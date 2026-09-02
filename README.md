@@ -1,37 +1,28 @@
-# Carbohort – prototyp serwisu (wireframe V5)
+# Carbohort – prototyp serwisu (makiety)
 
-Rozwojowa linia prototypu **Carbohort**. V5 to nowy layout sekcji strony produktowej –
-przebudowany pod animacje i sposób podawania treści, wciąż w systemie wireframe
-(skala szarości, bez koloru i brandingu). Warstwa wizualna to placeholdery,
-projekt graficzny powstaje osobno.
+Jedno repo na wszystkie wersje prototypu. Każda wersja mieszka w osobnym katalogu
+i ma własny adres na GitHub Pages, dzięki czemu można je porównywać, a dostęp do
+repozytorium nadaje się raz – działa też dla wersji, które dopiero powstaną.
 
-## Podgląd na żywo
+## Wersje
 
-- **V5 (ta wersja):** [carbomat.html](carbomat.html) – przebudowana podstrona CARBOMAT ECO
-- **V4 (wersja poprzednia, do porównania):** https://mpasti-jpg.github.io/carbohort-wireframe-v4/carbomat.html
+| Wersja | Katalog | Adres |
+| --- | --- | --- |
+| V5 – linia rozwojowa | `v5/` | https://mpasti-jpg.github.io/carbohort-wireframe/v5/ |
 
-`index.html` przekierowuje na `carbomat.html`.
+Wersja V4 (zamrożona, do porównania) stoi w osobnym repo:
+https://mpasti-jpg.github.io/carbohort-wireframe-v4/
 
-## Co zmienia V5 (względem V4)
+`index.html` w korzeniu to rozdzielacz z listą wersji. `404.html` przekierowuje
+stare linki bez numeru wersji (np. `/carbohort-wireframe/home.html`) na aktualną
+linię rozwojową, więc adresy rozesłane przed reorganizacją nadal działają.
 
-Przebudowana jest **strona `carbomat.html`**; pozostałe podstrony są kopiami z V4
-(z jednym wyjątkiem: nowe mega-menu „Nasze produkty" jest wspólne dla całego serwisu).
+## Jak dodać kolejną wersję
 
-- **Nawigacja:** górne menu przewija się ze stroną; do góry ekranu przykleja się
-  subnawigacja rozdziałów (pigułki + „KUP TERAZ"), pojawiająca się po zejściu z hero.
-- **Parametry produktu:** nowa, pełnoekranowa ciemna sekcja z tabelą 8 parametrów.
-- **Który dla mnie:** taby wariantów przyklejane pod subnawigacją, oba warianty
-  (CARBOMAT ECO i CARBOMAT ECO Ściółka) jeden pod drugim, cennik z „dodaj do koszyka".
-- **Czym jest / Jak stosować:** akordeon pięciu tematów z wymiennym wizualem;
-  recepty jako karty na zdjęciu scen.
-- **Dawkowanie:** kierunek na konfigurator (kalkulator dawek z V4 pozostaje w V4).
-- **Kiedy stosować:** oś sezonu sterowana scrollem – nagłówek przyklejony do góry,
-  kroki przyklejone do dołu i otwierane po kolei; siatka terminów z filtrami produktów.
-- **FAQ:** pytanie z lewej, odpowiedź z prawej; moduł „zapytaj dr Jurka".
-- **Sekcja „Liczby" usunięta.**
+1. Skopiuj katalog poprzedniej wersji: `cp -R v5 v6`.
+2. Dopisz wiersz do tabeli wyżej i do listy w `index.html`.
+3. Podnieś `LATEST` w `404.html`, jeśli nowa wersja ma przejmować stare linki.
+4. Commit i `git push origin main`. GitHub Pages publikuje z gałęzi `main`, katalog `/`.
 
-## Treść
-
-Teksty wdrożone 1:1 z dokumentu klienta „Produkty na stronę" (24.07.2026).
-Dane merytoryczne (dawki, ceny, parametry) pochodzą z ustaleń z zespołem Carbohort;
-pojedyncze pozycje oznaczone w kodzie komentarzem `⚠` czekają na potwierdzenie.
+Linki wewnątrz stron są względne, więc katalog wersji można kopiować i przenosić
+bez poprawek w kodzie.
