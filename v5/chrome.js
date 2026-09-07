@@ -344,9 +344,12 @@
      ⚠️ Etap i etykietę ustawia wyłącznie Mateusz; bez nich plakietka mówi
      „do ustalenia”, a nie zgaduje stanu.                                     */
   var STATUS_CSS = `
+/* Wysokosc jest sprzezona z odstepem doka doradcy: dok stoi na
+   bottom: var(--w-space-5) = 20 px, wiec plakietka musi zmiescic sie ponizej.
+   17 px daje 3 px zapasu; przy zmianie font-size albo paddingu sprawdz to ponownie. */
 .cw-status{position:fixed;left:0;bottom:0;z-index:var(--w-z-sticky);
-  display:flex;align-items:center;gap:.4em;max-width:min(92vw,44em);
-  padding:2px 9px 2px 7px;border-radius:0 6px 0 0;
+  display:flex;align-items:center;max-width:min(92vw,44em);
+  height:17px;padding:0 9px 0 7px;border-radius:0 6px 0 0;box-sizing:border-box;
   background:var(--w-surface-raised);border-top:1px solid var(--w-border-subtle);
   border-right:1px solid var(--w-border-subtle);
   font-family:var(--w-font-sans);font-size:11px;line-height:1.3;
@@ -354,15 +357,19 @@
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cw-status:hover{opacity:1}
 .cw-status__etap{color:var(--w-text-secondary);font-weight:600}
-.cw-status__sep{opacity:.5}
-.cw-status__etykieta--uwaga{color:var(--w-feedback-warning,#8a6100)}
-.cw-status__etykieta--czeka{color:var(--w-feedback-info,#1d4ed8)}
-.cw-status__etykieta--ok{color:var(--w-feedback-success,#166534)}
+.cw-status__sep{opacity:.5;margin:0 .4em}
+.cw-status__grupa{display:contents}
+/* Kolory na sztywno: kit nie ma tokenow feedbacku, wiec nie udajemy powiazania,
+   ktorego nie ma. Jeden ton na kazda etykiete z manifestu, lacznie z neutralnym. */
+.cw-status__etykieta--neutral{color:var(--w-text-secondary)}
+.cw-status__etykieta--uwaga{color:#8a6100}
 .cw-status__etykieta--praca{color:#6d28d9}
+.cw-status__etykieta--czeka{color:#1d4ed8}
 .cw-status__etykieta--poprawki{color:#b91c1c}
+.cw-status__etykieta--ok{color:#166534}
 .cw-status__ac{color:inherit;text-decoration:underline;text-underline-offset:2px}
 .cw-status__ac:hover{color:var(--w-text-primary)}
-@media (max-width:640px){.cw-status__etykieta,.cw-status__etykieta+.cw-status__sep{display:none}}
+@media (max-width:640px){.cw-status__grupa{display:none}}
 @media print{.cw-status{display:none}}`;
 
   function renderStatus() {
@@ -377,21 +384,26 @@
     st.textContent = STATUS_CSS;
     document.head.appendChild(st);
 
-    var czesci = [];
+    /* Separator jedzie RAZEM ze swoim elementem, nie jest doklejany miedzy czesci.
+       Dzieki temu schowanie etykiety na waskim ekranie nie zostawia wiszacej kropki. */
+    var SEP = '<span class="cw-status__sep">·</span>';
+    var html = "<span>Status:</span>";
     if (d.etap && cfg.etapy[d.etap]) {
-      czesci.push('<span class="cw-status__etap">' + cfg.etapy[d.etap] + "</span>");
+      html += '<span class="cw-status__etap">' + cfg.etapy[d.etap] + "</span>";
       var e = d.etykieta && cfg.etykiety[d.etykieta];
-      if (e) czesci.push('<span class="cw-status__etykieta cw-status__etykieta--' + e.ton + '">' + e.tekst + "</span>");
+      if (e) html += '<span class="cw-status__grupa">' + SEP +
+        '<span class="cw-status__etykieta cw-status__etykieta--' + e.ton + '">' + e.tekst + "</span></span>";
     } else {
-      czesci.push('<span class="cw-status__etap">do ustalenia</span>');
+      html += '<span class="cw-status__etap">do ustalenia</span>';
     }
-    if (d.ac) czesci.push('<a class="cw-status__ac" href="' + cfg.meta.bazaAC + d.ac + '" target="_blank" rel="noopener">AC #' + d.ac + "</a>");
+    if (d.ac) html += SEP + '<a class="cw-status__ac" href="' + cfg.meta.bazaAC + d.ac +
+      '" target="_blank" rel="noopener">AC #' + d.ac + "</a>";
 
     var box = document.createElement("div");
     box.className = "cw-status";
     box.setAttribute("role", "note");
     box.setAttribute("aria-label", "Stan prac nad tą podstroną");
-    box.innerHTML = "<span>Status:</span>" + czesci.join('<span class="cw-status__sep">·</span>');
+    box.innerHTML = html;
     document.body.appendChild(box);
   }
 

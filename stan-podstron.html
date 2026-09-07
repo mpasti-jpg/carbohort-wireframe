@@ -14,7 +14,9 @@
   .sub{color:var(--mut);font-size:13px;margin:0 0 20px}
   .box{border:1px solid var(--lin);border-left:3px solid var(--acc);border-radius:0 5px 5px 0;
     padding:11px 14px;margin:0 0 18px;font-size:13.5px;background:color-mix(in srgb,var(--acc) 5%,transparent)}
-  .tbl{overflow-x:auto;border:1px solid var(--lin);border-radius:6px}
+  /* max-height jest tu warunkiem dzialania sticky: bez wlasnego przewijania
+     wrapper nie jest kontenerem, do ktorego naglowek moze sie przykleic. */
+  .tbl{max-height:calc(100vh - 190px);overflow:auto;border:1px solid var(--lin);border-radius:6px}
   table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:900px}
   th,td{padding:8px 11px;border-bottom:1px solid var(--lin);text-align:left;vertical-align:top}
   th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--mut);
@@ -90,5 +92,5 @@
 
   <footer>DEV: etap jeszcze nieokreślony – na razie pracujemy nad projektem.
   Sekcja „Pozostałe” czeka na decyzję o numeracji – trafiają do niej podstrony opisowe (regulaminy, cookies i podobne).
-  <br>Makiety: <a href="https://mpasti-jpg.github.io/carbohort-wireframe/v5/">https://mpasti-jpg.github.io/carbohort-wireframe/v5/</a></footer>
+  <br>Makiety: <a href="v5/home.html">strona główna prototypu</a></footer>
 </div>
