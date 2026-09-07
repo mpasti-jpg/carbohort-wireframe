@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Borówka – program CarboHort: podłoże, ściółka i sezon | Carbohort</title>
+<meta name="description" content="Technologia humusowa w uprawie borówki: dwa scenariusze – zakładanie plantacji i plantacja istniejąca, przeliczniki na roślinę i metr rzędu, odczyn stanowiska, program nalistny.">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="wireframe.css">
+<link rel="stylesheet" href="cw.css">
+<script src="chrome.js"></script>
+<link rel="stylesheet" href="c5.css">
+<style>
+/* ===== Warstwa własna strony uprawy (c5up-*) – tylko to, czego nie ma w c5.css.
+       Wyłącznie tokeny --w-*, ostre narożniki zgodnie z językiem V5. ===== */
+.c5up-chips{display:flex;flex-wrap:wrap;gap:var(--w-space-2);margin:0;}
+.c5up-chip{display:flex;flex-direction:column;gap:2px;border:1px solid var(--w-border-default);padding:var(--w-space-2) var(--w-space-3);min-width:8.5rem;}
+.c5up-chip dt{font-size:var(--w-font-overline-size);line-height:var(--w-font-overline-lh);letter-spacing:var(--w-tracking-wide);text-transform:uppercase;color:var(--w-text-tertiary);}
+.c5up-chip dd{margin:0;font-size:var(--w-font-sm-size);font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+.c5up-node{border:1px solid var(--w-border-subtle);border-bottom:0;}
+.c5up-node:last-of-type{border-bottom:1px solid var(--w-border-subtle);}
+.c5up-node>summary{cursor:pointer;list-style:none;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:var(--w-space-3);align-items:center;padding:var(--w-space-4);}
+.c5up-node>summary::-webkit-details-marker{display:none;}
+.c5up-node>summary:hover{background:var(--w-surface-hover);}
+.c5up-node[open]>summary{background:var(--w-surface-subtle);}
+.c5up-node>summary:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:calc(var(--w-focus-ring-offset) * -1);}
+.c5up-node__ico{transition:transform var(--w-duration-fast) var(--w-ease);}
+.c5up-node[open] .c5up-node__ico{transform:rotate(180deg);}
+.c5up-node__body{padding:0 var(--w-space-4) var(--w-space-5);}
+.c5up-code{font-family:var(--w-font-mono);font-size:var(--w-font-sm-size);color:var(--w-text-secondary);border:1px solid var(--w-border-default);padding:2px var(--w-space-2);white-space:nowrap;}
+.c5up-note{border:1px solid var(--w-border-default);padding:var(--w-space-4);background:var(--w-surface-subtle);}
+.c5up-note--strong{border-color:var(--w-border-strong);background:var(--w-surface-page);}
+.c5up-tag{display:inline-block;font-size:var(--w-font-caption-size);line-height:var(--w-font-caption-lh);border:1px dashed var(--w-border-strong);padding:1px var(--w-space-2);color:var(--w-text-secondary);white-space:nowrap;}
+.c5up-legend{display:flex;flex-wrap:wrap;gap:var(--w-space-3) var(--w-space-5);}
+.c5up-calc{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:var(--w-space-4);align-items:end;}
+.c5up-out{border:1px solid var(--w-border-default);padding:var(--w-space-4);display:flex;flex-direction:column;gap:2px;}
+.c5up-out b{font-size:var(--w-font-h4-size);line-height:var(--w-font-h4-lh);font-weight:var(--w-weight-medium);}
+.c5up-empty{border:1px dashed var(--w-border-strong);padding:var(--w-space-5);text-align:center;}
+.c5up-two{display:grid;grid-template-columns:1fr;gap:var(--w-space-6);}
+@media (min-width:900px){.c5up-two{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+<a class="wf-sr-only" href="#main">Przejdź do treści</a>
+
+<cw-icons></cw-icons>
+
+
+<cw-navbar data-current="borowka"></cw-navbar>
+
+<!-- ===== Subnawigacja rozdziałów strony uprawy (scrollspy) ===== -->
+<nav class="cx-subnav" aria-label="Rozdziały strony uprawy borówki" data-subnav>
+  <div class="cx-subnav__in wf-container">
+    <div class="cx-subnav__links">
+      <a class="cx-subnav__link" href="#u-scenariusz" data-spy="u-scenariusz">Twoja sytuacja</a>
+      <a class="cx-subnav__link" href="#u-diagnoza" data-spy="u-diagnoza">Z czym się mierzysz</a>
+      <a class="cx-subnav__link" href="#u-os" data-spy="u-os">Oś programu</a>
+      <a class="cx-subnav__link" href="#u-matryca" data-spy="u-matryca">Matryca zaleceń</a>
+      <a class="cx-subnav__link" href="#u-produkty" data-spy="u-produkty">Produkty</a>
+      <a class="cx-subnav__link" href="#u-jak" data-spy="u-jak">Jak stosować</a>
+      <a class="cx-subnav__link" href="#u-dowod" data-spy="u-dowod">Co wiemy</a>
+      <a class="cx-subnav__link" href="#u-skala" data-spy="u-skala">Skala</a>
+      <a class="cx-subnav__link" href="#u-faq" data-spy="u-faq">FAQ</a>
+    </div>
+    <a class="cx-subnav__buy" href="konfigurator.html?uprawa=borowka">dobierz program</a>
+  </div>
+</nav>
+
+<main id="main">
+
+<!-- ===== 1. HERO ===== -->
+<section class="wf-section" id="u-hero">
+  <div class="wf-container">
+    <div class="c5-hero">
+      <div class="c5-hero__copy">
+        <span class="c5-kicker">Uprawy jagodowe · wieloletnie</span>
+        <h1 class="c5-h1">Borówka: podłoże, które ma pracować przez trzydzieści lat</h1>
+        <div class="c5-hero__lead">
+          <p>Borówkę sadzi się raz. Podłoże, ściółka i odczyn stanowiska, które ustalisz na starcie, zostają z plantacją na cały jej cykl. Dlatego program CarboHort dla borówki rozpada się na dwie różne rozmowy: inną z tym, kto dopiero zakłada plantację, i inną z tym, kto ma ją już w polu.</p>
+          <p>Lignit ma naturalnie niskie pH – 4,5 do 5,2. To jedyna uprawa, w której surowiec pasuje do wymagań rośliny bez żadnej korekty.</p>
+        </div>
+        <div class="c5-btnrow">
+          <a class="c5-btn c5-btn--dark" href="#u-scenariusz">wybierz swoją sytuację</a>
+          <a class="c5-btn c5-btn--light" href="#u-skala">policz ile potrzebujesz</a>
+        </div>
+      </div>
+      <div class="c5-hero__visual">
+        <div class="wf-ph"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 2. PASEK PARAMETRÓW UPRAWY ===== -->
+<section class="wf-section wf-section--sm wf-section--subtle" id="u-params">
+  <div class="wf-container">
+    <dl class="c5up-chips">
+      <div class="c5up-chip"><dt>Jednostka</dt><dd>roślina · rząd · m³</dd></div>
+      <div class="c5up-chip"><dt>Skala faz</dt><dd>terminy opisowe</dd></div>
+      <div class="c5up-chip"><dt>Cykl</dt><dd>do 30 lat</dd></div>
+      <div class="c5up-chip"><dt>Optymalne pH</dt><dd>4–5, nie powyżej 5,5</dd></div>
+      <div class="c5up-chip"><dt>Produkty w programie</dt><dd>5</dd></div>
+      <div class="c5up-chip"><dt>Podstawa</dt><dd>Poradnik borówkowy CarboHort</dd></div>
+    </dl>
+    <p class="wf-caption wf-t-tertiary" style="margin-top:var(--w-space-4);">Makieta do akceptacji. Liczby oznaczone <span class="c5up-tag">do potwierdzenia</span> czekają na rozstrzygnięcie po stronie CarboHort – patrz zestawienie pod matrycą zaleceń.</p>
+  </div>
+</section>
+
+<!-- ===== 3. Z CZYM SIĘ MIERZYSZ ===== -->
+<section class="wf-section" id="u-diagnoza">
+  <div class="wf-container wf-stack wf-stack--6">
+    <div class="wf-stack wf-stack--2">
+      <span class="wf-overline wf-t-tertiary">Z czym się mierzysz</span>
+      <h2 class="c5-h2">Co decyduje o borówce przez najbliższe lata</h2>
+      <p class="wf-lead wf-t-secondary" style="max-width:var(--w-measure);">Borówka rośnie w podłożu, które sami jej budujemy – kompletnie sztucznym dla siedliska, z torfem kwaśnym jako bazą. Każdy z tych problemów wynika wprost z tego faktu.</p>
+    </div>
+    <div class="wf-grid wf-grid--3" style="--wf-grid-min: 15rem;">
+      <a class="wf-card wf-card--interactive" href="#faza-podloze"><div class="wf-card__body wf-stack wf-stack--2">
+        <span class="wf-overline wf-t-tertiary">Odczyn</span>
+        <span class="wf-h5">pH stanowiska powyżej 5,5</span>
+        <span class="wf-small wf-t-secondary">Powyżej tej granicy borówka przestaje przyswajać składniki. Optimum to 4–5. Lignit obniża i stabilizuje odczyn, bo sam ma pH 4,5–5,2.</span>
+      </div></a>
+      <a class="wf-card wf-card--interactive" href="#faza-stoper"><div class="wf-card__body wf-stack wf-stack--2">
+        <span class="wf-overline wf-t-tertiary">Woda</span>
+        <span class="wf-h5">Retencja w strefie korzeniowej</span>
+        <span class="wf-small wf-t-secondary">Problemem zwykle nie jest brak dostępu do podlewania, tylko utrzymanie wody w podłożu i ograniczenie jej zużycia – szczególnie w okresach suszy.</span>
+      </div></a>
+      <a class="wf-card wf-card--interactive" href="#faza-sciolka"><div class="wf-card__body wf-stack wf-stack--2">
+        <span class="wf-overline wf-t-tertiary">Ściółkowanie</span>
+        <span class="wf-h5">Głód azotowy po świeżej korze</span>
+        <span class="wf-small wf-t-secondary">Kora, zrębki i trociny wciągają azot w trakcie rozkładu. Ściółka z lignitu nie jest materiałem świeżym, więc mikroorganizmy nie zużywają na nią azotu.</span>
+      </div></a>
+      <a class="wf-card wf-card--interactive" href="#faza-sciolka"><div class="wf-card__body wf-stack wf-stack--2">
+        <span class="wf-overline wf-t-tertiary">Ściółkowanie</span>
+        <span class="wf-h5">Chwasty i gryzonie w rzędzie</span>
+        <span class="wf-small wf-t-secondary">Przeciw chwastom: agrowłóknina pod ściółką albo warstwa powyżej 8 cm. Gruzełkowata struktura bardzo utrudnia gniazdowanie gryzoniom.</span>
+      </div></a>
+      <a class="wf-card wf-card--interactive" href="#faza-wiosna"><div class="wf-card__body wf-stack wf-stack--2">
+        <span class="wf-overline wf-t-tertiary">Stanowisko</span>
+        <span class="wf-h5">Choroby replantacyjne i zmęczenie gleby</span>
+        <span class="wf-small wf-t-secondary">Przy monokulturze bez regeneracji stanowiska stają się uboższe z każdym sezonem. To realne ryzyko przy trzydziestoletnim cyklu.</span>
+      </div></a>
+      <a class="wf-card wf-card--interactive" href="#faza-owoc"><div class="wf-card__body wf-stack wf-stack--2">
+        <span class="wf-overline wf-t-tertiary">Owoc</span>
+        <span class="wf-h5">Jędrność, wybarwienie i trwałość pozbiorcza</span>
+        <span class="wf-small wf-t-secondary">Opadanie i pękanie owoców, infekcje zewnętrzne, niedobory wapnia i boru – to one rozstrzygają, ile z plonu dojedzie do odbiorcy.</span>
+      </div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 4. SCENARIUSZE WEJŚCIA ===== -->
+<section class="wf-section wf-section--subtle" id="u-scenariusz">
+  <div class="wf-container wf-stack wf-stack--6">
+    <div class="wf-stack wf-stack--2">
+      <span class="wf-overline wf-t-tertiary">Dwie różne sytuacje</span>
+      <h2 class="c5-h2">Zakładam plantację albo mam ją od lat</h2>
+      <p class="wf-lead wf-t-secondary" style="max-width:var(--w-measure);">To nie są warianty tego samego programu. Przy zakładaniu pracujesz na podłożu i możesz jeszcze wszystko ustawić. Na plantacji istniejącej pracujesz od góry – ściółką i tym, co da się podać przez zraszacz.</p>
+    </div>
+    <div class="c5up-two">
+      <div class="wf-card"><div class="wf-card__body wf-stack wf-stack--4">
+        <span class="wf-overline wf-t-tertiary">Scenariusz A</span>
+        <span class="wf-h4">Zakładam plantację</span>
+        <p class="wf-small wf-t-secondary">Masz jedno podejście – rośliny sadzi się tylko raz. Wchodzi „Wodny Stoper" na dnie bruzdy, CARBOMAT ECO jako składnik podłoża i dołu sadzeniowego, a dopiero potem program sezonowy.</p>
+        <ul class="wf-list wf-small">
+          <li>Membrana węglowa przed wysypaniem podłoża</li>
+          <li>Udział lignitu w gotowej mieszance</li>
+          <li>Wybór frakcji: 2–4 i 4–8 mm</li>
+        </ul>
+        <a class="wf-link" href="#faza-stoper">Zobacz na osi programu</a>
+      </div></div>
+      <div class="wf-card"><div class="wf-card__body wf-stack wf-stack--4">
+        <span class="wf-overline wf-t-tertiary">Scenariusz B</span>
+        <span class="wf-h4">Mam plantację, często starszą</span>
+        <p class="wf-small wf-t-secondary">Podłoża już nie wymienisz. Pracujesz ściółką, kondycjonowaniem gleby dwa razy w roku i programem nalistnym. Naturalne okno na zabieg doglebowy to jesień, po zbiorach.</p>
+        <ul class="wf-list wf-small">
+          <li>CARBOMAT ECO Ściółka, frakcje 4–8 i 8–20 mm</li>
+          <li>Kondycjonowanie wiosną i po zbiorach</li>
+          <li>Fertygacja i program nalistny w sezonie</li>
+        </ul>
+        <a class="wf-link" href="#faza-sciolka">Zobacz na osi programu</a>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 5. OŚ PROGRAMU ===== -->
+<section class="wf-section" id="u-os">
+  <div class="wf-container wf-stack wf-stack--6">
+    <div class="wf-stack wf-stack--2">
+      <span class="wf-overline wf-t-tertiary">Oś programu</span>
+      <h2 class="c5-h2">Rok borówkowy i moment założenia plantacji</h2>
+      <p class="wf-lead wf-t-secondary" style="max-width:var(--w-measure);">Poradnik nie posługuje się skalą BBCH – opisuje terminy zabiegów własnymi nazwami. Zachowujemy jego nazewnictwo.</p>
+    </div>
+    <div>
+      <details class="c5up-node" id="faza-stoper" open>
+        <summary><span class="c5up-code">A · przed sadzeniem</span><span class="wf-w-medium">Wodny Stoper – membrana w bruździe</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+        <div class="c5up-node__body wf-stack wf-stack--3">
+          <p class="wf-body wf-t-secondary">Cel: przechwycenie i zmagazynowanie wody opadowej oraz podsiąkowej w strefie korzeniowej – zanim jeszcze cokolwiek stanie na tym stanowisku.</p>
+          <p class="wf-body">Roztwór 10% CARBOHUMIC niefiltrowanego, czyli 100 l produktu na 900 l wody, wylewa się <strong>na dno bruzd, jeszcze przed wysypaniem podłoża</strong>. Zabieg jest jednorazowy i nieodwracalny w tym sensie, że później nie ma już do tej warstwy dostępu.</p>
+          <p class="wf-small wf-t-secondary">Wg poradnika CarboHort technologia ma pozwolić zatrzymać nawet 50% więcej wody opadowej i z podsiąku. <span class="c5up-tag">do potwierdzenia</span></p>
+        </div>
+      </details>
+      <details class="c5up-node" id="faza-podloze">
+        <summary><span class="c5up-code">A · zakładanie</span><span class="wf-w-medium">Podłoże i dół sadzeniowy</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+        <div class="c5up-node__body wf-stack wf-stack--3">
+          <p class="wf-body wf-t-secondary">Cel: obniżenie i stabilizacja odczynu, materia organiczna, struktura, rewitalizacja gleby zmęczonej wieloletnimi uprawami.</p>
+          <p class="wf-body">CARBOMAT ECO jako składnik gotowej mieszanki, frakcje 2–4 i 4–8 mm. Przykładowe zestawy z poradnika: torf 70% i lignit 30%; lignit 50% i trociny 50%; torf 40%, gleba rodzima 20%, lignit 20% i trociny 20%.</p>
+          <p class="wf-small wf-t-secondary">Sposób nasadzenia – grunt, zagon czy donica – ustala udział lignitu w podłożu. Parametry z poradnika są orientacyjne.</p>
+        </div>
+      </details>
+      <details class="c5up-node" id="faza-sciolka">
+        <summary><span class="c5up-code">B · plantacja istniejąca</span><span class="wf-w-medium">Ściółkowanie</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+        <div class="c5up-node__body wf-stack wf-stack--3">
+          <p class="wf-body wf-t-secondary">Cel: kondycjonowanie gleby, obniżenie odczynu, podniesienie temperatury gleby, ograniczenie chwastów i gniazdowania gryzoni.</p>
+          <p class="wf-body">CARBOMAT ECO Ściółka, frakcje 4–8 lub 8–20 mm, wysypywana bezpośrednio na glebę. Ilość rośnie proporcjonalnie z wielkością krzewu. Przeciw chwastom: agrowłóknina lub geowłóknina pod ściółką albo warstwa powyżej 8 cm.</p>
+          <p class="wf-small wf-t-secondary">W odróżnieniu od świeżej kory, zrębków i trocin ten materiał nie wywołuje głodu azotowego – mikroorganizmy nie zużywają na niego azotu.</p>
+        </div>
+      </details>
+      <details class="c5up-node" id="faza-wiosna">
+        <summary><span class="c5up-code">wczesna wiosna</span><span class="wf-w-medium">Kondycjonowanie przed ruszeniem wegetacji</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+        <div class="c5up-node__body wf-stack wf-stack--3">
+          <p class="wf-body wf-t-secondary">Cel: budowanie próchnicy i kompleksu sorpcyjnego, wspomaganie ukorzeniania, uzupełnianie strat materii organicznej po sezonie.</p>
+          <p class="wf-body">Pierwsza część dawki rocznej CARBOHUMIC niefiltrowanego w roztworze roboczym 5–10%. Preparat w wersji pod borówkę jest celowo doprowadzany do odczynu w okolicy 5.</p>
+          <p class="wf-small wf-t-secondary">Dawkę roczną rozkłada się przynajmniej na dwa zabiegi – wiosną i po zbiorach.</p>
+        </div>
+      </details>
+      <details class="c5up-node" id="faza-fert">
+        <summary><span class="c5up-code">cały sezon</span><span class="wf-w-medium">Fertygacja</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+        <div class="c5up-node__body wf-stack wf-stack--3">
+          <p class="wf-body wf-t-secondary">Cel: bieżące dożywianie, chelatowanie składników przy łącznym stosowaniu z nawozami, rewitalizacja mikrobiomu.</p>
+          <p class="wf-body">CARBOHUMIC filtrowany (187 mesh / 80 µm) przez cały okres wegetacji. Stężenie zależy od częstotliwości: 0,1% przy aplikacji codziennej lub co drugi dzień, 1% przy aplikacji co 10–14 dni.</p>
+          <p class="wf-small wf-t-secondary">Odczyn preparatu to 7–8, ale przy zalecanym niskim stężeniu roboczym przyjmuje on pH wody lub pożywki.</p>
+        </div>
+      </details>
+      <details class="c5up-node" id="faza-wegetacja">
+        <summary><span class="c5up-code">wzrost wegetatywny</span><span class="wf-w-medium">Program nalistny do kwitnienia</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+        <div class="c5up-node__body wf-stack wf-stack--3">
+          <p class="wf-body wf-t-secondary">Cel: budowa masy liściowej, fotosynteza, transport wody i składników, odporność na stresy biotyczne i abiotyczne.</p>
+          <p class="wf-body">CARBOHUMIC MAXI PLUS w serii zabiegów co 10–14 dni, stężenie 0,1–0,5%, minimalny wydatek wody 500 l. Wg poradnika zabieg wykonany przed kwitnieniem zwiększa liczbę bujniejszych i zdrowszych kwiatostanów.</p>
+        </div>
+      </details>
+      <details class="c5up-node" id="faza-owoc">
+        <summary><span class="c5up-code">po zawiązaniu owoców</span><span class="wf-w-medium">Program jakości owocu</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+        <div class="c5up-node__body wf-stack wf-stack--3">
+          <p class="wf-body wf-t-secondary">Cel: błony komórkowe liści i owoców, wybarwienie, jędrność i mięsistość, trwałość pozbiorcza, ograniczenie opadania i pękania owoców.</p>
+          <p class="wf-body">CARBOHUMIC CALBOR – wapń i bor – od momentu zawiązania owoców, w serii zabiegów co 7–10 dni.</p>
+          <div class="c5up-note c5up-note--strong wf-stack wf-stack--2">
+            <span class="wf-w-semibold wf-inline"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-alert-triangle"></use></svg> Zakres stosowania do potwierdzenia</span>
+            <span class="wf-small wf-t-secondary">Decyzja rejestrowa dla tego produktu obejmuje uprawy sadownicze. Zanim ta część programu trafi na stronę publiczną, potrzebujemy jednoznacznego potwierdzenia, czy plantacja borówki się w tym zakresie mieści.</span>
+          </div>
+        </div>
+      </details>
+      <details class="c5up-node" id="faza-jesien">
+        <summary><span class="c5up-code">po zbiorach · jesień</span><span class="wf-w-medium">Uzupełnienie materii organicznej</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+        <div class="c5up-node__body wf-stack wf-stack--3">
+          <p class="wf-body wf-t-secondary">Cel: uzupełnienie strat materii organicznej po roku uprawowym, budowanie trwałej próchnicy.</p>
+          <p class="wf-body">Druga część rocznej dawki CARBOHUMIC niefiltrowanego, w roztworze 5–10%. Termin wprost z poradnika: niedługo po zbiorach lub jesienią, kiedy gleba jest dobrze zwilżona.</p>
+          <p class="wf-small wf-t-secondary">To także naturalne okno decyzyjne – po wrześniowych zbiorach jest i czas, i budżet.</p>
+        </div>
+      </details>
+      <details class="c5up-node" id="faza-interwencja">
+        <summary><span class="c5up-code">interwencyjnie</span><span class="wf-w-medium">Po przymrozku lub uszkodzeniu</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+        <div class="c5up-node__body wf-stack wf-stack--3">
+          <p class="wf-body wf-t-secondary">Cel: intensywna regeneracja po przymrozkach, uszkodzeniach chemicznych i mechanicznych oraz poparzeniach słonecznych.</p>
+          <p class="wf-body">Trzy opryski w odstępach co trzy dni. <span class="c5up-tag">brak dawki jednostkowej</span> – poradnik podaje schemat, ale nie określa dawki dla zabiegów interwencyjnych.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 6. MATRYCA ZALECEŃ ===== -->
+<section class="wf-section wf-section--subtle" id="u-matryca">
+  <div class="wf-container wf-stack wf-stack--6">
+    <div class="wf-stack wf-stack--2">
+      <span class="wf-overline wf-t-tertiary">Matryca zaleceń</span>
+      <h2 class="c5-h2">Termin, cel, produkt, dawka</h2>
+      <p class="wf-lead wf-t-secondary" style="max-width:var(--w-measure);">Dawki dla borówki liczy się na roślinę, na metr rzędu i na hektar – zależnie od zabiegu. Kolumna „scenariusz" mówi, czy pozycja dotyczy zakładania plantacji, czy plantacji istniejącej.</p>
+    </div>
+    <div class="cw-scrollx" tabindex="0">
+      <table class="wf-table" style="min-width:56rem;">
+        <caption class="wf-sr-only">Program CarboHort w uprawie borówki: termin, scenariusz, cel, produkt, dawka i ograniczenia</caption>
+        <thead><tr><th scope="col">Termin</th><th scope="col">Scen.</th><th scope="col">Cel</th><th scope="col">Produkt</th><th scope="col">Dawka</th><th scope="col">Uwagi</th></tr></thead>
+        <tbody>
+          <tr>
+            <th scope="row">Przed wysypaniem podłoża</th><td>A</td>
+            <td>Membrana węglowa na dnie bruzdy, retencja</td>
+            <td>CARBOHUMIC niefiltrowany</td>
+            <td>roztwór 10%<br><span class="wf-caption wf-t-tertiary">100 l produktu na 900 l wody</span></td>
+            <td>Zabieg jednorazowy, wykonywany zanim stanie podłoże</td>
+          </tr>
+          <tr>
+            <th scope="row">Zakładanie plantacji</th><td>A</td>
+            <td>Odczyn, materia organiczna, struktura podłoża</td>
+            <td>CARBOMAT ECO<br><span class="wf-caption wf-t-tertiary">frakcje 2–4 i 4–8 mm</span></td>
+            <td>udział 10–50% mieszanki <span class="c5up-tag">do potwierdzenia</span><br>rzędowo ok. 8 m³ na 100 m rzędu<br>punktowo 16 l na roślinę</td>
+            <td>Przeliczniki dla udziału 20%. Udział zależy od sposobu nasadzenia: grunt, zagon czy donica</td>
+          </tr>
+          <tr>
+            <th scope="row">Plantacja posadzona</th><td>B</td>
+            <td>Odczyn, temperatura gleby, chwasty, gryzonie</td>
+            <td>CARBOMAT ECO Ściółka<br><span class="wf-caption wf-t-tertiary">frakcje 4–8 lub 8–20 mm</span></td>
+            <td>rzędowo 3 m³ na 100 m rzędu<br><span class="wf-caption wf-t-tertiary">szer. 0,6 m, warstwa 5 cm</span><br>punktowo ok. 4,5 l na roślinę<br>min. 4 l na młody krzew</td>
+            <td>Przeciw chwastom: agrowłóknina pod ściółką albo warstwa powyżej 8 cm</td>
+          </tr>
+          <tr>
+            <th scope="row">Wczesna wiosna i po zbiorach</th><td>A · B</td>
+            <td>Próchnica, kompleks sorpcyjny, ukorzenianie</td>
+            <td>CARBOHUMIC niefiltrowany</td>
+            <td>100–600 l/ha rocznie <span class="c5up-tag">do potwierdzenia</span><br><span class="wf-caption wf-t-tertiary">roztwór roboczy 5–10%</span></td>
+            <td>Dawkę roczną rozłożyć przynajmniej na dwa zabiegi. Aplikacja polewowa, nie przez dokładne filtry</td>
+          </tr>
+          <tr>
+            <th scope="row">Cały okres wegetacji</th><td>A · B</td>
+            <td>Bieżące dożywianie, chelatowanie, mikrobiom</td>
+            <td>CARBOHUMIC filtrowany</td>
+            <td>20–60 l/ha rocznie <span class="c5up-tag">do potwierdzenia</span><br><span class="wf-caption wf-t-tertiary">0,1% co dzień lub co drugi dzień · 1% co 10–14 dni</span></td>
+            <td>Przez fertygację, linie kroplujące, zraszacze</td>
+          </tr>
+          <tr>
+            <th scope="row">Wzrost wegetatywny</th><td>A · B</td>
+            <td>Masa liściowa, fotosynteza, odporność na stresy</td>
+            <td>CARBOHUMIC MAXI PLUS</td>
+            <td>dawka nalistna <span class="c5up-tag">do potwierdzenia</span><br><span class="wf-caption wf-t-tertiary">seria co 10–14 dni · stężenie 0,1–0,5% · min. 500 l wody</span></td>
+            <td>Zabieg przed kwitnieniem zwiększa liczbę kwiatostanów</td>
+          </tr>
+          <tr>
+            <th scope="row">Po zawiązaniu owoców</th><td>A · B</td>
+            <td>Jędrność, wybarwienie, trwałość pozbiorcza, Ca i B</td>
+            <td>CARBOHUMIC CALBOR</td>
+            <td>dawka nalistna <span class="c5up-tag">do potwierdzenia</span><br><span class="wf-caption wf-t-tertiary">seria co 7–10 dni · min. 500 l wody</span></td>
+            <td><span class="c5up-tag">zakres rejestracji do potwierdzenia</span> – patrz nota pod tabelą</td>
+          </tr>
+          <tr>
+            <th scope="row">Interwencyjnie</th><td>A · B</td>
+            <td>Regeneracja po przymrozku i uszkodzeniach</td>
+            <td>CARBOHUMIC MAXI PLUS lub CALBOR</td>
+            <td>3 opryski co 3 dni<br><span class="c5up-tag">brak dawki w źródle</span></td>
+            <td>Poradnik podaje schemat, nie podaje dawki jednostkowej</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="c5up-legend wf-caption wf-t-secondary">
+      <span class="wf-inline"><span class="c5up-tag">do potwierdzenia</span> liczba, co do której materiały CarboHort podają dziś różne wartości</span>
+      <span class="wf-inline"><span class="c5up-tag">brak dawki w źródle</span> poradnik opisuje zabieg, ale nie podaje liczby</span>
+    </div>
+    <div class="c5up-note wf-stack wf-stack--2">
+      <span class="wf-w-semibold">CARBOMAT HUMIC nie wchodzi do borówki</span>
+      <p class="wf-small wf-t-secondary">To jedyne twarde wykluczenie produktowe w tej uprawie, potwierdzone przez CarboHort: odczyn produktu jest dla borówki za wysoki. Rolę bazy doglebowej pełni tu CARBOMAT ECO, którego surowiec ma pH 4,5–5,2.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 7. PRODUKTY W TEJ UPRAWIE ===== -->
+<section class="wf-section" id="u-produkty">
+  <div class="wf-container wf-stack wf-stack--6">
+    <div class="wf-stack wf-stack--2">
+      <span class="wf-overline wf-t-tertiary">Produkty w tej uprawie</span>
+      <h2 class="c5-h2">Pięć ról w programie borówkowym</h2>
+    </div>
+    <div class="wf-grid wf-grid--2" style="--wf-grid-min: 18rem;">
+      <div class="wf-card"><div class="wf-card__body wf-stack wf-stack--3">
+        <span class="wf-overline wf-t-tertiary">Podłoże · zakładanie plantacji</span>
+        <span class="wf-h4">CARBOMAT ECO</span>
+        <p class="wf-small wf-t-secondary">Składnik mieszanki podłożowej i dołu sadzeniowego. Obniża i stabilizuje odczyn, wnosi materię organiczną, poprawia strukturę i rewitalizuje glebę zmęczoną wieloletnią uprawą.</p>
+        <a class="wf-link" href="carbomat.html">Strona produktu</a>
+      </div></div>
+      <div class="wf-card"><div class="wf-card__body wf-stack wf-stack--3">
+        <span class="wf-overline wf-t-tertiary">Ściółka · plantacja istniejąca</span>
+        <span class="wf-h4">CARBOMAT ECO Ściółka</span>
+        <p class="wf-small wf-t-secondary">Grubsze frakcje na wierzch gleby. Kondycjonuje, obniża odczyn, podnosi temperaturę gleby, ogranicza chwasty i utrudnia gniazdowanie gryzoniom. Nie wywołuje głodu azotowego.</p>
+        <a class="wf-link" href="carbomat.html">Strona produktu</a>
+      </div></div>
+      <div class="wf-card"><div class="wf-card__body wf-stack wf-stack--3">
+        <span class="wf-overline wf-t-tertiary">Kondycjoner płynny · doglebowo</span>
+        <span class="wf-h4">CARBOHUMIC niefiltrowany</span>
+        <p class="wf-small wf-t-secondary">Próchnica, kompleks sorpcyjny, retencja, wspomaganie ukorzeniania. Wersja pod borówkę jest doprowadzana do odczynu w okolicy 5. Polewanie ręczne z beczki lub mauzera – nie przez urządzenia z dokładnymi filtrami.</p>
+        <a class="wf-link" href="carbohumic.html">Strona produktu</a>
+      </div></div>
+      <div class="wf-card"><div class="wf-card__body wf-stack wf-stack--3">
+        <span class="wf-overline wf-t-tertiary">Fertygacja · cały sezon</span>
+        <span class="wf-h4">CARBOHUMIC filtrowany</span>
+        <p class="wf-small wf-t-secondary">Przefiltrowany do 187 mesh / 80 µm, więc przechodzi przez linie kroplujące i zraszacze. Bieżące dożywianie, chelatowanie składników przy łącznym stosowaniu z nawozami, rewitalizacja mikrobiomu.</p>
+        <a class="wf-link" href="carbohumic.html">Strona produktu</a>
+      </div></div>
+      <div class="wf-card"><div class="wf-card__body wf-stack wf-stack--3">
+        <span class="wf-overline wf-t-tertiary">Nalistne · wzrost wegetatywny</span>
+        <span class="wf-h4">CARBOHUMIC MAXI PLUS</span>
+        <p class="wf-small wf-t-secondary">Biostymulator nalistny na masę liściową, fotosyntezę i odporność na stresy. Minimalny wydatek wody 500 l, stężenie 0,1–0,5%. Także interwencyjnie po przymrozku i uszkodzeniach.</p>
+        <a class="wf-link" href="carbohumic.html">Strona produktu</a>
+      </div></div>
+      <div class="wf-card"><div class="wf-card__body wf-stack wf-stack--3">
+        <span class="wf-overline wf-t-tertiary">Nalistne · okres owocowania</span>
+        <span class="wf-h4">CARBOHUMIC CALBOR</span>
+        <p class="wf-small wf-t-secondary">Wapń i bor na błony komórkowe, wybarwienie, jędrność i trwałość pozbiorczą owocu.</p>
+        <p class="wf-caption wf-t-tertiary wf-inline"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-alert-triangle"></use></svg> Zakres stosowania w uprawach jagodowych – do potwierdzenia przed publikacją.</p>
+        <a class="wf-link" href="carbohumic.html">Strona produktu</a>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 8. JAK STOSOWAĆ ===== -->
+<section class="wf-section wf-section--subtle" id="u-jak">
+  <div class="wf-container wf-stack wf-stack--6">
+    <div class="wf-stack wf-stack--2">
+      <span class="wf-overline wf-t-tertiary">Jak stosować</span>
+      <h2 class="c5-h2">Sprzęt, stężenia i granice</h2>
+    </div>
+    <div class="c5up-two">
+      <div class="wf-stack wf-stack--4">
+        <div class="wf-card"><div class="wf-card__body wf-stack wf-stack--2">
+          <span class="wf-w-semibold">Czym podawać który produkt</span>
+          <ul class="wf-list wf-small wf-t-secondary">
+            <li><strong>CARBOHUMIC niefiltrowany</strong> – polewanie ręczne z beczki lub mauzera. Nie stosować w urządzeniach z dokładnymi filtrami, w tym w fertygacji.</li>
+            <li><strong>CARBOHUMIC filtrowany</strong> – opryskiwacze, belki herbicydowe, zraszacze, linie kroplujące.</li>
+            <li><strong>MAXI PLUS i CALBOR</strong> – opryskiwacze, belki herbicydowe, zraszacze. Minimalny wydatek wody 500 l.</li>
+            <li><strong>Ściółka</strong> – wysyp bezpośrednio na glebę, ilość proporcjonalnie do wielkości krzewu.</li>
+          </ul>
+        </div></div>
+        <div class="c5up-note wf-stack wf-stack--2">
+          <span class="wf-w-semibold">Stężenia zależą od częstotliwości</span>
+          <p class="wf-small wf-t-secondary">Przy fertygacji: 0,1% jeśli podajesz codziennie lub co drugi dzień, 1% jeśli co 10–14 dni. Przy zabiegach nalistnych: 0,1–0,5%. Przy kondycjonowaniu doglebowym: roztwór roboczy 5–10%.</p>
+        </div>
+      </div>
+      <div class="wf-stack wf-stack--4">
+        <div class="wf-alert">
+          <span class="wf-alert__icon"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-alert-triangle"></use></svg></span>
+          <div class="wf-stack wf-stack--1">
+            <span class="wf-alert__title">Odczyn stanowiska jest warunkiem, nie efektem</span>
+            <span class="wf-small wf-t-secondary">Borówka wymaga pH w okolicy 4–5 i nie powinno ono przekraczać 5,5 – powyżej tej granicy roślina przestaje przyswajać składniki. Żaden biostymulator tego nie obejdzie.</span>
+          </div>
+        </div>
+        <div class="c5up-empty wf-stack wf-stack--1">
+          <span class="wf-w-semibold">Czego nie podajemy</span>
+          <span class="wf-small wf-t-secondary">Poradnik nie określa faz fenologicznych w skali BBCH, karencji ani odczynu produktów nalistnych. Nie podaje też dawki jednostkowej dla oprysków interwencyjnych. Zamiast domysłu – mówimy, że tego nie wiemy.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 9. DOWÓD ===== -->
+<section class="wf-section" id="u-dowod">
+  <div class="wf-container wf-stack wf-stack--6">
+    <div class="wf-stack wf-stack--2">
+      <span class="wf-overline wf-t-tertiary">Co wiemy, a czego jeszcze nie wiemy</span>
+      <h2 class="c5-h2">Stan dowodu dla borówki</h2>
+    </div>
+    <div class="wf-steps">
+      <span class="wf-step wf-step--current"><span class="wf-step__node">1</span> Mechanizm opisany</span>
+      <span class="wf-step__connector"></span>
+      <span class="wf-step wf-step--upcoming"><span class="wf-step__node">2</span> Doświadczenie w toku</span>
+      <span class="wf-step__connector"></span>
+      <span class="wf-step wf-step--upcoming"><span class="wf-step__node">3</span> Wynik z plantacji</span>
+    </div>
+    <div class="c5up-two">
+      <div class="c5up-note wf-stack wf-stack--2">
+        <span class="wf-w-semibold">Gdzie dziś jesteśmy</span>
+        <p class="wf-small wf-t-secondary">Program borówkowy opiera się na poradniku CarboHort. Opisuje mechanizm i praktykę, ale <strong>nie zawiera wyników doświadczenia polowego na borówce</strong>. Dlatego nie podajemy tu procentów przyrostu plonu. Liczby, które poradnik podaje jako efekt, oznaczamy jako pochodzące z jego treści, a nie z badania.</p>
+      </div>
+      <div class="wf-stack wf-stack--3">
+        <div class="wf-ph" style="aspect-ratio:16/9;"></div>
+        <p class="wf-caption wf-t-tertiary">Miejsce na referencję plantatora – zdjęcie i region, bez nazwy gospodarstwa.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 10. SKALA ===== -->
+<section class="wf-section wf-section--subtle" id="u-skala">
+  <div class="wf-container wf-stack wf-stack--6">
+    <div class="wf-stack wf-stack--2">
+      <span class="wf-overline wf-t-tertiary">Skala zabiegu</span>
+      <h2 class="c5-h2">Ile potrzebujesz na swoją plantację</h2>
+      <p class="wf-lead wf-t-secondary" style="max-width:var(--w-measure);">Borówkę liczy się inaczej niż uprawę polową – na roślinę i na metr rzędu. Przelicznik pracuje na wartościach z poradnika dla udziału 20% lignitu i warstwy ściółki 5 cm.</p>
+    </div>
+    <div data-calc class="wf-stack wf-stack--5">
+      <div class="c5up-calc">
+        <div class="wf-field">
+          <label class="wf-label" for="rosliny">Liczba roślin</label>
+          <div class="wf-input-group">
+            <input class="wf-input" id="rosliny" type="number" min="0" step="50" value="1000" data-calc-in>
+            <span class="wf-addon">szt.</span>
+          </div>
+        </div>
+        <div class="c5up-out" data-calc-out data-lo="16" data-hi="16" data-unit="l"><span class="wf-caption wf-t-tertiary">CARBOMAT ECO do podłoża, sadzenie punktowe</span><b>–</b></div>
+        <div class="c5up-out" data-calc-out data-lo="4.5" data-hi="4.5" data-unit="l"><span class="wf-caption wf-t-tertiary">CARBOMAT ECO Ściółka, warstwa 5 cm</span><b>–</b></div>
+        <div class="c5up-out" data-calc-out data-lo="4" data-hi="4" data-unit="l"><span class="wf-caption wf-t-tertiary">Ściółka – minimum na młody krzew</span><b>–</b></div>
+      </div>
+      <div class="wf-cluster wf-gap-3 wf-items-center">
+        <div class="wf-skeleton" style="width:12rem;height:var(--w-control-h-md);"></div>
+        <span class="wf-small wf-t-tertiary">Koszt na roślinę – do uzupełnienia po ustaleniu cen.</span>
+      </div>
+      <p class="wf-caption wf-t-tertiary">Przy sadzeniu rzędowym poradnik podaje inny przelicznik: rząd 100 m przy szerokości 1 m i głębokości 0,4 m to 40 m³ substratu, z czego przy udziale 20% wychodzi 8 m³ lignitu. Ściółkowanie rzędowe: 3 m³ na 100 m rzędu.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 11. GRANICE ===== -->
+<section class="wf-section" id="u-uczciwosc">
+  <div class="wf-container wf-stack wf-stack--6">
+    <div class="wf-stack wf-stack--2">
+      <span class="wf-overline wf-t-tertiary">Granice</span>
+      <h2 class="c5-h2">Czego ten program nie zrobi</h2>
+    </div>
+    <div class="wf-split">
+      <div class="wf-stack wf-stack--3">
+        <span class="wf-h5">Uzupełniamy, nie zastępujemy</span>
+        <ul class="wf-list wf-body wf-t-secondary">
+          <li>Program nie zastępuje nawożenia ani ochrony – wpina się w technologię, którą już prowadzisz.</li>
+          <li>Nie obejdzie odczynu stanowiska. Jeśli pH przekracza 5,5, to jest pierwszy problem do rozwiązania.</li>
+          <li>Nie jest środkiem ochrony roślin i nie zastępuje żadnego zabiegu ochronnego.</li>
+        </ul>
+      </div>
+      <div class="wf-stack wf-stack--3">
+        <span class="wf-h5">Horyzont efektu</span>
+        <ul class="wf-list wf-body wf-t-secondary">
+          <li><strong>Pierwszy sezon:</strong> retencja, struktura podłoża, warunki ukorzeniania, regeneracja po stresie.</li>
+          <li><strong>Kolejne lata:</strong> zawartość materii organicznej i stabilność odczynu w rzędzie.</li>
+          <li>Decyzje podjęte przy zakładaniu plantacji zostają z Tobą na cały cykl – do trzydziestu lat. Dlatego etap podłoża jest tym, w którym warto się nie spieszyć.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 12. FAQ ===== -->
+<section class="wf-section wf-section--subtle" id="u-faq">
+  <div class="wf-container wf-stack wf-stack--6">
+    <div class="wf-stack wf-stack--2">
+      <span class="wf-overline wf-t-tertiary">FAQ</span>
+      <h2 class="c5-h2">Pytania, które padają najczęściej</h2>
+    </div>
+    <div>
+      <details class="c5up-node"><summary><span class="c5up-code">01</span><span class="wf-w-medium">Mam plantację od ośmiu lat. Jest jeszcze sens?</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary><div class="c5up-node__body"><p class="wf-body wf-t-secondary">Tak, tylko innym wejściem. Podłoża już nie wymienisz, więc pracujesz ściółką, kondycjonowaniem doglebowym dwa razy w roku i programem nalistnym. Przy monokulturze bez regeneracji stanowiska stają się uboższe z każdym sezonem – i to jest właśnie ten problem, do którego wchodzi scenariusz B.</p></div></details>
+      <details class="c5up-node"><summary><span class="c5up-code">02</span><span class="wf-w-medium">Czym to się różni od ściółkowania korą albo trocinami?</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary><div class="c5up-node__body"><p class="wf-body wf-t-secondary">Kora, zrębki i trociny to materiał świeży – rozkładając się, wciągają azot i wywołują jego czasowy niedobór. Lignit jest materią organiczną już zhumifikowaną, więc mikroorganizmy nie zużywają na niego azotu. Dodatkowo obniża odczyn zamiast go podnosić i utrudnia gniazdowanie gryzoniom.</p></div></details>
+      <details class="c5up-node"><summary><span class="c5up-code">03</span><span class="wf-w-medium">Ile lignitu dać do podłoża?</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary><div class="c5up-node__body"><p class="wf-body wf-t-secondary">To zależy od sposobu nasadzenia – inaczej liczy się grunt, inaczej zagon, inaczej donica. Poradnik podaje przedział udziału w gotowej mieszance i trzy przykładowe zestawy z torfem i trocinami. Konkretną wartość dla Twojego przypadku warto ustalić z doradcą, bo to decyzja na cały cykl plantacji. <span class="c5up-tag">do potwierdzenia</span></p></div></details>
+      <details class="c5up-node"><summary><span class="c5up-code">04</span><span class="wf-w-medium">Czy mogę podawać to przez kroplowanie?</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary><div class="c5up-node__body"><p class="wf-body wf-t-secondary">Zależy od wariantu. Filtrowany – tak, jest przefiltrowany do 187 mesh i przechodzi przez linie kroplujące oraz zraszacze. Niefiltrowany – nie, tego podaje się polewowo z beczki lub mauzera i nie stosuje w urządzeniach z dokładnymi filtrami.</p></div></details>
+      <details class="c5up-node"><summary><span class="c5up-code">05</span><span class="wf-w-medium">Kiedy najlepiej zacząć?</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary><div class="c5up-node__body"><p class="wf-body wf-t-secondary">Dla plantacji istniejącej naturalnym momentem jest jesień, po zbiorach, przy dobrze zwilżonej glebie – to termin wprost z poradnika dla zabiegu doglebowego. Przy zakładaniu plantacji moment jest jeden i nie da się go powtórzyć: przed wysypaniem podłoża.</p></div></details>
+      <details class="c5up-node"><summary><span class="c5up-code">06</span><span class="wf-w-medium">Czy to podniesie mi pH podłoża?</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary><div class="c5up-node__body"><p class="wf-body wf-t-secondary">Nie. Surowiec ma pH 4,5–5,2, czyli sam w sobie obniża i stabilizuje odczyn, a wersja płynna pod borówkę jest celowo doprowadzana do wartości w okolicy 5. Wyjątkiem jest CARBOMAT HUMIC, który dla borówki jest wykluczony właśnie z powodu zbyt wysokiego odczynu.</p></div></details>
+    </div>
+    <div class="c5-btnrow">
+      <a class="c5-btn c5-btn--dark" href="konfigurator.html?uprawa=borowka">dobierz program dla plantacji</a>
+      <a class="c5-btn c5-btn--light" href="kontakt.html">zapytaj doradcę</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+</main>
+
+
+<cw-footer></cw-footer>
+
+<cw-dock></cw-dock>
+
+<script src="cw.js"></script>
+<script src="c5.js"></script>
+</body>
+</html>
