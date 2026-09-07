@@ -13,7 +13,7 @@
    Zmiana w menu albo w stopce = zmiana w TYM pliku. Podstron się nie dotyka.
 
    data-current przyjmuje wartość z data-nav w szablonie nawigacji:
-   produkty · uprawy · ziemniak · borowka · prochnica-plus · centrum-wiedzy
+   produkty · uprawy · ziemniak · kukurydza · borowka · prochnica-plus · centrum-wiedzy
    · o-firmie · kontakt · sklep · platforma-b2b. Puste = brak podświetlenia
    (strona główna).
 
@@ -195,6 +195,7 @@
               <span class="wf-overline wf-t-tertiary">Wybrane uprawy</span>
               <div class="cw-mega__list">
                 <a class="wf-link--quiet wf-small" href="ziemniak.html">Ziemniak</a>
+                <a class="wf-link--quiet wf-small" href="kukurydza.html">Kukurydza</a>
                 <a class="wf-link--quiet wf-small" href="borowka.html">Borówka</a>
               </div>
             </div>
@@ -238,6 +239,7 @@
     <a class="wf-navitem" data-nav="produkty" href="produkty.html">Nasze produkty</a>
     <a class="wf-navitem" data-nav="uprawy" href="uprawy.html">Rodzaje upraw</a>
     <a class="wf-navitem cw-mobilenav__sub" data-nav="ziemniak" data-nav-parent="uprawy" href="ziemniak.html">Ziemniak</a>
+    <a class="wf-navitem cw-mobilenav__sub" data-nav="kukurydza" data-nav-parent="uprawy" href="kukurydza.html">Kukurydza</a>
     <a class="wf-navitem cw-mobilenav__sub" data-nav="borowka" data-nav-parent="uprawy" href="borowka.html">Borówka</a>
     <a class="wf-navitem" data-nav="prochnica-plus" href="prochnica-plus.html">Programy i badania</a>
     <a class="wf-navitem" data-nav="centrum-wiedzy" href="centrum-wiedzy.html">Centrum wiedzy</a>

@@ -1,0 +1,701 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kukurydza – program CarboHort w skali BBCH: zabieg bazowy, dawki, resztki pożniwne | Carbohort</title>
+<meta name="description" content="Technologia humusowa w kukurydzy na ziarno i kiszonkę: zabieg bazowy przed siewem, nalistnie w fazie 4–8 liści, resztki po zbiorze. Dawki na hektar, granice stosowania, mieszaniny zbiornikowe.">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="wireframe.css">
+<link rel="stylesheet" href="cw.css">
+<script src="chrome.js"></script>
+<link rel="stylesheet" href="c5.css">
+<style>
+/* ===== Warstwa własna strony uprawy (c5up-*) – tylko to, czego nie ma w c5.css.
+       Wyłącznie tokeny --w-*, ostre narożniki zgodnie z językiem V5. ===== */
+.c5up-chips{display:flex;flex-wrap:wrap;gap:var(--w-space-2);margin:0;}
+.c5up-chip{display:flex;flex-direction:column;gap:2px;border:1px solid var(--w-border-default);padding:var(--w-space-2) var(--w-space-3);min-width:8.5rem;}
+.c5up-chip dt{font-size:var(--w-font-overline-size);line-height:var(--w-font-overline-lh);letter-spacing:var(--w-tracking-wide);text-transform:uppercase;color:var(--w-text-tertiary);}
+.c5up-chip dd{margin:0;font-size:var(--w-font-sm-size);font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+.c5up-node{border:1px solid var(--w-border-subtle);border-bottom:0;}
+.c5up-node:last-of-type{border-bottom:1px solid var(--w-border-subtle);}
+.c5up-node>summary{cursor:pointer;list-style:none;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:var(--w-space-3);align-items:center;padding:var(--w-space-4);}
+.c5up-node>summary::-webkit-details-marker{display:none;}
+.c5up-node>summary:hover{background:var(--w-surface-hover);}
+.c5up-node[open]>summary{background:var(--w-surface-subtle);}
+.c5up-node>summary:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:calc(var(--w-focus-ring-offset) * -1);}
+.c5up-node__ico{transition:transform var(--w-duration-fast) var(--w-ease);}
+.c5up-node[open] .c5up-node__ico{transform:rotate(180deg);}
+.c5up-node__body{padding:0 var(--w-space-4) var(--w-space-5);}
+.c5up-code{font-family:var(--w-font-mono);font-size:var(--w-font-sm-size);color:var(--w-text-secondary);border:1px solid var(--w-border-default);padding:2px var(--w-space-2);white-space:nowrap;}
+.c5up-note{border:1px solid var(--w-border-default);padding:var(--w-space-4);background:var(--w-surface-subtle);}
+.c5up-note--strong{border-color:var(--w-border-strong);background:var(--w-surface-page);}
+.c5up-tag{display:inline-block;font-size:var(--w-font-caption-size);line-height:var(--w-font-caption-lh);border:1px dashed var(--w-border-strong);padding:1px var(--w-space-2);color:var(--w-text-secondary);white-space:nowrap;}
+.c5up-legend{display:flex;flex-wrap:wrap;gap:var(--w-space-3) var(--w-space-5);}
+.c5up-calc{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:var(--w-space-4);align-items:end;}
+.c5up-out{border:1px solid var(--w-border-default);padding:var(--w-space-4);display:flex;flex-direction:column;gap:2px;}
+.c5up-out b{font-size:var(--w-font-h4-size);line-height:var(--w-font-h4-lh);font-weight:var(--w-weight-medium);}
+.c5up-empty{border:1px dashed var(--w-border-strong);padding:var(--w-space-5);text-align:center;}
+.c5up-two{display:grid;grid-template-columns:1fr;gap:var(--w-space-6);}
+@media (min-width:900px){.c5up-two{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+<a class="wf-sr-only" href="#main">Przejdź do treści</a>
+
+<cw-icons></cw-icons>
+
+
+<cw-navbar data-current="kukurydza"></cw-navbar>
+
+<!-- ===== Subnawigacja rozdziałów strony uprawy (scrollspy) ===== -->
+<nav class="cx-subnav" aria-label="Rozdziały strony uprawy kukurydzy" data-subnav>
+  <div class="cx-subnav__in wf-container">
+    <div class="cx-subnav__links">
+      <a class="cx-subnav__link" href="#u-diagnoza" data-spy="u-diagnoza">Z czym się mierzysz</a>
+      <a class="cx-subnav__link" href="#u-os" data-spy="u-os">Oś programu</a>
+      <a class="cx-subnav__link" href="#u-zabieg-bazowy" data-spy="u-zabieg-bazowy">Zabieg bazowy</a>
+      <a class="cx-subnav__link" href="#u-matryca" data-spy="u-matryca">Matryca zaleceń</a>
+      <a class="cx-subnav__link" href="#u-stanowisko" data-spy="u-stanowisko">Stanowisko</a>
+      <a class="cx-subnav__link" href="#u-produkty" data-spy="u-produkty">Produkty</a>
+      <a class="cx-subnav__link" href="#u-jak" data-spy="u-jak">Jak stosować</a>
+      <a class="cx-subnav__link" href="#u-dowod" data-spy="u-dowod">Co wiemy</a>
+      <a class="cx-subnav__link" href="#u-skala" data-spy="u-skala">Skala</a>
+      <a class="cx-subnav__link" href="#u-faq" data-spy="u-faq">FAQ</a>
+    </div>
+    <a class="cx-subnav__buy" href="konfigurator.html?crop=kukurydza">dobierz program</a>
+  </div>
+</nav>
+
+<main id="main">
+
+<!-- ===== 1. HERO ===== -->
+<section class="wf-section" id="hero">
+  <div class="wf-container">
+    <div class="c5-hero">
+      <div class="c5-hero__copy">
+        <span class="c5-kicker">Uprawy polowe · jare</span>
+        <h1 class="c5-h1">Kukurydza: technologia humusowa od ścierniska przedplonu po resztki pożniwne</h1>
+        <div class="c5-hero__lead">
+          <p>Kukurydza wcześnie ustala, ile może urodzić. W fazie 5–6 liści programuje potencjał plonowania, a do 6–7 liści musi mieć dostępną resztę azotu, zanim zawiąże się zalążek kolby. Do tego fosfor, który w glebie chłodniejszej niż 12°C jest słabo dostępny akurat wtedy, gdy siewka najbardziej go potrzebuje. Program CarboHort nie zastępuje bilansu składników ani odczynu – poprawia warunki, w jakich roślina korzysta z wody i z tego, co już masz w glebie.</p>
+          <p>Jeden zabieg bazowy w glebie przed siewem, jeden zabieg nalistny w oknie 4–8 liści i zabieg na resztki po zbiorze. Ziarno i kiszonka idą tym samym programem zabiegów CarboHort – różnią się obsadą, terminem zbioru i tym, co zostaje na polu po zbiorze.</p>
+        </div>
+        <div class="c5-btnrow">
+          <a class="c5-btn c5-btn--dark" href="konfigurator.html?crop=kukurydza">dobierz program dla swojego pola</a>
+          <a class="c5-btn c5-btn--light" href="#u-skala">policz ilość na hektary</a>
+        </div>
+      </div>
+      <div class="c5-hero__visual">
+        <div class="wf-ph"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 2. PASEK PARAMETRÓW UPRAWY ===== -->
+<section class="wf-section wf-section--sm wf-section--subtle" id="u-params">
+  <div class="wf-container">
+    <dl class="c5up-chips">
+      <div class="c5up-chip"><dt>Jednostka</dt><dd>hektar</dd></div>
+      <div class="c5up-chip"><dt>Skala faz</dt><dd>przedplon → BBCH 00–89 → resztki</dd></div>
+      <div class="c5up-chip"><dt>Cykl</dt><dd>jeden sezon</dd></div>
+      <div class="c5up-chip"><dt>Momenty z produktem CarboHort</dt><dd>5 na osi · 2 stałe w programie podstawowym</dd></div>
+      <div class="c5up-chip"><dt>Produkty w programie</dt><dd>4, CARBOHUMIC w dwóch wariantach (filtrowany 187 mesh i niefiltrowany 20 mesh)</dd></div>
+      <div class="c5up-chip"><dt>Podstawa</dt><dd>opracowanie technologiczne CarboHort, sierpień 2026</dd></div>
+    </dl>
+    <p class="wf-caption wf-t-tertiary" style="margin-top:var(--w-space-4);">Makieta do akceptacji. Liczby oznaczone <span class="c5up-tag">do potwierdzenia</span> i stanowiska oznaczone <span class="c5up-tag">do rozstrzygnięcia</span> czekają na decyzję CarboHort – zestawienie pod matrycą zaleceń.</p>
+  </div>
+</section>
+
+<!-- ===== 3. Z CZYM SIĘ MIERZYSZ ===== -->
+<section class="wf-section" id="u-diagnoza" data-chapter="u-diagnoza">
+  <div class="wf-container wf-stack wf-stack--6">
+    <div class="wf-stack wf-stack--2">
+      <span class="wf-overline wf-t-tertiary">Z czym się mierzysz</span>
+      <h2 class="c5-h2">Ograniczenia plonowania, od których zaczyna się program</h2>
+      <p class="wf-lead wf-t-secondary" style="max-width:var(--w-measure);">Opracowanie CarboHort zaczyna nie od odmiany ani herbicydu, tylko od ograniczeń plonowania: odczyn i zagęszczenie gleby, woda, azot i potas, fosfor w chłodnej glebie, cynk i bor. Każda karta prowadzi do fazy, w której program na to odpowiada – albo mówi wprost, że produkt tu nie pomoże.</p>
+    </div>
+    <div class="wf-grid wf-grid--3" style="--wf-grid-min: 15rem;">
+      <a class="wf-card wf-card--interactive" href="#faza-jesien"><div class="wf-card__body wf-stack wf-stack--2">
+        <span class="wf-overline wf-t-tertiary">Stanowisko</span>
+        <span class="wf-h5">Niski odczyn i zagęszczenie gleby</span>
+        <span class="wf-small wf-t-secondary">Optimum to pH 6,0–7,2 w wodzie. Poniżej 5,5 w wodzie potrzebne jest wapnowanie, nie biostymulator. Zagęszczenie i podeszwę płużną oceń penetrometrem, zanim wjedziesz głęboszem.</span>
+      </div></a>
+      <a class="wf-card wf-card--interactive" href="#u-stanowisko"><div class="wf-card__body wf-stack wf-stack--2">
+        <span class="wf-overline wf-t-tertiary">Przedplon</span>
+        <span class="wf-h5">Kukurydza po kukurydzy</span>
+        <span class="wf-small wf-t-secondary">Nie dłużej niż 3 lata na tym samym polu. Produkty humusowe nie usuwają skutków monokultury, zwłaszcza kiszonkowej – po zbiorze wspierają za to humifikację rozdrobnionych resztek.</span>
+      </div></a>
+      <a class="wf-card wf-card--interactive" href="#faza-0009"><div class="wf-card__body wf-stack wf-stack--2">
+        <span class="wf-overline wf-t-tertiary">BBCH 00–09</span>
+        <span class="wf-h5">Fosfor w chłodnej glebie</span>
+        <span class="wf-small wf-t-secondary">Od kiełkowania do 6–8 liści fosfor jest kluczowy, a w glebie poniżej 12°C słabo dostępny. Starter obok i poniżej nasiona, nie w kontakcie. Program nie stawia tu produktu.</span>
+      </div></a>
+      <a class="wf-card wf-card--interactive" href="#faza-1418"><div class="wf-card__body wf-stack wf-stack--2">
+        <span class="wf-overline wf-t-tertiary">BBCH 14–18</span>
+        <span class="wf-h5">Okno 5–6 liści: potencjał kolby</span>
+        <span class="wf-small wf-t-secondary">Roślina ustala liczbę rzędów i potencjał kolby, a reszta azotu musi dotrzeć najpóźniej do 6–7 liści. Główny zabieg nalistny programu przypada właśnie tu; druga, mała dawka w BBCH 19–39 – tylko przy uzasadnieniu.</span>
+      </div></a>
+      <a class="wf-card wf-card--interactive" href="#faza-1418"><div class="wf-card__body wf-stack wf-stack--2">
+        <span class="wf-overline wf-t-tertiary">BBCH 10–18</span>
+        <span class="wf-h5">Chłodna, mokra wiosna i regeneracja po herbicydzie</span>
+        <span class="wf-small wf-t-secondary">Roślina zahamowana po przymrozku albo fitotoksyczności słabo odpowiada na zabieg. Program każe czekać, aż wznowi wzrost, i dopiero wtedy sięgać po biostymulator.</span>
+      </div></a>
+      <a class="wf-card wf-card--interactive" href="#u-stanowisko"><div class="wf-card__body wf-stack wf-stack--2">
+        <span class="wf-overline wf-t-tertiary">Stanowisko</span>
+        <span class="wf-h5">Susza wiosenna na glebie lekkiej</span>
+        <span class="wf-small wf-t-secondary">Produkty CARBOHUMIC i CARBOMAT to wsparcie retencji, nie zamiennik wody. Na glebie lekkiej: mniejsze i dzielone dawki azotu, okrywa gleby, bez agresywnych mieszanin dolistnych.</span>
+      </div></a>
+      <a class="wf-card wf-card--interactive" href="#faza-5169"><div class="wf-card__body wf-stack wf-stack--2">
+        <span class="wf-overline wf-t-tertiary">BBCH 51–69</span>
+        <span class="wf-h5">Woda w pyleniu</span>
+        <span class="wf-small wf-t-secondary">Jeden z najbardziej wrażliwych okresów na suszę i upał. Niedoboru wody podczas pylenia nie skompensuje żaden zabieg dolistny. Program nie stawia tu produktu.</span>
+      </div></a>
+      <a class="wf-card wf-card--interactive" href="#faza-89"><div class="wf-card__body wf-stack wf-stack--2">
+        <span class="wf-overline wf-t-tertiary">Zbiór</span>
+        <span class="wf-h5">Kiszonka wywozi potas i materię organiczną</span>
+        <span class="wf-small wf-t-secondary">Zbiór całej rośliny zabiera z pola niemal cały potas i materię organiczną. Po kiszonce skoryguj bilans potasu i zaplanuj, skąd wróci materia organiczna.</span>
+      </div></a>
+      <a class="wf-card wf-card--interactive" href="#faza-resztki"><div class="wf-card__body wf-stack wf-stack--2">
+        <span class="wf-overline wf-t-tertiary">Po zbiorze</span>
+        <span class="wf-h5">Resztki: straty wody, chwasty, patogeny</span>
+        <span class="wf-small wf-t-secondary">Pocięta słoma kukurydziana to siedlisko patogenów i szkodników, a bez kontaktu z glebą rozkłada się wolno. Rozdrobnienie do 8 cm, wilgoć i zabieg humusowy; azot na słomę – patrz oś.</span>
+      </div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 4. OŚ PROGRAMU ===== -->
+<section class="wf-section wf-section--subtle" id="u-os" data-chapter="u-os">
+  <div class="wf-container wf-stack wf-stack--6">
+    <div class="wf-stack wf-stack--2">
+      <span class="wf-overline wf-t-tertiary">Oś programu</span>
+      <h2 class="c5-h2">Sezon kukurydzy w dziesięciu fazach</h2>
+      <p class="wf-lead wf-t-secondary" style="max-width:var(--w-measure);">Rozwiń fazę: cel agrotechniczny, to, co robi program, i uzupełnienia spoza portfolio CarboHort. Pięć faz ma produkt, pięć nie ma – tych drugich nie ukrywamy. Liczby na osi powtarzają matrycę zaleceń; tam stoją znaczniki.</p>
+    </div>
+    <div>
+      <details class="c5up-node" id="faza-jesien" open>
+        <summary><span class="c5up-code">jesień po przedplonie</span><span class="wf-w-medium">Po zbiorze przedplonu i jesienne przygotowanie pola</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+        <div class="c5up-node__body wf-stack wf-stack--3">
+          <p class="wf-body wf-t-secondary">Cel: analiza gleby (pH, P, K, Mg, Ca, S, Zn, B, Mn, materia organiczna) i Nmin w profilu 0–60 cm, ocena zagęszczenia penetrometrem, regulacja odczynu i stosunku kationów, poplon do likwidacji możliwie późno, nawet wiosną.</p>
+          <p class="wf-body">Pod poplon jesienny <strong>CARBOHUMIC filtrowany 187 mesh 10–40 l/ha w ok. 400 l wody</strong> po zbiorze lub przed uprawą, albo <strong>CARBOHUMIC niefiltrowany 20 mesh ok. 50 l/ha</strong> doglebowo sprzętem do aplikacji rozlewowej lub rozbryzgowej. <strong>CARBOMAT ECO</strong> tylko jako zabieg strategiczny przed siewem poplonu: na gleby lekkie, zdegradowane, nadmiernie ciężkie, ilaste lub ubogie w materię organiczną, dokładnie wymieszany z warstwą uprawną.</p>
+          <p class="wf-small wf-t-secondary">Uzupełnienia: Przy pH poniżej 5,5 w wodzie wapnowanie jest niezbędne; wapna nie łącz z innymi nawozami i zachowaj odstęp od nawozów fosforowych, azotowych i obornika. Głębosz wyłącznie na suchej glebie i tylko tam, gdzie badanie potwierdza zagęszczenie. Obornik, gnojowicę, kompost lub poferment dawkuj według analizy składu i ograniczeń prawnych, zaliczając wniesione składniki do bilansu. W monokulturze ziarnowej glebę osłania pocięta słoma zamiast międzyplonu.</p>
+        </div>
+      </details>
+      <details class="c5up-node" id="faza-wiosna">
+        <summary><span class="c5up-code">wczesna wiosna</span><span class="wf-w-medium">Przed siewem: jeden zabieg bazowy</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+        <div class="c5up-node__body wf-stack wf-stack--3">
+          <p class="wf-body wf-t-secondary">Cel: ogrzana, równa i wilgotna warstwa siewna, składniki blisko korzeni siewki, jak najmniej przejazdów – uprawa przesuszonej lub mokrej warstwy siewnej obniża skuteczność każdego programu biostymulacji.</p>
+          <p class="wf-body"><strong>Jeden zabieg bazowy, nie zestaw.</strong> Wariant A: CARBOHUMIC filtrowany 187 mesh 20–40 l/ha w ok. 400 l wody – oprysk gleby i płytkie wymieszanie, albo aplikacja poniżej głębokości siewu lub współrzędnie w systemie nawozów płynnych; albo z beczkowozu CARBOHUMIC niefiltrowany 20 mesh min. 50 l/ha, pasowo doglebowo lub współrzędnie do siewu (wariant polewowy). Wariant B: CARBOMAT HUMIC na sucho – do podsiewacza, w strip-tillu, pasowo lub całopowierzchniowo; wnosi część potasu. Wariant C: CARBOMAT ECO wymieszany z glebą w zakładanej dawce – inwestycja stanowiskowa, przy wysokim koszcie logistycznym raczej pasowo lub na polach priorytetowych. Który z nich – patrz „Zabieg bazowy" niżej.</p>
+          <p class="wf-small wf-t-secondary">Uzupełnienia: Azot: standardowo 2/3 wyliczonej dawki przed siewem, reszta najpóźniej do 6–7 liści; dawkę ustal z oczekiwanego plonu, Nmin po zimie, przedplonu i nawozów naturalnych. Fosfor blisko nasiona, ale nie w bezpośrednim kontakcie – np. dawka startowa podsiewaczem. Siarkę, magnez i mikroelementy planuj według zasobności gleby i stosunku wapnia do magnezu. Oprysku doglebowego nie wykonuj na glebę zamarzniętą, zalaną ani skrajnie suchą.</p>
+        </div>
+      </details>
+      <details class="c5up-node" id="faza-0009">
+        <summary><span class="c5up-code">BBCH 00–09</span><span class="wf-w-medium">Siew i kiełkowanie</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+        <div class="c5up-node__body wf-stack wf-stack--3">
+          <p class="wf-body wf-t-secondary">Cel: szybkie, równe wschody; priorytetem właściwy termin, obsada i bezpieczny nawóz startowy.</p>
+          <p class="wf-body"><strong>W tej fazie program nie przewiduje produktu CarboHort.</strong></p>
+          <p class="wf-small wf-t-secondary">Uzupełnienia: Siej, gdy gleba na głębokości ok. 10 cm ma 8–10°C; głębokość siewu 4–5 cm, na glebie lekkiej i przesuszonej 7–8 cm. Na ziarno 70–80 tys. kiełkujących nasion/ha; odmiany kiszonkowe mogą iść gęściej, kiszonka wysokoenergetyczna – jak ziarno. Starter obok i poniżej nasiona, nie w kontakcie, chyba że etykieta nawozu dopuszcza łoże siewne. Cynk doglebowo lub w starterze tylko przy niskiej zasobności, wysokim odczynie, zagrożeniu erozją albo prognozie chłodnej i mokrej wiosny.</p>
+        </div>
+      </details>
+      <details class="c5up-node" id="faza-1013">
+        <summary><span class="c5up-code">BBCH 10–13</span><span class="wf-w-medium">Wschody i 1–3 liście</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+        <div class="c5up-node__body wf-stack wf-stack--3">
+          <p class="wf-body wf-t-secondary">Cel: nie przeszkadzać wschodom i szybko reagować – równomierność, obsada, uszkodzenia od ptaków i szkodników glebowych, zgorzel siewek, zaskorupienie.</p>
+          <p class="wf-body"><strong>W tej fazie program nie przewiduje produktu CarboHort.</strong></p>
+          <p class="wf-small wf-t-secondary">Uzupełnienia: Nie dokładaj młodym roślinom stresów – rutynowe opryski tylko z uzasadnieniem; brak dodatkowych stresów pozwala im rozwijać się bez zakłóceń. Po przymrozku lub objawach fitotoksyczności odczekaj, aż roślina zacznie aktywnie rosnąć: zabieg na rośliny zahamowane we wzroście ma ograniczoną skuteczność.</p>
+        </div>
+      </details>
+      <details class="c5up-node" id="faza-1418">
+        <summary><span class="c5up-code">BBCH 14–18</span><span class="wf-w-medium">4–8 liści: najważniejszy termin</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+        <div class="c5up-node__body wf-stack wf-stack--3">
+          <p class="wf-body wf-t-secondary">Cel: zabezpieczyć azot, fosfor, potas, cynk i rozwój korzenia w fazie, w której roślina ustala liczbę rzędów i potencjał kolby.</p>
+          <p class="wf-body"><strong>CARBOHUMIC MAXI PLUS 0,6 l/ha z mikroelementami</strong> – jako element regeneracji po stresie albo zapobiegawczo. Powtórka po 7–10 dniach tylko przy utrzymującym się uzasadnieniu. W zdrowym łanie: cynk tylko po potwierdzeniu potrzeby, ewentualnie magnez i siarka. W łanie po stresie: najpierw ocena zdolności regeneracji, potem <strong>prosta mieszanina</strong> z CARBOHUMIC MAXI PLUS.</p>
+          <p class="wf-small wf-t-secondary">Uzupełnienia: Resztę azotu podaj najpóźniej do 6–7 liści, korygując przez Nmin, pogodę i obsadę. Cynk to pierwszy mikroelement do weryfikacji – forma i dawka według analizy, pH i etykiety. Magnez i siarka przy niskiej zasobności lub objawach potwierdzonych analizą; zabieg dolistny nie zastępuje bilansu doglebowego. Herbicyd wyłącznie z aktualną rejestracją. Nie łącz wielu mikroelementów bez zbadania zgodności; unikaj łączenia herbicydu, wielu soli nawozowych i biostymulatora na roślinie po chłodzie.</p>
+          <div class="c5up-note c5up-note--strong wf-stack wf-stack--2">
+            <span class="wf-w-semibold wf-inline"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-alert-triangle"></use></svg> Nalistnie na polu – <span class="c5up-tag">do potwierdzenia</span>.</span>
+            <span class="wf-small wf-t-secondary">Opracowanie kukurydzy stawia tu CARBOHUMIC MAXI PLUS 0,6 l/ha na cały areał. Decyzja CarboHort z 06.08 dla upraw polowych mówi inaczej: nalistnie CARBOHUMIC filtrowany, a CARBOHUMIC MAXI PLUS wyłącznie jako próba na 1 ha. Pokazujemy program i czekamy, które brzmienie obowiązuje.</span>
+          </div>
+        </div>
+      </details>
+      <details class="c5up-node" id="faza-1939">
+        <summary><span class="c5up-code">BBCH 19–39</span><span class="wf-w-medium">Intensywny wzrost</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+        <div class="c5up-node__body wf-stack wf-stack--3">
+          <p class="wf-body wf-t-secondary">Cel: kontrola dostępności wody i azotu; ocena barwy liści, tempa wzrostu, korzeni podporowych i ewentualnych niedoborów.</p>
+          <p class="wf-body"><strong>CARBOHUMIC MAXI PLUS tylko przy uzasadnieniu</strong> – druga, mała dawka po stresie lub przy niedostatecznym wigorze. Przed wjazdem opryskiwaczem sprawdź wysokość roślin i ryzyko uszkodzeń mechanicznych: korzyść z zabiegu musi przewyższać straty spowodowane przejazdem.</p>
+          <p class="wf-small wf-t-secondary">Uzupełnienia: Woda według potrzeb; azot, magnez, siarka, bor i mangan – wyłącznie dolistnie w oprysku. Przy nawadnianiu lepsze są mniejsze, dopasowane dawki nawozowe.</p>
+        </div>
+      </details>
+      <details class="c5up-node" id="faza-5169">
+        <summary><span class="c5up-code">BBCH 51–69</span><span class="wf-w-medium">Wiechowanie, pylenie, znamionowanie</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+        <div class="c5up-node__body wf-stack wf-stack--3">
+          <p class="wf-body wf-t-secondary">Cel: ochrona zapylenia przez wodę i zdrowotność roślin.</p>
+          <p class="wf-body"><strong>W tej fazie program nie przewiduje produktu CarboHort.</strong> Okno zabiegu nalistnego kończy się na początku wysuwania wiechy (BBCH 51) – później zabieg jest wątpliwy ze względu na wysokość roślin i potrzebę odpowiednich opryskiwaczy, zwłaszcza w odmianach kiszonkowych.</p>
+          <p class="wf-small wf-t-secondary">Uzupełnienia: To jeden z najbardziej wrażliwych okresów na suszę i wysoką temperaturę: niedoboru wody podczas pylenia nie skompensuje żaden zabieg dolistny. Lustruj omacnicę prosowiankę i stonkę kukurydzianą według komunikatów; w ochronie biologicznej kruszynek przeciw omacnicy, a w monokulturze biologiczna ochrona przeciw larwom stonki – jeśli aktualna rejestracja i warunki aplikacji na to pozwalają.</p>
+        </div>
+      </details>
+      <details class="c5up-node" id="faza-7187">
+        <summary><span class="c5up-code">BBCH 71–87</span><span class="wf-w-medium">Zawiązywanie i nalewanie ziarna</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+        <div class="c5up-node__body wf-stack wf-stack--3">
+          <p class="wf-body wf-t-secondary">Cel: zieloność liścia i nalewanie ziarna – przez bilans azotu, potasu, magnezu i wodę; bez rutynowych koktajli.</p>
+          <p class="wf-body"><strong>W tej fazie program nie przewiduje produktu CarboHort.</strong></p>
+          <p class="wf-small wf-t-secondary">Uzupełnienia: W wieloletnich doświadczeniach polowych mieszaniny boru, manganu i cynku często nie zwiększały plonu kukurydzy – stąd brak rutynowych, szerokich koktajli mikroelementowych. Fungicyd lub insektycyd wyłącznie po lustracji, progu ekonomicznym, sprawdzeniu aktualnej rejestracji i ocenie ryzyka pozostałości.</p>
+        </div>
+      </details>
+      <details class="c5up-node" id="faza-89">
+        <summary><span class="c5up-code">BBCH 89</span><span class="wf-w-medium">Dojrzewanie i zbiór</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+        <div class="c5up-node__body wf-stack wf-stack--3">
+          <p class="wf-body wf-t-secondary">Cel: ziarno – termin według wilgotności ziarna, pogody, kosztu suszenia i ryzyka wylegania lub fuzarioz; kiszonka – według dojrzałości całej rośliny i ziarna, nie tylko suchej masy łodygi.</p>
+          <p class="wf-body"><strong>W tej fazie program nie przewiduje produktu CarboHort.</strong> Przewiduje za to wagę: zważ plon, zmierz wilgotność i porównaj warianty – bez danych z wagi nie da się uczciwie ocenić finansowego zwrotu z biostymulacji.</p>
+          <p class="wf-small wf-t-secondary">Uzupełnienia: Po kiszonce skoryguj bilans potasu i zaplanuj dostarczenie materii organicznej – zbiór całej rośliny wywozi z pola niemal cały potas i materię organiczną zawarte w roślinach.</p>
+        </div>
+      </details>
+      <details class="c5up-node" id="faza-resztki">
+        <summary><span class="c5up-code">po zbiorze</span><span class="wf-w-medium">Resztki pożniwne kukurydzy</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+        <div class="c5up-node__body wf-stack wf-stack--3">
+          <p class="wf-body wf-t-secondary">Cel: ograniczyć straty wody, wschody chwastów i siedlisko patogenów i szkodników; przyspieszyć kontakt resztek z glebą; stymulować humifikację.</p>
+          <p class="wf-body">Rozdrobnij łodygi, szczególnie nasady, do <strong>fragmentów do 8 cm</strong>. Zabieg wykonaj, <strong>gdy resztki i gleba są wilgotne</strong> – na skrajnie suchej słomie efekt będzie ograniczony. <strong>CARBOHUMIC filtrowany 187 mesh 20–40 l/ha w ok. 400 l wody</strong> (w programie podstawowym 20 l/ha), opcjonalnie mikroorganizmy. Wymieszaj płytko i równomiernie, bez zakopywania grubej warstwy w warunkach beztlenowych – mulczowanie z glebą może poczekać nawet do przedwiośnia. Wiosną, przed siewem kolejnej rośliny, sprawdź stopień rozkładu resztek oraz obecność larw i źródeł infekcji.</p>
+          <p class="wf-small wf-t-secondary">Uzupełnienia: Wariant polewowy CARBOHUMIC niefiltrowanym 20 mesh (ok. 50 l/ha) opracowanie opisuje przy jesiennym przygotowaniu pola po zbiorze przedplonu – jeśli kukurydza wraca na to samo pole, to ten sam termin.</p>
+          <div class="c5up-note c5up-note--strong wf-stack wf-stack--2">
+            <span class="wf-w-semibold wf-inline"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-alert-triangle"></use></svg> Azot na resztki – <span class="c5up-tag">do rozstrzygnięcia</span>.</span>
+            <span class="wf-small wf-t-secondary">Stanowisko opracowania: nie stosuj azotu na pociętą słomę – badania polowe nie potwierdzają przyspieszonego rozkładu słomy kukurydzianej po jesiennych dawkach azotu; ważniejsze są rozdrobnienie, kontakt z glebą, temperatura i wilgotność. Inne materiały CarboHort mówią w tej sprawie inaczej, dlatego do czasu decyzji nie podajemy tu żadnej dawki azotu.</span>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 5. MODUŁ WŁASNY: JEDEN ZABIEG BAZOWY PRZED SIEWEM ===== -->
+<section class="wf-section" id="u-zabieg-bazowy" data-chapter="u-zabieg-bazowy">
+  <div class="wf-container wf-stack wf-stack--6">
+    <div class="wf-stack wf-stack--2">
+      <span class="wf-overline wf-t-tertiary">Zabieg bazowy</span>
+      <h2 class="c5-h2">Jeden zabieg bazowy przed siewem – który?</h2>
+      <p class="wf-lead wf-t-secondary" style="max-width:var(--w-measure);">Program nie każe stosować wszystkich form naraz. Wybierasz jedną – według sprzętu, którym dysponujesz, i stanowiska.</p>
+    </div>
+    <div class="wf-grid wf-grid--2" style="--wf-grid-min: 18rem;">
+      <div class="wf-card"><div class="wf-card__body wf-stack wf-stack--3">
+        <span class="wf-overline wf-t-tertiary">Masz opryskiwacz i chcesz szybki zabieg przed siewem</span>
+        <span class="wf-h4">CARBOHUMIC filtrowany 187 mesh</span>
+        <p class="wf-small wf-t-secondary">20–40 l/ha w ok. 400 l wody <span class="c5up-tag">do potwierdzenia</span>: oprysk gleby i płytkie wymieszanie, albo aplikacja poniżej głębokości siewu lub współrzędnie w systemie nawozów płynnych.</p>
+        <p class="wf-caption wf-t-tertiary">Nie na glebę zamarzniętą, zalaną ani skrajnie suchą. Po zabiegu przepłucz instalację.</p>
+      </div></div>
+      <div class="wf-card"><div class="wf-card__body wf-stack wf-stack--3">
+        <span class="wf-overline wf-t-tertiary">Robisz uprawę pasową, strip-till albo wysiewasz nawóz sypki</span>
+        <span class="wf-h4">CARBOMAT HUMIC</span>
+        <p class="wf-small wf-t-secondary">Na sucho: do 150 kg do podsiewacza, w strip-tillu przynajmniej 100 kg/ha, pasowo bliżej 150–250 kg/ha, całopowierzchniowo 500 kg/ha „tylko dla skokowego efektu" <span class="c5up-tag">do potwierdzenia</span>. Wnosi część potasu: ok. 6 / 15 / 30 kg K₂O na ha przy 100 / 250 / 500 kg/ha.</p>
+        <p class="wf-caption wf-t-tertiary">Nie do oprysku ani fertygacji. Nie jest zamiennikiem nawozów potasowych. Ostrożnie na glebach o wysokim pH i węglanowych.</p>
+      </div></div>
+      <div class="wf-card"><div class="wf-card__body wf-stack wf-stack--3">
+        <span class="wf-overline wf-t-tertiary">Masz beczkowóz, rozlewak albo instalację bez ryzyka zatkania</span>
+        <span class="wf-h4">CARBOHUMIC niefiltrowany 20 mesh</span>
+        <p class="wf-small wf-t-secondary">Minimum 50 l/ha <span class="c5up-tag">do potwierdzenia</span> wiosną (i jesienią), pasowo doglebowo lub współrzędnie do siewu, rozlewakami lub aplikatorami doglebowymi.</p>
+        <p class="wf-caption wf-t-tertiary">Nie przez standardowe dysze opryskiwaczy ani linie kroplujące.</p>
+      </div></div>
+      <div class="wf-card"><div class="wf-card__body wf-stack wf-stack--3">
+        <span class="wf-overline wf-t-tertiary">Gleba silnie zdegradowana, bardzo lekka, bardzo ilasta albo chronicznie uboga w materię organiczną</span>
+        <span class="wf-h4">CARBOMAT ECO</span>
+        <p class="wf-small wf-t-secondary">Inwestycja wieloletnia, nie coroczny zabieg: po kalkulacji dawki i kosztu, wymieszany z glebą, najlepiej pasowo lub na polach priorytetowych. Opracowanie nie podaje dawki na hektar – wylicza się ją indywidualnie <span class="c5up-tag">do potwierdzenia</span>.</p>
+        <p class="wf-caption wf-t-tertiary">W programie regeneracyjnym: zastosowanie badawcze na najgorszych fragmentach pola.</p>
+      </div></div>
+    </div>
+    <div class="c5up-note c5up-note--strong wf-stack wf-stack--2">
+      <span class="wf-w-semibold">Nie kumuluj wszystkich form produktów w jednym miejscu i sezonie.</span>
+      <p class="wf-small wf-t-secondary">Lepiej załóż pasy porównawcze i oceń efekt w glebie, korzeniach i plonie.</p>
+    </div>
+    <p class="wf-small wf-t-secondary">Program podstawowy to jeden zabieg przed siewem – CARBOHUMIC filtrowany 187 mesh albo CARBOMAT HUMIC – i CARBOHUMIC filtrowany 187 mesh 20 l/ha na resztki; CARBOHUMIC MAXI PLUS w nim tylko po stresie albo jako pas porównawczy. Wariant z beczkowozu, CARBOMAT ECO i planowy zabieg nalistny to warianty zbilansowany i regeneracyjny, dobierane do stanowiska niżej. Trzy warianty technologii w opracowaniu to nie trzy poziomy jakości: każdy może być poprawny, jeśli odpowiada ograniczeniom pola i budżetowi.</p>
+  </div>
+</section>
+
+<!-- ===== 6. MATRYCA ZALECEŃ ===== -->
+<section class="wf-section wf-section--subtle" id="u-matryca" data-chapter="u-matryca">
+  <div class="wf-container wf-stack wf-stack--6">
+    <div class="wf-stack wf-stack--2">
+      <span class="wf-overline wf-t-tertiary">Matryca zaleceń</span>
+      <h2 class="c5-h2">Faza, cel, produkt, dawka</h2>
+      <p class="wf-lead wf-t-secondary" style="max-width:var(--w-measure);">Rdzeń programu w jednej tabeli: wyłącznie fazy, w których opracowanie stawia produkt CarboHort. Przy liczbach, co do których materiały CarboHort mówią różnie, stoi znacznik – nie uśredniamy ich i nie wybieramy za klienta. Zabiegi jesienne po zbiorze przedplonu i zabieg na resztki kukurydzy to w praktyce jeden termin, gdy kukurydza wraca na to samo pole; opracowanie opisuje je osobno i tak je zostawiamy.</p>
+    </div>
+    <div class="cw-scrollx" tabindex="0">
+      <table class="wf-table" style="min-width:56rem;">
+        <caption class="wf-sr-only">Program CarboHort w uprawie kukurydzy: faza, cel agrotechniczny, produkt, dawka i ograniczenia</caption>
+        <thead><tr><th scope="col">Faza</th><th scope="col">Cel</th><th scope="col">Produkt</th><th scope="col">Dawka</th><th scope="col">Uwagi i ograniczenia</th></tr></thead>
+        <tbody>
+          <tr>
+            <th scope="row">Jesień po przedplonie</th>
+            <td>Regeneracja gleby pod poplon</td>
+            <td>CARBOHUMIC filtrowany 187 mesh</td>
+            <td>10–40 l/ha w ok. 400 l wody <span class="c5up-tag">do potwierdzenia</span></td>
+            <td>Po zbiorze lub przed uprawą. Nie na glebę zamarzniętą, zalaną ani skrajnie suchą.</td>
+          </tr>
+          <tr>
+            <th scope="row">Jesień po przedplonie</th>
+            <td>Regeneracja gleby, aplikacja polewowa</td>
+            <td>CARBOHUMIC niefiltrowany 20 mesh</td>
+            <td>ok. 50 l/ha (minimum 50) <span class="c5up-tag">do potwierdzenia</span></td>
+            <td>Sprzęt do aplikacji rozlewowej lub rozbryzgowej. Nie przez standardowe dysze ani linie kroplujące.</td>
+          </tr>
+          <tr>
+            <th scope="row">Przed uprawą – wariant C (strategiczny), raz na wiele lat</th>
+            <td>Inwestycja stanowiskowa: struktura, retencja wody i składników, trwała materia organiczna</td>
+            <td>CARBOMAT ECO</td>
+            <td>dawka indywidualna – opracowanie nie podaje liczby <span class="c5up-tag">do potwierdzenia</span></td>
+            <td>Gleby lekkie, zdegradowane, nadmiernie ciężkie, ilaste lub ubogie w materię organiczną. Dokładnie wymieszać z warstwą uprawną. Nie jest corocznym nawozem startowym; przy wysokim koszcie logistycznym pasowo lub na polach priorytetowych. Konfigurator pokazuje dawkę orientacyjną – przed zastosowaniem potwierdź ją z doradcą.</td>
+          </tr>
+          <tr>
+            <th scope="row">Przed siewem – wariant A (płynny)</th>
+            <td>Zabieg bazowy płynny: oprysk gleby</td>
+            <td>CARBOHUMIC filtrowany 187 mesh</td>
+            <td>20–40 l/ha w ok. 400 l wody <span class="c5up-tag">do potwierdzenia</span></td>
+            <td>Oprysk gleby i płytkie wymieszanie; alternatywnie poniżej głębokości siewu lub współrzędnie w systemie nawozów płynnych. Nie na glebę zamarzniętą, zalaną ani skrajnie suchą. Płukanie instalacji po zabiegu.</td>
+          </tr>
+          <tr>
+            <th scope="row">Przed siewem – wariant B (sypki)</th>
+            <td>Zabieg bazowy sypki z uprawą pasową lub nawozem; część potasu</td>
+            <td>CARBOMAT HUMIC</td>
+            <td>do 150 kg do podsiewacza · strip-till min. 100 kg/ha · pasowo 150–250 kg/ha · całopowierzchniowo 500 kg/ha „tylko dla skokowego efektu" <span class="c5up-tag">do potwierdzenia</span></td>
+            <td>Aplikacja jedynie na sucho. Nie do oprysku ani fertygacji. Wnosi ok. 6 kg K₂O/ha przy 100 kg/ha – nie jest zamiennikiem nawozów potasowych. Nie łączyć z wapnowaniem <span class="c5up-tag">do potwierdzenia</span>. Ostrożnie na glebach o wysokim pH i węglanowych.</td>
+          </tr>
+          <tr>
+            <th scope="row">Przed siewem – wariant polewowy (beczkowóz)</th>
+            <td>Zabieg bazowy z beczkowozu</td>
+            <td>CARBOHUMIC niefiltrowany 20 mesh</td>
+            <td>min. 50 l/ha <span class="c5up-tag">do potwierdzenia</span></td>
+            <td>Pasowo doglebowo lub współrzędnie do siewu; rozlewaki, aplikatory doglebowe. Nie przez standardowe dysze ani linie kroplujące.</td>
+          </tr>
+          <tr>
+            <th scope="row">BBCH 14–18</th>
+            <td>Regeneracja po stresie lub zapobiegawczo w oknie ustalania potencjału kolby</td>
+            <td>CARBOHUMIC MAXI PLUS</td>
+            <td>0,6 l/ha + mikroelementy; nie więcej niż 0,6 l/ha w jednym zabiegu <span class="c5up-tag">do potwierdzenia</span></td>
+            <td>Powtórka po 7–10 dniach tylko przy utrzymującym się uzasadnieniu. Prosta mieszanina; nie łączyć herbicydu, wielu soli nawozowych i biostymulatora na roślinie po chłodzie. Przy chłodnej i mokrej wiośnie dopiero po wznowieniu aktywnego wzrostu.</td>
+          </tr>
+          <tr>
+            <th scope="row">BBCH 19–39</th>
+            <td>Druga, mała dawka po stresie lub przy słabym wigorze – tylko przy uzasadnieniu</td>
+            <td>CARBOHUMIC MAXI PLUS</td>
+            <td>„druga mała dawka" – opracowanie nie podaje liczby; limit 0,6 l/ha na zabieg <span class="c5up-tag">do potwierdzenia</span></td>
+            <td>Przed wjazdem sprawdź wysokość roślin i ryzyko uszkodzeń mechanicznych. Okno zabiegu kończy się na BBCH 51.</td>
+          </tr>
+          <tr>
+            <th scope="row">Po zbiorze – resztki</th>
+            <td>Humifikacja resztek, kontakt słomy z glebą</td>
+            <td>CARBOHUMIC filtrowany 187 mesh</td>
+            <td>20–40 l/ha w ok. 400 l wody; program podstawowy: 20 l/ha <span class="c5up-tag">do potwierdzenia</span></td>
+            <td>Słoma rozdrobniona do 8 cm; tylko przy wilgotnych resztkach i glebie; płytkie i równomierne wymieszanie, nawet dopiero na przedwiośniu; opcjonalnie mikroorganizmy. Azot na słomę – <span class="c5up-tag">do rozstrzygnięcia</span>.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="c5up-legend wf-caption wf-t-secondary">
+      <span class="wf-inline"><span class="c5up-tag">do potwierdzenia</span> liczba lub zalecenie, co do którego materiały CarboHort podają dziś różne wartości – czeka na decyzję działu merytorycznego</span>
+      <span class="wf-inline"><span class="c5up-tag">do rozstrzygnięcia</span> stanowisko, w którym dokumenty CarboHort się wykluczają – do czasu decyzji nie podajemy żadnej liczby</span>
+    </div>
+    <div class="c5up-note wf-stack wf-stack--2">
+      <span class="wf-w-semibold">Czego w tej tabeli świadomie nie ma.</span>
+      <p class="wf-small wf-t-secondary">Nazw środków ochrony roślin ani preparatów mikrobiologicznych – ich dobór należy do Twojego programu ochrony i wymaga etykiety oraz testu polowego. Nie ma CARBOHUMIC CALBOR: opracowanie kukurydzy nie wymienia go ani razu, a decyzja rejestrowa obejmuje uprawy sadownicze. Nie ma też dawki azotu na resztki – patrz znacznik.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 7. MODUŁ WŁASNY: DOPASUJ PROGRAM DO STANOWISKA ===== -->
+<section class="wf-section" id="u-stanowisko" data-chapter="u-stanowisko">
+  <div class="wf-container wf-stack wf-stack--6">
+    <div class="wf-stack wf-stack--2">
+      <span class="wf-overline wf-t-tertiary">Stanowisko</span>
+      <h2 class="c5-h2">Dopasuj program do swojego pola</h2>
+      <p class="wf-lead wf-t-secondary" style="max-width:var(--w-measure);">Osiem sytuacji z opracowania CarboHort. Każda mówi trzy rzeczy: co jest priorytetem przed programem, co z programu ma sens, czego nie robić. Jeśli pytasz „ile mam dać, żeby zobaczyć efekt w mojej glebie" – odpowiedź zaczyna się tutaj, a kończy na pasie porównawczym.</p>
+    </div>
+    <div>
+      <details class="c5up-node" id="st-kwasna">
+        <summary><span class="c5up-code">pH w wodzie &lt; 5,5</span><span class="wf-w-medium">Gleba kwaśna (pH w wodzie poniżej 5,5)</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+        <div class="c5up-node__body wf-stack wf-stack--3">
+          <p class="wf-body wf-t-secondary"><strong>Najpierw:</strong> Wapnowanie, dobór formy wapna i analiza magnezu.</p>
+          <p class="wf-body"><strong>Z programu:</strong> CARBOMAT HUMIC może wspierać buforowanie, ale nie zastępuje wapna.</p>
+          <p class="wf-small wf-t-secondary"><strong>Nie:</strong> Nie zwiększaj dawek fosforu i cynku „w ciemno" – przy niskim pH mogą być słabo dostępne.</p>
+        </div>
+      </details>
+      <details class="c5up-node" id="st-weglanowa">
+        <summary><span class="c5up-code">pH wysokie</span><span class="wf-w-medium">Gleba węglanowa, wysoki odczyn</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+        <div class="c5up-node__body wf-stack wf-stack--3">
+          <p class="wf-body wf-t-secondary"><strong>Najpierw:</strong> Ocena ryzyka niedoboru cynku i fosforu.</p>
+          <p class="wf-body"><strong>Z programu:</strong> Ostrożnie z zasadowym CARBOMAT HUMIC. Cynk jako zabieg celowany, fosfor w nawozie startowym.</p>
+        </div>
+      </details>
+      <details class="c5up-node" id="st-lekka">
+        <summary><span class="c5up-code">gleba lekka</span><span class="wf-w-medium">Gleba lekka, mało materii organicznej</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+        <div class="c5up-node__body wf-stack wf-stack--3">
+          <p class="wf-body wf-t-secondary"><strong>Najpierw:</strong> Retencja wody i składników, mniejsze i dzielone dawki azotu, okrywa gleby roślinami.</p>
+          <p class="wf-body"><strong>Z programu:</strong> CARBOMAT ECO strategicznie; CARBOMAT HUMIC lub CARBOHUMIC filtrowany 187 mesh jako zabieg sezonowy. Potas, magnez i siarka według analizy. W wariancie zbilansowanym: CARBOHUMIC MAXI PLUS 0,6 l/ha w fazie 4–8 liści i druga dawka azotu przed spodziewanym deszczem.</p>
+        </div>
+      </details>
+      <details class="c5up-node" id="st-ciezka">
+        <summary><span class="c5up-code">gleba ciężka</span><span class="wf-w-medium">Gleba ciężka, zlewna</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+        <div class="c5up-node__body wf-stack wf-stack--3">
+          <p class="wf-body wf-t-secondary"><strong>Najpierw:</strong> Poprawa struktury gleby, drenaż, unikanie przejazdów na mokro.</p>
+          <p class="wf-body"><strong>Z programu:</strong> CARBOMAT ECO o grubszej frakcji jako element programu wieloletniego. Resztki pozbiorowe mieszaj płytko.</p>
+        </div>
+      </details>
+      <details class="c5up-node" id="st-monokultura">
+        <summary><span class="c5up-code">monokultura</span><span class="wf-w-medium">Kukurydza po kukurydzy</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+        <div class="c5up-node__body wf-stack wf-stack--3">
+          <p class="wf-body wf-t-secondary"><strong>Najpierw:</strong> Zmianowanie, mulczowanie grubych łodyg, lustracja omacnicy i stonki. Nie dłużej niż 3 lata na tym samym polu; w monokulturze ziarnowej słoma jako okrywa zamiast międzyplonu.</p>
+          <p class="wf-body"><strong>Z programu:</strong> CARBOHUMIC filtrowany 187 mesh po zbiorze jako wsparcie humifikacji. Rozważ ochronę biologiczną zgodną z rejestracją.</p>
+          <p class="wf-small wf-t-secondary"><strong>Nie:</strong> Nie oczekuj, że produkty humusowe usuną skutki monokultury, zwłaszcza kukurydzy na kiszonkę.</p>
+        </div>
+      </details>
+      <details class="c5up-node" id="st-obornik">
+        <summary><span class="c5up-code">obornik</span><span class="wf-w-medium">Pole po oborniku lub gnojowicy</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+        <div class="c5up-node__body wf-stack wf-stack--3">
+          <p class="wf-body wf-t-secondary"><strong>Najpierw:</strong> Bilans N, P, K i zasolenia. Zbadaj Nmin w profilu 0–60 cm.</p>
+          <p class="wf-body"><strong>Z programu:</strong> Dawka substancji humusowych może poprawić retencję, ale nie jest automatycznie potrzebna. Pomniejsz nawozy mineralne o składniki wniesione z nawozami naturalnymi.</p>
+        </div>
+      </details>
+      <details class="c5up-node" id="st-susza">
+        <summary><span class="c5up-code">susza</span><span class="wf-w-medium">Susza wiosenna</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+        <div class="c5up-node__body wf-stack wf-stack--3">
+          <p class="wf-body wf-t-secondary"><strong>Najpierw:</strong> Ochrona wilgoci, głębokość siewu, ograniczenie zasolenia gleby.</p>
+          <p class="wf-body"><strong>Z programu:</strong> Produkty CARBOHUMIC i CARBOMAT jako wsparcie retencji, nie zamiennik wody.</p>
+          <p class="wf-small wf-t-secondary"><strong>Nie:</strong> Nie wykonuj agresywnych mieszanin dolistnych.</p>
+        </div>
+      </details>
+      <details class="c5up-node" id="st-chlod">
+        <summary><span class="c5up-code">chłód</span><span class="wf-w-medium">Chłodna i mokra wiosna</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+        <div class="c5up-node__body wf-stack wf-stack--3">
+          <p class="wf-body wf-t-secondary"><strong>Najpierw:</strong> Fosfor dla siewek, ocena dostępności cynku, unikanie zagęszczenia.</p>
+          <p class="wf-body"><strong>Z programu:</strong> CARBOHUMIC MAXI PLUS dopiero po wznowieniu aktywnego wzrostu.</p>
+          <p class="wf-small wf-t-secondary"><strong>Nie:</strong> Nie opryskuj roślin bezpośrednio przed spadkiem temperatury.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 8. PRODUKTY W TEJ UPRAWIE ===== -->
+<section class="wf-section wf-section--subtle" id="u-produkty" data-chapter="u-produkty">
+  <div class="wf-container wf-stack wf-stack--6">
+    <div class="wf-stack wf-stack--2">
+      <span class="wf-overline wf-t-tertiary">Produkty w tej uprawie</span>
+      <h2 class="c5-h2">Pięć ról, nie pięć kart katalogowych</h2>
+    </div>
+    <div class="wf-grid wf-grid--3" style="--wf-grid-min: 16rem;">
+      <div class="wf-card"><div class="wf-card__body wf-stack wf-stack--3">
+        <span class="wf-overline wf-t-tertiary">Inwestycja w stanowisko · raz na wiele lat</span>
+        <span class="wf-h4">CARBOMAT ECO</span>
+        <p class="wf-small wf-t-secondary">Frakcjonowany lignit (0,1–2, 2–4, 4–8 mm) w dwóch odmianach pH. W kukurydzy inwestycja stanowiskowa na wiele lat: struktura gleby, retencja wody i składników, trwała materia organiczna. Nie jest typowym corocznym nawozem startowym; dawkę wylicza się indywidualnie. Na gleby ciężkie opracowanie wskazuje grubszą frakcję.</p>
+        <p class="wf-caption wf-t-tertiary">Dawka polowa <span class="c5up-tag">do potwierdzenia</span> – patrz matryca.</p>
+        <a class="wf-link" href="carbomat.html">Strona produktu</a>
+      </div></div>
+      <div class="wf-card"><div class="wf-card__body wf-stack wf-stack--3">
+        <span class="wf-overline wf-t-tertiary">Zabieg bazowy sypki · potas na start</span>
+        <span class="wf-h4">CARBOMAT HUMIC</span>
+        <p class="wf-small wf-t-secondary">Sypki, częściowo rozpuszczalny, zasadowy (odczyn produktu 9–11), ok. 6% K₂O. Do podsiewacza, w strip-tillu, pasowo lub całopowierzchniowo – zawsze na sucho. Przy 100 / 250 / 500 kg/ha wnosi ok. 6 / 15 / 30 kg K₂O na ha: dodatek startowy, nie zamiennik nawozów potasowych. Nie do oprysku ani fertygacji; ostrożnie na glebach o wysokim pH i węglanowych.</p>
+        <p class="wf-caption wf-t-tertiary">Dawki i łączenie z wapnowaniem <span class="c5up-tag">do potwierdzenia</span> – patrz matryca.</p>
+        <a class="wf-link" href="carbomat-humic.html">Strona produktu</a>
+      </div></div>
+      <div class="wf-card"><div class="wf-card__body wf-stack wf-stack--3">
+        <span class="wf-overline wf-t-tertiary">Zabieg bazowy płynny · resztki po zbiorze</span>
+        <span class="wf-h4">CARBOHUMIC filtrowany 187 mesh</span>
+        <p class="wf-small wf-t-secondary">Płynny ekstrakt humusowy, filtrowany – przez opryskiwacz, system nawozów płynnych i fertygację. W kukurydzy: oprysk gleby przed siewem, zabieg na resztki po zbiorze, jesienią pod poplon. Wymaga płukania instalacji dozujących.</p>
+        <p class="wf-caption wf-t-tertiary">Dawki <span class="c5up-tag">do potwierdzenia</span> – patrz matryca.</p>
+        <a class="wf-link" href="carbohumic.html">Strona produktu</a>
+      </div></div>
+      <div class="wf-card"><div class="wf-card__body wf-stack wf-stack--3">
+        <span class="wf-overline wf-t-tertiary">Zabieg bazowy polewowy · z beczkowozu</span>
+        <span class="wf-h4">CARBOHUMIC niefiltrowany 20 mesh</span>
+        <p class="wf-small wf-t-secondary">Płynny, niefiltrowany – do aplikacji polewowej beczkowozem, rozlewakami lub aplikatorami doglebowymi, w układach odpornych na zatkanie. Wiosną i jesienią, pasowo doglebowo lub współrzędnie do siewu. Nie przez standardowe dysze opryskiwaczy ani linie kroplujące.</p>
+        <p class="wf-caption wf-t-tertiary">Minimum na zabieg <span class="c5up-tag">do potwierdzenia</span> – patrz matryca.</p>
+        <a class="wf-link" href="carbohumic.html">Strona produktu</a>
+      </div></div>
+      <div class="wf-card"><div class="wf-card__body wf-stack wf-stack--3">
+        <span class="wf-overline wf-t-tertiary">Nalistnie · jedno okno BBCH 14–51</span>
+        <span class="wf-h4">CARBOHUMIC MAXI PLUS</span>
+        <p class="wf-small wf-t-secondary">Płynny, filtrowany, dolistny: wigor, powierzchnia asymilacyjna, regeneracja po stresie. W kukurydzy 0,6 l/ha w jednym zabiegu, od 4 liści (BBCH 14) do początku wysuwania wiechy (BBCH 51); później zabieg wątpliwy ze względu na wysokość roślin. Zaczynaj od prostego składu.</p>
+        <p class="wf-caption wf-t-tertiary"><span class="wf-w-semibold">Nalistnie na polu – <span class="c5up-tag">do potwierdzenia</span>.</span> Opracowanie kukurydzy stawia tu CARBOHUMIC MAXI PLUS 0,6 l/ha na cały areał. Decyzja CarboHort z 06.08 dla upraw polowych mówi inaczej: nalistnie CARBOHUMIC filtrowany, a CARBOHUMIC MAXI PLUS wyłącznie jako próba na 1 ha. Pokazujemy program i czekamy, które brzmienie obowiązuje.</p>
+        <a class="wf-link" href="carbohumic.html">Strona produktu</a>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 9. JAK STOSOWAĆ ===== -->
+<section class="wf-section" id="u-jak" data-chapter="u-jak">
+  <div class="wf-container wf-stack wf-stack--6">
+    <div class="wf-stack wf-stack--2">
+      <span class="wf-overline wf-t-tertiary">Jak stosować</span>
+      <h2 class="c5-h2">Mieszaniny zbiornikowe, sprzęt i to, czego nie podajemy</h2>
+    </div>
+    <div class="c5up-two">
+      <div class="wf-stack wf-stack--4">
+        <span class="wf-h5">Zanim zmieszasz</span>
+        <ol class="wf-list wf-stack wf-stack--2">
+          <li>Zawsze wykonaj test słoikowy w wodzie, której użyjesz do zabiegu. Oceń osad, kłaczki, pianę, wzrost temperatury i rozwarstwienie.</li>
+          <li>Sprawdź pH i twardość wody – produkty humusowe mogą reagować z komponentami silnie kwaśnymi, silnie zasadowymi lub wysoko zasolonymi.</li>
+          <li>Żywych mikroorganizmów nie łącz z wodą utlenioną, kwasem podchlorawym, srebrem, chlorem ani silnymi dezynfektantami.</li>
+          <li>Zgodność fizyczna nie oznacza bezpieczeństwa dla rośliny – przy wątpliwościach zrób próbę na małym fragmencie.</li>
+          <li>Nie łącz wielu mikroelementów bez zbadania ich zgodności: każdy kolejny składnik podnosi ryzyko uszkodzeń i antagonizmów. Zaczynaj od prostego składu.</li>
+        </ol>
+        <p class="wf-small wf-t-secondary">Kolejności napełniania zbiornika opracowanie kukurydzy nie podaje – dlatego jej tu nie ma.</p>
+      </div>
+      <div class="wf-stack wf-stack--4">
+        <div class="wf-alert">
+          <span class="wf-alert__icon"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-alert-triangle"></use></svg></span>
+          <div class="wf-stack wf-stack--1">
+            <span class="wf-alert__title">Ze środkami ochrony roślin test słoikowy nie wystarczy</span>
+            <span class="wf-small wf-t-secondary">Zgodność środka ochrony roślin z produktem humusowym trzeba sprawdzić także polowo, i dotyczy ona konkretnego produktu i jego formulacji, nie samej substancji czynnej. Dezaktywacja środka przez kwasy humusowe jest funkcją czasu i stężenia w cieczy roboczej – nawet po pomyślnych testach używaj dużej ilości wody i wykonuj oprysk niezwłocznie.</span>
+          </div>
+        </div>
+        <div class="wf-card"><div class="wf-card__body wf-stack wf-stack--2">
+          <span class="wf-w-semibold">Sprzęt i sposób aplikacji</span>
+          <ul class="wf-list wf-small wf-t-secondary">
+            <li>CARBOMAT ECO – wysiew i dokładne wymieszanie z warstwą uprawną; w aplikacji glebowej można łączyć z nawozami organicznymi i mineralnymi, kontrolując pH wariantu.</li>
+            <li>CARBOMAT HUMIC – wyłącznie na sucho: podsiewacz, siewnik strip-till, rozsiewacz. Nie do opryskiwacza, fertygacji ani linii kroplujących – nierozpuszczalne huminy zapychają filtry, dysze i kroplowniki. Można łączyć z granulowanym NPK i materią organiczną.</li>
+            <li>CARBOHUMIC filtrowany 187 mesh – opryskiwacz, aplikator nawozów płynnych, fertygacja; nawozy płynne i biologiczne po teście; unikać silnych utleniaczy i dezynfektantów; po zabiegu przepłukać instalację.</li>
+            <li>CARBOHUMIC niefiltrowany 20 mesh – beczkowóz, rozlewak, aplikator doglebowy, układy o dużym przepływie. Nie przez standardowe dysze ani filtry bez potwierdzonej przepustowości.</li>
+            <li>CARBOHUMIC MAXI PLUS – opryskiwacz polowy, nalistnie; nawozy dolistne i część środków ochrony roślin po teście i zgodnie z etykietą; unikać mieszanin wieloskładnikowych na roślinie po silnym stresie. Przed wjazdem sprawdź wysokość roślin.</li>
+          </ul>
+        </div></div>
+        <div class="c5up-empty wf-stack wf-stack--1">
+          <span class="wf-w-semibold">Czego nie podajemy</span>
+          <span class="wf-small wf-t-secondary">Opracowanie nie określa karencji, temperatur zabiegowych, kolejności napełniania zbiornika ani maksymalnej liczby zabiegów w sezonie. Jedyny limit, jaki podaje, to dawka: CARBOHUMIC MAXI PLUS nie więcej niż 0,6 l/ha w jednym zabiegu, powtórka po 7–10 dniach tylko przy uzasadnieniu. Nie podajemy też nazw środków ochrony roślin ani preparatów mikrobiologicznych. Zamiast zgadywać – mówimy, że tego nie wiemy.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 10. DOWÓD ===== -->
+<section class="wf-section wf-section--subtle" id="u-dowod" data-chapter="u-dowod">
+  <div class="wf-container wf-stack wf-stack--6">
+    <div class="wf-stack wf-stack--2">
+      <span class="wf-overline wf-t-tertiary">Co wiemy, a czego jeszcze nie wiemy</span>
+      <h2 class="c5-h2">Stan dowodu dla kukurydzy</h2>
+    </div>
+    <div class="wf-steps">
+      <span class="wf-step wf-step--current"><span class="wf-step__node">1</span> Mechanizm opisany</span>
+      <span class="wf-step__connector"></span>
+      <span class="wf-step wf-step--upcoming"><span class="wf-step__node">2</span> Doświadczenie w toku</span>
+      <span class="wf-step__connector"></span>
+      <span class="wf-step wf-step--upcoming"><span class="wf-step__node">3</span> Wynik z pola</span>
+    </div>
+    <div class="c5up-two">
+      <div class="wf-stack wf-stack--4">
+        <div class="c5up-note wf-stack wf-stack--2">
+          <span class="wf-w-semibold">Gdzie dziś jesteśmy</span>
+          <p class="wf-small wf-t-secondary">Dla kukurydzy mamy opracowanie technologiczne: opisany mechanizm i program fazowy od ścierniska po resztki. <strong>Nie mamy w materiałach CarboHort własnego doświadczenia polowego na kukurydzy</strong> i dlatego nie podajemy tu procentów przyrostu plonu ani innych liczb efektu. Kiedy takie dane powstaną, staną w tym miejscu z nazwą gospodarstwa i regionem.</p>
+        </div>
+        <span class="wf-h5">Jak to sprawdzić u siebie – metoda z opracowania</span>
+        <ul class="wf-list wf-small wf-t-secondary">
+          <li>Załóż pasy porównawcze i oceń efekt w glebie, korzeniach i plonie.</li>
+          <li>Zostaw stały element kontrolny: skuteczność preparatów humusowych bywa inna na glebie lekkiej, czarnoziemie i po wieloletniej monokulturze.</li>
+          <li>Po zbiorze zważ plon, zmierz wilgotność i porównaj warianty – bez danych z wagi nie da się uczciwie ocenić finansowego zwrotu z biostymulacji.</li>
+          <li>W programie regeneracyjnym dodatkowo: N-tester lub analiza liści, wilgotność gleby, plon i marża.</li>
+        </ul>
+      </div>
+      <div class="wf-stack wf-stack--3">
+        <div class="wf-ph" style="aspect-ratio:16/9;"></div>
+        <p class="wf-caption wf-t-tertiary">Miejsce na pierwsze zdjęcie z pasa porównawczego – do uzupełnienia po sezonie.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 11. SKALA ZABIEGU ===== -->
+<section class="wf-section" id="u-skala" data-chapter="u-skala">
+  <div class="wf-container wf-stack wf-stack--6">
+    <div class="wf-stack wf-stack--2">
+      <span class="wf-overline wf-t-tertiary">Skala zabiegu</span>
+      <h2 class="c5-h2">Ile produktu na Twoje pole</h2>
+      <p class="wf-lead wf-t-secondary" style="max-width:var(--w-measure);">Przelicznik pracuje wyłącznie na dawkach z matrycy – także tych ze znacznikiem: liczy to, co mówi opracowanie, i nie rozstrzyga sporu. Nie liczy CARBOMAT ECO, bo opracowanie nie podaje dawki na hektar, ani CARBOMAT HUMIC, bo materiały CarboHort podają dziś różne zestawy dawek (patrz znacznik w matrycy) – o ten produkt zapytaj o ofertę.</p>
+    </div>
+    <div data-calc class="wf-stack wf-stack--5">
+      <div class="c5up-calc">
+        <div class="wf-field">
+          <label class="wf-label" for="ha">Powierzchnia uprawy</label>
+          <div class="wf-input-group">
+            <input class="wf-input" id="ha" type="number" min="0" step="0.5" value="10" data-calc-in>
+            <span class="wf-addon">ha</span>
+          </div>
+        </div>
+        <div class="c5up-out" data-calc-out data-lo="20" data-hi="40" data-unit="l"><span class="wf-caption wf-t-tertiary">CARBOHUMIC filtrowany 187 mesh przed siewem</span><b>–</b></div>
+        <div class="c5up-out" data-calc-out data-lo="20" data-hi="40" data-unit="l"><span class="wf-caption wf-t-tertiary">CARBOHUMIC filtrowany na resztki</span><b>–</b></div>
+        <div class="c5up-out" data-calc-out data-lo="400" data-hi="400" data-unit="l"><span class="wf-caption wf-t-tertiary">Woda do zabiegu doglebowego CARBOHUMIC filtrowanym</span><b>–</b></div>
+        <div class="c5up-out" data-calc-out data-lo="50" data-hi="50" data-unit="l"><span class="wf-caption wf-t-tertiary">CARBOHUMIC niefiltrowany 20 mesh, jeden zabieg</span><b>–</b></div>
+      </div>
+      <p class="wf-small wf-t-secondary">CARBOHUMIC MAXI PLUS nie wchodzi do przelicznika: opracowanie liczy go na hektar, a decyzja CarboHort z 06.08 mówi o próbie na 1 ha, czyli 0,6 l niezależnie od powierzchni – patrz znacznik w matrycy.</p>
+      <div class="wf-cluster wf-gap-3 wf-items-center">
+        <div class="wf-skeleton" style="width:12rem;height:var(--w-control-h-md);"></div>
+        <span class="wf-small wf-t-tertiary">Koszt programu na hektar – do uzupełnienia po ustaleniu cen.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 12. GRANICE I HORYZONT EFEKTU ===== -->
+<section class="wf-section wf-section--subtle" id="u-uczciwosc">
+  <div class="wf-container wf-stack wf-stack--6">
+    <div class="wf-stack wf-stack--2">
+      <span class="wf-overline wf-t-tertiary">Granice</span>
+      <h2 class="c5-h2">Czego ten program nie zrobi</h2>
+    </div>
+    <div class="wf-split">
+      <div class="wf-stack wf-stack--3">
+        <span class="wf-h5">Uzupełniamy, nie zastępujemy</span>
+        <ul class="wf-list wf-body wf-t-secondary">
+          <li>Produkty humusowe poprawiają warunki wykorzystania wody i składników, ale <strong>nie zastępują bilansu azotu, fosforu, potasu, magnezu, wapnia, siarki i mikroelementów</strong> ani prawidłowego pH i prawidłowej uprawy roli.</li>
+          <li>Przy pH poniżej 5,5 w wodzie pierwsze jest wapnowanie, nie biostymulator; CARBOMAT HUMIC może wspierać buforowanie, ale nie zastępuje wapna.</li>
+          <li>Jeden zabieg bazowy, nie wszystkie formy naraz – i pas porównawczy zamiast wiary.</li>
+          <li>Produkty humusowe nie usuwają skutków uprawy monokulturowej, zwłaszcza kukurydzy na kiszonkę.</li>
+          <li>Niedoboru wody podczas pylenia nie skompensuje żaden zabieg dolistny; w suszę produkty CARBOHUMIC i CARBOMAT to wsparcie retencji, nie zamiennik wody.</li>
+        </ul>
+      </div>
+      <div class="wf-stack wf-stack--3">
+        <span class="wf-h5">Horyzont i kontrola</span>
+        <ul class="wf-list wf-body wf-t-secondary">
+          <li><strong>W sezonie:</strong> wigor i regeneracja po stresie oraz lepsze warunki wykorzystania wody i składników – to oceniasz w łanie i w korzeniach na pasie porównawczym.</li>
+          <li><strong>Na lata:</strong> CARBOMAT ECO to inwestycja stanowiskowa na wiele lat, a program regeneracyjny jest planem wieloletnim – nie wszystko naraz w pełnej dawce.</li>
+          <li>W metodyce plon kukurydzy w zmianowaniu bywa o 10–20%, czasem do 30% wyższy niż w monokulturze – to efekt zmianowania, nie produktu.</li>
+          <li>Skuteczność bywa inna na glebie lekkiej, czarnoziemie i po monokulturze. Dlatego zostaw na polu <strong>pas kontrolny</strong> i porównaj go po zbiorze – z wagą, nie na oko.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 13. FAQ ===== -->
+<section class="wf-section" id="u-faq" data-chapter="u-faq">
+  <div class="wf-container wf-stack wf-stack--6">
+    <div class="wf-stack wf-stack--2">
+      <span class="wf-overline wf-t-tertiary">FAQ</span>
+      <h2 class="c5-h2">Pytania, które padają najczęściej</h2>
+    </div>
+    <div>
+      <details class="c5up-node" id="faq-01"><summary><span class="c5up-code">01</span><span class="wf-w-medium">Ziarno czy kiszonka – czy program się różni?</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary><div class="c5up-node__body"><p class="wf-body wf-t-secondary">Te same produkty i te same momenty. Różni się to, co po zbiorze: kiszonka wywozi z pola niemal cały potas i materię organiczną z roślin, więc po zbiorze skoryguj bilans potasu i zaplanuj, skąd wróci materia organiczna. Przy odmianach kiszonkowych oprysk nalistny po BBCH 51 jest jeszcze mniej realny ze względu na wysokość roślin – okno zabiegu zamyka się na początku wysuwania wiechy.</p></div></details>
+      <details class="c5up-node" id="faq-02"><summary><span class="c5up-code">02</span><span class="wf-w-medium">Kukurydza po kukurydzy – co z programem?</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary><div class="c5up-node__body"><p class="wf-body wf-t-secondary">Opracowanie mówi wprost: nie dłużej niż 3 lata na tym samym polu. W metodyce plon w zmianowaniu bywa o 10–20%, czasem do 30% wyższy – to efekt zmianowania, nie produktu. Produkty humusowe nie usuwają skutków monokultury, zwłaszcza kiszonkowej. W monokulturze program stawia CARBOHUMIC filtrowany 187 mesh po zbiorze jako wsparcie humifikacji, do tego mulczowanie grubych łodyg, słomę jako okrywę zamiast międzyplonu i lustrację omacnicy i stonki.</p></div></details>
+      <details class="c5up-node" id="faq-03"><summary><span class="c5up-code">03</span><span class="wf-w-medium">Ile muszę dać, żeby zobaczyć efekt w mojej glebie?</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary><div class="c5up-node__body"><p class="wf-body wf-t-secondary">Nie ma jednej dawki na efekt. Skuteczność preparatów humusowych bywa inna na glebie lekkiej, czarnoziemie i po monokulturze – dlatego opracowanie każe założyć pasy porównawcze i zważyć plon. Zacznij od jednego zabiegu bazowego w dawce z matrycy, zostaw pas bez zabiegu i porównaj glebę, korzenie i plon. Trzy warianty technologii to nie trzy poziomy jakości: każdy może być poprawny, jeśli odpowiada ograniczeniom pola i budżetowi.</p></div></details>
+      <details class="c5up-node" id="faq-04"><summary><span class="c5up-code">04</span><span class="wf-w-medium">Czy mogę wrzucić to do zbiornika razem z herbicydem albo fungicydem?</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary><div class="c5up-node__body"><p class="wf-body wf-t-secondary">Nie bez sprawdzenia w polu. Zgodność ze środkiem ochrony roślin dotyczy konkretnego produktu i jego formulacji, nie substancji czynnej, i musi być sprawdzona nie tylko w słoiku, ale polowo. Kwasy humusowe mogą dezaktywować środek – tym mocniej, im dłużej i w wyższym stężeniu stoi w cieczy roboczej – dlatego dużo wody i oprysk od razu. W fazie 4–8 liści nie łącz herbicydu, wielu soli nawozowych i biostymulatora na roślinie po chłodzie.</p></div></details>
+      <details class="c5up-node" id="faq-05"><summary><span class="c5up-code">05</span><span class="wf-w-medium">Kiedy zobaczę efekt?</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary><div class="c5up-node__body"><p class="wf-body wf-t-secondary">Opracowanie nie obiecuje terminu. Pierwsze, co możesz ocenić w sezonie, to wigor i regeneracja po stresie w fazie 4–8 liści oraz stopień rozkładu resztek wiosną po zabiegu jesiennym. Zwrot z biostymulacji oceniasz po zbiorze – z wagi, z porównaniem wariantów. CARBOMAT ECO to inwestycja stanowiskowa na wiele lat, nie zabieg na jeden sezon.</p></div></details>
+      <details class="c5up-node" id="faq-06"><summary><span class="c5up-code">06</span><span class="wf-w-medium">Susza wiosenna – czy program pomoże?</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary><div class="c5up-node__body"><p class="wf-body wf-t-secondary">Produkty CARBOHUMIC i CARBOMAT to wsparcie retencji, nie zamiennik wody. W suszę nie wykonuj agresywnych mieszanin dolistnych. Na glebie lekkiej opracowanie zaleca mniejsze i dzielone dawki azotu oraz okrywę gleby roślinami. I jedno zdanie, którego nie da się obejść: niedoboru wody podczas pylenia nie skompensuje żaden zabieg dolistny.</p></div></details>
+      <details class="c5up-node" id="faq-07"><summary><span class="c5up-code">07</span><span class="wf-w-medium">Mam obornik albo gnojowicę – czy program jest mi potrzebny?</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary><div class="c5up-node__body"><p class="wf-body wf-t-secondary">Nie automatycznie. Po oborniku lub gnojowicy dawka substancji humusowych może poprawić retencję, ale nie jest automatycznie potrzebna. Zbadaj Nmin w profilu 0–60 cm i pomniejsz nawozy mineralne o składniki wniesione z nawozami naturalnymi; dawkę obornika ustal według analizy składu i ograniczeń prawnych. Jeśli chcesz wiedzieć, czy to Ci coś daje – pas porównawczy.</p></div></details>
+      <details class="c5up-node" id="faq-08"><summary><span class="c5up-code">08</span><span class="wf-w-medium">Którą formę CARBOHUMIC wybrać?</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary><div class="c5up-node__body"><p class="wf-body wf-t-secondary">Po sprzęcie. Opryskiwacz albo system nawozów płynnych – CARBOHUMIC filtrowany 187 mesh (20–40 l/ha przed siewem). Beczkowóz, rozlewak albo aplikator doglebowy bez ryzyka zatkania – CARBOHUMIC niefiltrowany 20 mesh (min. 50 l/ha). Niefiltrowanego nie puszczaj przez standardowe dysze ani linie kroplujące. Nalistnie opracowanie stawia wyłącznie CARBOHUMIC MAXI PLUS – ale tu jest kolizja z decyzją CarboHort, oznaczona w matrycy.</p></div></details>
+    </div>
+    <div class="c5-btnrow">
+      <a class="c5-btn c5-btn--dark" href="konfigurator.html?crop=kukurydza">dobierz program dla swojego pola</a>
+      <a class="c5-btn c5-btn--light" href="kontakt.html">zapytaj doradcę</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+
+
+
+<cw-footer></cw-footer>
+
+<cw-dock></cw-dock>
+
+<script src="cw.js"></script>
+<script src="c5.js"></script>
+</body>
+</html>
