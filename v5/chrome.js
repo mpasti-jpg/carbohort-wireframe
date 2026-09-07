@@ -1,5 +1,5 @@
 /* =====================================================================
-   chrome.js — WSPÓLNE ELEMENTY SERWISU W JEDNYM MIEJSCU.
+   chrome.js – WSPÓLNE ELEMENTY SERWISU W JEDNYM MIEJSCU.
 
    Nagłówek z mega-menu, nawigacja mobilna, przyciemnienie tła, stopka,
    sprite ikon i dok doradcy żyją TYLKO tutaj. Podstrony wstawiają je
@@ -23,6 +23,10 @@
    - Plik ładujemy w <head> BEZ defer. Dzięki temu definicje istnieją, zanim
      parser dojdzie do znaczników, elementy podnoszą się w locie, a cw.js
      z końca <body> zastaje kompletny DOM.
+   - Dok renderujemy BEZ klasy ukrywającej. Chowa go dopiero c5.js na stronach,
+     które mają sekcję id="hero" – tam ma się pojawiać po zejściu z hero. Na
+     stronach bez hero i bez c5.js zostaje widoczny, tak jak było przed
+     wyniesieniem chrome do tego pliku.
    - Sprite to suma ikon używanych w całym serwisie. Dokładanie ikony na
      jednej podstronie nie wymaga ruszania pozostałych.
    ===================================================================== */
@@ -219,14 +223,14 @@
           </div>
         </div>
       </div>
-      <a class="wf-navbar__link" href="centrum-wiedzy.html">Centrum wiedzy</a>
-      <a class="wf-navbar__link" href="o-firmie.html">O nas</a>
-      <a class="wf-navbar__link" href="kontakt.html">Kontakt</a>
+      <a class="wf-navbar__link" data-nav="centrum-wiedzy" href="centrum-wiedzy.html">Centrum wiedzy</a>
+      <a class="wf-navbar__link" data-nav="o-firmie" href="o-firmie.html">O nas</a>
+      <a class="wf-navbar__link" data-nav="kontakt" href="kontakt.html">Kontakt</a>
     </nav>
     <div class="wf-cluster wf-gap-2">
-      <a class="wf-btn wf-btn--primary wf-btn--sm" href="konfigurator.html">Konfigurator</a>
-      <a class="wf-btn wf-btn--ghost wf-btn--sm" href="sklep.html">Sklep</a>
-      <a class="wf-btn wf-btn--ghost wf-btn--sm wf-inline" href="platforma-b2b.html"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-user"></use></svg> Zaloguj</a>
+      <a class="wf-btn wf-btn--primary wf-btn--sm" data-nav="konfigurator" href="konfigurator.html">Konfigurator</a>
+      <a class="wf-btn wf-btn--ghost wf-btn--sm" data-nav="sklep" href="sklep.html">Sklep</a>
+      <a class="wf-btn wf-btn--ghost wf-btn--sm wf-inline" data-nav="platforma-b2b" href="platforma-b2b.html"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-user"></use></svg> Zaloguj</a>
       <a class="wf-btn wf-btn--ghost wf-btn--icon wf-badge--count cw-cart" href="koszyk.html" aria-label="Koszyk, 0 produktów"><svg class="wf-icon" aria-hidden="true"><use href="#ti-shopping-cart"></use></svg><span class="wf-count" data-cart-count>0</span></a>
       <button class="wf-btn wf-btn--ghost wf-btn--icon cw-navtoggle" data-navtoggle aria-controls="mobilenav" aria-expanded="false" aria-label="Otwórz menu"><svg class="wf-icon" aria-hidden="true"><use href="#ti-menu-2"></use></svg></button>
     </div>
@@ -284,7 +288,7 @@
 
   var DOCK = `<!-- ===== dr Jurek – pływający dok (ukryty do przewinięcia) ===== -->
 <div class="cw-jurek-backdrop" data-jurek-backdrop data-open="false" aria-hidden="true"></div>
-<div class="cw-jurek cx-dockhide" data-jurek-dock data-open="false">
+<div class="cw-jurek" data-jurek-dock data-open="false">
   <div class="cw-jurek__panel" role="dialog" aria-label="Wirtualny dr Jurek">
     <div class="cw-jurek__head">
       <span class="wf-ph wf-ph--avatar" aria-hidden="true"></span>
@@ -307,10 +311,13 @@
   /* Znacznik bieżącej sekcji – ustawiany z data-current na <cw-navbar>. */
   function markCurrent(root, key) {
     if (!key) return;
-    var el = root.querySelector('[data-nav="' + key + '"]');
-    if (!el) return;
-    el.setAttribute("aria-current", "page");
-    el.className += " wf-w-semibold";
+    var els = root.querySelectorAll('[data-nav="' + key + '"]');
+    if (!els.length) return;
+    Array.prototype.forEach.call(els, function (el) {
+      el.setAttribute("aria-current", "page");
+      if (el.classList.contains("wf-navitem")) el.className += " wf-w-semibold";
+    });
+    var el = els[0];
     /* Pozycja drugiego poziomu podświetla też swojego rodzica, żeby nie zgubić
        orientacji, w której sekcji serwisu jesteśmy. */
     var parent = el.getAttribute("data-nav-parent");
