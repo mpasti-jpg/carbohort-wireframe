@@ -373,4 +373,34 @@
       reducedMQ.addEventListener && reducedMQ.addEventListener(ev, onResize);
     });
   }
+
+  /* --- Przelicznik skali zabiegu (strony upraw) ----------------------------
+     Markup: kontener [data-calc] z polem [data-calc-in] i dowolną liczbą
+     wyników [data-calc-out] opisanych data-lo / data-hi / data-unit.
+     Liczy wyłącznie z dawek wpisanych w markup – nie ma tu własnych liczb.
+     Bez tego markupu blok nic nie robi. */
+  $$("[data-calc]").forEach(function (box) {
+    var input = box.querySelector("[data-calc-in]");
+    var outs = $$("[data-calc-out]", box);
+    if (!input || !outs.length) return;
+    function fmt(x) {
+      var v = x >= 100 ? Math.round(x) : Math.round(x * 10) / 10;
+      return v.toLocaleString("pl-PL");
+    }
+    function run() {
+      var n = parseFloat(String(input.value || "").replace(",", "."));
+      outs.forEach(function (o) {
+        var target = o.querySelector("b");
+        if (!target) return;
+        var lo = parseFloat(o.getAttribute("data-lo"));
+        var hi = parseFloat(o.getAttribute("data-hi"));
+        var unit = o.getAttribute("data-unit") || "";
+        if (!isFinite(n) || n <= 0 || !isFinite(lo)) { target.textContent = "–"; return; }
+        var a = lo * n, b = (isFinite(hi) ? hi : lo) * n;
+        target.textContent = (b !== a ? fmt(a) + " – " + fmt(b) : fmt(a)) + " " + unit;
+      });
+    }
+    input.addEventListener("input", run);
+    run();
+  });
 })();
