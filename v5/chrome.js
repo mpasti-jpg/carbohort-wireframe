@@ -159,7 +159,7 @@
               <span class="wf-small wf-t-secondary">„Próchnica w płynie" – kondycjonuje glebę i biostymuluje roślinę.</span>
             </a>
             <a class="cw-prodbox" href="carbomat-humic.html">
-              <span class="wf-overline wf-t-tertiary">Węgiel aktywowany · 3 w 1</span>
+              <span class="wf-overline wf-t-tertiary">Sypkie · doglebowe</span>
               <span class="wf-h5 cw-prodbox__name">CARBOMAT HUMIC</span>
               <span class="wf-small wf-t-secondary">Kondycjoner + potas + biostymulator; podnosi pH zakwaszonej gleby – na pole i do ogrodu.</span>
             </a>
@@ -188,7 +188,6 @@
                 <a class="wf-link--quiet wf-small" href="jagodowe.html">Jagodowe</a>
                 <a class="wf-link--quiet wf-small" href="warzywnicze.html">Warzywnicze</a>
                 <a class="wf-link--quiet wf-small" href="zboza.html">Zboża, rzepak, kukurydza</a>
-                <a class="wf-link--quiet wf-small" href="zielen.html">Zieleń miejska</a>
                 <a class="wf-link--quiet wf-small" href="szkolki.html">Szkółki</a>
               </div>
             </div>
