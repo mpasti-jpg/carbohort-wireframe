@@ -135,8 +135,8 @@
     <a class="cw-brand" href="home.html">Carbohort</a>
     <nav class="cw-nav" aria-label="Główna">
       <div class="cw-haspopup">
-        <button class="cw-nav-trigger" data-mega-trigger aria-haspopup="true" aria-expanded="false" aria-controls="mega-produkty">Nasze produkty <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button>
-        <div class="cw-mega cw-mega--wide" id="mega-produkty" data-open="false" role="region" aria-label="Nasze produkty">
+        <button class="cw-nav-trigger" data-mega-trigger aria-haspopup="true" aria-expanded="false" aria-controls="mega-produkty">Produkty Carbohort <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button>
+        <div class="cw-mega cw-mega--wide" id="mega-produkty" data-open="false" role="region" aria-label="Produkty Carbohort">
           <div class="cw-mega__head">
             <span class="wf-overline wf-t-tertiary">Produkty Carbohort</span>
             <a class="wf-btn wf-btn--secondary wf-btn--sm" href="produkty.html">Poznaj całą gamę produktów</a>
@@ -236,7 +236,7 @@
     </div>
   </div>
   <nav class="cw-mobilenav wf-container" id="mobilenav" data-open="false" aria-label="Menu mobilne">
-    <a class="wf-navitem" data-nav="produkty" href="produkty.html">Nasze produkty</a>
+    <a class="wf-navitem" data-nav="produkty" href="produkty.html">Produkty Carbohort</a>
     <a class="wf-navitem" data-nav="uprawy" href="uprawy.html">Rodzaje upraw</a>
     <a class="wf-navitem cw-mobilenav__sub" data-nav="ziemniak" data-nav-parent="uprawy" href="ziemniak.html">Ziemniak</a>
     <a class="wf-navitem cw-mobilenav__sub" data-nav="kukurydza" data-nav-parent="uprawy" href="kukurydza.html">Kukurydza</a>
@@ -260,7 +260,7 @@
         <p class="wf-small wf-t-secondary">Polski, rodzinny producent poprawiaczy gleby z lignitu i leonardytu. Dbając o glebę, inwestujemy w przyszłe pokolenia.</p>
       </div>
       <nav class="wf-stack wf-stack--2" aria-label="Produkty"><p class="wf-overline">Produkty</p>
-        <a class="wf-link--quiet" href="produkty.html">Nasze produkty</a>
+        <a class="wf-link--quiet" href="produkty.html">Produkty Carbohort</a>
         <a class="wf-link--quiet" href="carbomat.html">CARBOMAT ECO</a>
         <a class="wf-link--quiet" href="carbomat-mata.html">CARBOMAT Mata Uprawowa</a>
         <a class="wf-link--quiet" href="carbohumic.html">CARBOHUMIC</a>
@@ -334,6 +334,69 @@
         connectedCallback() { if (!this.dataset.cwReady) { this.dataset.cwReady = "1"; render(this); } }
       });
     }
+  }
+
+  /* ===== Plakietka stanu prac (lewy dolny róg każdej podstrony) ============
+     Dane bierze z status.js (window.CW_STATUS). Wstrzykuje się sama, bez
+     znacznika w HTML, więc nowa podstrona dostaje ją, gdy tylko trafi do
+     manifestu. Siedzi w pasie 0–20 px od dołu, czyli pod dokiem doradcy
+     (dok stoi na bottom: var(--w-space-5) = 20 px) – nie zachodzą na siebie.
+     ⚠️ Etap i etykietę ustawia wyłącznie Mateusz; bez nich plakietka mówi
+     „do ustalenia”, a nie zgaduje stanu.                                     */
+  var STATUS_CSS = `
+.cw-status{position:fixed;left:0;bottom:0;z-index:var(--w-z-sticky);
+  display:flex;align-items:center;gap:.4em;max-width:min(92vw,44em);
+  padding:2px 9px 2px 7px;border-radius:0 6px 0 0;
+  background:var(--w-surface-raised);border-top:1px solid var(--w-border-subtle);
+  border-right:1px solid var(--w-border-subtle);
+  font-family:var(--w-font-sans);font-size:11px;line-height:1.3;
+  color:var(--w-text-tertiary);opacity:.72;transition:opacity .15s ease;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cw-status:hover{opacity:1}
+.cw-status__etap{color:var(--w-text-secondary);font-weight:600}
+.cw-status__sep{opacity:.5}
+.cw-status__etykieta--uwaga{color:var(--w-feedback-warning,#8a6100)}
+.cw-status__etykieta--czeka{color:var(--w-feedback-info,#1d4ed8)}
+.cw-status__etykieta--ok{color:var(--w-feedback-success,#166534)}
+.cw-status__ac{color:inherit;text-decoration:underline;text-underline-offset:2px}
+.cw-status__ac:hover{color:var(--w-text-primary)}
+@media (max-width:640px){.cw-status__etykieta,.cw-status__etykieta+.cw-status__sep{display:none}}
+@media print{.cw-status{display:none}}`;
+
+  function renderStatus() {
+    var cfg = window.CW_STATUS;
+    if (!cfg || document.querySelector(".cw-status")) return;
+    var plik = (location.pathname.split("/").pop() || "home.html").split("?")[0];
+    if (!plik) plik = "home.html";
+    var d = cfg.strony[plik];
+    if (!d) return;
+
+    var st = document.createElement("style");
+    st.textContent = STATUS_CSS;
+    document.head.appendChild(st);
+
+    var czesci = [];
+    if (d.etap && cfg.etapy[d.etap]) {
+      czesci.push('<span class="cw-status__etap">' + cfg.etapy[d.etap] + "</span>");
+      var e = d.etykieta && cfg.etykiety[d.etykieta];
+      if (e) czesci.push('<span class="cw-status__etykieta cw-status__etykieta--' + e.ton + '">' + e.tekst + "</span>");
+    } else {
+      czesci.push('<span class="cw-status__etap">do ustalenia</span>');
+    }
+    if (d.ac) czesci.push('<a class="cw-status__ac" href="' + cfg.meta.bazaAC + d.ac + '" target="_blank" rel="noopener">AC #' + d.ac + "</a>");
+
+    var box = document.createElement("div");
+    box.className = "cw-status";
+    box.setAttribute("role", "note");
+    box.setAttribute("aria-label", "Stan prac nad tą podstroną");
+    box.innerHTML = "<span>Status:</span>" + czesci.join('<span class="cw-status__sep">·</span>');
+    document.body.appendChild(box);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", renderStatus);
+  } else {
+    renderStatus();
   }
 
   define("cw-icons",  function (el) { el.innerHTML = ICONS; });
