@@ -358,6 +358,8 @@
 .cw-status__etykieta--uwaga{color:var(--w-feedback-warning,#8a6100)}
 .cw-status__etykieta--czeka{color:var(--w-feedback-info,#1d4ed8)}
 .cw-status__etykieta--ok{color:var(--w-feedback-success,#166534)}
+.cw-status__etykieta--praca{color:#6d28d9}
+.cw-status__etykieta--poprawki{color:#b91c1c}
 .cw-status__ac{color:inherit;text-decoration:underline;text-underline-offset:2px}
 .cw-status__ac:hover{color:var(--w-text-primary)}
 @media (max-width:640px){.cw-status__etykieta,.cw-status__etykieta+.cw-status__sep{display:none}}

@@ -23,7 +23,8 @@ window.CW_STATUS = {
     "projektAC": 837,
     "bazaAC": "https://pm.bizwebstudio.pl/projects/837/tasks/",
     "live": "https://mpasti-jpg.github.io/carbohort-wireframe/v5/",
-    "tabelaLive": "https://mpasti-jpg.github.io/carbohort-wireframe/v5/stan-podstron.html"
+    "tabelaLive": "https://mpasti-jpg.github.io/carbohort-wireframe/stan-podstron.html",
+    "katalogWersji": "v5/"
   },
   "etapy": {
     "lofi": "Lo-Fi",
@@ -40,12 +41,16 @@ window.CW_STATUS = {
       "ton": "uwaga"
     },
     "projektowanie": {
-      "tekst": "W trakcie projektowania",
+      "tekst": "Projektowanie",
       "ton": "praca"
     },
     "akceptacja": {
-      "tekst": "Wymaga akceptacji",
+      "tekst": "Do akceptacji",
       "ton": "czeka"
+    },
+    "poprawki": {
+      "tekst": "Poprawki",
+      "ton": "poprawki"
     },
     "zaakceptowane": {
       "tekst": "Zaakceptowane",
@@ -384,14 +389,14 @@ window.CW_STATUS = {
       "uwaga": "Narzędzie wewnętrzne; słownik statusów niespójny z panelem klienta"
     },
     "partner.html": {
-      "sekcja": "Bez numeru",
+      "sekcja": "Pozostałe",
       "nazwa": "Zostań partnerem",
       "etap": null,
       "etykieta": null,
       "ac": null,
       "prop": "lofi",
       "data": "25.07",
-      "uwaga": "Bez numeru sekcji do czasu decyzji – tak jak przyszłe podstrony opisowe (regulaminy, cookies). Persona doradcy odłożona 06.08, więc otwarte zostaje też to, czy strona zostaje"
+      "uwaga": "W sekcji „Pozostałe\" do czasu decyzji o numeracji – tak jak przyszłe podstrony opisowe (regulaminy, cookies). Persona doradcy odłożona 06.08, więc otwarte zostaje też to, czy strona zostaje"
     },
     "zalecenia.html": {
       "sekcja": "Poza tabelą",
