@@ -283,8 +283,8 @@ window.CW_STATUS = {
       "etap": "lofi",
       "etykieta": "informacje",
       "ac": 30721,
-      "data": "07.09",
-      "uwaga": "Przebudowany od nowa: 4 pytania, 11 grup, matryca dawek ze źródłami. Logika czeka na akceptację Darka (15 pytań P-1…P-15)"
+      "data": "08.09",
+      "uwaga": "Przebudowany od nowa: 4 pytania, 11 grup, dawki ze źródłami (11 orientacyjnych z zaleceniem konsultacji). Komplet do akceptacji Darka: dokument czytelny, pełna logika i arkusz werdyktów w zasoby/dokumenty/konfigurator (87 pozycji z numerami, 15 pytań P-1…P-15)"
     },
     "sklep.html": {
       "sekcja": "9. Sklep",
