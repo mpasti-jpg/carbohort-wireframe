@@ -290,41 +290,96 @@ var KF = (function () {
     return o;
   }
   /* Orchard-style rows shared by sad / borowka / jagodowe (spec 4.1-4.3). */
-  function rowNief120(src, doseExtra) {
+  function rowNief120(zr, doseExtra, conc) {
     return { p: "nief", rate: 120, dose: "120 l/ha na rok (2 × 60 l/ha)" + (doseExtra || ""), pair: "soil",
       need: ["beczkowoz", "recznie"], needLabel: "beczkowozu",
       when: "wiosną (luty–maj) i po zbiorach (połowa sierpnia–grudzień)",
-      how: "Pierwszą dawkę (60 l/ha) podaj wczesną wiosną przed ruszeniem wegetacji, drugą po zbiorach, zawsze na wilgotną glebę. Rozcieńcz w beczce lub mauzerze do 1–5 % i polej pasy pod koronami, najlepiej przed deszczem albo nawadnianiem. Nie podawaj przez dysze i filtry, bo gęsta zawiesina je zapcha; przed użyciem mocno wstrząśnij.",
-      src: src };
+      how: "Pierwszą dawkę (60 l/ha) podaj wczesną wiosną przed ruszeniem wegetacji, drugą po zbiorach, zawsze na wilgotną glebę. Rozcieńcz w beczce lub mauzerze do " + (conc || "1–5 %") + " i polej pasy pod koronami, najlepiej przed deszczem albo nawadnianiem. Nie podawaj przez dysze i filtry, bo gęsta zawiesina je zapcha; przed użyciem mocno wstrząśnij.",
+      zr: zr };
   }
-  function rowFiltr40(src) {
+  function rowFiltr40(zr) {
     return { p: "filtr", rate: 40, dose: "40 l/ha na rok (2 × 20 l/ha)", pair: "soil",
       need: ["opryskiwacz", "fertygacja"], needLabel: "opryskiwacza lub fertygacji",
       when: "wiosną i po zbiorach",
       how: "Pierwszy oprysk gleby wczesną wiosną, drugi po zbiorach: 20 l/ha w ok. 400 l wody na hektar, najlepiej przed deszczem, nawadnianiem lub płytkim wymieszaniem. Przy fertygacji możesz podzielić dawkę na kilka mniejszych porcji przez linie kroplujące, w stężeniu 0,1–1 %. Po zabiegu przepłucz instalację czystą wodą.",
-      src: src };
+      zr: zr };
   }
-  function rowMaxi3(src) {
+  function rowMaxi3(zr) {
     return { p: "maxi", rate: 3, dose: "3 l/ha (3 × 1 l/ha)",
       need: ["opryskiwacz"], needLabel: "opryskiwacza",
       when: "w sezonie, od ruszenia wegetacji, co 10–14 dni",
       how: "Trzy opryski na liść po 1 l/ha co 10–14 dni, od ruszenia wegetacji do końca intensywnego wzrostu pędów; stężenie 0,1–0,5 %, minimum 500 l wody na hektar. Po przymrozku, gradzie lub innym uszkodzeniu zrób serię trzech zabiegów co 3 dni. Do zbiornika dodaj produkt na końcu, po rozpuszczeniu pozostałych składników.",
-      src: src };
+      zr: zr };
   }
-  function rowCalbor3(src) {
+  function rowCalbor3(zr) {
     return { p: "calbor", rate: 3, dose: "3 l/ha (3 × 1 l/ha)",
       need: ["opryskiwacz"], needLabel: "opryskiwacza",
       when: "po zawiązaniu owoców do zbioru, co 7–10 dni",
       how: "Zacznij po zawiązaniu owoców, gdy zaczynają rosnąć: trzy opryski po 1 l/ha co 7–10 dni, stężenie 0,1–0,5 %, minimum 500 l wody na hektar. Przy ryzyku niedoboru wapnia i boru możesz prowadzić serię aż do zbioru. Nie opryskuj w kwitnieniu.",
-      src: src };
+      zr: zr };
   }
 
-  var SRC_SAD_SOIL_N = "karta produktu: min. 60 l/ha wiosną i jesienią; poradnik sadowniczy: 100–600 l/ha na rok";
-  var SRC_SAD_SOIL_F = "karta produktu: 10–20 l/ha, min. 2 opryski w roku; poradnik sadowniczy: 40–80 l/ha na rok";
-  var SRC_SAD_LEAF = "poradnik sadowniczy";
-  var SRC_JAG = "poradniki malinowy i truskawkowy (niefiltrowany 100–250 i 100–150 l/ha na rok; filtrowany 40–80 l/ha; nalistne 3–5 l/ha)";
-  var SRC_BOR = "poradnik borówkowy";
-  var SRC_BOR_F = "poradnik borówkowy: 20–60 l/ha na rok";
+  /* Source label shown on every card ("dawka wg: …"). One entry per dose definition Z-xx;
+     the full sources, quotes and audit verdicts live in zasoby/dokumenty/konfigurator/konfigurator-zrodla-dawek.json
+     (Załącznik E) and must carry the same labels – konfigurator-docs.py checks that. */
+  var ZRODLA = {
+      "Z-01": "Darek, AC 21.07.2026: 3–8 l na drzewo jako starter (16.07: 3–5 l); poradnik sadowniczy: 3 l to minimum; 5 l to wybór crear ze środka widełek",
+      "Z-02": "poradnik malinowy: 25 l podłoża na roślinę przy 10 % udziału = 2,5 l; dla truskawki i pozostałych jagodowych przeniesione – poradnik truskawkowy nie podaje dawki na roślinę",
+      "Z-03": "propozycja crear: program ziemniaka 04.09.2026 (roboczy) 200–250 kg/ha pasowo, całopowierzchniowo min. 2000 kg/ha; przy gęstości 500–750 kg/m³ z karty 250 kg to 333–500 l; program kukurydzy 2026-08: dawka indywidualna",
+      "Z-04": "poradnik szkółkarski: 10–30 % udziału w podłożu; 20 % i przeliczenie na m³ to wybór crear; decyzja MRiRW G-971/20: podłoża 20–30 %",
+      "Z-05": "Darek 16.07.2026: 10–15 % objętości warstwy ornej (przy 20 cm to 20–30 l/m²); Darek 21.07: 100–200 ml pod rozsadę, 1–3 l pod krzew; decyzja MRiRW G-971/20: warzywa 20 l/m²",
+      "Z-06": "⚠️ brak zaleceń dla trawnika w materiałach CarboHort – dawka przeniesiona z grządek (20 l/m²)",
+      "Z-07": "Darek, AC 21.07.2026: krzewy i byliny 1–3 l na roślinę; 2 l to środek widełek wybrany przez crear",
+      "Z-08": "karta produktu: 10–20 % udziału w mieszance, przykład 0,5–1 l na doniczkę 5 l – przeskalowane na donicę 10 l (1–2 l); drenaż 5 cm: Darek 16.07 i poradnik szkółkarski",
+      "Z-09": "poradnik borówkowy: minimum 80 l podłoża na roślinę przy 20 % udziału = 16 l",
+      "Z-10": "Darek, AC 21.07.2026: krzewy i byliny 1–3 l – bierzemy górną granicę; pod borówkę poradnik borówkowy: 16 l w dołku 80 l",
+      "Z-11": "poradnik borówkowy: min. 4 l na młody krzew (warstwa 5 cm na kwadracie 30 × 30 cm = 4,5 l); szerokość pasów i odświeżanie: Darek 16.07.2026",
+      "Z-12": "poradnik borówkowy: 4,5 l na krzew; ⚠️ obsada 3000 krzewów/ha to założenie crear – poradnik obsady nie podaje",
+      "Z-13": "karta produktu: warstwa min. 4 cm (1 cm na 1 m² = 10 l, więc 40 l/m²); decyzja MRiRW G-971/20: ściółkowanie 40 l/m²; Darek 16.07.2026: 3–5 cm",
+      "Z-14": "poradnik borówkowy: min. 4 l na młody krzew – przeniesione na krzewy ozdobne; warstwa min. 4 cm wg karty produktu (Darek 16.07: 3–5 cm)",
+      "Z-15": "poradnik borówkowy: min. 4 l na młody krzew (warstwa 5 cm na kwadracie 30 × 30 cm) – przeniesione z borówki na inne kwasolubne; odświeżanie co kilka lat: Darek 16.07.2026",
+      "Z-16": "karta produktu (blok „dla sadownika”): 150 ml na roślinę; dołek 3 % i moczenie sadzonek 3 % – karta (blok „dla ogrodnika”)",
+      "Z-17": "karta produktu: po min. 60 l/ha wiosną i jesienią, dawka roczna na min. 2 zabiegi = 120 l/ha; poradnik sadowniczy: 100–600 l/ha na rok, stężenie 1–5 %",
+      "Z-18": "karta produktu (blok „dla sadownika”): 150 ml na roślinę – przeniesione na krzew borówki; poradnik borówkowy: preparat pod borówkę o pH ok. 5",
+      "Z-19": "karta produktu: po min. 60 l/ha wiosną i jesienią = 120 l/ha na rok; poradnik borówkowy: 100–600 l/ha na rok, stężenie robocze 5–10 %",
+      "Z-20": "karta produktu (blok „dla sadownika”): 150 ml na roślinę; zalewanie bruzd roztworem 3 % – karta i dokument Darka 29.07.2026; poradniki malinowy i truskawkowy nie podają dawki na roślinę",
+      "Z-21": "karta produktu: po min. 60 l/ha wiosną i jesienią = 120 l/ha na rok; mieści się w poradniku malinowym (100–250 l/ha) i truskawkowym (100–150 l/ha), stężenie 1–5 %",
+      "Z-22": "karta produktu: po min. 60 l/ha (zabieg wiosenny); dokument Darka 29.07.2026: min. 50 l/ha przed siewem, stężenie 1–10 %",
+      "Z-23": "karta produktu: po min. 60 l/ha (zabieg jesienny); sposób zabiegu na resztki jak w programie kukurydzy 2026-08 (tam ok. 50 l/ha; Darek 29.07: min. 40 l/ha)",
+      "Z-24": "program kukurydzy 2026-08 (po recenzji): min. 50 l/ha wiosną i jesienią ⚠️ karta produktu: po min. 60 l/ha",
+      "Z-25": "program kukurydzy 2026-08 (po recenzji): ok. 50 l/ha jesienią na rozdrobnione, wilgotne resztki",
+      "Z-26": "karta produktu: oprysk gleby 10–20 l/ha w ok. 400 l wody, min. 2 zabiegi w roku = 40 l/ha; poradnik sadowniczy: 40–80 l/ha na rok; fertygacja 0,1 % codziennie lub 1 % co 10–14 dni – poradnik sadowniczy",
+      "Z-27": "karta produktu: 2 × 20 l/ha (10–20 l/ha, min. 2 zabiegi w roku); poradnik borówkowy: 20–60 l/ha na rok",
+      "Z-28": "poradniki malinowy i truskawkowy: 40–80 l/ha na rok – dolna granica; karta produktu: 2 × 20 l/ha",
+      "Z-29": "karta produktu: 10–20 l/ha w ok. 400 l wody – górna granica; dokument Darka 29.07.2026: min. 20 l/ha; rozsada 0,5 % i dołki 3 % – instrukcja stosowania MRiRW dla CARBOHUMIC",
+      "Z-30": "dokument Darka 29.07.2026: min. 5 l/ha na zabieg, min. 5 zabiegów w sezonie co 10–14 dni, stężenie 1 % = min. 25 l/ha na sezon; 0,1 % przy podawaniu codziennym – poradniki",
+      "Z-31": "karta produktu: 2–3 opryski nalistne po 2–3 l/ha, 0,1–0,5 %, co 10–14 dni od fazy 2–3 liścia – bierzemy 2 × 2 l/ha ⚠️ zapis karty można też czytać jako 2–3 l/ha na rok",
+      "Z-32": "karta produktu: 10–20 l/ha w ok. 400 l wody po sezonie; dokument Darka 29.07.2026: min. 20 l/ha na resztki; program kukurydzy 2026-08: 20 l/ha po zbiorze",
+      "Z-33": "program kukurydzy 2026-08 (po recenzji): 20–40 l/ha w ok. 400 l wody – dolna granica; karta produktu: 10–20 l/ha",
+      "Z-34": "program kukurydzy 2026-08 (po recenzji): 20 l/ha po zbiorze w programie podstawowym, ok. 400 l wody",
+      "Z-35": "poradnik szkółkarski: zaprawa nasion 0,5–1 %; moczenie korzeni 1 % – karta produktu i poradnik truskawkowy; opakowanie 5 l to założenie crear",
+      "Z-36": "poradnik szkółkarski: 0,1 % co 7–10 dni (młodszy materiał), do 0,5 % co 10–14 dni; opakowanie 20 l to założenie crear – poradnik nie podaje ilości",
+      "Z-37": "poradnik sadowniczy: 3–5 l/ha na rok, 3–5 aplikacji po 1 l/ha co 10–14 dni, 0,1–0,5 %, min. 500 l wody – bierzemy dolną granicę ⚠️ program kukurydzy: maks. 0,6 l/ha na zabieg",
+      "Z-38": "poradnik borówkowy: 3–5 l/ha na rok, 3–5 aplikacji po 1 l/ha co 10–14 dni, 0,1–0,5 %, min. 500 l wody – bierzemy dolną granicę",
+      "Z-39": "poradniki malinowy i truskawkowy: 3–5 l/ha na rok, 3–5 aplikacji po 1 l/ha co 10–14 dni, 0,1–0,5 %, min. 500 l wody – bierzemy dolną granicę",
+      "Z-40": "schemat przeniesiony z poradników sadowniczego i jagodowych (3 × 1 l/ha) ⚠️ brak poradnika warzywniczego – dawka do potwierdzenia przez CarboHort",
+      "Z-41": "program kukurydzy 2026-08 (po recenzji): maks. 0,6 l/ha na zabieg, BBCH 14–51; klient 06.08.2026: dawka próbna 0,3–1 l/ha liczona do 1 ha",
+      "Z-42": "poradnik szkółkarski: 0,1 % co ok. 7 dni, min. 2–3 zabiegi od fazy 2–3 liścia; opakowanie 5 l to założenie crear",
+      "Z-43": "poradnik sadowniczy: 3–5 l/ha na rok, 3–5 aplikacji po 1 l/ha co 7–10 dni w owocowaniu, 0,1–0,5 %, min. 500 l wody – bierzemy dolną granicę; nie w kwitnieniu: dokument Darka 29.07.2026",
+      "Z-44": "poradnik borówkowy: 3–5 l/ha na rok, 3–5 aplikacji po 1 l/ha co 7–10 dni w owocowaniu, 0,1–0,5 %, min. 500 l wody – bierzemy dolną granicę",
+      "Z-45": "poradniki malinowy i truskawkowy: 3–5 l/ha na rok, 3–5 aplikacji po 1 l/ha co 7–10 dni w owocowaniu, 0,1–0,5 %, min. 500 l wody – bierzemy dolną granicę",
+      "Z-46": "karta produktu CARBOMAT HUMIC i dokument Darka 16.07.2026: przed siewem co najmniej 250 kg/ha, wymieszać do 10 cm – potwierdzone przez Darka 21.07 (AC #30867)",
+      "Z-47": "dokument Darka 16.07.2026, potwierdzone 21.07 (AC #30867): pasowo min. 150 kg/ha, całopowierzchniowo min. 250 kg/ha; strip-till 100–120 kg/ha – karta produktu ⚠️ karta podaje pasowo 100 kg/ha",
+      "Z-48": "poradnik szkółkarski: 3–10 % objętości podłoża, z mikoryzą 2–5 %; wybór 5 % i przeliczenie na 30 kg/m³ przy 0,6 kg/l (karta) to założenie crear",
+      "Z-49": "karta CARBOHUMIC niefiltrowanego (blok „dla ogrodnika”): podlewanie roztworem 1 % co 10–14 dni, 3 % do dołka, 5 % wiosną i jesienią ⚠️ ilość na m² to założenie crear: 5 l roztworu na m², 8 podlewań w sezonie",
+      "Z-50": "karta CARBOHUMIC niefiltrowanego: 150 ml na roślinę (blok „dla sadownika”); 3 % do dołka i 1 % po posadzeniu (blok „dla ogrodnika”)",
+      "Z-51": "karta CARBOHUMIC niefiltrowanego (blok „dla ogrodnika”): podlewanie 1 % co 10–14 dni ⚠️ ilość na roślinę to założenie crear: ok. 10 l roztworu pod krzew, 8 podlewań w sezonie",
+      "Z-52": "karta CARBOHUMIC niefiltrowanego (blok „dla ogrodnika”): podlewanie 1 % co 10–14 dni ⚠️ ilość na donicę to założenie crear: 2 l roztworu na podlewanie, 8 podlewań w sezonie",
+      "Z-53": "dokument Darka 16.07.2026: 500 g na 10 m² (= 50 g/m²), raz w roku, na glebie kwaśnej lub jałowej dawka podwójna; decyzja MRiRW G-1528/24: do 500 g na 10 m²",
+      "Z-54": "⚠️ brak źródła dla trawnika – dawka przeniesiona z ogrodu (500 g na 10 m²); decyzja MRiRW G-1528/24 wymienia warzywa i rośliny ozdobne w ogrodach, nie trawnik – do potwierdzenia u Darka",
+      "Z-55": "dokument Darka 16.07.2026 i decyzja MRiRW G-1528/24: 20–30 g na 10 l podłoża przy przesadzaniu; 20 g na donicę posypowo to dolna granica tego zakresu (założenie crear)"
+  };
+  var BOR_CONC = "5–10 %", BOR_CONC_DOSE = ", stężenie 5–10 %";   /* poradnik borówkowy – wyższe stężenie niż w innych uprawach */
   var ALT = "zamiast tego, jeśli wolisz";
 
   /* ============================ DATA ============================ */
@@ -342,7 +397,7 @@ var KF = (function () {
         why: "Surowy lignit: raz wymieszany z glebą pracuje latami – magazyn wody i trwała materia organiczna.",
         packs: [{ size: 20, label: "worek 20 l", price: 42 }, { size: 1000, label: "big bag 1000 l", price: 600 }, { size: 1500, label: "big bag 1500 l", price: 800 }] },
       sciolka: { name: "CARBOMAT ECO Ściółka pH 4,5–5,0", unit: "l", form: "bulk", page: "carbomat.html",
-        why: "Grubsza frakcja lignitu rozsypana warstwą 3–5 cm: zatrzymuje wilgoć, nie zabiera azotu jak kora, zakwasza.",
+        why: "Grubsza frakcja lignitu rozsypana warstwą 4–5 cm: zatrzymuje wilgoć, nie zabiera azotu jak kora, zakwasza.",
         packs: [{ size: 20, label: "worek 20 l", price: 42 }, { size: 1000, label: "big bag 1000 l", price: 600 }, { size: 1500, label: "big bag 1500 l", price: 800 }] },
       humic_h: { name: "CARBOMAT HUMIC", unit: "l", form: "liq", page: "carbomat-humic.html",
         why: "Kondycjoner, potas i biostymulator w jednym – działa od pierwszych tygodni, podnosi odczyn zakwaszonej gleby.",
@@ -429,30 +484,30 @@ var KF = (function () {
           { p: "eco_uni", rate: 5, dose: "5 l/drzewo", role: "hero",
             when: "przy sadzeniu, wiosną (luty–maj) lub jesienią",
             how: "Wsyp ok. 5 l do dołka i wymieszaj z glebą rodzimą w strefie korzeni, tak żeby lignit otaczał bryłę, a nie leżał warstwą na dnie. Na glebie ciężkiej daj więcej, do 8 l na drzewo. Sadzisz raz na kilkadziesiąt lat, więc to jedyny moment, żeby dać lignit pod korzeń.",
-            src: "Darek 21.07.2026: 3–8 l na drzewo jako starter; poradnik sadowniczy: min. 3 l" },
+            zr: "Z-01" },
           { p: "nief", rate: 0.15, dose: "0,15 l/drzewo", role: "add", need: ["beczkowoz", "recznie"], needLabel: "beczkowozu",
             when: "przy sadzeniu",
-            how: "Przygotuj roztwór ok. 3 % (300 ml na 10 l wody) i zalej nim dołek przed posadzeniem albo podlej drzewko zaraz po. Korzenie możesz też namoczyć przed sadzeniem w roztworze 1 %, nawet przez dobę. Przed użyciem mocno wstrząśnij, bo produkt gęstnieje.",
-            src: "karta produktu: 150 ml na roślinę" }
+            how: "Przygotuj roztwór ok. 3 % (300 ml na 10 l wody) i zalej nim dołek przed posadzeniem albo podlej drzewko zaraz po. Sadzonki możesz też namoczyć przed sadzeniem w tym samym roztworze 3 %. Przed użyciem mocno wstrząśnij, bo produkt gęstnieje.",
+            zr: "Z-16" }
         ] },
         { id: "gleba", label: "Odbudowa gleby w rosnącej plantacji", sub: "próchnica, woda w glebie, struktura", unit: "ha", items: [
-          mix(rowNief120(SRC_SAD_SOIL_N), { role: "hero" }),
-          mix(rowFiltr40(SRC_SAD_SOIL_F), { role: "hero" }),
-          mix(rowMaxi3(SRC_SAD_LEAF), { role: "opt" }),
-          mix(rowCalbor3(SRC_SAD_LEAF), { role: "opt" })
+          mix(rowNief120("Z-17"), { role: "hero" }),
+          mix(rowFiltr40("Z-26"), { role: "hero" }),
+          mix(rowMaxi3("Z-37"), { role: "opt" }),
+          mix(rowCalbor3("Z-43"), { role: "opt" })
         ] },
         { id: "wzrost", label: "Wzrost i regeneracja roślin w sezonie", sub: "wigor, masa liściowa, po chłodach lub gradzie", unit: "ha", items: [
-          mix(rowMaxi3(SRC_SAD_LEAF), { role: "hero" }),
-          mix(rowNief120(SRC_SAD_SOIL_N), { role: "add" }),
-          mix(rowFiltr40(SRC_SAD_SOIL_F), { role: "add" }),
-          mix(rowCalbor3(SRC_SAD_LEAF), { role: "opt" })
+          mix(rowMaxi3("Z-37"), { role: "hero" }),
+          mix(rowNief120("Z-17"), { role: "add" }),
+          mix(rowFiltr40("Z-26"), { role: "add" }),
+          mix(rowCalbor3("Z-43"), { role: "opt" })
         ] },
         { id: "owoc", label: "Jakość, kaliber i trwałość owocu", sub: "od zawiązania owoców do zbioru", unit: "ha",
           notes: ["Jakość owocu zaczyna się w glebie: lepsze pobieranie wapnia i wody daje równiejszy owoc, dlatego w zestawie jest też produkt doglebowy."], items: [
-          mix(rowCalbor3(SRC_SAD_LEAF), { role: "hero" }),
-          mix(rowNief120(SRC_SAD_SOIL_N), { role: "add" }),
-          mix(rowFiltr40(SRC_SAD_SOIL_F), { role: "add" }),
-          mix(rowMaxi3(SRC_SAD_LEAF), { role: "opt" })
+          mix(rowCalbor3("Z-43"), { role: "hero" }),
+          mix(rowNief120("Z-17"), { role: "add" }),
+          mix(rowFiltr40("Z-26"), { role: "add" }),
+          mix(rowMaxi3("Z-37"), { role: "opt" })
         ] }
       ] },
 
@@ -462,38 +517,38 @@ var KF = (function () {
           { p: "eco_kw", rate: 16, dose: "16 l/krzew", role: "hero",
             when: "przy sadzeniu (wiosna luty–maj lub jesień)",
             how: "Przygotuj dołek lub bruzdę na ok. 80 l podłoża na krzew i wymieszaj w niej 16 l lignitu z torfem kwaśnym lub trocinami (ok. 20 % objętości). Podłoże namocz dzień lub dwa przed sadzeniem, żeby lignit nabrał wody. Borówka rośnie na tym stanowisku 20–30 lat, więc nie oszczędzaj na tym etapie.",
-            src: "poradnik borówkowy: 80 l podłoża na roślinę, 20 % udziału" },
+            zr: "Z-09" },
           { p: "sciolka", rate: 4, dose: "4 l/krzew", role: "add",
             when: "zaraz po posadzeniu",
-            how: "Zaraz po posadzeniu rozsyp warstwę 5 cm w promieniu ok. 30 cm od krzewu, minimum 4 l na młody krzew. W kolejnych latach poszerzaj pas w miarę wzrostu krzewu: 60–80 cm dla młodych, 80–120 cm dla starszych. Warstwę odświeżaj co kilka lat.",
-            src: SRC_BOR },
+            how: "Zaraz po posadzeniu rozsyp warstwę 5 cm na kwadracie ok. 30 × 30 cm wokół krzewu (to ok. 4,5 l), minimum 4 l na młody krzew. W kolejnych latach poszerzaj pas w miarę wzrostu krzewu: 60–80 cm dla młodych, 80–120 cm dla starszych. Warstwę odświeżaj co kilka lat.",
+            zr: "Z-11" },
           { p: "nief", rate: 0.15, dose: "0,15 l/krzew", role: "add", need: ["beczkowoz", "recznie"], needLabel: "beczkowozu",
             when: "przy sadzeniu",
             how: "Przygotuj roztwór ok. 3 % i zalej nim dołek przed posadzeniem, tak żeby podłoże było wilgotne w całej objętości. Pod borówkę CarboHort przygotowuje wariant o pH ok. 5 – zaznacz to w zamówieniu. Przed użyciem mocno wstrząśnij.",
-            src: "karta produktu: 150 ml na roślinę; poradnik borówkowy: pH preparatu ok. 5" }
+            zr: "Z-18" }
         ] },
         { id: "gleba", label: "Odbudowa gleby w rosnącej plantacji", sub: "próchnica, woda w glebie, struktura", unit: "ha", items: [
-          mix(rowNief120(SRC_BOR, ", stężenie 5–10 %"), { role: "hero" }),
-          mix(rowFiltr40(SRC_BOR_F), { role: "hero" }),
+          mix(rowNief120("Z-19", BOR_CONC_DOSE, BOR_CONC), { role: "hero" }),
+          mix(rowFiltr40("Z-27"), { role: "hero" }),
           { p: "sciolka", rate: 13500, dose: "13 500 l/ha", role: "opt", consult: true,
             sub: "odświeżenie ściółki: 4,5 l na krzew, liczymy 3000 krzewów na ha – popraw liczbę krzewów u doradcy",
             when: "co kilka lat, po zbiorach albo wczesną wiosną",
             how: "Dosyp ściółkę tak, żeby pod krzewem znów było 5 cm warstwy, ok. 4,5 l na krzew; przy starszych krzewach poszerz pas do 80–120 cm. Najlepiej wczesną wiosną albo zaraz po zbiorach. Ściółka trzyma wilgoć, ogranicza chwasty i podtrzymuje kwaśny odczyn.",
-            src: SRC_BOR },
-          mix(rowMaxi3(SRC_BOR), { role: "opt" }),
-          mix(rowCalbor3(SRC_BOR), { role: "opt" })
+            zr: "Z-12" },
+          mix(rowMaxi3("Z-38"), { role: "opt" }),
+          mix(rowCalbor3("Z-44"), { role: "opt" })
         ] },
         { id: "wzrost", label: "Wzrost i regeneracja roślin w sezonie", sub: "wigor, masa liściowa, po chłodach lub gradzie", unit: "ha", items: [
-          mix(rowMaxi3(SRC_BOR), { role: "hero" }),
-          mix(rowNief120(SRC_BOR), { role: "add" }),
-          mix(rowFiltr40(SRC_BOR_F), { role: "add" }),
-          mix(rowCalbor3(SRC_BOR), { role: "opt" })
+          mix(rowMaxi3("Z-38"), { role: "hero" }),
+          mix(rowNief120("Z-19", BOR_CONC_DOSE, BOR_CONC), { role: "add" }),
+          mix(rowFiltr40("Z-27"), { role: "add" }),
+          mix(rowCalbor3("Z-44"), { role: "opt" })
         ] },
         { id: "owoc", label: "Jakość, kaliber i trwałość owocu", sub: "od zawiązania owoców do zbioru", unit: "ha", items: [
-          mix(rowCalbor3("poradnik borówkowy: 3–5 × 1 l/ha co 7–10 dni w owocowaniu"), { role: "hero" }),
-          mix(rowNief120(SRC_BOR), { role: "add" }),
-          mix(rowFiltr40(SRC_BOR_F), { role: "add" }),
-          mix(rowMaxi3(SRC_BOR), { role: "opt" })
+          mix(rowCalbor3("Z-44"), { role: "hero" }),
+          mix(rowNief120("Z-19", BOR_CONC_DOSE, BOR_CONC), { role: "add" }),
+          mix(rowFiltr40("Z-27"), { role: "add" }),
+          mix(rowMaxi3("Z-38"), { role: "opt" })
         ] }
       ] },
 
@@ -502,31 +557,31 @@ var KF = (function () {
           { p: "eco_uni", rate: 2.5, dose: "2,5 l/roślinę", role: "hero",
             when: "przy sadzeniu, wiosną (luty–maj) lub jesienią",
             how: "Wymieszaj lignit z podłożem w bruździe lub dołku w proporcji ok. 10 %: przy 25 l podłoża na roślinę to 2,5 l. Na całą długość rzędu możesz przygotować własną mieszankę, np. 70 % gleby rodzimej i 30 % lignitu. Malina i truskawka rosną w glebie rodzimej, więc to poprawia stanowisko na cały cykl plantacji.",
-            src: "poradnik malinowy: 25 l podłoża na roślinę, 10 %; ⚠️ poradnik truskawkowy nie podaje dawki na roślinę" },
+            zr: "Z-02" },
           { p: "nief", rate: 0.15, dose: "0,15 l/roślinę", role: "add", need: ["beczkowoz", "recznie"], needLabel: "beczkowozu",
             when: "przy sadzeniu",
-            how: "Przygotuj roztwór 3 % i zalej nim bruzdę lub dołki przed sadzeniem, na wilgotną glebę. Sadzonki możesz przed posadzeniem namoczyć w roztworze 1 %, nawet przez dobę. Przed użyciem mocno wstrząśnij.",
-            src: "poradnik malinowy" }
+            how: "Przygotuj roztwór 3 % i zalej nim bruzdę lub dołki przed sadzeniem, na wilgotną glebę. Sadzonki możesz przed posadzeniem namoczyć w tym samym roztworze 3 %. Przed użyciem mocno wstrząśnij.",
+            zr: "Z-20" }
         ] },
         { id: "gleba", label: "Odbudowa gleby w rosnącej plantacji", sub: "próchnica, woda w glebie, struktura", unit: "ha",
           notes: ["Malina po malinie i truskawka po truskawce wyczerpują stanowisko: odbudowa materii organicznej co roku ogranicza problemy replantacyjne."], items: [
-          mix(rowNief120(SRC_JAG), { role: "hero" }),
-          mix(rowFiltr40(SRC_JAG), { role: "hero" }),
-          mix(rowMaxi3(SRC_JAG), { role: "opt" }),
-          mix(rowCalbor3(SRC_JAG), { role: "opt" })
+          mix(rowNief120("Z-21"), { role: "hero" }),
+          mix(rowFiltr40("Z-28"), { role: "hero" }),
+          mix(rowMaxi3("Z-39"), { role: "opt" }),
+          mix(rowCalbor3("Z-45"), { role: "opt" })
         ] },
         { id: "wzrost", label: "Wzrost i regeneracja roślin w sezonie", sub: "wigor, masa liściowa, po chłodach lub gradzie", unit: "ha", items: [
-          mix(rowMaxi3(SRC_JAG), { role: "hero" }),
-          mix(rowNief120(SRC_JAG), { role: "add" }),
-          mix(rowFiltr40(SRC_JAG), { role: "add" }),
-          mix(rowCalbor3(SRC_JAG), { role: "opt" })
+          mix(rowMaxi3("Z-39"), { role: "hero" }),
+          mix(rowNief120("Z-21"), { role: "add" }),
+          mix(rowFiltr40("Z-28"), { role: "add" }),
+          mix(rowCalbor3("Z-45"), { role: "opt" })
         ] },
         { id: "owoc", label: "Jakość, kaliber i trwałość owocu", sub: "od zawiązania owoców do zbioru", unit: "ha",
           notes: ["Jakość owocu zaczyna się w glebie: lepsze pobieranie wapnia i wody daje równiejszy owoc, dlatego w zestawie jest też produkt doglebowy."], items: [
-          mix(rowCalbor3(SRC_JAG), { role: "hero" }),
-          mix(rowNief120(SRC_JAG), { role: "add" }),
-          mix(rowFiltr40(SRC_JAG), { role: "add" }),
-          mix(rowMaxi3(SRC_JAG), { role: "opt" })
+          mix(rowCalbor3("Z-45"), { role: "hero" }),
+          mix(rowNief120("Z-21"), { role: "add" }),
+          mix(rowFiltr40("Z-28"), { role: "add" }),
+          mix(rowMaxi3("Z-39"), { role: "opt" })
         ] }
       ] },
 
@@ -537,37 +592,37 @@ var KF = (function () {
           { p: "nief", rate: 60, dose: "60 l/ha", role: "hero", pair: "soil", need: ["beczkowoz", "recznie"], needLabel: "beczkowozu",
             when: "przed siewem lub sadzeniem, na wilgotną glebę",
             how: "Rozcieńcz w beczce do 1–5 % i polej glebę przed siewem lub sadzeniem, najlepiej na wilgotno, potem płytko wymieszaj. Pod rozsadę możesz dodatkowo dać 100–200 ml CARBOMAT ECO do dołka. Nie podawaj przez dysze i filtry.",
-            src: "karta produktu: min. 60 l/ha" },
+            zr: "Z-22" },
           { p: "filtr", rate: 20, dose: "20 l/ha", role: "hero", pair: "soil", need: ["opryskiwacz", "fertygacja"], needLabel: "opryskiwacza lub fertygacji",
             when: "przed siewem lub sadzeniem",
             how: "Oprysk gleby 20 l/ha w ok. 400 l wody, przed deszczem, nawadnianiem lub płytkim wymieszaniem. Rozsadę możesz podlać roztworem 0,5 %, a przed sadzeniem na miejsce stałe zalać dołki roztworem 3 %. Po zabiegu przepłucz opryskiwacz czystą wodą.",
-            src: "karta produktu: 10–20 l/ha" },
+            zr: "Z-29" },
           { p: "humic_pole", rate: 250, dose: "250 kg/ha (całopowierzchniowo)", role: "opt", need: ["rozsiewacz"], needLabel: "rozsiewacza",
             when: "przed siewem lub sadzeniem",
             how: "Rozsiej równomiernie 250 kg/ha i wymieszaj z wierzchnią warstwą gleby do ok. 10 cm przed siewem lub sadzeniem. Możesz mieszać z nawozami granulowanymi w rozsiewaczu. Nie stosuj na mokre rośliny ani przez opryskiwacz.",
-            src: "karta produktu (potwierdzone 21.07.2026)" }
+            zr: "Z-46" }
         ] },
         { id: "sezon", label: "Rośliny rosną: kondycja i wzrost", unit: "ha", items: [
-          mix(rowMaxi3("schemat z poradników CarboHort; ⚠️ brak poradnika warzywniczego"), { role: "hero", consult: true, dose: "3 l/ha (3 × 1 l/ha), co 10–14 dni, 0,1–0,5 %" }),
-          { p: "filtr", rate: 20, dose: "20 l/ha na sezon", role: "add", consult: true, need: ["fertygacja"], needLabel: "fertygacji",
-            when: "w sezonie, co 10–14 dni",
-            how: "Podawaj przez linie kroplujące w kilku mniejszych porcjach co 10–14 dni, w stężeniu 0,1–1 %, tak żeby w sezonie wyszło ok. 20 l/ha. Możesz łączyć z nawozami mineralnymi, ale produkt dodaj do zbiornika na końcu, wstępnie rozcieńczony wodą. Po każdym zabiegu przepłucz instalację.",
-            src: "karta produktu i narracja Darka 24.07: kilka mniejszych aplikacji w sezonie; ⚠️ 20 l/ha to propozycja dolnej granicy" },
+          mix(rowMaxi3("Z-40"), { role: "hero", consult: true, dose: "3 l/ha (3 × 1 l/ha), co 10–14 dni, 0,1–0,5 %" }),
+          { p: "filtr", rate: 25, dose: "25 l/ha na sezon (min. 5 zabiegów po 5 l/ha)", role: "add", consult: true, need: ["fertygacja"], needLabel: "fertygacji",
+            when: "w sezonie, co 10–14 dni (w stresie co 7–10 dni)",
+            how: "Podawaj przez linie kroplujące co 10–14 dni, w stresie co 7–10 dni: ok. 5 l/ha na zabieg w stężeniu 1 %, minimum pięć zabiegów w sezonie, czyli ok. 25 l/ha; przy podawaniu codziennym obniż stężenie do 0,1 %. Możesz łączyć z nawozami mineralnymi, ale produkt dodaj do zbiornika na końcu, wstępnie rozcieńczony wodą. Po każdym zabiegu przepłucz instalację.",
+            zr: "Z-30" },
           { p: "filtr", rate: 4, dose: "4 l/ha (2 × 2 l/ha)", role: "opt", need: ["opryskiwacz"], needLabel: "opryskiwacza",
             sub: "gdy nie ma CARBOHUMIC MAXI PLUS w programie",
             when: "w sezonie, 2–3 zabiegi co 10–14 dni",
             how: "Oprysk nalistny 2 l/ha w stężeniu 0,1–0,5 %, dwa zabiegi co 10–14 dni od fazy 2–3 liścia. Można łączyć z dokarmianiem dolistnym, np. mikroelementami; produkt dodaj do zbiornika jako ostatni. Przed nowym zestawieniem zrób próbę mieszalności w małym naczyniu.",
-            src: "karta produktu: 2–3 l/ha, 2–3 zabiegi co 10–14 dni" }
+            zr: "Z-31" }
         ] },
         { id: "po", label: "Po zbiorze: resztki i gleba na przyszły sezon", unit: "ha", items: [
           { p: "nief", rate: 60, dose: "60 l/ha", role: "hero", pair: "soil", need: ["beczkowoz", "recznie"], needLabel: "beczkowozu",
             when: "po zbiorze, na resztki i wilgotną glebę (połowa sierpnia–grudzień)",
             how: "Po zbiorze rozdrobnij resztki i polej glebę 60 l/ha z beczki w rozcieńczeniu 1–5 %, gdy gleba jest wilgotna. Potem płytko wymieszaj, żeby resztki miały kontakt z glebą. To wspomaga humifikację i odbudowuje materię organiczną przed kolejnym sezonem.",
-            src: "karta produktu; program kukurydzy 2026-08 (analogicznie)" },
+            zr: "Z-23" },
           { p: "filtr", rate: 20, dose: "20 l/ha w ok. 400 l wody", role: "hero", pair: "soil", need: ["opryskiwacz", "fertygacja"], needLabel: "opryskiwacza lub fertygacji",
             when: "po zbiorze, na resztki i wilgotną glebę (połowa sierpnia–grudzień)",
             how: "Po zbiorze rozdrobnij resztki i opryskaj je 20 l/ha w ok. 400 l wody, gdy resztki i gleba są wilgotne. Potem płytko wymieszaj, żeby resztki miały kontakt z glebą. To wspomaga humifikację i odbudowuje materię organiczną przed kolejnym sezonem.",
-            src: "karta produktu; program kukurydzy 2026-08 (analogicznie)" }
+            zr: "Z-32" }
         ] }
       ] },
 
@@ -578,43 +633,43 @@ var KF = (function () {
         { id: "przed", label: "Przed siewem: przygotowanie stanowiska", unit: "ha",
           notes: ["Przed siewem robimy jeden zabieg doglebowy – nie łączymy kilku produktów w tym samym miejscu i sezonie.",
                   "CARBOMAT ECO na polu to inwestycja stanowiskowa na gleby lekkie i ubogie w próchnicę; proponujemy dawkę orientacyjną pasowo, a dokładną dawkę w tonach na hektar potwierdź z naszym doradcą przed zastosowaniem."], items: [
-          { p: "humic_pole", rate: 150, dose: "150 kg/ha pasowo (do siewnika, strip-till) albo 250 kg/ha całopowierzchniowo – domyślnie 150 kg/ha", role: "hero", pair: "soil", need: ["rozsiewacz"], needLabel: "rozsiewacza",
+          { p: "humic_pole", rate: 150, dose: "pasowo min. 150 kg/ha (podsiewacz), strip-till 100–120 kg/ha, całopowierzchniowo 250 kg/ha – domyślnie 150 kg/ha", role: "hero", pair: "soil", need: ["rozsiewacz"], needLabel: "rozsiewacza",
             when: "przed siewem, wczesna wiosna lub jesień",
-            how: "Na sucho: 150 kg/ha pasowo do podsiewacza lub siewnika strip-till albo 250 kg/ha rozsiewaczem na całą powierzchnię z płytkim wymieszaniem do 10 cm. Nie stosuj do opryskiwacza ani fertygacji, bo nierozpuszczalne huminy zapychają dysze. Nie łącz z wapnowaniem w tym samym zabiegu, zachowaj odstęp czasowy.",
-            src: "karta produktu (potwierdzone 21.07.2026); program kukurydzy 2026-08" },
+            how: "Na sucho: pasowo 150 kg/ha do podsiewacza (w strip-till 100–120 kg/ha, w sąsiedztwie nasion) albo 250 kg/ha rozsiewaczem na całą powierzchnię z płytkim wymieszaniem do 10 cm. Nie stosuj do opryskiwacza ani fertygacji, bo nierozpuszczalne huminy zapychają dysze. Wapnowanie zrób w osobnym zabiegu, z odstępem czasowym – tak zaleca program kukurydzy po recenzji.",
+            zr: "Z-47" },
           { p: "filtr", rate: 20, dose: "20 l/ha w ok. 400 l wody", role: "hero", pair: "soil", need: ["opryskiwacz", "fertygacja"], needLabel: "opryskiwacza lub fertygacji",
             when: "przed siewem",
             how: "Oprysk gleby 20 l/ha w ok. 400 l wody i płytkie wymieszanie przed siewem; alternatywnie współrzędnie z siewem w systemie nawozów płynnych, poniżej głębokości siewu. Nie opryskuj gleby zamarzniętej, zalanej ani skrajnie suchej. Po zabiegu przepłucz opryskiwacz.",
-            src: "program kukurydzy 2026-08 (kanon): 20–40 l/ha" },
+            zr: "Z-33" },
           { p: "nief", rate: 50, dose: "50 l/ha", role: "hero", pair: "soil", need: ["beczkowoz", "recznie"], needLabel: "beczkowozu",
             when: "przed siewem, wilgotna gleba",
             how: "Rozlewakiem lub beczkowozem 50 l/ha, pasowo albo na całą powierzchnię, na wilgotną glebę przed siewem; potem płytkie wymieszanie. Nie przez standardowe dysze opryskiwacza ani linie kroplujące. Przed użyciem mocno wstrząśnij i w razie potrzeby rozcieńcz wodą.",
-            src: "program kukurydzy 2026-08: min. 50 l/ha (⚠️ karta produktu: min. 60 l/ha)" },
+            zr: "Z-24" },
           { p: "eco_uni", rate: 400, dose: "ok. 400 l/ha pasowo (ok. 250 kg/ha)", role: "add", consult: true,
             when: "przed uprawą, raz na wiele lat",
             how: "Wysyp pasowo w rzędy przyszłej uprawy albo na najsłabsze pola i wymieszaj z warstwą orną przed siewem; na całą powierzchnię gleb lekkich i ubogich w próchnicę stosuje się dawki kilka razy wyższe. Lignit pracuje w glebie wiele lat, więc to inwestycja w stanowisko, nie coroczny nawóz. Dawkę do Twojej gleby potwierdź z naszym doradcą, zanim wjedziesz w pole.",
-            src: "propozycja crear do potwierdzenia: program ziemniaka 04.09.2026 (roboczy) 200–250 kg/ha pasowo, całopowierzchniowo min. 2000 kg/ha; przelicznik ok. 0,6 kg/l; program kukurydzy 2026-08: dawka indywidualna" }
+            zr: "Z-03" }
         ] },
         { id: "sezon", label: "W sezonie: wzrost i regeneracja", unit: "ha", items: [
           { p: "filtr", rate: 4, dose: "4 l/ha (2 × 2 l/ha)", role: "hero", need: ["opryskiwacz"], needLabel: "opryskiwacza",
             when: "od 2–3 liścia do zwarcia rzędów, co 10–14 dni",
             how: "Dwa opryski nalistne po 2 l/ha co 10–14 dni, od fazy 2–3 liścia do zwarcia rzędów; stężenie 0,1–0,5 %. Można łączyć z nawożeniem dolistnym, np. mikroelementami, ale nie z wieloma składnikami naraz na roślinach po chłodzie. Produkt dodaj do zbiornika jako ostatni, wstępnie rozcieńczony.",
-            src: "karta produktu: 2–3 l/ha, 2–3 zabiegi" },
+            zr: "Z-31" },
           { p: "maxi", rate: 0.6, dose: "0,6 l/ha – tylko „próba na 1 ha”", role: "opt", need: ["opryskiwacz"], needLabel: "opryskiwacza", fixedArea: 1,
             sub: "próba na 1 ha – dawka liczona zawsze dla 1 ha, niezależnie od areału",
             when: "4–8 liści (kukurydza BBCH 14–51), po chłodach lub uszkodzeniach",
             how: "Jeden zabieg 0,6 l/ha z mikroelementami w fazie 4–8 liści; powtórka po 7–10 dniach tylko przy utrzymującym się stresie. Zostaw obok pas bez zabiegu i porównaj obsadę, wigor i plon. Przy chłodnej, mokrej wiośnie opryskuj dopiero, gdy rośliny wznowią wzrost.",
-            src: "program kukurydzy 2026-08: maks. 0,6 l/ha; klient 06.08.2026: dawka próbna 0,3–1 l/ha na 1 ha" }
+            zr: "Z-41" }
         ] },
         { id: "po", label: "Po zbiorze: resztki pożniwne i próchnica", unit: "ha", items: [
           { p: "nief", rate: 50, dose: "50 l/ha", role: "hero", pair: "soil", need: ["beczkowoz", "recznie"], needLabel: "beczkowozu",
             when: "po zbiorze, na rozdrobnione (do 8 cm) i wilgotne resztki",
-            how: "Rozdrobnij słomę do ok. 8 cm i polej 50 l/ha z beczkowozu tylko wtedy, gdy resztki i gleba są wilgotne. Potem płytko i równomiernie wymieszaj, bez zakopywania grubej warstwy. Nie dajemy azotu na pociętą słomę.",
-            src: "program kukurydzy 2026-08: ok. 50 l/ha jesienią" },
+            how: "Rozdrobnij słomę do ok. 8 cm i polej 50 l/ha z beczkowozu tylko wtedy, gdy resztki i gleba są wilgotne. Potem płytko i równomiernie wymieszaj, bez zakopywania grubej warstwy. Na pociętą słomę kukurydzianą nie dajemy azotu (program kukurydzy po recenzji).",
+            zr: "Z-25" },
           { p: "filtr", rate: 20, dose: "20 l/ha w ok. 400 l wody", role: "hero", pair: "soil", need: ["opryskiwacz", "fertygacja"], needLabel: "opryskiwacza lub fertygacji",
             when: "po zbiorze, na rozdrobnione (do 8 cm) i wilgotne resztki",
-            how: "Rozdrobnij słomę do ok. 8 cm i opryskaj 20 l/ha w ok. 400 l wody tylko wtedy, gdy resztki i gleba są wilgotne. Potem płytko i równomiernie wymieszaj, bez zakopywania grubej warstwy. Nie dajemy azotu na pociętą słomę.",
-            src: "program kukurydzy 2026-08: 20 l/ha w programie podstawowym" }
+            how: "Rozdrobnij słomę do ok. 8 cm i opryskaj 20 l/ha w ok. 400 l wody tylko wtedy, gdy resztki i gleba są wilgotne. Potem płytko i równomiernie wymieszaj, bez zakopywania grubej warstwy. Na pociętą słomę kukurydzianą nie dajemy azotu (program kukurydzy po recenzji).",
+            zr: "Z-34" }
         ] }
       ] },
 
@@ -623,16 +678,16 @@ var KF = (function () {
           { p: "eco_uni", acidTo: "eco_kw", consult: true, rate: 200, dose: "200 l/m³ (20 % udziału)", role: "hero",
             when: "Mieszam podłoże, sadzę do pojemników",
             how: "Wymieszaj lignit z torfem, kokosem lub kompostem w udziale ok. 20 % (10–30 %); zastępuje część torfu i trzyma wodę. Przed użyciem namocz go przez 2–3 doby, bo suchy surowiec wolno chłonie wodę. Pod rośliny kwasolubne użyj odmiany kwaśnej.",
-            src: "poradnik szkółkarski: 10–30 %" },
+            zr: "Z-04" },
           { p: "filtr", fixedPack: 5, consult: true, dose: "opakowanie 5 l na start", role: "add", need: ["opryskiwacz", "fertygacja", "recznie"], needLabel: "opryskiwacza, fertygacji lub aplikacji ręcznej",
             sub: "Zaprawa nasion 0,5–1 %, moczenie korzeni przed sadzeniem 1 % – ilość zależy od materiału; zamów opakowanie 5 l na start",
             when: "Mieszam podłoże, sadzę do pojemników",
             how: "Nasiona zapraw przez moczenie w roztworze 0,5–1 %, korzenie przed sadzeniem w roztworze 1 %. Zgodność z zaprawą fabryczną sprawdź przed pierwszym użyciem. Po zabiegu przepłucz naczynia i instalację.",
-            src: "poradnik szkółkarski" },
+            zr: "Z-35" },
           { p: "humic_pole", rate: 30, consult: true, dose: "30 kg/m³ (5 % objętości; 1 l ≈ 0,6 kg)", role: "opt", need: ["rozsiewacz"], needLabel: "rozsiewacza",
             when: "Mieszam podłoże, sadzę do pojemników",
             how: "Wymieszaj 3–10 % objętości podłoża przed napełnieniem pojemników; przy mikoryzie 2–5 %. Nie pod rośliny kwasolubne, bo podnosi odczyn. Opakowanie hurtowe ustal z doradcą.",
-            src: "poradnik szkółkarski: 3–10 %, z mikoryzą 2–5 %" }
+            zr: "Z-48" }
         ] },
         { id: "sezon", label: "Produkcja trwa: fertygacja i dokarmianie", unit: "m3",
           notes: ["Szkółka to produkcja o wielu zmiennych – ten zestaw to punkt wyjścia do rozmowy z doradcą."], items: [
@@ -640,12 +695,12 @@ var KF = (function () {
             sub: "stężenie 0,1 % co 7–10 dni (młody materiał) lub do 0,5 % co 10–14 dni; ilość zależy od systemu nawadniania – na start 20 l",
             when: "Produkcja trwa: fertygacja i dokarmianie",
             how: "Przez zraszacze lub linie kroplujące: młody materiał 0,1 % co 7–10 dni, lepiej rozwinięty do 0,5 % co 10–14 dni. Produkt rozcieńcz wstępnie w wodzie i dodaj do zbiornika na końcu. Po zabiegu przepłucz instalację.",
-            src: "poradnik szkółkarski" },
+            zr: "Z-36" },
           { p: "maxi", fixedPack: 5, consult: true, dose: "opakowanie 5 l na start", role: "opt", need: ["opryskiwacz"], needLabel: "opryskiwacza",
             sub: "oprysk 0,1 % co ok. 7 dni, min. 2–3 zabiegi od 2–3 liścia; na start 5 l",
             when: "Produkcja trwa: fertygacja i dokarmianie",
             how: "Oprysk na liść w stężeniu 0,1 % co ok. 7 dni, minimum 2–3 zabiegi od fazy 2–3 liścia właściwego. Po stresie, np. chłodzie, przesuszeniu lub przesadzaniu, możesz zrobić serię trzech zabiegów co 3 dni. Opryskuj równomiernie, do pełnego pokrycia liści.",
-            src: "poradnik szkółkarski" }
+            zr: "Z-42" }
         ] }
       ] },
 
@@ -653,27 +708,27 @@ var KF = (function () {
         { id: "zakladam", label: "Zakładam grządki, przekopuję, sadzę", unit: "m2", items: [
           { p: "eco_uni", rate: 20, dose: "20 l/m² (ciężka gleba: 30 l/m²)", role: "hero",
             when: "przy zakładaniu grządek, przekopywaniu, sadzeniu (wiosna luty–maj lub jesień)",
-            how: "Rozsyp worek 20 l na każdy metr grządki i przekop z wierzchnią warstwą na głębokość szpadla (ok. 20 cm); to 10 % objętości gleby i działa przez lata. Na ciężkiej, gliniastej glebie daj półtora worka. Pod pojedyncze rośliny wystarczy 100–200 ml do dołka pod rozsadę i 1–3 l pod krzew.",
-            src: "Darek: 10–15 % objętości warstwy ornej; kalkulator dawek: 20 cm → 20–30 l/m²" },
+            how: "Rozsyp worek 20 l na każdy metr grządki i przekop z wierzchnią warstwą na głębokość szpadla (ok. 20 cm); to 10 % objętości gleby i działa przez lata. Na cięższej glebie daj półtora worka (15 %); na ciężkiej glinie karta produktu dopuszcza nawet 20–30 %, czyli 2–3 worki. Pod pojedyncze rośliny wystarczy 100–200 ml do dołka pod rozsadę i 1–3 l pod krzew.",
+            zr: "Z-05" },
           { p: "ogrod", rate: 0.4, dose: "0,4 l/m² na sezon", role: "add",
             when: "po posadzeniu i co 10–14 dni w sezonie",
             how: "Przy sadzeniu zalej dołki roztworem 3 % (300 ml na 10 l wody). Potem podlewaj roztworem 1 % (100 ml na 10 l) co 10–14 dni przez sezon. Przed odmierzeniem mocno wstrząśnij butelką.",
-            src: "karta produktu (wariant „dla ogrodnika”); ⚠️ ilość na m² to nasze założenie: 5 l wody na m², 8 podlewań w sezonie" }
+            zr: "Z-49" }
         ] },
         { id: "rosnie", label: "Wszystko już rośnie", sub: "mocniejsze rośliny i ziemia, która trzyma wodę", unit: "m2", items: [
           { p: "ogrod", rate: 0.4, dose: "0,4 l/m² na sezon", role: "hero",
             when: "co 10–14 dni w sezonie",
-            how: "Podlewaj roztworem 1 % (100 ml na 10 l wody) co 10–14 dni, na wilgotną ziemię, od wiosny do jesieni. Wiosną i jesienią możesz podać mocniejszy roztwór 5 % (500 ml na 10 l). Nie da się przenawozić, ale nie podlewaj zamarzniętej ziemi.",
-            src: "karta produktu (wariant „dla ogrodnika”); ⚠️ ilość na m² to nasze założenie: 5 l wody na m², 8 podlewań w sezonie" },
+            how: "Podlewaj roztworem 1 % (100 ml na 10 l wody) co 10–14 dni, na wilgotną ziemię, od wiosny do jesieni. Wiosną i jesienią możesz podać mocniejszy roztwór 5 % (500 ml na 10 l). Nie podlewaj zamarzniętej ziemi.",
+            zr: "Z-49" },
           { p: "humic_h", rate: 0.083, dose: "50 g/m² (0,083 l/m²), raz w roku", role: "add",
             when: "raz w roku, wiosną",
             how: "Raz w roku, najlepiej wiosną przed ruszeniem wegetacji: rozsyp 50 g na m² (500 g na 10 m²) i podlej albo wymieszaj z wierzchnią warstwą do 10 cm. Na glebie kwaśnej lub jałowej możesz dać dawkę podwójną. Nie pod rośliny kwasolubne: borówkę, różaneczniki, azalie, wrzosy.",
-            src: "karta: 500 g na 10 m²" },
-          { p: "sciolka", rate: 30, dose: "30 l/m²", role: "opt",
-            sub: "rabaty i pod krzewami: warstwa 3 cm, mniej podlewania i chwastów",
+            zr: "Z-53" },
+          { p: "sciolka", rate: 40, dose: "40 l/m²", role: "opt",
+            sub: "rabaty i pod krzewami: warstwa 4 cm, mniej podlewania i chwastów",
             when: "wiosną albo po posadzeniu, odświeżanie co kilka lat",
-            how: "Rozsyp warstwę 3 cm na rabatach i pod krzewami, na całej powierzchni albo wokół pnia w obwodzie korony. W przeciwieństwie do kory nie zabiera azotu i można ją mieszać z inną ściółką. Odświeżaj co kilka lat.",
-            src: "karta produktu" }
+            how: "Rozsyp warstwę 4–5 cm (karta produktu: min. 4 cm) na rabatach i pod krzewami, na całej powierzchni albo wokół pnia w obwodzie korony. W przeciwieństwie do kory nie zabiera azotu i można ją mieszać z inną ściółką. Odświeżaj co kilka lat.",
+            zr: "Z-13" }
         ] }
       ] },
 
@@ -682,21 +737,21 @@ var KF = (function () {
           { p: "eco_uni", rate: 20, dose: "20 l/m²", role: "hero", consult: true,
             when: "przed siewem lub rolowaniem",
             how: "Rozsyp worek 20 l na każdy metr i wymieszaj z wierzchnią warstwą gleby (ok. 20 cm) przed siewem lub rolowaniem. Wyrównaj i lekko ugnieć powierzchnię jak zwykle przed siewem. Murawa dostaje magazyn wody na lata.",
-            src: "⚠️ trawnik nie ma jeszcze karty zaleceń – dawka jak dla grządek" },
+            zr: "Z-06" },
           { p: "ogrod", rate: 0.4, dose: "0,4 l/m² na sezon", role: "add",
             when: "po wschodach, co 10–14 dni",
             how: "Po wschodach podlewaj roztworem 1 % (100 ml na 10 l wody) co 10–14 dni, na wilgotną murawę. Wiosną i jesienią możesz podać mocniejszy roztwór 5 %. Przed odmierzeniem wstrząśnij.",
-            src: "karta produktu (wariant „dla ogrodnika”)" }
+            zr: "Z-49" }
         ] },
         { id: "jest", label: "Trawnik już jest", unit: "m2", items: [
           { p: "ogrod", rate: 0.4, dose: "0,4 l/m² na sezon", role: "hero",
             when: "co 10–14 dni w sezonie",
             how: "Podlewaj roztworem 1 % (100 ml na 10 l wody) co 10–14 dni od wiosny do jesieni, na wilgotną murawę. Wiosną i jesienią możesz podać mocniejszy roztwór 5 %. Nie podlewaj zamarzniętej ziemi.",
-            src: "karta produktu (wariant „dla ogrodnika”)" },
+            zr: "Z-49" },
           { p: "humic_h", rate: 0.083, dose: "50 g/m² (0,083 l/m²)", role: "add", consult: true,
             when: "wiosną, po wygrabieniu",
             how: "Wiosną, po wygrabieniu: rozsyp równomiernie 50 g na m² i podlej. Nie stosuj na mokrą trawę i nie łącz z wapnowaniem w tym samym czasie. Raz w roku wystarczy.",
-            src: "⚠️ decyzja MRiRW dla CARBOMAT HUMIC wymienia warzywa i ozdobne w ogrodach – trawnik do potwierdzenia u Darka" }
+            zr: "Z-54" }
         ] }
       ] },
 
@@ -705,22 +760,22 @@ var KF = (function () {
           { p: "eco_uni", rate: 2, dose: "2 l/roślinę", role: "hero",
             when: "przy sadzeniu (wiosna luty–maj lub jesień)",
             how: "Wsyp 2 l do dołka i wymieszaj z glebą rodzimą wokół bryły korzeniowej; pod dużą tuję lub krzew daj 3 l. Na ciężkiej glebie dodaj więcej, bo lignit ją rozluźnia. Posadź i obficie podlej.",
-            src: "Darek 21.07.2026: krzewy i byliny 1–3 l" },
+            zr: "Z-07" },
           { p: "ogrod", rate: 0.15, dose: "0,15 l/roślinę", role: "add",
             when: "przy sadzeniu, potem w sezonie",
             how: "Zalej dołek roztworem 3 % (300 ml na 10 l wody) przed posadzeniem, potem podlej roztworem 1 %. W pierwszym sezonie powtarzaj podlewanie 1 % co 10–14 dni. Przed odmierzeniem wstrząśnij.",
-            src: "karta produktu (wariant „dla ogrodnika”)" }
+            zr: "Z-50" }
         ] },
         { id: "rosna", label: "Już rosną", unit: "roslin", items: [
-          { p: "ogrod", rate: 0.3, dose: "0,3 l/roślinę na sezon", role: "hero",
+          { p: "ogrod", rate: 0.8, dose: "0,8 l/roślinę na sezon", role: "hero",
             when: "co 10–14 dni w sezonie",
-            how: "Podlewaj roztworem 1 % (100 ml na 10 l wody), ok. 10 l pod krzew, co 10–14 dni w sezonie. Wiosną i jesienią możesz podać mocniejszy roztwór 5 %. Podlewaj na wilgotną ziemię.",
-            src: "⚠️ założenie: 3 podlewania w sezonie" },
+            how: "Podlewaj roztworem 1 % (100 ml na 10 l wody), ok. 10 l pod krzew, co 10–14 dni od maja do sierpnia (ok. 8 podlewań). Wiosną i jesienią możesz podać mocniejszy roztwór 5 %. Podlewaj na wilgotną ziemię.",
+            zr: "Z-51" },
           { p: "sciolka", rate: 4, dose: "4 l/roślinę", role: "opt",
-            sub: "warstwa 3–5 cm wokół pnia: mniej podlewania, mniej chwastów",
+            sub: "warstwa 4–5 cm wokół pnia: mniej podlewania, mniej chwastów",
             when: "wiosną, odświeżanie co kilka lat",
-            how: "Rozsyp warstwę 3–5 cm wokół pnia w obwodzie korony, ok. 4 l na krzew. Mniej podlewania, mniej chwastów; można mieszać z korą. Odświeżaj co kilka lat.",
-            src: "karta produktu" }
+            how: "Rozsyp warstwę 4–5 cm wokół pnia w obwodzie korony, ok. 4 l na krzew (karta produktu: min. 4 cm). Mniej podlewania, mniej chwastów; można mieszać z korą. Odświeżaj co kilka lat.",
+            zr: "Z-14" }
         ] }
       ] },
 
@@ -730,25 +785,25 @@ var KF = (function () {
           { p: "eco_kw", rate: 3, dose: "3 l/roślinę", role: "hero",
             when: "przy sadzeniu (wiosna luty–maj lub jesień)",
             how: "Wsyp 3 l odmiany kwaśnej do dołka i wymieszaj z torfem kwaśnym; pod borówkę w ogrodzie daj więcej, nawet 16 l w dołku na 80 l podłoża. Wymieszane podłoże namocz przed sadzeniem. Nie dodawaj wapna ani CARBOMAT HUMIC.",
-            src: "Darek 21.07: 1–3 l na krzew; poradnik borówkowy: 16 l" },
+            zr: "Z-10" },
           { p: "sciolka", rate: 4, dose: "4 l/roślinę", role: "add",
             when: "zaraz po posadzeniu",
-            how: "Zaraz po posadzeniu rozsyp warstwę 5 cm w promieniu ok. 30 cm, minimum 4 l na roślinę. Ściółka trzyma wilgoć i podtrzymuje kwaśny odczyn. Odświeżaj co kilka lat.",
-            src: "poradnik borówkowy" },
+            how: "Zaraz po posadzeniu rozsyp warstwę 5 cm na kwadracie ok. 30 × 30 cm, minimum 4 l na roślinę. Ściółka trzyma wilgoć i podtrzymuje kwaśny odczyn. Odświeżaj co kilka lat.",
+            zr: "Z-15" },
           { p: "ogrod", rate: 0.15, dose: "0,15 l/roślinę", role: "add",
             when: "przy sadzeniu",
             how: "Zalej dołek roztworem 3 % (300 ml na 10 l wody) przed posadzeniem. Potem podlewaj roztworem 1 % co 10–14 dni. Przed odmierzeniem wstrząśnij.",
-            src: "karta produktu (wariant „dla ogrodnika”)" }
+            zr: "Z-50" }
         ] },
         { id: "rosna", label: "Już rosną", unit: "roslin", items: [
           { p: "sciolka", rate: 4, dose: "4 l/roślinę", role: "hero",
             when: "wiosną, odświeżanie co kilka lat",
-            how: "Dosyp ściółkę, żeby pod rośliną znów było 3–5 cm warstwy, ok. 4 l na roślinę, wczesną wiosną albo jesienią. Poszerzaj pas w miarę wzrostu rośliny. Odświeżaj co kilka lat.",
-            src: "poradnik borówkowy" },
-          { p: "ogrod", rate: 0.3, dose: "0,3 l/roślinę", role: "add",
+            how: "Dosyp ściółkę, żeby pod rośliną znów było 4–5 cm warstwy (karta produktu: min. 4 cm), ok. 4 l na roślinę, wczesną wiosną albo jesienią. Poszerzaj pas w miarę wzrostu rośliny. Odświeżaj co kilka lat.",
+            zr: "Z-15" },
+          { p: "ogrod", rate: 0.8, dose: "0,8 l/roślinę na sezon", role: "add",
             when: "co 10–14 dni w sezonie",
-            how: "Podlewaj roztworem 1 % (100 ml na 10 l wody) co 10–14 dni w sezonie, na wilgotną ziemię. Wiosną i jesienią możesz podać mocniejszy roztwór 5 %. Przed odmierzeniem wstrząśnij.",
-            src: "karta produktu (wariant „dla ogrodnika”)" }
+            how: "Podlewaj roztworem 1 % (100 ml na 10 l wody), ok. 10 l pod roślinę, co 10–14 dni od maja do sierpnia (ok. 8 podlewań), na wilgotną ziemię. Wiosną i jesienią możesz podać mocniejszy roztwór 5 %. Przed odmierzeniem wstrząśnij.",
+            zr: "Z-51" }
         ] }
       ] },
 
@@ -757,21 +812,21 @@ var KF = (function () {
           { p: "eco_uni", rate: 1.5, dose: "1,5 l/donicę", role: "hero",
             when: "przy sadzeniu i przesadzaniu",
             how: "Wymieszaj 1–2 l lignitu z ziemią na każdą donicę 10 l (10–20 % mieszanki). Zamiast tego możesz wysypać warstwę 5 cm na dnie donicy jako drenaż, który trzyma wodę. Rośliny lepiej znoszą przerwy w podlewaniu.",
-            src: "karta produktu: 0,5–1 l na 5 l doniczkę" },
-          { p: "ogrod", rate: 0.2, dose: "0,2 l/donicę na sezon", role: "add",
+            zr: "Z-08" },
+          { p: "ogrod", rate: 0.16, dose: "ok. 0,16 l/donicę na sezon", role: "add",
             when: "w sezonie, przy podlewaniu",
-            how: "Po posadzeniu podlej roztworem 1 % (100 ml na 10 l wody) i powtarzaj co 10–14 dni zamiast zwykłego podlewania. Przed odmierzeniem wstrząśnij.",
-            src: "⚠️ założenie: 2 l wody tygodniowo przez 10 tygodni" }
+            how: "Po posadzeniu podlej roztworem 1 % (100 ml na 10 l wody) i powtarzaj co 10–14 dni zamiast zwykłego podlewania, ok. 2 l roztworu na donicę 10 l (ok. 8 podlewań w sezonie). Przed odmierzeniem wstrząśnij.",
+            zr: "Z-52" }
         ] },
         { id: "rosna", label: "Rośliny już rosną", unit: "donic", items: [
-          { p: "ogrod", rate: 0.2, dose: "0,2 l/donicę", role: "hero",
+          { p: "ogrod", rate: 0.16, dose: "ok. 0,16 l/donicę na sezon", role: "hero",
             when: "w sezonie, przy podlewaniu",
-            how: "Podlewaj roztworem 1 % (100 ml na 10 l wody) co 10–14 dni zamiast zwykłego podlewania, od wiosny do jesieni. Przed odmierzeniem wstrząśnij. Nie da się przenawozić.",
-            src: "⚠️ założenie: 2 l wody tygodniowo przez 10 tygodni" },
+            how: "Podlewaj roztworem 1 % (100 ml na 10 l wody) co 10–14 dni zamiast zwykłego podlewania, ok. 2 l roztworu na donicę 10 l, od maja do sierpnia (ok. 8 podlewań). Przed odmierzeniem wstrząśnij.",
+            zr: "Z-52" },
           { p: "humic_h", rate: 0.033, dose: "20 g/donicę (0,033 l/donicę)", role: "add",
             when: "raz w sezonie",
-            how: "Posyp cienką warstwą ok. 20 g na donicę 10 l i podlej; raz w sezonie, najlepiej wiosną. Przy przesadzaniu wymieszaj 20–30 g na 10 l podłoża. Nie pod hortensje, azalie i inne rośliny kwasolubne.",
-            src: "karta: 20–30 g na 10 l podłoża" }
+            how: "Posyp cienką warstwą ok. 20 g na donicę 10 l i podlej; raz w sezonie, najlepiej wiosną. Przy przesadzaniu wymieszaj 20–30 g na 10 l podłoża. Nie pod azalie, niektóre hortensje i inne rośliny kwasolubne.",
+            zr: "Z-55" }
         ] }
       ] }
     ]
@@ -987,7 +1042,8 @@ var KF = (function () {
         doseHeavy: heavy && (pid === "eco_uni" || pid === "eco_kw"),
         when: it.when || a.label,
         how: it.how,
-        src: it.src,
+        src: it.zr ? ZRODLA[it.zr] : (it.src || ""),
+        zr: it.zr || "",
         sub: sub,
         gain: gainFor(g.id, a.id, pid),
         consult: !!it.consult,
@@ -1080,7 +1136,7 @@ var KF = (function () {
     calbor: "Jędrniejszy, równiejszy owoc i lepsza trwałość po zbiorze, bo wapń i bor trafiają prosto na liść w czasie, gdy owoc rośnie. To argument o klasę handlową plonu, nie o jego ilość.",
     sciolka: "Warstwa ściółki zatrzymuje wilgoć w strefie korzeni, ogranicza chwasty i podtrzymuje kwaśny odczyn. W odróżnieniu od kory nie zabiera roślinom azotu.",
     humic_pole: "Sypki koncentrat kwasów humusowych z łatwo dostępnym potasem: działa od pierwszych tygodni i przez cały sezon, podnosi odczyn zakwaszonej gleby i pozwala ograniczyć nawożenie potasowe.",
-    humic_h: "Kondycjoner, potas i biostymulator w jednym: działa od pierwszych tygodni, podnosi odczyn zakwaszonej ziemi i poprawia wykorzystanie innych nawozów. Nie da się nim przenawozić.",
+    humic_h: "Kondycjoner, potas i biostymulator w jednym: działa od pierwszych tygodni, podnosi odczyn zakwaszonej ziemi i poprawia wykorzystanie innych nawozów.",
     eco_uni: "Lignit raz wymieszany z glebą pracuje latami jako magazyn wody i trwała materia organiczna. To inwestycja w stanowisko, nie coroczny nawóz.",
     eco_kw: "Lignit o kwaśnym odczynie raz wymieszany z podłożem pracuje latami jako magazyn wody i trwała materia organiczna. To inwestycja w stanowisko, nie coroczny nawóz.",
     ogrod: "Próchnica w płynie do konewki: podlewanie roztworem 1 % co dwa tygodnie karmi glebę i korzenie przez cały sezon. Rośliny lepiej znoszą przerwy w podlewaniu."
@@ -1122,6 +1178,7 @@ var KF = (function () {
 
   return {
     KONFIG: KONFIG,
+    ZRODLA: ZRODLA,
     computeSet: computeSet,
     pickPacks: pickPacks,
     roundQty: roundQty,
