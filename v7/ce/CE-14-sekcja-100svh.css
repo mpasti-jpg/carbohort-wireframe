@@ -1,0 +1,47 @@
+/* ===== CE-14 · Sekcja 100svh z listą i zdjęciem (rejestr: ce-rejestr.js) =====
+   One-screen section: heading at the top of the left column, list and button at
+   its bottom, a full-height photo with a light parallax on the right. Merged
+   from carbomat.css DAWKOWANIE; the CARBOHUMIC copy („Dawki domowe") keeps its
+   own bottom column (a dose table instead of a numbered list) and the grid rows
+   that go with it in carbohumic.css. No variants.
+   Markup: .c5-dose-sec > .c5-dose > __top / __bottom / __media-wrap. ===== */
+
+/* --- DAWKOWANIE – sekcja na 100 % ekranu (spec §7) -------------------------
+   Domyślnie (mobile) jedna kolumna w kolejności DOM: nagłówek → zdjęcie →
+   lista → przycisk. Od 900 px sekcja ma wysokość ekranu, marginesy 30 px,
+   a zdjęcie stoi w prawej kolumnie od górnej krawędzi nagłówka do dolnej
+   krawędzi przycisku. */
+.c5-dose-sec{padding-block:var(--c5-gutter);}
+.c5-dose{display:grid;gap:clamp(2rem,5vw,3rem);}
+.c5-dose__top{display:flex;flex-direction:column;gap:clamp(1rem,2vw,1.5rem);}
+.c5-dose__top .c5-kicker{margin-bottom:0;}
+/* Numery w kółkach (1) (2) (3) – marker rysuje licznik CSS, więc treść zdań
+   zostaje nietknięta (§13.6). Kółko to znacznik, nie boks układu, dlatego
+   jedyny okrągły narożnik w tej sekcji. */
+.c5-dose__list{margin:0;padding:0;list-style:none;counter-reset:dose;display:flex;flex-direction:column;
+  gap:clamp(0.75rem,1.6vw,1.125rem);color:var(--w-text-secondary);max-width:486px;}
+.c5-dose__list li{counter-increment:dose;display:grid;grid-template-columns:28px 1fr;gap:var(--w-space-4);align-items:start;}
+.c5-dose__list li::before{content:counter(dose);display:flex;align-items:center;justify-content:center;
+  width:28px;height:28px;border:1px solid currentColor;border-radius:var(--w-radius-circle);
+  font-size:0.8125rem;line-height:1;color:var(--w-text-primary);}
+
+/* Parallax (§13.6): ramka przycina kadr, obraz jest od niej wyższy (114 %)
+   i przesuwa się w niej o kilka procent. Bez ruchu (mobile / reduced / bez JS)
+   `--dose-par` nie jest ustawiane i kadr stoi wyśrodkowany.
+   Pionowy kadr (4:5) – na wąskim ekranie nie może zająć całej wysokości okna. */
+.c5-dose__media-wrap{position:relative;width:100%;aspect-ratio:4/5;max-height:70vh;overflow:hidden;}
+.c5-dose__media{display:block;width:100%;height:114%;object-fit:cover;object-position:45% 50%;border-radius:0;
+  transform:translateY(calc(var(--dose-par,-7) * 1%));will-change:transform;}
+
+@media (min-width:900px){
+  .c5-dose-sec{min-height:100svh;display:grid;align-items:stretch;}
+  .c5-dose__top{grid-column:1;grid-row:1;}
+  .c5-dose__media-wrap{grid-column:2;grid-row:1 / -1;height:100%;max-height:none;aspect-ratio:auto;}
+}
+@media (prefers-reduced-motion: reduce){
+  .c5-dose__media{transform:translateY(-7%);}
+}
+/* Siatka sekcji od 900 px i kolumna dolna są treścią strony: ile wierszy ma
+   lewa kolumna i jak szeroka jest kolumna zdjęcia, decyduje jej zawartość –
+   reguły `.c5-dose__bottom` i `@media (min-width:900px) .c5-dose` stoją
+   w <strona>.css. */

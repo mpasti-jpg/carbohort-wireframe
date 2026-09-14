@@ -1,50 +1,13 @@
-/* ===== 00 · Warstwa wspólna strony CARBOMAT MATA UPRAWOWA (V5) =====
-   Baza = 00-base.css wzorca CARBOMAT ECO (carbomat.css) plus klocki
-   przeniesione z inline <style> bazy maty (`c5-mt-*`) i z `c5.css` – strona
-   nie ładuje już ani `c5.css`, ani `c5.js`, więc każda użyta klasa musi być
-   zdefiniowana tutaj albo w którymś fragmencie sekcji.
-   Tokeny `--w-*`, wyłącznie skala szarości, border-radius:0 (wyjątki: 30 px
-   na mediach pasa PRO, 12 px na miniaturach marquee, okrągłe kropki nawigacji). ===== */
-:root { --c5-acc: .2s; --c5-acc-fade: .14s; --c5-gutter: 30px; }
-
-/* Górne menu serwisu NIE jest przyklejone (decyzja Mateusza 24.07) – scrolluje
-   się razem ze stroną. Kit pozostaje nietknięty – to nadpisanie tylko w obrębie
-   tej strony. */
-.wf-navbar{position:static;}
-
-/* kotwice: bez przyklejonej belki nie potrzeba marginesu przewijania */
-[data-chapter]{scroll-margin-top:0;}
-
-/* --- Wspólne klocki układu ------------------------------------------------- */
-.c5-wrap{max-width:1180px;margin-inline:auto;padding-inline:var(--w-space-5);}
-.c5-sec{padding-block:clamp(3.5rem,7vw,6.25rem);}
-.c5-kicker{display:block;font-size:0.875rem;font-weight:var(--w-weight-medium);letter-spacing:.03em;text-transform:uppercase;margin-bottom:clamp(2rem,4vw,3.5rem);}
-.c5-kicker--center{text-align:center;}
-.c5-h1{font-size:clamp(2.1rem,4vw,3.125rem);line-height:1.12;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
-.c5-h2{font-size:clamp(1.7rem,3.2vw,2.5rem);line-height:1.15;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;max-width:784px;}
-.c5-h2--center{margin-inline:auto;text-align:center;}
-.c5-lead{font-size:1rem;color:var(--w-text-secondary);max-width:710px;}
-.c5-lead--center{margin-inline:auto;text-align:center;}
-.c5-head{display:flex;flex-direction:column;gap:clamp(1.25rem,2.6vw,2.25rem);}
-.c5-muted{color:var(--w-text-secondary);}
+/* ===== carbomat-mata.css – warstwa strony (V7) =====
+   Klocki wzorca i warstwa wspólna leżą w katalogu ce/ (ładowane wyżej).
+   Tutaj zostają wyłącznie klocki unikalne tej podstrony i nadpisania
+   treściowe klocków wspólnych. ===== */
 /* `.c5-label` i `.c5-dim` żyły w c5.css wyłącznie jako reguły kontekstowe –
    tutaj dostają definicję bazową, bo kontekstów jest więcej niż jeden. */
 .c5-label{display:block;font-weight:var(--w-weight-semibold);}
 .c5-dim{opacity:.65;}
 /* Braki danych zostają WIDOCZNE – nie chowamy ich pod kreską ani pod milczeniem */
 .c5-mt-gap{opacity:.6;}
-
-/* Przyciski nowego języka: ostre narożniki, etykiety jak w makiecie */
-.c5-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 45px;font:inherit;font-size:1rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;border:1px solid rgb(0 0 0 / .2);border-radius:0;cursor:pointer;text-decoration:none;transition:background var(--w-duration-base) var(--w-ease),color var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);}
-.c5-btn--dark{background:var(--w-gray-900);color:var(--w-text-inverse);border-color:var(--w-gray-900);}
-.c5-btn--dark:hover{background:var(--w-gray-700);border-color:var(--w-gray-700);}
-.c5-btn--light{background:var(--w-surface-page);color:var(--w-text-primary);}
-.c5-btn--light:hover{border-color:var(--w-border-strong);}
-.c5-btn--sm{padding:10px 25px;font-size:0.8125rem;}
-.c5-btn--inv{background:var(--w-surface-page);color:var(--w-text-primary);border-color:var(--w-surface-page);}
-.c5-btn--inv:hover{background:var(--w-gray-100);}
-.c5-btn .wf-icon{width:16px;height:16px;opacity:.55;}
-.c5-btnrow{display:flex;gap:6px;flex-wrap:wrap;}
 
 /* --- Placeholder zdjęcia (spec §0) ----------------------------------------
    Do czasu wygenerowania fotografii (Nano Banana Pro, Mateusz) każde zdjęcie
@@ -53,37 +16,17 @@
 .c5-ph{position:relative;background:var(--w-gray-200);overflow:hidden;}
 .c5-ph::after{content:attr(data-ph);position:absolute;left:10px;bottom:8px;font-size:0.75rem;line-height:1.2;color:var(--w-gray-500);}
 
-/* --- HERO: cały pierwszy ekran pod menu serwisu (spec §4) ------------------
-   Wysokość ekranu minus zmierzony pasek menu (`--cx-navbar-h` ustawia JS
-   w 00-base.js; fallback 0 px, gdy JS nie wystartuje). Lewa kolumna: copy
-   wyśrodkowane w pionie, breadcrumb przy dolnej krawędzi. Prawa: panel
-   jednolitej jasnej szarości z packshotem rękawa na środku. */
-#hero{display:flex;min-height:calc(100svh - var(--cx-navbar-h, 0px));}
-#hero > .c5-wrap{flex:1 1 auto;display:flex;}
-.c5-hero{flex:1 1 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,5vw,5rem);align-items:stretch;}
-.c5-hero__copy{display:flex;flex-direction:column;max-width:585px;}
+/* page-specific: hero – the base rules below are the same as in ce/CE-08-hero.css,
+   kept here because this page overrides them in its own low-window media queries. */
 .c5-hero__copyin{display:flex;flex-direction:column;gap:clamp(1.25rem,2.4vw,2rem);margin-block:auto;padding-block:clamp(2rem,4vw,3rem);}
-.c5-hero__copy .c5-kicker{margin-bottom:0;}
 .c5-hero__lead{display:flex;flex-direction:column;gap:var(--w-space-3);font-size:1.125rem;color:var(--w-text-secondary);max-width:486px;}
 .c5-hero__crumbs{font-size:0.75rem;color:var(--w-gray-400);padding-bottom:var(--c5-gutter);}
-.c5-hero__crumbs a,.c5-hero__crumbs .wf-breadcrumb__sep{color:inherit;}
-.c5-hero__crumbs a:hover{color:var(--w-gray-600);}
 /* Panel: 30 px od góry, dołu i prawej krawędzi ekranu. Rękaw jest szeroki
    i niski (1000 × 313), więc stoi na 72 % szerokości panelu i zachowuje
    własne proporcje – nic nie rozciągamy (spec §4). */
+/* page-specific: overrides CE-08 – the sleeve is centred in the panel. */
 .c5-hero__stage{position:relative;overflow:hidden;display:grid;place-items:center;margin-block:var(--c5-gutter);min-height:calc(100svh - var(--cx-navbar-h, 0px) - 2 * var(--c5-gutter));background:var(--w-gray-100);}
 .c5-hero__pack{display:block;width:72%;height:auto;max-width:calc(100% - 2 * var(--c5-gutter));object-fit:contain;}
-
-/* --- CTA końcowe ------------------------------------------------------------ */
-.c5-cta{display:flex;flex-direction:column;align-items:center;gap:clamp(1.75rem,3.5vw,2.75rem);text-align:center;}
-
-/* --- Dok dr Jurka: pojawia się po zejściu z hero ----------------------------- */
-.cw-jurek{transition:opacity .3s ease,visibility .3s ease;}
-.cw-jurek.cx-dockhide{opacity:0;visibility:hidden;pointer-events:none;}
-
-/* --- Jasny pas (sekcja Dowód, pas Ekonomia) --------------------------------- */
-.c5-band{background:var(--w-surface-subtle);}
-.c5-band__title{font-size:1.5rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
 
 /* --- Siatka kart i karta (z inline <style> bazy) ---------------------------- */
 .c5-mt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:var(--w-space-5);margin-top:clamp(2rem,4vw,3.5rem);}
@@ -94,12 +37,6 @@
 .c5-mt-card__txt{font-size:var(--w-font-sm-size);line-height:1.55;color:var(--w-text-secondary);}
 .c5-mt-card__txt + .c5-mt-card__txt{margin-top:calc(-1 * var(--w-space-1));}
 .c5-mt-card ul{margin:0;padding-left:1.2rem;display:flex;flex-direction:column;gap:var(--w-space-1);font-size:var(--w-font-sm-size);color:var(--w-text-secondary);}
-
-/* --- Wspólny wzorzec słupków (Dowód, Analiza podłoża) ----------------------- */
-.c5-barchart{display:flex;flex-direction:column;gap:var(--w-space-3);}
-.c5-bar{display:grid;grid-template-columns:minmax(7.5rem,34%) 1fr minmax(5.2rem,auto);gap:var(--w-space-3);align-items:center;font-size:var(--w-font-sm-size);}
-.c5-bar__track{height:12px;background:var(--w-gray-100);border:1px solid var(--w-border-subtle);overflow:hidden;}
-.c5-bar__fill{height:100%;width:var(--bw);background:var(--w-gray-900);}
 
 /* --- Notatka / widoczny brak danych ---------------------------------------- */
 .c5-mt-note{border-left:3px solid var(--w-gray-900);padding:var(--w-space-3) 0 var(--w-space-3) var(--w-space-4);margin-top:clamp(1.5rem,3vw,2.5rem);display:flex;flex-direction:column;gap:var(--w-space-2);align-items:flex-start;font-size:var(--w-font-sm-size);color:var(--w-text-secondary);}
@@ -116,12 +53,6 @@
    Tekst po lewej, przycisk po prawej, obramowanie górne i dolne (spec §9, §11.6). */
 .c5-mt-cross{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:clamp(1.25rem,3vw,2.5rem);border-top:1px solid var(--w-gray-900);border-bottom:1px solid var(--w-gray-900);padding-block:clamp(1.5rem,3vw,2rem);margin-top:clamp(2.5rem,5vw,4rem);}
 .c5-mt-cross > p{max-width:64ch;margin:0;}
-
-/* --- Scroll inertia (Lenis) – układ natywny; CSS smooth-behavior wyłączony --- */
-html.lenis,html.lenis body{height:auto;}
-.lenis.lenis-smooth{scroll-behavior:auto !important;}
-.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain;}
-.lenis.lenis-stopped{overflow:hidden;}
 
 /* --- Hero on a low window (laptop 1280 × 800 and 1280 × 720) --------------
    The hero must stay ONE screen, and this page's copy is longer than CARBOMAT
@@ -144,11 +75,6 @@ html.lenis,html.lenis body{height:auto;}
 }
 
 @media (max-width:899px){
-  /* hero: jedna kolumna – copy → panel z packshotem → breadcrumb pod spodem */
-  #hero{display:block;min-height:0;}
-  #hero > .c5-wrap{display:block;}
-  .c5-hero{display:flex;flex-direction:column;gap:clamp(1.5rem,4vw,2.5rem);padding-block:clamp(2rem,6vw,3rem);}
-  .c5-hero__copy{display:contents;}
   .c5-hero__copyin{order:1;margin-block:0;padding-block:0;max-width:585px;}
   .c5-hero__stage{order:2;margin-block:0;min-height:0;aspect-ratio:4/3;max-height:70vh;}
   .c5-hero__crumbs{order:3;padding-bottom:0;}
@@ -157,57 +83,6 @@ html.lenis,html.lenis body{height:auto;}
 @media (max-width:699px){
   .c5-mt-media{grid-template-columns:1fr;}
   .c5-mt-media__ico{width:5rem;}
-}
-@media (prefers-reduced-motion: reduce){
-  .c5-btn{transition:none;}
-  .cw-jurek{transition:none;}
-}
-
-/* ===== 10 · Nawigacja po podstronie – kropki przy prawej krawędzi (spec §3) =====
-   Port `.c5-dots` z ECO. Fixed, pionowo na środku ekranu. Etykiety wjeżdżają
-   po najechaniu na cały nav (albo po fokusie w jego wnętrzu). Nic nie klei się
-   do górnej krawędzi.
-
-   Widoczność na jasnych i ciemnych sekcjach: cały nav ma mix-blend-mode
-   difference, a kolory zapisujemy „w bieli”. Difference: result = |backdrop –
-   source|, więc biel (255) na białym tle daje czerń, a na ciemnym – biel.
-   Stąd: aktywna kropka = #fff (czytana jako gray-900 na białym), nieaktywna =
-   biel z alfą .55 (czytana jako ~gray-400).
-   Kropki są okrągłe celowo: to znaczniki, nie boksy układu. ---------------- */
-.c5-dots{position:fixed;right:var(--c5-gutter);top:50%;transform:translateY(-50%);z-index:90;mix-blend-mode:difference;}
-.c5-dots ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;align-items:flex-end;}
-/* Pole klikalne 28×28 px (bez odstępu między pozycjami = 28 px środek–środek).
-   Etykieta leży absolutnie POZA tym polem, więc nav zajmuje tylko wąską kolumnę
-   przy krawędzi i nie przechwytuje kliknięć w treść pod spodem. */
-.c5-dots__link{position:relative;display:flex;align-items:center;justify-content:flex-end;width:28px;min-height:28px;padding-right:2px;text-decoration:none;}
-.c5-dots__dot{flex:none;display:block;width:6px;height:6px;border-radius:var(--w-radius-circle);background:rgb(255 255 255 / .55);transition:width .2s var(--w-ease),height .2s var(--w-ease),background-color .2s var(--w-ease);}
-.c5-dots__link[aria-current="true"] .c5-dots__dot{width:10px;height:10px;background:#fff;}
-/* Etykiety: ukryte, wjeżdżają razem (lekki stagger) po najechaniu na nav.
-   Widoczna etykieta łapie wskaźnik i zachodzi 6 px na pole linku, więc między
-   kropką a etykietą nie ma „dziury”. */
-.c5-dots__label{position:absolute;right:calc(100% - 6px);top:50%;padding:6px 6px 6px 10px;font-size:0.8125rem;line-height:1.2;text-align:right;white-space:nowrap;color:rgb(255 255 255 / .6);opacity:0;transform:translate(6px,-50%);pointer-events:none;transition:opacity .2s var(--w-ease),transform .2s var(--w-ease);transition-delay:0s;}
-.c5-dots__link[aria-current="true"] .c5-dots__label{color:#fff;}
-.c5-dots:hover .c5-dots__label,
-.c5-dots:focus-within .c5-dots__label{opacity:1;transform:translateY(-50%);pointer-events:auto;}
-.c5-dots:hover li:nth-child(2) .c5-dots__label,.c5-dots:focus-within li:nth-child(2) .c5-dots__label{transition-delay:.02s;}
-.c5-dots:hover li:nth-child(3) .c5-dots__label,.c5-dots:focus-within li:nth-child(3) .c5-dots__label{transition-delay:.04s;}
-.c5-dots:hover li:nth-child(4) .c5-dots__label,.c5-dots:focus-within li:nth-child(4) .c5-dots__label{transition-delay:.06s;}
-.c5-dots:hover li:nth-child(5) .c5-dots__label,.c5-dots:focus-within li:nth-child(5) .c5-dots__label{transition-delay:.08s;}
-.c5-dots:hover li:nth-child(6) .c5-dots__label,.c5-dots:focus-within li:nth-child(6) .c5-dots__label{transition-delay:.10s;}
-.c5-dots:hover li:nth-child(7) .c5-dots__label,.c5-dots:focus-within li:nth-child(7) .c5-dots__label{transition-delay:.12s;}
-.c5-dots:hover li:nth-child(8) .c5-dots__label,.c5-dots:focus-within li:nth-child(8) .c5-dots__label{transition-delay:.14s;}
-.c5-dots:hover li:nth-child(9) .c5-dots__label,.c5-dots:focus-within li:nth-child(9) .c5-dots__label{transition-delay:.16s;}
-.c5-dots:hover li:nth-child(10) .c5-dots__label,.c5-dots:focus-within li:nth-child(10) .c5-dots__label{transition-delay:.18s;}
-.c5-dots:hover li:nth-child(11) .c5-dots__label,.c5-dots:focus-within li:nth-child(11) .c5-dots__label{transition-delay:.20s;}
-/* fokus klawiatury: obrys też „w bieli”, żeby był widoczny po obu stronach blendu */
-.c5-dots__link:focus-visible{outline:2px solid #fff;outline-offset:2px;}
-
-@media (max-width:899px){
-  /* dotyk nie ma najechania – zostaje zwykłe przewijanie strony */
-  .c5-dots{display:none;}
-}
-@media (prefers-reduced-motion: reduce){
-  .c5-dots__dot,.c5-dots__label{transition:none;}
 }
 
 /* ===== 25 · Uprawy – poziomy marquee między hero a Parametrami (spec §5) =====
@@ -221,24 +96,21 @@ html.lenis,html.lenis body{height:auto;}
    Iteracja 2 (spec §21.2): kicker usunięty. Odstęp, który wnosił nad torem
    (jego `margin-bottom`), zostaje jako dodatkowe górne powietrze – sekcja
    skraca się dokładnie o jeden wiersz kickera, nie o cały blok. */
+/* page-specific: overrides CE-09 padding – the removed kicker leaves its own air
+   (--c5-marq-head) above the track. */
 .c5-marq{--c5-marq-gap:clamp(1.5rem,3vw,3rem);--c5-marq-thumb:clamp(56px,6vw,96px);
   --c5-marq-head:clamp(2rem,4vw,3rem);
   padding-block:calc(130px + var(--c5-marq-head)) 130px;overflow:hidden;}
-.c5-marq__track{display:flex;align-items:center;width:max-content;margin:0;padding:0;list-style:none;animation:c5-marq 42s linear infinite;will-change:transform;}
-.c5-marq__item{display:flex;align-items:center;gap:var(--c5-marq-gap);padding-right:var(--c5-marq-gap);}
-.c5-marq__txt{font-size:clamp(2rem,4.4vw,3.5rem);line-height:1.1;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;white-space:nowrap;color:var(--w-text-primary);}
 /* 12 px zaokrąglenia – jedyny wyjątek od ostrych narożników w tej sekcji */
+/* page-specific: overrides CE-09 – the thumbnail is an <img>, not a div. */
 .c5-marq__thumb{flex:none;display:block;width:var(--c5-marq-thumb);height:var(--c5-marq-thumb);object-fit:cover;border-radius:12px;background:var(--w-gray-200);}
 /* do czasu zdjęć: samo pole, bez etykiety (podpisem jest tekst obok) */
 .c5-marq__thumb--ph{background:var(--w-gray-300);}
 @keyframes c5-marq{to{transform:translateX(-50%);}}
-/* kursor na sekcji zatrzymuje tor */
-.c5-marq:hover .c5-marq__track{animation-play-state:paused;}
 
 @media (prefers-reduced-motion: reduce){
   /* bez ruchu: tor stoi, widoczny pierwszy zestaw, na dotyku przewijany palcem */
   .c5-marq{overflow-x:auto;overflow-y:hidden;}
-  .c5-marq__track{animation:none;will-change:auto;}
   .c5-marq__item:nth-child(n+4){display:none;}
 }
 /* telefony: 130 px powietrza wokół paska to za dużo */
@@ -246,84 +118,22 @@ html.lenis,html.lenis body{height:auto;}
   .c5-marq{padding-block:calc(80px + var(--c5-marq-head)) 80px;}
 }
 
-/* ===== 30 · Parametry – film wyznacza granice sekcji + taby (spec §6) =====
-   Port ECO §13.3/§14.4: sekcja na pełny ekran; warstwa mediów i treść leżą
-   w tej samej komórce siatki, więc warstwa nie dokłada wysokości. Warstwa jest
-   przyklejona, treść przewija się po niej. Kadrem jest cała sekcja z 30 px
-   marginesu z boków, a `overflow:clip` (nie `hidden`, które zrobiłoby ze sekcji
-   kontener przewijania i zabiło sticky) trzyma przyklejone wideo w jej
-   granicach. ---------------------------------------------------------------- */
-.c5-params{position:relative;display:grid;grid-template-columns:minmax(0,1fr);min-height:100svh;margin-inline:var(--c5-gutter);overflow:clip;color:var(--w-text-inverse);}
-.c5-params > *{grid-area:1 / 1;}
-.c5-params__bg{position:sticky;top:0;align-self:start;height:100svh;z-index:0;}
-.c5-params__frame{position:absolute;inset:0;overflow:hidden;}
-.c5-params__media{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;}
-.c5-params__frame::after{content:"";position:absolute;inset:0;background:rgb(0 0 0 / .4);pointer-events:none;}
 /* Spacing in vh so the content stays centred on the screen. The "Podłoże" set
    (11 rows) is taller than the screen, so the content scrolls over the pinned
    video – the bottom must keep the advisor dock's clearance (~84 px including
    its offset from the edge), otherwise the last rows, the buttons and the
    footnote end up under the dock once the section is scrolled to its end. */
+/* page-specific: overrides CE-10 – 84 px of bottom clearance (11 rows scroll under
+   the advisor dock), a tighter title gap and a percentage value column. */
 .c5-params__body{position:relative;z-index:1;min-height:100svh;display:grid;align-content:center;padding-block:clamp(1.5rem,5vh,4rem) calc(clamp(1.5rem,5vh,4rem) + 84px);}
 .c5-params__title{font-size:clamp(1.4rem,2.4vw,1.875rem);font-weight:var(--w-weight-medium);letter-spacing:-0.01em;text-align:center;margin-bottom:clamp(1.75rem,3.5vw,2.75rem);}
 
-/* --- Taby zestawów parametrów (spec §6.2) ---------------------------------
-   Pigułki `.c5-way` wzorca w wersji na ciemnym tle: obrys w bieli z alfą,
-   aktywna biała z tekstem `--w-gray-900`. Wysokość ≤ 56 px, wyśrodkowane,
-   NAD tabelą. Bez JS nie mają czego przełączać – wtedy znikają, a oba panele
-   stoją jeden pod drugim. */
-.c5-params__tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:clamp(1.75rem,3.5vw,2.75rem);}
-.c5-params__tab{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 28px;font:inherit;font-size:1rem;letter-spacing:-0.01em;color:var(--w-text-inverse);background:transparent;border:1px solid rgb(255 255 255 / .35);border-radius:0;cursor:pointer;transition:background var(--w-duration-base) var(--w-ease),color var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);}
-.c5-params__tab:hover{border-color:var(--w-white);}
-.c5-params__tab[aria-selected="true"],.c5-params__tab.is-on{background:var(--w-white);color:var(--w-gray-900);border-color:var(--w-white);}
-.c5-params__tab:focus-visible{outline:2px solid #fff;outline-offset:2px;}
-html:not(.cx-js) .c5-params__tabs{display:none;}
-
-/* --- Panels: stacked in a single grid cell --------------------------------
-   Both panels sit in cell 1/1, so the grid row is measured by the TALLER of
-   them (a panel hidden with `visibility` still counts for layout) – the
-   container height is constant and the link, the buttons and the footnote
-   below the table never jump when tabs are switched. Without JS both panels
-   are visible, one under the other. */
-.c5-params__panels{display:grid;gap:clamp(2rem,4vw,3rem);}
-html.cx-js .c5-params__panels{gap:0;}
-html.cx-js .c5-params__panel{grid-area:1 / 1;opacity:0;visibility:hidden;transition:opacity .2s var(--w-ease),visibility 0s linear .2s;}
-html.cx-js .c5-params__panel.is-on{opacity:1;visibility:visible;transition:opacity .2s var(--w-ease);}
-/* nazwa zestawu „na główce tabeli” – ta sama co na tabie (polecenie Mateusza) */
-.c5-params__tabh{font-size:0.75rem;letter-spacing:.06em;text-transform:uppercase;opacity:.7;margin-bottom:var(--w-space-3);}
-
-/* The shorter set (the sleeve, 7 rows) spreads the taller panel's spare height
-   evenly across its rows instead of leaving a hole above the link: the table
-   fills the frame, row content stays vertically centred, and nothing below the
-   table moves when the tabs are switched. */
-html.cx-js .c5-params__panel{display:flex;flex-direction:column;}
 html.cx-js .c5-params__rows{flex:1 1 auto;}
 html.cx-js .c5-params__row{flex:1 1 auto;align-content:center;}
-.c5-params__rows{display:flex;flex-direction:column;}
 .c5-params__row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,46%);gap:var(--w-space-4);padding-block:14px;border-bottom:1px solid rgb(255 255 255 / .35);}
-.c5-params__row dt{font-weight:var(--w-weight-medium);font-size:1rem;}
-.c5-params__row dd{margin:0;font-size:1rem;font-weight:var(--w-weight-regular);}
 
-/* dyskretny link do analizy – nad przyciskami */
-.c5-params__dl{display:flex;align-items:center;justify-content:center;gap:8px;font-size:0.8125rem;color:inherit;text-decoration:underline;opacity:.75;margin-top:var(--w-space-6);transition:opacity var(--w-duration-base) var(--w-ease);}
-.c5-params__dl:hover{opacity:1;}
-.c5-params__dl .wf-icon{width:16px;height:16px;}
-.c5-params__actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:clamp(1.75rem,3.5vw,2.75rem);}
-.c5-params .c5-btn--ondark{background:var(--w-gray-900);color:var(--w-text-inverse);border-color:rgb(0 0 0 / .2);}
-.c5-params .c5-btn--ondark:hover{background:var(--w-gray-800);}
-.c5-params__src{text-align:center;font-size:0.75rem;opacity:.55;margin-top:var(--w-space-5);}
-
-@media (max-width:899px){
-  /* na wąskich ekranach kadr ma 16 px marginesu z boków */
-  .c5-params{margin-inline:16px;}
-  .c5-params__tab{flex:1 1 12rem;padding-inline:16px;}
-}
 @media (max-width:599px){
   .c5-params__row{grid-template-columns:1fr;gap:2px;}
-}
-@media (prefers-reduced-motion: reduce){
-  .c5-params__dl,.c5-params__tab{transition:none;}
-  html.cx-js .c5-params__panel{transition:none;}
 }
 
 /* ===== 35 · W skrócie – model rękawa + pięć kart (spec §7) =====
@@ -451,23 +261,16 @@ html.cx-js .c5-params__row{flex:1 1 auto;align-content:center;}
    Kolejność DOM = kolejność statyczna; siatka sceny tylko przestawia elementy. */
 /* Outside the scene the track is not a box at all: the stage flows straight
    in the section, so nothing reserves scene height in the static layout. */
+/* page-specific: overrides CE-12 – outside the scene the track is not a box at all. */
 .c5-facts-track{display:contents;height:auto;}
-.c5-facts-stage{display:flex;flex-direction:column;gap:clamp(2rem,4vw,3rem);}
 /* Section head: a normal centred block, styled by the shared `.c5-kicker` /
    `.c5-h2` / `.c5-lead` rules - it only needs the gap down to the scene. */
+/* page-specific: overrides CE-12 – the head stands above the track (spacing only). */
 .c5-facts-head{margin-bottom:clamp(2rem,4vw,3rem);}
 
-/* Panel tła (spec §9) – pięć warstw, po jednej na punkt. Poza sceną panel nie
-   tworzy boksu (`display:contents`), więc warstwy wchodzą wprost w bieg i każdy
-   punkt dostaje swoje tło; kolejność ustawia `order` niżej. W scenie panel
-   wraca jako boks: tło, wspólna ramka i wash.
-   Do czasu zdjęć warstwy są placeholderami `.c5-ph` (pliki docelowe
-   img/foto/mata-czym-jest-1…5.jpg, 4:5). */
-.c5-facts-panel{display:contents;}
 .c5-facts-panel__ph{display:block;width:100%;aspect-ratio:4/5;max-height:min(62vh,520px);background:var(--w-gray-700);}
 .c5-facts-panel__ph::after{color:rgb(255 255 255 / .6);}
 
-.c5-facts-flow{display:flex;flex-direction:column;gap:clamp(1.75rem,3.5vw,2.75rem);margin:0;padding:0;}
 /* Warstwy tła siedzą w DOM-ie razem (w panelu), więc w biegu przeplata je
    `order`: tło punktu, jego opis, jego ilustracja. W scenie wszystkie te
    elementy mają jawne miejsce w siatce, więc `order` steruje tam już tylko
@@ -477,52 +280,22 @@ html.cx-js .c5-params__row{flex:1 1 auto;align-content:center;}
 .c5-facts-panel__ph[data-fact-bg="3"]{order:7;} .c5-fact[data-fact="3"]{order:8;} .c5-viz[data-fact-viz="3"]{order:9;}
 .c5-facts-panel__ph[data-fact-bg="4"]{order:10;} .c5-fact[data-fact="4"]{order:11;} .c5-viz[data-fact-viz="4"]{order:12;}
 .c5-facts-panel__ph[data-fact-bg="5"]{order:13;} .c5-fact[data-fact="5"]{order:14;} .c5-viz[data-fact-viz="5"]{order:15;}
-.c5-fact{display:flex;flex-direction:column;gap:var(--w-space-3);max-width:560px;}
-.c5-fact__title{font-size:clamp(1.125rem,1.8vw,1.5rem);line-height:1.22;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
-.c5-fact__body{display:flex;flex-direction:column;gap:var(--w-space-3);font-size:0.9375rem;line-height:1.55;color:var(--w-text-secondary);}
-.c5-fact__body ul{margin:0;padding-left:1.35rem;display:flex;flex-direction:column;gap:var(--w-space-2);}
 
-/* Pasek progresu – tylko w scenie sterowanej przewijaniem */
-.c5-facts-prog{display:none;}
-.c5-facts-progress{position:relative;height:2px;background:var(--w-gray-200);}
-.c5-facts-progress__fill{position:absolute;inset:0;background:var(--w-gray-900);transform:scaleX(var(--facts-p,0));transform-origin:left center;will-change:transform;}
-/* cztery znaczniki dzielą tor na pięć odcinków */
-.c5-facts-progress__mark{position:absolute;top:50%;width:1px;height:8px;margin-top:-4px;background:var(--w-gray-400);}
 .c5-facts-progress__mark:nth-child(2){left:20%;}
 .c5-facts-progress__mark:nth-child(3){left:40%;}
 .c5-facts-progress__mark:nth-child(4){left:60%;}
 .c5-facts-progress__mark:nth-child(5){left:80%;}
 
-/* --- Boks ilustracji: ciemne pole, kolory odwrócone ------------------------ */
-.c5-viz{position:relative;margin:0;display:flex;flex-direction:column;gap:var(--w-space-5);width:100%;aspect-ratio:4/5;max-height:520px;padding:clamp(1.25rem,2.4vw,2rem);background:rgb(20 20 20 / .78);color:#fff;overflow:hidden;}
-.c5-viz__tag{font-size:0.75rem;letter-spacing:.06em;text-transform:uppercase;color:rgb(255 255 255 / .6);}
-.c5-viz__body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:var(--w-space-4);}
-.c5-viz__body svg:not(.wf-icon){width:100%;height:auto;color:inherit;}
-.c5-viz__cap{font-size:0.75rem;line-height:1.45;color:rgb(255 255 255 / .6);}
-.c5-viz__num{font-size:clamp(1.75rem,3.4vw,2.5rem);font-weight:var(--w-weight-bold);line-height:1;letter-spacing:-0.02em;}
-.c5-viz__ring{display:flex;align-items:center;gap:clamp(1rem,3vw,2rem);}
-.c5-viz__ring svg:not(.wf-icon){width:min(150px,42%);flex:none;}
-.c5-viz__list{display:flex;flex-direction:column;gap:var(--w-space-3);margin:0;padding:0;list-style:none;font-size:var(--w-font-sm-size);}
-.c5-viz__list li{display:flex;gap:var(--w-space-3);align-items:flex-start;}
-.c5-viz__list .wf-icon{flex:none;margin-top:2px;color:rgb(255 255 255 / .75);}
-/* odwrócenie kolorów kitu wewnątrz ciemnego boksu */
-.c5-viz .c5-muted,.c5-viz .wf-small,.c5-viz .wf-t-secondary{color:rgb(255 255 255 / .65);}
 /* Ilustracje przyszły z jasnej sekcji bazy, więc ich neutralne wypełnienia są
    zapisane tokenem `--w-gray-200`; na ciemnym boksie czytałyby się prawie jak
    biel i gubiły kontrast z warstwą aktywną – tu wracają na biel z alfą. */
 .c5-viz svg [fill="var(--w-gray-200)"]{fill:rgb(255 255 255 / .3);}
 .c5-viz svg [stroke="var(--w-gray-200)"]{stroke:rgb(255 255 255 / .25);}
-.c5-viz .c5-bar{grid-template-columns:minmax(6.25rem,31%) 1fr minmax(4.5rem,auto);font-size:0.8125rem;gap:var(--w-space-2);}
-.c5-viz .c5-bar__track{background:rgb(255 255 255 / .25);border-color:transparent;}
-.c5-viz .c5-bar__fill{background:#fff;}
 
 /* Układ statyczny na szerokim ekranie (reduced motion albo brak JS): pola
    tła nie mogą rozlewać się na całą szerokość kolumny. */
 @media (min-width:900px){
-  .c5-facts-flow{align-items:flex-start;}
-  .c5-viz{max-width:480px;}
   .c5-facts-panel__ph{max-width:480px;max-height:min(46vh,420px);}
-  .c5-fact{max-width:640px;}
 }
 
 /* --- Scena: sticky 100svh w wysokim torze (JS ustawia wysokość toru) -------- */
@@ -531,19 +304,6 @@ html.cx-js .c5-params__row{flex:1 1 auto;align-content:center;}
      The section keeps its own padding now: the head above the track is a
      normal block and needs the usual room over it. */
   .cx-js .c5-facts-track{display:block;}
-  .cx-js .c5-facts-stage{
-    --c5-facts-gap:clamp(2rem,6vw,8rem);
-    --c5-facts-prog:40px;
-    /* prześwit na dok doradcy, który pływa nad dolną krawędzią okna */
-    --c5-facts-dock:58px;
-    position:sticky;top:0;height:100svh;
-    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr);
-    gap:0 var(--c5-facts-gap);padding-block:var(--c5-gutter);
-  }
-  /* panel wraca jako boks w kolumnie 2 – warstwy tła leżą w nim jedna na
-     drugiej, widoczna jest tylko ta z data-on="true" */
-  .cx-js .c5-facts-flow > .c5-facts-panel{display:block;position:relative;grid-row:1;grid-column:2;align-self:stretch;
-    height:100%;background:var(--w-gray-700);overflow:hidden;}
   .cx-js .c5-facts-panel__ph{position:absolute;inset:0;height:100%;max-width:none;max-height:none;aspect-ratio:auto;
     opacity:0;transition:opacity .45s var(--w-ease);will-change:opacity;}
   .cx-js .c5-facts-panel__ph[data-on="true"]{opacity:1;}
@@ -551,25 +311,16 @@ html.cx-js .c5-params__row{flex:1 1 auto;align-content:center;}
      z jaśniejszymi partiami zdjęcia */
   .cx-js .c5-facts-panel::after{content:"";position:absolute;inset:0;
     background:rgb(0 0 0 / var(--facts-wash,.25));transition:background .45s var(--w-ease);}
-  /* Warstwa opis+ilustracja leży na całej scenie: opisy wyśrodkowane w pionie
-     w lewej kolumnie, ilustracje wyśrodkowane w prawej – wszystkie w jednej
-     komórce siatki, więc wymieniają się w miejscu. */
-  .cx-js .c5-facts-flow{grid-row:1;grid-column:1 / -1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr);gap:0 var(--c5-facts-gap);}
   /* Opis jest wyśrodkowany w pionie, ale nie w całej scenie: rezerwa na pasek
      progresu i prześwit doka siedzi jako `padding-bottom`, więc tekst środkuje
      się w polu NAD paskiem i nigdy na niego nie wchodzi. */
+  /* page-specific: overrides CE-12 – the description is centred, not bottom-aligned. */
   .cx-js .c5-facts-flow > .c5-fact{grid-row:1;grid-column:1;align-self:center;max-width:none;padding-bottom:calc(var(--c5-facts-prog) + var(--c5-facts-dock));opacity:0;transform:translateY(12px);transition:opacity .18s var(--w-ease),transform .18s var(--w-ease);}
-  .cx-js .c5-facts-flow > .c5-fact.is-on{opacity:1;transform:none;transition-duration:.26s;}
-  .cx-js .c5-facts-flow > .c5-viz{grid-row:1;grid-column:2;align-self:center;justify-self:center;width:clamp(300px,78%,560px);height:clamp(360px,64svh,600px);aspect-ratio:auto;max-width:none;max-height:none;opacity:0;visibility:hidden;transition:opacity .22s var(--w-ease),visibility 0s linear .22s;}
-  .cx-js .c5-facts-flow > .c5-viz[data-on="true"]{opacity:1;visibility:visible;transition:opacity .22s var(--w-ease);}
-  .cx-js .c5-facts-prog{grid-row:1;grid-column:1;align-self:end;display:flex;flex-direction:column;gap:var(--w-space-2);margin-bottom:var(--c5-facts-dock);}
 }
 /* Niskie okna (np. 1280×720): opis dostaje ciaśniejszą skalę, żeby najdłuższy
    punkt nadal mieścił się nad paskiem progresu. */
 @media (min-width:900px) and (prefers-reduced-motion: no-preference) and (max-height:780px){
-  .cx-js .c5-facts-stage{--c5-facts-prog:32px;}
   .cx-js .c5-facts-flow > .c5-fact .c5-fact__body{font-size:0.875rem;}
-  .cx-js .c5-facts-flow > .c5-fact .c5-fact__title{font-size:clamp(1.0625rem,1.5vw,1.25rem);}
 }
 
 /* pas „Ta sama organika…” domyka rozdział – odstęp od dołu niesie już padding
@@ -981,63 +732,23 @@ html:not(.cx-js) .c5-tco__h{cursor:default;}
    przy przewijaniu od wąskiego kadru (.5) do pełnej szerokości (1); po lewej
    nagłówek, po prawej akapity i dwa przyciski. Bez ruchu (mobile / reduced /
    bez JS): kadr statyczny nad treścią, 16:10, bez skalowania. -------------- */
+/* page-specific: overrides CE-16 – air above the band (the previous section ends flush). */
 .c5-pro{position:relative;background:var(--w-gray-600);color:var(--w-text-inverse);overflow:hidden;margin-top:clamp(3rem,6vw,5rem);}
 /* narożniki 30 px – jedyny wyjątek od ostrych narożników V5, na wyraźne
    życzenie Mateusza */
 .c5-pro__media{position:relative;width:100%;aspect-ratio:16/10;border-radius:30px;overflow:hidden;}
 .c5-pro__ph{position:absolute;inset:0;width:100%;height:100%;background:var(--w-gray-500);}
 .c5-pro__ph::after{color:rgb(255 255 255 / .7);}
-.c5-pro__grid{position:relative;z-index:1;padding-block:clamp(2.5rem,6vw,5rem);display:flex;flex-direction:column;gap:clamp(1.5rem,4vw,2.5rem);}
-.c5-pro__grid h2{font-size:clamp(1.75rem,3vw,2.5rem);line-height:1.15;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;max-width:486px;}
-.c5-pro__side{display:flex;flex-direction:column;gap:clamp(1.5rem,3vw,2rem);max-width:486px;}
-.c5-pro__side p{color:var(--w-text-inverse);opacity:.75;}
-.c5-pro__grid .c5-btnrow{gap:var(--w-space-2);}
-.c5-pro__grid .c5-btn{padding-inline:clamp(18px,2.2vw,32px);}
-.c5-pro__login{background:transparent;color:var(--w-text-inverse);border-color:rgb(255 255 255 / .6);}
-.c5-pro__login:hover{background:rgb(255 255 255 / .12);border-color:var(--w-text-inverse);}
-/* na ciemnym pasie pierścień fokusu musi być jasny (i ostry jak reszta V5) */
-.c5-pro a:focus-visible{outline-color:var(--w-focus-ring-inverse);border-radius:0;}
 
 @media (min-width:900px){
-  .c5-pro__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,486px);gap:clamp(2rem,6vw,6rem);align-items:center;}
-  /* dwa przyciski obok siebie mieszczą się w kolumnie 486 px */
-  .c5-pro__grid .c5-btnrow{flex-wrap:nowrap;}
-  .c5-pro__grid .c5-btn{white-space:nowrap;}
   /* statycznie (reduced / bez JS) kadr nad treścią nie zjada całego ekranu */
   .c5-pro__media{max-height:min(56vh,520px);}
 }
 @media (min-width:900px) and (prefers-reduced-motion: no-preference){
-  .cx-js .c5-pro{min-height:90svh;display:grid;align-items:center;}
   .cx-js .c5-pro__media{position:absolute;inset:0;width:auto;aspect-ratio:auto;max-height:none;transform:scale(var(--pro-s,1));transform-origin:center;will-change:transform;}
-  /* bez gradientów – jednolity, delikatny scrim */
-  .cx-js .c5-pro__media::after{content:"";position:absolute;inset:0;background:rgb(0 0 0 / .25);}
 }
 
 /* ===== 90 · FAQ: pytanie z lewej, odpowiedź z prawej (spec §15) =====
    Port ECO §14.5. Odstęp nagłówek → pierwszy akordeon ok. 164 px na desktopie.
    Wszystkie pytania są zwinięte; bez JS odpowiedzi zostają otwarte. ------- */
 .c5-faq{display:flex;flex-direction:column;margin-top:clamp(8rem,12vw,10.25rem);}
-.c5-faq__item{border-top:1px solid var(--w-border-default);position:relative;}
-.c5-faq__item:last-child{border-bottom:1px solid var(--w-border-default);}
-.c5-faq__q{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--w-space-4);width:100%;padding:26px 0;background:none;border:0;font:inherit;font-size:1.125rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;text-align:left;color:var(--w-text-primary);cursor:pointer;}
-.c5-faq__q .wf-icon{flex:none;margin-top:4px;transition:transform var(--w-duration-base) var(--w-ease);}
-.c5-faq__q[aria-expanded="true"] .wf-icon{transform:rotate(180deg);}
-.c5-faq__a{overflow:hidden;height:0;opacity:0;transition:height var(--c5-acc) var(--w-ease),opacity var(--c5-acc-fade) var(--w-ease);}
-.c5-faq__item[data-open] .c5-faq__a{opacity:1;}
-.c5-faq__ain{overflow:hidden;min-height:0;padding-bottom:26px;font-size:1rem;color:var(--w-text-secondary);}
-/* bez JS nie ma czym rozwijać paneli – odpowiedzi zostają otwarte */
-html:not(.cx-js) .c5-faq__a{height:auto;opacity:1;}
-@media (min-width:900px){
-  /* stały układ dwukolumnowy – bez skoku przy otwieraniu (kolumna odpowiedzi
-     jest zawsze, tylko zwinięta do zera) */
-  .c5-faq__item{display:grid;grid-template-columns:minmax(0,1fr) 515px;gap:var(--w-space-10);align-items:start;}
-  .c5-faq__q{grid-column:1;}
-  .c5-faq__a{grid-column:2;}
-  /* strzałka przy prawej krawędzi wiersza; tekst odpowiedzi z odstępem od niej */
-  .c5-faq__q .wf-icon{position:absolute;right:0;top:30px;}
-  .c5-faq__ain{padding-top:26px;padding-right:60px;}
-}
-@media (prefers-reduced-motion: reduce){
-  .c5-faq__q .wf-icon{transition:none;}
-  .c5-faq__a{transition:none;}
-}

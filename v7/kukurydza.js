@@ -1,182 +1,27 @@
-/* ===== Kukurydza – V5 · page layer (kukurydza.js) ===========================
-   Szyna CX5 przeniesiona z wzorca CARBOMAT ECO (`carbomat.js`, blok 00).
-   Jedna szyna dla wszystkich sekcji: moduły rejestrują swoje funkcje scroll /
-   resize, a szyna woła je w jednym przebiegu (rAF-throttled). Wspólne pomocniki:
-   $, $$, panelSet (animacja wysokości paneli), reducedMQ, wideMQ, clamp, lerp.
-   Każda sekcja to osobny moduł (IIFE) niżej w pliku – nic nie wycieka globalnie
-   poza `CX5`.
-   Różnica wobec wzorca: ta strona ładuje też `c5.js`, który ma własny, identyczny
-   moduł chowania doku doradcy (klasa `cx-dockhide`, próg 0.6 wysokości hero) i
-   style doku w `c5.css`. Modułu nie powtarzamy tutaj – dwie kopie pisałyby tę
-   samą klasę. `uprawa.js` sięga po instancję inercji przez `window.CX5.lenis`
-   (stop/start przy lightboxach, spec §9.0.4).
-   ========================================================== */
-window.CX5 = (function () {
-  "use strict";
-  var doc = document;
-  doc.documentElement.classList.add("cx-js");
-  function $(s, r) { return (r || doc).querySelector(s); }
-  function $$(s, r) { return Array.prototype.slice.call((r || doc).querySelectorAll(s)); }
-  var reducedMQ = window.matchMedia("(prefers-reduced-motion: reduce)");
-  var wideMQ = window.matchMedia("(min-width: 900px)");
-  function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
-  function lerp(a, b, t) { return a + (b - a) * t; }
-  /* scroll-driven helpers: motion is on only on wide screens without reduced motion */
-  function motionOn() { return wideMQ.matches && !reducedMQ.matches; }
-
-  /* --- Rozwijanie/zwijanie paneli (wspólne dla wszystkich akordeonów) --------
-     Animujemy wysokość mierzoną z wnętrza panelu; po otwarciu wracamy na `auto`. */
-  function panelSet(panel, open, instant) {
-    if (!panel) return;
-    var inner = panel.firstElementChild;
-    panel.inert = !open;
-    if (!inner) return;
-    if (instant || reducedMQ.matches) {
-      panel.style.transition = "none";
-      panel.style.height = open ? "auto" : "0px";
-      void panel.offsetHeight;
-      panel.style.transition = "";
-      return;
-    }
-    var from = panel.getBoundingClientRect().height;
-    var to = open ? inner.getBoundingClientRect().height : 0;
-    if (Math.abs(from - to) < 0.5) { if (open) panel.style.height = "auto"; return; }
-    panel.style.height = from + "px";
-    void panel.offsetHeight;
-    panel.style.height = to + "px";
-    if (open) {
-      var done = function (e) {
-        if (e.target !== panel || e.propertyName !== "height") return;
-        panel.removeEventListener("transitionend", done);
-        if (!panel.inert) panel.style.height = "auto";
-      };
-      panel.addEventListener("transitionend", done);
-    }
-  }
-
-  /* --- Szyna scroll/resize ---------------------------------------------------- */
-  var scrollFns = [], resizeFns = [], ticking = false, started = false;
-
-  /* --- Wysokość menu serwisu -> --cx-navbar-h --------------------------------
-     Menu nie jest przyklejone, ale hero ma zająć dokładnie pierwszy ekran pod
-     nim, więc jego wysokość mierzymy i udostępniamy wszystkim sekcjom. */
-  var navbarEl = null;
-  function measureNavbar() {
-    if (!navbarEl || !navbarEl.isConnected) navbarEl = doc.querySelector(".wf-navbar");
-    var h = navbarEl ? Math.round(navbarEl.getBoundingClientRect().height) : 0;
-    doc.documentElement.style.setProperty("--cx-navbar-h", h + "px");
-  }
-  resizeFns.push(measureNavbar);
-  function register(m) {
-    if (m.scroll) scrollFns.push(m.scroll);
-    if (m.resize) resizeFns.push(m.resize);
-    if (started && m.resize) m.resize();
-    if (started && m.scroll) m.scroll();
-  }
-  function runScroll() {
-    ticking = false;
-    for (var i = 0; i < scrollFns.length; i++) scrollFns[i]();
-  }
-  function onScroll() {
-    if (ticking) return;
-    ticking = true;
-    window.requestAnimationFrame(runScroll);
-  }
-  function onResize() {
-    for (var i = 0; i < resizeFns.length; i++) resizeFns[i]();
-    runScroll();
-  }
-  function start() {
-    if (started) return;
-    started = true;
-    onResize();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onResize);
-    window.addEventListener("load", onResize);
-    if (wideMQ.addEventListener) { wideMQ.addEventListener("change", onResize); reducedMQ.addEventListener("change", onResize); }
-  }
-
-  /* Programmatic scroll: through the inertia layer (Lenis) when it is active, else native.
-     `behavior` "auto" forces an instant native jump. */
-  var api = { $: $, $$: $$, panelSet: panelSet, reducedMQ: reducedMQ, wideMQ: wideMQ,
-              clamp: clamp, lerp: lerp, motionOn: motionOn, register: register, start: start, requestScroll: onScroll, lenis: null };
-  api.scrollTo = function (top, behavior) {
-    if (api.lenis && behavior !== "auto") { api.lenis.scrollTo(Math.round(top), { duration: 1.1 }); return; }
-    window.scrollTo({ top: Math.round(top), behavior: behavior || "smooth" });
-  };
-  return api;
-})();
-
-/* ===== 05 · Scroll inertia (Lenis) =========================================
-   A slight lag between the wheel and the page, as on serverobotics.com/robot.
-   Desktop only (>= 900 px) and only without prefers-reduced-motion; touch stays
-   native; without the CDN script the page simply scrolls natively. Lenis moves
-   the real window scroll, so sticky layouts and the CX5 scroll bus keep working.
-   The instance is published as `window.CX5.lenis`, because the component layer
-   (`uprawa.js`) has to stop it while a lightbox is open and start it again on
-   close (spec §9.0.4); everything else reaches it through `CX5.scrollTo`. */
-(function () {
-  "use strict";
-  var instance = null;
-  function make() {
-    if (instance || !window.Lenis) return;
-    instance = new window.Lenis({ lerp: 0.09, wheelMultiplier: 1, smoothWheel: true, syncTouch: false, autoRaf: true });
-    CX5.lenis = instance;
-    document.documentElement.classList.add("cx-lenis");
-  }
-  function drop() {
-    if (!instance) return;
-    instance.destroy(); instance = null; CX5.lenis = null;
-    document.documentElement.classList.remove("cx-lenis");
-  }
-  function sync() { if (CX5.motionOn()) make(); else drop(); }
-  sync();
-  if (CX5.wideMQ.addEventListener) { CX5.wideMQ.addEventListener("change", sync); CX5.reducedMQ.addEventListener("change", sync); }
-})();
-
-/* ===== 10 · Nawigacja kropkowa: scrollspy + płynne przewijanie do rozdziału ===== */
+/* ===== kukurydza.js – warstwa strony (V7) ==================================
+   Szyna CX5, warstwa wspólna i moduły klocków wzorca leżą w ce/*.js (ładowane
+   wcześniej). Tutaj zostają wyłącznie moduły klocków unikalnych tej podstrony.
+   Bez własnej definicji `window.CX5` i bez `CX5.start()` – szyna startuje sama
+   na DOMContentLoaded. ==================================================== */
+/* ===== 10+ · Skoki w obrębie strony spoza nawigacji kropkowej ===============
+   Przycisk w hero („Zobacz program krok po kroku", spec §9.3) skacze tą samą
+   drogą co kropki – przez warstwę inercji, natywnie przy ograniczonym ruchu.
+   Same kropki prowadzi ce/CE-07-nawigacja-kropkowa.js. =================== */
 (function () {
   "use strict";
   var doc = document, $$ = CX5.$$, reducedMQ = CX5.reducedMQ;
-  var dotLinks = $$("[data-dot]");
-  var chapters = $$("[data-chapter]");
-
-  /* one handler for every in-page jump: through the inertia layer when it is
-     active, a native jump with reduced motion. Also used by the hero button
-     („Zobacz program krok po kroku", spec §9.3). */
+  var links = $$("[data-cx-scroll]");
+  if (!links.length) return;
   function jumpTo(a) {
     var target = doc.getElementById(a.getAttribute("href").slice(1));
     if (!target) return false;
     CX5.scrollTo(Math.round(target.getBoundingClientRect().top + window.scrollY), reducedMQ.matches ? "auto" : "smooth");
     return true;
   }
-  $$("[data-cx-scroll]").forEach(function (a) {
+  links.forEach(function (a) {
     a.addEventListener("click", function (e) { if (jumpTo(a)) e.preventDefault(); });
   });
-
-  if (!dotLinks.length) return;
-
-  /* active chapter = the last one whose top edge is above 40 % of the viewport */
-  function updateSpy() {
-    var mid = window.innerHeight * 0.4;
-    var current = null;
-    chapters.forEach(function (sec) {
-      if (sec.getBoundingClientRect().top < mid) current = sec.getAttribute("data-chapter");
-    });
-    dotLinks.forEach(function (a) {
-      var on = a.getAttribute("data-dot") === current;
-      if (on) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current");
-    });
-  }
-
-  /* nothing is pinned to the top edge any more, so anchors need no offset */
-  dotLinks.forEach(function (a) {
-    a.addEventListener("click", function (e) { if (jumpTo(a)) e.preventDefault(); });
-  });
-
-  CX5.register({ scroll: updateSpy });
 })();
-
 /* ===== 40 · Program fazowy: lista faz + panel aktywnej fazy (spec §9.7) =====
    Dokładnie jeden panel otwarty naraz. Panel przełącza najechanie myszą
    (60 ms zwłoki, żeby przejazd kursorem przez listę nie migał), fokus, klik
@@ -461,4 +306,4 @@ window.CX5 = (function () {
   CX5.register({ scroll: update, resize: update });
 })();
 
-CX5.start();
+

@@ -1,0 +1,56 @@
+/* ===== CE-07 · Nawigacja kropkowa (rejestr: ce-rejestr.js) =====
+   Fixed dot column at the right edge: one dot per chapter, labels sliding in on
+   hover or focus of the whole nav. Merged from carbomat.css 10 – the copies of
+   the six other pages differed only in how far the label stagger ran (one rule
+   per chapter), so this file carries the stagger up to eleven positions; a page
+   with fewer chapters simply has no such <li>. No variants.
+   Markup: .c5-dots with [data-dot] links, chapters marked [data-chapter].
+
+   Fixed, pionowo na środku ekranu. Etykiety wjeżdżają po najechaniu na cały
+   nav (albo po fokusie w jego wnętrzu). Nic nie klei się do górnej krawędzi.
+   Kropki są okrągłe celowo: to znaczniki, nie boksy układu (jak .c5-way__ico).
+
+   Widoczność na jasnych i ciemnych sekcjach: cały nav ma mix-blend-mode
+   difference, a kolory zapisujemy „w bieli”. Difference: result = |backdrop –
+   source|, więc biel (255) na białym tle daje czerń, a na ciemnym – biel.
+   Stąd: aktywna kropka = #fff (czytana jako gray-900 na białym), nieaktywna =
+   biel z alfą .55 (czytana jako ~gray-400). ------------------------------- */
+.c5-dots{position:fixed;right:var(--c5-gutter);top:50%;transform:translateY(-50%);z-index:90;mix-blend-mode:difference;}
+.c5-dots ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;align-items:flex-end;}
+/* Pole klikalne 28×28 px (bez odstępu między pozycjami = 28 px środek–środek).
+   Etykieta leży absolutnie POZA tym polem, więc nav zajmuje tylko wąską kolumnę
+   przy krawędzi i nie przechwytuje kliknięć w treść pod spodem. */
+.c5-dots__link{position:relative;display:flex;align-items:center;justify-content:flex-end;width:28px;min-height:28px;padding-right:2px;text-decoration:none;}
+.c5-dots__dot{flex:none;display:block;width:6px;height:6px;border-radius:var(--w-radius-circle);background:rgb(255 255 255 / .55);transition:width .2s var(--w-ease),height .2s var(--w-ease),background-color .2s var(--w-ease);}
+.c5-dots__link[aria-current="true"] .c5-dots__dot{width:10px;height:10px;background:#fff;}
+/* Etykiety: ukryte, wjeżdżają razem (lekki stagger) po najechaniu na nav.
+   Widoczna etykieta łapie wskaźnik (`pointer-events:auto`) i zachodzi 6 px na
+   pole linku, więc między kropką a etykietą nie ma „dziury": przejście myszą na
+   etykietę nie gasi etykiet, a klik w nią przewija do rozdziału (spec §13.4). */
+.c5-dots__label{position:absolute;right:calc(100% - 6px);top:50%;padding:6px 6px 6px 10px;font-size:0.8125rem;line-height:1.2;text-align:right;white-space:nowrap;color:rgb(255 255 255 / .6);opacity:0;transform:translate(6px,-50%);pointer-events:none;transition:opacity .2s var(--w-ease),transform .2s var(--w-ease);transition-delay:0s;}
+.c5-dots__link[aria-current="true"] .c5-dots__label{color:#fff;}
+.c5-dots:hover .c5-dots__label,
+.c5-dots:focus-within .c5-dots__label{opacity:1;transform:translateY(-50%);pointer-events:auto;}
+.c5-dots:hover li:nth-child(2) .c5-dots__label,.c5-dots:focus-within li:nth-child(2) .c5-dots__label{transition-delay:.02s;}
+.c5-dots:hover li:nth-child(3) .c5-dots__label,.c5-dots:focus-within li:nth-child(3) .c5-dots__label{transition-delay:.04s;}
+.c5-dots:hover li:nth-child(4) .c5-dots__label,.c5-dots:focus-within li:nth-child(4) .c5-dots__label{transition-delay:.06s;}
+.c5-dots:hover li:nth-child(5) .c5-dots__label,.c5-dots:focus-within li:nth-child(5) .c5-dots__label{transition-delay:.08s;}
+.c5-dots:hover li:nth-child(6) .c5-dots__label,.c5-dots:focus-within li:nth-child(6) .c5-dots__label{transition-delay:.10s;}
+.c5-dots:hover li:nth-child(7) .c5-dots__label,.c5-dots:focus-within li:nth-child(7) .c5-dots__label{transition-delay:.12s;}
+.c5-dots:hover li:nth-child(8) .c5-dots__label,.c5-dots:focus-within li:nth-child(8) .c5-dots__label{transition-delay:.14s;}
+/* Strony z dziewięcioma, dziesięcioma i jedenastoma rozdziałami (Produkty,
+   CARBOHUMIC, CARBOMAT MATA UPRAWOWA) ciągną ten sam stagger dalej. */
+.c5-dots:hover li:nth-child(9) .c5-dots__label,.c5-dots:focus-within li:nth-child(9) .c5-dots__label{transition-delay:.16s;}
+.c5-dots:hover li:nth-child(10) .c5-dots__label,.c5-dots:focus-within li:nth-child(10) .c5-dots__label{transition-delay:.18s;}
+.c5-dots:hover li:nth-child(11) .c5-dots__label,.c5-dots:focus-within li:nth-child(11) .c5-dots__label{transition-delay:.20s;}
+/* fokus klawiatury: obrys też „w bieli", żeby był widoczny po obu stronach blendu */
+.c5-dots__link:focus-visible{outline:2px solid #fff;outline-offset:2px;}
+
+@media (max-width:899px){
+  /* dotyk nie ma najechania – zostaje zwykłe przewijanie strony */
+  .c5-dots{display:none;}
+}
+@media (prefers-reduced-motion: reduce){
+  .c5-dots__dot,.c5-dots__label{transition:none;}
+}
+

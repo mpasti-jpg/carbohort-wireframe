@@ -1,0 +1,68 @@
+/* ===== CE-11 · Warianty na tabach (rejestr: ce-rejestr.js) =====
+   Sticky tab bar over variant blocks that lie one under another – the tabs only
+   navigate, they never hide a block. Merged from carbomat.css KTÓRY DLA MNIE;
+   the CARBOHUMIC copy was identical apart from the variant below and its own
+   c5hu-* blocks, which stay in carbohumic.css. The pricing rows (.c5-price*)
+   are NOT here – they are a separate content element (CE-28, wave 2) and stay
+   in <strona>.css. Próchnica+ („taby-lat") drives its year tabs from the kit
+   (c5.css / c5.js) and does not link this file. ===== */
+
+/* --- KTÓRY DLA MNIE -------------------------------------------------------- */
+/* Taby wariantów: przyklejone do górnej krawędzi (nie ma już subnawigacji),
+   przewijają do bloków, które leżą JEDEN POD DRUGIM (oba widoczne – taby tylko
+   nawigują, nie przełączają). Sticky kończy się wraz z kontenerem
+   `.c5-variants`, więc po ostatnim bloku taby chowają się do góry. */
+.c5-variants{position:relative;margin-top:clamp(2rem,4vw,3.5rem);}
+.c5-ways{position:sticky;top:0;z-index:80;display:grid;grid-template-columns:1fr 1fr;gap:10px;background:var(--w-surface-page);padding-block:6px;transition:transform .25s var(--w-ease),opacity .25s var(--w-ease);}
+/* Taby chowają się w górę, gdy od dołu wchodzi „Czym jest" (spec §13.4) */
+.c5-ways.is-out{transform:translateY(-110%);opacity:0;pointer-events:none;}
+/* pasek ≤ 68 px: przycisk 56 px + 2 × 6 px paddingu (uwaga Mateusza „jakieś 60 px") */
+.c5-way{display:flex;align-items:center;gap:14px;padding:0 20px;min-height:56px;font:inherit;font-size:1rem;text-align:left;background:var(--w-gray-900);color:var(--w-text-inverse);border:0;border-radius:0;cursor:pointer;transition:background var(--w-duration-base) var(--w-ease),color var(--w-duration-base) var(--w-ease);}
+.c5-way[aria-selected="false"]{background:var(--w-gray-100);color:var(--w-text-primary);}
+.c5-way[aria-selected="false"]:hover{background:var(--w-gray-200);}
+.c5-way__ico{flex:none;display:grid;place-items:center;width:36px;height:36px;border:1px solid currentColor;border-radius:var(--w-radius-circle);}
+.c5-way .wf-icon{width:20px;height:20px;}
+
+.c5-variant{padding-top:clamp(2rem,4vw,3rem);}
+.c5-variant + .c5-variant{margin-top:clamp(3rem,7vw,6rem);}
+.c5-variant__name{font-size:clamp(2rem,3.6vw,3rem);font-weight:var(--w-weight-medium);letter-spacing:-0.01em;text-align:center;}
+
+/* Scena: 3 kafle funkcji | packshot | 2 kafle (screen Mateusza 13.11.22) */
+.c5-var__scene{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr) minmax(0,1fr);gap:clamp(1.5rem,3vw,3rem);align-items:center;margin-top:clamp(2rem,4vw,3rem);}
+.c5-var__tiles{display:grid;gap:14px;align-content:center;}
+.c5-var__tile{margin:0;border:1px solid var(--w-border-default);padding:20px 22px;font-size:0.9375rem;line-height:1.4;}
+.c5-var__pack{display:block;height:clamp(320px,46vh,520px);width:100%;object-fit:contain;}
+
+/* Dwie kolumny pod sceną: parametry | opakowania z cennikiem */
+.c5-var__cols{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,4rem);margin-top:clamp(2rem,4vw,3rem);}
+.c5-var__col{display:flex;flex-direction:column;gap:var(--w-space-5);font-size:1rem;}
+.c5-var__col .c5-label{font-weight:var(--w-weight-semibold);}
+.c5-var__col ul{margin:var(--w-space-1) 0 0;padding-left:1.35rem;display:flex;flex-direction:column;gap:var(--w-space-1);}
+.c5-variant__block{display:flex;flex-direction:column;gap:var(--w-space-1);}
+
+@media (max-width:899px){
+  .c5-ways{grid-template-columns:1fr;position:static;transition:none;}
+  /* bez przyklejania nie ma czego chować – pasek zostaje widoczny */
+  .c5-ways.is-out{transform:none;opacity:1;pointer-events:auto;}
+  /* jedna kolumna: najpierw packshot, potem kafle funkcji */
+  .c5-var__scene{grid-template-columns:1fr;}
+  .c5-var__pack{order:-1;height:clamp(240px,52vw,360px);}
+  .c5-var__cols{grid-template-columns:1fr;}
+}
+@media (prefers-reduced-motion: reduce){
+  .c5-way{transition:none;}
+  .c5-ways{transition:none;}
+}
+
+/* --- wariant: trzy-warianty (CARBOHUMIC) -----------------------------------
+   Trzy warianty zamiast dwóch: przy >= 900 px trzy kolumny. Niższy pasek
+   (56 px) mieści trzy taby, więc dawna reguła „dwie kolumny i bez sticky przy
+   900–1099 px" jest zbędna – zostaje tylko zwężenie typografii, żeby nazwa
+   wariantu nie łamała się na trzy wiersze. */
+.c5-ways--3{grid-template-columns:repeat(3,minmax(0,1fr));}
+@media (min-width:900px) and (max-width:1099px){
+  .c5-ways--3 .c5-way{gap:10px;padding:0 14px;font-size:0.9375rem;}
+}
+@media (max-width:899px){
+  .c5-ways--3{grid-template-columns:minmax(0,1fr);}
+}

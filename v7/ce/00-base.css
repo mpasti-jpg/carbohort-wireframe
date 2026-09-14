@@ -1,0 +1,69 @@
+/* ===== 00 · Warstwa wspólna klocków wzorca (rejestr: ce-rejestr.js) =====
+   Shared base layer of the CARBOMAT ECO pattern: layout blocks (.c5-wrap,
+   .c5-sec, headings, lead), buttons, the light band, the advisor dock and the
+   Lenis (scroll inertia) rules. Merged 1:1 from carbomat.css 00 – the copies in
+   carbohumic.css, carbomat-humic.css, carbomat-mata.css, produkty.css and
+   kukurydza.css were byte-identical; .c5-band / .c5-band__title come from the
+   same block of carbomat-mata.css / produkty.css / carbohumic.css.
+   Loaded by every page of the pattern, always before the CE-NN files. ===== */
+:root { --c5-acc: .2s; --c5-acc-fade: .14s; --c5-gutter: 30px; }
+
+/* Górne menu serwisu NIE jest przyklejone (decyzja Mateusza 24.07) – scrolluje
+   się razem ze stroną. Kit pozostaje nietknięty – to nadpisanie obowiązuje
+   tylko na podstronach wzorca. */
+.wf-navbar{position:static;}
+
+/* kotwice: bez przyklejonej belki nie potrzeba marginesu przewijania */
+[data-chapter]{scroll-margin-top:0;}
+
+/* --- Wspólne klocki nowego layoutu -------------------------------------- */
+.c5-wrap{max-width:1180px;margin-inline:auto;padding-inline:var(--w-space-5);}
+.c5-sec{padding-block:clamp(3.5rem,7vw,6.25rem);}
+.c5-kicker--center{text-align:center;}
+.c5-kicker{display:block;font-size:0.875rem;font-weight:var(--w-weight-medium);letter-spacing:.03em;text-transform:uppercase;margin-bottom:clamp(2rem,4vw,3.5rem);}
+.c5-h1{font-size:clamp(2.1rem,4vw,3.125rem);line-height:1.12;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+.c5-h2{font-size:clamp(1.7rem,3.2vw,2.5rem);line-height:1.15;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;max-width:784px;}
+.c5-h2--center{margin-inline:auto;text-align:center;}
+.c5-lead{font-size:1rem;color:var(--w-text-secondary);max-width:710px;}
+.c5-lead--center{margin-inline:auto;text-align:center;}
+.c5-head{display:flex;flex-direction:column;gap:clamp(1.25rem,2.6vw,2.25rem);}
+.c5-muted{color:var(--w-text-secondary);}
+
+/* Przyciski nowego języka: ostre narożniki, etykiety jak w makiecie */
+.c5-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 45px;font:inherit;font-size:1rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;border:1px solid rgb(0 0 0 / .2);border-radius:0;cursor:pointer;text-decoration:none;transition:background var(--w-duration-base) var(--w-ease),color var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);}
+.c5-btn--dark{background:var(--w-gray-900);color:var(--w-text-inverse);border-color:var(--w-gray-900);}
+.c5-btn--dark:hover{background:var(--w-gray-700);border-color:var(--w-gray-700);}
+.c5-btn--light{background:var(--w-surface-page);color:var(--w-text-primary);}
+.c5-btn--light:hover{border-color:var(--w-border-strong);}
+.c5-btn--sm{padding:10px 25px;font-size:0.8125rem;}
+.c5-btn--inv{background:var(--w-surface-page);color:var(--w-text-primary);border-color:var(--w-surface-page);}
+.c5-btn--inv:hover{background:var(--w-gray-100);}
+.c5-btn .wf-icon{width:16px;height:16px;opacity:.55;}
+.c5-btnrow{display:flex;gap:6px;flex-wrap:wrap;}
+
+/* --- Jasny pas (sekcje na tle --w-surface-subtle) --------------------------- */
+.c5-band{background:var(--w-surface-subtle);}
+.c5-band__title{font-size:1.5rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+
+/* Placeholdery bez opisów – neutralne pola pod zdjęcia (kadry ustala grafik).
+   Strona, która etykiety pokazuje (uprawy), cofa tę regułę u siebie. */
+.wf-ph__label{display:none;}
+
+/* --- Dok dr Jurka: pojawia się po zejściu z hero ----------------------------- */
+.cw-jurek{transition:opacity .3s ease,visibility .3s ease;}
+.cw-jurek.cx-dockhide{opacity:0;visibility:hidden;pointer-events:none;}
+
+/* Cel kotwicy po aktywacji linku „#" z klawiatury (00-base.js): bez obrysu na
+   dużych kontenerach – fokus tylko przenosi czytanie, nie podświetla sekcji. */
+[data-anchor-focus]:focus{outline:none;}
+
+@media (prefers-reduced-motion: reduce){
+  .c5-btn{transition:none;}
+  .cw-jurek{transition:none;}
+}
+
+/* --- Scroll inertia (Lenis) – keep native layout; CSS smooth-behavior off while active --- */
+html.lenis,html.lenis body{height:auto;}
+.lenis.lenis-smooth{scroll-behavior:auto !important;}
+.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain;}
+.lenis.lenis-stopped{overflow:hidden;}

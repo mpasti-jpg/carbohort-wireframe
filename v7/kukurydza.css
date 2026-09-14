@@ -1,151 +1,34 @@
-/* ===== 00 · Warstwa wspólna strony kukurydzy (V5, wzorzec CARBOMAT ECO) =====
-   Klocki układu, przyciski, hero, CTA. Adaptacja bloku 00 z `carbomat.css`.
-   Różnice wobec wzorca (spec §9.0.3, §9.3):
-   – strona ładuje też `c5.css` i `uprawa.css`, więc te reguły CELOWO nadpisują
-     `c5.css` tam, gdzie klasy się pokrywają (.c5-sec, .c5-kicker, .c5-h1/h2,
-     .c5-btn, hero) – wygląd ma być ten sam co na ECO;
-   – hero nie ma packshotów (to strona uprawy, nie produktu): prawy panel
-     wypełnia jeden kadr, więc reguły `.c5-hero__pack*` wypadły;
-   – reguła `.wf-ph__label{display:none}` z wzorca NIE obowiązuje: etykiety
-     placeholderów opisują kadry do zamówienia u grafika (spec §9.0.5);
-   – dok doradcy chowa `c5.js` (moduł „Dok dr. Jurka") tą samą logiką i tą samą
-     klasą `cx-dockhide`, a style doku ma `c5.css` – dlatego ani modułu, ani
-     reguł `.cw-jurek` nie powtarzamy tutaj (nie dublujemy mechanik c5).
-   Bez subnawigacji – nawigacja po podstronie to kropki po prawej (10-dots).
+/* ===== kukurydza.css – warstwa strony (V7) =====
+   Klocki wzorca i warstwa wspólna leżą w katalogu ce/ (ładowane wyżej).
+   Tutaj zostają wyłącznie klocki unikalne tej podstrony i nadpisania
+   treściowe klocków wspólnych. Strona ładuje też kit `c5.css` i `uprawa.css`
+   – oba stoją PRZED katalogiem ce/, więc warstwa wspólna wygrywa kaskadą.
    ===== */
-:root { --c5-acc: .2s; --c5-acc-fade: .14s; --c5-gutter: 30px; }
-
-/* Górne menu serwisu NIE jest przyklejone (decyzja Mateusza 24.07) – scrolluje
-   się razem ze stroną. Po zdjęciu paska subnawigacji (iteracja 5) do górnej
-   krawędzi nie klei się już nic. Kit pozostaje nietknięty – to nadpisanie
-   tylko w obrębie tej strony. */
-.wf-navbar{position:static;}
-
-/* kotwice: bez przyklejonej belki nie potrzeba marginesu przewijania
-   (c5.css odsuwa je o wysokość nieistniejącej tu subnawigacji) */
-[data-chapter]{scroll-margin-top:0;}
-
 /* Etykiety placeholderów zostają widoczne: na stronie uprawy opisują kadr do
    zamówienia u grafika (spec §9.0.5). `c5.css` chowa je dla stron produktowych,
    gdzie placeholderów nie ma – tu tę regułę cofamy. */
 .wf-ph__label{display:inline;}
 
-/* --- Wspólne klocki nowego layoutu -------------------------------------- */
-.c5-wrap{max-width:1180px;margin-inline:auto;padding-inline:var(--w-space-5);}
-.c5-sec{padding-block:clamp(3.5rem,7vw,6.25rem);}
-.c5-kicker--center{text-align:center;}
-.c5-kicker{display:block;font-size:0.875rem;font-weight:var(--w-weight-medium);letter-spacing:.03em;text-transform:uppercase;margin-bottom:clamp(2rem,4vw,3.5rem);}
-.c5-h1{font-size:clamp(2.1rem,4vw,3.125rem);line-height:1.12;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
-.c5-h2{font-size:clamp(1.7rem,3.2vw,2.5rem);line-height:1.15;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;max-width:784px;}
-.c5-h2--center{margin-inline:auto;text-align:center;}
-.c5-lead{font-size:1rem;color:var(--w-text-secondary);max-width:710px;}
-.c5-lead--center{margin-inline:auto;text-align:center;}
-.c5-head{display:flex;flex-direction:column;gap:clamp(1.25rem,2.6vw,2.25rem);}
-.c5-muted{color:var(--w-text-secondary);}
-
-/* Przyciski nowego języka: ostre narożniki, etykiety jak w makiecie */
-.c5-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 45px;font:inherit;font-size:1rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;border:1px solid rgb(0 0 0 / .2);border-radius:0;cursor:pointer;text-decoration:none;transition:background var(--w-duration-base) var(--w-ease),color var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);}
-.c5-btn--dark{background:var(--w-gray-900);color:var(--w-text-inverse);border-color:var(--w-gray-900);}
-.c5-btn--dark:hover{background:var(--w-gray-700);border-color:var(--w-gray-700);}
-.c5-btn--light{background:var(--w-surface-page);color:var(--w-text-primary);}
-.c5-btn--light:hover{border-color:var(--w-border-strong);}
-.c5-btn--sm{padding:10px 25px;font-size:0.8125rem;}
-.c5-btn--inv{background:var(--w-surface-page);color:var(--w-text-primary);border-color:var(--w-surface-page);}
-.c5-btn--inv:hover{background:var(--w-gray-100);}
-.c5-btn .wf-icon{width:16px;height:16px;opacity:.55;}
-.c5-btnrow{display:flex;gap:6px;flex-wrap:wrap;}
-
-/* --- HERO: cały pierwszy ekran pod menu serwisu (spec §9.3) ---------------
-   Wysokość ekranu minus zmierzony pasek menu (`--cx-navbar-h` ustawia JS w
-   00-base.js; fallback 0 px, gdy JS nie wystartuje). Lewa kolumna: copy
-   wyśrodkowane w pionie, breadcrumb przy dolnej krawędzi. Prawa: panel
-   jasnoszary z kadrem uprawy na całej powierzchni. ------------------------- */
-#hero{display:flex;min-height:calc(100svh - var(--cx-navbar-h, 0px));}
-#hero > .c5-wrap{flex:1 1 auto;display:flex;}
+/* page-specific: CE-08 hero – strona uprawy nie ma packshotów, więc prawy panel
+   wypełnia jeden kadr na całą powierzchnię, a lewa kolumna rozkłada odstępy
+   sama (`margin-block:auto` na copy). Reszta hero – z ce/CE-08-hero.css. */
 .c5-hero{flex:1 1 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,5vw,5rem);align-items:stretch;padding-block:0;min-height:0;}
 /* odstępy w lewej kolumnie robią `margin-block:auto` na copy i padding pod
    okruszkami – własnego `gap` (z c5.css) ta kolumna mieć nie może */
 .c5-hero__copy{display:flex;flex-direction:column;gap:0;max-width:585px;}
-.c5-hero__copyin{display:flex;flex-direction:column;gap:clamp(1.25rem,2.4vw,2rem);margin-block:auto;padding-block:clamp(2rem,4vw,3rem);}
-.c5-hero__copy .c5-kicker{margin-bottom:0;}
-.c5-hero__lead{display:flex;flex-direction:column;gap:var(--w-space-3);font-size:1.125rem;color:var(--w-text-secondary);max-width:486px;}
-/* breadcrumb: dyskretny, przy dolnej krawędzi ekranu */
-.c5-hero__crumbs{font-size:0.75rem;color:var(--w-gray-400);padding-bottom:var(--c5-gutter);}
-.c5-hero__crumbs a,.c5-hero__crumbs .wf-breadcrumb__sep{color:inherit;}
-.c5-hero__crumbs a:hover{color:var(--w-gray-600);}
 
-/* Panel: 30 px od góry, dołu i prawej krawędzi ekranu. Na stronie uprawy stoi
-   na nim jeden kadr na całą powierzchnię (docelowo zdjęcie `object-fit:cover`,
-   dziś placeholder z opisem kadru). */
-.c5-hero__stage{position:relative;overflow:hidden;margin-block:var(--c5-gutter);min-height:calc(100svh - var(--cx-navbar-h, 0px) - 2 * var(--c5-gutter));background:var(--w-gray-100);}
 .c5-hero__frame{position:absolute;inset:0;border-radius:0;min-height:0;border:0;}
 .c5-hero__frame .wf-ph__label{max-width:min(100%,22rem);}
 .c5-hero__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
 
-/* --- CTA końcowe ------------------------------------------------------------ */
+/* page-specific: CTA końcowe – strona nie ma klocka CE-18, więc nie linkuje
+   ce/CE-18-cta.css; ta jedna reguła zostaje tutaj (martwa dopóki CTA nie wróci). */
 .c5-cta{display:flex;flex-direction:column;align-items:center;gap:clamp(1.75rem,3.5vw,2.75rem);text-align:center;}
 
 @media (max-width:899px){
-  /* jedna kolumna: copy → panel z kadrem → breadcrumb pod spodem */
-  #hero{display:block;min-height:0;}
-  #hero > .c5-wrap{display:block;}
+  /* page-specific: CE-08 hero na telefonie – jedna kolumna bez packshotów */
   .c5-hero{display:flex;flex-direction:column;gap:clamp(1.5rem,4vw,2.5rem);padding-block:clamp(2rem,6vw,3rem);}
   .c5-hero__copy{display:contents;}
-  .c5-hero__copyin{order:1;margin-block:0;padding-block:0;max-width:585px;}
-  .c5-hero__stage{order:2;margin-block:0;min-height:0;aspect-ratio:4/5;max-height:70vh;}
-  .c5-hero__crumbs{order:3;padding-bottom:0;}
-}
-@media (prefers-reduced-motion: reduce){
-  .c5-btn{transition:none;}
-}
-
-/* --- Scroll inertia (Lenis) – keep native layout; CSS smooth-behavior off while active --- */
-html.lenis,html.lenis body{height:auto;}
-.lenis.lenis-smooth{scroll-behavior:auto !important;}
-.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain;}
-.lenis.lenis-stopped{overflow:hidden;}
-
-/* ===== 10 · Nawigacja po podstronie – kropki przy prawej krawędzi ==========
-   Fixed, pionowo na środku ekranu. Etykiety wjeżdżają po najechaniu na cały
-   nav (albo po fokusie w jego wnętrzu). Nic nie klei się do górnej krawędzi.
-
-   Widoczność na jasnych i ciemnych sekcjach: cały nav ma mix-blend-mode
-   difference, a kolory zapisujemy „w bieli". Difference: result = |backdrop –
-   source|, więc biel (255) na białym tle daje czerń, a na ciemnym – biel.
-   Stąd: aktywna kropka = #fff (czytana jako gray-900 na białym), nieaktywna =
-   biel z alfą .55 (czytana jako ~gray-400). ------------------------------- */
-.c5-dots{position:fixed;right:var(--c5-gutter);top:50%;transform:translateY(-50%);z-index:90;mix-blend-mode:difference;}
-.c5-dots ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;align-items:flex-end;}
-/* Pole klikalne 28×28 px (bez odstępu między pozycjami = 28 px środek–środek).
-   Etykieta leży absolutnie POZA tym polem, więc nav zajmuje tylko wąską kolumnę
-   przy krawędzi i nie przechwytuje kliknięć w treść pod spodem. */
-.c5-dots__link{position:relative;display:flex;align-items:center;justify-content:flex-end;width:28px;min-height:28px;padding-right:2px;text-decoration:none;}
-.c5-dots__dot{flex:none;display:block;width:6px;height:6px;border-radius:var(--w-radius-circle);background:rgb(255 255 255 / .55);transition:width .2s var(--w-ease),height .2s var(--w-ease),background-color .2s var(--w-ease);}
-.c5-dots__link[aria-current="true"] .c5-dots__dot{width:10px;height:10px;background:#fff;}
-/* Etykiety: ukryte, wjeżdżają razem (lekki stagger) po najechaniu na nav.
-   Widoczna etykieta łapie wskaźnik (`pointer-events:auto`) i zachodzi 6 px na
-   pole linku, więc między kropką a etykietą nie ma „dziury": przejście myszą na
-   etykietę nie gasi etykiet, a klik w nią przewija do rozdziału (spec §13.4). */
-.c5-dots__label{position:absolute;right:calc(100% - 6px);top:50%;padding:6px 6px 6px 10px;font-size:0.8125rem;line-height:1.2;text-align:right;white-space:nowrap;color:rgb(255 255 255 / .6);opacity:0;transform:translate(6px,-50%);pointer-events:none;transition:opacity .2s var(--w-ease),transform .2s var(--w-ease);transition-delay:0s;}
-.c5-dots__link[aria-current="true"] .c5-dots__label{color:#fff;}
-.c5-dots:hover .c5-dots__label,
-.c5-dots:focus-within .c5-dots__label{opacity:1;transform:translateY(-50%);pointer-events:auto;}
-.c5-dots:hover li:nth-child(2) .c5-dots__label,.c5-dots:focus-within li:nth-child(2) .c5-dots__label{transition-delay:.02s;}
-.c5-dots:hover li:nth-child(3) .c5-dots__label,.c5-dots:focus-within li:nth-child(3) .c5-dots__label{transition-delay:.04s;}
-.c5-dots:hover li:nth-child(4) .c5-dots__label,.c5-dots:focus-within li:nth-child(4) .c5-dots__label{transition-delay:.06s;}
-.c5-dots:hover li:nth-child(5) .c5-dots__label,.c5-dots:focus-within li:nth-child(5) .c5-dots__label{transition-delay:.08s;}
-.c5-dots:hover li:nth-child(6) .c5-dots__label,.c5-dots:focus-within li:nth-child(6) .c5-dots__label{transition-delay:.10s;}
-.c5-dots:hover li:nth-child(7) .c5-dots__label,.c5-dots:focus-within li:nth-child(7) .c5-dots__label{transition-delay:.12s;}
-.c5-dots:hover li:nth-child(8) .c5-dots__label,.c5-dots:focus-within li:nth-child(8) .c5-dots__label{transition-delay:.14s;}
-/* fokus klawiatury: obrys też „w bieli", żeby był widoczny po obu stronach blendu */
-.c5-dots__link:focus-visible{outline:2px solid #fff;outline-offset:2px;}
-
-@media (max-width:899px){
-  /* dotyk nie ma najechania – zostaje zwykłe przewijanie strony */
-  .c5-dots{display:none;}
-}
-@media (prefers-reduced-motion: reduce){
-  .c5-dots__dot,.c5-dots__label{transition:none;}
 }
 
 /* ===== 25 · Kluczowe liczby – ciemny kadr z trzema wierszami (spec §9.4) ====

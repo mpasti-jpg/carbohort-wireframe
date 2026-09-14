@@ -198,8 +198,8 @@ window.CW_CE = {
         "kotwica": "nawigacja-kropki"
       },
       "kod": {
-        "css": "<strona>.css ===== 10",
-        "js": "<strona>.js ===== 10"
+        "css": "ce/CE-07-nawigacja-kropkowa.css",
+        "js": "ce/CE-07-nawigacja-kropkowa.js"
       },
       "czesci": [
         "lista kropek",
@@ -221,8 +221,8 @@ window.CW_CE = {
         "kotwica": "hero"
       },
       "kod": {
-        "css": "<strona>.css /* --- HERO */",
-        "js": "<strona>.js ===== 00 (updateDock)"
+        "css": "ce/CE-08-hero.css (geometria packshotów per strona w <strona>.css)",
+        "js": "ce/00-base.js (updateDock)"
       },
       "czesci": [
         "kicker",
@@ -252,7 +252,7 @@ window.CW_CE = {
         "kotwica": "zalety"
       },
       "kod": {
-        "css": "<strona>.css /* --- ZALETY */ (c5-marq)",
+        "css": "ce/CE-09-marquee.css",
         "js": "brak (czysty CSS)"
       },
       "czesci": [
@@ -276,8 +276,8 @@ window.CW_CE = {
         "kotwica": "parametry"
       },
       "kod": {
-        "css": "<strona>.css /* --- PARAMETRY */ (c5-params)",
-        "js": "<strona>.js ===== 30"
+        "css": "ce/CE-10-parametry.css (wariant z-tabami w pliku)",
+        "js": "ce/CE-10-parametry.js"
       },
       "czesci": [
         "warstwa wideo z maską",
@@ -305,8 +305,8 @@ window.CW_CE = {
         "kotwica": "ktory-dla-mnie"
       },
       "kod": {
-        "css": "<strona>.css /* --- KTÓRY DLA MNIE */ (c5-ways, c5-variant)",
-        "js": "<strona>.js ===== 40"
+        "css": "ce/CE-11-warianty-taby.css (Próchnica+: kit c5.css)",
+        "js": "ce/CE-11-warianty-taby.js (Próchnica+: c5.js)"
       },
       "czesci": [
         "tablist",
@@ -332,8 +332,8 @@ window.CW_CE = {
         "kotwica": "czym-jest"
       },
       "kod": {
-        "css": "<strona>.css /* --- CZYM JEST */ (c5-facts, c5-viz)",
-        "js": "<strona>.js ===== 50"
+        "css": "ce/CE-12-scena-faktow.css (Próchnica+: własna pp-scene, do scalenia)",
+        "js": "ce/CE-12-scena-faktow.js"
       },
       "czesci": [
         "kicker + h2 (+ lead)",
@@ -362,8 +362,8 @@ window.CW_CE = {
         "kotwica": "jak-stosowac-eco"
       },
       "kod": {
-        "css": "<strona>.css /* --- JAK STOSOWAĆ */ (c5-use)",
-        "js": "<strona>.js ===== 60"
+        "css": "ce/CE-13-scena-produktu.css (stałe toru per strona: --use-*)",
+        "js": "ce/CE-13-scena-produktu.js"
       },
       "czesci": [
         "packshot z nazwą",
@@ -390,8 +390,8 @@ window.CW_CE = {
         "kotwica": "dawka"
       },
       "kod": {
-        "css": "<strona>.css /* --- DAWKOWANIE */ (c5-dose)",
-        "js": "<strona>.js ===== 70"
+        "css": "ce/CE-14-sekcja-100svh.css (Kukurydza: własna u-dg, do scalenia)",
+        "js": "ce/CE-14-sekcja-100svh.js"
       },
       "czesci": [
         "kicker + h2",
@@ -415,8 +415,8 @@ window.CW_CE = {
         "kotwica": "sezon-wiersze"
       },
       "kod": {
-        "css": "<strona>.css /* --- SEZON */ (c5-season)",
-        "js": "<strona>.js ===== 80"
+        "css": "ce/CE-15-wiersze-packshot.css",
+        "js": "ce/CE-15-wiersze-packshot.js"
       },
       "czesci": [
         "nagłówek przyklejony",
@@ -438,8 +438,8 @@ window.CW_CE = {
         "kotwica": "uprawy-profesjonalne"
       },
       "kod": {
-        "css": "<strona>.css /* --- Pas PRO */ (c5-pro)",
-        "js": "<strona>.js updatePro"
+        "css": "ce/CE-16-pas-pro.css (Kukurydza: własna u-end, do scalenia)",
+        "js": "ce/CE-16-pas-pro.js"
       },
       "czesci": [
         "kadr",
@@ -465,8 +465,8 @@ window.CW_CE = {
         "kotwica": "faq"
       },
       "kod": {
-        "css": "<strona>.css /* --- FAQ */ (c5-faq)",
-        "js": "<strona>.js ===== 90"
+        "css": "ce/CE-17-faq.css",
+        "js": "ce/CE-17-faq.js"
       },
       "czesci": [
         "kicker + h2",
@@ -490,7 +490,7 @@ window.CW_CE = {
         "kotwica": "cta-koncowe"
       },
       "kod": {
-        "css": "<strona>.css /* --- CTA końcowe */ (c5-cta)",
+        "css": "ce/CE-18-cta.css",
         "js": "brak"
       },
       "czesci": [

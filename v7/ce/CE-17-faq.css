@@ -1,0 +1,38 @@
+/* ===== CE-17 · FAQ (rejestr: ce-rejestr.js) =====
+   Accordion with the question on the left and the answer on the right from
+   900 px up; one question open at a time. Merged from carbomat.css FAQ – the
+   copies in carbomat-mata.css, carbohumic.css, carbomat-humic.css and
+   produkty.css were byte-identical except for the container rule `.c5-faq`
+   (its top margin follows the section above it), which stays in <strona>.css.
+   Variant „z-nota" (CARBOHUMIC) is a note element in the markup, with its own
+   class and no rule of the pattern. ===== */
+
+/* --- FAQ: pytanie z lewej, odpowiedź z prawej ------------------------------- */
+/* Odstęp nagłówek → pierwszy akordeon: §14.5 dokłada ~100 px do dotychczasowych
+   64 px, czyli ok. 164 px na desktopie. */
+.c5-faq__item{border-top:1px solid var(--w-border-default);position:relative;}
+.c5-faq__item:last-child{border-bottom:1px solid var(--w-border-default);}
+.c5-faq__q{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--w-space-4);width:100%;padding:26px 0;background:none;border:0;font:inherit;font-size:1.125rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;text-align:left;color:var(--w-text-primary);cursor:pointer;}
+.c5-faq__q .wf-icon{flex:none;margin-top:4px;transition:transform var(--w-duration-base) var(--w-ease);}
+.c5-faq__q[aria-expanded="true"] .wf-icon{transform:rotate(180deg);}
+.c5-faq__a{overflow:hidden;height:0;opacity:0;transition:height var(--c5-acc) var(--w-ease),opacity var(--c5-acc-fade) var(--w-ease);}
+.c5-faq__item[data-open] .c5-faq__a{opacity:1;}
+.c5-faq__ain{overflow:hidden;min-height:0;padding-bottom:26px;font-size:1rem;color:var(--w-text-secondary);}
+/* bez JS nie ma czym rozwijać paneli – odpowiedzi zostają otwarte (§0) */
+html:not(.cx-js) .c5-faq__a{height:auto;opacity:1;}
+@media (min-width:900px){
+  /* stały układ dwukolumnowy – bez skoku przy otwieraniu (kolumna odpowiedzi
+     jest zawsze, tylko zwinięta do zera) */
+  .c5-faq__item{display:grid;grid-template-columns:minmax(0,1fr) 515px;gap:var(--w-space-10);align-items:start;}
+  .c5-faq__q{grid-column:1;}
+  .c5-faq__a{grid-column:2;}
+  /* strzałka przy prawej krawędzi wiersza; tekst odpowiedzi z odstępem od niej */
+  .c5-faq__q .wf-icon{position:absolute;right:0;top:30px;}
+  .c5-faq__ain{padding-top:26px;padding-right:60px;}
+}
+@media (prefers-reduced-motion: reduce){
+  .c5-faq__q .wf-icon{transition:none;}
+  .c5-faq__a{transition:none;}
+}
+/* `.c5-faq{margin-top:…}` zostaje w <strona>.css – odstęp nad akordeonem
+   zależy od tego, co stoi nad nim na danej podstronie. */

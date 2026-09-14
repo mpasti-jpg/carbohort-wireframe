@@ -1,3 +1,7 @@
+/* ===== prochnica-plus.css – warstwa strony (V7) =====
+   Klocki wzorca i warstwa wspólna leżą w katalogu ce/ (ładowane wyżej).
+   Tutaj zostają wyłącznie klocki unikalne tej podstrony i nadpisania
+   treściowe klocków wspólnych. ===== */
 /* ===== 00 · Warstwa wspólna strony Próchnica+ (V5, wzorzec CARBOMAT ECO) =====
    Strona ładuje `c5.css` (wspólny słownik sekcji), więc tutaj stoi WYŁĄCZNIE
    to, czego kit nie ma albo co wzorzec ECO zmienia: tokeny, hero na cały
@@ -12,13 +16,6 @@
   --cx-subnav-h:0px;
 }
 
-/* Górne menu serwisu NIE jest przyklejone (decyzja Mateusza 24.07) – scrolluje
-   się razem ze stroną. Po zdjęciu subnawigacji do górnej krawędzi kleją się już
-   tylko taby lat w Wynikach. Kit zostaje nietknięty – nadpisanie tylko tutaj. */
-.wf-navbar{position:static;}
-
-/* kotwice: bez przyklejonej belki nie potrzeba marginesu przewijania */
-[data-chapter]{scroll-margin-top:0;}
 #main [id]{scroll-margin-top:0;}
 
 /* Chowane są wyłącznie panele akordeonów i komunikat formularza. Komunikat
@@ -36,9 +33,6 @@
 /* Znacznik braku danych po stronie klienta – widoczny, nieudawany. */
 .pp-todo{border:1px dashed var(--w-border-strong);padding:1px 7px;font-size:0.8125rem;color:var(--w-text-secondary);white-space:nowrap;}
 
-/* Kicker wyśrodkowany – wzorzec ECO daje go każdej sekcji z nagłówkiem. */
-.c5-kicker--center{text-align:center;}
-
 /* --- Klocki używane przez kilka sekcji naraz -------------------------------
    Nazwa kafla (koordynatorzy, rzetelność, karty uczestników, wyniki) oraz
    pigułka stanu kamienia (harmonogram, wyniki, etapy prac). Stan NIGDY nie
@@ -52,25 +46,14 @@
 .pp-ms__state--na{border-style:dotted;}
 .pp-ms__warn{font-size:0.8125rem;color:var(--w-text-secondary);}
 
-/* --- HERO: cały pierwszy ekran pod menu serwisu (wzorzec ECO §3.1) --------
-   Wysokość ekranu minus zmierzony pasek menu (`--cx-navbar-h` ustawia JS w
-   00-base.js; fallback 0 px, gdy JS nie wystartuje). Lewa kolumna: copy
-   wyśrodkowane w pionie, breadcrumb przy dolnej krawędzi. Prawa: panel jasnej
-   szarości z 30 px marginesu, na jego środku player YouTube. -------------- */
-#hero{display:flex;min-height:calc(100svh - var(--cx-navbar-h, 0px));}
-#hero > .c5-wrap{flex:1 1 auto;display:flex;}
-/* nadpisanie siatki z c5.css: bez własnego paddingu i min-height – wysokość
-   wyznacza sekcja, a kolumny rozciągają się na jej pełną wysokość */
+/* page-specific: CE-08 – nadpisanie siatki hero (c5.css + ce/CE-08): bez
+   własnego paddingu i min-height – wysokość wyznacza sekcja, a kolumny
+   rozciągają się na jej pełną wysokość. */
 .c5-hero{flex:1 1 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,5vw,5rem);align-items:stretch;padding-block:0;min-height:0;}
 .c5-hero__copy{display:flex;flex-direction:column;gap:0;max-width:585px;}
-.c5-hero__copyin{display:flex;flex-direction:column;gap:clamp(1.25rem,2.4vw,2rem);margin-block:auto;padding-block:clamp(2rem,4vw,3rem);}
-/* breadcrumb: dyskretny, przy dolnej krawędzi ekranu */
-.c5-hero__crumbs{font-size:0.75rem;color:var(--w-gray-400);padding-bottom:var(--c5-gutter);}
-.c5-hero__crumbs a,.c5-hero__crumbs .wf-breadcrumb__sep{color:inherit;}
-.c5-hero__crumbs a:hover{color:var(--w-gray-600);}
 
-/* Panel: 30 px od góry, dołu i prawej krawędzi ekranu; jednolita jasna szarość,
-   player dokładnie na środku (siatka place-items:center). */
+/* page-specific: CE-08 – panel hero tej strony: 30 px od góry, dołu i prawej
+   krawędzi ekranu; jednolita jasna szarość, player dokładnie na środku. */
 .c5-hero__stage{position:relative;display:grid;place-items:center;overflow:hidden;margin-block:var(--c5-gutter);min-height:calc(100svh - var(--cx-navbar-h, 0px) - 2 * var(--c5-gutter));background:var(--w-gray-100);padding:var(--c5-gutter);}
 
 /* Player YouTube jako placeholder 16:9 z podpisem pod spodem. */
@@ -87,97 +70,23 @@
 .pp-reveal.is-in{opacity:1;transform:none;}
 
 @media (max-width:899px){
-  /* jedna kolumna: copy → panel z playerem → breadcrumb pod spodem */
-  #hero{display:block;min-height:0;}
-  #hero > .c5-wrap{display:block;}
+  /* page-specific: CE-08 – układ hero na telefonie (panel z playerem zamiast
+     zdjęcia), reszta zachowania zostaje z ce/CE-08-hero.css. */
   .c5-hero{display:flex;flex-direction:column;gap:clamp(1.5rem,4vw,2.5rem);padding-block:clamp(2rem,6vw,3rem);}
   .c5-hero__copy{display:contents;}
-  .c5-hero__copyin{order:1;margin-block:0;padding-block:0;max-width:585px;}
   .c5-hero__stage{order:2;margin-block:0;min-height:0;padding:var(--w-space-5);}
-  .c5-hero__crumbs{order:3;padding-bottom:0;}
   .pp-film{max-width:none;}
 }
 @media (prefers-reduced-motion: reduce){
   .pp-reveal{opacity:1;transform:none;transition:none;}
 }
 
-/* --- Inercja przewijania (Lenis) – układ zostaje natywny; CSS smooth-behavior
-   wyłączony na czas działania biblioteki --------------------------------- */
-html.lenis,html.lenis body{height:auto;}
-.lenis.lenis-smooth{scroll-behavior:auto !important;}
-.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain;}
-.lenis.lenis-stopped{overflow:hidden;}
-
-/* ===== 10 · Nawigacja po podstronie – kropki przy prawej krawędzi ==========
-   Fixed, pionowo na środku ekranu. Etykiety wjeżdżają po najechaniu na cały
-   nav (albo po fokusie w jego wnętrzu). Nic nie klei się do górnej krawędzi.
-
-   Widoczność na jasnych i ciemnych sekcjach: cały nav ma mix-blend-mode
-   difference, a kolory zapisujemy „w bieli". Difference: result = |backdrop –
-   source|, więc biel (255) na białym tle daje czerń, a na ciemnym – biel.
-   Stąd: aktywna kropka = #fff (czytana jako gray-900 na białym), nieaktywna =
-   biel z alfą .55 (czytana jako ~gray-400). ------------------------------- */
-.c5-dots{position:fixed;right:var(--c5-gutter);top:50%;transform:translateY(-50%);z-index:90;mix-blend-mode:difference;}
-.c5-dots ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;align-items:flex-end;}
-/* Pole klikalne 28×28 px (bez odstępu między pozycjami = 28 px środek–środek).
-   Etykieta leży absolutnie POZA tym polem, więc nav zajmuje tylko wąską kolumnę
-   przy krawędzi i nie przechwytuje kliknięć w treść pod spodem. */
-.c5-dots__link{position:relative;display:flex;align-items:center;justify-content:flex-end;width:28px;min-height:28px;padding-right:2px;text-decoration:none;}
-.c5-dots__dot{flex:none;display:block;width:6px;height:6px;border-radius:var(--w-radius-circle);background:rgb(255 255 255 / .55);transition:width .2s var(--w-ease),height .2s var(--w-ease),background-color .2s var(--w-ease);}
-.c5-dots__link[aria-current="true"] .c5-dots__dot{width:10px;height:10px;background:#fff;}
-/* Etykiety: ukryte, wjeżdżają razem (lekki stagger) po najechaniu na nav.
-   Widoczna etykieta łapie wskaźnik (`pointer-events:auto`) i zachodzi 6 px na
-   pole linku, więc między kropką a etykietą nie ma „dziury": przejście myszą na
-   etykietę nie gasi etykiet, a klik w nią przewija do rozdziału (spec §13.4). */
-.c5-dots__label{position:absolute;right:calc(100% - 6px);top:50%;padding:6px 6px 6px 10px;font-size:0.8125rem;line-height:1.2;text-align:right;white-space:nowrap;color:rgb(255 255 255 / .6);opacity:0;transform:translate(6px,-50%);pointer-events:none;transition:opacity .2s var(--w-ease),transform .2s var(--w-ease);transition-delay:0s;}
-.c5-dots__link[aria-current="true"] .c5-dots__label{color:#fff;}
-.c5-dots:hover .c5-dots__label,
-.c5-dots:focus-within .c5-dots__label{opacity:1;transform:translateY(-50%);pointer-events:auto;}
-.c5-dots:hover li:nth-child(2) .c5-dots__label,.c5-dots:focus-within li:nth-child(2) .c5-dots__label{transition-delay:.02s;}
-.c5-dots:hover li:nth-child(3) .c5-dots__label,.c5-dots:focus-within li:nth-child(3) .c5-dots__label{transition-delay:.04s;}
-.c5-dots:hover li:nth-child(4) .c5-dots__label,.c5-dots:focus-within li:nth-child(4) .c5-dots__label{transition-delay:.06s;}
-.c5-dots:hover li:nth-child(5) .c5-dots__label,.c5-dots:focus-within li:nth-child(5) .c5-dots__label{transition-delay:.08s;}
-.c5-dots:hover li:nth-child(6) .c5-dots__label,.c5-dots:focus-within li:nth-child(6) .c5-dots__label{transition-delay:.10s;}
-.c5-dots:hover li:nth-child(7) .c5-dots__label,.c5-dots:focus-within li:nth-child(7) .c5-dots__label{transition-delay:.12s;}
-.c5-dots:hover li:nth-child(8) .c5-dots__label,.c5-dots:focus-within li:nth-child(8) .c5-dots__label{transition-delay:.14s;}
-/* fokus klawiatury: obrys też „w bieli", żeby był widoczny po obu stronach blendu */
-.c5-dots__link:focus-visible{outline:2px solid #fff;outline-offset:2px;}
-
-@media (max-width:899px){
-  /* dotyk nie ma najechania – zostaje zwykłe przewijanie strony */
-  .c5-dots{display:none;}
-}
-@media (prefers-reduced-motion: reduce){
-  .c5-dots__dot,.c5-dots__label{transition:none;}
-}
-
-/* ===== 25 · STAN PROGRAMU: poziomy marquee między hero a „O programie" =====
-   Kopia bloku `c5-marq` z wzorca CARBOMAT ECO (carbomat.css §14.3). Tor niesie
-   zestaw dwa razy, więc `translateX(-50%)` ląduje dokładnie na początku drugiej
-   kopii – pętla nie ma szwu. Każda pozycja niesie odstęp, który po niej idzie
-   (`padding-right` zamiast `gap` na torze), dzięki czemu odstęp na styku kopii
-   jest identyczny jak w środku zestawu. Czysty CSS – działa bez JS i nigdy nie
-   dotyka pozycji przewijania. ============================================ */
-.c5-marq{--c5-marq-gap:clamp(1.5rem,3vw,3rem);--c5-marq-thumb:clamp(56px,6vw,96px);padding-block:130px;overflow:hidden;}
-.c5-marq__track{display:flex;align-items:center;width:max-content;margin:0;padding:0;list-style:none;animation:c5-marq 42s linear infinite;will-change:transform;}
-.c5-marq__item{display:flex;align-items:center;gap:var(--c5-marq-gap);padding-right:var(--c5-marq-gap);}
+/* page-specific: CE-09 – skala i odstęp tekstu w marquee tej strony. */
 .c5-marq__txt{display:inline-flex;align-items:center;gap:var(--w-space-4);font-size:clamp(2rem,4.4vw,3.5rem);line-height:1.1;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;white-space:nowrap;color:var(--w-text-primary);}
-/* ikona 24 px przed tekstem (spec §4) – ten sam zestaw co w dawnej linii stanu */
-.c5-marq__ico{flex:none;width:24px;height:24px;color:var(--w-icon-default);}
-/* 12 px zaokrąglenia – jedyny wyjątek od ostrych narożników w tej sekcji */
-.c5-marq__thumb{flex:none;width:var(--c5-marq-thumb);height:var(--c5-marq-thumb);object-fit:cover;border-radius:12px;background:var(--w-gray-200);}
-@keyframes c5-marq{to{transform:translateX(-50%);}}
-/* kursor na sekcji zatrzymuje tor */
-.c5-marq:hover .c5-marq__track{animation-play-state:paused;}
 @media (prefers-reduced-motion: reduce){
-  /* bez ruchu: tor stoi, widoczny pierwszy zestaw, na dotyku przewijany palcem */
-  .c5-marq{overflow-x:auto;overflow-y:hidden;}
-  .c5-marq__track{animation:none;will-change:auto;}
+  /* page-specific: CE-09 – bez ruchu pokazujemy cztery pozycje (strona ma ich
+     więcej niż wzorzec). */
   .c5-marq__item:nth-child(n+5){display:none;}
-}
-/* telefon: 130 px powietrza wokół paska to za dużo */
-@media (max-width:899px){
-  .c5-marq{padding-block:80px;}
 }
 
 /* ===== 30 · O PROGRAMIE: cztery karty (spec §5) =============================
@@ -1106,6 +1015,7 @@ html.pp-lock{overflow:hidden;}
 .pp-ways .c5-way__ico{width:32px;height:32px;}
 .pp-ways .c5-way .wf-icon{width:18px;height:18px;}
 .pp-ways__sub{display:block;font-size:0.75rem;letter-spacing:.04em;text-transform:uppercase;opacity:.7;margin-top:2px;}
+/* page-specific: pasmo z tabami sposobów – tło z warstwy wspólnej. */
 .c5-band .c5-ways{background:var(--w-surface-subtle);}
 
 /* Nazwy gospodarstw i lat są długie – skala c5-variant__name (do 3 rem) jest
@@ -1148,7 +1058,8 @@ html.pp-lock{overflow:hidden;}
 @media (max-width:899px){
   .pp-report{grid-template-columns:minmax(0,1fr);align-items:start;gap:var(--w-space-2);}
 }
-/* Stan „niedostępne": osłabiony ton + obrys + atrybut disabled (nigdy sam ton) */
+/* page-specific: stan „niedostępne" przycisku z ce/00-base.css – osłabiony ton
+   + obrys + atrybut disabled (nigdy sam ton). */
 .c5-btn[disabled]{background:var(--w-surface-subtle);color:var(--w-text-disabled);
   border-color:var(--w-border-subtle);cursor:not-allowed;}
 

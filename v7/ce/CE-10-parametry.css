@@ -1,0 +1,97 @@
+/* ===== CE-10 · Parametry na wideo (rejestr: ce-rejestr.js) =====
+   Full-screen section whose bounds are set by a pinned video/photo layer, with
+   the parameter table scrolling over it. Merged from carbomat.css PARAMETRY –
+   the copies in carbohumic.css, carbomat-humic.css and carbomat-mata.css differ
+   only in page-level fixes and in content (dock clearance, column width, a
+   placeholder in the frame) which stay in <strona>.css.
+   Variant „z-tabami" (Mata: two parameter sets on tabs above the table) sits at
+   the bottom of this file; its hooks (.c5-params__tabs / __tab / __panels /
+   __panel / __tabh) exist only on that page. ===== */
+
+/* --- PARAMETRY: film wyznacza granice sekcji (spec §13.3, §14.4) ----------
+   Sekcja na pełny ekran; warstwa mediów i treść leżą w tej samej komórce
+   siatki, więc warstwa nie dokłada wysokości – sekcja jest tak wysoka jak treść
+   (min. 100svh). Warstwa jest przyklejona, treść przewija się po niej.
+   §14.4: sekcja nie ma własnego ciemnego tła ani ramki – kadrem jest cała
+   sekcja z 30 px marginesu z lewej i prawej, a `overflow:clip` (nie `hidden`,
+   które zrobiłoby ze sekcji kontener przewijania i zabiło sticky) trzyma
+   przyklejone wideo w jej granicach. Wjazd od dołu usunięty – film stoi od
+   pierwszego piksela sekcji. --------------------------------------------- */
+.c5-params{position:relative;display:grid;grid-template-columns:minmax(0,1fr);min-height:100svh;margin-inline:var(--c5-gutter);overflow:clip;color:var(--w-text-inverse);}
+.c5-params > *{grid-area:1 / 1;}
+.c5-params__bg{position:sticky;top:0;align-self:start;height:100svh;z-index:0;}
+.c5-params__frame{position:absolute;inset:0;overflow:hidden;}
+/* jedna klasa dla <img> i przyszłego <video> – podmiana to jeden element */
+.c5-params__media{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;}
+.c5-params__frame::after{content:"";position:absolute;inset:0;background:rgb(0 0 0 / .4);pointer-events:none;}
+/* Odstępy liczone w vh, żeby treść (720 px) mieściła się na ekranie i była
+   wyśrodkowana; u dołu dodatkowe 58 px prześwitu na dok doradcy. */
+.c5-params__body{position:relative;z-index:1;min-height:100svh;display:grid;align-content:center;padding-block:clamp(1.5rem,5vh,4rem) calc(clamp(1.5rem,5vh,4rem) + 58px);}
+.c5-params__title{font-size:clamp(1.4rem,2.4vw,1.875rem);font-weight:var(--w-weight-medium);letter-spacing:-0.01em;text-align:center;margin-bottom:clamp(2.5rem,5vw,4rem);}
+.c5-params__rows{display:flex;flex-direction:column;}
+.c5-params__row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,287px);gap:var(--w-space-4);padding-block:14px;border-bottom:1px solid rgb(255 255 255 / .35);}
+.c5-params__row dt{font-weight:var(--w-weight-medium);font-size:1rem;}
+.c5-params__row dd{margin:0;font-size:1rem;font-weight:var(--w-weight-regular);}
+.c5-params__row .c5-dim{opacity:.65;}
+/* dyskretny link do analizy – nad przyciskami (uwaga Mateusza 13.09) */
+.c5-params__dl{display:flex;align-items:center;justify-content:center;gap:8px;font-size:0.8125rem;color:inherit;text-decoration:underline;opacity:.75;margin-top:var(--w-space-6);transition:opacity var(--w-duration-base) var(--w-ease);}
+.c5-params__dl:hover{opacity:1;}
+.c5-params__dl .wf-icon{width:16px;height:16px;}
+.c5-params__actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:clamp(1.75rem,3.5vw,2.75rem);}
+.c5-params .c5-btn--ondark{background:var(--w-gray-900);color:var(--w-text-inverse);border-color:rgb(0 0 0 / .2);}
+.c5-params .c5-btn--ondark:hover{background:var(--w-gray-800);}
+.c5-params__src{text-align:center;font-size:0.75rem;opacity:.55;margin-top:var(--w-space-5);}
+
+@media (max-width:899px){
+  .c5-params__row{grid-template-columns:minmax(0,1fr) minmax(0,45%);}
+  /* na wąskich ekranach kadr ma 16 px marginesu z boków (§14.4) */
+  .c5-params{margin-inline:16px;}
+}
+@media (max-width:599px){
+  .c5-params__row{grid-template-columns:1fr;gap:2px;}
+}
+@media (prefers-reduced-motion: reduce){
+  .c5-params__dl{transition:none;}
+}
+
+
+/* --- wariant: z-tabami (CARBOMAT MATA UPRAWOWA, spec §6.2) -----------------
+   Pigułki `.c5-way` wzorca w wersji na ciemnym tle: obrys w bieli z alfą,
+   aktywna biała z tekstem `--w-gray-900`. Wysokość ≤ 56 px, wyśrodkowane,
+   NAD tabelą. Bez JS nie mają czego przełączać – wtedy znikają, a oba panele
+   stoją jeden pod drugim. */
+.c5-params__tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:clamp(1.75rem,3.5vw,2.75rem);}
+.c5-params__tab{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 28px;font:inherit;font-size:1rem;letter-spacing:-0.01em;color:var(--w-text-inverse);background:transparent;border:1px solid rgb(255 255 255 / .35);border-radius:0;cursor:pointer;transition:background var(--w-duration-base) var(--w-ease),color var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);}
+.c5-params__tab:hover{border-color:var(--w-white);}
+.c5-params__tab[aria-selected="true"],.c5-params__tab.is-on{background:var(--w-white);color:var(--w-gray-900);border-color:var(--w-white);}
+.c5-params__tab:focus-visible{outline:2px solid #fff;outline-offset:2px;}
+html:not(.cx-js) .c5-params__tabs{display:none;}
+
+/* Panels: stacked in a single grid cell. Both panels sit in cell 1/1, so the
+   grid row is measured by the TALLER of them (a panel hidden with `visibility`
+   still counts for layout) – the container height is constant and the link, the
+   buttons and the footnote below the table never jump when tabs are switched.
+   Without JS both panels are visible, one under the other. */
+.c5-params__panels{display:grid;gap:clamp(2rem,4vw,3rem);}
+html.cx-js .c5-params__panels{gap:0;}
+html.cx-js .c5-params__panel{grid-area:1 / 1;opacity:0;visibility:hidden;transition:opacity .2s var(--w-ease),visibility 0s linear .2s;}
+html.cx-js .c5-params__panel.is-on{opacity:1;visibility:visible;transition:opacity .2s var(--w-ease);}
+/* nazwa zestawu „na główce tabeli” – ta sama co na tabie (polecenie Mateusza) */
+.c5-params__tabh{font-size:0.75rem;letter-spacing:.06em;text-transform:uppercase;opacity:.7;margin-bottom:var(--w-space-3);}
+
+/* The shorter set spreads the taller panel's spare height evenly across its
+   rows instead of leaving a hole above the link: the table fills the frame, row
+   content stays vertically centred, and nothing below the table moves when the
+   tabs are switched. Scoped to .c5-params__panel, so a page without the tabs
+   keeps its rows exactly as they are. */
+html.cx-js .c5-params__panel{display:flex;flex-direction:column;}
+html.cx-js .c5-params__panel .c5-params__rows{flex:1 1 auto;}
+html.cx-js .c5-params__panel .c5-params__row{flex:1 1 auto;align-content:center;}
+
+@media (max-width:899px){
+  .c5-params__tab{flex:1 1 12rem;padding-inline:16px;}
+}
+@media (prefers-reduced-motion: reduce){
+  .c5-params__tab{transition:none;}
+  html.cx-js .c5-params__panel{transition:none;}
+}

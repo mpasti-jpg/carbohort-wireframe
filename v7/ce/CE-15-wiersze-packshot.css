@@ -1,0 +1,140 @@
+/* ===== CE-15 · Przypięte wiersze z packshotem (rejestr: ce-rejestr.js) =====
+   Rows pinned by their bottom edge: a heading that travels with the block, one
+   row per step, a packshot square in the middle and a description panel opened
+   by the scroll (a plain click accordion without JS, on a phone and with
+   reduced motion). Merged from carbomat.css SEZON; the copy in produkty.css
+   („Co dają – efekty w czasie") carries the same machinery.
+   What stays in <strona>.css: the row head rule (its type follows the page) and
+   the one-shot entrance of the rows, which the two pages gate differently.
+   No variants. ===== */
+
+/* --- SEZON: oś czasu z packshotami + pas PRO (spec §8) ---------------------- */
+/* Wiersz = tytuł (lewa) · scena packshotu (środek) · opis (prawa). Panel opisu
+   animuje wysokość (panelSet), scena stoi zawsze – zmienia się tylko jej stan.
+   Bez strzałek – rozwijaniem steruje scroll (patrz .c5-season-pin niżej). */
+.c5-season{display:flex;flex-direction:column;margin-top:clamp(2rem,4.5vw,4rem);background:var(--w-surface-page);
+  /* bok kwadratu sceny – ten sam w pinie i w akordeonie (§13.7). The lower
+     bound is 200 px, not 240: on windows under ~750 px the square is what
+     decides whether the header, the block and the dock still fit the screen. */
+  --c5-season-sq:clamp(200px,32vh,360px);
+  /* prześwit na dok doradcy, który pływa nad dolną krawędzią okna */
+  --c5-season-dock:60px;
+  /* odstęp dolnej krawędzi bloku od dołu ekranu w pinie (§14.7) */
+  --c5-season-gap:max(84px, calc(clamp(0.75rem,2.5vh,1.5rem) + var(--c5-season-dock)));}
+/* Wiersz zamknięty = sam tytuł: żadnej zarezerwowanej wysokości (scena i panel
+   mają wtedy zero), więc wystarczy ciasny padding i brak odstępów między
+   rzędami siatki – rosną dopiero razem z otwartym krokiem (§13.7). */
+.c5-season__row{border-top:1px solid var(--w-border-default);display:grid;row-gap:0;column-gap:clamp(1rem,3vw,2.5rem);align-items:start;padding-block:12px;}
+.c5-season__row[data-open="true"] .c5-season__head{color:var(--w-gray-900);}
+/* Scena packshotu: jasnoszary kwadrat + packshot na środku. Zamknięty krok nie
+   rezerwuje na nią miejsca (wysokość 0), więc otwarcie ma trzy takty:
+   1. miejsce na kwadrat otwiera się razem z wierszem (.22 s),
+   2. kwadrat wjeżdża od dołu do góry (clip-path, .26 s),
+   3. dopiero potem wchodzi packshot (.26 s). Zamknięcie – odwrotnie i krótko. */
+.c5-season__scene{position:relative;width:100%;max-width:var(--c5-season-sq);aspect-ratio:1;overflow:hidden;
+  max-height:0;margin-block:0;transition:max-height .18s var(--w-ease),margin-block .18s var(--w-ease);}
+.c5-season__row[data-open="true"] .c5-season__scene{max-height:var(--c5-season-sq);margin-block:var(--w-space-2);
+  transition:max-height .22s cubic-bezier(.2,.8,.2,1),margin-block .22s cubic-bezier(.2,.8,.2,1);}
+.c5-season__plate{position:absolute;inset:0;background:var(--w-gray-100);clip-path:inset(100% 0 0 0);transition:clip-path .15s var(--w-ease);will-change:clip-path;}
+.c5-season__row[data-open="true"] .c5-season__plate{clip-path:inset(0 0 0 0);transition:clip-path .26s cubic-bezier(.2,.8,.2,1) .14s;}
+.c5-season__pack{position:absolute;left:50%;top:50%;height:76%;width:76%;object-fit:contain;
+  opacity:0;transform:translate(-50%,-50%) translateY(14px) scale(.94);
+  transition:opacity .15s var(--w-ease),transform .15s var(--w-ease);will-change:transform;}
+.c5-season__row[data-open="true"] .c5-season__pack{opacity:1;transform:translate(-50%,-50%) translateY(0) scale(1);
+  transition:opacity .26s ease-out .32s,transform .26s ease-out .32s;}
+.c5-season__panel{overflow:hidden;height:0;opacity:0;transition:height var(--c5-acc) var(--w-ease),opacity var(--c5-acc-fade) var(--w-ease);}
+.c5-season__row[data-open="true"] .c5-season__panel{opacity:1;}
+.c5-season__panelin{overflow:hidden;min-height:0;padding-top:var(--w-space-2);}
+.c5-season__info{display:flex;flex-direction:column;gap:var(--w-space-3);align-items:flex-start;max-width:441px;}
+/* nazwa produktu jest teraz mocniejsza od tytułu kroku po lewej (§13.7) */
+.c5-season__info h3{font-size:clamp(1.375rem,2vw,1.75rem);line-height:1.2;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+
+/* Pomiar wysokości bloku w JS musi zastać stan docelowy, a nie klatkę animacji
+   – na czas pomiaru wszystkie przejścia sceny są wyłączone. */
+.c5-season--instant .c5-season__scene,
+.c5-season--instant .c5-season__plate,
+.c5-season--instant .c5-season__pack,
+.c5-season--instant .c5-season__row[data-open="true"] .c5-season__scene,
+.c5-season--instant .c5-season__row[data-open="true"] .c5-season__plate,
+.c5-season--instant .c5-season__row[data-open="true"] .c5-season__pack{transition:none;}
+
+/* Bez JS nikt nie otworzy panelu (wysokość ustawia panelSet), więc wszystkie
+   kroki pokazujemy rozwinięte – cała treść zostaje widoczna. */
+html:not(.cx-js) .c5-season__panel{height:auto;opacity:1;}
+html:not(.cx-js) .c5-season__head{color:var(--w-gray-900);cursor:default;}
+html:not(.cx-js) .c5-season__scene{max-height:var(--c5-season-sq);margin-block:var(--w-space-2);}
+html:not(.cx-js) .c5-season__plate{clip-path:none;}
+html:not(.cx-js) .c5-season__pack{opacity:1;transform:translate(-50%,-50%);}
+
+/* Pin (§14.7): the header and the step block first travel with the page, with
+   step 1 already open. The block sticks by its BOTTOM edge – sticky `top` is
+   `100svh - gap - block height`, so it locks exactly when the bottom edge
+   reaches the gap line. Only then does the header reach its own sticky `top`,
+   and the scroll phases open steps 2 and 3 (JS). Track height, spacer and
+   head-wrap height come from JS; without JS / on mobile it stays a plain
+   click accordion with the first step open. */
+.c5-season-pin{position:relative;}
+.c5-season-pin__spacer{display:none;}
+/* The kicker now travels and pins with the heading, so it lives inside the head
+   box; spacing comes from the .c5-head flex gap – its own margin would make the
+   sticky header taller for nothing, and the header height is what the block has
+   to fit under. */
+.c5-season-head .c5-kicker{margin-bottom:0;}
+
+@media (min-width:900px){
+  /* równe kolumny boczne = kwadrat dokładnie na środku ekranu (§13.7) */
+  .c5-season__row{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);column-gap:clamp(1.5rem,3.5vw,4rem);}
+  .c5-season__scene{grid-column:2;justify-self:center;width:var(--c5-season-sq);max-width:none;}
+  .c5-season__panel{grid-column:3;}
+}
+/* Wąski desktop: kolumny boczne zostają równe (kwadrat na środku ekranu), ale
+   scena i nazwa produktu schodzą o stopień, żeby opis nie łamał się po trzy
+   słowa w wąskiej kolumnie. */
+@media (min-width:900px) and (max-width:1099px){
+  .c5-season{--c5-season-sq:clamp(200px,30vh,300px);}
+  .c5-season__info h3{font-size:1.25rem;}
+}
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  /* The spacer reserves the flow room of the absolutely placed header, so the
+     header and the block enter the screen as one moving unit. Its height is the
+     header box (JS), the margin below it is the breathing room the block has
+     outside the pin plus the 100 px Mateusz asked for – keeping it here instead
+     of in the header box means a short window does not push the block down
+     (see --c5-season-headroom). */
+  .cx-js .c5-season-pin__spacer{display:block;margin-bottom:calc(clamp(2rem,4.5vw,4rem) + 100px);}
+  /* Sticky `top` = window minus gap minus block height, i.e. the block locks the
+     moment its bottom edge reaches `100svh - gap` and keeps that bottom edge
+     from then on. --c5-season-h is the measured height with one step open
+     (tallest of the three states) and --c5-season-headroom is the lowest top
+     that still clears the header – both set by JS. min-height freezes the
+     height, so opening another step cannot move the bottom edge. */
+  .cx-js .c5-season-pin > .c5-season{position:sticky;
+    top:max(var(--c5-season-headroom,0px),calc(100svh - var(--c5-season-gap) - var(--c5-season-h,0px)));
+    min-height:var(--c5-season-h,auto);margin-top:0;z-index:1;}
+  /* The header holds the top through the whole cycle and is then PUSHED up by
+     the bottom edge of its wrapper, so it leaves together with the steps
+     instead of disappearing. The wrapper is absolute (no room in the flow) and
+     JS sizes it so the push starts exactly when the block lets go.
+     No background at all (§14.7): nothing may cover the steps – the distance to
+     the block is spacing (head padding + spacer), never a white plate. */
+  .cx-js .c5-season-headwrap{position:absolute;top:0;left:0;right:0;}
+  .cx-js .c5-season-head{position:sticky;top:clamp(0.75rem,2.5vh,1.75rem);z-index:70;background:transparent;
+    padding-block:clamp(0.75rem,2vh,1.5rem);}
+}
+/* Short windows: the head is the only elastic part left between the pinned
+   block and the top edge, and its rhythm is width-based, so on a low window it
+   eats the room the block needs. Below ~680 px the kicker, H2 and lead move
+   closer together – without it the sticky offset hits its --c5-season-headroom
+   floor and the last step slides under the dock. */
+@media (min-width:900px) and (max-height:679px) and (prefers-reduced-motion: no-preference){
+  .cx-js .c5-season-head .c5-head{gap:clamp(0.5rem,1.6vh,1.4rem);}
+}
+@media (prefers-reduced-motion: reduce){
+  .c5-season__panel{transition:none;}
+  .c5-season__head{transition:none;}
+  .c5-season__scene,.c5-season__plate,.c5-season__pack{transition:none;}
+}
+
+/* `.c5-season__head` (typografia tytułu kroku) i jednorazowe wejście wierszy
+   („is-in") zostają w <strona>.css: pierwszy zależy od skali typograficznej
+   podstrony, drugie od progu, przy którym strona włącza ruch. */

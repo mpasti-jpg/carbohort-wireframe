@@ -1,0 +1,51 @@
+/* ===== CE-08 · Hero (rejestr: ce-rejestr.js) =====
+   First screen under the service menu: copy column with the breadcrumb at its
+   bottom edge, light-grey panel on the right. Merged from carbomat.css HERO –
+   the skeleton (#hero, .c5-hero, __copy, __copyin, __lead, __crumbs, the empty
+   __stage and the one-column layout below 900 px) is byte-identical in all
+   seven pages. What stands ON the panel is content, not pattern: the packshot
+   geometry (.c5-hero__pack*, the --c5-pack-h / --c5-pouch-scale numbers) and
+   the variants „polka" (Produkty), „kadr" (Kukurydza) and „player" (Próchnica+)
+   stay in <strona>.css, which is loaded after this file.
+   The one exception is at the bottom: the player panel does not take the 4:5
+   crop on a phone, and that rule cannot live in a file loaded earlier. ===== */
+
+/* --- HERO: cały pierwszy ekran pod menu serwisu (spec §13.2, §14.2) -------
+   Wysokość ekranu minus zmierzony pasek menu (`--cx-navbar-h` ustawia JS w
+   00-base.js; fallback 0 px, gdy JS nie wystartuje). Lewa kolumna: copy
+   wyśrodkowane w pionie, breadcrumb przy dolnej krawędzi. Prawa: panel bez
+   zdjęcia – jednolita jasna szarość, a to, co na nim stoi, wnosi strona. --- */
+#hero{display:flex;min-height:calc(100svh - var(--cx-navbar-h, 0px));}
+#hero > .c5-wrap{flex:1 1 auto;display:flex;}
+.c5-hero{flex:1 1 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,5vw,5rem);align-items:stretch;}
+.c5-hero__copy{display:flex;flex-direction:column;max-width:585px;}
+.c5-hero__copyin{display:flex;flex-direction:column;gap:clamp(1.25rem,2.4vw,2rem);margin-block:auto;padding-block:clamp(2rem,4vw,3rem);}
+.c5-hero__copy .c5-kicker{margin-bottom:0;}
+.c5-hero__lead{display:flex;flex-direction:column;gap:var(--w-space-3);font-size:1.125rem;color:var(--w-text-secondary);max-width:486px;}
+/* breadcrumb: dyskretny, przy dolnej krawędzi ekranu; §14.2 – jeszcze jaśniejszy */
+.c5-hero__crumbs{font-size:0.75rem;color:var(--w-gray-400);padding-bottom:var(--c5-gutter);}
+.c5-hero__crumbs a,.c5-hero__crumbs .wf-breadcrumb__sep{color:inherit;}
+.c5-hero__crumbs a:hover{color:var(--w-gray-600);}
+
+/* Panel: 30 px od góry, dołu i prawej krawędzi ekranu; §14.2 – bez zdjęcia
+   w tle i bez pasa gradientu, jednolita jasna szarość. */
+.c5-hero__stage{position:relative;overflow:hidden;margin-block:var(--c5-gutter);min-height:calc(100svh - var(--cx-navbar-h, 0px) - 2 * var(--c5-gutter));background:var(--w-gray-100);}
+
+@media (max-width:899px){
+  /* jedna kolumna: copy → panel → breadcrumb pod spodem */
+  #hero{display:block;min-height:0;}
+  #hero > .c5-wrap{display:block;}
+  .c5-hero{display:flex;flex-direction:column;gap:clamp(1.5rem,4vw,2.5rem);padding-block:clamp(2rem,6vw,3rem);}
+  .c5-hero__copy{display:contents;}
+  .c5-hero__copyin{order:1;margin-block:0;padding-block:0;max-width:585px;}
+  .c5-hero__stage{order:2;margin-block:0;min-height:0;aspect-ratio:4/5;max-height:70vh;}
+  .c5-hero__crumbs{order:3;padding-bottom:0;}
+}
+
+/* --- wariant: player (Próchnica+) -----------------------------------------
+   Na panelu stoi player filmu, a nie packshot, więc na telefonie wysokość
+   panelu wyznacza film – bez kadru 4:5 i bez ograniczenia do 70 vh. Włącza się
+   samą obecnością playera w panelu, bez dodatkowego haka w HTML-u. */
+@media (max-width:899px){
+  .c5-hero__stage:has(> .pp-film){aspect-ratio:auto;max-height:none;}
+}

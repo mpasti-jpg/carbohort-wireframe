@@ -1,0 +1,172 @@
+/* ===== CE-13 · Przypięta scena produktu (rejestr: ce-rejestr.js) =====
+   One pinned track per product: a 100svh stage, the hero packshot docking into
+   a 110 px bar, a photo frame growing from the bottom edge and one card per
+   term. Base = the N-frame version of carbohumic.css / carbohumic.js, which
+   replaces the two-frame version of the pattern: the number of frames is read
+   from the DOM and every rule here is index-free, so the same file serves 2, 4
+   or 6 frames. CARBOMAT ECO keeps its markup (.c5-use__layer--a/--b and named
+   crops) – the compatibility section at the bottom gives those elements their
+   --ord, and the track constants of a page live in <strona>.css so ECO keeps
+   the length and the phase edges it has today.
+   Everything that follows the CONTENT stays in <strona>.css: the photo crops,
+   the dose lists inside a card, the page-specific card width and type. ===== */
+
+/* The base layer below IS the static reading order – no JS, under 900 px or
+   with reduced motion: bar, then photo + title + card for every term, one under
+   another, nothing hidden. The pinned choreography is added in the media query
+   at the end of this block. Every single move is a function of the track
+   progress p – there is no transition and no animation in the pinned scene, so
+   whatever the wheel does, the picture does, and it stops the moment the wheel
+   stops. CE-13-scena-produktu.js writes:
+     on <article class="c5-use">
+       --t      0→1     hero packshot shrinks into the 110 px bar       (A)
+       --grow   .5→1    photo scale, origin on its bottom edge          (A)
+       --ui     0→1→0   tabs + card                                   (C, E)
+       --vl     0→1→0   the veil behind them                          (C, E)
+       --ovis, --bvis   visible/hidden – keeps what is invisible out of the tab
+                        order and out of the reach of the mouse (not a move)
+     on every .c5-use__layer      --o    0→1 opacity · --par ±3 parallax in %
+     on every .c5-use__crop       --k    card opacity · --ky card travel in px
+                                  --tabo tab emphasis (.45 … 1)
+                                  --tabi how many tab lines stand below this one
+   The photo box is anchored to the BOTTOM of the stage: 30 px above it in every
+   phase, 30 px from the sides, top at the bar. scale(var(--grow)) with the
+   origin on that bottom edge therefore grows the frame upwards and sideways and
+   never leaves white underneath it. The opaque bar retracts from 100svh to
+   110 px above the photo, so the frame comes out from under it. */
+
+.c5-use{
+  --bar-h:110px;
+  --t:0; --grow:.5; --ui:0; --vl:0;
+  --shade:calc(.45 * var(--vl));
+  /* Track constants read by CE-13-scena-produktu.js, in viewport heights:
+     intro (bar docks, photo grows, veil + tabs + first card), hold per frame,
+     switch between two frames, outro; --use-card is where the first card starts
+     inside the intro. A page whose cards need more reading time overrides them
+     in <strona>.css – CARBOMAT ECO does, to keep its 5.5-screen track. */
+  --use-intro:1; --use-hold:.75; --use-switch:.35; --use-outro:.5; --use-card:.917;
+  margin-top:clamp(2.5rem,5vw,4rem);
+}
+.c5-use__stage{max-width:1180px;margin-inline:auto;padding-inline:var(--w-space-5);}
+
+/* bar: kind · packshot · name + sprawdź w sklepie */
+.c5-use__bar{display:flex;flex-wrap:wrap;align-items:center;gap:clamp(0.75rem,2.5vw,2rem);background:var(--w-surface-page);}
+.c5-use__kind{font-size:clamp(0.8125rem,1.2vw,1.0625rem);font-weight:var(--w-weight-semibold);letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;}
+.c5-use__pack{height:64px;width:auto;flex:none;object-fit:contain;}
+.c5-use__barend{flex:1 1 auto;min-width:0;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--w-space-3) var(--w-space-4);}
+/* narrow: kind + packshot on one line, name and the shop button on the next */
+@media (max-width:559px){
+  .c5-use__barend{flex-basis:100%;}
+}
+.c5-use__name{font-size:clamp(1rem,1.5vw,1.25rem);font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+
+/* photo + the frames; static order: foto 1, tytuł, kartka, foto 2, tytuł, …
+   --ord is the frame index × 10 (inline in the markup, or from the
+   compatibility section below), so the layer, its title and its card interleave
+   without a single index in this stylesheet */
+.c5-use__photo{display:flex;flex-direction:column;gap:var(--w-space-4);margin-top:var(--w-space-6);}
+.c5-use__over,.c5-use__crop{display:contents;}
+.c5-use__layer{position:relative;aspect-ratio:16/10;overflow:hidden;order:var(--ord,0);}
+.c5-use__layer:nth-child(n+2){margin-top:clamp(1.5rem,4vw,2.5rem);}
+.c5-use__crop .c5-use__tab{order:calc(var(--ord,0) + 1);}
+.c5-use__crop .c5-use__box{order:calc(var(--ord,0) + 2);}
+
+/* .c5-use__fill = zdjęcie kadru; placeholdery (§2 spec) trzymają dokładnie to
+   samo miejsce co docelowy <img class="c5-use__fill"> – podmiana nie rusza
+   niczego poza tym jednym elementem */
+.c5-use__fill{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:50% 55%;}
+.c5-use__ph{background:var(--w-gray-500);}
+.c5-use__layer:nth-child(even) .c5-use__ph{background:var(--w-gray-400);}
+/* the label sits in the top right corner: the note holds the top left, the tabs
+   the bottom left and the card the bottom right, so nothing covers it. „top" in
+   per cent follows the box it is placed in, so it stays inside the frame also
+   when the pinned scene overscans that box by 6 % for the parallax. */
+.c5-use__phlab{position:absolute;top:8%;right:var(--w-space-4);max-width:calc(100% - 2 * var(--w-space-4));
+  background:rgb(255 255 255 / .82);color:var(--w-gray-900);padding:4px 10px;font-size:0.75rem;letter-spacing:.04em;}
+.c5-use__shade{display:none;}
+
+.c5-use__tab{font:inherit;font-size:clamp(1.375rem,3vw,1.75rem);font-weight:var(--w-weight-medium);line-height:1.15;letter-spacing:-0.01em;color:var(--w-text-primary);background:none;border:0;padding:0;text-align:left;cursor:default;}
+.c5-use__box{background:rgb(20 20 20 / .7);color:var(--w-text-inverse);max-width:var(--w-measure);padding:clamp(20px,3vw,28px);}
+.c5-use__desc{display:flex;flex-direction:column;gap:var(--w-space-4);font-size:0.875rem;line-height:1.55;}
+.c5-use__desc p{margin:0;}
+
+/* --- przypięta scena: tylko z JS, od 900 px i bez ograniczenia ruchu ------- */
+@media (min-width:900px) and (prefers-reduced-motion:no-preference){
+  .cx-js .c5-use{margin-top:0;}
+  .cx-js .c5-use__track{position:relative;}     /* height: JS, 100svh + runway(N) × okno */
+  .cx-js .c5-use__stage{position:sticky;top:0;height:100svh;overflow:hidden;max-width:none;margin-inline:0;padding-inline:0;}
+
+  /* hero (t=0, 100svh) and pinned bar (t=1, 110 px) are one and the same grid;
+     the bar is opaque and above the photo, so while it retracts it doubles as
+     the curtain the frame comes out from – bottom edge of the screen first */
+  .cx-js .c5-use__bar{position:absolute;top:0;right:0;left:0;z-index:3;
+    height:calc(100svh + (var(--bar-h) - 100svh) * var(--t));
+    display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;
+    gap:clamp(1rem,2.5vw,2.5rem);padding-inline:clamp(2rem,5vw,4rem);}
+  .cx-js .c5-use__pack{height:calc(46svh + (64px - 46svh) * var(--t));}
+  .cx-js .c5-use__buy{opacity:var(--t);visibility:var(--bvis,hidden);}
+
+  /* the frame never moves and never changes size in layout: bar above it,
+     30 px from the left, the right and – the point of the whole rewrite – the
+     bottom. Growth is scale() alone, with the origin on that bottom edge, so
+     the frame opens upwards and sideways and no white can appear under it */
+  .cx-js .c5-use__photo{display:block;position:absolute;top:var(--bar-h);
+    right:var(--c5-gutter);bottom:var(--c5-gutter);left:var(--c5-gutter);margin:0;
+    transform:scale(var(--grow));transform-origin:50% 100%;
+    will-change:transform;}
+  .cx-js .c5-use__layer{position:absolute;inset:0;margin:0;aspect-ratio:auto;
+    opacity:var(--o,0);will-change:opacity;}
+  /* overscan, so the parallax shift never uncovers an edge of the frame;
+     an <img> needs the height spelled out – „top + bottom" alone would leave
+     an absolutely positioned replaced box at its intrinsic height */
+  .cx-js .c5-use__fill{inset:-6% 0 auto;height:112%;
+    transform:translateY(calc(var(--par,0) * 1%));will-change:transform;}
+  /* the veil rises together with the tabs and goes down after them: the writing
+     is gone by p≈.96, the frame keeps brightening until p=1 */
+  .cx-js .c5-use__shade{display:block;position:absolute;inset:0;z-index:1;background:var(--w-black);opacity:var(--shade);will-change:opacity;}
+  /* the even veil alone is not enough where the tabs stand on a bright frame:
+     add a wash that only touches the lower half and rises and falls with
+     --shade, so phase E still clears it */
+  .cx-js .c5-use__photo::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:linear-gradient(0deg,rgb(0 0 0 / .55),rgb(0 0 0 / 0) 55%);opacity:var(--shade);}
+
+  /* --ovis is the only discrete thing here: what is transparent must also be
+     out of the tab order and deaf to the mouse. It is a keyword, not a move. */
+  .cx-js .c5-use__over{display:block;position:absolute;inset:0;z-index:2;pointer-events:none;visibility:var(--ovis,hidden);}
+  /* extra room at the bottom: the fixed dr Jurek dock (60 px, bottom centre)
+     must never sit on the tabs or on the card */
+  .cx-js .c5-use__crop{display:grid;position:absolute;inset:0;grid-template-columns:minmax(0,1fr) auto;
+    align-items:end;gap:clamp(1.5rem,4vw,4rem);
+    padding:var(--c5-gutter) clamp(2rem,5vw,4rem) calc(var(--c5-gutter) + 60px);}
+  .cx-js .c5-use__crop > *{order:0;}
+
+
+
+  /* tabs: all of them fade in with --ui and swap emphasis while the frames
+     cross-fade – active 1, the others .45, interpolated, never timed. Each tab
+     stands one line above the next one: --tabi = how many are below it. */
+  .cx-js .c5-use__tab{grid-column:1;justify-self:start;align-self:end;pointer-events:auto;
+    font-size:clamp(2rem,3.6vw,4rem);line-height:1.05;letter-spacing:-0.02em;white-space:nowrap;
+    color:var(--w-text-inverse);opacity:calc(var(--ui) * var(--tabo,1));will-change:opacity;
+    /* every tab stands one line above the next one: --tabi = how many are below */
+    margin-bottom:calc(var(--tabi,0) * (1.05em + 8px));}
+  .cx-js .c5-use__tab:focus-visible{outline-color:var(--w-focus-ring-inverse);}
+
+  /* the card: opacity AND the 40 px travel are interpolated from p as well, so
+     the card rises behind the tabs, leaves upwards when the frame changes, the
+     next one comes from below and scrolling back plays the very same move
+     backwards – nothing to remember */
+  .cx-js .c5-use__box{grid-column:2;align-self:end;width:min(486px,38vw);pointer-events:none;
+    opacity:var(--k,0);transform:translateY(calc(var(--ky,40) * 1px));
+    will-change:opacity,transform;}
+}
+
+/* --- kompatybilność: dwa kadry z nazwanymi warstwami (CARBOMAT ECO) --------
+   Markup ECO powstał przed uogólnieniem na N kadrów: warstwy niosą --a/--b,
+   a kadry mają nazwy. Te cztery reguły nadają im to samo --ord, którego reszta
+   pliku oczekuje, więc kolejność statyczna (foto 1, tytuł, opis, foto 2, …)
+   zostaje dokładnie ta sama co dziś, bez jednej zmiany w HTML-u. */
+.c5-use__layer--a{--ord:10;}
+.c5-use__layer--b{--ord:20;}
+.c5-use__crop[data-use-crop="gruntowe"]{--ord:10;}
+.c5-use__crop[data-use-crop="doniczkowe"]{--ord:20;}

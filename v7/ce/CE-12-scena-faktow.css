@@ -1,0 +1,135 @@
+/* ===== CE-12 · Scena faktów (rejestr: ce-rejestr.js) =====
+   Scroll-driven scene: one description at a time in the left column, a shared
+   photo panel and a fixed-size illustration box on the right; below 900 px, with
+   reduced motion or without JS the same DOM reads as one plain column.
+   Merged from carbomat.css CZYM JEST – the copies in carbomat-mata.css,
+   carbohumic.css, carbomat-humic.css and produkty.css carry the same machinery.
+   What follows the CONTENT stays in <strona>.css: how many steps there are
+   (the `order` grid, the progress marks), which photo each step gets
+   (object-position, the __ph placeholders) and the per-page type scale of the
+   scene head. Variant „naglowek-nad-scena" (Mata) sits at the bottom.
+   Próchnica+ builds the same idea on its own pp-scene layer and does not link
+   this file. ===== */
+
+/* --- CZYM JEST – scena sterowana przewijaniem (spec §6) --------------------
+   Dwa układy z jednego DOM-u:
+   · domyślny (mobile / reduced motion / bez JS) – jedna kolumna, wszystko
+     widoczne: nagłówek, panel zdjęcia, a potem pary „opis + ilustracja";
+   · scena (≥900 px, no-preference, .cx-js) – sticky na 100svh: nagłówek u góry
+     lewej kolumny, jeden opis naraz przy dolnej krawędzi, pasek progresu pod
+     nim, a po prawej panel zdjęcia z boksem ilustracji o stałym rozmiarze.
+   Kolejność DOM = kolejność statyczna; siatka sceny tylko przestawia elementy. */
+.c5-facts-track{height:auto;}
+.c5-facts-stage{display:flex;flex-direction:column;gap:clamp(2rem,4vw,3rem);}
+.c5-facts-head{display:flex;flex-direction:column;gap:clamp(1rem,2vw,1.5rem);}
+.c5-facts-head .c5-kicker{margin-bottom:0;}
+.c5-facts-head .c5-h2{max-width:486px;}
+
+/* Panel zdjęcia (§10.6, §13.5) – pięć warstw, po jednej na punkt.
+   Poza sceną panel nie tworzy boksu (`display:contents`), więc warstwy wchodzą
+   wprost w bieg i każdy punkt dostaje swoje zdjęcie; kolejność ustawia `order`
+   niżej. W scenie panel wraca jako boks: tło, wspólna ramka i wash. */
+.c5-facts-panel{display:contents;}
+.c5-facts-panel__img{display:block;width:100%;aspect-ratio:4/5;max-height:min(62vh,520px);
+  object-fit:cover;object-position:50% 58%;background:var(--w-gray-700);}
+
+.c5-facts-flow{display:flex;flex-direction:column;gap:clamp(1.75rem,3.5vw,2.75rem);margin:0;padding:0;}
+.c5-fact{display:flex;flex-direction:column;gap:var(--w-space-3);max-width:560px;}
+.c5-fact__title{font-size:clamp(1.125rem,1.8vw,1.5rem);line-height:1.22;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+.c5-fact__body{display:flex;flex-direction:column;gap:var(--w-space-3);font-size:0.9375rem;line-height:1.55;color:var(--w-text-secondary);}
+.c5-fact__body ul{margin:0;padding-left:1.35rem;display:flex;flex-direction:column;gap:var(--w-space-2);}
+
+/* Pasek progresu – tylko w scenie sterowanej przewijaniem */
+.c5-facts-prog{display:none;}
+.c5-facts-progress{position:relative;height:2px;background:var(--w-gray-200);}
+.c5-facts-progress__fill{position:absolute;inset:0;background:var(--w-gray-900);transform:scaleX(var(--facts-p,0));transform-origin:left center;will-change:transform;}
+/* cztery znaczniki dzielą tor na pięć odcinków – widać, ile brakuje do kolejnego opisu */
+.c5-facts-progress__mark{position:absolute;top:50%;width:1px;height:8px;margin-top:-4px;background:var(--w-gray-400);}
+
+/* --- Boks ilustracji: ciemne pole, kolory odwrócone ------------------------ */
+.c5-viz{position:relative;margin:0;display:flex;flex-direction:column;gap:var(--w-space-5);width:100%;aspect-ratio:4/5;max-height:520px;padding:clamp(1.25rem,2.4vw,2rem);background:rgb(20 20 20 / .78);color:#fff;overflow:hidden;}
+.c5-viz__tag{font-size:0.75rem;letter-spacing:.06em;text-transform:uppercase;color:rgb(255 255 255 / .6);}
+.c5-viz__body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:var(--w-space-4);}
+.c5-viz__body svg:not(.wf-icon){width:100%;height:auto;color:inherit;}
+.c5-viz__cap{font-size:0.75rem;line-height:1.45;color:rgb(255 255 255 / .6);}
+.c5-viz__num{font-size:clamp(1.75rem,3.4vw,2.5rem);font-weight:var(--w-weight-bold);line-height:1;letter-spacing:-0.02em;}
+.c5-viz__ring{display:flex;align-items:center;gap:clamp(1rem,3vw,2rem);}
+.c5-viz__ring svg:not(.wf-icon){width:min(150px,42%);flex:none;}
+.c5-viz__list{display:flex;flex-direction:column;gap:var(--w-space-3);margin:0;padding:0;list-style:none;font-size:var(--w-font-sm-size);}
+.c5-viz__list li{display:flex;gap:var(--w-space-3);align-items:flex-start;}
+.c5-viz__list .wf-icon{flex:none;margin-top:2px;color:rgb(255 255 255 / .75);}
+/* odwrócenie kolorów kitu wewnątrz ciemnego boksu */
+.c5-viz .c5-muted,.c5-viz .wf-small,.c5-viz .wf-t-secondary{color:rgb(255 255 255 / .65);}
+.c5-viz .wf-table{font-size:var(--w-font-sm-size);color:inherit;}
+.c5-viz .wf-table th{background:transparent;color:#fff;}
+.c5-viz .wf-table th,.c5-viz .wf-table td{padding:var(--w-space-2) var(--w-space-3);border-bottom-color:rgb(255 255 255 / .3);}
+.c5-viz .wf-table tbody tr:hover{background:rgb(255 255 255 / .08);}
+/* w ciemnym boksie pierścień fokusu przewijanej tabeli musi być jasny */
+.c5-viz .cw-scrollx:focus-visible{outline-color:var(--w-focus-ring-inverse);border-radius:0;}
+.c5-viz .c5-bar{grid-template-columns:minmax(6.25rem,31%) 1fr minmax(4.5rem,auto);font-size:0.8125rem;gap:var(--w-space-2);}
+.c5-viz .c5-bar__track{background:rgb(255 255 255 / .25);border-color:transparent;}
+.c5-viz .c5-bar__fill{background:#fff;}
+/* wykres humifikacji – wspólny wzorzec słupków */
+.c5-barchart{display:flex;flex-direction:column;gap:var(--w-space-3);}
+.c5-bar{display:grid;grid-template-columns:minmax(7.5rem,34%) 1fr minmax(5.2rem,auto);gap:var(--w-space-3);align-items:center;font-size:var(--w-font-sm-size);}
+.c5-bar__track{height:12px;background:var(--w-gray-100);border:1px solid var(--w-border-subtle);overflow:hidden;}
+.c5-bar__fill{height:100%;width:var(--bw);background:var(--w-gray-900);}
+
+/* Układ statyczny na szerokim ekranie (reduced motion albo brak JS): pola
+   zdjęć nie mogą rozlewać się na całą szerokość kolumny. */
+@media (min-width:900px){
+  .c5-facts-flow{align-items:flex-start;}
+  .c5-viz{max-width:480px;}
+  /* static wide layout: a band, not a full column */
+  .c5-facts-panel__img{max-width:480px;max-height:min(46vh,420px);}
+  .c5-fact{max-width:640px;}
+}
+
+/* --- Scena: sticky 100svh w wysokim torze (JS ustawia wysokość toru) -------- */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  .cx-js .c5-facts-sec{padding-block:0;}
+  .cx-js .c5-facts-stage{
+    --c5-facts-gap:clamp(2rem,6vw,8rem);
+    --c5-facts-prog:40px;
+    /* prześwit na dok doradcy, który pływa nad dolną krawędzią okna */
+    --c5-facts-dock:58px;
+    position:sticky;top:0;height:100svh;
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr);
+    gap:0 var(--c5-facts-gap);padding-block:var(--c5-gutter);
+  }
+  /* panel wraca jako boks w kolumnie 2 – warstwy zdjęć leżą w nim jedna na
+     drugiej, widoczna jest tylko ta z data-on="true" (§13.5) */
+  .cx-js .c5-facts-flow > .c5-facts-panel{display:block;position:relative;grid-row:1;grid-column:2;align-self:stretch;
+    height:100%;background:var(--w-gray-700);overflow:hidden;}
+  .cx-js .c5-facts-panel__img{position:absolute;inset:0;height:100%;max-width:none;max-height:none;aspect-ratio:auto;
+    opacity:0;transition:opacity .45s var(--w-ease);will-change:opacity;}
+  .cx-js .c5-facts-panel__img[data-on="true"]{opacity:1;}
+  /* Warstwa opis+ilustracja leży na całej scenie: opisy w lewej kolumnie przy
+     dolnej krawędzi, ilustracje wyśrodkowane w prawej – wszystkie w jednej
+     komórce siatki, więc wymieniają się w miejscu. */
+  .cx-js .c5-facts-flow{grid-row:1;grid-column:1 / -1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr);gap:0 var(--c5-facts-gap);}
+  .cx-js .c5-facts-flow > .c5-fact{grid-row:1;grid-column:1;align-self:end;max-width:none;padding-bottom:calc(var(--c5-facts-prog) + var(--c5-facts-dock));opacity:0;transform:translateY(12px);transition:opacity .18s var(--w-ease),transform .18s var(--w-ease);}
+  .cx-js .c5-facts-flow > .c5-fact.is-on{opacity:1;transform:none;transition-duration:.26s;}
+  .cx-js .c5-facts-flow > .c5-viz{grid-row:1;grid-column:2;align-self:center;justify-self:center;width:clamp(300px,78%,560px);height:clamp(360px,64svh,600px);aspect-ratio:auto;max-width:none;max-height:none;opacity:0;visibility:hidden;transition:opacity .22s var(--w-ease),visibility 0s linear .22s;}
+  .cx-js .c5-facts-flow > .c5-viz[data-on="true"]{opacity:1;visibility:visible;transition:opacity .22s var(--w-ease);}
+  .cx-js .c5-facts-prog{grid-row:1;grid-column:1;align-self:end;display:flex;flex-direction:column;gap:var(--w-space-2);margin-bottom:var(--c5-facts-dock);}
+}
+/* Niskie okna (np. 1280×720): opis dostaje ciaśniejszą skalę, żeby najdłuższy
+   punkt nadal mieścił się nad paskiem progresu. Skalę nagłówka sceny ustawia
+   strona – zależy od długości jej copy. */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference) and (max-height:780px){
+  .cx-js .c5-facts-stage{--c5-facts-prog:32px;}
+  .cx-js .c5-facts-flow > .c5-fact .c5-fact__title{font-size:clamp(1.0625rem,1.5vw,1.25rem);}
+}
+
+/* --- wariant: naglowek-nad-scena (CARBOMAT MATA UPRAWOWA, spec §21.3) ------
+   Nagłówek stoi NAD torem, jako bezpośrednie dziecko sekcji – poza sceną. Nie
+   jest wtedy kolumną sceny, tylko zwykłym blokiem w rytmie sekcji, a sekcja
+   zachowuje własne odstępy pionowe. Hakiem jest samo miejsce nagłówka w DOM-ie,
+   więc strona nie potrzebuje dodatkowej klasy. */
+.c5-facts-sec > .c5-facts-head{display:block;gap:normal;}
+.c5-facts-sec > .c5-facts-head .c5-kicker{margin-bottom:clamp(2rem,4vw,3.5rem);}
+.c5-facts-sec > .c5-facts-head .c5-h2{max-width:784px;}
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  .cx-js .c5-facts-sec:has(> .c5-facts-head){padding-block:clamp(3.5rem,7vw,6.25rem);}
+}

@@ -1,0 +1,55 @@
+/* ===== CE-16 · Pas PRO (rejestr: ce-rejestr.js) =====
+   Dark strip for the professional audience: a media frame scaling from .72 to 1
+   while it scrolls, heading on the left, paragraph and two buttons on the right.
+   Merged from carbomat.css „Pas PRO"; carbomat-mata.css, carbohumic.css,
+   carbomat-humic.css and produkty.css carry the same rules.
+   What stays in <strona>.css: the `.c5-pro` container (its margin follows the
+   section it sits in – inside „Sezon" on ECO and HUMIC, a section of its own
+   elsewhere), the media frame and whatever fills it (photo or placeholder), and
+   the paragraph colour. Variant „zamykajacy" (Kukurydza) is a separate port on
+   its own classes (u-end) and does not link this file. ===== */
+
+/* --- Pas PRO (spec §8, wzór sensiq.co) -------------------------------------
+   Szare tło, zdjęcie absolutne skalowane przy przewijaniu od wąskiego kadru
+   (.72) do pełnej szerokości (1); po lewej nagłówek, po prawej akapit i dwa
+   przyciski. Bez ruchu (mobile / reduced / bez JS): zdjęcie statyczne nad
+   treścią, 16:10, bez skalowania. */
+.c5-pro{position:relative;background:var(--w-gray-600);color:var(--w-text-inverse);overflow:hidden;}
+/* `margin-top` pasa zostaje w <strona>.css: na CARBOMAT ECO i CARBOMAT HUMIC
+   pas stoi wewnątrz sekcji „Sezon", na pozostałych jest osobną sekcją. */
+/* narożniki 30 px – jedyny wyjątek od ostrych narożników V5, na wyraźne
+   życzenie Mateusza (§13.8) */
+/* statycznie (reduced / bez JS) zdjęcie stoi nad treścią – kadr wyśrodkowany */
+.c5-pro__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 45%;}
+.c5-pro__grid{position:relative;z-index:1;padding-block:clamp(2.5rem,6vw,5rem);display:flex;flex-direction:column;gap:clamp(1.5rem,4vw,2.5rem);}
+.c5-pro__grid h2{font-size:clamp(1.75rem,3vw,2.5rem);line-height:1.15;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;max-width:486px;}
+.c5-pro__side{display:flex;flex-direction:column;gap:clamp(1.5rem,3vw,2rem);max-width:486px;}
+.c5-pro__side p{color:var(--w-text-inverse);opacity:.75;}
+.c5-pro__grid .c5-btnrow{gap:var(--w-space-2);}
+.c5-pro__grid .c5-btn{padding-inline:clamp(18px,2.2vw,32px);}
+.c5-pro__login{background:transparent;color:var(--w-text-inverse);border-color:rgb(255 255 255 / .6);}
+.c5-pro__login:hover{background:rgb(255 255 255 / .12);border-color:var(--w-text-inverse);}
+/* na ciemnym pasie pierścień fokusu musi być jasny (i ostry jak reszta V5) */
+.c5-pro a:focus-visible{outline-color:var(--w-focus-ring-inverse);border-radius:0;}
+
+@media (min-width:900px){
+  .c5-pro__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,486px);gap:clamp(2rem,6vw,6rem);align-items:center;}
+  /* dwa przyciski obok siebie mieszczą się w kolumnie 486 px */
+  .c5-pro__grid .c5-btnrow{flex-wrap:nowrap;}
+  .c5-pro__grid .c5-btn{white-space:nowrap;}
+  /* statycznie (reduced / bez JS) zdjęcie nad treścią nie zjada całego ekranu */
+}
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  .cx-js .c5-pro{min-height:90svh;display:grid;align-items:center;}
+  /* W pasie tekst leży NA zdjęciu: kadr zjeżdża niżej, żeby akapit po prawej
+     trafił na mgłę, a nie na jasną ściankę big baga (poziomo nie ma czym
+     sterować – przy 3:2 w pasie 16:9 przycięcie jest wyłącznie pionowe). */
+  .cx-js .c5-pro__img{object-position:50% 20%;}
+  /* bez gradientów – jednolity, delikatny scrim (§13.8). .25 zamiast .15:
+     jasny big bag stoi dokładnie pod pierwszymi wierszami akapitu po prawej. */
+  .cx-js .c5-pro__media::after{content:"";position:absolute;inset:0;background:rgb(0 0 0 / .25);}
+}
+
+/* `.c5-pro`, `.c5-pro__media` i `.c5-pro__side p` zostają w <strona>.css –
+   margines pasa, kadr (zdjęcie albo placeholder) i kontrast akapitu są
+   ustawieniem podstrony. */

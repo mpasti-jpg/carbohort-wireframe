@@ -1,0 +1,29 @@
+/* ===== 00+ · Reveal: one-shot fade-in of the children of [data-reveal] =====
+   Start state for the container variant of the reveal layer: the children of a
+   container marked `data-reveal` run in 90 ms apart once the container first
+   shows up on screen (`is-in` comes from the shared module in 00-base.js).
+   Merged 1:1 from carbohumic.css 72 and produkty.css 00+ (byte-identical).
+   Linked ONLY by pages that use this variant (Carbohumic, Produkty) – pages
+   with a different reveal mechanic (CARBOMAT HUMIC animates the [data-reveal]
+   element itself, Próchnica+ uses the JS-set .pp-reveal) keep theirs in their
+   own file, because this rule would hide their content. ===== */
+
+/* Wejście elementów: jednorazowy fade-in od dołu (spec §6, wzorzec §14.10)
+   Wspólny moduł dla sekcji bez analogu we wzorcu: kontener dostaje atrybut
+   `data-reveal`, a jego dzieci (karty, kroki, kafle, wiersze tabeli) wchodzą
+   po kolei, 90 ms po sobie, gdy blok pierwszy raz pojawi się na ekranie.
+   Efekt istnieje wyłącznie tam, gdzie działa `CX5.motionOn()` – stąd te same
+   progi w media query; przy ograniczonym ruchu, poniżej 900 px i bez JS
+   elementy są po prostu od razu widoczne. Transform nie zmienia wysokości
+   układu, więc nic nie skacze. */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  .cx-js [data-reveal] > *{opacity:0;transform:translateY(24px);
+    transition:opacity .5s cubic-bezier(.2,.7,.2,1),transform .5s cubic-bezier(.2,.7,.2,1);}
+  .cx-js [data-reveal].is-in > *{opacity:1;transform:none;}
+  .cx-js [data-reveal].is-in > *:nth-child(2){transition-delay:.09s;}
+  .cx-js [data-reveal].is-in > *:nth-child(3){transition-delay:.18s;}
+  .cx-js [data-reveal].is-in > *:nth-child(4){transition-delay:.27s;}
+  .cx-js [data-reveal].is-in > *:nth-child(5){transition-delay:.36s;}
+  .cx-js [data-reveal].is-in > *:nth-child(6){transition-delay:.45s;}
+  .cx-js [data-reveal].is-in > *:nth-child(n+7){transition-delay:.54s;}
+}
