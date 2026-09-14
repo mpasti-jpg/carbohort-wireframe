@@ -1,0 +1,1157 @@
+/* ===== 00 · Warstwa wspólna strony Próchnica+ (V5, wzorzec CARBOMAT ECO) =====
+   Strona ładuje `c5.css` (wspólny słownik sekcji), więc tutaj stoi WYŁĄCZNIE
+   to, czego kit nie ma albo co wzorzec ECO zmienia: tokeny, hero na cały
+   pierwszy ekran, ujawnianie przy przewijaniu i drobne klocki `pp-*` używane
+   przez więcej niż jedną sekcję. Nic z c5.css nie jest tu powtórzone.
+   Bez subnawigacji – nawigacja po podstronie to kropki po prawej (10-nav.css).
+   ===================================================================== */
+:root{
+  --c5-gutter:30px;
+  /* Subnawigacja zdjęta (spec §2) – wysokość „chrome" spada do zera, więc
+     kotwice, lepkie taby lat i sceny z c5.css liczą się od górnej krawędzi. */
+  --cx-subnav-h:0px;
+}
+
+/* Górne menu serwisu NIE jest przyklejone (decyzja Mateusza 24.07) – scrolluje
+   się razem ze stroną. Po zdjęciu subnawigacji do górnej krawędzi kleją się już
+   tylko taby lat w Wynikach. Kit zostaje nietknięty – nadpisanie tylko tutaj. */
+.wf-navbar{position:static;}
+
+/* kotwice: bez przyklejonej belki nie potrzeba marginesu przewijania */
+[data-chapter]{scroll-margin-top:0;}
+#main [id]{scroll-margin-top:0;}
+
+/* Chowane są wyłącznie panele akordeonów i komunikat formularza. Komunikat
+   ma display:flex, który wygrywa z domyślnym `display:none` przeglądarki. */
+[hidden]{display:none !important;}
+
+/* Dostępność (DS §5b): --w-text-tertiary przy rozmiarze caption nie przechodzi
+   AA, a podpisy pod placeholderami stoją także w pasmach. Na tej stronie
+   podpisy idą więc na --w-text-secondary. */
+.wf-caption{color:var(--w-text-secondary);}
+
+/* Cel dotykowy 44 px – kit trzyma kontrolki na 40 px (--w-control-h-md). */
+#main .wf-input,#main .wf-select{min-height:44px;}
+
+/* Znacznik braku danych po stronie klienta – widoczny, nieudawany. */
+.pp-todo{border:1px dashed var(--w-border-strong);padding:1px 7px;font-size:0.8125rem;color:var(--w-text-secondary);white-space:nowrap;}
+
+/* Kicker wyśrodkowany – wzorzec ECO daje go każdej sekcji z nagłówkiem. */
+.c5-kicker--center{text-align:center;}
+
+/* --- Klocki używane przez kilka sekcji naraz -------------------------------
+   Nazwa kafla (koordynatorzy, rzetelność, karty uczestników, wyniki) oraz
+   pigułka stanu kamienia (harmonogram, wyniki, etapy prac). Stan NIGDY nie
+   jest niesiony samym tonem – zawsze ikona + etykieta + kształt obrysu. */
+.pp-tile__name{font-size:1.0625rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;margin:0;}
+.pp-ms__state{display:inline-flex;align-items:center;gap:var(--w-space-2);width:max-content;
+  border:1px solid var(--w-border-default);padding:5px 11px;margin-top:var(--w-space-1);
+  font-size:0.75rem;letter-spacing:.04em;text-transform:uppercase;color:var(--w-text-secondary);}
+.pp-ms__state--doing{border-color:var(--w-gray-900);color:var(--w-text-primary);font-weight:var(--w-weight-semibold);}
+.pp-ms__state--todo{border-style:dashed;}
+.pp-ms__state--na{border-style:dotted;}
+.pp-ms__warn{font-size:0.8125rem;color:var(--w-text-secondary);}
+
+/* --- HERO: cały pierwszy ekran pod menu serwisu (wzorzec ECO §3.1) --------
+   Wysokość ekranu minus zmierzony pasek menu (`--cx-navbar-h` ustawia JS w
+   00-base.js; fallback 0 px, gdy JS nie wystartuje). Lewa kolumna: copy
+   wyśrodkowane w pionie, breadcrumb przy dolnej krawędzi. Prawa: panel jasnej
+   szarości z 30 px marginesu, na jego środku player YouTube. -------------- */
+#hero{display:flex;min-height:calc(100svh - var(--cx-navbar-h, 0px));}
+#hero > .c5-wrap{flex:1 1 auto;display:flex;}
+/* nadpisanie siatki z c5.css: bez własnego paddingu i min-height – wysokość
+   wyznacza sekcja, a kolumny rozciągają się na jej pełną wysokość */
+.c5-hero{flex:1 1 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,5vw,5rem);align-items:stretch;padding-block:0;min-height:0;}
+.c5-hero__copy{display:flex;flex-direction:column;gap:0;max-width:585px;}
+.c5-hero__copyin{display:flex;flex-direction:column;gap:clamp(1.25rem,2.4vw,2rem);margin-block:auto;padding-block:clamp(2rem,4vw,3rem);}
+/* breadcrumb: dyskretny, przy dolnej krawędzi ekranu */
+.c5-hero__crumbs{font-size:0.75rem;color:var(--w-gray-400);padding-bottom:var(--c5-gutter);}
+.c5-hero__crumbs a,.c5-hero__crumbs .wf-breadcrumb__sep{color:inherit;}
+.c5-hero__crumbs a:hover{color:var(--w-gray-600);}
+
+/* Panel: 30 px od góry, dołu i prawej krawędzi ekranu; jednolita jasna szarość,
+   player dokładnie na środku (siatka place-items:center). */
+.c5-hero__stage{position:relative;display:grid;place-items:center;overflow:hidden;margin-block:var(--c5-gutter);min-height:calc(100svh - var(--cx-navbar-h, 0px) - 2 * var(--c5-gutter));background:var(--w-gray-100);padding:var(--c5-gutter);}
+
+/* Player YouTube jako placeholder 16:9 z podpisem pod spodem. */
+.pp-film{display:flex;flex-direction:column;gap:var(--w-space-3);margin:0;width:100%;max-width:34rem;}
+.pp-film .wf-ph{width:100%;aspect-ratio:16/9;border-radius:0;display:grid;place-items:center;}
+.pp-film .wf-icon{width:44px;height:44px;color:var(--w-text-secondary);}
+
+/* --- UJAWNIANIE PRZY PRZEWIJANIU ------------------------------------------
+   Klasę .pp-reveal dokłada JS (02-reveal.js) wyłącznie elementom, które przy
+   starcie leżą PONIŻEJ pierwszego ekranu; .is-in wchodzi przy wejściu w widok.
+   Bez JS i przy prefers-reduced-motion wszystko jest po prostu widoczne. */
+.pp-reveal{opacity:.001;transform:translateY(12px);
+  transition:opacity .45s var(--w-ease),transform .45s var(--w-ease);}
+.pp-reveal.is-in{opacity:1;transform:none;}
+
+@media (max-width:899px){
+  /* jedna kolumna: copy → panel z playerem → breadcrumb pod spodem */
+  #hero{display:block;min-height:0;}
+  #hero > .c5-wrap{display:block;}
+  .c5-hero{display:flex;flex-direction:column;gap:clamp(1.5rem,4vw,2.5rem);padding-block:clamp(2rem,6vw,3rem);}
+  .c5-hero__copy{display:contents;}
+  .c5-hero__copyin{order:1;margin-block:0;padding-block:0;max-width:585px;}
+  .c5-hero__stage{order:2;margin-block:0;min-height:0;padding:var(--w-space-5);}
+  .c5-hero__crumbs{order:3;padding-bottom:0;}
+  .pp-film{max-width:none;}
+}
+@media (prefers-reduced-motion: reduce){
+  .pp-reveal{opacity:1;transform:none;transition:none;}
+}
+
+/* --- Inercja przewijania (Lenis) – układ zostaje natywny; CSS smooth-behavior
+   wyłączony na czas działania biblioteki --------------------------------- */
+html.lenis,html.lenis body{height:auto;}
+.lenis.lenis-smooth{scroll-behavior:auto !important;}
+.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain;}
+.lenis.lenis-stopped{overflow:hidden;}
+
+/* ===== 10 · Nawigacja po podstronie – kropki przy prawej krawędzi ==========
+   Fixed, pionowo na środku ekranu. Etykiety wjeżdżają po najechaniu na cały
+   nav (albo po fokusie w jego wnętrzu). Nic nie klei się do górnej krawędzi.
+
+   Widoczność na jasnych i ciemnych sekcjach: cały nav ma mix-blend-mode
+   difference, a kolory zapisujemy „w bieli". Difference: result = |backdrop –
+   source|, więc biel (255) na białym tle daje czerń, a na ciemnym – biel.
+   Stąd: aktywna kropka = #fff (czytana jako gray-900 na białym), nieaktywna =
+   biel z alfą .55 (czytana jako ~gray-400). ------------------------------- */
+.c5-dots{position:fixed;right:var(--c5-gutter);top:50%;transform:translateY(-50%);z-index:90;mix-blend-mode:difference;}
+.c5-dots ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;align-items:flex-end;}
+/* Pole klikalne 28×28 px (bez odstępu między pozycjami = 28 px środek–środek).
+   Etykieta leży absolutnie POZA tym polem, więc nav zajmuje tylko wąską kolumnę
+   przy krawędzi i nie przechwytuje kliknięć w treść pod spodem. */
+.c5-dots__link{position:relative;display:flex;align-items:center;justify-content:flex-end;width:28px;min-height:28px;padding-right:2px;text-decoration:none;}
+.c5-dots__dot{flex:none;display:block;width:6px;height:6px;border-radius:var(--w-radius-circle);background:rgb(255 255 255 / .55);transition:width .2s var(--w-ease),height .2s var(--w-ease),background-color .2s var(--w-ease);}
+.c5-dots__link[aria-current="true"] .c5-dots__dot{width:10px;height:10px;background:#fff;}
+/* Etykiety: ukryte, wjeżdżają razem (lekki stagger) po najechaniu na nav.
+   Widoczna etykieta łapie wskaźnik (`pointer-events:auto`) i zachodzi 6 px na
+   pole linku, więc między kropką a etykietą nie ma „dziury": przejście myszą na
+   etykietę nie gasi etykiet, a klik w nią przewija do rozdziału (spec §13.4). */
+.c5-dots__label{position:absolute;right:calc(100% - 6px);top:50%;padding:6px 6px 6px 10px;font-size:0.8125rem;line-height:1.2;text-align:right;white-space:nowrap;color:rgb(255 255 255 / .6);opacity:0;transform:translate(6px,-50%);pointer-events:none;transition:opacity .2s var(--w-ease),transform .2s var(--w-ease);transition-delay:0s;}
+.c5-dots__link[aria-current="true"] .c5-dots__label{color:#fff;}
+.c5-dots:hover .c5-dots__label,
+.c5-dots:focus-within .c5-dots__label{opacity:1;transform:translateY(-50%);pointer-events:auto;}
+.c5-dots:hover li:nth-child(2) .c5-dots__label,.c5-dots:focus-within li:nth-child(2) .c5-dots__label{transition-delay:.02s;}
+.c5-dots:hover li:nth-child(3) .c5-dots__label,.c5-dots:focus-within li:nth-child(3) .c5-dots__label{transition-delay:.04s;}
+.c5-dots:hover li:nth-child(4) .c5-dots__label,.c5-dots:focus-within li:nth-child(4) .c5-dots__label{transition-delay:.06s;}
+.c5-dots:hover li:nth-child(5) .c5-dots__label,.c5-dots:focus-within li:nth-child(5) .c5-dots__label{transition-delay:.08s;}
+.c5-dots:hover li:nth-child(6) .c5-dots__label,.c5-dots:focus-within li:nth-child(6) .c5-dots__label{transition-delay:.10s;}
+.c5-dots:hover li:nth-child(7) .c5-dots__label,.c5-dots:focus-within li:nth-child(7) .c5-dots__label{transition-delay:.12s;}
+.c5-dots:hover li:nth-child(8) .c5-dots__label,.c5-dots:focus-within li:nth-child(8) .c5-dots__label{transition-delay:.14s;}
+/* fokus klawiatury: obrys też „w bieli", żeby był widoczny po obu stronach blendu */
+.c5-dots__link:focus-visible{outline:2px solid #fff;outline-offset:2px;}
+
+@media (max-width:899px){
+  /* dotyk nie ma najechania – zostaje zwykłe przewijanie strony */
+  .c5-dots{display:none;}
+}
+@media (prefers-reduced-motion: reduce){
+  .c5-dots__dot,.c5-dots__label{transition:none;}
+}
+
+/* ===== 25 · STAN PROGRAMU: poziomy marquee między hero a „O programie" =====
+   Kopia bloku `c5-marq` z wzorca CARBOMAT ECO (carbomat.css §14.3). Tor niesie
+   zestaw dwa razy, więc `translateX(-50%)` ląduje dokładnie na początku drugiej
+   kopii – pętla nie ma szwu. Każda pozycja niesie odstęp, który po niej idzie
+   (`padding-right` zamiast `gap` na torze), dzięki czemu odstęp na styku kopii
+   jest identyczny jak w środku zestawu. Czysty CSS – działa bez JS i nigdy nie
+   dotyka pozycji przewijania. ============================================ */
+.c5-marq{--c5-marq-gap:clamp(1.5rem,3vw,3rem);--c5-marq-thumb:clamp(56px,6vw,96px);padding-block:130px;overflow:hidden;}
+.c5-marq__track{display:flex;align-items:center;width:max-content;margin:0;padding:0;list-style:none;animation:c5-marq 42s linear infinite;will-change:transform;}
+.c5-marq__item{display:flex;align-items:center;gap:var(--c5-marq-gap);padding-right:var(--c5-marq-gap);}
+.c5-marq__txt{display:inline-flex;align-items:center;gap:var(--w-space-4);font-size:clamp(2rem,4.4vw,3.5rem);line-height:1.1;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;white-space:nowrap;color:var(--w-text-primary);}
+/* ikona 24 px przed tekstem (spec §4) – ten sam zestaw co w dawnej linii stanu */
+.c5-marq__ico{flex:none;width:24px;height:24px;color:var(--w-icon-default);}
+/* 12 px zaokrąglenia – jedyny wyjątek od ostrych narożników w tej sekcji */
+.c5-marq__thumb{flex:none;width:var(--c5-marq-thumb);height:var(--c5-marq-thumb);object-fit:cover;border-radius:12px;background:var(--w-gray-200);}
+@keyframes c5-marq{to{transform:translateX(-50%);}}
+/* kursor na sekcji zatrzymuje tor */
+.c5-marq:hover .c5-marq__track{animation-play-state:paused;}
+@media (prefers-reduced-motion: reduce){
+  /* bez ruchu: tor stoi, widoczny pierwszy zestaw, na dotyku przewijany palcem */
+  .c5-marq{overflow-x:auto;overflow-y:hidden;}
+  .c5-marq__track{animation:none;will-change:auto;}
+  .c5-marq__item:nth-child(n+5){display:none;}
+}
+/* telefon: 130 px powietrza wokół paska to za dużo */
+@media (max-width:899px){
+  .c5-marq{padding-block:80px;}
+}
+
+/* ===== 30 · O PROGRAMIE: cztery karty (spec §5) =============================
+   Trzy karty akapitów wstępu + karta produktu badanego. Siatka wg spec:
+   4 kolumny od 1100 px, 2 kolumny 700–1099 px, 1 poniżej. Karty wchodzą
+   jednorazowym fade-inem ze stopniowaniem 80 ms (klasę dokłada 02-reveal.js).
+   ===================================================================== */
+.pp-manifest{display:grid;grid-template-columns:minmax(0,1fr);
+  gap:var(--w-space-5);margin-top:clamp(1.5rem,3vw,2.25rem);padding:0;list-style:none;}
+@media (min-width:700px){ .pp-manifest{grid-template-columns:repeat(2,minmax(0,1fr));} }
+@media (min-width:1100px){ .pp-manifest{grid-template-columns:repeat(4,minmax(0,1fr));} }
+.pp-mcard{display:flex;flex-direction:column;gap:var(--w-space-4);height:100%;
+  border:1px solid var(--w-border-default);background:var(--w-surface-page);
+  padding:clamp(1.25rem,2.4vw,1.75rem);
+  transition:border-color var(--w-duration-base) var(--w-ease);}
+.pp-mcard:hover{border-color:var(--w-gray-900);}
+.pp-mcard p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
+
+/* Karta produktu badanego: packshot na jasnoszarym polu, pod nim zdanie
+   i dwa przyciski; przyciski trzymają się dołu karty. */
+.pp-mcard__pack{display:grid;place-items:center;background:var(--w-gray-100);padding:var(--w-space-4);}
+.pp-mcard__pack img{display:block;height:140px;width:auto;max-width:100%;object-fit:contain;}
+/* Przyciski przy dolnej krawędzi karty, jeden pod drugim na całą szerokość –
+   w czterech kolumnach etykiety i tak zawijają, a równa szerokość trzyma je
+   w porządku. Cel dotykowy 44 px (c5-btn--sm ma 43 px wysokości). */
+.pp-mcard--prod .c5-btnrow{margin-top:auto;gap:var(--w-space-2);flex-direction:column;align-items:stretch;}
+.pp-mcard--prod .c5-btn{min-height:44px;padding-inline:16px;}
+
+/* Stopniowanie wejścia kart (80 ms) – transition-delay wygrywa z .pp-reveal. */
+.pp-manifest > li:nth-child(2){transition-delay:.08s;}
+.pp-manifest > li:nth-child(3){transition-delay:.16s;}
+.pp-manifest > li:nth-child(4){transition-delay:.24s;}
+
+@media (prefers-reduced-motion: reduce){
+  .pp-mcard{transition:none;}
+  .pp-manifest > li{transition-delay:0s;}
+}
+
+/* ===== 40 · Sceny sterowane przewijaniem (Założenia i cele, Metodologia) =====
+   Port modułu 50 „Czym jest" ze strony CARBOMAT ECO (spec §6 i §12). Jeden
+   zestaw reguł obsługuje obie sceny – różnią się wyłącznie liczbą kroków,
+   zdjęciami (kadrowanie niżej / w 80-metodologia.css) i leadem w nagłówku.
+
+   Dwa układy z jednego DOM-u:
+   · domyślny (mobile / ograniczony ruch / bez JS) – jedna kolumna, wszystko
+     widoczne: nagłówek, a potem pary „temat + ilustracja"; panel zdjęć to
+     dekoracja, więc w tym układzie w ogóle nie wchodzi;
+   · scena (≥ 900 px, no-preference, .cx-js) – sticky 100svh: nagłówek u góry
+     lewej kolumny, jeden temat naraz przy dolnej krawędzi, pasek progresu pod
+     nim, po prawej panel zdjęcia z boksem ilustracji o stałym rozmiarze.
+   Kolejność DOM = kolejność czytania; siatka sceny tylko przestawia elementy. */
+.pp-scene__track{height:auto;}
+.pp-scene{display:flex;flex-direction:column;gap:clamp(2rem,4vw,3rem);}
+.pp-scene__head{display:flex;flex-direction:column;gap:clamp(1rem,2vw,1.5rem);}
+.pp-scene__head .c5-kicker{margin-bottom:0;}
+.pp-scene__head .c5-h2{max-width:560px;}
+.pp-scene__lead{display:flex;flex-direction:column;gap:var(--w-space-3);max-width:560px;}
+
+/* Panel zdjęć: czysta dekoracja sceny (aria-hidden), poza sceną nie istnieje. */
+.pp-scene__panel{display:none;}
+
+.pp-scene__flow{display:flex;flex-direction:column;gap:clamp(1.75rem,3.5vw,2.75rem);margin:0;padding:0;}
+.pp-step{display:flex;flex-direction:column;gap:var(--w-space-3);max-width:640px;}
+.pp-step__title{font-size:clamp(1.125rem,1.8vw,1.5rem);line-height:1.22;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+.pp-step__body{display:flex;flex-direction:column;gap:var(--w-space-3);font-size:0.9375rem;line-height:1.55;color:var(--w-text-secondary);}
+.pp-step__body ul{margin:0;}
+.pp-step__body .wf-list{padding-left:0;}
+
+/* Pasek progresu ma sens tylko w scenie sterowanej przewijaniem. */
+.pp-scene__prog{display:none;}
+.pp-prog{position:relative;height:2px;background:var(--w-gray-200);}
+.pp-prog__fill{position:absolute;inset:0;background:var(--w-gray-900);transform:scaleX(var(--pp-p,0));transform-origin:left center;will-change:transform;}
+/* znaczniki dzielą tor na tyle odcinków, ile jest tematów – widać, ile
+   brakuje do kolejnego opisu */
+.pp-prog__mark{position:absolute;top:50%;width:1px;height:8px;margin-top:-4px;
+  left:calc(var(--pp-m,1) / var(--pp-steps,4) * 100%);background:var(--w-gray-400);}
+
+/* --- Klocki wizuali (przeniesione z warstwy 99, bloki 3 i 14) --------------
+   Drobne elementy wspólne dla ilustracji obu scen: pigułki upraw, siatka
+   punktów poboru, kalendarz dwuslotowy, lista technologii kontrolnej oraz
+   schemat kwatery (cztery pasy po 3 rzędy + referencja poza kwaterą).
+   Wariant NIGDY nie jest niesiony samym wypełnieniem – każdy pas ma etykietę. */
+.pp-chips{display:flex;flex-wrap:wrap;gap:8px;}
+.pp-chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--w-border-strong);
+  padding:7px 13px;font-size:0.75rem;letter-spacing:.04em;text-transform:uppercase;}
+.pp-chip--alt{border-style:dashed;border-color:var(--w-gray-900);}
+.pp-dots{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1rem,4vw,2rem);
+  justify-items:center;border:1px solid var(--w-border-default);padding:clamp(1rem,3vw,1.75rem);}
+.pp-dots i{width:13px;height:13px;background:var(--w-gray-900);display:block;}
+.pp-cal2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--w-space-4);}
+.pp-cal2 > div{display:flex;flex-direction:column;gap:4px;border-top:2px solid var(--w-gray-900);padding-top:var(--w-space-3);}
+.pp-cal2 b{font-size:0.9375rem;font-weight:var(--w-weight-medium);}
+.pp-cal2 span{font-size:0.8125rem;color:var(--w-text-secondary);}
+.pp-stack{display:flex;flex-direction:column;gap:var(--w-space-3);margin:0;padding:0;list-style:none;}
+.pp-stack li{display:flex;gap:var(--w-space-3);align-items:flex-start;
+  border-top:1px solid var(--w-border-default);padding-top:var(--w-space-3);font-size:0.9375rem;}
+.pp-stack .wf-icon{flex:none;margin-top:2px;color:var(--w-icon-default);}
+.pp-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--w-space-4);align-items:stretch;}
+.pp-layout__field{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px;
+  border:1px solid var(--w-gray-900);background:var(--w-gray-900);}
+.pp-lband{display:flex;flex-direction:column;gap:var(--w-space-2);background:var(--w-surface-page);
+  padding:var(--w-space-3);min-height:8rem;}
+.pp-lband__rows{display:flex;gap:5px;flex:1;min-height:3.5rem;}
+.pp-lband__rows i{flex:1;border:1px solid var(--w-border-strong);background:var(--w-surface-page);}
+.pp-lband--t200 .pp-lband__rows i{background:var(--w-gray-300);border-color:var(--w-gray-900);}
+.pp-lband--t500 .pp-lband__rows i{background:var(--w-gray-500);border-color:var(--w-gray-900);}
+.pp-lband__name{font-size:0.875rem;font-weight:var(--w-weight-medium);}
+.pp-lband__sub{font-size:0.75rem;color:var(--w-text-secondary);}
+.pp-layout__ref{display:flex;flex-direction:column;gap:var(--w-space-2);
+  border:1px dashed var(--w-gray-900);background:var(--w-surface-page);padding:var(--w-space-3);}
+
+/* --- Boks ilustracji: ciemne pole, kolory odwrócone ------------------------
+   Świadomie NIE używamy klasy .c5-viz z c5.css – tamta chowa wizual bez
+   atrybutu data-on, a tu wszystkie mają być widoczne w układzie statycznym.
+   Wnętrza (tag, body, cap, list) zostają na klasach kitu, kolory odwracamy. */
+.pp-sviz{position:relative;margin:0;display:flex;flex-direction:column;gap:var(--w-space-5);
+  width:100%;max-width:480px;padding:clamp(1.25rem,2.4vw,2rem);
+  background:rgb(20 20 20 / .86);color:#fff;overflow:hidden;}
+.pp-sviz .c5-viz__tag{color:rgb(255 255 255 / .6);}
+.pp-sviz .c5-viz__cap{color:rgb(255 255 255 / .6);}
+.pp-sviz .c5-viz__body{flex:1;min-height:0;}
+.pp-sviz .c5-viz__body svg:not(.wf-icon){color:inherit;}
+.pp-sviz .c5-viz__list .wf-icon{color:rgb(255 255 255 / .75);}
+/* placeholder zdjęcia w ciemnym boksie */
+.pp-sviz .wf-ph{background:rgb(255 255 255 / .06);border-color:rgb(255 255 255 / .3);
+  --w-placeholder-stroke:rgb(255 255 255 / .3);}
+/* pigułki upraw */
+.pp-sviz .pp-chip{border-color:rgb(255 255 255 / .45);}
+.pp-sviz .pp-chip--alt{border-color:#fff;}
+/* schemat kwatery: pasy jako jasne pola na ciemnym tle */
+.pp-sviz .pp-layout__field{border-color:rgb(255 255 255 / .45);background:rgb(255 255 255 / .45);}
+.pp-sviz .pp-lband{background:transparent;}
+.pp-sviz .pp-lband__rows i{border-color:rgb(255 255 255 / .5);background:transparent;}
+.pp-sviz .pp-lband--t200 .pp-lband__rows i{background:rgb(255 255 255 / .35);border-color:rgb(255 255 255 / .6);}
+.pp-sviz .pp-lband--t500 .pp-lband__rows i{background:rgb(255 255 255 / .7);border-color:rgb(255 255 255 / .8);}
+.pp-sviz .pp-lband__sub{color:rgb(255 255 255 / .6);}
+.pp-sviz .pp-layout__ref{border-color:rgb(255 255 255 / .5);background:transparent;}
+/* siatka punktów poboru */
+.pp-sviz .pp-dots{border-color:rgb(255 255 255 / .3);}
+.pp-sviz .pp-dots i{background:#fff;}
+/* kalendarz dwuslotowy */
+.pp-sviz .pp-cal2 > div{border-top-color:#fff;}
+.pp-sviz .pp-cal2 span{color:rgb(255 255 255 / .6);}
+/* lista technologii kontrolnej */
+.pp-sviz .pp-stack li{border-top-color:rgb(255 255 255 / .3);}
+.pp-sviz .pp-stack .wf-icon{color:rgb(255 255 255 / .75);}
+/* łańcuch danych / rytm roku – kroki kitu */
+.pp-sviz .wf-step{color:rgb(255 255 255 / .75);}
+.pp-sviz .wf-step__node{background:transparent;border-color:rgb(255 255 255 / .6);color:#fff;}
+.pp-sviz .wf-step__connector{background:rgb(255 255 255 / .35);}
+/* pierścień fokusu na ciemnym polu */
+.pp-sviz :focus-visible{outline-color:var(--w-focus-ring-inverse);}
+
+/* Boks ilustracji ma stałą szerokość i przycina zawartość, a łańcuch kroków w
+   rzędzie („rytm roku", „łańcuch danych") jest od niego szerszy – w boksie
+   układa się więc w kolumnę, z pionowym łącznikiem pod numerem. Na wąskim
+   ekranie to samo dotyczy kalendarza dwuslotowego. */
+.pp-sviz .wf-steps{flex-direction:column;align-items:flex-start;gap:var(--w-space-3);}
+.pp-sviz .wf-step__connector{width:1px;height:var(--w-space-4);margin-left:13px;}
+@media (max-width:699px){
+  .pp-sviz .pp-cal2{grid-template-columns:minmax(0,1fr);}
+}
+
+/* Układ statyczny na szerokim ekranie (ograniczony ruch albo brak JS):
+   ilustracja jest pasem, nie całą kolumną. */
+@media (min-width:900px){
+  .pp-scene__flow{align-items:flex-start;}
+  .pp-step{max-width:640px;}
+}
+
+/* --- Scena: sticky 100svh w wysokim torze (JS ustawia wysokość toru) -------- */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  .cx-js .pp-scene-sec{padding-block:0;}
+  .cx-js .pp-scene{
+    --pp-gap:clamp(2rem,6vw,8rem);
+    --pp-progh:40px;
+    /* prześwit na dok doradcy, który pływa nad dolną krawędzią okna */
+    --pp-dock:58px;
+    position:sticky;top:0;height:100svh;
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr);
+    gap:0 var(--pp-gap);padding-block:var(--c5-gutter);
+  }
+  /* Panel wraca jako boks w kolumnie 2 – warstwy zdjęć leżą jedna na drugiej,
+     widoczna jest tylko ta z data-on="true" (crossfade .45 s). */
+  .cx-js .pp-scene__flow > .pp-scene__panel{display:block;position:relative;grid-row:1;grid-column:2;
+    align-self:stretch;height:100%;background:var(--w-gray-700);overflow:hidden;}
+  .cx-js .pp-scene__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 55%;
+    opacity:0;transition:opacity .45s var(--w-ease);will-change:opacity;}
+  .cx-js .pp-scene__bg[data-on="true"]{opacity:1;}
+  /* nakładka pod boksem ilustracji – biały tekst nie może walczyć z jasnymi
+     partiami zdjęcia */
+  .cx-js .pp-scene__panel::after{content:"";position:absolute;inset:0;background:rgb(0 0 0 / .3);}
+  .cx-js .pp-scene__head{grid-row:1;grid-column:1;align-self:start;z-index:2;
+    background:var(--w-surface-page);padding-bottom:var(--w-space-4);}
+  /* w scenie nagłówek jest odrobinę mniejszy – najdłuższy temat musi zmieścić
+     się pod nim na ekranie 800 px bez wchodzenia w nagłówek */
+  .cx-js .pp-scene__head .c5-h2{font-size:clamp(1.5rem,2.6vw,2.125rem);}
+  .cx-js .pp-scene__head .c5-kicker{margin-bottom:0;}
+  /* Warstwa temat + ilustracja leży na całej scenie: tematy w lewej kolumnie
+     przy dolnej krawędzi, ilustracje wyśrodkowane w prawej – wszystkie w tej
+     samej komórce siatki, więc wymieniają się w miejscu. */
+  .cx-js .pp-scene__flow{grid-row:1;grid-column:1 / -1;display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr);gap:0 var(--pp-gap);}
+  .cx-js .pp-scene__flow > .pp-step{grid-row:1;grid-column:1;align-self:end;max-width:none;
+    padding-bottom:calc(var(--pp-progh) + var(--pp-dock));
+    opacity:0;transform:translateY(12px);transition:opacity .18s var(--w-ease),transform .18s var(--w-ease);}
+  .cx-js .pp-scene__flow > .pp-step.is-on{opacity:1;transform:none;transition-duration:.26s;}
+  .cx-js .pp-scene__flow > .pp-sviz{grid-row:1;grid-column:2;align-self:center;justify-self:center;
+    width:clamp(300px,78%,560px);height:clamp(360px,64svh,600px);max-width:none;
+    opacity:0;visibility:hidden;transition:opacity .22s var(--w-ease),visibility 0s linear .22s;}
+  .cx-js .pp-scene__flow > .pp-sviz[data-on="true"]{opacity:1;visibility:visible;transition:opacity .22s var(--w-ease);}
+  .cx-js .pp-scene__prog{grid-row:1;grid-column:1;align-self:end;display:block;margin-bottom:var(--pp-dock);}
+}
+/* Niskie okna (np. 1280×720): nagłówek i temat dostają ciaśniejszą skalę, żeby
+   najdłuższy temat nadal mieścił się nad paskiem progresu. */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference) and (max-height:820px){
+  .cx-js .pp-scene{--pp-progh:32px;}
+  .cx-js .pp-scene__head .c5-h2{font-size:clamp(1.375rem,2.2vw,1.75rem);}
+  .cx-js .pp-scene__flow > .pp-step .pp-step__body{font-size:0.875rem;}
+  .cx-js .pp-scene__flow > .pp-step .pp-step__title{font-size:clamp(1.0625rem,1.5vw,1.25rem);}
+}
+
+/* --- Kadrowanie zdjęć sceny „Założenia i cele" ----------------------------- */
+#zalozenia .pp-scene__bg[data-ppbg="1"]{object-position:50% 60%;}  /* siewka w glebie */
+#zalozenia .pp-scene__bg[data-ppbg="2"]{object-position:50% 52%;}  /* rzędy upraw o zachodzie */
+#zalozenia .pp-scene__bg[data-ppbg="3"]{object-position:50% 50%;}  /* rzędy w niskim słońcu */
+#zalozenia .pp-scene__bg[data-ppbg="4"]{object-position:50% 45%;}  /* gleba w dłoniach */
+
+/* ===== 45 · Oczekiwane długofalowe korzyści – karty nad napisem (spec §7) ====
+   Domyślnie (mobile / ograniczony ruch / bez JS) to zwykły nagłówek i siatka
+   ośmiu kart z jednorazowym fade-in – cały tekst korzyści zawsze widoczny.
+   Od 900 px z JS i pełnym ruchem: napis stoi przyklejony na środku ekranu przez
+   cały tor (≈ 8 × 55 vh), a karty płyną obok niego z własnym odsunięciem
+   (--pp-x), obrotem (--pp-rot) i prędkością (data-pp-speed → --pp-y z JS),
+   więc raz po raz nachodzą na napis. Karty są nieprzezroczyste. */
+.pp-kor{overflow-x:clip;}
+.pp-kor__track{position:relative;}
+.pp-kor__title{font-size:clamp(1.75rem,4.4vw,3rem);line-height:1.08;font-weight:var(--w-weight-medium);
+  letter-spacing:-0.02em;text-align:center;text-wrap:balance;margin:0;}
+.pp-kor__list{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--w-space-4);
+  margin:clamp(1.5rem,3vw,2.25rem) 0 0;padding:0;list-style:none;}
+@media (min-width:700px){ .pp-kor__list{grid-template-columns:repeat(2,minmax(0,1fr));} }
+.pp-kslot{display:flex;}
+.pp-kcard{display:flex;flex-direction:column;gap:var(--w-space-3);width:100%;
+  border:1px solid var(--w-border-default);background:var(--w-surface-page);
+  padding:clamp(1.1rem,2.2vw,1.5rem);}
+.pp-kcard__h{margin:0;font-size:1rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;line-height:1.3;}
+.pp-kcard__body{display:flex;flex-direction:column;gap:var(--w-space-3);}
+.pp-kcard__body p{margin:0;font-size:0.9375rem;line-height:1.55;color:var(--w-text-secondary);}
+
+/* --- Tor z przyklejonym napisem (tylko z JS, od 900 px, pełny ruch) -------- */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  .cx-js .pp-kor{padding-block:clamp(3.5rem,7vw,6.25rem) 0;}
+  /* Napis: pudełko na wysokość ekranu przyklejone do górnej krawędzi, napis w
+     jego pionowym środku. Ujemny margines pod spodem wciąga karty na napis –
+     to ten sam kadr, nie dwa oddzielne bloki. */
+  .cx-js .pp-kor__titlebox{position:sticky;top:0;z-index:0;height:100svh;
+    display:grid;place-items:center;margin-bottom:-100svh;pointer-events:none;}
+  .cx-js .pp-kor__title{font-size:clamp(2.5rem,6vw,5.5rem);line-height:1.02;max-width:14ch;}
+  .cx-js .pp-kor__list{display:block;position:relative;z-index:1;margin:0;}
+  .cx-js .pp-kslot{display:flex;align-items:center;justify-content:center;min-height:55vh;}
+  /* left = odsunięcie od środka kolumny (procent szerokości toru), transform =
+     parallax z JS + stały obrót karty */
+  .cx-js .pp-kcard{position:relative;left:var(--pp-x,0);width:min(22rem,40%);
+    transform:translateY(var(--pp-y,0px)) rotate(var(--pp-rot,0deg));
+    border-color:var(--w-border-subtle);box-shadow:0 24px 60px rgb(0 0 0 / .10);
+    will-change:transform;}
+}
+
+/* ===== 50 · Uczestnicy programu – siatka kart 3 × 2 (spec §8) ===============
+   Karuzela ze strzałkami i licznikiem znika: sześć gospodarstw stoi naraz w
+   siatce (3 kolumny ≥ 1100 px, 2 w przedziale 700–1099 px, 1 poniżej). Karta
+   niesie placeholder zdjęcia 4:3 z etykietą, chip uprawy, nazwę, gospodarza,
+   uprawę, lokalizację, pierwszy akapit profilu i dwa przyciski: „zobacz
+   profil" (pop-up z fragmentu 52) i „etapy prac" (wiersz wykresu z 85).
+   Tokeny --w-*, ostre narożniki, skala szarości; cele dotykowe 44 px. ====== */
+.pp-farms{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--w-space-5);
+  margin:clamp(1.5rem,3vw,2.25rem) 0 0;padding:0;list-style:none;}
+@media (max-width:1099px){ .pp-farms{grid-template-columns:repeat(2,minmax(0,1fr));} }
+@media (max-width:699px){ .pp-farms{grid-template-columns:minmax(0,1fr);} }
+
+.pp-farm{display:flex;flex-direction:column;gap:var(--w-space-2);align-items:flex-start;
+  border:1px solid var(--w-border-default);background:var(--w-surface-page);
+  padding:clamp(1.1rem,2.2vw,1.5rem);
+  transition:border-color var(--w-duration-base) var(--w-ease);}
+.pp-farm:hover{border-color:var(--w-gray-900);}
+.pp-farm__ph{width:100%;aspect-ratio:4/3;min-height:0;border-radius:0;margin-bottom:var(--w-space-2);}
+/* 00-base.css chowa .wf-ph__label (placeholdery wzorca są nieopisane), a tutaj
+   etykieta jest potrzebna – klient wie, jakie zdjęcie ma dostarczyć (§11). */
+.pp-ph__label{position:absolute;left:10px;bottom:8px;z-index:1;max-width:calc(100% - 20px);
+  font-size:0.6875rem;line-height:1.2;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--w-placeholder-ink);pointer-events:none;}
+.pp-farm__crop{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--w-gray-900);
+  padding:3px 10px;font-size:0.75rem;letter-spacing:.04em;text-transform:uppercase;}
+.pp-farm__name{font-size:1.0625rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;margin:0;}
+.pp-farm__who{margin:0;font-size:0.9375rem;}
+.pp-farm__meta{margin:0;font-size:0.875rem;color:var(--w-text-secondary);}
+.pp-farm__lead{margin:var(--w-space-2) 0 0;padding-top:var(--w-space-3);
+  border-top:1px solid var(--w-border-subtle);font-size:0.9375rem;color:var(--w-text-secondary);}
+.pp-farm__btns{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:var(--w-space-4);}
+/* c5-btn--sm ma 43 px wysokości – cel dotykowy musi mieć 44 px */
+.pp-farm__btns .c5-btn{min-height:44px;}
+
+@media (prefers-reduced-motion: reduce){
+  .pp-farm{transition:none;}
+}
+
+/* ===== 52 · Profile gospodarstw: źródło treści i pop-up (spec §8) ==========
+   Sekcja #profile stoi w DOM-ie zawsze – bez JS jest normalną częścią strony
+   (przyciski „zobacz profil" są wtedy kotwicami), z JS chowa ją 52-profile.js,
+   a blok gospodarstwa klonuje się do jednego `dialog.pp-profile`.
+   Natywny `dialog` daje pułapkę fokusu, `Esc` i `::backdrop` – reszta to
+   wymiary z §8: min(920px, 100% − 2 × 30 px), do 85svh z przewijaniem w
+   środku, przyciemnienie .55, X 44 px. ===================================== */
+.pp-profiles .c5-variants{margin-top:clamp(1.5rem,3vw,2.25rem);}
+.pp-profile__ph{border-radius:0;}
+
+/* --- dane profilu (przeniesione z warstwy legacy 11–12.09) ------------------
+   Klocki treści profilu: tabela danych identyfikacyjnych, „O gospodarstwie"
+   i nota o rozbieżnościach. Nota stoi też pod wykresem etapów, więc reguła
+   jest tu wspólna dla obu miejsc. ---------------------------------------- */
+.pp-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:var(--w-space-4);margin:0;}
+.pp-facts > div{display:flex;flex-direction:column;gap:4px;border-top:1px solid var(--w-border-default);padding-top:var(--w-space-3);}
+.pp-facts dt{font-size:0.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--w-text-secondary);}
+.pp-facts dd{margin:0;font-size:0.9375rem;}
+.pp-about{display:flex;flex-direction:column;gap:var(--w-space-3);}
+.pp-about p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
+.pp-note{display:flex;gap:var(--w-space-3);align-items:flex-start;
+  border:1px solid var(--w-border-default);padding:var(--w-space-4) var(--w-space-5);
+  margin-top:clamp(1.5rem,3vw,2.25rem);font-size:0.875rem;color:var(--w-text-secondary);max-width:900px;}
+.pp-note p{margin:0;}
+.pp-note .wf-icon{flex:none;margin-top:2px;}
+
+/* --- pop-up --------------------------------------------------------------- */
+.pp-profile{position:fixed;inset:0;margin:auto;
+  width:min(920px, 100% - 2 * var(--c5-gutter));max-width:none;
+  max-height:85svh;padding:0;overflow:hidden;
+  border:1px solid var(--w-border-default);border-radius:0;
+  background:var(--w-surface-page);color:var(--w-text-primary);}
+/* display tylko przy [open] – bez tego zamknięty dialog przestałby się chować */
+.pp-profile[open]{display:flex;flex-direction:column;}
+.pp-profile::backdrop{background:rgb(0 0 0 / .55);}
+.pp-profile__close{position:absolute;top:14px;right:14px;z-index:2;
+  display:grid;place-items:center;width:44px;height:44px;padding:0;
+  border:1px solid var(--w-border-default);border-radius:0;
+  background:var(--w-surface-page);color:var(--w-text-primary);cursor:pointer;
+  transition:background var(--w-duration-base) var(--w-ease);}
+.pp-profile__close:hover{background:var(--w-gray-100);}
+.pp-profile__scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;
+  padding:clamp(1.5rem,4vw,2.75rem);padding-right:calc(clamp(1.5rem,4vw,2.75rem) + 44px);}
+/* Klon bloku profilu: bez lepkiego zdjęcia (lepkość liczyła się względem
+   dawnej subnawigacji) i w mniejszym stopniu nagłówka – nazwy są wersalikami. */
+.pp-profile .c5-variant__grid{margin-top:var(--w-space-5);}
+/* relative, nie static: etykieta placeholdera jest pozycjonowana absolutnie
+   i bez bloku odniesienia uciekłaby na dół dialogu */
+.pp-profile .c5-variant__grid > .wf-ph{position:relative;top:auto;border-radius:0;}
+.pp-profile .c5-variant__name{font-size:clamp(1.35rem,2.6vw,1.875rem);}
+.pp-profile .c5-variant + .c5-variant{margin-top:0;}
+/* nota o rozbieżnościach – w każdym pop-upie, małym drukiem na dole */
+.pp-profile .pp-note{font-size:0.8125rem;margin-top:clamp(1.5rem,3vw,2.25rem);max-width:none;}
+/* strona pod pop-upem stoi (Lenis dostaje stop() w JS) */
+html.pp-lock{overflow:hidden;}
+
+@media (max-width:599px){
+  /* panel na cały ekran – tak samo jak lightbox kukurydzy */
+  .pp-profile{width:100%;max-height:100svh;height:100%;border:0;}
+  .pp-profile__scroll{padding:var(--w-space-5);padding-right:var(--w-space-5);padding-top:64px;}
+  .pp-profile__close{top:10px;right:10px;}
+}
+@media (prefers-reduced-motion: reduce){
+  .pp-profile__close{transition:none;}
+}
+
+/* ===== 55 · KOORDYNATORZY: dwie karty biogramów z „czytaj dalej" ===========
+   Przeniesione z warstwy 99 bez zmian (spec §9). Razem z nimi uniwersalna
+   szuflada `pp-disc` (klon mechaniki `.c5-fact__panel` z c5.css) – wysokość
+   animuje skrypt, CSS trzyma tylko przejście i wygaszenie. ============== */
+.pp-disc{overflow:hidden;height:0;opacity:0;
+  transition:height var(--c5-acc) var(--w-ease),opacity var(--c5-acc-fade) var(--w-ease);}
+.pp-disc[data-open="true"]{opacity:1;}
+.pp-discin{overflow:hidden;min-height:0;display:flex;flex-direction:column;gap:var(--w-space-3);}
+.pp-discin p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
+
+.pp-team{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:var(--w-space-5);
+  margin:clamp(1.5rem,3vw,2.25rem) 0 0;padding:0;list-style:none;}
+.pp-person{display:flex;flex-direction:column;gap:var(--w-space-3);border:1px solid var(--w-border-default);
+  background:var(--w-surface-page);padding:clamp(1.25rem,2.2vw,1.75rem);
+  transition:border-color var(--w-duration-base) var(--w-ease);}
+.pp-person:hover{border-color:var(--w-gray-900);}
+.pp-person > .wf-ph{width:100%;aspect-ratio:4/3;border-radius:0;}
+.pp-person p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
+.pp-person__indep{display:flex;gap:var(--w-space-3);align-items:flex-start;border:1px solid var(--w-gray-900);
+  padding:var(--w-space-3) var(--w-space-4);font-size:0.875rem;color:var(--w-text-primary);}
+.pp-person__indep .wf-icon{flex:none;margin-top:2px;}
+.pp-more{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;min-height:44px;
+  font:inherit;font-size:0.875rem;font-weight:var(--w-weight-medium);color:var(--w-text-primary);
+  border-bottom:1px solid var(--w-gray-900);padding:2px 0;}
+.pp-more .wf-icon{transition:transform var(--w-duration-base) var(--w-ease);color:var(--w-icon-default);}
+.pp-more[aria-expanded="true"] .wf-icon{transform:rotate(180deg);}
+
+/* Stopniowanie wejścia kart (80 ms). */
+.pp-team > li:nth-child(2){transition-delay:.08s;}
+
+@media (prefers-reduced-motion: reduce){
+  .pp-disc,.pp-more .wf-icon,.pp-person{transition:none;}
+  .pp-team > li{transition-delay:0s;}
+}
+
+/* ===== 60 · Program w liczbach – ciemny kadr z kołowrotkiem (spec §10) ======
+   Kadr z marginesem 30 px na wysokość ekranu (jak Parametry na CARBOMAT ECO),
+   tytuł u góry po lewej, cztery wiersze „etykieta | wielka liczba" rozdzielone
+   cienkimi liniami. Cyfry to pionowe taśmy 0–9 przewijane od góry do dołu –
+   taśmy buduje JS, więc bez JS i przy ograniczonym ruchu w kodzie stoi
+   zwyczajna liczba. */
+.pp-dark{position:relative;min-height:100svh;margin-inline:var(--c5-gutter);overflow:clip;
+  background:var(--w-gray-900);color:var(--w-text-inverse);padding-block:var(--c5-gutter);}
+/* pierścień fokusu na ciemnym tle (przeniesione z warstwy 99) */
+.pp-dark :focus-visible{outline-color:var(--w-focus-ring-inverse);}
+.pp-liczby{display:flex;flex-direction:column;gap:clamp(2rem,5vw,4rem);
+  min-height:calc(100svh - 2 * var(--c5-gutter));}
+.pp-liczby__title{font-size:clamp(2rem,4vw,3.25rem);max-width:none;}
+/* wiersze lądują w dolnej części kadru – jak na wzorze z uwagi 6 */
+.pp-liczby__rows{display:flex;flex-direction:column;margin:auto 0 0;padding:0 0 58px;list-style:none;}
+
+.pp-liczba{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--w-space-5);align-items:center;
+  padding-block:clamp(.35rem,1vw,.75rem);}
+.pp-liczba + .pp-liczba{border-top:1px solid rgb(255 255 255 / .18);}
+.pp-liczba__label{font-size:0.9375rem;line-height:1.45;color:var(--w-gray-300);max-width:38ch;}
+.pp-liczba__note{display:block;margin-top:var(--w-space-2);font-size:0.8125rem;color:var(--w-gray-400);}
+.pp-liczba__num{display:flex;align-items:flex-end;justify-content:flex-end;
+  font-size:clamp(4.5rem,11vw,10rem);line-height:1;font-weight:var(--w-weight-medium);
+  letter-spacing:-0.03em;font-variant-numeric:tabular-nums;}
+/* Prefiks „+" i sufiks „lata" w tej samej linii, 40 % wielkości liczby.
+   Okienko cyfry ma overflow:hidden, więc jego linia bazowa jest syntetyzowana z
+   dolnej krawędzi – wyrównujemy dołami, a afiks podnosimy o różnicę linii
+   bazowych (0,19 wysokości cyfry ≈ 0,32 wysokości afiksu). */
+.pp-liczba__aff{font-size:.4em;line-height:1;padding-bottom:.32em;}
+.pp-odo + .pp-liczba__aff{margin-left:.14em;}
+
+/* --- Kołowrotek cyfr -------------------------------------------------------
+   Każda cyfra to okno wysokości jednej cyfry, a w nim taśma z kolejnymi
+   wartościami (na dole cel, wyżej droga do niego). Start: taśma przesunięta w
+   górę o całą swoją długość, więc w oknie stoi 0; animacja sprowadza ją do 0,
+   czyli cyfry przesuwają się od góry do dołu. Wszystko na transformie. */
+.pp-odo{--pp-odo-h:1.06em;display:inline-flex;}
+.pp-odo__wrap{display:inline-flex;}
+.pp-odo__d{display:block;height:var(--pp-odo-h);overflow:hidden;}
+.pp-odo__strip{display:block;transform:translateY(calc(var(--pp-i,0) * var(--pp-odo-h) * -1));will-change:transform;}
+.pp-odo__strip > span{display:block;height:var(--pp-odo-h);line-height:var(--pp-odo-h);}
+.pp-odo.is-roll .pp-odo__strip{transition:transform 1.1s cubic-bezier(.2,.7,.2,1);transition-delay:var(--pp-delay,0ms);}
+
+@media (max-width:699px){
+  .pp-liczba{grid-template-columns:minmax(0,1fr);gap:var(--w-space-2);
+    padding-block:clamp(.75rem,3vw,1.25rem);}
+  .pp-liczba__num{justify-content:flex-start;font-size:clamp(3.25rem,15vw,6rem);}
+  .pp-liczba__label{max-width:none;}
+}
+@media (prefers-reduced-motion: reduce){
+  .pp-odo.is-roll .pp-odo__strip{transition:none;}
+}
+
+/* ===== 65 · HARMONOGRAM PROGRAMU: oś czasu (styl S1 „Edytorial") ===========
+   Przeniesione z warstwy 99 bez zmian mechaniki i wymiarów (spec §4, §16).
+   Razem z blokiem jedzie przycisk sterujący `.pp-ctrl__btn` (dawniej w bloku
+   karuzeli) – tutaj używają go strzałki osi. Pigułka stanu kamienia
+   (`.pp-ms__state`, `.pp-ms__warn`) stoi we fragmencie 00 jako klocek wspólny.
+   ===================================================================== */
+
+/* --- przycisk sterujący osi (44 px, kształt kitu) ------------------------- */
+.pp-ctrl__btn{min-width:44px;min-height:44px;width:44px;height:44px;padding:0;
+  display:inline-grid;place-items:center;border-radius:0;
+  border:1px solid var(--w-border-default);background:var(--w-surface-page);color:var(--w-text-primary);
+  transition:border-color var(--w-duration-base) var(--w-ease);}
+.pp-ctrl__btn:hover:not(:disabled){border-color:var(--w-gray-900);}
+.pp-ctrl__btn:disabled{color:var(--w-text-disabled);border-color:var(--w-border-subtle);cursor:not-allowed;}
+
+/* --- 8a. HARMONOGRAM PROGRAMU: oś czasu (styl S1 „Edytorial” z laboratorium)
+   Wdrożenie 12.09.2026 wyboru Mateusza z `lab/harmonogram.html`: układ S1
+   przetłumaczony na język makiety (tokeny --w-*, szarość, radius 0, typografia
+   kitu, ikony ze sprite'u, zero bibliotek). JEDNA ZMIANA WOBEC LABORATORIUM:
+   sekcja NIGDY nie wchodzi w drogę przewijaniu strony – etap zmieniają tylko
+   strzałki, węzły osi, klawiatura i przesunięcie palcem. Żadnego przypinania
+   ani przechwytywania kółka.
+
+   Słownik pp-os-* jest własny; z sąsiedztwa pożyczamy tylko gotowe elementy
+   kitu (.pp-ctrl__btn, .wf-ph, .wf-caption) i pigułkę stanu kamienia
+   (.pp-ms__state, .pp-ms__warn) wspólną z osiami w „Etapach prac”. Stan nigdy
+   samym tonem: ikona + etykieta + kształt obrysu. Ruch: tylko opacity
+   i transform, wszystko gaśnie przy reduced motion (§16). */
+
+.pp-os{--pp-os-rw:100%;--pp-os-line:30px;
+  margin-top:clamp(1.25rem,2.5vw,2rem);display:flex;flex-direction:column;
+  gap:clamp(1.25rem,2.5vw,2.25rem);}
+.pp-os:focus-visible{outline:2px solid var(--w-focus-ring);outline-offset:6px;}
+
+/* --- licznik „n / 11” ------------------------------------------------------ */
+.pp-os__head{display:flex;align-items:baseline;justify-content:flex-end;}
+.pp-os__counter{margin:0;font-size:0.8125rem;letter-spacing:.08em;
+  font-variant-numeric:tabular-nums;color:var(--w-text-secondary);white-space:nowrap;}
+.pp-os__counter b{font-weight:var(--w-weight-semibold);color:var(--w-text-primary);}
+
+/* --- treść etapu: data + opis po lewej, makieta zdjęcia po prawej --------- */
+/* Zdjęcie spina oba wiersze i zwykle jest wyższe niż tekst. Dwa równe wiersze
+   plus data dosunięta do dołu pierwszego, a etap do góry drugiego, ustawiają
+   parę data+opis w pionie na wysokości zdjęcia – tak jak w S1. */
+.pp-os__body{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);
+  grid-template-rows:minmax(0,1fr) minmax(0,1fr);
+  grid-template-areas:"date photo" "slide photo";
+  column-gap:clamp(2rem,4vw,4rem);row-gap:clamp(1rem,2.5vw,1.5rem);}
+
+.pp-os__date{grid-area:date;align-self:end;display:flex;flex-direction:column;
+  align-items:flex-start;gap:var(--w-space-3);min-width:0;}
+.pp-os__term{font-size:0.75rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--w-text-secondary);border-top:1px solid var(--w-gray-900);
+  padding-top:var(--w-space-2);min-width:min(18rem,100%);}
+.pp-os__term:empty{display:none;}
+.pp-os__year{position:relative;display:block;min-width:0;
+  font-size:clamp(3.5rem,8vw,7rem);line-height:0.9;font-weight:var(--w-weight-medium);
+  letter-spacing:-0.03em;font-variant-numeric:tabular-nums;color:var(--w-text-primary);}
+.pp-os__year b{display:block;font-weight:inherit;}
+.pp-os__year b.is-out{position:absolute;top:0;left:0;}
+
+/* Bez JS wszystkie etapy stoją w kolumnie rozdzielone cienką kreską. */
+.pp-os__slides{grid-area:slide;align-self:start;display:flex;flex-direction:column;min-width:0;}
+.pp-os__slide{display:flex;flex-direction:column;align-items:flex-start;
+  gap:var(--w-space-3);min-width:0;}
+.pp-os__slide + .pp-os__slide{margin-top:clamp(1.25rem,3vw,2rem);
+  border-top:1px solid var(--w-border-subtle);padding-top:clamp(1.25rem,3vw,2rem);}
+.pp-os__term2{margin:0;font-size:0.75rem;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--w-text-secondary);}
+.pp-os__name{font-size:clamp(1.375rem,2.4vw,2rem);line-height:1.12;
+  font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+.pp-os__desc{margin:0;font-size:1.0625rem;line-height:1.55;max-width:32em;
+  color:var(--w-text-secondary);}
+/* Odstępy w etapie trzyma `gap`, pigułka nie dokłada własnego marginesu. */
+.pp-os__slide .pp-ms__state{margin-top:0;}
+/* „następny krok” niesie grubszy obrys pigułki, nie sam ton. */
+.pp-os__slide[data-next="true"] .pp-ms__state{border-style:solid;border-width:2px;
+  border-color:var(--w-gray-900);color:var(--w-text-primary);
+  font-weight:var(--w-weight-semibold);padding:4px 10px;}
+
+/* Z JS widać jeden etap; wchodzący wjeżdża z dołu (klasę zdejmuje skrypt). */
+.pp-os.is-ready .pp-os__term2{display:none;}
+.pp-os.is-ready .pp-os__slides{display:block;}
+.pp-os.is-ready .pp-os__slide{display:none;}
+.pp-os.is-ready .pp-os__slide + .pp-os__slide{margin-top:0;border-top:0;padding-top:0;}
+.pp-os.is-ready .pp-os__slide.is-active{display:flex;
+  transition:opacity var(--w-duration-slow) var(--w-ease),transform var(--w-duration-slow) var(--w-ease);}
+.pp-os.is-ready .pp-os__slide.is-active.is-enter{opacity:0;transform:translateY(14px);transition:none;}
+
+/* Makieta zdjęcia: kreska-łodyga, podpis, ramka 4:5 (S1). */
+.pp-os__photo{grid-area:photo;justify-self:end;align-self:start;margin:0;
+  display:flex;flex-direction:column;width:100%;min-width:0;max-width:19rem;
+  gap:var(--w-space-2);}
+.pp-os__photo::before{content:"";order:1;align-self:center;width:1px;height:2.5rem;
+  background:var(--w-border-strong);}
+.pp-os__photo .wf-caption{order:2;text-align:center;}
+.pp-os__ph{order:3;width:100%;aspect-ratio:4/5;border-radius:0;display:grid;place-items:center;}
+
+/* --- oś: linijka, węzły wg daty, lata, znacznik „teraz” ------------------- */
+.pp-os__axis{display:flex;align-items:flex-start;gap:clamp(0.35rem,1vw,1rem);}
+.pp-os__prev,.pp-os__next{flex:none;margin-top:8px;}
+.pp-os__track{position:relative;flex:1 1 auto;min-width:0;height:88px;}
+.pp-os__rail{position:relative;width:var(--pp-os-rw);height:100%;}
+
+.pp-os__line{position:absolute;top:var(--pp-os-line);left:0;width:100%;height:1px;
+  background:var(--w-border-strong);}
+.pp-os__line::after{content:"";position:absolute;top:1px;left:0;width:100%;height:6px;
+  background-image:repeating-linear-gradient(to right,
+    var(--w-border-strong) 0 1px,transparent 1px 2.5%);}
+.pp-os__fill{position:absolute;top:var(--pp-os-line);left:0;width:var(--a,0%);height:2px;
+  background:var(--w-gray-900);transition:width 420ms var(--w-ease);}
+
+.pp-os__nodes{position:absolute;inset:0;margin:0;padding:0;list-style:none;}
+.pp-os__nodes > li{position:static;}
+.pp-os__node{position:absolute;top:0;left:var(--n,0%);transform:translateX(-50%);
+  width:44px;height:44px;padding:0;border:0;background:none;color:inherit;font:inherit;
+  display:flex;justify-content:center;align-items:flex-start;cursor:pointer;}
+.pp-os__tick{display:block;margin-top:22px;width:1px;height:14px;
+  background:var(--w-border-strong);}
+.pp-os__node:hover .pp-os__tick{background:var(--w-gray-900);}
+.pp-os__node[aria-current="step"] .pp-os__tick{width:2px;height:18px;background:var(--w-gray-900);}
+.pp-os__label{position:absolute;top:46px;left:50%;transform:translateX(-50%);display:none;
+  padding:2px 8px;font-size:0.6875rem;letter-spacing:.05em;text-transform:uppercase;
+  white-space:nowrap;background:var(--w-gray-900);color:var(--w-text-inverse);}
+.pp-os__node[aria-current="step"] .pp-os__label{display:block;}
+
+.pp-os__years{position:absolute;bottom:0;left:0;width:100%;height:1.2em;
+  margin:0;padding:0;list-style:none;}
+.pp-os__years > li{position:absolute;top:0;left:var(--l,0%);width:var(--w,0%);
+  text-align:center;font-size:0.75rem;letter-spacing:.08em;text-transform:uppercase;
+  font-variant-numeric:tabular-nums;color:var(--w-text-secondary);}
+.pp-os__years > li::before{content:"";position:absolute;top:-14px;left:0;width:1px;height:11px;
+  background:var(--w-border-default);}
+
+/* Znacznik „jesteśmy tutaj”: dłuższa szara kreska i wyciszony podpis nad
+   linią. Bez animacji, bez powiększenia – pokazujemy, nie promujemy. */
+.pp-os__now{position:absolute;top:2px;left:var(--n,0%);transform:translateX(-50%);
+  display:flex;flex-direction:column-reverse;align-items:center;gap:4px;
+  pointer-events:none;z-index:2;}
+.pp-os__now i{display:block;width:1px;height:22px;background:var(--w-border-strong);}
+.pp-os__now small{font-size:0.6875rem;line-height:1.2;color:var(--w-text-secondary);
+  white-space:nowrap;background:var(--w-surface-page);padding:0 4px;}
+
+@media (max-width:899px){
+  .pp-os{--pp-os-rw:660px;--pp-os-line:22px;}
+  .pp-os__body{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto auto;
+    grid-template-areas:"date" "slide" "photo";row-gap:clamp(1rem,4vw,1.5rem);}
+  .pp-os__date{align-self:start;}
+  .pp-os__year{font-size:clamp(2.75rem,13vw,4rem);}
+  .pp-os__photo{justify-self:stretch;max-width:none;}
+  .pp-os__photo::before{display:none;}
+  .pp-os__photo .wf-caption{text-align:left;}
+  .pp-os__ph{aspect-ratio:16/9;}
+  /* Linijka przewijana w poziomie; przyciski zostają na miejscu, a wcięcie
+     22 px daje miejsce skrajnym węzłom (0 % i 100 %). */
+  .pp-os__track{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;
+    padding-inline:22px;height:80px;}
+  .pp-os__track::-webkit-scrollbar{display:none;}
+  .pp-os__tick{margin-top:14px;}
+  .pp-os__label{top:38px;}
+  .pp-os__years > li::before{top:-12px;height:9px;}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .pp-ctrl__btn{transition:none;}
+  /* Harmonogram: podmiana etapu natychmiastowa, oś bez przejścia. */
+  .pp-os__slide,.pp-os__fill,.pp-os__year b,.pp-os__tick{transition:none;}
+  .pp-os__year b{opacity:1;transform:none;}
+  .pp-os__year b.is-out{opacity:0;}
+}
+
+/* ===== 70 · RZETELNOŚĆ: cytat + trzy kafelki zasad =========================
+   Przeniesione z warstwy 99 bez zmian (spec §2, wiersz 70). Cudzysłowy dokłada
+   CSS, więc tekst w HTML zostaje co do znaku. ========================== */
+.pp-quote{margin:clamp(1.5rem,3vw,2.25rem) 0 0;max-width:900px;
+  border-left:2px solid var(--w-gray-900);padding-left:clamp(1rem,3vw,2rem);}
+.pp-quote p{margin:0;font-size:clamp(1.25rem,2.4vw,1.75rem);line-height:1.35;
+  font-weight:var(--w-weight-medium);letter-spacing:-0.01em;color:var(--w-text-primary);}
+.pp-quote p::before{content:"\201E";}
+.pp-quote p::after{content:"\201D";}
+.pp-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:var(--w-space-5);margin:clamp(1.5rem,3vw,2.25rem) 0 0;padding:0;list-style:none;}
+.pp-tile-rule{display:flex;flex-direction:column;gap:var(--w-space-3);height:100%;
+  border:1px solid var(--w-border-default);background:var(--w-surface-page);
+  padding:clamp(1.25rem,2.2vw,1.75rem);
+  transition:border-color var(--w-duration-base) var(--w-ease);}
+.pp-tile-rule:hover{border-color:var(--w-gray-900);}
+.pp-tile-rule p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
+
+/* Stopniowanie wejścia kafelków (80 ms). */
+.pp-tiles > li:nth-child(2){transition-delay:.08s;}
+.pp-tiles > li:nth-child(3){transition-delay:.16s;}
+
+@media (prefers-reduced-motion: reduce){
+  .pp-tile-rule{transition:none;}
+  .pp-tiles > li{transition-delay:0s;}
+}
+
+/* ===== 75 · ZADAJ PYTANIE: formularz demonstracyjny + zdjęcie zespołu ======
+   Przeniesione z warstwy 99 bez zmian (spec §2, wiersz 75). ============= */
+.pp-ask{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:clamp(1.5rem,4vw,3.5rem);align-items:start;margin-top:clamp(1.5rem,3vw,2.25rem);}
+@media (max-width:899px){ .pp-ask{grid-template-columns:minmax(0,1fr);} }
+.pp-form{display:flex;flex-direction:column;gap:var(--w-space-4);border:1px solid var(--w-border-default);
+  background:var(--w-surface-page);padding:clamp(1.25rem,2.4vw,1.75rem);}
+.pp-form form{display:flex;flex-direction:column;gap:var(--w-space-4);}
+.pp-check{display:flex;gap:var(--w-space-3);align-items:flex-start;font-size:0.875rem;
+  color:var(--w-text-secondary);padding-block:var(--w-space-2);cursor:pointer;min-height:44px;}
+.pp-check .wf-checkbox{flex:none;margin-top:2px;}
+.pp-form .c5-btn{align-self:flex-start;}
+.pp-msg{margin:0;font-size:0.875rem;color:var(--w-text-primary);
+  border:1px solid var(--w-gray-900);padding:var(--w-space-3) var(--w-space-4);
+  display:flex;gap:var(--w-space-3);align-items:flex-start;}
+.pp-msg .wf-icon{flex:none;margin-top:2px;}
+.pp-askviz{display:flex;flex-direction:column;gap:var(--w-space-3);margin:0;}
+.pp-askviz .wf-ph{width:100%;aspect-ratio:4/3;border-radius:0;}
+
+/* ===== 80 · Metodologia – ta sama scena, sześć tematów (spec §12) ==========
+   Reguły sceny siedzą w 40-zalozenia.css; tutaj tylko to, czym Metodologia
+   różni się od Założeń: lead pod h2 w przyklejonej kolumnie (musi zostawić
+   miejsce najdłuższemu tematowi) i kadrowanie sześciu zdjęć panelu. */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  /* Nagłówek z leadem jest wyższy niż w Założeniach – w scenie lead schodzi do
+     skali małego tekstu, żeby temat 01 (najdłuższy na stronie) zmieścił się
+     pod nim nad paskiem progresu. */
+  .cx-js .pp-scene-sec--lead .pp-scene__head{gap:var(--w-space-4);}
+  .cx-js .pp-scene-sec--lead .pp-scene__lead{font-size:0.875rem;line-height:1.5;max-width:486px;gap:var(--w-space-2);}
+  .cx-js .pp-scene-sec--lead .pp-scene__flow > .pp-step .pp-step__body{font-size:0.875rem;}
+}
+@media (min-width:900px) and (prefers-reduced-motion: no-preference) and (max-height:900px){
+  /* Niższe okna: nagłówek z leadem musi zejść o kilkadziesiąt pikseli, żeby
+     temat 01 (najdłuższy na stronie) zaczynał się pod nim, a nie na nim.
+     Lead dostaje pełną szerokość kolumny (mniej wierszy) i ciaśniejszą
+     interlinię, a odstępy w nagłówku maleją. */
+  .cx-js .pp-scene-sec--lead .pp-scene__head{gap:var(--w-space-3);padding-bottom:var(--w-space-2);}
+  .cx-js .pp-scene-sec--lead .pp-scene__lead{font-size:0.8125rem;line-height:1.45;max-width:520px;gap:var(--w-space-1);}
+  .cx-js .pp-scene-sec--lead .pp-scene__flow > .pp-step .pp-step__body{font-size:0.8125rem;line-height:1.5;}
+  .cx-js .pp-scene-sec--lead .pp-scene__flow > .pp-step .pp-step__body .wf-list{gap:var(--w-space-1);}
+}
+
+@media (min-width:900px) and (prefers-reduced-motion: no-preference) and (max-height:760px){
+  /* Laptop 1280×720: ostatni stopień ścisku – mniejszy h2 i lead, ciaśniejszy
+     pasek progresu i prześwit doku. Niżej scena i tak nie ma sensu, ale i tu
+     temat 01 musi zaczynać się pod nagłówkiem. */
+  .cx-js .pp-scene-sec--lead .pp-scene{--pp-progh:28px;--pp-dock:52px;}
+  .cx-js .pp-scene-sec--lead .pp-scene__head{gap:var(--w-space-2);}
+  .cx-js .pp-scene-sec--lead .pp-scene__head .c5-h2{font-size:1.375rem;}
+  .cx-js .pp-scene-sec--lead .pp-scene__head .c5-kicker{font-size:0.8125rem;}
+  .cx-js .pp-scene-sec--lead .pp-scene__lead{font-size:0.75rem;line-height:1.4;}
+  .cx-js .pp-scene-sec--lead .pp-scene__flow > .pp-step .pp-step__body{line-height:1.45;}
+}
+
+/* --- Kadrowanie zdjęć sceny „Metodologia" ---------------------------------- */
+#metodologia .pp-scene__bg[data-ppbg="1"]{object-position:50% 50%;}  /* rzędy w niskim słońcu */
+#metodologia .pp-scene__bg[data-ppbg="2"]{object-position:50% 45%;}  /* gleba w dłoniach */
+#metodologia .pp-scene__bg[data-ppbg="3"]{object-position:50% 60%;}  /* siewka w glebie */
+#metodologia .pp-scene__bg[data-ppbg="4"]{object-position:50% 55%;}  /* rzędy warzyw liściowych */
+#metodologia .pp-scene__bg[data-ppbg="5"]{object-position:50% 52%;}  /* rzędy upraw o zachodzie */
+#metodologia .pp-scene__bg[data-ppbg="6"]{object-position:50% 48%;}  /* winnica na wzgórzach */
+
+/* ===== 85 · Etapy prac – wspólna oś Gantta z filtrami (spec §13) ===========
+   Jeden widok zamiast sześciu osi: wiersz = gospodarstwo (lepka kolumna nazw),
+   kolumny = miesiące XI 2025 → XII 2026 plus zbiorcze 2027 i 2028, kafle =
+   zdarzenia (termin + nazwa) rozstawione w kolumnie swojego terminu; zdarzenia
+   o zachodzących terminach idą na kolejne pasy tego samego wiersza.
+   Materiał niesie stan, ale NIGDY sam: kafel ma ikonę + ton + pełną etykietę
+   stanu w karcie opisu. Wykres buduje 85-etapy.js z sześciu osi `.pp-tl`,
+   które zostają w DOM-ie jako wersja bez JS. ============================== */
+.pp-gt{position:relative;margin-top:clamp(1.25rem,2.5vw,2rem);}
+
+/* --- filtry gospodarstw (zamiast tabów c5-ways, §11) ---------------------- */
+.pp-gt__filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:var(--w-space-4);}
+.pp-gt__chip{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 16px;
+  font:inherit;font-size:0.875rem;line-height:1.2;text-align:left;cursor:pointer;
+  border:1px solid var(--w-border-default);border-radius:0;
+  background:var(--w-surface-page);color:var(--w-text-primary);
+  transition:background var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);}
+.pp-gt__chip:hover{border-color:var(--w-gray-900);}
+.pp-gt__chip[aria-pressed="true"]{background:var(--w-gray-900);border-color:var(--w-gray-900);color:var(--w-text-inverse);}
+.pp-gt__chip .wf-icon{width:16px;height:16px;opacity:.7;}
+
+/* --- kontener wykresu ----------------------------------------------------- */
+.pp-gt__scroll{position:relative;overflow-x:auto;overscroll-behavior-x:contain;
+  border:1px solid var(--w-border-default);background:var(--w-surface-page);}
+.pp-gt__scroll:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:-2px;}
+.pp-gt__grid{display:grid;
+  grid-template-columns:var(--pp-name,16rem) repeat(var(--pp-cols,16),minmax(5.5rem,1fr));
+  grid-auto-rows:minmax(52px,auto);align-items:stretch;}
+
+/* nagłówki kolumn – lepkie u góry wewnątrz kontenera */
+.pp-gt__h{grid-row:1;position:sticky;top:0;z-index:2;
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:1px;
+  padding:8px 6px;text-align:center;background:var(--w-surface-page);
+  border-bottom:1px solid var(--w-border-strong);}
+.pp-gt__h--corner{grid-column:1;left:0;z-index:4;align-items:flex-start;text-align:left;
+  padding-inline:var(--w-space-4);border-right:1px solid var(--w-border-strong);}
+.pp-gt__m{font-size:0.8125rem;font-weight:var(--w-weight-medium);letter-spacing:.04em;}
+.pp-gt__y{font-size:0.625rem;letter-spacing:.04em;color:var(--w-text-secondary);}
+.pp-gt__corner-t{font-size:0.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--w-text-secondary);}
+.pp-gt__h--now .pp-gt__m{color:var(--w-text-primary);}
+.pp-gt__nowlab{font-size:0.5625rem;line-height:1.1;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--w-text-secondary);}
+
+/* linie kolumn i pionowa linia „jesteśmy tutaj" */
+.pp-gt__guide{grid-row:2 / -1;z-index:0;pointer-events:none;border-right:1px solid var(--w-border-subtle);}
+.pp-gt__guide--now{border-left:2px dashed var(--w-gray-900);opacity:.45;}
+
+/* pas wiersza + lepka kolumna nazw */
+.pp-gt__band{grid-column:1 / -1;z-index:0;border-bottom:1px solid var(--w-border-default);
+  transition:background var(--w-duration-base) var(--w-ease);}
+.pp-gt__name{grid-column:1;position:sticky;left:0;z-index:3;
+  display:flex;flex-direction:column;justify-content:center;gap:6px;
+  padding:var(--w-space-3) var(--w-space-4);background:var(--w-surface-page);
+  border-right:1px solid var(--w-border-strong);border-bottom:1px solid var(--w-border-default);
+  transition:background var(--w-duration-base) var(--w-ease);}
+.pp-gt__band.is-target,.pp-gt__name.is-target{background:var(--w-gray-100);}
+.pp-gt__farm{font-size:0.9375rem;font-weight:var(--w-weight-medium);line-height:1.25;letter-spacing:-0.01em;}
+.pp-gt__cropchip{display:inline-flex;align-items:center;gap:5px;width:max-content;
+  border:1px solid var(--w-gray-900);padding:1px 8px;
+  font-size:0.6875rem;letter-spacing:.04em;text-transform:uppercase;}
+.pp-gt__cropchip .wf-icon{width:12px;height:12px;}
+
+/* --- kafle zdarzeń -------------------------------------------------------- */
+.pp-gt__tile{position:relative;z-index:1;display:flex;flex-direction:column;justify-content:center;gap:2px;
+  margin:4px 3px;padding:5px 8px;min-height:44px;min-width:0;font:inherit;text-align:left;
+  border:1px solid var(--w-border-strong);border-radius:0;background:var(--w-surface-page);
+  color:var(--w-text-primary);cursor:pointer;
+  transition:box-shadow var(--w-duration-base) var(--w-ease);}
+.pp-gt__top{display:flex;align-items:center;gap:4px;min-width:0;}
+.pp-gt__term{font-size:0.625rem;letter-spacing:.04em;text-transform:uppercase;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.pp-gt__ev{font-size:0.75rem;font-weight:var(--w-weight-medium);line-height:1.2;
+  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;}
+.pp-gt__tile .wf-icon{width:12px;height:12px;flex:none;}
+/* stan: materiał + ikona (ton nigdy sam) */
+.pp-gt__tile[data-state="done"]{background:var(--w-gray-900);border-color:var(--w-gray-900);color:var(--w-text-inverse);}
+.pp-gt__tile[data-state="doing"]{border-width:2px;border-color:var(--w-gray-900);}
+.pp-gt__tile[data-state="todo"]{border-style:dotted;color:var(--w-text-secondary);}
+.pp-gt__tile[data-state="na"]{border-style:dashed;border-color:var(--w-border-subtle);
+  background:transparent;color:var(--w-text-disabled);}
+.pp-gt__pulse{position:absolute;top:-5px;left:-5px;width:9px;height:9px;background:var(--w-gray-900);}
+@keyframes pp-gt-pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.3;transform:scale(.65);}}
+.pp-gt__tile[data-state="doing"] .pp-gt__pulse{animation:pp-gt-pulse 1.8s var(--w-ease) infinite;}
+.pp-gt__tile:hover{box-shadow:0 0 0 2px var(--w-gray-900);}
+.pp-gt__tile:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:2px;}
+.pp-gt__tile.is-pinned{box-shadow:0 0 0 2px var(--w-gray-900);}
+
+/* --- karta opisu: dymek przy kaflu i wersja przypięta pod wykresem -------- */
+.pp-gt__bubble{position:absolute;z-index:20;width:min(26rem,100%);
+  background:var(--w-surface-page);border:1px solid var(--w-gray-900);
+  box-shadow:0 18px 40px rgb(0 0 0 / .14);padding:var(--w-space-4);pointer-events:none;}
+.pp-gt__pin{margin-top:var(--w-space-4);}
+.pp-gt__pinned{position:relative;border:1px solid var(--w-gray-900);background:var(--w-surface-page);
+  padding:var(--w-space-4) var(--w-space-5);padding-right:calc(var(--w-space-5) + 44px);}
+.pp-gt__pinclose{position:absolute;top:6px;right:6px;display:grid;place-items:center;
+  width:44px;height:44px;padding:0;border:1px solid var(--w-border-default);border-radius:0;
+  background:var(--w-surface-page);color:var(--w-text-primary);cursor:pointer;}
+.pp-gt__pinclose:hover{background:var(--w-gray-100);}
+.pp-gt__card{display:flex;flex-direction:column;gap:var(--w-space-2);}
+.pp-gt__card-farm{font-size:0.75rem;letter-spacing:.04em;text-transform:uppercase;color:var(--w-text-secondary);}
+/* klon kamienia milowego gubi chrome osi – ramkę i odstęp daje karta */
+.pp-gt__card .pp-ms{width:auto;flex:0 1 auto;border:0;padding:0;background:transparent;}
+.pp-gt__card .pp-ms::before{display:none;}
+.pp-gt__card .pp-rel{margin-top:var(--w-space-3);}
+
+@media (max-width:899px){
+  /* dymek nie ma sensu na dotyku – opis ląduje w karcie pod wykresem */
+  .pp-gt__bubble{display:none;}
+}
+@media (max-width:699px){
+  .pp-gt__grid{--pp-name:11rem;}
+  .pp-gt__name{padding:var(--w-space-3);}
+}
+@media (prefers-reduced-motion: reduce){
+  .pp-gt__tile,.pp-gt__band,.pp-gt__name,.pp-gt__chip,.pp-ms,.pp-rels .pp-rel{transition:none;}
+  .pp-gt__tile[data-state="doing"] .pp-gt__pulse{animation:none;}
+}
+
+/* ===== 85b · Oś kamieni milowych i sloty relacji (przeniesione z warstwy
+   legacy 11–12.09). Sześć osi stoi pod wykresem jako wersja bez JS i jako
+   źródło treści kafli; z JS kontener jest `hidden`. Klony kamieni w karcie
+   opisu korzystają z tej samej typografii. ============================ */
+
+/* --- 8. OŚ KAMIENI MILOWYCH („Etapy prac”, sześć gospodarstw) -------------- */
+/* Od 12.09.2026 obsługuje WYŁĄCZNIE sześć osi w „Etapach prac” – harmonogram
+   programu ma własny słownik pp-os-* (blok 8a niżej).
+   Mobile: lista pionowa z torem po lewej. Od 900 px: przewijany w poziomie rząd
+   grup rocznych z ciągłym torem, wypełnionym do pinezki „jesteśmy tutaj”.
+   Stan kamienia niesie ikona + etykieta + ton, nigdy sam kolor. */
+.pp-tl{margin-top:clamp(1.25rem,2.5vw,2rem);}
+.pp-tl__scroll{min-width:0;}
+.pp-tl__scroll:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:2px;}
+.pp-tl__track{position:relative;display:flex;flex-direction:column;gap:clamp(2rem,4vw,3rem);
+  margin:0;padding:0 0 0 1.75rem;list-style:none;}
+.pp-tl__track::before,.pp-tl__track::after{content:"";position:absolute;pointer-events:none;}
+.pp-tl__track::before{left:8px;top:0;bottom:0;width:1px;background:var(--w-border-strong);}
+.pp-tl__track::after{left:7px;top:0;width:3px;height:var(--pp-tl-fill,0px);background:var(--w-gray-900);}
+.pp-tl__year{display:flex;flex-direction:column;gap:var(--w-space-4);min-width:0;}
+.pp-tl__yearname{font-size:1.25rem;font-weight:var(--w-weight-medium);letter-spacing:.02em;
+  border-bottom:1px solid var(--w-border-default);padding-bottom:var(--w-space-2);}
+.pp-tl__items{display:flex;flex-direction:column;gap:var(--w-space-4);margin:0;padding:0;list-style:none;}
+.pp-ms{position:relative;display:flex;flex-direction:column;gap:var(--w-space-2);align-items:flex-start;
+  border:1px solid var(--w-border-default);background:var(--w-surface-page);
+  padding:var(--w-space-4) var(--w-space-5);
+  transition:border-color var(--w-duration-base) var(--w-ease);}
+.pp-ms:hover{border-color:var(--w-border-strong);}
+.pp-ms--next{border-width:2px;border-color:var(--w-gray-900);}
+.pp-ms::before{content:"";position:absolute;left:-25px;top:22px;width:11px;height:11px;
+  background:var(--w-surface-page);border:1px solid var(--w-gray-900);}
+.pp-ms[data-state="done"]::before{background:var(--w-gray-900);}
+.pp-ms[data-state="na"]::before{border-style:dotted;}
+.pp-ms__term{font-size:0.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--w-text-secondary);}
+.pp-ms__name{font-size:1.0625rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+.pp-ms p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
+/* .pp-ms__state (+ --doing/--todo/--na) i .pp-ms__warn -> moved to
+   00-base.css (pigułka stanu jest wspólna: harmonogram, wyniki, etapy). */
+.pp-tl__now{display:flex;align-items:center;gap:var(--w-space-3);
+  border-top:2px solid var(--w-gray-900);border-bottom:2px solid var(--w-gray-900);
+  padding-block:var(--w-space-3);font-size:0.875rem;font-weight:var(--w-weight-semibold);
+  letter-spacing:.02em;text-transform:uppercase;background:var(--w-surface-page);}
+/* Bez JS oś jest pionową listą na każdej szerokości: poziomy rząd grup
+   rocznych wymagał pomiarów ze skryptu, którego już nie ma – interakcję
+   przejął wykres wyżej. Strzałki lat zostają w DOM-ie (copy), ale nie
+   pokazujemy ich, bo nic by nie robiły. */
+.pp-tl__ctrl{display:none;}
+
+/* --- 13. SLOTY RELACJI WIDEO ---------------------------------------------- */
+.pp-rel{display:flex;gap:var(--w-space-3);align-items:flex-start;width:100%;
+  border:1px dashed var(--w-border-strong);padding:var(--w-space-3);margin-top:var(--w-space-2);
+  background:var(--w-surface-page);}
+.pp-rel .wf-ph{flex:none;width:6.5rem;aspect-ratio:16/9;border-radius:0;display:grid;place-items:center;}
+.pp-rel__body{display:flex;flex-direction:column;gap:3px;min-width:0;}
+.pp-rel__kind{font-size:0.75rem;letter-spacing:.04em;text-transform:uppercase;color:var(--w-text-secondary);}
+.pp-rel__title{font-size:0.9375rem;font-weight:var(--w-weight-medium);}
+.pp-rel__date{font-size:0.8125rem;color:var(--w-text-secondary);}
+.pp-rels{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--w-space-4);
+  margin:clamp(1.25rem,2.5vw,2rem) 0 0;padding:0;list-style:none;}
+.pp-rels .pp-rel{margin-top:0;border-style:solid;border-color:var(--w-border-default);
+  transition:border-color var(--w-duration-base) var(--w-ease);}
+.pp-rels .pp-rel:hover{border-color:var(--w-gray-900);}
+
+/* reduced motion – legacy rule kept from 99 (14.09) */
+@media (prefers-reduced-motion: reduce){
+  .pp-ms,.pp-rels .pp-rel{transition:none;}
+}
+
+/* ===== 90 · WYNIKI: taby lat, filtry, wykresy, wiersze raportów ============
+   Przeniesione z warstwy 99 bez zmian treści i mechaniki (spec §14). Taby lat
+   `c5-ways` zostają jedynym elementem przyklejonym do górnej krawędzi na całej
+   stronie; po zdjęciu subnawigacji `--cx-subnav-h` wynosi 0, więc pasek klei
+   się do samej góry, a bloki lat mają zapas na jego wysokość.
+   ⚠️ `.pp-ways` i `.pp-varname` przyjechały z bloku 12/11 warstwy 99 – używa
+   ich także sekcja „Etapy prac" (C), dlatego stoją tu, a nie w 99. ======= */
+
+/* Bloki pod lepkim paskiem tabów potrzebują zapasu na jego wysokość. */
+[data-variant-block]{scroll-margin-top:calc(var(--cx-subnav-h) + var(--c5-tabs-h, 92px) + var(--w-space-4));}
+
+/* --- pasek tabów: cztery lata (i sześć gospodarstw w „Etapach prac") ------
+   c5-ways jest siatką 1fr 1fr – przy sześciu pozycjach pasek urósłby do trzech
+   rzędów i zjadł pół ekranu. Tutaj jeden przewijany rząd kompaktowych pigułek;
+   przyklejanie i tony zostają z c5.css (ciemna = wybrana). */
+.pp-ways{display:flex;flex-wrap:nowrap;gap:8px;overflow-x:auto;scrollbar-width:none;}
+.pp-ways::-webkit-scrollbar{display:none;}
+.pp-ways .c5-way{flex:0 0 auto;min-height:44px;gap:var(--w-space-3);padding:10px 16px;font-size:0.9375rem;}
+.pp-ways .c5-way__ico{width:32px;height:32px;}
+.pp-ways .c5-way .wf-icon{width:18px;height:18px;}
+.pp-ways__sub{display:block;font-size:0.75rem;letter-spacing:.04em;text-transform:uppercase;opacity:.7;margin-top:2px;}
+.c5-band .c5-ways{background:var(--w-surface-subtle);}
+
+/* Nazwy gospodarstw i lat są długie – skala c5-variant__name (do 3 rem) jest
+   dla nich za duża, więc bloki poza profilami dostają mniejszy stopień. */
+.pp-varname{font-size:clamp(1.5rem,2.6vw,2rem);}
+
+/* --- filtry, tabele, wykresy, raporty ------------------------------------- */
+.pp-filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:var(--w-space-4);
+  margin-top:clamp(1.25rem,2.5vw,2rem);border:1px solid var(--w-border-default);
+  background:var(--w-surface-page);padding:clamp(1rem,2.2vw,1.5rem);}
+.pp-selects{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:var(--w-space-4);
+  margin-top:clamp(1.25rem,2.5vw,2rem);max-width:900px;}
+/* position:relative – kontener przewijany musi być blokiem odniesienia dla
+   pozycjonowanych absolutnie .wf-sr-only w komórkach tabeli; bez tego
+   uciekały one do .c5-variants{position:relative} i na 375 px rozpychały
+   stronę do 682 px, choć sama tabela przewijała się poprawnie. */
+.pp-scroll{position:relative;overflow-x:auto;}
+.pp-scroll .wf-table{min-width:680px;}
+.pp-scroll:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:2px;}
+.pp-empty{display:flex;gap:var(--w-space-3);align-items:flex-start;border:1px dashed var(--w-border-strong);
+  padding:clamp(1.25rem,2.4vw,1.75rem);color:var(--w-text-secondary);font-size:0.9375rem;
+  background:var(--w-surface-page);}
+.pp-empty .wf-icon{flex:none;margin-top:2px;}
+.pp-charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--w-space-5);
+  margin-top:clamp(1.25rem,2.5vw,2rem);}
+.pp-chart{margin:0;display:flex;flex-direction:column;gap:var(--w-space-3);
+  border:1px solid var(--w-border-default);background:var(--w-surface-page);padding:var(--w-space-4);
+  transition:border-color var(--w-duration-base) var(--w-ease);}
+.pp-chart:hover{border-color:var(--w-gray-900);}
+.pp-chart .wf-ph{width:100%;aspect-ratio:16/9;border-radius:0;display:grid;place-items:center;}
+.pp-chart figcaption{font-size:0.8125rem;color:var(--w-text-secondary);}
+.pp-reports{display:flex;flex-direction:column;margin:clamp(1.25rem,2.5vw,2rem) 0 0;padding:0;list-style:none;}
+.pp-report{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:var(--w-space-4);
+  align-items:center;padding-block:var(--w-space-4);border-top:1px solid var(--w-border-default);}
+.pp-reports > li:last-child .pp-report{border-bottom:1px solid var(--w-border-default);}
+.pp-report__name{font-size:1rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;margin:0;}
+.pp-report__meta{margin:0;font-size:0.875rem;color:var(--w-text-secondary);}
+/* Cel dotykowy 44 px – c5-btn--sm ma 43 px wysokości. */
+.pp-report .c5-btn{min-height:44px;}
+@media (max-width:899px){
+  .pp-report{grid-template-columns:minmax(0,1fr);align-items:start;gap:var(--w-space-2);}
+}
+/* Stan „niedostępne": osłabiony ton + obrys + atrybut disabled (nigdy sam ton) */
+.c5-btn[disabled]{background:var(--w-surface-subtle);color:var(--w-text-disabled);
+  border-color:var(--w-border-subtle);cursor:not-allowed;}
+
+@media (prefers-reduced-motion: reduce){
+  .pp-chart{transition:none;}
+}

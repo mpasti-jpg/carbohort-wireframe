@@ -1,0 +1,865 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Indeks content elementów – prototyp CarboHort</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="v7/tokens.css">
+<link rel="stylesheet" href="v7/wireframe.css">
+<style>
+  :root{--bg:#faf9f7;--fg:#1f1a13;--mut:#6b665e;--lin:#e2ded6;--gran:#a89b85;--acc:#6b4a2b;
+        --pole:#fff;--cien:rgba(31,26,19,.06)}
+  @media (prefers-color-scheme:dark){:root{--bg:#17150f;--fg:#ece7dd;--mut:#9a938a;--lin:#332e26;
+        --gran:#615748;--acc:#c99a6b;--pole:#1d1a14;--cien:rgba(0,0,0,.35)}}
+  *{box-sizing:border-box}
+  body{margin:0;padding:28px 20px 48px;background:var(--bg);color:var(--fg);
+    font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+  .wrap{max-width:1180px;margin:0 auto}
+  h1{font-size:22px;margin:0 0 4px;letter-spacing:-.01em}
+  .sub{color:var(--mut);font-size:13px;margin:0 0 20px}
+  a{color:var(--acc)}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--mut);
+    overflow-wrap:anywhere}
+  .box{border:1px solid var(--lin);border-left:3px solid var(--acc);border-radius:0 5px 5px 0;
+    padding:11px 14px;margin:0 0 18px;font-size:13.5px;
+    background:color-mix(in srgb,var(--acc) 5%,transparent)}
+  .grupy{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 22px}
+  .grupy a{display:inline-block;padding:3px 10px;border:1px solid var(--lin);border-radius:3px;
+    font-size:12.5px;text-decoration:none;background:var(--pole)}
+  .grupy a:hover{border-color:var(--gran)}
+  h2.gr{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);
+    margin:30px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--gran);scroll-margin-top:12px}
+  h2.gr span{text-transform:none;letter-spacing:0;font-weight:400;opacity:.8}
+  .ce{display:grid;grid-template-columns:minmax(0,40fr) minmax(0,60fr);gap:18px;
+    border:1px solid var(--lin);border-radius:6px;background:var(--pole);
+    padding:14px 16px;margin:0 0 14px;scroll-margin-top:12px}
+  .ce:target{border-color:var(--acc);box-shadow:0 0 0 2px color-mix(in srgb,var(--acc) 25%,transparent)}
+  .ce__info{min-width:0;overflow-wrap:break-word}
+  .ce__head{display:flex;align-items:baseline;flex-wrap:wrap;gap:8px;margin:0 0 8px}
+  .kod{font:600 19px/1.1 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--acc);
+    letter-spacing:-.01em}
+  .kod a{text-decoration:none;color:inherit}
+  .ce__nazwa{font-size:16px;margin:0;font-weight:600}
+  .gr-et{font-size:11.5px;color:var(--mut);border:1px solid var(--lin);border-radius:3px;
+    padding:1px 7px;white-space:nowrap}
+  .ce p{margin:0 0 7px;font-size:13.5px}
+  .ce .etk{color:var(--mut);font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;
+    display:block;margin:10px 0 3px}
+  .chips{display:flex;flex-wrap:wrap;gap:5px;margin:0 0 7px}
+  .chip{font-size:12px;padding:1px 8px;border:1px solid var(--lin);border-radius:10px;
+    background:color-mix(in srgb,var(--fg) 4%,transparent)}
+  ul.war,ul.wyst{margin:0;padding:0;list-style:none;font-size:13px}
+  ul.war li,ul.wyst li{padding:3px 0;border-bottom:1px dotted var(--lin)}
+  ul.war li:last-child,ul.wyst li:last-child{border-bottom:0}
+  .mut{color:var(--mut)}
+  .znacz{font-size:11px;color:var(--mut);border:1px solid var(--lin);border-radius:3px;
+    padding:0 5px;margin-left:4px;white-space:nowrap}
+  .btn{display:inline-block;margin:10px 0 2px;padding:5px 12px;border:1px solid var(--acc);
+    border-radius:3px;font-size:13px;text-decoration:none;color:var(--acc);background:transparent}
+  .btn:hover{background:color-mix(in srgb,var(--acc) 10%,transparent)}
+  .ce__shot{min-width:0}
+  .ce__shot img{display:block;width:100%;height:auto;border:1px solid var(--lin);border-radius:4px;
+    background:var(--bg)}
+  .pusty{display:flex;align-items:center;justify-content:center;min-height:180px;height:100%;
+    border:1px dashed var(--gran);border-radius:4px;color:var(--mut);font-size:13px;
+    text-align:center;padding:16px}
+  footer{margin-top:26px;padding-top:14px;border-top:1px solid var(--lin);
+    color:var(--mut);font-size:12.5px}
+  @media (max-width:900px){
+    body{padding:20px 16px 40px}
+    .ce{grid-template-columns:minmax(0,1fr)}
+    .ce__shot{order:-1}
+  }
+  @media print{.grupy{display:none}}
+</style>
+<div class="wrap">
+  <h1>Indeks content elementów – prototyp CarboHort</h1>
+  <p class="sub">53 CE · 152 wystąpień w 7 z 35 podstron katalogu
+  <code>v7</code> · rejestr zaktualizowany 2026-09-14<br>
+  Metadane pochodzą z <code>ce-rejestr.js</code>, wystąpienia ze znaczników
+  <code>data-ce</code> w kodzie stron.</p>
+
+  <div class="box">
+    <b>Co to jest CE?</b> Content element – powtarzalny blok treści makiety: hero, marquee,
+    scena przewijania, pas PRO, FAQ. Jeden kod może stać na wielu podstronach; wersja bazowa
+    to ta, która rozstrzyga o wyglądzie. Zrzuty robione są w oknie 1280×800 przy ograniczonym
+    ruchu, więc pokazują pierwszą klatkę sceny. Rejestr content elementów (CE) makiet CarboHort V5: metadane klocków. Wystąpienia wynikają ze znaczników data-ce w HTML stron – skanuje je _narzedzia/ce-indeks.py. Spec: 40-strona-www/koncepcja/content-elementy-spec.md.
+  </div>
+  
+  <nav class="grupy"><a href="#grupa-wspolne">Elementy wspólne serwisu (chrome.js)</a><a href="#grupa-nawigacja">Nawigacja po podstronie</a><a href="#grupa-otwarcie">Otwarcie strony</a><a href="#grupa-sceny">Sceny i bloki sterowane przewijaniem</a><a href="#grupa-przelaczniki">Taby, listy, karuzele, akordeony</a><a href="#grupa-karty">Karty, kolumny, panele</a><a href="#grupa-dane">Tabele, liczby, osie i formularze danych</a><a href="#grupa-noty-i-cta">Noty, boksy, pasy CTA, cytaty</a><a href="#grupa-nakladki">Nakładki: lightbox i pop-up</a></nav>
+
+  <h2 class="gr" id="grupa-wspolne">Elementy wspólne serwisu (chrome.js) <span>· 6 CE</span></h2>
+
+<article class="ce" id="CE-01">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-01">CE-01</a></span><h3 class="ce__nazwa">Nagłówek serwisu</h3><span class="gr-et">Elementy wspólne serwisu (chrome.js)</span></div>
+<p>Pasek nagłówka na całą szerokość: wordmark po lewej, główna nawigacja z trzema wyzwalaczami mega-menu na środku, przycisk CTA i przycisk menu mobilnego po prawej. Renderowany przez chrome.js ze znacznika cw-navbar.</p>
+<span class="etk">Mechanika</span><p>Wyzwalacze otwierają mega-menu (aria-expanded, przyciemnienie tła), pozycja bieżąca podświetlona z data-current; poniżej progu mobilnego pasek pokazuje przycisk otwierający nawigację mobilną. Obsługa w cw.js.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">wordmark</span><span class="chip">3 wyzwalacze mega-menu</span><span class="chip">przycisk CTA</span><span class="chip">przycisk menu mobilnego</span><span class="chip">przyciemnienie tła (cw-scrim)</span></div>
+<span class="etk">Kod</span><p><code>wireframe.css (wf-navbar) + cw.css (cw-nav, cw-brand)</code> · <code>chrome.js (szablon NAVBAR) + cw.js (mega-menu)</code></p>
+<span class="etk">Uwagi</span><p class="mut">Jeden plik dla całego serwisu: zmiana w menu = edycja chrome.js, nigdy podstron.</p>
+<a class="btn" href="v7/chrome.js">Wersja bazowa – chrome.js</a>
+<span class="etk">Występuje na</span><p>każda podstrona (chrome.js) – element wspólny, wstawiany do DOM przez <a href="v7/chrome.js"><code>chrome.js</code></a> (linia 137).</p>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-01.png"><img src="ce-indeks/img/CE-01.png" alt="Zrzut CE-01 – Nagłówek serwisu" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-02">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-02">CE-02</a></span><h3 class="ce__nazwa">Mega-menu</h3><span class="gr-et">Elementy wspólne serwisu (chrome.js)</span></div>
+<p>Panel rozwijany pod nagłówkiem: nagłówek panelu, kolumny odnośników albo boksy produktowe, stopka panelu. Trzy warianty układu zależnie od treści działu.</p>
+<span class="etk">Mechanika</span><p>Otwierany wyzwalaczem z nagłówka (data-open, aria-controls), zamykany klikiem poza panelem albo Escape; tło przyciemnione przez cw-scrim. Obsługa w cw.js.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">nagłówek panelu</span><span class="chip">kolumny odnośników albo boksy</span><span class="chip">stopka panelu</span></div>
+<span class="etk">Warianty</span><ul class="war"><li><code>szerokie</code> – cztery boksy produktowe (Produkty Carbohort)</li><li><code>domyslne</code> – trzy kolumny list (Rodzaje upraw)</li><li><code>waskie</code> – jedna lista (Programy i badania)</li></ul>
+<span class="etk">Kod</span><p><code>cw.css (cw-mega)</code> · <code>chrome.js (szablon NAVBAR) + cw.js</code></p>
+<span class="etk">Uwagi</span><p class="mut">CE zagnieżdżony w CE-01; ukryty do otwarcia.</p>
+<a class="btn" href="v7/chrome.js">Wersja bazowa – chrome.js</a>
+<span class="etk">Występuje na</span><p>każda podstrona (chrome.js) – element wspólny, wstawiany do DOM przez <a href="v7/chrome.js"><code>chrome.js</code></a> (linia 143).</p>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-02.png"><img src="ce-indeks/img/CE-02.png" alt="Zrzut CE-02 – Mega-menu" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-03">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-03">CE-03</a></span><h3 class="ce__nazwa">Nawigacja mobilna</h3><span class="gr-et">Elementy wspólne serwisu (chrome.js)</span></div>
+<p>Panel nawigacji rozwijany pod paskiem nagłówka na wąskich ekranach: lista działów z pozycjami drugiego poziomu i CTA.</p>
+<span class="etk">Mechanika</span><p>Otwierany przyciskiem menu z nagłówka, z przyciemnieniem tła; pozycja bieżąca podświetlona (data-nav na obu poziomach). Obsługa w cw.js.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">lista działów</span><span class="chip">pozycje drugiego poziomu</span><span class="chip">CTA</span></div>
+<span class="etk">Kod</span><p><code>cw.css (cw-mobilenav)</code> · <code>chrome.js (szablon NAVBAR) + cw.js</code></p>
+<span class="etk">Uwagi</span><p class="mut">Widoczna tylko poniżej progu mobilnego.</p>
+<a class="btn" href="v7/chrome.js">Wersja bazowa – chrome.js</a>
+<span class="etk">Występuje na</span><p>każda podstrona (chrome.js) – element wspólny, wstawiany do DOM przez <a href="v7/chrome.js"><code>chrome.js</code></a> (linia 242).</p>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-03.png"><img src="ce-indeks/img/CE-03.png" alt="Zrzut CE-03 – Nawigacja mobilna" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-04">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-04">CE-04</a></span><h3 class="ce__nazwa">Stopka serwisu</h3><span class="gr-et">Elementy wspólne serwisu (chrome.js)</span></div>
+<p>Stopka na całą szerokość: cztery kolumny (marka i opis, odnośniki działów, produkty, kontakt) i pas dolny z prawami i odnośnikami prawnymi.</p>
+<span class="etk">Mechanika</span><p>Statyczna.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">4 kolumny</span><span class="chip">pas dolny</span></div>
+<span class="etk">Kod</span><p><code>wireframe.css (wf-footer)</code> · <code>chrome.js (szablon FOOTER)</code></p>
+<a class="btn" href="v7/chrome.js">Wersja bazowa – chrome.js</a>
+<span class="etk">Występuje na</span><p>każda podstrona (chrome.js) – element wspólny, wstawiany do DOM przez <a href="v7/chrome.js"><code>chrome.js</code></a> (linia 259).</p>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-04.png"><img src="ce-indeks/img/CE-04.png" alt="Zrzut CE-04 – Stopka serwisu" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-05">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-05">CE-05</a></span><h3 class="ce__nazwa">Dok doradcy</h3><span class="gr-et">Elementy wspólne serwisu (chrome.js)</span></div>
+<p>Pływający dok w prawym dolnym rogu: pasek z polem pytania i przyciskiem, po otwarciu panel rozmowy (nagłówek, wiadomości, formularz).</p>
+<span class="etk">Mechanika</span><p>Ukryty na stronach z sekcją hero do czasu zejścia z hero (sterowanie w warstwie strony), otwierany przyciskiem albo z linków data-jurek-open; panel z tłem przyciemnionym. Obsługa w cw.js.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">pasek pytania</span><span class="chip">panel rozmowy</span><span class="chip">przyciemnienie tła</span></div>
+<span class="etk">Kod</span><p><code>cw.css (cw-jurek)</code> · <code>chrome.js (szablon DOCK) + cw.js + moduł 00 stron (updateDock)</code></p>
+<span class="etk">Uwagi</span><p class="mut">Element position: fixed – etykieta nakładki pojawia się, gdy dok jest widoczny.</p>
+<a class="btn" href="v7/chrome.js">Wersja bazowa – chrome.js</a>
+<span class="etk">Występuje na</span><p>każda podstrona (chrome.js) – element wspólny, wstawiany do DOM przez <a href="v7/chrome.js"><code>chrome.js</code></a> (linia 296).</p>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-05.png"><img src="ce-indeks/img/CE-05.png" alt="Zrzut CE-05 – Dok doradcy" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-06">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-06">CE-06</a></span><h3 class="ce__nazwa">Plakietka stanu prac</h3><span class="gr-et">Elementy wspólne serwisu (chrome.js)</span></div>
+<p>Niska plakietka w lewym dolnym rogu: etap, etykieta i odnośnik do zadania AC dla bieżącej podstrony.</p>
+<span class="etk">Mechanika</span><p>Renderowana z manifestu status.js po nazwie pliku; bez wpisu nie pojawia się. Narzędzie wewnętrzne projektu.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">etap</span><span class="chip">etykieta</span><span class="chip">odnośnik AC</span></div>
+<span class="etk">Kod</span><p><code>chrome.js (STATUS_CSS)</code> · <code>chrome.js (renderStatus)</code></p>
+<span class="etk">Uwagi</span><p class="mut">Nakładka CE stoi tuż nad plakietką.</p>
+<a class="btn" href="v7/chrome.js">Wersja bazowa – chrome.js</a>
+<span class="etk">Występuje na</span><p>każda podstrona (chrome.js) – element wspólny, wstawiany do DOM przez <a href="v7/chrome.js"><code>chrome.js</code></a> (linia 409).</p>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-06.png"><img src="ce-indeks/img/CE-06.png" alt="Zrzut CE-06 – Plakietka stanu prac" loading="lazy"></a></div>
+</article>
+
+<h2 class="gr" id="grupa-nawigacja">Nawigacja po podstronie <span>· 1 CE</span></h2>
+
+<article class="ce" id="CE-07">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-07">CE-07</a></span><h3 class="ce__nazwa">Nawigacja kropkowa</h3><span class="gr-et">Nawigacja po podstronie</span></div>
+<p>Pionowa lista kropek przyklejona przy prawej krawędzi ekranu, jedna kropka na rozdział strony; etykiety rozdziałów wysuwają się po najechaniu na całą nawigację.</p>
+<span class="etk">Mechanika</span><p>Scrollspy po sekcjach z data-chapter (kropka aktywna większa), klik przewija płynnie do rozdziału (przez Lenis, gdy aktywny); mix-blend-mode difference na ciemnym tle; ukryta poniżej 900 px.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">lista kropek</span><span class="chip">etykiety</span></div>
+<span class="etk">Kod</span><p><code>&lt;strona&gt;.css ===== 10</code> · <code>&lt;strona&gt;.js ===== 10</code></p>
+<span class="etk">Uwagi</span><p class="mut">Liczba i nazwy rozdziałów są treścią strony. Zastąpiła przyklejoną belkę subnawigacji (13.09).</p>
+<a class="btn" href="v7/carbomat.html#nawigacja-kropki">Wersja bazowa – carbomat.html</a>
+<span class="etk">Występuje na (7)</span><ul class="wyst"><li><a href="v7/carbomat.html#nawigacja-kropki">CARBOMAT ECO</a> <span class="mut">(poza &lt;main&gt;)</span> <code>#nawigacja-kropki</code></li><li><a href="v7/carbohumic.html#nawigacja-kropki">CARBOHUMIC</a> <span class="mut">(poza &lt;main&gt;)</span> <code>#nawigacja-kropki</code></li><li><a href="v7/carbomat-humic.html#nawigacja-kropki">CARBOMAT HUMIC</a> <span class="mut">(poza &lt;main&gt;)</span> <code>#nawigacja-kropki</code></li><li><a href="v7/carbomat-mata.html#nawigacja-kropki">CARBOMAT Mata Uprawowa</a> <span class="mut">(poza &lt;main&gt;)</span> <code>#nawigacja-kropki</code></li><li><a href="v7/kukurydza.html#nawigacja-kropki">Kukurydza</a> <span class="mut">(poza &lt;main&gt;)</span> <code>#nawigacja-kropki</code></li><li><a href="v7/prochnica-plus.html#nawigacja-kropki">Próchnica+</a> <span class="mut">(poza &lt;main&gt;)</span> <code>#nawigacja-kropki</code></li><li><a href="v7/produkty.html#nawigacja-kropki">Produkty Carbohort</a> <span class="mut">(poza &lt;main&gt;)</span> <code>#nawigacja-kropki</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-07.png"><img src="ce-indeks/img/CE-07.png" alt="Zrzut CE-07 – Nawigacja kropkowa" loading="lazy"></a></div>
+</article>
+
+<h2 class="gr" id="grupa-otwarcie">Otwarcie strony <span>· 3 CE</span></h2>
+
+<article class="ce" id="CE-08">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-08">CE-08</a></span><h3 class="ce__nazwa">Hero</h3><span class="gr-et">Otwarcie strony</span></div>
+<p>Pierwszy ekran pod menu serwisu (min-height 100svh minus menu). Lewa kolumna: kicker, H1, lead, rząd dwóch przycisków wyśrodkowane w pionie, dyskretny breadcrumb przy dolnej krawędzi. Prawa: jasnoszary panel z marginesem 30 px, a na jego środku packshoty, półka opakowań, kadr zdjęcia albo player.</p>
+<span class="etk">Mechanika</span><p>Statyczne; po zejściu z hero pojawia się dok doradcy (moduł 00 strony).</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">kicker</span><span class="chip">h1</span><span class="chip">lead</span><span class="chip">rząd 2 przycisków</span><span class="chip">breadcrumb</span><span class="chip">panel z mediami</span></div>
+<span class="etk">Warianty</span><ul class="war"><li><code>polka</code> – półka czterech opakowań rodzin (Produkty)</li><li><code>kadr</code> – kadr zdjęcia uprawy zamiast packshotu (Kukurydza)</li><li><code>player</code> – player filmu na panelu (Próchnica+)</li></ul>
+<span class="etk">Kod</span><p><code>&lt;strona&gt;.css /* --- HERO */</code> · <code>&lt;strona&gt;.js ===== 00 (updateDock)</code></p>
+<span class="etk">Uwagi</span><p class="mut">Domyślnie 1–2 packshoty na panelu (strony produktowe).</p>
+<a class="btn" href="v7/carbomat.html#hero">Wersja bazowa – carbomat.html</a>
+<span class="etk">Występuje na (7)</span><ul class="wyst"><li><a href="v7/carbomat.html#hero">CARBOMAT ECO</a> <code>#hero</code></li><li><a href="v7/carbohumic.html#hero">CARBOHUMIC</a> <code>#hero</code></li><li><a href="v7/carbomat-humic.html#hero">CARBOMAT HUMIC</a> <code>#hero</code></li><li><a href="v7/carbomat-mata.html#hero">CARBOMAT Mata Uprawowa</a> <code>#hero</code></li><li><a href="v7/kukurydza.html#hero">Kukurydza</a> <span class="mut">(wariant: kadr)</span> <code>#hero</code></li><li><a href="v7/prochnica-plus.html#hero">Próchnica+</a> <span class="mut">(wariant: player)</span> <code>#hero</code></li><li><a href="v7/produkty.html#hero">Produkty Carbohort</a> <span class="mut">(wariant: polka)</span> <code>#hero</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-08.png"><img src="ce-indeks/img/CE-08.png" alt="Zrzut CE-08 – Hero" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-09">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-09">CE-09</a></span><h3 class="ce__nazwa">Marquee</h3><span class="gr-et">Otwarcie strony</span></div>
+<p>Poziomy pas między hero a następną sekcją: duży tekst pozycji przeplatany kwadratowymi miniaturami (narożniki 12 px), tor zdublowany, 130 px odstępu góra i dół (80 px na telefonie).</p>
+<span class="etk">Mechanika</span><p>Pętla bez szwu (translateX -50 %, ok. 42 s), pauza po najechaniu; przy reduced-motion statyczny pas przewijany w poziomie.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">pozycje: tekst + miniatura</span></div>
+<span class="etk">Warianty</span><ul class="war"><li><code>z-ikona</code> – pozycja z ikoną przed tekstem (Próchnica+)</li></ul>
+<span class="etk">Kod</span><p><code>&lt;strona&gt;.css /* --- ZALETY */ (c5-marq)</code> · <code>brak (czysty CSS)</code></p>
+<span class="etk">Uwagi</span><p class="mut">Liczba pozycji (3–4) jest treścią; tor musi być szerszy niż okno 2560 px.</p>
+<a class="btn" href="v7/carbomat.html#zalety">Wersja bazowa – carbomat.html</a>
+<span class="etk">Występuje na (6)</span><ul class="wyst"><li><a href="v7/carbomat.html#zalety">CARBOMAT ECO</a> <code>#zalety</code></li><li><a href="v7/carbohumic.html#zalety">CARBOHUMIC</a> <code>#zalety</code></li><li><a href="v7/carbomat-humic.html#zalety">CARBOMAT HUMIC</a> <code>#zalety</code></li><li><a href="v7/carbomat-mata.html#uprawy">CARBOMAT Mata Uprawowa</a> <code>#uprawy</code></li><li><a href="v7/prochnica-plus.html#stan">Próchnica+</a> <span class="mut">(wariant: z-ikona)</span> <code>#stan</code></li><li><a href="v7/produkty.html#zaufanie">Produkty Carbohort</a> <code>#zaufanie</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-09.png"><img src="ce-indeks/img/CE-09.png" alt="Zrzut CE-09 – Marquee" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-10">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-10">CE-10</a></span><h3 class="ce__nazwa">Parametry na wideo</h3><span class="gr-et">Otwarcie strony</span></div>
+<p>Sekcja bez własnego tła, 30 px marginesu z boków, min-height 100svh: wideo w pętli przyklejone na całą wysokość sekcji pod maską, nad nim wyśrodkowana treść (tytuł, tabela dl, dyskretny link do analizy, przyciski karty i certyfikatów, przypis).</p>
+<span class="etk">Mechanika</span><p>Wideo sticky na czas sekcji, pauza przy reduced-motion (poster); treść przewija się po wideo, gdy dłuższa niż ekran. Moduł 30.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">warstwa wideo z maską</span><span class="chip">tytuł</span><span class="chip">tabela dl</span><span class="chip">link do analizy</span><span class="chip">rząd przycisków</span><span class="chip">przypis</span></div>
+<span class="etk">Warianty</span><ul class="war"><li><code>z-tabami</code> – dwa zestawy parametrów przełączane tabami nad tabelą (Mata)</li></ul>
+<span class="etk">Kod</span><p><code>&lt;strona&gt;.css /* --- PARAMETRY */ (c5-params)</code> · <code>&lt;strona&gt;.js ===== 30</code></p>
+<span class="etk">Uwagi</span><p class="mut">Kontrast linii źródła (.c5-params__src) do poprawy na wszystkich stronach przy pushu zbiorczym (backlog).</p>
+<a class="btn" href="v7/carbomat.html#parametry">Wersja bazowa – carbomat.html</a>
+<span class="etk">Występuje na (4)</span><ul class="wyst"><li><a href="v7/carbomat.html#parametry">CARBOMAT ECO</a> <code>#parametry</code></li><li><a href="v7/carbohumic.html#parametry">CARBOHUMIC</a> <code>#parametry</code></li><li><a href="v7/carbomat-humic.html#parametry">CARBOMAT HUMIC</a> <code>#parametry</code></li><li><a href="v7/carbomat-mata.html#parametry">CARBOMAT Mata Uprawowa</a> <span class="mut">(wariant: z-tabami)</span> <code>#parametry</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-10.png"><img src="ce-indeks/img/CE-10.png" alt="Zrzut CE-10 – Parametry na wideo" loading="lazy"></a></div>
+</article>
+
+<h2 class="gr" id="grupa-sceny">Sceny i bloki sterowane przewijaniem <span>· 9 CE</span></h2>
+
+<article class="ce" id="CE-12">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-12">CE-12</a></span><h3 class="ce__nazwa">Scena faktów</h3><span class="gr-et">Sceny i bloki sterowane przewijaniem</span></div>
+<p>Scena sticky 100svh w wysokim torze: lewa kolumna z przyklejonym kickerem i H2 (opcjonalnie lead), jeden opis naraz przy dolnej krawędzi, pasek progresu ze znacznikami; prawa kolumna to panel na wysokość ekranu ze zmieniającym się zdjęciem i boksem ilustracji o stałym rozmiarze (kolory odwrócone).</p>
+<span class="etk">Mechanika</span><p>Pozycja przewijania wybiera krok (N kroków po ok. 80 % okna każdy), zdjęcie panelu crossfade, ilustracja podmieniana; poniżej 900 px, przy reduced-motion i bez JS bloki stoją jeden pod drugim. Moduł 50.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">kicker + h2 (+ lead)</span><span class="chip">N opisów</span><span class="chip">pasek progresu</span><span class="chip">panel zdjęcia</span><span class="chip">boks ilustracji</span></div>
+<span class="etk">Warianty</span><ul class="war"><li><code>naglowek-nad-scena</code> – nagłówek i lead nad torem, w scenie tylko opis punktu (Mata)</li><li><code>osiem-krokow</code> – 8 kroków, kroki 2–6 na wspólnym zdjęciu (CARBOMAT HUMIC)</li><li><code>z-leadem</code> – dwa akapity leadu przyklejone razem z nagłówkiem (Próchnica+ Metodologia)</li></ul>
+<span class="etk">Kod</span><p><code>&lt;strona&gt;.css /* --- CZYM JEST */ (c5-facts, c5-viz)</code> · <code>&lt;strona&gt;.js ===== 50</code></p>
+<span class="etk">Uwagi</span><p class="mut">Liczba kroków (4–8) jest treścią; jeden moduł czyta ją z DOM.</p>
+<a class="btn" href="v7/carbomat.html#czym-jest">Wersja bazowa – carbomat.html</a>
+<span class="etk">Występuje na (7)</span><ul class="wyst"><li><a href="v7/carbomat.html#czym-jest">CARBOMAT ECO</a> <code>#czym-jest</code></li><li><a href="v7/carbohumic.html#czym-jest">CARBOHUMIC</a> <code>#czym-jest</code></li><li><a href="v7/carbomat-humic.html#czym-jest">CARBOMAT HUMIC</a> <span class="mut">(wariant: osiem-krokow)</span> <code>#czym-jest</code></li><li><a href="v7/carbomat-mata.html#czym-jest-scena">CARBOMAT Mata Uprawowa</a> <span class="mut">(wariant: naglowek-nad-scena · od: #czym-jest)</span> <code>#czym-jest-scena</code></li><li><a href="v7/prochnica-plus.html#zalozenia">Próchnica+</a> <code>#zalozenia</code></li><li><a href="v7/prochnica-plus.html#metodologia">Próchnica+</a> <span class="mut">(wariant: z-leadem)</span> <code>#metodologia</code></li><li><a href="v7/produkty.html#jak-dzialaja">Produkty Carbohort</a> <code>#jak-dzialaja</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-12.png"><img src="ce-indeks/img/CE-12.png" alt="Zrzut CE-12 – Scena faktów" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-13">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-13">CE-13</a></span><h3 class="ce__nazwa">Przypięta scena produktu</h3><span class="gr-et">Sceny i bloki sterowane przewijaniem</span></div>
+<p>Jeden article na produkt lub wariant: tor 100svh plus kilka ekranów, scena sticky; packshot z nazwą maleje do przyklejonego pasa z przyciskiem, zdjęcie rośnie od dołu, kartka opisu wjeżdża, taby kadrów przełączają zdjęcie i kartkę; napisy gasną na końcu.</p>
+<span class="etk">Mechanika</span><p>Wszystko interpolowane z pozycji przewijania (bez przejść w czasie), taby klikalne; poniżej 900 px pas jako blok i kadry jeden pod drugim. Moduł 60; wersja N kadrów liczy tor z liczby kadrów.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">packshot z nazwą</span><span class="chip">pas z przyciskiem</span><span class="chip">zdjęcie kadru</span><span class="chip">kartka opisu</span><span class="chip">taby kadrów</span></div>
+<span class="etk">Warianty</span><ul class="war"><li><code>n-kadrow</code> – N kadrów = N terminów, tor liczony z liczby kadrów (CARBOHUMIC)</li></ul>
+<span class="etk">Kod</span><p><code>&lt;strona&gt;.css /* --- JAK STOSOWAĆ */ (c5-use)</code> · <code>&lt;strona&gt;.js ===== 60</code></p>
+<span class="etk">Uwagi</span><p class="mut">Nagłówek sekcji „Jak stosować” stoi nad pierwszym article (data-ce-od).</p>
+<a class="btn" href="v7/carbomat.html#jak-stosowac-eco">Wersja bazowa – carbomat.html</a>
+<span class="etk">Występuje na (4)</span><ul class="wyst"><li><a href="v7/carbomat.html#jak-stosowac-eco">CARBOMAT ECO</a> <span class="mut">(od: #jak-stosowac)</span> <code>#jak-stosowac-eco</code></li><li><a href="v7/carbomat.html#jak-stosowac-sciolka">CARBOMAT ECO</a> <code>#jak-stosowac-sciolka</code></li><li><a href="v7/carbohumic.html#jak-stosowac-filtrowany">CARBOHUMIC</a> <span class="mut">(wariant: n-kadrow · od: #jak-stosowac)</span> <code>#jak-stosowac-filtrowany</code></li><li><a href="v7/carbohumic.html#jak-stosowac-niefiltrowany">CARBOHUMIC</a> <span class="mut">(wariant: n-kadrow)</span> <code>#jak-stosowac-niefiltrowany</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-13.png"><img src="ce-indeks/img/CE-13.png" alt="Zrzut CE-13 – Przypięta scena produktu" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-14">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-14">CE-14</a></span><h3 class="ce__nazwa">Sekcja 100svh z listą i zdjęciem</h3><span class="gr-et">Sceny i bloki sterowane przewijaniem</span></div>
+<p>Sekcja na wysokość ekranu, 30 px góra i dół: lewa kolumna z kickerem i H2 u góry oraz listą ol z numerami w kółkach i przyciskiem u dołu; prawa kolumna to zdjęcie na całą wysokość.</p>
+<span class="etk">Mechanika</span><p>Lekki parallax zdjęcia z pozycji przewijania (tylko motionOn); poniżej 900 px zdjęcie nad listą. Moduł 70.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">kicker + h2</span><span class="chip">lista ol</span><span class="chip">przycisk</span><span class="chip">zdjęcie</span></div>
+<span class="etk">Kod</span><p><code>&lt;strona&gt;.css /* --- DAWKOWANIE */ (c5-dose)</code> · <code>&lt;strona&gt;.js ===== 70</code></p>
+<a class="btn" href="v7/carbomat.html#dawka">Wersja bazowa – carbomat.html</a>
+<span class="etk">Występuje na (3)</span><ul class="wyst"><li><a href="v7/carbomat.html#dawka">CARBOMAT ECO</a> <code>#dawka</code></li><li><a href="v7/carbohumic.html#dawki-domowe">CARBOHUMIC</a> <code>#dawki-domowe</code></li><li><a href="v7/kukurydza.html#u-decyzje">Kukurydza</a> <code>#u-decyzje</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-14.png"><img src="ce-indeks/img/CE-14.png" alt="Zrzut CE-14 – Sekcja 100svh z listą i zdjęciem" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-15">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-15">CE-15</a></span><h3 class="ce__nazwa">Przypięte wiersze z packshotem</h3><span class="gr-et">Sceny i bloki sterowane przewijaniem</span></div>
+<p>Nagłówek (kicker, H2, lead) przyklejony na czas cyklu; blok wierszy wchodzi w biegu z pierwszym wierszem otwartym i przykleja się dolną krawędzią; wiersz = tytuł | kwadratowa scena z packshotem | nazwa, opis, przycisk.</p>
+<span class="etk">Mechanika</span><p>Dalsze przewijanie otwiera kolejne wiersze (kwadrat rozwija się od dołu, potem wjeżdża packshot), po ostatnim całość odjeżdża; bez ruchu akordeon na klik z pierwszym otwartym; bez JS wszystkie otwarte. Moduł 80.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">nagłówek przyklejony</span><span class="chip">wiersze: tytuł, scena, packshot, opis, przycisk</span></div>
+<span class="etk">Kod</span><p><code>&lt;strona&gt;.css /* --- SEZON */ (c5-season)</code> · <code>&lt;strona&gt;.js ===== 80</code></p>
+<span class="etk">Uwagi</span><p class="mut">Na Produktach ten sam pin niesie „efekty w czasie”.</p>
+<a class="btn" href="v7/carbomat.html#sezon-wiersze">Wersja bazowa – carbomat.html</a>
+<span class="etk">Występuje na (2)</span><ul class="wyst"><li><a href="v7/carbomat.html#sezon-wiersze">CARBOMAT ECO</a> <code>#sezon-wiersze</code></li><li><a href="v7/produkty.html#co-daja-wiersze">Produkty Carbohort</a> <span class="mut">(od: #co-daja)</span> <code>#co-daja-wiersze</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-15.png"><img src="ce-indeks/img/CE-15.png" alt="Zrzut CE-15 – Przypięte wiersze z packshotem" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-16">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-16">CE-16</a></span><h3 class="ce__nazwa">Pas PRO</h3><span class="gr-et">Sceny i bloki sterowane przewijaniem</span></div>
+<p>Pas na szarym tle: kadr zdjęcia z narożnikami 30 px, pod nim nagłówek po lewej oraz akapit i dwa przyciski po prawej.</p>
+<span class="etk">Mechanika</span><p>Kadr skaluje się od .5 do 1, gdy górna krawędź sekcji schodzi poniżej 75 % okna (koniec przy 10 %); statyczny kadr 3:2 na telefonie. Moduł 80/85.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">kadr</span><span class="chip">h2</span><span class="chip">akapit</span><span class="chip">rząd 2 przycisków</span></div>
+<span class="etk">Warianty</span><ul class="war"><li><code>zamykajacy</code> – bez akapitu: nagłówek po lewej, dwa przyciski po prawej (Kukurydza)</li></ul>
+<span class="etk">Kod</span><p><code>&lt;strona&gt;.css /* --- Pas PRO */ (c5-pro)</code> · <code>&lt;strona&gt;.js updatePro</code></p>
+<span class="etk">Uwagi</span><p class="mut">Na CARBOMAT ECO i CARBOMAT HUMIC stoi wewnątrz sekcji Sezon, na pozostałych jako osobna sekcja.</p>
+<a class="btn" href="v7/carbomat.html#uprawy-profesjonalne">Wersja bazowa – carbomat.html</a>
+<span class="etk">Występuje na (6)</span><ul class="wyst"><li><a href="v7/carbomat.html#uprawy-profesjonalne">CARBOMAT ECO</a> <code>#uprawy-profesjonalne</code></li><li><a href="v7/carbohumic.html#uprawy-profesjonalne">CARBOHUMIC</a> <code>#uprawy-profesjonalne</code></li><li><a href="v7/carbomat-humic.html#kanal-sprzedazy">CARBOMAT HUMIC</a> <code>#kanal-sprzedazy</code></li><li><a href="v7/carbomat-mata.html#dla-kogo">CARBOMAT Mata Uprawowa</a> <code>#dla-kogo</code></li><li><a href="v7/kukurydza.html#u-cta">Kukurydza</a> <span class="mut">(wariant: zamykajacy)</span> <code>#u-cta</code></li><li><a href="v7/produkty.html#dla-profesjonalistow">Produkty Carbohort</a> <code>#dla-profesjonalistow</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-16.png"><img src="ce-indeks/img/CE-16.png" alt="Zrzut CE-16 – Pas PRO" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-26">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-26">CE-26</a></span><h3 class="ce__nazwa">Stos kart</h3><span class="gr-et">Sceny i bloki sterowane przewijaniem</span></div>
+<p>Karty kroków jedna pod drugą; każda karta: numer, tytuł, opis, zdjęcie, dopisek fazy.</p>
+<span class="etk">Mechanika</span><p>Karty przyklejają się kolejno i nakładają na siebie przy przewijaniu (transform z pozycji scrolla, tylko motionOn); bez ruchu zwykły stos. Moduł 60 (Mata) / 72 (Carbohumic).</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">karty: numer, tytuł, opis, zdjęcie, dopisek</span></div>
+<span class="etk">Kod</span><p><code>carbomat-mata.css ===== 60 (c5-steps)</code> · <code>carbomat-mata.js ===== 60</code></p>
+<span class="etk">Uwagi</span><p class="mut">Wzór: portfolio.widehue.co/rezonbio.</p>
+<a class="btn" href="v7/carbomat-mata.html#przygotowanie-protokol">Wersja bazowa – carbomat-mata.html</a>
+<span class="etk">Występuje na (2)</span><ul class="wyst"><li><a href="v7/carbomat-mata.html#przygotowanie-protokol">CARBOMAT Mata Uprawowa</a> <span class="mut">(od: #przygotowanie)</span> <code>#przygotowanie-protokol</code></li><li><a href="v7/carbohumic.html#z-czym-laczyc-kroki">CARBOHUMIC</a> <code>#z-czym-laczyc-kroki</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-26.png"><img src="ce-indeks/img/CE-26.png" alt="Zrzut CE-26 – Stos kart" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-29">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-29">CE-29</a></span><h3 class="ce__nazwa">Licznik sezonów</h3><span class="gr-et">Sceny i bloki sterowane przewijaniem</span></div>
+<p>Nagłówek nad sceną; scena sticky w torze: po lewej tytuł przystanku, wielki numer sezonu z odmienianym słowem i rząd pięciu rękawów, po prawej panele treści; na dole pasek przystanków z klikalnymi etykietami.</p>
+<span class="etk">Mechanika</span><p>Wszystko z pozycji przewijania: numer rośnie, rękawy wypełniają się sezon po sezonie, worek CARBOMAT ECO wjeżdża na trzecim przystanku, panele crossfade; statycznie trzy bloki z glifami. Moduł 80.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">tytuł przystanku</span><span class="chip">numer sezonu</span><span class="chip">rząd rękawów</span><span class="chip">panele treści</span><span class="chip">pasek przystanków</span></div>
+<span class="etk">Kod</span><p><code>carbomat-mata.css ===== 80 (c5-yrs)</code> · <code>carbomat-mata.js ===== 80</code></p>
+<span class="etk">Uwagi</span><p class="mut">Jedyne wystąpienie; na CARBOMAT ECO tę rolę pełni CE-15.</p>
+<a class="btn" href="v7/carbomat-mata.html#sezon-licznik">Wersja bazowa – carbomat-mata.html</a>
+<span class="etk">Występuje na (1)</span><ul class="wyst"><li><a href="v7/carbomat-mata.html#sezon-licznik">CARBOMAT Mata Uprawowa</a> <span class="mut">(od: #sezon)</span> <code>#sezon-licznik</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-29.png"><img src="ce-indeks/img/CE-29.png" alt="Zrzut CE-29 – Licznik sezonów" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-32">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-32">CE-32</a></span><h3 class="ce__nazwa">Oś czasu pozioma</h3><span class="gr-et">Sceny i bloki sterowane przewijaniem</span></div>
+<p>Pozioma oś z przystankami (etykieta czasu, tytuł, opis) i przypisem; na wąskich ekranach oś pionowa.</p>
+<span class="etk">Mechanika</span><p>Oś dorysowuje się przy przewijaniu, przystanki rozświetlają się kolejno (tylko motionOn). Moduł 48.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">oś</span><span class="chip">przystanki</span><span class="chip">przypis</span></div>
+<span class="etk">Kod</span><p><code>carbohumic.css (c5hu-time)</code> · <code>carbohumic.js ===== 48</code></p>
+<span class="etk">Uwagi</span><p class="mut">Jedyne wystąpienie („Skala czasu”).</p>
+<a class="btn" href="v7/carbohumic.html#czas-prochnicy">Wersja bazowa – carbohumic.html</a>
+<span class="etk">Występuje na (1)</span><ul class="wyst"><li><a href="v7/carbohumic.html#czas-prochnicy">CARBOHUMIC</a> <code>#czas-prochnicy</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-32.png"><img src="ce-indeks/img/CE-32.png" alt="Zrzut CE-32 – Oś czasu pozioma" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-44">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-44">CE-44</a></span><h3 class="ce__nazwa">Napis przyklejony z płynącymi kaflami</h3><span class="gr-et">Sceny i bloki sterowane przewijaniem</span></div>
+<p>Duży napis przyklejony na środku ekranu przez cały tor sekcji; kafelki lub karty rozłożone w torze nieregularnie (odsunięcie, obrót, własna prędkość) przepływają obok i po napisie.</p>
+<span class="etk">Mechanika</span><p>Parallax kafelków liczony z pozycji przewijania (tylko motionOn); statycznie napis i kafelki jeden pod drugim. Moduł 55 (Kukurydza) / 45 (Próchnica+).</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">napis</span><span class="chip">kafelki lub karty</span></div>
+<span class="etk">Kod</span><p><code>prochnica-plus.css ===== 45 (pp-kor) / kukurydza.css ===== 55 (u-fk)</code> · <code>prochnica-plus.js ===== 45 / kukurydza.js ===== 55</code></p>
+<a class="btn" href="v7/prochnica-plus.html#korzysci">Wersja bazowa – prochnica-plus.html</a>
+<span class="etk">Występuje na (2)</span><ul class="wyst"><li><a href="v7/prochnica-plus.html#korzysci">Próchnica+</a> <code>#korzysci</code></li><li><a href="v7/kukurydza.html#u-fakty-scena">Kukurydza</a> <span class="mut">(od: #u-fakty)</span> <code>#u-fakty-scena</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-44.png"><img src="ce-indeks/img/CE-44.png" alt="Zrzut CE-44 – Napis przyklejony z płynącymi kaflami" loading="lazy"></a></div>
+</article>
+
+<h2 class="gr" id="grupa-przelaczniki">Taby, listy, karuzele, akordeony <span>· 9 CE</span></h2>
+
+<article class="ce" id="CE-11">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-11">CE-11</a></span><h3 class="ce__nazwa">Warianty na tabach</h3><span class="gr-et">Taby, listy, karuzele, akordeony</span></div>
+<p>Pasek tabów wariantów przyklejony do górnej krawędzi na czas bloku, pod nim bloki wariantów jeden pod drugim: nazwa wyśrodkowana, scena kafle | packshot | kafle, dwie kolumny (aplikacja | opakowania z cennikiem).</p>
+<span class="etk">Mechanika</span><p>Taby nie ukrywają treści: klik przewija do bloku, scrollspy zaznacza tab bloku pod paskiem, pasek chowa się, gdy od dołu wchodzi następna sekcja. Moduł 40 (na Próchnica+ ta sama mechanika z c5.js).</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">tablist</span><span class="chip">bloki wariantu: nazwa, kafle, packshot, kolumny</span><span class="chip">cennik opakowań (c5-price)</span></div>
+<span class="etk">Warianty</span><ul class="war"><li><code>trzy-warianty</code> – trzy taby i trzy bloki (CARBOHUMIC)</li><li><code>taby-lat</code> – taby lat i bloki lat w Wynikach (Próchnica+, kit c5)</li></ul>
+<span class="etk">Kod</span><p><code>&lt;strona&gt;.css /* --- KTÓRY DLA MNIE */ (c5-ways, c5-variant)</code> · <code>&lt;strona&gt;.js ===== 40</code></p>
+<span class="etk">Uwagi</span><p class="mut">Cennik opakowań w bloku wariantu to element interfejsu wspólny z CE-28 (lista opakowań).</p>
+<a class="btn" href="v7/carbomat.html#ktory-dla-mnie">Wersja bazowa – carbomat.html</a>
+<span class="etk">Występuje na (3)</span><ul class="wyst"><li><a href="v7/carbomat.html#ktory-dla-mnie">CARBOMAT ECO</a> <code>#ktory-dla-mnie</code></li><li><a href="v7/carbohumic.html#ktory-dla-mnie-warianty">CARBOHUMIC</a> <span class="mut">(wariant: trzy-warianty · od: #ktory-dla-mnie)</span> <code>#ktory-dla-mnie-warianty</code></li><li><a href="v7/prochnica-plus.html#wyniki-lata">Próchnica+</a> <span class="mut">(wariant: taby-lat)</span> <code>#wyniki-lata</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-11.png"><img src="ce-indeks/img/CE-11.png" alt="Zrzut CE-11 – Warianty na tabach" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-17">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-17">CE-17</a></span><h3 class="ce__nazwa">FAQ</h3><span class="gr-et">Taby, listy, karuzele, akordeony</span></div>
+<p>Kicker i H2, pod nimi akordeon pytań: pytanie po lewej, odpowiedź po prawej, wszystkie zwinięte na starcie.</p>
+<span class="etk">Mechanika</span><p>Jedno pytanie otwarte naraz (panelSet animuje wysokość), otwarcie z kotwicy; bez JS wszystkie odpowiedzi widoczne. Moduł 90.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">kicker + h2</span><span class="chip">pozycje: pytanie + odpowiedź</span></div>
+<span class="etk">Warianty</span><ul class="war"><li><code>z-nota</code> – nota o statusie odpowiedzi między nagłówkiem a akordeonem (CARBOHUMIC)</li></ul>
+<span class="etk">Kod</span><p><code>&lt;strona&gt;.css /* --- FAQ */ (c5-faq)</code> · <code>&lt;strona&gt;.js ===== 90</code></p>
+<span class="etk">Uwagi</span><p class="mut">Moduł „zadaj pytanie” zdjęty 13.09.</p>
+<a class="btn" href="v7/carbomat.html#faq">Wersja bazowa – carbomat.html</a>
+<span class="etk">Występuje na (5)</span><ul class="wyst"><li><a href="v7/carbomat.html#faq">CARBOMAT ECO</a> <code>#faq</code></li><li><a href="v7/carbohumic.html#faq">CARBOHUMIC</a> <span class="mut">(wariant: z-nota)</span> <code>#faq</code></li><li><a href="v7/carbomat-humic.html#faq">CARBOMAT HUMIC</a> <code>#faq</code></li><li><a href="v7/carbomat-mata.html#faq">CARBOMAT Mata Uprawowa</a> <code>#faq</code></li><li><a href="v7/produkty.html#faq">Produkty Carbohort</a> <code>#faq</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-17.png"><img src="ce-indeks/img/CE-17.png" alt="Zrzut CE-17 – FAQ" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-19">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-19">CE-19</a></span><h3 class="ce__nazwa">Model interaktywny</h3><span class="gr-et">Taby, listy, karuzele, akordeony</span></div>
+<p>Scena z rysunkiem SVG w cienkiej ramce po lewej, panel opisu po prawej, pod nimi rząd etykiet-przełączników części modelu.</p>
+<span class="etk">Mechanika</span><p>Czysty CSS: grupa radio + :checked podświetla warstwę SVG, pokazuje panel opisu i wypełnia etykietę; poniżej 900 px jedna kolumna.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">SVG z warstwami</span><span class="chip">panele opisu</span><span class="chip">etykiety-przełączniki</span></div>
+<span class="etk">Kod</span><p><code>carbomat-mata.css ===== 35 (c5-mt-model)</code> · <code>brak (czysty CSS)</code></p>
+<span class="etk">Uwagi</span><p class="mut">Jedyne wystąpienie (model rękawa maty).</p>
+<a class="btn" href="v7/carbomat-mata.html#inwestycja-model">Wersja bazowa – carbomat-mata.html</a>
+<span class="etk">Występuje na (1)</span><ul class="wyst"><li><a href="v7/carbomat-mata.html#inwestycja-model">CARBOMAT Mata Uprawowa</a> <span class="mut">(od: #inwestycja)</span> <code>#inwestycja-model</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-19.png"><img src="ce-indeks/img/CE-19.png" alt="Zrzut CE-19 – Model interaktywny" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-30">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-30">CE-30</a></span><h3 class="ce__nazwa">Lista z panelem opisu</h3><span class="gr-et">Taby, listy, karuzele, akordeony</span></div>
+<p>Dwie kolumny: po lewej lista dużych tytułów (z numerami), po prawej przyklejony panel z opisem aktywnej pozycji (opcjonalnie przycisk); na telefonie akordeon.</p>
+<span class="etk">Mechanika</span><p>Najechanie podgląda, klik wybiera, strzałki nawigują, kotwice trafiają w pozycje; bez JS wszystkie opisy otwarte. Moduły 50 (Produkty), 72 (Carbohumic), 80 (Mata), 40 (Kukurydza).</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">lista tytułów</span><span class="chip">panel opisu</span><span class="chip">przycisk w panelu (opcjonalnie)</span></div>
+<span class="etk">Warianty</span><ul class="war"><li><code>z-lightboxem</code> – panel ma przycisk otwierający pełny opis w lightboxie (Kukurydza fazy)</li></ul>
+<span class="etk">Kod</span><p><code>per strona: c5pr-paths, c5hu-mixlist, c5-tco, u-fz</code> · <code>produkty.js ===== 50</code></p>
+<span class="etk">Uwagi</span><p class="mut">Cztery implementacje tej samej mechaniki – kandydat do konsolidacji.</p>
+<a class="btn" href="v7/produkty.html#wg-potrzeby-sciezki">Wersja bazowa – produkty.html</a>
+<span class="etk">Występuje na (4)</span><ul class="wyst"><li><a href="v7/produkty.html#wg-potrzeby-sciezki">Produkty Carbohort</a> <code>#wg-potrzeby-sciezki</code></li><li><a href="v7/carbohumic.html#z-czym-laczyc-lista">CARBOHUMIC</a> <span class="mut">(od: #z-czym-laczyc)</span> <code>#z-czym-laczyc-lista</code></li><li><a href="v7/carbomat-mata.html#ekonomia-lista">CARBOMAT Mata Uprawowa</a> <span class="mut">(od: #ekonomia)</span> <code>#ekonomia-lista</code></li><li><a href="v7/kukurydza.html#u-fazy">Kukurydza</a> <span class="mut">(wariant: z-lightboxem)</span> <code>#u-fazy</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-30.png"><img src="ce-indeks/img/CE-30.png" alt="Zrzut CE-30 – Lista z panelem opisu" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-39">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-39">CE-39</a></span><h3 class="ce__nazwa">Pokaz rodzin na tabach</h3><span class="gr-et">Taby, listy, karuzele, akordeony</span></div>
+<p>Belka z przełącznikiem segmentowym tabów i linkiem „Porównaj”, pod nią panel rodziny: packshot na linii podłogi, nazwa i obietnica po lewej, rząd przycisków po prawej, cztery kolumny parametrów dl.</p>
+<span class="etk">Mechanika</span><p>Taby ARIA (klik, strzałki, Home/End), znacznik aktywnego tabu przesuwa się; stary panel wyjeżdża, nowy packshot wjeżdża z kierunku wyboru, kaskada podpisów, płynna wysokość; przeciąganie packshotu; deep link. Moduł 30.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">tablist</span><span class="chip">link Porównaj</span><span class="chip">panele rodzin: packshot, nazwa, obietnica, przyciski, dl</span></div>
+<span class="etk">Kod</span><p><code>produkty.css ===== 30 (c5pr-show)</code> · <code>produkty.js ===== 30</code></p>
+<span class="etk">Uwagi</span><p class="mut">Wzór: rivian.com/r1s.</p>
+<a class="btn" href="v7/produkty.html#gama">Wersja bazowa – produkty.html</a>
+<span class="etk">Występuje na (1)</span><ul class="wyst"><li><a href="v7/produkty.html#gama">Produkty Carbohort</a> <code>#gama</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-39.png"><img src="ce-indeks/img/CE-39.png" alt="Zrzut CE-39 – Pokaz rodzin na tabach" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-42">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-42">CE-42</a></span><h3 class="ce__nazwa">Akordeon pogłębiający</h3><span class="gr-et">Taby, listy, karuzele, akordeony</span></div>
+<p>Nagłówek h4, kilka pozycji akordeonu kitu (przycisk z szewronem, panel z akapitem), pod nimi przycisk do Centrum wiedzy.</p>
+<span class="etk">Mechanika</span><p>Akordeon kitu z cw.js: panele niezależne, pierwszy otwarty na start, bez animacji wysokości; reveal bloku.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">h4</span><span class="chip">pozycje akordeonu</span><span class="chip">przycisk</span></div>
+<span class="etk">Kod</span><p><code>produkty.css (c5pr-more)</code> · <code>cw.js (wf-accordion)</code></p>
+<span class="etk">Uwagi</span><p class="mut">Inny klocek niż FAQ (CE-17): pytanie nad odpowiedzią, panele niezależne.</p>
+<a class="btn" href="v7/produkty.html#co-daja-dociekliwi">Wersja bazowa – produkty.html</a>
+<span class="etk">Występuje na (1)</span><ul class="wyst"><li><a href="v7/produkty.html#co-daja-dociekliwi">Produkty Carbohort</a> <code>#co-daja-dociekliwi</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-42.png"><img src="ce-indeks/img/CE-42.png" alt="Zrzut CE-42 – Akordeon pogłębiający" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-43">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-43">CE-43</a></span><h3 class="ce__nazwa">Przełącznik z paskiem proporcji</h3><span class="gr-et">Taby, listy, karuzele, akordeony</span></div>
+<p>Jedna kolumna: h3 i zdanie, rząd przycisków wyboru, poziomy pasek wypełnienia z etykietą, blok interpretacji (duża wartość, etykieta, akapity).</p>
+<span class="etk">Mechanika</span><p>Przyciski aria-pressed ustawiają szerokość wypełnienia i pokazują swój blok tekstu; bez JS wszystkie bloki widoczne. uprawa.js (pasek potasu).</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">h3</span><span class="chip">przyciski wyboru</span><span class="chip">pasek</span><span class="chip">bloki interpretacji</span></div>
+<span class="etk">Kod</span><p><code>uprawa.css 6 (u-kbar)</code> · <code>uprawa.js 5 (pasek potasu)</code></p>
+<span class="etk">Uwagi</span><p class="mut">Krewny CE-45 (pudełka-przełączniki).</p>
+<a class="btn" href="v7/kukurydza.html#u-wybor-potas">Wersja bazowa – kukurydza.html</a>
+<span class="etk">Występuje na (1)</span><ul class="wyst"><li><a href="v7/kukurydza.html#u-wybor-potas">Kukurydza</a> <code>#u-wybor-potas</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-43.png"><img src="ce-indeks/img/CE-43.png" alt="Zrzut CE-43 – Przełącznik z paskiem proporcji" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-45">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-45">CE-45</a></span><h3 class="ce__nazwa">Pudełka-przełączniki</h3><span class="gr-et">Taby, listy, karuzele, akordeony</span></div>
+<p>Rząd pudełek (tablist) z nazwą i podpisem wariantu, pod nimi panel treści aktywnego wariantu (tabela).</p>
+<span class="etk">Mechanika</span><p>Tablist ARIA z klawiaturą; klik pokazuje panel; bez JS wszystkie panele widoczne. uprawa.js (pudełka wariantów).</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">pudełka</span><span class="chip">panel treści</span></div>
+<span class="etk">Kod</span><p><code>uprawa.css 11</code> · <code>uprawa.js 10</code></p>
+<a class="btn" href="v7/kukurydza.html#u-warianty">Wersja bazowa – kukurydza.html</a>
+<span class="etk">Występuje na (1)</span><ul class="wyst"><li><a href="v7/kukurydza.html#u-warianty">Kukurydza</a> <code>#u-warianty</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-45.png"><img src="ce-indeks/img/CE-45.png" alt="Zrzut CE-45 – Pudełka-przełączniki" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-46">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-46">CE-46</a></span><h3 class="ce__nazwa">Karuzela kart</h3><span class="gr-et">Taby, listy, karuzele, akordeony</span></div>
+<p>Nagłówek w jednym wierszu (kicker, h2, lead po lewej; licznik i strzałki po prawej), tor kart scroll-snap, pasek postępu pod torem.</p>
+<span class="etk">Mechanika</span><p>Strzałki, klawisze, przeciąganie myszą, licznik „01 / 08”; bez JS tor przewija się natywnie, sterowanie ukryte. Moduł 70.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">nagłówek z licznikiem i strzałkami</span><span class="chip">tor kart</span><span class="chip">pasek postępu</span></div>
+<span class="etk">Kod</span><p><code>kukurydza.css ===== 70 (u-cr)</code> · <code>kukurydza.js ===== 70</code></p>
+<a class="btn" href="v7/kukurydza.html#u-stanowisko">Wersja bazowa – kukurydza.html</a>
+<span class="etk">Występuje na (1)</span><ul class="wyst"><li><a href="v7/kukurydza.html#u-stanowisko">Kukurydza</a> <code>#u-stanowisko</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-46.png"><img src="ce-indeks/img/CE-46.png" alt="Zrzut CE-46 – Karuzela kart" loading="lazy"></a></div>
+</article>
+
+<h2 class="gr" id="grupa-karty">Karty, kolumny, panele <span>· 7 CE</span></h2>
+
+<article class="ce" id="CE-20">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-20">CE-20</a></span><h3 class="ce__nazwa">Siatka kart</h3><span class="gr-et">Karty, kolumny, panele</span></div>
+<p>Siatka kart auto-fit (2–5 kolumn zależnie od szerokości), karta w ramce: ikona, numer, zdjęcie albo packshot, tytuł, akapit, opcjonalnie lista dl i rząd przycisków.</p>
+<span class="etk">Mechanika</span><p>Statyczna albo z jednorazowym wejściem od dołu po wejściu w widok (data-reveal, IntersectionObserver, stagger 80–90 ms); poniżej 900 px, przy reduced-motion i bez JS karty po prostu widoczne; w wariancie produktowym na telefonie karuzela scroll-snap.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">karty: ikona / numer / zdjęcie / packshot</span><span class="chip">tytuł</span><span class="chip">akapit</span><span class="chip">lista dl (opcjonalnie)</span><span class="chip">rząd przycisków (opcjonalnie)</span></div>
+<span class="etk">Warianty</span><ul class="war"><li><code>z-ikona</code> – ikona w kółku, tytuł, akapit</li><li><code>numerowane</code> – numer porządkowy zamiast ikony</li><li><code>ze-zdjeciem</code> – zdjęcie 4:3 u góry karty</li><li><code>z-przyciskami</code> – zdjęcie lub packshot, opis, rząd przycisków przy dolnej krawędzi</li><li><code>produktowe</code> – packshot na szarym polu, cała karta jednym linkiem (Kukurydza)</li><li><code>kafle-danych</code> – wartość x → y, mini-wykres słupków, chip stanu (Mata)</li><li><code>ostrzegawcze</code> – karta z ikoną x na przygaszonym tle</li><li><code>sloty-poziome</code> – miniatura 16:9 obok tekstu (Próchnica+)</li><li><code>miejsca-na-wykresy</code> – numer, placeholder 16:9, podpis</li><li><code>szerokie</code> – dwie szerokie karty</li></ul>
+<span class="etk">Kod</span><p><code>per strona: c5-mt-grid, c5hu-tiles/c5hu-mix, c5pr-goals/c5pr-foliar/c5pr-read, u-cards/u-rules, pp-cards/pp-tiles/pp-rels/pp-charts</code> · <code>reveal: moduł 72 (Carbohumic, Produkty), 02 (Próchnica+), u-reveal (uprawa.js)</code></p>
+<span class="etk">Uwagi</span><p class="mut">Najczęstszy klocek serwisu (ponad 20 wystąpień) z osobnymi klasami na każdej stronie – pierwszy kandydat do konsolidacji kodu (faza 2).</p>
+<a class="btn" href="v7/carbohumic.html#jaka-gleba-kafle">Wersja bazowa – carbohumic.html</a>
+<span class="etk">Występuje na (17)</span><ul class="wyst"><li><a href="v7/carbohumic.html#z-czym-laczyc-unikamy">CARBOHUMIC</a> <span class="mut">(wariant: ostrzegawcze)</span> <code>#z-czym-laczyc-unikamy</code></li><li><a href="v7/carbohumic.html#jaka-gleba-kafle">CARBOHUMIC</a> <span class="mut">(wariant: z-ikona · od: #jaka-gleba)</span> <code>#jaka-gleba-kafle</code></li><li><a href="v7/carbomat-mata.html#inwestycja-karty">CARBOMAT Mata Uprawowa</a> <span class="mut">(wariant: numerowane)</span> <code>#inwestycja-karty</code></li><li><a href="v7/carbomat-mata.html#dowod-karty">CARBOMAT Mata Uprawowa</a> <span class="mut">(wariant: z-przyciskami)</span> <code>#dowod-karty</code></li><li><a href="v7/carbomat-mata.html#dowod-sggw-karty">CARBOMAT Mata Uprawowa</a> <span class="mut">(wariant: numerowane · w CE-25)</span> <code>#dowod-sggw-karty</code></li><li><a href="v7/carbomat-mata.html#dowod-lca-karty">CARBOMAT Mata Uprawowa</a> <span class="mut">(wariant: szerokie · w CE-25)</span> <code>#dowod-lca-karty</code></li><li><a href="v7/carbomat-mata.html#dowod-pomidor-karty">CARBOMAT Mata Uprawowa</a> <span class="mut">(wariant: numerowane · w CE-25)</span> <code>#dowod-pomidor-karty</code></li><li><a href="v7/carbomat-mata.html#analiza-kafle">CARBOMAT Mata Uprawowa</a> <span class="mut">(wariant: kafle-danych · od: #analiza-podloza)</span> <code>#analiza-kafle</code></li><li><a href="v7/kukurydza.html#u-produkty">Kukurydza</a> <span class="mut">(wariant: produktowe)</span> <code>#u-produkty</code></li><li><a href="v7/kukurydza.html#u-mieszaniny-zasady">Kukurydza</a> <span class="mut">(wariant: numerowane · od: #u-mieszaniny)</span> <code>#u-mieszaniny-zasady</code></li><li><a href="v7/prochnica-plus.html#o-programie">Próchnica+</a> <span class="mut">(wariant: z-ikona)</span> <code>#o-programie</code></li><li><a href="v7/prochnica-plus.html#uczestnicy-programu">Próchnica+</a> <span class="mut">(wariant: z-przyciskami)</span> <code>#uczestnicy-programu</code></li><li><a href="v7/prochnica-plus.html#rzetelnosc-kafle">Próchnica+</a> <span class="mut">(wariant: z-ikona)</span> <code>#rzetelnosc-kafle</code></li><li><a href="v7/prochnica-plus.html#etapy-relacje">Próchnica+</a> <span class="mut">(wariant: sloty-poziome · od: #etapy-prac)</span> <code>#etapy-relacje</code></li><li><a href="v7/prochnica-plus.html#wyniki-wykresy">Próchnica+</a> <span class="mut">(wariant: miejsca-na-wykresy)</span> <code>#wyniki-wykresy</code></li><li><a href="v7/produkty.html#wg-potrzeby-cele">Produkty Carbohort</a> <span class="mut">(wariant: ze-zdjeciem · od: #wg-potrzeby)</span> <code>#wg-potrzeby-cele</code></li><li><a href="v7/produkty.html#doglebowo-nalistne">Produkty Carbohort</a> <span class="mut">(wariant: z-przyciskami)</span> <code>#doglebowo-nalistne</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-20.png"><img src="ce-indeks/img/CE-20.png" alt="Zrzut CE-20 – Siatka kart" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-21">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-21">CE-21</a></span><h3 class="ce__nazwa">Dwie kolumny przewag</h3><span class="gr-et">Karty, kolumny, panele</span></div>
+<p>Nadpis nad parą równych kolumn: w każdej zdjęcie, tytuł, cztery punkty i link.</p>
+<span class="etk">Mechanika</span><p>Statyczne (czysty CSS).</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">nadpis</span><span class="chip">2 kolumny: zdjęcie, tytuł, punkty, link</span></div>
+<span class="etk">Kod</span><p><code>carbomat-mata.css ===== 40 (c5-cmp2)</code> · <code>brak</code></p>
+<span class="etk">Uwagi</span><p class="mut">Jedyne wystąpienie („Co zastępujesz”).</p>
+<a class="btn" href="v7/carbomat-mata.html#co-zastepujesz-kolumny">Wersja bazowa – carbomat-mata.html</a>
+<span class="etk">Występuje na (1)</span><ul class="wyst"><li><a href="v7/carbomat-mata.html#co-zastepujesz-kolumny">CARBOMAT Mata Uprawowa</a> <span class="mut">(od: #co-zastepujesz)</span> <code>#co-zastepujesz-kolumny</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-21.png"><img src="ce-indeks/img/CE-21.png" alt="Zrzut CE-21 – Dwie kolumny przewag" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-34">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-34">CE-34</a></span><h3 class="ce__nazwa">Karty od → do</h3><span class="gr-et">Karty, kolumny, panele</span></div>
+<p>Siatka kart równej wysokości; karta czyta się jak zdanie na trzech poziomach: stan wyjściowy lub warunek u góry, łącznik ze strzałką, stan docelowy lub odpowiedź u dołu; opcjonalnie tag produktu i packshot obok.</p>
+<span class="etk">Mechanika</span><p>Jednorazowe wejście ze staggerem (reveal), po wejściu dociąga się kreska łącznika; w wariancie reguł cała karta jest linkiem do lightboxa i ma dwa układy (produkt pod zdaniem albo w prawej kolumnie od 1100 px).</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">numer</span><span class="chip">od: tag + zdanie</span><span class="chip">łącznik</span><span class="chip">do: tag + zdanie</span><span class="chip">packshot (opcjonalnie)</span></div>
+<span class="etk">Warianty</span><ul class="war"><li><code>przemiana</code> – cztery karty CARBOMAT ECO → CARBOMAT HUMIC</li><li><code>regula-z-packshotem</code> – warunek → odpowiedź + produkt, karta jako link (Kukurydza)</li></ul>
+<span class="etk">Kod</span><p><code>carbomat-humic.css (c5-diff) / kukurydza.css ===== 35 (u-rl)</code> · <code>carbomat-humic.js ===== 35 / uprawa.js u-reveal</code></p>
+<a class="btn" href="v7/carbomat-humic.html#roznice-karty">Wersja bazowa – carbomat-humic.html</a>
+<span class="etk">Występuje na (2)</span><ul class="wyst"><li><a href="v7/carbomat-humic.html#roznice-karty">CARBOMAT HUMIC</a> <span class="mut">(wariant: przemiana · od: #roznice-eco-humic)</span> <code>#roznice-karty</code></li><li><a href="v7/kukurydza.html#u-wybor-karty">Kukurydza</a> <span class="mut">(wariant: regula-z-packshotem · od: #u-wybor)</span> <code>#u-wybor-karty</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-34.png"><img src="ce-indeks/img/CE-34.png" alt="Zrzut CE-34 – Karty od → do" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-36">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-36">CE-36</a></span><h3 class="ce__nazwa">Wiersz zdjęcie | opis</h3><span class="gr-et">Karty, kolumny, panele</span></div>
+<p>Dwie równe kolumny wyrównane do środka: kadr zdjęcia 4:5 z jednej strony, z drugiej nazwa, zajawka, blok dawek i przycisk; kolejne wiersze naprzemiennie.</p>
+<span class="etk">Mechanika</span><p>Parallax kadru z pozycji przewijania, wejście kolumny opisu (reveal), przycisk otwiera pop-up z pełną kartą (CE-37); poniżej 900 px zdjęcie nad tekstem. Moduł 40.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">kadr zdjęcia</span><span class="chip">h3</span><span class="chip">zajawka</span><span class="chip">blok dawek</span><span class="chip">przycisk</span></div>
+<span class="etk">Warianty</span><ul class="war"><li><code>odwrocony</code> – opis po lewej, zdjęcie po prawej</li></ul>
+<span class="etk">Kod</span><p><code>carbomat-humic.css (c5-who)</code> · <code>carbomat-humic.js ===== 40</code></p>
+<a class="btn" href="v7/carbomat-humic.html#wariant-pro">Wersja bazowa – carbomat-humic.html</a>
+<span class="etk">Występuje na (2)</span><ul class="wyst"><li><a href="v7/carbomat-humic.html#wariant-pro">CARBOMAT HUMIC</a> <span class="mut">(od: #ktory-dla-mnie)</span> <code>#wariant-pro</code></li><li><a href="v7/carbomat-humic.html#wariant-hobby">CARBOMAT HUMIC</a> <span class="mut">(wariant: odwrocony)</span> <code>#wariant-hobby</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-36.png"><img src="ce-indeks/img/CE-36.png" alt="Zrzut CE-36 – Wiersz zdjęcie | opis" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-38">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-38">CE-38</a></span><h3 class="ce__nazwa">Dwa panele fotograficzne</h3><span class="gr-et">Karty, kolumny, panele</span></div>
+<p>Dwa równe panele fotograficzne obok siebie, każdy z tytułem, dwoma akapitami i przyciskiem przy dolnej krawędzi.</p>
+<span class="etk">Mechanika</span><p>Parallax zdjęć i wejście paneli ze staggerem (reveal); poniżej 900 px jeden pod drugim. Moduł 80.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">2 panele: zdjęcie, tytuł, akapity, przycisk</span></div>
+<span class="etk">Kod</span><p><code>carbomat-humic.css (c5-when)</code> · <code>carbomat-humic.js ===== 80</code></p>
+<span class="etk">Uwagi</span><p class="mut">Zastąpił przypięte wiersze (CE-15) na CARBOMAT HUMIC (uwaga Mateusza 14.09).</p>
+<a class="btn" href="v7/carbomat-humic.html#sezon-panele">Wersja bazowa – carbomat-humic.html</a>
+<span class="etk">Występuje na (1)</span><ul class="wyst"><li><a href="v7/carbomat-humic.html#sezon-panele">CARBOMAT HUMIC</a> <span class="mut">(od: #sezon)</span> <code>#sezon-panele</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-38.png"><img src="ce-indeks/img/CE-38.png" alt="Zrzut CE-38 – Dwa panele fotograficzne" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-41">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-41">CE-41</a></span><h3 class="ce__nazwa">Bloki wiedzy (para)</h3><span class="gr-et">Karty, kolumny, panele</span></div>
+<p>Dwa bloki w ramkach: każdy z h3, wizualem (tabela, skala, wykres słupkowy, lista źródeł z kaflami liczb) i przypisem; obok siebie albo jeden pod drugim na całą szerokość.</p>
+<span class="etk">Mechanika</span><p>Jednorazowe wejście (reveal); paski wykresu rosną po wejściu w widok. Moduł 72.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">2 bloki: h3, wizual, przypis</span></div>
+<span class="etk">Warianty</span><ul class="war"><li><code>jeden-pod-drugim</code> – oba bloki na całą szerokość (--stack)</li></ul>
+<span class="etk">Kod</span><p><code>produkty.css (c5pr-two, c5pr-block)</code> · <code>produkty.js ===== 72</code></p>
+<a class="btn" href="v7/produkty.html#dowod-bloki">Wersja bazowa – produkty.html</a>
+<span class="etk">Występuje na (2)</span><ul class="wyst"><li><a href="v7/produkty.html#co-daja-bloki">Produkty Carbohort</a> <span class="mut">(wariant: jeden-pod-drugim)</span> <code>#co-daja-bloki</code></li><li><a href="v7/produkty.html#dowod-bloki">Produkty Carbohort</a> <span class="mut">(wariant: jeden-pod-drugim · od: #dowod)</span> <code>#dowod-bloki</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-41.png"><img src="ce-indeks/img/CE-41.png" alt="Zrzut CE-41 – Bloki wiedzy (para)" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-48">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-48">CE-48</a></span><h3 class="ce__nazwa">Karty biogramów</h3><span class="gr-et">Karty, kolumny, panele</span></div>
+<p>Dwie karty biogramów: zdjęcie, nazwisko i rola, pierwszy akapit widoczny, reszta pod przyciskiem „czytaj dalej”.</p>
+<span class="etk">Mechanika</span><p>Szuflada rozwijana na klik (panelSet); bez JS cała treść widoczna. Moduł 55.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">2 karty: zdjęcie, nazwisko, rola, akapity, przycisk</span></div>
+<span class="etk">Kod</span><p><code>prochnica-plus.css ===== 55 (pp-bio)</code> · <code>prochnica-plus.js ===== 55</code></p>
+<a class="btn" href="v7/prochnica-plus.html#koordynatorzy">Wersja bazowa – prochnica-plus.html</a>
+<span class="etk">Występuje na (1)</span><ul class="wyst"><li><a href="v7/prochnica-plus.html#koordynatorzy">Próchnica+</a> <code>#koordynatorzy</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-48.png"><img src="ce-indeks/img/CE-48.png" alt="Zrzut CE-48 – Karty biogramów" loading="lazy"></a></div>
+</article>
+
+<h2 class="gr" id="grupa-dane">Tabele, liczby, osie i formularze danych <span>· 9 CE</span></h2>
+
+<article class="ce" id="CE-22">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-22">CE-22</a></span><h3 class="ce__nazwa">Tabela</h3><span class="gr-et">Tabele, liczby, osie i formularze danych</span></div>
+<p>Samodzielna tabela w kontenerze przewijanym w poziomie na wąskich ekranach (cw-scrollx, tabindex), nagłówki kolumn, opcjonalnie packshoty w nagłówkach i przypis pod tabelą.</p>
+<span class="etk">Mechanika</span><p>Statyczna; wariant z klikalnymi wierszami otwiera lightbox; wiersze mogą wchodzić z reveal.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">thead</span><span class="chip">tbody</span><span class="chip">przypis</span></div>
+<span class="etk">Warianty</span><ul class="war"><li><code>porownawcza</code> – kolumny = porównywane pozycje (2×6, 3 podłoża)</li><li><code>danych</code> – kolumny liczbowe wyrównane do prawej (analiza, certyfikaty)</li><li><code>z-packshotami</code> – packshoty nad etykietami kolumn (CARBOHUMIC)</li><li><code>klikalne-wiersze</code> – klik w wiersz otwiera stronę lightboxa (Kukurydza)</li></ul>
+<span class="etk">Kod</span><p><code>per strona: c5-mt-cmp/c5-mt-tbl, c5hu-cmp, c5pr-cmp/c5pr-cert, u-mt</code> · <code>kukurydza.js ===== 80 (klikalne wiersze)</code></p>
+<span class="etk">Uwagi</span><p class="mut">Tabela technikaliów na Produktach to osobny CE-40 (ma własną mechanikę).</p>
+<a class="btn" href="v7/produkty.html#doglebowo-tabela">Wersja bazowa – produkty.html</a>
+<span class="etk">Występuje na (6)</span><ul class="wyst"><li><a href="v7/produkty.html#certyfikaty">Produkty Carbohort</a> <span class="mut">(wariant: danych)</span> <code>#certyfikaty</code></li><li><a href="v7/produkty.html#doglebowo-tabela">Produkty Carbohort</a> <span class="mut">(wariant: porownawcza · od: #doglebowo-czy-nalistnie)</span> <code>#doglebowo-tabela</code></li><li><a href="v7/carbohumic.html#doglebowo-tabela">CARBOHUMIC</a> <span class="mut">(wariant: z-packshotami · od: #doglebowo-czy-nalistnie)</span> <code>#doglebowo-tabela</code></li><li><a href="v7/carbomat-mata.html#co-zastepujesz-tabela">CARBOMAT Mata Uprawowa</a> <span class="mut">(wariant: porownawcza)</span> <code>#co-zastepujesz-tabela</code></li><li><a href="v7/carbomat-mata.html#analiza-tabela">CARBOMAT Mata Uprawowa</a> <span class="mut">(wariant: danych)</span> <code>#analiza-tabela</code></li><li><a href="v7/kukurydza.html#u-mieszaniny-tabela">Kukurydza</a> <span class="mut">(wariant: klikalne-wiersze)</span> <code>#u-mieszaniny-tabela</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-22.png"><img src="ce-indeks/img/CE-22.png" alt="Zrzut CE-22 – Tabela" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-24">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-24">CE-24</a></span><h3 class="ce__nazwa">Ciemny pas liczb</h3><span class="gr-et">Tabele, liczby, osie i formularze danych</span></div>
+<p>Ciemny kadr z marginesem 30 px na wysokość ekranu: tytuł u góry po lewej, wiersze „etykieta i podpis | wielka liczba z jednostką” rozdzielone cienkimi liniami.</p>
+<span class="etk">Mechanika</span><p>Wiersze wchodzą od dołu ze staggerem przy pierwszym wejściu w widok (Mata), cyfry odliczają od zera (Kukurydza) albo wjeżdżają kołowrotkiem (Próchnica+); bez JS i przy reduced-motion od razu wartości końcowe.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">tytuł</span><span class="chip">wiersze: etykieta, podpis, liczba, jednostka</span><span class="chip">źródło</span></div>
+<span class="etk">Warianty</span><ul class="war"><li><code>odliczanie</code> – liczby odliczają od zera (Kukurydza)</li><li><code>kolowrotek</code> – cyfry wjeżdżają kołowrotkiem (Próchnica+)</li></ul>
+<span class="etk">Kod</span><p><code>per strona: c5-stats (Mata), u-num (Kukurydza), pp-liczby (Próchnica+)</code> · <code>carbomat-mata.js ===== 55 / uprawa.js data-count / prochnica-plus.js ===== 60</code></p>
+<span class="etk">Uwagi</span><p class="mut">Wzór: serverobotics.com (uwaga Mateusza 14.09).</p>
+<a class="btn" href="v7/carbomat-mata.html#dowod-liczby">Wersja bazowa – carbomat-mata.html</a>
+<span class="etk">Występuje na (3)</span><ul class="wyst"><li><a href="v7/carbomat-mata.html#dowod-liczby">CARBOMAT Mata Uprawowa</a> <span class="mut">(od: #dowod)</span> <code>#dowod-liczby</code></li><li><a href="v7/kukurydza.html#u-liczby">Kukurydza</a> <span class="mut">(wariant: odliczanie)</span> <code>#u-liczby</code></li><li><a href="v7/prochnica-plus.html#w-liczbach">Próchnica+</a> <span class="mut">(wariant: kolowrotek)</span> <code>#w-liczbach</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-24.png"><img src="ce-indeks/img/CE-24.png" alt="Zrzut CE-24 – Ciemny pas liczb" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-40">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-40">CE-40</a></span><h3 class="ce__nazwa">Tabela technikaliów z podświetlaniem kolumn</h3><span class="gr-et">Tabele, liczby, osie i formularze danych</span></div>
+<p>Wyśrodkowany nagłówek, tabela pięciu kolumn (parametr | cztery rodziny) ze stopką przycisków dokumentów i przypisem, pod nią zasada ogólna i trzy karty uwag z przyciskami „pokaż w tabeli”, na końcu rząd przycisków nawigacyjnych.</p>
+<span class="etk">Mechanika</span><p>Od 900 px wiersz nagłówka przykleja się do górnej krawędzi; poniżej tabela przewija się w bok z przypiętą pierwszą kolumną; przycisk karty podświetla kolumnę (is-pick) z błyskiem nagłówka. Moduł 40.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">tabela</span><span class="chip">przyciski dokumentów</span><span class="chip">przypis</span><span class="chip">karty uwag sterujące</span><span class="chip">rząd przycisków</span></div>
+<span class="etk">Kod</span><p><code>produkty.css ===== 40 (c5pr-techsheet)</code> · <code>produkty.js ===== 40</code></p>
+<span class="etk">Uwagi</span><p class="mut">Osobny CE, nie port Parametrów (CE-10) – decyzja Mateusza 14.09.</p>
+<a class="btn" href="v7/produkty.html#porownanie">Wersja bazowa – produkty.html</a>
+<span class="etk">Występuje na (1)</span><ul class="wyst"><li><a href="v7/produkty.html#porownanie">Produkty Carbohort</a> <code>#porownanie</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-40.png"><img src="ce-indeks/img/CE-40.png" alt="Zrzut CE-40 – Tabela technikaliów z podświetlaniem kolumn" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-47">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-47">CE-47</a></span><h3 class="ce__nazwa">Przelicznik</h3><span class="gr-et">Tabele, liczby, osie i formularze danych</span></div>
+<p>Nagłówek, suwak powierzchni z wartością, siatka boksów wyników (wartość, jednostka, wiersz pomocniczy).</p>
+<span class="etk">Mechanika</span><p>Suwak przelicza dawki na bieżąco (data-calc w c5.js, grupowanie tysięcy), bez JS wartości domyślne.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">suwak</span><span class="chip">boksy wyników</span></div>
+<span class="etk">Kod</span><p><code>uprawa.css 16 (u-calc, u-out)</code> · <code>c5.js (przelicznik data-calc) + uprawa.js 13 (suwak)</code></p>
+<span class="etk">Uwagi</span><p class="mut">Ten sam mechanizm na ziemniak.html i borowka.html (poza zakresem 14.09).</p>
+<a class="btn" href="v7/kukurydza.html#u-skala">Wersja bazowa – kukurydza.html</a>
+<span class="etk">Występuje na (1)</span><ul class="wyst"><li><a href="v7/kukurydza.html#u-skala">Kukurydza</a> <code>#u-skala</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-47.png"><img src="ce-indeks/img/CE-47.png" alt="Zrzut CE-47 – Przelicznik" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-49">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-49">CE-49</a></span><h3 class="ce__nazwa">Harmonogram na osi</h3><span class="gr-et">Tabele, liczby, osie i formularze danych</span></div>
+<p>Jeden etap na ekran: duży rok i termin, tytuł i pełny opis po lewej, makieta zdjęcia po prawej; na dole oś czasu z węzłami wg daty, latami, znacznikiem „teraz” i licznikiem „n / N”, przyciski strzałek.</p>
+<span class="etk">Mechanika</span><p>Sterowanie wyłącznie strzałkami, klawiszami i klikiem w oś (bez przechwytywania przewijania); wyśrodkowanie węzła na osi. Moduł 65 (styl S1 z laboratorium).</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">etap: rok, termin, tytuł, opis, zdjęcie</span><span class="chip">oś z węzłami</span><span class="chip">licznik</span><span class="chip">strzałki</span></div>
+<span class="etk">Kod</span><p><code>prochnica-plus.css ===== 65 (pp-os)</code> · <code>prochnica-plus.js ===== 65</code></p>
+<span class="etk">Uwagi</span><p class="mut">Laboratorium stylów: v5/lab/harmonogram.html.</p>
+<a class="btn" href="v7/prochnica-plus.html#harmonogram">Wersja bazowa – prochnica-plus.html</a>
+<span class="etk">Występuje na (1)</span><ul class="wyst"><li><a href="v7/prochnica-plus.html#harmonogram">Próchnica+</a> <code>#harmonogram</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-49.png"><img src="ce-indeks/img/CE-49.png" alt="Zrzut CE-49 – Harmonogram na osi" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-50">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-50">CE-50</a></span><h3 class="ce__nazwa">Formularz</h3><span class="gr-et">Tabele, liczby, osie i formularze danych</span></div>
+<p>Dwie kolumny: formularz (pola, zgoda, przycisk) i zdjęcie zespołu.</p>
+<span class="etk">Mechanika</span><p>Demonstracyjny: nic nie wychodzi na serwer, walidacja i komunikat po wysłaniu w JS. Moduł 75.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">pola</span><span class="chip">zgoda</span><span class="chip">przycisk</span><span class="chip">zdjęcie</span></div>
+<span class="etk">Kod</span><p><code>prochnica-plus.css ===== 75 (pp-form)</code> · <code>prochnica-plus.js ===== 75</code></p>
+<span class="etk">Uwagi</span><p class="mut">Formularz kontaktu na kontakt.html poza zakresem 14.09.</p>
+<a class="btn" href="v7/prochnica-plus.html#zadaj-pytanie">Wersja bazowa – prochnica-plus.html</a>
+<span class="etk">Występuje na (1)</span><ul class="wyst"><li><a href="v7/prochnica-plus.html#zadaj-pytanie">Próchnica+</a> <code>#zadaj-pytanie</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-50.png"><img src="ce-indeks/img/CE-50.png" alt="Zrzut CE-50 – Formularz" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-51">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-51">CE-51</a></span><h3 class="ce__nazwa">Oś Gantta z filtrami</h3><span class="gr-et">Tabele, liczby, osie i formularze danych</span></div>
+<p>Filtry-chipy gospodarstw nad wykresem, wykres z wierszem na gospodarstwo i kaflami zdarzeń w kolumnach miesięcy i lat, karta opisu jako dymek i wersja przypięta pod wykresem.</p>
+<span class="etk">Mechanika</span><p>Wykres budowany z ukrytego źródła treści (osie kamieni per gospodarstwo), filtry przełączają wiersze, klik w kafel otwiera opis; bez JS widoczne pionowe osie kamieni. Moduł 85.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">filtry</span><span class="chip">wykres</span><span class="chip">kafle zdarzeń</span><span class="chip">karta opisu</span><span class="chip">źródło treści (osie kamieni, wersja bez JS)</span></div>
+<span class="etk">Kod</span><p><code>prochnica-plus.css ===== 85 (pp-gt)</code> · <code>prochnica-plus.js ===== 85</code></p>
+<a class="btn" href="v7/prochnica-plus.html#etapy-gantt">Wersja bazowa – prochnica-plus.html</a>
+<span class="etk">Występuje na (1)</span><ul class="wyst"><li><a href="v7/prochnica-plus.html#etapy-gantt">Próchnica+</a> <code>#etapy-gantt</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-51.png"><img src="ce-indeks/img/CE-51.png" alt="Zrzut CE-51 – Oś Gantta z filtrami" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-52">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-52">CE-52</a></span><h3 class="ce__nazwa">Pasek pól wyboru</h3><span class="gr-et">Tabele, liczby, osie i formularze danych</span></div>
+<p>Siatka pól select z etykietami (jedno pole albo cztery w ramce), wysokość pola 44 px.</p>
+<span class="etk">Mechanika</span><p>W makiecie pola niczego nie filtrują (brak obsługi w JS).</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">pola select z etykietami</span></div>
+<span class="etk">Warianty</span><ul class="war"><li><code>w-ramce</code> – cztery pola w ramce z nagłówkiem Filtry</li></ul>
+<span class="etk">Kod</span><p><code>prochnica-plus.css ===== 90 (pp-selects, pp-filters)</code> · <code>brak</code></p>
+<a class="btn" href="v7/prochnica-plus.html#wyniki-filtry">Wersja bazowa – prochnica-plus.html</a>
+<span class="etk">Występuje na (2)</span><ul class="wyst"><li><a href="v7/prochnica-plus.html#wyniki-wybor">Próchnica+</a> <span class="mut">(od: #wyniki)</span> <code>#wyniki-wybor</code></li><li><a href="v7/prochnica-plus.html#wyniki-filtry">Próchnica+</a> <span class="mut">(wariant: w-ramce)</span> <code>#wyniki-filtry</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-52.png"><img src="ce-indeks/img/CE-52.png" alt="Zrzut CE-52 – Pasek pól wyboru" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-53">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-53">CE-53</a></span><h3 class="ce__nazwa">Lista wierszy z akcją</h3><span class="gr-et">Tabele, liczby, osie i formularze danych</span></div>
+<p>Lista wierszy rozdzielonych cienkimi liniami: tytuł | metryka | przycisk po prawej; pod listą pusty stan w ramce kreskowanej.</p>
+<span class="etk">Mechanika</span><p>Fade-in wierszy; przyciski wyłączone, gdy materiał w przygotowaniu.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">wiersze: tytuł, metryka, przycisk</span><span class="chip">pusty stan</span></div>
+<span class="etk">Kod</span><p><code>prochnica-plus.css ===== 90 (pp-reports)</code> · <code>prochnica-plus.js ===== 02 (reveal)</code></p>
+<a class="btn" href="v7/prochnica-plus.html#wyniki-raporty">Wersja bazowa – prochnica-plus.html</a>
+<span class="etk">Występuje na (1)</span><ul class="wyst"><li><a href="v7/prochnica-plus.html#wyniki-raporty">Próchnica+</a> <code>#wyniki-raporty</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-53.png"><img src="ce-indeks/img/CE-53.png" alt="Zrzut CE-53 – Lista wierszy z akcją" loading="lazy"></a></div>
+</article>
+
+<h2 class="gr" id="grupa-noty-i-cta">Noty, boksy, pasy CTA, cytaty <span>· 7 CE</span></h2>
+
+<article class="ce" id="CE-18">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-18">CE-18</a></span><h3 class="ce__nazwa">CTA wyśrodkowane</h3><span class="gr-et">Noty, boksy, pasy CTA, cytaty</span></div>
+<p>Wyśrodkowany H2 (opcjonalnie lead) i rząd przycisków.</p>
+<span class="etk">Mechanika</span><p>Statyczne.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">h2</span><span class="chip">lead (opcjonalnie)</span><span class="chip">rząd przycisków</span></div>
+<span class="etk">Warianty</span><ul class="war"><li><code>na-pasie</code> – na jasnym pasie c5-band w środku strony (CARBOHUMIC „Dobierz produkt”)</li><li><code>z-leadem</code> – z akapitem pod nagłówkiem (Mata)</li></ul>
+<span class="etk">Kod</span><p><code>&lt;strona&gt;.css /* --- CTA końcowe */ (c5-cta)</code> · <code>brak</code></p>
+<a class="btn" href="v7/carbomat.html#cta-koncowe">Wersja bazowa – carbomat.html</a>
+<span class="etk">Występuje na (6)</span><ul class="wyst"><li><a href="v7/carbomat.html#cta-koncowe">CARBOMAT ECO</a> <code>#cta-koncowe</code></li><li><a href="v7/carbohumic.html#dobierz-produkt">CARBOHUMIC</a> <span class="mut">(wariant: na-pasie)</span> <code>#dobierz-produkt</code></li><li><a href="v7/carbohumic.html#cta-koncowe">CARBOHUMIC</a> <code>#cta-koncowe</code></li><li><a href="v7/carbomat-humic.html#cta-koncowe">CARBOMAT HUMIC</a> <code>#cta-koncowe</code></li><li><a href="v7/carbomat-mata.html#cta-koncowe">CARBOMAT Mata Uprawowa</a> <span class="mut">(wariant: z-leadem)</span> <code>#cta-koncowe</code></li><li><a href="v7/produkty.html#cta-koncowe">Produkty Carbohort</a> <code>#cta-koncowe</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-18.png"><img src="ce-indeks/img/CE-18.png" alt="Zrzut CE-18 – CTA wyśrodkowane" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-23">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-23">CE-23</a></span><h3 class="ce__nazwa">Pas CTA</h3><span class="gr-et">Noty, boksy, pasy CTA, cytaty</span></div>
+<p>Pas na szerokość kolumny między kreską górną (i dolną): po lewej tekst (zdanie wytłuszczone + zdanie drugorzędne, opcjonalnie ikona albo h4 w osobnej kolumnie), po prawej jeden lub dwa przyciski.</p>
+<span class="etk">Mechanika</span><p>Statyczne; poniżej 900 px przyciski schodzą pod tekst.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">kreski</span><span class="chip">ikona (opcjonalnie)</span><span class="chip">tekst</span><span class="chip">h4 (opcjonalnie)</span><span class="chip">1–2 przyciski</span></div>
+<span class="etk">Warianty</span><ul class="war"><li><code>z-ikona</code> – ikona przed tekstem, kreski góra i dół</li><li><code>kreski-gora-dol</code> – bez ikony, kreski góra i dół (Mata cross-sell)</li><li><code>dwa-przyciski</code> – tekst i dwa przyciski, tylko kreska górna</li><li><code>z-naglowkiem</code> – h4 w lewej kolumnie, tekst i przycisk w prawej</li></ul>
+<span class="etk">Kod</span><p><code>per strona: c5-cmp2__cta, c5-mt-cross, c5-proofs__cta, c5pr-bar, c5-who__note</code> · <code>brak</code></p>
+<span class="etk">Uwagi</span><p class="mut">Pięć różnych klas o tym samym kształcie – kandydat do jednej klasy w fazie 2.</p>
+<a class="btn" href="v7/produkty.html#wg-potrzeby-pas">Wersja bazowa – produkty.html</a>
+<span class="etk">Występuje na (7)</span><ul class="wyst"><li><a href="v7/produkty.html#wg-potrzeby-pas">Produkty Carbohort</a> <span class="mut">(wariant: z-ikona)</span> <code>#wg-potrzeby-pas</code></li><li><a href="v7/produkty.html#doglebowo-pas">Produkty Carbohort</a> <span class="mut">(wariant: z-ikona)</span> <code>#doglebowo-pas</code></li><li><a href="v7/carbomat-humic.html#ktory-dla-mnie-ostrzezenie">CARBOMAT HUMIC</a> <span class="mut">(wariant: z-ikona)</span> <code>#ktory-dla-mnie-ostrzezenie</code></li><li><a href="v7/carbomat-mata.html#co-zastepujesz-cta">CARBOMAT Mata Uprawowa</a> <span class="mut">(wariant: dwa-przyciski)</span> <code>#co-zastepujesz-cta</code></li><li><a href="v7/carbomat-mata.html#czym-jest-cross">CARBOMAT Mata Uprawowa</a> <span class="mut">(wariant: kreski-gora-dol)</span> <code>#czym-jest-cross</code></li><li><a href="v7/carbomat-mata.html#dowod-cta">CARBOMAT Mata Uprawowa</a> <span class="mut">(wariant: z-naglowkiem)</span> <code>#dowod-cta</code></li><li><a href="v7/carbomat-mata.html#przygotowanie-cross">CARBOMAT Mata Uprawowa</a> <span class="mut">(wariant: kreski-gora-dol)</span> <code>#przygotowanie-cross</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-23.png"><img src="ce-indeks/img/CE-23.png" alt="Zrzut CE-23 – Pas CTA" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-27">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-27">CE-27</a></span><h3 class="ce__nazwa">Blok materiału</h3><span class="gr-et">Noty, boksy, pasy CTA, cytaty</span></div>
+<p>Wąski poziomy blok: kwadratowa ikona po lewej, po prawej tytuł, zdanie opisu i mały przycisk.</p>
+<span class="etk">Mechanika</span><p>Statyczne.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">ikona</span><span class="chip">tytuł</span><span class="chip">opis</span><span class="chip">przycisk</span></div>
+<span class="etk">Warianty</span><ul class="war"><li><code>dokument</code> – ikona dokumentu, materiał do pobrania</li></ul>
+<span class="etk">Kod</span><p><code>carbomat-mata.css (c5-mt-media)</code> · <code>brak</code></p>
+<span class="etk">Uwagi</span><p class="mut">Przydatny także w Centrum wiedzy.</p>
+<a class="btn" href="v7/carbomat-mata.html#przygotowanie-film">Wersja bazowa – carbomat-mata.html</a>
+<span class="etk">Występuje na (2)</span><ul class="wyst"><li><a href="v7/carbomat-mata.html#dowod-pomidor-material">CARBOMAT Mata Uprawowa</a> <span class="mut">(wariant: dokument · w CE-25)</span> <code>#dowod-pomidor-material</code></li><li><a href="v7/carbomat-mata.html#przygotowanie-film">CARBOMAT Mata Uprawowa</a> <code>#przygotowanie-film</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-27.png"><img src="ce-indeks/img/CE-27.png" alt="Zrzut CE-27 – Blok materiału" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-28">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-28">CE-28</a></span><h3 class="ce__nazwa">Boks w ramce</h3><span class="gr-et">Noty, boksy, pasy CTA, cytaty</span></div>
+<p>Obramowany boks (1 px) z tytułem i akapitem; wnętrze w jednej lub dwóch kolumnach, opcjonalnie rozpiska dl, lista opakowań, przypis i przyciski.</p>
+<span class="etk">Mechanika</span><p>Statyczne; poniżej 900 px jedna kolumna.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">tytuł</span><span class="chip">akapit</span><span class="chip">rozpiska dl / lista / przypis (opcjonalnie)</span><span class="chip">przyciski (opcjonalnie)</span></div>
+<span class="etk">Warianty</span><ul class="war"><li><code>z-przyciskiem</code> – tytuł, akapit z oznaczeniem braku danych, przycisk (Mata)</li><li><code>z-rozpiska</code> – nazwa i akapit | rozpiska dl (Carbohumic)</li><li><code>lista-opakowan</code> – etykieta i zdanie | wiersze opakowań z miniaturami (Carbohumic)</li><li><code>cross-sell</code> – h3, akapit, przypis, rząd przycisków (Carbohumic)</li></ul>
+<span class="etk">Kod</span><p><code>per strona: c5-mt-note (Mata), c5hu-note/c5hu-extra/c5hu-foliar (Carbohumic)</code> · <code>brak</code></p>
+<span class="etk">Uwagi</span><p class="mut">Różni się od CE-31 (nota) tym, że niesie treść blokową, nie jedno zdanie z ikoną.</p>
+<a class="btn" href="v7/carbomat-mata.html#analiza-nota">Wersja bazowa – carbomat-mata.html</a>
+<span class="etk">Występuje na (6)</span><ul class="wyst"><li><a href="v7/carbomat-mata.html#analiza-nota">CARBOMAT Mata Uprawowa</a> <span class="mut">(wariant: z-przyciskiem)</span> <code>#analiza-nota</code></li><li><a href="v7/carbomat-mata.html#ekonomia-nota">CARBOMAT Mata Uprawowa</a> <span class="mut">(wariant: z-przyciskiem)</span> <code>#ekonomia-nota</code></li><li><a href="v7/carbohumic.html#ktory-dla-mnie-opakowania">CARBOHUMIC</a> <span class="mut">(wariant: lista-opakowan)</span> <code>#ktory-dla-mnie-opakowania</code></li><li><a href="v7/carbohumic.html#jak-stosowac-zaprawianie">CARBOHUMIC</a> <span class="mut">(wariant: z-rozpiska)</span> <code>#jak-stosowac-zaprawianie</code></li><li><a href="v7/carbohumic.html#jak-stosowac-dodatkowe">CARBOHUMIC</a> <span class="mut">(wariant: z-rozpiska)</span> <code>#jak-stosowac-dodatkowe</code></li><li><a href="v7/carbohumic.html#doglebowo-nalistne">CARBOHUMIC</a> <span class="mut">(wariant: cross-sell)</span> <code>#doglebowo-nalistne</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-28.png"><img src="ce-indeks/img/CE-28.png" alt="Zrzut CE-28 – Boks w ramce" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-31">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-31">CE-31</a></span><h3 class="ce__nazwa">Nota</h3><span class="gr-et">Noty, boksy, pasy CTA, cytaty</span></div>
+<p>Obramowany pas z małą ikoną i jednym–dwoma zdaniami (wstęp wytłuszczony), opcjonalnie przycisk po prawej; wariant „brak danych” to akapit w ramce z kreski przerywanej.</p>
+<span class="etk">Mechanika</span><p>Statyczne (role note).</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">ikona</span><span class="chip">zdanie główne</span><span class="chip">zdanie wyjaśniające (opcjonalnie)</span><span class="chip">przycisk (opcjonalnie)</span></div>
+<span class="etk">Warianty</span><ul class="war"><li><code>miekka</code> – mniejsza ikona, tło strony</li><li><code>z-przyciskiem</code> – ciemny przycisk po prawej</li><li><code>brak-danych</code> – ramka z kreski przerywanej, bez ikony (helper c5-gap)</li></ul>
+<span class="etk">Kod</span><p><code>per strona: c5hu-warn/c5hu-faqnote, c5-gap, u-callout, pp-note</code> · <code>brak</code></p>
+<span class="etk">Uwagi</span><p class="mut">Wewnątrz innych bloków (przypis pod tabelą, ostrzeżenie w lightboxie) nota jest częścią bloku, nie osobnym CE.</p>
+<a class="btn" href="v7/carbohumic.html#ktory-dla-mnie-ostrzezenie">Wersja bazowa – carbohumic.html</a>
+<span class="etk">Występuje na (8)</span><ul class="wyst"><li><a href="v7/carbohumic.html#ktory-dla-mnie-ostrzezenie">CARBOHUMIC</a> <span class="mut">(wariant: z-przyciskiem)</span> <code>#ktory-dla-mnie-ostrzezenie</code></li><li><a href="v7/carbohumic.html#jak-stosowac-nota-1">CARBOHUMIC</a> <span class="mut">(wariant: miekka)</span> <code>#jak-stosowac-nota-1</code></li><li><a href="v7/carbohumic.html#jak-stosowac-nota-2">CARBOHUMIC</a> <code>#jak-stosowac-nota-2</code></li><li><a href="v7/carbohumic.html#z-czym-laczyc-nota">CARBOHUMIC</a> <span class="mut">(wariant: miekka)</span> <code>#z-czym-laczyc-nota</code></li><li><a href="v7/carbohumic.html#faq-nota">CARBOHUMIC</a> <span class="mut">(wariant: miekka · w CE-17)</span> <code>#faq-nota</code></li><li><a href="v7/carbomat-humic.html#sezon-nota">CARBOMAT HUMIC</a> <span class="mut">(wariant: brak-danych)</span> <code>#sezon-nota</code></li><li><a href="v7/kukurydza.html#u-wybor-nota">Kukurydza</a> <code>#u-wybor-nota</code></li><li><a href="v7/prochnica-plus.html#etapy-nota">Próchnica+</a> <code>#etapy-nota</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-31.png"><img src="ce-indeks/img/CE-31.png" alt="Zrzut CE-31 – Nota" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-33">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-33">CE-33</a></span><h3 class="ce__nazwa">Cytat lub zasada</h3><span class="gr-et">Noty, boksy, pasy CTA, cytaty</span></div>
+<p>Wyróżnione jedno zdanie lub akapit: duży cytat z pionową kreską i cudzysłowami z CSS, ciemny boks z etykietą wersalikami, albo pasek pod grubą kreską z etykietą i zdaniem.</p>
+<span class="etk">Mechanika</span><p>Statyczne (opcjonalnie reveal).</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">etykieta (opcjonalnie)</span><span class="chip">zdanie lub akapit</span></div>
+<span class="etk">Warianty</span><ul class="war"><li><code>ciemny-boks</code> – ciemne tło, etykieta wersalikami, duży akapit (Kukurydza)</li><li><code>pasek-zasady</code> – gruba kreska górna, etykieta i wytłuszczone zdanie w jednym wierszu (Carbohumic)</li><li><code>cytat</code> – blockquote z kreską i cudzysłowami</li></ul>
+<span class="etk">Kod</span><p><code>per strona: pp-quote, u-quote, c5hu-rule</code> · <code>brak</code></p>
+<a class="btn" href="v7/prochnica-plus.html#rzetelnosc-cytat">Wersja bazowa – prochnica-plus.html</a>
+<span class="etk">Występuje na (3)</span><ul class="wyst"><li><a href="v7/prochnica-plus.html#rzetelnosc-cytat">Próchnica+</a> <span class="mut">(wariant: cytat · od: #rzetelnosc)</span> <code>#rzetelnosc-cytat</code></li><li><a href="v7/carbohumic.html#jak-stosowac-zasada">CARBOHUMIC</a> <span class="mut">(wariant: pasek-zasady)</span> <code>#jak-stosowac-zasada</code></li><li><a href="v7/kukurydza.html#u-fakty-zasada">Kukurydza</a> <span class="mut">(wariant: ciemny-boks)</span> <code>#u-fakty-zasada</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-33.png"><img src="ce-indeks/img/CE-33.png" alt="Zrzut CE-33 – Cytat lub zasada" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-35">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-35">CE-35</a></span><h3 class="ce__nazwa">Panel kryteriów z CTA</h3><span class="gr-et">Noty, boksy, pasy CTA, cytaty</span></div>
+<p>Szeroki jasnoszary panel w dwóch kolumnach: h3 i rząd dwóch przycisków po lewej, lista punktów z ikoną check w dwóch kolumnach po prawej.</p>
+<span class="etk">Mechanika</span><p>Jednorazowe wejście w widok (reveal); statyczny.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">h3</span><span class="chip">rząd 2 przycisków</span><span class="chip">lista punktów z check</span></div>
+<span class="etk">Kod</span><p><code>carbomat-humic.css (c5-pick)</code> · <code>carbomat-humic.js reveal</code></p>
+<span class="etk">Uwagi</span><p class="mut">Kandydat na blok „dla kogo / kiedy wybrać” na pozostałych stronach produktowych.</p>
+<a class="btn" href="v7/carbomat-humic.html#roznice-dla-ciebie">Wersja bazowa – carbomat-humic.html</a>
+<span class="etk">Występuje na (1)</span><ul class="wyst"><li><a href="v7/carbomat-humic.html#roznice-dla-ciebie">CARBOMAT HUMIC</a> <code>#roznice-dla-ciebie</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-35.png"><img src="ce-indeks/img/CE-35.png" alt="Zrzut CE-35 – Panel kryteriów z CTA" loading="lazy"></a></div>
+</article>
+
+<h2 class="gr" id="grupa-nakladki">Nakładki: lightbox i pop-up <span>· 2 CE</span></h2>
+
+<article class="ce" id="CE-25">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-25">CE-25</a></span><h3 class="ce__nazwa">Lightbox wielostronicowy</h3><span class="gr-et">Nakładki: lightbox i pop-up</span></div>
+<p>Nakładka na całą stronę z panelem przewijanym: przycisk zamknięcia, N stron treści (każda z nagłówkiem i stopką), licznik „n / N”.</p>
+<span class="etk">Mechanika</span><p>Otwierany linkiem data-lightbox-open albo hashem, fokus-trap, Escape, tło inert i zablokowane przewijanie; bez JS strony renderują się jako zwykłe bloki pod sekcją. Moduł 55 (Mata) / uprawa.js (Kukurydza).</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">nakładka</span><span class="chip">panel</span><span class="chip">przycisk zamknięcia</span><span class="chip">strony</span><span class="chip">licznik</span></div>
+<span class="etk">Warianty</span><ul class="war"><li><code>popup-produktu</code> – strona = mapa zastosowań produktu z packshotem w nagłówku i własną stopką (Kukurydza)</li></ul>
+<span class="etk">Kod</span><p><code>carbomat-mata.css ===== 55 (c5-lb) / uprawa.css 8 (u-lightbox)</code> · <code>carbomat-mata.js ===== 55 / uprawa.js lbEgzemplarz</code></p>
+<span class="etk">Uwagi</span><p class="mut">Treść stron lightboxa to zwykłe klocki (np. CE-20) oznaczone jako zagnieżdżone.</p>
+<a class="btn" href="v7/carbomat-mata.html#dowod-lb">Wersja bazowa – carbomat-mata.html</a>
+<span class="etk">Występuje na (3)</span><ul class="wyst"><li><a href="v7/carbomat-mata.html#dowod-lb">CARBOMAT Mata Uprawowa</a> <code>#dowod-lb</code></li><li><a href="v7/kukurydza.html#u-lightbox-produkty">Kukurydza</a> <span class="mut">(wariant: popup-produktu)</span> <code>#u-lightbox-produkty</code></li><li><a href="v7/kukurydza.html#u-lightbox">Kukurydza</a> <code>#u-lightbox</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-25.png"><img src="ce-indeks/img/CE-25.png" alt="Zrzut CE-25 – Lightbox wielostronicowy" loading="lazy"></a></div>
+</article>
+
+<article class="ce" id="CE-37">
+<div class="ce__info">
+<div class="ce__head"><span class="kod"><a href="#CE-37">CE-37</a></span><h3 class="ce__nazwa">Pop-up karty</h3><span class="gr-et">Nakładki: lightbox i pop-up</span></div>
+<p>Dialog na środku ekranu z tłem przyciemnionym: nagłówek (nazwa, packshot lub zdjęcie), treść karty w jednej kolumnie, stopka z przyciskami, przycisk zamknięcia.</p>
+<span class="etk">Mechanika</span><p>Otwierany przyciskiem, fokus-trap, Escape, tło inert; wariant z jednym dialogiem klonuje treść z ukrytego źródła na stronie; bez JS treść stoi w biegu strony. Moduły 40 (HUMIC) / 52 (Próchnica+).</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">nakładka</span><span class="chip">nagłówek</span><span class="chip">treść</span><span class="chip">stopka</span><span class="chip">zamknięcie</span></div>
+<span class="etk">Warianty</span><ul class="war"><li><code>jeden-dialog</code> – jeden dialog na stronę, treść podmieniana z bloków źródłowych (Próchnica+ profile)</li></ul>
+<span class="etk">Kod</span><p><code>carbomat-humic.css (c5-pop) / prochnica-plus.css ===== 52</code> · <code>carbomat-humic.js ===== 40 / prochnica-plus.js ===== 52</code></p>
+<span class="etk">Uwagi</span><p class="mut">Pop-up wg lightboxu kukurydzy (CE-25).</p>
+<a class="btn" href="v7/carbomat-humic.html#pop-pro">Wersja bazowa – carbomat-humic.html</a>
+<span class="etk">Występuje na (3)</span><ul class="wyst"><li><a href="v7/carbomat-humic.html#pop-pro">CARBOMAT HUMIC</a> <code>#pop-pro</code></li><li><a href="v7/carbomat-humic.html#pop-hobby">CARBOMAT HUMIC</a> <code>#pop-hobby</code></li><li><a href="v7/prochnica-plus.html#profile">Próchnica+</a> <span class="mut">(wariant: jeden-dialog)</span> <code>#profile</code></li></ul>
+</div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-37.png"><img src="ce-indeks/img/CE-37.png" alt="Zrzut CE-37 – Pop-up karty" loading="lazy"></a></div>
+</article>
+
+  <footer>Wygenerowano 14.09.2026 z <code>ce-rejestr.js</code> i znaczników <code>data-ce</code>
+  w 35 stronach – nie edytuj ręcznie, zmieniasz rejestr albo kod stron i uruchamiasz
+  <code>zasoby/kod/_narzedzia/ce-indeks.py</code>.<br>
+  Lista wystąpień w postaci maszynowej: <a href="ce-indeks/wystapienia.json">wystapienia.json</a>.</footer>
+</div>

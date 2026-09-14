@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carbohort — Koszyk</title>
+<meta name="description" content="Koszyk Carbohort — przegląd pozycji i podsumowanie wartości przed przejściem do kasy. Ceny bazowe jawne; kupujący profesjonalnie składa zamówienie z Twoją ceną w panelu B2B.">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="wireframe.css">
+<link rel="stylesheet" href="cw.css">
+<script src="../status.js"></script>
+<script src="chrome.js"></script>
+</head>
+<body>
+<a class="wf-sr-only" href="#main">Przejdź do treści</a>
+
+<cw-icons></cw-icons>
+
+<cw-navbar data-current="sklep"></cw-navbar>
+
+<main id="main">
+
+  <!-- ===== NAGŁÓWEK + BREADCRUMB ===== -->
+  <section class="wf-section wf-section--sm">
+    <div class="wf-container wf-stack wf-stack--4">
+      <nav class="wf-breadcrumb" aria-label="Ścieżka">
+        <ol>
+          <li><a class="wf-link--quiet" href="home.html">Start</a></li>
+          <li><span class="wf-breadcrumb__sep" aria-hidden="true"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-right"></use></svg></span></li>
+          <li><a class="wf-link--quiet" href="sklep.html">Sklep</a></li>
+          <li><span class="wf-breadcrumb__sep" aria-hidden="true"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-right"></use></svg></span></li>
+          <li><span aria-current="page" class="wf-w-semibold">Koszyk</span></li>
+        </ol>
+      </nav>
+      <div class="wf-stack wf-stack--3" style="max-width:680px;">
+        <span class="wf-overline">Krok 1 z 3 · zakup dla siebie</span>
+        <h1 class="wf-h1">Koszyk</h1>
+        <p class="wf-lead wf-t-secondary">Sprawdź pozycje i podsumowanie wartości, zanim przejdziesz do kasy. Ceny bazowe są jawne i liczone tutaj; kupujący profesjonalnie składa zamówienie z indywidualną ceną w panelu B2B.</p>
+      </div>
+      <div class="wf-alert">
+        <span class="wf-alert__icon"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-info-circle"></use></svg></span>
+        <div><span class="wf-alert__title">Ceny bazowe jawne — cena PRO po zalogowaniu.</span> <span class="wf-small wf-t-secondary">W tym koszyku liczymy ceny bazowe drobnicy (np. „od 89 zł"). Kupujący profesjonalnie nie widzi tu kwoty — rabaty są indywidualne per klient, a „Twoja cena" pojawia się dopiero po zalogowaniu, gdzie składasz zamówienie w <a class="wf-link" href="platforma-b2b.html">Platformie B2B</a>.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== KOSZYK — pozycje + podsumowanie ===== -->
+  <section class="wf-section wf-section--subtle">
+    <div class="wf-container">
+      <div class="cw-cart-grid">
+
+        <!-- LEWA — pozycje (renderowane przez JS z sessionStorage cw_cart) -->
+        <div class="wf-stack wf-stack--5" style="min-width: 0;">
+
+          <!-- Pusty stan — pokazywany, gdy koszyk pusty -->
+          <div class="wf-empty wf-center wf-stack wf-stack--3 wf-hidden" data-cart-empty hidden>
+            <span class="wf-ph wf-ph--icon" aria-hidden="true"><svg class="wf-icon wf-icon--lg" aria-hidden="true"><use href="#ti-shopping-cart"></use></svg></span>
+            <h2 class="wf-h4">Twój koszyk jest pusty</h2>
+            <p class="wf-small wf-t-secondary" style="max-width:36ch;">Dodaj produkty ze sklepu albo poproś Konfigurator o dobór dla Twojej uprawy.</p>
+            <div class="wf-cluster wf-gap-2 wf-center">
+              <a class="wf-btn wf-btn--primary" href="sklep.html">Przejdź do sklepu</a>
+              <a class="wf-btn wf-btn--secondary" href="konfigurator.html">Otwórz Konfigurator</a>
+            </div>
+          </div>
+
+          <!-- Tabela pozycji — pokazywana, gdy koszyk ma pozycje -->
+          <div class="wf-card wf-card--flush" data-cart-table hidden>
+            <div class="wf-card__body wf-stack wf-stack--1">
+              <h2 class="wf-h5">Pozycje w koszyku</h2>
+              <p class="wf-caption wf-t-secondary">Ceny bazowe; dawki i opakowania dobierzesz na stronie produktu.</p>
+            </div>
+            <div class="cw-scrollx" tabindex="0">
+              <table class="wf-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Produkt</th>
+                    <th scope="col" style="text-align:center;">Ilość</th>
+                    <th scope="col" style="text-align:right;">Cena jedn.</th>
+                    <th scope="col" style="text-align:right;">Wartość</th>
+                    <th scope="col"><span class="wf-sr-only">Akcje</span></th>
+                  </tr>
+                </thead>
+                <tbody data-cart-rows>
+                  <!-- Wiersze renderuje JS z sessionStorage cw_cart -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="wf-cluster wf-gap-3" data-cart-actions hidden>
+            <a class="wf-btn wf-btn--ghost wf-inline" href="sklep.html"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-left"></use></svg> Kontynuuj zakupy</a>
+            <button type="button" class="wf-btn wf-btn--link wf-inline" data-cart-clear><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-trash"></use></svg> Wyczyść koszyk</button>
+          </div>
+
+          <p class="wf-small wf-t-secondary wf-prose">Koszyk to krok 1 ścieżki dla kupujących dla siebie (koszyk, kasa, potwierdzenie). Kwoty wartości, dostawy i sumy są szacunkowe — finalne ceny i koszt dostawy wg cennika Carbohort. Profesjonalista świadomie nie widzi tu kwoty: ścieżka zamówienia biegnie przez Platformę B2B.</p>
+        </div>
+
+        <!-- PRAWA — podsumowanie (hidden, dopóki koszyk pusty; JS pokazuje) -->
+        <aside aria-label="Podsumowanie zamówienia" style="min-width: 0;">
+          <div class="wf-card" data-cart-summary hidden>
+            <div class="wf-card__body wf-stack wf-stack--4">
+              <h2 class="wf-h5">Podsumowanie</h2>
+              <dl class="wf-stack wf-stack--3" style="margin:0;">
+                <div class="wf-cluster wf-cluster--between">
+                  <dt class="wf-small wf-t-secondary">Wartość produktów</dt>
+                  <dd class="wf-body wf-w-semibold" style="margin:0;" data-cart-subtotal>—</dd>
+                </div>
+                <div class="wf-cluster wf-cluster--between">
+                  <dt class="wf-small wf-t-secondary">Dostawa <span class="wf-caption wf-t-tertiary">(szacunek)</span></dt>
+                  <dd class="wf-body" style="margin:0;" data-cart-shipping>do ustalenia</dd>
+                </div>
+                <div class="wf-divider"></div>
+                <div class="wf-cluster wf-cluster--between wf-items-center">
+                  <dt class="wf-body wf-w-semibold">Razem <span class="wf-caption wf-t-tertiary">(szacunek)</span></dt>
+                  <dd class="wf-h4" style="margin:0;" data-cart-total>—</dd>
+                </div>
+              </dl>
+              <a class="wf-btn wf-btn--primary wf-btn--lg wf-btn--block" href="checkout.html">Przejdź do kasy</a>
+              <div class="wf-alert">
+                <span class="wf-alert__icon"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-lock"></use></svg></span>
+                <div><span class="wf-alert__title">Kupujesz profesjonalnie?</span> <span class="wf-small wf-t-secondary">Po zalogowaniu zobaczysz Twoją cenę i złożysz zamówienie w <a class="wf-link" href="platforma-b2b.html">panelu B2B</a>.</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Zachęta przy pustym koszyku po stronie podsumowania -->
+          <div class="cw-ask wf-hidden" data-cart-summary-empty hidden>
+            <span class="wf-ph wf-ph--avatar" aria-hidden="true"></span>
+            <div class="cw-ask__txt wf-stack wf-stack--1">
+              <span class="wf-w-semibold wf-small">Nie wiesz, co wybrać?</span>
+              <span class="wf-small wf-t-secondary">Zapytaj dr Jurka o dobór i dawki — także w weekend.</span>
+            </div>
+            <button type="button" class="wf-btn wf-btn--secondary wf-btn--sm" data-jurek-open>Zapytaj dr Jurka</button>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<cw-footer></cw-footer>
+
+<cw-dock></cw-dock>
+
+<script src="cw.js"></script>
+
+<!-- ===== Koszyk — render z sessionStorage cw_cart (page-local) ===== -->
+<script>
+(function () {
+  var KEY = "cw_cart";
+
+  var emptyEl        = document.querySelector("[data-cart-empty]");
+  var tableEl        = document.querySelector("[data-cart-table]");
+  var rowsEl         = document.querySelector("[data-cart-rows]");
+  var actionsEl      = document.querySelector("[data-cart-actions]");
+  var summaryEl      = document.querySelector("[data-cart-summary]");
+  var summaryEmptyEl = document.querySelector("[data-cart-summary-empty]");
+  var subtotalEl     = document.querySelector("[data-cart-subtotal]");
+  var totalEl        = document.querySelector("[data-cart-total]");
+  var clearBtn       = document.querySelector("[data-cart-clear]");
+  if (!rowsEl) return;
+
+  // Demo pozycje — używane, gdy sessionStorage nie ma jeszcze struktury pozycji.
+  var DEMO = [
+    { name: "CARBOMAT Eco · worek 20 L", price: 89, qty: 2 },
+    { name: "CARBOHUMIC · kanister 5 L", price: 149, qty: 1 },
+    { name: "MAXI PLUS · butelka 1 L",   price: 49,  qty: 1 }
+  ];
+
+  function readCart() {
+    var raw;
+    try { raw = sessionStorage.getItem(KEY); } catch (_) { raw = null; }
+    if (raw == null || raw === "") return null;          // brak klucza → start z demo
+    var trimmed = raw.trim();
+    // sklep.html zapisuje cw_cart jako liczbę (licznik). 0 = pusty, >0 = pokaż pozycje demo.
+    if (/^\d+$/.test(trimmed)) {
+      var n = parseInt(trimmed, 10);
+      return n > 0 ? DEMO : [];
+    }
+    // Jeśli to JSON z pozycjami — użyj go.
+    try {
+      var parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) return parsed;
+    } catch (_) {}
+    return DEMO;
+  }
+
+  function formatPLN(value) {
+    return value.toLocaleString("pl-PL") + " zł";
+  }
+
+  function totalCount(items) {
+    return items.reduce(function (s, it) { return s + (parseInt(it.qty, 10) || 0); }, 0);
+  }
+
+  function persist(items) {
+    // Makieta: trzymamy licznik (zgodnie z cw.js), aby badge był spójny między stronami.
+    try { sessionStorage.setItem(KEY, String(totalCount(items))); } catch (_) {}
+  }
+
+  function syncBadge(count) {
+    var badges = document.querySelectorAll("[data-cart-count]");
+    Array.prototype.forEach.call(badges, function (el) {
+      el.textContent = String(count);
+      el.hidden = count === 0;
+    });
+    var cartLink = document.querySelector(".cw-cart");
+    if (cartLink) cartLink.setAttribute("aria-label", "Koszyk, " + count + " produktów");
+  }
+
+  function renderRow(items, index) {
+    var item = items[index];
+    var qty = parseInt(item.qty, 10) || 0;
+    var line = qty * (parseFloat(item.price) || 0);
+    var tr = document.createElement("tr");
+
+    var tdName = document.createElement("td");
+    var a = document.createElement("a");
+    a.className = "wf-link--quiet wf-w-semibold";
+    a.href = "pdp.html";
+    a.textContent = item.name;
+    tdName.appendChild(a);
+
+    var tdQty = document.createElement("td");
+    tdQty.style.textAlign = "center";
+    var group = document.createElement("div");
+    group.className = "wf-input-group";
+    group.style.display = "inline-flex";
+    group.style.width = "auto";
+    group.setAttribute("role", "group");
+    group.setAttribute("aria-label", "Ilość: " + item.name);
+    group.innerHTML =
+      '<button type="button" class="wf-addon wf-btn wf-btn--ghost" data-qty-dec aria-label="Zmniejsz ilość: ' + item.name + '"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-minus"></use></svg></button>' +
+      '<input class="wf-input" type="text" inputmode="numeric" value="' + qty + '" data-qty-val aria-label="Ilość, ' + item.name + '" style="width:3rem;text-align:center;" readonly>' +
+      '<button type="button" class="wf-addon wf-btn wf-btn--ghost" data-qty-inc aria-label="Zwiększ ilość: ' + item.name + '"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-plus"></use></svg></button>';
+    tdQty.appendChild(group);
+
+    var tdPrice = document.createElement("td");
+    tdPrice.style.textAlign = "right";
+    tdPrice.textContent = item.price ? formatPLN(item.price) : "—";
+
+    var tdLine = document.createElement("td");
+    tdLine.style.textAlign = "right";
+    tdLine.className = "wf-w-semibold";
+    tdLine.textContent = line ? formatPLN(line) : "—";
+
+    var tdAct = document.createElement("td");
+    tdAct.style.textAlign = "right";
+    var rm = document.createElement("button");
+    rm.type = "button";
+    rm.className = "wf-btn wf-btn--ghost wf-btn--icon wf-btn--sm";
+    rm.setAttribute("aria-label", "Usuń z koszyka: " + item.name);
+    rm.innerHTML = '<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-trash"></use></svg>';
+    tdAct.appendChild(rm);
+
+    tr.appendChild(tdName);
+    tr.appendChild(tdQty);
+    tr.appendChild(tdPrice);
+    tr.appendChild(tdLine);
+    tr.appendChild(tdAct);
+
+    function setQty(q) {
+      q = Math.max(0, q);
+      if (q === 0) { items.splice(index, 1); }
+      else { items[index].qty = q; }
+      persist(items);
+      render(items);
+    }
+    group.querySelector("[data-qty-dec]").addEventListener("click", function () { setQty(qty - 1); });
+    group.querySelector("[data-qty-inc]").addEventListener("click", function () { setQty(qty + 1); });
+    rm.addEventListener("click", function () { items.splice(index, 1); persist(items); render(items); });
+
+    return tr;
+  }
+
+  // wf-card / wf-empty / cw-ask set display:flex, co bije domyślne [hidden]{display:none};
+  // dlatego widoczność sterujemy klasą wf-hidden (display:none !important), a atrybut
+  // hidden zostawiamy zsynchronizowany dla drzewa dostępności.
+  function setHidden(el, isHidden) {
+    if (!el) return;
+    el.hidden = isHidden;
+    el.classList.toggle("wf-hidden", isHidden);
+  }
+
+  function render(items) {
+    var hasItems = !!(items && items.length);
+
+    setHidden(emptyEl, hasItems);
+    setHidden(tableEl, !hasItems);
+    setHidden(actionsEl, !hasItems);
+    setHidden(summaryEl, !hasItems);
+    setHidden(summaryEmptyEl, hasItems);
+
+    rowsEl.innerHTML = "";
+    var subtotal = 0;
+    if (hasItems) {
+      items.forEach(function (item, i) {
+        subtotal += (parseInt(item.qty, 10) || 0) * (parseFloat(item.price) || 0);
+        rowsEl.appendChild(renderRow(items, i));
+      });
+    }
+
+    if (subtotalEl) subtotalEl.textContent = hasItems ? formatPLN(subtotal) : "—";
+    if (totalEl)    totalEl.textContent    = hasItems ? formatPLN(subtotal) : "—";
+
+    syncBadge(hasItems ? totalCount(items) : 0);
+  }
+
+  if (clearBtn) {
+    clearBtn.addEventListener("click", function () {
+      try { sessionStorage.setItem(KEY, "0"); } catch (_) {}
+      render([]);
+    });
+  }
+
+  var initial = readCart();
+  // Brak klucza → makieta startuje z przykładowymi pozycjami, aby pokazać układ tabeli.
+  render(initial == null ? DEMO : initial);
+})();
+</script>
+</body>
+</html>

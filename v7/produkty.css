@@ -1,0 +1,978 @@
+/* ===== 00 · Warstwa wspólna strony CARBOMAT ECO (V5) =====
+   Klocki układu, przyciski, hero, CTA, dok. Bez subnawigacji – nawigacja
+   po podstronie to kropki po prawej (10-nav.css). ===== */
+:root { --c5-acc: .2s; --c5-acc-fade: .14s; --c5-gutter: 30px; }
+
+/* Górne menu serwisu NIE jest przyklejone (decyzja Mateusza 24.07) – scrolluje
+   się razem ze stroną. Po zdjęciu subnawigacji (13.09) do górnej krawędzi kleją
+   się już tylko taby wariantów i pas „kup teraz" w „Jak stosować". Kit
+   pozostaje nietknięty – to nadpisanie tylko w obrębie tej strony. */
+.wf-navbar{position:static;}
+
+/* kotwice: bez przyklejonej belki nie potrzeba marginesu przewijania */
+[data-chapter]{scroll-margin-top:0;}
+
+/* --- Wspólne klocki nowego layoutu -------------------------------------- */
+.c5-wrap{max-width:1180px;margin-inline:auto;padding-inline:var(--w-space-5);}
+.c5-sec{padding-block:clamp(3.5rem,7vw,6.25rem);}
+.c5-kicker--center{text-align:center;}
+.c5-kicker{display:block;font-size:0.875rem;font-weight:var(--w-weight-medium);letter-spacing:.03em;text-transform:uppercase;margin-bottom:clamp(2rem,4vw,3.5rem);}
+.c5-h1{font-size:clamp(2.1rem,4vw,3.125rem);line-height:1.12;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+.c5-h2{font-size:clamp(1.7rem,3.2vw,2.5rem);line-height:1.15;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;max-width:784px;}
+.c5-h2--center{margin-inline:auto;text-align:center;}
+.c5-lead{font-size:1rem;color:var(--w-text-secondary);max-width:710px;}
+.c5-lead--center{margin-inline:auto;text-align:center;}
+.c5-head{display:flex;flex-direction:column;gap:clamp(1.25rem,2.6vw,2.25rem);}
+.c5-muted{color:var(--w-text-secondary);}
+
+/* Przyciski nowego języka: ostre narożniki, etykiety jak w makiecie */
+.c5-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 45px;font:inherit;font-size:1rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;border:1px solid rgb(0 0 0 / .2);border-radius:0;cursor:pointer;text-decoration:none;transition:background var(--w-duration-base) var(--w-ease),color var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);}
+.c5-btn--dark{background:var(--w-gray-900);color:var(--w-text-inverse);border-color:var(--w-gray-900);}
+.c5-btn--dark:hover{background:var(--w-gray-700);border-color:var(--w-gray-700);}
+.c5-btn--light{background:var(--w-surface-page);color:var(--w-text-primary);}
+.c5-btn--light:hover{border-color:var(--w-border-strong);}
+.c5-btn--sm{padding:10px 25px;font-size:0.8125rem;}
+.c5-btn--inv{background:var(--w-surface-page);color:var(--w-text-primary);border-color:var(--w-surface-page);}
+.c5-btn--inv:hover{background:var(--w-gray-100);}
+.c5-btn .wf-icon{width:16px;height:16px;opacity:.55;}
+.c5-btnrow{display:flex;gap:6px;flex-wrap:wrap;}
+
+/* --- HERO: cały pierwszy ekran pod menu serwisu (spec §13.2, §14.2) -------
+   Wysokość ekranu minus zmierzony pasek menu (`--cx-navbar-h` ustawia JS w
+   00-base.js; fallback 0 px, gdy JS nie wystartuje). Lewa kolumna: copy
+   wyśrodkowane w pionie, breadcrumb przy dolnej krawędzi. Prawa: panel bez
+   zdjęcia – jednolita jasna szarość z packshotem na środku (§14.2). --------- */
+#hero{display:flex;min-height:calc(100svh - var(--cx-navbar-h, 0px));}
+#hero > .c5-wrap{flex:1 1 auto;display:flex;}
+.c5-hero{flex:1 1 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,5vw,5rem);align-items:stretch;}
+.c5-hero__copy{display:flex;flex-direction:column;max-width:585px;}
+.c5-hero__copyin{display:flex;flex-direction:column;gap:clamp(1.25rem,2.4vw,2rem);margin-block:auto;padding-block:clamp(2rem,4vw,3rem);}
+.c5-hero__copy .c5-kicker{margin-bottom:0;}
+.c5-hero__lead{display:flex;flex-direction:column;gap:var(--w-space-3);font-size:1.125rem;color:var(--w-text-secondary);max-width:486px;}
+/* breadcrumb: dyskretny, przy dolnej krawędzi ekranu; §14.2 – jeszcze jaśniejszy */
+.c5-hero__crumbs{font-size:0.75rem;color:var(--w-gray-400);padding-bottom:var(--c5-gutter);}
+.c5-hero__crumbs a,.c5-hero__crumbs .wf-breadcrumb__sep{color:inherit;}
+.c5-hero__crumbs a:hover{color:var(--w-gray-600);}
+
+/* Panel: 30 px od góry, dołu i prawej krawędzi ekranu; §14.2 – bez zdjęcia
+   w tle i bez pasa gradientu, jednolita jasna szarość pod packshotami */
+.c5-hero__stage{position:relative;overflow:hidden;container-type:inline-size;margin-block:var(--c5-gutter);min-height:calc(100svh - var(--cx-navbar-h, 0px) - 2 * var(--c5-gutter));background:var(--w-gray-100);}
+/* Produkty Carbohort (spec §4): a shelf of the four families instead of the CARBOMAT ECO pair.
+   H (--c5-pack-h) = bag height = 42 % of the panel height (its minimum height: the screen minus
+   the menu and the 30 px margins), 240-480 px, but never more than the panel width minus the
+   30 px margins can hold. The panel is an inline-size container, so the width limit uses cqw;
+   cqh is not used – Chrome resolves it to 0 when the panel height comes from min-height.
+   The group is 1.45 H wide (the lying sleeve sets the width; the standing row is 1.44 H =
+   canister .56 + bag .66 + pouch .36 - .14 overlap). Standing packs share one bottom line and
+   get a height only (width from the image ratio), so nothing is stretched; the pouch overlaps
+   the bag's right edge as on the CARBOMAT ECO hero; the sleeve lies in front along the base
+   (.06 H below it) and is last in the DOM, so it covers the bases without z-index. */
+.c5pr-shelf{--c5-pack-h:min(clamp(240px,calc((100svh - var(--cx-navbar-h, 0px) - 2 * var(--c5-gutter)) * .42),480px),calc((100cqw - 2 * var(--c5-gutter) - 24px) / 1.45));position:absolute;left:50%;top:calc(50% - var(--c5-pack-h) * .13);transform:translate(-50%,-50%);display:flex;align-items:flex-end;height:var(--c5-pack-h);}
+.c5pr-shelf__pack{display:block;flex:none;width:auto;max-width:none;object-fit:contain;}
+.c5pr-shelf__pack--kanister{height:calc(var(--c5-pack-h) * .82);}
+.c5pr-shelf__pack--worek{height:var(--c5-pack-h);}
+.c5pr-shelf__pack--torba{height:calc(var(--c5-pack-h) * .55);margin-left:calc(var(--c5-pack-h) * -.14);}
+/* sleeve lies lower and smaller in front: it overlaps only the bottom 12–21 % of the standing packs;
+   the shelf is lifted by .13 H so the whole group stays centred in the panel */
+.c5pr-shelf__pack--mata{position:absolute;left:50%;bottom:calc(var(--c5-pack-h) * -.26);width:calc(var(--c5-pack-h) * 1.2);height:auto;transform:translateX(-50%);}
+/* Placeholdery bez opisów – neutralne pola pod zdjęcia (kadry ustala grafik). */
+.wf-ph__label{display:none;}
+
+/* --- CTA końcowe ------------------------------------------------------------ */
+.c5-cta{display:flex;flex-direction:column;align-items:center;gap:clamp(1.75rem,3.5vw,2.75rem);text-align:center;}
+
+/* --- Dok dr Jurka: pojawia się po zejściu z hero ----------------------------- */
+.cw-jurek{transition:opacity .3s ease,visibility .3s ease;}
+.cw-jurek.cx-dockhide{opacity:0;visibility:hidden;pointer-events:none;}
+
+@media (max-width:899px){
+  /* jedna kolumna: copy → panel z packshotem → breadcrumb pod spodem */
+  #hero{display:block;min-height:0;}
+  #hero > .c5-wrap{display:block;}
+  .c5-hero{display:flex;flex-direction:column;gap:clamp(1.5rem,4vw,2.5rem);padding-block:clamp(2rem,6vw,3rem);}
+  .c5-hero__copy{display:contents;}
+  .c5-hero__copyin{order:1;margin-block:0;padding-block:0;max-width:585px;}
+  .c5-hero__stage{order:2;margin-block:0;min-height:0;aspect-ratio:4/5;max-height:70vh;}
+  /* shelf: H = 40 % of the 4:5 panel (spec §4) – the panel is min(1.25 × width, 70vh) tall,
+     so H = min(50cqw, 28vh); same width limit */
+  .c5pr-shelf{--c5-pack-h:min(50cqw,28vh,calc((100cqw - 2 * var(--c5-gutter) - 24px) / 1.45));}
+  .c5-hero__crumbs{order:3;padding-bottom:0;}
+}
+@media (prefers-reduced-motion: reduce){
+  .c5-btn{transition:none;}
+  .cw-jurek{transition:none;}
+}
+
+/* --- Scroll inertia (Lenis) – keep native layout; CSS smooth-behavior off while active --- */
+html.lenis,html.lenis body{height:auto;}
+.lenis.lenis-smooth{scroll-behavior:auto !important;}
+.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain;}
+.lenis.lenis-stopped{overflow:hidden;}
+
+/* dots are round on purpose: they are markers, not layout boxes (like .c5-way__ico) */
+
+/* ===== 00+ · Produkty Carbohort – additions to the pattern base (spec §3) ===== */
+/* placeholder with a label saying which photo goes here (from carbomat-mata.css) */
+.c5-ph{position:relative;background:var(--w-gray-200);overflow:hidden;}
+.c5-ph::after{content:attr(data-ph);position:absolute;left:10px;bottom:8px;font-size:0.75rem;line-height:1.2;color:var(--w-gray-500);}
+.c5-ph--dark{background:var(--w-gray-800);}
+.c5-ph--dark::after{color:rgb(255 255 255 / .7);}
+/* one-time fade-in for sections without a pattern analogue (carbohumic.css 72) */
+
+/* --- Wejście elementów: jednorazowy fade-in od dołu (spec §6, wzorzec §14.10)
+   Wspólny moduł dla sekcji bez analogu we wzorcu: kontener dostaje atrybut
+   `data-reveal`, a jego dzieci (karty, kroki, kafle, wiersze tabeli) wchodzą
+   po kolei, 90 ms po sobie, gdy blok pierwszy raz pojawi się na ekranie
+   (`is-in` dokłada js/72-reveal.js). Efekt istnieje wyłącznie tam, gdzie
+   działa `CX5.motionOn()` – stąd te same progi w media query; przy ograniczonym
+   ruchu, poniżej 900 px i bez JS elementy są po prostu od razu widoczne.
+   Transform nie zmienia wysokości układu, więc nic nie skacze. */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  .cx-js [data-reveal] > *{opacity:0;transform:translateY(24px);
+    transition:opacity .5s cubic-bezier(.2,.7,.2,1),transform .5s cubic-bezier(.2,.7,.2,1);}
+  .cx-js [data-reveal].is-in > *{opacity:1;transform:none;}
+  .cx-js [data-reveal].is-in > *:nth-child(2){transition-delay:.09s;}
+  .cx-js [data-reveal].is-in > *:nth-child(3){transition-delay:.18s;}
+  .cx-js [data-reveal].is-in > *:nth-child(4){transition-delay:.27s;}
+  .cx-js [data-reveal].is-in > *:nth-child(5){transition-delay:.36s;}
+  .cx-js [data-reveal].is-in > *:nth-child(6){transition-delay:.45s;}
+  .cx-js [data-reveal].is-in > *:nth-child(n+7){transition-delay:.54s;}
+}
+
+/* bands and small shared helpers (c5.css + old inline layer) */
+.c5-band{background:var(--w-surface-subtle);}
+.c5-band__title{font-size:1.5rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+/* --- Wspólne drobiazgi ----------------------------------------------------- */
+/* Brak danych po stronie producenta – widoczny, nieudawany (wzorzec z maty). */
+.c5pr-gap{color:var(--w-text-tertiary);}
+.c5pr-dim{opacity:.8;}
+.c5pr-lead-note{margin-top:clamp(1.5rem,3vw,2.25rem);font-size:0.9375rem;color:var(--w-text-secondary);max-width:784px;}
+
+
+/* strip replacing .c5-alert with a placeholder (pattern: .c5-who__note in carbomat-humic.css) */
+.c5pr-bar{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:clamp(1rem,3vw,2rem);align-items:center;border-top:1px solid var(--w-border-default);border-bottom:1px solid var(--w-border-default);padding:clamp(1.25rem,2.5vw,1.75rem) 0;margin-top:clamp(2.5rem,5vw,4rem);}
+.c5pr-bar > .wf-icon{width:24px;height:24px;color:var(--w-gray-900);}
+.c5pr-bar p{margin:0;}
+/* below 900 px the button drops under the text; the icon stays beside the text */
+@media (max-width:899px){.c5pr-bar{grid-template-columns:auto minmax(0,1fr);}.c5pr-bar > .c5-btn{grid-column:2;justify-self:start;}}
+/* anchors without a sticky bar: land 30 px below the top edge */
+.c5pr-goal[id],.c5pr-paths__panel[id],.c5-faq__item[id],#certyfikaty{scroll-margin-top:var(--c5-gutter);}
+/* target focused after a keyboard-activated in-page link (00-base.js): no ring on large containers */
+[data-anchor-focus]:focus{outline:none;}
+
+/* ===== 10 · Nawigacja po podstronie – kropki przy prawej krawędzi ==========
+   Fixed, pionowo na środku ekranu. Etykiety wjeżdżają po najechaniu na cały
+   nav (albo po fokusie w jego wnętrzu). Nic nie klei się do górnej krawędzi.
+
+   Widoczność na jasnych i ciemnych sekcjach: cały nav ma mix-blend-mode
+   difference, a kolory zapisujemy „w bieli". Difference: result = |backdrop –
+   source|, więc biel (255) na białym tle daje czerń, a na ciemnym – biel.
+   Stąd: aktywna kropka = #fff (czytana jako gray-900 na białym), nieaktywna =
+   biel z alfą .55 (czytana jako ~gray-400). ------------------------------- */
+.c5-dots{position:fixed;right:var(--c5-gutter);top:50%;transform:translateY(-50%);z-index:90;mix-blend-mode:difference;}
+.c5-dots ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;align-items:flex-end;}
+/* Pole klikalne 28×28 px (bez odstępu między pozycjami = 28 px środek–środek).
+   Etykieta leży absolutnie POZA tym polem, więc nav zajmuje tylko wąską kolumnę
+   przy krawędzi i nie przechwytuje kliknięć w treść pod spodem. */
+.c5-dots__link{position:relative;display:flex;align-items:center;justify-content:flex-end;width:28px;min-height:28px;padding-right:2px;text-decoration:none;}
+.c5-dots__dot{flex:none;display:block;width:6px;height:6px;border-radius:var(--w-radius-circle);background:rgb(255 255 255 / .55);transition:width .2s var(--w-ease),height .2s var(--w-ease),background-color .2s var(--w-ease);}
+.c5-dots__link[aria-current="true"] .c5-dots__dot{width:10px;height:10px;background:#fff;}
+/* Etykiety: ukryte, wjeżdżają razem (lekki stagger) po najechaniu na nav.
+   Widoczna etykieta łapie wskaźnik (`pointer-events:auto`) i zachodzi 6 px na
+   pole linku, więc między kropką a etykietą nie ma „dziury": przejście myszą na
+   etykietę nie gasi etykiet, a klik w nią przewija do rozdziału (spec §13.4). */
+.c5-dots__label{position:absolute;right:calc(100% - 6px);top:50%;padding:6px 6px 6px 10px;font-size:0.8125rem;line-height:1.2;text-align:right;white-space:nowrap;color:rgb(255 255 255 / .6);opacity:0;transform:translate(6px,-50%);pointer-events:none;transition:opacity .2s var(--w-ease),transform .2s var(--w-ease);transition-delay:0s;}
+.c5-dots__link[aria-current="true"] .c5-dots__label{color:#fff;}
+.c5-dots:hover .c5-dots__label,
+.c5-dots:focus-within .c5-dots__label{opacity:1;transform:translateY(-50%);pointer-events:auto;}
+.c5-dots:hover li:nth-child(2) .c5-dots__label,.c5-dots:focus-within li:nth-child(2) .c5-dots__label{transition-delay:.02s;}
+.c5-dots:hover li:nth-child(3) .c5-dots__label,.c5-dots:focus-within li:nth-child(3) .c5-dots__label{transition-delay:.04s;}
+.c5-dots:hover li:nth-child(4) .c5-dots__label,.c5-dots:focus-within li:nth-child(4) .c5-dots__label{transition-delay:.06s;}
+.c5-dots:hover li:nth-child(5) .c5-dots__label,.c5-dots:focus-within li:nth-child(5) .c5-dots__label{transition-delay:.08s;}
+.c5-dots:hover li:nth-child(6) .c5-dots__label,.c5-dots:focus-within li:nth-child(6) .c5-dots__label{transition-delay:.10s;}
+.c5-dots:hover li:nth-child(7) .c5-dots__label,.c5-dots:focus-within li:nth-child(7) .c5-dots__label{transition-delay:.12s;}
+.c5-dots:hover li:nth-child(8) .c5-dots__label,.c5-dots:focus-within li:nth-child(8) .c5-dots__label{transition-delay:.14s;}
+/* Produkty Carbohort has nine chapters (spec §3) */
+.c5-dots:hover li:nth-child(9) .c5-dots__label,.c5-dots:focus-within li:nth-child(9) .c5-dots__label{transition-delay:.16s;}
+/* fokus klawiatury: obrys też „w bieli", żeby był widoczny po obu stronach blendu */
+.c5-dots__link:focus-visible{outline:2px solid #fff;outline-offset:2px;}
+
+@media (max-width:899px){
+  /* dotyk nie ma najechania – zostaje zwykłe przewijanie strony */
+  .c5-dots{display:none;}
+}
+@media (prefers-reduced-motion: reduce){
+  .c5-dots__dot,.c5-dots__label{transition:none;}
+}
+
+/* --- ZALETY: poziomy marquee między hero a Parametrami (spec §14.3) --------
+   One continuous track: big advantage text, square thumbnail, next advantage.
+   The track carries the set twice, so translateX(-50%) lands exactly on the
+   start of the second copy – the loop has no seam. Every item owns the gap
+   that follows it (padding-right instead of a flex gap), so the spacing across
+   the splice is identical to the spacing inside the set. The set repeats the
+   three advantages twice, so half the track stays wider than the viewport even
+   on a 2560 px screen – otherwise the end of the cycle would leave empty space
+   at the right edge. Pure CSS – works without JS and never touches the scroll
+   position. ------------------------------------------------------------- */
+.c5-marq{--c5-marq-gap:clamp(1.5rem,3vw,3rem);--c5-marq-thumb:clamp(56px,6vw,96px);padding-block:130px;overflow:hidden;}
+/* 56 s, nie 28 s ze spec: blok jest dwa razy dłuższy (trzy zalety ×2), więc
+   podwojony czas daje dokładnie to tempo w pikselach, które spec zakładała. */
+.c5-marq__track{display:flex;align-items:center;width:max-content;margin:0;padding:0;list-style:none;animation:c5-marq 42s linear infinite;will-change:transform;}
+.c5-marq__item{display:flex;align-items:center;gap:var(--c5-marq-gap);padding-right:var(--c5-marq-gap);}
+.c5-marq__txt{font-size:clamp(2rem,4.4vw,3.5rem);line-height:1.1;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;white-space:nowrap;color:var(--w-text-primary);}
+/* 12 px zaokrąglenia – jedyny wyjątek od ostrych narożników w tej sekcji (§14.3) */
+.c5-marq__thumb{flex:none;width:var(--c5-marq-thumb);height:var(--c5-marq-thumb);object-fit:cover;border-radius:12px;background:var(--w-gray-200);}
+/* Produkty Carbohort (spec §5): an empty square until the dedicated photo exists
+   (target file names in the HTML comment above the section) */
+.c5-marq__thumb--ph{display:block;background:var(--w-gray-300);}
+@keyframes c5-marq{to{transform:translateX(-50%);}}
+/* kursor na sekcji zatrzymuje tor */
+.c5-marq:hover .c5-marq__track{animation-play-state:paused;}
+@media (prefers-reduced-motion: reduce){
+  /* bez ruchu: tor stoi, widoczny pierwszy zestaw, na dotyku przewijany palcem */
+  .c5-marq{overflow-x:auto;overflow-y:hidden;}
+  .c5-marq__track{animation:none;will-change:auto;}
+  .c5-marq__item:nth-child(n+4){display:none;}
+}
+/* phones: 130 px of air around a two-line strip is too much – tighten (orchestrator, it. 4) */
+@media (max-width:899px){
+  .c5-marq{padding-block:80px;}
+}
+
+/* ===== 30 · Gama – pokaz czterech rodzin =====
+   Pattern: version picker on rivian.com/r1s (Mateusz's screen 11.09.2026). Family tabs above
+   a "studio" with the packshot; under it the name, the promise and the links; below that four
+   columns with the same rows as the former tiles (Postać · Sposób aplikacji · Dla kogo ·
+   Warianty).
+   14.09.2026 (spec §6): packshots from img/opakowania/ instead of placeholders; the studio glow
+   behind the product is removed; the section no longer touches the technical table – the
+   „Porównaj" link only scrolls to #porownanie (the shared anchor handler) and module 30 moves
+   focus to the table. Nothing here highlights a table column any more.
+   The .c5pr-js class (one-line script in <head>) turns on the tab mode before the first paint;
+   without JS there are no tabs and the families stand one below another.
+   Corners per the V5 language (0). A pill like on the screen = one change:
+   --c5pr-seg-r: var(--w-radius-pill). */
+.c5pr-studio{--c5pr-seg-r:0;position:relative;overflow:hidden;background:linear-gradient(180deg,var(--w-gray-150) 0%,var(--w-gray-100) 42%,var(--w-gray-150) 100%);}
+/* no scroll-margin: nothing is pinned to the top edge (spec §3) */
+.c5pr-show{margin-top:clamp(2rem,4vw,3.5rem);}
+
+/* Bar: segmented switch in the middle, „Porównaj" on the right; its own layer above the panels */
+.c5pr-show__bar{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:var(--w-space-4);}
+.c5pr-seg{display:none;position:relative;grid-auto-flow:column;padding:4px;background:var(--w-surface-page);border:1px solid var(--w-border-subtle);border-radius:var(--c5pr-seg-r);box-shadow:var(--w-shadow-xs);}
+.c5pr-js .c5pr-seg{display:grid;}
+.c5pr-seg__thumb{position:absolute;left:0;top:0;width:0;height:0;background:var(--w-gray-900);border-radius:var(--c5pr-seg-r);pointer-events:none;transition:transform .5s var(--w-ease),width .5s var(--w-ease),height .5s var(--w-ease);}
+.c5pr-seg__tab{padding:13px clamp(1.1rem,2vw,1.75rem);font:inherit;font-size:1rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;line-height:1.2;white-space:nowrap;color:var(--w-text-primary);background:none;border:0;border-radius:var(--c5pr-seg-r);cursor:pointer;transition:background-color .2s var(--w-ease);}
+/* Etykieta odwraca kolor dokładnie pod znacznikiem, także w trakcie przesuwania:
+   biel w trybie „difference” daje czerń na białym torze i biel na czarnym znaczniku.
+   Przycisk nie jest pozycjonowany, więc etykieta (później w DOM) leży nad znacznikiem. */
+.c5pr-seg__lbl{position:relative;color:var(--w-text-inverse);mix-blend-mode:difference;}
+.c5pr-seg__tab[aria-selected="false"]:hover{background:var(--w-surface-hover);}
+.c5pr-seg__tab[aria-selected="true"]{cursor:default;}
+/* zanim skrypt ustawi znacznik, aktywna zakładka ma własne tło */
+.c5pr-seg:not([data-ready]) .c5pr-seg__tab[aria-selected="true"]{background:var(--w-gray-900);}
+.c5pr-seg__tab:focus-visible{outline:2px solid var(--w-gray-900);outline-offset:3px;}
+/* text link, but a 44 px tall target (spec §0.8) */
+.c5pr-show__compare{display:inline-flex;align-items:center;min-height:44px;font-size:1rem;color:var(--w-text-secondary);text-decoration:underline;text-underline-offset:4px;white-space:nowrap;}
+.c5pr-show__compare:hover{color:var(--w-text-primary);}
+@media (min-width:1120px){
+  .c5pr-js .c5pr-show__bar{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:clamp(1.5rem,2.5vw,2.25rem);}
+  .c5pr-js .c5pr-seg{grid-column:2;}
+  .c5pr-js .c5pr-show__compare{grid-column:3;justify-self:start;}
+}
+/* Jeden rząd tabów ma ok. 770 px – poniżej 860 px przełącznik przechodzi w siatkę 2×2 */
+@media (max-width:859px){
+  .c5pr-seg{width:100%;grid-auto-flow:row;grid-template-columns:repeat(2,minmax(0,1fr));}
+  .c5pr-seg__tab{white-space:normal;padding:12px 10px;font-size:0.875rem;min-height:56px;}
+}
+
+/* Panele: aktywny w biegu dokumentu; wychodzący na czas animacji leży nad nim.
+   flow-root: margines studia zostaje w panelu – inaczej wypływa przez rodziców
+   i wychodzący (absolutny) panel opadałby o jego wysokość. */
+.c5pr-show__panels{position:relative;display:flow-root;}
+.c5pr-js .c5pr-fam:not([data-on]):not([data-leaving]){display:none;}
+.c5pr-fam[data-leaving]{position:absolute;top:0;left:0;right:0;pointer-events:none;}
+.c5pr-fam + .c5pr-fam{margin-top:clamp(3.5rem,7vw,6rem);}
+.c5pr-js .c5pr-fam + .c5pr-fam{margin-top:0;}
+.c5pr-fam:focus-visible{outline:2px solid var(--w-gray-900);outline-offset:8px;border-radius:0;}
+
+/* Studio: the packshot stands on the floor line with a soft shadow under it.
+   The glow behind the product (.c5pr-stage::before, a radial white gradient) was removed on
+   14.09 – white mock-ups on the light gradient do not need it (spec §6.2, §19.2). If it has to
+   come back, it is a single rule in the inline <style> of the archived page
+   zasoby/kod/archiwum-wersji/produkty-gama-taby-2026-09-12.html. */
+.c5pr-stage{position:relative;display:flex;align-items:flex-end;justify-content:center;height:clamp(220px,34vh,420px);margin-top:clamp(1rem,2.5vw,2rem);padding-bottom:22px;touch-action:pan-y;}
+/* data-shape sizes each packshot: standing packs get a height (share of the stage) and take
+   their width from the image, the lying sleeve gets a width – nothing is stretched. The HUMIC
+   stand-in is the same 20 l bag as CARBOMAT ECO, so it keeps the same scale. */
+.c5pr-shot{position:relative;z-index:0;display:flex;align-items:flex-end;justify-content:center;height:82%;max-width:100%;}
+.c5pr-shot[data-shape="kanister"]{height:74%;}
+.c5pr-shot[data-shape="rekaw"]{height:auto;width:min(72%,560px);}
+.c5pr-shot__img{display:block;width:auto;height:100%;max-width:100%;object-fit:contain;}
+.c5pr-shot[data-shape="rekaw"] .c5pr-shot__img{width:100%;height:auto;}
+.c5pr-shot__floor{position:absolute;left:50%;bottom:-18px;z-index:-1;width:135%;height:36px;transform:translateX(-50%);background:radial-gradient(closest-side,rgb(0 0 0 / .22),rgb(0 0 0 / 0));pointer-events:none;}
+.c5pr-shot[data-shape="rekaw"] .c5pr-shot__floor{width:112%;}
+
+/* Pod zdjęciem: nazwa i obietnica z lewej, przejścia z prawej */
+.c5pr-fam__cap{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--w-space-5) clamp(2rem,5vw,4.5rem);align-items:end;margin-top:clamp(1.5rem,3vw,2.5rem);}
+.c5pr-fam__intro{display:flex;flex-direction:column;gap:var(--w-space-2);min-width:0;}
+.c5pr-fam__form{font-size:0.75rem;font-weight:var(--w-weight-medium);letter-spacing:.06em;text-transform:uppercase;color:var(--w-text-secondary);}
+.c5pr-fam__name{color:var(--w-text-primary);font-size:clamp(1.625rem,2.8vw,2.25rem);font-weight:var(--w-weight-medium);line-height:1.1;letter-spacing:-0.015em;}
+.c5pr-fam__promise{margin:0;max-width:36em;font-size:clamp(1.0625rem,1.5vw,1.25rem);line-height:1.35;color:var(--w-text-secondary);}
+.c5pr-fam__acts{display:flex;flex-direction:column;align-items:flex-end;gap:var(--w-space-3);}
+.c5pr-fam__acts .c5-btnrow{justify-content:flex-end;flex-wrap:nowrap;}
+
+/* Cztery kolumny parametrów – ten sam zestaw wierszy dla każdej rodziny */
+.c5pr-specs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--w-space-5) clamp(1.25rem,2.6vw,2.5rem);margin:clamp(1.75rem,3.5vw,2.75rem) 0 0;}
+.c5pr-spec{display:flex;flex-direction:column;gap:var(--w-space-2);padding-top:var(--w-space-4);border-top:1px solid var(--w-border-strong);}
+.c5pr-spec dt{font-size:0.75rem;font-weight:var(--w-weight-medium);letter-spacing:.06em;text-transform:uppercase;color:var(--w-text-secondary);}
+.c5pr-spec dd{margin:0;font-size:0.9375rem;line-height:1.55;color:var(--w-text-primary);}
+.c5pr-spec__warn{display:flex;gap:var(--w-space-2);align-items:flex-start;margin-top:var(--w-space-3);padding-top:var(--w-space-3);border-top:1px solid var(--w-border-default);font-size:0.875rem;}
+.c5pr-spec__warn .wf-icon{flex:none;margin-top:2px;}
+@media (max-width:1023px){ .c5pr-specs{grid-template-columns:repeat(2,minmax(0,1fr));} }
+@media (max-width:899px){
+  .c5pr-fam__cap{grid-template-columns:minmax(0,1fr);align-items:start;}
+  .c5pr-fam__acts{align-items:flex-start;}
+  .c5pr-fam__acts .c5-btnrow{justify-content:flex-start;flex-wrap:wrap;}
+}
+@media (max-width:599px){
+  .c5pr-stage{height:clamp(190px,58vw,260px);}
+  .c5pr-shot[data-shape="rekaw"]{width:86%;}
+  .c5pr-specs{grid-template-columns:minmax(0,1fr);}
+  .c5pr-fam__acts,.c5pr-fam__acts .c5-btnrow{width:100%;}
+  .c5pr-fam__acts .c5-btn{flex:1 1 100%;}
+}
+
+/* Tryb wymuszonych kolorów (np. wysoki kontrast w Windows): mieszanie „difference”
+   dałoby biel na bieli – etykiety w kolorach systemu, znacznik w kolorze zaznaczenia. */
+@media (forced-colors:active){
+  .c5pr-seg__lbl{mix-blend-mode:normal;color:inherit;}
+  .c5pr-seg__thumb{forced-color-adjust:none;background:Highlight;}
+  .c5pr-seg__tab[aria-selected="true"] .c5pr-seg__lbl{forced-color-adjust:none;color:HighlightText;}
+}
+@media (prefers-reduced-motion:reduce){ .c5pr-seg__thumb,.c5pr-seg__tab{transition:none;} }
+
+/* ===== 40 · Porównanie – technikalia czterech rodzin: own content element (spec §7) =====
+   Since 14.09.2026 (Mateusz, artifact comment on the section title) the section has no video and
+   is no longer a port of the „Parametry on video" CE (CARBOMAT ECO 30) – changes to that CE on
+   the product pages do not reach it, and vice versa. A light datasheet of its own:
+   · ≥ 900 px – the table fills the content width (fixed layout, no scroll container), and the
+     header row with the four family names sticks to the top edge while the rows scroll;
+   · < 900 px – the table scrolls sideways inside `.cw-scrollx`, the parameter column sticks to
+     the left edge and each family column snaps next to it.
+   Only one thing sticks at a time (pattern rule): the header row or the first column.
+   `border-collapse:separate` keeps the cell borders on the sticky cells (collapsed borders stay
+   behind with the table). Data gaps are drawn as dashed chips, so a gap never reads as a value. */
+.c5pr-techsheet{background:var(--w-surface-page);color:var(--w-text-primary);}
+/* the section is a plain block with a block content wrapper: nothing may size it to the table's
+   intrinsic width (the phone table is ~1050 px wide and scrolls inside .cw-scrollx) */
+.c5pr-techsheet{display:block;}
+.c5pr-techsheet > .c5-wrap{width:100%;min-width:0;}
+.c5pr-techsheet .c5-h2{text-wrap:balance;}
+
+.c5pr-tabwrap{margin-top:clamp(2.5rem,5vw,4rem);}
+.c5pr-tabwrap:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:6px;}
+.c5pr-tab{width:100%;table-layout:fixed;border-collapse:separate;border-spacing:0;font-size:0.9375rem;line-height:1.5;color:var(--w-text-primary);font-variant-numeric:tabular-nums;}
+.c5pr-tab col:first-child{width:17%;}
+.c5pr-tab th,.c5pr-tab td{text-align:left;vertical-align:top;padding:16px 18px;border-bottom:1px solid var(--w-border-subtle);overflow-wrap:break-word;}
+.c5pr-tab thead th{position:sticky;top:0;z-index:2;padding-block:20px 14px;background:var(--w-surface-page);font-size:0.9375rem;font-weight:var(--w-weight-semibold);line-height:1.3;letter-spacing:-0.005em;vertical-align:bottom;border-bottom:1px solid var(--w-gray-900);}
+.c5pr-tab thead th:first-child{font-size:0.75rem;font-weight:var(--w-weight-medium);letter-spacing:.04em;text-transform:uppercase;color:var(--w-text-tertiary);}
+.c5pr-tab tbody th{font-weight:var(--w-weight-medium);color:var(--w-text-secondary);}
+.c5pr-tab__note{display:block;margin-top:4px;font-size:0.8125rem;line-height:1.45;color:var(--w-text-tertiary);}
+.c5pr-tab .c5pr-gap{display:inline-block;padding:2px 8px;font-size:0.8125rem;line-height:1.45;color:var(--w-text-tertiary);border:1px dashed var(--w-border-default);}
+/* reading across a row on a pointer device */
+@media (hover:hover){
+  .c5pr-tab tbody tr:hover > *{background:color-mix(in srgb,var(--w-gray-900) 3%,transparent);}
+  /* the pinned parameter cell (< 900 px) must stay opaque, or the scrolled cells show through it */
+  .c5pr-tab tbody tr:hover > :first-child{background:color-mix(in srgb,var(--w-gray-900) 3%,var(--w-surface-page));}
+}
+.c5pr-tab tfoot th,.c5pr-tab tfoot td{border-bottom:0;padding-top:18px;}
+.c5pr-tab tfoot th{font-weight:var(--w-weight-medium);color:var(--w-text-secondary);padding-top:30px;}
+.c5pr-tab__acts{display:flex;flex-direction:column;align-items:flex-start;gap:0;}
+.c5pr-tab__acts .c5pr-gap{margin-top:12px;}
+.c5pr-doc{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-size:0.875rem;font-weight:var(--w-weight-medium);line-height:1.3;color:var(--w-text-primary);text-decoration:underline;text-decoration-color:var(--w-border-default);text-underline-offset:4px;}
+.c5pr-doc:hover{text-decoration-color:currentColor;}
+.c5pr-doc:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:2px;}
+.c5pr-doc .wf-icon{flex:none;width:16px;height:16px;opacity:.6;}
+/* Column(s) picked with „pokaż w tabeli" (module 40): a quiet wash down the column and a heavy
+   rule on its header – the sticky header cell needs the wash on itself. */
+.c5pr-tab col.is-pick,.c5pr-tab thead th.is-pick{background:var(--w-surface-sunken);}
+.c5pr-tab thead th.is-pick{box-shadow:inset 0 3px 0 var(--w-gray-900);}
+
+.c5pr-techsheet__src{max-width:88ch;margin-top:var(--w-space-5);font-size:0.75rem;line-height:1.55;color:var(--w-text-tertiary);}
+
+/* Jak czytać tabelę: zasada ogólna szeroko + trzy uwagi kolumnowe. Each note hangs under a black
+   rule (the language of the table header, not a card); the buttons line up at the bottom. */
+.c5pr-read{margin-top:clamp(3.5rem,7vw,5.5rem);}
+.c5pr-read__lead{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.7fr);gap:clamp(1rem,3vw,2.5rem);align-items:start;}
+.c5pr-read__h{font-size:clamp(1.25rem,2vw,1.5rem);font-weight:var(--w-weight-medium);line-height:1.3;letter-spacing:-0.01em;text-wrap:balance;}
+.c5pr-read__lead p{margin:0;max-width:68ch;font-size:1rem;line-height:1.6;color:var(--w-text-secondary);}
+.c5pr-read__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(1.5rem,3vw,2.5rem);margin-top:clamp(2rem,4vw,3rem);}
+.c5pr-note{display:flex;flex-direction:column;gap:var(--w-space-3);padding-top:var(--w-space-5);border-top:1px solid var(--w-gray-900);}
+.c5pr-note__h{font-size:1rem;font-weight:var(--w-weight-semibold);line-height:1.35;text-wrap:balance;}
+.c5pr-note p{margin:0;font-size:0.875rem;line-height:1.6;color:var(--w-text-secondary);}
+.c5pr-note .c5-btn{align-self:flex-start;min-height:44px;margin-top:auto;}
+.c5pr-note .c5-btn[aria-pressed="true"]{background:var(--w-gray-900);color:var(--w-text-inverse);border-color:var(--w-gray-900);}
+.c5pr-note .c5-btn[aria-pressed="true"] .wf-icon{opacity:.8;}
+.c5pr-techsheet__actions{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:clamp(2.5rem,5vw,4rem);}
+.c5pr-techsheet__actions .c5-btn{min-height:44px;}
+
+/* wide screens: no scroll container, so the header row can stick to the viewport */
+@media (min-width:900px){
+  .c5pr-techsheet .c5pr-tabwrap{overflow:visible;}
+}
+/* 900–1239 px: the chapter dots (fixed, 30 px from the right edge) would sit on the last family
+   column – the content keeps clear of them on both sides, so the head stays centred */
+@media (min-width:900px) and (max-width:1239px){
+  .c5pr-techsheet > .c5-wrap{padding-inline:64px;}
+}
+@media (max-width:1023px){
+  .c5pr-read__lead,.c5pr-read__grid{grid-template-columns:minmax(0,1fr);}
+}
+/* narrow screens: sideways scroll with the parameter column pinned; one family column fits next to
+   it in full (at most 15rem) and the next one peeks in by 24 px, so the table reads as scrollable */
+@media (max-width:899px){
+  .c5pr-techsheet{--c5pr-param-w:124px;--c5pr-fam-w:min(15rem,calc(100vw - 40px - var(--c5pr-param-w) - 24px));}
+  .c5pr-tab{width:calc(var(--c5pr-param-w) + 4 * var(--c5pr-fam-w));}
+  .c5pr-tab col:first-child{width:var(--c5pr-param-w);}
+  .c5pr-tab col[data-col]{width:var(--c5pr-fam-w);}
+  .c5pr-techsheet .c5pr-tabwrap{scroll-snap-type:x proximity;scroll-padding-left:var(--c5pr-param-w);overscroll-behavior-x:contain;}
+  .c5pr-tab th,.c5pr-tab td{padding:14px;}
+  .c5pr-tab thead th{position:static;}
+  .c5pr-tab thead th[data-col]{scroll-snap-align:start;}
+  .c5pr-tab tr > :first-child{position:sticky;left:0;z-index:1;background:var(--w-surface-page);box-shadow:inset -1px 0 0 var(--w-border-subtle);}
+}
+
+/* ===== 50 · Wg potrzeby – goal index with photos + paths as two columns (spec §8) =====
+   8.1 six goal cards: 4:3 photo on top, :target outlines the whole card (mega-menu anchors);
+   8.2 ten paths from one DOM – cards without JS (the default below), tabs >= 900 px and an
+       accordion < 900 px; 50-wg-potrzeby.js sets data-paths="tabs|acc" and the ARIA roles;
+   8.3 "Żadna ścieżka nie pasuje?" uses the shared strip .c5pr-bar from 00-base.css.
+   Anchor offsets (.c5pr-goal[id], .c5pr-paths__panel[id]) live in 00-base.css. */
+
+/* --- 8.1 Goal index ------------------------------------------------------------------- */
+.c5pr-goals{margin-top:clamp(2.5rem,5vw,4rem);}
+.c5pr-goals__lead{margin:0 0 var(--w-space-5);font-size:0.8125rem;letter-spacing:.06em;text-transform:uppercase;color:var(--w-text-tertiary);}
+.c5pr-goals__list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:minmax(0,1fr);gap:var(--w-space-5);}
+@media (min-width:700px){.c5pr-goals__list{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (min-width:1100px){.c5pr-goals__list{grid-template-columns:repeat(3,minmax(0,1fr));}}
+.c5pr-goal{--c5pr-goal-pad:clamp(1rem,2vw,1.5rem);display:flex;flex-direction:column;gap:var(--w-space-2);min-width:0;border:1px solid var(--w-border-default);background:var(--w-surface-page);padding:0 0 var(--c5pr-goal-pad);}
+.c5pr-goal__media{flex:none;aspect-ratio:4/3;overflow:hidden;background:var(--w-gray-200);margin-bottom:var(--w-space-3);}
+.c5pr-goal__media img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s var(--w-ease);}
+@media (hover:hover){.c5pr-goal:hover .c5pr-goal__media img{transform:scale(1.04);}}
+.c5pr-goal__name,.c5pr-goal__txt,.c5pr-goal__go{padding-inline:var(--c5pr-goal-pad);}
+.c5pr-goal__name{font-size:1.0625rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+.c5pr-goal__txt{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
+.c5pr-goal__go{margin-top:auto;padding-top:var(--w-space-2);font-size:0.875rem;color:var(--w-text-tertiary);}
+/* inline links: vertical padding widens the tap area to ~44 px without moving the text */
+.c5pr-goal__go .wf-link{padding-block:14px;}
+/* goal reached from the mega-menu (no JS needed) */
+.c5pr-goal:target{outline:2px solid var(--w-gray-900);outline-offset:2px;}
+
+/* --- 8.2 Paths – default = ten cards (no JS, or before the module runs) ----------------- */
+.c5pr-paths{margin-top:clamp(3rem,6vw,5rem);}
+.c5pr-paths__list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(310px,100%),1fr));gap:var(--w-space-5);}
+.c5pr-paths__row{display:contents;}
+.c5pr-paths__tab{display:none;}
+.c5pr-paths__panel{display:flex;min-width:0;}
+.c5pr-path{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:var(--w-space-3);border:1px solid var(--w-border-default);background:var(--w-surface-page);padding:clamp(1.25rem,2.2vw,1.75rem);}
+.c5pr-path__no{font-size:0.75rem;letter-spacing:.06em;color:var(--w-text-tertiary);}
+.c5pr-path__h{font-size:1.125rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+.c5pr-path p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
+.c5pr-picks{display:flex;flex-direction:column;gap:var(--w-space-2);margin:0;padding:0;list-style:none;}
+.c5pr-picks li{display:flex;gap:var(--w-space-3);align-items:flex-start;font-size:0.9375rem;}
+.c5pr-picks .wf-icon{flex:none;margin-top:3px;color:var(--w-icon-default);}
+.c5pr-path__warn{display:flex;gap:var(--w-space-3);align-items:flex-start;border:1px solid var(--w-gray-900);padding:var(--w-space-3) var(--w-space-4);font-size:0.875rem;}
+.c5pr-path__warn .wf-icon{flex:none;margin-top:2px;}
+.c5pr-path__warn p{font-size:0.875rem;color:var(--w-text-primary);}
+.c5pr-path .c5-btnrow{margin-top:auto;padding-top:var(--w-space-2);}
+/* small buttons still give a 44 px touch target */
+.c5pr-path .c5-btn{min-height:44px;}
+.c5pr-paths__no{font-size:0.75rem;letter-spacing:.06em;}
+.c5pr-paths__t{font-size:1.125rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;line-height:1.3;}
+.c5pr-paths__tab:focus-visible{outline:2px solid var(--w-gray-900);outline-offset:-2px;border-radius:0;}
+
+/* --- Tabs (>= 900 px, JS): list of paths | sticky description ------------------------------
+   Rows are display:contents, so every button sits in column 1 (rows 1…n) and every panel in
+   the same cell of column 2 (rows 1…-1, stacked). The extra 1fr row takes the height a panel
+   may add over the list, so the list rows keep their natural height. */
+.c5pr-paths[data-paths="tabs"] .c5pr-paths__list{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);grid-template-rows:repeat(var(--c5pr-n,10),auto) 1fr;column-gap:clamp(2rem,5vw,4.5rem);row-gap:0;align-items:start;}
+.c5pr-paths[data-paths="tabs"] .c5pr-paths__tab{grid-column:1;display:grid;grid-template-columns:2.5rem minmax(0,1fr);gap:var(--w-space-3);align-items:baseline;width:100%;padding:18px 0 18px 14px;border:0;border-top:1px solid var(--w-border-default);border-left:2px solid transparent;background:none;font:inherit;text-align:left;cursor:pointer;color:var(--w-gray-500);transition:color .2s,border-color .2s;}
+.c5pr-paths[data-paths="tabs"] .c5pr-paths__row:last-child .c5pr-paths__tab{border-bottom:1px solid var(--w-border-default);}
+.c5pr-paths[data-paths="tabs"] .c5pr-paths__chev{display:none;}
+/* shown (hover preview, is-on) and chosen (aria-selected) */
+.c5pr-paths[data-paths="tabs"] .c5pr-paths__tab.is-on,
+.c5pr-paths[data-paths="tabs"] .c5pr-paths__tab[aria-selected="true"]{color:var(--w-gray-900);border-left-color:var(--w-gray-900);}
+@media (hover:hover){
+  .c5pr-paths[data-paths="tabs"] .c5pr-paths__tab:hover:not(.is-on):not([aria-selected="true"]){color:var(--w-gray-700);}
+}
+/* Sticky column with a gap from the top (like "Główne przewagi" on the mata). A panel that
+   would reach under the advisor dock sticks by its bottom edge instead, 84 px above the window
+   bottom (--c5pr-ph = its height, set by JS), so its buttons never hide below the fold. */
+.c5pr-paths[data-paths="tabs"] .c5pr-paths__panel{grid-column:2;grid-row:1 / -1;align-self:start;position:sticky;
+  top:min(calc(var(--cx-navbar-h, 0px) + var(--c5-gutter)), calc(100svh - var(--c5pr-ph, 0px) - 84px));
+  opacity:0;visibility:hidden;transform:translateY(8px);
+  transition:opacity .25s var(--w-ease),transform .25s var(--w-ease),visibility 0s linear .25s;}
+.c5pr-paths[data-paths="tabs"] .c5pr-paths__panel[data-on]{z-index:1;opacity:1;visibility:visible;transform:none;transition-delay:0s;}
+.c5pr-paths[data-paths="tabs"] .c5pr-paths__panel:focus-visible{outline:2px solid var(--w-gray-900);outline-offset:2px;border-radius:0;}
+.c5pr-paths[data-paths="tabs"] .c5pr-path{padding:clamp(1.5rem,2.6vw,2.25rem);}
+.c5pr-paths[data-paths="tabs"] .c5pr-path__h{font-size:clamp(1.375rem,2.2vw,1.75rem);line-height:1.2;}
+
+/* --- Accordion (< 900 px, JS): number · title · chevron, one panel open ----------------- */
+.c5pr-paths[data-paths="acc"] .c5pr-paths__list{display:block;}
+.c5pr-paths[data-paths="acc"] .c5pr-paths__row{display:block;border-top:1px solid var(--w-border-default);}
+.c5pr-paths[data-paths="acc"] .c5pr-paths__row:last-child{border-bottom:1px solid var(--w-border-default);}
+.c5pr-paths[data-paths="acc"] .c5pr-paths__tab{display:grid;grid-template-columns:2.5rem minmax(0,1fr) auto;gap:var(--w-space-3);align-items:baseline;width:100%;min-height:56px;padding:16px 0;border:0;background:none;font:inherit;text-align:left;cursor:pointer;color:var(--w-text-primary);}
+.c5pr-paths[data-paths="acc"] .c5pr-paths__no{color:var(--w-text-tertiary);}
+.c5pr-paths[data-paths="acc"] .c5pr-paths__chev{align-self:center;transition:transform var(--w-duration-base) var(--w-ease);}
+.c5pr-paths[data-paths="acc"] .c5pr-paths__tab[aria-expanded="true"] .c5pr-paths__chev{transform:rotate(180deg);}
+.c5pr-paths[data-paths="acc"] .c5pr-paths__panel{display:block;position:relative;overflow:hidden;height:0;transition:height var(--c5-acc) var(--w-ease);}
+.c5pr-paths[data-paths="acc"] .c5pr-path{border:0;background:none;padding:0 0 var(--w-space-5);}
+/* the row button already shows the number and the title – the card keeps them for screen readers */
+.c5pr-paths[data-paths="acc"] .c5pr-path__no,
+.c5pr-paths[data-paths="acc"] .c5pr-path__h{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+
+/* --- 8.3 "Żadna ścieżka nie pasuje?" – shared strip --------------------------------------- */
+#wg-potrzeby .c5pr-bar .c5-btn{white-space:nowrap;}
+@media (max-width:699px){#wg-potrzeby .c5pr-bar .c5-btn{justify-self:start;white-space:normal;}}
+
+@media (prefers-reduced-motion: reduce){
+  .c5pr-goal__media img{transition:none;}
+  .c5pr-paths[data-paths] .c5pr-paths__tab,
+  .c5pr-paths[data-paths] .c5pr-paths__chev,
+  .c5pr-paths[data-paths] .c5pr-paths__panel{transition:none;}
+}
+
+/* ===== 60 · Jak działają – scroll-driven scene (spec §9, port of CARBOMAT ECO 50) =====
+   Two layouts from one DOM:
+   · default (mobile / reduced motion / no JS) – one column, everything visible:
+     heading, then triples background / title + description / illustration;
+   · scene (>= 900 px, no-preference, .cx-js) – sticky 100svh: heading at the top of the
+     left column, one description at a time at the bottom edge, the progress bar under it,
+     the panel on the right with its background layers and a fixed-size illustration box.
+   DOM order = static order; the scene grid only re-places the elements. ===== */
+.c5-facts-track{height:auto;}
+.c5-facts-stage{display:flex;flex-direction:column;gap:clamp(2rem,4vw,3rem);}
+.c5-facts-head{display:flex;flex-direction:column;gap:clamp(1rem,2vw,1.5rem);}
+.c5-facts-head .c5-kicker{margin-bottom:0;}
+.c5-facts-head .c5-h2{max-width:486px;}
+/* lead under the H2 – smaller than section leads: it shares the column with the descriptions (as on the mat page) */
+.c5-facts-lead{font-size:var(--w-font-sm-size);line-height:1.55;max-width:32rem;}
+
+/* Background panel – five layers, one per topic (four temporary photos + one placeholder).
+   Outside the scene the panel is not a box (`display:contents`), so the layers join the
+   flow and every topic gets its own background; `order` below interleaves them. In the
+   scene the panel comes back as a box: background, shared frame and wash. */
+.c5-facts-panel{display:contents;}
+.c5-facts-panel__img,.c5-facts-panel__ph{display:block;width:100%;aspect-ratio:4/5;max-height:min(62vh,520px);}
+.c5-facts-panel__img{object-fit:cover;object-position:50% 58%;background:var(--w-gray-700);}
+/* the placeholder sits one step lighter than .c5-ph--dark, so the dark illustration box
+   (.78 black) still reads as a box on top of it */
+.c5-facts-panel__ph{background:var(--w-gray-700);}
+/* Crop per layer (⚠ temporary photos of the CARBOMAT ECO series). In the scene the panel is
+   taller than wide, so the full height shows and the sides are cropped; in the static
+   layout it is the other way round – the values suit both. */
+.c5-facts-panel__img[data-fact-bg="1"]{object-position:42% 46%;}  /* czym-jest-1: seam wall on the left */
+.c5-facts-panel__img[data-fact-bg="2"]{object-position:50% 52%;}  /* czym-jest-2: mound with roots */
+.c5-facts-panel__img[data-fact-bg="3"]{object-position:50% 54%;}  /* czym-jest-3: two heaps on boards */
+.c5-facts-panel__img[data-fact-bg="4"]{object-position:50% 58%;}  /* czym-jest-5: granule macro with a root */
+
+.c5-facts-flow{display:flex;flex-direction:column;gap:clamp(1.75rem,3.5vw,2.75rem);margin:0;padding:0;}
+/* The background layers live together in the panel, so in the flow `order` interleaves
+   them: background of the topic, its description, its illustration. In the scene every
+   element has an explicit grid cell, so `order` only sets the paint order there. */
+.c5-facts-panel > [data-fact-bg="1"]{order:1;} .c5-fact[data-fact="1"]{order:2;} .c5-viz[data-fact-viz="1"]{order:3;}
+.c5-facts-panel > [data-fact-bg="2"]{order:4;} .c5-fact[data-fact="2"]{order:5;} .c5-viz[data-fact-viz="2"]{order:6;}
+.c5-facts-panel > [data-fact-bg="3"]{order:7;} .c5-fact[data-fact="3"]{order:8;} .c5-viz[data-fact-viz="3"]{order:9;}
+.c5-facts-panel > [data-fact-bg="4"]{order:10;} .c5-fact[data-fact="4"]{order:11;} .c5-viz[data-fact-viz="4"]{order:12;}
+.c5-facts-panel > [data-fact-bg="5"]{order:13;} .c5-fact[data-fact="5"]{order:14;} .c5-viz[data-fact-viz="5"]{order:15;}
+.c5-fact{display:flex;flex-direction:column;gap:var(--w-space-3);max-width:560px;}
+.c5-fact__title{font-size:clamp(1.125rem,1.8vw,1.5rem);line-height:1.22;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+.c5-fact__body{display:flex;flex-direction:column;gap:var(--w-space-3);font-size:0.9375rem;line-height:1.55;color:var(--w-text-secondary);}
+.c5-fact__body p{margin:0;}
+.c5-fact__body ul{margin:0;padding-left:1.35rem;display:flex;flex-direction:column;gap:var(--w-space-2);}
+
+/* Progress bar – scene only */
+.c5-facts-prog{display:none;}
+.c5-facts-progress{position:relative;height:2px;background:var(--w-gray-200);}
+.c5-facts-progress__fill{position:absolute;inset:0;background:var(--w-gray-900);transform:scaleX(var(--facts-p,0));transform-origin:left center;will-change:transform;}
+/* four marks split the track into five parts – the reader sees how far the next topic is */
+.c5-facts-progress__mark{position:absolute;top:50%;width:1px;height:8px;margin-top:-4px;background:var(--w-gray-400);}
+.c5-facts-progress__mark:nth-child(2){left:20%;}
+.c5-facts-progress__mark:nth-child(3){left:40%;}
+.c5-facts-progress__mark:nth-child(4){left:60%;}
+.c5-facts-progress__mark:nth-child(5){left:80%;}
+
+/* --- Illustration box: dark field, inverted colours (carbomat.css l. 343–364) ----------- */
+.c5-viz{position:relative;margin:0;display:flex;flex-direction:column;gap:var(--w-space-5);width:100%;aspect-ratio:4/5;max-height:520px;padding:clamp(1.25rem,2.4vw,2rem);background:rgb(20 20 20 / .78);color:#fff;overflow:hidden;}
+.c5-viz__tag{font-size:0.75rem;letter-spacing:.06em;text-transform:uppercase;color:rgb(255 255 255 / .6);}
+.c5-viz__body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:var(--w-space-4);}
+.c5-viz__body svg:not(.wf-icon){width:100%;height:auto;color:inherit;}
+.c5-viz__cap{font-size:0.75rem;line-height:1.45;color:rgb(255 255 255 / .6);}
+.c5-viz__num{font-size:clamp(1.75rem,3.4vw,2.5rem);font-weight:var(--w-weight-bold);line-height:1;letter-spacing:-0.02em;}
+.c5-viz__ring{display:flex;align-items:center;gap:clamp(1rem,3vw,2rem);}
+.c5-viz__ring svg:not(.wf-icon){width:min(150px,42%);flex:none;}
+.c5-viz__list{display:flex;flex-direction:column;gap:var(--w-space-3);margin:0;padding:0;list-style:none;font-size:var(--w-font-sm-size);}
+.c5-viz__list li{display:flex;gap:var(--w-space-3);align-items:flex-start;}
+.c5-viz__list .wf-icon{flex:none;margin-top:2px;color:rgb(255 255 255 / .75);}
+/* kit colours inverted inside the dark box */
+.c5-viz .c5-muted,.c5-viz .wf-small,.c5-viz .wf-t-secondary{color:rgb(255 255 255 / .65);}
+.c5-viz .c5-bar{grid-template-columns:minmax(6.25rem,31%) 1fr minmax(4.5rem,auto);font-size:0.8125rem;gap:var(--w-space-2);}
+.c5-viz .c5-bar__track{background:rgb(255 255 255 / .25);border-color:transparent;}
+.c5-viz .c5-bar__fill{background:#fff;}
+/* bar chart – shared by the illustration (03) and the proof block in #dowod */
+.c5-barchart{display:flex;flex-direction:column;gap:var(--w-space-3);}
+.c5-bar{display:grid;grid-template-columns:minmax(7.5rem,34%) 1fr minmax(5.2rem,auto);gap:var(--w-space-3);align-items:center;font-size:var(--w-font-sm-size);}
+.c5-bar__track{height:12px;background:var(--w-gray-100);border:1px solid var(--w-border-subtle);overflow:hidden;}
+.c5-bar__fill{height:100%;width:var(--bw);background:var(--w-gray-900);}
+
+/* Static layout on a wide screen (reduced motion or no JS): the boxes must not spread
+   over the whole column. */
+@media (min-width:900px){
+  .c5-facts-flow{align-items:flex-start;}
+  .c5-viz{max-width:480px;}
+  .c5-facts-panel__img,.c5-facts-panel__ph{max-width:480px;max-height:min(46vh,420px);}
+  .c5-fact{max-width:640px;}
+}
+
+/* --- Scene: sticky 100svh in a tall track (JS sets the track height) ------------------- */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  .cx-js .c5-facts-sec{padding-block:0;}
+  .cx-js .c5-facts-stage{
+    --c5-facts-gap:clamp(2rem,6vw,8rem);
+    --c5-facts-prog:40px;
+    /* room for the advisor dock floating over the bottom edge of the window */
+    --c5-facts-dock:58px;
+    position:sticky;top:0;height:100svh;
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr);
+    gap:0 var(--c5-facts-gap);padding-block:var(--c5-gutter);
+  }
+  /* the panel comes back as a box in column 2 – the layers lie on top of each other and
+     only the one with data-on="true" is visible */
+  .cx-js .c5-facts-flow > .c5-facts-panel{display:block;position:relative;grid-row:1;grid-column:2;align-self:stretch;
+    height:100%;background:var(--w-gray-700);overflow:hidden;}
+  .cx-js .c5-facts-panel__img,.cx-js .c5-facts-panel__ph{position:absolute;inset:0;width:100%;height:100%;max-width:none;max-height:none;aspect-ratio:auto;
+    opacity:0;transition:opacity .45s var(--w-ease);will-change:opacity;}
+  .cx-js .c5-facts-panel__img[data-on="true"],.cx-js .c5-facts-panel__ph[data-on="true"]{opacity:1;}
+  /* the advisor dock floats over the bottom edge of the window, right where the placeholder
+     label sits – in the scene the label goes to the top-left corner of the panel */
+  .cx-js .c5-facts-panel__ph::after{top:12px;bottom:auto;left:14px;}
+  /* wash under the illustration box – white text on .78 black must not fight the lighter
+     patches of the photographs */
+  .cx-js .c5-facts-panel::after{content:"";position:absolute;inset:0;background:rgb(0 0 0 / .25);}
+  .cx-js .c5-facts-head{grid-row:1;grid-column:1;align-self:start;z-index:2;background:var(--w-surface-page);padding-bottom:var(--w-space-4);
+    gap:clamp(0.75rem,1.4vw,1rem);}
+  /* in the scene the heading is a step smaller and may use the whole column – the longest
+     topics (04, 05) have to fit between it and the progress bar */
+  .cx-js .c5-facts-head .c5-h2{font-size:clamp(1.5rem,2.2vw,2rem);max-width:none;}
+  /* Description + illustration layer covers the whole stage: descriptions at the bottom of
+     column 1, illustrations centred in column 2 – all in one grid cell, so they swap in place. */
+  .cx-js .c5-facts-flow{grid-row:1;grid-column:1 / -1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr);gap:0 var(--c5-facts-gap);}
+  .cx-js .c5-facts-flow > .c5-fact{grid-row:1;grid-column:1;align-self:end;max-width:none;padding-bottom:calc(var(--c5-facts-prog) + var(--c5-facts-dock));opacity:0;transform:translateY(12px);transition:opacity .18s var(--w-ease),transform .18s var(--w-ease);}
+  .cx-js .c5-facts-flow > .c5-fact.is-on{opacity:1;transform:none;transition-duration:.26s;}
+  .cx-js .c5-facts-flow > .c5-viz{grid-row:1;grid-column:2;align-self:center;justify-self:center;width:clamp(300px,78%,560px);height:clamp(360px,64svh,600px);aspect-ratio:auto;max-width:none;max-height:none;opacity:0;visibility:hidden;transition:opacity .22s var(--w-ease),visibility 0s linear .22s;}
+  .cx-js .c5-facts-flow > .c5-viz[data-on="true"]{opacity:1;visibility:visible;transition:opacity .22s var(--w-ease);}
+  .cx-js .c5-facts-prog{grid-row:1;grid-column:1;align-self:end;display:flex;flex-direction:column;gap:var(--w-space-2);margin-bottom:var(--c5-facts-dock);}
+}
+/* Narrow desktop (900–1199 px): the description column is the narrowest there, so it takes
+   more room at the expense of the gap and the illustration column (as on CARBOHUMIC). */
+@media (min-width:900px) and (max-width:1199px) and (prefers-reduced-motion: no-preference){
+  .cx-js .c5-facts-stage{--c5-facts-gap:clamp(1.5rem,4vw,3rem);grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);}
+  .cx-js .c5-facts-flow{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);}
+  .cx-js .c5-facts-flow > .c5-viz{width:min(100%,360px);}
+}
+/* Topics 04 (paragraph + three long list items + closing sentence) and 05 (three paragraphs)
+   are the longest on the page and must fit between the pinned heading (lead included) and
+   the progress bar. Measured (agent-C/fit.py): with 0.9375rem the description of 04 runs
+   into the heading at 1280×800 (−85 px) and 1440×900, so the scene steps down by window
+   height, as on CARBOHUMIC: tighter rhythm everywhere, 0.875rem up to 1000 px, 0.8125rem up
+   to 780 px. */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  .cx-js .c5-facts-flow > .c5-fact{gap:10px;}
+  .cx-js .c5-facts-flow > .c5-fact .c5-fact__body{line-height:1.5;gap:10px;}
+  .cx-js .c5-facts-flow > .c5-fact .c5-fact__body ul{gap:6px;}
+}
+@media (min-width:900px) and (prefers-reduced-motion: no-preference) and (max-height:1000px){
+  .cx-js .c5-facts-flow > .c5-fact .c5-fact__body{font-size:0.875rem;}
+  .cx-js .c5-facts-flow > .c5-fact .c5-fact__title{font-size:clamp(1.0625rem,1.5vw,1.25rem);}
+}
+/* Low windows (e.g. 1280×720): the progress bar moves closer, the heading and the
+   descriptions take the tightest step. */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference) and (max-height:780px){
+  .cx-js .c5-facts-stage{--c5-facts-prog:32px;}
+  .cx-js .c5-facts-head .c5-h2{font-size:clamp(1.375rem,2vw,1.75rem);}
+  .cx-js .c5-facts-flow > .c5-fact .c5-fact__body{font-size:0.8125rem;}
+}
+
+/* ===== 65 · Co dają – effects over time as pinned rows (spec §10, port of CARBOMAT ECO 80 "Sezon")
+   + knowledge blocks (table of materials, soil optimum, "Dla dociekliwych") ===== */
+/* Row = title (left) · packshot scene (centre) · name + description (right). The description
+   panel animates its height (panelSet), the scene always stands – only its state changes.
+   The scroll drives the opening in the pin (see .c5-season-pin below). */
+.c5-season{display:flex;flex-direction:column;margin-top:clamp(2rem,4.5vw,4rem);background:var(--w-surface-page);
+  /* side of the scene square – the same in the pin and in the accordion. The lower bound is
+     200 px, not 240: on windows under ~750 px the square decides whether the header, the
+     block and the dock still fit the screen. */
+  --c5-season-sq:clamp(200px,32vh,360px);
+  /* room for the advisor dock floating over the bottom edge of the window */
+  --c5-season-dock:60px;
+  /* distance of the block's bottom edge from the bottom of the screen in the pin */
+  --c5-season-gap:max(84px, calc(clamp(0.75rem,2.5vh,1.5rem) + var(--c5-season-dock)));}
+/* on the light band the block takes the band colour, so the rows do not read as a white card */
+.c5-band .c5-season{background:var(--w-surface-subtle);}
+/* Closed row = the title only: scene and panel have zero height, so a tight padding and no
+   row gap are enough – they grow only with the open row. */
+.c5-season__row{border-top:1px solid var(--w-border-default);display:grid;row-gap:0;column-gap:clamp(1rem,3vw,2.5rem);align-items:start;padding-block:12px;}
+.c5-season__row:last-child{border-bottom:1px solid var(--w-border-default);}
+/* the title button keeps the 50 px closed row, but its hit area is 44 px tall
+   (padding-block 10 px balanced by margin-block -10 px) */
+.c5-season__head{grid-column:1;padding:10px 0;margin-block:-10px;background:none;border:0;font:inherit;font-size:1rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;text-align:left;cursor:pointer;
+  color:var(--w-gray-400);transition:color .2s var(--w-ease);}
+/* Entrance: the rows fade in from below once, the first time the block shows up on screen
+   (IntersectionObserver adds `is-in`), 90 ms apart – only where the scroll mechanics run.
+   A transform does not change the layout height, so the block measurement in JS and the
+   sticky `top` stay correct in the start state. */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  .cx-js .c5-season__row{opacity:0;transform:translateY(24px);
+    transition:opacity .5s cubic-bezier(.2,.7,.2,1),transform .5s cubic-bezier(.2,.7,.2,1);}
+  .cx-js .c5-season.is-in .c5-season__row{opacity:1;transform:none;}
+  .cx-js .c5-season.is-in .c5-season__row:nth-child(2){transition-delay:.09s;}
+  .cx-js .c5-season.is-in .c5-season__row:nth-child(3){transition-delay:.18s;}
+}
+.c5-season__row[data-open="true"] .c5-season__head{color:var(--w-gray-900);}
+/* Packshot scene: light grey square + packshot in the middle. A closed row reserves no room
+   for it (height 0), so opening has three beats:
+   1. room for the square opens together with the row (.22 s),
+   2. the square slides in from the bottom (clip-path, .26 s),
+   3. only then the packshot comes in (.26 s). Closing – the other way round and short. */
+.c5-season__scene{position:relative;width:100%;max-width:var(--c5-season-sq);aspect-ratio:1;overflow:hidden;
+  max-height:0;margin-block:0;transition:max-height .18s var(--w-ease),margin-block .18s var(--w-ease);}
+.c5-season__row[data-open="true"] .c5-season__scene{max-height:var(--c5-season-sq);margin-block:var(--w-space-2);
+  transition:max-height .22s cubic-bezier(.2,.8,.2,1),margin-block .22s cubic-bezier(.2,.8,.2,1);}
+.c5-season__plate{position:absolute;inset:0;background:var(--w-gray-100);clip-path:inset(100% 0 0 0);transition:clip-path .15s var(--w-ease);will-change:clip-path;}
+/* on the band (#fafafa) the plate goes one step darker to keep the contrast it has on white */
+.c5-band .c5-season__plate{background:var(--w-gray-150);}
+.c5-season__row[data-open="true"] .c5-season__plate{clip-path:inset(0 0 0 0);transition:clip-path .26s cubic-bezier(.2,.8,.2,1) .14s;}
+.c5-season__pack{position:absolute;left:50%;top:50%;height:76%;width:76%;object-fit:contain;
+  opacity:0;transform:translate(-50%,-50%) translateY(14px) scale(.94);
+  transition:opacity .15s var(--w-ease),transform .15s var(--w-ease);will-change:transform;}
+.c5-season__row[data-open="true"] .c5-season__pack{opacity:1;transform:translate(-50%,-50%) translateY(0) scale(1);
+  transition:opacity .26s ease-out .32s,transform .26s ease-out .32s;}
+.c5-season__panel{overflow:hidden;height:0;opacity:0;transition:height var(--c5-acc) var(--w-ease),opacity var(--c5-acc-fade) var(--w-ease);}
+.c5-season__row[data-open="true"] .c5-season__panel{opacity:1;}
+.c5-season__panelin{overflow:hidden;min-height:0;padding-top:var(--w-space-2);}
+.c5-season__info{display:flex;flex-direction:column;gap:var(--w-space-3);align-items:flex-start;max-width:441px;}
+.c5-season__info p{margin:0;}
+/* the name of the effect is stronger than the row title on the left */
+.c5-season__info h3{font-size:clamp(1.375rem,2vw,1.75rem);line-height:1.2;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+
+/* The block height measured in JS must see the target state, not an animation frame – all
+   scene transitions are off for the measurement. */
+.c5-season--instant .c5-season__scene,
+.c5-season--instant .c5-season__plate,
+.c5-season--instant .c5-season__pack,
+.c5-season--instant .c5-season__row[data-open="true"] .c5-season__scene,
+.c5-season--instant .c5-season__row[data-open="true"] .c5-season__plate,
+.c5-season--instant .c5-season__row[data-open="true"] .c5-season__pack{transition:none;}
+
+/* Without JS nobody opens a panel (panelSet sets the height), so every row is open –
+   all content stays visible. */
+html:not(.cx-js) .c5-season__panel{height:auto;opacity:1;}
+html:not(.cx-js) .c5-season__head{color:var(--w-gray-900);cursor:default;}
+html:not(.cx-js) .c5-season__scene{max-height:var(--c5-season-sq);margin-block:var(--w-space-2);}
+html:not(.cx-js) .c5-season__plate{clip-path:none;}
+html:not(.cx-js) .c5-season__pack{opacity:1;transform:translate(-50%,-50%);}
+
+/* Pin: the header and the block first travel with the page, with row 1 already open. The
+   block sticks by its BOTTOM edge – sticky `top` is `100svh - gap - block height`, so it
+   locks exactly when the bottom edge reaches the gap line. Only then does the header reach
+   its own sticky `top`, and the scroll phases open rows 2 and 3 (JS). Track height, spacer
+   and head-wrap height come from JS; without JS / on mobile it is a click accordion. */
+.c5-season-pin{position:relative;}
+.c5-season-pin__spacer{display:none;}
+/* the kicker travels and pins with the heading, so it lives inside the head box; spacing
+   comes from the .c5-head gap */
+.c5-season-head .c5-kicker{margin-bottom:0;}
+
+@media (min-width:900px){
+  /* equal side columns = the square exactly in the middle of the screen */
+  .c5-season__row{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);column-gap:clamp(1.5rem,3.5vw,4rem);}
+  .c5-season__scene{grid-column:2;justify-self:center;width:var(--c5-season-sq);max-width:none;}
+  .c5-season__panel{grid-column:3;}
+}
+/* Narrow desktop: the side columns stay equal (square in the middle), but the scene and the
+   name step down, so the description does not break every three words. */
+@media (min-width:900px) and (max-width:1099px){
+  .c5-season{--c5-season-sq:clamp(200px,30vh,300px);}
+  .c5-season__info h3{font-size:1.25rem;}
+}
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  /* The spacer reserves the flow room of the absolutely placed header, so the header and
+     the block enter the screen as one moving unit. Its height is the header box (JS); the
+     margin below it is the breathing room the block has outside the pin plus 100 px. */
+  .cx-js .c5-season-pin__spacer{display:block;margin-bottom:calc(clamp(2rem,4.5vw,4rem) + 100px);}
+  /* Sticky `top` = window minus gap minus block height. --c5-season-h is the measured height
+     with one row open (the tallest of the three states) and --c5-season-headroom the lowest
+     top that still clears the header – both set by JS. min-height freezes the height, so
+     opening another row cannot move the bottom edge. */
+  .cx-js .c5-season-pin > .c5-season{position:sticky;
+    top:max(var(--c5-season-headroom,0px),calc(100svh - var(--c5-season-gap) - var(--c5-season-h,0px)));
+    min-height:var(--c5-season-h,auto);margin-top:0;z-index:1;}
+  /* The header holds the top through the whole cycle and is then PUSHED up by the bottom
+     edge of its wrapper, so it leaves together with the rows. The wrapper is absolute and JS
+     sizes it so the push starts exactly when the block lets go. No background at all. */
+  .cx-js .c5-season-headwrap{position:absolute;top:0;left:0;right:0;}
+  .cx-js .c5-season-head{position:sticky;top:clamp(0.75rem,2.5vh,1.75rem);z-index:70;background:transparent;
+    padding-block:clamp(0.75rem,2vh,1.5rem);}
+}
+/* Short windows: below ~680 px the kicker, H2 and lead move closer together – otherwise the
+   sticky offset hits its --c5-season-headroom floor and the last row slides under the dock. */
+@media (min-width:900px) and (max-height:679px) and (prefers-reduced-motion: no-preference){
+  .cx-js .c5-season-head .c5-head{gap:clamp(0.5rem,1.6vh,1.4rem);}
+}
+@media (prefers-reduced-motion: reduce){
+  .c5-season__panel{transition:none;}
+  .c5-season__head{transition:none;}
+  .c5-season__scene,.c5-season__plate,.c5-season__pack{transition:none;}
+}
+
+/* --- Knowledge blocks (former inline layer): table of materials + soil optimum ---------- */
+.c5pr-two{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(1.5rem,3vw,3rem);align-items:start;margin-top:clamp(2.5rem,5vw,4rem);}
+@media (max-width:899px){ .c5pr-two{grid-template-columns:minmax(0,1fr);} }
+/* stacked variant: one under the other, each block full width (Mateusz 12.09 and 14.09) */
+.c5pr-two--stack{grid-template-columns:minmax(0,1fr);}
+/* after the pinned rows the blocks get a longer run-up – the pin leaves the screen first */
+.c5-season-pin + .c5pr-two{margin-top:clamp(3.5rem,7vw,6rem);}
+/* Soil optimum: one 100 % scale of three shares; labels in the same grid. */
+.c5pr-mix{margin-top:var(--w-space-2);}
+.c5pr-mix__bar{display:grid;grid-template-columns:50fr 25fr 25fr;height:clamp(56px,6.5vw,84px);border:1px solid var(--w-gray-900);}
+.c5pr-mix__seg{display:grid;place-items:center;font-size:clamp(0.875rem,1.2vw,1.0625rem);font-weight:var(--w-weight-semibold);letter-spacing:-0.01em;}
+.c5pr-mix__seg + .c5pr-mix__seg{border-left:1px solid var(--w-gray-900);}
+.c5pr-mix__seg--a{background:var(--w-gray-900);color:var(--w-text-inverse);}
+.c5pr-mix__seg--b{background:var(--w-gray-400);color:var(--w-text-primary);}
+.c5pr-mix__seg--c{background:var(--w-gray-200);color:var(--w-text-primary);}
+.c5pr-mix__names{display:grid;grid-template-columns:50fr 25fr 25fr;margin-top:var(--w-space-2);font-size:0.875rem;color:var(--w-text-secondary);}
+.c5pr-mix__names span{text-align:center;}
+/* block – shared by #co-daja and #dowod */
+.c5pr-block{display:flex;flex-direction:column;gap:var(--w-space-4);border:1px solid var(--w-border-default);background:var(--w-surface-page);padding:clamp(1.25rem,2.2vw,1.75rem);}
+.c5pr-block__h{font-size:1.0625rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+.c5pr-block__src{font-size:0.75rem;line-height:1.45;color:var(--w-text-tertiary);}
+.c5pr-block .wf-table{font-size:var(--w-font-sm-size);}
+.c5pr-more{margin-top:clamp(2rem,4vw,3rem);display:flex;flex-direction:column;gap:var(--w-space-3);}
+
+/* ===== 70 · Dowód – two proof blocks stacked at full width + certificates (spec §11) =====
+   Blocks and the bar chart come from 65 (.c5pr-two, .c5pr-block) and 60 (.c5-barchart). */
+.c5pr-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--w-space-5);margin-top:clamp(1.5rem,3vw,2.25rem);}
+.c5pr-stat{display:flex;flex-direction:column;gap:var(--w-space-2);border-top:1px solid var(--w-border-default);padding-top:var(--w-space-4);}
+.c5pr-stat__num{font-size:clamp(1.75rem,3.4vw,2.5rem);font-weight:var(--w-weight-bold);line-height:1;letter-spacing:-0.02em;}
+.c5pr-stat p{margin:0;font-size:0.875rem;color:var(--w-text-secondary);}
+
+/* Bars grow once their block enters – behind the same gates as the reveal (00-base), so with
+   reduced motion, on a phone and without JS the bars simply stand at full length. The fill
+   keeps its width (--bw); only a scale runs, 60 ms apart per bar. */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  .cx-js [data-reveal] .c5-barchart .c5-bar__fill{transform:scaleX(0);transform-origin:left center;}
+  .cx-js [data-reveal].is-in .c5-barchart .c5-bar__fill{transform:none;transition:transform .7s var(--w-ease) .2s;}
+  .cx-js [data-reveal].is-in .c5-barchart .c5-bar:nth-child(2) .c5-bar__fill{transition-delay:.26s;}
+  .cx-js [data-reveal].is-in .c5-barchart .c5-bar:nth-child(3) .c5-bar__fill{transition-delay:.32s;}
+  .cx-js [data-reveal].is-in .c5-barchart .c5-bar:nth-child(4) .c5-bar__fill{transition-delay:.38s;}
+  .cx-js [data-reveal].is-in .c5-barchart .c5-bar:nth-child(5) .c5-bar__fill{transition-delay:.44s;}
+  .cx-js [data-reveal].is-in .c5-barchart .c5-bar:nth-child(n+6) .c5-bar__fill{transition-delay:.5s;}
+}
+
+/* ===== 75 · Doglebowo czy nalistnie (spec §12, layout as carbohumic.css 76) =====
+   Comparison of the two application routes + the two foliar products. The table rows enter
+   through `data-reveal` on `tbody` (js/72-reveal.js); the transform runs on the table row,
+   so the column layout stays untouched. */
+.c5pr-cmp{margin-top:clamp(1.5rem,3vw,2.5rem);}
+/* a row still sliding in (translateY) must not add a vertical scrollbar to the scroll box */
+.c5pr-cmp.cw-scrollx{overflow-y:hidden;}
+.c5pr-cmp .wf-table{min-width:640px;}
+.c5pr-cmp .wf-table th,.c5pr-cmp .wf-table td{width:50%;vertical-align:top;}
+.c5pr-foliar{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:var(--w-space-5);margin-top:clamp(2rem,4vw,3rem);}
+.c5pr-foliar__card{display:flex;flex-direction:column;gap:var(--w-space-3);border:1px solid var(--w-border-default);padding:clamp(1.25rem,2.2vw,1.75rem);}
+/* photo placeholder 16:10 (.c5-ph carries the grey field and the label) */
+.c5pr-foliar__ph{aspect-ratio:16/10;width:100%;}
+.c5pr-foliar__name{font-size:1.25rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+.c5pr-foliar__card p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
+.c5pr-foliar__rows{display:flex;flex-direction:column;margin:0;}
+.c5pr-foliar__row{display:flex;flex-direction:column;gap:2px;padding-block:9px;border-top:1px solid var(--w-border-subtle);font-size:0.875rem;}
+.c5pr-foliar__row dt{color:var(--w-text-tertiary);}
+.c5pr-foliar__row dd{margin:0;}
+.c5pr-foliar__card .c5-btnrow{margin-top:auto;padding-top:var(--w-space-2);}
+
+/* ===== 80 · Pas dla profesjonalistów (spec §13, pattern §3.9, sensiq.co) =====
+   Grey band; in the scene the media lies under the content and scales from .5 to 1 while
+   scrolling (JS 80-pro.js writes --pro-s). Without motion (mobile / reduced / no JS): a
+   static 3:2 frame above the content, 30 px from the screen edges. The band stands between
+   "Doglebowo czy nalistnie" (a band with its own padding) and FAQ, so it has no margin. */
+.c5-pro{position:relative;background:var(--w-gray-600);color:var(--w-text-inverse);overflow:hidden;}
+/* 30 px corners – the only exception to the sharp corners of V5, asked for by Mateusz */
+.c5-pro__media{position:relative;width:100%;aspect-ratio:3/2;border-radius:30px;overflow:hidden;background:var(--w-gray-500);}
+.c5-pro__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 45%;}
+.c5-pro__grid{position:relative;z-index:1;padding-block:clamp(2.5rem,6vw,5rem);display:flex;flex-direction:column;gap:clamp(1.5rem,4vw,2.5rem);}
+.c5-pro__grid h2{font-size:clamp(1.75rem,3vw,2.5rem);line-height:1.15;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;max-width:486px;}
+.c5-pro__side{display:flex;flex-direction:column;gap:clamp(1.5rem,3vw,2rem);max-width:486px;}
+.c5-pro__side p{margin:0;color:var(--w-text-inverse);opacity:.75;}
+.c5-pro__grid .c5-btnrow{gap:var(--w-space-2);}
+.c5-pro__grid .c5-btn{padding-inline:clamp(18px,2.2vw,32px);}
+.c5-pro__login{background:transparent;color:var(--w-text-inverse);border-color:rgb(255 255 255 / .6);}
+.c5-pro__login:hover{background:rgb(255 255 255 / .12);border-color:var(--w-text-inverse);}
+/* on the dark band the focus ring must be light (and sharp like the rest of V5) */
+.c5-pro a:focus-visible{outline-color:var(--w-focus-ring-inverse);border-radius:0;}
+
+@media (max-width:899px){
+  /* static: the frame stands above the content, 30 px from the screen edges */
+  .c5-pro__media{margin:var(--c5-gutter) var(--c5-gutter) 0;width:auto;}
+}
+@media (prefers-reduced-motion: reduce){
+  /* without motion the frame does not scale – it stands above the content, centred */
+  .c5-pro__media{margin-inline:auto;max-width:calc(100% - 2 * var(--c5-gutter));}
+}
+@media (min-width:900px){
+  .c5-pro__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,486px);gap:clamp(2rem,6vw,6rem);align-items:center;}
+  /* two buttons side by side fit the 486 px column */
+  .c5-pro__grid .c5-btnrow{flex-wrap:nowrap;}
+  .c5-pro__grid .c5-btn{white-space:nowrap;}
+  /* static (reduced / no JS): the frame above the content does not eat the whole screen */
+  .c5-pro__media{margin:var(--c5-gutter) auto 0;width:auto;max-width:calc(100% - 2 * var(--c5-gutter));max-height:min(56vh,520px);}
+}
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  .cx-js .c5-pro{min-height:90svh;display:grid;align-items:center;}
+  /* in the scene the frame covers the band and scales around its centre (pattern ECO 80) */
+  .cx-js .c5-pro__media{position:absolute;inset:0;margin:0;width:auto;max-width:none;aspect-ratio:auto;max-height:none;
+    transform:scale(var(--pro-s,1));transform-origin:center;will-change:transform;}
+  /* the text lies ON the photo: the crop moves down so the paragraph lands on the haze */
+  .cx-js .c5-pro__img{object-position:50% 20%;}
+  /* no gradients – one flat, gentle scrim */
+  .cx-js .c5-pro__media::after{content:"";position:absolute;inset:0;background:rgb(0 0 0 / .25);}
+}
+
+/* --- FAQ: pytanie z lewej, odpowiedź z prawej ------------------------------- */
+/* Odstęp nagłówek → pierwszy akordeon: §14.5 dokłada ~100 px do dotychczasowych
+   64 px, czyli ok. 164 px na desktopie. */
+.c5-faq{display:flex;flex-direction:column;margin-top:clamp(8rem,12vw,10.25rem);}
+.c5-faq__item{border-top:1px solid var(--w-border-default);position:relative;}
+.c5-faq__item:last-child{border-bottom:1px solid var(--w-border-default);}
+.c5-faq__q{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--w-space-4);width:100%;padding:26px 0;background:none;border:0;font:inherit;font-size:1.125rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;text-align:left;color:var(--w-text-primary);cursor:pointer;}
+.c5-faq__q .wf-icon{flex:none;margin-top:4px;transition:transform var(--w-duration-base) var(--w-ease);}
+.c5-faq__q[aria-expanded="true"] .wf-icon{transform:rotate(180deg);}
+.c5-faq__a{overflow:hidden;height:0;opacity:0;transition:height var(--c5-acc) var(--w-ease),opacity var(--c5-acc-fade) var(--w-ease);}
+.c5-faq__item[data-open] .c5-faq__a{opacity:1;}
+.c5-faq__ain{overflow:hidden;min-height:0;padding-bottom:26px;font-size:1rem;color:var(--w-text-secondary);}
+/* bez JS nie ma czym rozwijać paneli – odpowiedzi zostają otwarte (§0) */
+html:not(.cx-js) .c5-faq__a{height:auto;opacity:1;}
+@media (min-width:900px){
+  /* stały układ dwukolumnowy – bez skoku przy otwieraniu (kolumna odpowiedzi
+     jest zawsze, tylko zwinięta do zera) */
+  .c5-faq__item{display:grid;grid-template-columns:minmax(0,1fr) 515px;gap:var(--w-space-10);align-items:start;}
+  .c5-faq__q{grid-column:1;}
+  .c5-faq__a{grid-column:2;}
+  /* strzałka przy prawej krawędzi wiersza; tekst odpowiedzi z odstępem od niej */
+  .c5-faq__q .wf-icon{position:absolute;right:0;top:30px;}
+  .c5-faq__ain{padding-top:26px;padding-right:60px;}
+}
+@media (prefers-reduced-motion: reduce){
+  .c5-faq__q .wf-icon{transition:none;}
+  .c5-faq__a{transition:none;}
+}

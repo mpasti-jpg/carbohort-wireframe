@@ -1,0 +1,604 @@
+/* ===== 00 · Warstwa wspólna strony kukurydzy (V5, wzorzec CARBOMAT ECO) =====
+   Klocki układu, przyciski, hero, CTA. Adaptacja bloku 00 z `carbomat.css`.
+   Różnice wobec wzorca (spec §9.0.3, §9.3):
+   – strona ładuje też `c5.css` i `uprawa.css`, więc te reguły CELOWO nadpisują
+     `c5.css` tam, gdzie klasy się pokrywają (.c5-sec, .c5-kicker, .c5-h1/h2,
+     .c5-btn, hero) – wygląd ma być ten sam co na ECO;
+   – hero nie ma packshotów (to strona uprawy, nie produktu): prawy panel
+     wypełnia jeden kadr, więc reguły `.c5-hero__pack*` wypadły;
+   – reguła `.wf-ph__label{display:none}` z wzorca NIE obowiązuje: etykiety
+     placeholderów opisują kadry do zamówienia u grafika (spec §9.0.5);
+   – dok doradcy chowa `c5.js` (moduł „Dok dr. Jurka") tą samą logiką i tą samą
+     klasą `cx-dockhide`, a style doku ma `c5.css` – dlatego ani modułu, ani
+     reguł `.cw-jurek` nie powtarzamy tutaj (nie dublujemy mechanik c5).
+   Bez subnawigacji – nawigacja po podstronie to kropki po prawej (10-dots).
+   ===== */
+:root { --c5-acc: .2s; --c5-acc-fade: .14s; --c5-gutter: 30px; }
+
+/* Górne menu serwisu NIE jest przyklejone (decyzja Mateusza 24.07) – scrolluje
+   się razem ze stroną. Po zdjęciu paska subnawigacji (iteracja 5) do górnej
+   krawędzi nie klei się już nic. Kit pozostaje nietknięty – to nadpisanie
+   tylko w obrębie tej strony. */
+.wf-navbar{position:static;}
+
+/* kotwice: bez przyklejonej belki nie potrzeba marginesu przewijania
+   (c5.css odsuwa je o wysokość nieistniejącej tu subnawigacji) */
+[data-chapter]{scroll-margin-top:0;}
+
+/* Etykiety placeholderów zostają widoczne: na stronie uprawy opisują kadr do
+   zamówienia u grafika (spec §9.0.5). `c5.css` chowa je dla stron produktowych,
+   gdzie placeholderów nie ma – tu tę regułę cofamy. */
+.wf-ph__label{display:inline;}
+
+/* --- Wspólne klocki nowego layoutu -------------------------------------- */
+.c5-wrap{max-width:1180px;margin-inline:auto;padding-inline:var(--w-space-5);}
+.c5-sec{padding-block:clamp(3.5rem,7vw,6.25rem);}
+.c5-kicker--center{text-align:center;}
+.c5-kicker{display:block;font-size:0.875rem;font-weight:var(--w-weight-medium);letter-spacing:.03em;text-transform:uppercase;margin-bottom:clamp(2rem,4vw,3.5rem);}
+.c5-h1{font-size:clamp(2.1rem,4vw,3.125rem);line-height:1.12;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+.c5-h2{font-size:clamp(1.7rem,3.2vw,2.5rem);line-height:1.15;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;max-width:784px;}
+.c5-h2--center{margin-inline:auto;text-align:center;}
+.c5-lead{font-size:1rem;color:var(--w-text-secondary);max-width:710px;}
+.c5-lead--center{margin-inline:auto;text-align:center;}
+.c5-head{display:flex;flex-direction:column;gap:clamp(1.25rem,2.6vw,2.25rem);}
+.c5-muted{color:var(--w-text-secondary);}
+
+/* Przyciski nowego języka: ostre narożniki, etykiety jak w makiecie */
+.c5-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 45px;font:inherit;font-size:1rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;border:1px solid rgb(0 0 0 / .2);border-radius:0;cursor:pointer;text-decoration:none;transition:background var(--w-duration-base) var(--w-ease),color var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);}
+.c5-btn--dark{background:var(--w-gray-900);color:var(--w-text-inverse);border-color:var(--w-gray-900);}
+.c5-btn--dark:hover{background:var(--w-gray-700);border-color:var(--w-gray-700);}
+.c5-btn--light{background:var(--w-surface-page);color:var(--w-text-primary);}
+.c5-btn--light:hover{border-color:var(--w-border-strong);}
+.c5-btn--sm{padding:10px 25px;font-size:0.8125rem;}
+.c5-btn--inv{background:var(--w-surface-page);color:var(--w-text-primary);border-color:var(--w-surface-page);}
+.c5-btn--inv:hover{background:var(--w-gray-100);}
+.c5-btn .wf-icon{width:16px;height:16px;opacity:.55;}
+.c5-btnrow{display:flex;gap:6px;flex-wrap:wrap;}
+
+/* --- HERO: cały pierwszy ekran pod menu serwisu (spec §9.3) ---------------
+   Wysokość ekranu minus zmierzony pasek menu (`--cx-navbar-h` ustawia JS w
+   00-base.js; fallback 0 px, gdy JS nie wystartuje). Lewa kolumna: copy
+   wyśrodkowane w pionie, breadcrumb przy dolnej krawędzi. Prawa: panel
+   jasnoszary z kadrem uprawy na całej powierzchni. ------------------------- */
+#hero{display:flex;min-height:calc(100svh - var(--cx-navbar-h, 0px));}
+#hero > .c5-wrap{flex:1 1 auto;display:flex;}
+.c5-hero{flex:1 1 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,5vw,5rem);align-items:stretch;padding-block:0;min-height:0;}
+/* odstępy w lewej kolumnie robią `margin-block:auto` na copy i padding pod
+   okruszkami – własnego `gap` (z c5.css) ta kolumna mieć nie może */
+.c5-hero__copy{display:flex;flex-direction:column;gap:0;max-width:585px;}
+.c5-hero__copyin{display:flex;flex-direction:column;gap:clamp(1.25rem,2.4vw,2rem);margin-block:auto;padding-block:clamp(2rem,4vw,3rem);}
+.c5-hero__copy .c5-kicker{margin-bottom:0;}
+.c5-hero__lead{display:flex;flex-direction:column;gap:var(--w-space-3);font-size:1.125rem;color:var(--w-text-secondary);max-width:486px;}
+/* breadcrumb: dyskretny, przy dolnej krawędzi ekranu */
+.c5-hero__crumbs{font-size:0.75rem;color:var(--w-gray-400);padding-bottom:var(--c5-gutter);}
+.c5-hero__crumbs a,.c5-hero__crumbs .wf-breadcrumb__sep{color:inherit;}
+.c5-hero__crumbs a:hover{color:var(--w-gray-600);}
+
+/* Panel: 30 px od góry, dołu i prawej krawędzi ekranu. Na stronie uprawy stoi
+   na nim jeden kadr na całą powierzchnię (docelowo zdjęcie `object-fit:cover`,
+   dziś placeholder z opisem kadru). */
+.c5-hero__stage{position:relative;overflow:hidden;margin-block:var(--c5-gutter);min-height:calc(100svh - var(--cx-navbar-h, 0px) - 2 * var(--c5-gutter));background:var(--w-gray-100);}
+.c5-hero__frame{position:absolute;inset:0;border-radius:0;min-height:0;border:0;}
+.c5-hero__frame .wf-ph__label{max-width:min(100%,22rem);}
+.c5-hero__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+
+/* --- CTA końcowe ------------------------------------------------------------ */
+.c5-cta{display:flex;flex-direction:column;align-items:center;gap:clamp(1.75rem,3.5vw,2.75rem);text-align:center;}
+
+@media (max-width:899px){
+  /* jedna kolumna: copy → panel z kadrem → breadcrumb pod spodem */
+  #hero{display:block;min-height:0;}
+  #hero > .c5-wrap{display:block;}
+  .c5-hero{display:flex;flex-direction:column;gap:clamp(1.5rem,4vw,2.5rem);padding-block:clamp(2rem,6vw,3rem);}
+  .c5-hero__copy{display:contents;}
+  .c5-hero__copyin{order:1;margin-block:0;padding-block:0;max-width:585px;}
+  .c5-hero__stage{order:2;margin-block:0;min-height:0;aspect-ratio:4/5;max-height:70vh;}
+  .c5-hero__crumbs{order:3;padding-bottom:0;}
+}
+@media (prefers-reduced-motion: reduce){
+  .c5-btn{transition:none;}
+}
+
+/* --- Scroll inertia (Lenis) – keep native layout; CSS smooth-behavior off while active --- */
+html.lenis,html.lenis body{height:auto;}
+.lenis.lenis-smooth{scroll-behavior:auto !important;}
+.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain;}
+.lenis.lenis-stopped{overflow:hidden;}
+
+/* ===== 10 · Nawigacja po podstronie – kropki przy prawej krawędzi ==========
+   Fixed, pionowo na środku ekranu. Etykiety wjeżdżają po najechaniu na cały
+   nav (albo po fokusie w jego wnętrzu). Nic nie klei się do górnej krawędzi.
+
+   Widoczność na jasnych i ciemnych sekcjach: cały nav ma mix-blend-mode
+   difference, a kolory zapisujemy „w bieli". Difference: result = |backdrop –
+   source|, więc biel (255) na białym tle daje czerń, a na ciemnym – biel.
+   Stąd: aktywna kropka = #fff (czytana jako gray-900 na białym), nieaktywna =
+   biel z alfą .55 (czytana jako ~gray-400). ------------------------------- */
+.c5-dots{position:fixed;right:var(--c5-gutter);top:50%;transform:translateY(-50%);z-index:90;mix-blend-mode:difference;}
+.c5-dots ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;align-items:flex-end;}
+/* Pole klikalne 28×28 px (bez odstępu między pozycjami = 28 px środek–środek).
+   Etykieta leży absolutnie POZA tym polem, więc nav zajmuje tylko wąską kolumnę
+   przy krawędzi i nie przechwytuje kliknięć w treść pod spodem. */
+.c5-dots__link{position:relative;display:flex;align-items:center;justify-content:flex-end;width:28px;min-height:28px;padding-right:2px;text-decoration:none;}
+.c5-dots__dot{flex:none;display:block;width:6px;height:6px;border-radius:var(--w-radius-circle);background:rgb(255 255 255 / .55);transition:width .2s var(--w-ease),height .2s var(--w-ease),background-color .2s var(--w-ease);}
+.c5-dots__link[aria-current="true"] .c5-dots__dot{width:10px;height:10px;background:#fff;}
+/* Etykiety: ukryte, wjeżdżają razem (lekki stagger) po najechaniu na nav.
+   Widoczna etykieta łapie wskaźnik (`pointer-events:auto`) i zachodzi 6 px na
+   pole linku, więc między kropką a etykietą nie ma „dziury": przejście myszą na
+   etykietę nie gasi etykiet, a klik w nią przewija do rozdziału (spec §13.4). */
+.c5-dots__label{position:absolute;right:calc(100% - 6px);top:50%;padding:6px 6px 6px 10px;font-size:0.8125rem;line-height:1.2;text-align:right;white-space:nowrap;color:rgb(255 255 255 / .6);opacity:0;transform:translate(6px,-50%);pointer-events:none;transition:opacity .2s var(--w-ease),transform .2s var(--w-ease);transition-delay:0s;}
+.c5-dots__link[aria-current="true"] .c5-dots__label{color:#fff;}
+.c5-dots:hover .c5-dots__label,
+.c5-dots:focus-within .c5-dots__label{opacity:1;transform:translateY(-50%);pointer-events:auto;}
+.c5-dots:hover li:nth-child(2) .c5-dots__label,.c5-dots:focus-within li:nth-child(2) .c5-dots__label{transition-delay:.02s;}
+.c5-dots:hover li:nth-child(3) .c5-dots__label,.c5-dots:focus-within li:nth-child(3) .c5-dots__label{transition-delay:.04s;}
+.c5-dots:hover li:nth-child(4) .c5-dots__label,.c5-dots:focus-within li:nth-child(4) .c5-dots__label{transition-delay:.06s;}
+.c5-dots:hover li:nth-child(5) .c5-dots__label,.c5-dots:focus-within li:nth-child(5) .c5-dots__label{transition-delay:.08s;}
+.c5-dots:hover li:nth-child(6) .c5-dots__label,.c5-dots:focus-within li:nth-child(6) .c5-dots__label{transition-delay:.10s;}
+.c5-dots:hover li:nth-child(7) .c5-dots__label,.c5-dots:focus-within li:nth-child(7) .c5-dots__label{transition-delay:.12s;}
+.c5-dots:hover li:nth-child(8) .c5-dots__label,.c5-dots:focus-within li:nth-child(8) .c5-dots__label{transition-delay:.14s;}
+/* fokus klawiatury: obrys też „w bieli", żeby był widoczny po obu stronach blendu */
+.c5-dots__link:focus-visible{outline:2px solid #fff;outline-offset:2px;}
+
+@media (max-width:899px){
+  /* dotyk nie ma najechania – zostaje zwykłe przewijanie strony */
+  .c5-dots{display:none;}
+}
+@media (prefers-reduced-motion: reduce){
+  .c5-dots__dot,.c5-dots__label{transition:none;}
+}
+
+/* ===== 25 · Kluczowe liczby – ciemny kadr z trzema wierszami (spec §9.4) ====
+   Wzór: Parametry z CARBOMAT ECO (ciemne pole odsunięte o 30 px od krawędzi)
+   + układ wiersza z serverobotics (etykieta po lewej, wielka wartość po
+   prawej, cienka linia między wierszami) i typografia liczby z docshield
+   (duże cienkie cyfry, mała jednostka w tej samej linii, podpis pod etykietą).
+   Iteracja 6 (§10.2): kadr wystający i dolny pas pod niego zdjęte – zostaje
+   symetryczny padding, czyli zwykły odstęp pod trzecim wierszem.
+   `padding` skrótem nadpisuje `padding-block` z `.c5-sec` – rytm wobec
+   sąsiadów robi tu margines 30 px, taki sam jak odstęp panelu w hero. */
+.u-num{display:flex;flex-direction:column;justify-content:center;
+  margin-inline:var(--c5-gutter);margin-block:var(--c5-gutter);
+  padding:clamp(3rem,6vw,5rem) clamp(1.5rem,4vw,4rem);
+  min-height:70svh;background:var(--w-gray-900);color:var(--w-gray-100);}
+.u-num__rows{display:flex;flex-direction:column;}
+.u-num__row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(1rem,3vw,3rem);
+  align-items:center;padding-block:clamp(1.25rem,2.5vw,2rem);border-top:1px solid rgb(255 255 255 / .18);}
+.u-num__row:last-child{border-bottom:1px solid rgb(255 255 255 / .18);}
+.u-num__key{display:flex;flex-direction:column;gap:var(--w-space-3);max-width:30rem;}
+.u-num__lab{font-size:1rem;line-height:1.35;color:var(--w-gray-300);}
+.u-num__cap{font-size:0.875rem;line-height:1.45;color:var(--w-gray-400);}
+.u-num__chips{display:flex;flex-wrap:wrap;gap:var(--w-space-2);}
+.u-num__chip{font-size:var(--w-font-caption-size);line-height:var(--w-font-caption-lh);
+  padding:var(--w-space-1) var(--w-space-3);border:1px solid rgb(255 255 255 / .35);color:var(--w-gray-300);}
+/* wielka liczba: cienka, ciasno spacjowana, cyfry tej samej szerokości */
+.u-num__val{display:flex;align-items:baseline;justify-content:flex-end;gap:.18em;
+  font-size:clamp(4.5rem,11vw,10rem);line-height:1;font-weight:var(--w-weight-regular);
+  letter-spacing:-0.02em;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap;}
+.u-num__unit{font-size:.4em;letter-spacing:0;color:var(--w-gray-300);}
+
+@media (max-width:899px){
+  /* liczba pod etykietą, ciemne pole na całą szerokość */
+  .u-num{margin-inline:0;min-height:0;}
+  .u-num__row{grid-template-columns:minmax(0,1fr);gap:var(--w-space-4);}
+  .u-num__key{max-width:none;}
+  .u-num__val{justify-content:flex-start;text-align:left;font-size:clamp(3.5rem,18vw,6rem);}
+}
+
+/* ===== 30 · Produkty: karta jako jeden link (spec §9.5, uwaga 2) ============
+   Nadpisania komponentu `u-prod` z `uprawa.css` – siatka (3 + 2 od 900 px)
+   i karuzela na telefonie zostają tam, tutaj zmienia się tylko wnętrze karty:
+   cała karta jest linkiem otwierającym mapę zastosowań, placeholder ustępuje
+   prawdziwemu packshotowi na polu --w-gray-100, a zamiast dwóch odnośników
+   („Mapa zastosowań" + „Strona produktu") zostaje jedna wskazówka ze
+   strzałką. Link do strony produktu i „Kup produkt" są w stopce popupu. ==== */
+.u-prodwrap{margin-top:clamp(2rem,4vw,3.5rem);}
+
+/* cała karta klikalna – link dziedziczy kolor, hover pogłębia ramkę */
+.u-prod__card{color:inherit;text-decoration:none;transition:border-color var(--w-duration-base) var(--w-ease);}
+.u-prod__card:hover{border-color:var(--w-gray-900);}
+
+/* Reveal ma na tym elemencie własną listę przejść (uprawa.css), więc dokładamy
+   do niej border-color i kaskadę 80 ms – inaczej jedno nadpisałoby drugie.
+   Opóźnienie siedzi w zmiennej, żeby dotyczyło tylko wjazdu karty, a nie
+   hoveru (border-color zostaje bez opóźnienia). */
+html.cx-js .u-prod__card{--u-prod-delay:0ms;
+  transition:opacity var(--w-duration-slow) var(--w-ease) var(--u-prod-delay),
+             transform var(--w-duration-slow) var(--w-ease) var(--u-prod-delay),
+             border-color var(--w-duration-base) var(--w-ease);}
+.u-prod__card:nth-child(2){--u-prod-delay:80ms;}
+.u-prod__card:nth-child(3){--u-prod-delay:160ms;}
+.u-prod__card:nth-child(4){--u-prod-delay:240ms;}
+.u-prod__card:nth-child(5){--u-prod-delay:320ms;}
+
+/* Pole packshotu: 4:3, jasna szarość, obraz wpisany z zapasem (§9.0.5).
+   `min-height:0` jest konieczne – bez niego domyślne `min-height:auto`
+   elementu flex pozwala wysokiemu packshotowi rozepchnąć pole. */
+.u-prod__ph{display:block;aspect-ratio:4/3;min-height:0;background:var(--w-gray-100);padding:12%;}
+.u-prod__img{display:block;width:100%;height:100%;object-fit:contain;}
+
+/* wskazówka zamiast przycisku – strzałka przesuwa się przy hoverze karty */
+.u-prod__go{margin-top:auto;display:inline-flex;align-items:center;gap:var(--w-space-2);
+  font-size:var(--w-font-sm-size);line-height:var(--w-font-sm-lh);font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+.u-prod__go .wf-icon{width:16px;height:16px;transition:transform var(--w-duration-fast) var(--w-ease);}
+.u-prod__card:hover .u-prod__go .wf-icon{transform:translateX(3px);}
+
+@media (prefers-reduced-motion: reduce){
+  html.cx-js .u-prod__card{--u-prod-delay:0ms;transition:none;}
+  .u-prod__go .wf-icon{transition:none;}
+  .u-prod__card:hover .u-prod__go .wf-icon{transform:none;}
+}
+
+/* ===== 35 · Zasada wyboru: cztery karty reguł (spec §10.4) =================
+   Scena sterowana przewijaniem zdjęta (uwaga 3 Mateusza) – zostaje siatka
+   2 × 2 kart. Karta = jedno zdanie Darka rozłożone na trzy poziomy: warunek
+   u góry, strzałka w dół zamiast słowa „to", odpowiedź u dołu; obok produkt,
+   do którego odpowiedź prowadzi. Karty mają równą wysokość, a odpowiedzi
+   trzymają się dolnej krawędzi (`margin-top:auto` na strzałce), więc w rzędzie
+   czyta się je w jednej linii wzroku.
+   Dwa układy karty z jednego DOM-u: domyślnie (do 1099 px) jedna kolumna –
+   zdanie na całą szerokość, produkt w wierszu pod cienką linią; od 1100 px
+   produkt przechodzi do prawej kolumny karty (siatka `minmax(0,1fr) auto`).
+   Cała karta jest linkiem – bez JS zwykły odnośnik do sekcji popupu. ====== */
+.u-rl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--w-space-5);}
+
+.u-rl__card{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:1fr auto;
+  gap:var(--w-space-4);border:1px solid var(--w-border-default);border-radius:0;
+  padding:var(--w-space-6);color:inherit;text-decoration:none;
+  transition:border-color var(--w-duration-base) var(--w-ease);}
+.u-rl__card:hover,.u-rl__card:focus-visible{border-color:var(--w-gray-900);}
+
+/* Reveal ma na tym elemencie własną listę przejść (uprawa.css), więc dokładamy
+   do niej border-color i kaskadę 80 ms – inaczej jedno nadpisałoby drugie.
+   Opóźnienie siedzi w zmiennej, żeby dotyczyło tylko wjazdu karty. */
+html.cx-js .u-rl__card{--u-rl-delay:0ms;
+  transition:opacity var(--w-duration-slow) var(--w-ease) var(--u-rl-delay),
+             transform var(--w-duration-slow) var(--w-ease) var(--u-rl-delay),
+             border-color var(--w-duration-base) var(--w-ease);}
+.u-rl__card:nth-child(2){--u-rl-delay:80ms;}
+.u-rl__card:nth-child(3){--u-rl-delay:160ms;}
+.u-rl__card:nth-child(4){--u-rl-delay:240ms;}
+
+/* Warunek jest pełnym zdaniem, więc nie idzie wersalikami jak `u-lab`. */
+.u-rl__rule{display:flex;flex-direction:column;gap:var(--w-space-3);}
+.u-rl__cond{font-size:var(--w-font-sm-size);line-height:var(--w-font-sm-lh);color:var(--w-text-secondary);}
+.u-rl__down{width:24px;height:24px;margin-top:auto;color:var(--w-icon-default);
+  transition:transform var(--w-duration-base) var(--w-ease);}
+.u-rl__card:hover .u-rl__down,.u-rl__card:focus-visible .u-rl__down{transform:translateY(3px);}
+.u-rl__ans{font-size:var(--w-font-h4-size);line-height:var(--w-font-h4-lh);
+  font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+
+/* Produkt w wierszu: packshot po lewej przez dwa wiersze, obok nazwa
+   i wskazówka „Mapa zastosowań". */
+.u-rl__prod{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;
+  column-gap:var(--w-space-3);row-gap:var(--w-space-1);
+  padding-top:var(--w-space-4);border-top:1px solid var(--w-border-subtle);}
+.u-rl__ph{grid-row:1 / span 2;display:grid;place-items:center;width:72px;aspect-ratio:4/3;
+  background:var(--w-gray-100);padding:8px;overflow:clip;}
+.u-rl__img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;
+  transition:transform var(--w-duration-base) var(--w-ease);}
+.u-rl__card:hover .u-rl__img,.u-rl__card:focus-visible .u-rl__img{transform:scale(1.04);}
+.u-rl__n{color:var(--w-text-secondary);}
+.u-rl__go{display:inline-flex;align-items:center;gap:var(--w-space-2);white-space:nowrap;
+  font-size:var(--w-font-sm-size);line-height:var(--w-font-sm-lh);
+  font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+.u-rl__go .wf-icon{width:16px;height:16px;flex:none;}
+
+/* Od 1100 px produkt staje się kolumną karty: packshot 96 px, nazwa
+   i wskazówka pod nim, wszystko wyśrodkowane. Stała szerokość kolumny trzyma
+   tor `auto` w ryzach – bez niej najdłuższa nazwa produktu rozpychałaby
+   kolumnę kosztem zdania. */
+@media (min-width:1100px){
+  .u-rl__card{grid-template-columns:minmax(0,1fr) auto;gap:var(--w-space-6);}
+  .u-rl__prod{grid-template-columns:minmax(0,1fr);justify-items:center;text-align:center;
+    align-self:start;width:156px;row-gap:var(--w-space-2);padding-top:0;border-top:0;}
+  .u-rl__ph{grid-row:auto;width:96px;}
+}
+/* Poniżej 640 px jedna kolumna kart i ciaśniejszy padding karty. */
+@media (max-width:639px){
+  .u-rl{grid-template-columns:minmax(0,1fr);}
+  .u-rl__card{padding:var(--w-space-4);}
+}
+
+@media (prefers-reduced-motion: reduce){
+  html.cx-js .u-rl__card{--u-rl-delay:0ms;transition:none;}
+  .u-rl__down,.u-rl__img{transition:none;}
+  .u-rl__card:hover .u-rl__down,.u-rl__card:focus-visible .u-rl__down{transform:none;}
+  .u-rl__card:hover .u-rl__img,.u-rl__card:focus-visible .u-rl__img{transform:none;}
+}
+
+/* ===== 40 · Program fazowy: lista faz + panel aktywnej fazy (spec §9.7) =====
+   Uwaga 4 Mateusza (14.09). Układ jak w liście warunków stanowiska z iteracji 5,
+   bo to ten sam gest: wiersze po lewej, treść po prawej. Trzy stany:
+   – bez JS   – dziesięć par wiersz–panel jeden pod drugim (wszystko widoczne);
+   – < 900 px – ten sam DOM działa jak akordeon (panel pod swoim wierszem);
+   – ≥ 900 px – dwie kolumny, wszystkie panele w jednym polu (grid-row 1 / -1),
+     widoczny tylko aktywny, przyklejony pod menu serwisu.
+   Oś, linia i kropki z iteracji 4 nie są już używane. ===================== */
+.u-fz__grid{margin-top:clamp(2rem,4vw,3.5rem);display:flex;flex-direction:column;gap:var(--w-space-2);}
+.u-fz__pair{display:flex;flex-direction:column;}
+
+/* wiersz: numer w mono + tytuł fazy, cel dotykowy co najmniej 44 px */
+.u-fz__row{display:flex;align-items:baseline;gap:var(--w-space-3);width:100%;min-height:44px;
+  font:inherit;text-align:left;padding:var(--w-space-4);background:var(--w-surface-page);
+  border:1px solid var(--w-border-default);border-radius:0;cursor:pointer;
+  transition:background var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);}
+.u-fz__row:hover{background:var(--w-surface-hover);}
+.u-fz__row[aria-expanded="true"]{border-color:var(--w-gray-900);background:var(--w-surface-subtle);}
+.u-fz__no{flex:none;font-family:var(--w-font-mono);font-size:var(--w-font-caption-size);line-height:var(--w-font-caption-lh);color:var(--w-text-tertiary);}
+.u-fz__t{font-size:var(--w-font-h5-size);line-height:var(--w-font-h5-lh);font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+
+/* panel: skrót fazy, chipy produktów i wejście w pełny opis. Przenikanie
+   przy przełączeniu robi klasa `is-swap` z `uprawa.css` (JS zdejmuje ją
+   w następnej klatce), stąd przejście tylko na przezroczystości. */
+.u-fz__panel{display:flex;flex-direction:column;align-items:flex-start;gap:var(--w-space-4);
+  border:1px solid var(--w-border-strong);border-top:0;border-radius:0;padding:var(--w-space-5);
+  background:var(--w-surface-page);opacity:1;transition:opacity 180ms var(--w-ease);}
+.u-fz__lead{font-size:var(--w-font-body-size);line-height:var(--w-font-body-lh);color:var(--w-text-secondary);max-width:var(--w-measure);}
+.u-fz__src{max-width:var(--w-measure);}
+.u-fz__go{margin-top:var(--w-space-1);}
+
+@media (min-width:900px){
+  html.cx-js .u-fz__grid{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);
+    grid-template-rows:repeat(var(--u-fz-n,10),min-content) 1fr;
+    column-gap:var(--w-space-6);row-gap:var(--w-space-2);align-items:start;}
+  html.cx-js .u-fz__pair{display:contents;}
+  html.cx-js .u-fz__row{grid-column:1;}
+  /* panele leżą w jednym polu – widoczny jest tylko aktywny, więc nie nachodzą */
+  html.cx-js .u-fz__panel{grid-column:2;grid-row:1 / -1;position:sticky;
+    top:calc(var(--cx-navbar-h, 0px) + var(--c5-gutter));
+    border-top:1px solid var(--w-border-strong);padding:var(--w-space-6);min-height:22rem;}
+}
+@media (prefers-reduced-motion: reduce){
+  .u-fz__row{transition:none;}
+  .u-fz__panel{transition:none;}
+}
+
+/* ===== 50 · Decyzje przed sezonem – pakiet diagnostyczny (spec §9.8) =======
+   Układ „Dawkowanie" z wzorca (§3.7). Domyślnie (mobile) jedna kolumna
+   w kolejności DOM: nagłówek → kadr → lista → przycisk. Od 900 px sekcja ma
+   wysokość ekranu, marginesy 30 px, a kadr stoi w prawej kolumnie od górnej
+   krawędzi nagłówka do dolnej krawędzi przycisku. =========================== */
+.u-dg{padding-block:var(--c5-gutter);}
+.u-dg__grid{display:grid;gap:clamp(2rem,5vw,3rem);}
+.u-dg__top{display:flex;flex-direction:column;gap:clamp(1rem,2vw,1.5rem);}
+.u-dg__top .c5-kicker{margin-bottom:0;}
+/* prześwit na dok doradcy (80 px nad dolną krawędzią okna) – bez niego
+   przycisk wchodziłby pod dok w układzie na wysokość ekranu */
+.u-dg{--u-dg-dock:84px;}
+.u-dg__bottom{display:flex;flex-direction:column;gap:clamp(1.5rem,3vw,2.5rem);align-items:flex-start;}
+
+/* Numery w kółkach (1) (2) (3) – marker rysuje licznik CSS, więc zdania Darka
+   zostają nietknięte. Kółko to znacznik, nie boks układu, dlatego jedyny
+   okrągły narożnik w tej sekcji. Ikony z poprzedniej wersji listy znikają. */
+.u-dg__list{margin:0;padding:0;list-style:none;counter-reset:u-dg;display:flex;flex-direction:column;
+  gap:clamp(0.75rem,1.6vw,1.125rem);color:var(--w-text-secondary);
+  font-size:var(--w-font-sm-size);line-height:var(--w-font-sm-lh);max-width:560px;}
+.u-dg__list li{counter-increment:u-dg;display:grid;grid-template-columns:28px 1fr;gap:var(--w-space-4);align-items:start;}
+.u-dg__list li::before{content:counter(u-dg);display:flex;align-items:center;justify-content:center;
+  width:28px;height:28px;border:1px solid currentColor;border-radius:var(--w-radius-circle);
+  font-size:0.8125rem;line-height:1;color:var(--w-text-primary);}
+
+/* Parallax (wzorzec §13.6): ramka przycina kadr, kadr jest od niej wyższy
+   (114 %) i przesuwa się w niej o kilka procent. Bez ruchu (mobile / reduced /
+   bez JS) `--dg-par` nie jest ustawiane i kadr stoi wyśrodkowany. */
+.u-dg__media-wrap{position:relative;width:100%;aspect-ratio:4/3;max-height:70vh;overflow:hidden;}
+.u-dg__media{display:grid;width:100%;height:114%;min-height:0;border-radius:0;
+  transform:translateY(calc(var(--dg-par,-7) * 1%));will-change:transform;}
+/* etykieta placeholderu opisuje kadr do zamówienia u grafika – kopia wzorca
+   chowa `.wf-ph__label`, więc w tej sekcji przywracamy ją jawnie */
+.u-dg .wf-ph__label{display:block;max-width:min(100%,26rem);}
+
+@media (min-width:900px){
+  .u-dg{min-height:100svh;display:grid;align-items:stretch;}
+  .u-dg__grid{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto;
+    column-gap:clamp(2rem,5vw,5rem);row-gap:0;min-height:calc(100svh - 2*var(--c5-gutter));}
+  .u-dg__top{grid-column:1;grid-row:1;}
+  .u-dg__bottom{grid-column:1;grid-row:3;padding-bottom:var(--u-dg-dock);}
+  .u-dg__media-wrap{grid-column:2;grid-row:1 / -1;height:100%;max-height:none;aspect-ratio:auto;}
+}
+@media (prefers-reduced-motion: reduce){
+  .u-dg__media{transform:translateY(-7%);}
+}
+
+/* ===== 55 · Krytyczne fakty dla kukurydzy (spec §9.9, uwaga 5) =============
+   Domyślnie (mobile / ograniczony ruch / bez JS): napis u góry, kafelki
+   w jednej kolumnie (dwie od 640 px), bez obrotów i odsunięć.
+   Scena (≥900 px, no-preference, .cx-js): napis przyklejony na środku ekranu
+   przez cały tor (6 × 55 vh), kafelki rozstawione w torze nieregularnie –
+   `--i` to miejsce w torze, `--x` odsunięcie od środka, `--rot` obrót,
+   `--par` (liczy JS) parallax. Kafelki są nieprzezroczyste i leżą NAD
+   napisem, więc przejeżdżając zasłaniają go i schodzą z niego. ============= */
+/* w układzie statycznym tor jest zwykłą kolumną treści (marginesy jak
+   `c5-wrap`); w scenie idzie na pełną szerokość, żeby napis i kafelki miały
+   gdzie się rozjechać */
+.u-fk__track{position:relative;max-width:1180px;margin-inline:auto;padding-inline:var(--w-space-5);}
+.u-fk__title{font-size:clamp(2.5rem,6vw,5.5rem);line-height:1.04;font-weight:var(--w-weight-medium);
+  letter-spacing:-0.02em;text-align:center;margin-inline:auto;max-width:min(100%,20ch);}
+.u-fk__tiles{display:grid;gap:clamp(1rem,2.5vw,1.5rem);margin-top:clamp(2rem,5vw,3rem);}
+.u-fk__tile{display:flex;flex-direction:column;gap:var(--w-space-3);
+  background:var(--w-surface-page);border:1px solid var(--w-border-default);border-radius:0;
+  padding:clamp(1.25rem,2.4vw,1.75rem);box-shadow:0 12px 40px rgb(0 0 0 / .08);}
+.u-fk__area{font-size:var(--w-font-h5-size);line-height:var(--w-font-h5-lh);font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+.u-fk__after{margin-top:clamp(2.5rem,5vw,4rem);}
+
+@media (min-width:640px){
+  .u-fk__tiles{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;}
+}
+
+/* --- Scena: napis przyklejony na środku, kafelki nad nim ------------------- */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  /* tor: wjazd + sześć kroków + ogon, żeby napis stał na środku, dopóki
+     ostatni kafelek z niego nie zjedzie */
+  .cx-js .u-fk{--u-fk-step:55vh;--u-fk-lead:45vh;--u-fk-tail:25vh;}
+  .cx-js .u-fk__track{height:calc(var(--u-fk-lead) + 6 * var(--u-fk-step) + var(--u-fk-tail));max-width:none;padding-inline:0;}
+  /* `top:50svh` + przesunięcie o połowę własnej wysokości = napis stoi na
+     środku ekranu przez cały tor i odjeżdża dopiero z końcem sekcji */
+  .cx-js .u-fk__title{position:sticky;top:50svh;transform:translateY(-50%);z-index:0;}
+  .cx-js .u-fk__tiles{display:block;margin-top:0;}
+  .cx-js .u-fk__tile{position:absolute;z-index:1;width:clamp(16rem,24vw,22rem);
+    top:calc(var(--u-fk-lead) + var(--i,0) * var(--u-fk-step));
+    left:calc(50% + var(--x,0%));
+    transform:translate(-50%,var(--par,0px)) rotate(var(--rot,0deg));will-change:transform;}
+}
+
+/* ===== 70 · Dobór do stanowiska – karuzela warunków (spec §10.5) ============
+   Own prefix: u-cr. Eight equal-height cards on a horizontal snap track that
+   lives inside `c5-wrap`, so the document never gets wider than the viewport
+   (the track is the only thing that scrolls sideways). Counter and arrows are
+   JS-only; without JS the track is a plain native scroller with every card
+   reachable. ======================================================== */
+
+/* header row: kicker + h2 + lead on the left, counter and arrows on the right */
+.u-cr__top{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--w-space-6);}
+.u-cr__intro{min-width:0;}
+.u-cr__ctl{display:none;}
+html.cx-js .u-cr__ctl{display:flex;align-items:center;gap:var(--w-space-4);flex:none;}
+.u-cr__count{font-family:var(--w-font-mono);font-size:var(--w-font-sm-size);line-height:1;color:var(--w-text-tertiary);white-space:nowrap;}
+.u-cr__navs{display:flex;gap:var(--w-space-2);}
+/* c5-btn--sm is a wide pill (25 px side padding); an icon-only arrow needs a square */
+.u-cr__nav{padding:0;width:var(--w-control-h-lg);height:var(--w-control-h-lg);flex:none;}
+.u-cr__nav[disabled]{opacity:.35;cursor:default;}
+
+/* the track and every ancestor need min-width:0, or the flex row would grow the page */
+.u-cr{display:flex;flex-direction:column;gap:var(--w-space-4);min-width:0;}
+.u-cr__track{display:flex;gap:var(--w-space-5);min-width:0;margin:0;padding:0 0 var(--w-space-1);list-style:none;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none;}
+.u-cr__track::-webkit-scrollbar{display:none;}
+.u-cr__track:focus-visible{outline:2px solid var(--w-focus-ring);outline-offset:4px;}
+/* while dragging with the mouse: grab cursor, no selection, snapping out of the way */
+.u-cr__track.is-drag{cursor:grabbing;user-select:none;scroll-snap-type:none;}
+
+/* two cards and a slice of the third on a desktop */
+.u-cr__slide{flex:0 0 clamp(20rem,46%,34rem);display:flex;min-width:0;scroll-snap-align:start;}
+.u-cr__card{flex:1 1 auto;display:flex;flex-direction:column;gap:var(--w-space-5);min-width:0;border:1px solid var(--w-border-default);border-radius:0;background:var(--w-surface-page);padding:var(--w-space-6);}
+.u-cr__hd{display:flex;flex-direction:column;gap:var(--w-space-2);}
+.u-cr__no{font-family:var(--w-font-mono);font-size:var(--w-font-caption-size);line-height:var(--w-font-caption-lh);color:var(--w-text-tertiary);}
+.u-cr__t{font-size:var(--w-font-h4-size);line-height:var(--w-font-h4-lh);font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+.u-cr__sec{display:flex;flex-direction:column;gap:var(--w-space-2);}
+.u-cr__prio{font-size:var(--w-font-h5-size);line-height:var(--w-font-h5-lh);font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+
+/* progress bar = the shared u-rail component, but shown at every width here
+   (u-rail alone appears only below 900 px) and only when JS drives the thumb */
+.u-cr__rail{display:none;}
+html.cx-js .u-cr__rail{display:block;}
+
+@media (max-width:639px){
+  .u-cr__top{flex-direction:column;align-items:stretch;gap:var(--w-space-4);}
+  html.cx-js .u-cr__ctl{justify-content:space-between;}
+  .u-cr__slide{flex-basis:88%;}
+  .u-cr__card{padding:var(--w-space-5);}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .u-cr__nav{transition:none;}
+}
+
+/* ===== 80 · Mieszaniny zbiornikowe – tabela zgodności (spec §10.6) =========
+   Own prefix: u-mt. `table-layout: fixed` keeps the four columns at the
+   declared widths whatever the cell text does, so the table never pushes the
+   page sideways. The whole row is clickable (JS), but the only focusable thing
+   in it is the real link in the first cell – no doubled roles.
+   Below 900 px the table folds into cards: the head is dropped and every cell
+   carries its own label from `data-label`. ============================== */
+.u-mt__box{min-width:0;}
+.u-mt{width:100%;border-collapse:collapse;table-layout:fixed;}
+.u-mt__h{padding:var(--w-space-3) var(--w-space-4);text-align:left;vertical-align:bottom;background:var(--w-surface-subtle);border-bottom:1px solid var(--w-border-strong);font-size:var(--w-font-overline-size);line-height:var(--w-font-overline-lh);letter-spacing:var(--w-tracking-wide);text-transform:uppercase;font-weight:var(--w-weight-regular);color:var(--w-text-tertiary);}
+.u-mt__h:first-child{width:26%;}
+.u-mt__c{padding:var(--w-space-4);vertical-align:top;border-bottom:1px solid var(--w-border-subtle);overflow-wrap:break-word;}
+.u-mt__row:last-child .u-mt__c{border-bottom:0;}
+.u-mt__row{transition:background var(--w-duration-base) var(--w-ease);}
+html.cx-js .u-mt__row{cursor:pointer;}
+.u-mt__row:hover,.u-mt__row:focus-within{background:var(--w-surface-subtle);}
+
+.u-mt__prod{display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--w-space-3);align-items:center;color:inherit;text-decoration:none;}
+.u-mt__prod:focus-visible{outline:2px solid var(--w-focus-ring);outline-offset:2px;}
+/* `min-height:0` – a tall packshot would otherwise stretch its own field */
+.u-mt__ph{display:block;width:72px;height:54px;min-height:0;background:var(--w-gray-100);padding:6px;}
+.u-mt__img{display:block;width:100%;height:100%;object-fit:contain;}
+.u-mt__n{font-size:var(--w-font-sm-size);line-height:var(--w-font-sm-lh);font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+/* the kit sets `svg{display:block}` globally – the arrow has to sit on the
+   last line of the product name, not under it */
+.u-mt__ar{display:inline-block;vertical-align:-0.125em;color:var(--w-icon-default);transition:transform var(--w-duration-base) var(--w-ease);}
+.u-mt__row:hover .u-mt__ar,.u-mt__row:focus-within .u-mt__ar{transform:translateX(3px);}
+
+@media (max-width:899px){
+  .u-mt,.u-mt tbody,.u-mt__row,.u-mt__c{display:block;width:auto;}
+  .u-mt thead{display:none;}
+  .u-mt__row{border:1px solid var(--w-border-default);background:var(--w-surface-page);padding:var(--w-space-5);}
+  .u-mt__row+.u-mt__row{margin-top:var(--w-space-3);}
+  .u-mt__c{padding:0;border-bottom:0;}
+  .u-mt__c+.u-mt__c{margin-top:var(--w-space-4);}
+  .u-mt__c:not(.u-mt__c--prod)::before{content:attr(data-label);display:block;margin-bottom:var(--w-space-2);font-size:var(--w-font-overline-size);line-height:var(--w-font-overline-lh);letter-spacing:var(--w-tracking-wide);text-transform:uppercase;color:var(--w-text-tertiary);}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .u-mt__row,.u-mt__ar{transition:none;}
+}
+
+/* ===== 85 · Ile produktu na Twoje pole (spec §9.10, §10.3) =================
+   Przelicznik bez zmian – placeholder w boksie wyniku ustępuje packshotowi
+   (szerokość i proporcja zostają z `uprawa.css`, tu dochodzi tło i zapas).
+   Iteracja 6: woda do zabiegu wchodzi do boksów CARBOHUMIC filtrowanego
+   187 mesh jako wiersz pomocniczy pod cienką linią, a siatka schodzi z pięciu
+   boksów na cztery (4 / 2 / 1 kolumny). Nadpisania `.u-calc` i `.u-out b`
+   z `uprawa.css` działają kaskadą – `kukurydza.css` wchodzi po `uprawa.css`. */
+.u-out__ph{display:block;background:var(--w-gray-100);padding:8%;}
+.u-out__img{display:block;width:100%;height:100%;object-fit:contain;}
+
+/* cztery boksy: pełny rząd od 1200 px, dwa od 640 px, jeden niżej */
+.u-calc{grid-template-columns:repeat(4,minmax(0,1fr));}
+@media (max-width:1199px){.u-calc{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (max-width:639px){.u-calc{grid-template-columns:1fr;}}
+
+/* Wiersz pomocniczy: własny `data-calc-out` w środku boksu produktu – woda nie
+   jest osobnym produktem, więc nie dostaje ani packshotu, ani sklepu.
+   Wartość mniejsza od głównej (h5 wobec h4), żeby hierarchia boksu została. */
+.u-out__sub{display:flex;flex-direction:column;gap:var(--w-space-1);
+  padding-top:var(--w-space-3);border-top:1px solid var(--w-border-subtle);}
+.u-out__sub b{font-size:var(--w-font-h5-size);line-height:var(--w-font-h5-lh);}
+
+/* ===== 90 · Pas zamykający (spec §9.11) – port pasa PRO z CARBOMAT ECO =====
+   Ciemne tło, kadr na pełną szerokość kolumny treści z narożnikami 30 px
+   (jedyny sankcjonowany wyjątek od ostrych narożników), skalowany .5 → 1
+   przy przewijaniu (JS: 90-cta.js pisze `--u-end-s`). Bez ruchu (poniżej
+   900 px, reduced-motion, bez JS) kadr stoi w skali 1. */
+.u-end{background:var(--w-gray-600);color:var(--w-text-inverse);}
+.u-end .c5-wrap{display:flex;flex-direction:column;gap:clamp(2rem,5vw,3.5rem);}
+.u-end__media{position:relative;width:100%;aspect-ratio:16/10;border-radius:30px;overflow:hidden;
+  transform:scale(var(--u-end-s,1));transform-origin:center;will-change:transform;}
+.u-end__frame{position:absolute;inset:0;border-radius:0;min-height:0;border:0;}
+.u-end__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 45%;}
+/* Jednolity, delikatny scrim (bez gradientów) – włącza go modyfikator, żeby
+   nie przygaszał etykiety placeholdera, zanim wejdzie prawdziwe zdjęcie. */
+.u-end__media--photo::after{content:"";position:absolute;inset:0;background:rgb(0 0 0 / .25);}
+.u-end__grid{display:flex;flex-direction:column;gap:clamp(1.5rem,4vw,2.5rem);}
+.u-end__t{font-size:clamp(1.75rem,3vw,2.5rem);line-height:1.15;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;max-width:486px;}
+.u-end__acts{gap:var(--w-space-2);}
+.u-end__acts .c5-btn{padding-inline:clamp(18px,2.2vw,32px);}
+.u-end__ghost{background:transparent;color:var(--w-text-inverse);border-color:rgb(255 255 255 / .6);}
+.u-end__ghost:hover{background:rgb(255 255 255 / .12);border-color:var(--w-text-inverse);}
+/* na ciemnym pasie pierścień fokusu musi być jasny (i ostry jak reszta V5) */
+.u-end a:focus-visible{outline-color:var(--w-focus-ring-inverse);border-radius:0;}
+/* wiersz źródła – w biegu strony, pod pasem */
+.u-end__srcwrap{padding-block:clamp(1.5rem,3vw,2.5rem);}
+.u-end__src{text-align:center;color:var(--w-text-tertiary);}
+
+@media (min-width:900px){
+  /* kadr nie zjada całego ekranu – nagłówek i przyciski wchodzą razem z nim
+     (ten sam limit co na pasie PRO wzorca w układzie statycznym) */
+  .u-end__media{max-height:min(56vh,520px);}
+  /* Kolumna przycisków bierze tyle, ile potrzebują etykiety (`max-content`),
+     a nie sztywne 486 px pasa PRO wzorca: etykiety z §9.13 są dłuższe niż
+     kolumna wzorca i przy 900–1280 px wychodziły poza siatkę, dokładając
+     stronie poziome przewijanie. Dolna granica toru to 0, więc gdy miejsca
+     naprawdę brakuje, rząd zawija się (bez `flex-wrap: nowrap`) zamiast
+     wystawać poza pas. Same etykiety nadal nie łamią się w środku. */
+  .u-end__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,max-content);gap:clamp(2rem,6vw,6rem);align-items:center;}
+  .u-end__acts .c5-btn{white-space:nowrap;}
+}
+@media (max-width:899px){
+  .u-end__media{aspect-ratio:4/3;transform:none;}
+}
+@media (prefers-reduced-motion: reduce){
+  .u-end__media{transform:none;}
+}

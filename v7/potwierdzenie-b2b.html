@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carbohort — Zamówienie B2B przyjęte (proforma)</title>
+<meta name="description" content="Zamówienie B2B przyjęte. Doradca potwierdzi cenę netto i termin, a następnie wystawi proformę. Numer proformy, oś statusów zamówienia, kontakt opiekuna handlowego i dokumenty do dotacji.">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="wireframe.css">
+<link rel="stylesheet" href="cw.css">
+<script src="../status.js"></script>
+<script src="chrome.js"></script>
+</head>
+<body>
+<a class="wf-sr-only" href="#main">Przejdź do treści</a>
+
+<cw-icons></cw-icons>
+
+<cw-navbar data-current="platforma-b2b"></cw-navbar>
+
+<main id="main">
+
+  <!-- ===== NAGŁÓWEK + POTWIERDZENIE ===== -->
+  <section class="wf-section wf-section--sm">
+    <div class="wf-container wf-stack wf-stack--5">
+      <nav class="wf-breadcrumb" aria-label="Ścieżka">
+        <ol>
+          <li><a class="wf-link--quiet" href="home.html">Start</a></li>
+          <li><span class="wf-breadcrumb__sep" aria-hidden="true"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-right"></use></svg></span></li>
+          <li><a class="wf-link--quiet" href="platforma-b2b.html">Panel B2B</a></li>
+          <li><span class="wf-breadcrumb__sep" aria-hidden="true"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-right"></use></svg></span></li>
+          <li><span aria-current="page" class="wf-w-semibold">Zamówienie przyjęte</span></li>
+        </ol>
+      </nav>
+
+      <div class="wf-stack wf-stack--3" style="max-width:680px;">
+        <span class="wf-overline">Zamówienie B2B</span>
+        <h1 class="wf-h1">Zamówienie przyjęte do obsługi</h1>
+        <p class="wf-lead wf-t-secondary">Numer proformy: <span class="wf-w-semibold">[PRF/2026/0000]</span>. Zamówienie trafiło do Twojego opiekuna handlowego. To nie jest paragon — wiążącą cenę netto i termin otrzymasz w proformie po potwierdzeniu przez doradcę.</p>
+      </div>
+
+      <div class="wf-alert" role="status">
+        <span class="wf-alert__icon"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-check"></use></svg></span>
+        <div><span class="wf-alert__title">Przyjęto — zamówienie jest u doradcy.</span> <span class="wf-small wf-t-secondary">Ceny i termin mają na tym etapie charakter wstępny. Doradca zweryfikuje Twoją cenę netto, dostępność i termin dostawy, a następnie wystawi wiążącą proformę.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== OŚ STATUSÓW + PODSUMOWANIE ===== -->
+  <section class="wf-section wf-section--subtle">
+    <div class="wf-container wf-stack wf-stack--8">
+
+      <div class="wf-stack wf-stack--4">
+        <div class="wf-stack wf-stack--2" style="max-width:680px;">
+          <span class="wf-overline wf-t-tertiary">Status zamówienia</span>
+          <h2 class="wf-h3">Gdzie jest Twoje zamówienie</h2>
+        </div>
+        <ol class="wf-steps" tabindex="0" aria-label="Etapy realizacji zamówienia B2B">
+          <li class="wf-step wf-step--done"><span class="wf-step__node" aria-hidden="true"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-check"></use></svg></span> Zamówienie przyjęte <span class="wf-sr-only">(zakończone)</span></li>
+          <span class="wf-step__connector" aria-hidden="true"></span>
+          <li class="wf-step wf-step--current" aria-current="step"><span class="wf-step__node">2</span> Potwierdzenie ceny i terminu</li>
+          <span class="wf-step__connector" aria-hidden="true"></span>
+          <li class="wf-step wf-step--upcoming" aria-disabled="true"><span class="wf-step__node">3</span> Proforma</li>
+          <span class="wf-step__connector" aria-hidden="true"></span>
+          <li class="wf-step wf-step--upcoming" aria-disabled="true"><span class="wf-step__node">4</span> Realizacja i transport</li>
+        </ol>
+      </div>
+
+      <div class="wf-grid wf-grid--2 wf-items-start" style="--wf-grid-min: 20rem;">
+
+        <!-- Co dalej -->
+        <div class="wf-card">
+          <div class="wf-card__body wf-stack wf-stack--5">
+            <h3 class="wf-h4">Co dalej</h3>
+
+            <div class="wf-cluster wf-gap-3 wf-items-start" style="flex-wrap:nowrap;">
+              <span class="wf-step__node" aria-hidden="true">1</span>
+              <div class="wf-stack wf-stack--1">
+                <span class="wf-w-semibold">Potwierdzenie ceny i terminu</span>
+                <p class="wf-small wf-t-secondary">Doradca zweryfikuje Twoją cenę netto, dostępność i termin dostawy, a następnie wystawi proformę.</p>
+                <span class="wf-small wf-t-secondary wf-inline"><svg class="wf-icon wf-icon--sm wf-icon--muted" aria-hidden="true"><use href="#ti-clock"></use></svg> Kontakt zwrotny w ciągu [1 dnia roboczego].</span>
+              </div>
+            </div>
+
+            <div class="wf-cluster wf-gap-3 wf-items-start" style="flex-wrap:nowrap;">
+              <span class="wf-step__node" aria-hidden="true">2</span>
+              <div class="wf-stack wf-stack--1">
+                <span class="wf-w-semibold">Proforma</span>
+                <p class="wf-small wf-t-secondary">Dokument do płatności i rozliczeń (m.in. wnioski dotacyjne) wyślemy na e-mail przypisany do konta oraz udostępnimy w panelu B2B.</p>
+              </div>
+            </div>
+
+            <div class="wf-cluster wf-gap-3 wf-items-start" style="flex-wrap:nowrap;">
+              <span class="wf-step__node" aria-hidden="true">3</span>
+              <div class="wf-stack wf-stack--1">
+                <span class="wf-w-semibold">Realizacja</span>
+                <p class="wf-small wf-t-secondary">Po opłaceniu/akceptacji proformy uruchamiamy kompletację i transport (paleta / 1000 L wg zamówienia); status śledzisz w panelu.</p>
+              </div>
+            </div>
+
+            <div class="wf-cluster wf-gap-3">
+              <a class="wf-btn wf-btn--primary" href="platforma-b2b.html">Wróć do panelu B2B</a>
+              <a class="wf-btn wf-btn--secondary wf-inline" href="#" data-doc="proforma"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-download"></use></svg> Pobierz proformę [PDF]</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Podsumowanie zamówienia / proforma -->
+        <div class="wf-stack wf-stack--4">
+          <div class="wf-card wf-card--flush">
+            <div class="wf-card__body wf-stack wf-stack--1">
+              <h3 class="wf-h5">Proforma [PRF/2026/0000]</h3>
+              <p class="wf-caption wf-t-secondary">Wartości wstępne — wiążące po potwierdzeniu doradcy.</p>
+            </div>
+            <table class="wf-table">
+              <caption class="wf-sr-only">Pozycje zamówienia B2B</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Pozycja</th>
+                  <th scope="col" style="text-align:right;">Ilość</th>
+                  <th scope="col" style="text-align:right;">Wartość netto</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>CARBOMAT — paleta (big-bag)</td>
+                  <td style="text-align:right;">4 palety</td>
+                  <td style="text-align:right;">[—]</td>
+                </tr>
+                <tr>
+                  <td>CARBOHUMIC — 1000 L (mauzer)</td>
+                  <td style="text-align:right;">2 szt.</td>
+                  <td style="text-align:right;">[—]</td>
+                </tr>
+                <tr>
+                  <td>CARBOMAT HUMIC — paleta</td>
+                  <td style="text-align:right;">1 paleta</td>
+                  <td style="text-align:right;">[—]</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th scope="row">Razem netto</th>
+                  <td style="text-align:right;">—</td>
+                  <td style="text-align:right;"><span class="wf-w-semibold">[do potwierdzenia]</span></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <div class="wf-alert" role="status">
+            <span class="wf-alert__icon"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-info-circle"></use></svg></span>
+            <div><span class="wf-alert__title">Twoja cena po zalogowaniu.</span> <span class="wf-small wf-t-secondary">Ceny netto w pozycjach palet / 1000 L wyznacza rabat indywidualny per gospodarstwo. Doradca uzupełni je w proformie.</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== OPIEKUN + DOKUMENTY ===== -->
+  <section class="wf-section">
+    <div class="wf-container wf-stack wf-stack--8">
+      <div class="wf-stack wf-stack--3" style="max-width:680px;">
+        <span class="wf-overline">Wsparcie</span>
+        <h2 class="wf-h2">Twój opiekun i dokumenty zamówienia</h2>
+        <p class="wf-lead wf-t-secondary">Jedna osoba prowadzi Twoją proformę od początku do końca. Dokumenty do płatności i do dotacji znajdziesz tutaj oraz w panelu B2B.</p>
+      </div>
+
+      <div class="wf-grid wf-grid--2 wf-items-start" style="--wf-grid-min: 20rem;">
+
+        <!-- Opiekun -->
+        <div class="wf-card">
+          <div class="wf-card__body wf-stack wf-stack--4">
+            <div class="wf-cluster wf-gap-3 wf-items-center" style="flex-wrap:nowrap;">
+              <span class="wf-ph wf-ph--avatar" aria-hidden="true"></span>
+              <div class="wf-stack wf-stack--1">
+                <span class="wf-h5">Radek [nazwisko]</span>
+                <span class="wf-small wf-t-secondary">Doradca B2B · Carbohort</span>
+              </div>
+            </div>
+            <p class="wf-small wf-t-secondary">Masz pytanie do tego zamówienia? Zadzwoń lub napisz — Radek prowadzi Twoją proformę od początku do końca.</p>
+            <div class="wf-cluster wf-gap-2">
+              <a class="wf-btn wf-btn--secondary wf-inline" href="tel:+48000000000"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-phone"></use></svg> [telefon]</a>
+              <a class="wf-btn wf-btn--ghost wf-inline" href="mailto:radek@carbohort.pl"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-mail"></use></svg> [e-mail]</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dokumenty -->
+        <div class="wf-card">
+          <div class="wf-card__body wf-stack wf-stack--4">
+            <h3 class="wf-h5">Dokumenty zamówienia</h3>
+            <ul class="wf-list wf-list--plain wf-stack wf-stack--3">
+              <li class="wf-cluster wf-cluster--between wf-items-center wf-gap-3">
+                <span class="wf-inline"><svg class="wf-icon wf-icon--sm wf-icon--muted" aria-hidden="true"><use href="#ti-file-text"></use></svg> <a class="wf-link--quiet" href="#" data-doc="proforma">Proforma [PRF/2026/0000]</a></span>
+                <span class="wf-badge wf-badge--outline">po potwierdzeniu</span>
+              </li>
+              <li class="wf-cluster wf-cluster--between wf-items-center wf-gap-3">
+                <span class="wf-inline"><svg class="wf-icon wf-icon--sm wf-icon--muted" aria-hidden="true"><use href="#ti-file-text"></use></svg> <a class="wf-link--quiet" href="#" data-doc="specyfikacja">Specyfikacja pozycji</a></span>
+                <span class="wf-small wf-t-tertiary">PDF</span>
+              </li>
+              <li class="wf-cluster wf-cluster--between wf-items-center wf-gap-3">
+                <span class="wf-inline"><svg class="wf-icon wf-icon--sm wf-icon--muted" aria-hidden="true"><use href="#ti-file-text"></use></svg> <a class="wf-link--quiet" href="#" data-doc="dotacja">Pakiet dokumentów do dotacji</a></span>
+                <span class="wf-small wf-t-tertiary">PDF</span>
+              </li>
+            </ul>
+            <p class="wf-caption wf-t-secondary">Pakiet do dotacji zawiera karty produktów, deklaracje i fakturę wzorcową.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- dr Jurek — inline ask -->
+      <div class="cw-ask">
+        <span class="wf-ph wf-ph--avatar" aria-hidden="true"></span>
+        <div class="cw-ask__txt wf-stack wf-stack--1">
+          <span class="wf-w-semibold">Coś jeszcze do tego zamówienia?</span>
+          <span class="wf-small wf-t-secondary">Dawki, kolejność zabiegów, dobór pod konkretną fazę uprawy — dopytaj, zanim doradca potwierdzi proformę.</span>
+        </div>
+        <button type="button" class="wf-btn wf-btn--secondary" data-jurek-open>Zapytaj dr Jurka</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<cw-footer></cw-footer>
+
+<cw-dock></cw-dock>
+
+<script src="cw.js"></script>
+</body>
+</html>

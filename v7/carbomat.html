@@ -1,0 +1,884 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CARBOMAT ECO – surowy polski lignit do trwałej poprawy gleby | Carbohort</title>
+<meta name="description" content="CARBOMAT ECO: surowy polski lignit – jeden składnik, który pracuje w glebie latami. Dwa warianty (dodatek do gleby i CARBOMAT ECO Ściółka), pięć faktów o surowcu, najprostsze recepty stosowania i dawkowanie w konfiguratorze.">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="wireframe.css">
+<link rel="stylesheet" href="cw.css">
+<link rel="stylesheet" href="carbomat.css">
+<script src="../status.js"></script>
+<script src="../ce-rejestr.js"></script>
+<script src="chrome.js"></script>
+</head>
+<body>
+<a class="wf-sr-only" href="#main">Przejdź do treści</a>
+
+<cw-icons></cw-icons>
+
+<cw-navbar data-current="produkty"></cw-navbar>
+
+<!-- ===== Nawigacja po podstronie: kropki przy prawej krawędzi (scrollspy) =====
+     Zastępuje przyklejoną subnawigację z pigułkami i „kup teraz" (uwaga Mateusza
+     13.09). Etykiety pokazują się po najechaniu na cały nav; poniżej 900 px nav
+     jest ukryty. -->
+<nav id="nawigacja-kropki" class="c5-dots" aria-label="Rozdziały strony CARBOMAT ECO" data-dots data-ce="CE-07">
+  <ol>
+    <li><a class="c5-dots__link" href="#hero" data-dot="hero"><span class="c5-dots__label">Start</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#parametry" data-dot="parametry"><span class="c5-dots__label">Parametry</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#ktory-dla-mnie" data-dot="ktory-dla-mnie"><span class="c5-dots__label">Który dla mnie</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#czym-jest" data-dot="czym-jest"><span class="c5-dots__label">Czym jest Carbomat</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#jak-stosowac" data-dot="jak-stosowac"><span class="c5-dots__label">Jak stosować</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#dawka" data-dot="dawka"><span class="c5-dots__label">Dawkowanie</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#sezon" data-dot="sezon"><span class="c5-dots__label">Sezon</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#faq" data-dot="faq"><span class="c5-dots__label">FAQ</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+  </ol>
+</nav>
+
+<main id="main">
+
+  <!-- ===== 1. HERO (makieta: „carbomat eco – hero") =====
+       Copy 1:1 z „Produkty na stronę" 24.07 (poprawiona literówka „beż"→„bez").
+       Iteracja 3 (spec §13.2): hero zajmuje cały pierwszy ekran pod menu serwisu,
+       prawa kolumna to panel z marginesem 30 px, packshot stoi na nim
+       wyśrodkowany, breadcrumb zszedł z góry sekcji na dół lewej kolumny.
+       Iteracja 4 (spec §14.2): panel bez zdjęcia w tle – jednolita jasna szarość;
+       lista zaufania przeniesiona do sekcji „Zalety" (marquee, §14.3);
+       breadcrumb jaśniejszy. Na panelu stoją dwa opakowania nałożone na siebie:
+       worek 20 l i mniejsza torebka 1 l / 2 l przy jego prawej krawędzi. -->
+  <section id="hero" data-chapter="hero" data-ce="CE-08">
+    <div class="c5-wrap">
+      <div class="c5-hero">
+        <div class="c5-hero__copy">
+          <div class="c5-hero__copyin">
+            <span class="c5-kicker">Surowy polski lignit</span>
+            <h1 class="c5-h1">Jeden składnik, który pracuje w&nbsp;glebie latami</h1>
+            <div class="c5-hero__lead">
+              <p>Carbomat ECO to nie sezonowy nawóz, tylko trwała – nawet powyżej 20 lat, jednorazowa inwestycja w jakość i strukturę gleby, próchnicę oraz retencję wody.</p>
+              <p>Frakcjonowany i odsiewany, bez żadnej obróbki chemicznej.</p>
+            </div>
+            <div class="c5-btnrow">
+              <a class="c5-btn c5-btn--dark" href="sklep.html?grupa=carbomat">kup teraz</a>
+              <!-- ⚠ cel linku do potwierdzenia: docelowo moduł dawek w konfiguratorze (patrz sekcja Dawkowanie) -->
+              <a class="c5-btn c5-btn--light" href="#dawka">dobierz właściwe dawki</a>
+            </div>
+          </div>
+          <nav class="wf-breadcrumb c5-hero__crumbs" aria-label="Okruszki">
+            <ol class="wf-cluster wf-items-center">
+              <li><a class="wf-link--quiet" href="home.html">Strona główna</a></li>
+              <li><span class="wf-breadcrumb__sep" aria-hidden="true">/</span></li>
+              <li><a class="wf-link--quiet" href="produkty.html">Produkty Carbohort</a></li>
+              <li><span class="wf-breadcrumb__sep" aria-hidden="true">/</span></li>
+              <li aria-current="page">CARBOMAT ECO</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="c5-hero__stage">
+          <!-- dwa opakowania jak na półce: worek z tyłu, torebka z przodu (kolejność
+               w DOM decyduje o nakładaniu – bez z-index i bez cieni) -->
+          <img class="c5-hero__pack" src="img/opakowania/worek_20l.png" alt="CARBOMAT ECO – worek 20 l">
+          <img class="c5-hero__pack c5-hero__pack--sm" src="img/opakowania/torba_1l_2l.png" alt="CARBOMAT ECO – torebka 1 l / 2 l">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 1b. ZALETY – marquee (spec §14.3) =====
+       Copy 1:1 z dawnej listy zaufania w hero. Jeden ciągły tor w duchu
+       serverobotics.com/delivery: duży tekst zalety → kwadratowa miniatura →
+       następna zaleta. Tor niesie ten sam zestaw dwa razy (druga połowa
+       `aria-hidden`), więc przesunięcie o -50 % wraca dokładnie na początek –
+       pętla bez szwu. Zestaw = trzy zalety powtórzone dwa razy: jedno przejście
+       trzech zalet ma ok. 2470 px, czyli mniej niż okno na monitorze 2560 px,
+       i na końcu cyklu zostawiałoby przy prawej krawędzi pustkę.
+       Bez `data-chapter`: kropki nawigacji bez zmian.
+       ⚠ miniatury tymczasowe (istniejące kadry) – do podmiany na dedykowane. -->
+  <section class="c5-marq" id="zalety" aria-label="Zalety CARBOMAT ECO" data-ce="CE-09">
+    <ul class="c5-marq__track">
+      <li class="c5-marq__item">
+        <span class="c5-marq__txt">Produkt Ekologiczny</span>
+        <img class="c5-marq__thumb" src="img/foto/zaleta-eko.jpg" alt="" width="96" height="96" loading="lazy" decoding="async">
+      </li>
+      <li class="c5-marq__item">
+        <span class="c5-marq__txt">Czysta organika</span>
+        <img class="c5-marq__thumb" src="img/foto/zaleta-organika.jpg" alt="" width="96" height="96" loading="lazy" decoding="async">
+      </li>
+      <li class="c5-marq__item">
+        <span class="c5-marq__txt">Rezerwuar składników odżywczych</span>
+        <img class="c5-marq__thumb" src="img/foto/zaleta-rezerwuar.jpg" alt="" width="96" height="96" loading="lazy" decoding="async">
+      </li>
+      <li class="c5-marq__item">
+        <span class="c5-marq__txt">Produkt Ekologiczny</span>
+        <img class="c5-marq__thumb" src="img/foto/zaleta-eko.jpg" alt="" width="96" height="96" loading="lazy" decoding="async">
+      </li>
+      <li class="c5-marq__item">
+        <span class="c5-marq__txt">Czysta organika</span>
+        <img class="c5-marq__thumb" src="img/foto/zaleta-organika.jpg" alt="" width="96" height="96" loading="lazy" decoding="async">
+      </li>
+      <li class="c5-marq__item">
+        <span class="c5-marq__txt">Rezerwuar składników odżywczych</span>
+        <img class="c5-marq__thumb" src="img/foto/zaleta-rezerwuar.jpg" alt="" width="96" height="96" loading="lazy" decoding="async">
+      </li>
+      <li class="c5-marq__item" aria-hidden="true">
+        <span class="c5-marq__txt">Produkt Ekologiczny</span>
+        <img class="c5-marq__thumb" src="img/foto/zaleta-eko.jpg" alt="" width="96" height="96" loading="lazy" decoding="async">
+      </li>
+      <li class="c5-marq__item" aria-hidden="true">
+        <span class="c5-marq__txt">Czysta organika</span>
+        <img class="c5-marq__thumb" src="img/foto/zaleta-organika.jpg" alt="" width="96" height="96" loading="lazy" decoding="async">
+      </li>
+      <li class="c5-marq__item" aria-hidden="true">
+        <span class="c5-marq__txt">Rezerwuar składników odżywczych</span>
+        <img class="c5-marq__thumb" src="img/foto/zaleta-rezerwuar.jpg" alt="" width="96" height="96" loading="lazy" decoding="async">
+      </li>
+      <li class="c5-marq__item" aria-hidden="true">
+        <span class="c5-marq__txt">Produkt Ekologiczny</span>
+        <img class="c5-marq__thumb" src="img/foto/zaleta-eko.jpg" alt="" width="96" height="96" loading="lazy" decoding="async">
+      </li>
+      <li class="c5-marq__item" aria-hidden="true">
+        <span class="c5-marq__txt">Czysta organika</span>
+        <img class="c5-marq__thumb" src="img/foto/zaleta-organika.jpg" alt="" width="96" height="96" loading="lazy" decoding="async">
+      </li>
+      <li class="c5-marq__item" aria-hidden="true">
+        <span class="c5-marq__txt">Rezerwuar składników odżywczych</span>
+        <img class="c5-marq__thumb" src="img/foto/zaleta-rezerwuar.jpg" alt="" width="96" height="96" loading="lazy" decoding="async">
+      </li>
+    </ul>
+  </section>
+
+  <!-- ===== 2. PARAMETRY PRODUKTU (film wyznacza granice sekcji) =====
+       Wartości jak w V4 (badanie akredytowane PCBC S.A. 2022 + karta produktu);
+       substancje humusowe „do ~70%" wg materiału producenta – zależne od pokładu.
+       Iteracja 3 (spec §13.3): sekcja na całą wysokość ekranu, w tle przyklejona
+       warstwa mediów. Treść leży nad mediami i to ona się przewija, nie wideo.
+       Iteracja 4 (spec §14.4): bez osobnego ciemnego tła i bez ramki – kadrem
+       jest cała sekcja (30 px marginesu z boków), film stoi w niej od pierwszego
+       piksela i jest widoczny przez całą jej wysokość. -->
+  <section class="c5-params" id="parametry" data-chapter="parametry" data-params data-ce="CE-10">
+    <!-- warstwa mediów musi stać w DOM PRZED treścią (leży pod nią) -->
+    <div class="c5-params__bg" aria-hidden="true">
+      <div class="c5-params__frame">
+        <!-- pętla makro gruzełek §13.9 V1 (1280×720, 10 s, bez audio); przy ograniczonym
+             ruchu JS zdejmuje autoplay i zatrzymuje wideo na plakacie -->
+        <video class="c5-params__media" autoplay muted loop playsinline preload="metadata"
+               poster="img/wideo/parametry-poster.jpg" aria-hidden="true">
+          <source src="img/wideo/parametry.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+    <div class="c5-wrap c5-params__body">
+      <h2 class="c5-params__title">Parametry produktu · w suchej masie</h2>
+      <dl class="c5-params__rows">
+        <div class="c5-params__row"><dt>Odczyn (pH)</dt><dd>4,5–5,0 · 6,0–6,5 <span class="c5-dim">(dwie odmiany)</span></dd></div>
+        <div class="c5-params__row"><dt>Sucha masa</dt><dd>~87%</dd></div>
+        <div class="c5-params__row"><dt>Substancje humusowe</dt><dd>do ~70% <span class="c5-dim">(zależnie od pokładu)</span></dd></div>
+        <div class="c5-params__row"><dt>Materia organiczna</dt><dd>~92%</dd></div>
+        <div class="c5-params__row"><dt>Węgiel organiczny</dt><dd>~51%</dd></div>
+        <div class="c5-params__row"><dt>Azot (N)</dt><dd>~0,11%</dd></div>
+        <div class="c5-params__row"><dt>Potas (K₂O)</dt><dd>~0,6%</dd></div>
+        <div class="c5-params__row"><dt>Fosfor (P₂O₅)</dt><dd>~0,5%</dd></div>
+      </dl>
+      <!-- ⚠ realne PDF-y (raport PCBC + karta produktu + certyfikaty) do podpięcia – stuby jak w V4 -->
+      <a class="c5-params__dl" href="centrum-wiedzy.html#magazyn"><svg class="wf-icon" aria-hidden="true"><use href="#ti-download"></use></svg> Pobierz aktualną analizę</a>
+      <div class="c5-params__actions">
+        <a class="c5-btn c5-btn--sm c5-btn--ondark" href="centrum-wiedzy.html#magazyn"><svg class="wf-icon" aria-hidden="true"><use href="#ti-file-text"></use></svg> Karta produktu</a>
+        <a class="c5-btn c5-btn--sm c5-btn--ondark" href="centrum-wiedzy.html#magazyn"><svg class="wf-icon" aria-hidden="true"><use href="#ti-file-invoice"></use></svg> Certyfikaty</a>
+      </div>
+      <p class="c5-params__src">Materia organiczna i węgiel w suchej masie; badanie akredytowanego laboratorium PCBC S.A. (2022) i karta produktu.</p>
+    </div>
+  </section>
+
+  <!-- ===== 3. KTÓRY DLA MNIE (przełącznik wariantu → pełna karta) =====
+       Copy 1:1 z dokumentu 24.07; ceny wg AC #30867 (21.07).
+       Układ bloku wariantu wg screena Mateusza 13.09 (13.11.22): nazwa na środku,
+       scena „kafle | packshot | kafle", pod nią dwie kolumny. -->
+  <section class="c5-sec" id="ktory-dla-mnie" data-chapter="ktory-dla-mnie" data-ce="CE-11">
+    <div class="c5-wrap">
+      <span class="c5-kicker c5-kicker--center">Który dla mnie</span>
+      <div class="c5-head">
+        <h2 class="c5-h2 c5-h2--center">Dwa warianty, dwie czynności: przemieszać z&nbsp;glebą albo rozsypać po powierzchni.</h2>
+        <p class="c5-lead c5-lead--center">Zastosuj ten sam surowiec zarówno w czasie zakładania plantacji bądź sadzenia roślin, kiedy chcesz wnieść do gleby cenną materię organiczną lub w przypadku upraw już istniejących w postaci ściółki.</p>
+      </div>
+
+      <!-- Taby: nie przełączają widoczności – przewijają do bloków leżących pod sobą -->
+      <div class="c5-variants" data-variants>
+      <div class="c5-ways" role="tablist" aria-label="Warianty CARBOMAT ECO" data-tabs>
+        <button type="button" class="c5-way" role="tab" data-tab="eco" aria-selected="true" aria-controls="wariant-eco">
+          <span class="c5-way__ico"><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrows-sort"></use></svg></span>
+          <span>Dodatek do gleby</span>
+        </button>
+        <button type="button" class="c5-way" role="tab" data-tab="sciolka" aria-selected="false" aria-controls="wariant-sciolka">
+          <span class="c5-way__ico"><svg class="wf-icon" aria-hidden="true"><use href="#ti-stack-2"></use></svg></span>
+          <span>Ściółka</span>
+        </button>
+      </div>
+
+      <!-- Blok: CARBOMAT ECO -->
+      <div class="c5-variant" id="wariant-eco" data-variant-block="eco">
+        <h3 class="c5-variant__name">CARBOMAT ECO</h3>
+        <div class="c5-var__scene">
+          <div class="c5-var__tiles">
+            <p class="c5-var__tile">Optymalizacja właściwości fizycznych i chemicznych gleby</p>
+            <p class="c5-var__tile">Trwałe użyźnienie i stabilizacja odczynu gleby</p>
+            <p class="c5-var__tile">Rozwój systemu korzeniowego</p>
+          </div>
+          <img class="c5-var__pack" src="img/opakowania/worek_20l.png" alt="CARBOMAT ECO – worek 20 l">
+          <div class="c5-var__tiles">
+            <p class="c5-var__tile">Budowa magazynu na składniki odżywcze i wodę w glebie</p>
+            <p class="c5-var__tile">Działa ochronnie na glebę, przeciwdziała chorobom</p>
+          </div>
+        </div>
+        <div class="c5-var__cols">
+          <div class="c5-var__col">
+            <div class="c5-variant__block">
+              <span class="c5-label">Aplikacja:</span>
+              <p class="c5-muted">Wymieszaj z glebą lub stwórz własną mieszankę podłoża.</p>
+            </div>
+            <div class="c5-variant__block">
+              <span class="c5-label">Gdzie najlepiej:</span>
+              <p class="c5-muted">Każdy rodzaj gleby o niskiej zawartości materii organicznej bądź poprawy struktury, uprawy doniczkowe</p>
+            </div>
+            <div class="c5-variant__block">
+              <span class="c5-label">pH:</span>
+              <ul class="c5-muted">
+                <li>4,5–5,0 pH – dla roślin kwasolubnych jak borówka, wrzosowate, różaneczniki, azalie</li>
+                <li>6,0–6,5 pH – odmiana uniwersalna dla większości grup roślin</li>
+              </ul>
+            </div>
+            <div class="c5-variant__block">
+              <span class="c5-label">Frakcja:</span>
+              <p class="c5-muted">0,1–2 mm&ensp;|&ensp;2–4 mm&ensp;|&ensp;4–8 mm</p>
+              <!-- Frakcje wg AC #30867; kierunek „pył 0,1–2 tylko w odmianie o niskim pH" – nie publikujemy do potwierdzenia oferty -->
+            </div>
+          </div>
+          <div class="c5-var__col">
+            <div class="c5-variant__block">
+              <span class="c5-label">Opakowania:</span>
+              <div class="c5-price">
+                <!-- Ceny brutto wg Darka (AC #30867): big bagi – niższa cena = pH 4,5–5,0, wyższa = 6,0–6,5 -->
+                <div class="c5-price__row">
+                  <img class="c5-price__thumb" src="img/opakowania/worek_20l.png" alt="">
+                  <div class="c5-price__body"><span class="c5-price__name">worek 20 l</span><a class="c5-btn c5-btn--light c5-btn--sm" href="sklep.html?grupa=carbomat"><svg class="wf-icon" aria-hidden="true"><use href="#ti-plus"></use></svg> dodaj do koszyka</a></div>
+                  <span class="c5-price__val">43 zł</span>
+                </div>
+                <div class="c5-price__row">
+                  <img class="c5-price__thumb" src="img/opakowania/worek_1000l_1500l.png" alt="">
+                  <div class="c5-price__body"><span class="c5-price__name">big bag 1000 l</span><a class="c5-btn c5-btn--light c5-btn--sm" href="sklep.html?grupa=carbomat"><svg class="wf-icon" aria-hidden="true"><use href="#ti-plus"></use></svg> dodaj do koszyka</a></div>
+                  <span class="c5-price__val">600–650 zł</span>
+                </div>
+                <div class="c5-price__row">
+                  <img class="c5-price__thumb" src="img/opakowania/worek_1000l_1500l.png" alt="">
+                  <div class="c5-price__body"><span class="c5-price__name">big bag 1500 l</span><a class="c5-btn c5-btn--light c5-btn--sm" href="sklep.html?grupa=carbomat"><svg class="wf-icon" aria-hidden="true"><use href="#ti-plus"></use></svg> dodaj do koszyka</a></div>
+                  <span class="c5-price__val">800–850 zł</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Blok: CARBOMAT ECO Ściółka (leży pod poprzednim, oba widoczne) -->
+      <div class="c5-variant" id="wariant-sciolka" data-variant-block="sciolka">
+        <h3 class="c5-variant__name">CARBOMAT ECO Ściółka</h3>
+        <div class="c5-var__scene">
+          <div class="c5-var__tiles">
+            <p class="c5-var__tile">Chroni glebę przed erozją i nadmiernym odparowaniem</p>
+            <p class="c5-var__tile">Wzbogaca glebę w materię organiczną i substancje humusowe</p>
+            <p class="c5-var__tile">Obniżenie pH gleb i podłoży pod istniejące uprawy kwasolubne</p>
+          </div>
+          <img class="c5-var__pack" src="img/opakowania/worek_1000l_1500l.png" alt="CARBOMAT ECO Ściółka – big bag 1000/1500 l">
+          <div class="c5-var__tiles">
+            <p class="c5-var__tile">W przeciwieństwie do kory, nie powoduje głodu azotowego</p>
+            <p class="c5-var__tile">Tworzy siedlisko dla pożytecznych mikroorganizmów</p>
+          </div>
+        </div>
+        <div class="c5-var__cols">
+          <div class="c5-var__col">
+            <div class="c5-variant__block">
+              <span class="c5-label">Aplikacja:</span>
+              <p class="c5-muted">Rozsyp wokół roślin lub w rzędach – bez mieszania.</p>
+            </div>
+            <div class="c5-variant__block">
+              <span class="c5-label">Gdzie najlepiej:</span>
+              <p class="c5-muted">Uprawy borówki, krzewów i drzew ozdobnych – doniczki, rzędy i rabaty lub w przypadku chęci zakwaszenia gleby.</p>
+            </div>
+            <div class="c5-variant__block">
+              <span class="c5-label">pH:</span>
+              <p class="c5-muted">produkt dostępny wyłącznie o niższym odczynie</p>
+            </div>
+            <div class="c5-variant__block">
+              <span class="c5-label">Frakcja:</span>
+              <!-- 8–20 mm wg dotychczasowego kanonu (karta/V4); dokument 24.07 nie podaje frakcji Ściółki -->
+              <p class="c5-muted">8–20 mm</p>
+            </div>
+          </div>
+          <div class="c5-var__col">
+            <div class="c5-variant__block">
+              <span class="c5-label">Opakowania:</span>
+              <div class="c5-price">
+                <!-- Ceny brutto wg Darka (AC #30867): Ściółka „odpowiednio jak dla pH 4" -->
+                <div class="c5-price__row">
+                  <img class="c5-price__thumb" src="img/opakowania/worek_20l.png" alt="">
+                  <div class="c5-price__body"><span class="c5-price__name">worek 20 l <span class="wf-badge wf-badge--outline">nowość</span></span><a class="c5-btn c5-btn--light c5-btn--sm" href="sklep.html?grupa=carbomat"><svg class="wf-icon" aria-hidden="true"><use href="#ti-plus"></use></svg> dodaj do koszyka</a></div>
+                  <span class="c5-price__val">43 zł</span>
+                </div>
+                <div class="c5-price__row">
+                  <img class="c5-price__thumb" src="img/opakowania/worek_1000l_1500l.png" alt="">
+                  <div class="c5-price__body"><span class="c5-price__name">big bag 1000 l</span><a class="c5-btn c5-btn--light c5-btn--sm" href="sklep.html?grupa=carbomat"><svg class="wf-icon" aria-hidden="true"><use href="#ti-plus"></use></svg> dodaj do koszyka</a></div>
+                  <span class="c5-price__val">600 zł</span>
+                </div>
+                <div class="c5-price__row">
+                  <img class="c5-price__thumb" src="img/opakowania/worek_1000l_1500l.png" alt="">
+                  <div class="c5-price__body"><span class="c5-price__name">big bag 1500 l</span><a class="c5-btn c5-btn--light c5-btn--sm" href="sklep.html?grupa=carbomat"><svg class="wf-icon" aria-hidden="true"><use href="#ti-plus"></use></svg> dodaj do koszyka</a></div>
+                  <span class="c5-price__val">800 zł</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div><!-- /.c5-variants – tu kończy się przyklejenie tabów -->
+    </div>
+  </section>
+
+  <!-- ===== 4. CZYM JEST – scena sterowana przewijaniem (spec §6) =====
+       Nagłówek i panel zdjęcia stoją w miejscu przez całą sekcję, a pięć
+       opisów wymienia się przy dolnej krawędzi lewej kolumny. Ilustracja
+       każdego punktu żyje w boksie o stałym rozmiarze na panelu zdjęcia.
+       Treść 1:1 z dokumentu 24.07. Punkt „Pełny mechanizm: jak lignit buduje
+       próchnicę" – Darek sam poddaje w wątpliwość („AI mocno popłynęło") →
+       NIE wdrożony, decyzja u Mateusza.
+       DOM order = układ statyczny (mobile / reduced motion / bez JS): nagłówek,
+       a potem trójki zdjęcie / tytuł+opis / ilustracja – każdy punkt ma własne
+       zdjęcie (§13.5). Panel zdjęcia to `display:contents` poza sceną, więc te
+       same warstwy stoją raz jako tło panelu, a raz w biegu przy swoim opisie.
+       Układ dwukolumnowy składa z tych samych elementów siatka w @media niżej. -->
+  <section class="c5-sec c5-facts-sec" id="czym-jest" data-chapter="czym-jest" data-facts data-ce="CE-12">
+    <div class="c5-facts-track" data-facts-track>
+      <div class="c5-facts-stage c5-wrap">
+
+        <div class="c5-facts-head">
+          <span class="c5-kicker">Czym jest carbomat</span>
+          <h2 class="c5-h2">Skondensowana próchnica, najbardziej wartościowa materia organiczna.</h2>
+        </div>
+
+        <div class="c5-facts-flow">
+
+          <!-- Warstwy zdjęć: jedna na punkt, przełączane razem z opisem (§13.5).
+               Zdjęcia P2–P5 z §13.9 (01 pokład lignitu, 02 gleba z korzeniami,
+               03 ściółka obok bryłek, 04 kadr laboratoryjny, 05 makro gruzełek).
+               Są dekoracją pod boksem ilustracji, dlatego alt="" i aria-hidden
+               na panelu; kadrowanie każdej warstwy ustawia CSS. -->
+          <div class="c5-facts-panel" aria-hidden="true">
+            <img class="c5-facts-panel__img" data-fact-bg="1" data-on="true" src="img/foto/czym-jest-1.jpg" alt="" loading="lazy" decoding="async">
+            <img class="c5-facts-panel__img" data-fact-bg="2" src="img/foto/czym-jest-2.jpg" alt="" loading="lazy" decoding="async">
+            <img class="c5-facts-panel__img" data-fact-bg="3" src="img/foto/czym-jest-3.jpg" alt="" loading="lazy" decoding="async">
+            <img class="c5-facts-panel__img" data-fact-bg="4" src="img/foto/czym-jest-4.jpg" alt="" loading="lazy" decoding="async">
+            <img class="c5-facts-panel__img" data-fact-bg="5" src="img/foto/czym-jest-5.jpg" alt="" loading="lazy" decoding="async">
+          </div>
+
+          <div class="c5-fact is-on" data-fact="1">
+            <h3 class="c5-fact__title">Węgiel, który nie musi być paliwem</h3>
+            <div class="c5-fact__body">
+              <p>Lignit to najmłodsza forma węgla brunatnego – materia organiczna z prastarych drzew, zatrzymana na etapie stabilnego i trwałego humusu. Surowiec ten nie musi kojarzyć się wyłącznie z energetyką. Coraz bardziej odkrywamy jego ogromny potencjał jako naturalnego składnika wspierającego zdrowe i żyzne gleby. Co więcej, zamiast być spalanym i emitować CO₂ do atmosfery, lignit zastosowany w glebie wspiera proces sekwestracji CO₂, czyli długotrwałego wiązania dwutlenku węgla.</p>
+            </div>
+          </div>
+
+          <figure class="c5-viz" data-fact-viz="1" data-on="true">
+            <span class="c5-viz__tag">01 · Pochodzenie</span>
+            <div class="c5-viz__body">
+              <svg viewBox="0 0 420 250" role="img" aria-label="Dwie drogi tego samego surowca: spalony oddaje dwutlenek węgla do atmosfery, zastosowany w glebie wiąże węgiel na lata">
+                <defs><marker id="c5-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>
+                <circle cx="54" cy="125" r="34" fill="none" stroke="currentColor"/>
+                <text x="54" y="122" text-anchor="middle" font-size="12" fill="currentColor">lignit</text>
+                <text x="54" y="138" text-anchor="middle" font-size="9" fill="currentColor" opacity=".55">węgiel</text>
+                <path d="M92 108 C140 78 160 56 196 56" fill="none" stroke="currentColor" stroke-dasharray="5 5" marker-end="url(#c5-arrow)"/>
+                <rect x="206" y="26" width="206" height="60" fill="none" stroke="currentColor" opacity=".45"/>
+                <text x="222" y="50" font-size="12" fill="currentColor" opacity=".55">spalanie</text>
+                <text x="222" y="70" font-size="11" fill="currentColor" opacity=".45">CO₂ trafia do atmosfery</text>
+                <path d="M92 142 C140 172 160 194 196 194" fill="none" stroke="currentColor" marker-end="url(#c5-arrow)"/>
+                <rect x="206" y="164" width="206" height="60" fill="none" stroke="currentColor"/>
+                <text x="222" y="188" font-size="12" fill="currentColor">gleba</text>
+                <text x="222" y="208" font-size="11" fill="currentColor" opacity=".6">węgiel zostaje związany</text>
+              </svg>
+            </div>
+            <figcaption class="c5-viz__cap">Lignit zatrzymany na etapie stabilnego humusu. Zastosowany w glebie zamiast spalony – wspiera sekwestrację CO₂.</figcaption>
+          </figure>
+
+          <div class="c5-fact" data-fact="2">
+            <h3 class="c5-fact__title">Najbardziej zasobna substancja organiczna w&nbsp;kwasy humusowe i&nbsp;fulwowe</h3>
+            <div class="c5-fact__body">
+              <p>W przeciwieństwie do młodej materii organicznej, takiej jak komposty, biohumus, lignina czy produkty roślinne, lignit zawiera dojrzałe formy humusu o złożonej, trwałej strukturze. Dzięki temu wykazuje znacznie większą zdolność do poprawy właściwości gleby – zwiększa jej pojemność sorpcyjną, wspiera zatrzymywanie wody i składników pokarmowych oraz tworzy korzystne środowisko dla rozwoju korzeni i mikroorganizmów glebowych. To właśnie wysoki stopień humifikacji sprawia, że lignit działa długofalowo, pomagając odbudować żyzność i strukturę gleby. Zawartość kwasów humusowych w lignitach różni się w zależności od pokładu, ale może sięgać nawet 70% suchej masy.</p>
+            </div>
+          </div>
+
+          <figure class="c5-viz" data-fact-viz="2">
+            <span class="c5-viz__tag">02 · Zasobność</span>
+            <div class="c5-viz__body">
+              <div class="c5-viz__ring">
+                <svg viewBox="0 0 200 200" role="img" aria-label="Udział kwasów humusowych w suchej masie lignitu – do około 70 procent">
+                  <circle cx="100" cy="100" r="80" fill="none" stroke="rgb(255 255 255 / .25)" stroke-width="18"/>
+                  <circle cx="100" cy="100" r="80" fill="none" stroke="currentColor" stroke-width="18" stroke-dasharray="352 503" transform="rotate(-90 100 100)"/>
+                </svg>
+                <div class="wf-stack wf-stack--2">
+                  <span class="c5-viz__num">do 70%</span>
+                  <span class="wf-small wf-t-secondary">kwasów humusowych i fulwowych w suchej masie</span>
+                </div>
+              </div>
+              <ul class="c5-viz__list">
+                <li><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-magnet"></use></svg> dojrzałe formy humusu o trwałej strukturze</li>
+                <li><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-droplet"></use></svg> większa pojemność sorpcyjna gleby</li>
+              </ul>
+            </div>
+            <figcaption class="c5-viz__cap">Zawartość kwasów humusowych różni się zależnie od pokładu.</figcaption>
+          </figure>
+
+          <div class="c5-fact" data-fact="3">
+            <h3 class="c5-fact__title">Lignit to najbardziej dojrzała i&nbsp;stabilna forma materii organicznej</h3>
+            <div class="c5-fact__body">
+              <p>O wartości materii organicznej nie decyduje wyłącznie jej ilość, ale przede wszystkim stopień jej przekształcenia i stabilności. Świeża biomasa, kompost czy torf zawierają głównie młodszą materię organiczną, która stosunkowo szybko ulega dalszemu rozkładowi. Lignit natomiast jest efektem milionów lat naturalnej humifikacji i kondensacji związków organicznych i zawiera wysoko przekształconą, stabilną materię humusową o znacznie większej trwałości i zdolności do długotrwałego oddziaływania w glebie. Świeże nośniki materii organicznej jak kompost, obornik, biohumus są dopiero na początku tej drogi.</p>
+              <p>Całkowita zawartość substancji organicznej (% suchej masy) pokazuje „ile materii organicznej jest w materiale". Stopień humifikacji i stabilności tej materii pokazuje „jak długo i jak skutecznie działa w glebie".</p>
+            </div>
+          </div>
+
+          <!-- 03 · Stabilność – wykres przeniesiony z treści akordeonu -->
+          <figure class="c5-viz" data-fact-viz="3">
+            <span class="c5-viz__tag">03 · Stabilność</span>
+            <div class="c5-viz__body">
+              <div class="c5-barchart" role="img" aria-label="Porównanie stopnia humifikacji i stabilności materii organicznej: lignit bardzo wysoki, torf wysoki do średniego, biohumus średni, kompost dojrzały średni, obornik niski do średniego, świeża biomasa bardzo niski">
+                <div class="c5-bar"><span class="wf-w-semibold">Lignit</span><div class="c5-bar__track"><div class="c5-bar__fill" style="--bw:100%;"></div></div><span class="c5-muted">bardzo wysoki</span></div>
+                <div class="c5-bar"><span>Torf</span><div class="c5-bar__track"><div class="c5-bar__fill" style="--bw:62%;"></div></div><span class="c5-muted">wysoki / średni</span></div>
+                <div class="c5-bar"><span>Biohumus</span><div class="c5-bar__track"><div class="c5-bar__fill" style="--bw:46%;"></div></div><span class="c5-muted">średni</span></div>
+                <div class="c5-bar"><span>Kompost dojrzały</span><div class="c5-bar__track"><div class="c5-bar__fill" style="--bw:42%;"></div></div><span class="c5-muted">średni</span></div>
+                <div class="c5-bar"><span>Obornik</span><div class="c5-bar__track"><div class="c5-bar__fill" style="--bw:24%;"></div></div><span class="c5-muted">niski / średni</span></div>
+                <div class="c5-bar"><span>Świeża biomasa</span><div class="c5-bar__track"><div class="c5-bar__fill" style="--bw:8%;"></div></div><span class="c5-muted">bardzo niski</span></div>
+              </div>
+            </div>
+            <figcaption class="c5-viz__cap">Stopień humifikacji i stabilności materii organicznej – porównanie jakościowe wg materiałów producenta.</figcaption>
+          </figure>
+
+          <div class="c5-fact" data-fact="4">
+            <h3 class="c5-fact__title">Nasz lignit jest wolny od zanieczyszczeń i&nbsp;nadmiaru metali ciężkich</h3>
+            <div class="c5-fact__body">
+              <p>Carbomat ECO dostarcza glebie cennej materii organicznej bez ryzyka nadmiernego wprowadzania metali ciężkich. Bardzo niska zawartość pierwiastków takich jak kadm, rtęć, arsen czy ołów potwierdza wysoką jakość surowca. Zawarte w nim kwasy humusowe dodatkowo wspierają naturalną stabilizację środowiska glebowego.</p>
+            </div>
+          </div>
+
+          <!-- 04 · Czystość – tabela przeniesiona z treści akordeonu -->
+          <figure class="c5-viz" data-fact-viz="4">
+            <span class="c5-viz__tag">04 · Czystość</span>
+            <div class="c5-viz__body">
+              <div class="cw-scrollx" tabindex="0">
+                <table class="wf-table">
+                  <thead><tr><th scope="col">Pierwiastek</th><th scope="col" style="text-align:right;">Zawartość</th></tr></thead>
+                  <tbody>
+                    <tr><td>Ołów (Pb)</td><td style="text-align:right;">&lt;1,0 mg/kg</td></tr>
+                    <tr><td>Kadm (Cd)</td><td style="text-align:right;">&lt;1,0 mg/kg</td></tr>
+                    <tr><td>Arsen (As)</td><td style="text-align:right;">&lt;0,01 mg/kg</td></tr>
+                    <tr><td>Chrom (Cr)</td><td style="text-align:right;">&lt;0,5 mg/kg</td></tr>
+                    <tr><td>Nikiel (Ni)</td><td style="text-align:right;">&lt;0,5 mg/kg</td></tr>
+                    <tr><td>Rtęć (Hg)</td><td style="text-align:right;">&lt;0,05 mg/kg</td></tr>
+                    <tr><td>Selen (Se)</td><td style="text-align:right;">&lt;0,5 mg/kg</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <figcaption class="c5-viz__cap">Badanie akredytowanego laboratorium PCBC S.A. (2022).</figcaption>
+          </figure>
+
+          <div class="c5-fact" data-fact="5">
+            <h3 class="c5-fact__title">Każda gruzełka Carbomatu ECO to ogromny mikrokosmos</h3>
+            <div class="c5-fact__body">
+              <p>Carbomat ECO charakteryzuje się naturalnie rozwiniętą strukturą porowatą – około 60% objętości stanowią pory. Dzięki temu działa jak naturalny regulator środowiska glebowego, który:</p>
+              <ul>
+                <li>magazynuje wodę w strukturze mikroporów, ograniczając przesychanie gleby,</li>
+                <li>poprawia napowietrzenie podłoża, tworząc korzystne warunki dla korzeni i mikroorganizmów,</li>
+                <li>zwiększa powierzchnię aktywną sorpcyjnie, na której mogą być zatrzymywane składniki pokarmowe – ujemny ładunek grup funkcyjnych w kwasach humusowych pozwala wiązać kationy potasu, wapnia, magnezu, azotu (amonowy) i wielu innych mikroelementów.</li>
+              </ul>
+            </div>
+          </div>
+
+          <figure class="c5-viz" data-fact-viz="5">
+            <span class="c5-viz__tag">05 · Struktura</span>
+            <div class="c5-viz__body">
+              <div class="c5-viz__ring">
+                <svg viewBox="0 0 200 200" role="img" aria-label="Przekrój gruzełka lignitu – około 60 procent objętości stanowią pory">
+                  <circle cx="100" cy="100" r="86" fill="none" stroke="currentColor"/>
+                  <g fill="rgb(255 255 255 / .3)">
+                    <circle cx="72" cy="62" r="11"/><circle cx="112" cy="52" r="7"/><circle cx="142" cy="78" r="13"/>
+                    <circle cx="60" cy="100" r="8"/><circle cx="96" cy="92" r="15"/><circle cx="134" cy="120" r="9"/>
+                    <circle cx="70" cy="138" r="12"/><circle cx="104" cy="150" r="8"/><circle cx="146" cy="150" r="6"/>
+                    <circle cx="42" cy="128" r="5"/><circle cx="120" cy="86" r="5"/><circle cx="86" cy="120" r="6"/>
+                  </g>
+                </svg>
+                <div class="wf-stack wf-stack--2">
+                  <span class="c5-viz__num">~60%</span>
+                  <span class="wf-small wf-t-secondary">objętości gruzełki stanowią naturalne pory</span>
+                </div>
+              </div>
+              <ul class="c5-viz__list">
+                <li><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-droplet"></use></svg> magazynuje wodę w mikroporach</li>
+                <li><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-stack-2"></use></svg> napowietrza podłoże</li>
+                <li><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-magnet"></use></svg> wiąże składniki pokarmowe</li>
+              </ul>
+            </div>
+            <figcaption class="c5-viz__cap">Przekrój poglądowy – proporcja porów wg opracowania producenta.</figcaption>
+          </figure>
+
+        </div>
+
+        <!-- Pasek progresu zamiast dividerów: wypełnienie = postęp globalny,
+             cztery znaczniki dzielą tor na pięć odcinków. Widoczny tylko
+             w scenie sterowanej przewijaniem. -->
+        <div class="c5-facts-prog" data-facts-prog>
+          <div class="c5-facts-progress" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="1" aria-label="Postęp – punkt z pięciu">
+            <span class="c5-facts-progress__fill"></span>
+            <span class="c5-facts-progress__mark"></span>
+            <span class="c5-facts-progress__mark"></span>
+            <span class="c5-facts-progress__mark"></span>
+            <span class="c5-facts-progress__mark"></span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 5. JAK STOSOWAĆ (dwie przypięte sceny produktowe) =====
+       Copy 1:1 z dokumentu 24.07. Wartości punktowe „krzewy i byliny 1–3 l,
+       drzewa 3–8 l" wg późniejszego rozstrzygnięcia Darka (AC #30867, 21.07)
+       – dokument 24.07 ma tu jeszcze starą wersję „3–5 litrów" bez środka
+       skali. ⚠ do potwierdzenia z Darkiem.
+
+       Layout: the section head runs in normal flow; each product is one
+       <article class="c5-use"> = a tall track with a single sticky 100svh
+       stage. Scroll position drives custom properties on the article (see
+       60-jak-stosowac.js) and CSS interpolates EVERY move from them – the
+       photo, the shade, the tabs and the description card all follow the
+       wheel and stop when it stops. The sticky bar with „kup teraz" is the
+       only thing pinned to the top edge here.
+       Without JS, below 900 px or with reduced motion the very same markup
+       reads as a plain stack: bar, then photo + title + description twice.
+       Nothing is hidden, nothing needs a script. -->
+  <section class="c5-sec" id="jak-stosowac" data-chapter="jak-stosowac">
+    <div class="c5-wrap">
+      <span class="c5-kicker c5-kicker--center">Jak stosować</span>
+      <div class="c5-head">
+        <h2 class="c5-h2 c5-h2--center">Dwa produkty – najprostsze recepty.</h2>
+        <p class="c5-lead c5-lead--center">Bez głębszych niuansów i tabel – ogólne zasady. Dokładniejsze proporcje znajdziesz w naszych opracowaniach lub zapytaj bezpośrednio doradcę.</p>
+      </div>
+    </div>
+
+    <article id="jak-stosowac-eco" class="c5-use" data-use-product="eco" data-ce="CE-13" data-ce-od="#jak-stosowac">
+      <div class="c5-use__track" data-use-track>
+        <div class="c5-use__stage">
+          <!-- hero at p=0, sticky 110 px bar from p≈.18 on: same three elements -->
+          <div class="c5-use__bar">
+            <span class="c5-use__kind">Dodatek do gleby</span>
+            <img class="c5-use__pack" src="img/opakowania/worek_20l.png" width="578" height="875" alt="">
+            <div class="c5-use__barend">
+              <span class="c5-use__name">CARBOMAT ECO</span>
+              <a class="c5-btn c5-btn--dark c5-btn--sm c5-use__buy" href="sklep.html?grupa=carbomat">kup teraz</a>
+            </div>
+          </div>
+          <div class="c5-use__photo">
+            <!-- .c5-use__fill = the photograph itself; it overscans the layer so the parallax never uncovers an edge -->
+            <div class="c5-use__layer c5-use__layer--a" data-use-layer="gruntowe">
+              <img class="c5-use__fill" src="img/foto/eco-gruntowe.jpg" alt="Dłonie w rękawicach mieszają ciemne granulki lignitu z glebą rabaty, obok krzew z odkrytą bryłą korzeniową" loading="lazy" decoding="async">
+            </div>
+            <div class="c5-use__layer c5-use__layer--b" data-use-layer="doniczkowe">
+              <img class="c5-use__fill" src="img/foto/eco-doniczkowe.jpg" alt="Przesadzanie rośliny do białej doniczki, na drewnianym stole miska z ciemnymi granulkami i jasnym podłożem" loading="lazy" decoding="async">
+            </div>
+            <div class="c5-use__shade"></div>
+            <div class="c5-use__over">
+              <div class="c5-use__crop" data-use-crop="gruntowe">
+                <button type="button" class="c5-use__tab" data-use-tab="gruntowe" aria-pressed="true">Uprawy gruntowe</button>
+                <div class="c5-use__box">
+                  <div class="c5-use__desc">
+                    <p><span class="c5-label">Powierzchniowo:</span> Wymieszaj z glebą lub innymi składnikami w ilości 10–15% objętości gleby z warstwy ornej lub całego przygotowanego podłoża. Dobieraj frakcje wedle uznania; dla gleb lekkich, piaszczystych stosuj drobniejszą, a dla cięższych gliniastych grubszą.</p>
+                    <p><span class="c5-label">Punktowo:</span> Stosuj pod rozsadę lub pod goły korzeń w trakcie sadzenia i przemieszaj z glebą. Ilość produktu zależna od wielkości i długości życia rośliny. Dla małych jednorocznych (pomidor, papryka, ogórek) ok. 100–200 ml, dla krzewów i bylin 1–3 l, dla drzew sadowniczych 3–8 l jako starter. Co do zasady im więcej przygotujemy wartościowego podłoża, tym bujniej rozrośnie się korzeń.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="c5-use__crop" data-use-crop="doniczkowe">
+                <button type="button" class="c5-use__tab" data-use-tab="doniczkowe" aria-pressed="false">Uprawy doniczkowe</button>
+                <div class="c5-use__box">
+                  <div class="c5-use__desc">
+                    <ul class="c5-use__list">
+                      <li>Stosuj jako 10–20% udział mieszanki gotowego podłoża. Wymieszaj równomiernie.</li>
+                      <li>Zastosuj w formie wartościowego drenażu na spodzie doniczki, grubość około 5 cm.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article id="jak-stosowac-sciolka" class="c5-use" data-use-product="sciolka" data-ce="CE-13">
+      <div class="c5-use__track" data-use-track>
+        <div class="c5-use__stage">
+          <div class="c5-use__bar">
+            <span class="c5-use__kind">Ściółka</span>
+            <img class="c5-use__pack" src="img/opakowania/worek_20l.png" width="578" height="875" alt="">
+            <div class="c5-use__barend">
+              <span class="c5-use__name">CARBOMAT ECO Ściółka</span>
+              <a class="c5-btn c5-btn--dark c5-btn--sm c5-use__buy" href="sklep.html?grupa=carbomat">kup teraz</a>
+            </div>
+          </div>
+          <div class="c5-use__photo">
+            <div class="c5-use__layer c5-use__layer--a" data-use-layer="gruntowe">
+              <img class="c5-use__fill" src="img/foto/sciolka-gruntowe.jpg" alt="Rząd młodych krzewów borówki, pas gruboziarnistej ciemnej ściółki pod krzewami, trawa w międzyrzędziu" loading="lazy" decoding="async">
+            </div>
+            <div class="c5-use__layer c5-use__layer--b" data-use-layer="doniczkowe">
+              <img class="c5-use__fill" src="img/foto/sciolka-doniczkowe.jpg" alt="Biała donica z kwitnącym różanecznikiem na tarasie, powierzchnia podłoża przykryta grubą ciemną ściółką" loading="lazy" decoding="async">
+            </div>
+            <div class="c5-use__shade"></div>
+            <div class="c5-use__over">
+              <div class="c5-use__crop" data-use-crop="gruntowe">
+                <button type="button" class="c5-use__tab" data-use-tab="gruntowe" aria-pressed="true">Uprawy gruntowe</button>
+                <div class="c5-use__box">
+                  <div class="c5-use__desc">
+                    <p><span class="c5-label">Powierzchniowo:</span> W rzędach dostosuj szerokość ściółki do wielkości rośliny, np. przy młodej borówce (pierwsze 3 lata) szerokość może mieć 60–80 cm, a przy starszych 80–120 cm. Przy rabatach przykryj całą powierzchnię użytkową. Warstwa 3–5 cm. Odświeżaj warstwę co kilka lat.</p>
+                    <p><span class="c5-label">Punktowo:</span> Stosuj obwód ściółki odpowiadający części nadziemnej rośliny. Warstwa 3–5 cm.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="c5-use__crop" data-use-crop="doniczkowe">
+                <button type="button" class="c5-use__tab" data-use-tab="doniczkowe" aria-pressed="false">Uprawy doniczkowe</button>
+                <div class="c5-use__box">
+                  <div class="c5-use__desc">
+                    <p>Przykryj całą powierzchnię doniczki warstwą 3–5 cm.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ===== 6. DAWKOWANIE (kierunek: konfigurator) – sekcja na 100 % ekranu =====
+       Makieta zdejmuje kalkulator D59 ze strony i kieruje do konfiguratora.
+       Nagłówek w makiecie = placeholder → poniżej propozycja robocza (⚠ do
+       akceptacji); kalkulator D59 żyje dalej w V4. Darek (dokument 24.07)
+       popiera kierunek „Dobierz swoją dawkę".
+       Układ (spec §7): lewa kolumna – nagłówek u góry, lista i przycisk u dołu;
+       prawa – zdjęcie na całą wysokość sekcji, 30 px od krawędzi ekranu.
+       Zdjęcie jedzie lekkim parallaksem (§13.6): kadr przycina ramka, a obraz
+       jest od niej wyższy i przesuwa się w niej razem z przewijaniem.
+       DOM order = kolejność mobilna: nagłówek → zdjęcie → lista → przycisk. -->
+  <section class="c5-sec c5-dose-sec" id="dawka" data-chapter="dawka" data-ce="CE-14">
+    <div class="c5-wrap c5-dose">
+      <div class="c5-dose__top">
+        <span class="c5-kicker">Dawkowanie carbomatu</span>
+        <h2 class="c5-h2">Dokładną dawkę dla swojej uprawy dobierzesz w&nbsp;konfiguratorze.</h2>
+      </div>
+      <div class="c5-dose__media-wrap" data-dose-media>
+        <img class="c5-dose__media" src="img/foto/dawka.jpg" alt="Miarka z ciemnymi granulkami nad czarną doniczką z podłożem, obok biały worek na drewnianej ławie" loading="lazy" decoding="async">
+      </div>
+      <div class="c5-dose__bottom">
+        <!-- numery w kółkach (1) (2) (3) – licznik CSS, treść zdań bez zmian (§13.6) -->
+        <ol class="c5-dose__list" role="list">
+          <li>Wybierz produkt i sposób aplikacji – przemieszanie z glebą, mieszanka doniczkowa albo ściółkowanie.</li>
+          <li>Podaj powierzchnię, objętość podłoża lub liczbę roślin.</li>
+          <li>Otrzymasz orientacyjną dawkę w litrach i podpowiedź, które opakowania wybrać.</li>
+        </ol>
+        <!-- ⚠ cel linku do potwierdzenia: moduł dawek w konfiguratorze (dziś konfigurator dobiera produkt) -->
+        <a class="c5-btn c5-btn--dark" href="konfigurator.html">dobierz właściwe dawki</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 7. SEZON: oś czasu z packshotami + pas PRO (spec §8) =====
+       Wiersz = tytuł | kwadratowa scena packshotu | opis. Otwarcie kroku:
+       jasnoszary kwadrat rozwija się od dołu do góry, dopiero potem wchodzi
+       packshot – sterowane wyłącznie atrybutem data-open wiersza, więc działa
+       i w trybie pinu (scroll), i w akordeonie na klik.
+       Pas „Wskazania terminów stosowania popularnych upraw" usunięty.
+       Step 1 is open from the first frame (data-open / aria-expanded here, and
+       JS keeps it open before the pin) – the header and the block enter in the
+       normal flow of the page and only pin later (§14.7). -->
+  <section class="c5-sec" id="sezon" data-chapter="sezon" style="padding-bottom:0;">
+    <div class="c5-wrap">
+      <div id="sezon-wiersze" class="c5-season-pin" data-season-pin data-ce="CE-15">
+      <!-- Nagłówek żyje w kontenerze pinu (absolutnie, więc nie zajmuje miejsca
+           w biegu) – dzięki temu po zakończeniu cyklu odjeżdża w górę razem
+           z krokami, zamiast znikać. Kicker jedzie i przykleja się razem z H2
+           i leadem (uwaga Mateusza z 13.09); nagłówek bez własnego tła, żeby
+           nic nie zasłaniało kroków. -->
+      <div class="c5-season-headwrap" data-season-headwrap>
+        <div class="c5-season-head" data-season-head>
+          <div class="c5-head">
+            <span class="c5-kicker c5-kicker--center">Kiedy stosować</span>
+            <h2 class="c5-h2 c5-h2--center">Produkty w rytmie sezonu.</h2>
+            <p class="c5-lead c5-lead--center">CARBOMAT ECO to pierwszy krok systemu: bazę zakładasz raz, a w sezonie pracują produkty płynne.</p>
+          </div>
+        </div>
+      </div>
+      <div class="c5-season-pin__spacer" data-season-spacer aria-hidden="true"></div>
+      <div class="c5-season">
+        <div class="c5-season__row" data-open="true">
+          <button type="button" class="c5-season__head" data-season="1" aria-expanded="true" aria-controls="season-1">Start · przygotowanie gleby</button>
+          <div class="c5-season__scene">
+            <span class="c5-season__plate" aria-hidden="true"></span>
+            <img class="c5-season__pack" src="img/opakowania/worek_20l.png" alt="CARBOMAT ECO – worek 20 l">
+          </div>
+          <div class="c5-season__panel" id="season-1">
+            <div class="c5-season__panelin">
+            <div class="c5-season__info">
+              <h3>CARBOMAT ECO – baza doglebowa</h3>
+              <p class="c5-muted">Stosujesz raz, gdy gleba jest odkryta – przy sadzeniu lub zakładaniu uprawy. Potem już jej nie rozkopujesz, żeby nie niszczyć budowanej próchnicy.</p>
+              <a class="c5-btn c5-btn--light c5-btn--sm" href="sklep.html?grupa=carbomat"><svg class="wf-icon" aria-hidden="true"><use href="#ti-plus"></use></svg> dodaj do koszyka</a>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div class="c5-season__row">
+          <button type="button" class="c5-season__head" data-season="2" aria-expanded="false" aria-controls="season-2">W roku · wiosna i jesień</button>
+          <div class="c5-season__scene">
+            <span class="c5-season__plate" aria-hidden="true"></span>
+            <img class="c5-season__pack" src="img/opakowania/kanister_5l.png" alt="CARBOHUMIC niefiltrowany – kanister 5 l">
+          </div>
+          <div class="c5-season__panel" id="season-2">
+            <div class="c5-season__panelin">
+            <div class="c5-season__info">
+              <h3>CARBOHUMIC niefiltrowany – uzupełnienie doglebowe</h3>
+              <p class="c5-muted">Płynne kwasy humusowe podajesz bez rozkopywania – podlewając. Zabiegi można powtarzać, kilka razy w roku.</p>
+              <a class="c5-btn c5-btn--light c5-btn--sm" href="carbohumic.html">zobacz produkt</a>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div class="c5-season__row" style="border-bottom:1px solid var(--w-border-default);">
+          <button type="button" class="c5-season__head" data-season="3" aria-expanded="false" aria-controls="season-3">W sezonie · wzrost i owocowanie</button>
+          <div class="c5-season__scene">
+            <span class="c5-season__plate" aria-hidden="true"></span>
+            <img class="c5-season__pack" src="img/opakowania/butelka_1l.png" alt="MAXI PLUS – butelka 1 l">
+          </div>
+          <div class="c5-season__panel" id="season-3">
+            <div class="c5-season__panelin">
+            <div class="c5-season__info">
+              <h3>MAXI PLUS, w sadzie CALBOR – wzmocnienie nalistne</h3>
+              <p class="c5-muted">MAXI PLUS w fazie wzrostu, CALBOR na jakość owocu (wyłącznie sady). Opryski nalistne można powtarzać kilka razy w sezonie.</p>
+              <a class="c5-btn c5-btn--light c5-btn--sm" href="carbohumic.html">zobacz produkty</a>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <!-- Pas PRO – copy 1:1 z V4; Darek 24.07: „Fajne, podoba mi się taka narracja."
+         Układ wg sensiq.co: szare tło, zdjęcie skaluje się przy przewijaniu od
+         wąskiego kadru do pełnej szerokości, nagłówek po lewej, akapit i dwa
+         przyciski po prawej. -->
+    <div class="c5-pro" id="uprawy-profesjonalne" data-pro data-ce="CE-16">
+      <div class="c5-pro__media" data-pro-media aria-hidden="true">
+        <img class="c5-pro__img" src="img/foto/pro.jpg" alt="Biały big bag na palecie w międzyrzędziu plantacji borówki, obok sadownik z tabletem" loading="lazy" decoding="async">
+      </div>
+      <div class="c5-wrap c5-pro__grid">
+        <h2>Prowadzisz uprawę profesjonalną – sad, plantację, pole lub szkółkę?</h2>
+        <div class="c5-pro__side">
+          <p>Przygotujemy ofertę i Twoją cenę – także na palety i duże opakowania (big bag 1,5 m³). Pierwsze zamówienie możesz złożyć w sklepie, a po realizacji zakładamy konto i kolejne robisz po swojej cenie.</p>
+          <div class="c5-btnrow">
+            <a class="c5-btn c5-btn--inv" href="kontakt.html">Zapytaj o ofertę</a>
+            <a class="c5-btn c5-pro__login" href="platforma-b2b.html">Masz konto? Zaloguj się</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 8. FAQ (pytanie z lewej, odpowiedź z prawej) ===== -->
+  <section class="c5-sec" id="faq" data-chapter="faq" data-ce="CE-17">
+    <div class="c5-wrap">
+      <span class="c5-kicker">FAQ</span>
+      <h2 class="c5-h2">Najczęstsze pytania o CARBOMAT ECO</h2>
+
+      <div class="c5-faq">
+        <div class="c5-faq__item">
+          <button type="button" class="c5-faq__q" aria-expanded="false" aria-controls="faq-1">Czym CARBOMAT ECO różni się od obornika i kompostu?<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button>
+          <div class="c5-faq__a" id="faq-1">
+            <div class="c5-faq__ain">CARBOMAT ECO to gotowa, trwała próchnica, a obornik i kompost mineralizują się w około 3 lata i tylko około 15% przechodzi w trwałą próchnicę (Kwiatkowska-Malina, PW + IUNG). 1 tona CARBOMAT ECO to około 800 kg suchej masy – równoważnik około 5000 kg suchej masy młodej materii organicznej (wg karty). Wkład zostaje w glebie kilkanaście do ponad 20 lat.</div>
+          </div>
+        </div>
+        <div class="c5-faq__item">
+          <button type="button" class="c5-faq__q" aria-expanded="false" aria-controls="faq-2">Ile wody zatrzyma lignit w glebie?<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button>
+          <div class="c5-faq__a" id="faq-2">
+            <div class="c5-faq__ain">To zależy od gleby, uprawy i pogody – nie podajemy litrów. W naszym doświadczeniu (wyniki wstępne) wilgotność po nasyceniu wzrosła z 11,9% w kontroli do 13,3% po przemieszaniu CARBOMAT ECO z glebą. Retencję buduje aplikacja doglebowa, nie oprysk.</div>
+          </div>
+        </div>
+        <div class="c5-faq__item">
+          <button type="button" class="c5-faq__q" aria-expanded="false" aria-controls="faq-3">Czy CARBOMAT ECO można przedawkować?<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button>
+          <div class="c5-faq__a" id="faq-3">
+            <div class="c5-faq__ain">Praktycznie nie – to produkt nienawozowy. Zwróć uwagę tylko na odczyn: pod borówkę i inne kwasolubne wybierz odmianę 4,5–5,0 pH; odmiana uniwersalna ma 6,0–6,5 pH.</div>
+          </div>
+        </div>
+        <div class="c5-faq__item">
+          <button type="button" class="c5-faq__q" aria-expanded="false" aria-controls="faq-4">Przemieszać czy rozsypać?<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button>
+          <div class="c5-faq__a" id="faq-4">
+            <div class="c5-faq__ain">Zależy od wariantu: CARBOMAT ECO (frakcje 0,1–8 mm) przemieszaj z glebą lub podłożem, a CARBOMAT ECO Ściółkę (8–20 mm) rozsyp na powierzchni równą warstwą 3–5 cm.</div>
+          </div>
+        </div>
+        <div class="c5-faq__item">
+          <button type="button" class="c5-faq__q" aria-expanded="false" aria-controls="faq-5">Kiedy zobaczę efekt?<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button>
+          <div class="c5-faq__a" id="faq-5">
+            <div class="c5-faq__ain">Strukturę i lepsze gospodarowanie wodą – już w pierwszym sezonie; budowę próchnicy – w horyzoncie 2–5 lat. Trwały wkład lignitu pozostaje kilkanaście do ponad 20 lat.</div>
+          </div>
+        </div>
+        <div class="c5-faq__item">
+          <button type="button" class="c5-faq__q" aria-expanded="false" aria-controls="faq-6">Czy CARBOMAT ECO zastąpi torf w podłożu?<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button>
+          <div class="c5-faq__a" id="faq-6">
+            <div class="c5-faq__ain">Tak, jako komponent podłoża – w mieszankach zalecany udział to 10–20% objętości. To trwały, organiczny następca torfu.</div>
+          </div>
+        </div>
+        <div class="c5-faq__item">
+          <button type="button" class="c5-faq__q" aria-expanded="false" aria-controls="faq-7">Czym CARBOMAT ECO Ściółka różni się od kory?<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button>
+          <div class="c5-faq__a" id="faq-7">
+            <div class="c5-faq__ain">W przeciwieństwie do kory nie powoduje głodu azotowego. Do tego wzbogaca glebę w materię organiczną i substancje humusowe, obniża pH pod uprawy kwasolubne i tworzy siedlisko dla pożytecznych mikroorganizmów.</div>
+          </div>
+        </div>
+        <div class="c5-faq__item">
+          <button type="button" class="c5-faq__q" aria-expanded="false" aria-controls="faq-8">Węgiel w glebie – a co z metalami ciężkimi?<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button>
+          <div class="c5-faq__a" id="faq-8">
+            <div class="c5-faq__ain">Nasz lignit jest wolny od zanieczyszczeń i nadmiaru metali ciężkich – potwierdza to badanie akredytowanego laboratorium PCBC S.A.: ołów, kadm, arsen, chrom, nikiel, rtęć i selen wielokrotnie poniżej granic (m.in. Hg &lt;0,05 mg/kg, As &lt;0,01 mg/kg). Zawarte w lignicie kwasy humusowe dodatkowo wspierają naturalną stabilizację środowiska glebowego – pełna tabela w sekcji „Czym jest".</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ===== 9. CTA KOŃCOWE (jasne, wyśrodkowane) ===== -->
+  <section id="cta-koncowe" class="c5-sec" data-ce="CE-18">
+    <div class="c5-wrap">
+      <div class="c5-cta">
+        <h2 class="c5-h2">Gotów zainwestować w glebę na lata?</h2>
+        <div class="c5-btnrow">
+          <a class="c5-btn c5-btn--dark" href="sklep.html?grupa=carbomat">kup teraz</a>
+          <a class="c5-btn c5-btn--light" href="#dawka">dobierz właściwe dawki</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<cw-footer></cw-footer>
+
+<cw-dock></cw-dock>
+
+<script src="cw.js"></script>
+<!-- Lenis: slight scroll inertia (like serverobotics.com); the page scrolls natively without it -->
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
+<script src="carbomat.js"></script>
+<script src="ce-overlay.js"></script>
+</body>
+</html>

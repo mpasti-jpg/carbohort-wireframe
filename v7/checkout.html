@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carbohort — Kasa</title>
+<meta name="description" content="Kasa Carbohort dla kupujących dla siebie: dane do wysyłki i e-mail, bez logowania. Po złożeniu zamówienia przejdziesz do potwierdzenia — bez płatności online w makiecie.">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="wireframe.css">
+<link rel="stylesheet" href="cw.css">
+<script src="../status.js"></script>
+<script src="chrome.js"></script>
+</head>
+<body>
+<a class="wf-sr-only" href="#main">Przejdź do treści</a>
+
+<cw-icons></cw-icons>
+
+<cw-navbar data-current="sklep"></cw-navbar>
+
+<main id="main">
+
+  <!-- ===== NAGŁÓWEK + BREADCRUMB + POSTĘP ===== -->
+  <section class="wf-section wf-section--sm">
+    <div class="wf-container wf-stack wf-stack--4">
+      <nav class="wf-breadcrumb" aria-label="Ścieżka">
+        <ol>
+          <li><a class="wf-link--quiet" href="home.html">Start</a></li>
+          <li><span class="wf-breadcrumb__sep" aria-hidden="true"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-right"></use></svg></span></li>
+          <li><a class="wf-link--quiet" href="koszyk.html">Koszyk</a></li>
+          <li><span class="wf-breadcrumb__sep" aria-hidden="true"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-right"></use></svg></span></li>
+          <li><span aria-current="page" class="wf-w-semibold">Kasa</span></li>
+        </ol>
+      </nav>
+
+      <div class="wf-stack wf-stack--3" style="max-width:680px;">
+        <span class="wf-overline">Kasa</span>
+        <h1 class="wf-h1">Kasa — dane do zamówienia</h1>
+        <p class="wf-lead wf-t-secondary">Kilka pól i gotowe. Bez logowania i bez płatności online — po złożeniu zamówienia zobaczysz potwierdzenie z dalszymi krokami.</p>
+      </div>
+
+      <!-- Postęp zakupu — stepper (done / current / upcoming) -->
+      <ol class="wf-steps" aria-label="Postęp zakupu">
+        <li class="wf-step wf-step--done"><span class="wf-step__node" aria-hidden="true"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-check"></use></svg></span> Koszyk <span class="wf-sr-only">(ukończony)</span></li>
+        <span class="wf-step__connector" aria-hidden="true"></span>
+        <li class="wf-step wf-step--current" aria-current="step"><span class="wf-step__node">2</span> Dane i wysyłka</li>
+        <span class="wf-step__connector" aria-hidden="true"></span>
+        <li class="wf-step wf-step--upcoming"><span class="wf-step__node">3</span> Potwierdzenie</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ===== KASA — formularz + podsumowanie ===== -->
+  <section class="wf-section wf-section--subtle">
+    <div class="wf-container wf-split wf-split--sidebar" style="align-items: start;">
+
+      <!-- LEWA — formularz danych -->
+      <form class="wf-stack wf-stack--6" data-checkout-form aria-label="Dane do zamówienia">
+
+        <div class="wf-card">
+          <div class="wf-card__body wf-stack wf-stack--5">
+            <div class="wf-stack wf-stack--2">
+              <h2 class="wf-h4">Dane kontaktowe i wysyłka</h2>
+              <p class="wf-small wf-t-secondary">Potrzebujemy ich, żeby dostarczyć zamówienie i wysłać potwierdzenie. Pola oznaczone gwiazdką są wymagane.</p>
+            </div>
+
+            <div class="wf-grid wf-grid--2" style="--wf-grid-min: 14rem;">
+
+              <div class="wf-field" style="grid-column: 1 / -1;">
+                <label class="wf-label" for="ck-name">Imię i nazwisko <span class="wf-req" aria-hidden="true">*</span><span class="wf-sr-only">(wymagane)</span></label>
+                <input class="wf-input" type="text" id="ck-name" name="name" autocomplete="name" required aria-required="true" placeholder="Imię i nazwisko">
+                <p class="wf-hint">(wymagane)</p>
+              </div>
+
+              <div class="wf-field">
+                <label class="wf-label wf-inline" for="ck-email"><svg class="wf-icon wf-icon--sm wf-icon--muted" aria-hidden="true"><use href="#ti-mail"></use></svg> E-mail <span class="wf-req" aria-hidden="true">*</span><span class="wf-sr-only">(wymagane)</span></label>
+                <input class="wf-input" type="email" id="ck-email" name="email" autocomplete="email" required aria-required="true" aria-describedby="ck-email-hint" placeholder="adres@e-mail">
+                <p class="wf-hint" id="ck-email-hint">(wymagane) — e-mail zbieramy po raz pierwszy tutaj, do potwierdzenia zamówienia.</p>
+              </div>
+
+              <div class="wf-field">
+                <label class="wf-label" for="ck-phone">Telefon <span class="wf-req" aria-hidden="true">*</span><span class="wf-sr-only">(wymagane)</span></label>
+                <input class="wf-input" type="tel" id="ck-phone" name="phone" autocomplete="tel" required aria-required="true" aria-describedby="ck-phone-hint" placeholder="+48 000 000 000">
+                <p class="wf-hint" id="ck-phone-hint">(wymagane) — do ustalenia terminu dostawy.</p>
+              </div>
+
+              <div class="wf-field" style="grid-column: 1 / -1;">
+                <label class="wf-label" for="ck-address">Adres (ulica i numer) <span class="wf-req" aria-hidden="true">*</span><span class="wf-sr-only">(wymagane)</span></label>
+                <input class="wf-input" type="text" id="ck-address" name="address" autocomplete="street-address" required aria-required="true" placeholder="ulica i numer">
+                <p class="wf-hint">(wymagane)</p>
+              </div>
+
+              <div class="wf-field">
+                <label class="wf-label" for="ck-zip">Kod pocztowy <span class="wf-req" aria-hidden="true">*</span><span class="wf-sr-only">(wymagane)</span></label>
+                <input class="wf-input" type="text" id="ck-zip" name="zip" autocomplete="postal-code" inputmode="numeric" required aria-required="true" placeholder="00-000">
+                <p class="wf-hint">(wymagane)</p>
+              </div>
+
+              <div class="wf-field">
+                <label class="wf-label" for="ck-city">Miasto <span class="wf-req" aria-hidden="true">*</span><span class="wf-sr-only">(wymagane)</span></label>
+                <input class="wf-input" type="text" id="ck-city" name="city" autocomplete="address-level2" required aria-required="true" placeholder="miasto">
+                <p class="wf-hint">(wymagane)</p>
+              </div>
+
+              <div class="wf-field" style="grid-column: 1 / -1;">
+                <label class="wf-label" for="ck-note">Uwagi do zamówienia</label>
+                <textarea class="wf-textarea" id="ck-note" name="note" rows="3" placeholder="Np. dogodne godziny dostawy" aria-describedby="ck-note-hint"></textarea>
+                <p class="wf-hint" id="ck-note-hint">Opcjonalnie.</p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="wf-alert" role="status">
+          <span class="wf-alert__icon"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-info-circle"></use></svg></span>
+          <div><span class="wf-alert__title">Płatność i koszt dostawy ustalamy poza makietą.</span> <span class="wf-small wf-t-secondary">Wybór metody płatności, kalkulacja kosztów dostawy i integracja z bramką to kolejny etap. Tutaj testujemy najkrótszą ścieżkę i komplet pól potrzebnych do realizacji.</span></div>
+        </div>
+
+        <div class="cw-ask">
+          <span class="wf-ph wf-ph--avatar" aria-hidden="true"></span>
+          <div class="cw-ask__txt wf-stack wf-stack--1">
+            <span class="wf-w-semibold wf-small">Wolisz porozmawiać przed zamówieniem?</span>
+            <span class="wf-small wf-t-secondary">Napisz do nas albo zapytaj naszego asystenta — dr Jurka.</span>
+          </div>
+          <button type="button" class="wf-btn wf-btn--secondary wf-btn--sm" data-jurek-open>Zapytaj dr Jurka</button>
+        </div>
+
+        <div class="wf-cluster wf-gap-3 wf-items-center">
+          <a class="wf-btn wf-btn--ghost wf-inline" href="koszyk.html"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-left"></use></svg> Wróć do koszyka</a>
+          <a class="wf-btn wf-btn--link" href="kontakt.html">Kontakt</a>
+        </div>
+
+      </form>
+
+      <!-- PRAWA — podsumowanie zamówienia -->
+      <aside class="wf-stack wf-stack--5" aria-label="Podsumowanie zamówienia">
+
+        <div class="wf-card">
+          <div class="wf-card__body wf-stack wf-stack--4">
+            <h2 class="wf-h4">Twoje zamówienie</h2>
+
+            <div class="wf-stack wf-stack--3">
+              <div class="wf-cluster wf-cluster--between wf-items-center">
+                <span class="wf-small">CARBOMAT Eco · worek 20 L <span class="wf-t-tertiary">× 2</span></span>
+                <span class="wf-small wf-w-semibold">178 zł</span>
+              </div>
+              <div class="wf-cluster wf-cluster--between wf-items-center">
+                <span class="wf-small">CARBOHUMIC · kanister 5 L <span class="wf-t-tertiary">× 1</span></span>
+                <span class="wf-small wf-w-semibold">149 zł</span>
+              </div>
+              <div class="wf-cluster wf-cluster--between wf-items-center">
+                <span class="wf-small">MAXI PLUS · butelka 1 L <span class="wf-t-tertiary">× 1</span></span>
+                <span class="wf-small wf-w-semibold">49 zł</span>
+              </div>
+            </div>
+
+            <div class="wf-divider"></div>
+
+            <div class="wf-stack wf-stack--2">
+              <div class="wf-cluster wf-cluster--between wf-items-center">
+                <span class="wf-small wf-t-secondary">Produkty</span>
+                <span class="wf-small">376 zł</span>
+              </div>
+              <div class="wf-cluster wf-cluster--between wf-items-center">
+                <span class="wf-small wf-t-secondary">Dostawa</span>
+                <span class="wf-small wf-t-secondary">do ustalenia</span>
+              </div>
+            </div>
+
+            <div class="wf-divider"></div>
+
+            <div class="wf-cluster wf-cluster--between wf-items-center">
+              <span class="wf-body wf-w-semibold">Razem</span>
+              <span class="wf-h4">376 zł <span class="wf-small wf-t-tertiary">+ dostawa</span></span>
+            </div>
+
+            <a class="wf-btn wf-btn--primary wf-btn--lg wf-btn--block" href="potwierdzenie.html">Złóż zamówienie</a>
+            <p class="wf-caption wf-t-secondary">Bez płatności online w makiecie — po złożeniu przejdziesz do potwierdzenia.</p>
+          </div>
+        </div>
+
+        <!-- SLA — co dalej po złożeniu -->
+        <div class="wf-card">
+          <div class="wf-card__body wf-stack wf-stack--3">
+            <h2 class="wf-h5">Co dzieje się po złożeniu</h2>
+            <ul class="wf-list">
+              <li class="wf-small">Na podany e-mail wysyłamy potwierdzenie zamówienia.</li>
+              <li class="wf-small">Oddzwaniamy w ciągu <span class="wf-w-semibold">1 dnia roboczego</span>, by ustalić płatność i termin dostawy.</li>
+              <li class="wf-small">Wysyłka po potwierdzeniu — zwykle <span class="wf-w-semibold">2–5 dni roboczych</span>.</li>
+            </ul>
+            <p class="wf-caption wf-t-secondary">Terminy orientacyjne — do potwierdzenia danymi Carbohort.</p>
+          </div>
+        </div>
+
+      </aside>
+
+    </div>
+  </section>
+
+</main>
+
+<cw-footer></cw-footer>
+
+<cw-dock></cw-dock>
+
+<script src="cw.js"></script>
+</body>
+</html>

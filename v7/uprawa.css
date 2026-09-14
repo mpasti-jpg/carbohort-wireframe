@@ -1,0 +1,226 @@
+/* =========================================================================
+   uprawa.css - warstwa stron pojedynczych upraw (V5). Wchodzi PO c5.css i
+   tylko DOKLADA komponenty, ktorych w c5 nie ma. Docelowo uzyja jej takze
+   ziemniak i borowka. Zasady: wylacznie tokeny --w-*, ostre naroznik i,
+   prefiks u-, zero wlasnych hexow i funkcji kolorow. Plikow kitu ani
+   c5.css / cw.css NIE edytujemy.
+   Iteracja 5 (14.09, spec §9.5 i §9.10): wypadly martwe bloki po sekcjach
+   przebudowanych na warstwe kukurydza.css - kafle liczb (u-tiles), pionowa os
+   faz (u-phases/u-phase poza chipami i kodem fazy), wybieracz (u-choice),
+   lista diagnostyczna (u-diag) i kafelki faktow (u-facts/u-fact). Doszla
+   stopka per strona w popupie produktu i packshot w jego naglowku.
+   Iteracja 6 (14.09 wieczor, spec §10.5 i §10.6): wypadla lista-karta
+   stanowiska i karty mieszanin z iteracji 5 - zastapily je karuzela u-cr
+   i tabela u-mt w kukurydza.css. Zostaja komponenty, ktorych one uzywaja:
+   u-rail (pasek przewijania), u-chip-prod (chipy produktow), u-rules.
+   Integracja: wypadlo tez pole ikony boksu przelicznika - po §10.3
+   woda jest wierszem w boksie produktu, nie osobnym boksem z ikona kropli.
+   ========================================================================= */
+
+/* --- 0. Pomocnicze --- */
+/* `hidden` musi wygrac z wlasnym `display` komponentu */
+[hidden]{display:none !important;}
+.u-measure{max-width:var(--w-measure);}
+.u-head{display:flex;flex-direction:column;gap:var(--w-space-3);}
+.u-locked{overflow:hidden;}
+/* etykieta nadkreslona - jedna deklaracja dla wszystkich uzyc */
+.u-lab,.u-defs dt{font-size:var(--w-font-overline-size);line-height:var(--w-font-overline-lh);letter-spacing:var(--w-tracking-wide);text-transform:uppercase;color:var(--w-text-tertiary);}
+.u-h3{font-size:var(--w-font-h3-size);line-height:var(--w-font-h3-lh);font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+.u-h4{font-size:var(--w-font-h4-size);line-height:var(--w-font-h4-lh);font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+.u-txt{font-size:var(--w-font-sm-size);line-height:var(--w-font-sm-lh);color:var(--w-text-secondary);}
+/* indeks porzadkowy w mono - pudelka wariantow, lista warunkow, karty zasad */
+.u-vtab__no,.u-rules__no{font-family:var(--w-font-mono);font-size:var(--w-font-caption-size);line-height:var(--w-font-caption-lh);color:var(--w-text-tertiary);}
+/* przenikanie przelaczanego panelu (klase zdejmuje JS w nastepnej klatce) */
+.is-swap{opacity:0 !important;transition:none !important;}
+
+.u-none{display:inline-flex;align-items:center;gap:var(--w-space-2);font-size:var(--w-font-sm-size);line-height:var(--w-font-sm-lh);color:var(--w-text-tertiary);border:1px dashed var(--w-border-default);padding:var(--w-space-2) var(--w-space-3);}
+
+.u-more{display:inline-flex;align-items:center;gap:var(--w-space-2);font:inherit;font-size:var(--w-font-sm-size);font-weight:var(--w-weight-medium);color:var(--w-text-primary);background:none;border:0;border-radius:0;padding:0;cursor:pointer;text-align:left;}
+.u-more .wf-icon{width:16px;height:16px;transition:transform var(--w-duration-fast) var(--w-ease);}
+.u-more[aria-expanded="true"] .wf-icon{transform:rotate(180deg);}
+
+/* panel rozwijany – wysokosc animuje JS (panelSet) */
+.u-disc{height:0;overflow:hidden;transition:height var(--w-duration-base) var(--w-ease);}
+
+.u-defs{display:grid;gap:var(--w-space-4);margin:0;}
+.u-defs>div{display:grid;gap:var(--w-space-1);}
+.u-defs dd{margin:0;font-size:var(--w-font-sm-size);line-height:var(--w-font-sm-lh);color:var(--w-text-secondary);}
+
+/* --- 1. Reveal (stan spoczynkowy = widoczny; ukrywa tylko JS) --- */
+html.cx-js .u-reveal{opacity:0;transform:translateY(12px);transition:opacity var(--w-duration-slow) var(--w-ease),transform var(--w-duration-slow) var(--w-ease),background var(--w-duration-base) var(--w-ease);}
+html.cx-js .u-reveal.is-in{opacity:1;transform:none;}
+
+/* --- 3. Rzad kart produktow / karuzela na mobile --- */
+.u-prod{display:grid;gap:var(--w-space-4);grid-template-columns:repeat(3,minmax(0,1fr));}
+/* cala karta jest linkiem otwierajacym popup (iteracja 5, uwaga 2) - stad
+   dziedziczony kolor tekstu, brak podkreslenia i widoczne stany */
+.u-prod__card{display:flex;flex-direction:column;gap:var(--w-space-3);border:1px solid var(--w-border-default);border-radius:0;background:var(--w-surface-page);padding:var(--w-space-4);color:inherit;text-decoration:none;transition:border-color var(--w-duration-base) var(--w-ease),background var(--w-duration-base) var(--w-ease);}
+.u-prod__card:hover{border-color:var(--w-gray-900);}
+.u-prod__card:focus-visible{outline:2px solid var(--w-focus-ring);outline-offset:2px;}
+.u-prod__card .wf-ph{border-radius:0;aspect-ratio:4/3;min-height:0;}
+.u-prod__name{font-size:var(--w-font-h5-size);line-height:var(--w-font-h5-lh);font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+.u-prod__foot{margin-top:auto;display:flex;flex-direction:column;align-items:flex-start;gap:var(--w-space-2);}
+.u-rail{display:none;height:2px;background:var(--w-surface-sunken);}
+.u-rail__thumb{display:block;height:100%;width:20%;background:var(--w-gray-500);}
+@media (max-width:899px){
+  .u-prod{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:82%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:var(--w-space-2);}
+  .u-prod::-webkit-scrollbar{display:none;}
+  .u-prod__card{scroll-snap-align:start;}
+  .u-rail{display:block;}
+}
+
+/* --- 4. Wspolna nakladka obu lightboxow --- */
+.u-overlay{position:fixed;inset:0;background:var(--w-gray-900);opacity:0;z-index:var(--w-z-popover);transition:opacity var(--w-duration-base) var(--w-ease);}
+.u-overlay[data-open="true"]{opacity:.5;}
+
+/* --- 6. Wizual potasu --- */
+.u-kbar{display:flex;flex-direction:column;gap:var(--w-space-5);}
+.u-kbar__doses{display:flex;flex-wrap:wrap;gap:var(--w-space-2);}
+.u-kbar__dose{font:inherit;font-size:var(--w-font-sm-size);padding:var(--w-space-2) var(--w-space-5);background:var(--w-surface-page);border:1px solid var(--w-border-default);border-radius:0;color:var(--w-text-secondary);cursor:pointer;transition:background var(--w-duration-base) var(--w-ease),color var(--w-duration-base) var(--w-ease);}
+.u-kbar__dose[aria-pressed="true"]{background:var(--w-surface-inverse);border-color:var(--w-gray-900);color:var(--w-text-inverse);}
+.u-kbar__track{height:var(--w-space-10);background:var(--w-surface-sunken);border:1px solid var(--w-border-subtle);}
+.u-kbar__fill{display:block;height:100%;width:0;background:var(--w-gray-600);transition:width var(--w-duration-slow) var(--w-ease);}
+.u-kbar__val{font-size:var(--w-font-h4-size);line-height:var(--w-font-h4-lh);font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+.u-kbar__texts>[data-k-text]{display:flex;flex-direction:column;gap:var(--w-space-2);}
+
+/* --- 7. Chipy produktow w fazach (os faz zastapiona lista-panelem w kukurydza.css) --- */
+.u-phase__kod{font-size:var(--w-font-overline-size);line-height:var(--w-font-overline-lh);letter-spacing:var(--w-tracking-wide);text-transform:uppercase;color:var(--w-text-tertiary);}
+.u-phase__chips,.u-chips-prod{display:flex;flex-wrap:wrap;gap:var(--w-space-2);}
+/* u-chip-prod = ten sam chip, ale klikalny (otwiera popup produktu) */
+.u-chip-prod{font:inherit;background:var(--w-surface-page);border-radius:0;cursor:pointer;transition:background var(--w-duration-base) var(--w-ease);}
+.u-chip-prod:hover{background:var(--w-surface-hover);}
+.u-phase__chip,.u-chip-prod{font-size:var(--w-font-caption-size);line-height:var(--w-font-caption-lh);padding:var(--w-space-1) var(--w-space-3);border:1px solid var(--w-border-strong);color:var(--w-text-primary);}
+
+/* --- 8. Lightbox: fazy i popup produktu (bez JS: zwykle sekcje po kolei) --- */
+.u-chunk{display:flex;flex-direction:column;gap:var(--w-space-3);}
+.u-lightbox{display:block;}
+.u-lightbox__panel{display:flex;flex-direction:column;min-height:0;}
+.u-lightbox__close{display:none;place-items:center;flex:none;width:var(--w-control-h-md);height:var(--w-control-h-md);background:var(--w-surface-page);border:1px solid var(--w-border-default);border-radius:0;color:var(--w-text-primary);cursor:pointer;}
+.u-lightbox__close:hover{background:var(--w-surface-hover);}
+.u-lightbox__scroll{display:flex;flex-direction:column;gap:var(--w-space-12);}
+.u-lightbox__page{display:flex;flex-direction:column;gap:var(--w-space-6);opacity:1;transition:opacity var(--w-duration-base) var(--w-ease);}
+.u-lightbox__head{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:var(--w-space-6);align-items:end;padding-bottom:var(--w-space-5);border-bottom:1px solid var(--w-border-subtle);}
+.u-lightbox__tt{display:flex;flex-direction:column;gap:var(--w-space-2);}
+.u-lightbox__t{margin:0;color:var(--w-text-primary);}
+.u-lightbox__lead{font-size:var(--w-font-sm-size);line-height:var(--w-font-sm-lh);color:var(--w-text-secondary);}
+.u-lightbox__body{display:flex;flex-direction:column;gap:var(--w-space-6);}
+.u-lightbox__foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--w-space-3);}
+.u-lightbox__steps,.u-lightbox__acts{display:flex;flex-wrap:wrap;gap:var(--w-space-2);}
+.u-lightbox__steps .c5-btn[disabled]{opacity:.4;cursor:default;}
+html.cx-js .u-lightbox{position:fixed;inset:0;z-index:var(--w-z-toast);display:grid;place-items:center;padding:var(--w-space-6);opacity:0;visibility:hidden;transition:opacity 220ms var(--w-ease),visibility 0s linear 220ms;}
+html.cx-js .u-lightbox[data-open="true"]{opacity:1;visibility:visible;transition:opacity 220ms var(--w-ease),visibility 0s;}
+html.cx-js .u-lightbox__panel{position:relative;width:100%;max-width:1080px;max-height:90vh;background:var(--w-surface-page);border:1px solid var(--w-border-default);transform:scale(.98);transition:transform 220ms var(--w-ease);}
+html.cx-js .u-lightbox[data-open="true"] .u-lightbox__panel{transform:none;}
+html.cx-js .u-lightbox__close{display:grid;position:absolute;top:var(--w-space-4);right:var(--w-space-4);z-index:1;}
+html.cx-js .u-lightbox__scroll{flex:1 1 auto;min-height:0;overflow-y:auto;gap:0;padding:clamp(1.25rem,3vw,2.5rem);}
+html.cx-js .u-lightbox__head{padding-right:var(--w-control-h-md);}
+html.cx-js .u-lightbox__foot{padding:var(--w-space-4) var(--w-space-6);border-top:1px solid var(--w-border-subtle);background:var(--w-surface-subtle);}
+
+/* popup produktu: packshot + nazwa w naglowku, dwie kolumny w ciele, stopka
+   wewnatrz strony (kazdy produkt ma wlasne adresy - spec 9.5) */
+.u-prodpop__head{grid-template-columns:auto minmax(0,1fr);align-items:center;}
+.u-prodpop__pack{width:160px;aspect-ratio:4/3;object-fit:contain;background:var(--w-gray-100);padding:var(--w-space-3);}
+.u-prodpop__foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--w-space-3);margin-top:auto;padding-top:var(--w-space-5);border-top:1px solid var(--w-border-subtle);}
+.u-prodpop__acts{display:flex;flex-wrap:wrap;gap:var(--w-space-2);}
+.u-prodpop__body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--w-space-8);align-items:start;}
+.u-prodpop__col{display:flex;flex-direction:column;gap:var(--w-space-8);}
+.u-psec{display:flex;flex-direction:column;gap:var(--w-space-4);}
+@media (max-width:899px){
+  .u-lightbox__head{grid-template-columns:1fr;align-items:start;}
+  .u-prodpop__head{grid-template-columns:auto minmax(0,1fr);align-items:center;}
+  .u-prodpop__pack{width:96px;padding:var(--w-space-2);}
+  .u-prodpop__acts{flex:1 1 100%;}
+  .u-prodpop__acts>.c5-btn{flex:1 1 0;padding-inline:var(--w-space-3);}
+  .u-prodpop__body{grid-template-columns:1fr;gap:var(--w-space-6);}
+  html.cx-js .u-lightbox{padding:0;}
+  html.cx-js .u-lightbox__panel{max-width:none;max-height:none;height:100%;border:0;}
+  html.cx-js .u-lightbox__t{font-size:var(--w-font-h3-size);line-height:var(--w-font-h3-lh);}
+  html.cx-js .u-lightbox__foot{padding:var(--w-space-3) var(--w-space-4);}
+  .u-lightbox__steps,.u-lightbox__acts{flex:1 1 100%;}
+  .u-lightbox__steps>.c5-btn,.u-lightbox__acts>.c5-btn{flex:1 1 0;padding-inline:var(--w-space-3);}
+}
+
+/* --- 9. Noty wyrozniane i cytat --- */
+.u-callout{display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--w-space-3);border:1px solid var(--w-border-strong);border-radius:0;background:var(--w-surface-subtle);padding:var(--w-space-4);}
+.u-callout__in{display:flex;flex-direction:column;gap:var(--w-space-2);}
+.u-callout__t{font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+.u-callout>.wf-icon{margin-top:2px;color:var(--w-icon-default);}
+.u-quote{display:flex;flex-direction:column;gap:var(--w-space-4);background:var(--w-surface-inverse);color:var(--w-text-inverse);border-radius:0;padding:clamp(1.5rem,4vw,3rem);}
+.u-quote__t{font-size:var(--w-font-overline-size);line-height:var(--w-font-overline-lh);letter-spacing:var(--w-tracking-wide);text-transform:uppercase;color:var(--w-gray-400);}
+.u-quote p{font-size:clamp(1.125rem,2.2vw,1.5rem);line-height:1.35;font-weight:var(--w-weight-medium);max-width:var(--w-measure);}
+
+/* --- 11. Pudelka wariantow (tablist) --- */
+.u-vtabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--w-space-2);}
+.u-vtab{display:flex;flex-direction:column;align-items:flex-start;gap:var(--w-space-2);font:inherit;text-align:left;padding:var(--w-space-5);background:var(--w-surface-page);border:1px solid var(--w-border-default);border-radius:0;cursor:pointer;transition:background var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);}
+.u-vtab:hover{background:var(--w-surface-hover);}
+.u-vtab__t{font-size:var(--w-font-h4-size);line-height:var(--w-font-h4-lh);font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+.u-vtab[aria-selected="true"]{background:var(--w-surface-inverse);border-color:var(--w-gray-900);}
+.u-vtab[aria-selected="true"]:hover{background:var(--w-surface-inverse);}
+.u-vtab[aria-selected="true"] .u-vtab__t{color:var(--w-text-inverse);}
+.u-vtab[aria-selected="true"] .u-vtab__no{color:var(--w-gray-400);}
+.u-vpanel{opacity:1;transition:opacity var(--w-duration-base) var(--w-ease);}
+.u-vtabs__sub{font-size:var(--w-font-h4-size);line-height:var(--w-font-h4-lh);font-weight:var(--w-weight-medium);color:var(--w-text-secondary);}
+@media (max-width:639px){.u-vtabs{grid-template-columns:1fr;}}
+.u-rows{display:flex;flex-direction:column;border:1px solid var(--w-border-subtle);margin:0;}
+.u-row{display:grid;grid-template-columns:minmax(0,14rem) minmax(0,1fr);gap:var(--w-space-4);padding:var(--w-space-4);border-bottom:1px solid var(--w-border-subtle);}
+.u-row:last-child{border-bottom:0;}
+.u-row dt{font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+.u-row dd{margin:0;color:var(--w-text-secondary);}
+@media (max-width:767px){.u-row{grid-template-columns:1fr;gap:var(--w-space-1);}}
+
+/* --- 12. Karty warunkow (wspolny komponent kart: lightbox, warianty) --- */
+.u-conds{display:grid;gap:var(--w-space-4);grid-template-columns:repeat(auto-fit,minmax(17rem,1fr));}
+.u-conds--tight{grid-template-columns:repeat(auto-fit,minmax(12.5rem,1fr));}
+.u-cond{display:flex;flex-direction:column;gap:var(--w-space-4);border:1px solid var(--w-border-default);border-radius:0;background:var(--w-surface-page);padding:var(--w-space-5);}
+.u-cond__t{font-size:var(--w-font-h5-size);line-height:var(--w-font-h5-lh);font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+
+/* --- 14. Karty produktowe w fazach i pionowy stepper krokow --- */
+.u-pcard{display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--w-space-4);border:1px solid var(--w-border-default);border-radius:0;background:var(--w-surface-page);padding:var(--w-space-4);}
+.u-pcard--muted{border-style:dashed;}
+.u-pcard--muted .u-pcard__n{color:var(--w-text-tertiary);}
+.u-pcard__in{display:flex;flex-direction:column;gap:var(--w-space-1);}
+.u-pcard__n{font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+.u-pcard>.wf-icon{margin-top:2px;color:var(--w-icon-default);}
+.u-steps{display:flex;flex-direction:column;margin:0;border-left:2px solid var(--w-border-default);padding-left:var(--w-space-5);list-style:none;}
+.u-steps__i{position:relative;display:flex;flex-direction:column;gap:var(--w-space-2);padding-bottom:var(--w-space-6);}
+.u-steps__i:last-child{padding-bottom:0;}
+.u-steps__i::before{content:"";position:absolute;left:calc((var(--w-space-5) + 5px) * -1);top:6px;width:8px;height:8px;background:var(--w-gray-900);}
+.u-steps__n{font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+
+/* --- 15. Mieszaniny: karty zasad (tabela zgodnosci zyje w kukurydza.css) --- */
+.u-rules{display:grid;gap:var(--w-space-3);grid-template-columns:repeat(5,minmax(0,1fr));list-style:none;margin:0;padding:0;}
+.u-rules__i{display:flex;flex-direction:column;gap:var(--w-space-3);border:1px solid var(--w-border-default);border-radius:0;background:var(--w-surface-page);padding:var(--w-space-5);}
+@media (max-width:1199px){.u-rules{grid-template-columns:repeat(3,minmax(0,1fr));}}
+@media (max-width:899px){.u-rules{grid-template-columns:1fr;}}
+
+/* --- 16. Przelicznik: suwak powierzchni i boksy wynikow --- */
+.u-area{display:flex;flex-direction:column;gap:var(--w-space-2);}
+.u-area__row{display:flex;align-items:center;gap:var(--w-space-4);}
+.u-area__range{flex:1 1 auto;min-width:0;accent-color:var(--w-gray-900);}
+.u-area__row .wf-input-group{flex:none;width:9rem;}
+.u-area__scale{display:flex;justify-content:space-between;}
+@media (max-width:479px){.u-area__row{flex-wrap:wrap;}.u-area__row .wf-input-group{width:100%;}}
+.u-calc{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--w-space-4);align-items:stretch;}
+.u-out{height:100%;display:flex;flex-direction:column;gap:var(--w-space-2);border:1px solid var(--w-border-default);border-radius:0;padding:var(--w-space-4);}
+.u-out b{font-size:var(--w-font-h4-size);line-height:var(--w-font-h4-lh);font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+.u-out .wf-caption{color:var(--w-text-tertiary);}
+.u-out__ph{width:64px;aspect-ratio:4/3;min-height:0;border-radius:0;}
+.u-out__buy{margin-top:auto;}
+@media (max-width:1199px){.u-calc{grid-template-columns:repeat(3,minmax(0,1fr));}}
+@media (max-width:899px){.u-calc{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (max-width:479px){.u-calc{grid-template-columns:1fr;}}
+.u-cost{border:1px dashed var(--w-border-strong);border-radius:0;padding:var(--w-space-4);}
+
+/* --- 17. Domkniecie --- */
+.u-cta{text-align:center;}
+.u-cta .c5-btnrow{justify-content:center;}
+
+/* --- 18. Ograniczenie ruchu --- */
+@media (prefers-reduced-motion: reduce){
+  html.cx-js .u-reveal{opacity:1;transform:none;transition:none;}
+  html.cx-js .u-lightbox__panel{transform:none;}
+  .u-prod__card,.u-overlay,.u-kbar__fill,
+  .u-disc,.u-more .wf-icon,.u-kbar__dose,.u-chip-prod,
+  .u-vtab,.u-vpanel,.u-lightbox__page,
+  html.cx-js .u-lightbox,html.cx-js .u-lightbox__panel{transition:none;}
+}

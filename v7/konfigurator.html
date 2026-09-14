@@ -1,0 +1,1722 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Konfigurator doboru produktów CarboHort</title>
+<meta name="description" content="Odpowiedz na trzy lub cztery pytania o uprawę, cel i skalę, a konfigurator CarboHort dobierze produkty, ilości w opakowaniach, cenę i krótką instrukcję – kiedy i jak je zastosować.">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="wireframe.css">
+<link rel="stylesheet" href="cw.css">
+<script src="../status.js"></script>
+<script src="chrome.js"></script>
+<link rel="stylesheet" href="c5.css">
+<style>
+/* Page-scoped styles for the configurator. Prefix kf-; kit files stay untouched. */
+#main [hidden] { display: none !important; }   /* kit trap: display:flex beats [hidden] */
+
+.kf-tiles { display: flex; flex-direction: column; gap: var(--w-space-5); }
+.kf-tiles__group { display: flex; flex-direction: column; gap: var(--w-space-3); }
+.kf-tiles__name { font-size: var(--w-font-sm-size); font-weight: var(--w-weight-semibold);
+  letter-spacing: .04em; text-transform: uppercase; color: var(--w-text-secondary); }
+.kf-grid { display: grid; gap: var(--w-space-3); grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
+
+.kf-tile { display: flex; flex-direction: column; align-items: flex-start; gap: var(--w-space-1);
+  width: 100%; min-height: var(--w-tap-min); padding: var(--w-space-4);
+  font: inherit; text-align: left; color: var(--w-text-primary);
+  background: var(--w-surface-raised); border: 1px solid var(--w-border-default);
+  border-radius: var(--w-radius-md); cursor: pointer; overflow-wrap: anywhere;
+  transition: border-color var(--w-duration-fast) var(--w-ease); }
+.kf-tile:hover { border-color: var(--w-border-strong); }
+.kf-tile:focus-visible { outline: 2px solid var(--w-border-strong); outline-offset: 2px; }
+.kf-tile[aria-pressed="true"] { background: var(--w-surface-inverse); color: var(--w-text-inverse);
+  border-color: var(--w-surface-inverse); }
+.kf-tile[aria-pressed="true"] .kf-tile__sub { color: var(--w-text-inverse); opacity: .8; }
+.kf-tile__name { font-weight: var(--w-weight-semibold); }
+.kf-tile__sub { font-size: var(--w-font-sm-size); line-height: 1.4; color: var(--w-text-secondary); }
+
+.kf-chips { display: flex; flex-wrap: wrap; gap: var(--w-space-2); }
+.kf-chip { font: inherit; font-size: var(--w-font-sm-size); padding: 8px 18px; min-height: var(--w-tap-min);
+  background: var(--w-surface-raised); color: var(--w-text-primary);
+  border: 1px solid var(--w-border-default); border-radius: var(--w-radius-pill); cursor: pointer; }
+.kf-chip:hover { border-color: var(--w-border-strong); }
+.kf-chip:focus-visible { outline: 2px solid var(--w-border-strong); outline-offset: 2px; }
+.kf-chip[aria-pressed="true"] { background: var(--w-surface-inverse); color: var(--w-text-inverse);
+  border-color: var(--w-surface-inverse); }
+
+.kf-amount { display: flex; flex-wrap: wrap; gap: var(--w-space-4); align-items: flex-end; }
+.kf-amount__field { flex: 0 1 14rem; min-width: 11rem; }
+.kf-choice { display: flex; align-items: flex-start; gap: var(--w-space-3); cursor: pointer; }
+.kf-choice input { margin-top: 3px; }
+
+.kf-equip { display: grid; gap: var(--w-space-2); grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
+.kf-equip__item { display: flex; align-items: flex-start; gap: var(--w-space-3);
+  padding: var(--w-space-3) var(--w-space-4); border: 1px solid var(--w-border-default);
+  border-radius: var(--w-radius-md); background: var(--w-surface-raised); cursor: pointer; }
+.kf-equip__item:hover { border-color: var(--w-border-strong); }
+.kf-equip__item input { margin-top: 3px; }
+
+.kf-res { display: flex; flex-direction: column; gap: var(--w-space-6); }
+.kf-res__head { display: flex; flex-direction: column; gap: var(--w-space-1); }
+.kf-cards { display: grid; gap: var(--w-space-4); grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr)); }
+.kf-card { display: flex; flex-direction: column; gap: var(--w-space-3); padding: var(--w-space-5);
+  border: 1px solid var(--w-border-default); border-radius: var(--w-radius-lg);
+  background: var(--w-surface-raised); overflow-wrap: anywhere; }
+.kf-card--hero { border-color: var(--w-border-strong); border-width: 2px; }
+.kf-card--off { opacity: .62; }
+.kf-card--blocked { opacity: .55; background: var(--w-surface-subtle); }
+.kf-card__top { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--w-space-3); }
+.kf-card__pick { display: inline-flex; align-items: center; gap: var(--w-space-2); min-height: var(--w-tap-min);
+  font-size: var(--w-font-sm-size); cursor: pointer; flex: none; }
+.kf-card__meta { display: flex; flex-direction: column; gap: 2px; }
+
+.kf-packs { display: flex; flex-direction: column; gap: var(--w-space-2); }
+.kf-pack { display: flex; flex-wrap: wrap; align-items: center; gap: var(--w-space-2); }
+.kf-pack__qty { display: flex; align-items: center; gap: var(--w-space-2); flex: none; }
+.kf-pack__num { min-width: 1.6rem; text-align: center; font-weight: var(--w-weight-semibold); }
+.kf-pack__lab { flex: 1 1 7rem; }
+.kf-pack__price { font-weight: var(--w-weight-semibold); white-space: nowrap; }
+.kf-card__sum { display: flex; justify-content: space-between; gap: var(--w-space-3);
+  padding-top: var(--w-space-2); border-top: 1px solid var(--w-border-subtle); }
+
+.kf-sum { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+.kf-sum__buy { display: flex; flex-wrap: wrap; align-items: center; gap: var(--w-space-3); }
+.kf-sum__alt { margin: 0; max-width: 26rem; }
+.kf-sum__alt a { color: inherit; text-decoration: underline; }
+  gap: var(--w-space-3); padding: var(--w-space-4) var(--w-space-5);
+  border: 1px solid var(--w-border-strong); border-radius: var(--w-radius-lg); }
+.kf-sum__val { font-size: var(--w-font-h4-size); font-weight: var(--w-weight-bold); }
+
+.kf-when { display: flex; flex-direction: column; gap: var(--w-space-4); }
+.kf-when__item { display: flex; flex-direction: column; gap: var(--w-space-2);
+  padding-bottom: var(--w-space-4); border-bottom: 1px solid var(--w-border-subtle); }
+.kf-when__row { display: grid; grid-template-columns: 4.5rem minmax(0, 1fr); gap: var(--w-space-3); }
+.kf-when__lab { font-weight: var(--w-weight-semibold); font-size: var(--w-font-sm-size); }
+
+.kf-cta { display: flex; flex-direction: column; gap: var(--w-space-3); max-width: 32rem; }
+.kf-quiet { display: flex; flex-wrap: wrap; gap: var(--w-space-3); }
+.kf-opts { display: flex; flex-direction: column; gap: var(--w-space-4); }
+.kf-opt { display: grid; grid-template-columns: minmax(0, 20rem) minmax(0, 1fr); gap: var(--w-space-5); align-items: start; }
+.kf-opt__info { display: flex; flex-direction: column; gap: var(--w-space-3); padding-top: var(--w-space-2); }
+.kf-opt__info .kf-when__row { grid-template-columns: 7rem minmax(0, 1fr); }
+.kf-consult { display: flex; gap: var(--w-space-2); align-items: flex-start; border-left: 3px solid var(--w-border-strong); padding: var(--w-space-1) 0 var(--w-space-1) var(--w-space-3); }
+.kf-consult .wf-icon { flex: none; margin-top: 2px; }
+.kf-why { border-top: 1px solid var(--w-border); padding-top: var(--w-space-3); }
+.kf-why summary { cursor: pointer; }
+.kf-why ul { margin-top: var(--w-space-2); }
+
+@media (max-width: 640px) {
+  .kf-grid, .kf-cards, .kf-equip { grid-template-columns: 1fr; }
+  .kf-when__row, .kf-opt__info .kf-when__row { grid-template-columns: 1fr; gap: 0; }
+  .kf-opt { grid-template-columns: 1fr; }
+  .kf-amount__field { flex: 1 1 100%; }
+}
+</style>
+</head>
+<body>
+<a class="wf-sr-only" href="#main">Przejdź do treści</a>
+
+
+<cw-icons></cw-icons>
+
+<cw-navbar data-current="konfigurator"></cw-navbar>
+
+<main id="main">
+
+  <!-- ===== INTRO ===== -->
+  <section class="wf-section wf-section--sm">
+    <div class="wf-container wf-stack wf-stack--5">
+      <nav class="wf-breadcrumb" aria-label="Ścieżka">
+        <ol>
+          <li><a class="wf-link--quiet" href="home.html">Start</a></li>
+          <li><span class="wf-breadcrumb__sep" aria-hidden="true"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-right"></use></svg></span><span aria-current="page">Konfigurator</span></li>
+        </ol>
+      </nav>
+      <div class="wf-stack wf-stack--3" style="max-width:760px;">
+        <span class="wf-overline">Dobór produktów</span>
+        <h1 class="wf-h1">Dobierz produkty do swojej uprawy</h1>
+        <p class="wf-lead wf-t-secondary">Trzy lub cztery pytania i masz gotowy zestaw: produkty, ilości w opakowaniach, cena i krótka instrukcja, kiedy i jak je zastosować. Nietypowy przypadek? Na końcu jest doradca.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== KONFIGURATOR ===== -->
+  <section class="wf-section wf-section--subtle">
+    <div class="wf-container">
+      <h2 class="wf-sr-only">Konfigurator doboru produktów</h2>
+      <div class="cw-acc" data-kf data-kf-top>
+
+        <!-- KROK 1 -->
+        <section class="cw-acc__item" data-q="q1" data-state="open" data-answered="false">
+          <h3 class="cw-acc__h"><button type="button" class="cw-acc__head" data-acc-head aria-expanded="true">
+            <span class="cw-acc__no" aria-hidden="true" data-kf-no>1</span>
+            <span class="cw-acc__title">Co uprawiasz?</span>
+            <span class="cw-acc__pill" data-acc-pill hidden></span>
+            <svg class="wf-icon cw-acc__chev" aria-hidden="true"><use href="#ti-chevron-down"></use></svg>
+          </button></h3>
+          <div class="cw-acc__body" data-acc-body>
+            <div class="kf-tiles" data-kf-groups></div>
+          </div>
+        </section>
+
+        <!-- KROK 2 -->
+        <section class="cw-acc__item" data-q="q2" data-state="hidden" data-answered="false">
+          <h3 class="cw-acc__h"><button type="button" class="cw-acc__head" data-acc-head aria-expanded="false">
+            <span class="cw-acc__no" aria-hidden="true" data-kf-no>2</span>
+            <span class="cw-acc__title">Co chcesz zrobić?</span>
+            <span class="cw-acc__pill" data-acc-pill hidden></span>
+            <svg class="wf-icon cw-acc__chev" aria-hidden="true"><use href="#ti-chevron-down"></use></svg>
+          </button></h3>
+          <div class="cw-acc__body" data-acc-body>
+            <div class="kf-grid" role="group" aria-label="Co chcesz zrobić" data-kf-actions></div>
+          </div>
+        </section>
+
+        <!-- KROK 3 (tylko rejestr pro) -->
+        <section class="cw-acc__item" data-q="q3" data-state="hidden" data-answered="false">
+          <h3 class="cw-acc__h"><button type="button" class="cw-acc__head" data-acc-head aria-expanded="false">
+            <span class="cw-acc__no" aria-hidden="true" data-kf-no>3</span>
+            <span class="cw-acc__title">Czym możesz aplikować?</span>
+            <span class="cw-acc__pill" data-acc-pill hidden></span>
+            <svg class="wf-icon cw-acc__chev" aria-hidden="true"><use href="#ti-chevron-down"></use></svg>
+          </button></h3>
+          <div class="cw-acc__body" data-acc-body>
+            <p class="cw-acc__intro wf-small wf-t-secondary">Zaznacz wszystko, czym dysponujesz. Sprzęt decyduje o formie produktu: sypki, płynny gęsty czy płynny filtrowany.</p>
+            <div class="kf-equip" role="group" aria-label="Sprzęt do aplikacji" data-kf-equip></div>
+            <div><button type="button" class="wf-btn wf-btn--primary" data-kf-equip-next disabled>Dalej</button></div>
+          </div>
+        </section>
+
+        <!-- KROK 4 (hobby: krok 3) -->
+        <section class="cw-acc__item" data-q="q4" data-state="hidden" data-answered="false">
+          <h3 class="cw-acc__h"><button type="button" class="cw-acc__head" data-acc-head aria-expanded="false">
+            <span class="cw-acc__no" aria-hidden="true" data-kf-no>4</span>
+            <span class="cw-acc__title">Ile?</span>
+            <span class="cw-acc__pill" data-acc-pill hidden></span>
+            <svg class="wf-icon cw-acc__chev" aria-hidden="true"><use href="#ti-chevron-down"></use></svg>
+          </button></h3>
+          <div class="cw-acc__body" data-acc-body>
+            <div class="kf-amount">
+              <div class="wf-stack wf-stack--1 kf-amount__field">
+                <label class="wf-small wf-w-semibold" for="kf-amount" data-kf-amount-label>Powierzchnia w hektarach</label>
+                <div class="wf-input-group">
+                  <input class="wf-input" id="kf-amount" type="text" inputmode="decimal" autocomplete="off" value="1" data-kf-amount>
+                  <span class="wf-addon" data-kf-amount-unit>ha</span>
+                </div>
+              </div>
+              <div class="kf-chips" role="group" aria-label="Szybki wybór wielkości" data-kf-amount-chips></div>
+            </div>
+            <div class="wf-stack wf-stack--2" data-kf-soil hidden>
+              <span class="wf-small wf-w-semibold" id="kf-soil-label">Jaka gleba?</span>
+              <div class="kf-chips" role="group" aria-labelledby="kf-soil-label" data-kf-soil-chips></div>
+            </div>
+            <label class="kf-choice" data-kf-trial hidden>
+              <input type="checkbox" class="wf-checkbox" data-kf-trial-input>
+              <span class="wf-stack wf-stack--1">
+                <span class="wf-w-semibold">Chcę najpierw sprawdzić na 1 ha</span>
+                <span class="wf-small wf-t-secondary">Tak radzimy każdemu nowemu klientowi: mały areał, pas kontrolny obok, ocena po sezonie.</span>
+              </span>
+            </label>
+            <label class="kf-choice" data-kf-acid hidden>
+              <input type="checkbox" class="wf-checkbox" data-kf-acid-input>
+              <span class="wf-stack wf-stack--1">
+                <span class="wf-w-semibold">Rośliny kwasolubne</span>
+                <span class="wf-small wf-t-secondary">Podłoże pod borówkę, różaneczniki, azalie i wrzosy – zmieniamy CARBOMAT ECO na odmianę kwaśną.</span>
+              </span>
+            </label>
+            <div><button type="button" class="wf-btn wf-btn--primary" data-kf-submit>Pokaż mój zestaw</button></div>
+          </div>
+        </section>
+
+        <!-- WYNIK -->
+        <section class="cw-acc__item cw-tier--lead" data-q="result" data-state="hidden" data-answered="false">
+          <h3 class="cw-acc__h"><button type="button" class="cw-acc__head" data-acc-head aria-expanded="false">
+            <span class="cw-acc__no" aria-hidden="true"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-check"></use></svg></span>
+            <span class="cw-acc__title">Twój zestaw</span>
+            <span class="cw-acc__pill" data-acc-pill hidden></span>
+            <svg class="wf-icon cw-acc__chev" aria-hidden="true"><use href="#ti-chevron-down"></use></svg>
+          </button></h3>
+          <div class="cw-acc__body" data-acc-body>
+            <div data-kf-result aria-live="polite"></div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WIRTUALNY DORADCA ===== -->
+  <section class="wf-section">
+    <div class="wf-container wf-stack wf-stack--4">
+      <div class="cw-ask">
+        <span class="wf-ph wf-ph--avatar" aria-hidden="true"></span>
+        <div class="cw-ask__txt wf-stack wf-stack--1">
+          <span class="wf-w-semibold">Nietypowa uprawa, szklarnia, rekultywacja albo wątpliwość, której konfigurator nie obejmuje?</span>
+          <span class="wf-small wf-t-secondary">Zapytaj wirtualnego doradcę – pomoże dobrać produkty, dawki i sposób aplikacji, także w weekend.</span>
+        </div>
+        <button type="button" class="wf-btn wf-btn--secondary" data-jurek-open>Zapytaj wirtualnego doradcę</button>
+      </div>
+      <p class="wf-small wf-t-secondary">Uprawa w matach? Zobacz <a class="wf-link--quiet" href="carbomat-mata.html">CARBOMAT Mata Uprawowa</a> – sprzedaż od palety, dobór z doradcą.</p>
+    </div>
+  </section>
+
+</main>
+
+<cw-footer></cw-footer>
+
+<cw-dock></cw-dock>
+
+<script src="cw.js"></script>
+<script src="c5.js"></script>
+
+<!-- engine:start -->
+<script>
+/* =========================================================================
+   KF - configurator engine (pure logic, no DOM).
+   Single source of truth for data and rules: spec-konfigurator-v2 (2026-09-06).
+   All UI strings are Polish and copied 1:1 from the spec; code is English.
+   Exposed as KF = { KONFIG, computeSet, pickPacks, roundQty, recalc, ... }.
+   ========================================================================= */
+var KF = (function () {
+  "use strict";
+
+  var EPS = 1e-9;
+
+  /* ---------- helpers used while declaring data ---------- */
+  function mix(base, extra) {
+    var o = {}, k;
+    for (k in base) { if (base.hasOwnProperty(k)) o[k] = base[k]; }
+    for (k in extra) { if (extra.hasOwnProperty(k)) o[k] = extra[k]; }
+    return o;
+  }
+  /* Orchard-style rows shared by sad / borowka / jagodowe (spec 4.1-4.3). */
+  function rowNief120(zr, doseExtra, conc) {
+    return { p: "nief", rate: 120, dose: "120 l/ha na rok (2 × 60 l/ha)" + (doseExtra || ""), pair: "soil",
+      need: ["beczkowoz", "recznie"], needLabel: "beczkowozu",
+      when: "wiosną (luty–maj) i po zbiorach (połowa sierpnia–grudzień)",
+      how: "Pierwszą dawkę (60 l/ha) podaj wczesną wiosną przed ruszeniem wegetacji, drugą po zbiorach, zawsze na wilgotną glebę. Rozcieńcz w beczce lub mauzerze do " + (conc || "1–5 %") + " i polej pasy pod koronami, najlepiej przed deszczem albo nawadnianiem. Nie podawaj przez dysze i filtry, bo gęsta zawiesina je zapcha; przed użyciem mocno wstrząśnij.",
+      zr: zr };
+  }
+  function rowFiltr40(zr) {
+    return { p: "filtr", rate: 40, dose: "40 l/ha na rok (2 × 20 l/ha)", pair: "soil",
+      need: ["opryskiwacz", "fertygacja"], needLabel: "opryskiwacza lub fertygacji",
+      when: "wiosną i po zbiorach",
+      how: "Pierwszy oprysk gleby wczesną wiosną, drugi po zbiorach: 20 l/ha w ok. 400 l wody na hektar, najlepiej przed deszczem, nawadnianiem lub płytkim wymieszaniem. Przy fertygacji możesz podzielić dawkę na kilka mniejszych porcji przez linie kroplujące, w stężeniu 0,1–1 %. Po zabiegu przepłucz instalację czystą wodą.",
+      zr: zr };
+  }
+  function rowMaxi3(zr) {
+    return { p: "maxi", rate: 3, dose: "3 l/ha (3 × 1 l/ha)",
+      need: ["opryskiwacz"], needLabel: "opryskiwacza",
+      when: "w sezonie, od ruszenia wegetacji, co 10–14 dni",
+      how: "Trzy opryski na liść po 1 l/ha co 10–14 dni, od ruszenia wegetacji do końca intensywnego wzrostu pędów; stężenie 0,1–0,5 %, minimum 500 l wody na hektar. Po przymrozku, gradzie lub innym uszkodzeniu zrób serię trzech zabiegów co 3 dni. Do zbiornika dodaj produkt na końcu, po rozpuszczeniu pozostałych składników.",
+      zr: zr };
+  }
+  function rowCalbor3(zr) {
+    return { p: "calbor", rate: 3, dose: "3 l/ha (3 × 1 l/ha)",
+      need: ["opryskiwacz"], needLabel: "opryskiwacza",
+      when: "po zawiązaniu owoców do zbioru, co 7–10 dni",
+      how: "Zacznij po zawiązaniu owoców, gdy zaczynają rosnąć: trzy opryski po 1 l/ha co 7–10 dni, stężenie 0,1–0,5 %, minimum 500 l wody na hektar. Przy ryzyku niedoboru wapnia i boru możesz prowadzić serię aż do zbioru. Nie opryskuj w kwitnieniu.",
+      zr: zr };
+  }
+
+  /* Source label shown on every card ("dawka wg: …"). One entry per dose definition Z-xx;
+     the full sources, quotes and audit verdicts live in zasoby/dokumenty/konfigurator/konfigurator-zrodla-dawek.json
+     (Załącznik E) and must carry the same labels – konfigurator-docs.py checks that. */
+  var ZRODLA = {
+      "Z-01": "Darek, AC 21.07.2026: 3–8 l na drzewo jako starter (16.07: 3–5 l); poradnik sadowniczy: 3 l to minimum; 5 l to wybór crear ze środka widełek",
+      "Z-02": "poradnik malinowy: 25 l podłoża na roślinę przy 10 % udziału = 2,5 l; dla truskawki i pozostałych jagodowych przeniesione – poradnik truskawkowy nie podaje dawki na roślinę",
+      "Z-03": "propozycja crear: program ziemniaka 04.09.2026 (roboczy) 200–250 kg/ha pasowo, całopowierzchniowo min. 2000 kg/ha; przy gęstości 500–750 kg/m³ z karty 250 kg to 333–500 l; program kukurydzy 2026-08: dawka indywidualna",
+      "Z-04": "poradnik szkółkarski: 10–30 % udziału w podłożu; 20 % i przeliczenie na m³ to wybór crear; decyzja MRiRW G-971/20: podłoża 20–30 %",
+      "Z-05": "Darek 16.07.2026: 10–15 % objętości warstwy ornej (przy 20 cm to 20–30 l/m²); Darek 21.07: 100–200 ml pod rozsadę, 1–3 l pod krzew; decyzja MRiRW G-971/20: warzywa 20 l/m²",
+      "Z-06": "⚠️ brak zaleceń dla trawnika w materiałach CarboHort – dawka przeniesiona z grządek (20 l/m²)",
+      "Z-07": "Darek, AC 21.07.2026: krzewy i byliny 1–3 l na roślinę; 2 l to środek widełek wybrany przez crear",
+      "Z-08": "karta produktu: 10–20 % udziału w mieszance, przykład 0,5–1 l na doniczkę 5 l – przeskalowane na donicę 10 l (1–2 l); drenaż 5 cm: Darek 16.07 i poradnik szkółkarski",
+      "Z-09": "poradnik borówkowy: minimum 80 l podłoża na roślinę przy 20 % udziału = 16 l",
+      "Z-10": "Darek, AC 21.07.2026: krzewy i byliny 1–3 l – bierzemy górną granicę; pod borówkę poradnik borówkowy: 16 l w dołku 80 l",
+      "Z-11": "poradnik borówkowy: min. 4 l na młody krzew (warstwa 5 cm na kwadracie 30 × 30 cm = 4,5 l); szerokość pasów i odświeżanie: Darek 16.07.2026",
+      "Z-12": "poradnik borówkowy: 4,5 l na krzew; ⚠️ obsada 3000 krzewów/ha to założenie crear – poradnik obsady nie podaje",
+      "Z-13": "karta produktu: warstwa min. 4 cm (1 cm na 1 m² = 10 l, więc 40 l/m²); decyzja MRiRW G-971/20: ściółkowanie 40 l/m²; Darek 16.07.2026: 3–5 cm",
+      "Z-14": "poradnik borówkowy: min. 4 l na młody krzew – przeniesione na krzewy ozdobne; warstwa min. 4 cm wg karty produktu (Darek 16.07: 3–5 cm)",
+      "Z-15": "poradnik borówkowy: min. 4 l na młody krzew (warstwa 5 cm na kwadracie 30 × 30 cm) – przeniesione z borówki na inne kwasolubne; odświeżanie co kilka lat: Darek 16.07.2026",
+      "Z-16": "karta produktu (blok „dla sadownika”): 150 ml na roślinę; dołek 3 % i moczenie sadzonek 3 % – karta (blok „dla ogrodnika”)",
+      "Z-17": "karta produktu: po min. 60 l/ha wiosną i jesienią, dawka roczna na min. 2 zabiegi = 120 l/ha; poradnik sadowniczy: 100–600 l/ha na rok, stężenie 1–5 %",
+      "Z-18": "karta produktu (blok „dla sadownika”): 150 ml na roślinę – przeniesione na krzew borówki; poradnik borówkowy: preparat pod borówkę o pH ok. 5",
+      "Z-19": "karta produktu: po min. 60 l/ha wiosną i jesienią = 120 l/ha na rok; poradnik borówkowy: 100–600 l/ha na rok, stężenie robocze 5–10 %",
+      "Z-20": "karta produktu (blok „dla sadownika”): 150 ml na roślinę; zalewanie bruzd roztworem 3 % – karta i dokument Darka 29.07.2026; poradniki malinowy i truskawkowy nie podają dawki na roślinę",
+      "Z-21": "karta produktu: po min. 60 l/ha wiosną i jesienią = 120 l/ha na rok; mieści się w poradniku malinowym (100–250 l/ha) i truskawkowym (100–150 l/ha), stężenie 1–5 %",
+      "Z-22": "karta produktu: po min. 60 l/ha (zabieg wiosenny); dokument Darka 29.07.2026: min. 50 l/ha przed siewem, stężenie 1–10 %",
+      "Z-23": "karta produktu: po min. 60 l/ha (zabieg jesienny); sposób zabiegu na resztki jak w programie kukurydzy 2026-08 (tam ok. 50 l/ha; Darek 29.07: min. 40 l/ha)",
+      "Z-24": "program kukurydzy 2026-08 (po recenzji): min. 50 l/ha wiosną i jesienią ⚠️ karta produktu: po min. 60 l/ha",
+      "Z-25": "program kukurydzy 2026-08 (po recenzji): ok. 50 l/ha jesienią na rozdrobnione, wilgotne resztki",
+      "Z-26": "karta produktu: oprysk gleby 10–20 l/ha w ok. 400 l wody, min. 2 zabiegi w roku = 40 l/ha; poradnik sadowniczy: 40–80 l/ha na rok; fertygacja 0,1 % codziennie lub 1 % co 10–14 dni – poradnik sadowniczy",
+      "Z-27": "karta produktu: 2 × 20 l/ha (10–20 l/ha, min. 2 zabiegi w roku); poradnik borówkowy: 20–60 l/ha na rok",
+      "Z-28": "poradniki malinowy i truskawkowy: 40–80 l/ha na rok – dolna granica; karta produktu: 2 × 20 l/ha",
+      "Z-29": "karta produktu: 10–20 l/ha w ok. 400 l wody – górna granica; dokument Darka 29.07.2026: min. 20 l/ha; rozsada 0,5 % i dołki 3 % – instrukcja stosowania MRiRW dla CARBOHUMIC",
+      "Z-30": "dokument Darka 29.07.2026: min. 5 l/ha na zabieg, min. 5 zabiegów w sezonie co 10–14 dni, stężenie 1 % = min. 25 l/ha na sezon; 0,1 % przy podawaniu codziennym – poradniki",
+      "Z-31": "karta produktu: 2–3 opryski nalistne po 2–3 l/ha, 0,1–0,5 %, co 10–14 dni od fazy 2–3 liścia – bierzemy 2 × 2 l/ha ⚠️ zapis karty można też czytać jako 2–3 l/ha na rok",
+      "Z-32": "karta produktu: 10–20 l/ha w ok. 400 l wody po sezonie; dokument Darka 29.07.2026: min. 20 l/ha na resztki; program kukurydzy 2026-08: 20 l/ha po zbiorze",
+      "Z-33": "program kukurydzy 2026-08 (po recenzji): 20–40 l/ha w ok. 400 l wody – dolna granica; karta produktu: 10–20 l/ha",
+      "Z-34": "program kukurydzy 2026-08 (po recenzji): 20 l/ha po zbiorze w programie podstawowym, ok. 400 l wody",
+      "Z-35": "poradnik szkółkarski: zaprawa nasion 0,5–1 %; moczenie korzeni 1 % – karta produktu i poradnik truskawkowy; opakowanie 5 l to założenie crear",
+      "Z-36": "poradnik szkółkarski: 0,1 % co 7–10 dni (młodszy materiał), do 0,5 % co 10–14 dni; opakowanie 20 l to założenie crear – poradnik nie podaje ilości",
+      "Z-37": "poradnik sadowniczy: 3–5 l/ha na rok, 3–5 aplikacji po 1 l/ha co 10–14 dni, 0,1–0,5 %, min. 500 l wody – bierzemy dolną granicę ⚠️ program kukurydzy: maks. 0,6 l/ha na zabieg",
+      "Z-38": "poradnik borówkowy: 3–5 l/ha na rok, 3–5 aplikacji po 1 l/ha co 10–14 dni, 0,1–0,5 %, min. 500 l wody – bierzemy dolną granicę",
+      "Z-39": "poradniki malinowy i truskawkowy: 3–5 l/ha na rok, 3–5 aplikacji po 1 l/ha co 10–14 dni, 0,1–0,5 %, min. 500 l wody – bierzemy dolną granicę",
+      "Z-40": "schemat przeniesiony z poradników sadowniczego i jagodowych (3 × 1 l/ha) ⚠️ brak poradnika warzywniczego – dawka do potwierdzenia przez CarboHort",
+      "Z-41": "program kukurydzy 2026-08 (po recenzji): maks. 0,6 l/ha na zabieg, BBCH 14–51; klient 06.08.2026: dawka próbna 0,3–1 l/ha liczona do 1 ha",
+      "Z-42": "poradnik szkółkarski: 0,1 % co ok. 7 dni, min. 2–3 zabiegi od fazy 2–3 liścia; opakowanie 5 l to założenie crear",
+      "Z-43": "poradnik sadowniczy: 3–5 l/ha na rok, 3–5 aplikacji po 1 l/ha co 7–10 dni w owocowaniu, 0,1–0,5 %, min. 500 l wody – bierzemy dolną granicę; nie w kwitnieniu: dokument Darka 29.07.2026",
+      "Z-44": "poradnik borówkowy: 3–5 l/ha na rok, 3–5 aplikacji po 1 l/ha co 7–10 dni w owocowaniu, 0,1–0,5 %, min. 500 l wody – bierzemy dolną granicę",
+      "Z-45": "poradniki malinowy i truskawkowy: 3–5 l/ha na rok, 3–5 aplikacji po 1 l/ha co 7–10 dni w owocowaniu, 0,1–0,5 %, min. 500 l wody – bierzemy dolną granicę",
+      "Z-46": "karta produktu CARBOMAT HUMIC i dokument Darka 16.07.2026: przed siewem co najmniej 250 kg/ha, wymieszać do 10 cm – potwierdzone przez Darka 21.07 (AC #30867)",
+      "Z-47": "dokument Darka 16.07.2026, potwierdzone 21.07 (AC #30867): pasowo min. 150 kg/ha, całopowierzchniowo min. 250 kg/ha; strip-till 100–120 kg/ha – karta produktu ⚠️ karta podaje pasowo 100 kg/ha",
+      "Z-48": "poradnik szkółkarski: 3–10 % objętości podłoża, z mikoryzą 2–5 %; wybór 5 % i przeliczenie na 30 kg/m³ przy 0,6 kg/l (karta) to założenie crear",
+      "Z-49": "karta CARBOHUMIC niefiltrowanego (blok „dla ogrodnika”): podlewanie roztworem 1 % co 10–14 dni, 3 % do dołka, 5 % wiosną i jesienią ⚠️ ilość na m² to założenie crear: 5 l roztworu na m², 8 podlewań w sezonie",
+      "Z-50": "karta CARBOHUMIC niefiltrowanego: 150 ml na roślinę (blok „dla sadownika”); 3 % do dołka i 1 % po posadzeniu (blok „dla ogrodnika”)",
+      "Z-51": "karta CARBOHUMIC niefiltrowanego (blok „dla ogrodnika”): podlewanie 1 % co 10–14 dni ⚠️ ilość na roślinę to założenie crear: ok. 10 l roztworu pod krzew, 8 podlewań w sezonie",
+      "Z-52": "karta CARBOHUMIC niefiltrowanego (blok „dla ogrodnika”): podlewanie 1 % co 10–14 dni ⚠️ ilość na donicę to założenie crear: 2 l roztworu na podlewanie, 8 podlewań w sezonie",
+      "Z-53": "dokument Darka 16.07.2026: 500 g na 10 m² (= 50 g/m²), raz w roku, na glebie kwaśnej lub jałowej dawka podwójna; decyzja MRiRW G-1528/24: do 500 g na 10 m²",
+      "Z-54": "⚠️ brak źródła dla trawnika – dawka przeniesiona z ogrodu (500 g na 10 m²); decyzja MRiRW G-1528/24 wymienia warzywa i rośliny ozdobne w ogrodach, nie trawnik – do potwierdzenia u Darka",
+      "Z-55": "dokument Darka 16.07.2026 i decyzja MRiRW G-1528/24: 20–30 g na 10 l podłoża przy przesadzaniu; 20 g na donicę posypowo to dolna granica tego zakresu (założenie crear)"
+  };
+  var BOR_CONC = "5–10 %", BOR_CONC_DOSE = ", stężenie 5–10 %";   /* poradnik borówkowy – wyższe stężenie niż w innych uprawach */
+  var ALT = "zamiast tego, jeśli wolisz";
+
+  /* ============================ DATA ============================ */
+  var KONFIG = {
+
+    /* Products, packs and gross shop prices - spec 3 (catalogue 10.08.2026).
+       form: "bulk" = dry, dosed in litres (rounded to full 10 l);
+             "kg"   = dry, dosed in kg (rounded to full 10 kg);
+             "liq"  = liquid (full litre, hobby 0,5 l). */
+    products: {
+      eco_uni: { name: "CARBOMAT ECO · odmiana uniwersalna pH 6,0–6,5", unit: "l", form: "bulk", page: "carbomat.html",
+        why: "Surowy lignit: raz wymieszany z glebą pracuje latami – magazyn wody i trwała materia organiczna.",
+        packs: [{ size: 20, label: "worek 20 l", price: 42 }, { size: 1000, label: "big bag 1000 l", price: 650 }, { size: 1500, label: "big bag 1500 l", price: 850 }] },
+      eco_kw: { name: "CARBOMAT ECO · odmiana kwaśna pH 4,5–5,0", unit: "l", form: "bulk", page: "carbomat.html",
+        why: "Surowy lignit: raz wymieszany z glebą pracuje latami – magazyn wody i trwała materia organiczna.",
+        packs: [{ size: 20, label: "worek 20 l", price: 42 }, { size: 1000, label: "big bag 1000 l", price: 600 }, { size: 1500, label: "big bag 1500 l", price: 800 }] },
+      sciolka: { name: "CARBOMAT ECO Ściółka pH 4,5–5,0", unit: "l", form: "bulk", page: "carbomat.html",
+        why: "Grubsza frakcja lignitu rozsypana warstwą 4–5 cm: zatrzymuje wilgoć, nie zabiera azotu jak kora, zakwasza.",
+        packs: [{ size: 20, label: "worek 20 l", price: 42 }, { size: 1000, label: "big bag 1000 l", price: 600 }, { size: 1500, label: "big bag 1500 l", price: 800 }] },
+      humic_h: { name: "CARBOMAT HUMIC", unit: "l", form: "liq", page: "carbomat-humic.html",
+        why: "Kondycjoner, potas i biostymulator w jednym – działa od pierwszych tygodni, podnosi odczyn zakwaszonej gleby.",
+        packs: [{ size: 1, label: "1 l", price: 30 }, { size: 2, label: "2 l", price: 40 }] },
+      humic_pole: { name: "CARBOMAT HUMIC · opakowanie polowe", unit: "kg", form: "kg", page: "carbomat-humic.html", quote: true,
+        why: "Sypki koncentrat kwasów humusowych z potasem do rozsiewacza lub siewnika – szybki i długi efekt w glebie.",
+        packs: [], packNote: "Opakowanie polowe (worek 20 kg, big bag) nie jest jeszcze w sklepie – cenę podamy na zapytanie." },
+      nief: { name: "CARBOHUMIC niefiltrowany", unit: "l", form: "liq", page: "carbohumic.html",
+        why: "Próchnica w płynie: gęsty ekstrakt do polewania z beczki, najwięcej materii organicznej za litr.",
+        packs: [{ size: 20, label: "20 l", price: 170 }, { size: 200, label: "200 l", price: 1400 }, { size: 1000, label: "mauzer 1000 l", price: 6000 }] },
+      filtr: { name: "CARBOHUMIC filtrowany", unit: "l", form: "liq", page: "carbohumic.html",
+        why: "Ten sam ekstrakt humusowy, przefiltrowany: przechodzi przez dysze, filtry i linie kroplujące.",
+        packs: [{ size: 1, label: "1 l", price: 25 }, { size: 5, label: "5 l", price: 80 }, { size: 20, label: "20 l", price: 260 }, { size: 200, label: "200 l", price: 2200 }, { size: 1000, label: "mauzer 1000 l", price: 9200 }] },
+      ogrod: { name: "CARBOHUMIC OGRÓD", unit: "l", form: "liq", page: "carbohumic.html",
+        why: "Próchnica w płynie w wersji na konewkę: rozcieńczasz z wodą i podlewasz.",
+        packs: [{ size: 5, label: "5 l", price: 70 }, { size: 20, label: "20 l", price: 164 }] },
+      maxi: { name: "CARBOHUMIC MAXI PLUS", unit: "l", form: "liq", page: "carbohumic.html",
+        why: "Biostymulator na liść: wigor, powierzchnia liści, regeneracja po chłodach, gradzie czy herbicydzie.",
+        packs: [{ size: 1, label: "1 l", price: 119 }, { size: 5, label: "5 l", price: 295 }, { size: 20, label: "20 l", price: 850 }] },
+      calbor: { name: "CARBOHUMIC CALBOR", unit: "l", form: "liq", page: "carbohumic.html",
+        why: "Wapń i bor w chelacie kwasów humusowych na liść: jędrność, kaliber i trwałość owocu po zbiorze.",
+        packs: [{ size: 1, label: "1 l", price: 138 }, { size: 5, label: "5 l", price: 380 }, { size: 20, label: "20 l", price: 999 }] },
+      zestaw: { name: "Zestaw: CARBOMAT ECO 20 l + CARBOHUMIC OGRÓD 5 l", unit: "komplet", form: "set", page: "sklep.html?oferta=zestawy",
+        why: "Worek CARBOMAT ECO 20 l i kanister CARBOHUMIC OGRÓD 5 l razem za 100 zł – o 12 zł taniej niż osobno.",
+        packs: [{ size: 1, label: "komplet", price: 100 }] }
+    },
+
+    /* Scale units - spec 2, step 4. */
+    units: {
+      ha: { field: "Powierzchnia w hektarach", sym: "ha", chips: [1, 2, 5, 10, 20], decimal: true },
+      drzew: { field: "Liczba roślin do posadzenia", sym: "drzew", chips: [50, 200, 500, 1000, 3000] },
+      krzewow: { field: "Liczba roślin do posadzenia", sym: "krzewów", chips: [50, 200, 500, 1000, 3000] },
+      roslinPro: { field: "Liczba roślin do posadzenia", sym: "roślin", chips: [50, 200, 500, 1000, 3000] },
+      m3: { field: "Objętość podłoża w m³", sym: "m³", chips: [1, 5, 10, 30] },
+      m2: { field: "Powierzchnia w m²", sym: "m²", chips: [10, 25, 50, 100, 300] },
+      roslin: { field: "Liczba roślin", sym: "roślin", chips: [3, 5, 10, 20] },
+      donic: { field: "Liczba donic (średnio 10 l)", sym: "donic", chips: [3, 5, 10, 20] }
+    },
+
+    /* Equipment - spec 2, step 3 (pro only). */
+    equipment: [
+      { id: "opryskiwacz", label: "Opryskiwacz", sub: "polowy lub sadowniczy", short: "opryskiwacz" },
+      { id: "beczkowoz", label: "Beczkowóz, rozlewak, wąż z beczki", sub: "polewanie bez dysz", short: "beczkowóz" },
+      { id: "fertygacja", label: "Fertygacja, nawadnianie kropelkowe", sub: "linie z filtrami", short: "fertygacja" },
+      { id: "rozsiewacz", label: "Rozsiewacz, siewnik, strip-till", sub: "produkty sypkie", short: "rozsiewacz" },
+      { id: "recznie", label: "Ręcznie", sub: "konewka, wąż, łopata", short: "ręcznie" }
+    ],
+
+    /* Soil chips - spec 2, step 4. */
+    soils: [
+      { id: "lekka", label: "lekka, piaszczysta" },
+      { id: "srednia", label: "średnia" },
+      { id: "ciezka", label: "ciężka, gliniasta" },
+      { id: "niewiem", label: "nie wiem" }
+    ],
+
+    sections: [
+      { id: "A", label: "Gospodarstwo i produkcja" },
+      { id: "B", label: "Ogród i dom" }
+    ],
+
+    /* ?crop= aliases from the old links - spec 2. */
+    aliases: { sadownicze: "sad", jagodowe: "jagodowe", warzywnicze: "warzywa", zboza: "pole", szkolki: "szkolka", trawnik: "trawnik", ogrod: "ogrod", krzewy: "krzewy", balkon: "balkon", zielen: "", ziemniak: "pole", kukurydza: "pole", borowka: "jagodowe" },
+
+    texts: {
+      r9: "Nie stosuj na glebę zamarzniętą, zalaną ani pokrytą śniegiem. Płynne produkty przed użyciem mocno wstrząśnij, a instalację po zabiegu przepłucz wodą.",
+      consult: "Dla pozycji oznaczonych „dawka orientacyjna” nie mamy jeszcze dawki potwierdzonej przez CarboHort dla tej uprawy – zaproponowaliśmy wyważoną dawkę na podstawie programów innych upraw i kart produktów. Możesz kupić od razu, ale przed zastosowaniem potwierdź dawkę z naszym doradcą.",
+      rounding: "Ilości zaokrąglamy w górę do pełnych opakowań.",
+      horizon: "Retencja i struktura – od pierwszego sezonu; przyrost próchnicy – 2–5 lat. Sprawdzaj efekt na pasie kontrolnym.",
+      heavy: "Na ciężkiej glebie dajemy więcej lignitu, bo ma ją rozluźnić.",
+      trial: "Tak radzimy każdemu nowemu klientowi: mały areał, pas kontrolny obok, ocena po sezonie.",
+      blocked: "Do części produktów nie masz zaznaczonego sprzętu – zostawiamy je na liście wyszarzone, z informacją, czego wymagają.",
+      r3nief: "Masz beczkowóz, więc proponujemy CARBOHUMIC niefiltrowany. Do opryskiwacza albo fertygacji wybralibyśmy filtrowany.",
+      r3filtr: "Masz opryskiwacz albo fertygację, więc proponujemy CARBOHUMIC filtrowany. Do beczkowozu albo polewania ręcznie wybralibyśmy niefiltrowany.",
+      footer: "Dobór poglądowy na podstawie kart produktów i programów CarboHort. Ostateczną dawkę do Twojej gleby potwierdza doradca. Ceny brutto według katalogu sklepu z 10.08.2026.",
+      b2b_alt: 'lub, jeśli prowadzisz uprawę komercyjną, <a class="wf-link" href="platforma-b2b.html">złóż zamówienie przez platformę B2B</a>',
+      quote_add: "+ pozycje na zapytanie"
+    },
+
+    /* ------------------- groups, actions, dose matrix (spec 4) ------------------- */
+    groups: [
+      { id: "sad", label: "Sad", sub: "jabłoń, grusza, pestkowe", reg: "pro", section: "A", actions: [
+        { id: "zakladam", label: "Zakładam plantację lub dosadzam", sub: "sadzenie to jedyny moment, żeby dać glebie lignit do korzeni", unit: "drzew", items: [
+          { p: "eco_uni", rate: 5, dose: "5 l/drzewo", role: "hero",
+            when: "przy sadzeniu, wiosną (luty–maj) lub jesienią",
+            how: "Wsyp ok. 5 l do dołka i wymieszaj z glebą rodzimą w strefie korzeni, tak żeby lignit otaczał bryłę, a nie leżał warstwą na dnie. Na glebie ciężkiej daj więcej, do 8 l na drzewo. Sadzisz raz na kilkadziesiąt lat, więc to jedyny moment, żeby dać lignit pod korzeń.",
+            zr: "Z-01" },
+          { p: "nief", rate: 0.15, dose: "0,15 l/drzewo", role: "add", need: ["beczkowoz", "recznie"], needLabel: "beczkowozu",
+            when: "przy sadzeniu",
+            how: "Przygotuj roztwór ok. 3 % (300 ml na 10 l wody) i zalej nim dołek przed posadzeniem albo podlej drzewko zaraz po. Sadzonki możesz też namoczyć przed sadzeniem w tym samym roztworze 3 %. Przed użyciem mocno wstrząśnij, bo produkt gęstnieje.",
+            zr: "Z-16" }
+        ] },
+        { id: "gleba", label: "Odbudowa gleby w rosnącej plantacji", sub: "próchnica, woda w glebie, struktura", unit: "ha", items: [
+          mix(rowNief120("Z-17"), { role: "hero" }),
+          mix(rowFiltr40("Z-26"), { role: "hero" }),
+          mix(rowMaxi3("Z-37"), { role: "opt" }),
+          mix(rowCalbor3("Z-43"), { role: "opt" })
+        ] },
+        { id: "wzrost", label: "Wzrost i regeneracja roślin w sezonie", sub: "wigor, masa liściowa, po chłodach lub gradzie", unit: "ha", items: [
+          mix(rowMaxi3("Z-37"), { role: "hero" }),
+          mix(rowNief120("Z-17"), { role: "add" }),
+          mix(rowFiltr40("Z-26"), { role: "add" }),
+          mix(rowCalbor3("Z-43"), { role: "opt" })
+        ] },
+        { id: "owoc", label: "Jakość, kaliber i trwałość owocu", sub: "od zawiązania owoców do zbioru", unit: "ha",
+          notes: ["Jakość owocu zaczyna się w glebie: lepsze pobieranie wapnia i wody daje równiejszy owoc, dlatego w zestawie jest też produkt doglebowy."], items: [
+          mix(rowCalbor3("Z-43"), { role: "hero" }),
+          mix(rowNief120("Z-17"), { role: "add" }),
+          mix(rowFiltr40("Z-26"), { role: "add" }),
+          mix(rowMaxi3("Z-37"), { role: "opt" })
+        ] }
+      ] },
+
+      { id: "borowka", label: "Borówka", sub: "plantacja towarowa", reg: "pro", section: "A", acid: true,
+        checks: ["Borówka lubi pH 4–5, więc proponujemy odmianę kwaśną CARBOMAT ECO. CARBOMAT HUMIC pomijamy, bo podnosi odczyn."], actions: [
+        { id: "zakladam", label: "Zakładam plantację lub dosadzam", sub: "sadzenie to jedyny moment, żeby dać glebie lignit do korzeni", unit: "krzewow", items: [
+          { p: "eco_kw", rate: 16, dose: "16 l/krzew", role: "hero",
+            when: "przy sadzeniu (wiosna luty–maj lub jesień)",
+            how: "Przygotuj dołek lub bruzdę na ok. 80 l podłoża na krzew i wymieszaj w niej 16 l lignitu z torfem kwaśnym lub trocinami (ok. 20 % objętości). Podłoże namocz dzień lub dwa przed sadzeniem, żeby lignit nabrał wody. Borówka rośnie na tym stanowisku 20–30 lat, więc nie oszczędzaj na tym etapie.",
+            zr: "Z-09" },
+          { p: "sciolka", rate: 4, dose: "4 l/krzew", role: "add",
+            when: "zaraz po posadzeniu",
+            how: "Zaraz po posadzeniu rozsyp warstwę 5 cm na kwadracie ok. 30 × 30 cm wokół krzewu (to ok. 4,5 l), minimum 4 l na młody krzew. W kolejnych latach poszerzaj pas w miarę wzrostu krzewu: 60–80 cm dla młodych, 80–120 cm dla starszych. Warstwę odświeżaj co kilka lat.",
+            zr: "Z-11" },
+          { p: "nief", rate: 0.15, dose: "0,15 l/krzew", role: "add", need: ["beczkowoz", "recznie"], needLabel: "beczkowozu",
+            when: "przy sadzeniu",
+            how: "Przygotuj roztwór ok. 3 % i zalej nim dołek przed posadzeniem, tak żeby podłoże było wilgotne w całej objętości. Pod borówkę CarboHort przygotowuje wariant o pH ok. 5 – zaznacz to w zamówieniu. Przed użyciem mocno wstrząśnij.",
+            zr: "Z-18" }
+        ] },
+        { id: "gleba", label: "Odbudowa gleby w rosnącej plantacji", sub: "próchnica, woda w glebie, struktura", unit: "ha", items: [
+          mix(rowNief120("Z-19", BOR_CONC_DOSE, BOR_CONC), { role: "hero" }),
+          mix(rowFiltr40("Z-27"), { role: "hero" }),
+          { p: "sciolka", rate: 13500, dose: "13 500 l/ha", role: "opt", consult: true,
+            sub: "odświeżenie ściółki: 4,5 l na krzew, liczymy 3000 krzewów na ha – popraw liczbę krzewów u doradcy",
+            when: "co kilka lat, po zbiorach albo wczesną wiosną",
+            how: "Dosyp ściółkę tak, żeby pod krzewem znów było 5 cm warstwy, ok. 4,5 l na krzew; przy starszych krzewach poszerz pas do 80–120 cm. Najlepiej wczesną wiosną albo zaraz po zbiorach. Ściółka trzyma wilgoć, ogranicza chwasty i podtrzymuje kwaśny odczyn.",
+            zr: "Z-12" },
+          mix(rowMaxi3("Z-38"), { role: "opt" }),
+          mix(rowCalbor3("Z-44"), { role: "opt" })
+        ] },
+        { id: "wzrost", label: "Wzrost i regeneracja roślin w sezonie", sub: "wigor, masa liściowa, po chłodach lub gradzie", unit: "ha", items: [
+          mix(rowMaxi3("Z-38"), { role: "hero" }),
+          mix(rowNief120("Z-19", BOR_CONC_DOSE, BOR_CONC), { role: "add" }),
+          mix(rowFiltr40("Z-27"), { role: "add" }),
+          mix(rowCalbor3("Z-44"), { role: "opt" })
+        ] },
+        { id: "owoc", label: "Jakość, kaliber i trwałość owocu", sub: "od zawiązania owoców do zbioru", unit: "ha", items: [
+          mix(rowCalbor3("Z-44"), { role: "hero" }),
+          mix(rowNief120("Z-19", BOR_CONC_DOSE, BOR_CONC), { role: "add" }),
+          mix(rowFiltr40("Z-27"), { role: "add" }),
+          mix(rowMaxi3("Z-38"), { role: "opt" })
+        ] }
+      ] },
+
+      { id: "jagodowe", label: "Malina, truskawka i inne jagodowe", sub: "porzeczka, agrest, aronia", reg: "pro", section: "A", actions: [
+        { id: "zakladam", label: "Zakładam plantację lub dosadzam", sub: "sadzenie to jedyny moment, żeby dać glebie lignit do korzeni", unit: "roslinPro", items: [
+          { p: "eco_uni", rate: 2.5, dose: "2,5 l/roślinę", role: "hero",
+            when: "przy sadzeniu, wiosną (luty–maj) lub jesienią",
+            how: "Wymieszaj lignit z podłożem w bruździe lub dołku w proporcji ok. 10 %: przy 25 l podłoża na roślinę to 2,5 l. Na całą długość rzędu możesz przygotować własną mieszankę, np. 70 % gleby rodzimej i 30 % lignitu. Malina i truskawka rosną w glebie rodzimej, więc to poprawia stanowisko na cały cykl plantacji.",
+            zr: "Z-02" },
+          { p: "nief", rate: 0.15, dose: "0,15 l/roślinę", role: "add", need: ["beczkowoz", "recznie"], needLabel: "beczkowozu",
+            when: "przy sadzeniu",
+            how: "Przygotuj roztwór 3 % i zalej nim bruzdę lub dołki przed sadzeniem, na wilgotną glebę. Sadzonki możesz przed posadzeniem namoczyć w tym samym roztworze 3 %. Przed użyciem mocno wstrząśnij.",
+            zr: "Z-20" }
+        ] },
+        { id: "gleba", label: "Odbudowa gleby w rosnącej plantacji", sub: "próchnica, woda w glebie, struktura", unit: "ha",
+          notes: ["Malina po malinie i truskawka po truskawce wyczerpują stanowisko: odbudowa materii organicznej co roku ogranicza problemy replantacyjne."], items: [
+          mix(rowNief120("Z-21"), { role: "hero" }),
+          mix(rowFiltr40("Z-28"), { role: "hero" }),
+          mix(rowMaxi3("Z-39"), { role: "opt" }),
+          mix(rowCalbor3("Z-45"), { role: "opt" })
+        ] },
+        { id: "wzrost", label: "Wzrost i regeneracja roślin w sezonie", sub: "wigor, masa liściowa, po chłodach lub gradzie", unit: "ha", items: [
+          mix(rowMaxi3("Z-39"), { role: "hero" }),
+          mix(rowNief120("Z-21"), { role: "add" }),
+          mix(rowFiltr40("Z-28"), { role: "add" }),
+          mix(rowCalbor3("Z-45"), { role: "opt" })
+        ] },
+        { id: "owoc", label: "Jakość, kaliber i trwałość owocu", sub: "od zawiązania owoców do zbioru", unit: "ha",
+          notes: ["Jakość owocu zaczyna się w glebie: lepsze pobieranie wapnia i wody daje równiejszy owoc, dlatego w zestawie jest też produkt doglebowy."], items: [
+          mix(rowCalbor3("Z-45"), { role: "hero" }),
+          mix(rowNief120("Z-21"), { role: "add" }),
+          mix(rowFiltr40("Z-28"), { role: "add" }),
+          mix(rowMaxi3("Z-39"), { role: "opt" })
+        ] }
+      ] },
+
+      { id: "warzywa", label: "Warzywa", sub: "grunt i tunele", reg: "pro", section: "A",
+        checks: ["CARBOHUMIC CALBOR jest zarejestrowany dla upraw sadowniczych, więc w warzywach go nie proponujemy.",
+                 "Jeśli pH gleby jest poniżej 5,5, najpierw wapnowanie, dopiero potem program – żaden biostymulator tego nie zastąpi."], actions: [
+        { id: "przed", label: "Przed siewem lub sadzeniem", unit: "ha", items: [
+          { p: "nief", rate: 60, dose: "60 l/ha", role: "hero", pair: "soil", need: ["beczkowoz", "recznie"], needLabel: "beczkowozu",
+            when: "przed siewem lub sadzeniem, na wilgotną glebę",
+            how: "Rozcieńcz w beczce do 1–5 % i polej glebę przed siewem lub sadzeniem, najlepiej na wilgotno, potem płytko wymieszaj. Pod rozsadę możesz dodatkowo dać 100–200 ml CARBOMAT ECO do dołka. Nie podawaj przez dysze i filtry.",
+            zr: "Z-22" },
+          { p: "filtr", rate: 20, dose: "20 l/ha", role: "hero", pair: "soil", need: ["opryskiwacz", "fertygacja"], needLabel: "opryskiwacza lub fertygacji",
+            when: "przed siewem lub sadzeniem",
+            how: "Oprysk gleby 20 l/ha w ok. 400 l wody, przed deszczem, nawadnianiem lub płytkim wymieszaniem. Rozsadę możesz podlać roztworem 0,5 %, a przed sadzeniem na miejsce stałe zalać dołki roztworem 3 %. Po zabiegu przepłucz opryskiwacz czystą wodą.",
+            zr: "Z-29" },
+          { p: "humic_pole", rate: 250, dose: "250 kg/ha (całopowierzchniowo)", role: "opt", need: ["rozsiewacz"], needLabel: "rozsiewacza",
+            when: "przed siewem lub sadzeniem",
+            how: "Rozsiej równomiernie 250 kg/ha i wymieszaj z wierzchnią warstwą gleby do ok. 10 cm przed siewem lub sadzeniem. Możesz mieszać z nawozami granulowanymi w rozsiewaczu. Nie stosuj na mokre rośliny ani przez opryskiwacz.",
+            zr: "Z-46" }
+        ] },
+        { id: "sezon", label: "Rośliny rosną: kondycja i wzrost", unit: "ha", items: [
+          mix(rowMaxi3("Z-40"), { role: "hero", consult: true, dose: "3 l/ha (3 × 1 l/ha), co 10–14 dni, 0,1–0,5 %" }),
+          { p: "filtr", rate: 25, dose: "25 l/ha na sezon (min. 5 zabiegów po 5 l/ha)", role: "add", consult: true, need: ["fertygacja"], needLabel: "fertygacji",
+            when: "w sezonie, co 10–14 dni (w stresie co 7–10 dni)",
+            how: "Podawaj przez linie kroplujące co 10–14 dni, w stresie co 7–10 dni: ok. 5 l/ha na zabieg w stężeniu 1 %, minimum pięć zabiegów w sezonie, czyli ok. 25 l/ha; przy podawaniu codziennym obniż stężenie do 0,1 %. Możesz łączyć z nawozami mineralnymi, ale produkt dodaj do zbiornika na końcu, wstępnie rozcieńczony wodą. Po każdym zabiegu przepłucz instalację.",
+            zr: "Z-30" },
+          { p: "filtr", rate: 4, dose: "4 l/ha (2 × 2 l/ha)", role: "opt", need: ["opryskiwacz"], needLabel: "opryskiwacza",
+            sub: "gdy nie ma CARBOHUMIC MAXI PLUS w programie",
+            when: "w sezonie, 2–3 zabiegi co 10–14 dni",
+            how: "Oprysk nalistny 2 l/ha w stężeniu 0,1–0,5 %, dwa zabiegi co 10–14 dni od fazy 2–3 liścia. Można łączyć z dokarmianiem dolistnym, np. mikroelementami; produkt dodaj do zbiornika jako ostatni. Przed nowym zestawieniem zrób próbę mieszalności w małym naczyniu.",
+            zr: "Z-31" }
+        ] },
+        { id: "po", label: "Po zbiorze: resztki i gleba na przyszły sezon", unit: "ha", items: [
+          { p: "nief", rate: 60, dose: "60 l/ha", role: "hero", pair: "soil", need: ["beczkowoz", "recznie"], needLabel: "beczkowozu",
+            when: "po zbiorze, na resztki i wilgotną glebę (połowa sierpnia–grudzień)",
+            how: "Po zbiorze rozdrobnij resztki i polej glebę 60 l/ha z beczki w rozcieńczeniu 1–5 %, gdy gleba jest wilgotna. Potem płytko wymieszaj, żeby resztki miały kontakt z glebą. To wspomaga humifikację i odbudowuje materię organiczną przed kolejnym sezonem.",
+            zr: "Z-23" },
+          { p: "filtr", rate: 20, dose: "20 l/ha w ok. 400 l wody", role: "hero", pair: "soil", need: ["opryskiwacz", "fertygacja"], needLabel: "opryskiwacza lub fertygacji",
+            when: "po zbiorze, na resztki i wilgotną glebę (połowa sierpnia–grudzień)",
+            how: "Po zbiorze rozdrobnij resztki i opryskaj je 20 l/ha w ok. 400 l wody, gdy resztki i gleba są wilgotne. Potem płytko wymieszaj, żeby resztki miały kontakt z glebą. To wspomaga humifikację i odbudowuje materię organiczną przed kolejnym sezonem.",
+            zr: "Z-32" }
+        ] }
+      ] },
+
+      { id: "pole", label: "Pole", sub: "zboża, rzepak, kukurydza, ziemniak, słonecznik", reg: "pro", section: "A",
+        checks: ["Na polu na liść proponujemy CARBOHUMIC filtrowany. CARBOHUMIC MAXI PLUS zostawiamy jako próbę na 1 ha – tak ustalił CarboHort ze względu na koszt litra na hektar.",
+                 "CARBOHUMIC CALBOR jest zarejestrowany dla upraw sadowniczych, więc na polu go nie proponujemy.",
+                 "Jeśli pH gleby jest poniżej 5,5, najpierw wapnowanie, dopiero potem program – żaden biostymulator tego nie zastąpi."], actions: [
+        { id: "przed", label: "Przed siewem: przygotowanie stanowiska", unit: "ha",
+          notes: ["Przed siewem robimy jeden zabieg doglebowy – nie łączymy kilku produktów w tym samym miejscu i sezonie.",
+                  "CARBOMAT ECO na polu to inwestycja stanowiskowa na gleby lekkie i ubogie w próchnicę; proponujemy dawkę orientacyjną pasowo, a dokładną dawkę w tonach na hektar potwierdź z naszym doradcą przed zastosowaniem."], items: [
+          { p: "humic_pole", rate: 150, dose: "pasowo min. 150 kg/ha (podsiewacz), strip-till 100–120 kg/ha, całopowierzchniowo 250 kg/ha – domyślnie 150 kg/ha", role: "hero", pair: "soil", need: ["rozsiewacz"], needLabel: "rozsiewacza",
+            when: "przed siewem, wczesna wiosna lub jesień",
+            how: "Na sucho: pasowo 150 kg/ha do podsiewacza (w strip-till 100–120 kg/ha, w sąsiedztwie nasion) albo 250 kg/ha rozsiewaczem na całą powierzchnię z płytkim wymieszaniem do 10 cm. Nie stosuj do opryskiwacza ani fertygacji, bo nierozpuszczalne huminy zapychają dysze. Wapnowanie zrób w osobnym zabiegu, z odstępem czasowym – tak zaleca program kukurydzy po recenzji.",
+            zr: "Z-47" },
+          { p: "filtr", rate: 20, dose: "20 l/ha w ok. 400 l wody", role: "hero", pair: "soil", need: ["opryskiwacz", "fertygacja"], needLabel: "opryskiwacza lub fertygacji",
+            when: "przed siewem",
+            how: "Oprysk gleby 20 l/ha w ok. 400 l wody i płytkie wymieszanie przed siewem; alternatywnie współrzędnie z siewem w systemie nawozów płynnych, poniżej głębokości siewu. Nie opryskuj gleby zamarzniętej, zalanej ani skrajnie suchej. Po zabiegu przepłucz opryskiwacz.",
+            zr: "Z-33" },
+          { p: "nief", rate: 50, dose: "50 l/ha", role: "hero", pair: "soil", need: ["beczkowoz", "recznie"], needLabel: "beczkowozu",
+            when: "przed siewem, wilgotna gleba",
+            how: "Rozlewakiem lub beczkowozem 50 l/ha, pasowo albo na całą powierzchnię, na wilgotną glebę przed siewem; potem płytkie wymieszanie. Nie przez standardowe dysze opryskiwacza ani linie kroplujące. Przed użyciem mocno wstrząśnij i w razie potrzeby rozcieńcz wodą.",
+            zr: "Z-24" },
+          { p: "eco_uni", rate: 400, dose: "ok. 400 l/ha pasowo (ok. 250 kg/ha)", role: "add", consult: true,
+            when: "przed uprawą, raz na wiele lat",
+            how: "Wysyp pasowo w rzędy przyszłej uprawy albo na najsłabsze pola i wymieszaj z warstwą orną przed siewem; na całą powierzchnię gleb lekkich i ubogich w próchnicę stosuje się dawki kilka razy wyższe. Lignit pracuje w glebie wiele lat, więc to inwestycja w stanowisko, nie coroczny nawóz. Dawkę do Twojej gleby potwierdź z naszym doradcą, zanim wjedziesz w pole.",
+            zr: "Z-03" }
+        ] },
+        { id: "sezon", label: "W sezonie: wzrost i regeneracja", unit: "ha", items: [
+          { p: "filtr", rate: 4, dose: "4 l/ha (2 × 2 l/ha)", role: "hero", need: ["opryskiwacz"], needLabel: "opryskiwacza",
+            when: "od 2–3 liścia do zwarcia rzędów, co 10–14 dni",
+            how: "Dwa opryski nalistne po 2 l/ha co 10–14 dni, od fazy 2–3 liścia do zwarcia rzędów; stężenie 0,1–0,5 %. Można łączyć z nawożeniem dolistnym, np. mikroelementami, ale nie z wieloma składnikami naraz na roślinach po chłodzie. Produkt dodaj do zbiornika jako ostatni, wstępnie rozcieńczony.",
+            zr: "Z-31" },
+          { p: "maxi", rate: 0.6, dose: "0,6 l/ha – tylko „próba na 1 ha”", role: "opt", need: ["opryskiwacz"], needLabel: "opryskiwacza", fixedArea: 1,
+            sub: "próba na 1 ha – dawka liczona zawsze dla 1 ha, niezależnie od areału",
+            when: "4–8 liści (kukurydza BBCH 14–51), po chłodach lub uszkodzeniach",
+            how: "Jeden zabieg 0,6 l/ha z mikroelementami w fazie 4–8 liści; powtórka po 7–10 dniach tylko przy utrzymującym się stresie. Zostaw obok pas bez zabiegu i porównaj obsadę, wigor i plon. Przy chłodnej, mokrej wiośnie opryskuj dopiero, gdy rośliny wznowią wzrost.",
+            zr: "Z-41" }
+        ] },
+        { id: "po", label: "Po zbiorze: resztki pożniwne i próchnica", unit: "ha", items: [
+          { p: "nief", rate: 50, dose: "50 l/ha", role: "hero", pair: "soil", need: ["beczkowoz", "recznie"], needLabel: "beczkowozu",
+            when: "po zbiorze, na rozdrobnione (do 8 cm) i wilgotne resztki",
+            how: "Rozdrobnij słomę do ok. 8 cm i polej 50 l/ha z beczkowozu tylko wtedy, gdy resztki i gleba są wilgotne. Potem płytko i równomiernie wymieszaj, bez zakopywania grubej warstwy. Na pociętą słomę kukurydzianą nie dajemy azotu (program kukurydzy po recenzji).",
+            zr: "Z-25" },
+          { p: "filtr", rate: 20, dose: "20 l/ha w ok. 400 l wody", role: "hero", pair: "soil", need: ["opryskiwacz", "fertygacja"], needLabel: "opryskiwacza lub fertygacji",
+            when: "po zbiorze, na rozdrobnione (do 8 cm) i wilgotne resztki",
+            how: "Rozdrobnij słomę do ok. 8 cm i opryskaj 20 l/ha w ok. 400 l wody tylko wtedy, gdy resztki i gleba są wilgotne. Potem płytko i równomiernie wymieszaj, bez zakopywania grubej warstwy. Na pociętą słomę kukurydzianą nie dajemy azotu (program kukurydzy po recenzji).",
+            zr: "Z-34" }
+        ] }
+      ] },
+
+      { id: "szkolka", label: "Szkółka", sub: "produkcja w pojemnikach i w gruncie", reg: "pro", section: "A", actions: [
+        { id: "podloze", label: "Mieszam podłoże, sadzę do pojemników", unit: "m3", acidSwitch: true, items: [
+          { p: "eco_uni", acidTo: "eco_kw", consult: true, rate: 200, dose: "200 l/m³ (20 % udziału)", role: "hero",
+            when: "Mieszam podłoże, sadzę do pojemników",
+            how: "Wymieszaj lignit z torfem, kokosem lub kompostem w udziale ok. 20 % (10–30 %); zastępuje część torfu i trzyma wodę. Przed użyciem namocz go przez 2–3 doby, bo suchy surowiec wolno chłonie wodę. Pod rośliny kwasolubne użyj odmiany kwaśnej.",
+            zr: "Z-04" },
+          { p: "filtr", fixedPack: 5, consult: true, dose: "opakowanie 5 l na start", role: "add", need: ["opryskiwacz", "fertygacja", "recznie"], needLabel: "opryskiwacza, fertygacji lub aplikacji ręcznej",
+            sub: "Zaprawa nasion 0,5–1 %, moczenie korzeni przed sadzeniem 1 % – ilość zależy od materiału; zamów opakowanie 5 l na start",
+            when: "Mieszam podłoże, sadzę do pojemników",
+            how: "Nasiona zapraw przez moczenie w roztworze 0,5–1 %, korzenie przed sadzeniem w roztworze 1 %. Zgodność z zaprawą fabryczną sprawdź przed pierwszym użyciem. Po zabiegu przepłucz naczynia i instalację.",
+            zr: "Z-35" },
+          { p: "humic_pole", rate: 30, consult: true, dose: "30 kg/m³ (5 % objętości; 1 l ≈ 0,6 kg)", role: "opt", need: ["rozsiewacz"], needLabel: "rozsiewacza",
+            when: "Mieszam podłoże, sadzę do pojemników",
+            how: "Wymieszaj 3–10 % objętości podłoża przed napełnieniem pojemników; przy mikoryzie 2–5 %. Nie pod rośliny kwasolubne, bo podnosi odczyn. Opakowanie hurtowe ustal z doradcą.",
+            zr: "Z-48" }
+        ] },
+        { id: "sezon", label: "Produkcja trwa: fertygacja i dokarmianie", unit: "m3",
+          notes: ["Szkółka to produkcja o wielu zmiennych – ten zestaw to punkt wyjścia do rozmowy z doradcą."], items: [
+          { p: "filtr", fixedPack: 20, consult: true, dose: "opakowanie 20 l na start", role: "hero", need: ["opryskiwacz", "fertygacja", "recznie"], needLabel: "opryskiwacza, fertygacji lub aplikacji ręcznej",
+            sub: "stężenie 0,1 % co 7–10 dni (młody materiał) lub do 0,5 % co 10–14 dni; ilość zależy od systemu nawadniania – na start 20 l",
+            when: "Produkcja trwa: fertygacja i dokarmianie",
+            how: "Przez zraszacze lub linie kroplujące: młody materiał 0,1 % co 7–10 dni, lepiej rozwinięty do 0,5 % co 10–14 dni. Produkt rozcieńcz wstępnie w wodzie i dodaj do zbiornika na końcu. Po zabiegu przepłucz instalację.",
+            zr: "Z-36" },
+          { p: "maxi", fixedPack: 5, consult: true, dose: "opakowanie 5 l na start", role: "opt", need: ["opryskiwacz"], needLabel: "opryskiwacza",
+            sub: "oprysk 0,1 % co ok. 7 dni, min. 2–3 zabiegi od 2–3 liścia; na start 5 l",
+            when: "Produkcja trwa: fertygacja i dokarmianie",
+            how: "Oprysk na liść w stężeniu 0,1 % co ok. 7 dni, minimum 2–3 zabiegi od fazy 2–3 liścia właściwego. Po stresie, np. chłodzie, przesuszeniu lub przesadzaniu, możesz zrobić serię trzech zabiegów co 3 dni. Opryskuj równomiernie, do pełnego pokrycia liści.",
+            zr: "Z-42" }
+        ] }
+      ] },
+
+      { id: "ogrod", label: "Ogród i działka", sub: "warzywnik, rabaty, krzewy owocowe", reg: "hobby", section: "B", actions: [
+        { id: "zakladam", label: "Zakładam grządki, przekopuję, sadzę", unit: "m2", items: [
+          { p: "eco_uni", rate: 20, dose: "20 l/m² (ciężka gleba: 30 l/m²)", role: "hero",
+            when: "przy zakładaniu grządek, przekopywaniu, sadzeniu (wiosna luty–maj lub jesień)",
+            how: "Rozsyp worek 20 l na każdy metr grządki i przekop z wierzchnią warstwą na głębokość szpadla (ok. 20 cm); to 10 % objętości gleby i działa przez lata. Na cięższej glebie daj półtora worka (15 %); na ciężkiej glinie karta produktu dopuszcza nawet 20–30 %, czyli 2–3 worki. Pod pojedyncze rośliny wystarczy 100–200 ml do dołka pod rozsadę i 1–3 l pod krzew.",
+            zr: "Z-05" },
+          { p: "ogrod", rate: 0.4, dose: "0,4 l/m² na sezon", role: "add",
+            when: "po posadzeniu i co 10–14 dni w sezonie",
+            how: "Przy sadzeniu zalej dołki roztworem 3 % (300 ml na 10 l wody). Potem podlewaj roztworem 1 % (100 ml na 10 l) co 10–14 dni przez sezon. Przed odmierzeniem mocno wstrząśnij butelką.",
+            zr: "Z-49" }
+        ] },
+        { id: "rosnie", label: "Wszystko już rośnie", sub: "mocniejsze rośliny i ziemia, która trzyma wodę", unit: "m2", items: [
+          { p: "ogrod", rate: 0.4, dose: "0,4 l/m² na sezon", role: "hero",
+            when: "co 10–14 dni w sezonie",
+            how: "Podlewaj roztworem 1 % (100 ml na 10 l wody) co 10–14 dni, na wilgotną ziemię, od wiosny do jesieni. Wiosną i jesienią możesz podać mocniejszy roztwór 5 % (500 ml na 10 l). Nie podlewaj zamarzniętej ziemi.",
+            zr: "Z-49" },
+          { p: "humic_h", rate: 0.083, dose: "50 g/m² (0,083 l/m²), raz w roku", role: "add",
+            when: "raz w roku, wiosną",
+            how: "Raz w roku, najlepiej wiosną przed ruszeniem wegetacji: rozsyp 50 g na m² (500 g na 10 m²) i podlej albo wymieszaj z wierzchnią warstwą do 10 cm. Na glebie kwaśnej lub jałowej możesz dać dawkę podwójną. Nie pod rośliny kwasolubne: borówkę, różaneczniki, azalie, wrzosy.",
+            zr: "Z-53" },
+          { p: "sciolka", rate: 40, dose: "40 l/m²", role: "opt",
+            sub: "rabaty i pod krzewami: warstwa 4 cm, mniej podlewania i chwastów",
+            when: "wiosną albo po posadzeniu, odświeżanie co kilka lat",
+            how: "Rozsyp warstwę 4–5 cm (karta produktu: min. 4 cm) na rabatach i pod krzewami, na całej powierzchni albo wokół pnia w obwodzie korony. W przeciwieństwie do kory nie zabiera azotu i można ją mieszać z inną ściółką. Odświeżaj co kilka lat.",
+            zr: "Z-13" }
+        ] }
+      ] },
+
+      { id: "trawnik", label: "Trawnik", sub: "", reg: "hobby", section: "B", actions: [
+        { id: "zakladam", label: "Zakładam trawnik", unit: "m2", items: [
+          { p: "eco_uni", rate: 20, dose: "20 l/m²", role: "hero", consult: true,
+            when: "przed siewem lub rolowaniem",
+            how: "Rozsyp worek 20 l na każdy metr i wymieszaj z wierzchnią warstwą gleby (ok. 20 cm) przed siewem lub rolowaniem. Wyrównaj i lekko ugnieć powierzchnię jak zwykle przed siewem. Murawa dostaje magazyn wody na lata.",
+            zr: "Z-06" },
+          { p: "ogrod", rate: 0.4, dose: "0,4 l/m² na sezon", role: "add",
+            when: "po wschodach, co 10–14 dni",
+            how: "Po wschodach podlewaj roztworem 1 % (100 ml na 10 l wody) co 10–14 dni, na wilgotną murawę. Wiosną i jesienią możesz podać mocniejszy roztwór 5 %. Przed odmierzeniem wstrząśnij.",
+            zr: "Z-49" }
+        ] },
+        { id: "jest", label: "Trawnik już jest", unit: "m2", items: [
+          { p: "ogrod", rate: 0.4, dose: "0,4 l/m² na sezon", role: "hero",
+            when: "co 10–14 dni w sezonie",
+            how: "Podlewaj roztworem 1 % (100 ml na 10 l wody) co 10–14 dni od wiosny do jesieni, na wilgotną murawę. Wiosną i jesienią możesz podać mocniejszy roztwór 5 %. Nie podlewaj zamarzniętej ziemi.",
+            zr: "Z-49" },
+          { p: "humic_h", rate: 0.083, dose: "50 g/m² (0,083 l/m²)", role: "add", consult: true,
+            when: "wiosną, po wygrabieniu",
+            how: "Wiosną, po wygrabieniu: rozsyp równomiernie 50 g na m² i podlej. Nie stosuj na mokrą trawę i nie łącz z wapnowaniem w tym samym czasie. Raz w roku wystarczy.",
+            zr: "Z-54" }
+        ] }
+      ] },
+
+      { id: "krzewy", label: "Krzewy ozdobne, tuje, iglaki", sub: "i byliny", reg: "hobby", section: "B", actions: [
+        { id: "sadze", label: "Sadzę", unit: "roslin", items: [
+          { p: "eco_uni", rate: 2, dose: "2 l/roślinę", role: "hero",
+            when: "przy sadzeniu (wiosna luty–maj lub jesień)",
+            how: "Wsyp 2 l do dołka i wymieszaj z glebą rodzimą wokół bryły korzeniowej; pod dużą tuję lub krzew daj 3 l. Na ciężkiej glebie dodaj więcej, bo lignit ją rozluźnia. Posadź i obficie podlej.",
+            zr: "Z-07" },
+          { p: "ogrod", rate: 0.15, dose: "0,15 l/roślinę", role: "add",
+            when: "przy sadzeniu, potem w sezonie",
+            how: "Zalej dołek roztworem 3 % (300 ml na 10 l wody) przed posadzeniem, potem podlej roztworem 1 %. W pierwszym sezonie powtarzaj podlewanie 1 % co 10–14 dni. Przed odmierzeniem wstrząśnij.",
+            zr: "Z-50" }
+        ] },
+        { id: "rosna", label: "Już rosną", unit: "roslin", items: [
+          { p: "ogrod", rate: 0.8, dose: "0,8 l/roślinę na sezon", role: "hero",
+            when: "co 10–14 dni w sezonie",
+            how: "Podlewaj roztworem 1 % (100 ml na 10 l wody), ok. 10 l pod krzew, co 10–14 dni od maja do sierpnia (ok. 8 podlewań). Wiosną i jesienią możesz podać mocniejszy roztwór 5 %. Podlewaj na wilgotną ziemię.",
+            zr: "Z-51" },
+          { p: "sciolka", rate: 4, dose: "4 l/roślinę", role: "opt",
+            sub: "warstwa 4–5 cm wokół pnia: mniej podlewania, mniej chwastów",
+            when: "wiosną, odświeżanie co kilka lat",
+            how: "Rozsyp warstwę 4–5 cm wokół pnia w obwodzie korony, ok. 4 l na krzew (karta produktu: min. 4 cm). Mniej podlewania, mniej chwastów; można mieszać z korą. Odświeżaj co kilka lat.",
+            zr: "Z-14" }
+        ] }
+      ] },
+
+      { id: "kwasolubne", label: "Rośliny kwasolubne", sub: "borówka w ogrodzie, różaneczniki, azalie, wrzosy, hortensje", reg: "hobby", section: "B", acid: true,
+        checks: ["Rośliny kwasolubne dostają odmianę kwaśną pH 4,5–5,0. CARBOMAT HUMIC pomijamy, bo podnosi odczyn."], actions: [
+        { id: "sadze", label: "Sadzę", unit: "roslin", items: [
+          { p: "eco_kw", rate: 3, dose: "3 l/roślinę", role: "hero",
+            when: "przy sadzeniu (wiosna luty–maj lub jesień)",
+            how: "Wsyp 3 l odmiany kwaśnej do dołka i wymieszaj z torfem kwaśnym; pod borówkę w ogrodzie daj więcej, nawet 16 l w dołku na 80 l podłoża. Wymieszane podłoże namocz przed sadzeniem. Nie dodawaj wapna ani CARBOMAT HUMIC.",
+            zr: "Z-10" },
+          { p: "sciolka", rate: 4, dose: "4 l/roślinę", role: "add",
+            when: "zaraz po posadzeniu",
+            how: "Zaraz po posadzeniu rozsyp warstwę 5 cm na kwadracie ok. 30 × 30 cm, minimum 4 l na roślinę. Ściółka trzyma wilgoć i podtrzymuje kwaśny odczyn. Odświeżaj co kilka lat.",
+            zr: "Z-15" },
+          { p: "ogrod", rate: 0.15, dose: "0,15 l/roślinę", role: "add",
+            when: "przy sadzeniu",
+            how: "Zalej dołek roztworem 3 % (300 ml na 10 l wody) przed posadzeniem. Potem podlewaj roztworem 1 % co 10–14 dni. Przed odmierzeniem wstrząśnij.",
+            zr: "Z-50" }
+        ] },
+        { id: "rosna", label: "Już rosną", unit: "roslin", items: [
+          { p: "sciolka", rate: 4, dose: "4 l/roślinę", role: "hero",
+            when: "wiosną, odświeżanie co kilka lat",
+            how: "Dosyp ściółkę, żeby pod rośliną znów było 4–5 cm warstwy (karta produktu: min. 4 cm), ok. 4 l na roślinę, wczesną wiosną albo jesienią. Poszerzaj pas w miarę wzrostu rośliny. Odświeżaj co kilka lat.",
+            zr: "Z-15" },
+          { p: "ogrod", rate: 0.8, dose: "0,8 l/roślinę na sezon", role: "add",
+            when: "co 10–14 dni w sezonie",
+            how: "Podlewaj roztworem 1 % (100 ml na 10 l wody), ok. 10 l pod roślinę, co 10–14 dni od maja do sierpnia (ok. 8 podlewań), na wilgotną ziemię. Wiosną i jesienią możesz podać mocniejszy roztwór 5 %. Przed odmierzeniem wstrząśnij.",
+            zr: "Z-51" }
+        ] }
+      ] },
+
+      { id: "balkon", label: "Balkon, taras, donice", sub: "", reg: "hobby", section: "B", actions: [
+        { id: "sadze", label: "Sadzę lub przesadzam", unit: "donic", items: [
+          { p: "eco_uni", rate: 1.5, dose: "1,5 l/donicę", role: "hero",
+            when: "przy sadzeniu i przesadzaniu",
+            how: "Wymieszaj 1–2 l lignitu z ziemią na każdą donicę 10 l (10–20 % mieszanki). Zamiast tego możesz wysypać warstwę 5 cm na dnie donicy jako drenaż, który trzyma wodę. Rośliny lepiej znoszą przerwy w podlewaniu.",
+            zr: "Z-08" },
+          { p: "ogrod", rate: 0.16, dose: "ok. 0,16 l/donicę na sezon", role: "add",
+            when: "w sezonie, przy podlewaniu",
+            how: "Po posadzeniu podlej roztworem 1 % (100 ml na 10 l wody) i powtarzaj co 10–14 dni zamiast zwykłego podlewania, ok. 2 l roztworu na donicę 10 l (ok. 8 podlewań w sezonie). Przed odmierzeniem wstrząśnij.",
+            zr: "Z-52" }
+        ] },
+        { id: "rosna", label: "Rośliny już rosną", unit: "donic", items: [
+          { p: "ogrod", rate: 0.16, dose: "ok. 0,16 l/donicę na sezon", role: "hero",
+            when: "w sezonie, przy podlewaniu",
+            how: "Podlewaj roztworem 1 % (100 ml na 10 l wody) co 10–14 dni zamiast zwykłego podlewania, ok. 2 l roztworu na donicę 10 l, od maja do sierpnia (ok. 8 podlewań). Przed odmierzeniem wstrząśnij.",
+            zr: "Z-52" },
+          { p: "humic_h", rate: 0.033, dose: "20 g/donicę (0,033 l/donicę)", role: "add",
+            when: "raz w sezonie",
+            how: "Posyp cienką warstwą ok. 20 g na donicę 10 l i podlej; raz w sezonie, najlepiej wiosną. Przy przesadzaniu wymieszaj 20–30 g na 10 l podłoża. Nie pod azalie, niektóre hortensje i inne rośliny kwasolubne.",
+            zr: "Z-55" }
+        ] }
+      ] }
+    ]
+  };
+
+  /* ============================ ENGINE ============================ */
+
+  var TRIAL_GROUPS = ["pole", "warzywa", "sad", "borowka", "jagodowe"];
+
+  function group(id) {
+    for (var i = 0; i < KONFIG.groups.length; i++) { if (KONFIG.groups[i].id === id) return KONFIG.groups[i]; }
+    return null;
+  }
+  function action(g, id) {
+    if (!g) return null;
+    for (var i = 0; i < g.actions.length; i++) { if (g.actions[i].id === id) return g.actions[i]; }
+    return null;
+  }
+  function equipLabel(id) {
+    for (var i = 0; i < KONFIG.equipment.length; i++) { if (KONFIG.equipment[i].id === id) return KONFIG.equipment[i].short; }
+    return id;
+  }
+  function toNumber(v) {
+    var n = parseFloat(String(v === undefined || v === null ? "" : v).replace(",", ".").replace(/\s/g, ""));
+    return isFinite(n) && n > 0 ? n : 0;
+  }
+  function r3(x) { return Math.round(x * 1000) / 1000; }
+
+  /* Rounding up - spec 6.1. */
+  function roundQty(qty, prod, reg) {
+    if (!(qty > 0)) return 0;
+    var step = reg === "hobby" ? 0.5 : (prod.form === "bulk" || prod.form === "kg" ? 10 : 1);
+    return r3(Math.ceil(r3(qty) / step - EPS) * step);
+  }
+
+  /* Cheapest pack combination covering `need` - spec 6.2.
+     A size may enter only when size <= 2 x remaining; the smallest size in the
+     range is always allowed. Ties: fewer packs, then smaller surplus. */
+  function pickPacks(need, packs) {
+    var out = { lines: [], price: 0, count: 0, covered: 0, surplus: 0 };
+    if (!packs || !packs.length || !(need > 0)) return out;
+    var sizes = packs.slice().sort(function (a, b) { return b.size - a.size; });
+    var last = sizes.length - 1;
+    var minSize = sizes[last].size;
+    var best = null;
+    var counts = [];
+    for (var z = 0; z < sizes.length; z++) counts.push(0);
+
+    function record(price, count, covered) {
+      if (best) {
+        if (price > best.price + EPS) return;
+        if (Math.abs(price - best.price) < EPS) {
+          if (count > best.count) return;
+          if (count === best.count && covered >= best.covered - EPS) return;
+        }
+      }
+      best = { counts: counts.slice(), price: price, count: count, covered: covered };
+    }
+    function rec(i, rem, price, count, covered) {
+      if (best && price > best.price + EPS) return;
+      if (rem <= EPS) { record(price, count, covered); return; }
+      if (i > last) return;
+      var p = sizes[i];
+      if (i === last) {
+        var kk = Math.ceil(r3(rem) / p.size - EPS);
+        counts[i] = kk;
+        record(price + kk * p.price, count + kk, covered + kk * p.size);
+        counts[i] = 0;
+        return;
+      }
+      var allowed = (p.size <= 2 * rem + EPS) || (p.size === minSize);
+      var maxK = allowed ? Math.ceil(r3(rem) / p.size - EPS) : 0;
+      for (var k = 0; k <= maxK; k++) {
+        counts[i] = k;
+        rec(i + 1, r3(rem - k * p.size), price + k * p.price, count + k, covered + k * p.size);
+      }
+      counts[i] = 0;
+    }
+    rec(0, r3(need), 0, 0, 0);
+    if (!best) return out;
+    for (var i2 = 0; i2 < sizes.length; i2++) {
+      if (best.counts[i2] > 0) {
+        out.lines.push({ size: sizes[i2].size, label: sizes[i2].label, price: sizes[i2].price, count: best.counts[i2] });
+      }
+    }
+    out.price = best.price; out.count = best.count; out.covered = best.covered;
+    out.surplus = r3(best.covered - need);
+    return out;
+  }
+
+  /* R3 - one base treatment: pick a single product from the "soil" pair,
+     following the declaration order and the equipment actually available. */
+  function chooseBase(items, equip, reg) {
+    var pair = [], i;
+    for (i = 0; i < items.length; i++) { if (items[i].pair === "soil") pair.push(i); }
+    if (pair.length < 2) return { winner: pair.length ? pair[0] : -1, pair: pair };
+    var win = -1;
+    for (i = 0; i < pair.length; i++) {
+      if (hasEquip(items[pair[i]], equip, reg)) { win = pair[i]; break; }
+    }
+    if (win < 0) win = pair[0];
+    return { winner: win, pair: pair };
+  }
+  function hasEquip(item, equip, reg) {
+    if (reg !== "pro") return true;
+    if (!item.need || !item.need.length) return true;
+    for (var i = 0; i < item.need.length; i++) { if (equip.indexOf(item.need[i]) !== -1) return true; }
+    return false;
+  }
+
+  /* Hobby bundle - spec 6.5: pairs of ECO 20 l + OGRÓD 5 l become 100 zl sets. */
+  function applyBundles(cards, reg) {
+    if (reg !== "hobby") return null;
+    var ecoCard = null, ogCard = null, ecoLine = null, ogLine = null, i, j;
+    for (i = 0; i < cards.length; i++) {
+      var c = cards[i];
+      if (!c.included) continue;
+      for (j = 0; j < c.packs.length; j++) {
+        if (!ecoLine && (c.p === "eco_uni" || c.p === "eco_kw") && c.packs[j].size === 20 && c.packs[j].count > 0) { ecoCard = c; ecoLine = c.packs[j]; }
+        if (!ogLine && c.p === "ogrod" && c.packs[j].size === 5 && c.packs[j].count > 0) { ogCard = c; ogLine = c.packs[j]; }
+      }
+    }
+    if (!ecoLine || !ogLine) return null;
+    var k = Math.min(ecoLine.count, ogLine.count);
+    if (k < 1) return null;
+    ecoLine.count -= k;
+    ogLine.count -= k;
+    /* Remember how many packs moved into sets, so the cards can say so instead of showing "0 x". */
+    ecoCard.inSet = k; ecoCard.inSetLabel = ecoLine.label;
+    ogCard.inSet = k; ogCard.inSetLabel = ogLine.label;
+    return { count: k, unitPrice: 100, saving: 12 * k,
+      variant: ecoCard.p === "eco_kw" ? "pH 4,5–5,0" : "pH 6,0–6,5",
+      from: [ecoCard.key, ogCard.key] };
+  }
+
+  /* Recompute card prices, total, quote and wholesale flags - live for steppers. */
+  function recalc(res) {
+    var total = 0, quote = false, big = false, positions = 0;
+    for (var i = 0; i < res.cards.length; i++) {
+      var c = res.cards[i], p = 0, j;
+      for (j = 0; j < c.packs.length; j++) p += c.packs[j].count * c.packs[j].price;
+      c.price = p;
+      if (!c.included) continue;
+      if (c.quote) { quote = true; continue; }
+      total += p;
+      for (j = 0; j < c.packs.length; j++) {
+        if (c.packs[j].count > 0) { positions += c.packs[j].count; if (c.packs[j].size >= 1000 && c.p !== "zestaw") big = true; }
+      }
+    }
+    res.total = Math.round(total * 100) / 100;
+    res.hasQuote = quote;
+    res.hasBig = big;
+    res.positions = positions;
+    return res;
+  }
+
+  /* Main entry: state -> full result model. */
+  function computeSet(state) {
+    var g = group(state.group);
+    var a = action(g, state.action);
+    if (!g || !a) return null;
+    var reg = g.reg;
+    var unit = KONFIG.units[a.unit];
+    var trialOk = a.unit === "ha" && TRIAL_GROUPS.indexOf(g.id) !== -1;
+    var trial = !!state.trial && trialOk;
+    var amount = trial ? 1 : toNumber(state.amount);
+    var equip = reg === "pro" ? (state.equipment || []) : [];
+    var soil = state.soil || "niewiem";
+    var heavy = soil === "ciezka" && soilShown(a);
+    var acid = !!state.acid && !!a.acidSwitch;
+
+    var base = chooseBase(a.items, equip, reg);
+    var cards = [], checks = [], i;
+    var blockedAny = false;
+
+    for (i = 0; i < a.items.length; i++) {
+      var it = a.items[i];
+      var pid = (acid && it.acidTo) ? it.acidTo : it.p;
+      var prod = KONFIG.products[pid];
+      var role = it.role;
+      var sub = it.sub || "";
+      if (it.pair === "soil" && base.pair.length > 1 && i !== base.winner) { role = "opt"; sub = ALT; }
+      var blocked = !hasEquip(it, equip, reg);
+      if (blocked) blockedAny = true;
+
+      var qty = null, packs = [], surplus = 0;
+      var isQuote = !!it.quote || !!prod.quote;
+      if (it.fixedPack) {
+        var fp = null;
+        for (var f = 0; f < prod.packs.length; f++) { if (prod.packs[f].size === it.fixedPack) fp = prod.packs[f]; }
+        if (fp) { qty = fp.size; packs = [{ size: fp.size, label: fp.label, price: fp.price, count: 1 }]; }
+      } else if (it.rate !== null && it.rate !== undefined) {
+        var n = it.fixedArea ? it.fixedArea : amount;
+        var rate = it.rate;
+        if (heavy && (pid === "eco_uni" || pid === "eco_kw")) rate = r3(rate * 1.5);
+        qty = roundQty(rate * n, prod, reg);
+        if (!isQuote) {
+          var pick = pickPacks(qty, prod.packs);
+          packs = pick.lines;
+          surplus = pick.surplus;
+        }
+      }
+
+      cards.push({
+        key: pid + "_" + i,
+        idx: i,
+        p: pid,
+        name: prod.name,
+        why: prod.why,
+        page: prod.page,
+        unit: prod.unit,
+        dose: it.dose,
+        doseHeavy: heavy && (pid === "eco_uni" || pid === "eco_kw"),
+        when: it.when || a.label,
+        how: it.how,
+        src: it.zr ? ZRODLA[it.zr] : (it.src || ""),
+        zr: it.zr || "",
+        sub: sub,
+        gain: gainFor(g.id, a.id, pid),
+        consult: !!it.consult,
+        role: role,
+        qty: qty,
+        packs: packs,
+        surplus: surplus,
+        quote: isQuote,
+        quoteLabel: it.quoteLabel || (prod.packNote || "Zapytaj o ofertę"),
+        packNote: prod.packNote || "",
+        blocked: blocked,
+        needLabel: it.needLabel || "",
+        included: role !== "opt" && !blocked,
+        price: 0
+      });
+    }
+
+    var bundle = applyBundles(cards, reg);
+    if (bundle) {
+      var zp = KONFIG.products.zestaw;
+      cards.push({
+        key: "zestaw_x", idx: 99, p: "zestaw", name: zp.name, why: zp.why, page: zp.page, unit: "komplet",
+        dose: "komplet: worek 20 l + kanister 5 l", when: "", how: "", src: "", sub: "wariant " + bundle.variant + " · oszczędzasz " + bundle.saving + " zł",
+        role: "add", qty: null, packs: [{ size: 1, label: "komplet", price: 100, count: bundle.count }],
+        surplus: 0, quote: false, quoteLabel: "", packNote: "", blocked: false, needLabel: "", included: true, price: 0
+      });
+    }
+
+    /* ----- section D: rules that actually fired ----- */
+    if (g.checks) { for (i = 0; i < g.checks.length; i++) checks.push(g.checks[i]); }
+    if (a.notes) { for (i = 0; i < a.notes.length; i++) checks.push(a.notes[i]); }
+    if (base.pair.length > 1 && g.id !== "pole") {
+      var winP = a.items[base.winner].p;
+      if (winP === "nief") checks.push(KONFIG.texts.r3nief);
+      else if (winP === "filtr") checks.push(KONFIG.texts.r3filtr);
+    }
+    if (heavy) checks.push(KONFIG.texts.heavy);
+    if (trial) checks.push(KONFIG.texts.trial);
+    if (blockedAny) checks.push(KONFIG.texts.blocked);
+    for (i = 0; i < cards.length; i++) { if (cards[i].consult) { checks.push(KONFIG.texts.consult); break; } }
+    checks.push(KONFIG.texts.rounding);
+    checks.push(KONFIG.texts.horizon);
+
+    var ctx = [g.label, a.label, fmtAmount(amount) + " " + unit.sym];
+    if (reg === "pro" && equip.length) {
+      var eq = [];
+      for (i = 0; i < equip.length; i++) eq.push(equipLabel(equip[i]));
+      ctx.push(eq.join(", "));
+    }
+
+    var res = {
+      group: g.id, groupLabel: g.label, action: a.id, actionLabel: a.label,
+      reg: reg, unit: a.unit, unitSym: unit.sym, amount: amount, trial: trial,
+      soil: soil, heavy: heavy, acid: acid,
+      heading: trial ? "Zestaw próbny na 1 ha" : "Twój zestaw",
+      context: ctx.join(" · "),
+      cards: cards, checks: checks, bundle: bundle,
+      total: 0, hasQuote: false, hasBig: false, positions: 0
+    };
+    return recalc(res);
+  }
+
+  /* Show the "Jaka gleba?" row only where CARBOMAT ECO has a per-unit dose. */
+  function soilShown(a) {
+    for (var i = 0; i < a.items.length; i++) {
+      var it = a.items[i];
+      if ((it.p === "eco_uni" || it.p === "eco_kw") && it.rate !== null && it.rate !== undefined) return true;
+    }
+    return false;
+  }
+  function trialShown(g, a) {
+    return a.unit === "ha" && TRIAL_GROUPS.indexOf(g.id) !== -1;
+  }
+  function fmtAmount(n) {
+    var s = (Math.round(n * 100) / 100).toString();
+    return s.replace(".", ",");
+  }
+  function fmtPrice(n) {
+    var v = Math.round(n * 100) / 100;
+    var s = (Math.round(v) === v) ? String(v) : v.toFixed(2).replace(".", ",");
+    return s.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  }
+
+  /* Benefit texts shown next to optional products - what the product gives the crop (sources: product cards,
+     guides, persona review 2026-08-06). Context overrides first, then per product. */
+  var GAIN = {
+    nief: "Najwięcej materii organicznej za litr i najtańszy litr w rodzinie CARBOHUMIC: gęsta próchnica w płynie do polewania z beczki. Najmocniejsza odbudowa gleby, jeśli masz czym ją rozlać.",
+    filtr: "Ten sam ekstrakt humusowy, ale przefiltrowany, więc podasz go opryskiwaczem albo przez linie kroplujące i możesz dołożyć w sezonie przez fertygację. Poprawia warunki w strefie korzeni i pracę mikroorganizmów bez beczkowozu.",
+    maxi: "Więcej zdrowych liści w okresie wzrostu i szybsza regeneracja po chłodach, gradzie czy suszy; efekt przez liść widać szybciej niż po produktach doglebowych. Wspiera też pracę korzeni w czasie stresu.",
+    calbor: "Jędrniejszy, równiejszy owoc i lepsza trwałość po zbiorze, bo wapń i bor trafiają prosto na liść w czasie, gdy owoc rośnie. To argument o klasę handlową plonu, nie o jego ilość.",
+    sciolka: "Warstwa ściółki zatrzymuje wilgoć w strefie korzeni, ogranicza chwasty i podtrzymuje kwaśny odczyn. W odróżnieniu od kory nie zabiera roślinom azotu.",
+    humic_pole: "Sypki koncentrat kwasów humusowych z łatwo dostępnym potasem: działa od pierwszych tygodni i przez cały sezon, podnosi odczyn zakwaszonej gleby i pozwala ograniczyć nawożenie potasowe.",
+    humic_h: "Kondycjoner, potas i biostymulator w jednym: działa od pierwszych tygodni, podnosi odczyn zakwaszonej ziemi i poprawia wykorzystanie innych nawozów.",
+    eco_uni: "Lignit raz wymieszany z glebą pracuje latami jako magazyn wody i trwała materia organiczna. To inwestycja w stanowisko, nie coroczny nawóz.",
+    eco_kw: "Lignit o kwaśnym odczynie raz wymieszany z podłożem pracuje latami jako magazyn wody i trwała materia organiczna. To inwestycja w stanowisko, nie coroczny nawóz.",
+    ogrod: "Próchnica w płynie do konewki: podlewanie roztworem 1 % co dwa tygodnie karmi glebę i korzenie przez cały sezon. Rośliny lepiej znoszą przerwy w podlewaniu."
+  };
+  var GAIN_CTX = {
+    "pole/sezon/maxi": "Szybka biostymulacja przez liść w najważniejszej fazie 4–8 liści, gdy roślina ustala potencjał plonu. Na 1 ha sprawdzisz na własnym polu, czy warto ją włączyć do programu na większy areał.",
+    "pole/przed/filtr": "Płynne kwasy humusowe do opryskiwacza: oprysk gleby przed siewem poprawia warunki w strefie korzeni i pracę mikroorganizmów, bez sprzętu do produktów sypkich.",
+    "pole/przed/nief": "Najgęstsza próchnica w płynie do rozlewaka: najwięcej materii organicznej na hektar, gdy stawiasz na regenerację gleby.",
+    "pole/przed/humic_pole": "Sypki, do siewnika lub rozsiewacza: kwasy humusowe z potasem trafiają blisko nasion, dając szybki start i długie działanie w glebie.",
+    "warzywa/sezon/filtr": "Bieżąca biostymulacja przez liść: lepsze wykorzystanie dokarmiania dolistnego i wsparcie roślin w stresie, w przeliczeniu na hektar taniej niż biostymulator dolistny.",
+    "borowka/gleba/sciolka": "Odświeżona warstwa ściółki trzyma wilgoć pod krzewami, ogranicza chwasty i podtrzymuje kwaśny odczyn, którego borówka potrzebuje. Nie zabiera azotu jak kora.",
+    "ogrod/rosnie/sciolka": "Warstwa ściółki na rabatach i pod krzewami zatrzymuje wilgoć i ogranicza chwasty, więc podlewasz i pielisz rzadziej. Lekko zakwasza, więc najlepsza pod krzewy owocowe, iglaki i rabaty; nie zabiera roślinom azotu.",
+    "krzewy/rosna/sciolka": "Warstwa ściółki wokół krzewu zatrzymuje wilgoć i ogranicza chwasty, więc podlewasz i pielisz rzadziej. Lekko zakwasza, więc dobra pod iglaki i tuje; nie zabiera roślinom azotu.",
+    "szkolka/podloze/humic_pole": "Kwasy humusowe z potasem wymieszane w podłożu: lepsze ukorzenienie i wyrównany wzrost materiału w pojemnikach.",
+    "szkolka/sezon/maxi": "Oprysk na liść w produkcji młodego materiału: wyrównany wzrost i szybsza regeneracja po przesadzaniu lub chłodach."
+  };
+  function gainFor(gid, aid, pid) {
+    return GAIN_CTX[gid + "/" + aid + "/" + pid] || GAIN[pid] || "";
+  }
+
+  /* Question prefilled into the virtual advisor dock - spec 7 E. */
+  function advisorQuestion(res) {
+    var prods = [], i;
+    for (i = 0; i < res.cards.length; i++) {
+      var c = res.cards[i];
+      if (!c.included) continue;
+      prods.push(c.name + (c.qty !== null && c.qty !== undefined ? " " + fmtAmount(c.qty) + " " + c.unit : ""));
+    }
+    var eqTxt = "brak";
+    if (res.reg === "pro") {
+      var g = group(res.group);
+      eqTxt = res.context.split(" · ")[3] || "brak";
+      if (!g) eqTxt = "brak";
+    }
+    return "Mam " + res.groupLabel.toLowerCase() + ", " + res.actionLabel.toLowerCase() + ", " +
+      fmtAmount(res.amount) + " " + res.unitSym + ", sprzęt: " + eqTxt + ". Konfigurator proponuje: " +
+      (prods.length ? prods.join("; ") : "brak pozycji") + ". Czy to dobry dobór?";
+  }
+
+  return {
+    KONFIG: KONFIG,
+    ZRODLA: ZRODLA,
+    computeSet: computeSet,
+    pickPacks: pickPacks,
+    roundQty: roundQty,
+    recalc: recalc,
+    applyBundles: applyBundles,
+    group: group,
+    action: action,
+    soilShown: soilShown,
+    trialShown: trialShown,
+    fmtAmount: fmtAmount,
+    fmtPrice: fmtPrice,
+    advisorQuestion: advisorQuestion
+  };
+})();
+</script>
+<!-- engine:end -->
+
+<!-- ===== Konfigurator - interfejs (inline) ===== -->
+<script>
+/* =========================================================================
+   Configurator UI: accordion, steps, result rendering. Uses KF for all logic
+   and the shared hooks from cw.js (cart badge, advisor dock).
+   ========================================================================= */
+(function () {
+  "use strict";
+  var root = document.querySelector("[data-kf]");
+  if (!root || typeof KF === "undefined") return;
+  var K = KF.KONFIG;
+  var qs = function (s, r) { return (r || root).querySelector(s); };
+  var qsa = function (s, r) { return Array.prototype.slice.call((r || root).querySelectorAll(s)); };
+  function esc(s) {
+    return String(s === undefined || s === null ? "" : s).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  }
+  var ROLE_LABEL = { hero: "Baza", add: "Uzupełnienie", opt: "Opcja" };
+
+  /* ---------------------------------------------------------------- state */
+  var S = { group: null, action: null, equipment: [], equipDone: false, amount: "", soil: "niewiem", trial: false, acid: false };
+  var RES = null;
+  var reached = { q1: true };
+  var resultShown = false;
+  var openId = "q1";
+  var prevVisible = {};
+  var inited = false;
+  var ITEMS = ["q1", "q2", "q3", "q4", "result"];
+
+  function grp() { return S.group ? KF.group(S.group) : null; }
+  function act() { var g = grp(); return g && S.action ? KF.action(g, S.action) : null; }
+  function reg() { var g = grp(); return g ? g.reg : null; }
+  function seq() { return reg() === "hobby" ? ["q1", "q2", "q4"] : ["q1", "q2", "q3", "q4"]; }
+  function item(id) { return qs('[data-q="' + id + '"]'); }
+
+  function answered(id) {
+    switch (id) {
+      case "q1": return !!S.group;
+      case "q2": return !!S.action;
+      case "q3": return S.equipDone && S.equipment.length > 0;
+      case "q4": return resultShown;
+      default: return true;
+    }
+  }
+  function pillText(id) {
+    var g = grp(), a = act(), i;
+    switch (id) {
+      case "q1": return g ? g.label : "";
+      case "q2": return a ? a.label : "";
+      case "q3":
+        var out = [];
+        for (i = 0; i < K.equipment.length; i++) { if (S.equipment.indexOf(K.equipment[i].id) !== -1) out.push(K.equipment[i].short); }
+        return out.join(", ");
+      case "q4":
+        if (!a) return "";
+        var u = K.units[a.unit];
+        return (S.trial ? "próba na 1 ha" : KF.fmtAmount(numAmount()) + " " + u.sym);
+      default: return "";
+    }
+  }
+  function numAmount() {
+    var a = act(); if (!a) return 0;
+    var n = parseFloat(String(S.amount).replace(",", "."));
+    if (!isFinite(n) || n <= 0) n = K.units[a.unit].chips[0];
+    return n;
+  }
+
+  /* ------------------------------------------------------------- step 1 */
+  function renderGroups() {
+    var mount = qs("[data-kf-groups]"); if (!mount) return;
+    var html = "";
+    for (var s = 0; s < K.sections.length; s++) {
+      var sec = K.sections[s], tiles = "";
+      for (var i = 0; i < K.groups.length; i++) {
+        var g = K.groups[i];
+        if (g.section !== sec.id) continue;
+        tiles += '<button type="button" class="kf-tile" data-kf-group="' + esc(g.id) + '" aria-pressed="' + (S.group === g.id ? "true" : "false") + '">' +
+          '<span class="kf-tile__name">' + esc(g.label) + '</span>' +
+          (g.sub ? '<span class="kf-tile__sub">' + esc(g.sub) + '</span>' : "") + '</button>';
+      }
+      html += '<div class="kf-tiles__group"><span class="kf-tiles__name" id="kf-sec-' + esc(sec.id) + '">' + esc(sec.label) + '</span>' +
+        '<div class="kf-grid" role="group" aria-labelledby="kf-sec-' + esc(sec.id) + '">' + tiles + '</div></div>';
+    }
+    mount.innerHTML = html;
+  }
+
+  /* ------------------------------------------------------------- step 2 */
+  function renderActions() {
+    var mount = qs("[data-kf-actions]"); if (!mount) return;
+    var g = grp();
+    if (!g) { mount.innerHTML = ""; return; }
+    var html = "";
+    for (var i = 0; i < g.actions.length; i++) {
+      var a = g.actions[i];
+      html += '<button type="button" class="kf-tile" data-kf-action="' + esc(a.id) + '" aria-pressed="' + (S.action === a.id ? "true" : "false") + '">' +
+        '<span class="kf-tile__name">' + esc(a.label) + '</span>' +
+        (a.sub ? '<span class="kf-tile__sub">' + esc(a.sub) + '</span>' : "") + '</button>';
+    }
+    mount.innerHTML = html;
+  }
+
+  /* ------------------------------------------------------------- step 3 */
+  function renderEquip() {
+    var mount = qs("[data-kf-equip]"); if (!mount) return;
+    var html = "";
+    for (var i = 0; i < K.equipment.length; i++) {
+      var e = K.equipment[i];
+      html += '<label class="kf-equip__item"><input type="checkbox" class="wf-checkbox" data-kf-equip-id="' + esc(e.id) + '"' +
+        (S.equipment.indexOf(e.id) !== -1 ? " checked" : "") + '>' +
+        '<span class="wf-stack wf-stack--1"><span class="wf-w-semibold">' + esc(e.label) + '</span>' +
+        '<span class="wf-small wf-t-secondary">' + esc(e.sub) + '</span></span></label>';
+    }
+    mount.innerHTML = html;
+    var next = qs("[data-kf-equip-next]");
+    if (next) next.disabled = S.equipment.length === 0;
+  }
+
+  /* ------------------------------------------------------------- step 4 */
+  function renderAmount() {
+    var g = grp(), a = act();
+    if (!g || !a) return;
+    var u = K.units[a.unit];
+    var lab = qs("[data-kf-amount-label]"); if (lab) lab.textContent = u.field;
+    var sym = qs("[data-kf-amount-unit]"); if (sym) sym.textContent = u.sym;
+    var inp = qs("[data-kf-amount]"); if (inp) inp.value = String(S.amount).replace(".", ",");
+    var chips = qs("[data-kf-amount-chips]");
+    if (chips) {
+      var html = "", i;
+      for (i = 0; i < u.chips.length; i++) {
+        html += '<button type="button" class="kf-chip" data-kf-chip="' + u.chips[i] + '" aria-pressed="' +
+          (numAmount() === u.chips[i] ? "true" : "false") + '">' + u.chips[i] + '</button>';
+      }
+      chips.innerHTML = html;
+    }
+    var soilWrap = qs("[data-kf-soil]");
+    if (soilWrap) {
+      var show = KF.soilShown(a);
+      soilWrap.hidden = !show;
+      if (show) {
+        var sh = "", j;
+        for (j = 0; j < K.soils.length; j++) {
+          sh += '<button type="button" class="kf-chip" data-kf-soil-id="' + esc(K.soils[j].id) + '" aria-pressed="' +
+            (S.soil === K.soils[j].id ? "true" : "false") + '">' + esc(K.soils[j].label) + '</button>';
+        }
+        qs("[data-kf-soil-chips]").innerHTML = sh;
+      }
+    }
+    var trialWrap = qs("[data-kf-trial]");
+    if (trialWrap) {
+      trialWrap.hidden = !KF.trialShown(g, a);
+      var ti = qs("[data-kf-trial-input]"); if (ti) ti.checked = !!S.trial;
+    }
+    var acidWrap = qs("[data-kf-acid]");
+    if (acidWrap) {
+      acidWrap.hidden = !a.acidSwitch;
+      var ai = qs("[data-kf-acid-input]"); if (ai) ai.checked = !!S.acid;
+    }
+  }
+
+  /* -------------------------------------------------------------- render */
+  function render() {
+    var s = seq(), i;
+    var numbers = {};
+    for (i = 0; i < s.length; i++) numbers[s[i]] = i + 1;
+    for (i = 0; i < ITEMS.length; i++) {
+      var id = ITEMS[i], el = item(id); if (!el) continue;
+      var visible = id === "result" ? resultShown : (s.indexOf(id) !== -1 && !!reached[id]);
+      if (!visible) { el.setAttribute("data-state", "hidden"); continue; }
+      var st = id === openId ? "open" : "collapsed";
+      el.setAttribute("data-state", st);
+      var isAns = id !== "result" && answered(id);
+      el.setAttribute("data-answered", isAns ? "true" : "false");
+      var head = qs("[data-acc-head]", el); if (head) head.setAttribute("aria-expanded", st === "open" ? "true" : "false");
+      var no = qs("[data-kf-no]", el); if (no && numbers[id]) no.textContent = String(numbers[id]);
+      var pill = qs("[data-acc-pill]", el);
+      if (pill) { var pt = (isAns && st === "collapsed") ? pillText(id) : ""; pill.textContent = pt; pill.hidden = !pt; }
+    }
+    var now = {};
+    for (i = 0; i < ITEMS.length; i++) { var e2 = item(ITEMS[i]); if (e2 && e2.getAttribute("data-state") !== "hidden") now[ITEMS[i]] = true; }
+    if (inited) {
+      for (var k in now) {
+        if (now.hasOwnProperty(k) && !prevVisible[k]) {
+          var el3 = item(k); el3.classList.remove("cw-acc__item--enter"); void el3.offsetWidth; el3.classList.add("cw-acc__item--enter");
+        }
+      }
+    }
+    prevVisible = now;
+  }
+
+  function scrollOpen() {
+    var el = item(openId); if (!el) return;
+    try { el.scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch (e) {}
+  }
+  function advance() {
+    var s = seq(), i, next = null;
+    for (i = 0; i < s.length; i++) { if (!answered(s[i])) { next = s[i]; break; } }
+    var wasHidden;
+    if (next) {
+      var ni = s.indexOf(next);
+      for (i = 0; i <= ni; i++) reached[s[i]] = true;
+      wasHidden = !prevVisible[next];
+      openId = next;
+    } else {
+      for (i = 0; i < s.length; i++) reached[s[i]] = true;
+      wasHidden = !prevVisible.result;
+      resultShown = true;
+      openId = "result";
+      compute();
+    }
+    render();
+    if (wasHidden) scrollOpen();
+  }
+
+  function resetBelowGroup() {
+    S.action = null; S.equipment = []; S.equipDone = false; S.amount = ""; S.soil = "niewiem"; S.trial = false; S.acid = false;
+    RES = null; resultShown = false;
+    reached = { q1: true, q2: true };
+  }
+  function resetBelowAction() {
+    var a = act();
+    S.amount = a ? K.units[a.unit].chips[0] : "";
+    S.soil = "niewiem"; S.trial = false; S.acid = false;
+    RES = null; resultShown = false;
+  }
+
+  function compute() {
+    var g = grp(), a = act();
+    if (!g || !a) { RES = null; renderResult(); return; }
+    RES = KF.computeSet({
+      group: S.group, action: S.action, equipment: S.equipment,
+      amount: numAmount(), soil: S.soil, trial: S.trial, acid: S.acid
+    });
+    renderResult();
+  }
+  function liveRecompute() { if (resultShown) compute(); }
+
+  /* -------------------------------------------------------------- result */
+  function packHTML(c, i) {
+    var l = c.packs[i];
+    return '<div class="kf-pack">' +
+      '<span class="kf-pack__qty">' +
+      '<button type="button" class="wf-btn wf-btn--secondary wf-btn--icon wf-btn--sm" data-kf-minus="' + esc(c.key) + '|' + i + '" aria-label="Mniej opakowań: ' + esc(l.label) + ', ' + esc(c.name) + '"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-minus"></use></svg></button>' +
+      '<span class="kf-pack__num">' + l.count + '</span>' +
+      '<button type="button" class="wf-btn wf-btn--secondary wf-btn--icon wf-btn--sm" data-kf-plus="' + esc(c.key) + '|' + i + '" aria-label="Więcej opakowań: ' + esc(l.label) + ', ' + esc(c.name) + '"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-plus"></use></svg></button>' +
+      '</span>' +
+      '<span class="kf-pack__lab wf-small">× ' + esc(l.label) + '</span>' +
+      '<span class="kf-pack__price wf-small">' + KF.fmtPrice(l.count * l.price) + ' zł</span>' +
+      '</div>';
+  }
+
+  function cardHTML(c, isOpt) {
+    var cls = "kf-card";
+    if (c.role === "hero") cls += " kf-card--hero";
+    if (c.blocked && !c.included) cls += " kf-card--blocked";
+    else if (!c.included) cls += " kf-card--off";
+    var h = '<article class="' + cls + '">';
+    h += '<div class="kf-card__top"><div class="kf-card__meta">' +
+      '<span class="wf-overline wf-t-tertiary">' + esc(ROLE_LABEL[c.role] || "Zestaw") + '</span>' +
+      '<h5 class="wf-h5">' + esc(c.name) + '</h5></div>' +
+      '<label class="kf-card__pick"><input type="checkbox" class="wf-checkbox" data-kf-pick="' + esc(c.key) + '"' +
+      (c.included ? " checked" : "") + '> ' + (isOpt ? "dodaj do zestawu" : "w zestawie") + '</label></div>';
+    h += '<p class="wf-small wf-t-secondary">' + esc(c.why) + '</p>';
+    if (c.sub) h += '<p class="wf-small"><em>' + esc(c.sub) + '</em></p>';
+    if (c.blocked) h += '<p class="wf-small"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-info-circle"></use></svg> Wymaga: ' + esc(c.needLabel) + ' – tego sprzętu nie zaznaczyłeś. Możesz dodać produkt mimo to albo <a class="wf-link" href="#" data-kf-goto="q3">zmienić odpowiedź o sprzęcie</a>.</p>';
+    h += '<p class="wf-small">Dawka: ' + esc(c.dose) + (c.doseHeavy ? " × 1,5 (gleba ciężka)" : "") + '</p>';
+    if (c.consult) h += '<p class="kf-consult wf-small"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-info-circle"></use></svg> <span><strong>Dawka orientacyjna.</strong> Możesz kupić od razu, ale przed zastosowaniem <a class="wf-link" href="kontakt.html">skonsultuj dawkę z naszym doradcą</a>.</span></p>';
+    if (c.qty !== null && c.qty !== undefined) h += '<p class="wf-small wf-w-semibold">Łącznie: ' + KF.fmtAmount(c.qty) + ' ' + esc(c.unit) + '</p>';
+    if (c.quote) {
+      h += '<p class="wf-small wf-t-secondary">' + esc(c.quoteLabel) + '</p>' +
+        '<a class="wf-btn wf-btn--secondary wf-btn--sm" href="platforma-b2b.html">Zapytaj o ofertę</a>';
+    } else if (c.packs.length) {
+      h += '<div class="kf-packs">';
+      for (var i = 0; i < c.packs.length; i++) h += packHTML(c, i);
+      h += '</div>';
+      if (c.inSet > 0) h += '<p class="wf-small wf-w-semibold">+ ' + c.inSet + ' × ' + esc(c.inSetLabel) + ' w kompletach zestawu (karta niżej)</p>';
+      if (c.surplus > 0) h += '<p class="wf-caption wf-t-tertiary">nadwyżka ok. ' + KF.fmtAmount(c.surplus) + ' ' + esc(c.unit) + ' – zużyjesz w następnym zabiegu</p>';
+      h += '<div class="kf-card__sum wf-small"><span>' + (c.inSet > 0 ? "razem poza zestawem" : "razem") + '</span><span class="kf-pack__price">' + KF.fmtPrice(c.price) + ' zł</span></div>';
+    }
+    if (c.src) h += '<p class="wf-caption wf-t-tertiary">dawka wg: ' + esc(c.src) + '</p>';
+    h += '<a class="wf-link--quiet wf-small" href="' + esc(c.page) + '">strona produktu</a>';
+    h += '</article>';
+    return h;
+  }
+
+  function renderResult() {
+    var mount = qs("[data-kf-result]"); if (!mount) return;
+    if (!RES) { mount.innerHTML = ""; return; }
+    var g = grp(), i, c;
+    var mains = [], opts = [], live = [];
+    for (i = 0; i < RES.cards.length; i++) {
+      c = RES.cards[i];
+      if (c.role === "opt") opts.push(c); else mains.push(c);
+      if (c.included && c.how) live.push(c);
+    }
+    var h = '<div class="kf-res">';
+
+    /* head */
+    h += '<div class="kf-res__head"><h4 class="wf-h4">' + esc(RES.heading) + '</h4>' +
+      '<p class="wf-small wf-t-secondary">' + esc(RES.context) + '</p></div>';
+
+    /* A - selected products */
+    h += '<div class="kf-cards">';
+    for (i = 0; i < mains.length; i++) h += cardHTML(mains[i], false);
+    h += '</div>';
+
+    /* sum */
+    h += '<div class="kf-sum">' +
+      '<div class="kf-sum__buy"><span class="kf-sum__val">Razem ' + KF.fmtPrice(RES.total) + ' zł brutto</span>' +
+      (RES.hasQuote ? '<span class="wf-small wf-t-secondary">' + esc(K.texts.quote_add) + '</span>' : "") +
+      '<button type="button" class="wf-btn wf-btn--primary" data-kf-checkout>Kup w sklepie</button></div>' +
+      '<p class="kf-sum__alt wf-small wf-t-secondary">' + K.texts.b2b_alt + '</p></div>';
+
+    /* B - when and how */
+    if (live.length) {
+      h += '<section class="wf-stack wf-stack--4"><h4 class="wf-h4">Kiedy i jak – w skrócie</h4><div class="kf-when">';
+      for (i = 0; i < live.length; i++) {
+        c = live[i];
+        h += '<div class="kf-when__item"><span class="wf-w-semibold">' + esc(c.name) + '</span>' +
+          '<div class="kf-when__row"><span class="kf-when__lab">Kiedy</span><span class="wf-small"><span class="wf-badge wf-badge--outline">' + esc(c.when) + '</span></span></div>' +
+          '<div class="kf-when__row"><span class="kf-when__lab">Ile</span><span class="wf-small">' + esc(c.dose) + (c.consult ? ' <span class="wf-t-secondary">(dawka orientacyjna – przed zastosowaniem potwierdź ją z naszym doradcą)</span>' : '') + '</span></div>' +
+          '<div class="kf-when__row"><span class="kf-when__lab">Jak</span><span class="wf-small">' + esc(c.how) + '</span></div></div>';
+      }
+      h += '</div><p class="wf-alert wf-small"><span class="wf-alert__icon" aria-hidden="true"><svg class="wf-icon wf-icon--sm"><use href="#ti-info-circle"></use></svg></span><span>' + esc(K.texts.r9) + '</span></p></section>';
+    }
+
+    /* C - options: product card on the left, benefit / when / how on the right */
+    if (opts.length) {
+      h += '<section class="wf-stack wf-stack--4"><div class="wf-stack wf-stack--1"><h4 class="wf-h4">Możesz dołożyć do zestawu</h4>' +
+        '<p class="wf-small wf-t-secondary">Przy każdej pozycji: co da Twojej uprawie, kiedy ją zastosować i jak. Zaznacz „dodaj do zestawu", a ilość i cena wejdą do podsumowania.</p></div>' +
+        '<div class="kf-opts">';
+      for (i = 0; i < opts.length; i++) {
+        c = opts[i];
+        h += '<div class="kf-opt">' + cardHTML(c, true) +
+          '<div class="kf-opt__info">' +
+          (c.gain ? '<div class="kf-when__row"><span class="kf-when__lab">Co da uprawie</span><span class="wf-small">' + esc(c.gain) + '</span></div>' : '') +
+          (c.when ? '<div class="kf-when__row"><span class="kf-when__lab">Kiedy</span><span class="wf-small"><span class="wf-badge wf-badge--outline">' + esc(c.when) + '</span></span></div>' : '') +
+          (c.how ? '<div class="kf-when__row"><span class="kf-when__lab">Jak</span><span class="wf-small">' + esc(c.how) + '</span></div>' : '') +
+          '</div></div>';
+      }
+      h += '</div></section>';
+    }
+
+    /* E - CTA */
+    var priceTxt = KF.fmtPrice(RES.total) + " zł";
+    h += '<div class="wf-divider"></div><div class="kf-cta">';
+    h += '<button type="button" class="wf-btn wf-btn--primary wf-btn--lg wf-btn--block" data-kf-checkout>Kup w sklepie · ' + priceTxt + '</button>' +
+      '<p class="wf-small wf-t-secondary">' + K.texts.b2b_alt + '</p>';
+    h += '<div class="kf-quiet">' +
+      '<a class="wf-btn wf-btn--ghost wf-inline" href="kontakt.html"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-message-2"></use></svg> Skonsultuj zestaw z naszym doradcą</a>' +
+      '</div></div>';
+
+    h += '<p class="wf-caption wf-t-tertiary">' + esc(K.texts.footer) + '</p>';
+
+    /* D - why this set: rules that fired, collapsed, below every button */
+    h += '<details class="kf-why"><summary class="wf-small wf-w-semibold">Dlaczego taki dobór? Zasady, które zastosowaliśmy</summary><ul class="wf-list wf-small">';
+    for (i = 0; i < RES.checks.length; i++) h += '<li>' + esc(RES.checks[i]) + '</li>';
+    h += '</ul></details>';
+    h += '<div><button type="button" class="wf-btn wf-btn--ghost wf-btn--sm wf-inline" data-kf-restart><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-rotate"></use></svg> Zacznij od nowa</button></div>';
+    h += '</div>';
+    mount.innerHTML = h;
+  }
+
+  function cardByKey(key) {
+    if (!RES) return null;
+    for (var i = 0; i < RES.cards.length; i++) { if (RES.cards[i].key === key) return RES.cards[i]; }
+    return null;
+  }
+
+  /* ---------------------------------------------------------------- cart */
+  function bumpCart(by) {
+    try {
+      var n = (parseInt(sessionStorage.getItem("cw_cart") || "0", 10) || 0) + by;
+      sessionStorage.setItem("cw_cart", String(n));
+      var els = document.querySelectorAll("[data-cart-count]");
+      for (var i = 0; i < els.length; i++) { els[i].textContent = String(n); els[i].hidden = n === 0; }
+    } catch (e) {}
+  }
+  function checkout() {
+    if (!RES || !RES.positions) return;
+    bumpCart(RES.positions);
+    setTimeout(function () { location.href = "koszyk.html"; }, 300);
+  }
+  /* The only virtual-advisor button on the page sits below the configurator; when a set exists, it opens
+     the dock with the set already written into the question (spec 7 E). */
+  (function () {
+    var opener = document.querySelector(".cw-ask [data-jurek-open]");
+    if (!opener) return;
+    opener.addEventListener("click", function () {
+      if (!RES) return;
+      setTimeout(function () {
+        var inp = document.querySelector("[data-jurek-input]");
+        if (inp && !inp.value) { inp.value = KF.advisorQuestion(RES); inp.focus(); }
+      }, 0);
+    });
+  })();
+
+  function restart() {
+    S = { group: null, action: null, equipment: [], equipDone: false, amount: "", soil: "niewiem", trial: false, acid: false };
+    RES = null; reached = { q1: true }; resultShown = false; openId = "q1";
+    renderGroups(); renderActions(); renderEquip(); renderResult(); render();
+    var top = qs("[data-kf-top]"); if (top) { try { top.scrollIntoView({ behavior: "smooth", block: "start" }); } catch (e) {} }
+  }
+
+  /* -------------------------------------------------------------- events */
+  root.addEventListener("click", function (e) {
+    var t = e.target, el;
+
+    el = t.closest ? t.closest("[data-acc-head]") : null;
+    if (el) {
+      var it = el.closest("[data-q]");
+      if (it && it.getAttribute("data-state") !== "hidden") {
+        var id = it.getAttribute("data-q");
+        if (id && id !== openId) { openId = id; render(); }
+      }
+      return;
+    }
+    el = t.closest ? t.closest("[data-kf-group]") : null;
+    if (el) {
+      var gid = el.getAttribute("data-kf-group");
+      if (gid !== S.group) { S.group = gid; resetBelowGroup(); renderGroups(); renderActions(); renderEquip(); renderResult(); }
+      advance();
+      return;
+    }
+    el = t.closest ? t.closest("[data-kf-action]") : null;
+    if (el) {
+      var aid = el.getAttribute("data-kf-action");
+      if (aid !== S.action) { S.action = aid; resetBelowAction(); renderActions(); renderAmount(); renderResult(); }
+      advance();
+      return;
+    }
+    el = t.closest ? t.closest("[data-kf-equip-next]") : null;
+    if (el) { if (S.equipment.length) { S.equipDone = true; renderAmount(); advance(); } return; }
+    el = t.closest ? t.closest("[data-kf-chip]") : null;
+    if (el) {
+      S.amount = parseFloat(el.getAttribute("data-kf-chip"));
+      renderAmount(); liveRecompute(); render();
+      return;
+    }
+    el = t.closest ? t.closest("[data-kf-soil-id]") : null;
+    if (el) { S.soil = el.getAttribute("data-kf-soil-id"); renderAmount(); liveRecompute(); return; }
+    el = t.closest ? t.closest("[data-kf-submit]") : null;
+    if (el) { resultShown = true; compute(); openId = "result"; render(); scrollOpen(); return; }
+    el = t.closest ? t.closest("[data-kf-plus]") : null;
+    if (el) { stepPack(el.getAttribute("data-kf-plus"), 1); return; }
+    el = t.closest ? t.closest("[data-kf-minus]") : null;
+    if (el) { stepPack(el.getAttribute("data-kf-minus"), -1); return; }
+    el = t.closest ? t.closest("[data-kf-checkout]") : null;
+    if (el) { checkout(); return; }
+    el = t.closest ? t.closest("[data-kf-goto]") : null;
+    if (el) { e.preventDefault(); openId = el.getAttribute("data-kf-goto"); render(); scrollOpen(); return; }
+    el = t.closest ? t.closest("[data-kf-restart]") : null;
+    if (el) { restart(); return; }
+  });
+
+  function stepPack(ref, delta) {
+    if (!RES || !ref) return;
+    var parts = ref.split("|"), c = cardByKey(parts[0]), i = parseInt(parts[1], 10);
+    if (!c || !c.packs[i]) return;
+    c.packs[i].count = Math.max(0, c.packs[i].count + delta);
+    KF.recalc(RES);
+    renderResult();
+  }
+
+  root.addEventListener("change", function (e) {
+    var t = e.target, el;
+    el = t.closest ? t.closest("[data-kf-equip-id]") : null;
+    if (el) {
+      var id = el.getAttribute("data-kf-equip-id");
+      var at = S.equipment.indexOf(id);
+      if (el.checked && at === -1) S.equipment.push(id);
+      if (!el.checked && at !== -1) S.equipment.splice(at, 1);
+      var next = qs("[data-kf-equip-next]"); if (next) next.disabled = S.equipment.length === 0;
+      liveRecompute();
+      return;
+    }
+    el = t.closest ? t.closest("[data-kf-trial-input]") : null;
+    if (el) { S.trial = el.checked; liveRecompute(); render(); return; }
+    el = t.closest ? t.closest("[data-kf-acid-input]") : null;
+    if (el) { S.acid = el.checked; liveRecompute(); return; }
+    el = t.closest ? t.closest("[data-kf-pick]") : null;
+    if (el) {
+      var c = cardByKey(el.getAttribute("data-kf-pick"));
+      if (c) { c.included = el.checked; KF.recalc(RES); renderResult(); }
+      return;
+    }
+  });
+
+  root.addEventListener("input", function (e) {
+    var el = e.target.closest ? e.target.closest("[data-kf-amount]") : null;
+    if (!el) return;
+    S.amount = el.value;
+    var chips = qsa("[data-kf-chip]");
+    for (var i = 0; i < chips.length; i++) {
+      chips[i].setAttribute("aria-pressed", parseFloat(chips[i].getAttribute("data-kf-chip")) === numAmount() ? "true" : "false");
+    }
+    liveRecompute();
+  });
+
+  root.addEventListener("keydown", function (e) {
+    if (e.key !== "Enter") return;
+    var el = e.target.closest ? e.target.closest("[data-kf-amount]") : null;
+    if (!el) return;
+    e.preventDefault();
+    resultShown = true; compute(); openId = "result"; render(); scrollOpen();
+  });
+
+  /* ------------------------------------------------- deep link ?grupa= / ?crop= */
+  function prefill() {
+    var m = (location.search.match(/[?&]grupa=([^&]+)/) || [])[1];
+    if (!m) {
+      var c = (location.search.match(/[?&]crop=([^&]+)/) || [])[1];
+      if (c) { c = decodeURIComponent(c); m = K.aliases.hasOwnProperty(c) ? K.aliases[c] : c; }
+    } else { m = decodeURIComponent(m); }
+    if (!m) return;
+    var btn = qs('[data-kf-group="' + m.replace(/"/g, "") + '"]');
+    if (btn) btn.click();
+  }
+
+  renderGroups(); renderActions(); renderEquip(); render(); inited = true; prefill();
+})();
+</script>
+</body>
+</html>

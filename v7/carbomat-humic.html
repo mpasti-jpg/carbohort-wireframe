@@ -1,0 +1,1104 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CARBOMAT HUMIC – sypki węgiel aktywowany na pole i do ogrodu | Carbohort</title>
+<meta name="description" content="CARBOMAT HUMIC: przetworzony lignit w formie węgla aktywowanego – kondycjoner, nawóz i biostymulator w jednym. Parametry z aktualnej analizy, różnice wobec CARBOMAT ECO, dawki polowe (250 / 150 / 100–120 kg/ha) i ogrodowe (500 g na 10 m²).">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="wireframe.css">
+<link rel="stylesheet" href="cw.css">
+<link rel="stylesheet" href="carbomat-humic.css">
+<script src="../status.js"></script>
+<script src="../ce-rejestr.js"></script>
+<script src="chrome.js"></script>
+</head>
+<body>
+<a class="wf-sr-only" href="#main">Przejdź do treści</a>
+
+<cw-icons></cw-icons>
+
+<cw-navbar data-current="produkty"></cw-navbar>
+
+<!-- ===== Nawigacja po podstronie: kropki przy prawej krawędzi (scrollspy) =====
+     Zastępuje przyklejoną subnawigację z pigułkami i „sprawdź w sklepie" (uwaga
+     Mateusza 13.09). Etykiety pokazują się po najechaniu na cały nav; poniżej
+     900 px nav jest ukryty. -->
+<nav id="nawigacja-kropki" class="c5-dots" aria-label="Rozdziały strony CARBOMAT HUMIC" data-dots data-ce="CE-07">
+  <ol>
+    <li><a class="c5-dots__link" href="#hero" data-dot="hero"><span class="c5-dots__label">Start</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#parametry" data-dot="parametry"><span class="c5-dots__label">Parametry</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#roznice-eco-humic" data-dot="roznice-eco-humic"><span class="c5-dots__label">ECO czy HUMIC</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#ktory-dla-mnie" data-dot="ktory-dla-mnie"><span class="c5-dots__label">Który dla mnie</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#czym-jest" data-dot="czym-jest"><span class="c5-dots__label">Czym jest</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#sezon" data-dot="sezon"><span class="c5-dots__label">Kiedy stosować</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#faq" data-dot="faq"><span class="c5-dots__label">FAQ</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+  </ol>
+</nav>
+
+<main id="main">
+
+  <!-- ===== 1. HERO =====
+       Copy 1:1 z „Produkty na stronę" 29.07 (l. 295–304). Layout wzorca CARBOMAT
+       ECO (spec HUMIC §3): hero zajmuje cały pierwszy ekran pod menu serwisu,
+       prawa kolumna to jasnoszary panel z marginesem 30 px i packshotem na środku,
+       breadcrumb zszedł na dół lewej kolumny, lista zaufania pojechała do marquee
+       „Zalety" (§4).
+
+       ⚠️ SPRZECZNOŚĆ W ŹRÓDLE – ROZPUSZCZALNOŚĆ (krytyczna, do rozstrzygnięcia z Darkiem).
+       Lead hero, dokument 29.07 l. 296:
+         „Carbomat HUMIC to unikalny produkt hybrydowy, który łączy zalety granulowanych
+          produktów węglowych […] z korzyściami płynnych preparatów humusowych, zapewniając
+          szybkie rozpuszczanie, przenikanie do gleby i wysoką aktywność biologiczną."
+       FAQ nr 1 w TYM SAMYM dokumencie, l. 386–389:
+         „Carbomat HUMIC jest częściowo rozpuszczalny, ale nie rozpuszcza się całkowicie.
+          To celowa cecha produktu, a nie jego wada. […] Dlatego nie zalecamy rozpuszczania
+          Carbomatu HUMIC i stosowania go przez opryskiwacze, instalacje fertygacyjne czy inne
+          układy przeznaczone do preparatów całkowicie rozpuszczalnych. Nierozpuszczalne cząstki
+          huminów mogą powodować zatykanie filtrów i dysz."
+       Ryzyko operacyjne: rolnik, który przeczyta tylko pierwszy ekran, może podać produkt przez
+       fertygację i zapchać instalację (filtry, dysze).
+       Co robimy: copy Darka zostaje 1:1 (nie parafrazujemy klienta), ale pod leadem stoi
+       WIDOCZNY most do FAQ o rozpuszczalności, a pytanie stoi na 1. pozycji FAQ. Po przebudowie
+       akordeon FAQ jest cały zwinięty, więc most z hero otwiera to pytanie z kotwicy (#faq-1)
+       i przewija do niego – patrz 90-faq.js. Pytanie do Darka (AC #30867): czy „szybkie
+       rozpuszczanie" zostaje, czy zamieniamy je na brzmienie zgodne z FAQ, np. „szybkie
+       uwalnianie aktywnych substancji humusowych w glebie". Punkt dopisany do
+       40-strona-www/backlog.md, sekcja „Sprzeczności do rozstrzygnięcia". -->
+  <section id="hero" data-chapter="hero" data-ce="CE-08">
+    <div class="c5-wrap">
+      <div class="c5-hero">
+        <div class="c5-hero__copy">
+          <div class="c5-hero__copyin">
+            <!-- Postać produktu („sypki") w kickerze – w V4 stała w pierwszym zdaniu hero, w V5 padała dopiero
+                 w linijce o CARBOHUMIC. Źródło: nota 30-produkty/carbomat-humic.md, Specyfikacja („czarny / sypki"). -->
+            <span class="c5-kicker">Sypki · przetworzony lignit · węgiel aktywowany</span>
+            <h1 class="c5-h1">Jeden produkt, trzy zastosowania: kondycjoner, nawóz, biostymulator</h1>
+            <div class="c5-hero__lead">
+              <p>CARBOMAT HUMIC to unikalny produkt hybrydowy, który łączy zalety granulowanych produktów węglowych – łatwość aplikacji, wysoką zawartość substancji humusowych i długotrwałe działanie – z korzyściami płynnych preparatów humusowych, zapewniając szybkie rozpuszczanie, przenikanie do gleby i wysoką aktywność biologiczną.</p>
+              <p>Dostępne 3 frakcje: ziemista 0,1–2 mm, 2–4 mm, 4–8 mm.</p>
+            </div>
+            <div class="c5-btnrow">
+              <!-- Brak cen w kanonie – zamiast „kup teraz" uczciwe CTA (backlog: ceny i opakowania HUMIC do dostarczenia). -->
+              <a class="c5-btn c5-btn--dark" href="sklep.html?grupa=carbomat-humic">sprawdź dostępność i cenę</a>
+              <a class="c5-btn c5-btn--light" href="kontakt.html?produkt=carbomat-humic">zapytaj o ofertę</a>
+            </div>
+            <!-- Most hero → FAQ nr 1: rozbraja sprzeczność „szybkie rozpuszczanie" z leadu (patrz komentarz nad sekcją) -->
+            <p class="wf-small wf-t-tertiary">Szukasz płynu do podlewania lub oprysku? To rodzina <a class="wf-link" href="carbohumic.html">CARBOHUMIC</a> – CARBOMAT HUMIC jest sypki i stosuje się go doglebowo, a nie przez opryskiwacz czy instalację fertygacyjną (<a class="wf-link" href="#faq-1">dlaczego? – rozpuszczalność w FAQ</a>).</p>
+            <p class="wf-small wf-t-tertiary">Pole czy ogród? <a class="wf-link" href="#ktory-dla-mnie">Sprawdź, który sposób aplikacji i dawki są dla Ciebie</a>.</p>
+          </div>
+          <nav class="wf-breadcrumb c5-hero__crumbs" aria-label="Okruszki">
+            <ol class="wf-cluster wf-items-center">
+              <li><a class="wf-link--quiet" href="home.html">Strona główna</a></li>
+              <li><span class="wf-breadcrumb__sep" aria-hidden="true">/</span></li>
+              <li><a class="wf-link--quiet" href="produkty.html">Produkty Carbohort</a></li>
+              <li><span class="wf-breadcrumb__sep" aria-hidden="true">/</span></li>
+              <li aria-current="page">CARBOMAT HUMIC</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="c5-hero__stage">
+          <!-- ⚠️ Opakowań CARBOMAT HUMIC NIE MA w kanonie (backlog: „ceny i opakowania dla 5 z 6
+               produktów"). Worek 20 l to zastępnik „najbliższy wyglądem", do decyzji Mateusza –
+               dlatego alt mówi wprost „opakowanie poglądowe". Jedno opakowanie na środku panelu:
+               dopóki nie znamy linii opakowań HUMIC, nie ustawiamy obok siebie worka i torebki. -->
+          <img class="c5-hero__pack" src="img/opakowania/worek_20l.png" alt="CARBOMAT HUMIC – worek (opakowanie poglądowe)">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 1b. ZALETY – marquee (spec HUMIC §4) =====
+       Copy 1:1 z dawnej listy zaufania w hero (wyróżniki z kanonu: nota
+       30-produkty/carbomat-humic.md – pH 9–11 „tak mamy w dopuszczeniu" AC #30867
+       21.07; „ok. 60 kg K2O/t"; „ponad 80 pierwiastków"; certyfikat eko IUNG;
+       termin przydatności +5 lat). Jeden ciągły tor w duchu
+       serverobotics.com/delivery: duży tekst zalety → kwadratowa miniatura →
+       następna zaleta. Tor niesie ten sam zestaw pięciu zalet dwa razy (druga
+       połowa `aria-hidden`), więc przesunięcie o -50 % wraca dokładnie na
+       początek – pętla bez szwu. Pięć zalet HUMIC-a jest dłuższych od trzech
+       zalet ECO, więc połowa toru sama z siebie przekracza szerokość okna i nie
+       trzeba dublować zestawu w obrębie połowy (jak w ECO).
+       Bez `data-chapter`: kropki nawigacji bez zmian.
+       ⚠️ miniatury to placeholdery – zdjęcia do wygenerowania (prompty w spec §11). -->
+  <section class="c5-marq" id="zalety" aria-label="Zalety CARBOMAT HUMIC" data-ce="CE-09">
+    <ul class="c5-marq__track">
+      <li class="c5-marq__item">
+        <span class="c5-marq__txt">pH 9–11 · podnosi odczyn gleb zakwaszonych</span>
+        <span class="c5-marq__thumb c5-marq__thumb--ph" aria-hidden="true"></span>
+      </li>
+      <li class="c5-marq__item">
+        <span class="c5-marq__txt">~60 kg K₂O w tonie produktu</span>
+        <span class="c5-marq__thumb c5-marq__thumb--ph" aria-hidden="true"></span>
+      </li>
+      <li class="c5-marq__item">
+        <span class="c5-marq__txt">Ponad 80 pierwiastków</span>
+        <span class="c5-marq__thumb c5-marq__thumb--ph" aria-hidden="true"></span>
+      </li>
+      <li class="c5-marq__item">
+        <span class="c5-marq__txt">Certyfikat ekologiczny · IUNG</span>
+        <span class="c5-marq__thumb c5-marq__thumb--ph" aria-hidden="true"></span>
+      </li>
+      <li class="c5-marq__item">
+        <span class="c5-marq__txt">Termin przydatności +5 lat</span>
+        <span class="c5-marq__thumb c5-marq__thumb--ph" aria-hidden="true"></span>
+      </li>
+      <li class="c5-marq__item" aria-hidden="true">
+        <span class="c5-marq__txt">pH 9–11 · podnosi odczyn gleb zakwaszonych</span>
+        <span class="c5-marq__thumb c5-marq__thumb--ph" aria-hidden="true"></span>
+      </li>
+      <li class="c5-marq__item" aria-hidden="true">
+        <span class="c5-marq__txt">~60 kg K₂O w tonie produktu</span>
+        <span class="c5-marq__thumb c5-marq__thumb--ph" aria-hidden="true"></span>
+      </li>
+      <li class="c5-marq__item" aria-hidden="true">
+        <span class="c5-marq__txt">Ponad 80 pierwiastków</span>
+        <span class="c5-marq__thumb c5-marq__thumb--ph" aria-hidden="true"></span>
+      </li>
+      <li class="c5-marq__item" aria-hidden="true">
+        <span class="c5-marq__txt">Certyfikat ekologiczny · IUNG</span>
+        <span class="c5-marq__thumb c5-marq__thumb--ph" aria-hidden="true"></span>
+      </li>
+      <li class="c5-marq__item" aria-hidden="true">
+        <span class="c5-marq__txt">Termin przydatności +5 lat</span>
+        <span class="c5-marq__thumb c5-marq__thumb--ph" aria-hidden="true"></span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ===== 2. PARAMETRY PRODUKTU (film wyznacza granice sekcji) =====
+       Układ pozycji wg zamówienia Darka (dokument 29.07, l. 284–294): odczyn,
+       sucha masa, substancje humusowe z rozbiciem, materia organiczna, węgiel
+       organiczny + azot, potas, fosfor. Wartości z aktualnej analizy
+       laboratoryjnej 06.2026 (nota 30-produkty/carbomat-humic.md), pH 9–11
+       wg dopuszczenia (Darek, AC #30867, 21.07).
+       ⚠️ NIE przenosimy tu „substancji humusowych do ~70%" ze strony CARBOMAT ECO –
+       to inna kategoria danych i inny produkt (defekt §10.1 analizy 29.07).
+       ⚠️ Nazwy laboratorium celowo nie publikujemy (decyzja 27.07: „badania robi
+       laboratorium zagraniczne – sposób komunikacji do przemyślenia").
+       Layout wzorca CARBOMAT ECO (spec HUMIC §5): sekcja na całą wysokość ekranu,
+       w tle przyklejona warstwa mediów pod maską .4; kadrem jest cała sekcja
+       (30 px marginesu z boków), treść przewija się po mediach. -->
+  <section class="c5-params" id="parametry" data-chapter="parametry" data-params data-ce="CE-10">
+    <!-- warstwa mediów musi stać w DOM PRZED treścią (leży pod nią) -->
+    <div class="c5-params__bg" aria-hidden="true">
+      <div class="c5-params__frame">
+        <!-- ⚠️ wideo do wygenerowania (prompt w spec §11: makro CARBOMAT HUMIC, 16:9, pętla
+             8–10 s, bez audio). Do czasu dostawy stoi tu placeholder w tej samej klasie
+             `c5-params__media`, więc podmiana na <video> to jeden element; moduł 30-parametry.js
+             obsłuży wideo od razu, gdy plik dojdzie. -->
+        <div class="c5-params__media c5-ph c5-ph--dark" aria-hidden="true"><span class="c5-ph__label">wideo 16:9 · makro CARBOMAT HUMIC</span></div>
+      </div>
+    </div>
+    <div class="c5-wrap c5-params__body">
+      <h2 class="c5-params__title">Parametry produktu · w suchej masie</h2>
+      <dl class="c5-params__rows">
+        <div class="c5-params__row"><dt>Odczyn (pH)</dt><dd>9–11 <span class="c5-dim">(w analizie 9,84)</span></dd></div>
+        <div class="c5-params__row"><dt>Sucha masa</dt><dd>~56%</dd></div>
+        <div class="c5-params__row"><dt>Substancje humusowe</dt><dd>~48% <span class="c5-dim">(huminowe ~45% · fulwowe ~2,5%)</span></dd></div>
+        <div class="c5-params__row"><dt>Materia organiczna</dt><dd>~50%</dd></div>
+        <div class="c5-params__row"><dt>Węgiel organiczny</dt><dd>~28%</dd></div>
+        <div class="c5-params__row"><dt>Azot (N)</dt><dd>~0,64%</dd></div>
+        <div class="c5-params__row"><dt>Potas (K₂O)</dt><dd>~11,3% <span class="c5-dim">(≈6% na produkcie, ok. 60 kg/t)</span></dd></div>
+        <div class="c5-params__row"><dt>Fosfor (P₂O₅)</dt><dd>~0,02%</dd></div>
+      </dl>
+      <!-- ⚠️ realne PDF-y (aktualna analiza + karta produktu + certyfikaty) do podpięcia – stuby jak we wzorcu -->
+      <a class="c5-params__dl" href="centrum-wiedzy.html#magazyn"><svg class="wf-icon" aria-hidden="true"><use href="#ti-download"></use></svg> Pobierz aktualną analizę</a>
+      <div class="c5-params__actions">
+        <a class="c5-btn c5-btn--sm c5-btn--ondark" href="centrum-wiedzy.html#magazyn"><svg class="wf-icon" aria-hidden="true"><use href="#ti-file-text"></use></svg> Karta produktu</a>
+        <a class="c5-btn c5-btn--sm c5-btn--ondark" href="centrum-wiedzy.html#magazyn"><svg class="wf-icon" aria-hidden="true"><use href="#ti-file-invoice"></use></svg> Certyfikaty</a>
+      </div>
+      <p class="c5-params__src">Wartości w suchej masie – aktualna analiza laboratoryjna (06.2026). Odczyn podajemy w zakresie z dopuszczenia; w analizie pH 9,84.</p>
+      <!-- ⚠️ Tabela jest zamówiona przez Darka wprost pod porównywanie produktów (dokument 29.07, l. 294:
+           „Od razu już widać pierwsze dane dla klienta do porównania z resztą produktów"). W zestawieniu
+           z tabelą na carbomat.html surowy CARBOMAT ECO wygląda na bogatszy w organikę od droższego,
+           aktywowanego HUMIC-a. Liczb HUMIC nie ruszamy – są poprawne (Fitosoil 06.2026). Zdanie niżej
+           rozbraja porównanie dla klienta; wiersz „Substancje humusowe do ~70%" po stronie CARBOMAT ECO
+           to defekt §10.1 analizy 29.07 (70% dotyczy kwasów humusowych w lignitach W OGÓLE, nie produktu)
+           i wymaga przeformułowania na tamtej stronie – zgłoszone w 40-strona-www/backlog.md. -->
+      <p class="c5-params__src">Liczb z tej tabeli nie porównuj wprost z CARBOMAT ECO. CARBOMAT HUMIC to wyekstrahowany i aktywowany koncentrat substancji humusowych o suchej masie ~56%, a CARBOMAT ECO to surowy lignit – inna postać produktu i inna baza odniesienia. O efekcie w polu decyduje dostępność składników dla roślin, nie sama zawartość w tabeli.</p>
+    </div>
+  </section>
+
+  <!-- ===== 3. ECO CZY HUMIC (sekcja spoza wzorca) =====
+       W dokumencie tabela leży w środku „Czym jest" jako punkt 2 (l. 337–344).
+       Wyniesiona wysoko, bo rozstrzyga kanibalizację dwóch produktów sypkich
+       i jest kluczowa dla decyzji zakupowej (analiza 29.07 §9).
+       Rebuilt 13.09 (spec §6): the two-column table becomes four "from -> to"
+       cards, so the set reads as one process (extraction and activation) instead
+       of a score sheet. All four pairs of statements are the baseline copy,
+       in the baseline order; the only new strings are the product tags and the
+       numbers 01-04. -->
+  <section class="c5-sec c5-diff-sec" id="roznice-eco-humic" data-chapter="roznice-eco-humic">
+    <div class="c5-wrap">
+      <span class="c5-kicker c5-kicker--center">ECO czy HUMIC</span>
+      <div class="c5-head">
+        <h2 class="c5-h2 c5-h2--center">Największe różnice między CARBOMAT ECO a CARBOMAT HUMIC.</h2>
+        <!-- „z tego samego rodzaju surowca – lignitu": źródła mówią tylko o rodzaju surowca (dokument 29.07:
+             „powstaje z naturalnego lignitu, jednak w przeciwieństwie do surowego węgla brunatnego…";
+             nota HUMIC: „przetworzony miękki węgiel brunatny (lignit)"; nota ECO: „surowy, młody i miękki lignit").
+             ⚠️ Nigdzie NIE ma potwierdzenia, że to ten sam surowiec w sensie złoża/dostawcy – pytanie do Darka,
+             wpisane do 40-strona-www/backlog.md. -->
+        <p class="c5-lead c5-lead--center">Dwa produkty sypkie z tego samego rodzaju surowca – lignitu – i dwa różne tempa działania. Cztery najważniejsze różnice, a do tego lista sytuacji, w których wybierasz HUMIC.</p>
+      </div>
+
+      <ol id="roznice-karty" class="c5-diff" aria-label="Cztery różnice między CARBOMAT ECO a CARBOMAT HUMIC" data-reveal-group data-ce="CE-34" data-ce-wariant="przemiana" data-ce-od="#roznice-eco-humic">
+        <li class="c5-diff__card" data-reveal>
+          <span class="c5-diff__num" aria-hidden="true">01</span>
+          <div class="c5-diff__from">
+            <span class="c5-diff__tag">CARBOMAT ECO</span>
+            <p>Działa powoli</p>
+          </div>
+          <span class="c5-diff__arrow" aria-hidden="true"><svg class="wf-icon"><use href="#ti-arrow-down"></use></svg></span>
+          <div class="c5-diff__to">
+            <span class="c5-diff__tag">CARBOMAT HUMIC</span>
+            <p>Działa już od pierwszych dni po zastosowaniu</p>
+          </div>
+        </li>
+        <li class="c5-diff__card" data-reveal>
+          <span class="c5-diff__num" aria-hidden="true">02</span>
+          <div class="c5-diff__from">
+            <span class="c5-diff__tag">CARBOMAT ECO</span>
+            <p>Większość substancji jest trudno dostępna dla roślin</p>
+          </div>
+          <span class="c5-diff__arrow" aria-hidden="true"><svg class="wf-icon"><use href="#ti-arrow-down"></use></svg></span>
+          <div class="c5-diff__to">
+            <span class="c5-diff__tag">CARBOMAT HUMIC</span>
+            <p>Zawiera aktywowane substancje humusowe łatwo dostępne dla roślin</p>
+          </div>
+        </li>
+        <li class="c5-diff__card" data-reveal>
+          <span class="c5-diff__num" aria-hidden="true">03</span>
+          <div class="c5-diff__from">
+            <span class="c5-diff__tag">CARBOMAT ECO</span>
+            <p>Poprawia właściwości gleby głównie w długim okresie</p>
+          </div>
+          <span class="c5-diff__arrow" aria-hidden="true"><svg class="wf-icon"><use href="#ti-arrow-down"></use></svg></span>
+          <div class="c5-diff__to">
+            <span class="c5-diff__tag">CARBOMAT HUMIC</span>
+            <p>Łączy szybkie wsparcie roślin z długotrwałą poprawą gleby</p>
+          </div>
+        </li>
+        <li class="c5-diff__card" data-reveal>
+          <span class="c5-diff__num" aria-hidden="true">04</span>
+          <div class="c5-diff__from">
+            <span class="c5-diff__tag">CARBOMAT ECO</span>
+            <p>Materiał o niewielkim stopniu przetworzenia</p>
+          </div>
+          <span class="c5-diff__arrow" aria-hidden="true"><svg class="wf-icon"><use href="#ti-arrow-down"></use></svg></span>
+          <div class="c5-diff__to">
+            <span class="c5-diff__tag">CARBOMAT HUMIC</span>
+            <p>Produkt poddany ekstrakcji i aktywacji</p>
+          </div>
+        </li>
+      </ol>
+
+      <div id="roznice-dla-ciebie" class="c5-pick" data-reveal data-ce="CE-35">
+        <div class="c5-pick__head">
+          <h3 class="c5-pick__title">Dla Ciebie, jeśli:</h3>
+          <div class="c5-btnrow">
+            <a class="c5-btn c5-btn--dark" href="konfigurator.html">dobierz właściwy produkt</a>
+            <a class="c5-btn c5-btn--light" href="carbomat.html">zobacz CARBOMAT ECO</a>
+          </div>
+        </div>
+        <ul class="c5-pick__list">
+          <li><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-check"></use></svg> <span>Bardziej interesuje Cię postać sypka kwasów humusowych</span></li>
+          <li><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-check"></use></svg> <span>Oczekujesz po produkcie z jednej strony szybkiego efektu na roślinach, a z drugiej wydłużonej trwałości w glebie</span></li>
+          <li><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-check"></use></svg> <span>Chcesz jednym zabiegiem uzupełnić niedobory organiki i potasu</span></li>
+          <li><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-check"></use></svg> <span>Masz zakwaszoną glebę i szukasz z czym wartościowym połączyć zabieg wapnowania</span></li>
+          <li><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-check"></use></svg> <span>Masz słabą glebę i chcesz wspomóc rośliny na starcie</span></li>
+          <li><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-check"></use></svg> <span>Chcesz zaprawić karpy lub korzenie roślin w węgiel aktywny</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 4. KTÓRY DLA MNIE: odbiorca, nie wariant produktu =====
+       HUMIC ma jeden skład i trzy frakcje – rozstrzygamy więc ODBIORCĘ.
+       Rebuilt 13.09 (spec §7): the tabs are gone – there is nothing to switch
+       between. Two alternating rows (photo | copy) carry the name, the teaser
+       and the doses; one button per row opens a pop-up with the full card.
+       Treść 1:1 z sekcji „02. Jak stosować?" (dokument 29.07, l. 305–331).
+       Kanał sprzedażowy pro / detal wpięty w bloki – zgoda Darka (l. 376).
+       ⚠️ FLAGA REGULACYJNA: decyzja MRiRW G-1528/24 obejmuje działkę i dom, a produkt
+       pozycjonujemy pole-first. Darek rozstrzygnął to 21.07 (AC #30867): „Na stronie
+       możemy pisać co chcemy – proponuję to wykorzystać, a na etykiecie to co musimy."
+       Ograniczenia decyzji zostają tematem ETYKIET (prowadzi je CarboHort). Flaga
+       zostaje w kodzie, bo przy zmianie właściciela tematu łatwo ją zgubić. -->
+  <section class="c5-sec" id="ktory-dla-mnie" data-chapter="ktory-dla-mnie">
+    <div class="c5-wrap">
+      <span class="c5-kicker c5-kicker--center">Który dla mnie</span>
+      <div class="c5-head">
+        <h2 class="c5-h2 c5-h2--center">Ten sam produkt, dwa światy: pole i&nbsp;ogród.</h2>
+        <p class="c5-lead c5-lead--center">CARBOMAT HUMIC to dziś przede wszystkim produkt dla rolnictwa polowego, ale na pewno świetnie sprawdzi się też w Twoim domu lub ogrodzie. Wybierz, gdzie chcesz zastosować, a dopasujemy do Ciebie sposób aplikacji, dawki i formę zakupu.</p>
+      </div>
+
+      <!-- Wiersz 1: Profesjonalista – zdjęcie po lewej, opis po prawej -->
+      <article class="c5-who" id="wariant-pro" data-who="pro" data-ce="CE-36" data-ce-od="#ktory-dla-mnie">
+        <div class="c5-who__media" data-who-media>
+          <div class="c5-who__ph c5-ph" role="img" aria-label="Zdjęcie poglądowe: uprawa polowa"></div>
+          <!-- the placeholder label sits on the frame, not on the parallaxed layer,
+               so the drifting crop never pushes it out of the visible area -->
+          <span class="c5-ph__label" aria-hidden="true">foto 4:5 · profesjonalista · pole</span>
+        </div>
+        <div class="c5-who__body" data-reveal>
+          <h3 class="c5-who__name">Profesjonalista</h3>
+          <p class="c5-who__teaser">Uprawy polowe – dedykowany uprawom polowym zbóż, warzyw / strip-till, pogłównie, pasowo, całopowierzchniowo.</p>
+          <div class="c5-who__brief">
+            <!-- Dawki 1:1 z dokumentu; potwierdzone przez Darka (AC #30867, 21.07) -->
+            <span class="c5-label">Dawki:</span>
+            <ul class="c5-who__list">
+              <li>przed siewem / sadzeniem po całej powierzchni – co najmniej 250 kg/ha</li>
+              <li>pasowo – co najmniej 150 kg/ha</li>
+              <li>pogłównie – do 250 kg/ha</li>
+              <li>strip-till – 100–120 kg/ha</li>
+            </ul>
+          </div>
+          <button type="button" class="c5-btn c5-btn--dark" data-pop-open="pop-pro" aria-haspopup="dialog" aria-controls="pop-pro">Sposób aplikacji, dawki i zakup</button>
+        </div>
+      </article>
+
+      <!-- Pop-up 1: pełna karta Profesjonalisty. Bez JS leży w biegu strony pod
+           swoim wierszem (cała treść widoczna); z JS jedzie na koniec <body>. -->
+      <div class="c5-pop" id="pop-pro" data-pop role="dialog" aria-modal="true" aria-labelledby="pop-pro-t" tabindex="-1" data-ce="CE-37">
+        <div class="c5-pop__panel">
+          <button type="button" class="c5-pop__close" data-pop-close aria-label="Zamknij"><svg class="wf-icon" aria-hidden="true"><use href="#ti-x"></use></svg></button>
+          <div class="c5-pop__scroll" data-lenis-prevent>
+            <header class="c5-pop__head">
+              <h3 class="c5-pop__title" id="pop-pro-t">Profesjonalista</h3>
+              <p class="c5-muted">Uprawy polowe – dedykowany uprawom polowym zbóż, warzyw / strip-till, pogłównie, pasowo, całopowierzchniowo.</p>
+            </header>
+            <div class="c5-pop__body">
+              <div class="c5-variant__block">
+                <!-- Cele stosowania 1:1 z kanonu: nota 30-produkty/carbomat-humic.md, sekcja „Zastosowania / uprawy"
+                     (rekultywacja, remediacja, kompleks sorpcyjny, agregaty glebowe, gospodarka wodna / higroskopijność,
+                     zatrzymywanie jonów amonowych, chelatacja pierwiastków uśpionych do humianów). W V4 był to blok
+                     6 kart „Uprawy profesjonalne"; bez tego strona nie mówi profesjonaliście, PO CO ma produkt kupić.
+                     Bez nowych liczb – same cele z kanonu. -->
+                <span class="c5-label">Cel stosowania:</span>
+                <ul class="c5-muted">
+                  <li>rekultywacja gleb zdegradowanych i ubogich w materię organiczną – dostarcza związki tożsame z próchnicą glebową</li>
+                  <li>remediacja gleb skażonych biologicznie i chemicznie – wysoka sorpcja i reaktywność surowca</li>
+                  <li>budowanie w glebie kompleksu sorpcyjnego, czyli magazynu na składniki odżywcze, i tworzenie agregatów glebowych</li>
+                  <li>poprawa gospodarki wodnej – produkt higroskopijny, o wysokiej pojemności wodnej cząstek węgla</li>
+                  <li>ograniczanie strat azotu – zatrzymuje w glebie jony amonowe</li>
+                  <li>aktywacja i chelatacja pierwiastków uśpionych w glebie do łatwo przyswajalnych humianów</li>
+                  <li>suplementacja gleby w łatwo przyswajalny potas oraz zaopatrzenie nasion w składniki odżywcze na start</li>
+                </ul>
+              </div>
+              <div class="c5-variant__block">
+                <span class="c5-label">Gdzie i jak:</span>
+                <ul class="c5-muted">
+                  <li>Uprawy polowe jare i ozime, siane i sadzone (bulwy i sadzonki)</li>
+                  <li>Do mieszania z każdym rodzajem gleby – po całej powierzchni lub pasowo</li>
+                  <li>Przed siewem / sadzeniem lub pogłównie po powierzchni w trakcie wegetacji</li>
+                  <li>Strip-till – współrzędne z siewem / sadzeniem</li>
+                  <li>Może zastąpić nawozy startowe (wysoki potas, zasobne w organikę oraz mikroelementy)</li>
+                </ul>
+              </div>
+              <div class="c5-variant__block">
+                <span class="c5-label">Sposób aplikacji:</span>
+                <ul class="c5-muted">
+                  <li>rozrzut po powierzchni – pasowo lub strip-till, wymieszać z wierzchnią warstwą gleby do 10 cm</li>
+                  <li>podsiewaczem w trakcie siewu</li>
+                  <!-- Mieszalność i łączenie sposobów aplikacji – kanon: nota 30-produkty/carbomat-humic.md,
+                       sekcja „Dawkowanie i stosowanie": „Można mieszać z wapnem nawozowym i innymi nawozami
+                       granulowanymi, stosowanymi poprzez rozrzutnik." oraz „Sposoby umieszczania produktu w glebie
+                       można dowolnie łączyć, np. stosowanie pasowe wraz ze współrzędnym w technologii strip-till."
+                       Informacja operacyjna (jeden przejazd zamiast dwóch); w V5 zginęła, a tabletka dr. Jurka
+                       „Czy mogę mieszać z nawozami granulowanymi?" pytała o coś, czego strona nie mówiła. -->
+                  <li>można mieszać z wapnem nawozowym i innymi nawozami granulowanymi, stosowanymi przez rozrzutnik</li>
+                  <li>sposoby aplikacji można dowolnie łączyć, np. stosowanie pasowe wraz ze współrzędnym w technologii strip-till</li>
+                </ul>
+              </div>
+              <div class="c5-variant__block">
+                <!-- Dawki 1:1 z dokumentu; potwierdzone przez Darka (AC #30867, 21.07) -->
+                <span class="c5-label">Dawki:</span>
+                <ul class="c5-muted">
+                  <li>przed siewem / sadzeniem po całej powierzchni – co najmniej 250 kg/ha</li>
+                  <li>pasowo – co najmniej 150 kg/ha</li>
+                  <li>pogłównie – do 250 kg/ha</li>
+                  <li>strip-till – 100–120 kg/ha</li>
+                </ul>
+              </div>
+              <div class="c5-variant__block">
+                <span class="c5-label">Częstotliwość:</span>
+                <p class="c5-muted">Jeden zabieg w roku, najlepiej wiosną lub jesienią. Przy stosowaniu corocznym efekt się kumuluje! Nie stosujemy na rośliny mokre.</p>
+              </div>
+              <div class="c5-variant__block">
+                <span class="c5-label">Odkwaszanie gleby:</span>
+                <p class="c5-muted">Produkt o pH 9–11 – idealny do użyźniania i stabilizowania pH, połączyć aplikację z wapnowaniem dla lepszego i trwalszego efektu.</p>
+              </div>
+              <div class="c5-variant__block">
+                <span class="c5-label">Zakup:</span>
+                <p class="c5-muted">Kanał hurtowy – przygotujemy ofertę i Twoją cenę pod areał.</p>
+                <!-- ⚠️ brak opakowań i cen HUMIC w kanonie (backlog: „ceny i opakowania dla 5 z 6 produktów") -->
+                <p class="c5-gap c5-gap--inline">Opakowania i ceny hurtowe – dane w uzupełnieniu.</p>
+                <div class="c5-btnrow">
+                  <a class="c5-btn c5-btn--dark" href="kontakt.html?produkt=carbomat-humic">zapytaj o ofertę</a>
+                  <a class="c5-btn c5-btn--light" href="platforma-b2b.html">masz konto? zaloguj się</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Wiersz 2: Hobbysta – opis po lewej, zdjęcie po prawej -->
+      <article class="c5-who c5-who--flip" id="wariant-hobby" data-who="hobby" data-ce="CE-36" data-ce-wariant="odwrocony">
+        <div class="c5-who__media" data-who-media>
+          <div class="c5-who__ph c5-ph" role="img" aria-label="Zdjęcie poglądowe: ogród i dom"></div>
+          <span class="c5-ph__label" aria-hidden="true">foto 4:5 · hobbysta · ogród i dom</span>
+        </div>
+        <div class="c5-who__body" data-reveal>
+          <h3 class="c5-who__name">Hobbysta</h3>
+          <p class="c5-who__teaser">Ogród i dom – produkt doskonale sprawdzi się w doniczkach, warzywnikach, zielnikach czy rabatach.</p>
+          <div class="c5-who__brief">
+            <span class="c5-label">Dawki:</span>
+            <ul class="c5-who__list">
+              <li>przygotowanie podłoża – wymieszaj dokładnie 20–30 g produktu z 10 l podłoża</li>
+              <li>domieszka do gleby – wymieszaj 500 g produktu z 10 m² gleby na głębokość do 10 cm</li>
+              <li>posypowo – cienka warstwa przykrywająca powierzchnię gleby / podłoża</li>
+            </ul>
+          </div>
+          <button type="button" class="c5-btn c5-btn--dark" data-pop-open="pop-hobby" aria-haspopup="dialog" aria-controls="pop-hobby">Sposób aplikacji, dawki i zakup</button>
+        </div>
+      </article>
+
+      <!-- Pop-up 2: pełna karta Hobbysty -->
+      <div class="c5-pop" id="pop-hobby" data-pop role="dialog" aria-modal="true" aria-labelledby="pop-hobby-t" tabindex="-1" data-ce="CE-37">
+        <div class="c5-pop__panel">
+          <button type="button" class="c5-pop__close" data-pop-close aria-label="Zamknij"><svg class="wf-icon" aria-hidden="true"><use href="#ti-x"></use></svg></button>
+          <div class="c5-pop__scroll" data-lenis-prevent>
+            <header class="c5-pop__head">
+              <h3 class="c5-pop__title" id="pop-hobby-t">Hobbysta</h3>
+              <p class="c5-muted">Ogród i dom – produkt doskonale sprawdzi się w doniczkach, warzywnikach, zielnikach czy rabatach.</p>
+            </header>
+            <div class="c5-pop__body">
+              <div class="c5-variant__block">
+                <span class="c5-label">Gdzie i jak:</span>
+                <ul class="c5-muted">
+                  <li>Zastosuj podczas siewu lub przygotowywania rozsady jako dodatek do podłoża. Możesz również delikatnie posypać podłoże po wysianiu nasion.</li>
+                  <li>Masz kwaśną glebę? Rozsyp produkt w miejscu planowanego sadzenia i wymieszaj go z podłożem przed posadzeniem rośliny.</li>
+                  <li>Jeśli roślina już rośnie – w doniczce lub w gruncie – rozsyp produkt na powierzchni podłoża, aby poprawić jego kondycję i wspomóc regenerację.</li>
+                  <li>Produkt organiczny, nie ma możliwości przenawożenia, świetnie współpracuje z nawożeniem organicznym i mineralnym</li>
+                </ul>
+              </div>
+              <div class="c5-variant__block">
+                <span class="c5-label">Sposób aplikacji:</span>
+                <ul class="c5-muted">
+                  <li>wymieszaj z glebą / podłożem na głębokość maksymalnie 10 cm</li>
+                  <li>przysyp powierzchnię gleby / podłoża</li>
+                </ul>
+              </div>
+              <div class="c5-variant__block">
+                <span class="c5-label">Dawki:</span>
+                <ul class="c5-muted">
+                  <li>przygotowanie podłoża – wymieszaj dokładnie 20–30 g produktu z 10 l podłoża</li>
+                  <li>domieszka do gleby – wymieszaj 500 g produktu z 10 m² gleby na głębokość do 10 cm</li>
+                  <li>posypowo – cienka warstwa przykrywająca powierzchnię gleby / podłoża</li>
+                </ul>
+              </div>
+              <div class="c5-variant__block">
+                <span class="c5-label">Częstotliwość:</span>
+                <ul class="c5-muted">
+                  <li>1 raz na sezon w przypadku roślin już rosnących, najlepiej przed ruszeniem wegetacji</li>
+                  <li>w trakcie siewu / sadzenia lub zaraz po</li>
+                </ul>
+              </div>
+              <div class="c5-variant__block">
+                <span class="c5-label">Odkwaszanie gleby:</span>
+                <p class="c5-muted">W przypadku gleb kwaśnych i/lub nieurodzajnych zastosuj podwójną dawkę.</p>
+              </div>
+              <div class="c5-variant__block">
+                <span class="c5-label">Zakup:</span>
+                <p class="c5-muted">Kanał detaliczny – opakowania do ogrodu i domu kupisz w sklepie.</p>
+                <!-- ⚠️ brak rozmiarów handlowych i cen detalicznych w kanonie -->
+                <p class="c5-gap c5-gap--inline">Rozmiary opakowań i ceny detaliczne – dane w uzupełnieniu.</p>
+                <div class="c5-btnrow">
+                  <a class="c5-btn c5-btn--dark" href="sklep.html?grupa=carbomat-humic">sprawdź dostępność i cenę</a>
+                  <a class="c5-btn c5-btn--light" href="konfigurator.html">dobierz właściwy produkt</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ostrzeżenie 1:1 z dokumentu (l. 331) – jednocześnie najlepszy cross-sell strony.
+           Treść bezpieczeństwa potwierdzona przez klienta 06.08, więc widoczna bez klikania. -->
+      <aside id="ktory-dla-mnie-ostrzezenie" class="c5-who__note" role="note" aria-label="Ostrzeżenie o odczynie produktu" data-reveal data-ce="CE-23" data-ce-wariant="z-ikona">
+        <svg class="wf-icon" aria-hidden="true"><use href="#ti-alert-triangle"></use></svg>
+        <p><span class="wf-w-semibold">Produkt o odczynie zasadowym – nie pod rośliny kwasolubne.</span><br>
+        <span class="c5-muted">Nie stosuj pod rośliny kwasolubne jak borówka i inne wrzosowate, różaneczniki, niektóre hortensje, azalie itd. Dla nich sięgnij po CARBOMAT ECO o niższym pH.</span></p>
+        <a class="c5-btn c5-btn--light c5-btn--sm" href="carbomat.html">zobacz CARBOMAT ECO</a>
+      </aside>
+
+      <!-- Jedna nakładka na stronę; JS przenosi ją na koniec <body> razem z pop-upami -->
+      <div class="c5-pop-overlay" data-pop-overlay hidden></div>
+    </div>
+  </section>
+
+  <!-- ===== 5. CZYM JEST – scroll-driven scene (spec §8) =====
+       The heading and the photo panel stand still through the whole section,
+       and eight descriptions swap one at a time at the bottom edge of the left
+       column. Steps 2-6 are the five functions of one product: they share one
+       photo (data-fact-bg="2-6"), but each of them has its own illustration
+       box (spec 16.4).
+       DOM order = static layout (mobile / reduced motion / no JS): photo,
+       step(s), illustration box; `order` in the CSS interleaves the photo
+       layers, which sit together inside the panel. Copy 1:1 with the version
+       before the rebuild (an accordion of four topics), the five functions
+       split into five steps; step 7 reworded on Mateusz's instruction (16.3). -->
+  <section class="c5-sec c5-facts-sec" id="czym-jest" data-chapter="czym-jest" data-facts data-ce="CE-12" data-ce-wariant="osiem-krokow">
+    <div class="c5-facts-track" data-facts-track>
+      <div class="c5-facts-stage c5-wrap">
+
+        <div class="c5-facts-head">
+          <span class="c5-kicker">Czym jest</span>
+          <h2 class="c5-h2">Przetworzony lignit do formy węgla aktywowanego.</h2>
+        </div>
+
+        <div class="c5-facts-flow">
+
+          <!-- Cztery kadry na scenę: jeden do kroku 1, jeden wspólny dla kroku
+               2-6 (pięć funkcji), jeden do kroku 7 i jeden do kroku 8. Zdjęć
+               HUMIC jeszcze nie ma - placeholdery, prompty w spec §11. -->
+          <div class="c5-facts-panel" aria-hidden="true">
+            <div class="c5-facts-panel__ph c5-ph c5-ph--dark" data-fact-bg="1" data-on="true"><span class="c5-ph__label">foto 4:5 · czym jest 01</span></div>
+            <div class="c5-facts-panel__ph c5-ph c5-ph--dark" data-fact-bg="2-6"><span class="c5-ph__label">foto 4:5 · czym jest 02</span></div>
+            <div class="c5-facts-panel__ph c5-ph c5-ph--dark" data-fact-bg="7"><span class="c5-ph__label">foto 4:5 · czym jest 03</span></div>
+            <div class="c5-facts-panel__ph c5-ph c5-ph--dark" data-fact-bg="8"><span class="c5-ph__label">foto 4:5 · czym jest 04</span></div>
+          </div>
+
+          <div class="c5-fact is-on" data-fact="1">
+            <h3 class="c5-fact__title">Pochodzenie produktu</h3>
+            <div class="c5-fact__body">
+              <!-- literówka w źródle: „CAR HUMIC" → CARBOMAT HUMIC -->
+              <p>CARBOMAT HUMIC powstaje z naturalnego lignitu, jednak w przeciwieństwie do surowego węgla brunatnego jest produktem poddanym zaawansowanemu procesowi ekstrakcji i aktywacji substancji humusowych. Dzięki temu najcenniejsze składniki odpowiedzialne za poprawę jakości gleby oraz rozwój roślin są znacznie łatwiej dostępne i szybciej zaczynają działać. Efektem jest produkt, który nie tylko wspiera rośliny od pierwszych etapów wzrostu, ale również stopniowo poprawia strukturę, żyzność i aktywność biologiczną gleby. To połączenie szybkiego działania z długofalowym wpływem na kondycję gleby.</p>
+            </div>
+          </div>
+
+          <figure class="c5-viz" data-fact-viz="1" data-on="true">
+            <span class="c5-viz__tag">01 · Pochodzenie</span>
+            <div class="c5-viz__body">
+              <svg viewBox="0 0 420 210" role="img" aria-label="Droga surowca: naturalny lignit przechodzi ekstrakcję i aktywację substancji humusowych, dzięki czemu stają się one łatwo dostępne dla roślin">
+                <defs><marker id="c5h-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>
+                <circle cx="52" cy="105" r="36" fill="none" stroke="currentColor" opacity=".5"/>
+                <text x="52" y="102" text-anchor="middle" font-size="12" fill="currentColor">lignit</text>
+                <text x="52" y="118" text-anchor="middle" font-size="9" fill="currentColor" opacity=".55">surowiec</text>
+                <path d="M94 105 H150" fill="none" stroke="currentColor" marker-end="url(#c5h-arrow)"/>
+                <rect x="160" y="72" width="110" height="66" fill="none" stroke="currentColor"/>
+                <text x="215" y="100" text-anchor="middle" font-size="12" fill="currentColor">ekstrakcja</text>
+                <text x="215" y="118" text-anchor="middle" font-size="12" fill="currentColor">i aktywacja</text>
+                <path d="M276 105 H330" fill="none" stroke="currentColor" marker-end="url(#c5h-arrow)"/>
+                <rect x="340" y="60" width="76" height="90" fill="none" stroke="currentColor" opacity=".45"/>
+                <text x="378" y="96" text-anchor="middle" font-size="11" fill="currentColor">łatwo</text>
+                <text x="378" y="112" text-anchor="middle" font-size="11" fill="currentColor">dostępne</text>
+                <text x="378" y="128" text-anchor="middle" font-size="11" fill="currentColor" opacity=".6">dla roślin</text>
+              </svg>
+            </div>
+            <!-- ⚠️ Złagodzone: źródła potwierdzają tylko RODZAJ surowca (lignit), nie to samo złoże co CARBOMAT ECO. -->
+            <figcaption class="c5-viz__cap">Ten sam rodzaj surowca co w CARBOMAT ECO – lignit – ale po ekstrakcji i aktywacji substancji humusowych, stąd szybsze działanie.</figcaption>
+          </figure>
+
+          <div class="c5-fact" data-fact="2">
+            <h3 class="c5-fact__title">Kondycjoner gleby</h3>
+            <div class="c5-fact__body">
+              <p>CARBOMAT HUMIC wspiera tworzenie stabilnej, gruzełkowatej struktury gleby oraz procesy odpowiedzialne za odbudowę próchnicy. Poprawia napowietrzenie, ułatwia rozwój korzeni i zwiększa żyzność stanowiska. Regularne stosowanie pozwala stopniowo odbudowywać potencjał gleby, dlatego korzyści są widoczne nie tylko w bieżącym sezonie, ale również w kolejnych latach.</p>
+            </div>
+          </div>
+
+          <figure class="c5-viz" data-fact-viz="2">
+            <span class="c5-viz__tag">02 · Kondycjoner gleby</span>
+            <div class="c5-viz__body">
+              <svg viewBox="0 0 420 250" role="img" aria-label="Zbita gleba przechodzi w stabilną strukturę gruzełkową z prześwitami, w której swobodnie rozwijają się korzenie">
+                <defs><marker id="c5h-arrow-2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>
+                <text x="102" y="46" text-anchor="middle" font-size="11" fill="currentColor" opacity=".6">zbita gleba</text>
+                <rect x="22" y="60" width="160" height="160" fill="none" stroke="currentColor" opacity=".45"/>
+                <g fill="none" stroke="currentColor" opacity=".55">
+                  <rect x="26" y="64" width="36" height="36"/><rect x="64" y="64" width="36" height="36"/><rect x="102" y="64" width="36" height="36"/><rect x="140" y="64" width="36" height="36"/>
+                  <rect x="26" y="102" width="36" height="36"/><rect x="64" y="102" width="36" height="36"/><rect x="102" y="102" width="36" height="36"/><rect x="140" y="102" width="36" height="36"/>
+                  <rect x="26" y="140" width="36" height="36"/><rect x="64" y="140" width="36" height="36"/><rect x="102" y="140" width="36" height="36"/><rect x="140" y="140" width="36" height="36"/>
+                  <rect x="26" y="178" width="36" height="36"/><rect x="64" y="178" width="36" height="36"/><rect x="102" y="178" width="36" height="36"/><rect x="140" y="178" width="36" height="36"/>
+                </g>
+                <path d="M194 140 H240" fill="none" stroke="currentColor" marker-end="url(#c5h-arrow-2)"/>
+                <text x="336" y="46" text-anchor="middle" font-size="11" fill="currentColor" opacity=".6">struktura gruzełkowata</text>
+                <rect x="256" y="60" width="160" height="160" fill="none" stroke="currentColor" opacity=".45"/>
+                <g fill="rgb(255 255 255 / .28)">
+                  <circle cx="297" cy="97" r="16"/><circle cx="338" cy="87" r="11"/><circle cx="376" cy="105" r="17"/>
+                  <circle cx="278" cy="138" r="11"/><circle cx="319" cy="133" r="19"/><circle cx="365" cy="148" r="13"/>
+                  <circle cx="292" cy="186" r="14"/><circle cx="333" cy="188" r="11"/><circle cx="372" cy="190" r="14"/>
+                  <circle cx="354" cy="116" r="7"/><circle cx="305" cy="162" r="7"/><circle cx="391" cy="142" r="7"/>
+                </g>
+                <g fill="none" stroke="currentColor" stroke-width="1.6" opacity=".8">
+                  <path d="M330 60 C325 100 341 134 332 218"/>
+                  <path d="M336 128 C351 142 356 162 354 192"/>
+                  <path d="M328 106 C314 118 306 134 304 152"/>
+                </g>
+              </svg>
+            </div>
+            <figcaption class="c5-viz__cap">Stabilna, gruzełkowata struktura gleby: napowietrzenie, rozwój korzeni, odbudowa próchnicy.</figcaption>
+          </figure>
+
+          <div class="c5-fact" data-fact="3">
+            <h3 class="c5-fact__title">Stabilizacja pH gleby</h3>
+            <div class="c5-fact__body">
+              <p>Naturalnie wysokie pH produktu wspomaga ograniczanie zakwaszenia gleby oraz zwiększa jej zdolności buforowe. W efekcie poprawiają się warunki do pobierania składników pokarmowych, a gleba dłużej utrzymuje optymalny odczyn. To szczególnie istotne na stanowiskach o niskim pH.</p>
+            </div>
+          </div>
+
+          <figure class="c5-viz" data-fact-viz="3">
+            <span class="c5-viz__tag">03 · Stabilizacja pH</span>
+            <div class="c5-viz__body">
+              <div class="wf-stack wf-stack--2">
+                <span class="c5-viz__num">pH 9–11</span>
+                <span class="wf-small wf-t-secondary">odczyn produktu (w analizie 9,84)</span>
+              </div>
+              <svg viewBox="0 0 420 200" role="img" aria-label="Oś odczynu gleby od 4 do 9: z zakwaszonego stanowiska w stronę pasma optymalnego odczynu między 6 a 7">
+                <defs><marker id="c5h-arrow-3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>
+                <text x="74" y="56" text-anchor="middle" font-size="11" fill="currentColor" opacity=".65">gleba zakwaszona</text>
+                <path d="M74 64 V124" fill="none" stroke="currentColor" opacity=".35" stroke-dasharray="4 4"/>
+                <circle cx="74" cy="134" r="5" fill="rgb(255 255 255 / .8)"/>
+                <text x="210" y="72" text-anchor="middle" font-size="11" fill="currentColor" opacity=".8">optymalny odczyn</text>
+                <rect x="176" y="82" width="68" height="52" fill="rgb(255 255 255 / .18)" stroke="rgb(255 255 255 / .7)"/>
+                <path d="M96 106 H166" fill="none" stroke="currentColor" marker-end="url(#c5h-arrow-3)"/>
+                <path d="M34 134 H392" fill="none" stroke="currentColor" opacity=".6"/>
+                <g fill="none" stroke="currentColor" opacity=".5">
+                  <path d="M40 128 V142"/><path d="M108 128 V142"/><path d="M176 128 V142"/><path d="M244 128 V142"/><path d="M312 128 V142"/><path d="M380 128 V142"/>
+                </g>
+                <g font-size="11" fill="currentColor" opacity=".6" text-anchor="middle">
+                  <text x="40" y="160">4</text><text x="108" y="160">5</text><text x="176" y="160">6</text><text x="244" y="160">7</text><text x="312" y="160">8</text><text x="380" y="160">9</text>
+                </g>
+                <text x="392" y="188" text-anchor="end" font-size="10" fill="currentColor" opacity=".55">pH gleby</text>
+              </svg>
+            </div>
+            <figcaption class="c5-viz__cap">Wysokie pH produktu ogranicza zakwaszenie i zwiększa zdolności buforowe gleby.</figcaption>
+          </figure>
+
+          <div class="c5-fact" data-fact="4">
+            <h3 class="c5-fact__title">Źródło łatwo dostępnego potasu</h3>
+            <div class="c5-fact__body">
+              <!-- ⚠️ KOLIZJA CLAIMU: dokument (l. 351) mówi „co umożliwia całkowite wyeliminowanie
+                   nawozów potasowych ze stosowanej agrotechniki". Publikujemy brzmienie samego Darka
+                   z 21.07 (AC #30867): „Pozwala zasadniczo zredukować stosowane nawożenie potasowe."
+                   – obietnica do obrony zamiast obietnicy nie do obrony. Do domknięcia z Darkiem. -->
+              <p>Zawiera około 6% K₂O (tj. około 60 kg w tonie), dostarczając roślinom łatwo przyswajalny potas już od początku wegetacji. Pozwala zasadniczo zredukować stosowane nawożenie potasowe.</p>
+            </div>
+          </div>
+
+          <figure class="c5-viz" data-fact-viz="4">
+            <span class="c5-viz__tag">04 · Potas</span>
+            <div class="c5-viz__body">
+              <div class="wf-stack wf-stack--2">
+                <span class="c5-viz__num">~6% K₂O</span>
+                <span class="wf-small wf-t-secondary">około 60 kg potasu w tonie produktu</span>
+              </div>
+              <div class="c5-barchart" role="img" aria-label="Zawartość potasu: na produkcie około 6 procent K2O, w suchej masie około 11,3 procent">
+                <div class="c5-bar"><span class="wf-w-semibold">Na produkcie</span><div class="c5-bar__track"><div class="c5-bar__fill" style="--bw:6%;"></div></div><span class="c5-muted">~6% K₂O</span></div>
+                <div class="c5-bar"><span>W suchej masie</span><div class="c5-bar__track"><div class="c5-bar__fill" style="--bw:11.3%;"></div></div><span class="c5-muted">~11,3%</span></div>
+              </div>
+            </div>
+            <figcaption class="c5-viz__cap">Zawartość potasu wg materiału producenta (ok. 6% K₂O, ok. 60 kg/t).</figcaption>
+          </figure>
+
+          <div class="c5-fact" data-fact="5">
+            <h3 class="c5-fact__title">Biostymulator i nawóz</h3>
+            <div class="c5-fact__body">
+              <p>Bogactwo kwasów humusowych oraz aktywowanego węgla organicznego pobudza rozwój mikroorganizmów glebowych, wspiera wzrost korzeni i poprawia wykorzystanie składników pokarmowych. Dzięki temu rośliny lepiej radzą sobie z suszą, okresowym zalaniem czy innymi czynnikami stresowymi.</p>
+            </div>
+          </div>
+
+          <figure class="c5-viz" data-fact-viz="5">
+            <span class="c5-viz__tag">05 · Biostymulator i nawóz</span>
+            <div class="c5-viz__body">
+              <svg viewBox="0 0 420 250" role="img" aria-label="Roślina rozwija głębszy system korzeniowy w otoczeniu mikroorganizmów glebowych, dzięki czemu lepiej znosi suszę, zalanie i stres">
+                <defs><marker id="c5h-arrow-5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>
+                <path d="M20 124 H264" fill="none" stroke="currentColor" opacity=".5"/>
+                <g fill="none" stroke="currentColor" opacity=".7">
+                  <path d="M76 124 V82"/><path d="M76 98 C64 94 56 84 56 74"/><path d="M76 90 C90 85 98 75 98 64"/>
+                </g>
+                <g fill="none" stroke="currentColor" opacity=".45">
+                  <path d="M76 124 V168"/><path d="M76 138 C64 148 56 158 54 170"/><path d="M76 144 C90 154 98 162 100 174"/>
+                </g>
+                <path d="M120 104 H176" fill="none" stroke="currentColor" marker-end="url(#c5h-arrow-5)"/>
+                <g fill="none" stroke="currentColor">
+                  <path d="M214 124 V48"/><path d="M214 76 C196 68 186 54 184 40"/><path d="M214 62 C232 54 244 42 246 30"/><path d="M214 98 C202 92 194 84 192 72"/>
+                </g>
+                <g fill="none" stroke="currentColor" opacity=".6">
+                  <path d="M214 124 V232"/><path d="M214 142 C196 156 184 174 180 198"/><path d="M214 152 C234 166 248 184 252 208"/>
+                  <path d="M214 178 C202 192 196 206 194 224"/><path d="M214 188 C228 200 236 212 238 228"/>
+                </g>
+                <g fill="rgb(255 255 255 / .45)">
+                  <circle cx="56" cy="146" r="2.5"/><circle cx="96" cy="152" r="2"/><circle cx="66" cy="174" r="2"/><circle cx="88" cy="134" r="2"/>
+                  <circle cx="188" cy="166" r="2.5"/><circle cx="244" cy="158" r="2.5"/><circle cx="200" cy="202" r="2"/><circle cx="256" cy="192" r="2.5"/>
+                  <circle cx="172" cy="186" r="2"/><circle cx="228" cy="214" r="2"/><circle cx="262" cy="214" r="2"/><circle cx="178" cy="216" r="2.5"/>
+                  <circle cx="216" cy="160" r="2"/><circle cx="246" cy="228" r="2"/>
+                </g>
+                <path d="M276 112 H312" fill="none" stroke="currentColor" marker-end="url(#c5h-arrow-5)"/>
+                <rect x="318" y="62" width="94" height="112" fill="none" stroke="currentColor" opacity=".45"/>
+                <g font-size="12" fill="currentColor" opacity=".75" text-anchor="middle">
+                  <text x="365" y="94">susza</text><text x="365" y="122">zalanie</text><text x="365" y="150">stres</text>
+                </g>
+              </svg>
+            </div>
+            <figcaption class="c5-viz__cap">Pobudza mikroorganizmy glebowe, wspiera wzrost korzeni i odporność na suszę czy zalanie.</figcaption>
+          </figure>
+
+          <div class="c5-fact" data-fact="6">
+            <h3 class="c5-fact__title">Zwiększa retencję wody i składników odżywczych</h3>
+            <div class="c5-fact__body">
+              <p>Aktywowany węgiel organiczny poprawia zdolność gleby do magazynowania wody oraz zatrzymywania składników pokarmowych w strefie korzeniowej. Dzięki temu są one dłużej dostępne dla roślin, co przekłada się na lepsze wykorzystanie nawożenia i większą odporność upraw na okresowe niedobory wody. Dodatek węgla aktywowanego do gleby to także skuteczniejsza sekwestracja dwutlenku węgla.</p>
+            </div>
+          </div>
+
+          <figure class="c5-viz" data-fact-viz="6">
+            <span class="c5-viz__tag">06 · Retencja</span>
+            <div class="c5-viz__body">
+              <svg viewBox="0 0 420 250" role="img" aria-label="Przekrój gruzełka: w porach zatrzymane są woda oraz składniki pokarmowe – potas i azot amonowy – a węgiel trafiający do gleby wiąże dwutlenek węgla">
+                <defs><marker id="c5h-arrow-6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>
+                <circle cx="140" cy="125" r="98" fill="none" stroke="currentColor"/>
+                <g fill="rgb(255 255 255 / .22)">
+                  <circle cx="106" cy="76" r="16"/><circle cx="158" cy="66" r="12"/><circle cx="196" cy="96" r="20"/>
+                  <circle cx="80" cy="120" r="13"/><circle cx="130" cy="112" r="20"/><circle cx="186" cy="150" r="15"/>
+                  <circle cx="96" cy="166" r="17"/><circle cx="140" cy="176" r="12"/><circle cx="178" cy="196" r="9"/>
+                  <circle cx="60" cy="152" r="8"/><circle cx="164" cy="128" r="7"/><circle cx="116" cy="146" r="8"/>
+                </g>
+                <g fill="rgb(255 255 255 / .55)">
+                  <path d="M0 -10 C6 -3 9 1 9 5 A9 9 0 1 1 -9 5 C-9 1 -6 -3 0 -10 z" transform="translate(130 114)"/>
+                  <path d="M0 -10 C6 -3 9 1 9 5 A9 9 0 1 1 -9 5 C-9 1 -6 -3 0 -10 z" transform="translate(96 169) scale(.85)"/>
+                  <path d="M0 -10 C6 -3 9 1 9 5 A9 9 0 1 1 -9 5 C-9 1 -6 -3 0 -10 z" transform="translate(186 153) scale(.8)"/>
+                </g>
+                <g font-size="11" fill="currentColor" text-anchor="middle">
+                  <text x="106" y="80">K⁺</text><text x="196" y="100">NH₄⁺</text>
+                </g>
+                <text x="336" y="58" text-anchor="middle" font-size="13" fill="currentColor">CO₂</text>
+                <path d="M336 70 V162" fill="none" stroke="currentColor" stroke-dasharray="5 5" marker-end="url(#c5h-arrow-6)"/>
+                <path d="M286 172 H404" fill="none" stroke="currentColor" opacity=".5"/>
+                <text x="336" y="192" text-anchor="middle" font-size="11" fill="currentColor" opacity=".65">węgiel w glebie</text>
+              </svg>
+            </div>
+            <figcaption class="c5-viz__cap">Magazynuje wodę i składniki w strefie korzeniowej; węgiel w glebie to także sekwestracja CO₂.</figcaption>
+          </figure>
+
+          <div class="c5-fact" data-fact="7">
+            <h3 class="c5-fact__title">Bogaty kompleks związków organicznych</h3>
+            <div class="c5-fact__body">
+              <!-- reworded and shortened on Mateusz's instruction 14.09 (spec 16.3): the same facts, no new ones -->
+              <p>CARBOMAT HUMIC to wieloskładnikowy kompleks materii organicznej z biomasy roślinnej sprzed milionów lat. Oprócz substancji humusowych dostarcza glebie stabilny węgiel organiczny, naturalne minerały i związki bioaktywne, które odbudowują jej potencjał biologiczny i fizyczny. Zawiera:</p>
+              <ul>
+                <li>naturalną, stabilną próchnicę – kwasy huminowe, fulwowe i huminy – jaka w glebie powstaje przez dziesięciolecia;</li>
+                <li>stabilny węgiel organiczny, który długotrwale poprawia właściwości fizyczne i biologiczne stanowiska;</li>
+                <li>liczne związki organiczne: ligniny, woski, żywice, polifenole, taniny, antyoksydanty, kwasy lipidowe, wolne aminokwasy, fitohormony, związki aromatyczne;</li>
+                <li>kilkadziesiąt naturalnych chelatów mineralnych z makro-, mikroelementami i pierwiastkami śladowymi.</li>
+              </ul>
+            </div>
+          </div>
+
+          <figure class="c5-viz" data-fact-viz="7">
+            <span class="c5-viz__tag">07 · Kompleks organiczny</span>
+            <div class="c5-viz__body">
+              <div class="c5-barchart" role="img" aria-label="Skład CARBOMAT HUMIC w suchej masie wg aktualnej analizy: materia organiczna około 50 procent, ekstrakt humusowy około 48 procent, kwasy huminowe około 45 procent, węgiel organiczny około 28 procent, kwasy fulwowe około 2,5 procent">
+                <div class="c5-bar"><span class="wf-w-semibold">Materia organiczna</span><div class="c5-bar__track"><div class="c5-bar__fill" style="--bw:50%;"></div></div><span class="c5-muted">~50%</span></div>
+                <div class="c5-bar"><span>Ekstrakt humusowy</span><div class="c5-bar__track"><div class="c5-bar__fill" style="--bw:48%;"></div></div><span class="c5-muted">~48%</span></div>
+                <div class="c5-bar"><span>Kwasy huminowe</span><div class="c5-bar__track"><div class="c5-bar__fill" style="--bw:45%;"></div></div><span class="c5-muted">~45%</span></div>
+                <div class="c5-bar"><span>Węgiel organiczny</span><div class="c5-bar__track"><div class="c5-bar__fill" style="--bw:28%;"></div></div><span class="c5-muted">~28%</span></div>
+                <div class="c5-bar"><span>Kwasy fulwowe</span><div class="c5-bar__track"><div class="c5-bar__fill" style="--bw:2.5%;"></div></div><span class="c5-muted">~2,5%</span></div>
+              </div>
+            </div>
+            <figcaption class="c5-viz__cap">Wartości w suchej masie – aktualna analiza laboratoryjna (06.2026).</figcaption>
+          </figure>
+
+          <div class="c5-fact" data-fact="8">
+            <h3 class="c5-fact__title">Czysty i bezpieczny dla gleby</h3>
+            <div class="c5-fact__body">
+              <p>CARBOMAT HUMIC powstaje z naturalnej materii organicznej, poddawanej rygorystycznej kontroli jakości. Produkt charakteryzuje się wysoką czystością mikrobiologiczną oraz bardzo niską zawartością niepożądanych pierwiastków, dzięki czemu może być bezpiecznie stosowany w gospodarstwach dbających o długoterminową żyzność gleby.</p>
+              <ul>
+                <li>Brak wykrytych patogenów Salmonella spp. – nie wykryto obecności bakterii Salmonella w badanej próbce.</li>
+                <li>Bardzo niska liczba mikroorganizmów wskaźnikowych.</li>
+                <li>Niska zawartość metali ciężkich – pełne wyniki w tabeli czystości.</li>
+              </ul>
+            </div>
+          </div>
+
+          <figure class="c5-viz" data-fact-viz="8">
+            <span class="c5-viz__tag">08 · Czystość</span>
+            <div class="c5-viz__body">
+              <div class="cw-scrollx" tabindex="0">
+                <table class="wf-table">
+                  <thead><tr><th scope="col">Parametr</th><th scope="col" style="text-align:right;">Wynik</th></tr></thead>
+                  <tbody>
+                    <tr><td>Salmonella spp.</td><td style="text-align:right;">nie wykryto</td></tr>
+                    <tr><td>Escherichia coli</td><td style="text-align:right;">&lt;10 cfu/g</td></tr>
+                    <tr><td>Enterobacteriaceae</td><td style="text-align:right;">&lt;10 cfu/g</td></tr>
+                    <tr><td>Arsen (As)</td><td style="text-align:right;">1,52 mg/kg</td></tr>
+                    <tr><td>Kadm (Cd)</td><td style="text-align:right;">&lt;0,303 mg/kg</td></tr>
+                    <tr><td>Rtęć (Hg)</td><td style="text-align:right;">&lt;0,121 mg/kg</td></tr>
+                    <tr><td>Ołów (Pb)</td><td style="text-align:right;">3,44 mg/kg</td></tr>
+                    <tr><td>Nikiel (Ni)</td><td style="text-align:right;">2,86 mg/kg</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <figcaption class="c5-viz__cap">Aktualna analiza laboratoryjna (06.2026), wartości na próbce produktu.</figcaption>
+          </figure>
+
+        </div>
+
+        <!-- Pasek progresu zamiast dividerów: wypełnienie = postęp globalny,
+             siedem znaczników dzieli tor na osiem odcinków. Widoczny tylko
+             w scenie sterowanej przewijaniem. -->
+        <div class="c5-facts-prog" data-facts-prog>
+          <div class="c5-facts-progress" role="progressbar" aria-valuemin="0" aria-valuemax="8" aria-valuenow="1" aria-label="Postęp – punkt z ośmiu">
+            <span class="c5-facts-progress__fill"></span>
+            <span class="c5-facts-progress__mark"></span>
+            <span class="c5-facts-progress__mark"></span>
+            <span class="c5-facts-progress__mark"></span>
+            <span class="c5-facts-progress__mark"></span>
+            <span class="c5-facts-progress__mark"></span>
+            <span class="c5-facts-progress__mark"></span>
+            <span class="c5-facts-progress__mark"></span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 6. KIEDY STOSOWAĆ – dwa panele „Pole" | „Ogród i dom" (spec §16.1) =====
+       Iteration 2 (Mateusz, 14.09): the row mechanics did not fit this content.
+       Two application worlds are not a sequence, so nothing is pinned and nothing
+       is opened by the scroll any more – the section heading runs in the normal
+       flow and below it two equally tall photographic panels stand side by side,
+       each carrying its title, two paragraphs and one button at the bottom edge.
+       The photo layer is taller than the panel, which buys room for a light
+       parallax (--when-par) and a hover zoom (--when-zoom) without ever showing
+       the panel edge; panels enter once with CX5.reveal. Below 900 px the pair
+       stacks into one column – the whole content is there without JS as well. -->
+  <section class="c5-sec c5-when-sec" id="sezon" data-chapter="sezon" data-when>
+    <div class="c5-wrap">
+      <div class="c5-head">
+        <span class="c5-kicker c5-kicker--center">Kiedy stosować</span>
+        <h2 class="c5-h2 c5-h2--center">Jeden zabieg w roku – wiosną lub jesienią.</h2>
+        <p class="c5-lead c5-lead--center">Przy stosowaniu corocznym efekt się kumuluje. Nie stosujemy na rośliny mokre.</p>
+      </div>
+    </div>
+    <!-- Panele niosą treść, której nie ma wyżej (nota 30-produkty/carbomat-humic.md, sekcja „Posypowo / pogłównie":
+         „najlepiej wiosną w czasie intensywnego rozwoju roślin; w trakcie opadów produkt wnika wraz z wodą
+         do strefy korzeniowej"; „Produkt organiczny – nie ma możliwości przenawożenia"), a CTA prowadzą
+         DO PRZODU (oferta, konfigurator, FAQ), nie z powrotem do minionych sekcji. -->
+    <div id="sezon-panele" class="c5-when" data-reveal-group data-ce="CE-38" data-ce-od="#sezon">
+      <article class="c5-when__panel" data-reveal>
+        <!-- The label sits on the frame, not on the moving layer – a parallax
+             would drag it out of the corner. -->
+        <div class="c5-when__media" data-when-media aria-hidden="true">
+          <div class="c5-when__ph c5-ph c5-ph--dark"></div>
+          <span class="c5-ph__label">foto 4:5 · pole · zabieg wiosną lub jesienią</span>
+        </div>
+        <div class="c5-when__body">
+          <h3 class="c5-when__title">Pole</h3>
+          <p>Jeden zabieg w roku. Przed siewem / sadzeniem – rozrzut i wymieszanie z wierzchnią warstwą gleby. Pogłównie – najlepiej wiosną, w czasie intensywnego rozwoju roślin; w trakcie opadów produkt wnika wraz z wodą do strefy korzeniowej.</p>
+          <p>Planujesz wapnowanie? Oba zabiegi da się wykonać jednym przejazdem – kolejność i uzasadnienie opisaliśmy w <a class="wf-link" href="#faq">FAQ</a>.</p>
+          <a class="c5-btn c5-btn--inv c5-btn--sm" href="kontakt.html?produkt=carbomat-humic">zapytaj o ofertę pod areał</a>
+        </div>
+      </article>
+      <article class="c5-when__panel" data-reveal>
+        <div class="c5-when__media" data-when-media aria-hidden="true">
+          <div class="c5-when__ph c5-ph c5-ph--dark"></div>
+          <span class="c5-ph__label">foto 4:5 · ogród i dom · przed ruszeniem wegetacji</span>
+        </div>
+        <div class="c5-when__body">
+          <h3 class="c5-when__title">Ogród i dom</h3>
+          <p>1 raz na sezon w przypadku roślin już rosnących, najlepiej przed ruszeniem wegetacji, albo w trakcie siewu / sadzenia lub zaraz po.</p>
+          <p>To produkt organiczny – nie ma możliwości przenawożenia, świetnie współpracuje z nawożeniem organicznym i mineralnym.</p>
+          <a class="c5-btn c5-btn--inv c5-btn--sm" href="konfigurator.html">dobierz właściwy produkt</a>
+        </div>
+      </article>
+    </div>
+    <div class="c5-wrap">
+      <!-- ⚠️ Kalendarz sezonowy bez decyzji: Darek zadaje pytanie otwarte (l. 377): „Pytanie co z kalendarzem, bo możemy to oczywiście fajnie wpleść i rozwiązać, ale czy robimy pod konkretny produkt, czy coś interaktywnego, klikalnego, co będzie dobierało wszystkie produkty pod konkretną porę."
+           Dopóki nie ma rozstrzygnięcia, nie budujemy siatki terminów – zostaje nota o braku danych. -->
+      <p id="sezon-nota" class="c5-gap c5-when__gap" data-ce="CE-31" data-ce-wariant="brak-danych">Pełny kalendarz sezonowy – który produkt CarboHort w której porze roku – dane w uzupełnieniu. Terminu pod swoją uprawę możesz zapytać dr Jurka w doku doradcy.</p>
+    </div>
+
+    <!-- ===== Pas PRO: kanał sprzedażowy profesjonalny (zgoda Darka, l. 376) =====
+         Układ wg sensiq.co: szare tło, media skalowane przy przewijaniu od
+         połowy do pełnej szerokości, nagłówek po lewej, akapit i dwa przyciski
+         po prawej. Zdjęcia jeszcze nie ma – placeholder (prompt w spec §11). -->
+    <div class="c5-pro" id="kanal-sprzedazy" data-pro data-ce="CE-16">
+      <div class="c5-pro__media" data-pro-media aria-hidden="true">
+        <div class="c5-pro__ph c5-ph"><span class="c5-ph__label">foto 3:2 · uprawy polowe · big bag</span></div>
+      </div>
+      <div class="c5-wrap c5-pro__grid">
+        <h2>Prowadzisz uprawę polową – zboża, warzywa, strip-till?</h2>
+        <div class="c5-pro__side">
+          <p>Przygotujemy ofertę i Twoją cenę pod areał. Po pierwszym zamówieniu zakładamy konto, a kolejne składasz już po swojej cenie.</p>
+          <div class="c5-btnrow">
+            <a class="c5-btn c5-btn--inv" href="kontakt.html?produkt=carbomat-humic">Zapytaj o ofertę</a>
+            <a class="c5-btn c5-pro__login" href="platforma-b2b.html">Masz konto? Zaloguj się</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 8. FAQ (pytanie z lewej, odpowiedź z prawej) =====
+       Pięć pytań z dokumentu (l. 378–389). Trzy mają odpowiedzi Darka – publikujemy 1:1.
+       Dwa są bez odpowiedzi: „Dlaczego wybrać CARBOMAT HUMIC, a nie CARBOMAT ECO?" –
+       tu odpowiedź jest przepisaniem zdaniami własnej tabeli różnic Darka (l. 337–344),
+       oraz „Czym różnią się od siebie węgiel brunatny (lignit), węgiel aktywny i węgiel
+       aktywowany?" – tego NIE dopisujemy, bo w źródłach nie ma żadnej podstawy.
+       Dalej cztery pytania przywrócone z V4, pokryte notą kanoniczną.
+       ⚠️ Darek zapowiedział pełne FAQ HUMIC („w sumie mamy już względnie to gotowe") – do pozyskania.
+       Spec HUMIC §10: moduł „zadaj pytanie dr Jurkowi" usunięty (polecenie Mateusza 13.09),
+       wszystkie pozycje zwinięte jak we wzorcu ECO, a most z hero (#faq-1) otwiera pytanie
+       o rozpuszczalność z kotwicy – patrz 90-faq.js. -->
+  <section class="c5-sec" id="faq" data-chapter="faq" data-ce="CE-17">
+    <div class="c5-wrap">
+      <span class="c5-kicker">FAQ</span>
+      <h2 class="c5-h2">Najczęstsze pytania o CARBOMAT HUMIC</h2>
+
+      <div class="c5-faq">
+        <div class="c5-faq__item">
+          <button type="button" class="c5-faq__q" aria-expanded="false" aria-controls="faq-1">Czy CARBOMAT HUMIC jest w pełni rozpuszczalny?<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button>
+          <div class="c5-faq__a" id="faq-1">
+            <div class="c5-faq__ain">
+              <div class="c5-faq__answer">
+                <p>CARBOMAT HUMIC jest częściowo rozpuszczalny, ale nie rozpuszcza się całkowicie. To celowa cecha produktu, a nie jego wada. Został opracowany jako produkt do aplikacji doglebowej – właśnie wtedy w pełni wykorzystuje swoje właściwości i zapewnia najlepsze efekty.</p>
+                <p>Podczas rozpuszczania do roztworu przechodzą aktywne substancje humusowe, natomiast pozostają nierozpuszczalne huminy – najbardziej stabilna frakcja materii organicznej. To właśnie one stanowią trwały węgiel organiczny, który pozostaje w glebie przez długi czas, poprawiając jej strukturę, pojemność sorpcyjną oraz wspierając odbudowę próchnicy.</p>
+                <p>Dlatego nie zalecamy rozpuszczania CARBOMAT HUMIC i stosowania go przez opryskiwacze, instalacje fertygacyjne czy inne układy przeznaczone do preparatów całkowicie rozpuszczalnych. Nierozpuszczalne cząstki huminów mogą powodować zatykanie filtrów i dysz.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="c5-faq__item">
+          <button type="button" class="c5-faq__q" aria-expanded="false" aria-controls="faq-2">Dlaczego wybrać CARBOMAT HUMIC, a nie CARBOMAT ECO?<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button>
+          <div class="c5-faq__a" id="faq-2">
+            <div class="c5-faq__ain">
+              <!-- ⚠️ Pytanie z dokumentu 29.07 (l. 383) zostało bez odpowiedzi. NIE dopisujemy nic za Darka –
+                   odpowiedź niżej to przepisanie zdaniami JEGO WŁASNEJ 4-wierszowej tabeli różnic z tego samego
+                   dokumentu (l. 337–344), która stoi wyżej na tej stronie. Gdy Darek przekaże pełne FAQ HUMIC
+                   („w sumie mamy już względnie to gotowe"), podmienić na jego brzmienie. -->
+              <div class="c5-faq__answer">
+                <p>To dwa różne tempa działania. <a class="wf-link" href="carbomat.html">CARBOMAT ECO</a> jest materiałem o niewielkim stopniu przetworzenia: działa powoli, większość substancji jest trudno dostępna dla roślin, a właściwości gleby poprawia głównie w długim okresie.</p>
+                <p>CARBOMAT HUMIC jest produktem poddanym ekstrakcji i aktywacji: zawiera aktywowane substancje humusowe łatwo dostępne dla roślin, więc działa już od pierwszych dni po zastosowaniu i łączy szybkie wsparcie roślin z długotrwałą poprawą gleby.</p>
+                <p>Wszystkie cztery różnice zebraliśmy w sekcji <a class="wf-link" href="#roznice-eco-humic">ECO czy HUMIC</a>. Pod rośliny kwasolubne wybieraj CARBOMAT ECO – HUMIC ma pH 9–11.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="c5-faq__item">
+          <button type="button" class="c5-faq__q" aria-expanded="false" aria-controls="faq-3">Czym różnią się od siebie węgiel brunatny (lignit), węgiel aktywny i węgiel aktywowany?<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button>
+          <div class="c5-faq__a" id="faq-3">
+            <div class="c5-faq__ain">
+              <!-- ⚠️ pytanie z dokumentu BEZ odpowiedzi (l. 384) -->
+              <div class="c5-faq__answer">
+                <p class="c5-gap">Odpowiedź w przygotowaniu.</p>
+                <p>Potrzebujesz jej teraz? Zadaj to pytanie dr Jurkowi w doku doradcy na dole ekranu.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="c5-faq__item">
+          <button type="button" class="c5-faq__q" aria-expanded="false" aria-controls="faq-4">Lepiej jest połączyć wapnowanie i zabieg CARBOMAT HUMIC, czy zastosować osobno? W jakiej kolejności?<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button>
+          <div class="c5-faq__a" id="faq-4">
+            <div class="c5-faq__ain">
+              <div class="c5-faq__answer">
+                <p>Z agrotechnicznego punktu widzenia najlepsze efekty uzyskuje się, stosując CARBOMAT HUMIC bezpośrednio po wapnowaniu. Wapnowanie poprawia odczyn gleby, natomiast CARBOMAT HUMIC pomaga go stabilizować dzięki wysokiej zawartości substancji humusowych i zwiększeniu pojemności buforowej gleby. Dodatkowo dostarcza aktywnych substancji humusowych oraz stabilnego węgla organicznego, co przyspiesza odbudowę żyzności i aktywności biologicznej gleby.</p>
+                <p>Z praktycznego punktu widzenia równie ważna jest jednak ekonomika zabiegów. Dlatego w wielu gospodarstwach najlepszym rozwiązaniem jest wykonanie jednego przejazdu i zastosowanie obu produktów podczas tego samego zabiegu, szczególnie w przypadku wapna węglanowego, które nie wykazuje tak wysokiej reaktywności jak wapno tlenkowe.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="c5-faq__item">
+          <button type="button" class="c5-faq__q" aria-expanded="false" aria-controls="faq-5">Czy stosując CARBOMAT HUMIC konieczne byłoby dodatkowe stosowanie biowęgla / węgla aktywnego?<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button>
+          <div class="c5-faq__a" id="faq-5">
+            <div class="c5-faq__ain">
+              <div class="c5-faq__answer">
+                <p>W większości standardowych zastosowań rolniczych CARBOMAT HUMIC zapewnia efekty, dla których najczęściej stosuje się biowęgiel, jednocześnie dostarczając aktywnych substancji humusowych i składników pokarmowych. Dzięki temu w typowej agrotechnice nie ma potrzeby dodatkowego stosowania biowęgla. Wyjątek mogą stanowić specjalistyczne zastosowania, takie jak rekultywacja gleb silnie zdegradowanych czy projekty ukierunkowane na maksymalną sekwestrację węgla, z uwagi na jeszcze lepsze właściwości sorpcyjne biowęgli.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cztery pytania spoza dokumentu 29.07: przywrócone z V4, w całości pokryte kanonem
+             (nota 30-produkty/carbomat-humic.md – Specyfikacja, Dawkowanie i stosowanie, Wskazówki).
+             Do podmiany, gdy Darek przekaże pełne FAQ HUMIC. -->
+        <div class="c5-faq__item">
+          <button type="button" class="c5-faq__q" aria-expanded="false" aria-controls="faq-6">Czym CARBOMAT HUMIC różni się od CARBOHUMIC?<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button>
+          <div class="c5-faq__a" id="faq-6">
+            <div class="c5-faq__ain">
+              <div class="c5-faq__answer">
+                <p>To dwa różne produkty o myląco podobnych nazwach. CARBOMAT HUMIC to produkt sypki (węgiel aktywowany) do aplikacji doglebowej, a <a class="wf-link" href="carbohumic.html">CARBOHUMIC</a> to rodzina produktów płynnych. Jeśli szukasz płynu do podlewania lub oprysku – to CARBOHUMIC.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="c5-faq__item">
+          <button type="button" class="c5-faq__q" aria-expanded="false" aria-controls="faq-7">Jakie dawki na hektar i czy mogę mieszać produkt z innymi nawozami?<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button>
+          <div class="c5-faq__a" id="faq-7">
+            <div class="c5-faq__ain">
+              <div class="c5-faq__answer">
+                <p>Przed siewem / sadzeniem po całej powierzchni – co najmniej 250 kg/ha, wymieszane z wierzchnią warstwą gleby do 10 cm. Pasowo – co najmniej 150 kg/ha. Współrzędnie w strip-till – 100–120 kg/ha. Pogłównie – do 250 kg/ha po powierzchni albo do 150 kg/ha pasowo wzdłuż rzędów. Zalecany jeden zabieg w roku.</p>
+                <p>Produkt można mieszać z wapnem nawozowym i innymi nawozami granulowanymi, stosowanymi przez rozrzutnik, a sposoby aplikacji dowolnie łączyć – np. stosowanie pasowe wraz ze współrzędnym w technologii strip-till. Nie stosujemy na rośliny mokre. Pełne dawki dla pola i ogrodu: <a class="wf-link" href="#ktory-dla-mnie">Który dla mnie</a>.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="c5-faq__item">
+          <button type="button" class="c5-faq__q" aria-expanded="false" aria-controls="faq-8">Czy mogę stosować go pod borówkę i inne rośliny kwasolubne?<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button>
+          <div class="c5-faq__a" id="faq-8">
+            <div class="c5-faq__ain">
+              <div class="c5-faq__answer">
+                <p>Nie. CARBOMAT HUMIC ma pH 9–11 i podnosi odczyn gleby, a borówka i inne wrzosowate, różaneczniki, azalie czy niektóre hortensje potrzebują gleby kwaśnej. Dla nich sięgnij po <a class="wf-link" href="carbomat.html">CARBOMAT ECO</a> o niższym pH.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="c5-faq__item">
+          <button type="button" class="c5-faq__q" aria-expanded="false" aria-controls="faq-9">Jak długo można przechowywać CARBOMAT HUMIC?<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button>
+          <div class="c5-faq__a" id="faq-9">
+            <div class="c5-faq__ain">
+              <div class="c5-faq__answer">
+                <p>Termin przydatności to +5 lat. Przechowuj produkt w oryginalnym, zamkniętym opakowaniu, w miejscu suchym.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 9. CTA KOŃCOWE (jasne, wyśrodkowane) ===== -->
+  <section id="cta-koncowe" class="c5-sec" data-ce="CE-18">
+    <div class="c5-wrap">
+      <div class="c5-cta">
+        <h2 class="c5-h2">Chcesz jednym zabiegiem uzupełnić niedobory organiki i&nbsp;potasu?</h2>
+        <div class="c5-btnrow">
+          <a class="c5-btn c5-btn--dark" href="sklep.html?grupa=carbomat-humic">sprawdź dostępność i cenę</a>
+          <a class="c5-btn c5-btn--light" href="kontakt.html?produkt=carbomat-humic">zapytaj o ofertę</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<cw-footer></cw-footer>
+
+<cw-dock></cw-dock>
+
+<script src="cw.js"></script>
+<!-- Lenis: slight scroll inertia (like serverobotics.com); the page scrolls natively without it -->
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
+<script src="carbomat-humic.js"></script>
+<script src="ce-overlay.js"></script>
+</body>
+</html>

@@ -1,0 +1,1637 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Program uprawy kukurydzy – CarboHort</title>
+<meta name="description" content="Program technologiczny CarboHort dla kukurydzy na ziarno i kiszonkę: produkty i mapa zastosowań, skrót programu, program fazowy od ścierniska do zbioru, trzy warianty technologii, dobór do stanowiska, mieszaniny zbiornikowe.">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="wireframe.css">
+<link rel="stylesheet" href="cw.css">
+<script src="chrome.js"></script>
+<script src="../status.js"></script>
+<script src="../ce-rejestr.js"></script>
+<link rel="stylesheet" href="c5.css">
+<link rel="stylesheet" href="uprawa.css">
+<link rel="stylesheet" href="kukurydza.css">
+</head>
+<body>
+<a class="wf-sr-only" href="#main">Przejdź do treści</a>
+
+<cw-icons></cw-icons>
+
+<cw-navbar data-current="kukurydza"></cw-navbar>
+
+<!-- ===== 10 · NAWIGACJA KROPKOWA (spec §9.12) =====
+     Zastępuje pasek subnawigacji (zdjęty w iteracji 5). Osiem rozdziałów w
+     kolejności sekcji; scrollspy chodzi po `data-chapter`, etykiety wjeżdżają
+     po najechaniu na nav. Przycisk „Dobierz produkty" z dawnego paska ma
+     odpowiedniki w hero, w popupach i w domknięciu. -->
+<nav id="nawigacja-kropki" class="c5-dots" aria-label="Rozdziały strony: program uprawy kukurydzy" data-dots data-ce="CE-07">
+  <ol>
+    <li><a class="c5-dots__link" href="#hero" data-dot="hero"><span class="c5-dots__label">Start</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#u-produkty" data-dot="u-produkty"><span class="c5-dots__label">Produkty</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#u-fazy" data-dot="u-fazy"><span class="c5-dots__label">Program fazowy</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#u-decyzje" data-dot="u-decyzje"><span class="c5-dots__label">Decyzje przed sezonem</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#u-warianty" data-dot="u-warianty"><span class="c5-dots__label">Warianty</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#u-stanowisko" data-dot="u-stanowisko"><span class="c5-dots__label">Stanowisko</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#u-mieszaniny" data-dot="u-mieszaniny"><span class="c5-dots__label">Mieszaniny</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#u-skala" data-dot="u-skala"><span class="c5-dots__label">Skala</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+  </ol>
+</nav>
+
+<main id="main">
+
+  <!-- ===== 20 · HERO (spec §9.3, wzorzec §3.1) =====
+       Cały pierwszy ekran pod menu serwisu. Lewa kolumna: copy wyśrodkowane
+       w pionie, breadcrumb dyskretny przy dolnej krawędzi. Prawa: panel
+       jasnoszary 30 px od góry, dołu i prawej krawędzi, wypełniony kadrem
+       uprawy (na stronie uprawy nie ma packshotów jak na stronie produktu).
+       Lead to cytat z programu (w. 39) bez zmian. -->
+  <section id="hero" data-chapter="hero" data-ce="CE-08" data-ce-wariant="kadr">
+    <div class="c5-wrap">
+      <div class="c5-hero">
+        <div class="c5-hero__copy">
+          <div class="c5-hero__copyin">
+            <span class="c5-kicker">Program technologiczny CarboHort · uprawy rolnicze · jare</span>
+            <h1 class="c5-h1">Program uprawy kukurydzy</h1>
+            <div class="c5-hero__lead">
+              <p>Najdokładniejszy program nie zaczyna się od wyboru odmiany, czy preparatu herbicydowego, lecz od określenia ograniczeń plonowania. W kukurydzy najczęściej są nim: zbyt niski odczyn i zagęszczenia gleby, niedobór wody, niewłaściwe nawożenie azotowe i potasowe, słaba dostępność fosforu w chłodnej glebie, niedobór cynku i boru, a także możliwe nadmiary.</p>
+            </div>
+            <div class="c5-btnrow">
+              <a class="c5-btn c5-btn--dark" href="#u-fazy" data-cx-scroll>Zobacz program krok po kroku</a>
+              <a class="c5-btn c5-btn--light" href="konfigurator.html?crop=kukurydza">Dobierz produkty w konfiguratorze</a>
+            </div>
+          </div>
+          <nav class="wf-breadcrumb c5-hero__crumbs" aria-label="Okruszki">
+            <ol class="wf-cluster wf-items-center">
+              <li><a class="wf-link--quiet" href="home.html">Strona główna</a></li>
+              <li><span class="wf-breadcrumb__sep" aria-hidden="true">/</span></li>
+              <li><a class="wf-link--quiet" href="uprawy.html">Uprawy</a></li>
+              <li><span class="wf-breadcrumb__sep" aria-hidden="true">/</span></li>
+              <li><a class="wf-link--quiet" href="zboza.html">Zboża</a></li>
+              <li><span class="wf-breadcrumb__sep" aria-hidden="true">/</span></li>
+              <li aria-current="page">Kukurydza</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="c5-hero__stage">
+          <!-- foto: kukurydza-hero.jpg -->
+          <div class="wf-ph wf-ph--cross c5-hero__frame"><span class="wf-ph__label">kadr: łan kukurydzy w fazie 6–8 liści, niskie słońce</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 25 · KLUCZOWE LICZBY (spec §9.4, §10.2) =====
+       Trzy kafle zamienione w trzy wiersze w ciemnym kadrze (jak Parametry na
+       CARBOMAT ECO): po lewej etykieta i podpis, po prawej wielka liczba
+       z mniejszą jednostką. Treść bez zmian – odliczanie nadal robi mechanika
+       `data-count` z `uprawa.js`. Iteracja 6: kadr wystający zdjęty (uwaga 1
+       Mateusza – „nie będzie tu żadnego zdjęcia kolby"), sekcja kończy się
+       zwykłym odstępem pod trzecim wierszem. -->
+  <section class="c5-sec u-num" id="u-liczby" data-ce="CE-24" data-ce-wariant="odliczanie">
+    <div class="u-num__rows">
+      <div class="u-num__row">
+        <div class="u-num__key">
+          <span class="u-num__lab">zabieg bazowy · przed siewem</span>
+          <div class="u-num__chips">
+            <span class="u-num__chip">A. Płynny</span>
+            <span class="u-num__chip">B. Sypki</span>
+            <span class="u-num__chip">C. Strategiczny</span>
+          </div>
+          <p class="u-num__cap">Warianty Carbohort – wybierz jeden zabieg bazowy</p>
+        </div>
+        <p class="u-num__val"><span data-count="1">1</span></p>
+      </div>
+      <div class="u-num__row">
+        <div class="u-num__key">
+          <span class="u-num__lab">CARBOHUMIC MAXI PLUS</span>
+          <p class="u-num__cap">od fazy 4 liści BBCH 14 do początku wysuwania wiechy BBCH 51</p>
+        </div>
+        <p class="u-num__val"><span data-count="0,6">0,6</span><span class="u-num__unit">l/ha</span></p>
+      </div>
+      <div class="u-num__row">
+        <div class="u-num__key">
+          <span class="u-num__lab">CARBOHUMIC filtrowany 187 mesh na resztki</span>
+          <p class="u-num__cap">w ok. 400 l wody</p>
+        </div>
+        <p class="u-num__val"><span data-count="20–40">20–40</span><span class="u-num__unit">l/ha</span></p>
+      </div>
+    </div>
+  </section>
+
+<!-- ===== 30 · PRODUKTY: pięć kart, cała karta otwiera mapę zastosowań =====
+     Uwaga 2 Mateusza (14.09): linki „Strona produktu” znikają z kart – razem
+     z „Kup produkt” wracają w stopce popupu (fragment 95). Karta jest jednym
+     linkiem `data-lightbox-open`, dokładnie jak karta fazy w iteracji 4.
+     Packshoty wg spec §9.0.5 (`object-fit: contain` na polu --w-gray-100).
+     Trzy kolumny (3 + 2) od 900 px, niżej karuzela ze wskaźnikiem. ===== -->
+<section class="c5-sec" id="u-produkty" data-chapter="u-produkty" data-ce="CE-20" data-ce-wariant="produktowe">
+  <div class="c5-wrap">
+    <span class="c5-kicker c5-kicker--center u-reveal">Produkty</span>
+    <div class="c5-head u-reveal">
+      <h2 class="c5-h2 c5-h2--center">Produkty Carbohort w technologii kukurydzy</h2>
+      <p class="c5-lead c5-lead--center">Pięć produktów, każdy w innej roli. Kliknij kartę, żeby zobaczyć mapę zastosowań i konsekwencje dla kukurydzy.</p>
+    </div>
+    <div class="u-prodwrap wf-stack wf-stack--3">
+      <div class="u-prod" id="prod-rail">
+        <a class="u-prod__card u-reveal" href="#produkt-eco" data-lightbox-open="produkt-eco">
+          <span class="u-prod__ph"><img class="u-prod__img" src="img/opakowania/worek_1000l_1500l.png" alt="" loading="lazy" decoding="async"></span>
+          <span class="u-prod__name">CARBOMAT ECO</span>
+          <dl class="u-defs">
+            <div><dt>Forma</dt><dd>Sypki, rozdrobniony lignit o regulowanym pH</dd></div>
+            <div><dt>Najlepszy termin</dt><dd>Przed uprawą, inwestycja strategiczna na wiele lat</dd></div>
+          </dl>
+          <span class="u-prod__go">Mapa zastosowań <svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></span>
+        </a>
+        <a class="u-prod__card u-reveal" href="#produkt-humic" data-lightbox-open="produkt-humic">
+          <span class="u-prod__ph"><img class="u-prod__img" src="img/opakowania/worek_20l.png" alt="" loading="lazy" decoding="async"></span>
+          <span class="u-prod__name">CARBOMAT HUMIC</span>
+          <dl class="u-defs">
+            <div><dt>Forma</dt><dd>Sypki, częściowo rozpuszczalny</dd></div>
+            <div><dt>Najlepszy termin</dt><dd>Przed siewem, całopowierzchniowo, pasowo, strip-till w podsiewaczu</dd></div>
+          </dl>
+          <span class="u-prod__go">Mapa zastosowań <svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></span>
+        </a>
+        <a class="u-prod__card u-reveal" href="#produkt-187" data-lightbox-open="produkt-187">
+          <span class="u-prod__ph"><img class="u-prod__img" src="img/opakowania/kanister_20l.png" alt="" loading="lazy" decoding="async"></span>
+          <span class="u-prod__name">CARBOHUMIC filtrowany 187 mesh</span>
+          <dl class="u-defs">
+            <div><dt>Forma</dt><dd>Płynny, filtrowany</dd></div>
+            <div><dt>Najlepszy termin</dt><dd>Przed siewem, start wegetacji, po zbiorze na resztki pozbiorowe lub jako regeneracja gleby</dd></div>
+          </dl>
+          <span class="u-prod__go">Mapa zastosowań <svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></span>
+        </a>
+        <a class="u-prod__card u-reveal" href="#produkt-20" data-lightbox-open="produkt-20">
+          <span class="u-prod__ph"><img class="u-prod__img" src="img/opakowania/mauzer_1000l_1500l.png" alt="" loading="lazy" decoding="async"></span>
+          <span class="u-prod__name">CARBOHUMIC niefiltrowany 20 mesh</span>
+          <dl class="u-defs">
+            <div><dt>Forma</dt><dd>Płynny, niefiltrowany</dd></div>
+            <div><dt>Najlepszy termin</dt><dd>Doglebowo w układach odpornych na zatkanie</dd></div>
+          </dl>
+          <span class="u-prod__go">Mapa zastosowań <svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></span>
+        </a>
+        <a class="u-prod__card u-reveal" href="#produkt-maxi" data-lightbox-open="produkt-maxi">
+          <span class="u-prod__ph"><img class="u-prod__img" src="img/opakowania/kanister_5l.png" alt="" loading="lazy" decoding="async"></span>
+          <span class="u-prod__name">CARBOHUMIC MAXI PLUS</span>
+          <dl class="u-defs">
+            <div><dt>Forma</dt><dd>Płynny, filtrowany, dolistny</dd></div>
+            <div><dt>Najlepszy termin</dt><dd>Wczesny wzrost i regeneracja po stresie</dd></div>
+          </dl>
+          <span class="u-prod__go">Mapa zastosowań <svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></span>
+        </a>
+      </div>
+      <div class="u-rail" data-rail="prod-rail" aria-hidden="true"><span class="u-rail__thumb" data-rail-thumb></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 35 · ZASADA WYBORU PREPARATU DOGLEBOWEGO (spec §10.4) =============
+     Iteracja 6, uwaga 3 Mateusza: scena sterowana przewijaniem („nie pasuje do
+     tego rodzaju treści") ustępuje siatce 2 × 2 kart reguł. Karta czyta się
+     jak zdanie Darka: warunek u góry, strzałka w dół zamiast słowa „to",
+     odpowiedź na dole, a po prawej produkt, którego odpowiedź dotyczy.
+     Cała karta jest linkiem do mapy zastosowań (jak karta produktu i karta
+     fazy), więc bez JS zostaje zwykły odnośnik do sekcji popupu.
+     Pod siatką, bez zmian: nota w. 143 i blok potasu. -->
+<section class="c5-sec" id="u-wybor">
+  <div class="c5-wrap wf-stack wf-stack--8">
+
+    <div class="u-reveal">
+      <span class="c5-kicker">Zasada wyboru</span>
+      <div class="c5-head">
+        <h2 class="c5-h2">Zasada wyboru preparatu doglebowego</h2>
+      </div>
+    </div>
+
+    <div id="u-wybor-karty" class="u-rl" data-ce="CE-34" data-ce-wariant="regula-z-packshotem" data-ce-od="#u-wybor">
+      <a class="u-rl__card u-reveal" href="#produkt-187" data-lightbox-open="produkt-187">
+        <span class="u-rl__rule">
+          <span class="u-rl__cond">Jeśli potrzebny jest szybki zabieg przed siewem i gospodarstwo ma opryskiwacz</span>
+          <svg class="wf-icon u-rl__down" aria-hidden="true"><use href="#ti-arrow-down"></use></svg>
+          <span class="u-rl__ans">Wybierz CARBOHUMIC filtrowany 187 mesh.</span>
+        </span>
+        <span class="u-rl__prod">
+          <span class="u-rl__ph"><img class="u-rl__img" src="img/opakowania/kanister_20l.png" alt="" loading="lazy" decoding="async"></span>
+          <span class="wf-caption u-rl__n">CARBOHUMIC filtrowany 187 mesh</span>
+          <span class="u-rl__go">Mapa zastosowań <svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></span>
+        </span>
+      </a>
+
+      <a class="u-rl__card u-reveal" href="#produkt-humic" data-lightbox-open="produkt-humic">
+        <span class="u-rl__rule">
+          <span class="u-rl__cond">Jeśli celem jest zabieg sypki razem z uprawą pasową lub nawozem</span>
+          <svg class="wf-icon u-rl__down" aria-hidden="true"><use href="#ti-arrow-down"></use></svg>
+          <span class="u-rl__ans">Rozważ CARBOMAT HUMIC.</span>
+        </span>
+        <span class="u-rl__prod">
+          <span class="u-rl__ph"><img class="u-rl__img" src="img/opakowania/worek_20l.png" alt="" loading="lazy" decoding="async"></span>
+          <span class="wf-caption u-rl__n">CARBOMAT HUMIC</span>
+          <span class="u-rl__go">Mapa zastosowań <svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></span>
+        </span>
+      </a>
+
+      <a class="u-rl__card u-reveal" href="#produkt-eco" data-lightbox-open="produkt-eco">
+        <span class="u-rl__rule">
+          <span class="u-rl__cond">Jeśli gleba jest silnie zdegradowana, bardzo lekka bądź bardzo ilasta albo ma chronicznie niską zawartość materii organicznej</span>
+          <svg class="wf-icon u-rl__down" aria-hidden="true"><use href="#ti-arrow-down"></use></svg>
+          <span class="u-rl__ans">Zaplanuj CARBOMAT ECO jako inwestycję wieloletnią, po kalkulacji dawki i kosztu.</span>
+        </span>
+        <span class="u-rl__prod">
+          <span class="u-rl__ph"><img class="u-rl__img" src="img/opakowania/worek_1000l_1500l.png" alt="" loading="lazy" decoding="async"></span>
+          <span class="wf-caption u-rl__n">CARBOMAT ECO</span>
+          <span class="u-rl__go">Mapa zastosowań <svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></span>
+        </span>
+      </a>
+
+      <a class="u-rl__card u-reveal" href="#produkt-20" data-lightbox-open="produkt-20">
+        <span class="u-rl__rule">
+          <span class="u-rl__cond">Jeśli dostępny jest beczkowóz lub instalacja bez ryzyka zatkania</span>
+          <svg class="wf-icon u-rl__down" aria-hidden="true"><use href="#ti-arrow-down"></use></svg>
+          <span class="u-rl__ans">Można wybrać CARBOHUMIC niefiltrowany 20 mesh.</span>
+        </span>
+        <span class="u-rl__prod">
+          <span class="u-rl__ph"><img class="u-rl__img" src="img/opakowania/mauzer_1000l_1500l.png" alt="" loading="lazy" decoding="async"></span>
+          <span class="wf-caption u-rl__n">CARBOHUMIC niefiltrowany 20 mesh</span>
+          <span class="u-rl__go">Mapa zastosowań <svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></span>
+        </span>
+      </a>
+    </div>
+
+    <div id="u-wybor-nota" class="u-callout u-reveal" data-ce="CE-31">
+      <svg class="wf-icon" aria-hidden="true"><use href="#ti-info-circle"></use></svg>
+      <div class="u-callout__in">
+        <p class="u-txt">Nie kumuluj wszystkich form produktów w jednym miejscu i sezonie. Lepiej założyć pasy porównawcze i ocenić efekt w glebie, korzeniach i plonie owoców i ziarna.</p>
+      </div>
+    </div>
+
+    <div id="u-wybor-potas" class="wf-stack wf-stack--6 u-reveal" data-kbar data-ce="CE-43">
+      <div class="u-head">
+        <h3 class="u-h3">Ile potasu realnie wnosi CARBOMAT HUMIC</h3>
+        <p class="u-txt u-measure">Przy deklarowanej zawartości około 6% K₂O produkt wnosi orientacyjnie:</p>
+      </div>
+      <div class="u-kbar">
+        <div class="wf-stack wf-stack--2">
+          <span class="u-lab">Dawka produktu</span>
+          <div class="u-kbar__doses" role="group" aria-label="Dawka produktu">
+            <button class="u-kbar__dose" type="button" data-k-dose="d100" data-k-pct="20" aria-pressed="false">100 kg/ha</button>
+            <button class="u-kbar__dose" type="button" data-k-dose="d250" data-k-pct="50" aria-pressed="false">250 kg/ha</button>
+            <button class="u-kbar__dose" type="button" data-k-dose="d500" data-k-pct="100" aria-pressed="false">500 kg/ha</button>
+          </div>
+        </div>
+        <div class="wf-stack wf-stack--2">
+          <span class="u-lab">Wniesione K₂O</span>
+          <div class="u-kbar__track"><span class="u-kbar__fill" data-k-bar></span></div>
+        </div>
+        <div class="u-kbar__texts" aria-live="polite">
+          <div data-k-text="d100">
+            <span class="u-kbar__val">ok. 6 kg K₂O/ha</span>
+            <span class="u-lab">Interpretacja</span>
+            <p class="u-txt u-measure">Dodatek startowy, nie pełna dawka potasu.</p>
+            <p class="u-txt u-measure">Jest to całościowo w bilansie ilość praktycznie bez znaczenia biorąc pod uwagę, że będzie to ok. 4 kg czystego potasu przy standardowej średniej zasobności gleby około 300 kg K/ha. Więc im wcześniej i im bliżej nasion, tym efekt z tego dodatku będzie lepszy.</p>
+          </div>
+          <div data-k-text="d250">
+            <span class="u-kbar__val">ok. 15 kg K₂O/ha</span>
+            <span class="u-lab">Interpretacja</span>
+            <p class="u-txt u-measure">Część bilansu, nadal zwykle niewystarczająca dla kukurydzy.</p>
+          </div>
+          <div data-k-text="d500">
+            <span class="u-kbar__val">ok. 30 kg K₂O/ha</span>
+            <span class="u-lab">Interpretacja</span>
+            <p class="u-txt u-measure">Istotny wkład, ale nadal wymaga zestawienia z analizą gleby i planowanym plonem.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== 40 · PROGRAM FAZOWY: lista faz + panel aktywnej fazy (spec §9.7) =====
+     Uwaga 4 Mateusza (14.09): po lewej numery i nazwy faz, po najechaniu po
+     prawej skrót aktywnej fazy, pod nim przycisk otwierający lightbox (bez
+     zmian). Oś, linia i kropki z iteracji 4 znikają. Bez JS: dziesięć par
+     wiersz–panel jeden pod drugim; poniżej 900 px ten sam DOM jest
+     akordeonem. Treść faz – cytaty ze Skrótu programu, przeniesione co do
+     znaku z poprzedniej wersji sekcji. ===== -->
+<section class="c5-sec u-fz" id="u-fazy" data-chapter="u-fazy" data-ce="CE-30" data-ce-wariant="z-lightboxem">
+  <div class="c5-wrap">
+    <span class="c5-kicker u-reveal">Program fazowy</span>
+    <div class="c5-head u-reveal">
+      <h2 class="c5-h2">Program fazowy od ścierniska do zbioru</h2>
+      <p class="c5-lead">Dziesięć faz od zbioru przedplonu po resztki pożniwne. Najedź na fazę, żeby zobaczyć jej skrót; pełny opis z zaleceniami otwiera się po kliknięciu.</p>
+    </div>
+    <div class="u-fz__grid" data-fz aria-live="polite">
+      <div class="u-fz__pair">
+        <button class="u-fz__row" type="button" id="fz-row-1" aria-expanded="true" aria-controls="fz-panel-1"><span class="u-fz__no">01</span><span class="u-fz__t">Po zbiorze przedplonu i jesienne przygotowanie pola</span></button>
+        <div class="u-fz__panel" id="fz-panel-1" role="region" aria-labelledby="fz-row-1">
+          <span class="u-lab">Po zbiorze przedplonu</span>
+          <h3 class="u-h3">Po zbiorze przedplonu i jesienne przygotowanie pola</h3>
+          <p class="u-fz__lead">Analiza gleby, rozdrobnienie resztek, regulacja pH i stosunku kationów według potrzeb. Uprawa poplonu do likwidacji zimą lub wczesną wiosną. Tu może być nawożenie P, K Mg, S i mikroelementów Zn, Mn, B przed lub po poplonach</p>
+          <span class="u-chips-prod"><button class="u-chip-prod" type="button" data-lightbox-open="produkt-187" aria-label="Mapa zastosowań: CARBOHUMIC filtrowany 187 mesh">CARBOHUMIC filtrowany 187 mesh</button><button class="u-chip-prod" type="button" data-lightbox-open="produkt-20" aria-label="Mapa zastosowań: CARBOHUMIC niefiltrowany 20 mesh">CARBOHUMIC niefiltrowany 20 mesh</button><button class="u-chip-prod" type="button" data-lightbox-open="produkt-eco" aria-label="Mapa zastosowań: CARBOMAT ECO">CARBOMAT ECO</button></span>
+          <p class="wf-caption u-fz__src">CARBOHUMIC filtrowany 187 mesh lub CARBOHUMIC niefiltrowany 20 mesh pod uprawę poplonu jesiennego; CARBOMAT ECO tylko jako zabieg strategiczny przed siewem poplonu</p>
+          <a class="c5-btn c5-btn--dark c5-btn--sm u-fz__go" href="#faza-3-1" data-lightbox-open="faza-3-1">Pełny opis fazy <svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+        </div>
+      </div>
+      <div class="u-fz__pair">
+        <button class="u-fz__row" type="button" id="fz-row-2" aria-expanded="true" aria-controls="fz-panel-2"><span class="u-fz__no">02</span><span class="u-fz__t">Wczesna wiosna i przygotowanie przedsiewne</span></button>
+        <div class="u-fz__panel" id="fz-panel-2" role="region" aria-labelledby="fz-row-2">
+          <span class="u-lab">Przed siewem</span>
+          <h3 class="u-h3">Wczesna wiosna i przygotowanie przedsiewne</h3>
+          <p class="u-fz__lead">Ewentualna korekta struktury gleby – głębosz, nawożenie N wg bilansu azotu po zimie (inne najlepiej jesienią) z uwzględnieniem systemu optymalizacji wykorzystania N (inhibitory)</p>
+          <span class="u-chips-prod"><button class="u-chip-prod" type="button" data-lightbox-open="produkt-humic" aria-label="Mapa zastosowań: CARBOMAT HUMIC">CARBOMAT HUMIC</button><button class="u-chip-prod" type="button" data-lightbox-open="produkt-187" aria-label="Mapa zastosowań: CARBOHUMIC filtrowany 187 mesh">CARBOHUMIC filtrowany 187 mesh</button></span>
+          <p class="wf-caption u-fz__src">CARBOMAT HUMIC do 150 kg do podsiewacza albo CARBOHUMIC filtrowany 187 mesh – aplikacja poniżej głębokości siewu lub współrzędowa w systemie aplikacji nawozów płynnych.</p>
+          <a class="c5-btn c5-btn--dark c5-btn--sm u-fz__go" href="#faza-3-2" data-lightbox-open="faza-3-2">Pełny opis fazy <svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+        </div>
+      </div>
+      <div class="u-fz__pair">
+        <button class="u-fz__row" type="button" id="fz-row-3" aria-expanded="true" aria-controls="fz-panel-3"><span class="u-fz__no">03</span><span class="u-fz__t">Siew i kiełkowanie – BBCH 00–09</span></button>
+        <div class="u-fz__panel" id="fz-panel-3" role="region" aria-labelledby="fz-row-3">
+          <span class="u-lab">Siew</span>
+          <h3 class="u-h3">Siew i kiełkowanie – BBCH 00–09</h3>
+          <p class="u-fz__lead">Właściwy termin, obsada, bezpieczny nawóz startowy.</p>
+          <span class="u-none"><svg class="wf-icon" aria-hidden="true"><use href="#ti-minus"></use></svg> bez produktu CarboHort</span>
+          <a class="c5-btn c5-btn--dark c5-btn--sm u-fz__go" href="#faza-3-3" data-lightbox-open="faza-3-3">Pełny opis fazy <svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+        </div>
+      </div>
+      <div class="u-fz__pair">
+        <button class="u-fz__row" type="button" id="fz-row-4" aria-expanded="true" aria-controls="fz-panel-4"><span class="u-fz__no">04</span><span class="u-fz__t">Wschody i 1–3 liście – BBCH 10–13</span></button>
+        <div class="u-fz__panel" id="fz-panel-4" role="region" aria-labelledby="fz-row-4">
+          <span class="u-lab">BBCH 10–13</span>
+          <h3 class="u-h3">Wschody i 1–3 liście – BBCH 10–13</h3>
+          <p class="u-fz__lead">Nie przeszkadzać wschodom kukurydzy, szybko reagować na zaskorupienie, chłód, fitotoksyczność lub niedobory.</p>
+          <span class="u-none"><svg class="wf-icon" aria-hidden="true"><use href="#ti-minus"></use></svg> bez produktu CarboHort</span>
+          <a class="c5-btn c5-btn--dark c5-btn--sm u-fz__go" href="#faza-3-4" data-lightbox-open="faza-3-4">Pełny opis fazy <svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+        </div>
+      </div>
+      <div class="u-fz__pair">
+        <button class="u-fz__row" type="button" id="fz-row-5" aria-expanded="true" aria-controls="fz-panel-5"><span class="u-fz__no">05</span><span class="u-fz__t">4–8 liści – BBCH 14–18: najważniejszy termin</span></button>
+        <div class="u-fz__panel" id="fz-panel-5" role="region" aria-labelledby="fz-row-5">
+          <span class="u-lab">BBCH 14–16</span>
+          <h3 class="u-h3">4–8 liści – BBCH 14–18: najważniejszy termin</h3>
+          <p class="u-fz__lead">Ewentualna druga dawka N, ewentualnie cynk, obserwacja stresu</p>
+          <span class="u-chips-prod"><button class="u-chip-prod" type="button" data-lightbox-open="produkt-maxi" aria-label="Mapa zastosowań: CARBOHUMIC MAXI PLUS">CARBOHUMIC MAXI PLUS</button></span>
+          <p class="wf-caption u-fz__src">CARBOHUMIC MAXI PLUS jako zabieg interwencyjny lub zapobiegawczy</p>
+          <a class="c5-btn c5-btn--dark c5-btn--sm u-fz__go" href="#faza-3-5" data-lightbox-open="faza-3-5">Pełny opis fazy <svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+        </div>
+      </div>
+      <div class="u-fz__pair">
+        <button class="u-fz__row" type="button" id="fz-row-6" aria-expanded="true" aria-controls="fz-panel-6"><span class="u-fz__no">06</span><span class="u-fz__t">Intensywny wzrost – BBCH 19–39</span></button>
+        <div class="u-fz__panel" id="fz-panel-6" role="region" aria-labelledby="fz-row-6">
+          <span class="u-lab">BBCH 19–39</span>
+          <h3 class="u-h3">Intensywny wzrost – BBCH 19–39</h3>
+          <p class="u-fz__lead">Woda, azot, magnez, siarka bor i mangan według potrzeb tylko dolistnie w oprysku</p>
+          <span class="u-chips-prod"><button class="u-chip-prod" type="button" data-lightbox-open="produkt-maxi" aria-label="Mapa zastosowań: CARBOHUMIC MAXI PLUS">CARBOHUMIC MAXI PLUS</button></span>
+          <p class="wf-caption u-fz__src">CARBOHUMIC MAXI PLUS tylko przy uzasadnieniu</p>
+          <a class="c5-btn c5-btn--dark c5-btn--sm u-fz__go" href="#faza-3-6" data-lightbox-open="faza-3-6">Pełny opis fazy <svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+        </div>
+      </div>
+      <div class="u-fz__pair">
+        <button class="u-fz__row" type="button" id="fz-row-7" aria-expanded="true" aria-controls="fz-panel-7"><span class="u-fz__no">07</span><span class="u-fz__t">Wiechowanie, pylenie i znamionowanie – BBCH 51–69</span></button>
+        <div class="u-fz__panel" id="fz-panel-7" role="region" aria-labelledby="fz-row-7">
+          <span class="u-lab">BBCH 51–69</span>
+          <h3 class="u-h3">Wiechowanie, pylenie i znamionowanie – BBCH 51–69</h3>
+          <p class="u-fz__lead">Ochrona zapylenia przez wodę i zdrowotność roślin</p>
+          <span class="u-none"><svg class="wf-icon" aria-hidden="true"><use href="#ti-minus"></use></svg> bez produktu CarboHort</span>
+          <a class="c5-btn c5-btn--dark c5-btn--sm u-fz__go" href="#faza-3-7" data-lightbox-open="faza-3-7">Pełny opis fazy <svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+        </div>
+      </div>
+      <div class="u-fz__pair">
+        <button class="u-fz__row" type="button" id="fz-row-8" aria-expanded="true" aria-controls="fz-panel-8"><span class="u-fz__no">08</span><span class="u-fz__t">Zawiązywanie i nalewanie ziarna – BBCH 71–87</span></button>
+        <div class="u-fz__panel" id="fz-panel-8" role="region" aria-labelledby="fz-row-8">
+          <span class="u-lab">BBCH 71–87</span>
+          <h3 class="u-h3">Zawiązywanie i nalewanie ziarna – BBCH 71–87</h3>
+          <p class="u-fz__lead">Ochrona liścia, nalewanie ziarna, brak rutynowych koktajli Zabiegi na omacnicę prosowiankę</p>
+          <span class="u-none"><svg class="wf-icon" aria-hidden="true"><use href="#ti-minus"></use></svg> bez produktu CarboHort</span>
+          <a class="c5-btn c5-btn--dark c5-btn--sm u-fz__go" href="#faza-3-8" data-lightbox-open="faza-3-8">Pełny opis fazy <svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+        </div>
+      </div>
+      <div class="u-fz__pair">
+        <button class="u-fz__row" type="button" id="fz-row-9" aria-expanded="true" aria-controls="fz-panel-9"><span class="u-fz__no">09</span><span class="u-fz__t">Dojrzewanie i zbiór – BBCH 89</span></button>
+        <div class="u-fz__panel" id="fz-panel-9" role="region" aria-labelledby="fz-row-9">
+          <span class="u-lab">BBCH 89</span>
+          <h3 class="u-h3">Dojrzewanie i zbiór – BBCH 89</h3>
+          <p class="u-fz__lead">Termin zbioru dobierz odpowiednio do wilgotności ziarna, pogody, kosztu suszenia i ryzyka wylegania lub pojawu chorób fuzaryjnych.</p>
+          <span class="u-none"><svg class="wf-icon" aria-hidden="true"><use href="#ti-minus"></use></svg> bez produktu CarboHort</span>
+          <a class="c5-btn c5-btn--dark c5-btn--sm u-fz__go" href="#faza-4-9" data-lightbox-open="faza-4-9">Pełny opis fazy <svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+        </div>
+      </div>
+      <div class="u-fz__pair">
+        <button class="u-fz__row" type="button" id="fz-row-10" aria-expanded="true" aria-controls="fz-panel-10"><span class="u-fz__no">10</span><span class="u-fz__t">Resztki pożniwne kukurydzy</span></button>
+        <div class="u-fz__panel" id="fz-panel-10" role="region" aria-labelledby="fz-row-10">
+          <span class="u-lab">Po zbiorze</span>
+          <h3 class="u-h3">Resztki pożniwne kukurydzy</h3>
+          <p class="u-fz__lead">Równomierne rozdrobnienie, wilgoć, płytkie wymieszanie/mulczowanie lub pozostawienie na powierzchni gleby</p>
+          <span class="u-chips-prod"><button class="u-chip-prod" type="button" data-lightbox-open="produkt-187" aria-label="Mapa zastosowań: CARBOHUMIC filtrowany 187 mesh">CARBOHUMIC filtrowany 187 mesh</button><span class="u-phase__chip">CARBOHUMIC BIOMAS</span></span>
+          <p class="wf-caption u-fz__src">CARBOHUMIC filtrowany 187 mesh, opcjonalnie mikroorganizmy</p>
+          <p class="wf-caption u-fz__src">Można dać CARBOHUMIC BIOMAS</p>
+          <a class="c5-btn c5-btn--dark c5-btn--sm u-fz__go" href="#faza-4-10" data-lightbox-open="faza-4-10">Pełny opis fazy <svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 50 · NAJWAŻNIEJSZE DECYZJE PRZED SEZONEM (spec §9.8) ===============
+     Układ „Dawkowanie" z wzorca (§3.7): sekcja na wysokość ekranu, 30 px góra
+     i dół; lewa kolumna – nagłówek u góry, lista i przycisk u dołu; prawa –
+     kadr na całą wysokość z lekkim parallaksem. Numery punktów rysuje licznik
+     CSS, więc zdania Darka zostają nietknięte. Ikony z listy znikają (§9.2).
+     DOM order = kolejność mobilna: nagłówek → kadr → lista → przycisk. -->
+<section class="c5-sec u-dg" id="u-decyzje" data-chapter="u-decyzje" data-ce="CE-14">
+  <div class="c5-wrap u-dg__grid">
+
+    <div class="u-dg__top">
+      <span class="c5-kicker">Decyzje przed sezonem</span>
+      <h2 class="c5-h2">Najważniejsze decyzje przed sezonem</h2>
+      <p class="c5-lead">Zanim wybierzesz produkt: co zbadać i które fakty o kukurydzy decydują o programie.</p>
+    </div>
+
+    <!-- foto: kukurydza-diagnostyka.jpg -->
+    <div class="u-dg__media-wrap" data-dg-media>
+      <div class="wf-ph wf-ph--cross u-dg__media"><span class="wf-ph__label">kadr: pobieranie próbki gleby penetrometrem na polu kukurydzy</span></div>
+    </div>
+
+    <div class="u-dg__bottom">
+      <h3 class="u-h3">Minimalny pakiet diagnostyczny</h3>
+      <ol class="u-dg__list" role="list">
+        <li>Analiza gleby: pH, P, K, Mg, Ca, S, Zn, B, Mn zawartość materii organicznej lub węgla organicznego.</li>
+        <li>Azot mineralny Nmin w profilu 0–60 cm, zwłaszcza po przedplonach pozostawiających dużo azotu lub po nawozach naturalnych.</li>
+        <li>Ocena zagęszczenia: badanie penetrometrem, głębokość i grubość podeszwy płużnej, przepuszczalność gleby i obecność zastoisk wody.</li>
+        <li>Historia pola: przedplon, dawki obornika/gnojowicy, presja omacnicy, stonki kukurydzianej i fuzarioz, udział kukurydzy w zmianowaniu.</li>
+        <li>Cel produkcji: na ziarno lub kiszonkę, planowana obsada, FAO, oczekiwany plon i realne możliwości wodne stanowiska.</li>
+        <li>Analiza liści w sezonie, jeśli pole ma historię niedoborów cynku, magnezu, siarki lub gdy objawy są niejednoznaczne.</li>
+      </ol>
+      <a class="c5-btn c5-btn--dark" href="kontakt.html">Zapytaj doradcę CarboHort</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== 55 · KRYTYCZNE FAKTY DLA KUKURYDZY (spec §9.9, uwaga 5) ============
+     Napis przyklejony na środku ekranu przez cały tor sekcji (≈ 6 × 55 vh),
+     sześć nieprzezroczystych kafelków rozłożonych w torze nieregularnie:
+     --i = miejsce w torze, --x = odsunięcie od środka, --rot = obrót,
+     --speed = prędkość względem strony (parallax liczy JS przy motionOn();
+     > 1 = kafelek jedzie wolniej niż strona). Kafelki przejeżdżają po napisie.
+     Pełna treść każdego faktu jest zawsze widoczna – przycisk „więcej" znika.
+     Poniżej 900 px, przy ograniczonym ruchu i bez JS: napis u góry, kafelki
+     w kolumnie (dwie od 640 px), bez obrotów i odsunięć. -->
+<section class="c5-sec u-fk" id="u-fakty" data-fk>
+  <div id="u-fakty-scena" class="u-fk__track" data-fk-track data-ce="CE-44" data-ce-od="#u-fakty">
+
+    <h2 class="u-fk__title">Krytyczne fakty dla kukurydzy</h2>
+
+    <div class="u-fk__tiles">
+
+      <article class="u-fk__tile" data-fk-tile style="--i:0;--x:-30%;--rot:-3deg;--speed:1.18">
+        <h3 class="u-fk__area">Odczyn</h3>
+        <span class="u-lab">Wniosek technologiczny</span>
+        <p class="u-txt">Optymalny zakres w metodyce integrowanej to około pH 6,0–7,2 w wodzie.</p>
+        <p class="u-txt">Przy pH poniżej 5,5 bezwzględnie potrzebne wapnowanie, nie biostymulator.</p>
+      </article>
+
+      <article class="u-fk__tile" data-fk-tile style="--i:1;--x:26%;--rot:2.5deg;--speed:0.78">
+        <h3 class="u-fk__area">Faza 5–6 liści</h3>
+        <span class="u-lab">Wniosek technologiczny</span>
+        <p class="u-txt">Roślina intensywnie programuje potencjał plonowania.</p>
+        <p class="u-txt">Do fazy 6–7 liści powinna być dostępna pozostała część azotu, przed tworzeniem się zalążka kolby.</p>
+      </article>
+
+      <article class="u-fk__tile" data-fk-tile style="--i:2;--x:-14%;--rot:1.5deg;--speed:1.28">
+        <h3 class="u-fk__area">Fosfor</h3>
+        <span class="u-lab">Wniosek technologiczny</span>
+        <p class="u-txt">Łatwodostępny jest kluczowy od kiełkowania do fazy 6–8 liści, szczególnie w glebie o temperaturze poniżej 12 °C.</p>
+        <p class="u-txt">Nawóz startowy może przyspieszać rozwój, ale nie zawsze podnosi plon.</p>
+      </article>
+
+      <article class="u-fk__tile" data-fk-tile style="--i:3;--x:32%;--rot:-2deg;--speed:0.92">
+        <h3 class="u-fk__area">Potas</h3>
+        <span class="u-lab">Wniosek technologiczny</span>
+        <p class="u-txt">Najbardziej intensywne pobieranie przypada mniej więcej od 5–6 liści do kwitnienia.</p>
+        <p class="u-txt">Bilans musi uwzględniać zasobność i przeznaczenie plonu. Przesadna zasobność/nawożenie potasem może obniżać plon.</p>
+      </article>
+
+      <article class="u-fk__tile" data-fk-tile style="--i:4;--x:-28%;--rot:3.5deg;--speed:1.08">
+        <h3 class="u-fk__area">Cynk</h3>
+        <span class="u-lab">Wniosek technologiczny</span>
+        <p class="u-txt">To najważniejszy mikroelement do rozważenia w kukurydzy, ale dawka powinna wynikać z analizy gleby lub liści i ryzyka stanowiska.</p>
+      </article>
+
+      <article class="u-fk__tile" data-fk-tile style="--i:5;--x:18%;--rot:-4deg;--speed:0.72">
+        <h3 class="u-fk__area">Bor, wapń i magnez</h3>
+        <span class="u-lab">Wniosek technologiczny</span>
+        <p class="u-txt">Oba pierwiastki wspierają się w działaniu i warunkują prawidłowy rozwój i plonowanie.</p>
+        <p class="u-txt">Odpowiedź kukurydzy na bor zależy od dostępności wapnia, a nadmiar może być toksyczny, lecz mało prawdopodobny w glebach Polski. Wapń zwykle uzupełnia się przez regulację odczynu, lecz jego zawartość nie powinna być mniejsza niż 1000mg/kg gleby, przy zasobności w magnez na poziomie co najmniej 70 mg/kg gleby.</p>
+      </article>
+
+    </div>
+  </div>
+
+  <div class="c5-wrap u-fk__after">
+    <div id="u-fakty-zasada" class="u-quote u-reveal" data-ce="CE-33" data-ce-wariant="ciemny-boks">
+      <span class="u-quote__t">Najważniejsza zasada</span>
+      <p>Produkty humusowe poprawiają warunki wykorzystania wody i składników, ale nie zastępują bilansu N, P, K, Mg, Ca, S, mikroelementów, prawidłowego pH ani prawidłowej uprawy roli.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 60 · TRZY WARIANTY TECHNOLOGII (spec §9.10) =====
+     Mechanika bez zmian (pudełka-przełączniki z iteracji 4). Zmiana wizualna:
+     odstępy i nagłówek wzorca – kicker, h2 i lead wyśrodkowane jak w „Który
+     dla mnie”, bez tła `wf-section--subtle`. ===== -->
+<section class="c5-sec" id="u-warianty" data-chapter="u-warianty" data-ce="CE-45">
+  <div class="c5-wrap wf-stack wf-stack--10">
+    <div class="u-reveal">
+      <span class="c5-kicker c5-kicker--center">Warianty</span>
+      <div class="c5-head">
+        <h2 class="c5-h2 c5-h2--center">Trzy warianty technologii</h2>
+        <p class="c5-lead c5-lead--center">Warianty nie oznaczają trzech poziomów jakości. Każdy może być poprawny, jeśli odpowiada ograniczeniom pola i budżetowi.</p>
+      </div>
+    </div>
+    <div class="wf-stack wf-stack--6 u-reveal" data-tabs-group>
+      <div class="u-vtabs" role="tablist" aria-label="Trzy warianty technologii">
+        <button class="u-vtab" type="button" role="tab" id="tab-w1" aria-controls="panel-w1" aria-selected="false"><span class="u-vtab__no">01</span><span class="u-vtab__t">Program podstawowy</span></button>
+        <button class="u-vtab" type="button" role="tab" id="tab-w2" aria-controls="panel-w2" aria-selected="false"><span class="u-vtab__no">02</span><span class="u-vtab__t">Program zbilansowany</span></button>
+        <button class="u-vtab" type="button" role="tab" id="tab-w3" aria-controls="panel-w3" aria-selected="false"><span class="u-vtab__no">03</span><span class="u-vtab__t">Program regeneracyjny</span></button>
+      </div>
+      <div class="wf-stack wf-stack--4 u-vpanel" role="tabpanel" id="panel-w1" aria-labelledby="tab-w1" tabindex="0">
+        <p class="u-vtabs__sub">Pole w dobrej kulturze</p>
+        <span class="u-lab">Termin · Program</span>
+        <dl class="u-rows">
+          <div class="u-row"><dt>Jesień/wiosna</dt><dd>Analiza gleby, wapnowanie i NPKMgS i mikroelementy według bilansu.</dd></div>
+          <div class="u-row"><dt>Przed siewem</dt><dd>Jeden zabieg: CARBOHUMIC filtrowany 187 mesh 20–40 l/ha albo CARBOMAT HUMIC w zatwierdzonej dawce.</dd></div>
+          <div class="u-row"><dt>Siew</dt><dd>Starter P + mała dawka N; Zn tylko przy ryzyku/niskiej zasobności.</dd></div>
+          <div class="u-row"><dt>BBCH 14–39</dt><dd>Pozostały N; CARBOHUMIC MAXI PLUS tylko po stresie lub jako pas porównawczy.</dd></div>
+          <div class="u-row"><dt>Kwitnienie</dt><dd>Woda i monitoring szkodników i niedoborów.</dd></div>
+          <div class="u-row"><dt>Po zbiorze</dt><dd>Rozdrobnienie + CARBOHUMIC filtrowany 187 mesh 20 l/ha, jeśli warunki wilgotnościowe sprzyjają.</dd></div>
+        </dl>
+      </div>
+      <div class="wf-stack wf-stack--4 u-vpanel" role="tabpanel" id="panel-w2" aria-labelledby="tab-w2" tabindex="0">
+        <p class="u-vtabs__sub">Gleba lekka lub okresowo przesychająca</p>
+        <span class="u-lab">Obszar · Program</span>
+        <dl class="u-rows">
+          <div class="u-row"><dt>Stanowisko</dt><dd>Priorytet dla retencji wody i składników, podziału dawek N, ograniczenia ugniatania i utrzymania okrywy. Wskazane wykorzystanie międzyplonów.</dd></div>
+          <div class="u-row"><dt>Przed siewem</dt><dd>CARBOMAT HUMIC pasowo/strip-till lub CARBOHUMIC filtrowany 187 mesh; nie kumulować obu produktów bez potrzeby.</dd></div>
+          <div class="u-row"><dt>Siew</dt><dd>Precyzyjny starter P+N oraz Zn po analizie.</dd></div>
+          <div class="u-row"><dt>BBCH 14–18</dt><dd>CARBOHUMIC MAXI PLUS 0,6 l/ha + celowane nawożenie mikroelementowe; druga dawka N przed spodziewanym deszczem.</dd></div>
+          <div class="u-row"><dt>BBCH 19–39</dt><dd>Ewentualna druga mała dawka CARBOHUMIC MAXI PLUS po stresie lub przy niedostatecznym wigorze wzrostowym.</dd></div>
+          <div class="u-row"><dt>Po zbiorze</dt><dd>CARBOHUMIC filtrowany 187 mesh + mikroorganizmy, płytkie wymieszanie. Można pozostawić całość pociętych resztek na powierzchni w celu ochrony gleby.</dd></div>
+        </dl>
+      </div>
+      <div class="wf-stack wf-stack--4 u-vpanel" role="tabpanel" id="panel-w3" aria-labelledby="tab-w3" tabindex="0">
+        <p class="u-vtabs__sub">Stanowisko zdegradowane lub wieloletnia monokultura</p>
+        <span class="u-lab">Element · Program</span>
+        <dl class="u-rows">
+          <div class="u-row"><dt>Rok 0</dt><dd>Pełna diagnostyka gleby, zbadanie i usunięcie zagnieceń gleby i podglebia, regulacja pH, zwiększenie zasobności w materię organiczną (międzyplony, nawozy organiczne), zbadanie ryzyka ze strony chwastów, chorób i szkodników.</dd></div>
+          <div class="u-row"><dt>Zmianowanie</dt><dd>W miarę możliwości przerwa w uprawie kukurydzy. Produkty humusowe nie usuwają skutków uprawy monokulturowej, zwłaszcza kukurydzy na kiszonkę.</dd></div>
+          <div class="u-row"><dt>CARBOMAT ECO</dt><dd>Zastosowanie badawcze na najgorszych fragmentach pola. Dawkę ustalić według wad gleby i ekonomiki zabiegu.</dd></div>
+          <div class="u-row"><dt>CARBOMAT HUMIC/CARBOHUMIC</dt><dd>W kolejnym kroku, nie wszystko naraz w pełnej dawce. Ułożyć plan wieloletni.</dd></div>
+          <div class="u-row"><dt>Biologia</dt><dd>Mikroorganizmy i ochrona biologiczna tylko jako element całego systemu uprawy: resztki pozbiorowe, uprawa gleby, rotacja roślin, terminy siewu, zdrowy materiał etc.</dd></div>
+          <div class="u-row"><dt>Pomiary</dt><dd>Stałe obiekty kontrolne i porównawcze, N-tester/analiza liści, wilgotność gleby, plon i marża.</dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 70 · DOBÓR DO STANOWISKA (spec §10.5) =====
+     Uwaga 4 Mateusza (iteracja 6): lista–karta z iteracji 5 ustępuje karuzeli
+     ośmiu kart (`u-cr`) – mechanika nieużywana nigdzie indziej na stronie.
+     Nagłówek w jednym wierszu: kicker + h2 + lead po lewej, licznik i strzałki
+     po prawej. Tor leży w `c5-wrap`, więc dokument się nie poszerza; bez JS
+     przewija się natywnie, a licznik i strzałki są ukryte. ===== -->
+<section class="c5-sec" id="u-stanowisko" data-chapter="u-stanowisko" data-cr data-ce="CE-46">
+  <div class="c5-wrap wf-stack wf-stack--6">
+    <div class="u-cr__top u-reveal">
+      <div class="u-cr__intro">
+        <span class="c5-kicker">Stanowisko</span>
+        <div class="c5-head">
+          <h2 class="c5-h2">Dobór programu do warunków stanowiska</h2>
+          <p class="c5-lead">Osiem warunków z opracowania – dla każdego priorytet, miejsce produktów CarboHort i uzupełnienie. Wybierz warunek, który opisuje Twoje pole.</p>
+        </div>
+      </div>
+      <div class="u-cr__ctl">
+        <p class="u-cr__count" aria-live="polite" aria-atomic="true"><span data-cr-now>01</span> / 08</p>
+        <div class="u-cr__navs">
+          <button class="c5-btn c5-btn--light c5-btn--sm u-cr__nav" type="button" data-cr-prev aria-label="poprzedni warunek"><svg class="wf-icon" aria-hidden="true"><use href="#ti-chevron-left"></use></svg></button>
+          <button class="c5-btn c5-btn--light c5-btn--sm u-cr__nav" type="button" data-cr-next aria-label="następny warunek"><svg class="wf-icon" aria-hidden="true"><use href="#ti-chevron-right"></use></svg></button>
+        </div>
+      </div>
+    </div>
+    <div class="u-cr u-reveal">
+      <ul class="u-cr__track" id="cr-stanowisko" role="list" tabindex="0" aria-label="Warunki stanowiska" data-cr-track data-lenis-prevent>
+        <li class="u-cr__slide">
+          <article class="u-cr__card">
+            <div class="u-cr__hd">
+              <span class="u-cr__no">01</span>
+              <h3 class="u-cr__t">pH &lt; 5,5 w wodzie</h3>
+            </div>
+            <div class="u-cr__sec">
+              <span class="u-lab">Priorytet</span>
+              <p class="u-cr__prio">Wapnowanie, dobór formy wapna, analiza Mg</p>
+            </div>
+            <div class="u-cr__sec">
+              <span class="u-lab">Carbohort</span>
+              <p class="u-txt">CARBOMAT HUMIC może wspierać buforowanie, ale nie zastępuje wapna</p>
+              <span class="u-chips-prod"><button class="u-chip-prod" type="button" data-lightbox-open="produkt-humic" aria-label="Mapa zastosowań: CARBOMAT HUMIC">CARBOMAT HUMIC</button></span>
+            </div>
+            <div class="u-cr__sec">
+              <span class="u-lab">Uzupełnienie</span>
+              <p class="u-txt">Fosfor i Zn mogą być słabo dostępne; nie zwiększaj dawek w ciemno.</p>
+            </div>
+          </article>
+        </li>
+        <li class="u-cr__slide">
+          <article class="u-cr__card">
+            <div class="u-cr__hd">
+              <span class="u-cr__no">02</span>
+              <h3 class="u-cr__t">pH wysokie / gleba węglanowa</h3>
+            </div>
+            <div class="u-cr__sec">
+              <span class="u-lab">Priorytet</span>
+              <p class="u-cr__prio">Ocena ryzyka niedoboru Zn i P</p>
+            </div>
+            <div class="u-cr__sec">
+              <span class="u-lab">Carbohort</span>
+              <p class="u-txt">Ostrożnie z zasadowym CARBOMAT HUMIC;</p>
+              <span class="u-chips-prod"><button class="u-chip-prod" type="button" data-lightbox-open="produkt-humic" aria-label="Mapa zastosowań: CARBOMAT HUMIC">CARBOMAT HUMIC</button></span>
+            </div>
+            <div class="u-cr__sec">
+              <span class="u-lab">Uzupełnienie</span>
+              <p class="u-txt">Cynk – zabieg celowany, nawóz startowy P.</p>
+            </div>
+          </article>
+        </li>
+        <li class="u-cr__slide">
+          <article class="u-cr__card">
+            <div class="u-cr__hd">
+              <span class="u-cr__no">03</span>
+              <h3 class="u-cr__t">Gleba lekka, mało substancji organicznej</h3>
+            </div>
+            <div class="u-cr__sec">
+              <span class="u-lab">Priorytet</span>
+              <p class="u-cr__prio">Retencja wody i składników, mniejsze i dzielone dawki N, stosowanie okrywy gleby roślinami</p>
+            </div>
+            <div class="u-cr__sec">
+              <span class="u-lab">Carbohort</span>
+              <p class="u-txt">CARBOMAT ECO strategicznie; CARBOMAT HUMIC lub CARBOHUMIC filtrowany 187 mesh jako zabieg sezonowy</p>
+              <span class="u-chips-prod"><button class="u-chip-prod" type="button" data-lightbox-open="produkt-eco" aria-label="Mapa zastosowań: CARBOMAT ECO">CARBOMAT ECO</button><button class="u-chip-prod" type="button" data-lightbox-open="produkt-humic" aria-label="Mapa zastosowań: CARBOMAT HUMIC">CARBOMAT HUMIC</button><button class="u-chip-prod" type="button" data-lightbox-open="produkt-187" aria-label="Mapa zastosowań: CARBOHUMIC filtrowany 187 mesh">CARBOHUMIC filtrowany 187 mesh</button></span>
+            </div>
+            <div class="u-cr__sec">
+              <span class="u-lab">Uzupełnienie</span>
+              <p class="u-txt">Potas, Mg, S według analizy.</p>
+            </div>
+          </article>
+        </li>
+        <li class="u-cr__slide">
+          <article class="u-cr__card">
+            <div class="u-cr__hd">
+              <span class="u-cr__no">04</span>
+              <h3 class="u-cr__t">Gleba ciężka, zlewna</h3>
+            </div>
+            <div class="u-cr__sec">
+              <span class="u-lab">Priorytet</span>
+              <p class="u-cr__prio">Poprawa struktury gleby, drenaż, unikanie przejazdów na mokro</p>
+            </div>
+            <div class="u-cr__sec">
+              <span class="u-lab">Carbohort</span>
+              <p class="u-txt">CARBOMAT ECO o grubszej frakcji może być elementem programu wieloletniego</p>
+              <span class="u-chips-prod"><button class="u-chip-prod" type="button" data-lightbox-open="produkt-eco" aria-label="Mapa zastosowań: CARBOMAT ECO">CARBOMAT ECO</button></span>
+            </div>
+            <div class="u-cr__sec">
+              <span class="u-lab">Uzupełnienie</span>
+              <p class="u-txt">Resztki pozbiorowe mieszane płytko w glebie.</p>
+            </div>
+          </article>
+        </li>
+        <li class="u-cr__slide">
+          <article class="u-cr__card">
+            <div class="u-cr__hd">
+              <span class="u-cr__no">05</span>
+              <h3 class="u-cr__t">Monokultura kukurydzy</h3>
+            </div>
+            <div class="u-cr__sec">
+              <span class="u-lab">Priorytet</span>
+              <p class="u-cr__prio">Zmianowanie, mulczowanie grubych łodyg, lustracja omacnicy i stonki</p>
+            </div>
+            <div class="u-cr__sec">
+              <span class="u-lab">Carbohort</span>
+              <p class="u-txt">CARBOHUMIC filtrowany 187 mesh po zbiorze jako wsparcie humifikacji</p>
+              <span class="u-chips-prod"><button class="u-chip-prod" type="button" data-lightbox-open="produkt-187" aria-label="Mapa zastosowań: CARBOHUMIC filtrowany 187 mesh">CARBOHUMIC filtrowany 187 mesh</button></span>
+            </div>
+            <div class="u-cr__sec">
+              <span class="u-lab">Uzupełnienie</span>
+              <p class="u-txt">Rozważ biologiczną ochronę zgodną z rejestracją.</p>
+            </div>
+          </article>
+        </li>
+        <li class="u-cr__slide">
+          <article class="u-cr__card">
+            <div class="u-cr__hd">
+              <span class="u-cr__no">06</span>
+              <h3 class="u-cr__t">Pole po oborniku/gnojowicy</h3>
+            </div>
+            <div class="u-cr__sec">
+              <span class="u-lab">Priorytet</span>
+              <p class="u-cr__prio">Bilans N, P, K i zasolenia</p>
+            </div>
+            <div class="u-cr__sec">
+              <span class="u-lab">Carbohort</span>
+              <p class="u-txt">Dawka substancji humusowych może poprawić retencję, ale nie jest automatycznie potrzebna</p>
+            </div>
+            <div class="u-cr__sec">
+              <span class="u-lab">Uzupełnienie</span>
+              <p class="u-txt">Zmniejsz nawozy mineralne o składniki wniesione z nawozami naturalnymi.</p>
+            </div>
+          </article>
+        </li>
+        <li class="u-cr__slide">
+          <article class="u-cr__card">
+            <div class="u-cr__hd">
+              <span class="u-cr__no">07</span>
+              <h3 class="u-cr__t">Susza wiosenna</h3>
+            </div>
+            <div class="u-cr__sec">
+              <span class="u-lab">Priorytet</span>
+              <p class="u-cr__prio">Ochrona wilgoci, głębokość siewu, ograniczenie zasolenia gleby</p>
+            </div>
+            <div class="u-cr__sec">
+              <span class="u-lab">Carbohort</span>
+              <p class="u-txt">produkty CARBOHUMIC i CARBOMAT jako wsparcie retencji, nie zamiennik wody</p>
+            </div>
+            <div class="u-cr__sec">
+              <span class="u-lab">Uzupełnienie</span>
+              <p class="u-txt">Nie wykonuj agresywnych mieszanin dolistnych.</p>
+            </div>
+          </article>
+        </li>
+        <li class="u-cr__slide">
+          <article class="u-cr__card">
+            <div class="u-cr__hd">
+              <span class="u-cr__no">08</span>
+              <h3 class="u-cr__t">Chłodna i mokra wiosna</h3>
+            </div>
+            <div class="u-cr__sec">
+              <span class="u-lab">Priorytet</span>
+              <p class="u-cr__prio">Fosfor dla siewek, ocena dostępności Zn, unikanie zagęszczenia</p>
+            </div>
+            <div class="u-cr__sec">
+              <span class="u-lab">Carbohort</span>
+              <p class="u-txt">CARBOHUMIC MAXI PLUS dopiero po wznowieniu aktywnego wzrostu</p>
+              <span class="u-chips-prod"><button class="u-chip-prod" type="button" data-lightbox-open="produkt-maxi" aria-label="Mapa zastosowań: CARBOHUMIC MAXI PLUS">CARBOHUMIC MAXI PLUS</button></span>
+            </div>
+            <div class="u-cr__sec">
+              <span class="u-lab">Uzupełnienie</span>
+              <p class="u-txt">Nie opryskuj roślin bezpośrednio przed spadkiem temperatury.</p>
+            </div>
+          </article>
+        </li>
+      </ul>
+      <div class="u-rail u-cr__rail" data-rail="cr-stanowisko" aria-hidden="true"><span class="u-rail__thumb" data-rail-thumb></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 80 · MIESZANINY ZBIORNIKOWE (spec §10.6) =====
+     Uwaga 5 Mateusza (iteracja 6): pięć kart produktów z iteracji 5 ustępuje
+     jednej tabeli `u-mt` z nagłówkami kolumn z dokumentu. Pierwsza komórka to
+     link do mapy zastosowań (packshot + nazwa + strzałka); klik w dowolne
+     miejsce wiersza uruchamia ten sam link. Karty zasad, przypis ŚOR i zdanie
+     zamykające bez zmian. ===== -->
+<section class="c5-sec" id="u-mieszaniny" data-chapter="u-mieszaniny">
+  <div class="c5-wrap wf-stack wf-stack--10">
+    <div class="u-reveal">
+      <span class="c5-kicker c5-kicker--center">Mieszaniny</span>
+      <div class="c5-head">
+        <h2 class="c5-h2 c5-h2--center">Mieszaniny zbiornikowe i bezpieczeństwo aplikacji</h2>
+      </div>
+    </div>
+    <div id="u-mieszaniny-zasady" class="wf-stack wf-stack--4 u-reveal" data-ce="CE-20" data-ce-wariant="numerowane" data-ce-od="#u-mieszaniny">
+      <h3 class="u-h3">Zasady ogólne</h3>
+      <ol class="u-rules">
+        <li class="u-rules__i"><span class="u-rules__no">01</span><p class="u-txt">Zawsze wykonaj test słoikowy w wodzie używanej do zabiegu. Oceniaj osad, kłaczki, pianę, wzrost temperatury i rozwarstwienie.</p></li>
+        <li class="u-rules__i"><span class="u-rules__no">02</span><p class="u-txt">Sprawdź pH i twardość wody. Produkty humusowe mogą reagować z silnie kwaśnymi, silnie zasadowymi lub wysoko zasolonymi komponentami.</p></li>
+        <li class="u-rules__i"><span class="u-rules__no">03</span><p class="u-txt">Nie łącz żywych mikroorganizmów z wodą utlenioną, kwasem podchlorawym, srebrem, chlorem i silnymi dezynfektantami.</p></li>
+        <li class="u-rules__i"><span class="u-rules__no">04</span><p class="u-txt">Nie zakładaj, że zgodność fizyczna zawsze oznacza bezpieczeństwo dla rośliny. Przy wątpliwościach wykonaj próbę na małym fragmencie.</p></li>
+        <li class="u-rules__i"><span class="u-rules__no">05</span><p class="u-txt">Każdy środek ochrony roślin stosuj zgodnie z jego etykietą.</p></li>
+      </ol>
+    </div>
+    <div id="u-mieszaniny-tabela" class="wf-stack wf-stack--5 u-reveal" data-ce="CE-22" data-ce-wariant="klikalne-wiersze">
+      <div class="u-mt__box">
+        <table class="u-mt" data-mt>
+          <caption class="wf-sr-only">Zgodność produktów w mieszaninach zbiornikowych</caption>
+          <thead>
+            <tr>
+              <th class="u-mt__h" scope="col">Produkt</th>
+              <th class="u-mt__h" scope="col">Możliwe połączenia</th>
+              <th class="u-mt__h" scope="col">Unikać</th>
+              <th class="u-mt__h" scope="col">Praktyczna uwaga</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="u-mt__row">
+              <td class="u-mt__c u-mt__c--prod" data-label="Produkt">
+                <a class="u-mt__prod" href="#produkt-eco" data-lightbox-open="produkt-eco" aria-label="Mapa zastosowań: CARBOMAT ECO">
+                  <span class="u-mt__ph"><img class="u-mt__img" src="img/opakowania/worek_1000l_1500l.png" alt="" loading="lazy" decoding="async"></span>
+                  <span class="u-mt__n">CARBOMAT ECO <svg class="wf-icon wf-icon--sm u-mt__ar" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></span>
+                </a>
+              </td>
+              <td class="u-mt__c" data-label="Możliwe połączenia"><p class="u-txt">Nawozy organiczne/mineralne w aplikacji glebowej</p></td>
+              <td class="u-mt__c" data-label="Unikać"><p class="u-txt">Nie dotyczy</p></td>
+              <td class="u-mt__c" data-label="Praktyczna uwaga"><p class="u-txt">Wymieszać z glebą; kontrolować pH wariantu.</p></td>
+            </tr>
+            <tr class="u-mt__row">
+              <td class="u-mt__c u-mt__c--prod" data-label="Produkt">
+                <a class="u-mt__prod" href="#produkt-humic" data-lightbox-open="produkt-humic" aria-label="Mapa zastosowań: CARBOMAT HUMIC">
+                  <span class="u-mt__ph"><img class="u-mt__img" src="img/opakowania/worek_20l.png" alt="" loading="lazy" decoding="async"></span>
+                  <span class="u-mt__n">CARBOMAT HUMIC <svg class="wf-icon wf-icon--sm u-mt__ar" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></span>
+                </a>
+              </td>
+              <td class="u-mt__c" data-label="Możliwe połączenia"><p class="u-txt">Granulowane NPK, materia organiczna; nie łączyć z wapnowaniem</p></td>
+              <td class="u-mt__c" data-label="Unikać"><p class="u-txt">Opryskiwacz, fertygacja, linie kroplujące</p></td>
+              <td class="u-mt__c" data-label="Praktyczna uwaga"><p class="u-txt">Nierozpuszczalne huminy mogą zapychać filtry, dysze i kroplowniki.</p></td>
+            </tr>
+            <tr class="u-mt__row">
+              <td class="u-mt__c u-mt__c--prod" data-label="Produkt">
+                <a class="u-mt__prod" href="#produkt-187" data-lightbox-open="produkt-187" aria-label="Mapa zastosowań: CARBOHUMIC filtrowany 187 mesh">
+                  <span class="u-mt__ph"><img class="u-mt__img" src="img/opakowania/kanister_20l.png" alt="" loading="lazy" decoding="async"></span>
+                  <span class="u-mt__n">CARBOHUMIC filtrowany 187 mesh <svg class="wf-icon wf-icon--sm u-mt__ar" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></span>
+                </a>
+              </td>
+              <td class="u-mt__c" data-label="Możliwe połączenia"><p class="u-txt">Nawozy płynne i biologiczne po teście; aplikacja doglebowa</p></td>
+              <td class="u-mt__c" data-label="Unikać"><p class="u-txt">Silne utleniacze/dezynfektanty</p></td>
+              <td class="u-mt__c" data-label="Praktyczna uwaga"><p class="u-txt">Drobna frakcja, ale nadal wymaga płukania instalacji dozujących</p></td>
+            </tr>
+            <tr class="u-mt__row">
+              <td class="u-mt__c u-mt__c--prod" data-label="Produkt">
+                <a class="u-mt__prod" href="#produkt-20" data-lightbox-open="produkt-20" aria-label="Mapa zastosowań: CARBOHUMIC niefiltrowany 20 mesh">
+                  <span class="u-mt__ph"><img class="u-mt__img" src="img/opakowania/mauzer_1000l_1500l.png" alt="" loading="lazy" decoding="async"></span>
+                  <span class="u-mt__n">CARBOHUMIC niefiltrowany 20 mesh <svg class="wf-icon wf-icon--sm u-mt__ar" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></span>
+                </a>
+              </td>
+              <td class="u-mt__c" data-label="Możliwe połączenia"><p class="u-txt">Aplikacja polewowa i układy o dużym przepływie</p></td>
+              <td class="u-mt__c" data-label="Unikać"><p class="u-txt">Standardowe dysze i filtry bez potwierdzonej przepustowości</p></td>
+              <td class="u-mt__c" data-label="Praktyczna uwaga"><p class="u-txt">Ryzyko zapchania.</p></td>
+            </tr>
+            <tr class="u-mt__row">
+              <td class="u-mt__c u-mt__c--prod" data-label="Produkt">
+                <a class="u-mt__prod" href="#produkt-maxi" data-lightbox-open="produkt-maxi" aria-label="Mapa zastosowań: CARBOHUMIC MAXI PLUS">
+                  <span class="u-mt__ph"><img class="u-mt__img" src="img/opakowania/kanister_5l.png" alt="" loading="lazy" decoding="async"></span>
+                  <span class="u-mt__n">CARBOHUMIC MAXI PLUS <svg class="wf-icon wf-icon--sm u-mt__ar" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></span>
+                </a>
+              </td>
+              <td class="u-mt__c" data-label="Możliwe połączenia"><p class="u-txt">Nawozy dolistne i część ŚOR po teście<a class="wf-link" href="#przypis-sor">*</a> i zgodnie z etykietą</p></td>
+              <td class="u-mt__c" data-label="Unikać"><p class="u-txt">Mieszaniny wieloskładnikowe na roślinie po silnym stresie</p></td>
+              <td class="u-mt__c" data-label="Praktyczna uwaga"><p class="u-txt">Zaczynać od prostego składu.</p></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="u-callout" id="przypis-sor">
+        <svg class="wf-icon" aria-hidden="true"><use href="#ti-info-circle"></use></svg>
+        <div class="u-callout__in">
+          <p class="u-txt">* ze względu na bardzo złożone i różnorodne formulacje zgodność ŚOR z produktami humusowymi musi być sprawdzona nie tylko w teście słoikowym, ale także polowo. Dotyczy to konkretnego produktu-formulacji, a nie jedynie substancji czynnej. Dezaktywacja ŚOR przez kwasy humusowe jest także funkcją czasu i stężenia w cieczy roboczej, dlatego nawet przy pomyślnych testach mieszalności należy stosować duże ilości wody i niezwłocznie wykonywać zabieg oprysku.</p>
+        </div>
+      </div>
+      <p class="wf-body u-measure">Skuteczność preparatów humusowych może być inna na glebie lekkiej, czarnoziemie i stanowisku po wieloletniej monokulturze. Dlatego program powinien mieć stały element kontrolny.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 85 · ILE PRODUKTU NA TWOJE POLE (spec §9.10, §10.3) =====
+     Przelicznik `data-calc` i suwak bez zmian. Iteracja 6 (uwaga 2 Mateusza):
+     woda do zabiegu przestaje być osobnym boksem – siedzi w obu boksach
+     CARBOHUMIC filtrowanego 187 mesh jako wiersz pomocniczy `u-out__sub`
+     z własnym `data-calc-out`. Wartość główna boksu stoi w DOM przed tym
+     wierszem, bo `c5.js` bierze pierwszy znacznik b w elemencie z `data-calc-out`.
+     Zostają cztery boksy z prawdziwymi packshotami (64 px). ===== -->
+<section class="c5-sec" id="u-skala" data-chapter="u-skala" data-ce="CE-47">
+  <div class="c5-wrap wf-stack wf-stack--8">
+    <div class="u-reveal">
+      <span class="c5-kicker">Skala</span>
+      <div class="c5-head">
+        <h2 class="c5-h2">Ile produktu na Twoje pole</h2>
+        <p class="c5-lead">Przelicznik mnoży dawki z programu przez powierzchnię. Nie liczy CARBOMAT ECO, bo program każe wyliczyć dawkę indywidualnie, ani CARBOMAT HUMIC, bo dawka zależy od sposobu aplikacji (od 100 kg/ha w strip-tillu do 500 kg/ha całopowierzchniowo).</p>
+      </div>
+    </div>
+    <div data-calc class="wf-stack wf-stack--5 u-reveal">
+      <div class="u-area">
+        <label class="wf-label" for="ha">Powierzchnia uprawy</label>
+        <div class="u-area__row">
+          <input class="u-area__range" type="range" min="0.5" max="100" step="0.5" value="10" data-calc-range aria-label="Powierzchnia uprawy w hektarach">
+          <div class="wf-input-group">
+            <input class="wf-input" id="ha" type="number" min="0" step="0.5" value="10" data-calc-in>
+            <span class="wf-addon">ha</span>
+          </div>
+        </div>
+        <div class="u-area__scale"><span class="wf-caption">0,5 ha</span><span class="wf-caption">100 ha</span></div>
+      </div>
+      <div class="u-calc" aria-live="polite">
+        <div class="u-out" data-calc-out data-lo="20" data-hi="40" data-unit="l">
+          <span class="u-out__ph"><img class="u-out__img" src="img/opakowania/kanister_20l.png" alt="" loading="lazy" decoding="async"></span>
+          <span class="wf-caption">CARBOHUMIC filtrowany 187 mesh przed siewem</span>
+          <b>–</b>
+          <div class="u-out__sub" data-calc-out data-lo="400" data-hi="400" data-unit="l">
+            <span class="wf-caption">Woda do zabiegu · ok. 400 l/ha</span>
+            <b>–</b>
+          </div>
+          <a class="c5-btn c5-btn--light c5-btn--sm u-out__buy" href="sklep.html?grupa=carbohumic">Kup produkt</a>
+        </div>
+        <div class="u-out" data-calc-out data-lo="20" data-hi="40" data-unit="l">
+          <span class="u-out__ph"><img class="u-out__img" src="img/opakowania/kanister_20l.png" alt="" loading="lazy" decoding="async"></span>
+          <span class="wf-caption">CARBOHUMIC filtrowany 187 mesh na resztki</span>
+          <b>–</b>
+          <div class="u-out__sub" data-calc-out data-lo="400" data-hi="400" data-unit="l">
+            <span class="wf-caption">Woda do zabiegu · ok. 400 l/ha</span>
+            <b>–</b>
+          </div>
+          <a class="c5-btn c5-btn--light c5-btn--sm u-out__buy" href="sklep.html?grupa=carbohumic">Kup produkt</a>
+        </div>
+        <div class="u-out" data-calc-out data-lo="50" data-hi="50" data-unit="l">
+          <span class="u-out__ph"><img class="u-out__img" src="img/opakowania/mauzer_1000l_1500l.png" alt="" loading="lazy" decoding="async"></span>
+          <span class="wf-caption">CARBOHUMIC niefiltrowany 20 mesh, jeden zabieg jesienią</span>
+          <b>–</b>
+          <a class="c5-btn c5-btn--light c5-btn--sm u-out__buy" href="sklep.html?grupa=carbohumic">Kup produkt</a>
+        </div>
+        <div class="u-out" data-calc-out data-lo="0.6" data-hi="0.6" data-unit="l">
+          <span class="u-out__ph"><img class="u-out__img" src="img/opakowania/kanister_5l.png" alt="" loading="lazy" decoding="async"></span>
+          <span class="wf-caption">CARBOHUMIC MAXI PLUS, jeden zabieg nalistny</span>
+          <b>–</b>
+          <a class="c5-btn c5-btn--light c5-btn--sm u-out__buy" href="sklep.html?grupa=carbohumic">Kup produkt</a>
+        </div>
+      </div>
+      <p class="wf-small u-measure">CARBOHUMIC MAXI PLUS: 0,6 l/ha w jednym zabiegu; program dopuszcza powtórkę po 7–10 dniach tylko przy utrzymującym się uzasadnieniu.</p>
+      <div class="u-cost">
+        <p class="wf-small">Koszt programu na hektar – do uzupełnienia po ustaleniu cen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- ===== 90 · DOMKNIĘCIE – pas zamykający (spec §9.11, wzorzec §3.9) =====
+       Port pasa PRO z CARBOMAT ECO: ciemne tło, kadr z narożnikami 30 px
+       skalowany .5 → 1 przy przewijaniu, pod kadrem nagłówek po lewej i dwa
+       przyciski po prawej. Wiersz źródła zostaje w biegu strony, pod pasem. -->
+  <section class="c5-sec u-end" id="u-cta" data-endscale data-ce="CE-16" data-ce-wariant="zamykajacy">
+    <div class="c5-wrap">
+      <div class="u-end__media">
+        <!-- foto: kukurydza-zbior.jpg -->
+        <div class="wf-ph wf-ph--cross u-end__frame"><span class="wf-ph__label">kadr: zbiór kukurydzy na ziarno, kombajn w niskim słońcu</span></div>
+      </div>
+      <div class="u-end__grid">
+        <h2 class="u-end__t">Program dla Twojego pola</h2>
+        <div class="c5-btnrow u-end__acts">
+          <a class="c5-btn c5-btn--inv" href="konfigurator.html?crop=kukurydza">Dobierz produkty w konfiguratorze</a>
+          <a class="c5-btn u-end__ghost" href="kontakt.html">Zapytaj doradcę CarboHort</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="c5-wrap u-end__srcwrap">
+    <p class="wf-caption u-end__src">Źródło treści: Program uprawy kukurydzy, CarboHort, program technologiczny, sierpień 2026.</p>
+  </div>
+
+<!-- ===== 95 · POPUP PRODUKTU (mapa zastosowań, 5 stron) =====
+     Iteracja 5 (spec §9.5, uwagi Mateusza 2 i 3 z 14.09): bez strzałek
+     poprzedni/następny produkt i bez wspólnej stopki – każda strona popupu ma
+     własną stopkę ze swoim adresem strony produktu i swoim adresem w sklepie.
+     W nagłówku strony stoi prawdziwy packshot (§9.0.5). -->
+<div class="u-overlay" data-overlay hidden></div>
+
+<div class="u-lightbox" id="u-lightbox-produkty" data-lightbox role="dialog" aria-modal="true" aria-label="Mapa zastosowań produktu" data-ce="CE-25" data-ce-wariant="popup-produktu">
+  <div class="u-lightbox__panel">
+    <button class="u-lightbox__close" type="button" data-lightbox-close aria-label="Zamknij mapę zastosowań"><svg class="wf-icon" aria-hidden="true"><use href="#ti-x"></use></svg></button>
+    <div class="u-lightbox__scroll" data-lightbox-scroll>
+      <section class="u-lightbox__page u-prodpop" id="produkt-eco" data-lightbox-page="produkt-eco" aria-labelledby="produkt-eco-t">
+        <div class="u-lightbox__head u-prodpop__head">
+          <img class="u-prodpop__pack" src="img/opakowania/worek_1000l_1500l.png" alt="" loading="lazy" decoding="async">
+          <h2 class="wf-h2 u-lightbox__t" id="produkt-eco-t">CARBOMAT ECO</h2>
+        </div>
+        <div class="u-lightbox__body u-prodpop__body">
+          <div class="u-prodpop__col">
+            <div class="u-psec">
+              <h3 class="u-lab">Mapa zastosowań</h3>
+              <dl class="u-defs">
+                <div><dt>Forma</dt><dd>Sypki, rozdrobniony lignit o regulowanym pH</dd></div>
+                <div><dt>Najlepszy termin</dt><dd>Przed uprawą, inwestycja strategiczna na wiele lat</dd></div>
+                <div><dt>Główna rola</dt><dd>Poprawa struktury gleby, retencja wody i składników odżywczych, zwiększenie zasobności w trwałą materię organiczną</dd></div>
+                <div><dt>Ograniczenie</dt><dd>Indywidualna dawka stanowiskowa; nie jako rutynowy coroczny nawóz</dd></div>
+              </dl>
+            </div>
+          </div>
+          <div class="u-prodpop__col">
+            <div class="u-psec">
+              <h3 class="u-lab">Nowa informacja</h3>
+              <p class="u-txt">Trwały, rozdrobniony lignit o regulowanej kwasowości do poprawy struktury gleby i retencji wody oraz składników odżywczych; nie jest typowym corocznym nawozem startowym.</p>
+              <h3 class="u-lab">Konsekwencja dla kukurydzy</h3>
+              <p class="u-txt">W kukurydzy traktować jako inwestycję stanowiskową na gleby lekkie, zdegradowane, nadmiernie ciężkie, ilaste lub ubogie w materię organiczną. Dawkę wyliczyć indywidualnie.</p>
+            </div>
+            <div class="u-psec">
+              <h3 class="u-lab">Mieszaniny zbiornikowe</h3>
+              <dl class="u-defs">
+                <div><dt>Możliwe połączenia</dt><dd>Nawozy organiczne/mineralne w aplikacji glebowej</dd></div>
+                <div><dt>Unikać</dt><dd>Nie dotyczy</dd></div>
+                <div><dt>Praktyczna uwaga</dt><dd>Wymieszać z glebą; kontrolować pH wariantu.</dd></div>
+              </dl>
+            </div>
+          </div>
+        </div>
+        <div class="u-prodpop__foot">
+          <div class="u-prodpop__acts">
+            <a class="c5-btn c5-btn--light c5-btn--sm" href="carbomat.html">Strona produktu</a>
+            <a class="c5-btn c5-btn--dark c5-btn--sm" href="sklep.html?grupa=carbomat">Kup produkt</a>
+          </div>
+          <div class="u-prodpop__acts">
+            <a class="c5-btn c5-btn--light c5-btn--sm" href="konfigurator.html?crop=kukurydza">Dobierz produkty</a>
+          </div>
+        </div>
+      </section>
+      <section class="u-lightbox__page u-prodpop" id="produkt-humic" data-lightbox-page="produkt-humic" aria-labelledby="produkt-humic-t">
+        <div class="u-lightbox__head u-prodpop__head">
+          <img class="u-prodpop__pack" src="img/opakowania/worek_20l.png" alt="" loading="lazy" decoding="async">
+          <h2 class="wf-h2 u-lightbox__t" id="produkt-humic-t">CARBOMAT HUMIC</h2>
+        </div>
+        <div class="u-lightbox__body u-prodpop__body">
+          <div class="u-prodpop__col">
+            <div class="u-psec">
+              <h3 class="u-lab">Mapa zastosowań</h3>
+              <dl class="u-defs">
+                <div><dt>Forma</dt><dd>Sypki, częściowo rozpuszczalny</dd></div>
+                <div><dt>Najlepszy termin</dt><dd>Przed siewem, całopowierzchniowo, pasowo, strip-till w podsiewaczu</dd></div>
+                <div><dt>Główna rola</dt><dd>Szybkie i długotrwałe wsparcie gleby, część potasu, stymulacja rozwoju korzeni i odporności na suszę</dd></div>
+                <div><dt>Ograniczenie</dt><dd>Przynajmniej 100 kg/ha w zastosowaniu w strip-tillu, przy aplikacji pasowej już bliżej 150–250 kg/ha, 500 kg/ha całopowierzchniowo, tylko dla skokowego efektu</dd></div>
+              </dl>
+            </div>
+          </div>
+          <div class="u-prodpop__col">
+            <div class="u-psec">
+              <h3 class="u-lab">Nowa informacja</h3>
+              <p class="u-txt">Produkt częściowo rozpuszczalny, zasadowy, zawiera ok. 6% K₂O i aktywowane substancje humusowe. Frakcja nierozpuszczalna tworzy odpowiednik próchnicy w glebie.</p>
+              <h3 class="u-lab">Konsekwencja dla kukurydzy</h3>
+              <p class="u-txt">Do stosowania przed siewem, pasowo lub strip-till pod nasiona. Nie stosować do oprysku ani fertygacji. Nie jest zamiennikiem nawozów potasowych.</p>
+            </div>
+            <div class="u-psec">
+              <h3 class="u-lab">Mieszaniny zbiornikowe</h3>
+              <dl class="u-defs">
+                <div><dt>Możliwe połączenia</dt><dd>Granulowane NPK, materia organiczna; nie łączyć z wapnowaniem</dd></div>
+                <div><dt>Unikać</dt><dd>Opryskiwacz, fertygacja, linie kroplujące</dd></div>
+                <div><dt>Praktyczna uwaga</dt><dd>Nierozpuszczalne huminy mogą zapychać filtry, dysze i kroplowniki.</dd></div>
+              </dl>
+            </div>
+          </div>
+        </div>
+        <div class="u-prodpop__foot">
+          <div class="u-prodpop__acts">
+            <a class="c5-btn c5-btn--light c5-btn--sm" href="carbomat-humic.html">Strona produktu</a>
+            <a class="c5-btn c5-btn--dark c5-btn--sm" href="sklep.html?grupa=carbomat-humic">Kup produkt</a>
+          </div>
+          <div class="u-prodpop__acts">
+            <a class="c5-btn c5-btn--light c5-btn--sm" href="konfigurator.html?crop=kukurydza">Dobierz produkty</a>
+          </div>
+        </div>
+      </section>
+      <section class="u-lightbox__page u-prodpop" id="produkt-187" data-lightbox-page="produkt-187" aria-labelledby="produkt-187-t">
+        <div class="u-lightbox__head u-prodpop__head">
+          <img class="u-prodpop__pack" src="img/opakowania/kanister_20l.png" alt="" loading="lazy" decoding="async">
+          <h2 class="wf-h2 u-lightbox__t" id="produkt-187-t">CARBOHUMIC filtrowany 187 mesh</h2>
+        </div>
+        <div class="u-lightbox__body u-prodpop__body">
+          <div class="u-prodpop__col">
+            <div class="u-psec">
+              <h3 class="u-lab">Mapa zastosowań</h3>
+              <dl class="u-defs">
+                <div><dt>Forma</dt><dd>Płynny, filtrowany</dd></div>
+                <div><dt>Najlepszy termin</dt><dd>Przed siewem, start wegetacji, po zbiorze na resztki pozbiorowe lub jako regeneracja gleby</dd></div>
+                <div><dt>Główna rola</dt><dd>Kwasy humusowe, stymulacja w ryzosferze, aktywność biologiczna, retencja składników odżywczych</dd></div>
+                <div><dt>Ograniczenie</dt><dd>20–40 l/ha przed siewem wg strony producenta; dalej mniejsze dawki 20–40 l/ha pasowo doglebowo lub współrzędnie do siewu</dd></div>
+              </dl>
+            </div>
+          </div>
+          <div class="u-prodpop__col">
+            <div class="u-psec">
+              <h3 class="u-lab">Nowa informacja</h3>
+              <p class="u-txt">Wersja filtrowana do stosowania jako opryski i fertygację w wielu scenariuszach użytkowania.</p>
+              <h3 class="u-lab">Konsekwencja dla kukurydzy</h3>
+              <p class="u-txt">Może być podstawowym zabiegiem oprysku/aplikacji doglebowej przed siewem lub oprysku po zbiorze.</p>
+            </div>
+            <div class="u-psec">
+              <h3 class="u-lab">Mieszaniny zbiornikowe</h3>
+              <dl class="u-defs">
+                <div><dt>Możliwe połączenia</dt><dd>Nawozy płynne i biologiczne po teście; aplikacja doglebowa</dd></div>
+                <div><dt>Unikać</dt><dd>Silne utleniacze/dezynfektanty</dd></div>
+                <div><dt>Praktyczna uwaga</dt><dd>Drobna frakcja, ale nadal wymaga płukania instalacji dozujących</dd></div>
+              </dl>
+            </div>
+          </div>
+        </div>
+        <div class="u-prodpop__foot">
+          <div class="u-prodpop__acts">
+            <a class="c5-btn c5-btn--light c5-btn--sm" href="carbohumic.html">Strona produktu</a>
+            <a class="c5-btn c5-btn--dark c5-btn--sm" href="sklep.html?grupa=carbohumic">Kup produkt</a>
+          </div>
+          <div class="u-prodpop__acts">
+            <a class="c5-btn c5-btn--light c5-btn--sm" href="konfigurator.html?crop=kukurydza">Dobierz produkty</a>
+          </div>
+        </div>
+      </section>
+      <section class="u-lightbox__page u-prodpop" id="produkt-20" data-lightbox-page="produkt-20" aria-labelledby="produkt-20-t">
+        <div class="u-lightbox__head u-prodpop__head">
+          <img class="u-prodpop__pack" src="img/opakowania/mauzer_1000l_1500l.png" alt="" loading="lazy" decoding="async">
+          <h2 class="wf-h2 u-lightbox__t" id="produkt-20-t">CARBOHUMIC niefiltrowany 20 mesh</h2>
+        </div>
+        <div class="u-lightbox__body u-prodpop__body">
+          <div class="u-prodpop__col">
+            <div class="u-psec">
+              <h3 class="u-lab">Mapa zastosowań</h3>
+              <dl class="u-defs">
+                <div><dt>Forma</dt><dd>Płynny, niefiltrowany</dd></div>
+                <div><dt>Najlepszy termin</dt><dd>Doglebowo w układach odpornych na zatkanie</dd></div>
+                <div><dt>Główna rola</dt><dd>Regeneracja gleby, retencja, biologia gleby</dd></div>
+                <div><dt>Ograniczenie</dt><dd>Minimum 50 l/ha wiosną i jesienią, pasowo doglebowo lub współrzędnie do siewu (rozlewaki lub aplikatory doglebowe)</dd></div>
+              </dl>
+            </div>
+          </div>
+          <div class="u-prodpop__col">
+            <div class="u-psec">
+              <h3 class="u-lab">Nowa informacja</h3>
+              <p class="u-txt">Wersja niefiltrowana do aplikacji polewowej, beczkowozem lub rozlewakami.</p>
+              <h3 class="u-lab">Konsekwencja dla kukurydzy</h3>
+              <p class="u-txt">Nie stosować przez standardowe dysze opryskiwaczy i linie kroplujące.</p>
+            </div>
+            <div class="u-psec">
+              <h3 class="u-lab">Mieszaniny zbiornikowe</h3>
+              <dl class="u-defs">
+                <div><dt>Możliwe połączenia</dt><dd>Aplikacja polewowa i układy o dużym przepływie</dd></div>
+                <div><dt>Unikać</dt><dd>Standardowe dysze i filtry bez potwierdzonej przepustowości</dd></div>
+                <div><dt>Praktyczna uwaga</dt><dd>Ryzyko zapchania.</dd></div>
+              </dl>
+            </div>
+          </div>
+        </div>
+        <div class="u-prodpop__foot">
+          <div class="u-prodpop__acts">
+            <a class="c5-btn c5-btn--light c5-btn--sm" href="carbohumic.html">Strona produktu</a>
+            <a class="c5-btn c5-btn--dark c5-btn--sm" href="sklep.html?grupa=carbohumic">Kup produkt</a>
+          </div>
+          <div class="u-prodpop__acts">
+            <a class="c5-btn c5-btn--light c5-btn--sm" href="konfigurator.html?crop=kukurydza">Dobierz produkty</a>
+          </div>
+        </div>
+      </section>
+      <section class="u-lightbox__page u-prodpop" id="produkt-maxi" data-lightbox-page="produkt-maxi" aria-labelledby="produkt-maxi-t">
+        <div class="u-lightbox__head u-prodpop__head">
+          <img class="u-prodpop__pack" src="img/opakowania/kanister_5l.png" alt="" loading="lazy" decoding="async">
+          <h2 class="wf-h2 u-lightbox__t" id="produkt-maxi-t">CARBOHUMIC MAXI PLUS</h2>
+        </div>
+        <div class="u-lightbox__body u-prodpop__body">
+          <div class="u-prodpop__col">
+            <div class="u-psec">
+              <h3 class="u-lab">Mapa zastosowań</h3>
+              <dl class="u-defs">
+                <div><dt>Forma</dt><dd>Płynny, filtrowany, dolistny</dd></div>
+                <div><dt>Najlepszy termin</dt><dd>Wczesny wzrost i regeneracja po stresie</dd></div>
+                <div><dt>Główna rola</dt><dd>Wigor, powierzchnia asymilacyjna, regeneracja</dd></div>
+                <div><dt>Ograniczenie</dt><dd>Zabieg 0,6 l/ha od fazy 4 liści BBCH 14 do początku wysuwania wiechy BBCH 51 – (później wątpliwe zainteresowanie z powodu wysokości roślin i potrzeby odpowiednich opryskiwaczy, zwłaszcza przy odmianach kiszonkowych)</dd></div>
+              </dl>
+            </div>
+          </div>
+          <div class="u-prodpop__col">
+            <div class="u-psec">
+              <h3 class="u-lab">Nowa informacja</h3>
+              <p class="u-txt">Aktualne publiczne dawki są niższe niż 2–5 l/ha wpisane w starym dokumencie dla kukurydzy. Dawki nie powinny przekraczać 0,6 l/ha w jednym zabiegu</p>
+              <h3 class="u-lab">Konsekwencja dla kukurydzy</h3>
+              <p class="u-txt">Zabieg 0,6 l/ha od fazy 4 liści BBCH 14 do początku wysuwania wiechy BBCH 51 – (później wątpliwe zainteresowanie z powodu wysokości roślin i potrzeby odpowiednich opryskiwaczy, zwłaszcza przy odmianach kiszonkowych)</p>
+            </div>
+            <div class="u-psec">
+              <h3 class="u-lab">Mieszaniny zbiornikowe</h3>
+              <dl class="u-defs">
+                <div><dt>Możliwe połączenia</dt><dd>Nawozy dolistne i część ŚOR po teście* i zgodnie z etykietą</dd></div>
+                <div><dt>Unikać</dt><dd>Mieszaniny wieloskładnikowe na roślinie po silnym stresie</dd></div>
+                <div><dt>Praktyczna uwaga</dt><dd>Zaczynać od prostego składu.</dd></div>
+              </dl>
+            </div>
+          </div>
+        </div>
+        <div class="u-prodpop__foot">
+          <div class="u-prodpop__acts">
+            <a class="c5-btn c5-btn--light c5-btn--sm" href="carbohumic.html">Strona produktu</a>
+            <a class="c5-btn c5-btn--dark c5-btn--sm" href="sklep.html?grupa=carbohumic">Kup produkt</a>
+          </div>
+          <div class="u-prodpop__acts">
+            <a class="c5-btn c5-btn--light c5-btn--sm" href="konfigurator.html?crop=kukurydza">Dobierz produkty</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+
+<!-- ===== LIGHTBOX FAZ (tresc rozdzialow 3.1-4.10, 1:1 z programu) ===== -->
+<div class="u-lightbox" id="u-lightbox" data-lightbox role="dialog" aria-modal="true" aria-label="Pełny opis fazy" data-ce="CE-25">
+  <div class="u-lightbox__panel">
+    <button class="u-lightbox__close" type="button" data-lightbox-close aria-label="Zamknij opis fazy"><svg class="wf-icon" aria-hidden="true"><use href="#ti-x"></use></svg></button>
+    <div class="u-lightbox__scroll" data-lightbox-scroll>
+      <section class="u-lightbox__page" id="faza-3-1" data-lightbox-page="faza-3-1" aria-labelledby="faza-3-1-t">
+        <div class="u-lightbox__head">
+          <div class="u-lightbox__tt">
+            <span class="u-lab">Faza 1 z 10</span>
+            <h3 class="wf-h2 u-lightbox__t" id="faza-3-1-t">Po zbiorze przedplonu i jesienne przygotowanie pola</h3>
+          </div>
+          <p class="u-lightbox__lead">Analiza gleby, rozdrobnienie resztek, regulacja pH i stosunku kationów według potrzeb. Uprawa poplonu do likwidacji zimą lub wczesną wiosną. Tu może być nawożenie P, K Mg, S i mikroelementów Zn, Mn, B przed lub po poplonach</p>
+        </div>
+        <div class="u-lightbox__body">
+            <div class="u-chunk">
+              <span class="u-lab">Cel</span>
+              <p class="u-txt u-measure">Usunięcie ograniczeń strukturalnych gleby, wyregulowanie odczynu, aktywizacja biologiczna i zbudowanie rezerwy wody przed wiosną.</p>
+            </div>
+            <div class="u-chunk">
+              <span class="u-lab">Działania podstawowe</span>
+              <ul class="wf-list u-txt u-measure">
+                <li>Wykonaj analizę gleby i zaplanuj uzupełnienie zasobności w wapń, magnez, potas, fosfor, siarkę i brakujące mikroelementy. Przy pH w wodzie poniżej 5,5 wapnowanie jest zabiegiem niezbędnym.</li>
+                <li>Rozdrobnij resztki przedplonu równomiernie, wymieszaj je z powierzchniową warstwą gleby.</li>
+                <li>Głębokie spulchnianie wykonuj wyłącznie na suchej glebie i tylko tam, gdzie badanie potwierdza zagęszczenie gleby lub podglebia.</li>
+                <li>Zasiej międzyplon w celu ochrony gleby przed erozją, jej zasobów wody, azotu i w celu aktywizacji ryzosfery. Likwidacja międzyplonu możliwie późno, nawet wiosną.</li>
+                <li>Uprawa kukurydzy nie powinna być dłuższa niż 3 lata. Plon kukurydzy w zmianowaniu jest o 10 do 30% wyższy niż w monokulturze.</li>
+              </ul>
+            </div>
+            <div class="u-chunk">
+              <span class="u-lab">Produkty Carbohort</span>
+              <div class="u-pcard">
+                <svg class="wf-icon" aria-hidden="true"><use href="#ti-package"></use></svg>
+                <div class="u-pcard__in">
+                  <span class="u-pcard__n">CARBOMAT ECO</span>
+                  <p class="u-txt">Wariant na gleby lekkie, zdegradowane, nadmiernie ciężkie, ilaste lub ubogie w materię organiczną. Można stosować całopowierzchniowo lub pasowo w uprawach rzędowych trwałych. Dokładnie wymieszać z warstwą uprawną.</p>
+                </div>
+              </div>
+              <div class="u-pcard">
+                <svg class="wf-icon" aria-hidden="true"><use href="#ti-droplet"></use></svg>
+                <div class="u-pcard__in">
+                  <span class="u-pcard__n">CARBOHUMIC niefiltrowany 20 mesh</span>
+                  <p class="u-txt">Ok. 50 l/ha doglebowo sprzętem do aplikacji rozlewowej lub rozbryzgowej.</p>
+                </div>
+              </div>
+              <div class="u-pcard">
+                <svg class="wf-icon" aria-hidden="true"><use href="#ti-droplet"></use></svg>
+                <div class="u-pcard__in">
+                  <span class="u-pcard__n">CARBOHUMIC filtrowany 187 mesh</span>
+                  <p class="u-txt">10–40 l/ha w ok. 400 l wody po zbiorze lub przed uprawą, zgodnie z zaleceniami.</p>
+                </div>
+              </div>
+            </div>
+            <div class="u-chunk">
+              <button class="u-more" type="button" data-disclose aria-expanded="false" aria-controls="disc-3-1">Pokaż rozwiązania uzupełniające <svg class="wf-icon" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button>
+              <div class="u-disc" id="disc-3-1" data-disclose-panel>
+                <div class="wf-stack wf-stack--3">
+                  <span class="u-lab">Rozwiązania uzupełniające</span>
+                  <ul class="wf-list u-txt u-measure">
+                    <li>Wapno nawozowe odpowiedniego typu dawkować odpowiednio do potrzeb wynikających z pH, kategorii agronomicznej gleby oraz zasobności w wapń i magnez. Nie należy łączyć z innymi nawozami zachowując odstęp czasowy od stosowania nawozów fosforowych, azotowych i obornika.</li>
+                    <li>Dawkę obornika, kompostu, pofermentu lub gnojowicy ustalać według analizy składu i ograniczeń prawnych uwzględniając wniesione składniki w bilansie nawożenia.</li>
+                    <li>Stosować międzyplony wielogatunkowe z roślinami bobowatymi i innymi odpowiednimi do potrzeb i stosowanego płodozmianu.</li>
+                    <li>Międzyplony likwidować (mulczować) zimą lub na przedwiośniu wydłużając czas osłony gleby żywymi i martwymi roślinami. W wypadku upraw monokulturowych kukurydzy ziarnowej osłaniać glebę pociętą słomą kukurydzianą zamiast międzyplonami.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="u-callout">
+              <svg class="wf-icon" aria-hidden="true"><use href="#ti-alert-triangle"></use></svg>
+              <div class="u-callout__in">
+                <span class="u-callout__t">Nie dawaj azotu na resztki pozbiorowe</span>
+                <p class="u-txt">Badania polowe nie potwierdzają przyspieszonego rozkładu pociętej słomy kukurydzianej po aplikacji jesiennych dawek azotu. Ważniejsze są: rozdrobnienie, kontakt z glebą, temperatura i wilgotność.</p>
+              </div>
+            </div>
+        </div>
+      </section>
+      <section class="u-lightbox__page" id="faza-3-2" data-lightbox-page="faza-3-2" aria-labelledby="faza-3-2-t">
+        <div class="u-lightbox__head">
+          <div class="u-lightbox__tt">
+            <span class="u-lab">Faza 2 z 10</span>
+            <h3 class="wf-h2 u-lightbox__t" id="faza-3-2-t">Wczesna wiosna i przygotowanie przedsiewne</h3>
+          </div>
+          <p class="u-lightbox__lead">Ewentualna korekta struktury gleby – głębosz, nawożenie N wg bilansu azotu po zimie (inne najlepiej jesienią) z uwzględnieniem systemu optymalizacji wykorzystania N (inhibitory)</p>
+        </div>
+        <div class="u-lightbox__body">
+            <div class="u-chunk">
+              <span class="u-lab">Cel</span>
+              <p class="u-txt u-measure">Stworzyć ogrzaną, równą i wilgotną strefę siewną oraz umieścić składniki odżywcze w pobliżu korzeni siewki.</p>
+            </div>
+            <div class="u-chunk">
+              <span class="u-lab">Zalecenia</span>
+              <ul class="wf-list u-txt u-measure">
+                <li>Ogranicz liczbę przejazdów. Uprawa przesuszonej lub mokrej warstwy siewnej obniża skuteczność każdego programu biostymulacji.</li>
+                <li>Ustal dawkę N na podstawie oczekiwanego plonu, zasobności w Nmin pozostający po zimie, przedplonu i dawki zastosowanych nawozów naturalnych. Standardowo 2/3 wyliczonej dawki azotu podaje się przed siewem, a resztę najpóźniej do 6–7 liści.</li>
+                <li>Fosfor i potas stosuj odpowiednio do zasobności gleby, o ile nie były zastosowane już jesienią poprzedniego roku. W niskiej temperaturze wiosennych wschodów szczególnie ważne jest umiejscowienie fosforu blisko, lecz nie w bezpośrednim kontakcie z nasionem, np. przez aplikację dawki startowej podsiewaczem.</li>
+                <li>Siarkę, magnez i mikroelementy uwzględnij w planie nawożenia odpowiednio do ich zasobności w glebie i struktury kompleksu sorpcyjnego (stosunek wapnia do magnezu).</li>
+              </ul>
+            </div>
+            <div class="u-chunk">
+              <span class="u-h4">Warianty Carbohort – wybierz jeden zabieg bazowy</span>
+              <div class="u-conds u-conds--tight">
+                <div class="u-cond">
+                  <span class="u-cond__t">A. Płynny</span>
+                  <dl class="u-defs">
+                    <div><dt>Zabieg</dt><dd>CARBOHUMIC filtrowany 187 mesh 20–40 l/ha w ok. 400 l wody, oprysk gleby i płytkie wymieszanie.</dd></div>
+                    <div><dt>Zaleta</dt><dd>Szybka aplikacja, dobra dystrybucja.</dd></div>
+                    <div><dt>Ograniczenie</dt><dd>Nie wykonywać na zamarzniętą, zalaną lub skrajnie suchą glebę.</dd></div>
+                  </dl>
+                </div>
+                <div class="u-cond">
+                  <span class="u-cond__t">B. Sypki</span>
+                  <dl class="u-defs">
+                    <div><dt>Zabieg</dt><dd>CARBOMAT HUMIC całopowierzchniowo, pasowo lub strip-till; dawka zgodna z zaleceniami.</dd></div>
+                    <div><dt>Zaleta</dt><dd>Jednoczesne wniesienie aktywowanej frakcji humusowej i części nawożenia potasem.</dd></div>
+                    <div><dt>Ograniczenie</dt><dd>Produkt częściowo nierozpuszczalny; aplikacja jedynie na sucho.</dd></div>
+                  </dl>
+                </div>
+                <div class="u-cond">
+                  <span class="u-cond__t">C. Strategiczny</span>
+                  <dl class="u-defs">
+                    <div><dt>Zabieg</dt><dd>CARBOMAT ECO wymieszany z glebą w zakładanej dawce.</dd></div>
+                    <div><dt>Zaleta</dt><dd>Długotrwała poprawa struktury gleby oraz retencji wody i składników odżywczych.</dd></div>
+                    <div><dt>Ograniczenie</dt><dd>Wysoki koszt logistyczny; najlepiej stosować pasowo lub na polach priorytetowych.</dd></div>
+                  </dl>
+                </div>
+              </div>
+              <p class="u-txt"><a class="wf-link" href="#u-produkty">Który wariant? Zasada wyboru preparatu doglebowego</a></p>
+            </div>
+        </div>
+      </section>
+      <section class="u-lightbox__page" id="faza-3-3" data-lightbox-page="faza-3-3" aria-labelledby="faza-3-3-t">
+        <div class="u-lightbox__head">
+          <div class="u-lightbox__tt">
+            <span class="u-lab">Faza 3 z 10</span>
+            <h3 class="wf-h2 u-lightbox__t" id="faza-3-3-t">Siew i kiełkowanie – BBCH 00–09</h3>
+          </div>
+          <p class="u-lightbox__lead">Właściwy termin, obsada, bezpieczny nawóz startowy.</p>
+        </div>
+        <div class="u-lightbox__body">
+            <div class="u-chunk">
+              <span class="u-lab">Cel</span>
+              <p class="u-txt u-measure">Szybkie, równe wschody bez uszkodzenia siewek przez zasolenie, chłód lub zbyt głęboki siew.</p>
+            </div>
+            <div class="u-chunk">
+              <span class="u-lab">Zalecenia</span>
+              <ul class="wf-list u-txt u-measure">
+                <li>Siej, gdy gleba na głębokości około 10 cm osiąga 8–10 °C. Standardowa głębokość siewu 4–5 cm, na lekkiej i przesuszonej glebie wynosić będzie 7–8 cm.</li>
+                <li>Dla kukurydzy ziarnowej metodyka uprawy zaleca wysiew 70–80 tys. kiełkujących nasion/ha; dla odmian kiszonkowych obsada może być wyższa; w wypadku siewu kukurydzy na kiszonkę wysokoenergetyczną obsada jest zbliżona do kukurydzy ziarnowej.</li>
+                <li>Nawóz startowy lokalizuj obok i poniżej nasiona, a nie w bezpośrednim kontakcie, chyba że etykieta konkretnego nawozu dopuszcza aplikację w łożu siewnym.</li>
+                <li>Cynk zastosuj doglebowo lub w starterze tylko przy niskiej zasobności lub niekorzystnych warunkach: wysoki odczyn gleby, zagrożenie erozją, prognozy chłodnej i mokrej wiosny.</li>
+              </ul>
+            </div>
+            <p><span class="u-none"><svg class="wf-icon" aria-hidden="true"><use href="#ti-minus"></use></svg> W tej fazie program nie przewiduje produktu CarboHort</span></p>
+        </div>
+      </section>
+      <section class="u-lightbox__page" id="faza-3-4" data-lightbox-page="faza-3-4" aria-labelledby="faza-3-4-t">
+        <div class="u-lightbox__head">
+          <div class="u-lightbox__tt">
+            <span class="u-lab">Faza 4 z 10</span>
+            <h3 class="wf-h2 u-lightbox__t" id="faza-3-4-t">Wschody i 1–3 liście – BBCH 10–13</h3>
+          </div>
+          <p class="u-lightbox__lead">Nie przeszkadzać wschodom kukurydzy, szybko reagować na zaskorupienie, chłód, fitotoksyczność lub niedobory.</p>
+        </div>
+        <div class="u-lightbox__body">
+            <div class="u-chunk">
+              <span class="u-lab">Cel</span>
+              <p class="u-txt u-measure">Nie przeszkadzać wschodom kukurydzy, szybko reagować na zaskorupienie, chłód, fitotoksyczność lub niedobory.</p>
+            </div>
+            <div class="u-chunk">
+              <span class="u-lab">Zalecenia</span>
+              <ul class="wf-list u-txt u-measure">
+                <li>Prowadź prawidłowy monitoring równomierności wschodów, obsady, uszkodzeń od ptaków i szkodników glebowych, objawów zgorzeli siewek oraz zaskorupienia gleby.</li>
+                <li>Nie wykonuj rutynowo oprysków herbicydowych na młode rośliny. Brak dodatkowych stresów umożliwia ich niezaburzony rozwój.</li>
+                <li>Po przymrozku lub objawach fitotoksyczności po zastosowaniu herbicydów odczekaj, aż roślina zacznie aktywnie rosnąć. Zabieg na rośliny zahamowane we wzroście ma ograniczoną skuteczność.</li>
+              </ul>
+            </div>
+            <p><span class="u-none"><svg class="wf-icon" aria-hidden="true"><use href="#ti-minus"></use></svg> W tej fazie program nie przewiduje produktu CarboHort</span></p>
+        </div>
+      </section>
+      <section class="u-lightbox__page" id="faza-3-5" data-lightbox-page="faza-3-5" aria-labelledby="faza-3-5-t">
+        <div class="u-lightbox__head">
+          <div class="u-lightbox__tt">
+            <span class="u-lab">Faza 5 z 10</span>
+            <h3 class="wf-h2 u-lightbox__t" id="faza-3-5-t">4–8 liści – BBCH 14–18: najważniejszy termin</h3>
+          </div>
+          <p class="u-lightbox__lead">Ewentualna druga dawka N, ewentualnie cynk, obserwacja stresu</p>
+        </div>
+        <div class="u-lightbox__body">
+            <div class="u-chunk">
+              <span class="u-lab">Cel</span>
+              <p class="u-txt u-measure">Zabezpieczyć azot, fosfor, potas, cynk i rozwój korzenia w fazie, w której roślina ustala liczbę rzędów i potencjał kolby. Nie łącz wielu mikroelementów bez zbadania ich zgodności. Każdy kolejny składnik podnosi ryzyko uszkodzeń i antagonizmów.</p>
+            </div>
+            <div class="u-chunk">
+              <span class="u-lab">Element · Zalecenie</span>
+              <dl class="u-rows">
+                <div class="u-row"><dt>Azot</dt><dd>Podaj pozostałą część najpóźniej do 6–7 liści. Dawkę koryguj przez Nmin, pogodę i obsadę.</dd></div>
+                <div class="u-row"><dt>Cynk</dt><dd>Pierwszy mikroelement do weryfikacji. Forma i dawka według analizy, pH i etykiety nawozu. Nie zakładaj, że każde pole odpowie wzrostem plonu.</dd></div>
+                <div class="u-row"><dt>Magnez i siarka</dt><dd>Stosuj przy niskiej zasobności lub objawach potwierdzonych analizą. Zabieg dolistny nie zastępuje bilansu doglebowego.</dd></div>
+                <div class="u-row"><dt>Herbicyd</dt><dd>Dobierz do spektrum chwastów i fazy. Stosuj wyłącznie produkt z aktualną rejestracją i według etykiety.</dd></div>
+                <div class="u-row"><dt>Preparaty biologiczne</dt><dd>Stosuj osobno od utleniających dezynfektantów i preparatów o skrajnej reakcji pH, chyba że producent potwierdza kompatybilność.</dd></div>
+              </dl>
+              <div class="u-pcard">
+                <svg class="wf-icon" aria-hidden="true"><use href="#ti-flask"></use></svg>
+                <div class="u-pcard__in">
+                  <span class="u-pcard__n">CARBOHUMIC MAXI PLUS</span>
+                  <p class="u-txt">0,6 l/ha + mikroelementy jako element regeneracji po stresie lub zapobiegawczo. Możliwa powtórka po 7–10 dniach tylko przy utrzymującym się uzasadnieniu.</p>
+                  <button class="u-more" type="button" data-lightbox-open="produkt-maxi">Mapa zastosowań <svg class="wf-icon" aria-hidden="true"><use href="#ti-chevron-right"></use></svg></button>
+                </div>
+              </div>
+            </div>
+            <div class="u-callout">
+              <svg class="wf-icon" aria-hidden="true"><use href="#ti-alert-triangle"></use></svg>
+              <div class="u-callout__in">
+                <span class="u-callout__t">Praktyczny układ zabiegu</span>
+                <p class="u-txt">W zdrowym łanie: cynk tylko po potwierdzeniu potrzeby + ewentualnie Mg/S. W łanie po stresie: najpierw oceń zdolność regeneracji, następnie zastosuj prostą mieszaninę z CARBOHUMIC MAXI PLUS. Unikaj jednoczesnego łączenia herbicydu, wielu soli nawozowych i biostymulatora na roślinie po chłodzie.</p>
+              </div>
+            </div>
+        </div>
+      </section>
+      <section class="u-lightbox__page" id="faza-3-6" data-lightbox-page="faza-3-6" aria-labelledby="faza-3-6-t">
+        <div class="u-lightbox__head">
+          <div class="u-lightbox__tt">
+            <span class="u-lab">Faza 6 z 10</span>
+            <h3 class="wf-h2 u-lightbox__t" id="faza-3-6-t">Intensywny wzrost – BBCH 19–39</h3>
+          </div>
+          <p class="u-lightbox__lead">Woda, azot, magnez, siarka bor i mangan według potrzeb tylko dolistnie w oprysku</p>
+        </div>
+        <div class="u-lightbox__body">
+            <div class="u-chunk">
+              <span class="u-lab">Zalecenia</span>
+              <ul class="wf-list u-txt u-measure">
+                <li>Kontroluj dostępność wody i azotu. Przy nawadnianiu lepsze są mniejsze, dopasowane dawki nawozowe.</li>
+                <li>Oceń barwę liści, tempo wzrostu roślin, rozwój korzeni podporowych i ewentualne niedobory.</li>
+                <li>Przed wjazdem opryskiwaczem sprawdź wysokość roślin i ryzyko uszkodzeń mechanicznych. Korzyść z zabiegu musi przewyższać straty spowodowane przejazdem.</li>
+              </ul>
+            </div>
+            <div class="u-chunk">
+              <span class="u-lab">Miejsce produktów Carbohort</span>
+              <div class="u-pcard u-pcard--muted">
+                <svg class="wf-icon" aria-hidden="true"><use href="#ti-flask"></use></svg>
+                <div class="u-pcard__in">
+                  <span class="u-pcard__n">CARBOHUMIC MAXI PLUS tylko przy uzasadnieniu</span>
+                </div>
+              </div>
+            </div>
+        </div>
+      </section>
+      <section class="u-lightbox__page" id="faza-3-7" data-lightbox-page="faza-3-7" aria-labelledby="faza-3-7-t">
+        <div class="u-lightbox__head">
+          <div class="u-lightbox__tt">
+            <span class="u-lab">Faza 7 z 10</span>
+            <h3 class="wf-h2 u-lightbox__t" id="faza-3-7-t">Wiechowanie, pylenie i znamionowanie – BBCH 51–69</h3>
+          </div>
+          <p class="u-lightbox__lead">Ochrona zapylenia przez wodę i zdrowotność roślin</p>
+        </div>
+        <div class="u-lightbox__body">
+            <div class="u-chunk">
+              <span class="u-lab">Cel</span>
+              <p class="u-txt u-measure">Utrzymać wodę, sprawny aparat liściowy i zdrowe, dobrze wypełnione kolby. Jest to jeden z najbardziej wrażliwych okresów na suszę i wysoką temperaturę.</p>
+            </div>
+            <div class="u-chunk">
+              <span class="u-lab">Zalecenia</span>
+              <ul class="wf-list u-txt u-measure">
+                <li>Priorytetem jest woda. Niedoboru wody podczas pylenia nie skompensuje żaden zabieg dolistny.</li>
+                <li>Monitoruj omacnicę prosowiankę i stonkę kukurydzianą według lustracji i komunikatów. Zabiegi chemiczne lub biologiczne wykonuj w optymalnym terminie dla danego agrofaga, nie tylko dlatego, że planowany jest przejazd.</li>
+                <li>W ochronie biologicznej można rozważyć kruszynka przeciw omacnicy, a w monokulturze odpowiednie nicienie przeciw larwom stonki, jeśli aktualna rejestracja i warunki aplikacji to dopuszczają.</li>
+              </ul>
+            </div>
+            <p><span class="u-none"><svg class="wf-icon" aria-hidden="true"><use href="#ti-minus"></use></svg> bez produktu CarboHort</span></p>
+        </div>
+      </section>
+      <section class="u-lightbox__page" id="faza-3-8" data-lightbox-page="faza-3-8" aria-labelledby="faza-3-8-t">
+        <div class="u-lightbox__head">
+          <div class="u-lightbox__tt">
+            <span class="u-lab">Faza 8 z 10</span>
+            <h3 class="wf-h2 u-lightbox__t" id="faza-3-8-t">Zawiązywanie i nalewanie ziarna – BBCH 71–87</h3>
+          </div>
+          <p class="u-lightbox__lead">Ochrona liścia, nalewanie ziarna, brak rutynowych koktajli Zabiegi na omacnicę prosowiankę</p>
+        </div>
+        <div class="u-lightbox__body">
+            <div class="u-chunk">
+              <span class="u-lab">Zalecenia</span>
+              <ul class="wf-list u-txt u-measure">
+                <li>Chronić zieloność liścia przez prawidłowy bilans N, K, Mg i wodę. Późne interwencje mają sens tylko, gdy liście są aktywne i sprzęt pozwala uniknąć strat mechanicznych.</li>
+                <li>Nie stosuj rutynowo szerokich koktajli mikroelementowych. W wieloletnich doświadczeniach polowych mieszaniny B, Mn i Zn często nie zwiększały plonu kukurydzy.</li>
+                <li>Fungicyd lub insektycyd tylko po lustracji, progu ekonomicznym, aktualnej rejestracji i ocenie ryzyka pozostałości.</li>
+              </ul>
+            </div>
+            <p><span class="u-none"><svg class="wf-icon" aria-hidden="true"><use href="#ti-minus"></use></svg> bez produktu CarboHort</span></p>
+        </div>
+      </section>
+      <section class="u-lightbox__page" id="faza-4-9" data-lightbox-page="faza-4-9" aria-labelledby="faza-4-9-t">
+        <div class="u-lightbox__head">
+          <div class="u-lightbox__tt">
+            <span class="u-lab">Faza 9 z 10</span>
+            <h3 class="wf-h2 u-lightbox__t" id="faza-4-9-t">Dojrzewanie i zbiór – BBCH 89</h3>
+          </div>
+          <p class="u-lightbox__lead">Termin zbioru dobierz odpowiednio do wilgotności ziarna, pogody, kosztu suszenia i ryzyka wylegania lub pojawu chorób fuzaryjnych.</p>
+        </div>
+        <div class="u-lightbox__body">
+            <div class="u-conds">
+              <div class="u-cond">
+                <span class="u-cond__t">Kukurydza na ziarno</span>
+                <ul class="wf-list u-txt">
+                  <li>Termin zbioru dobierz odpowiednio do wilgotności ziarna, pogody, kosztu suszenia i ryzyka wylegania lub pojawu chorób fuzaryjnych.</li>
+                  <li>Po zbiorze zważ plon, zmierz wilgotność i porównaj stosowane warianty uprawy. Bez danych z wagi nie da się uczciwie ocenić finansowego zwrotu z zastosowanej biostymulacji roślin.</li>
+                </ul>
+              </div>
+              <div class="u-cond">
+                <span class="u-cond__t">Kukurydza na kiszonkę</span>
+                <ul class="wf-list u-txt">
+                  <li>Termin ustalaj według dojrzałości całej rośliny i ziarna, a nie tylko suchej masy łodygi.</li>
+                  <li>Usunięcie całej biomasy oznacza wywóz z pola niemal całości potasu i materii organicznej zawartych w roślinach. Po zbiorze skoryguj bilans potasu i zaplanuj dostarczenie materii organicznej regenerującej glebę.</li>
+                </ul>
+              </div>
+            </div>
+            <p><span class="u-none"><svg class="wf-icon" aria-hidden="true"><use href="#ti-minus"></use></svg> bez produktu CarboHort</span></p>
+        </div>
+      </section>
+      <section class="u-lightbox__page" id="faza-4-10" data-lightbox-page="faza-4-10" aria-labelledby="faza-4-10-t">
+        <div class="u-lightbox__head">
+          <div class="u-lightbox__tt">
+            <span class="u-lab">Faza 10 z 10</span>
+            <h3 class="wf-h2 u-lightbox__t" id="faza-4-10-t">Resztki pożniwne kukurydzy</h3>
+          </div>
+          <p class="u-lightbox__lead">Równomierne rozdrobnienie, wilgoć, płytkie wymieszanie/mulczowanie lub pozostawienie na powierzchni gleby</p>
+        </div>
+        <div class="u-lightbox__body">
+            <div class="u-chunk">
+              <span class="u-lab">Cel</span>
+              <p class="u-txt u-measure">Ograniczyć straty wody, wschody chwastów, siedlisko dla patogenów i szkodników, przyspieszyć kontakt resztek z glebą i stymulować procesy humifikacyjne.</p>
+            </div>
+            <div class="u-chunk">
+              <span class="u-lab">Krok · Zalecenie</span>
+              <div class="u-steps">
+                <div class="u-steps__i">
+                  <span class="u-steps__n">1. Rozdrobnienie</span>
+                  <p class="u-txt u-measure">Rozdrabniacz lub mulczer powinien przeciąć łodygi, szczególnie nasady, i równomiernie rozrzucić biomasę. Optymalne rozdrobnienie to fragmenty słomy do 8 cm długości.</p>
+                </div>
+                <div class="u-steps__i">
+                  <span class="u-steps__n">2. Wilgoć</span>
+                  <p class="u-txt u-measure">Zabieg produktami biologicznymi lub humusowymi wykonuj, gdy resztki i gleba są wilgotne. Na skrajnie suchej słomie efekt będzie ograniczony.</p>
+                </div>
+                <div class="u-steps__i">
+                  <span class="u-steps__n">3. Carbohumic</span>
+                  <div class="u-pcard">
+                    <svg class="wf-icon" aria-hidden="true"><use href="#ti-droplet"></use></svg>
+                    <div class="u-pcard__in">
+                      <p class="u-txt">CARBOHUMIC filtrowany 187 mesh w zakresie 20–40 l/ha w ok. 400 l wody. CARBOHUMIC BIOMAS w dawce 100 l z 300 l wody na ha.</p>
+                      <button class="u-more" type="button" data-lightbox-open="produkt-187">Mapa zastosowań <svg class="wf-icon" aria-hidden="true"><use href="#ti-chevron-right"></use></svg></button>
+                    </div>
+                  </div>
+                </div>
+                <div class="u-steps__i">
+                  <span class="u-steps__n">4. Mikroorganizmy</span>
+                  <p class="u-txt u-measure">Opcjonalnie preparat do resztek, np. konsorcjum bakterii/grzybów o potwierdzonej rejestracji.</p>
+                </div>
+                <div class="u-steps__i">
+                  <span class="u-steps__n">5. Azot</span>
+                  <div class="u-callout">
+                    <svg class="wf-icon" aria-hidden="true"><use href="#ti-alert-triangle"></use></svg>
+                    <div class="u-callout__in">
+                      <p class="u-txt">Nie stosuj azotu na pociętą słomę. Badania nie potwierdzają korzyści ze stosowania azotu na słomę przed zimą.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="u-steps__i">
+                  <span class="u-steps__n">6. Wymieszanie</span>
+                  <p class="u-txt u-measure">Płytkie i równomierne wymieszanie z glebą. Głębokość dopasuj do wilgotności i systemu uprawy; unikaj zakopania grubej warstwy w warunkach beztlenowych. Mulczowanie z glebą może być wykonane nawet dopiero na przedwiośniu, zależnie od terminów uprawy pod roślinę następczą.</p>
+                </div>
+                <div class="u-steps__i">
+                  <span class="u-steps__n">7. Lustracja wiosenna</span>
+                  <p class="u-txt u-measure">Sprawdź stopień rozkładu resztek, obecność larw i źródeł infekcji przed siewem kolejnej rośliny.</p>
+                </div>
+              </div>
+            </div>
+        </div>
+      </section>
+    </div>
+    <div class="u-lightbox__foot">
+      <div class="u-lightbox__steps">
+        <button class="c5-btn c5-btn--light c5-btn--sm" type="button" data-lightbox-prev><svg class="wf-icon" aria-hidden="true"><use href="#ti-chevron-left"></use></svg> poprzednia faza</button>
+        <button class="c5-btn c5-btn--light c5-btn--sm" type="button" data-lightbox-next>następna faza <svg class="wf-icon" aria-hidden="true"><use href="#ti-chevron-right"></use></svg></button>
+      </div>
+      <div class="u-lightbox__acts">
+        <a class="c5-btn c5-btn--dark c5-btn--sm" href="konfigurator.html?crop=kukurydza">Dobierz produkty</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<cw-footer></cw-footer>
+
+<cw-dock></cw-dock>
+
+<script src="cw.js"></script>
+<script src="c5.js"></script>
+<script src="uprawa.js"></script>
+<!-- Lenis: slight scroll inertia (like serverobotics.com); the page scrolls natively without it -->
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
+<script src="kukurydza.js"></script>
+<script src="ce-overlay.js"></script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carbohort — Rejestracja B2B</title>
+<meta name="description" content="Załóż konto Carbohort w 2 minuty: zamawiaj od ręki po cenie bazowej, a indywidualną cenę netto („Twoja cena") odblokuj po weryfikacji firmy lub gospodarstwa. Jeden próg wejścia, weryfikacja w 4 krokach.">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="wireframe.css">
+<link rel="stylesheet" href="cw.css">
+<script src="../status.js"></script>
+<script src="chrome.js"></script>
+</head>
+<body>
+<a class="wf-sr-only" href="#main">Przejdź do treści</a>
+
+<cw-icons></cw-icons>
+
+<cw-navbar data-current="platforma-b2b"></cw-navbar>
+
+<main id="main">
+
+  <!-- ===== NAGŁÓWEK + BREADCRUMB ===== -->
+  <section class="wf-section wf-section--sm">
+    <div class="wf-container wf-stack wf-stack--4">
+      <nav class="wf-breadcrumb" aria-label="Ścieżka">
+        <ol>
+          <li><a class="wf-link--quiet" href="home.html">Start</a></li>
+          <li><span class="wf-breadcrumb__sep" aria-hidden="true"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-right"></use></svg></span></li>
+          <li><span aria-current="page" class="wf-w-semibold">Rejestracja</span></li>
+        </ol>
+      </nav>
+      <div class="wf-stack wf-stack--3" style="max-width:680px;">
+        <span class="wf-overline">Załóż konto</span>
+        <h1 class="wf-h1">Załóż konto w 2 minuty — zamawiaj, gdy Ci pasuje</h1>
+        <p class="wf-lead wf-t-secondary">Konto nie jest bramką do zakupu: w sklepie kupisz bez logowania, a cena bazowa jest jawna. Konto daje wygodę — historia, ponów zamówienie, faktury — a po weryfikacji firmy lub gospodarstwa odblokowuje indywidualną cenę netto („Twoja cena") i oferty sezonowe.</p>
+      </div>
+      <div class="wf-alert" role="status">
+        <span class="wf-alert__icon"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-info-circle"></use></svg></span>
+        <div><span class="wf-alert__title">Jeden próg wejścia, weryfikacja potem.</span> <span class="wf-small wf-t-secondary">Każdy zakłada lekkie konto od ręki i może złożyć zamówienie po cenie bazowej. Status profesjonalisty i „Twoją cenę" netto nadaje doradca po weryfikacji — przy pierwszym zgłoszeniu. To dwa stany konta, nie dwa formularze.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== INTRO + FORMULARZ ===== -->
+  <section class="wf-section wf-section--subtle">
+    <div class="wf-container wf-grid wf-grid--2" style="align-items: start; --wf-grid-min: 20rem;">
+
+      <!-- FORMULARZ — minimum pól -->
+      <form class="wf-card" onsubmit="return false">
+        <div class="wf-card__body wf-stack wf-stack--5">
+          <div class="wf-stack wf-stack--2">
+            <h2 class="wf-h4">Dane konta (minimum)</h2>
+            <p class="wf-small wf-t-secondary">Tyle wystarczy, by założyć konto i zacząć zamawiać. Dane gospodarstwa lub firmy dopełnisz przy pierwszym zamówieniu.</p>
+          </div>
+
+          <div class="wf-grid wf-grid--2" style="--wf-grid-min: 12rem;">
+            <div class="wf-field">
+              <label class="wf-label" for="r-imie">Imię i nazwisko <span class="wf-req" aria-hidden="true">*</span></label>
+              <input class="wf-input" id="r-imie" type="text" autocomplete="name" required aria-required="true">
+              <span class="wf-hint">(wymagane)</span>
+            </div>
+            <div class="wf-field">
+              <label class="wf-label" for="r-tel">Telefon <span class="wf-req" aria-hidden="true">*</span></label>
+              <input class="wf-input" id="r-tel" type="tel" autocomplete="tel" required aria-required="true">
+              <span class="wf-hint">(wymagane)</span>
+            </div>
+          </div>
+
+          <div class="wf-field">
+            <label class="wf-label" for="r-email">E-mail <span class="wf-req" aria-hidden="true">*</span></label>
+            <input class="wf-input" id="r-email" type="email" autocomplete="email" required aria-required="true">
+            <span class="wf-hint">(wymagane) — na ten adres wyślemy potwierdzenie konta.</span>
+          </div>
+
+          <div class="wf-grid wf-grid--2" style="--wf-grid-min: 12rem;">
+            <div class="wf-field">
+              <label class="wf-label" for="r-pass">Hasło <span class="wf-req" aria-hidden="true">*</span></label>
+              <input class="wf-input" id="r-pass" type="password" autocomplete="new-password" required aria-required="true">
+              <span class="wf-hint">(wymagane) — min. 8 znaków.</span>
+            </div>
+            <div class="wf-field">
+              <label class="wf-label" for="r-pass2">Powtórz hasło <span class="wf-req" aria-hidden="true">*</span></label>
+              <input class="wf-input" id="r-pass2" type="password" autocomplete="new-password" required aria-required="true">
+              <span class="wf-hint">(wymagane)</span>
+            </div>
+          </div>
+
+          <div class="wf-field">
+            <label class="wf-label" for="r-nip">NIP <span class="wf-t-tertiary">(opcjonalnie)</span></label>
+            <input class="wf-input" id="r-nip" type="text" inputmode="numeric" autocomplete="off">
+            <span class="wf-hint">Jeśli prowadzisz działalność. Rolnik ryczałtowy i gospodarstwo bez wpisu do CEIDG nie mają NIP firmowego — to w porządku, zostaw puste.</span>
+          </div>
+
+          <div class="wf-stack wf-stack--3">
+            <label class="wf-choice"><input class="wf-checkbox" type="checkbox" required aria-required="true"> <span class="wf-small">Akceptuję <a class="wf-link" href="#">regulamin</a> i <a class="wf-link" href="#">politykę prywatności</a> <span class="wf-t-tertiary">(wymagane)</span>.</span></label>
+            <label class="wf-choice"><input class="wf-checkbox" type="checkbox"> <span class="wf-small">Chcę dostawać powiadomienia o ofertach sezonowych e-mailem <span class="wf-t-tertiary">(opcjonalne — bez tej zgody nie wyślemy maili promocyjnych)</span>.</span></label>
+          </div>
+
+          <a class="wf-btn wf-btn--primary wf-btn--block wf-btn--lg wf-inline" href="platforma-b2b.html">Załóż konto <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+          <p class="wf-small wf-t-secondary">Masz już konto? <a class="wf-link" href="platforma-b2b.html">Zaloguj się do Panelu B2B</a>.</p>
+        </div>
+      </form>
+
+      <!-- CO DOSTAJESZ -->
+      <div class="wf-stack wf-stack--4">
+        <div class="wf-card">
+          <div class="wf-card__body wf-stack wf-stack--3">
+            <h2 class="wf-h4">Co dostajesz od ręki</h2>
+            <ul class="wf-list">
+              <li>Logowanie do panelu, <strong>historia zamówień</strong> i statusy</li>
+              <li><strong>Ponów zamówienie</strong> w jeden klik — powtórz poprzedni koszyk</li>
+              <li>Faktury i dokumenty w jednym miejscu</li>
+              <li><strong>Możesz od razu złożyć zamówienie</strong> — po cenie bazowej, jawnej jak w sklepie</li>
+            </ul>
+            <div class="wf-alert" role="status">
+              <span class="wf-alert__icon"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-lock"></use></svg></span>
+              <div><span class="wf-alert__title">„Twoja cena" netto — po weryfikacji.</span> <span class="wf-small wf-t-secondary">Indywidualny rabat pojawia się po sprawdzeniu konta (patrz niżej). Do tego czasu widzisz cenę bazową.</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cw-ask">
+          <span class="wf-ph wf-ph--avatar" aria-hidden="true"></span>
+          <div class="cw-ask__txt wf-stack wf-stack--1">
+            <span class="wf-w-semibold">Nowy profesjonalista i chcesz negocjować warunki?</span>
+            <span class="wf-small wf-t-secondary">Zanim zaczniesz — krótka rozmowa z doradcą o cenie, dostawach i programie na sezon.</span>
+          </div>
+          <a class="wf-btn wf-btn--secondary wf-inline" href="kontakt.html"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-mail"></use></svg> Doradca</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== KIM JEST PROFESJONALISTA ===== -->
+  <section class="wf-section">
+    <div class="wf-container wf-stack wf-stack--8">
+      <div class="wf-stack wf-stack--3" style="max-width:680px;">
+        <span class="wf-overline">Dla kogo „Twoja cena"</span>
+        <h2 class="wf-h2">Kim jest klient profesjonalny?</h2>
+        <p class="wf-lead wf-t-secondary">Decyduje <strong>cel zarobkowy</strong>, nie forma prawna ani wielkość działki. Profesjonalista to ktoś, kto <strong>na uprawie zarabia lub robi to zawodowo</strong> — albo jest zawodowym pośrednikiem, np. utrzymuje zieleń na zlecenie.</p>
+      </div>
+
+      <div class="wf-grid wf-grid--2" style="align-items: start; --wf-grid-min: 20rem;">
+        <article class="wf-card">
+          <div class="wf-card__body wf-stack wf-stack--3">
+            <h3 class="wf-h5 wf-inline"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-check"></use></svg> Traktujemy jako profesjonalistę</h3>
+            <ul class="wf-list">
+              <li>Gospodarstwo, sad lub plantacja — produkcja towarowa (sprzedaż plonów)</li>
+              <li><strong>Rolnik ryczałtowy / VAT RR</strong> i gospodarstwo <strong>bez wpisu do CEIDG</strong> — brak NIP firmowego jest w porządku</li>
+              <li>Szkółka, producent materiału roślinnego</li>
+              <li><strong>Wykonawca lub pośrednik</strong> — np. utrzymanie zieleni miejskiej czy przy biurowcach (zarabia na usłudze)</li>
+              <li>Instytucja lub jednostka (zieleń, przetargi)</li>
+              <li>Firma z działalnością (CEIDG / KRS, NIP)</li>
+            </ul>
+          </div>
+        </article>
+        <article class="wf-card">
+          <div class="wf-card__body wf-stack wf-stack--3">
+            <h3 class="wf-h5 wf-inline"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-x"></use></svg> Traktujemy jako nieprofesjonalistę</h3>
+            <ul class="wf-list">
+              <li>Duży ogród lub działka <strong>dla siebie</strong> — bez sprzedaży plonów, bez zarobku</li>
+              <li>Uprawa <strong>dla przyjemności</strong>, nawet z dużym areałem, jeśli to nie jest zarobek</li>
+            </ul>
+            <p class="wf-small wf-t-secondary">Nieprofesjonalista też ma u nas konto i kupuje normalnie — po cenie bazowej. „Twoja cena" netto to warstwa dla zarabiających na uprawie.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="wf-alert" role="status">
+        <span class="wf-alert__icon"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-info-circle"></use></svg></span>
+        <div><span class="wf-alert__title">Kryterium to zarobek, nie forma prawna ani skala.</span> <span class="wf-small wf-t-secondary">Duży ogród uprawiany dla siebie, bez zarobku, to nieprofesjonalista; mały producent, który sprzedaje plony, to profesjonalista. <strong>NIP jest opcjonalny</strong> — rolnik ryczałtowy i gospodarstwo bez CEIDG nie mają NIP firmowego. Wielkość i rodzaj opakowania to tylko sygnały pomocnicze.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== JAK DZIAŁA WERYFIKACJA — 4 KROKI ===== -->
+  <section class="wf-section wf-section--subtle">
+    <div class="wf-container wf-stack wf-stack--8">
+      <div class="wf-stack wf-stack--3" style="max-width:680px;">
+        <span class="wf-overline">Jak to działa</span>
+        <h2 class="wf-h2">Od rejestracji do „Twojej ceny" — 4 kroki</h2>
+        <p class="wf-lead wf-t-secondary">Zakładasz konto od ręki; weryfikacja firmy lub gospodarstwa dzieje się przy pierwszym zamówieniu i kończy się odblokowaniem indywidualnej ceny netto.</p>
+      </div>
+
+      <ol class="wf-steps" tabindex="0" aria-label="Etapy rejestracji B2B">
+        <li class="wf-step wf-step--current" aria-current="step"><span class="wf-step__node">1</span> Zakładasz konto</li>
+        <span class="wf-step__connector" aria-hidden="true"></span>
+        <li class="wf-step wf-step--upcoming"><span class="wf-step__node">2</span> Składasz 1. zamówienie</li>
+        <span class="wf-step__connector" aria-hidden="true"></span>
+        <li class="wf-step wf-step--upcoming"><span class="wf-step__node">3</span> Weryfikujemy konto</li>
+        <span class="wf-step__connector" aria-hidden="true"></span>
+        <li class="wf-step wf-step--upcoming"><span class="wf-step__node">4</span> Masz „Twoją cenę"</li>
+      </ol>
+
+      <div class="wf-grid wf-grid--4" style="align-items: start; --wf-grid-min: 13rem;">
+        <article class="wf-card"><div class="wf-card__body wf-stack wf-stack--2"><span class="wf-overline wf-t-tertiary">Krok 1</span><h3 class="wf-h5">Zakładasz konto</h3><p class="wf-small wf-t-secondary">Minimum danych — kontakt i hasło. Od razu możesz przeglądać i składać zamówienia.</p></div></article>
+        <article class="wf-card"><div class="wf-card__body wf-stack wf-stack--2"><span class="wf-overline wf-t-tertiary">Krok 2</span><h3 class="wf-h5">Składasz 1. zamówienie</h3><p class="wf-small wf-t-secondary">Dopełniasz dane gospodarstwa: typ rozliczenia, NIP jeśli masz, uprawa, adres. Cena = bazowa, status „do potwierdzenia".</p></div></article>
+        <article class="wf-card"><div class="wf-card__body wf-stack wf-stack--2"><span class="wf-overline wf-t-tertiary">Krok 3</span><h3 class="wf-h5">Weryfikujemy konto</h3><p class="wf-small wf-t-secondary">Doradca sprawdza zgłoszenie i akceptuje jako profesjonalistę albo prosi o uzupełnienie.</p></div></article>
+        <article class="wf-card"><div class="wf-card__body wf-stack wf-stack--2"><span class="wf-overline wf-t-tertiary">Krok 4</span><h3 class="wf-h5">Masz „Twoją cenę"</h3><p class="wf-small wf-t-secondary">Po akceptacji widzisz indywidualną cenę netto i oferty sezonowe. Doradca potwierdza zamówienie.</p></div></article>
+      </div>
+
+      <div class="wf-alert" role="status">
+        <span class="wf-alert__icon"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-info-circle"></use></svg></span>
+        <div><span class="wf-alert__title">Dlaczego ceny netto nie widać od razu.</span> <span class="wf-small wf-t-secondary">Cennik netto wystawiony „z zimna" każdemu przyciąga tych, którzy chcą podejrzeć marżę — konkurencję i odsprzedawców — a realny klient dostałby cenę „dla wszystkich" zamiast indywidualnej. Dlatego „Twoja cena" pojawia się po weryfikacji konta. <strong>Odrzucenie statusu profesjonalisty nie kasuje konta</strong> — zostaje lekkie konto, którym kupujesz po cenie bazowej w sklepie.</span></div>
+      </div>
+
+      <div class="wf-card">
+        <div class="wf-card__body wf-cluster wf-cluster--between wf-items-center wf-gap-4">
+          <p class="wf-body wf-prose">Wolisz najpierw policzyć zestaw albo pogadać o dawce? Po założeniu konta trafiasz do Panelu B2B w stanie „profesjonalista — oczekuje weryfikacji".</p>
+          <div class="wf-cluster wf-gap-2">
+            <a class="wf-btn wf-btn--secondary" href="konfigurator.html">Otwórz Konfigurator</a>
+            <a class="wf-btn wf-btn--ghost" href="kontakt.html">Porozmawiaj z doradcą</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<cw-footer></cw-footer>
+
+<cw-dock></cw-dock>
+
+<script src="cw.js"></script>
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carbohort — Zalecenia stosowania (strona QR z etykiety)</title>
+<meta name="description" content="Strona docelowa kodu QR z etykiety. Pełne zalecenia stosowania produktów Carbohort: dawki doglebowe i nalistne, fazy uprawy, liczba zabiegów i pełna agrotechnika per produkt.">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="wireframe.css">
+<link rel="stylesheet" href="cw.css">
+<script src="../status.js"></script>
+<script src="chrome.js"></script>
+</head>
+<body>
+<a class="wf-sr-only" href="#main">Przejdź do treści</a>
+
+<cw-icons></cw-icons>
+
+<cw-navbar data-current="centrum-wiedzy"></cw-navbar>
+
+<main id="main">
+
+  <!-- ===== BREADCRUMB ===== -->
+  <div class="wf-container">
+    <nav class="wf-breadcrumb" aria-label="Breadcrumb">
+      <ol class="wf-cluster wf-items-center">
+        <li><a class="wf-link--quiet" href="home.html">Start</a></li>
+        <li><span class="wf-breadcrumb__sep" aria-hidden="true">/</span></li>
+        <li><a class="wf-link--quiet" href="centrum-wiedzy.html">Centrum wiedzy</a></li>
+        <li><span class="wf-breadcrumb__sep" aria-hidden="true">/</span></li>
+        <li aria-current="page">Zalecenia</li>
+      </ol>
+    </nav>
+  </div>
+
+  <!-- ===== 1. WEJŚCIE Z QR ===== -->
+  <section class="wf-section">
+    <div class="wf-container wf-stack wf-stack--8">
+      <div class="wf-stack wf-stack--3" style="max-width:680px;">
+        <span class="wf-overline">Zalecenia stosowania</span>
+        <h1 class="wf-h1">Trafiłeś tu z kodu QR na etykiecie?</h1>
+        <p class="wf-lead wf-prose">Dobrze trafiłeś. Tutaj masz <strong>pełne zalecenia stosowania</strong> wybranego produktu: dawki, fazy uprawy, liczbę zabiegów oraz <strong>zalecenia nalistne</strong> i pełną agrotechnikę — to, czego z powodów formalnych nie wolno wydrukować na etykiecie doglebowej.</p>
+      </div>
+
+      <div class="wf-alert" role="status">
+        <span class="wf-alert__icon"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-info-circle"></use></svg></span>
+        <div>
+          <p class="wf-alert__title">Stoisz w polu lub w sadzie?</p>
+          <p class="wf-small wf-t-secondary">Ta strona podaje to, czego potrzebujesz przy zabiegu — bez przeklikiwania całego serwisu. Wybierz produkt poniżej i zjedź do tabeli dawek.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 2. SELEKTOR PRODUKTU ===== -->
+  <section class="wf-section wf-section--subtle" id="produkt">
+    <div class="wf-container wf-stack wf-stack--8">
+      <div class="wf-stack wf-stack--3" style="max-width:680px;">
+        <span class="wf-overline">Krok 1</span>
+        <h2 class="wf-h2">Który produkt masz w ręku?</h2>
+        <p class="wf-lead wf-t-secondary">Jeśli wszedłeś przez kod QR, produkt jest już wybrany automatycznie (parametr w adresie). Jeśli nie — wskaż go ręcznie.</p>
+      </div>
+
+      <div class="wf-grid wf-grid--2 wf-items-start" style="--wf-grid-min: 20rem;">
+        <div class="wf-card">
+          <div class="wf-card__body">
+            <form class="wf-stack wf-stack--5">
+              <div class="wf-field">
+                <label class="wf-label" for="sel-produkt">Produkt</label>
+                <select class="wf-select" id="sel-produkt" name="produkt">
+                  <option value="carbomat">CARBOMAT — sypki, doglebowy</option>
+                  <option value="carbohumic">CARBOHUMIC — płynny, doglebowy i nalistny</option>
+                  <option value="carbomat-humic">CARBOMAT HUMIC — węgiel aktywowany 3 w 1</option>
+                </select>
+              </div>
+              <div class="wf-field">
+                <label class="wf-label" for="sel-uprawa">Uprawa <span class="wf-t-secondary wf-w-regular">(zawęża zalecenia)</span></label>
+                <select class="wf-select" id="sel-uprawa" name="uprawa">
+                  <option value="">— wszystkie uprawy —</option>
+                  <option value="sadownicze">Sadownicze</option>
+                  <option value="jagodowe">Jagodowe</option>
+                  <option value="warzywnicze">Warzywnicze</option>
+                  <option value="zboza">Zboża i rzepak</option>
+                  <option value="trawnik">Trawnik</option>
+                  <option value="ogrod">Ogród / działka</option>
+                </select>
+              </div>
+              <p class="wf-small wf-t-secondary">Selektor poglądowy. Docelowo prefiltruje się z adresu kodu QR i przewija do właściwej tabeli.</p>
+            </form>
+          </div>
+        </div>
+
+        <div class="wf-stack wf-stack--3">
+          <div class="wf-ph wf-ph--4x3" aria-hidden="true"><span class="wf-ph__label">Etykieta doglebowa z widocznym kodem QR — kadr „w polu"</span></div>
+          <p class="wf-caption wf-t-secondary">Kod QR z etykiety prowadzi prosto tutaj — do pełnych zaleceń, których nie mieści (i nie może zawierać) etykieta.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 3. TABELE DAWEK ===== -->
+  <section class="wf-section" id="dawki">
+    <div class="wf-container wf-stack wf-stack--8">
+      <div class="wf-stack wf-stack--3" style="max-width:680px;">
+        <span class="wf-overline">Krok 2</span>
+        <h2 class="wf-h2">Dawki, fazy i liczba zabiegów</h2>
+        <p class="wf-lead wf-t-secondary">Wybrany produkt: <strong>CARBOMAT</strong>. Stosuj zgodnie z fazą uprawy. Zawsze dostosuj dawkę do zasobności i wilgotności gleby.</p>
+      </div>
+
+      <div class="wf-alert" role="status">
+        <span class="wf-alert__icon"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-info-circle"></use></svg></span>
+        <div>
+          <p class="wf-alert__title">Wartości w nawiasach to placeholdery</p>
+          <p class="wf-small wf-t-secondary">Dawki, liczby zabiegów i terminy poniżej są poglądowe — do uzupełnienia z kart produktów i akceptacji merytorycznej. Pełna karta produktu z parametrami: <a class="wf-link" href="pdp.html">karta produktu</a>.</p>
+        </div>
+      </div>
+
+      <div class="wf-stack wf-stack--4">
+        <h3 class="wf-h4">Stosowanie doglebowe</h3>
+        <div class="wf-card wf-card--flush">
+          <table class="wf-table">
+            <thead>
+              <tr>
+                <th scope="col">Faza / termin</th>
+                <th scope="col" style="text-align:right;">Dawka</th>
+                <th scope="col" style="text-align:right;">Liczba zabiegów</th>
+                <th scope="col">Uwagi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Przed siewem / sadzeniem</td><td style="text-align:right;">[~200 kg/ha]</td><td style="text-align:right;">1×</td><td>wymieszanie z warstwą orną</td></tr>
+              <tr><td>Rusza wegetacja (wiosna)</td><td style="text-align:right;">[dawka]</td><td style="text-align:right;">1×</td><td>pasowo pod korzeniami / w rzędzie</td></tr>
+              <tr><td>Pełnia wegetacji</td><td style="text-align:right;">[dawka]</td><td style="text-align:right;">1–2×</td><td>przy nawadnianiu / opadach</td></tr>
+              <tr><td>Po zbiorze / jesień</td><td style="text-align:right;">[dawka]</td><td style="text-align:right;">1×</td><td>regeneracja gleby na kolejny sezon</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="wf-stack wf-stack--4">
+        <h3 class="wf-h4">Stosowanie nalistne <span class="wf-small wf-t-secondary wf-w-regular">(dotyczy form płynnych — np. CARBOHUMIC)</span></h3>
+        <div class="wf-card wf-card--flush">
+          <table class="wf-table">
+            <thead>
+              <tr>
+                <th scope="col">Faza / termin</th>
+                <th scope="col" style="text-align:right;">Stężenie / dawka</th>
+                <th scope="col" style="text-align:right;">Liczba zabiegów</th>
+                <th scope="col">Uwagi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Faza intensywnego wzrostu</td><td style="text-align:right;">[X % / X l/ha]</td><td style="text-align:right;">2–3×</td><td>oprysk drobnokroplisty, wczesny ranek lub wieczór</td></tr>
+              <tr><td>Przed kwitnieniem</td><td style="text-align:right;">[X % / X l/ha]</td><td style="text-align:right;">1×</td><td>można łączyć w zbiorniku — sprawdź mieszalność</td></tr>
+              <tr><td>Wzrost / dojrzewanie owocu</td><td style="text-align:right;">[X % / X l/ha]</td><td style="text-align:right;">1–2×</td><td>nie stosować w pełnym słońcu i upale</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="wf-alert" role="alert">
+        <span class="wf-alert__icon"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-alert-triangle"></use></svg></span>
+        <div>
+          <p class="wf-alert__title">Granice agronomiczne</p>
+          <p class="wf-small wf-t-secondary">Nie stosować zabiegu nalistnego w pełnym słońcu ani w upale. Przed łączeniem w zbiorniku zawsze sprawdź mieszalność produktów. Dawkę doglebową dostosuj do typu i wilgotności gleby.</p>
+        </div>
+      </div>
+
+      <div class="cw-ask">
+        <span class="wf-ph wf-ph--avatar" aria-hidden="true"></span>
+        <div class="cw-ask__txt wf-stack wf-stack--1">
+          <span class="wf-w-semibold">Nie masz pewności co do dawki przy Twojej glebie?</span>
+          <span class="wf-small wf-t-secondary">Opisz uprawę, fazę i typ gleby — dobierzemy dawkę i termin pod Twoje pole. Szybciej niż przeglądanie całej tabeli.</span>
+        </div>
+        <button type="button" class="wf-btn wf-btn--secondary" data-jurek-open>Zapytaj dr Jurka</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 4. PEŁNE INSTRUKCJE PER PRODUKT ===== -->
+  <section class="wf-section wf-section--subtle" id="instrukcje">
+    <div class="wf-container wf-stack wf-stack--8">
+      <div class="wf-stack wf-stack--3" style="max-width:680px;">
+        <span class="wf-overline">Pełna agrotechnika</span>
+        <h2 class="wf-h2">Pełne instrukcje stosowania per produkt</h2>
+        <p class="wf-lead wf-t-secondary">Rozwiń swój produkt, by zobaczyć komplet zaleceń: sposób aplikacji, terminy, łączenie zabiegów i przechowywanie.</p>
+      </div>
+
+      <div class="wf-accordion">
+        <div class="wf-accordion__item">
+          <button class="wf-accordion__trigger wf-w-medium" aria-expanded="true" aria-controls="acc-carbomat" id="acc-carbomat-h">
+            CARBOMAT — sypki, doglebowy
+            <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg>
+          </button>
+          <div class="wf-accordion__panel" id="acc-carbomat" role="region" aria-labelledby="acc-carbomat-h">
+            <div class="wf-stack wf-stack--3">
+              <p class="wf-body wf-prose">Sypki poprawiacz gleby z surowego lignitu. Stosowany doglebowo — przebudowuje strukturę i retencję na lata. Najlepiej działa wymieszany z warstwą orną.</p>
+              <ul class="wf-list">
+                <li><strong>Aplikacja:</strong> rozsiew na powierzchnię, następnie wymieszanie z glebą (brona, kultywator) lub pasowo pod korzeniami / w rzędzie.</li>
+                <li><strong>Najlepszy termin:</strong> przed siewem lub sadzeniem oraz jesienią po zbiorze (regeneracja na kolejny sezon).</li>
+                <li><strong>Dawka:</strong> [~200 kg/ha] — dostosuj do zasobności i wilgotności gleby [do potwierdzenia].</li>
+                <li><strong>Łączenie:</strong> można stosować razem z nawożeniem podstawowym; nie wymaga rozpuszczania.</li>
+                <li><strong>Przechowywanie:</strong> w suchym miejscu, w oryginalnym opakowaniu, z dala od wilgoci.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="wf-accordion__item">
+          <button class="wf-accordion__trigger wf-w-medium" aria-expanded="false" aria-controls="acc-carbohumic" id="acc-carbohumic-h">
+            CARBOHUMIC — płynny, doglebowy i nalistny
+            <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg>
+          </button>
+          <div class="wf-accordion__panel" id="acc-carbohumic" role="region" aria-labelledby="acc-carbohumic-h" hidden>
+            <div class="wf-stack wf-stack--3">
+              <p class="wf-body wf-prose">„Próchnica w płynie" — płynny kondycjoner glebowy i biostymulator. Może być stosowany doglebowo oraz nalistnie, co czyni go uniwersalnym uzupełnieniem programu.</p>
+              <ul class="wf-list">
+                <li><strong>Aplikacja doglebowa:</strong> z wodą, przez nawadnianie kropelkowe lub oprysk doglebowy.</li>
+                <li><strong>Aplikacja nalistna:</strong> oprysk drobnokroplisty, wczesnym rankiem lub wieczorem, [X % / X l/ha].</li>
+                <li><strong>Najlepszy termin nalistny:</strong> faza intensywnego wzrostu, przed kwitnieniem, wzrost i dojrzewanie owocu.</li>
+                <li><strong>Łączenie:</strong> można łączyć w zbiorniku — zawsze sprawdź mieszalność z innymi produktami.</li>
+                <li><strong>Granice:</strong> nie stosować w pełnym słońcu i upale; chronić przed mrozem.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="wf-accordion__item">
+          <button class="wf-accordion__trigger wf-w-medium" aria-expanded="false" aria-controls="acc-carbomat-humic" id="acc-carbomat-humic-h">
+            CARBOMAT HUMIC — węgiel aktywowany 3 w 1
+            <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg>
+          </button>
+          <div class="wf-accordion__panel" id="acc-carbomat-humic" role="region" aria-labelledby="acc-carbomat-humic-h" hidden>
+            <div class="wf-stack wf-stack--3">
+              <p class="wf-body wf-prose">Węgiel aktywowany w jednym produkcie: kondycjoner + potas + biostymulator. Podnosi pH zakwaszonych pól — szczególnie przydatny tam, gdzie gleba wymaga jednoczesnej odbudowy i odkwaszenia.</p>
+              <ul class="wf-list">
+                <li><strong>Aplikacja:</strong> doglebowo, z wymieszaniem z warstwą orną.</li>
+                <li><strong>Najlepszy termin:</strong> przed siewem / sadzeniem; na polach zakwaszonych jako element regulacji pH.</li>
+                <li><strong>Dawka:</strong> [dawka kg/ha] — dostosuj do pH i zasobności gleby [do potwierdzenia].</li>
+                <li><strong>Efekt:</strong> trzy działania naraz — struktura i retencja, dostarczenie potasu, biostymulacja.</li>
+                <li><strong>Przechowywanie:</strong> w suchym miejscu, w oryginalnym opakowaniu.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 5. NOTA REGULACYJNA ===== -->
+  <section class="wf-section" id="dlaczego">
+    <div class="wf-container wf-stack wf-stack--8">
+      <div class="wf-stack wf-stack--3" style="max-width:680px;">
+        <span class="wf-overline">Dlaczego te zalecenia są na stronie, a nie na etykiecie</span>
+        <h2 class="wf-h2">Krótka nota regulacyjna</h2>
+      </div>
+
+      <div class="wf-grid wf-grid--2 wf-items-start" style="--wf-grid-min: 20rem;">
+        <div class="wf-card">
+          <div class="wf-card__body wf-stack wf-stack--3">
+            <p class="wf-body wf-prose"><strong>Etykieta produktu doglebowego nie może zawierać zaleceń nalistnych.</strong> Zakres informacji na etykiecie środka poprawiającego właściwości gleby jest ściśle określony przepisami — etykieta opisuje zastosowanie doglebowe, dla którego produkt został zgłoszony.</p>
+            <p class="wf-small wf-t-secondary">Pełna agrotechnika — w tym zalecenia nalistne, łączenie zabiegów i dawkowanie per faza — wykracza poza to, co wolno wydrukować na opakowaniu. Dlatego udostępniamy ją tutaj, przez kod QR.</p>
+          </div>
+        </div>
+        <div class="wf-card">
+          <div class="wf-card__body wf-stack wf-stack--3">
+            <h3 class="wf-h5">W skrócie</h3>
+            <ul class="wf-list">
+              <li>Etykieta = zwięzłe, formalne zastosowanie doglebowe.</li>
+              <li>Ta strona = pełne, aktualne zalecenia (doglebowe + nalistne).</li>
+              <li>Zalecenia możemy aktualizować bez przedruku etykiet.</li>
+              <li>Kod QR = most między workiem w polu a aktualną wiedzą.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 6. CO DALEJ ===== -->
+  <section class="wf-section wf-section--subtle" id="dalej">
+    <div class="wf-container wf-stack wf-stack--8">
+      <div class="wf-stack wf-stack--3" style="max-width:680px;">
+        <span class="wf-overline">Co dalej</span>
+        <h2 class="wf-h2">Potrzebujesz czegoś więcej?</h2>
+      </div>
+      <div class="wf-grid wf-grid--3" style="--wf-grid-min: 15rem;">
+        <article class="wf-card">
+          <div class="wf-card__body wf-stack wf-stack--3">
+            <h3 class="wf-h5">Pełna karta produktu</h3>
+            <p class="wf-small wf-t-secondary">Skład, parametry, opis działania i karta PDF do pobrania.</p>
+            <a class="wf-link--quiet wf-inline wf-small" href="pdp.html">Otwórz kartę produktu <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+          </div>
+        </article>
+        <article class="wf-card">
+          <div class="wf-card__body wf-stack wf-stack--3">
+            <h3 class="wf-h5">Dobierz program</h3>
+            <p class="wf-small wf-t-secondary">Konfigurator złoży program pod Twoją uprawę, skalę i cel.</p>
+            <a class="wf-link--quiet wf-inline wf-small" href="konfigurator.html">Przejdź do konfiguratora <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+          </div>
+        </article>
+        <article class="wf-card">
+          <div class="wf-card__body wf-stack wf-stack--3">
+            <h3 class="wf-h5">Kup ponownie</h3>
+            <p class="wf-small wf-t-secondary">Skończył się produkt? Zamów ten sam w sklepie.</p>
+            <a class="wf-link--quiet wf-inline wf-small" href="sklep.html">Przejdź do sklepu <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<cw-footer></cw-footer>
+
+<cw-dock></cw-dock>
+
+<script src="cw.js"></script>
+</body>
+</html>
