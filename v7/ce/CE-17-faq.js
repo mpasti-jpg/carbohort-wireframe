@@ -19,9 +19,12 @@
 
   /* one item open at a time; `instant` skips the height animation (page start);
      `instantAbove` collapses the items above `item` at once, so its final place is known now */
-  function openOnly(item, instant, instantAbove) {
+  function openOnly(item, instant, instantAbove, group) {
+    /* scope to one accordion: a page may carry several .c5-faq blocks (FAQ + "Dla dociekliwych") */
+    group = group || (item && item.closest ? item.closest(".c5-faq") : null);
     var at = faqItems.indexOf(item);
     faqItems.forEach(function (it, j) {
+      if (group && it.closest(".c5-faq") !== group) return;
       var b = $(".c5-faq__q", it);
       var a = $(".c5-faq__a", it);
       var on = it === item;
@@ -37,7 +40,7 @@
     if (!btn || !ans) return;
     btn.addEventListener("click", function () {
       var open = btn.getAttribute("aria-expanded") === "true";
-      openOnly(open ? null : item);
+      openOnly(open ? null : item, false, false, item.closest(".c5-faq"));
     });
   });
 

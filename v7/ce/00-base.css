@@ -29,15 +29,21 @@
 .c5-head{display:flex;flex-direction:column;gap:clamp(1.25rem,2.6vw,2.25rem);}
 .c5-muted{color:var(--w-text-secondary);}
 
-/* Przyciski nowego języka: ostre narożniki, etykiety jak w makiecie */
-.c5-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 45px;font:inherit;font-size:1rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;border:1px solid rgb(0 0 0 / .2);border-radius:0;cursor:pointer;text-decoration:none;transition:background var(--w-duration-base) var(--w-ease),color var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);}
+/* Przyciski nowego języka: ostre narożniki, etykiety jak w makiecie.
+   EL-01 (wave 2a): the 44 px touch target now lives in the base instead of
+   six local `min-height:44px` patches (produkty.css, prochnica-plus.css);
+   side padding goes through the `--c5-btn-px` token (45 px base), which each
+   context sets for itself instead of overriding `padding-inline`. */
+.c5-btn{--c5-btn-px:45px;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:44px;padding:12px var(--c5-btn-px);font:inherit;font-size:1rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;border:1px solid rgb(0 0 0 / .2);border-radius:0;cursor:pointer;text-decoration:none;transition:background var(--w-duration-base) var(--w-ease),color var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);}
 .c5-btn--dark{background:var(--w-gray-900);color:var(--w-text-inverse);border-color:var(--w-gray-900);}
 .c5-btn--dark:hover{background:var(--w-gray-700);border-color:var(--w-gray-700);}
 .c5-btn--light{background:var(--w-surface-page);color:var(--w-text-primary);}
 .c5-btn--light:hover{border-color:var(--w-border-strong);}
-.c5-btn--sm{padding:10px 25px;font-size:0.8125rem;}
+.c5-btn--sm{--c5-btn-px:25px;min-height:44px;padding:10px var(--c5-btn-px);font-size:0.8125rem;}
 .c5-btn--inv{background:var(--w-surface-page);color:var(--w-text-primary);border-color:var(--w-surface-page);}
 .c5-btn--inv:hover{background:var(--w-gray-100);}
+/* narrow variant (PRO band, section footers) – must come after --sm to win */
+.c5-btn--tight{--c5-btn-px:clamp(18px,2.2vw,32px);}
 .c5-btn .wf-icon{width:16px;height:16px;opacity:.55;}
 .c5-btnrow{display:flex;gap:6px;flex-wrap:wrap;}
 
@@ -67,3 +73,93 @@ html.lenis,html.lenis body{height:auto;}
 .lenis.lenis-smooth{scroll-behavior:auto !important;}
 .lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain;}
 .lenis.lenis-stopped{overflow:hidden;}
+
+/* ===== EL · Interface elements (style guide) =====
+   One definition per interface element (EL-NN) of the style guide – registry:
+   ce-rejestr.js, inventory: 40-strona-www/koncepcja/style-guide-inwentarz.md,
+   decisions: style-guide-spec.md. Values follow the CARBOMAT ECO pattern.
+   The old page classes these elements absorb stay in <strona>.css until the
+   markup is renamed (wave 2a, agents B) – then those rules go away. ===== */
+
+/* EL-02 Przycisk ikonowy */
+/* A 44 px square (touch target) with the kit border; `--sm` is 40 px, for the
+   button that sits in the corner of a lightbox. One definition instead of
+   four: c5-pop__close and pp-ctrl__btn (44), c5-lb__close and
+   u-lightbox__close (40). Note for the rename: the rules that hide the button
+   without JS (`display:none`) and pin it to the corner stay in <strona>.css –
+   only the anatomy lives here. */
+.c5-iconbtn{display:inline-grid;place-items:center;flex:none;width:44px;height:44px;min-width:44px;min-height:44px;padding:0;background:var(--w-surface-page);border:1px solid var(--w-border-default);border-radius:0;color:var(--w-text-primary);cursor:pointer;transition:background var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);}
+.c5-iconbtn:hover:not(:disabled){background:var(--w-surface-hover);border-color:var(--w-gray-900);}
+.c5-iconbtn:disabled{color:var(--w-text-disabled);border-color:var(--w-border-subtle);cursor:not-allowed;}
+.c5-iconbtn--sm{width:var(--w-control-h-md);height:var(--w-control-h-md);min-width:var(--w-control-h-md);min-height:var(--w-control-h-md);}
+
+/* EL-10 Nagłówek klocka (zaliczka na falę 2c) */
+/* The full merge of the 36 h3/h4/h5 classes is wave 2c; this base exists now
+   because rozjazd 3 moves two kit headings onto it already (Produkty `wf-h4`).
+   Scale from the inventory §16: --xs 1 rem · base/--sm 1.0625 · --md 1.125 ·
+   --lg clamp(1.125,1.8vw,1.5) · --xl clamp(2,3.6vw,3). */
+.c5-h3{font-size:1.0625rem;line-height:1.3;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+.c5-h3--xs{font-size:1rem;}
+.c5-h3--sm{font-size:1.0625rem;}
+.c5-h3--md{font-size:1.125rem;}
+.c5-h3--lg{font-size:clamp(1.125rem,1.8vw,1.5rem);line-height:1.22;}
+.c5-h3--xl{font-size:clamp(2rem,3.6vw,3rem);line-height:1.15;}
+
+/* EL-14 Przypis / źródło */
+/* The source line under data: 0.75 rem, tertiary text. On the dark band it is
+   white at .8 – NOT the .55 c5-params__src used to have (AA contrast). */
+.c5-src{font-size:0.75rem;line-height:1.45;color:var(--w-text-tertiary);}
+.c5-src--ondark{color:rgb(255 255 255 / .8);}
+
+/* EL-16 Chip */
+/* An outlined pill in caps. State is carried by the BORDER STYLE, never by a
+   colour: solid = done / in progress (`--solid`), dashed = to do (`--dashed`),
+   dotted = not applicable (`--dotted`). `--ondark` for dark backgrounds. */
+.c5-chip{display:inline-flex;align-items:center;gap:var(--w-space-2);font:inherit;background:transparent;border:1px solid var(--w-border-strong);border-radius:0;padding:4px 12px;font-size:0.75rem;line-height:1.45;letter-spacing:.04em;text-transform:uppercase;color:var(--w-text-secondary);}
+.c5-chip--dashed{border-style:dashed;}
+.c5-chip--dotted{border-style:dotted;}
+.c5-chip--solid{border-style:solid;border-color:var(--w-gray-900);color:var(--w-text-primary);font-weight:var(--w-weight-semibold);}
+.c5-chip--ondark{border-color:rgb(255 255 255 / .35);color:rgb(255 255 255 / .8);}
+
+/* EL-17 Nota */
+/* A framed note: icon plus paragraph, one anatomy instead of nine classes.
+   `--strong` dark border, `--soft` light border + secondary text, `--rule`
+   only a rule on top, `--dashed` a dashed border for „brak danych” notes
+   (those carry no icon), `--sm` the smaller size. */
+.c5-note{display:flex;gap:var(--w-space-3);align-items:flex-start;background:var(--w-surface-page);border:1px solid var(--w-border-default);border-radius:0;padding:16px 20px;font-size:0.9375rem;}
+.c5-note p{margin:0;}
+.c5-note > .wf-icon{flex:none;margin-top:2px;}  /* direct child only: icons inside a note's button keep the button's alignment */
+.c5-note--strong{border-color:var(--w-gray-900);}
+.c5-note--soft{border-color:var(--w-border-default);color:var(--w-text-secondary);}
+.c5-note--rule{background:none;border:0;border-top:1px solid var(--w-gray-900);padding:var(--w-space-5) 0 0;}
+.c5-note--dashed{border:1px dashed var(--w-border-strong);color:var(--w-text-secondary);}
+.c5-note--sm{font-size:0.875rem;}
+
+/* EL-24 Ramka ikony */
+/* A ⌀36 circle outlined in the current text colour (tab tiles) or a 44 px
+   square with a `--w-border-strong` outline (CARBOHUMIC tiles); `--sm` is the
+   ⌀32 used in the compact tab bar. Replaces c5-way__ico and c5hu-tile__ico. */
+.c5-icoframe{flex:none;display:grid;place-items:center;width:36px;height:36px;border:1px solid currentColor;border-radius:0;}
+.c5-icoframe--circle{border-radius:var(--w-radius-circle);}
+.c5-icoframe--square{width:44px;height:44px;border-color:var(--w-border-strong);}
+.c5-icoframe--sm{width:32px;height:32px;}
+
+/* Compact tab (variant of the tab bar, EL-18 / CE-11): 44 px, .9375 rem, icon frame 32 px – a bar with
+   six positions does not fit the 56 px tab. Lives here (not in CE-11) because Próchnica+ builds its year tabs
+   on the old c5.css core and does not link CE-11. */
+.c5-way--compact{min-height:44px;gap:var(--w-space-3);padding:10px 16px;font-size:0.9375rem;}
+.c5-way--compact .c5-icoframe{width:32px;height:32px;}
+.c5-way--compact .wf-icon{width:18px;height:18px;}
+
+
+/* EL-28 Pola formularza */
+/* The kit gives fields an 8 px radius and a 40 px height – in V7 every corner
+   is sharp and every control is 44 px. One rule instead of the local patch
+   that used to sit in prochnica-plus.css. */
+#main .wf-input,#main .wf-select,#main .wf-textarea{border-radius:0;min-height:44px;}
+
+/* Reduced motion for the elements above – this block must stay AFTER their
+   definitions: same specificity, so the later rule wins. */
+@media (prefers-reduced-motion: reduce){
+  .c5-iconbtn{transition:none;}
+}

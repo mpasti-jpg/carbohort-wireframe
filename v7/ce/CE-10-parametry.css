@@ -40,7 +40,11 @@
 .c5-params__actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:clamp(1.75rem,3.5vw,2.75rem);}
 .c5-params .c5-btn--ondark{background:var(--w-gray-900);color:var(--w-text-inverse);border-color:rgb(0 0 0 / .2);}
 .c5-params .c5-btn--ondark:hover{background:var(--w-gray-800);}
-.c5-params__src{text-align:center;font-size:0.75rem;opacity:.55;margin-top:var(--w-space-5);}
+/* EL-14 (wave 2a): the source line itself is `c5-src c5-src--ondark` from the
+   00 layer; only its place inside the frame stays here. `.c5-params__src` is
+   kept next to it until the markup is renamed (agents B) – after the rename
+   only the `.c5-params .c5-src` half is left. */
+.c5-params .c5-src{text-align:center;margin-top:var(--w-space-5);}
 
 @media (max-width:899px){
   .c5-params__row{grid-template-columns:minmax(0,1fr) minmax(0,45%);}

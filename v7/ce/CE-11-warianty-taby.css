@@ -20,7 +20,6 @@
 .c5-way{display:flex;align-items:center;gap:14px;padding:0 20px;min-height:56px;font:inherit;font-size:1rem;text-align:left;background:var(--w-gray-900);color:var(--w-text-inverse);border:0;border-radius:0;cursor:pointer;transition:background var(--w-duration-base) var(--w-ease),color var(--w-duration-base) var(--w-ease);}
 .c5-way[aria-selected="false"]{background:var(--w-gray-100);color:var(--w-text-primary);}
 .c5-way[aria-selected="false"]:hover{background:var(--w-gray-200);}
-.c5-way__ico{flex:none;display:grid;place-items:center;width:36px;height:36px;border:1px solid currentColor;border-radius:var(--w-radius-circle);}
 .c5-way .wf-icon{width:20px;height:20px;}
 
 .c5-variant{padding-top:clamp(2rem,4vw,3rem);}
@@ -66,3 +65,11 @@
 @media (max-width:899px){
   .c5-ways--3{grid-template-columns:minmax(0,1fr);}
 }
+
+/* --- wariant: --compact (pasek z sześcioma pozycjami, Próchnica+) ----------
+   EL-18 / rozjazd 5: the base tile-tab is the ECO one (56 px, 1 rem, ⌀36).
+   A bar that carries six years does not fit it, so it gets `c5-way--compact`:
+   44 px, 0.9375 rem, ⌀32 – the size Próchnica+ had as a page-local override.
+   The `.c5-way__ico` half of the icon selector goes away once the markup is
+   renamed to `c5-icoframe` (wave 2a, agents B). */
+/* `c5-way--compact` lives in 00-base.css (EL section): Próchnica+ carries these tabs on c5.css and does not link this file */

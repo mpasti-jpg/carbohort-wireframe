@@ -27,23 +27,15 @@
    podpisy idą więc na --w-text-secondary. */
 .wf-caption{color:var(--w-text-secondary);}
 
-/* Cel dotykowy 44 px – kit trzyma kontrolki na 40 px (--w-control-h-md). */
-#main .wf-input,#main .wf-select{min-height:44px;}
-
-/* Znacznik braku danych po stronie klienta – widoczny, nieudawany. */
-.pp-todo{border:1px dashed var(--w-border-strong);padding:1px 7px;font-size:0.8125rem;color:var(--w-text-secondary);white-space:nowrap;}
-
 /* --- Klocki używane przez kilka sekcji naraz -------------------------------
    Nazwa kafla (koordynatorzy, rzetelność, karty uczestników, wyniki) oraz
    pigułka stanu kamienia (harmonogram, wyniki, etapy prac). Stan NIGDY nie
    jest niesiony samym tonem – zawsze ikona + etykieta + kształt obrysu. */
 .pp-tile__name{font-size:1.0625rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;margin:0;}
-.pp-ms__state{display:inline-flex;align-items:center;gap:var(--w-space-2);width:max-content;
-  border:1px solid var(--w-border-default);padding:5px 11px;margin-top:var(--w-space-1);
-  font-size:0.75rem;letter-spacing:.04em;text-transform:uppercase;color:var(--w-text-secondary);}
-.pp-ms__state--doing{border-color:var(--w-gray-900);color:var(--w-text-primary);font-weight:var(--w-weight-semibold);}
-.pp-ms__state--todo{border-style:dashed;}
-.pp-ms__state--na{border-style:dotted;}
+/* Pigułka stanu to element c5-chip (EL-16, ce/00-base.css); stan niesie styl
+   obrysu: --solid „w toku”, --dashed „zaplanowane”, --dotted „nie dotyczy”.
+   Tu zostaje tylko miejsce pigułki w kamieniu, wierszu osi i pustym slocie. */
+.pp-ms .c5-chip,.pp-os__slide .c5-chip,.pp-empty .c5-chip{width:max-content;margin-top:var(--w-space-1);}
 .pp-ms__warn{font-size:0.8125rem;color:var(--w-text-secondary);}
 
 /* page-specific: CE-08 – nadpisanie siatki hero (c5.css + ce/CE-08): bez
@@ -111,9 +103,9 @@
 .pp-mcard__pack img{display:block;height:140px;width:auto;max-width:100%;object-fit:contain;}
 /* Przyciski przy dolnej krawędzi karty, jeden pod drugim na całą szerokość –
    w czterech kolumnach etykiety i tak zawijają, a równa szerokość trzyma je
-   w porządku. Cel dotykowy 44 px (c5-btn--sm ma 43 px wysokości). */
+   w porządku. */
 .pp-mcard--prod .c5-btnrow{margin-top:auto;gap:var(--w-space-2);flex-direction:column;align-items:stretch;}
-.pp-mcard--prod .c5-btn{min-height:44px;padding-inline:16px;}
+.pp-mcard--prod .c5-btn{--c5-btn-px:16px;}
 
 /* Stopniowanie wejścia kart (80 ms) – transition-delay wygrywa z .pp-reveal. */
 .pp-manifest > li:nth-child(2){transition-delay:.08s;}
@@ -170,9 +162,6 @@
    schemat kwatery (cztery pasy po 3 rzędy + referencja poza kwaterą).
    Wariant NIGDY nie jest niesiony samym wypełnieniem – każdy pas ma etykietę. */
 .pp-chips{display:flex;flex-wrap:wrap;gap:8px;}
-.pp-chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--w-border-strong);
-  padding:7px 13px;font-size:0.75rem;letter-spacing:.04em;text-transform:uppercase;}
-.pp-chip--alt{border-style:dashed;border-color:var(--w-gray-900);}
 .pp-dots{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1rem,4vw,2rem);
   justify-items:center;border:1px solid var(--w-border-default);padding:clamp(1rem,3vw,1.75rem);}
 .pp-dots i{width:13px;height:13px;background:var(--w-gray-900);display:block;}
@@ -206,16 +195,12 @@
   width:100%;max-width:480px;padding:clamp(1.25rem,2.4vw,2rem);
   background:rgb(20 20 20 / .86);color:#fff;overflow:hidden;}
 .pp-sviz .c5-viz__tag{color:rgb(255 255 255 / .6);}
-.pp-sviz .c5-viz__cap{color:rgb(255 255 255 / .6);}
 .pp-sviz .c5-viz__body{flex:1;min-height:0;}
 .pp-sviz .c5-viz__body svg:not(.wf-icon){color:inherit;}
 .pp-sviz .c5-viz__list .wf-icon{color:rgb(255 255 255 / .75);}
 /* placeholder zdjęcia w ciemnym boksie */
 .pp-sviz .wf-ph{background:rgb(255 255 255 / .06);border-color:rgb(255 255 255 / .3);
   --w-placeholder-stroke:rgb(255 255 255 / .3);}
-/* pigułki upraw */
-.pp-sviz .pp-chip{border-color:rgb(255 255 255 / .45);}
-.pp-sviz .pp-chip--alt{border-color:#fff;}
 /* schemat kwatery: pasy jako jasne pola na ciemnym tle */
 .pp-sviz .pp-layout__field{border-color:rgb(255 255 255 / .45);background:rgb(255 255 255 / .45);}
 .pp-sviz .pp-lband{background:transparent;}
@@ -387,8 +372,6 @@
 .pp-farm__lead{margin:var(--w-space-2) 0 0;padding-top:var(--w-space-3);
   border-top:1px solid var(--w-border-subtle);font-size:0.9375rem;color:var(--w-text-secondary);}
 .pp-farm__btns{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:var(--w-space-4);}
-/* c5-btn--sm ma 43 px wysokości – cel dotykowy musi mieć 44 px */
-.pp-farm__btns .c5-btn{min-height:44px;}
 
 @media (prefers-reduced-motion: reduce){
   .pp-farm{transition:none;}
@@ -414,11 +397,9 @@
 .pp-facts dd{margin:0;font-size:0.9375rem;}
 .pp-about{display:flex;flex-direction:column;gap:var(--w-space-3);}
 .pp-about p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
-.pp-note{display:flex;gap:var(--w-space-3);align-items:flex-start;
-  border:1px solid var(--w-border-default);padding:var(--w-space-4) var(--w-space-5);
-  margin-top:clamp(1.5rem,3vw,2.25rem);font-size:0.875rem;color:var(--w-text-secondary);max-width:900px;}
-.pp-note p{margin:0;}
-.pp-note .wf-icon{flex:none;margin-top:2px;}
+/* Nota o rozbieżnościach: element c5-note --soft --sm (EL-17); klasa strony
+   niesie już tylko odstęp i miarę wiersza. */
+.pp-note{margin-top:clamp(1.5rem,3vw,2.25rem);max-width:900px;}
 
 /* --- pop-up --------------------------------------------------------------- */
 .pp-profile{position:fixed;inset:0;margin:auto;
@@ -478,9 +459,9 @@ html.pp-lock{overflow:hidden;}
 .pp-person:hover{border-color:var(--w-gray-900);}
 .pp-person > .wf-ph{width:100%;aspect-ratio:4/3;border-radius:0;}
 .pp-person p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
-.pp-person__indep{display:flex;gap:var(--w-space-3);align-items:flex-start;border:1px solid var(--w-gray-900);
-  padding:var(--w-space-3) var(--w-space-4);font-size:0.875rem;color:var(--w-text-primary);}
-.pp-person__indep .wf-icon{flex:none;margin-top:2px;}
+/* Nota „ekspert niezależny”: element c5-note --strong (EL-17) w ciaśniejszym
+   padding'u 12/16 – EL-17 nie ma wariantu ciasnego. */
+.pp-person__indep{padding:var(--w-space-3) var(--w-space-4);}
 .pp-more{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;min-height:44px;
   font:inherit;font-size:0.875rem;font-weight:var(--w-weight-medium);color:var(--w-text-primary);
   border-bottom:1px solid var(--w-gray-900);padding:2px 0;}
@@ -550,18 +531,13 @@ html.pp-lock{overflow:hidden;}
 
 /* ===== 65 · HARMONOGRAM PROGRAMU: oś czasu (styl S1 „Edytorial") ===========
    Przeniesione z warstwy 99 bez zmian mechaniki i wymiarów (spec §4, §16).
-   Razem z blokiem jedzie przycisk sterujący `.pp-ctrl__btn` (dawniej w bloku
-   karuzeli) – tutaj używają go strzałki osi. Pigułka stanu kamienia
-   (`.pp-ms__state`, `.pp-ms__warn`) stoi we fragmencie 00 jako klocek wspólny.
+   Strzałki osi to element `c5-iconbtn` (EL-02), pigułka stanu kamienia to
+   element `c5-chip` (EL-16) – oba w `ce/00-base.css`; `.pp-ms__warn` stoi
+   we fragmencie 00 jako klocek wspólny.
    ===================================================================== */
 
-/* --- przycisk sterujący osi (44 px, kształt kitu) ------------------------- */
-.pp-ctrl__btn{min-width:44px;min-height:44px;width:44px;height:44px;padding:0;
-  display:inline-grid;place-items:center;border-radius:0;
-  border:1px solid var(--w-border-default);background:var(--w-surface-page);color:var(--w-text-primary);
-  transition:border-color var(--w-duration-base) var(--w-ease);}
-.pp-ctrl__btn:hover:not(:disabled){border-color:var(--w-gray-900);}
-.pp-ctrl__btn:disabled{color:var(--w-text-disabled);border-color:var(--w-border-subtle);cursor:not-allowed;}
+/* Strzałki osi i lat to element c5-iconbtn (EL-02, ce/00-base.css) – 44 px,
+   obrys kitu, stan disabled i wyłączone przejście przy reduced motion. */
 
 /* --- 8a. HARMONOGRAM PROGRAMU: oś czasu (styl S1 „Edytorial” z laboratorium)
    Wdrożenie 12.09.2026 wyboru Mateusza z `lab/harmonogram.html`: układ S1
@@ -572,8 +548,8 @@ html.pp-lock{overflow:hidden;}
    ani przechwytywania kółka.
 
    Słownik pp-os-* jest własny; z sąsiedztwa pożyczamy tylko gotowe elementy
-   kitu (.pp-ctrl__btn, .wf-ph, .wf-caption) i pigułkę stanu kamienia
-   (.pp-ms__state, .pp-ms__warn) wspólną z osiami w „Etapach prac”. Stan nigdy
+   (.c5-iconbtn, .wf-ph, .wf-caption) i pigułkę stanu kamienia
+   (.c5-chip, .pp-ms__warn) wspólną z osiami w „Etapach prac”. Stan nigdy
    samym tonem: ikona + etykieta + kształt obrysu. Ruch: tylko opacity
    i transform, wszystko gaśnie przy reduced motion (§16). */
 
@@ -622,9 +598,9 @@ html.pp-lock{overflow:hidden;}
 .pp-os__desc{margin:0;font-size:1.0625rem;line-height:1.55;max-width:32em;
   color:var(--w-text-secondary);}
 /* Odstępy w etapie trzyma `gap`, pigułka nie dokłada własnego marginesu. */
-.pp-os__slide .pp-ms__state{margin-top:0;}
+.pp-os__slide .c5-chip{margin-top:0;}
 /* „następny krok” niesie grubszy obrys pigułki, nie sam ton. */
-.pp-os__slide[data-next="true"] .pp-ms__state{border-style:solid;border-width:2px;
+.pp-os__slide[data-next="true"] .c5-chip{border-style:solid;border-width:2px;
   border-color:var(--w-gray-900);color:var(--w-text-primary);
   font-weight:var(--w-weight-semibold);padding:4px 10px;}
 
@@ -712,7 +688,6 @@ html.pp-lock{overflow:hidden;}
 }
 
 @media (prefers-reduced-motion: reduce){
-  .pp-ctrl__btn{transition:none;}
   /* Harmonogram: podmiana etapu natychmiastowa, oś bez przejścia. */
   .pp-os__slide,.pp-os__fill,.pp-os__year b,.pp-os__tick{transition:none;}
   .pp-os__year b{opacity:1;transform:none;}
@@ -758,10 +733,9 @@ html.pp-lock{overflow:hidden;}
   color:var(--w-text-secondary);padding-block:var(--w-space-2);cursor:pointer;min-height:44px;}
 .pp-check .wf-checkbox{flex:none;margin-top:2px;}
 .pp-form .c5-btn{align-self:flex-start;}
-.pp-msg{margin:0;font-size:0.875rem;color:var(--w-text-primary);
-  border:1px solid var(--w-gray-900);padding:var(--w-space-3) var(--w-space-4);
-  display:flex;gap:var(--w-space-3);align-items:flex-start;}
-.pp-msg .wf-icon{flex:none;margin-top:2px;}
+/* Komunikat formularza: element c5-note --strong --sm (EL-17), ciasny padding
+   i kolor podstawowy zostają przy stronie. */
+.pp-msg{margin:0;padding:var(--w-space-3) var(--w-space-4);color:var(--w-text-primary);}
 .pp-askviz{display:flex;flex-direction:column;gap:var(--w-space-3);margin:0;}
 .pp-askviz .wf-ph{width:100%;aspect-ratio:4/3;border-radius:0;}
 
@@ -962,8 +936,8 @@ html.pp-lock{overflow:hidden;}
 .pp-ms__term{font-size:0.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--w-text-secondary);}
 .pp-ms__name{font-size:1.0625rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
 .pp-ms p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
-/* .pp-ms__state (+ --doing/--todo/--na) i .pp-ms__warn -> moved to
-   00-base.css (pigułka stanu jest wspólna: harmonogram, wyniki, etapy). */
+/* Pigułka stanu kamienia to element c5-chip (EL-16, ce/00-base.css); .pp-ms__warn
+   stoi we fragmencie 00 jako klocek wspólny: harmonogram, wyniki, etapy. */
 .pp-tl__now{display:flex;align-items:center;gap:var(--w-space-3);
   border-top:2px solid var(--w-gray-900);border-bottom:2px solid var(--w-gray-900);
   padding-block:var(--w-space-3);font-size:0.875rem;font-weight:var(--w-weight-semibold);
@@ -1053,8 +1027,6 @@ html.pp-lock{overflow:hidden;}
 .pp-reports > li:last-child .pp-report{border-bottom:1px solid var(--w-border-default);}
 .pp-report__name{font-size:1rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;margin:0;}
 .pp-report__meta{margin:0;font-size:0.875rem;color:var(--w-text-secondary);}
-/* Cel dotykowy 44 px – c5-btn--sm ma 43 px wysokości. */
-.pp-report .c5-btn{min-height:44px;}
 @media (max-width:899px){
   .pp-report{grid-template-columns:minmax(0,1fr);align-items:start;gap:var(--w-space-2);}
 }

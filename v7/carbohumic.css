@@ -4,7 +4,7 @@
    treściowe klocków wspólnych. ===== */
 /* Carbohumic: both hero labels are longer than on CARBOMAT ECO ("który wariant dla mnie",
    "sprawdź dostępność i cenę") – narrower padding keeps them on one row in the 538 px column at 1280 px */
-.c5-hero__copyin .c5-btn{padding-inline:32px;}
+.c5-hero__copyin .c5-btn{--c5-btn-px:32px;}
 
 /* Panel: 30 px od góry, dołu i prawej krawędzi ekranu; §14.2 – bez zdjęcia
    w tle i bez pasa gradientu, jednolita jasna szarość pod packshotami */
@@ -37,13 +37,13 @@
   .c5-hero__stage{order:2;margin-block:0;min-height:0;aspect-ratio:4/5;max-height:70vh;}
 }
 
-/* dots are round on purpose: they are markers, not layout boxes (like .c5-way__ico) */
+/* dots are round on purpose: they are markers, not layout boxes (like .c5-icoframe--circle) */
 
 .c5hu-todo{color:var(--w-text-tertiary);}
-.c5hu-warn{display:flex;gap:var(--w-space-3);align-items:flex-start;border:1px solid var(--w-gray-900);background:var(--w-surface-page);padding:var(--w-space-4) var(--w-space-5);margin-top:var(--w-space-5);font-size:0.9375rem;}
-.c5hu-warn p{margin:0;}
-.c5hu-warn .wf-icon{flex:none;margin-top:2px;}
-.c5hu-warn--soft{border-color:var(--w-border-default);color:var(--w-text-secondary);}
+/* EL-17 (wave 2a): the note anatomy (frame, icon, paddings, `--strong` /
+   `--soft`) now lives in ce/00-base.css as `c5-note`. Only the gap above a
+   note, which the old page class carried, stays with the page. */
+.c5-note{margin-top:var(--w-space-5);}
 .c5hu-dose--wide .c5hu-dose__row{grid-template-columns:minmax(0,13rem) minmax(0,1fr);}
 .c5hu-dose{display:flex;flex-direction:column;margin:auto 0 0;padding-top:var(--w-space-3);}
 .c5hu-dose__row{display:grid;grid-template-columns:minmax(0,6.5rem) minmax(0,1fr);gap:var(--w-space-3);padding-block:7px;border-top:1px solid var(--w-border-subtle);font-size:0.875rem;}
@@ -120,8 +120,8 @@
 .c5-price__name{font-size:1rem;}
 
 /* --- Ostrzeżenie aplikacyjne z przyciskiem po prawej -----------------------
-   Bazowe reguły `c5hu-warn` leżą w 00-base.css (dzielone z sekcją „Jak
-   stosować"); tutaj tylko wariant z akcją: treść po lewej, przycisk po prawej. */
+   Anatomię noty niesie `c5-note c5-note--strong` z ce/00-base.css; tutaj tylko
+   wariant układu z akcją: treść po lewej, przycisk po prawej. */
 .c5hu-warn--action{align-items:center;gap:var(--w-space-4);}
 .c5hu-warn--action p{flex:1 1 auto;}
 .c5hu-warn--action .c5-btn{flex:none;}
@@ -454,7 +454,7 @@ ul.c5hu-sq{list-style:none;padding-left:0;}
 /* Dwa przyciski zamiast jednego (wzorzec ma jeden), więc w węższej kolumnie
    dostają ciaśniejsze wypełnienie; poniżej ~1200 px i tak zawijają się na dwa
    wiersze, co jest w porządku. */
-.c5-dose__bottom .c5-btn{padding-inline:clamp(18px,2.4vw,45px);}
+.c5-dose__bottom .c5-btn{--c5-btn-px:clamp(18px,2.4vw,45px);}
 
 /* Placeholder zamiast zdjęcia: pole bez ramki i bez zaokrągleń (V5), etykieta
    mówi, co tu trafi. Kit chowa `.wf-ph__label`, więc etykieta ma własną klasę. */
@@ -602,7 +602,6 @@ ul.c5hu-sq{list-style:none;padding-left:0;}
    Wejście kafli: `data-reveal` + moduł js/72-reveal.js. */
 .c5hu-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:var(--w-space-5);margin-top:clamp(1.5rem,3vw,2.5rem);}
 .c5hu-tile{display:flex;flex-direction:column;gap:var(--w-space-3);background:var(--w-surface-page);border:1px solid var(--w-border-default);padding:clamp(1.25rem,2.2vw,1.75rem);}
-.c5hu-tile__ico{flex:none;display:grid;place-items:center;width:44px;height:44px;border:1px solid var(--w-border-strong);}
 .c5hu-tile h3{font-size:1.125rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
 .c5hu-tile p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
 
@@ -676,7 +675,7 @@ ul.c5hu-sq{list-style:none;padding-left:0;}
    między nagłówkiem a akordeonem, więc odstęp wzorca (ok. 164 px nagłówek →
    pierwsze pytanie) jest rozdzielony na dwie części: 64 px nagłówek → nota
    i ok. 100 px nota → pierwsze pytanie. Suma powietrza taka jak we wzorcu. */
-.c5hu-faqnote{display:flex;gap:var(--w-space-3);align-items:flex-start;border:1px solid var(--w-border-default);padding:var(--w-space-4) var(--w-space-5);margin-top:clamp(2.5rem,5vw,4rem);font-size:0.875rem;color:var(--w-text-secondary);}
-.c5hu-faqnote p{margin:0;}
-.c5hu-faqnote .wf-icon{flex:none;margin-top:2px;}
+/* EL-17: `c5-note c5-note--soft c5-note--sm` – the page keeps only the gap,
+   larger here than the 20 px every other note on this page gets. */
+#faq .c5-note{margin-top:clamp(2.5rem,5vw,4rem);}
 .c5-faq{display:flex;flex-direction:column;margin-top:clamp(4rem,7vw,6.25rem);}

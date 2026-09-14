@@ -202,8 +202,9 @@
 .c5pr-tab thead th{position:sticky;top:0;z-index:2;padding-block:20px 14px;background:var(--w-surface-page);font-size:0.9375rem;font-weight:var(--w-weight-semibold);line-height:1.3;letter-spacing:-0.005em;vertical-align:bottom;border-bottom:1px solid var(--w-gray-900);}
 .c5pr-tab thead th:first-child{font-size:0.75rem;font-weight:var(--w-weight-medium);letter-spacing:.04em;text-transform:uppercase;color:var(--w-text-tertiary);}
 .c5pr-tab tbody th{font-weight:var(--w-weight-medium);color:var(--w-text-secondary);}
-.c5pr-tab__note{display:block;margin-top:4px;font-size:0.8125rem;line-height:1.45;color:var(--w-text-tertiary);}
-.c5pr-tab .c5pr-gap{display:inline-block;padding:2px 8px;font-size:0.8125rem;line-height:1.45;color:var(--w-text-tertiary);border:1px dashed var(--w-border-default);}
+/* EL-14: the footnote under a value – anatomy in ce/00-base.css (.c5-src), only its
+   place in the cell stays here. EL-16: „brak danych” is a dashed chip (.c5-chip--dashed). */
+.c5pr-tab .c5-src{display:block;margin-top:4px;}
 /* reading across a row on a pointer device */
 @media (hover:hover){
   .c5pr-tab tbody tr:hover > *{background:color-mix(in srgb,var(--w-gray-900) 3%,transparent);}
@@ -213,7 +214,7 @@
 .c5pr-tab tfoot th,.c5pr-tab tfoot td{border-bottom:0;padding-top:18px;}
 .c5pr-tab tfoot th{font-weight:var(--w-weight-medium);color:var(--w-text-secondary);padding-top:30px;}
 .c5pr-tab__acts{display:flex;flex-direction:column;align-items:flex-start;gap:0;}
-.c5pr-tab__acts .c5pr-gap{margin-top:12px;}
+.c5pr-tab__acts .c5-chip{margin-top:12px;}
 .c5pr-doc{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-size:0.875rem;font-weight:var(--w-weight-medium);line-height:1.3;color:var(--w-text-primary);text-decoration:underline;text-decoration-color:var(--w-border-default);text-underline-offset:4px;}
 .c5pr-doc:hover{text-decoration-color:currentColor;}
 .c5pr-doc:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:2px;}
@@ -223,7 +224,8 @@
 .c5pr-tab col.is-pick,.c5pr-tab thead th.is-pick{background:var(--w-surface-sunken);}
 .c5pr-tab thead th.is-pick{box-shadow:inset 0 3px 0 var(--w-gray-900);}
 
-.c5pr-techsheet__src{max-width:88ch;margin-top:var(--w-space-5);font-size:0.75rem;line-height:1.55;color:var(--w-text-tertiary);}
+/* type from EL-14 (.c5-src); measure and spacing stay with the page */
+.c5pr-techsheet__src{max-width:88ch;margin-top:var(--w-space-5);}
 
 /* Jak czytać tabelę: zasada ogólna szeroko + trzy uwagi kolumnowe. Each note hangs under a black
    rule (the language of the table header, not a card); the buttons line up at the bottom. */
@@ -232,14 +234,18 @@
 .c5pr-read__h{font-size:clamp(1.25rem,2vw,1.5rem);font-weight:var(--w-weight-medium);line-height:1.3;letter-spacing:-0.01em;text-wrap:balance;}
 .c5pr-read__lead p{margin:0;max-width:68ch;font-size:1rem;line-height:1.6;color:var(--w-text-secondary);}
 .c5pr-read__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(1.5rem,3vw,2.5rem);margin-top:clamp(2rem,4vw,3rem);}
-.c5pr-note{display:flex;flex-direction:column;gap:var(--w-space-3);padding-top:var(--w-space-5);border-top:1px solid var(--w-gray-900);}
+/* EL-17 note, variant --rule (rule on top + 20 px above): anatomy in ce/00-base.css.
+   This one stacks (heading, paragraph, button) instead of standing beside an icon,
+   and its children keep the full column width. */
+.c5pr-note{flex-direction:column;align-items:stretch;gap:var(--w-space-3);}
 .c5pr-note__h{font-size:1rem;font-weight:var(--w-weight-semibold);line-height:1.35;text-wrap:balance;}
 .c5pr-note p{margin:0;font-size:0.875rem;line-height:1.6;color:var(--w-text-secondary);}
-.c5pr-note .c5-btn{align-self:flex-start;min-height:44px;margin-top:auto;}
+.c5pr-note .c5-btn{align-self:flex-start;margin-top:auto;}
+/* the note has no leading icon – the 2 px of .c5-note .wf-icon must not reach the button */
+.c5pr-note .c5-btn .wf-icon{margin-top:0;}
 .c5pr-note .c5-btn[aria-pressed="true"]{background:var(--w-gray-900);color:var(--w-text-inverse);border-color:var(--w-gray-900);}
 .c5pr-note .c5-btn[aria-pressed="true"] .wf-icon{opacity:.8;}
 .c5pr-techsheet__actions{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:clamp(2.5rem,5vw,4rem);}
-.c5pr-techsheet__actions .c5-btn{min-height:44px;}
 
 /* wide screens: no scroll container, so the header row can stick to the viewport */
 @media (min-width:900px){
@@ -310,8 +316,6 @@
 .c5pr-path__warn .wf-icon{flex:none;margin-top:2px;}
 .c5pr-path__warn p{font-size:0.875rem;color:var(--w-text-primary);}
 .c5pr-path .c5-btnrow{margin-top:auto;padding-top:var(--w-space-2);}
-/* small buttons still give a 44 px touch target */
-.c5pr-path .c5-btn{min-height:44px;}
 .c5pr-paths__no{font-size:0.75rem;letter-spacing:.06em;}
 .c5pr-paths__t{font-size:1.125rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;line-height:1.3;}
 .c5pr-paths__tab:focus-visible{outline:2px solid var(--w-gray-900);outline-offset:-2px;border-radius:0;}
@@ -517,7 +521,6 @@
 /* block – shared by #co-daja and #dowod */
 .c5pr-block{display:flex;flex-direction:column;gap:var(--w-space-4);border:1px solid var(--w-border-default);background:var(--w-surface-page);padding:clamp(1.25rem,2.2vw,1.75rem);}
 .c5pr-block__h{font-size:1.0625rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
-.c5pr-block__src{font-size:0.75rem;line-height:1.45;color:var(--w-text-tertiary);}
 .c5pr-block .wf-table{font-size:var(--w-font-sm-size);}
 .c5pr-more{margin-top:clamp(2rem,4vw,3rem);display:flex;flex-direction:column;gap:var(--w-space-3);}
 
@@ -588,4 +591,7 @@
 /* --- FAQ: pytanie z lewej, odpowiedź z prawej ------------------------------- */
 /* Odstęp nagłówek → pierwszy akordeon: §14.5 dokłada ~100 px do dotychczasowych
    64 px, czyli ok. 164 px na desktopie. */
-.c5-faq{display:flex;flex-direction:column;margin-top:clamp(8rem,12vw,10.25rem);}
+.c5-faq{display:flex;flex-direction:column;}
+/* the gap above the accordion belongs to the FAQ section; the „Dla dociekliwych” block
+   (same element, variant --plain) sits inside a block and keeps its own rhythm */
+#faq .c5-faq{margin-top:clamp(8rem,12vw,10.25rem);}

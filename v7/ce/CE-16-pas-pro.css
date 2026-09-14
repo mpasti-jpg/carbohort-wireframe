@@ -26,7 +26,9 @@
 .c5-pro__side{display:flex;flex-direction:column;gap:clamp(1.5rem,3vw,2rem);max-width:486px;}
 .c5-pro__side p{color:var(--w-text-inverse);opacity:.75;}
 .c5-pro__grid .c5-btnrow{gap:var(--w-space-2);}
-.c5-pro__grid .c5-btn{padding-inline:clamp(18px,2.2vw,32px);}
+/* EL-01: the narrow button of the PRO band – set the token, do not override
+   `padding-inline` (same value as `c5-btn--tight`). */
+.c5-pro__grid .c5-btn{--c5-btn-px:clamp(18px,2.2vw,32px);}
 .c5-pro__login{background:transparent;color:var(--w-text-inverse);border-color:rgb(255 255 255 / .6);}
 .c5-pro__login:hover{background:rgb(255 255 255 / .12);border-color:var(--w-text-inverse);}
 /* na ciemnym pasie pierścień fokusu musi być jasny (i ostry jak reszta V5) */

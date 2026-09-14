@@ -12,7 +12,7 @@
    =========================================================================== */
 window.CW_CE = {
   "meta": {
-    "zaktualizowano": "2026-09-14",
+    "zaktualizowano": "2026-09-15",
     "katalogWersji": "v7/",
     "indeks": "ce-indeks.html",
     "opis": "Rejestr content elementów (CE) makiet CarboHort V5: metadane klocków. Wystąpienia wynikają ze znaczników data-ce w HTML stron – skanuje je _narzedzia/ce-indeks.py. Spec: 40-strona-www/koncepcja/content-elementy-spec.md."
@@ -473,9 +473,10 @@ window.CW_CE = {
         "pozycje: pytanie + odpowiedź"
       ],
       "warianty": {
-        "z-nota": "nota o statusie odpowiedzi między nagłówkiem a akordeonem (CARBOHUMIC)"
+        "z-nota": "nota o statusie odpowiedzi między nagłówkiem a akordeonem (CARBOHUMIC)",
+        "dla-dociekliwych": "wariant c5-faq--plain: pytanie nad odpowiedzią, pełna szerokość, h4 i przycisk do Centrum wiedzy (Produkty, dawny CE-42)"
       },
-      "uwagi": "Moduł „zadaj pytanie” zdjęty 13.09.",
+      "uwagi": "Moduł „zadaj pytanie” zdjęty 13.09. Jeden moduł ce/CE-17-faq.js obsługuje kilka akordeonów na stronie (zakres per blok).",
       "zrzut": {
         "maxh": 900
       }
@@ -1143,10 +1144,11 @@ window.CW_CE = {
         "przycisk"
       ],
       "warianty": {},
-      "uwagi": "Inny klocek niż FAQ (CE-17): pytanie nad odpowiedzią, panele niezależne.",
+      "uwagi": "WYCOFANY 15.09.2026 – scalony z CE-17 (FAQ) jako wariant dla-dociekliwych po decyzji Mateusza o jednym stylu (dwa akordeony obok siebie na Produktach). Kod zostaje w rejestrze na stałe, nie jest używany ponownie.",
       "zrzut": {
         "maxh": 500
-      }
+      },
+      "status": "wycofany"
     },
     "CE-43": {
       "nazwa": "Przełącznik z paskiem proporcji",
@@ -1410,6 +1412,1110 @@ window.CW_CE = {
       "zrzut": {
         "maxh": 700
       }
+    }
+  },
+  "grupyEl": {
+    "akcje": "Przyciski i linki",
+    "typografia": "Kicker, nagłówki, lead",
+    "pojemniki": "Karty, boksy, pasy",
+    "sterowanie": "Taby, chipy, akordeony, pola",
+    "dane": "Tabele, listy dl, kafle liczb, paski",
+    "ikony": "Ikony i wizuale",
+    "tokeny": "Kolory, typografia, odstępy"
+  },
+  "elementy": {
+    "EL-01": {
+      "nazwa": "Przycisk",
+      "grupa": "akcje",
+      "klasa": "c5-btn",
+      "warianty": {
+        "c5-btn--dark": "ciemny, akcja główna",
+        "c5-btn--light": "jasny z obrysem, akcja drugorzędna",
+        "c5-btn--inv": "odwrócony – biały na ciemnym tle",
+        "c5-btn--ondark": "ciemny przycisk na ciemnym pasie – działa tylko w kontekście .c5-params (CE-10)",
+        "c5-btn--sm": "mały, 0.8125 rem, nadal 44 px wysokości",
+        "c5-btn--tight": "wąski boczny padding, gdy przyciski stoją ciasno"
+      },
+      "opis": "Podstawowa akcja: ostre narożniki, obrys 1 px, etykieta małymi literami, ikona po lewej. Cel dotykowy 44 px siedzi w bazie – nie łata się go już punktowo, a boczny padding ustawia token --c5-btn-px zamiast ośmiu kontekstowych nadpisań.",
+      "przyklad": "<div class=\"c5-btnrow\"><a class=\"c5-btn c5-btn--dark\" href=\"#\">kup teraz</a><a class=\"c5-btn c5-btn--light\" href=\"#\">dobierz dawki</a><a class=\"c5-btn c5-btn--light c5-btn--sm\" href=\"#\"><svg class=\"wf-icon\" aria-hidden=\"true\"><use href=\"#ti-file-text\"></use></svg> karta produktu</a><a class=\"c5-btn c5-btn--light c5-btn--sm c5-btn--tight\" href=\"#\">zaloguj się</a></div><div class=\"sg-ondark\"><a class=\"c5-btn c5-btn--inv\" href=\"#\">zamów próbkę</a></div>",
+      "przyklad_tlo": "jasne",
+      "kod": "ce/00-base.css – Przyciski nowego języka",
+      "uzywany_w": [
+        "CE-08",
+        "CE-10",
+        "CE-11",
+        "CE-13",
+        "CE-14",
+        "CE-15",
+        "CE-16",
+        "CE-17",
+        "CE-18",
+        "CE-20",
+        "CE-23",
+        "CE-25",
+        "CE-27",
+        "CE-28",
+        "CE-29",
+        "CE-30",
+        "CE-31",
+        "CE-35",
+        "CE-36",
+        "CE-37",
+        "CE-38",
+        "CE-39",
+        "CE-40",
+        "CE-46",
+        "CE-47",
+        "CE-50",
+        "CE-53"
+      ],
+      "zastepuje": [
+        "sześć łat min-height:44px (produkty.css, prochnica-plus.css)",
+        "osiem kontekstowych nadpisań padding-inline – dziś token --c5-btn-px",
+        "wf-btn z kitu i osiem jego modyfikatorów – w V7 nieużywane"
+      ],
+      "uwagi": "Przycisków kitu (wf-btn) w V7 nie używamy – zero wystąpień na siedmiu stronach. Nowy przycisk to zawsze c5-btn. Wariant --ondark nie ma własnej definicji w warstwie wspólnej: żyje w regule .c5-params .c5-btn--ondark, więc poza pasem parametrów nic nie robi – dlatego nie ma go w przykładzie obok."
+    },
+    "EL-02": {
+      "nazwa": "Przycisk ikonowy",
+      "grupa": "akcje",
+      "klasa": "c5-iconbtn",
+      "warianty": {
+        "c5-iconbtn--sm": "40 px – róg lightboxa"
+      },
+      "opis": "Kwadrat 44 × 44 px z obrysem kitu i samą ikoną w środku: zamknięcie nakładki, strzałki karuzeli, sterowanie harmonogramem. Jedna definicja zamiast czterech klas, które różniły się wyłącznie rozmiarem.",
+      "przyklad": "<div class=\"c5-btnrow\"><button type=\"button\" class=\"c5-iconbtn\" aria-label=\"Zamknij\"><svg class=\"wf-icon\" aria-hidden=\"true\"><use href=\"#ti-x\"></use></svg></button><button type=\"button\" class=\"c5-iconbtn\" aria-label=\"Poprzedni\"><svg class=\"wf-icon\" aria-hidden=\"true\"><use href=\"#ti-chevron-left\"></use></svg></button><button type=\"button\" class=\"c5-iconbtn\" aria-label=\"Następny\" disabled><svg class=\"wf-icon\" aria-hidden=\"true\"><use href=\"#ti-chevron-right\"></use></svg></button><button type=\"button\" class=\"c5-iconbtn c5-iconbtn--sm\" aria-label=\"Zamknij podgląd\"><svg class=\"wf-icon wf-icon--sm\" aria-hidden=\"true\"><use href=\"#ti-x\"></use></svg></button></div>",
+      "przyklad_tlo": "jasne",
+      "kod": "ce/00-base.css – EL · Interface elements → EL-02",
+      "uzywany_w": [
+        "CE-25",
+        "CE-37",
+        "CE-49"
+      ],
+      "zastepuje": [
+        "pp-ctrl__btn (Próchnica+, 14)",
+        "c5-pop__close (CARBOMAT HUMIC, 2)",
+        "u-lightbox__close (Kukurydza, 2)",
+        "c5-lb__close (CARBOMAT Mata, 1)"
+      ],
+      "uwagi": "Reguły pozycjonujące krzyżyk w rogu i chowające go bez JS zostają w pliku strony – tu mieszka sama anatomia przycisku."
+    },
+    "EL-03": {
+      "nazwa": "Link cichy",
+      "grupa": "akcje",
+      "klasa": "c5-quiet",
+      "warianty": {
+        "c5-quiet--underline": "podkreślenie w kolorze obrysu",
+        "c5-quiet--rule": "kreska pod spodem, chevron obraca się",
+        "c5-quiet--ondark": "na ciemnym pasie, przygaszony"
+      },
+      "opis": "Link z ikoną, który nie udaje przycisku: pobranie karty produktu, rozwinięcie dłuższego tekstu, odnośnik w ciemnym pasie parametrów. Trzy dzisiejsze dekoracje schodzą do trzech wariantów jednej klasy.",
+      "przyklad": "<div class=\"sg-stos\"><a class=\"c5-quiet c5-quiet--underline\" href=\"#\"><svg class=\"wf-icon\" aria-hidden=\"true\"><use href=\"#ti-download\"></use></svg> Pobierz aktualną analizę</a><a class=\"c5-quiet c5-quiet--rule\" href=\"#\">więcej <svg class=\"wf-icon wf-icon--sm\" aria-hidden=\"true\"><use href=\"#ti-chevron-down\"></use></svg></a></div>",
+      "przyklad_tlo": "jasne",
+      "kod": "do dopisania w ce/00-base.css (fala 2b)",
+      "uzywany_w": [
+        "CE-10",
+        "CE-25",
+        "CE-40",
+        "CE-48"
+      ],
+      "zastepuje": [
+        "c5pr-doc (Produkty, 7)",
+        "c5-params__dl (4 strony, 4)",
+        "u-more (Kukurydza, 3)",
+        "pp-more (Próchnica+, 2)"
+      ],
+      "uwagi": "Do rozstrzygnięcia przed scaleniem: która dekoracja jest domyślna – podkreślenie czy kreska pod spodem.",
+      "status": "planowane (fala 2b/2c)",
+      "dzis": [
+        "c5pr-doc",
+        "pp-more",
+        "u-more",
+        "c5-params__dl"
+      ]
+    },
+    "EL-04": {
+      "nazwa": "Rząd przycisków",
+      "grupa": "akcje",
+      "klasa": "c5-btnrow",
+      "warianty": {
+        "c5-btnrow--stack": "kolumna na wąskim ekranie",
+        "c5-btnrow--end": "wyrównanie do prawej"
+      },
+      "opis": "Poziomy rząd akcji z odstępem 6 px, zawijany, gdy zabraknie miejsca. Osiem lokalnych nadpisań odstępu i marginesu czeka na sprowadzenie do dwóch wariantów.",
+      "przyklad": "<div class=\"c5-btnrow\"><a class=\"c5-btn c5-btn--dark\" href=\"#\">kup teraz</a><a class=\"c5-btn c5-btn--light\" href=\"#\">porównaj warianty</a><a class=\"c5-btn c5-btn--light\" href=\"#\">zapytaj doradcę</a></div>",
+      "przyklad_tlo": "jasne",
+      "kod": "ce/00-base.css – Przyciski nowego języka",
+      "uzywany_w": [
+        "CE-08",
+        "CE-11",
+        "CE-14",
+        "CE-16",
+        "CE-18",
+        "CE-20",
+        "CE-23",
+        "CE-28",
+        "CE-30",
+        "CE-35",
+        "CE-37",
+        "CE-39"
+      ],
+      "zastepuje": [
+        "dziewięć identycznych kopii reguły w arkuszach stron",
+        "osiem lokalnych nadpisań gap/margin"
+      ],
+      "uwagi": "Warianty --stack i --end są na razie planem – dziś odstępy poprawia się lokalnie w plikach stron."
+    },
+    "EL-05": {
+      "nazwa": "Link treściowy",
+      "grupa": "akcje",
+      "klasa": "wf-link",
+      "warianty": {
+        "wf-link--muted": "przygaszony, nadal podkreślony",
+        "wf-link--quiet": "podkreślenie dopiero po najechaniu"
+      },
+      "opis": "Zwykły link w zdaniu, prosto z kitu – jedyny element akcji, którego V7 nie przepisuje. Zostaje bez zmian, bo działa i jest używany na pięciu stronach.",
+      "przyklad": "<p class=\"sg-tekst\">Dawki dobierzesz w <a class=\"wf-link\" href=\"#\">konfiguratorze</a>, a metodykę opisuje <a class=\"wf-link wf-link--muted\" href=\"#\">karta produktu</a>. Szczegóły badań zostawiamy w <a class=\"wf-link wf-link--quiet\" href=\"#\">centrum wiedzy</a>.</p>",
+      "przyklad_tlo": "jasne",
+      "kod": "wireframe.css – 3. TYPOGRAPHY / links",
+      "uzywany_w": [
+        "CE-08",
+        "CE-17",
+        "CE-18",
+        "CE-19",
+        "CE-20",
+        "CE-21",
+        "CE-22",
+        "CE-25",
+        "CE-28",
+        "CE-29",
+        "CE-38"
+      ],
+      "zastepuje": [],
+      "uwagi": ""
+    },
+    "EL-06": {
+      "nazwa": "Kicker",
+      "grupa": "typografia",
+      "klasa": "c5-kicker",
+      "warianty": {
+        "c5-kicker--center": "wyśrodkowany",
+        "c5-kicker--flush": "bez odstępu pod spodem"
+      },
+      "opis": "Nadtytuł sekcji: 0.875 rem, wersaliki, tracking .03em i duży odstęp do treści pod spodem. Dwanaście lokalnych nadpisań margin-bottom:0 czeka na wariant --flush.",
+      "przyklad": "<span class=\"c5-kicker\">Czym jest CARBOMAT ECO</span><span class=\"c5-kicker c5-kicker--center\">Dla dociekliwych</span>",
+      "przyklad_tlo": "jasne",
+      "kod": "ce/00-base.css – Wspólne klocki nowego layoutu",
+      "uzywany_w": [
+        "CE-08",
+        "CE-11",
+        "CE-12",
+        "CE-14",
+        "CE-15",
+        "CE-17",
+        "CE-20",
+        "CE-30",
+        "CE-32",
+        "CE-39",
+        "CE-40",
+        "CE-45",
+        "CE-46",
+        "CE-47"
+      ],
+      "zastepuje": [
+        "c5-kicker--center (osobna kopia w ośmiu arkuszach)"
+      ],
+      "uwagi": ""
+    },
+    "EL-07": {
+      "nazwa": "Overline",
+      "grupa": "typografia",
+      "klasa": "c5-overline",
+      "warianty": {
+        "c5-overline--plain": "bez wersalików",
+        "c5-overline--ondark": "na ciemnym tle",
+        "c5-overline--solid": "biała na ciemnym prostokącie"
+      },
+      "opis": "Mała etykieta 0.75 rem z trackingiem .06em nad liczbą, kafelkiem albo wierszem tabeli – rola inna niż kicker, bo nie otwiera sekcji. Trzynaście klas o identycznej treści schodzi do jednej z trzema modyfikatorami.",
+      "przyklad": "<div class=\"sg-stos\"><span class=\"c5-overline\">01 · Pochodzenie</span><span class=\"c5-overline c5-overline--plain\">02</span></div><div class=\"sg-ondark\"><span class=\"c5-overline c5-overline--ondark\">Zasobność</span></div>",
+      "przyklad_tlo": "jasne",
+      "kod": "do dopisania w ce/00-base.css (fala 2b)",
+      "uzywany_w": [
+        "CE-12",
+        "CE-20",
+        "CE-21",
+        "CE-25",
+        "CE-26",
+        "CE-30",
+        "CE-33",
+        "CE-43",
+        "CE-44",
+        "CE-45",
+        "CE-46"
+      ],
+      "zastepuje": [
+        "c5-viz__tag, c5-mt-card__no, c5-mt-proof__tag, c5hu-rule__label",
+        "c5hu-stack__no, c5pr-path__no, c5-cmp2__no, c5-tco__no",
+        "u-lab, u-fz__no, u-cr__no, u-rules__no, u-vtab__no (linia kitu)"
+      ],
+      "uwagi": "Decyzja z inwentarza §2: skala ECO (0.75 rem / .06em), nie skala kitu (--w-font-caption + .08em) – 92 wystąpienia na sześciu stronach wobec 123 skupionych na jednej.",
+      "status": "planowane (fala 2b/2c)",
+      "dzis": [
+        "c5-viz__tag",
+        "c5-mt-card__no",
+        "u-lab",
+        "i dziesięć innych klas"
+      ]
+    },
+    "EL-08": {
+      "nazwa": "Nagłówek strony",
+      "grupa": "typografia",
+      "klasa": "c5-h1",
+      "warianty": {},
+      "opis": "Jedyny h1 na podstronie, w hero: clamp od 2,1 do 3,125 rem, waga 500, tracking −0.01em. Element bez wariantów – siedem stron, siedem wystąpień, jedna definicja.",
+      "przyklad": "<h1 class=\"c5-h1\">CARBOMAT ECO – surowy polski lignit</h1>",
+      "przyklad_tlo": "jasne",
+      "kod": "ce/00-base.css – Wspólne klocki nowego layoutu",
+      "uzywany_w": [
+        "CE-08"
+      ],
+      "zastepuje": [
+        "lokalne zmniejszenie w carbomat-humic.css (do decyzji)"
+      ],
+      "uwagi": ""
+    },
+    "EL-09": {
+      "nazwa": "Nagłówek sekcji",
+      "grupa": "typografia",
+      "klasa": "c5-h2",
+      "warianty": {
+        "c5-h2--center": "wyśrodkowany",
+        "c5-h2--tight": "mniejszy, do pasa parametrów",
+        "c5-h2--sm": "scena sterowana przewijaniem"
+      },
+      "opis": "Nagłówek sekcji: clamp od 1,7 do 2,5 rem, waga 500, szerokość łamania 784 px. Wchłania c5-params__title i nagłówki kitu z Kukurydzy, które dziś mają wagę 700.",
+      "przyklad": "<h2 class=\"c5-h2\">Pięć rzeczy, które warto wiedzieć o lignicie</h2><h2 class=\"c5-h2 c5-h2--center\">Który wariant dla mnie</h2>",
+      "przyklad_tlo": "jasne",
+      "kod": "ce/00-base.css – Wspólne klocki nowego layoutu",
+      "uzywany_w": [
+        "CE-10",
+        "CE-11",
+        "CE-12",
+        "CE-14",
+        "CE-15",
+        "CE-16",
+        "CE-17",
+        "CE-18",
+        "CE-20",
+        "CE-24",
+        "CE-25",
+        "CE-30",
+        "CE-32",
+        "CE-39",
+        "CE-40",
+        "CE-44",
+        "CE-45",
+        "CE-46",
+        "CE-47",
+        "CE-48",
+        "CE-49",
+        "CE-50"
+      ],
+      "zastepuje": [
+        "wf-h2 (Kukurydza, 15 – waga 700 schodzi do 500)",
+        "c5-params__title",
+        "u-fk__title",
+        "u-end__t",
+        "pp-liczby__title"
+      ],
+      "uwagi": "Warianty --tight i --sm nie są jeszcze w arkuszu; zamiana wf-h2 na Kukurydzy idzie w fali 2a, reszta w 2b.",
+      "status": "planowane (fala 2b/2c)",
+      "dzis": [
+        "wf-h2",
+        "c5-params__title",
+        "u-fk__title",
+        "u-end__t"
+      ]
+    },
+    "EL-10": {
+      "nazwa": "Nagłówek klocka",
+      "grupa": "typografia",
+      "klasa": "c5-h3",
+      "warianty": {
+        "c5-h3--xs": "1 rem",
+        "c5-h3--sm": "1,0625 rem (baza)",
+        "c5-h3--md": "1,125 rem",
+        "c5-h3--lg": "clamp 1,125 – 1,5 rem",
+        "c5-h3--xl": "clamp 2 – 3 rem"
+      },
+      "opis": "Nagłówek wewnątrz klocka – karty, kroku, kafla, pozycji listy – w pięciu rozmiarach jednej skali. To największy bałagan inwentarza: 36 klas o tym samym kroju czeka na scalenie w fali 2c.",
+      "przyklad": "<div class=\"sg-stos\"><h3 class=\"c5-h3 c5-h3--xl\">Dodatek do gleby</h3><h3 class=\"c5-h3 c5-h3--lg\">Trwała próchnica, nie nawóz</h3><h3 class=\"c5-h3 c5-h3--md\">Nasiąkliwość</h3><h3 class=\"c5-h3\">Dawka na hektar</h3><h3 class=\"c5-h3 c5-h3--xs\">Opakowanie</h3></div>",
+      "przyklad_tlo": "jasne",
+      "kod": "ce/00-base.css – EL · Interface elements → EL-10",
+      "uzywany_w": [
+        "CE-12",
+        "CE-14",
+        "CE-17",
+        "CE-20",
+        "CE-22",
+        "CE-25",
+        "CE-26",
+        "CE-28",
+        "CE-30",
+        "CE-37",
+        "CE-40",
+        "CE-41",
+        "CE-43",
+        "CE-44",
+        "CE-46",
+        "CE-48"
+      ],
+      "zastepuje": [
+        "36 klas h3/h4/h5 z siedmiu stron – m.in. c5-fact__title, pp-step__title, c5-mt-card__title, c5-band__title, u-h3, u-h4"
+      ],
+      "uwagi": "Skala jest już w arkuszu (zaliczka z fali 2a), ale prawie nic jej jeszcze nie używa – scalenie 292 wystąpień idzie stroną po stronie w fali 2c.",
+      "status": "planowane (fala 2b/2c)",
+      "dzis": [
+        "c5-fact__title",
+        "pp-step__title",
+        "c5-mt-card__title",
+        "u-h3",
+        "i 32 inne klasy"
+      ]
+    },
+    "EL-11": {
+      "nazwa": "Głowa sekcji",
+      "grupa": "typografia",
+      "klasa": "c5-head",
+      "warianty": {
+        "c5-head--center": "wyśrodkowana"
+      },
+      "opis": "Kontener kickera, nagłówka i leadu: kolumna z odstępem clamp od 1,25 do 2,25 rem. Element czysto strukturalny – dziewięć klas __head i __hd robi dziś dokładnie to samo.",
+      "przyklad": "<div class=\"c5-head\"><span class=\"c5-kicker c5-kicker--flush\">Parametry</span><h2 class=\"c5-h2\">Co dokładnie jest w worku</h2><p class=\"c5-lead\">Wartości z karty produktu – zakres, nie jedna liczba, bo pokład różni się partiami.</p></div>",
+      "przyklad_tlo": "jasne",
+      "kod": "ce/00-base.css – Wspólne klocki nowego layoutu",
+      "uzywany_w": [
+        "CE-11",
+        "CE-12",
+        "CE-13",
+        "CE-15",
+        "CE-20",
+        "CE-25",
+        "CE-30",
+        "CE-37",
+        "CE-39",
+        "CE-40",
+        "CE-45",
+        "CE-46",
+        "CE-47"
+      ],
+      "zastepuje": [
+        "c5-facts-head",
+        "c5-season__head",
+        "c5-pop__head",
+        "pp-scene__head",
+        "u-cr__hd",
+        "u-lightbox__head",
+        "c5hu-use__head",
+        "c5-mt-proof__head"
+      ],
+      "uwagi": "Do rozstrzygnięcia razem z odstępami kitu (wf-stack--N na Kukurydzy, 17 wystąpień) – dwa systemy odstępów obok siebie.",
+      "status": "planowane (fala 2b/2c)",
+      "dzis": [
+        "c5-facts-head",
+        "c5-season__head",
+        "u-cr__hd",
+        "i sześć innych"
+      ]
+    },
+    "EL-12": {
+      "nazwa": "Lead",
+      "grupa": "typografia",
+      "klasa": "c5-lead",
+      "warianty": {
+        "c5-lead--center": "wyśrodkowany",
+        "c5-lead--hero": "większy, 1,125 rem – tylko w hero"
+      },
+      "opis": "Akapit wprowadzający pod nagłówkiem: 1 rem, kolor secondary, łamanie do 710 px. W hero rośnie do 1,125 rem i łamie się węziej.",
+      "przyklad": "<p class=\"c5-lead\">Jeden składnik, który pracuje w glebie latami – nie nawóz na sezon, tylko trwała próchnica.</p><p class=\"c5-lead c5-lead--center\">Dwa warianty, jedno źródło – ten sam pokład lignitu.</p>",
+      "przyklad_tlo": "jasne",
+      "kod": "ce/00-base.css – Wspólne klocki nowego layoutu",
+      "uzywany_w": [
+        "CE-08",
+        "CE-11",
+        "CE-12",
+        "CE-14",
+        "CE-15",
+        "CE-18",
+        "CE-20",
+        "CE-25",
+        "CE-30",
+        "CE-37",
+        "CE-39",
+        "CE-40",
+        "CE-45",
+        "CE-46",
+        "CE-47"
+      ],
+      "zastepuje": [
+        "c5-hero__lead",
+        "c5-facts-lead",
+        "u-fz__lead",
+        "u-lightbox__lead",
+        "pp-scene__lead",
+        "pp-farm__lead",
+        "c5pr-read__lead",
+        "c5pr-goals__lead",
+        "c5hu-recipe__lead"
+      ],
+      "uwagi": "Wariant --hero jeszcze nie istnieje – dziś hero ma własną klasę c5-hero__lead."
+    },
+    "EL-13": {
+      "nazwa": "Akapit",
+      "grupa": "typografia",
+      "klasa": "c5-p",
+      "warianty": {
+        "c5-p--sm": "0,9375 rem – treść karty",
+        "c5-p--xs": "0,875 rem",
+        "c5-p--ondark": "na ciemnym tle"
+      },
+      "opis": "Zwykły akapit treści w klocku, w dwóch rozmiarach zamiast szesnastu klas o nazwach __txt, __body i __desc. Decyzja z inwentarza §4: bazą jest 0,9375 rem ze wzorca ECO.",
+      "przyklad": "<div class=\"sg-stos\"><p class=\"c5-p\">Lignit nie mineralizuje się jak obornik – zostaje w glebie kilkanaście lat.</p><p class=\"c5-p c5-p--sm\">Dawka zależy od zasobności gleby i uprawy; konfigurator liczy ją na hektar.</p></div>",
+      "przyklad_tlo": "jasne",
+      "kod": "do dopisania w ce/00-base.css (fala 2b)",
+      "uzywany_w": [
+        "CE-11",
+        "CE-12",
+        "CE-13",
+        "CE-15",
+        "CE-19",
+        "CE-20",
+        "CE-21",
+        "CE-23",
+        "CE-25",
+        "CE-26",
+        "CE-27",
+        "CE-28",
+        "CE-30",
+        "CE-31",
+        "CE-32",
+        "CE-36",
+        "CE-37",
+        "CE-38",
+        "CE-41",
+        "CE-44",
+        "CE-49"
+      ],
+      "zastepuje": [
+        "c5-muted i 16 klas treści karty – m.in. c5-mt-card__txt, pp-kcard__body, c5-fact__body, c5hu-extra__body, pp-os__desc"
+      ],
+      "uwagi": "c5-muted ma dziś dwie definicje (jasny kontekst i wnętrze c5-viz) – wariant --ondark ma je zastąpić.",
+      "status": "planowane (fala 2b/2c)",
+      "dzis": [
+        "c5-muted",
+        "c5-fact__body",
+        "c5-mt-card__txt",
+        "i 14 innych"
+      ]
+    },
+    "EL-14": {
+      "nazwa": "Przypis / źródło",
+      "grupa": "typografia",
+      "klasa": "c5-src",
+      "warianty": {
+        "c5-src--ondark": "na ciemnym tle – biel .8, nie .55"
+      },
+      "opis": "Linijka pod danymi, wykresem albo tabelą: skąd wzięta jest liczba. 0,75 rem w kolorze tertiary; na ciemnym tle biel .8, czyli więcej niż dotychczasowe .55 – świadoma poprawka kontrastu AA.",
+      "przyklad": "<p class=\"c5-src\">Wartości z karty produktu, partia 2026/01.</p><div class=\"sg-ondark\"><p class=\"c5-src c5-src--ondark\">Stopień humifikacji – porównanie jakościowe wg materiałów producenta.</p></div>",
+      "przyklad_tlo": "jasne",
+      "kod": "ce/00-base.css – EL · Interface elements → EL-14",
+      "uzywany_w": [
+        "CE-10",
+        "CE-12",
+        "CE-20",
+        "CE-22",
+        "CE-24",
+        "CE-25",
+        "CE-30",
+        "CE-32",
+        "CE-40",
+        "CE-41"
+      ],
+      "zastepuje": [
+        "c5-viz__cap (6 stron, 37)",
+        "c5pr-tab__note (14)",
+        "c5-mt-stat__src (7)",
+        "c5pr-block__src (5)",
+        "c5-params__src (4 strony, 5)",
+        "u-fz__src",
+        "u-num__cap",
+        "c5-lb__src",
+        "c5pr-techsheet__src",
+        "u-end__src",
+        "c5hu-time__cap",
+        "c5pr-lead-note"
+      ],
+      "uwagi": "Podniesienie bieli z .55/.6 do .8 to jedyna zamierzona zmiana wyglądu w tym elemencie – zapisana w backlogu jako poprawka AA."
+    },
+    "EL-15": {
+      "nazwa": "Karta",
+      "grupa": "pojemniki",
+      "klasa": "c5-card",
+      "warianty": {
+        "c5-card--pad-sm": "padding 16 px",
+        "c5-card--pad-lg": "padding clamp 1,5 – 2 rem",
+        "c5-card--hover": "obrys ciemnieje po najechaniu",
+        "c5-card--dashed": "obrys przerywany",
+        "c5-card--dark": "odwrócona, na przyciemnionym tle",
+        "c5-card--photo": "ze zdjęciem 4:3 nad treścią"
+      },
+      "opis": "Prostokąt z obrysem 1 px, bez cienia i bez promienia – anatomia wspólna dla 25 dzisiejszych klas kart i kafli. Największa pojedyncza wygrana inwentarza i zarazem największe ryzyko, dlatego robimy ją na końcu, stroną po stronie.",
+      "przyklad": "<div class=\"sg-siatka\"><div class=\"c5-card\"><h3 class=\"c5-h3 c5-h3--md\">Dodatek do gleby</h3><p class=\"c5-p c5-p--sm\">Miesza się z glebą przed siewem.</p></div><div class=\"c5-card c5-card--hover c5-card--pad-sm\"><h3 class=\"c5-h3 c5-h3--md\">Ściółka</h3><p class=\"c5-p c5-p--sm\">Warstwa na powierzchni.</p></div></div>",
+      "przyklad_tlo": "jasne",
+      "kod": "do dopisania w ce/00-base.css (fala 2c)",
+      "uzywany_w": [
+        "CE-11",
+        "CE-13",
+        "CE-20",
+        "CE-22",
+        "CE-25",
+        "CE-26",
+        "CE-28",
+        "CE-34",
+        "CE-41",
+        "CE-44",
+        "CE-45",
+        "CE-46",
+        "CE-48",
+        "CE-50",
+        "CE-52"
+      ],
+      "zastepuje": [
+        "25 klas kart i kafli – m.in. c5-mt-card, c5hu-tile, c5pr-block, pp-mcard, pp-kcard, u-fk__tile, u-cr__card, c5-var__tile, c5-use__box"
+      ],
+      "uwagi": "Padding schodzi z ośmiu wartości do trzech (16 / clamp 1,25–1,75 / clamp 1,5–2). Cień zniknął już w fali 2a – jedyny w całym serwisie siedział na u-fk__tile.",
+      "status": "planowane (fala 2b/2c)",
+      "dzis": [
+        "c5-mt-card",
+        "c5hu-tile",
+        "pp-mcard",
+        "u-fk__tile",
+        "i 21 innych"
+      ]
+    },
+    "EL-16": {
+      "nazwa": "Chip",
+      "grupa": "sterowanie",
+      "klasa": "c5-chip",
+      "warianty": {
+        "c5-chip--dashed": "obrys przerywany – do zrobienia",
+        "c5-chip--dotted": "obrys kropkowany – nie dotyczy",
+        "c5-chip--solid": "obrys ciemny, pogrubiony – w trakcie",
+        "c5-chip--ondark": "na ciemnym tle"
+      },
+      "opis": "Pigułka z obrysem i etykietą wersalikami – stan niesie STYL OBRYSU, nigdy kolor. To świadomy wzorzec z Próchnicy+, przeniesiony na wszystkie strony zamiast ośmiu podobnych pigułek.",
+      "przyklad": "<div class=\"c5-btnrow\"><span class=\"c5-chip\">nowość</span><span class=\"c5-chip c5-chip--solid\">w trakcie</span><span class=\"c5-chip c5-chip--dashed\">do zrobienia</span><span class=\"c5-chip c5-chip--dotted\">nie dotyczy</span></div><div class=\"sg-ondark\"><span class=\"c5-chip c5-chip--ondark\">edycja 2026</span><span class=\"c5-chip c5-chip--ondark c5-chip--dashed\">w przygotowaniu</span></div>",
+      "przyklad_tlo": "jasne",
+      "kod": "ce/00-base.css – EL · Interface elements → EL-16",
+      "uzywany_w": [
+        "CE-10",
+        "CE-11",
+        "CE-12",
+        "CE-20",
+        "CE-22",
+        "CE-24",
+        "CE-28",
+        "CE-30",
+        "CE-37",
+        "CE-40",
+        "CE-46",
+        "CE-49",
+        "CE-50"
+      ],
+      "zastepuje": [
+        "pp-ms__state i trzy jego stany (Próchnica+, 110)",
+        "u-chip-prod i u-phase__chip (Kukurydza, 17)",
+        "pp-chip i pp-chip--alt (8)",
+        "c5-mt-chip (4)",
+        "c5pr-gap, pp-todo, c5-gap, c5hu-todo (inline)",
+        "u-num__chip",
+        "c5hu-scope",
+        "wf-badge z kitu"
+      ],
+      "uwagi": "Chip niesie wersaliki, więc etykieta musi być krótka – tam, gdzie dziś w pigułce siedzi całe zdanie (c5hu-scope, część c5pr-gap), element czeka na decyzję zamiast na sed."
+    },
+    "EL-17": {
+      "nazwa": "Nota",
+      "grupa": "pojemniki",
+      "klasa": "c5-note",
+      "warianty": {
+        "c5-note--strong": "obrys ciemny – ostrzeżenie",
+        "c5-note--soft": "obrys jasny, tekst secondary",
+        "c5-note--rule": "tylko kreska u góry, bez ramki",
+        "c5-note--dashed": "obrys przerywany – brak danych",
+        "c5-note--sm": "mniejszy krój, 0,875 rem"
+      },
+      "opis": "Ikona i akapit w ramce: ostrzeżenie, wyjaśnienie pod FAQ, informacja o niezależności badania. Dziewięć klas miało tę samą anatomię – flex, odstęp 12 px, ikona wyrównana do pierwszego wiersza.",
+      "przyklad": "<div class=\"sg-stos\"><div class=\"c5-note c5-note--strong\"><svg class=\"wf-icon\" aria-hidden=\"true\"><use href=\"#ti-alert-triangle\"></use></svg><p>Nie mieszaj z nawozami wapniowymi w jednym przejeździe.</p></div><div class=\"c5-note c5-note--soft c5-note--sm\"><svg class=\"wf-icon\" aria-hidden=\"true\"><use href=\"#ti-info-circle\"></use></svg><p>Wartości dotyczą partii z jednego pokładu – zakres, nie jedna liczba.</p></div><div class=\"c5-note c5-note--rule\"><svg class=\"wf-icon\" aria-hidden=\"true\"><use href=\"#ti-flask\"></use></svg><p>Badanie prowadzi niezależne laboratorium.</p></div><div class=\"c5-note c5-note--dashed c5-note--sm\"><p>dane w uzupełnieniu</p></div></div>",
+      "przyklad_tlo": "jasne",
+      "kod": "ce/00-base.css – EL · Interface elements → EL-17",
+      "uzywany_w": [
+        "CE-17",
+        "CE-28",
+        "CE-31",
+        "CE-37",
+        "CE-40",
+        "CE-48",
+        "CE-50"
+      ],
+      "zastepuje": [
+        "c5hu-warn i c5hu-warn--soft (CARBOHUMIC, 4)",
+        "c5pr-note (Produkty, 3)",
+        "pp-note (Próchnica+, 2)",
+        "c5-mt-note (Mata, 2)",
+        "c5-gap blokowy (HUMIC, 4)",
+        "c5hu-faqnote",
+        "pp-msg",
+        "pp-person__indep"
+      ],
+      "uwagi": "Wariant --dashed to dawna nota brak danych – jedyny bez ikony. c5-mt-note ma dziś kreskę z lewej, nie z góry: przejście na --rule jest widoczną zmianą i czeka na decyzję Mateusza."
+    },
+    "EL-18": {
+      "nazwa": "Tab",
+      "grupa": "sterowanie",
+      "klasa": "c5-tab",
+      "warianty": {
+        "c5-tab--tile": "kafel z ikoną, 56 px",
+        "c5-tab--compact": "kafel 44 px – pasek z sześcioma pozycjami",
+        "c5-tab--text": "tekstowy, bez tła",
+        "c5-tab--pill": "pigułka na ciemnym pasie"
+      },
+      "opis": "Przełącznik widoku w pięciu dzisiejszych mechanikach – kafel z ikoną, tab tekstowy, pigułka, radio i nagłówek klikalny. Baza to kafel ECO: 56 px, 1 rem, ikona w ramce ⌀36.",
+      "przyklad": "<div class=\"sg-stos\"><button type=\"button\" class=\"c5-tab c5-tab--tile\" aria-selected=\"true\"><span class=\"c5-icoframe c5-icoframe--circle\"><svg class=\"wf-icon\" aria-hidden=\"true\"><use href=\"#ti-arrows-sort\"></use></svg></span><span>Dodatek do gleby</span></button><button type=\"button\" class=\"c5-tab c5-tab--compact\" aria-selected=\"false\"><span class=\"c5-icoframe c5-icoframe--circle c5-icoframe--sm\"><svg class=\"wf-icon wf-icon--sm\" aria-hidden=\"true\"><use href=\"#ti-calendar\"></use></svg></span><span>2026</span></button></div>",
+      "przyklad_tlo": "jasne",
+      "kod": "dziś ce/CE-11-warianty-taby.css (c5-way, c5-way--compact)",
+      "uzywany_w": [
+        "CE-10",
+        "CE-11",
+        "CE-13",
+        "CE-19",
+        "CE-29",
+        "CE-30",
+        "CE-45"
+      ],
+      "zastepuje": [
+        "c5-way i trzy jego skale (110 / 56 / 44 px)",
+        "c5pr-paths__tab",
+        "c5-params__tab",
+        "c5-mt-model__tab",
+        "c5hu-mixlist__name",
+        "c5-tco__h",
+        "c5-yrs__seg",
+        "c5-use__tab",
+        "u-vtab"
+      ],
+      "uwagi": "Rozjazd 5 jest już spłacony: baza c5-way to skala ECO, a wariant --compact daje 44 px dla paska lat. Przemianowanie na c5-tab czeka na falę 2b razem z wycofaniem c5.css.",
+      "status": "planowane (fala 2b/2c)",
+      "dzis": [
+        "c5-way",
+        "c5-way--compact",
+        "c5pr-paths__tab",
+        "c5-params__tab"
+      ]
+    },
+    "EL-19": {
+      "nazwa": "Segment",
+      "grupa": "sterowanie",
+      "klasa": "c5-seg",
+      "warianty": {
+        "c5-seg--pill": "zaokrąglony kciuk"
+      },
+      "opis": "Przełącznik segmentowy z pływającym kciukiem – świadomie osobny element, bo ma inną mechanikę niż tab. Dziś jeden egzemplarz na Produktach i jedyne miejsce w serwisie, które używa cienia z kitu.",
+      "przyklad": "<div class=\"c5-seg\" role=\"tablist\"><span class=\"c5-seg__thumb\"></span><button type=\"button\" class=\"c5-seg__tab\" aria-selected=\"true\"><span class=\"c5-seg__lbl\">doglebowo</span></button><button type=\"button\" class=\"c5-seg__tab\" aria-selected=\"false\"><span class=\"c5-seg__lbl\">dolistnie</span></button></div>",
+      "przyklad_tlo": "jasne",
+      "kod": "dziś produkty.css (c5pr-seg)",
+      "uzywany_w": [
+        "CE-39"
+      ],
+      "zastepuje": [
+        "c5pr-seg i trzy klasy jego wnętrza (Produkty)"
+      ],
+      "uwagi": "Do rozstrzygnięcia przy przenoszeniu: promień sterowany zmienną --c5pr-seg-r (dziś 0) i jedyne użycie --w-shadow-xs w całym serwisie.",
+      "status": "planowane (fala 2b/2c)",
+      "dzis": [
+        "c5pr-seg",
+        "c5pr-seg__tab",
+        "c5pr-seg__thumb",
+        "c5pr-seg__lbl"
+      ]
+    },
+    "EL-20": {
+      "nazwa": "Akordeon",
+      "grupa": "sterowanie",
+      "klasa": "c5-faq",
+      "warianty": {
+        "c5-faq--plain": "pytanie nad odpowiedzią, pełna szerokość"
+      },
+      "opis": "Pytanie z lewej, odpowiedź z prawej od 900 px w górę; jedno pytanie otwarte naraz. Wariant --plain zdejmuje podział na kolumny tam, gdzie blok nie jest kolumną FAQ, tylko listą na pełnej szerokości.",
+      "przyklad": "<div class=\"c5-faq\"><div class=\"c5-faq__item\"><button type=\"button\" class=\"c5-faq__q\" aria-expanded=\"false\" aria-controls=\"sg-faq-1\">Czym CARBOMAT ECO różni się od obornika?<svg class=\"wf-icon wf-icon--sm\" aria-hidden=\"true\"><use href=\"#ti-chevron-down\"></use></svg></button><div class=\"c5-faq__a\" id=\"sg-faq-1\"><div class=\"c5-faq__ain\">Obornik mineralizuje się w około trzy lata, lignit zostaje w glebie kilkanaście lat.</div></div></div><div class=\"c5-faq__item\"><button type=\"button\" class=\"c5-faq__q\" aria-expanded=\"false\" aria-controls=\"sg-faq-2\">Czy można przedawkować?<svg class=\"wf-icon wf-icon--sm\" aria-hidden=\"true\"><use href=\"#ti-chevron-down\"></use></svg></button><div class=\"c5-faq__a\" id=\"sg-faq-2\"><div class=\"c5-faq__ain\">Nie ma progu fitotoksyczności – dawka wynika z budżetu, nie z ryzyka.</div></div></div></div>",
+      "przyklad_tlo": "jasne",
+      "szeroki": true,
+      "kod": "ce/CE-17-faq.css – FAQ oraz wariant --plain",
+      "uzywany_w": [
+        "CE-17"
+      ],
+      "zastepuje": [
+        "wf-accordion__item / __trigger / __panel (Produkty, 3)",
+        "pięć identycznych kopii reguł w arkuszach stron"
+      ],
+      "uwagi": "Bez JS odpowiedzi zostają otwarte – tak jak w przykładzie obok. Na stronie panel otwiera CE-17-faq.js."
+    },
+    "EL-21": {
+      "nazwa": "Tabela",
+      "grupa": "dane",
+      "klasa": "c5-table",
+      "warianty": {
+        "c5-table--num": "liczby wyrównane do prawej",
+        "c5-table--sticky": "przyklejony nagłówek",
+        "c5-table--ondark": "na ciemnym tle"
+      },
+      "opis": "Tabela danych: 0,875 rem, padding 12/16, nagłówek na tle subtle, podświetlany wiersz. Scala tabelę kitu z dwiema tabelami Maty; porównywarka z Produktów zostaje osobnym klockiem, bo ma własną mechanikę podświetlania kolumn.",
+      "przyklad": "<table class=\"wf-table\"><thead><tr><th>Materiał</th><th>Sucha masa</th><th>Trwałość w glebie</th></tr></thead><tbody><tr><td>CARBOMAT ECO</td><td>~87%</td><td>kilkanaście lat</td></tr><tr><td>Obornik</td><td>~25%</td><td>około 3 lata</td></tr><tr><td>Kompost dojrzały</td><td>~40%</td><td>3 – 5 lat</td></tr></tbody></table>",
+      "przyklad_tlo": "jasne",
+      "szeroki": true,
+      "kod": "dziś wireframe.css (wf-table)",
+      "uzywany_w": [
+        "CE-11",
+        "CE-12",
+        "CE-22",
+        "CE-41"
+      ],
+      "zastepuje": [
+        "wf-table z kitu (8 wystąpień na 5 stronach)",
+        "c5-mt-cmp i c5-mt-tbl (Mata)",
+        "u-mt (Kukurydza)"
+      ],
+      "uwagi": "Przykład obok pokazuje dzisiejszą tabelę kitu – klasa c5-table pojawi się w arkuszu razem z przemianowaniem w fali 2b.",
+      "status": "planowane (fala 2b/2c)",
+      "dzis": [
+        "wf-table",
+        "c5-mt-cmp",
+        "c5-mt-tbl",
+        "u-mt"
+      ]
+    },
+    "EL-22": {
+      "nazwa": "Lista definicyjna",
+      "grupa": "dane",
+      "klasa": "c5-dl",
+      "warianty": {
+        "c5-dl--rows": "wiersze z kreską",
+        "c5-dl--grid": "siatka kolumnowa",
+        "c5-dl--ondark": "na ciemnym tle – kreska biała .35"
+      },
+      "opis": "Para nazwa – wartość: parametry produktu, dawki, specyfikacja opakowania. Jedenaście dzisiejszych list dl robi to samo w trzech układach, więc zostają trzy warianty jednej klasy.",
+      "przyklad": "<dl class=\"c5-dl c5-dl--rows\"><div class=\"c5-dl__row\"><dt>Odczyn (pH)</dt><dd>4,5 – 5,0</dd></div><div class=\"c5-dl__row\"><dt>Sucha masa</dt><dd>~87%</dd></div><div class=\"c5-dl__row\"><dt>Substancje humusowe</dt><dd>do ~70%</dd></div></dl>",
+      "przyklad_tlo": "jasne",
+      "szeroki": true,
+      "kod": "do dopisania w ce/00-base.css (fala 2b)",
+      "uzywany_w": [
+        "CE-10",
+        "CE-13",
+        "CE-14",
+        "CE-20",
+        "CE-25",
+        "CE-28",
+        "CE-37",
+        "CE-39",
+        "CE-45"
+      ],
+      "zastepuje": [
+        "c5-params__rows (4 strony, 51 wierszy)",
+        "c5hu-dose (34)",
+        "u-defs (18)",
+        "c5pr-foliar__rows (12)",
+        "pp-facts (6)",
+        "c5pr-specs (4)",
+        "u-rows (4)"
+      ],
+      "uwagi": "Wariant --ondark jest obowiązkowy: pas parametrów stoi na ciemnym tle i ma kreskę w innym kolorze.",
+      "status": "planowane (fala 2b/2c)",
+      "dzis": [
+        "c5-params__rows",
+        "c5hu-dose",
+        "u-defs",
+        "pp-facts",
+        "i 7 innych"
+      ]
+    },
+    "EL-23": {
+      "nazwa": "Ikona",
+      "grupa": "ikony",
+      "klasa": "wf-icon",
+      "warianty": {
+        "wf-icon--sm": "16 × 16",
+        "wf-icon--lg": "24 × 24",
+        "wf-icon--muted": "przygaszona (zero użyć w V7)"
+      },
+      "opis": "Ikona liniowa z sprite: 20 × 20, obrys w kolorze tekstu, grubość z tokena. Jedyny element, który już działa jak style guide – 648 wystąpień na siedmiu stronach i ani jednego wyjątku.",
+      "przyklad": "<div class=\"c5-btnrow\"><svg class=\"wf-icon\" aria-hidden=\"true\"><use href=\"#ti-leaf\"></use></svg><svg class=\"wf-icon\" aria-hidden=\"true\"><use href=\"#ti-droplet\"></use></svg><svg class=\"wf-icon\" aria-hidden=\"true\"><use href=\"#ti-calendar\"></use></svg><svg class=\"wf-icon\" aria-hidden=\"true\"><use href=\"#ti-flask\"></use></svg><svg class=\"wf-icon\" aria-hidden=\"true\"><use href=\"#ti-truck\"></use></svg><svg class=\"wf-icon wf-icon--sm\" aria-hidden=\"true\"><use href=\"#ti-check\"></use></svg><svg class=\"wf-icon wf-icon--sm\" aria-hidden=\"true\"><use href=\"#ti-chevron-down\"></use></svg><svg class=\"wf-icon wf-icon--lg\" aria-hidden=\"true\"><use href=\"#ti-alert-triangle\"></use></svg></div>",
+      "przyklad_tlo": "jasne",
+      "kod": "wireframe.css – 5. ICON; sprite w v7/chrome.js",
+      "uzywany_w": [
+        "CE-08",
+        "CE-09",
+        "CE-10",
+        "CE-11",
+        "CE-12",
+        "CE-15",
+        "CE-17",
+        "CE-20",
+        "CE-21",
+        "CE-22",
+        "CE-23",
+        "CE-25",
+        "CE-27",
+        "CE-30",
+        "CE-31",
+        "CE-34",
+        "CE-35",
+        "CE-37",
+        "CE-39",
+        "CE-40",
+        "CE-44",
+        "CE-46",
+        "CE-48",
+        "CE-49",
+        "CE-50",
+        "CE-53"
+      ],
+      "zastepuje": [],
+      "uwagi": "Źródłem ikon jest chrome.js (53 ikony, użytych 38). Plik tabler-sprite.svg nie jest ładowany przez żadną z siedmiu stron – dla V7 jest martwy."
+    },
+    "EL-24": {
+      "nazwa": "Ramka ikony",
+      "grupa": "ikony",
+      "klasa": "c5-icoframe",
+      "warianty": {
+        "c5-icoframe--circle": "koło ⌀36 w kolorze tekstu",
+        "c5-icoframe--square": "kwadrat 44 px z obrysem strong",
+        "c5-icoframe--sm": "⌀32 – pasek kompaktowy"
+      },
+      "opis": "Obrys wokół ikony w kaflu tabu albo w kafelku listy. Trzy klasy o tej samej geometrii schodzą do jednej z dwoma kształtami i jednym rozmiarem mniejszym.",
+      "przyklad": "<div class=\"c5-btnrow\"><span class=\"c5-icoframe c5-icoframe--circle\"><svg class=\"wf-icon\" aria-hidden=\"true\"><use href=\"#ti-arrows-sort\"></use></svg></span><span class=\"c5-icoframe c5-icoframe--circle c5-icoframe--sm\"><svg class=\"wf-icon wf-icon--sm\" aria-hidden=\"true\"><use href=\"#ti-calendar\"></use></svg></span><span class=\"c5-icoframe c5-icoframe--square\"><svg class=\"wf-icon\" aria-hidden=\"true\"><use href=\"#ti-stack-2\"></use></svg></span></div>",
+      "przyklad_tlo": "jasne",
+      "kod": "ce/00-base.css – EL · Interface elements → EL-24",
+      "uzywany_w": [
+        "CE-09",
+        "CE-11",
+        "CE-20"
+      ],
+      "zastepuje": [
+        "c5-way__ico (ECO, CARBOHUMIC, Próchnica+ – 11)",
+        "c5hu-tile__ico (CARBOHUMIC, 4)",
+        "c5-marq__ico"
+      ],
+      "uwagi": ""
+    },
+    "EL-25": {
+      "nazwa": "Boks ilustracji",
+      "grupa": "ikony",
+      "klasa": "c5-viz",
+      "warianty": {
+        "c5-viz--light": "wersja jasna (dziś martwa kopia w c5.css)"
+      },
+      "opis": "Ciemny kadr 4:5 pod rysunek, pierścień albo wykres: tło rgb(20 20 20 / .78), tekst biały, przypis pod spodem. Sześć stron ma wersję ciemną – jasna kopia w c5.css jest starsza i nigdzie nie wygrywa kaskadą.",
+      "przyklad": "<div class=\"sg-waskie\"><figure class=\"c5-viz\"><span class=\"c5-viz__tag\">02 · Zasobność</span><div class=\"c5-viz__body\"><span class=\"c5-viz__num\">do 70%</span><p class=\"c5-muted\">udział substancji humusowych w suchej masie</p></div><figcaption class=\"c5-src c5-src--ondark\">Karta produktu, partia 2026/01.</figcaption></figure></div>",
+      "przyklad_tlo": "jasne",
+      "kod": "ce/CE-12-scena-faktow.css – kadr ilustracji",
+      "uzywany_w": [
+        "CE-12"
+      ],
+      "zastepuje": [
+        "siedem kopii w arkuszach stron (osiem rozjechanych selektorów wnętrza)"
+      ],
+      "uwagi": "Rozjazd 8 sprawdzony w przeglądarce w fali 2a: kadr jest ciemny na wszystkich pięciu stronach wzorca, Kukurydza nie ma tego klocka, a Próchnica+ ma własny ciemny odpowiednik pp-sviz.",
+      "status": "planowane (fala 2b/2c)",
+      "dzis": [
+        "c5-viz (kopie w siedmiu arkuszach)",
+        "pp-sviz (Próchnica+)"
+      ]
+    },
+    "EL-26": {
+      "nazwa": "Kafel liczby",
+      "grupa": "dane",
+      "klasa": "c5-stat",
+      "warianty": {
+        "c5-stat--sm": "1,5 rem",
+        "c5-stat--md": "clamp 1,75 – 2,5 rem",
+        "c5-stat--lg": "clamp 2 – 3 rem",
+        "c5-stat--hero": "clamp 6 – 15 rem"
+      },
+      "opis": "Duża liczba z etykietą i przypisem – zasobność, wynik badania, rok. Osiem klas dawało dziś osiem różnych skal, zostają cztery stopnie jednej.",
+      "przyklad": "<div class=\"sg-stos\"><span class=\"c5-overline\">Substancje humusowe</span><span class=\"c5-stat c5-stat--lg\">do 70%</span><p class=\"c5-src\">Zależnie od pokładu – karta produktu.</p></div>",
+      "przyklad_tlo": "jasne",
+      "kod": "do dopisania w ce/00-base.css (fala 2b)",
+      "uzywany_w": [
+        "CE-12",
+        "CE-20",
+        "CE-24",
+        "CE-29",
+        "CE-34",
+        "CE-41"
+      ],
+      "zastepuje": [
+        "c5-viz__num",
+        "pp-liczba__num",
+        "u-num__val",
+        "c5pr-stat__num",
+        "c5-diff__num",
+        "c5-mt-stat__val",
+        "c5-mt-delta__val",
+        "c5-yrs__num"
+      ],
+      "uwagi": "c5-yrs__num używa tokena --w-weight-light, którego w tokens.css nie ma (działa fallback 300) – do sprzątnięcia przy scaleniu.",
+      "status": "planowane (fala 2b/2c)",
+      "dzis": [
+        "c5-viz__num",
+        "u-num__val",
+        "c5-mt-stat__val",
+        "i 5 innych"
+      ]
+    },
+    "EL-27": {
+      "nazwa": "Pasek postępu",
+      "grupa": "dane",
+      "klasa": "c5-bar",
+      "warianty": {
+        "c5-bar--hairline": "kreska 1 – 2 px sterowana scaleX",
+        "c5-bar--thick": "tor 40 px",
+        "c5-bar--ondark": "na ciemnym tle – tor biały .25"
+      },
+      "opis": "Poziomy wykres słupkowy: etykieta, tor z wypełnieniem i wartość. Wysokość wypełnienia steruje zmienna --bw; trzy cienkie paski postępu na stronach to dziś trzy kopie tej samej reguły.",
+      "przyklad": "<div class=\"c5-barchart\"><div class=\"c5-bar\"><span class=\"wf-w-semibold\">Lignit</span><div class=\"c5-bar__track\"><div class=\"c5-bar__fill\" style=\"--bw:100%;\"></div></div><span class=\"c5-muted\">bardzo wysoki</span></div><div class=\"c5-bar\"><span>Torf</span><div class=\"c5-bar__track\"><div class=\"c5-bar__fill\" style=\"--bw:62%;\"></div></div><span class=\"c5-muted\">wysoki / średni</span></div><div class=\"c5-bar\"><span>Obornik</span><div class=\"c5-bar__track\"><div class=\"c5-bar__fill\" style=\"--bw:24%;\"></div></div><span class=\"c5-muted\">niski / średni</span></div></div>",
+      "przyklad_tlo": "jasne",
+      "kod": "ce/CE-12-scena-faktow.css – wykres słupkowy",
+      "uzywany_w": [
+        "CE-12",
+        "CE-13",
+        "CE-20",
+        "CE-29",
+        "CE-32",
+        "CE-41",
+        "CE-43"
+      ],
+      "zastepuje": [
+        "c5-facts-progress, pp-prog, c5-yrs__segtrack – trzy kopie tej samej kreski",
+        "c5hu-time__track",
+        "u-kbar__track",
+        "c5-use__bar"
+      ],
+      "uwagi": "Warianty --hairline, --thick i --ondark czekają na falę 2b; wersja na ciemnym tle działa dziś przez kontekst .c5-viz."
+    },
+    "EL-28": {
+      "nazwa": "Pole formularza",
+      "grupa": "sterowanie",
+      "klasa": "wf-input / wf-select / wf-textarea",
+      "warianty": {},
+      "opis": "Pola zostają z kitu, ale warstwa projektu zdejmuje im promień 8 px i podnosi wysokość do 44 px. To był jeden z dwóch najwyraźniejszych punktów dwóch stylów – jedyne zaokrąglone elementy w całym serwisie.",
+      "przyklad": "<div class=\"sg-siatka\"><div class=\"wf-field\"><label class=\"wf-label\" for=\"sg-ha\">Powierzchnia (ha)</label><input class=\"wf-input\" id=\"sg-ha\" type=\"text\" value=\"12,5\"></div><div class=\"wf-field\"><label class=\"wf-label\" for=\"sg-up\">Uprawa</label><select class=\"wf-select\" id=\"sg-up\"><option>kukurydza</option><option>pszenica ozima</option></select></div></div><div class=\"wf-field\"><label class=\"wf-label\" for=\"sg-uw\">Uwagi</label><textarea class=\"wf-textarea\" id=\"sg-uw\" rows=\"2\"></textarea></div>",
+      "przyklad_tlo": "jasne",
+      "scena_id": "main",
+      "kod": "ce/00-base.css – EL · Interface elements → EL-28",
+      "uzywany_w": [
+        "CE-47",
+        "CE-50",
+        "CE-52"
+      ],
+      "zastepuje": [
+        "lokalne min-height:44px w prochnica-plus.css"
+      ],
+      "uwagi": "Reguła celuje w #main, więc pole w doku doradcy (buduje je chrome.js) zostaje z promieniem 8 px – do backlogu."
+    },
+    "EL-29": {
+      "nazwa": "Kontener",
+      "grupa": "pojemniki",
+      "klasa": "c5-wrap",
+      "warianty": {
+        "c5-wrap--narrow": "węższa kolumna do czytania"
+      },
+      "opis": "Środkowa kolumna strony: maksymalnie 1180 px, boczny padding 20 px, wyśrodkowana. Osiem identycznych kopii w arkuszach stron zeszło do jednej definicji – zmierzone wartości są na siedmiu stronach takie same.",
+      "przyklad": "<div class=\"c5-wrap sg-ramka\"><p class=\"c5-p\">Wszystko, co czyta się w tekście, mieści się w tej kolumnie – pasy tła idą pełną szerokością, treść nigdy.</p></div>",
+      "przyklad_tlo": "jasne",
+      "szeroki": true,
+      "kod": "ce/00-base.css – Wspólne klocki nowego layoutu",
+      "uzywany_w": [
+        "CE-08",
+        "CE-10",
+        "CE-11",
+        "CE-12",
+        "CE-14",
+        "CE-16",
+        "CE-17",
+        "CE-18",
+        "CE-20",
+        "CE-24",
+        "CE-29",
+        "CE-30",
+        "CE-32",
+        "CE-37",
+        "CE-39",
+        "CE-40",
+        "CE-44",
+        "CE-45",
+        "CE-46",
+        "CE-47",
+        "CE-48",
+        "CE-49",
+        "CE-50"
+      ],
+      "zastepuje": [
+        "osiem identycznych kopii w arkuszach stron",
+        "wf-container z kitu – zero użyć w V7"
+      ],
+      "uwagi": ""
+    },
+    "EL-30": {
+      "nazwa": "Sekcja",
+      "grupa": "pojemniki",
+      "klasa": "c5-sec",
+      "warianty": {
+        "c5-sec--band": "jasny pas (dziś osobna klasa c5-band)",
+        "c5-sec--dark": "ciemny pas",
+        "c5-sec--flush": "bez odstępu pionowego"
+      },
+      "opis": "Pionowy rytm strony: padding-block clamp od 3,5 do 6,25 rem. Jasny pas jest dziś osobną klasą c5-band, a cztery strony mają własne warianty sekcji z sufiksem.",
+      "przyklad": "<section class=\"c5-sec c5-band sg-ramka\"><div class=\"c5-wrap\"><h2 class=\"c5-h2\">Jasny pas</h2><p class=\"c5-lead\">Sekcja na tle --w-surface-subtle – rytm pionowy taki sam jak w sekcji zwykłej.</p></div></section>",
+      "przyklad_tlo": "jasne",
+      "szeroki": true,
+      "kod": "ce/00-base.css – Wspólne klocki nowego layoutu",
+      "uzywany_w": [
+        "CE-11",
+        "CE-12",
+        "CE-14",
+        "CE-16",
+        "CE-17",
+        "CE-18",
+        "CE-20",
+        "CE-24",
+        "CE-30",
+        "CE-32",
+        "CE-37",
+        "CE-39",
+        "CE-40",
+        "CE-44",
+        "CE-45",
+        "CE-46",
+        "CE-47",
+        "CE-48",
+        "CE-49",
+        "CE-50"
+      ],
+      "zastepuje": [
+        "siedem identycznych kopii w arkuszach stron",
+        "c5-facts-sec, c5-dose-sec, c5-diff-sec, pp-scene-sec"
+      ],
+      "uwagi": "Na Kukurydzy sekcja jest niższa (76,8 px zamiast 89,6) przez lokalne nadpisanie u-num – do sprzątnięcia w fali 2b."
     }
   }
 };

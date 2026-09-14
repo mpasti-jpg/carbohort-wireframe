@@ -1,0 +1,923 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Style guide elementów interfejsu – prototyp CarboHort</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="v7/tokens.css">
+<link rel="stylesheet" href="v7/wireframe.css">
+<link rel="stylesheet" href="v7/cw.css">
+<link rel="stylesheet" href="v7/ce/00-base.css">
+<link rel="stylesheet" href="v7/ce/00-reveal.css">
+<link rel="stylesheet" href="v7/ce/CE-07-nawigacja-kropkowa.css">
+<link rel="stylesheet" href="v7/ce/CE-08-hero.css">
+<link rel="stylesheet" href="v7/ce/CE-09-marquee.css">
+<link rel="stylesheet" href="v7/ce/CE-10-parametry.css">
+<link rel="stylesheet" href="v7/ce/CE-11-warianty-taby.css">
+<link rel="stylesheet" href="v7/ce/CE-12-scena-faktow.css">
+<link rel="stylesheet" href="v7/ce/CE-13-scena-produktu.css">
+<link rel="stylesheet" href="v7/ce/CE-14-sekcja-100svh.css">
+<link rel="stylesheet" href="v7/ce/CE-15-wiersze-packshot.css">
+<link rel="stylesheet" href="v7/ce/CE-16-pas-pro.css">
+<link rel="stylesheet" href="v7/ce/CE-17-faq.css">
+<link rel="stylesheet" href="v7/ce/CE-18-cta.css">
+<style>
+  :root{--bg:#faf9f7;--fg:#1f1a13;--mut:#6b665e;--lin:#e2ded6;--gran:#a89b85;--acc:#6b4a2b;
+        --pole:#fff;--plan:#8a6100}
+  @media (prefers-color-scheme:dark){:root{--bg:#17150f;--fg:#ece7dd;--mut:#9a938a;--lin:#332e26;
+        --gran:#615748;--acc:#c99a6b;--pole:#1d1a14;--plan:#d2a15a}}
+  *{box-sizing:border-box}
+  body{margin:0;padding:28px 20px 48px;background:var(--bg);color:var(--fg);
+    font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+  .wrap{max-width:1180px;margin:0 auto}
+  h1{font-size:22px;margin:0 0 4px;letter-spacing:-.01em}
+  .sub{color:var(--mut);font-size:13px;margin:0 0 20px}
+  a{color:var(--acc)}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--mut);
+    overflow-wrap:anywhere}
+  .box{border:1px solid var(--lin);border-left:3px solid var(--acc);border-radius:0 5px 5px 0;
+    padding:11px 14px;margin:0 0 18px;font-size:13.5px;
+    background:color-mix(in srgb,var(--acc) 5%,transparent)}
+  .grupy{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 22px}
+  .grupy a{display:inline-block;padding:3px 10px;border:1px solid var(--lin);border-radius:3px;
+    font-size:12.5px;text-decoration:none;background:var(--pole)}
+  .grupy a:hover{border-color:var(--gran)}
+  h2.gr{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);
+    margin:30px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--gran);scroll-margin-top:12px}
+  h2.gr span{text-transform:none;letter-spacing:0;font-weight:400;opacity:.8}
+  .el{display:grid;grid-template-columns:minmax(0,40fr) minmax(0,60fr);gap:18px;
+    border:1px solid var(--lin);border-radius:6px;background:var(--pole);
+    padding:14px 16px;margin:0 0 14px;scroll-margin-top:12px}
+  .el--szeroki{grid-template-columns:minmax(0,1fr)}
+  .el:target{border-color:var(--acc);box-shadow:0 0 0 2px color-mix(in srgb,var(--acc) 25%,transparent)}
+  .el__info{min-width:0;overflow-wrap:break-word}
+  .el__head{display:flex;align-items:baseline;flex-wrap:wrap;gap:8px;margin:0 0 6px}
+  .kod{font:600 19px/1.1 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--acc);
+    letter-spacing:-.01em}
+  .kod a{text-decoration:none;color:inherit}
+  .el__nazwa{font-size:16px;margin:0;font-weight:600}
+  .gr-et{font-size:11.5px;color:var(--mut);border:1px solid var(--lin);border-radius:3px;
+    padding:1px 7px;white-space:nowrap}
+  .plakietka{font-size:11.5px;color:var(--plan);border:1px dashed var(--plan);border-radius:3px;
+    padding:1px 7px;white-space:nowrap}
+  .el p{margin:0 0 7px;font-size:13.5px}
+  .el .etk{color:var(--mut);font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;
+    display:block;margin:10px 0 3px}
+  .cel{font:600 13px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--fg);
+    margin:0 0 8px;overflow-wrap:anywhere}
+  .chips{display:flex;flex-wrap:wrap;gap:5px;margin:0 0 7px}
+  .chip{font-size:12px;padding:1px 8px;border:1px solid var(--lin);border-radius:10px;
+    background:color-mix(in srgb,var(--fg) 4%,transparent);text-decoration:none;color:inherit}
+  a.chip:hover{border-color:var(--gran)}
+  ul.war,ul.zast{margin:0;padding:0;list-style:none;font-size:13px}
+  ul.war li,ul.zast li{padding:3px 0;border-bottom:1px dotted var(--lin)}
+  ul.war li:last-child,ul.zast li:last-child{border-bottom:0}
+  .brak{font-size:11px;color:var(--plan);border:1px dashed var(--plan);border-radius:3px;
+    padding:0 5px;margin-left:4px;white-space:nowrap}
+  .mut{color:var(--mut)}
+  .el__demo{min-width:0}
+  pre{margin:8px 0 0;padding:10px 12px;border:1px solid var(--lin);border-radius:4px;
+    background:color-mix(in srgb,var(--fg) 3%,transparent);font-size:11.5px;line-height:1.5;
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--mut);
+    white-space:pre-wrap;overflow-wrap:anywhere;max-height:260px;overflow-y:auto}
+  .uwaga-plan{font-size:12px;color:var(--plan);margin:8px 0 0}
+  footer{margin-top:26px;padding-top:14px;border-top:1px solid var(--lin);
+    color:var(--mut);font-size:12.5px}
+
+  /* --- pole żywego przykładu ------------------------------------------------
+     Wewnątrz sceny obowiązuje typografia makiety, nie typografia tej strony:
+     scena wraca do kroju i koloru z tokenów, żeby przykład wyglądał dokładnie
+     tak jak na podstronie. */
+  .sg-scena{border:1px solid var(--lin);border-radius:4px;padding:20px;
+    background:var(--w-surface-page);color:var(--w-text-primary);
+    font-family:var(--w-font-sans);font-size:var(--w-font-body-size);
+    line-height:var(--w-font-body-lh);font-weight:var(--w-weight-regular);
+    overflow-x:auto}
+  .sg-scena--ciemne{background:var(--w-gray-900);color:var(--w-text-inverse)}
+  /* Pomocnicze klasy należą do style guide'u, nie do makiet – układają sam
+     przykład (stos, siatka, ciemny pasek pod warianty --ondark). */
+  .sg-scena .sg-stos{display:flex;flex-direction:column;gap:14px;align-items:stretch}
+  .sg-scena .sg-siatka{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:14px}
+  .sg-scena .sg-ondark{margin-top:14px;padding:16px;background:var(--w-gray-900);
+    color:var(--w-text-inverse);display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .sg-scena .sg-ramka{outline:1px dashed var(--gran);outline-offset:-1px}
+  .sg-scena .sg-waskie{max-width:420px}
+  .sg-scena .sg-tekst{max-width:46em}
+
+  /* --- sekcja tokenów ------------------------------------------------------- */
+  .tok{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;
+    margin:0 0 18px}
+  .tok__p{display:flex;align-items:center;gap:9px;border:1px solid var(--lin);border-radius:4px;
+    padding:7px 9px;background:var(--pole);min-width:0}
+  .tok__pr{width:26px;height:26px;flex:none;border:1px solid var(--lin);border-radius:3px}
+  .tok__op{min-width:0}
+  .tok__n{font:12px/1.35 ui-monospace,SFMono-Regular,Menlo,monospace;overflow-wrap:anywhere}
+  .tok__w{font-size:11px;color:var(--mut)}
+  .skala{border:1px solid var(--lin);border-radius:4px;background:var(--w-surface-page);
+    padding:18px 20px;margin:0 0 18px;color:var(--w-text-primary);
+    font-family:var(--w-font-sans)}
+  .skala__w{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+    padding:10px 0;border-bottom:1px dotted var(--lin)}
+  .skala__w:last-child{border-bottom:0}
+  .skala__m{font:11.5px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--mut);
+    overflow-wrap:anywhere}
+  /* Pasek skali pokazuje ROZMIAR, nie rytm – duży odstęp pod kickerem rozrywałby
+     wiersz, więc tylko tutaj go zdejmujemy (na makietach zostaje). */
+  .skala .c5-kicker{margin-bottom:0}
+  .odst{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 18px}
+  .odst__p{text-align:center;font:11px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;
+    color:var(--mut)}
+  .odst__b{height:22px;background:var(--gran);margin:0 auto 4px}
+
+  @media (max-width:900px){
+    body{padding:20px 16px 40px}
+    .el{grid-template-columns:minmax(0,1fr)}
+    .el__demo{order:-1}
+    .sg-scena{padding:14px}
+  }
+  @media print{.grupy{display:none}}
+
+  .sg-hover{display:contents}
+  .sg-hover .c5-btn--dark{background:var(--w-gray-700);border-color:var(--w-gray-700);}
+  .sg-hover .c5-btn--light{border-color:var(--w-border-strong);}
+  .sg-hover .c5-btn--inv{background:var(--w-gray-100);}
+  .sg-hover .c5-iconbtn{background:var(--w-surface-hover);border-color:var(--w-gray-900);}
+</style>
+<script src="v7/chrome.js"></script>
+<cw-icons></cw-icons>
+<div class="wrap">
+  <h1>Style guide elementów interfejsu – prototyp CarboHort</h1>
+  <p class="sub">30 elementów (17 gotowych, 13 planowanych)
+  w 6 grupach · arkusze katalogu <code>v7</code> ·
+  rejestr zaktualizowany 2026-09-15<br>
+  Metadane i przykłady pochodzą z <code>ce-rejestr.js</code> (sekcje
+  <code>grupyEl</code> i <code>elementy</code>).</p>
+
+  <div class="box">
+    <b>Co to jest element interfejsu?</b> Poziom pod content elementami: klocek,
+    z którego CE są zbudowane – przycisk, chip, nota, nagłówek, pole. Każdy ma kod
+    <code>EL-NN</code> nadany raz na zawsze, jedną klasę docelową i warianty jako
+    modyfikatory. <b>Przykłady są żywe</b> – strona ładuje te same arkusze co makiety
+    (17 plików), więc pokazuje aktualny stan kodu, nie zrzut. Klasy
+    <code>sg-*</code> w przykładach należą do samego style guide'u (układ pola),
+    nigdy do makiet. Element z plakietką <b>planowane</b> czeka na przemianowanie
+    w kolejnej fali – lista jego dzisiejszych klas stoi w wierszu „Dziś w kodzie”.
+  </div>
+  <div class="box"><b>Uwagi z walidacji:</b><br>11 wariantów jest jeszcze planem – każdy oznaczony przy swoim elemencie etykietą „brak w CSS”.</div>
+  <nav class="grupy"><a href="#grupa-akcje">Przyciski i linki</a><a href="#grupa-typografia">Kicker, nagłówki, lead</a><a href="#grupa-pojemniki">Karty, boksy, pasy</a><a href="#grupa-sterowanie">Taby, chipy, akordeony, pola</a><a href="#grupa-dane">Tabele, listy dl, kafle liczb, paski</a><a href="#grupa-ikony">Ikony i wizuale</a><a href="#grupa-tokeny">Kolory, typografia, odstępy</a></nav>
+
+  <h2 class="gr" id="grupa-akcje">Przyciski i linki <span>· 5 elementów</span></h2>
+
+<article class="el" id="EL-01">
+<div class="el__info">
+<div class="el__head"><span class="kod"><a href="#EL-01">EL-01</a></span><h3 class="el__nazwa">Przycisk</h3><span class="gr-et">Przyciski i linki</span></div>
+<p class="cel">.c5-btn</p>
+<p>Podstawowa akcja: ostre narożniki, obrys 1 px, etykieta małymi literami, ikona po lewej. Cel dotykowy 44 px siedzi w bazie – nie łata się go już punktowo, a boczny padding ustawia token --c5-btn-px zamiast ośmiu kontekstowych nadpisań.</p>
+<span class="etk">Warianty</span><ul class="war"><li><code>.c5-btn--dark</code> – ciemny, akcja główna</li><li><code>.c5-btn--light</code> – jasny z obrysem, akcja drugorzędna</li><li><code>.c5-btn--inv</code> – odwrócony – biały na ciemnym tle</li><li><code>.c5-btn--ondark</code> – ciemny przycisk na ciemnym pasie – działa tylko w kontekście .c5-params (CE-10)</li><li><code>.c5-btn--sm</code> – mały, 0.8125 rem, nadal 44 px wysokości</li><li><code>.c5-btn--tight</code> – wąski boczny padding, gdy przyciski stoją ciasno</li></ul>
+<span class="etk">Gdzie w kodzie</span><p><code>ce/00-base.css – Przyciski nowego języka</code></p>
+<span class="etk">Używany w (27)</span><div class="chips"><a class="chip" href="ce-indeks.html#CE-08">CE-08</a><a class="chip" href="ce-indeks.html#CE-10">CE-10</a><a class="chip" href="ce-indeks.html#CE-11">CE-11</a><a class="chip" href="ce-indeks.html#CE-13">CE-13</a><a class="chip" href="ce-indeks.html#CE-14">CE-14</a><a class="chip" href="ce-indeks.html#CE-15">CE-15</a><a class="chip" href="ce-indeks.html#CE-16">CE-16</a><a class="chip" href="ce-indeks.html#CE-17">CE-17</a><a class="chip" href="ce-indeks.html#CE-18">CE-18</a><a class="chip" href="ce-indeks.html#CE-20">CE-20</a><a class="chip" href="ce-indeks.html#CE-23">CE-23</a><a class="chip" href="ce-indeks.html#CE-25">CE-25</a><a class="chip" href="ce-indeks.html#CE-27">CE-27</a><a class="chip" href="ce-indeks.html#CE-28">CE-28</a><a class="chip" href="ce-indeks.html#CE-29">CE-29</a><a class="chip" href="ce-indeks.html#CE-30">CE-30</a><a class="chip" href="ce-indeks.html#CE-31">CE-31</a><a class="chip" href="ce-indeks.html#CE-35">CE-35</a><a class="chip" href="ce-indeks.html#CE-36">CE-36</a><a class="chip" href="ce-indeks.html#CE-37">CE-37</a><a class="chip" href="ce-indeks.html#CE-38">CE-38</a><a class="chip" href="ce-indeks.html#CE-39">CE-39</a><a class="chip" href="ce-indeks.html#CE-40">CE-40</a><a class="chip" href="ce-indeks.html#CE-46">CE-46</a><a class="chip" href="ce-indeks.html#CE-47">CE-47</a><a class="chip" href="ce-indeks.html#CE-50">CE-50</a><a class="chip" href="ce-indeks.html#CE-53">CE-53</a></div>
+<span class="etk">Zastępuje</span><ul class="zast"><li>sześć łat min-height:44px (produkty.css, prochnica-plus.css)</li><li>osiem kontekstowych nadpisań padding-inline – dziś token --c5-btn-px</li><li>wf-btn z kitu i osiem jego modyfikatorów – w V7 nieużywane</li></ul>
+<span class="etk">Uwagi</span><p class="mut">Przycisków kitu (wf-btn) w V7 nie używamy – zero wystąpień na siedmiu stronach. Nowy przycisk to zawsze c5-btn. Wariant --ondark nie ma własnej definicji w warstwie wspólnej: żyje w regule .c5-params .c5-btn--ondark, więc poza pasem parametrów nic nie robi – dlatego nie ma go w przykładzie obok.</p>
+</div>
+<div class="el__demo">
+<div class="sg-scena"><div class="c5-btnrow"><a class="c5-btn c5-btn--dark" href="#">kup teraz</a><a class="c5-btn c5-btn--light" href="#">dobierz dawki</a><a class="c5-btn c5-btn--light c5-btn--sm" href="#"><svg class="wf-icon" aria-hidden="true"><use href="#ti-file-text"></use></svg> karta produktu</a><a class="c5-btn c5-btn--light c5-btn--sm c5-btn--tight" href="#">zaloguj się</a></div><div class="sg-ondark"><a class="c5-btn c5-btn--inv" href="#">zamów próbkę</a></div></div>
+<pre>&lt;div class=&quot;c5-btnrow&quot;&gt;
+  &lt;a class=&quot;c5-btn c5-btn--dark&quot; href=&quot;#&quot;&gt;kup teraz&lt;/a&gt;
+  &lt;a class=&quot;c5-btn c5-btn--light&quot; href=&quot;#&quot;&gt;dobierz dawki&lt;/a&gt;
+  &lt;a class=&quot;c5-btn c5-btn--light c5-btn--sm&quot; href=&quot;#&quot;&gt;&lt;svg class=&quot;wf-icon&quot; aria-hidden=&quot;true&quot;&gt;&lt;use href=&quot;#ti-file-text&quot;&gt;&lt;/use&gt;&lt;/svg&gt; karta produktu&lt;/a&gt;
+  &lt;a class=&quot;c5-btn c5-btn--light c5-btn--sm c5-btn--tight&quot; href=&quot;#&quot;&gt;zaloguj się&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sg-ondark&quot;&gt;
+  &lt;a class=&quot;c5-btn c5-btn--inv&quot; href=&quot;#&quot;&gt;zamów próbkę&lt;/a&gt;
+&lt;/div&gt;</pre>
+</div></article>
+
+<article class="el" id="EL-02">
+<div class="el__info">
+<div class="el__head"><span class="kod"><a href="#EL-02">EL-02</a></span><h3 class="el__nazwa">Przycisk ikonowy</h3><span class="gr-et">Przyciski i linki</span></div>
+<p class="cel">.c5-iconbtn</p>
+<p>Kwadrat 44 × 44 px z obrysem kitu i samą ikoną w środku: zamknięcie nakładki, strzałki karuzeli, sterowanie harmonogramem. Jedna definicja zamiast czterech klas, które różniły się wyłącznie rozmiarem.</p>
+<span class="etk">Warianty</span><ul class="war"><li><code>.c5-iconbtn--sm</code> – 40 px – róg lightboxa</li></ul>
+<span class="etk">Gdzie w kodzie</span><p><code>ce/00-base.css – EL · Interface elements → EL-02</code></p>
+<span class="etk">Używany w (3)</span><div class="chips"><a class="chip" href="ce-indeks.html#CE-25">CE-25</a><a class="chip" href="ce-indeks.html#CE-37">CE-37</a><a class="chip" href="ce-indeks.html#CE-49">CE-49</a></div>
+<span class="etk">Zastępuje</span><ul class="zast"><li>pp-ctrl__btn (Próchnica+, 14)</li><li>c5-pop__close (CARBOMAT HUMIC, 2)</li><li>u-lightbox__close (Kukurydza, 2)</li><li>c5-lb__close (CARBOMAT Mata, 1)</li></ul>
+<span class="etk">Uwagi</span><p class="mut">Reguły pozycjonujące krzyżyk w rogu i chowające go bez JS zostają w pliku strony – tu mieszka sama anatomia przycisku.</p>
+</div>
+<div class="el__demo">
+<div class="sg-scena"><div class="c5-btnrow"><button type="button" class="c5-iconbtn" aria-label="Zamknij"><svg class="wf-icon" aria-hidden="true"><use href="#ti-x"></use></svg></button><button type="button" class="c5-iconbtn" aria-label="Poprzedni"><svg class="wf-icon" aria-hidden="true"><use href="#ti-chevron-left"></use></svg></button><button type="button" class="c5-iconbtn" aria-label="Następny" disabled><svg class="wf-icon" aria-hidden="true"><use href="#ti-chevron-right"></use></svg></button><button type="button" class="c5-iconbtn c5-iconbtn--sm" aria-label="Zamknij podgląd"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-x"></use></svg></button></div></div>
+<pre>&lt;div class=&quot;c5-btnrow&quot;&gt;
+  &lt;button type=&quot;button&quot; class=&quot;c5-iconbtn&quot; aria-label=&quot;Zamknij&quot;&gt;&lt;svg class=&quot;wf-icon&quot; aria-hidden=&quot;true&quot;&gt;&lt;use href=&quot;#ti-x&quot;&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/button&gt;
+  &lt;button type=&quot;button&quot; class=&quot;c5-iconbtn&quot; aria-label=&quot;Poprzedni&quot;&gt;&lt;svg class=&quot;wf-icon&quot; aria-hidden=&quot;true&quot;&gt;&lt;use href=&quot;#ti-chevron-left&quot;&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/button&gt;
+  &lt;button type=&quot;button&quot; class=&quot;c5-iconbtn&quot; aria-label=&quot;Następny&quot; disabled&gt;&lt;svg class=&quot;wf-icon&quot; aria-hidden=&quot;true&quot;&gt;&lt;use href=&quot;#ti-chevron-right&quot;&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/button&gt;
+  &lt;button type=&quot;button&quot; class=&quot;c5-iconbtn c5-iconbtn--sm&quot; aria-label=&quot;Zamknij podgląd&quot;&gt;&lt;svg class=&quot;wf-icon wf-icon--sm&quot; aria-hidden=&quot;true&quot;&gt;&lt;use href=&quot;#ti-x&quot;&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/button&gt;
+&lt;/div&gt;</pre>
+</div></article>
+
+<article class="el" id="EL-03">
+<div class="el__info">
+<div class="el__head"><span class="kod"><a href="#EL-03">EL-03</a></span><h3 class="el__nazwa">Link cichy</h3><span class="gr-et">Przyciski i linki</span><span class="plakietka">planowane (fala 2b/2c)</span></div>
+<p class="cel">.c5-quiet</p>
+<p>Link z ikoną, który nie udaje przycisku: pobranie karty produktu, rozwinięcie dłuższego tekstu, odnośnik w ciemnym pasie parametrów. Trzy dzisiejsze dekoracje schodzą do trzech wariantów jednej klasy.</p>
+<span class="etk">Warianty</span><ul class="war"><li><code>.c5-quiet--underline</code> – podkreślenie w kolorze obrysu<span class="brak">brak w CSS</span></li><li><code>.c5-quiet--rule</code> – kreska pod spodem, chevron obraca się<span class="brak">brak w CSS</span></li><li><code>.c5-quiet--ondark</code> – na ciemnym pasie, przygaszony<span class="brak">brak w CSS</span></li></ul>
+<span class="etk">Dziś w kodzie</span><div class="chips"><span class="chip">c5pr-doc</span><span class="chip">pp-more</span><span class="chip">u-more</span><span class="chip">c5-params__dl</span></div>
+<span class="etk">Gdzie w kodzie</span><p><code>do dopisania w ce/00-base.css (fala 2b)</code></p>
+<span class="etk">Używany w (4)</span><div class="chips"><a class="chip" href="ce-indeks.html#CE-10">CE-10</a><a class="chip" href="ce-indeks.html#CE-25">CE-25</a><a class="chip" href="ce-indeks.html#CE-40">CE-40</a><a class="chip" href="ce-indeks.html#CE-48">CE-48</a></div>
+<span class="etk">Zastępuje</span><ul class="zast"><li>c5pr-doc (Produkty, 7)</li><li>c5-params__dl (4 strony, 4)</li><li>u-more (Kukurydza, 3)</li><li>pp-more (Próchnica+, 2)</li></ul>
+<span class="etk">Uwagi</span><p class="mut">Do rozstrzygnięcia przed scaleniem: która dekoracja jest domyślna – podkreślenie czy kreska pod spodem.</p>
+</div>
+<div class="el__demo">
+<div class="sg-scena"><div class="sg-stos"><a class="c5-quiet c5-quiet--underline" href="#"><svg class="wf-icon" aria-hidden="true"><use href="#ti-download"></use></svg> Pobierz aktualną analizę</a><a class="c5-quiet c5-quiet--rule" href="#">więcej <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></a></div></div>
+<p class="uwaga-plan">Klasa <code>.c5-quiet</code> nie jest jeszcze w arkuszach – przykład pokazuje docelowy markup, nie docelowy wygląd.</p>
+<pre>&lt;div class=&quot;sg-stos&quot;&gt;
+  &lt;a class=&quot;c5-quiet c5-quiet--underline&quot; href=&quot;#&quot;&gt;&lt;svg class=&quot;wf-icon&quot; aria-hidden=&quot;true&quot;&gt;&lt;use href=&quot;#ti-download&quot;&gt;&lt;/use&gt;&lt;/svg&gt; Pobierz aktualną analizę&lt;/a&gt;
+  &lt;a class=&quot;c5-quiet c5-quiet--rule&quot; href=&quot;#&quot;&gt;więcej &lt;svg class=&quot;wf-icon wf-icon--sm&quot; aria-hidden=&quot;true&quot;&gt;&lt;use href=&quot;#ti-chevron-down&quot;&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/a&gt;
+&lt;/div&gt;</pre>
+</div></article>
+
+<article class="el" id="EL-04">
+<div class="el__info">
+<div class="el__head"><span class="kod"><a href="#EL-04">EL-04</a></span><h3 class="el__nazwa">Rząd przycisków</h3><span class="gr-et">Przyciski i linki</span></div>
+<p class="cel">.c5-btnrow</p>
+<p>Poziomy rząd akcji z odstępem 6 px, zawijany, gdy zabraknie miejsca. Osiem lokalnych nadpisań odstępu i marginesu czeka na sprowadzenie do dwóch wariantów.</p>
+<span class="etk">Warianty</span><ul class="war"><li><code>.c5-btnrow--stack</code> – kolumna na wąskim ekranie<span class="brak">brak w CSS</span></li><li><code>.c5-btnrow--end</code> – wyrównanie do prawej<span class="brak">brak w CSS</span></li></ul>
+<span class="etk">Gdzie w kodzie</span><p><code>ce/00-base.css – Przyciski nowego języka</code></p>
+<span class="etk">Używany w (12)</span><div class="chips"><a class="chip" href="ce-indeks.html#CE-08">CE-08</a><a class="chip" href="ce-indeks.html#CE-11">CE-11</a><a class="chip" href="ce-indeks.html#CE-14">CE-14</a><a class="chip" href="ce-indeks.html#CE-16">CE-16</a><a class="chip" href="ce-indeks.html#CE-18">CE-18</a><a class="chip" href="ce-indeks.html#CE-20">CE-20</a><a class="chip" href="ce-indeks.html#CE-23">CE-23</a><a class="chip" href="ce-indeks.html#CE-28">CE-28</a><a class="chip" href="ce-indeks.html#CE-30">CE-30</a><a class="chip" href="ce-indeks.html#CE-35">CE-35</a><a class="chip" href="ce-indeks.html#CE-37">CE-37</a><a class="chip" href="ce-indeks.html#CE-39">CE-39</a></div>
+<span class="etk">Zastępuje</span><ul class="zast"><li>dziewięć identycznych kopii reguły w arkuszach stron</li><li>osiem lokalnych nadpisań gap/margin</li></ul>
+<span class="etk">Uwagi</span><p class="mut">Warianty --stack i --end są na razie planem – dziś odstępy poprawia się lokalnie w plikach stron.</p>
+</div>
+<div class="el__demo">
+<div class="sg-scena"><div class="c5-btnrow"><a class="c5-btn c5-btn--dark" href="#">kup teraz</a><a class="c5-btn c5-btn--light" href="#">porównaj warianty</a><a class="c5-btn c5-btn--light" href="#">zapytaj doradcę</a></div></div>
+<pre>&lt;div class=&quot;c5-btnrow&quot;&gt;
+  &lt;a class=&quot;c5-btn c5-btn--dark&quot; href=&quot;#&quot;&gt;kup teraz&lt;/a&gt;
+  &lt;a class=&quot;c5-btn c5-btn--light&quot; href=&quot;#&quot;&gt;porównaj warianty&lt;/a&gt;
+  &lt;a class=&quot;c5-btn c5-btn--light&quot; href=&quot;#&quot;&gt;zapytaj doradcę&lt;/a&gt;
+&lt;/div&gt;</pre>
+</div></article>
+
+<article class="el" id="EL-05">
+<div class="el__info">
+<div class="el__head"><span class="kod"><a href="#EL-05">EL-05</a></span><h3 class="el__nazwa">Link treściowy</h3><span class="gr-et">Przyciski i linki</span></div>
+<p class="cel">.wf-link</p>
+<p>Zwykły link w zdaniu, prosto z kitu – jedyny element akcji, którego V7 nie przepisuje. Zostaje bez zmian, bo działa i jest używany na pięciu stronach.</p>
+<span class="etk">Warianty</span><ul class="war"><li><code>.wf-link--muted</code> – przygaszony, nadal podkreślony</li><li><code>.wf-link--quiet</code> – podkreślenie dopiero po najechaniu</li></ul>
+<span class="etk">Gdzie w kodzie</span><p><code>wireframe.css – 3. TYPOGRAPHY / links</code></p>
+<span class="etk">Używany w (11)</span><div class="chips"><a class="chip" href="ce-indeks.html#CE-08">CE-08</a><a class="chip" href="ce-indeks.html#CE-17">CE-17</a><a class="chip" href="ce-indeks.html#CE-18">CE-18</a><a class="chip" href="ce-indeks.html#CE-19">CE-19</a><a class="chip" href="ce-indeks.html#CE-20">CE-20</a><a class="chip" href="ce-indeks.html#CE-21">CE-21</a><a class="chip" href="ce-indeks.html#CE-22">CE-22</a><a class="chip" href="ce-indeks.html#CE-25">CE-25</a><a class="chip" href="ce-indeks.html#CE-28">CE-28</a><a class="chip" href="ce-indeks.html#CE-29">CE-29</a><a class="chip" href="ce-indeks.html#CE-38">CE-38</a></div>
+</div>
+<div class="el__demo">
+<div class="sg-scena"><p class="sg-tekst">Dawki dobierzesz w <a class="wf-link" href="#">konfiguratorze</a>, a metodykę opisuje <a class="wf-link wf-link--muted" href="#">karta produktu</a>. Szczegóły badań zostawiamy w <a class="wf-link wf-link--quiet" href="#">centrum wiedzy</a>.</p></div>
+<pre>&lt;p class=&quot;sg-tekst&quot;&gt;
+  Dawki dobierzesz w
+  &lt;a class=&quot;wf-link&quot; href=&quot;#&quot;&gt;konfiguratorze&lt;/a&gt;
+  , a metodykę opisuje
+  &lt;a class=&quot;wf-link wf-link--muted&quot; href=&quot;#&quot;&gt;karta produktu&lt;/a&gt;
+  . Szczegóły badań zostawiamy w
+  &lt;a class=&quot;wf-link wf-link--quiet&quot; href=&quot;#&quot;&gt;centrum wiedzy&lt;/a&gt;
+  .&lt;/p&gt;</pre>
+</div></article>
+
+<h2 class="gr" id="grupa-typografia">Kicker, nagłówki, lead <span>· 9 elementów</span></h2>
+
+<article class="el" id="EL-06">
+<div class="el__info">
+<div class="el__head"><span class="kod"><a href="#EL-06">EL-06</a></span><h3 class="el__nazwa">Kicker</h3><span class="gr-et">Kicker, nagłówki, lead</span></div>
+<p class="cel">.c5-kicker</p>
+<p>Nadtytuł sekcji: 0.875 rem, wersaliki, tracking .03em i duży odstęp do treści pod spodem. Dwanaście lokalnych nadpisań margin-bottom:0 czeka na wariant --flush.</p>
+<span class="etk">Warianty</span><ul class="war"><li><code>.c5-kicker--center</code> – wyśrodkowany</li><li><code>.c5-kicker--flush</code> – bez odstępu pod spodem<span class="brak">brak w CSS</span></li></ul>
+<span class="etk">Gdzie w kodzie</span><p><code>ce/00-base.css – Wspólne klocki nowego layoutu</code></p>
+<span class="etk">Używany w (14)</span><div class="chips"><a class="chip" href="ce-indeks.html#CE-08">CE-08</a><a class="chip" href="ce-indeks.html#CE-11">CE-11</a><a class="chip" href="ce-indeks.html#CE-12">CE-12</a><a class="chip" href="ce-indeks.html#CE-14">CE-14</a><a class="chip" href="ce-indeks.html#CE-15">CE-15</a><a class="chip" href="ce-indeks.html#CE-17">CE-17</a><a class="chip" href="ce-indeks.html#CE-20">CE-20</a><a class="chip" href="ce-indeks.html#CE-30">CE-30</a><a class="chip" href="ce-indeks.html#CE-32">CE-32</a><a class="chip" href="ce-indeks.html#CE-39">CE-39</a><a class="chip" href="ce-indeks.html#CE-40">CE-40</a><a class="chip" href="ce-indeks.html#CE-45">CE-45</a><a class="chip" href="ce-indeks.html#CE-46">CE-46</a><a class="chip" href="ce-indeks.html#CE-47">CE-47</a></div>
+<span class="etk">Zastępuje</span><ul class="zast"><li>c5-kicker--center (osobna kopia w ośmiu arkuszach)</li></ul>
+</div>
+<div class="el__demo">
+<div class="sg-scena"><span class="c5-kicker">Czym jest CARBOMAT ECO</span><span class="c5-kicker c5-kicker--center">Dla dociekliwych</span></div>
+<pre>&lt;span class=&quot;c5-kicker&quot;&gt;Czym jest CARBOMAT ECO&lt;/span&gt;
+&lt;span class=&quot;c5-kicker c5-kicker--center&quot;&gt;Dla dociekliwych&lt;/span&gt;</pre>
+</div></article>
+
+<article class="el" id="EL-07">
+<div class="el__info">
+<div class="el__head"><span class="kod"><a href="#EL-07">EL-07</a></span><h3 class="el__nazwa">Overline</h3><span class="gr-et">Kicker, nagłówki, lead</span><span class="plakietka">planowane (fala 2b/2c)</span></div>
+<p class="cel">.c5-overline</p>
+<p>Mała etykieta 0.75 rem z trackingiem .06em nad liczbą, kafelkiem albo wierszem tabeli – rola inna niż kicker, bo nie otwiera sekcji. Trzynaście klas o identycznej treści schodzi do jednej z trzema modyfikatorami.</p>
+<span class="etk">Warianty</span><ul class="war"><li><code>.c5-overline--plain</code> – bez wersalików<span class="brak">brak w CSS</span></li><li><code>.c5-overline--ondark</code> – na ciemnym tle<span class="brak">brak w CSS</span></li><li><code>.c5-overline--solid</code> – biała na ciemnym prostokącie<span class="brak">brak w CSS</span></li></ul>
+<span class="etk">Dziś w kodzie</span><div class="chips"><span class="chip">c5-viz__tag</span><span class="chip">c5-mt-card__no</span><span class="chip">u-lab</span><span class="chip">i dziesięć innych klas</span></div>
+<span class="etk">Gdzie w kodzie</span><p><code>do dopisania w ce/00-base.css (fala 2b)</code></p>
+<span class="etk">Używany w (11)</span><div class="chips"><a class="chip" href="ce-indeks.html#CE-12">CE-12</a><a class="chip" href="ce-indeks.html#CE-20">CE-20</a><a class="chip" href="ce-indeks.html#CE-21">CE-21</a><a class="chip" href="ce-indeks.html#CE-25">CE-25</a><a class="chip" href="ce-indeks.html#CE-26">CE-26</a><a class="chip" href="ce-indeks.html#CE-30">CE-30</a><a class="chip" href="ce-indeks.html#CE-33">CE-33</a><a class="chip" href="ce-indeks.html#CE-43">CE-43</a><a class="chip" href="ce-indeks.html#CE-44">CE-44</a><a class="chip" href="ce-indeks.html#CE-45">CE-45</a><a class="chip" href="ce-indeks.html#CE-46">CE-46</a></div>
+<span class="etk">Zastępuje</span><ul class="zast"><li>c5-viz__tag, c5-mt-card__no, c5-mt-proof__tag, c5hu-rule__label</li><li>c5hu-stack__no, c5pr-path__no, c5-cmp2__no, c5-tco__no</li><li>u-lab, u-fz__no, u-cr__no, u-rules__no, u-vtab__no (linia kitu)</li></ul>
+<span class="etk">Uwagi</span><p class="mut">Decyzja z inwentarza §2: skala ECO (0.75 rem / .06em), nie skala kitu (--w-font-caption + .08em) – 92 wystąpienia na sześciu stronach wobec 123 skupionych na jednej.</p>
+</div>
+<div class="el__demo">
+<div class="sg-scena"><div class="sg-stos"><span class="c5-overline">01 · Pochodzenie</span><span class="c5-overline c5-overline--plain">02</span></div><div class="sg-ondark"><span class="c5-overline c5-overline--ondark">Zasobność</span></div></div>
+<p class="uwaga-plan">Klasa <code>.c5-overline</code> nie jest jeszcze w arkuszach – przykład pokazuje docelowy markup, nie docelowy wygląd.</p>
+<pre>&lt;div class=&quot;sg-stos&quot;&gt;
+  &lt;span class=&quot;c5-overline&quot;&gt;01 · Pochodzenie&lt;/span&gt;
+  &lt;span class=&quot;c5-overline c5-overline--plain&quot;&gt;02&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sg-ondark&quot;&gt;
+  &lt;span class=&quot;c5-overline c5-overline--ondark&quot;&gt;Zasobność&lt;/span&gt;
+&lt;/div&gt;</pre>
+</div></article>
+
+<article class="el" id="EL-08">
+<div class="el__info">
+<div class="el__head"><span class="kod"><a href="#EL-08">EL-08</a></span><h3 class="el__nazwa">Nagłówek strony</h3><span class="gr-et">Kicker, nagłówki, lead</span></div>
+<p class="cel">.c5-h1</p>
+<p>Jedyny h1 na podstronie, w hero: clamp od 2,1 do 3,125 rem, waga 500, tracking −0.01em. Element bez wariantów – siedem stron, siedem wystąpień, jedna definicja.</p>
+<span class="etk">Gdzie w kodzie</span><p><code>ce/00-base.css – Wspólne klocki nowego layoutu</code></p>
+<span class="etk">Używany w (1)</span><div class="chips"><a class="chip" href="ce-indeks.html#CE-08">CE-08</a></div>
+<span class="etk">Zastępuje</span><ul class="zast"><li>lokalne zmniejszenie w carbomat-humic.css (do decyzji)</li></ul>
+</div>
+<div class="el__demo">
+<div class="sg-scena"><h1 class="c5-h1">CARBOMAT ECO – surowy polski lignit</h1></div>
+<pre>&lt;h1 class=&quot;c5-h1&quot;&gt;CARBOMAT ECO – surowy polski lignit&lt;/h1&gt;</pre>
+</div></article>
+
+<article class="el" id="EL-09">
+<div class="el__info">
+<div class="el__head"><span class="kod"><a href="#EL-09">EL-09</a></span><h3 class="el__nazwa">Nagłówek sekcji</h3><span class="gr-et">Kicker, nagłówki, lead</span><span class="plakietka">planowane (fala 2b/2c)</span></div>
+<p class="cel">.c5-h2</p>
+<p>Nagłówek sekcji: clamp od 1,7 do 2,5 rem, waga 500, szerokość łamania 784 px. Wchłania c5-params__title i nagłówki kitu z Kukurydzy, które dziś mają wagę 700.</p>
+<span class="etk">Warianty</span><ul class="war"><li><code>.c5-h2--center</code> – wyśrodkowany</li><li><code>.c5-h2--tight</code> – mniejszy, do pasa parametrów<span class="brak">brak w CSS</span></li><li><code>.c5-h2--sm</code> – scena sterowana przewijaniem<span class="brak">brak w CSS</span></li></ul>
+<span class="etk">Dziś w kodzie</span><div class="chips"><span class="chip">wf-h2</span><span class="chip">c5-params__title</span><span class="chip">u-fk__title</span><span class="chip">u-end__t</span></div>
+<span class="etk">Gdzie w kodzie</span><p><code>ce/00-base.css – Wspólne klocki nowego layoutu</code></p>
+<span class="etk">Używany w (22)</span><div class="chips"><a class="chip" href="ce-indeks.html#CE-10">CE-10</a><a class="chip" href="ce-indeks.html#CE-11">CE-11</a><a class="chip" href="ce-indeks.html#CE-12">CE-12</a><a class="chip" href="ce-indeks.html#CE-14">CE-14</a><a class="chip" href="ce-indeks.html#CE-15">CE-15</a><a class="chip" href="ce-indeks.html#CE-16">CE-16</a><a class="chip" href="ce-indeks.html#CE-17">CE-17</a><a class="chip" href="ce-indeks.html#CE-18">CE-18</a><a class="chip" href="ce-indeks.html#CE-20">CE-20</a><a class="chip" href="ce-indeks.html#CE-24">CE-24</a><a class="chip" href="ce-indeks.html#CE-25">CE-25</a><a class="chip" href="ce-indeks.html#CE-30">CE-30</a><a class="chip" href="ce-indeks.html#CE-32">CE-32</a><a class="chip" href="ce-indeks.html#CE-39">CE-39</a><a class="chip" href="ce-indeks.html#CE-40">CE-40</a><a class="chip" href="ce-indeks.html#CE-44">CE-44</a><a class="chip" href="ce-indeks.html#CE-45">CE-45</a><a class="chip" href="ce-indeks.html#CE-46">CE-46</a><a class="chip" href="ce-indeks.html#CE-47">CE-47</a><a class="chip" href="ce-indeks.html#CE-48">CE-48</a><a class="chip" href="ce-indeks.html#CE-49">CE-49</a><a class="chip" href="ce-indeks.html#CE-50">CE-50</a></div>
+<span class="etk">Zastępuje</span><ul class="zast"><li>wf-h2 (Kukurydza, 15 – waga 700 schodzi do 500)</li><li>c5-params__title</li><li>u-fk__title</li><li>u-end__t</li><li>pp-liczby__title</li></ul>
+<span class="etk">Uwagi</span><p class="mut">Warianty --tight i --sm nie są jeszcze w arkuszu; zamiana wf-h2 na Kukurydzy idzie w fali 2a, reszta w 2b.</p>
+</div>
+<div class="el__demo">
+<div class="sg-scena"><h2 class="c5-h2">Pięć rzeczy, które warto wiedzieć o lignicie</h2><h2 class="c5-h2 c5-h2--center">Który wariant dla mnie</h2></div>
+<pre>&lt;h2 class=&quot;c5-h2&quot;&gt;Pięć rzeczy, które warto wiedzieć o lignicie&lt;/h2&gt;
+&lt;h2 class=&quot;c5-h2 c5-h2--center&quot;&gt;Który wariant dla mnie&lt;/h2&gt;</pre>
+</div></article>
+
+<article class="el" id="EL-10">
+<div class="el__info">
+<div class="el__head"><span class="kod"><a href="#EL-10">EL-10</a></span><h3 class="el__nazwa">Nagłówek klocka</h3><span class="gr-et">Kicker, nagłówki, lead</span><span class="plakietka">planowane (fala 2b/2c)</span></div>
+<p class="cel">.c5-h3</p>
+<p>Nagłówek wewnątrz klocka – karty, kroku, kafla, pozycji listy – w pięciu rozmiarach jednej skali. To największy bałagan inwentarza: 36 klas o tym samym kroju czeka na scalenie w fali 2c.</p>
+<span class="etk">Warianty</span><ul class="war"><li><code>.c5-h3--xs</code> – 1 rem</li><li><code>.c5-h3--sm</code> – 1,0625 rem (baza)</li><li><code>.c5-h3--md</code> – 1,125 rem</li><li><code>.c5-h3--lg</code> – clamp 1,125 – 1,5 rem</li><li><code>.c5-h3--xl</code> – clamp 2 – 3 rem</li></ul>
+<span class="etk">Dziś w kodzie</span><div class="chips"><span class="chip">c5-fact__title</span><span class="chip">pp-step__title</span><span class="chip">c5-mt-card__title</span><span class="chip">u-h3</span><span class="chip">i 32 inne klasy</span></div>
+<span class="etk">Gdzie w kodzie</span><p><code>ce/00-base.css – EL · Interface elements → EL-10</code></p>
+<span class="etk">Używany w (16)</span><div class="chips"><a class="chip" href="ce-indeks.html#CE-12">CE-12</a><a class="chip" href="ce-indeks.html#CE-14">CE-14</a><a class="chip" href="ce-indeks.html#CE-17">CE-17</a><a class="chip" href="ce-indeks.html#CE-20">CE-20</a><a class="chip" href="ce-indeks.html#CE-22">CE-22</a><a class="chip" href="ce-indeks.html#CE-25">CE-25</a><a class="chip" href="ce-indeks.html#CE-26">CE-26</a><a class="chip" href="ce-indeks.html#CE-28">CE-28</a><a class="chip" href="ce-indeks.html#CE-30">CE-30</a><a class="chip" href="ce-indeks.html#CE-37">CE-37</a><a class="chip" href="ce-indeks.html#CE-40">CE-40</a><a class="chip" href="ce-indeks.html#CE-41">CE-41</a><a class="chip" href="ce-indeks.html#CE-43">CE-43</a><a class="chip" href="ce-indeks.html#CE-44">CE-44</a><a class="chip" href="ce-indeks.html#CE-46">CE-46</a><a class="chip" href="ce-indeks.html#CE-48">CE-48</a></div>
+<span class="etk">Zastępuje</span><ul class="zast"><li>36 klas h3/h4/h5 z siedmiu stron – m.in. c5-fact__title, pp-step__title, c5-mt-card__title, c5-band__title, u-h3, u-h4</li></ul>
+<span class="etk">Uwagi</span><p class="mut">Skala jest już w arkuszu (zaliczka z fali 2a), ale prawie nic jej jeszcze nie używa – scalenie 292 wystąpień idzie stroną po stronie w fali 2c.</p>
+</div>
+<div class="el__demo">
+<div class="sg-scena"><div class="sg-stos"><h3 class="c5-h3 c5-h3--xl">Dodatek do gleby</h3><h3 class="c5-h3 c5-h3--lg">Trwała próchnica, nie nawóz</h3><h3 class="c5-h3 c5-h3--md">Nasiąkliwość</h3><h3 class="c5-h3">Dawka na hektar</h3><h3 class="c5-h3 c5-h3--xs">Opakowanie</h3></div></div>
+<pre>&lt;div class=&quot;sg-stos&quot;&gt;
+  &lt;h3 class=&quot;c5-h3 c5-h3--xl&quot;&gt;Dodatek do gleby&lt;/h3&gt;
+  &lt;h3 class=&quot;c5-h3 c5-h3--lg&quot;&gt;Trwała próchnica, nie nawóz&lt;/h3&gt;
+  &lt;h3 class=&quot;c5-h3 c5-h3--md&quot;&gt;Nasiąkliwość&lt;/h3&gt;
+  &lt;h3 class=&quot;c5-h3&quot;&gt;Dawka na hektar&lt;/h3&gt;
+  &lt;h3 class=&quot;c5-h3 c5-h3--xs&quot;&gt;Opakowanie&lt;/h3&gt;
+&lt;/div&gt;</pre>
+</div></article>
+
+<article class="el" id="EL-11">
+<div class="el__info">
+<div class="el__head"><span class="kod"><a href="#EL-11">EL-11</a></span><h3 class="el__nazwa">Głowa sekcji</h3><span class="gr-et">Kicker, nagłówki, lead</span><span class="plakietka">planowane (fala 2b/2c)</span></div>
+<p class="cel">.c5-head</p>
+<p>Kontener kickera, nagłówka i leadu: kolumna z odstępem clamp od 1,25 do 2,25 rem. Element czysto strukturalny – dziewięć klas __head i __hd robi dziś dokładnie to samo.</p>
+<span class="etk">Warianty</span><ul class="war"><li><code>.c5-head--center</code> – wyśrodkowana<span class="brak">brak w CSS</span></li></ul>
+<span class="etk">Dziś w kodzie</span><div class="chips"><span class="chip">c5-facts-head</span><span class="chip">c5-season__head</span><span class="chip">u-cr__hd</span><span class="chip">i sześć innych</span></div>
+<span class="etk">Gdzie w kodzie</span><p><code>ce/00-base.css – Wspólne klocki nowego layoutu</code></p>
+<span class="etk">Używany w (13)</span><div class="chips"><a class="chip" href="ce-indeks.html#CE-11">CE-11</a><a class="chip" href="ce-indeks.html#CE-12">CE-12</a><a class="chip" href="ce-indeks.html#CE-13">CE-13</a><a class="chip" href="ce-indeks.html#CE-15">CE-15</a><a class="chip" href="ce-indeks.html#CE-20">CE-20</a><a class="chip" href="ce-indeks.html#CE-25">CE-25</a><a class="chip" href="ce-indeks.html#CE-30">CE-30</a><a class="chip" href="ce-indeks.html#CE-37">CE-37</a><a class="chip" href="ce-indeks.html#CE-39">CE-39</a><a class="chip" href="ce-indeks.html#CE-40">CE-40</a><a class="chip" href="ce-indeks.html#CE-45">CE-45</a><a class="chip" href="ce-indeks.html#CE-46">CE-46</a><a class="chip" href="ce-indeks.html#CE-47">CE-47</a></div>
+<span class="etk">Zastępuje</span><ul class="zast"><li>c5-facts-head</li><li>c5-season__head</li><li>c5-pop__head</li><li>pp-scene__head</li><li>u-cr__hd</li><li>u-lightbox__head</li><li>c5hu-use__head</li><li>c5-mt-proof__head</li></ul>
+<span class="etk">Uwagi</span><p class="mut">Do rozstrzygnięcia razem z odstępami kitu (wf-stack--N na Kukurydzy, 17 wystąpień) – dwa systemy odstępów obok siebie.</p>
+</div>
+<div class="el__demo">
+<div class="sg-scena"><div class="c5-head"><span class="c5-kicker c5-kicker--flush">Parametry</span><h2 class="c5-h2">Co dokładnie jest w worku</h2><p class="c5-lead">Wartości z karty produktu – zakres, nie jedna liczba, bo pokład różni się partiami.</p></div></div>
+<pre>&lt;div class=&quot;c5-head&quot;&gt;
+  &lt;span class=&quot;c5-kicker c5-kicker--flush&quot;&gt;Parametry&lt;/span&gt;
+  &lt;h2 class=&quot;c5-h2&quot;&gt;Co dokładnie jest w worku&lt;/h2&gt;
+  &lt;p class=&quot;c5-lead&quot;&gt;Wartości z karty produktu – zakres, nie jedna liczba, bo pokład różni się partiami.&lt;/p&gt;
+&lt;/div&gt;</pre>
+</div></article>
+
+<article class="el" id="EL-12">
+<div class="el__info">
+<div class="el__head"><span class="kod"><a href="#EL-12">EL-12</a></span><h3 class="el__nazwa">Lead</h3><span class="gr-et">Kicker, nagłówki, lead</span></div>
+<p class="cel">.c5-lead</p>
+<p>Akapit wprowadzający pod nagłówkiem: 1 rem, kolor secondary, łamanie do 710 px. W hero rośnie do 1,125 rem i łamie się węziej.</p>
+<span class="etk">Warianty</span><ul class="war"><li><code>.c5-lead--center</code> – wyśrodkowany</li><li><code>.c5-lead--hero</code> – większy, 1,125 rem – tylko w hero<span class="brak">brak w CSS</span></li></ul>
+<span class="etk">Gdzie w kodzie</span><p><code>ce/00-base.css – Wspólne klocki nowego layoutu</code></p>
+<span class="etk">Używany w (15)</span><div class="chips"><a class="chip" href="ce-indeks.html#CE-08">CE-08</a><a class="chip" href="ce-indeks.html#CE-11">CE-11</a><a class="chip" href="ce-indeks.html#CE-12">CE-12</a><a class="chip" href="ce-indeks.html#CE-14">CE-14</a><a class="chip" href="ce-indeks.html#CE-15">CE-15</a><a class="chip" href="ce-indeks.html#CE-18">CE-18</a><a class="chip" href="ce-indeks.html#CE-20">CE-20</a><a class="chip" href="ce-indeks.html#CE-25">CE-25</a><a class="chip" href="ce-indeks.html#CE-30">CE-30</a><a class="chip" href="ce-indeks.html#CE-37">CE-37</a><a class="chip" href="ce-indeks.html#CE-39">CE-39</a><a class="chip" href="ce-indeks.html#CE-40">CE-40</a><a class="chip" href="ce-indeks.html#CE-45">CE-45</a><a class="chip" href="ce-indeks.html#CE-46">CE-46</a><a class="chip" href="ce-indeks.html#CE-47">CE-47</a></div>
+<span class="etk">Zastępuje</span><ul class="zast"><li>c5-hero__lead</li><li>c5-facts-lead</li><li>u-fz__lead</li><li>u-lightbox__lead</li><li>pp-scene__lead</li><li>pp-farm__lead</li><li>c5pr-read__lead</li><li>c5pr-goals__lead</li><li>c5hu-recipe__lead</li></ul>
+<span class="etk">Uwagi</span><p class="mut">Wariant --hero jeszcze nie istnieje – dziś hero ma własną klasę c5-hero__lead.</p>
+</div>
+<div class="el__demo">
+<div class="sg-scena"><p class="c5-lead">Jeden składnik, który pracuje w glebie latami – nie nawóz na sezon, tylko trwała próchnica.</p><p class="c5-lead c5-lead--center">Dwa warianty, jedno źródło – ten sam pokład lignitu.</p></div>
+<pre>&lt;p class=&quot;c5-lead&quot;&gt;Jeden składnik, który pracuje w glebie latami – nie nawóz na sezon, tylko trwała próchnica.&lt;/p&gt;
+&lt;p class=&quot;c5-lead c5-lead--center&quot;&gt;Dwa warianty, jedno źródło – ten sam pokład lignitu.&lt;/p&gt;</pre>
+</div></article>
+
+<article class="el" id="EL-13">
+<div class="el__info">
+<div class="el__head"><span class="kod"><a href="#EL-13">EL-13</a></span><h3 class="el__nazwa">Akapit</h3><span class="gr-et">Kicker, nagłówki, lead</span><span class="plakietka">planowane (fala 2b/2c)</span></div>
+<p class="cel">.c5-p</p>
+<p>Zwykły akapit treści w klocku, w dwóch rozmiarach zamiast szesnastu klas o nazwach __txt, __body i __desc. Decyzja z inwentarza §4: bazą jest 0,9375 rem ze wzorca ECO.</p>
+<span class="etk">Warianty</span><ul class="war"><li><code>.c5-p--sm</code> – 0,9375 rem – treść karty<span class="brak">brak w CSS</span></li><li><code>.c5-p--xs</code> – 0,875 rem<span class="brak">brak w CSS</span></li><li><code>.c5-p--ondark</code> – na ciemnym tle<span class="brak">brak w CSS</span></li></ul>
+<span class="etk">Dziś w kodzie</span><div class="chips"><span class="chip">c5-muted</span><span class="chip">c5-fact__body</span><span class="chip">c5-mt-card__txt</span><span class="chip">i 14 innych</span></div>
+<span class="etk">Gdzie w kodzie</span><p><code>do dopisania w ce/00-base.css (fala 2b)</code></p>
+<span class="etk">Używany w (21)</span><div class="chips"><a class="chip" href="ce-indeks.html#CE-11">CE-11</a><a class="chip" href="ce-indeks.html#CE-12">CE-12</a><a class="chip" href="ce-indeks.html#CE-13">CE-13</a><a class="chip" href="ce-indeks.html#CE-15">CE-15</a><a class="chip" href="ce-indeks.html#CE-19">CE-19</a><a class="chip" href="ce-indeks.html#CE-20">CE-20</a><a class="chip" href="ce-indeks.html#CE-21">CE-21</a><a class="chip" href="ce-indeks.html#CE-23">CE-23</a><a class="chip" href="ce-indeks.html#CE-25">CE-25</a><a class="chip" href="ce-indeks.html#CE-26">CE-26</a><a class="chip" href="ce-indeks.html#CE-27">CE-27</a><a class="chip" href="ce-indeks.html#CE-28">CE-28</a><a class="chip" href="ce-indeks.html#CE-30">CE-30</a><a class="chip" href="ce-indeks.html#CE-31">CE-31</a><a class="chip" href="ce-indeks.html#CE-32">CE-32</a><a class="chip" href="ce-indeks.html#CE-36">CE-36</a><a class="chip" href="ce-indeks.html#CE-37">CE-37</a><a class="chip" href="ce-indeks.html#CE-38">CE-38</a><a class="chip" href="ce-indeks.html#CE-41">CE-41</a><a class="chip" href="ce-indeks.html#CE-44">CE-44</a><a class="chip" href="ce-indeks.html#CE-49">CE-49</a></div>
+<span class="etk">Zastępuje</span><ul class="zast"><li>c5-muted i 16 klas treści karty – m.in. c5-mt-card__txt, pp-kcard__body, c5-fact__body, c5hu-extra__body, pp-os__desc</li></ul>
+<span class="etk">Uwagi</span><p class="mut">c5-muted ma dziś dwie definicje (jasny kontekst i wnętrze c5-viz) – wariant --ondark ma je zastąpić.</p>
+</div>
+<div class="el__demo">
+<div class="sg-scena"><div class="sg-stos"><p class="c5-p">Lignit nie mineralizuje się jak obornik – zostaje w glebie kilkanaście lat.</p><p class="c5-p c5-p--sm">Dawka zależy od zasobności gleby i uprawy; konfigurator liczy ją na hektar.</p></div></div>
+<p class="uwaga-plan">Klasa <code>.c5-p</code> nie jest jeszcze w arkuszach – przykład pokazuje docelowy markup, nie docelowy wygląd.</p>
+<pre>&lt;div class=&quot;sg-stos&quot;&gt;
+  &lt;p class=&quot;c5-p&quot;&gt;Lignit nie mineralizuje się jak obornik – zostaje w glebie kilkanaście lat.&lt;/p&gt;
+  &lt;p class=&quot;c5-p c5-p--sm&quot;&gt;Dawka zależy od zasobności gleby i uprawy; konfigurator liczy ją na hektar.&lt;/p&gt;
+&lt;/div&gt;</pre>
+</div></article>
+
+<article class="el" id="EL-14">
+<div class="el__info">
+<div class="el__head"><span class="kod"><a href="#EL-14">EL-14</a></span><h3 class="el__nazwa">Przypis / źródło</h3><span class="gr-et">Kicker, nagłówki, lead</span></div>
+<p class="cel">.c5-src</p>
+<p>Linijka pod danymi, wykresem albo tabelą: skąd wzięta jest liczba. 0,75 rem w kolorze tertiary; na ciemnym tle biel .8, czyli więcej niż dotychczasowe .55 – świadoma poprawka kontrastu AA.</p>
+<span class="etk">Warianty</span><ul class="war"><li><code>.c5-src--ondark</code> – na ciemnym tle – biel .8, nie .55</li></ul>
+<span class="etk">Gdzie w kodzie</span><p><code>ce/00-base.css – EL · Interface elements → EL-14</code></p>
+<span class="etk">Używany w (10)</span><div class="chips"><a class="chip" href="ce-indeks.html#CE-10">CE-10</a><a class="chip" href="ce-indeks.html#CE-12">CE-12</a><a class="chip" href="ce-indeks.html#CE-20">CE-20</a><a class="chip" href="ce-indeks.html#CE-22">CE-22</a><a class="chip" href="ce-indeks.html#CE-24">CE-24</a><a class="chip" href="ce-indeks.html#CE-25">CE-25</a><a class="chip" href="ce-indeks.html#CE-30">CE-30</a><a class="chip" href="ce-indeks.html#CE-32">CE-32</a><a class="chip" href="ce-indeks.html#CE-40">CE-40</a><a class="chip" href="ce-indeks.html#CE-41">CE-41</a></div>
+<span class="etk">Zastępuje</span><ul class="zast"><li>c5-viz__cap (6 stron, 37)</li><li>c5pr-tab__note (14)</li><li>c5-mt-stat__src (7)</li><li>c5pr-block__src (5)</li><li>c5-params__src (4 strony, 5)</li><li>u-fz__src</li><li>u-num__cap</li><li>c5-lb__src</li><li>c5pr-techsheet__src</li><li>u-end__src</li><li>c5hu-time__cap</li><li>c5pr-lead-note</li></ul>
+<span class="etk">Uwagi</span><p class="mut">Podniesienie bieli z .55/.6 do .8 to jedyna zamierzona zmiana wyglądu w tym elemencie – zapisana w backlogu jako poprawka AA.</p>
+</div>
+<div class="el__demo">
+<div class="sg-scena"><p class="c5-src">Wartości z karty produktu, partia 2026/01.</p><div class="sg-ondark"><p class="c5-src c5-src--ondark">Stopień humifikacji – porównanie jakościowe wg materiałów producenta.</p></div></div>
+<pre>&lt;p class=&quot;c5-src&quot;&gt;Wartości z karty produktu, partia 2026/01.&lt;/p&gt;
+&lt;div class=&quot;sg-ondark&quot;&gt;
+  &lt;p class=&quot;c5-src c5-src--ondark&quot;&gt;Stopień humifikacji – porównanie jakościowe wg materiałów producenta.&lt;/p&gt;
+&lt;/div&gt;</pre>
+</div></article>
+
+<h2 class="gr" id="grupa-pojemniki">Karty, boksy, pasy <span>· 4 elementów</span></h2>
+
+<article class="el" id="EL-15">
+<div class="el__info">
+<div class="el__head"><span class="kod"><a href="#EL-15">EL-15</a></span><h3 class="el__nazwa">Karta</h3><span class="gr-et">Karty, boksy, pasy</span><span class="plakietka">planowane (fala 2b/2c)</span></div>
+<p class="cel">.c5-card</p>
+<p>Prostokąt z obrysem 1 px, bez cienia i bez promienia – anatomia wspólna dla 25 dzisiejszych klas kart i kafli. Największa pojedyncza wygrana inwentarza i zarazem największe ryzyko, dlatego robimy ją na końcu, stroną po stronie.</p>
+<span class="etk">Warianty</span><ul class="war"><li><code>.c5-card--pad-sm</code> – padding 16 px<span class="brak">brak w CSS</span></li><li><code>.c5-card--pad-lg</code> – padding clamp 1,5 – 2 rem<span class="brak">brak w CSS</span></li><li><code>.c5-card--hover</code> – obrys ciemnieje po najechaniu<span class="brak">brak w CSS</span></li><li><code>.c5-card--dashed</code> – obrys przerywany<span class="brak">brak w CSS</span></li><li><code>.c5-card--dark</code> – odwrócona, na przyciemnionym tle<span class="brak">brak w CSS</span></li><li><code>.c5-card--photo</code> – ze zdjęciem 4:3 nad treścią<span class="brak">brak w CSS</span></li></ul>
+<span class="etk">Dziś w kodzie</span><div class="chips"><span class="chip">c5-mt-card</span><span class="chip">c5hu-tile</span><span class="chip">pp-mcard</span><span class="chip">u-fk__tile</span><span class="chip">i 21 innych</span></div>
+<span class="etk">Gdzie w kodzie</span><p><code>do dopisania w ce/00-base.css (fala 2c)</code></p>
+<span class="etk">Używany w (15)</span><div class="chips"><a class="chip" href="ce-indeks.html#CE-11">CE-11</a><a class="chip" href="ce-indeks.html#CE-13">CE-13</a><a class="chip" href="ce-indeks.html#CE-20">CE-20</a><a class="chip" href="ce-indeks.html#CE-22">CE-22</a><a class="chip" href="ce-indeks.html#CE-25">CE-25</a><a class="chip" href="ce-indeks.html#CE-26">CE-26</a><a class="chip" href="ce-indeks.html#CE-28">CE-28</a><a class="chip" href="ce-indeks.html#CE-34">CE-34</a><a class="chip" href="ce-indeks.html#CE-41">CE-41</a><a class="chip" href="ce-indeks.html#CE-44">CE-44</a><a class="chip" href="ce-indeks.html#CE-45">CE-45</a><a class="chip" href="ce-indeks.html#CE-46">CE-46</a><a class="chip" href="ce-indeks.html#CE-48">CE-48</a><a class="chip" href="ce-indeks.html#CE-50">CE-50</a><a class="chip" href="ce-indeks.html#CE-52">CE-52</a></div>
+<span class="etk">Zastępuje</span><ul class="zast"><li>25 klas kart i kafli – m.in. c5-mt-card, c5hu-tile, c5pr-block, pp-mcard, pp-kcard, u-fk__tile, u-cr__card, c5-var__tile, c5-use__box</li></ul>
+<span class="etk">Uwagi</span><p class="mut">Padding schodzi z ośmiu wartości do trzech (16 / clamp 1,25–1,75 / clamp 1,5–2). Cień zniknął już w fali 2a – jedyny w całym serwisie siedział na u-fk__tile.</p>
+</div>
+<div class="el__demo">
+<div class="sg-scena"><div class="sg-siatka"><div class="c5-card"><h3 class="c5-h3 c5-h3--md">Dodatek do gleby</h3><p class="c5-p c5-p--sm">Miesza się z glebą przed siewem.</p></div><div class="c5-card c5-card--hover c5-card--pad-sm"><h3 class="c5-h3 c5-h3--md">Ściółka</h3><p class="c5-p c5-p--sm">Warstwa na powierzchni.</p></div></div></div>
+<p class="uwaga-plan">Klasa <code>.c5-card</code> nie jest jeszcze w arkuszach – przykład pokazuje docelowy markup, nie docelowy wygląd.</p>
+<pre>&lt;div class=&quot;sg-siatka&quot;&gt;
+  &lt;div class=&quot;c5-card&quot;&gt;
+    &lt;h3 class=&quot;c5-h3 c5-h3--md&quot;&gt;Dodatek do gleby&lt;/h3&gt;
+    &lt;p class=&quot;c5-p c5-p--sm&quot;&gt;Miesza się z glebą przed siewem.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;c5-card c5-card--hover c5-card--pad-sm&quot;&gt;
+    &lt;h3 class=&quot;c5-h3 c5-h3--md&quot;&gt;Ściółka&lt;/h3&gt;
+    &lt;p class=&quot;c5-p c5-p--sm&quot;&gt;Warstwa na powierzchni.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+</div></article>
+
+<article class="el" id="EL-17">
+<div class="el__info">
+<div class="el__head"><span class="kod"><a href="#EL-17">EL-17</a></span><h3 class="el__nazwa">Nota</h3><span class="gr-et">Karty, boksy, pasy</span></div>
+<p class="cel">.c5-note</p>
+<p>Ikona i akapit w ramce: ostrzeżenie, wyjaśnienie pod FAQ, informacja o niezależności badania. Dziewięć klas miało tę samą anatomię – flex, odstęp 12 px, ikona wyrównana do pierwszego wiersza.</p>
+<span class="etk">Warianty</span><ul class="war"><li><code>.c5-note--strong</code> – obrys ciemny – ostrzeżenie</li><li><code>.c5-note--soft</code> – obrys jasny, tekst secondary</li><li><code>.c5-note--rule</code> – tylko kreska u góry, bez ramki</li><li><code>.c5-note--dashed</code> – obrys przerywany – brak danych</li><li><code>.c5-note--sm</code> – mniejszy krój, 0,875 rem</li></ul>
+<span class="etk">Gdzie w kodzie</span><p><code>ce/00-base.css – EL · Interface elements → EL-17</code></p>
+<span class="etk">Używany w (7)</span><div class="chips"><a class="chip" href="ce-indeks.html#CE-17">CE-17</a><a class="chip" href="ce-indeks.html#CE-28">CE-28</a><a class="chip" href="ce-indeks.html#CE-31">CE-31</a><a class="chip" href="ce-indeks.html#CE-37">CE-37</a><a class="chip" href="ce-indeks.html#CE-40">CE-40</a><a class="chip" href="ce-indeks.html#CE-48">CE-48</a><a class="chip" href="ce-indeks.html#CE-50">CE-50</a></div>
+<span class="etk">Zastępuje</span><ul class="zast"><li>c5hu-warn i c5hu-warn--soft (CARBOHUMIC, 4)</li><li>c5pr-note (Produkty, 3)</li><li>pp-note (Próchnica+, 2)</li><li>c5-mt-note (Mata, 2)</li><li>c5-gap blokowy (HUMIC, 4)</li><li>c5hu-faqnote</li><li>pp-msg</li><li>pp-person__indep</li></ul>
+<span class="etk">Uwagi</span><p class="mut">Wariant --dashed to dawna nota brak danych – jedyny bez ikony. c5-mt-note ma dziś kreskę z lewej, nie z góry: przejście na --rule jest widoczną zmianą i czeka na decyzję Mateusza.</p>
+</div>
+<div class="el__demo">
+<div class="sg-scena"><div class="sg-stos"><div class="c5-note c5-note--strong"><svg class="wf-icon" aria-hidden="true"><use href="#ti-alert-triangle"></use></svg><p>Nie mieszaj z nawozami wapniowymi w jednym przejeździe.</p></div><div class="c5-note c5-note--soft c5-note--sm"><svg class="wf-icon" aria-hidden="true"><use href="#ti-info-circle"></use></svg><p>Wartości dotyczą partii z jednego pokładu – zakres, nie jedna liczba.</p></div><div class="c5-note c5-note--rule"><svg class="wf-icon" aria-hidden="true"><use href="#ti-flask"></use></svg><p>Badanie prowadzi niezależne laboratorium.</p></div><div class="c5-note c5-note--dashed c5-note--sm"><p>dane w uzupełnieniu</p></div></div></div>
+<pre>&lt;div class=&quot;sg-stos&quot;&gt;
+  &lt;div class=&quot;c5-note c5-note--strong&quot;&gt;
+    &lt;svg class=&quot;wf-icon&quot; aria-hidden=&quot;true&quot;&gt;&lt;use href=&quot;#ti-alert-triangle&quot;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;p&gt;Nie mieszaj z nawozami wapniowymi w jednym przejeździe.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;c5-note c5-note--soft c5-note--sm&quot;&gt;
+    &lt;svg class=&quot;wf-icon&quot; aria-hidden=&quot;true&quot;&gt;&lt;use href=&quot;#ti-info-circle&quot;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;p&gt;Wartości dotyczą partii z jednego pokładu – zakres, nie jedna liczba.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;c5-note c5-note--rule&quot;&gt;
+    &lt;svg class=&quot;wf-icon&quot; aria-hidden=&quot;true&quot;&gt;&lt;use href=&quot;#ti-flask&quot;&gt;&lt;/use&gt;&lt;/svg&gt;
+    &lt;p&gt;Badanie prowadzi niezależne laboratorium.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;c5-note c5-note--dashed c5-note--sm&quot;&gt;
+    &lt;p&gt;dane w uzupełnieniu&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+</div></article>
+
+<article class="el el--szeroki" id="EL-29">
+<div class="el__info">
+<div class="el__head"><span class="kod"><a href="#EL-29">EL-29</a></span><h3 class="el__nazwa">Kontener</h3><span class="gr-et">Karty, boksy, pasy</span></div>
+<p class="cel">.c5-wrap</p>
+<p>Środkowa kolumna strony: maksymalnie 1180 px, boczny padding 20 px, wyśrodkowana. Osiem identycznych kopii w arkuszach stron zeszło do jednej definicji – zmierzone wartości są na siedmiu stronach takie same.</p>
+<span class="etk">Warianty</span><ul class="war"><li><code>.c5-wrap--narrow</code> – węższa kolumna do czytania<span class="brak">brak w CSS</span></li></ul>
+<span class="etk">Gdzie w kodzie</span><p><code>ce/00-base.css – Wspólne klocki nowego layoutu</code></p>
+<span class="etk">Używany w (23)</span><div class="chips"><a class="chip" href="ce-indeks.html#CE-08">CE-08</a><a class="chip" href="ce-indeks.html#CE-10">CE-10</a><a class="chip" href="ce-indeks.html#CE-11">CE-11</a><a class="chip" href="ce-indeks.html#CE-12">CE-12</a><a class="chip" href="ce-indeks.html#CE-14">CE-14</a><a class="chip" href="ce-indeks.html#CE-16">CE-16</a><a class="chip" href="ce-indeks.html#CE-17">CE-17</a><a class="chip" href="ce-indeks.html#CE-18">CE-18</a><a class="chip" href="ce-indeks.html#CE-20">CE-20</a><a class="chip" href="ce-indeks.html#CE-24">CE-24</a><a class="chip" href="ce-indeks.html#CE-29">CE-29</a><a class="chip" href="ce-indeks.html#CE-30">CE-30</a><a class="chip" href="ce-indeks.html#CE-32">CE-32</a><a class="chip" href="ce-indeks.html#CE-37">CE-37</a><a class="chip" href="ce-indeks.html#CE-39">CE-39</a><a class="chip" href="ce-indeks.html#CE-40">CE-40</a><a class="chip" href="ce-indeks.html#CE-44">CE-44</a><a class="chip" href="ce-indeks.html#CE-45">CE-45</a><a class="chip" href="ce-indeks.html#CE-46">CE-46</a><a class="chip" href="ce-indeks.html#CE-47">CE-47</a><a class="chip" href="ce-indeks.html#CE-48">CE-48</a><a class="chip" href="ce-indeks.html#CE-49">CE-49</a><a class="chip" href="ce-indeks.html#CE-50">CE-50</a></div>
+<span class="etk">Zastępuje</span><ul class="zast"><li>osiem identycznych kopii w arkuszach stron</li><li>wf-container z kitu – zero użyć w V7</li></ul>
+</div>
+<div class="el__demo">
+<div class="sg-scena"><div class="c5-wrap sg-ramka"><p class="c5-p">Wszystko, co czyta się w tekście, mieści się w tej kolumnie – pasy tła idą pełną szerokością, treść nigdy.</p></div></div>
+<pre>&lt;div class=&quot;c5-wrap sg-ramka&quot;&gt;
+  &lt;p class=&quot;c5-p&quot;&gt;Wszystko, co czyta się w tekście, mieści się w tej kolumnie – pasy tła idą pełną szerokością, treść nigdy.&lt;/p&gt;
+&lt;/div&gt;</pre>
+</div></article>
+
+<article class="el el--szeroki" id="EL-30">
+<div class="el__info">
+<div class="el__head"><span class="kod"><a href="#EL-30">EL-30</a></span><h3 class="el__nazwa">Sekcja</h3><span class="gr-et">Karty, boksy, pasy</span></div>
+<p class="cel">.c5-sec</p>
+<p>Pionowy rytm strony: padding-block clamp od 3,5 do 6,25 rem. Jasny pas jest dziś osobną klasą c5-band, a cztery strony mają własne warianty sekcji z sufiksem.</p>
+<span class="etk">Warianty</span><ul class="war"><li><code>.c5-sec--band</code> – jasny pas (dziś osobna klasa c5-band)<span class="brak">brak w CSS</span></li><li><code>.c5-sec--dark</code> – ciemny pas<span class="brak">brak w CSS</span></li><li><code>.c5-sec--flush</code> – bez odstępu pionowego<span class="brak">brak w CSS</span></li></ul>
+<span class="etk">Gdzie w kodzie</span><p><code>ce/00-base.css – Wspólne klocki nowego layoutu</code></p>
+<span class="etk">Używany w (20)</span><div class="chips"><a class="chip" href="ce-indeks.html#CE-11">CE-11</a><a class="chip" href="ce-indeks.html#CE-12">CE-12</a><a class="chip" href="ce-indeks.html#CE-14">CE-14</a><a class="chip" href="ce-indeks.html#CE-16">CE-16</a><a class="chip" href="ce-indeks.html#CE-17">CE-17</a><a class="chip" href="ce-indeks.html#CE-18">CE-18</a><a class="chip" href="ce-indeks.html#CE-20">CE-20</a><a class="chip" href="ce-indeks.html#CE-24">CE-24</a><a class="chip" href="ce-indeks.html#CE-30">CE-30</a><a class="chip" href="ce-indeks.html#CE-32">CE-32</a><a class="chip" href="ce-indeks.html#CE-37">CE-37</a><a class="chip" href="ce-indeks.html#CE-39">CE-39</a><a class="chip" href="ce-indeks.html#CE-40">CE-40</a><a class="chip" href="ce-indeks.html#CE-44">CE-44</a><a class="chip" href="ce-indeks.html#CE-45">CE-45</a><a class="chip" href="ce-indeks.html#CE-46">CE-46</a><a class="chip" href="ce-indeks.html#CE-47">CE-47</a><a class="chip" href="ce-indeks.html#CE-48">CE-48</a><a class="chip" href="ce-indeks.html#CE-49">CE-49</a><a class="chip" href="ce-indeks.html#CE-50">CE-50</a></div>
+<span class="etk">Zastępuje</span><ul class="zast"><li>siedem identycznych kopii w arkuszach stron</li><li>c5-facts-sec, c5-dose-sec, c5-diff-sec, pp-scene-sec</li></ul>
+<span class="etk">Uwagi</span><p class="mut">Na Kukurydzy sekcja jest niższa (76,8 px zamiast 89,6) przez lokalne nadpisanie u-num – do sprzątnięcia w fali 2b.</p>
+</div>
+<div class="el__demo">
+<div class="sg-scena"><section class="c5-sec c5-band sg-ramka"><div class="c5-wrap"><h2 class="c5-h2">Jasny pas</h2><p class="c5-lead">Sekcja na tle --w-surface-subtle – rytm pionowy taki sam jak w sekcji zwykłej.</p></div></section></div>
+<pre>&lt;section class=&quot;c5-sec c5-band sg-ramka&quot;&gt;
+  &lt;div class=&quot;c5-wrap&quot;&gt;
+    &lt;h2 class=&quot;c5-h2&quot;&gt;Jasny pas&lt;/h2&gt;
+    &lt;p class=&quot;c5-lead&quot;&gt;Sekcja na tle --w-surface-subtle – rytm pionowy taki sam jak w sekcji zwykłej.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</pre>
+</div></article>
+
+<h2 class="gr" id="grupa-sterowanie">Taby, chipy, akordeony, pola <span>· 5 elementów</span></h2>
+
+<article class="el" id="EL-16">
+<div class="el__info">
+<div class="el__head"><span class="kod"><a href="#EL-16">EL-16</a></span><h3 class="el__nazwa">Chip</h3><span class="gr-et">Taby, chipy, akordeony, pola</span></div>
+<p class="cel">.c5-chip</p>
+<p>Pigułka z obrysem i etykietą wersalikami – stan niesie STYL OBRYSU, nigdy kolor. To świadomy wzorzec z Próchnicy+, przeniesiony na wszystkie strony zamiast ośmiu podobnych pigułek.</p>
+<span class="etk">Warianty</span><ul class="war"><li><code>.c5-chip--dashed</code> – obrys przerywany – do zrobienia</li><li><code>.c5-chip--dotted</code> – obrys kropkowany – nie dotyczy</li><li><code>.c5-chip--solid</code> – obrys ciemny, pogrubiony – w trakcie</li><li><code>.c5-chip--ondark</code> – na ciemnym tle</li></ul>
+<span class="etk">Gdzie w kodzie</span><p><code>ce/00-base.css – EL · Interface elements → EL-16</code></p>
+<span class="etk">Używany w (13)</span><div class="chips"><a class="chip" href="ce-indeks.html#CE-10">CE-10</a><a class="chip" href="ce-indeks.html#CE-11">CE-11</a><a class="chip" href="ce-indeks.html#CE-12">CE-12</a><a class="chip" href="ce-indeks.html#CE-20">CE-20</a><a class="chip" href="ce-indeks.html#CE-22">CE-22</a><a class="chip" href="ce-indeks.html#CE-24">CE-24</a><a class="chip" href="ce-indeks.html#CE-28">CE-28</a><a class="chip" href="ce-indeks.html#CE-30">CE-30</a><a class="chip" href="ce-indeks.html#CE-37">CE-37</a><a class="chip" href="ce-indeks.html#CE-40">CE-40</a><a class="chip" href="ce-indeks.html#CE-46">CE-46</a><a class="chip" href="ce-indeks.html#CE-49">CE-49</a><a class="chip" href="ce-indeks.html#CE-50">CE-50</a></div>
+<span class="etk">Zastępuje</span><ul class="zast"><li>pp-ms__state i trzy jego stany (Próchnica+, 110)</li><li>u-chip-prod i u-phase__chip (Kukurydza, 17)</li><li>pp-chip i pp-chip--alt (8)</li><li>c5-mt-chip (4)</li><li>c5pr-gap, pp-todo, c5-gap, c5hu-todo (inline)</li><li>u-num__chip</li><li>c5hu-scope</li><li>wf-badge z kitu</li></ul>
+<span class="etk">Uwagi</span><p class="mut">Chip niesie wersaliki, więc etykieta musi być krótka – tam, gdzie dziś w pigułce siedzi całe zdanie (c5hu-scope, część c5pr-gap), element czeka na decyzję zamiast na sed.</p>
+</div>
+<div class="el__demo">
+<div class="sg-scena"><div class="c5-btnrow"><span class="c5-chip">nowość</span><span class="c5-chip c5-chip--solid">w trakcie</span><span class="c5-chip c5-chip--dashed">do zrobienia</span><span class="c5-chip c5-chip--dotted">nie dotyczy</span></div><div class="sg-ondark"><span class="c5-chip c5-chip--ondark">edycja 2026</span><span class="c5-chip c5-chip--ondark c5-chip--dashed">w przygotowaniu</span></div></div>
+<pre>&lt;div class=&quot;c5-btnrow&quot;&gt;
+  &lt;span class=&quot;c5-chip&quot;&gt;nowość&lt;/span&gt;
+  &lt;span class=&quot;c5-chip c5-chip--solid&quot;&gt;w trakcie&lt;/span&gt;
+  &lt;span class=&quot;c5-chip c5-chip--dashed&quot;&gt;do zrobienia&lt;/span&gt;
+  &lt;span class=&quot;c5-chip c5-chip--dotted&quot;&gt;nie dotyczy&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sg-ondark&quot;&gt;
+  &lt;span class=&quot;c5-chip c5-chip--ondark&quot;&gt;edycja 2026&lt;/span&gt;
+  &lt;span class=&quot;c5-chip c5-chip--ondark c5-chip--dashed&quot;&gt;w przygotowaniu&lt;/span&gt;
+&lt;/div&gt;</pre>
+</div></article>
+
+<article class="el" id="EL-18">
+<div class="el__info">
+<div class="el__head"><span class="kod"><a href="#EL-18">EL-18</a></span><h3 class="el__nazwa">Tab</h3><span class="gr-et">Taby, chipy, akordeony, pola</span><span class="plakietka">planowane (fala 2b/2c)</span></div>
+<p class="cel">.c5-tab</p>
+<p>Przełącznik widoku w pięciu dzisiejszych mechanikach – kafel z ikoną, tab tekstowy, pigułka, radio i nagłówek klikalny. Baza to kafel ECO: 56 px, 1 rem, ikona w ramce ⌀36.</p>
+<span class="etk">Warianty</span><ul class="war"><li><code>.c5-tab--tile</code> – kafel z ikoną, 56 px<span class="brak">brak w CSS</span></li><li><code>.c5-tab--compact</code> – kafel 44 px – pasek z sześcioma pozycjami<span class="brak">brak w CSS</span></li><li><code>.c5-tab--text</code> – tekstowy, bez tła<span class="brak">brak w CSS</span></li><li><code>.c5-tab--pill</code> – pigułka na ciemnym pasie<span class="brak">brak w CSS</span></li></ul>
+<span class="etk">Dziś w kodzie</span><div class="chips"><span class="chip">c5-way</span><span class="chip">c5-way--compact</span><span class="chip">c5pr-paths__tab</span><span class="chip">c5-params__tab</span></div>
+<span class="etk">Gdzie w kodzie</span><p><code>dziś ce/CE-11-warianty-taby.css (c5-way, c5-way--compact)</code></p>
+<span class="etk">Używany w (7)</span><div class="chips"><a class="chip" href="ce-indeks.html#CE-10">CE-10</a><a class="chip" href="ce-indeks.html#CE-11">CE-11</a><a class="chip" href="ce-indeks.html#CE-13">CE-13</a><a class="chip" href="ce-indeks.html#CE-19">CE-19</a><a class="chip" href="ce-indeks.html#CE-29">CE-29</a><a class="chip" href="ce-indeks.html#CE-30">CE-30</a><a class="chip" href="ce-indeks.html#CE-45">CE-45</a></div>
+<span class="etk">Zastępuje</span><ul class="zast"><li>c5-way i trzy jego skale (110 / 56 / 44 px)</li><li>c5pr-paths__tab</li><li>c5-params__tab</li><li>c5-mt-model__tab</li><li>c5hu-mixlist__name</li><li>c5-tco__h</li><li>c5-yrs__seg</li><li>c5-use__tab</li><li>u-vtab</li></ul>
+<span class="etk">Uwagi</span><p class="mut">Rozjazd 5 jest już spłacony: baza c5-way to skala ECO, a wariant --compact daje 44 px dla paska lat. Przemianowanie na c5-tab czeka na falę 2b razem z wycofaniem c5.css.</p>
+</div>
+<div class="el__demo">
+<div class="sg-scena"><div class="sg-stos"><button type="button" class="c5-tab c5-tab--tile" aria-selected="true"><span class="c5-icoframe c5-icoframe--circle"><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrows-sort"></use></svg></span><span>Dodatek do gleby</span></button><button type="button" class="c5-tab c5-tab--compact" aria-selected="false"><span class="c5-icoframe c5-icoframe--circle c5-icoframe--sm"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-calendar"></use></svg></span><span>2026</span></button></div></div>
+<p class="uwaga-plan">Klasa <code>.c5-tab</code> nie jest jeszcze w arkuszach – przykład pokazuje docelowy markup, nie docelowy wygląd.</p>
+<pre>&lt;div class=&quot;sg-stos&quot;&gt;
+  &lt;button type=&quot;button&quot; class=&quot;c5-tab c5-tab--tile&quot; aria-selected=&quot;true&quot;&gt;
+    &lt;span class=&quot;c5-icoframe c5-icoframe--circle&quot;&gt;&lt;svg class=&quot;wf-icon&quot; aria-hidden=&quot;true&quot;&gt;&lt;use href=&quot;#ti-arrows-sort&quot;&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/span&gt;
+    &lt;span&gt;Dodatek do gleby&lt;/span&gt;
+  &lt;/button&gt;
+  &lt;button type=&quot;button&quot; class=&quot;c5-tab c5-tab--compact&quot; aria-selected=&quot;false&quot;&gt;
+    &lt;span class=&quot;c5-icoframe c5-icoframe--circle c5-icoframe--sm&quot;&gt;&lt;svg class=&quot;wf-icon wf-icon--sm&quot; aria-hidden=&quot;true&quot;&gt;&lt;use href=&quot;#ti-calendar&quot;&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/span&gt;
+    &lt;span&gt;2026&lt;/span&gt;
+  &lt;/button&gt;
+&lt;/div&gt;</pre>
+</div></article>
+
+<article class="el" id="EL-19">
+<div class="el__info">
+<div class="el__head"><span class="kod"><a href="#EL-19">EL-19</a></span><h3 class="el__nazwa">Segment</h3><span class="gr-et">Taby, chipy, akordeony, pola</span><span class="plakietka">planowane (fala 2b/2c)</span></div>
+<p class="cel">.c5-seg</p>
+<p>Przełącznik segmentowy z pływającym kciukiem – świadomie osobny element, bo ma inną mechanikę niż tab. Dziś jeden egzemplarz na Produktach i jedyne miejsce w serwisie, które używa cienia z kitu.</p>
+<span class="etk">Warianty</span><ul class="war"><li><code>.c5-seg--pill</code> – zaokrąglony kciuk<span class="brak">brak w CSS</span></li></ul>
+<span class="etk">Dziś w kodzie</span><div class="chips"><span class="chip">c5pr-seg</span><span class="chip">c5pr-seg__tab</span><span class="chip">c5pr-seg__thumb</span><span class="chip">c5pr-seg__lbl</span></div>
+<span class="etk">Gdzie w kodzie</span><p><code>dziś produkty.css (c5pr-seg)</code></p>
+<span class="etk">Używany w (1)</span><div class="chips"><a class="chip" href="ce-indeks.html#CE-39">CE-39</a></div>
+<span class="etk">Zastępuje</span><ul class="zast"><li>c5pr-seg i trzy klasy jego wnętrza (Produkty)</li></ul>
+<span class="etk">Uwagi</span><p class="mut">Do rozstrzygnięcia przy przenoszeniu: promień sterowany zmienną --c5pr-seg-r (dziś 0) i jedyne użycie --w-shadow-xs w całym serwisie.</p>
+</div>
+<div class="el__demo">
+<div class="sg-scena"><div class="c5-seg" role="tablist"><span class="c5-seg__thumb"></span><button type="button" class="c5-seg__tab" aria-selected="true"><span class="c5-seg__lbl">doglebowo</span></button><button type="button" class="c5-seg__tab" aria-selected="false"><span class="c5-seg__lbl">dolistnie</span></button></div></div>
+<p class="uwaga-plan">Klasa <code>.c5-seg</code> nie jest jeszcze w arkuszach – przykład pokazuje docelowy markup, nie docelowy wygląd.</p>
+<pre>&lt;div class=&quot;c5-seg&quot; role=&quot;tablist&quot;&gt;
+  &lt;span class=&quot;c5-seg__thumb&quot;&gt;
+  &lt;/span&gt;
+  &lt;button type=&quot;button&quot; class=&quot;c5-seg__tab&quot; aria-selected=&quot;true&quot;&gt;
+    &lt;span class=&quot;c5-seg__lbl&quot;&gt;doglebowo&lt;/span&gt;
+  &lt;/button&gt;
+  &lt;button type=&quot;button&quot; class=&quot;c5-seg__tab&quot; aria-selected=&quot;false&quot;&gt;
+    &lt;span class=&quot;c5-seg__lbl&quot;&gt;dolistnie&lt;/span&gt;
+  &lt;/button&gt;
+&lt;/div&gt;</pre>
+</div></article>
+
+<article class="el el--szeroki" id="EL-20">
+<div class="el__info">
+<div class="el__head"><span class="kod"><a href="#EL-20">EL-20</a></span><h3 class="el__nazwa">Akordeon</h3><span class="gr-et">Taby, chipy, akordeony, pola</span></div>
+<p class="cel">.c5-faq</p>
+<p>Pytanie z lewej, odpowiedź z prawej od 900 px w górę; jedno pytanie otwarte naraz. Wariant --plain zdejmuje podział na kolumny tam, gdzie blok nie jest kolumną FAQ, tylko listą na pełnej szerokości.</p>
+<span class="etk">Warianty</span><ul class="war"><li><code>.c5-faq--plain</code> – pytanie nad odpowiedzią, pełna szerokość</li></ul>
+<span class="etk">Gdzie w kodzie</span><p><code>ce/CE-17-faq.css – FAQ oraz wariant --plain</code></p>
+<span class="etk">Używany w (1)</span><div class="chips"><a class="chip" href="ce-indeks.html#CE-17">CE-17</a></div>
+<span class="etk">Zastępuje</span><ul class="zast"><li>wf-accordion__item / __trigger / __panel (Produkty, 3)</li><li>pięć identycznych kopii reguł w arkuszach stron</li></ul>
+<span class="etk">Uwagi</span><p class="mut">Bez JS odpowiedzi zostają otwarte – tak jak w przykładzie obok. Na stronie panel otwiera CE-17-faq.js.</p>
+</div>
+<div class="el__demo">
+<div class="sg-scena"><div class="c5-faq"><div class="c5-faq__item"><button type="button" class="c5-faq__q" aria-expanded="false" aria-controls="sg-faq-1">Czym CARBOMAT ECO różni się od obornika?<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button><div class="c5-faq__a" id="sg-faq-1"><div class="c5-faq__ain">Obornik mineralizuje się w około trzy lata, lignit zostaje w glebie kilkanaście lat.</div></div></div><div class="c5-faq__item"><button type="button" class="c5-faq__q" aria-expanded="false" aria-controls="sg-faq-2">Czy można przedawkować?<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button><div class="c5-faq__a" id="sg-faq-2"><div class="c5-faq__ain">Nie ma progu fitotoksyczności – dawka wynika z budżetu, nie z ryzyka.</div></div></div></div></div>
+<pre>&lt;div class=&quot;c5-faq&quot;&gt;
+  &lt;div class=&quot;c5-faq__item&quot;&gt;
+    &lt;button type=&quot;button&quot; class=&quot;c5-faq__q&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;sg-faq-1&quot;&gt;Czym CARBOMAT ECO różni się od obornika?&lt;svg class=&quot;wf-icon wf-icon--sm&quot; aria-hidden=&quot;true&quot;&gt;&lt;use href=&quot;#ti-chevron-down&quot;&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/button&gt;
+    &lt;div class=&quot;c5-faq__a&quot; id=&quot;sg-faq-1&quot;&gt;
+      &lt;div class=&quot;c5-faq__ain&quot;&gt;Obornik mineralizuje się w około trzy lata, lignit zostaje w glebie kilkanaście lat.&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;c5-faq__item&quot;&gt;
+    &lt;button type=&quot;button&quot; class=&quot;c5-faq__q&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;sg-faq-2&quot;&gt;Czy można przedawkować?&lt;svg class=&quot;wf-icon wf-icon--sm&quot; aria-hidden=&quot;true&quot;&gt;&lt;use href=&quot;#ti-chevron-down&quot;&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/button&gt;
+    &lt;div class=&quot;c5-faq__a&quot; id=&quot;sg-faq-2&quot;&gt;
+      &lt;div class=&quot;c5-faq__ain&quot;&gt;Nie ma progu fitotoksyczności – dawka wynika z budżetu, nie z ryzyka.&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+</div></article>
+
+<article class="el" id="EL-28">
+<div class="el__info">
+<div class="el__head"><span class="kod"><a href="#EL-28">EL-28</a></span><h3 class="el__nazwa">Pole formularza</h3><span class="gr-et">Taby, chipy, akordeony, pola</span></div>
+<p class="cel">.wf-input · .wf-select · .wf-textarea</p>
+<p>Pola zostają z kitu, ale warstwa projektu zdejmuje im promień 8 px i podnosi wysokość do 44 px. To był jeden z dwóch najwyraźniejszych punktów dwóch stylów – jedyne zaokrąglone elementy w całym serwisie.</p>
+<span class="etk">Gdzie w kodzie</span><p><code>ce/00-base.css – EL · Interface elements → EL-28</code></p>
+<span class="etk">Używany w (3)</span><div class="chips"><a class="chip" href="ce-indeks.html#CE-47">CE-47</a><a class="chip" href="ce-indeks.html#CE-50">CE-50</a><a class="chip" href="ce-indeks.html#CE-52">CE-52</a></div>
+<span class="etk">Zastępuje</span><ul class="zast"><li>lokalne min-height:44px w prochnica-plus.css</li></ul>
+<span class="etk">Uwagi</span><p class="mut">Reguła celuje w #main, więc pole w doku doradcy (buduje je chrome.js) zostaje z promieniem 8 px – do backlogu.</p>
+</div>
+<div class="el__demo">
+<div class="sg-scena" id="main"><div class="sg-siatka"><div class="wf-field"><label class="wf-label" for="sg-ha">Powierzchnia (ha)</label><input class="wf-input" id="sg-ha" type="text" value="12,5"></div><div class="wf-field"><label class="wf-label" for="sg-up">Uprawa</label><select class="wf-select" id="sg-up"><option>kukurydza</option><option>pszenica ozima</option></select></div></div><div class="wf-field"><label class="wf-label" for="sg-uw">Uwagi</label><textarea class="wf-textarea" id="sg-uw" rows="2"></textarea></div></div>
+<pre>&lt;div class=&quot;sg-siatka&quot;&gt;
+  &lt;div class=&quot;wf-field&quot;&gt;
+    &lt;label class=&quot;wf-label&quot; for=&quot;sg-ha&quot;&gt;Powierzchnia (ha)&lt;/label&gt;
+    &lt;input class=&quot;wf-input&quot; id=&quot;sg-ha&quot; type=&quot;text&quot; value=&quot;12,5&quot;&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;wf-field&quot;&gt;
+    &lt;label class=&quot;wf-label&quot; for=&quot;sg-up&quot;&gt;Uprawa&lt;/label&gt;
+    &lt;select class=&quot;wf-select&quot; id=&quot;sg-up&quot;&gt;
+      &lt;option&gt;kukurydza&lt;/option&gt;
+      &lt;option&gt;pszenica ozima&lt;/option&gt;
+    &lt;/select&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;wf-field&quot;&gt;
+  &lt;label class=&quot;wf-label&quot; for=&quot;sg-uw&quot;&gt;Uwagi&lt;/label&gt;
+  &lt;textarea class=&quot;wf-textarea&quot; id=&quot;sg-uw&quot; rows=&quot;2&quot;&gt;
+  &lt;/textarea&gt;
+&lt;/div&gt;</pre>
+</div></article>
+
+<h2 class="gr" id="grupa-dane">Tabele, listy dl, kafle liczb, paski <span>· 4 elementów</span></h2>
+
+<article class="el el--szeroki" id="EL-21">
+<div class="el__info">
+<div class="el__head"><span class="kod"><a href="#EL-21">EL-21</a></span><h3 class="el__nazwa">Tabela</h3><span class="gr-et">Tabele, listy dl, kafle liczb, paski</span><span class="plakietka">planowane (fala 2b/2c)</span></div>
+<p class="cel">.c5-table</p>
+<p>Tabela danych: 0,875 rem, padding 12/16, nagłówek na tle subtle, podświetlany wiersz. Scala tabelę kitu z dwiema tabelami Maty; porównywarka z Produktów zostaje osobnym klockiem, bo ma własną mechanikę podświetlania kolumn.</p>
+<span class="etk">Warianty</span><ul class="war"><li><code>.c5-table--num</code> – liczby wyrównane do prawej<span class="brak">brak w CSS</span></li><li><code>.c5-table--sticky</code> – przyklejony nagłówek<span class="brak">brak w CSS</span></li><li><code>.c5-table--ondark</code> – na ciemnym tle<span class="brak">brak w CSS</span></li></ul>
+<span class="etk">Dziś w kodzie</span><div class="chips"><span class="chip">wf-table</span><span class="chip">c5-mt-cmp</span><span class="chip">c5-mt-tbl</span><span class="chip">u-mt</span></div>
+<span class="etk">Gdzie w kodzie</span><p><code>dziś wireframe.css (wf-table)</code></p>
+<span class="etk">Używany w (4)</span><div class="chips"><a class="chip" href="ce-indeks.html#CE-11">CE-11</a><a class="chip" href="ce-indeks.html#CE-12">CE-12</a><a class="chip" href="ce-indeks.html#CE-22">CE-22</a><a class="chip" href="ce-indeks.html#CE-41">CE-41</a></div>
+<span class="etk">Zastępuje</span><ul class="zast"><li>wf-table z kitu (8 wystąpień na 5 stronach)</li><li>c5-mt-cmp i c5-mt-tbl (Mata)</li><li>u-mt (Kukurydza)</li></ul>
+<span class="etk">Uwagi</span><p class="mut">Przykład obok pokazuje dzisiejszą tabelę kitu – klasa c5-table pojawi się w arkuszu razem z przemianowaniem w fali 2b.</p>
+</div>
+<div class="el__demo">
+<div class="sg-scena"><table class="wf-table"><thead><tr><th>Materiał</th><th>Sucha masa</th><th>Trwałość w glebie</th></tr></thead><tbody><tr><td>CARBOMAT ECO</td><td>~87%</td><td>kilkanaście lat</td></tr><tr><td>Obornik</td><td>~25%</td><td>około 3 lata</td></tr><tr><td>Kompost dojrzały</td><td>~40%</td><td>3 – 5 lat</td></tr></tbody></table></div>
+<p class="uwaga-plan">Klasa <code>.c5-table</code> nie jest jeszcze w arkuszach – przykład pokazuje docelowy markup, nie docelowy wygląd.</p>
+<pre>&lt;table class=&quot;wf-table&quot;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Materiał&lt;/th&gt;
+      &lt;th&gt;Sucha masa&lt;/th&gt;
+      &lt;th&gt;Trwałość w glebie&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;CARBOMAT ECO&lt;/td&gt;
+      &lt;td&gt;~87%&lt;/td&gt;
+      &lt;td&gt;kilkanaście lat&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Obornik&lt;/td&gt;
+      &lt;td&gt;~25%&lt;/td&gt;
+      &lt;td&gt;około 3 lata&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Kompost dojrzały&lt;/td&gt;
+      &lt;td&gt;~40%&lt;/td&gt;
+      &lt;td&gt;3 – 5 lat&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</pre>
+</div></article>
+
+<article class="el el--szeroki" id="EL-22">
+<div class="el__info">
+<div class="el__head"><span class="kod"><a href="#EL-22">EL-22</a></span><h3 class="el__nazwa">Lista definicyjna</h3><span class="gr-et">Tabele, listy dl, kafle liczb, paski</span><span class="plakietka">planowane (fala 2b/2c)</span></div>
+<p class="cel">.c5-dl</p>
+<p>Para nazwa – wartość: parametry produktu, dawki, specyfikacja opakowania. Jedenaście dzisiejszych list dl robi to samo w trzech układach, więc zostają trzy warianty jednej klasy.</p>
+<span class="etk">Warianty</span><ul class="war"><li><code>.c5-dl--rows</code> – wiersze z kreską<span class="brak">brak w CSS</span></li><li><code>.c5-dl--grid</code> – siatka kolumnowa<span class="brak">brak w CSS</span></li><li><code>.c5-dl--ondark</code> – na ciemnym tle – kreska biała .35<span class="brak">brak w CSS</span></li></ul>
+<span class="etk">Dziś w kodzie</span><div class="chips"><span class="chip">c5-params__rows</span><span class="chip">c5hu-dose</span><span class="chip">u-defs</span><span class="chip">pp-facts</span><span class="chip">i 7 innych</span></div>
+<span class="etk">Gdzie w kodzie</span><p><code>do dopisania w ce/00-base.css (fala 2b)</code></p>
+<span class="etk">Używany w (9)</span><div class="chips"><a class="chip" href="ce-indeks.html#CE-10">CE-10</a><a class="chip" href="ce-indeks.html#CE-13">CE-13</a><a class="chip" href="ce-indeks.html#CE-14">CE-14</a><a class="chip" href="ce-indeks.html#CE-20">CE-20</a><a class="chip" href="ce-indeks.html#CE-25">CE-25</a><a class="chip" href="ce-indeks.html#CE-28">CE-28</a><a class="chip" href="ce-indeks.html#CE-37">CE-37</a><a class="chip" href="ce-indeks.html#CE-39">CE-39</a><a class="chip" href="ce-indeks.html#CE-45">CE-45</a></div>
+<span class="etk">Zastępuje</span><ul class="zast"><li>c5-params__rows (4 strony, 51 wierszy)</li><li>c5hu-dose (34)</li><li>u-defs (18)</li><li>c5pr-foliar__rows (12)</li><li>pp-facts (6)</li><li>c5pr-specs (4)</li><li>u-rows (4)</li></ul>
+<span class="etk">Uwagi</span><p class="mut">Wariant --ondark jest obowiązkowy: pas parametrów stoi na ciemnym tle i ma kreskę w innym kolorze.</p>
+</div>
+<div class="el__demo">
+<div class="sg-scena"><dl class="c5-dl c5-dl--rows"><div class="c5-dl__row"><dt>Odczyn (pH)</dt><dd>4,5 – 5,0</dd></div><div class="c5-dl__row"><dt>Sucha masa</dt><dd>~87%</dd></div><div class="c5-dl__row"><dt>Substancje humusowe</dt><dd>do ~70%</dd></div></dl></div>
+<p class="uwaga-plan">Klasa <code>.c5-dl</code> nie jest jeszcze w arkuszach – przykład pokazuje docelowy markup, nie docelowy wygląd.</p>
+<pre>&lt;dl class=&quot;c5-dl c5-dl--rows&quot;&gt;
+  &lt;div class=&quot;c5-dl__row&quot;&gt;
+    &lt;dt&gt;Odczyn (pH)&lt;/dt&gt;
+    &lt;dd&gt;4,5 – 5,0&lt;/dd&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;c5-dl__row&quot;&gt;
+    &lt;dt&gt;Sucha masa&lt;/dt&gt;
+    &lt;dd&gt;~87%&lt;/dd&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;c5-dl__row&quot;&gt;
+    &lt;dt&gt;Substancje humusowe&lt;/dt&gt;
+    &lt;dd&gt;do ~70%&lt;/dd&gt;
+  &lt;/div&gt;
+&lt;/dl&gt;</pre>
+</div></article>
+
+<article class="el" id="EL-26">
+<div class="el__info">
+<div class="el__head"><span class="kod"><a href="#EL-26">EL-26</a></span><h3 class="el__nazwa">Kafel liczby</h3><span class="gr-et">Tabele, listy dl, kafle liczb, paski</span><span class="plakietka">planowane (fala 2b/2c)</span></div>
+<p class="cel">.c5-stat</p>
+<p>Duża liczba z etykietą i przypisem – zasobność, wynik badania, rok. Osiem klas dawało dziś osiem różnych skal, zostają cztery stopnie jednej.</p>
+<span class="etk">Warianty</span><ul class="war"><li><code>.c5-stat--sm</code> – 1,5 rem<span class="brak">brak w CSS</span></li><li><code>.c5-stat--md</code> – clamp 1,75 – 2,5 rem<span class="brak">brak w CSS</span></li><li><code>.c5-stat--lg</code> – clamp 2 – 3 rem<span class="brak">brak w CSS</span></li><li><code>.c5-stat--hero</code> – clamp 6 – 15 rem<span class="brak">brak w CSS</span></li></ul>
+<span class="etk">Dziś w kodzie</span><div class="chips"><span class="chip">c5-viz__num</span><span class="chip">u-num__val</span><span class="chip">c5-mt-stat__val</span><span class="chip">i 5 innych</span></div>
+<span class="etk">Gdzie w kodzie</span><p><code>do dopisania w ce/00-base.css (fala 2b)</code></p>
+<span class="etk">Używany w (6)</span><div class="chips"><a class="chip" href="ce-indeks.html#CE-12">CE-12</a><a class="chip" href="ce-indeks.html#CE-20">CE-20</a><a class="chip" href="ce-indeks.html#CE-24">CE-24</a><a class="chip" href="ce-indeks.html#CE-29">CE-29</a><a class="chip" href="ce-indeks.html#CE-34">CE-34</a><a class="chip" href="ce-indeks.html#CE-41">CE-41</a></div>
+<span class="etk">Zastępuje</span><ul class="zast"><li>c5-viz__num</li><li>pp-liczba__num</li><li>u-num__val</li><li>c5pr-stat__num</li><li>c5-diff__num</li><li>c5-mt-stat__val</li><li>c5-mt-delta__val</li><li>c5-yrs__num</li></ul>
+<span class="etk">Uwagi</span><p class="mut">c5-yrs__num używa tokena --w-weight-light, którego w tokens.css nie ma (działa fallback 300) – do sprzątnięcia przy scaleniu.</p>
+</div>
+<div class="el__demo">
+<div class="sg-scena"><div class="sg-stos"><span class="c5-overline">Substancje humusowe</span><span class="c5-stat c5-stat--lg">do 70%</span><p class="c5-src">Zależnie od pokładu – karta produktu.</p></div></div>
+<p class="uwaga-plan">Klasa <code>.c5-stat</code> nie jest jeszcze w arkuszach – przykład pokazuje docelowy markup, nie docelowy wygląd.</p>
+<pre>&lt;div class=&quot;sg-stos&quot;&gt;
+  &lt;span class=&quot;c5-overline&quot;&gt;Substancje humusowe&lt;/span&gt;
+  &lt;span class=&quot;c5-stat c5-stat--lg&quot;&gt;do 70%&lt;/span&gt;
+  &lt;p class=&quot;c5-src&quot;&gt;Zależnie od pokładu – karta produktu.&lt;/p&gt;
+&lt;/div&gt;</pre>
+</div></article>
+
+<article class="el" id="EL-27">
+<div class="el__info">
+<div class="el__head"><span class="kod"><a href="#EL-27">EL-27</a></span><h3 class="el__nazwa">Pasek postępu</h3><span class="gr-et">Tabele, listy dl, kafle liczb, paski</span></div>
+<p class="cel">.c5-bar</p>
+<p>Poziomy wykres słupkowy: etykieta, tor z wypełnieniem i wartość. Wysokość wypełnienia steruje zmienna --bw; trzy cienkie paski postępu na stronach to dziś trzy kopie tej samej reguły.</p>
+<span class="etk">Warianty</span><ul class="war"><li><code>.c5-bar--hairline</code> – kreska 1 – 2 px sterowana scaleX<span class="brak">brak w CSS</span></li><li><code>.c5-bar--thick</code> – tor 40 px<span class="brak">brak w CSS</span></li><li><code>.c5-bar--ondark</code> – na ciemnym tle – tor biały .25<span class="brak">brak w CSS</span></li></ul>
+<span class="etk">Gdzie w kodzie</span><p><code>ce/CE-12-scena-faktow.css – wykres słupkowy</code></p>
+<span class="etk">Używany w (7)</span><div class="chips"><a class="chip" href="ce-indeks.html#CE-12">CE-12</a><a class="chip" href="ce-indeks.html#CE-13">CE-13</a><a class="chip" href="ce-indeks.html#CE-20">CE-20</a><a class="chip" href="ce-indeks.html#CE-29">CE-29</a><a class="chip" href="ce-indeks.html#CE-32">CE-32</a><a class="chip" href="ce-indeks.html#CE-41">CE-41</a><a class="chip" href="ce-indeks.html#CE-43">CE-43</a></div>
+<span class="etk">Zastępuje</span><ul class="zast"><li>c5-facts-progress, pp-prog, c5-yrs__segtrack – trzy kopie tej samej kreski</li><li>c5hu-time__track</li><li>u-kbar__track</li><li>c5-use__bar</li></ul>
+<span class="etk">Uwagi</span><p class="mut">Warianty --hairline, --thick i --ondark czekają na falę 2b; wersja na ciemnym tle działa dziś przez kontekst .c5-viz.</p>
+</div>
+<div class="el__demo">
+<div class="sg-scena"><div class="c5-barchart"><div class="c5-bar"><span class="wf-w-semibold">Lignit</span><div class="c5-bar__track"><div class="c5-bar__fill" style="--bw:100%;"></div></div><span class="c5-muted">bardzo wysoki</span></div><div class="c5-bar"><span>Torf</span><div class="c5-bar__track"><div class="c5-bar__fill" style="--bw:62%;"></div></div><span class="c5-muted">wysoki / średni</span></div><div class="c5-bar"><span>Obornik</span><div class="c5-bar__track"><div class="c5-bar__fill" style="--bw:24%;"></div></div><span class="c5-muted">niski / średni</span></div></div></div>
+<pre>&lt;div class=&quot;c5-barchart&quot;&gt;
+  &lt;div class=&quot;c5-bar&quot;&gt;
+    &lt;span class=&quot;wf-w-semibold&quot;&gt;Lignit&lt;/span&gt;
+    &lt;div class=&quot;c5-bar__track&quot;&gt;
+      &lt;div class=&quot;c5-bar__fill&quot; style=&quot;--bw:100%;&quot;&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;span class=&quot;c5-muted&quot;&gt;bardzo wysoki&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;c5-bar&quot;&gt;
+    &lt;span&gt;Torf&lt;/span&gt;
+    &lt;div class=&quot;c5-bar__track&quot;&gt;
+      &lt;div class=&quot;c5-bar__fill&quot; style=&quot;--bw:62%;&quot;&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;span class=&quot;c5-muted&quot;&gt;wysoki / średni&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;c5-bar&quot;&gt;
+    &lt;span&gt;Obornik&lt;/span&gt;
+    &lt;div class=&quot;c5-bar__track&quot;&gt;
+      &lt;div class=&quot;c5-bar__fill&quot; style=&quot;--bw:24%;&quot;&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;span class=&quot;c5-muted&quot;&gt;niski / średni&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+</div></article>
+
+<h2 class="gr" id="grupa-ikony">Ikony i wizuale <span>· 3 elementów</span></h2>
+
+<article class="el" id="EL-23">
+<div class="el__info">
+<div class="el__head"><span class="kod"><a href="#EL-23">EL-23</a></span><h3 class="el__nazwa">Ikona</h3><span class="gr-et">Ikony i wizuale</span></div>
+<p class="cel">.wf-icon</p>
+<p>Ikona liniowa z sprite: 20 × 20, obrys w kolorze tekstu, grubość z tokena. Jedyny element, który już działa jak style guide – 648 wystąpień na siedmiu stronach i ani jednego wyjątku.</p>
+<span class="etk">Warianty</span><ul class="war"><li><code>.wf-icon--sm</code> – 16 × 16</li><li><code>.wf-icon--lg</code> – 24 × 24</li><li><code>.wf-icon--muted</code> – przygaszona (zero użyć w V7)</li></ul>
+<span class="etk">Gdzie w kodzie</span><p><code>wireframe.css – 5. ICON; sprite w v7/chrome.js</code></p>
+<span class="etk">Używany w (26)</span><div class="chips"><a class="chip" href="ce-indeks.html#CE-08">CE-08</a><a class="chip" href="ce-indeks.html#CE-09">CE-09</a><a class="chip" href="ce-indeks.html#CE-10">CE-10</a><a class="chip" href="ce-indeks.html#CE-11">CE-11</a><a class="chip" href="ce-indeks.html#CE-12">CE-12</a><a class="chip" href="ce-indeks.html#CE-15">CE-15</a><a class="chip" href="ce-indeks.html#CE-17">CE-17</a><a class="chip" href="ce-indeks.html#CE-20">CE-20</a><a class="chip" href="ce-indeks.html#CE-21">CE-21</a><a class="chip" href="ce-indeks.html#CE-22">CE-22</a><a class="chip" href="ce-indeks.html#CE-23">CE-23</a><a class="chip" href="ce-indeks.html#CE-25">CE-25</a><a class="chip" href="ce-indeks.html#CE-27">CE-27</a><a class="chip" href="ce-indeks.html#CE-30">CE-30</a><a class="chip" href="ce-indeks.html#CE-31">CE-31</a><a class="chip" href="ce-indeks.html#CE-34">CE-34</a><a class="chip" href="ce-indeks.html#CE-35">CE-35</a><a class="chip" href="ce-indeks.html#CE-37">CE-37</a><a class="chip" href="ce-indeks.html#CE-39">CE-39</a><a class="chip" href="ce-indeks.html#CE-40">CE-40</a><a class="chip" href="ce-indeks.html#CE-44">CE-44</a><a class="chip" href="ce-indeks.html#CE-46">CE-46</a><a class="chip" href="ce-indeks.html#CE-48">CE-48</a><a class="chip" href="ce-indeks.html#CE-49">CE-49</a><a class="chip" href="ce-indeks.html#CE-50">CE-50</a><a class="chip" href="ce-indeks.html#CE-53">CE-53</a></div>
+<span class="etk">Uwagi</span><p class="mut">Źródłem ikon jest chrome.js (53 ikony, użytych 38). Plik tabler-sprite.svg nie jest ładowany przez żadną z siedmiu stron – dla V7 jest martwy.</p>
+</div>
+<div class="el__demo">
+<div class="sg-scena"><div class="c5-btnrow"><svg class="wf-icon" aria-hidden="true"><use href="#ti-leaf"></use></svg><svg class="wf-icon" aria-hidden="true"><use href="#ti-droplet"></use></svg><svg class="wf-icon" aria-hidden="true"><use href="#ti-calendar"></use></svg><svg class="wf-icon" aria-hidden="true"><use href="#ti-flask"></use></svg><svg class="wf-icon" aria-hidden="true"><use href="#ti-truck"></use></svg><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-check"></use></svg><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg><svg class="wf-icon wf-icon--lg" aria-hidden="true"><use href="#ti-alert-triangle"></use></svg></div></div>
+<pre>&lt;div class=&quot;c5-btnrow&quot;&gt;&lt;svg class=&quot;wf-icon&quot; aria-hidden=&quot;true&quot;&gt;&lt;use href=&quot;#ti-leaf&quot;&gt;&lt;/use&gt;&lt;/svg&gt;&lt;svg class=&quot;wf-icon&quot; aria-hidden=&quot;true&quot;&gt;&lt;use href=&quot;#ti-droplet&quot;&gt;&lt;/use&gt;&lt;/svg&gt;&lt;svg class=&quot;wf-icon&quot; aria-hidden=&quot;true&quot;&gt;&lt;use href=&quot;#ti-calendar&quot;&gt;&lt;/use&gt;&lt;/svg&gt;&lt;svg class=&quot;wf-icon&quot; aria-hidden=&quot;true&quot;&gt;&lt;use href=&quot;#ti-flask&quot;&gt;&lt;/use&gt;&lt;/svg&gt;&lt;svg class=&quot;wf-icon&quot; aria-hidden=&quot;true&quot;&gt;&lt;use href=&quot;#ti-truck&quot;&gt;&lt;/use&gt;&lt;/svg&gt;&lt;svg class=&quot;wf-icon wf-icon--sm&quot; aria-hidden=&quot;true&quot;&gt;&lt;use href=&quot;#ti-check&quot;&gt;&lt;/use&gt;&lt;/svg&gt;&lt;svg class=&quot;wf-icon wf-icon--sm&quot; aria-hidden=&quot;true&quot;&gt;&lt;use href=&quot;#ti-chevron-down&quot;&gt;&lt;/use&gt;&lt;/svg&gt;&lt;svg class=&quot;wf-icon wf-icon--lg&quot; aria-hidden=&quot;true&quot;&gt;&lt;use href=&quot;#ti-alert-triangle&quot;&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/div&gt;</pre>
+</div></article>
+
+<article class="el" id="EL-24">
+<div class="el__info">
+<div class="el__head"><span class="kod"><a href="#EL-24">EL-24</a></span><h3 class="el__nazwa">Ramka ikony</h3><span class="gr-et">Ikony i wizuale</span></div>
+<p class="cel">.c5-icoframe</p>
+<p>Obrys wokół ikony w kaflu tabu albo w kafelku listy. Trzy klasy o tej samej geometrii schodzą do jednej z dwoma kształtami i jednym rozmiarem mniejszym.</p>
+<span class="etk">Warianty</span><ul class="war"><li><code>.c5-icoframe--circle</code> – koło ⌀36 w kolorze tekstu</li><li><code>.c5-icoframe--square</code> – kwadrat 44 px z obrysem strong</li><li><code>.c5-icoframe--sm</code> – ⌀32 – pasek kompaktowy</li></ul>
+<span class="etk">Gdzie w kodzie</span><p><code>ce/00-base.css – EL · Interface elements → EL-24</code></p>
+<span class="etk">Używany w (3)</span><div class="chips"><a class="chip" href="ce-indeks.html#CE-09">CE-09</a><a class="chip" href="ce-indeks.html#CE-11">CE-11</a><a class="chip" href="ce-indeks.html#CE-20">CE-20</a></div>
+<span class="etk">Zastępuje</span><ul class="zast"><li>c5-way__ico (ECO, CARBOHUMIC, Próchnica+ – 11)</li><li>c5hu-tile__ico (CARBOHUMIC, 4)</li><li>c5-marq__ico</li></ul>
+</div>
+<div class="el__demo">
+<div class="sg-scena"><div class="c5-btnrow"><span class="c5-icoframe c5-icoframe--circle"><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrows-sort"></use></svg></span><span class="c5-icoframe c5-icoframe--circle c5-icoframe--sm"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-calendar"></use></svg></span><span class="c5-icoframe c5-icoframe--square"><svg class="wf-icon" aria-hidden="true"><use href="#ti-stack-2"></use></svg></span></div></div>
+<pre>&lt;div class=&quot;c5-btnrow&quot;&gt;
+  &lt;span class=&quot;c5-icoframe c5-icoframe--circle&quot;&gt;&lt;svg class=&quot;wf-icon&quot; aria-hidden=&quot;true&quot;&gt;&lt;use href=&quot;#ti-arrows-sort&quot;&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/span&gt;
+  &lt;span class=&quot;c5-icoframe c5-icoframe--circle c5-icoframe--sm&quot;&gt;&lt;svg class=&quot;wf-icon wf-icon--sm&quot; aria-hidden=&quot;true&quot;&gt;&lt;use href=&quot;#ti-calendar&quot;&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/span&gt;
+  &lt;span class=&quot;c5-icoframe c5-icoframe--square&quot;&gt;&lt;svg class=&quot;wf-icon&quot; aria-hidden=&quot;true&quot;&gt;&lt;use href=&quot;#ti-stack-2&quot;&gt;&lt;/use&gt;&lt;/svg&gt;&lt;/span&gt;
+&lt;/div&gt;</pre>
+</div></article>
+
+<article class="el" id="EL-25">
+<div class="el__info">
+<div class="el__head"><span class="kod"><a href="#EL-25">EL-25</a></span><h3 class="el__nazwa">Boks ilustracji</h3><span class="gr-et">Ikony i wizuale</span><span class="plakietka">planowane (fala 2b/2c)</span></div>
+<p class="cel">.c5-viz</p>
+<p>Ciemny kadr 4:5 pod rysunek, pierścień albo wykres: tło rgb(20 20 20 / .78), tekst biały, przypis pod spodem. Sześć stron ma wersję ciemną – jasna kopia w c5.css jest starsza i nigdzie nie wygrywa kaskadą.</p>
+<span class="etk">Warianty</span><ul class="war"><li><code>.c5-viz--light</code> – wersja jasna (dziś martwa kopia w c5.css)<span class="brak">brak w CSS</span></li></ul>
+<span class="etk">Dziś w kodzie</span><div class="chips"><span class="chip">c5-viz (kopie w siedmiu arkuszach)</span><span class="chip">pp-sviz (Próchnica+)</span></div>
+<span class="etk">Gdzie w kodzie</span><p><code>ce/CE-12-scena-faktow.css – kadr ilustracji</code></p>
+<span class="etk">Używany w (1)</span><div class="chips"><a class="chip" href="ce-indeks.html#CE-12">CE-12</a></div>
+<span class="etk">Zastępuje</span><ul class="zast"><li>siedem kopii w arkuszach stron (osiem rozjechanych selektorów wnętrza)</li></ul>
+<span class="etk">Uwagi</span><p class="mut">Rozjazd 8 sprawdzony w przeglądarce w fali 2a: kadr jest ciemny na wszystkich pięciu stronach wzorca, Kukurydza nie ma tego klocka, a Próchnica+ ma własny ciemny odpowiednik pp-sviz.</p>
+</div>
+<div class="el__demo">
+<div class="sg-scena"><div class="sg-waskie"><figure class="c5-viz"><span class="c5-viz__tag">02 · Zasobność</span><div class="c5-viz__body"><span class="c5-viz__num">do 70%</span><p class="c5-muted">udział substancji humusowych w suchej masie</p></div><figcaption class="c5-src c5-src--ondark">Karta produktu, partia 2026/01.</figcaption></figure></div></div>
+<pre>&lt;div class=&quot;sg-waskie&quot;&gt;
+  &lt;figure class=&quot;c5-viz&quot;&gt;
+    &lt;span class=&quot;c5-viz__tag&quot;&gt;02 · Zasobność&lt;/span&gt;
+    &lt;div class=&quot;c5-viz__body&quot;&gt;
+      &lt;span class=&quot;c5-viz__num&quot;&gt;do 70%&lt;/span&gt;
+      &lt;p class=&quot;c5-muted&quot;&gt;udział substancji humusowych w suchej masie&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;figcaption class=&quot;c5-src c5-src--ondark&quot;&gt;Karta produktu, partia 2026/01.&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;/div&gt;</pre>
+</div></article>
+
+<h2 class="gr" id="grupa-tokeny">Kolory, typografia, odstępy <span>· 31 kolorów w użyciu</span></h2><span class="etk">Kolory, których warstwa projektu faktycznie używa</span><div class="tok"><div class="tok__p"><span class="tok__pr" style="background:var(--w-gray-900)"></span><span class="tok__op"><span class="tok__n">--w-gray-900</span><br><span class="tok__w">#171717 · 146×</span></span></div><div class="tok__p"><span class="tok__pr" style="background:var(--w-text-secondary)"></span><span class="tok__op"><span class="tok__n">--w-text-secondary</span><br><span class="tok__w">#525252 · 105×</span></span></div><div class="tok__p"><span class="tok__pr" style="background:var(--w-border-default)"></span><span class="tok__op"><span class="tok__n">--w-border-default</span><br><span class="tok__w">#d4d4d4 · 99×</span></span></div><div class="tok__p"><span class="tok__pr" style="background:var(--w-surface-page)"></span><span class="tok__op"><span class="tok__n">--w-surface-page</span><br><span class="tok__w">#ffffff · 87×</span></span></div><div class="tok__p"><span class="tok__pr" style="background:var(--w-text-primary)"></span><span class="tok__op"><span class="tok__n">--w-text-primary</span><br><span class="tok__w">#171717 · 80×</span></span></div><div class="tok__p"><span class="tok__pr" style="background:var(--w-text-inverse)"></span><span class="tok__op"><span class="tok__n">--w-text-inverse</span><br><span class="tok__w">#ffffff · 48×</span></span></div><div class="tok__p"><span class="tok__pr" style="background:var(--w-text-tertiary)"></span><span class="tok__op"><span class="tok__n">--w-text-tertiary</span><br><span class="tok__w">#737373 · 46×</span></span></div><div class="tok__p"><span class="tok__pr" style="background:var(--w-border-subtle)"></span><span class="tok__op"><span class="tok__n">--w-border-subtle</span><br><span class="tok__w">#e5e5e5 · 35×</span></span></div><div class="tok__p"><span class="tok__pr" style="background:var(--w-gray-100)"></span><span class="tok__op"><span class="tok__n">--w-gray-100</span><br><span class="tok__w">#f5f5f5 · 31×</span></span></div><div class="tok__p"><span class="tok__pr" style="background:var(--w-border-strong)"></span><span class="tok__op"><span class="tok__n">--w-border-strong</span><br><span class="tok__w">#a3a3a3 · 30×</span></span></div><div class="tok__p"><span class="tok__pr" style="background:var(--w-gray-700)"></span><span class="tok__op"><span class="tok__n">--w-gray-700</span><br><span class="tok__w">#404040 · 17×</span></span></div><div class="tok__p"><span class="tok__pr" style="background:var(--w-gray-500)"></span><span class="tok__op"><span class="tok__n">--w-gray-500</span><br><span class="tok__w">#737373 · 16×</span></span></div><div class="tok__p"><span class="tok__pr" style="background:var(--w-gray-200)"></span><span class="tok__op"><span class="tok__n">--w-gray-200</span><br><span class="tok__w">#e5e5e5 · 15×</span></span></div><div class="tok__p"><span class="tok__pr" style="background:var(--w-surface-subtle)"></span><span class="tok__op"><span class="tok__n">--w-surface-subtle</span><br><span class="tok__w">#fafafa · 15×</span></span></div><div class="tok__p"><span class="tok__pr" style="background:var(--w-gray-400)"></span><span class="tok__op"><span class="tok__n">--w-gray-400</span><br><span class="tok__w">#a3a3a3 · 12×</span></span></div><div class="tok__p"><span class="tok__pr" style="background:var(--w-focus-ring)"></span><span class="tok__op"><span class="tok__n">--w-focus-ring</span><br><span class="tok__w">#171717 · 12×</span></span></div><div class="tok__p"><span class="tok__pr" style="background:var(--w-gray-300)"></span><span class="tok__op"><span class="tok__n">--w-gray-300</span><br><span class="tok__w">#d4d4d4 · 11×</span></span></div><div class="tok__p"><span class="tok__pr" style="background:var(--w-gray-600)"></span><span class="tok__op"><span class="tok__n">--w-gray-600</span><br><span class="tok__w">#525252 · 10×</span></span></div><div class="tok__p"><span class="tok__pr" style="background:var(--w-icon-default)"></span><span class="tok__op"><span class="tok__n">--w-icon-default</span><br><span class="tok__w">#525252 · 10×</span></span></div><div class="tok__p"><span class="tok__pr" style="background:var(--w-surface-inverse)"></span><span class="tok__op"><span class="tok__n">--w-surface-inverse</span><br><span class="tok__w">#171717 · 8×</span></span></div><div class="tok__p"><span class="tok__pr" style="background:var(--w-focus-ring-inverse)"></span><span class="tok__op"><span class="tok__n">--w-focus-ring-inverse</span><br><span class="tok__w">#ffffff · 7×</span></span></div><div class="tok__p"><span class="tok__pr" style="background:var(--w-surface-hover)"></span><span class="tok__op"><span class="tok__n">--w-surface-hover</span><br><span class="tok__w">#f5f5f5 · 6×</span></span></div><div class="tok__p"><span class="tok__pr" style="background:var(--w-surface-raised)"></span><span class="tok__op"><span class="tok__n">--w-surface-raised</span><br><span class="tok__w">#ffffff · 5×</span></span></div><div class="tok__p"><span class="tok__pr" style="background:var(--w-gray-800)"></span><span class="tok__op"><span class="tok__n">--w-gray-800</span><br><span class="tok__w">#262626 · 4×</span></span></div><div class="tok__p"><span class="tok__pr" style="background:var(--w-surface-sunken)"></span><span class="tok__op"><span class="tok__n">--w-surface-sunken</span><br><span class="tok__w">#f5f5f5 · 4×</span></span></div><div class="tok__p"><span class="tok__pr" style="background:var(--w-placeholder-ink)"></span><span class="tok__op"><span class="tok__n">--w-placeholder-ink</span><br><span class="tok__w">#a3a3a3 · 3×</span></span></div><div class="tok__p"><span class="tok__pr" style="background:var(--w-text-disabled)"></span><span class="tok__op"><span class="tok__n">--w-text-disabled</span><br><span class="tok__w">#a3a3a3 · 3×</span></span></div><div class="tok__p"><span class="tok__pr" style="background:var(--w-gray-150)"></span><span class="tok__op"><span class="tok__n">--w-gray-150</span><br><span class="tok__w">#ededed · 3×</span></span></div><div class="tok__p"><span class="tok__pr" style="background:var(--w-white)"></span><span class="tok__op"><span class="tok__n">--w-white</span><br><span class="tok__w">#ffffff · 3×</span></span></div><div class="tok__p"><span class="tok__pr" style="background:var(--w-icon-muted)"></span><span class="tok__op"><span class="tok__n">--w-icon-muted</span><br><span class="tok__w">#a3a3a3 · 1×</span></span></div><div class="tok__p"><span class="tok__pr" style="background:var(--w-black)"></span><span class="tok__op"><span class="tok__n">--w-black</span><br><span class="tok__w">#000000 · 1×</span></span></div></div><span class="etk">Skala typograficzna w realnych rozmiarach</span><div class="skala"><div class="skala__w"><span class="c5-h1">Nagłówek strony</span><span class="skala__m">.c5-h1 · clamp(2.1rem,4vw,3.125rem) · waga var(--w-weight-medium)</span></div><div class="skala__w"><span class="c5-h2">Nagłówek sekcji</span><span class="skala__m">.c5-h2 · clamp(1.7rem,3.2vw,2.5rem) · waga var(--w-weight-medium)</span></div><div class="skala__w"><span class="c5-h3">Nagłówek klocka</span><span class="skala__m">.c5-h3 · 1.0625rem · waga var(--w-weight-medium)</span></div><div class="skala__w"><span class="c5-lead">Lead pod nagłówkiem</span><span class="skala__m">.c5-lead · 1rem</span></div><div class="skala__w"><span class="c5-kicker">Kicker sekcji</span><span class="skala__m">.c5-kicker · 0.875rem</span></div><div class="skala__w"><span class="c5-src">Przypis pod danymi</span><span class="skala__m">.c5-src · 0.75rem</span></div></div><span class="etk">Odstępy</span><div class="odst"><div class="odst__p"><div class="odst__b" style="width:var(--w-space-2)"></div>2</div><div class="odst__p"><div class="odst__b" style="width:var(--w-space-3)"></div>3</div><div class="odst__p"><div class="odst__b" style="width:var(--w-space-4)"></div>4</div><div class="odst__p"><div class="odst__b" style="width:var(--w-space-5)"></div>5</div><div class="odst__p"><div class="odst__b" style="width:var(--w-space-6)"></div>6</div><div class="odst__p"><div class="odst__b" style="width:var(--w-space-8)"></div>8</div><div class="odst__p"><div class="odst__b" style="width:var(--w-space-10)"></div>10</div><div class="odst__p"><div class="odst__b" style="width:var(--w-space-12)"></div>12</div></div><span class="etk">Przyciski w stanach</span>
+  <div class="sg-scena">
+    <div class="c5-btnrow">
+      <a class="c5-btn c5-btn--dark" href="#">stan spoczynku</a>
+      <span class="sg-hover"><a class="c5-btn c5-btn--dark" href="#">po najechaniu</a></span>
+      <a class="c5-btn c5-btn--light" href="#">jasny</a>
+      <span class="sg-hover"><a class="c5-btn c5-btn--light" href="#">jasny, hover</a></span>
+      <button type="button" class="c5-btn c5-btn--light" disabled>wyłączony</button>
+    </div>
+    <div class="sg-ondark">
+      <a class="c5-btn c5-btn--inv" href="#">odwrócony</a>
+      <span class="sg-hover"><a class="c5-btn c5-btn--inv" href="#">odwrócony, hover</a></span>
+    </div>
+    <div class="c5-btnrow" style="margin-top:14px">
+      <button type="button" class="c5-iconbtn" aria-label="Zamknij">
+        <svg class="wf-icon" aria-hidden="true"><use href="#ti-x"></use></svg></button>
+      <span class="sg-hover"><button type="button" class="c5-iconbtn" aria-label="Zamknij">
+        <svg class="wf-icon" aria-hidden="true"><use href="#ti-x"></use></svg></button></span>
+      <button type="button" class="c5-iconbtn" aria-label="Następny" disabled>
+        <svg class="wf-icon" aria-hidden="true"><use href="#ti-chevron-right"></use></svg></button>
+    </div>
+  </div><p class="uwaga-plan">Stany po najechaniu są kopiowane przy każdym generowaniu prosto z reguł <code>:hover</code> w arkuszu, więc nie mogą się rozjechać z kodem. Stan wyłączony nie ma dziś wspólnej reguły dla <code>.c5-btn</code> – przycisk wygląda jak aktywny, a trzy strony radzą sobie własnymi nadpisaniami. Do backlogu.</p>
+
+  <footer>Wygenerowano 15.09.2026 z <code>ce-rejestr.js</code> – nie edytuj ręcznie,
+  zmieniasz rejestr albo arkusze i uruchamiasz
+  <code>zasoby/kod/_narzedzia/style-guide.py</code>.<br>
+  Content elementy, które z tych klocków powstają: <a href="ce-indeks.html">ce-indeks.html</a> ·
+  stan podstron: <a href="stan-podstron.html">stan-podstron.html</a>.</footer>
+</div>

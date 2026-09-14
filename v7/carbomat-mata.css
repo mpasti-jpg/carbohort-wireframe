@@ -66,7 +66,7 @@
   .c5-hero__copyin{gap:clamp(0.75rem,2vh,2rem);padding-block:clamp(0.75rem,2.5vh,3rem);}
   .c5-hero__copy .c5-h1{font-size:min(3.125rem,6vh);}
   .c5-hero__lead{font-size:1.0625rem;gap:var(--w-space-2);max-width:none;}
-  #hero .c5-btn{padding-inline:28px;}
+  #hero .c5-btn{--c5-btn-px:28px;}
   .c5-hero__crumbs{padding-bottom:calc(var(--c5-gutter) * .6);}
 }
 @media (min-width:900px) and (max-height:760px){
@@ -346,7 +346,6 @@ html.cx-js .c5-params__row{flex:1 1 auto;align-content:center;}
 .c5-stats__row + .c5-stats__row{border-top:1px solid rgb(255 255 255 / .18);}
 .c5-stats__txt{display:flex;flex-direction:column;gap:var(--w-space-2);max-width:46rem;}
 .c5-stats .c5-mt-stat__lab{font-size:1rem;line-height:1.4;color:rgb(255 255 255 / .85);}
-.c5-stats .c5-mt-stat__src{font-size:0.8125rem;line-height:1.4;color:rgb(255 255 255 / .55);}
 .c5-stats .c5-mt-stat__val{font-size:clamp(3rem,7.5vw,6.5rem);font-weight:var(--w-weight-medium);
   letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap;}
 
@@ -374,8 +373,6 @@ html.cx-js .c5-params__row{flex:1 1 auto;align-content:center;}
 .c5-mt-proof__head{display:flex;flex-direction:column;gap:var(--w-space-2);padding-bottom:var(--w-space-4);border-bottom:1px solid var(--w-gray-900);}
 .c5-mt-proof__tag{font-size:0.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--w-text-tertiary);}
 .c5-mt-proof__title{font-size:clamp(1.25rem,2.2vw,1.5rem);font-weight:var(--w-weight-medium);letter-spacing:-0.01em;line-height:1.25;}
-/* przypis pod wykresem / pod stroną lightboxa (poza ciemnym pasem liczb) */
-.c5-mt-stat__src{font-size:0.75rem;color:var(--w-text-tertiary);}
 .c5-mt-pubs{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;}
 .c5-mt-pubs li{border-top:1px solid var(--w-border-subtle);padding-block:var(--w-space-3);font-size:var(--w-font-sm-size);color:var(--w-text-secondary);}
 .c5-mt-pubs li:first-child{border-top:0;}
@@ -415,8 +412,8 @@ html.cx-js .c5-params__row{flex:1 1 auto;align-content:center;}
    55-dowod.js dokłada `is-js`, semantykę dialogu i warstwę nakładki. */
 .c5-lb{display:block;max-width:1180px;margin:clamp(2.5rem,5vw,4rem) auto 0;padding-inline:var(--w-space-5);}
 .c5-lb__panel{display:flex;flex-direction:column;min-height:0;}
-.c5-lb__close{display:none;place-items:center;flex:none;width:var(--w-control-h-md);height:var(--w-control-h-md);background:var(--w-surface-page);border:1px solid var(--w-border-default);border-radius:0;color:var(--w-text-primary);cursor:pointer;}
-.c5-lb__close:hover{background:var(--w-surface-hover);}
+/* The close button exists only in JS mode (anatomy: EL-02 c5-iconbtn). */
+.c5-lb .c5-iconbtn{display:none;}
 .c5-lb__scroll{display:flex;flex-direction:column;gap:clamp(2.5rem,5vw,4rem);}
 .c5-lb__page{display:flex;flex-direction:column;gap:var(--w-space-5);}
 /* `hidden` na stronie musi wygrać z `display:flex` powyżej (JS chowa strony atrybutem) */
@@ -440,7 +437,7 @@ html.cx-js .c5-params__row{flex:1 1 auto;align-content:center;}
 .c5-lb.is-js[data-open="true"]{display:grid;animation:c5-lb-in 200ms var(--w-ease);}
 .c5-lb.is-js .c5-lb__panel{position:relative;width:100%;max-width:1040px;max-height:calc(100svh - 2 * var(--c5-gutter));background:var(--w-surface-page);border:1px solid var(--w-border-default);}
 .c5-lb.is-js[data-open="true"] .c5-lb__panel{animation:c5-lb-panel-in 220ms var(--w-ease);}
-.c5-lb.is-js .c5-lb__close{display:grid;position:absolute;top:var(--w-space-4);right:var(--w-space-4);z-index:1;}
+.c5-lb.is-js .c5-iconbtn{display:grid;position:absolute;top:var(--w-space-4);right:var(--w-space-4);z-index:1;}
 .c5-lb.is-js .c5-lb__scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;gap:0;padding:clamp(1.25rem,3vw,2.5rem);}
 .c5-lb.is-js .c5-lb__page{animation:c5-lb-page-in 180ms var(--w-ease);}
 .c5-lb.is-js .c5-mt-proof__head{padding-right:var(--w-control-h-md);}
@@ -455,7 +452,7 @@ html.cx-js .c5-params__row{flex:1 1 auto;align-content:center;}
   .c5-lb.is-js .c5-lb__panel{max-width:none;max-height:calc(100svh - 32px);}
   .c5-lb.is-js .c5-lb__foot{padding:var(--w-space-3) var(--w-space-4);}
   .c5-lb__steps{flex:1 1 100%;}
-  .c5-lb__steps > .c5-btn{flex:1 1 0;padding-inline:var(--w-space-3);}
+  .c5-lb__steps > .c5-btn{flex:1 1 0;--c5-btn-px:var(--w-space-3);}
 }
 @media (prefers-reduced-motion: reduce){
   .c5-lb.is-js[data-open="true"],.c5-lb.is-js[data-open="true"] .c5-lb__panel,.c5-lb.is-js .c5-lb__page{animation:none;}
@@ -537,7 +534,9 @@ html.cx-js .c5-params__row{flex:1 1 auto;align-content:center;}
 
 /* ===== 65 · Analiza podłoża – kafle zmian + tabela (spec §12) =====
    CSS przeniesiony 1:1 z inline <style> bazy; jedyna zmiana wg spec: wartości
-   w kaflach są większe (`clamp(1.5rem,2.6vw,2rem)`), chip bez zmian. ------- */
+   w kaflach są większe (`clamp(1.5rem,2.6vw,2rem)`), chip bez zmian. Od fali 2a
+   chip jest wspólnym `c5-chip` (EL-16, ce/00-base.css); tutaj zostaje wyłącznie
+   jego położenie w kaflu. ------------------------------------------------- */
 .c5-mt-delta{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:var(--w-space-5);margin-top:clamp(2rem,4vw,3rem);}
 .c5-mt-delta__item{border:1px solid var(--w-border-default);padding:clamp(1rem,2vw,1.5rem);display:flex;flex-direction:column;gap:var(--w-space-3);}
 .c5-mt-delta__name{font-size:var(--w-font-sm-size);font-weight:var(--w-weight-semibold);}
@@ -548,8 +547,7 @@ html.cx-js .c5-params__row{flex:1 1 auto;align-content:center;}
 .c5-mt-delta__val{font-size:clamp(1.5rem,2.6vw,2rem);font-weight:var(--w-weight-medium);letter-spacing:-0.01em;line-height:1.15;min-height:2.3em;}
 .c5-mt-delta__note{font-size:0.75rem;color:var(--w-text-tertiary);}
 .c5-mt-delta .c5-bar{grid-template-columns:minmax(4.5rem,32%) 1fr minmax(3.5rem,auto);gap:var(--w-space-2);font-size:0.75rem;}
-.c5-mt-chip{display:inline-flex;align-self:flex-start;align-items:center;gap:4px;font-size:0.75rem;letter-spacing:.02em;padding:2px 10px;border:1px solid var(--w-border-strong);white-space:nowrap;}
-.c5-mt-delta__item .c5-mt-chip{margin-top:auto;}
+.c5-mt-delta__item .c5-chip{margin-top:auto;align-self:flex-start;white-space:nowrap;}
 
 .c5-mt-tblwrap{margin-top:clamp(2rem,4vw,3rem);}
 .c5-mt-tbl{width:100%;min-width:34rem;border-collapse:collapse;font-size:var(--w-font-sm-size);}

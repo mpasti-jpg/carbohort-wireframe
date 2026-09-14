@@ -36,3 +36,14 @@ html:not(.cx-js) .c5-faq__a{height:auto;opacity:1;}
 }
 /* `.c5-faq{margin-top:…}` zostaje w <strona>.css – odstęp nad akordeonem
    zależy od tego, co stoi nad nim na danej podstronie. */
+
+/* --- wariant: --plain (pytanie nad odpowiedzią, pełna szerokość) -----------
+   EL-20: the same accordion – same type, same 26 px rhythm, same rule between
+   items – but without the two-column split above 900 px. Used where the block
+   is not a FAQ column but a full-width list („Dla dociekliwych” on Produkty),
+   so the answer simply sits under its question, exactly as on a phone. */
+@media (min-width:900px){
+  .c5-faq--plain .c5-faq__item{display:block;}
+  .c5-faq--plain .c5-faq__q .wf-icon{position:static;margin-top:4px;}
+  .c5-faq--plain .c5-faq__ain{padding-top:0;padding-right:0;}
+}

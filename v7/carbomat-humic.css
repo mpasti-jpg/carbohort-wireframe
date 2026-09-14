@@ -4,13 +4,12 @@
    treściowe klocków wspólnych. ===== */
 /* --- Pomocniki wspólne strony HUMIC (używają ich sekcje B i C) -------------
    .c5-label / .c5-variant__block – bloki karty odbiorcy (pop-up, §7);
-   .c5-gap – widoczny brak danych zamiast wymyślania liczb;
+   .c5-gap--inline – ciaśniejszy wariant noty „brak danych” (c5-note--dashed);
    .c5-ph – placeholder zdjęcia/wideo: płaska szarość + mała etykieta, co tu
    trafi (prompty w spec §11). ------------------------------------------- */
 .c5-label{display:block;font-weight:var(--w-weight-semibold);color:var(--w-text-primary);}
 .c5-variant__block{display:flex;flex-direction:column;gap:var(--w-space-1);}
 .c5-variant__block ul{margin:var(--w-space-1) 0 0;padding-left:1.35rem;display:flex;flex-direction:column;gap:var(--w-space-1);}
-.c5-gap{border:1px dashed var(--w-border-strong);background:var(--w-surface-page);padding:var(--w-space-4) var(--w-space-5);font-size:0.875rem;color:var(--w-text-secondary);}
 .c5-gap--inline{padding:var(--w-space-3) var(--w-space-4);margin-top:var(--w-space-2);}
 .c5-ph{position:relative;display:block;background:var(--w-gray-300);}
 .c5-ph--dark{background:var(--w-gray-700);}
@@ -166,11 +165,9 @@
    środku, X, Escape, pułapka fokusu, `inert` na tle, zablokowany scroll.
    Warstwy nad dokiem dr. Jurka (--w-z-modal), jak w lightboxie kukurydzy. */
 html:not(.cx-js) [data-pop-open],
-html:not(.cx-js) .c5-pop__close{display:none;}
+html:not(.cx-js) .c5-pop .c5-iconbtn{display:none;}
 html:not(.cx-js) .c5-pop{margin-top:1.5rem;border:1px solid var(--w-border-default);padding:clamp(1.25rem,3vw,2rem);}
 .c5-pop__panel{display:flex;flex-direction:column;min-height:0;}
-.c5-pop__close{place-items:center;flex:none;width:44px;height:44px;background:var(--w-surface-page);border:1px solid var(--w-border-default);border-radius:0;color:var(--w-text-primary);cursor:pointer;}
-.c5-pop__close:hover{background:var(--w-gray-100);}
 .c5-pop__head{display:flex;flex-direction:column;gap:var(--w-space-2);padding-bottom:var(--w-space-5);border-bottom:1px solid var(--w-border-subtle);margin-bottom:var(--w-space-5);}
 .c5-pop__title{font-size:clamp(1.5rem,2.6vw,2.125rem);font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
 .c5-pop__body{display:flex;flex-direction:column;gap:var(--w-space-5);font-size:1rem;}
@@ -181,7 +178,7 @@ html.cx-js .c5-pop{position:fixed;inset:0;z-index:var(--w-z-toast);display:grid;
 html.cx-js .c5-pop[data-open="true"]{opacity:1;visibility:visible;transition:opacity .22s var(--w-ease),visibility 0s;}
 html.cx-js .c5-pop__panel{position:relative;width:100%;max-width:760px;max-height:calc(100svh - 2 * var(--c5-gutter));background:var(--w-surface-page);border:1px solid var(--w-border-default);transform:translateY(16px);transition:transform .26s cubic-bezier(.2,.8,.2,1);}
 html.cx-js .c5-pop[data-open="true"] .c5-pop__panel{transform:none;}
-html.cx-js .c5-pop__close{display:grid;position:absolute;top:14px;right:14px;z-index:1;}
+html.cx-js .c5-pop .c5-iconbtn{display:grid;position:absolute;top:14px;right:14px;z-index:1;}
 html.cx-js .c5-pop__scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:clamp(1.5rem,4vw,2.75rem);}
 html.cx-js .c5-pop__head{padding-right:56px;}
 
