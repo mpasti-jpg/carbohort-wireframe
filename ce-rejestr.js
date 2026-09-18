@@ -12,7 +12,7 @@
    =========================================================================== */
 window.CW_CE = {
   "meta": {
-    "zaktualizowano": "2026-09-15",
+    "zaktualizowano": "2026-09-18",
     "katalogWersji": "v7/",
     "indeks": "ce-indeks.html",
     "opis": "Rejestr content elementów (CE) makiet CarboHort V5: metadane klocków. Wystąpienia wynikają ze znaczników data-ce w HTML stron – skanuje je _narzedzia/ce-indeks.py. Spec: 40-strona-www/koncepcja/content-elementy-spec.md."
@@ -235,7 +235,10 @@ window.CW_CE = {
       "warianty": {
         "polka": "półka czterech opakowań rodzin (Produkty)",
         "kadr": "kadr zdjęcia uprawy zamiast packshotu (Kukurydza)",
-        "player": "player filmu na panelu (Próchnica+)"
+        "player": "player filmu na panelu (Próchnica+)",
+        "foto": "panel ze zdjęciem zamiast packshotu (o-firmie.html#hero)",
+        "dzial": "jedna kolumna na dwie trzecie szerokości, wysokość wg treści, wyszukiwarka i przycisk przewodnika (centrum-wiedzy.html#hero, centrum-wiedzy-kategoria.html#hero)",
+        "artykul": "nagłówek artykułu: okruszki, chipy, h1, metryka autora, przyciski udostępnij/drukuj (artykul.html#naglowek)"
       },
       "uwagi": "Domyślnie 1–2 packshoty na panelu (strony produktowe).",
       "zrzut": {
@@ -332,8 +335,8 @@ window.CW_CE = {
         "kotwica": "czym-jest"
       },
       "kod": {
-        "css": "ce/CE-12-scena-faktow.css (Próchnica+: własna pp-scene, do scalenia)",
-        "js": "ce/CE-12-scena-faktow.js"
+        "css": "ce/CE-12-scena-faktow.css (Próchnica+: własna pp-scene, do scalenia); nowy układ z 18.09.2026: ce/CE-12-scena-faktow-proba.css (na razie tylko Produkty)",
+        "js": "ce/CE-12-scena-faktow.js; nowy układ z 18.09.2026: ce/CE-12-scena-faktow-proba.js (na razie tylko Produkty)"
       },
       "czesci": [
         "kicker + h2 (+ lead)",
@@ -345,9 +348,28 @@ window.CW_CE = {
       "warianty": {
         "naglowek-nad-scena": "nagłówek i lead nad torem, w scenie tylko opis punktu (Mata)",
         "osiem-krokow": "8 kroków, kroki 2–6 na wspólnym zdjęciu (CARBOMAT HUMIC)",
-        "z-leadem": "dwa akapity leadu przyklejone razem z nagłówkiem (Próchnica+ Metodologia)"
+        "z-leadem": "dwa akapity leadu przyklejone razem z nagłówkiem (Próchnica+ Metodologia)",
+        "z-naglowkiem": "nowy układ wg ramki Figma „Frame 206” (Mateusz, 18.09.2026; na razie tylko Produkty): scena we własnym kontenerze na całą szerokość okna (do 1800 px, tekst 40 px od lewej krawędzi), zdjęcie na prawą połowę kontenera i całą wysokość ekranu z marginesami 20 px, ilustracja na środku zdjęcia na rozmytym ciemnym tle, u góry lewej kolumny kicker i H2, przy dole jeden fakt naraz – tytuł, cienka linia z postępem bieżącego slajdu, opis i licznik „02/05”; bez leadu",
+        "bez-naglowka": "ten sam nowy układ bez kickera i H2 w scenie – gdy sekcja potrzebuje leadu, kicker, H2 i lead stoją nad torem jako zwykły nagłówek sekcji (reguła Mateusza: lead nigdy w scenie); na Produktach do obejrzenia przełącznikiem podglądu"
       },
-      "uwagi": "Liczba kroków (4–8) jest treścią; jeden moduł czyta ją z DOM.",
+      "zrzuty_wariantow": {
+        "z-naglowkiem": {
+          "plik": "v7/produkty.html",
+          "kotwica": "jak-dzialaja",
+          "ruch": true,
+          "przewin": "#jak-dzialaja [data-fx-track]",
+          "czekaj": 900
+        },
+        "bez-naglowka": {
+          "plik": "v7/produkty.html",
+          "kotwica": "jak-dzialaja",
+          "ruch": true,
+          "klik": "#jak-dzialaja [data-fx-var=\"bez-naglowka\"]",
+          "przewin": "#jak-dzialaja [data-fx-track]",
+          "czekaj": 900
+        }
+      },
+      "uwagi": "Liczba kroków (4–8) jest treścią; jeden moduł czyta ją z DOM. 18.09.2026: przebudowa klocka wg Frame 206 – próba na Produktach (warianty z-naglowkiem / bez-naglowka, spec produkty-wzorzec-eco-spec §21.3 i §21.8); pozostałe strony stoją na układzie bazowym do decyzji Mateusza o przeniesieniu nowego układu do warstwy wspólnej.",
       "zrzut": {
         "maxh": 900
       }
@@ -438,8 +460,8 @@ window.CW_CE = {
         "kotwica": "uprawy-profesjonalne"
       },
       "kod": {
-        "css": "ce/CE-16-pas-pro.css (Kukurydza: własna u-end, do scalenia)",
-        "js": "ce/CE-16-pas-pro.js"
+        "css": "ce/CE-16-pas-pro.css",
+        "js": "ce/CE-16-pas-pro.js; wariant pozny-wzrost: ce/CE-16-pas-pro-proba.js (na razie tylko Produkty)"
       },
       "czesci": [
         "kadr",
@@ -448,9 +470,11 @@ window.CW_CE = {
         "rząd 2 przycisków"
       ],
       "warianty": {
-        "zamykajacy": "bez akapitu: nagłówek po lewej, dwa przyciski po prawej (Kukurydza)"
+        "zamykajacy": "bez akapitu: nagłówek po lewej, dwa przyciski po prawej, oba na kadrze (Kukurydza; od 18.09.2026 na bazowym kodzie klocka zamiast własnego portu u-end)",
+        "kontakt": "pas „Wolisz porozmawiać z człowiekiem?” z przyciskami Kontakt i Zostań partnerem (o-firmie.html#porozmawiajmy)",
+        "pozny-wzrost": "kadr stoi na 50 % szerokości ekranu, dopóki górna krawędź pasa jest niżej niż 35 % wysokości okna, potem rośnie i pełny rozmiar osiąga 2 % od góry okna; nakładka przyciemniająca narasta razem ze wzrostem, więc w postoju zdjęcie jest bez przyciemnienia (uwagi Mateusza z 18.09.2026; na razie tylko Produkty)"
       },
-      "uwagi": "Na CARBOMAT ECO i CARBOMAT HUMIC stoi wewnątrz sekcji Sezon, na pozostałych jako osobna sekcja.",
+      "uwagi": "Na CARBOMAT ECO i CARBOMAT HUMIC stoi wewnątrz sekcji Sezon, na pozostałych jako osobna sekcja. Wariant pozny-wzrost: spec produkty-wzorzec-eco-spec §21.4 i §21.8; do decyzji Mateusza kontrast białego tekstu na nieprzyciemnionym zdjęciu (akapit min 2,32).",
       "zrzut": {
         "maxh": 900
       }
@@ -474,7 +498,8 @@ window.CW_CE = {
       ],
       "warianty": {
         "z-nota": "nota o statusie odpowiedzi między nagłówkiem a akordeonem (CARBOHUMIC)",
-        "dla-dociekliwych": "wariant c5-faq--plain: pytanie nad odpowiedzią, pełna szerokość, h4 i przycisk do Centrum wiedzy (Produkty, dawny CE-42)"
+        "dla-dociekliwych": "wariant c5-faq--plain: pytanie nad odpowiedzią, pełna szerokość, h4 i przycisk do Centrum wiedzy (Produkty, dawny CE-42)",
+        "plain": "trzy pytania pod artykułem, odpowiedzi ze zdań tekstu (artykul.html#faq)"
       },
       "uwagi": "Moduł „zadaj pytanie” zdjęty 13.09. Jeden moduł ce/CE-17-faq.js obsługuje kilka akordeonów na stronie (zakres per blok).",
       "zrzut": {
@@ -562,7 +587,8 @@ window.CW_CE = {
         "ostrzegawcze": "karta z ikoną x na przygaszonym tle",
         "sloty-poziome": "miniatura 16:9 obok tekstu (Próchnica+)",
         "miejsca-na-wykresy": "numer, placeholder 16:9, podpis",
-        "szerokie": "dwie szerokie karty"
+        "szerokie": "dwie szerokie karty",
+        "czytaj-dalej": "trzy karty: dwa artykuły i jedna strona komercyjna (artykul.html#dalej-karty)"
       },
       "uwagi": "Najczęstszy klocek serwisu (ponad 20 wystąpień) z osobnymi klasami na każdej stronie – pierwszy kandydat do konsolidacji kodu (faza 2).",
       "zrzut": {
@@ -653,16 +679,16 @@ window.CW_CE = {
       }
     },
     "CE-24": {
-      "nazwa": "Ciemny pas liczb",
+      "nazwa": "Pas liczb",
       "grupa": "dane",
-      "opis": "Ciemny kadr z marginesem 30 px na wysokość ekranu: tytuł u góry po lewej, wiersze „etykieta i podpis | wielka liczba z jednostką” rozdzielone cienkimi liniami.",
+      "opis": "Kadr z marginesem 30 px na wysokość ekranu. Wersja podstawowa: ciemne tło, tytuł u góry po lewej, wiersze „etykieta i podpis | wielka liczba z sufiksem” rozdzielone cienkimi liniami. Wersja alternatywna (wariant kolumny): jasne tło, trzy kolumny z pionowymi liniami, chip nad liczbą, podpis pod nią. Sufiksy liczb to element EL-31.",
       "mechanika": "Wiersze wchodzą od dołu ze staggerem przy pierwszym wejściu w widok (Mata), cyfry odliczają od zera (Kukurydza) albo wjeżdżają kołowrotkiem (Próchnica+); bez JS i przy reduced-motion od razu wartości końcowe.",
       "baza": {
         "plik": "v7/carbomat-mata.html",
         "kotwica": "dowod-liczby"
       },
       "kod": {
-        "css": "per strona: c5-stats (Mata), u-num (Kukurydza), pp-liczby (Próchnica+)",
+        "css": "per strona: c5-stats (Mata), u-nb (Kukurydza, wariant kolumny), pp-liczby (Próchnica+); sufiksy: ce/00-base.css EL-31",
         "js": "carbomat-mata.js ===== 55 / uprawa.js data-count / prochnica-plus.js ===== 60"
       },
       "czesci": [
@@ -671,10 +697,17 @@ window.CW_CE = {
         "źródło"
       ],
       "warianty": {
-        "odliczanie": "liczby odliczają od zera (Kukurydza)",
-        "kolowrotek": "cyfry wjeżdżają kołowrotkiem (Próchnica+)"
+        "odliczanie": "liczby odliczają od zera (mechanika data-count z uprawa.js; na Kukurydzy razem z wariantem kolumny)",
+        "kolowrotek": "cyfry wjeżdżają kołowrotkiem (Próchnica+)",
+        "kolumny": "jasny panel, trzy kolumny rozdzielone pionowymi liniami: chip nad liczbą, wielka liczba z małą jednostką u górnej krawędzi cyfr, podpis pod liczbą (wersja alternatywna sekcji liczb; Kukurydza od 18.09 – decyzja Mateusza)"
       },
-      "uwagi": "Wzór: serverobotics.com (uwaga Mateusza 14.09).",
+      "zrzuty_wariantow": {
+        "kolumny": {
+          "plik": "v7/kukurydza.html",
+          "kotwica": "u-liczby"
+        }
+      },
+      "uwagi": "Wzór: serverobotics.com (uwaga Mateusza 14.09). Jednostka i sufiksy (%, +) małe i wyrównane do górnej krawędzi cyfr (uwaga Mateusza 15.09) – od 18.09 jako element EL-31 c5-aff (0,24 em, kolor liczby) na wszystkich wystąpieniach: Mata, Próchnica+, Kukurydza; wariant kolumny – wzór UPC Renewables i Yerevan (zrzuty 15.09). Nazwa klocka zmieniona 18.09 z „Ciemny pas liczb”, bo doszła jasna wersja alternatywna.",
       "zrzut": {
         "maxh": 900
       }
@@ -817,14 +850,14 @@ window.CW_CE = {
       "nazwa": "Lista z panelem opisu",
       "grupa": "przelaczniki",
       "opis": "Dwie kolumny: po lewej lista dużych tytułów (z numerami), po prawej przyklejony panel z opisem aktywnej pozycji (opcjonalnie przycisk); na telefonie akordeon.",
-      "mechanika": "Najechanie podgląda, klik wybiera, strzałki nawigują, kotwice trafiają w pozycje; bez JS wszystkie opisy otwarte. Moduły 50 (Produkty), 72 (Carbohumic), 80 (Mata), 40 (Kukurydza).",
+      "mechanika": "Najechanie podgląda, klik wybiera, strzałki nawigują, kotwice trafiają w pozycje; bez JS wszystkie opisy otwarte. Moduły 72 (Carbohumic), 80 (Mata), 40 (O nas).",
       "baza": {
-        "plik": "v7/produkty.html",
-        "kotwica": "wg-potrzeby-sciezki"
+        "plik": "v7/carbohumic.html",
+        "kotwica": "z-czym-laczyc-lista"
       },
       "kod": {
-        "css": "per strona: c5pr-paths, c5hu-mixlist, c5-tco, u-fz",
-        "js": "produkty.js ===== 50"
+        "css": "per strona: c5hu-mixlist, c5-tco, on-val; wariant akordeon-z-odliczaniem: c5pr-acc i c5pr-pcard w produkty.css",
+        "js": "carbohumic.js ===== 72; wariant akordeon-z-odliczaniem: produkty.js ===== 50"
       },
       "czesci": [
         "lista tytułów",
@@ -832,9 +865,17 @@ window.CW_CE = {
         "przycisk w panelu (opcjonalnie)"
       ],
       "warianty": {
-        "z-lightboxem": "panel ma przycisk otwierający pełny opis w lightboxie (Kukurydza fazy)"
+        "z-lightboxem": "panel ma przycisk otwierający pełny opis w lightboxie (Kukurydza fazy do 18.09; sekcję przejął CE-65, wariant bez wystąpień)",
+        "akordeon-z-odliczaniem": "akordeon na szerokość kontenera wg ramki Figma „Frame 207” (Mateusz, 18.09.2026; Produkty, ścieżki wg sytuacji): otwarta pozycja ma duży tytuł, po lewej opis z notami, ostrzeżeniem i linkami, po prawej karty produktów z packshotem (po dwie w rzędzie, kolejne zawijają się do następnego wiersza; cała karta prowadzi na stronę produktu, „Kup produkt” odsłania się pod opisem na karcie, a packshot maleje); pierwsza pozycja otwarta od początku, odliczanie 5 s z paskiem na górnej linii następnej pozycji otwiera kolejną i zamyka poprzednią, klik otwiera dowolną albo zamyka otwartą i wyłącza automat, kotwica pozycji otwiera ją i zatrzymuje automat; automat tylko na szerokim ekranie i przy włączonym ruchu, pod kursorem i przy fokusie odliczanie stoi"
       },
-      "uwagi": "Cztery implementacje tej samej mechaniki – kandydat do konsolidacji.",
+      "zrzuty_wariantow": {
+        "akordeon-z-odliczaniem": {
+          "plik": "v7/produkty.html",
+          "kotwica": "wg-potrzeby-sciezki",
+          "maxh": 1100
+        }
+      },
+      "uwagi": "Trzy implementacje tej samej mechaniki (Carbohumic, Mata, O nas) – kandydat do konsolidacji. Do 18.09.2026 bazą były ścieżki na Produktach; po ich przebudowie na wariant akordeon-z-odliczaniem (spec produkty-wzorzec-eco-spec §21.2 i §21.8) baza przeszła na CARBOHUMIC „Z czym łączyć”.",
       "zrzut": {
         "maxh": 900
       }
@@ -941,7 +982,7 @@ window.CW_CE = {
       ],
       "warianty": {
         "przemiana": "cztery karty CARBOMAT ECO → CARBOMAT HUMIC",
-        "regula-z-packshotem": "warunek → odpowiedź + produkt, karta jako link (Kukurydza)"
+        "regula-z-packshotem": "warunek → odpowiedź + sam packshot produktu (bez nazwy i wskazówki od 16.09), karta jako link (Kukurydza)"
       },
       "uwagi": "",
       "zrzut": {
@@ -1185,15 +1226,23 @@ window.CW_CE = {
         "kotwica": "korzysci"
       },
       "kod": {
-        "css": "prochnica-plus.css ===== 45 (pp-kor) / kukurydza.css ===== 55 (u-fk)",
+        "css": "prochnica-plus.css ===== 45 (pp-kor) / kukurydza.css ===== 55 (u-fk, wariant tlo-foto)",
         "js": "prochnica-plus.js ===== 45 / kukurydza.js ===== 55"
       },
       "czesci": [
         "napis",
         "kafelki lub karty"
       ],
-      "warianty": {},
-      "uwagi": "",
+      "warianty": {
+        "tlo-foto": "jedno zdjęcie w tle sceny na pełny ekran (scena przyklejona 100svh, jednolity scrim), biały napis wchodzi wyraz po wyrazie zza maski, gdy kadr zajmuje ok. 2/3 okna; kafle proste, w trzech rozłącznych pasach, po 2–3 naraz, z profilem prędkości: szybki wjazd, zwolnienie w środku okna, szybki wyjazd; na końcu napis zostaje sam (Kukurydza, #u-fakty-scena)"
+      },
+      "zrzuty_wariantow": {
+        "tlo-foto": {
+          "plik": "v7/kukurydza.html",
+          "kotwica": "u-fakty-scena"
+        }
+      },
+      "uwagi": "Wariant tlo-foto: uwagi Mateusza z 18.09.2026 (iteracja 9 Kukurydzy, spec kukurydza-hifi-spec §13.4); baza na Próchnicy+ bez zmian.",
       "zrzut": {
         "maxh": 900
       }
@@ -1240,10 +1289,11 @@ window.CW_CE = {
         "pasek postępu"
       ],
       "warianty": {},
-      "uwagi": "",
+      "uwagi": "WYCOFANY 18.09.2026 – karuzelę kart na Kukurydzy (jedyne wystąpienie) zastąpił CE-66 „Tablica warunków” po uwadze Mateusza z 18.09 (wspólne elementy ośmiu kart wykorzystane jako stała rama). Kod u-cr* zdjęty z kukurydza.css i kukurydza.js; ostatnia wersja w repo makiet (deploy V7 z 14–15.09). Kod CE-46 zostaje w rejestrze na stałe, nie jest używany ponownie.",
       "zrzut": {
         "maxh": 800
-      }
+      },
+      "status": "wycofany"
     },
     "CE-47": {
       "nazwa": "Przelicznik",
@@ -1284,7 +1334,10 @@ window.CW_CE = {
       "czesci": [
         "2 karty: zdjęcie, nazwisko, rola, akapity, przycisk"
       ],
-      "warianty": {},
+      "warianty": {
+        "siatka": "osiem biogramów w siatce 4 kolumn z „czytaj dalej” (o-firmie.html#ludzie)",
+        "kompakt": "trzy karty autorów bez rozwijania (centrum-wiedzy.html#autorzy)"
+      },
       "uwagi": "",
       "zrzut": {
         "maxh": 700
@@ -1334,8 +1387,11 @@ window.CW_CE = {
         "przycisk",
         "zdjęcie"
       ],
-      "warianty": {},
-      "uwagi": "Formularz kontaktu na kontakt.html poza zakresem 14.09.",
+      "warianty": {
+        "kontakt": "formularz z wyborem tematu obok panelu danych firmy i mapy (kontakt.html#napisz)",
+        "temat": "formularz „Zaproponuj temat” obok pasa przewodnika (centrum-wiedzy.html#zaproponuj, artykul.html#zaproponuj-temat)"
+      },
+      "uwagi": "Warianty 15.09: „kontakt” na kontakt.html#napisz, „temat” na dziale i artykule Centrum wiedzy.",
       "zrzut": {
         "maxh": 800
       }
@@ -1407,10 +1463,329 @@ window.CW_CE = {
         "wiersze: tytuł, metryka, przycisk",
         "pusty stan"
       ],
+      "warianty": {
+        "dokumenty": "certyfikaty, poradniki i karty do pobrania z numerem lub metryką (o-firmie.html#dowody-listy, centrum-wiedzy.html#poradniki)"
+      },
+      "uwagi": "",
+      "zrzut": {
+        "maxh": 700
+      }
+    },
+    "CE-54": {
+      "nazwa": "Kafle szybkiego kontaktu",
+      "grupa": "karty",
+      "opis": "Nagłówek strony (kicker, h1, lead) i trzy duże kafle w ramce: pole pod zdjęcie, imię i nazwisko, rola, numer telefonu dużą czcionką jako link tel:, pod nim adres e-mail jako link mailto:.",
+      "mechanika": "Statyczne; na telefonie (poniżej 600 px) numer staje się ciemnym przyciskiem „Zadzwoń” na całą szerokość kafla, od 600 px wraca do dużej liczby w jednym wierszu. Wejście kafli przez reveal.",
+      "baza": {
+        "plik": "v7/kontakt.html",
+        "kotwica": "szybki-kontakt"
+      },
+      "kod": {
+        "css": "kontakt.css ===== 10 (kt-quick)",
+        "js": "00-base.js (reveal)"
+      },
+      "czesci": [
+        "nagłówek strony",
+        "3 kafle: zdjęcie, nazwisko, rola, telefon, e-mail"
+      ],
+      "warianty": {},
+      "uwagi": "Treść 1:1 z dokumentu Sylwii 09.09 (AC #31570).",
+      "zrzut": {
+        "maxh": 760
+      }
+    },
+    "CE-55": {
+      "nazwa": "Wiersze działów z akcjami",
+      "grupa": "dane",
+      "opis": "Lista wierszy rozdzielonych cienkimi liniami, każdy w trzech kolumnach: nazwa działu z osobą | opis (1–3 zdania) | kolumna akcji z pełnym numerem telefonu i pełnym adresem e-mail jako przyciskami.",
+      "mechanika": "Fade-in wierszy (reveal); wiersz wskazany chipem „Wybierz sprawę” albo hashem #dzial-… dostaje na 1,5 s klasę is-hot (obramowanie, jasne tło). Poniżej 900 px kolumny jedna pod drugą, przyciski na całą szerokość.",
+      "baza": {
+        "plik": "v7/kontakt.html",
+        "kotwica": "dzialy"
+      },
+      "kod": {
+        "css": "kontakt.css ===== 30 (kt-dept)",
+        "js": "kontakt.js 20 (is-hot z chipów i hasha)"
+      },
+      "czesci": [
+        "wiersze: dział + osoba, opis, telefon, e-mail"
+      ],
+      "warianty": {},
+      "uwagi": "",
+      "zrzut": {
+        "maxh": 900
+      }
+    },
+    "CE-56": {
+      "nazwa": "Mapa z listą lokalizacji",
+      "grupa": "karty",
+      "opis": "Pole mapy z numerowanymi pinezkami (pozycje w procentach w CSS) obok siatki kart lokalizacji: kraj wersalikami, firma, osoba, telefon i e-mail jako przyciski.",
+      "mechanika": "Najechanie lub fokus na karcie podświetla pinezkę o tym samym numerze i odwrotnie; klik w pinezkę przewija do karty (kotwica). Poniżej 900 px mapa nad siatką, siatka w jednej kolumnie. Bez JS: mapa statyczna, karty widoczne.",
+      "baza": {
+        "plik": "v7/kontakt.html",
+        "kotwica": "dystrybutorzy"
+      },
+      "kod": {
+        "css": "kontakt.css ===== 50 (kt-eumap, kt-pin, kt-dcard)",
+        "js": "kontakt.js 50 (hover i fokus ↔ pinezka)"
+      },
+      "czesci": [
+        "pole mapy z pinezkami",
+        "siatka kart lokalizacji"
+      ],
+      "warianty": {
+        "o-nas": "kolumna adresu firmy z mapą i lista krajów bez osób (o-firmie.html#gdzie-jestesmy, prefiks on-map)"
+      },
+      "uwagi": "",
+      "zrzut": {
+        "maxh": 900
+      }
+    },
+    "CE-57": {
+      "nazwa": "Indeks artykułów",
+      "grupa": "dane",
+      "opis": "Pasek sterowania (chipy podgrup, sortowanie, wyszukiwanie, licznik) i lista wierszy bez miniatur: tytuł, zajawka w dwóch liniach, meta (podgrupa, autor, miesiąc, czas czytania); pod listą stronicowanie numerowane.",
+      "mechanika": "Filtrowanie chipami, sortowanie i wyszukiwanie po tytule i zajawce w JS (data-kat, data-date, data-title), stronicowanie 10 na stronę z zapisem ?kat= i ?strona= w adresie; pusty stan z przyciskiem czyszczącym. Bez JS wszystkie wiersze widoczne, kontrolki ukryte.",
+      "baza": {
+        "plik": "v7/centrum-wiedzy.html",
+        "kotwica": "artykuly"
+      },
+      "kod": {
+        "css": "centrum-wiedzy.css ===== 57 (cw-k-index, cw-k-row)",
+        "js": "centrum-wiedzy.js (filtry, sortowanie, wyszukiwanie, stronicowanie)"
+      },
+      "czesci": [
+        "pasek sterowania",
+        "wiersze listy",
+        "stronicowanie",
+        "pusty stan"
+      ],
+      "warianty": {
+        "kategoria": "lista jednej kategorii z chipami jej podgrup i wierszem „wkrótce” (centrum-wiedzy-kategoria.html#artykuly)"
+      },
+      "uwagi": "Układ z decyzji klienta 10.08: bez miniatur, stronicowanie zamiast doładowywania, podpis autora w każdym wierszu.",
+      "zrzut": {
+        "maxh": 1000
+      }
+    },
+    "CE-58": {
+      "nazwa": "Karty najnowszych",
+      "grupa": "karty",
+      "opis": "Trzy ostatnie artykuły: karta wiodąca z polem pod infografikę 16:9, chipem podgrupy, tytułem, zajawką i meta oraz dwie mniejsze karty bez obrazu jedna nad drugą; pod rzędem nota o następnym tekście.",
+      "mechanika": "Jednorazowe wejście kart (reveal); poniżej 900 px jedna kolumna.",
+      "baza": {
+        "plik": "v7/centrum-wiedzy.html",
+        "kotwica": "najnowsze"
+      },
+      "kod": {
+        "css": "centrum-wiedzy.css ===== 58 (cw-k-latest, cw-k-card)",
+        "js": "00-base.js (reveal)"
+      },
+      "czesci": [
+        "karta wiodąca z polem pod infografikę",
+        "2 karty mniejsze",
+        "nota o następnym artykule"
+      ],
+      "warianty": {},
+      "uwagi": "",
+      "zrzut": {
+        "maxh": 800
+      }
+    },
+    "CE-59": {
+      "nazwa": "Nawigacja kategorii",
+      "grupa": "karty",
+      "opis": "Dwa obramowane boksy obok siebie: nazwa grupy głównej jako link, zdanie opisu i lista podgrup z licznikami artykułów.",
+      "mechanika": "Statyczne; linki podgrup prowadzą do indeksu z parametrem ?kat=, który ustawia filtr. Poniżej 900 px boksy jeden pod drugim.",
+      "baza": {
+        "plik": "v7/centrum-wiedzy.html",
+        "kotwica": "kategorie"
+      },
+      "kod": {
+        "css": "centrum-wiedzy.css ===== 59 (cw-k-cats)",
+        "js": "–"
+      },
+      "czesci": [
+        "2 boksy grup głównych",
+        "listy podgrup z licznikami"
+      ],
       "warianty": {},
       "uwagi": "",
       "zrzut": {
         "maxh": 700
+      }
+    },
+    "CE-60": {
+      "nazwa": "Spis treści z paskiem postępu",
+      "grupa": "nawigacja",
+      "opis": "Spis treści artykułu (lista linków do wszystkich h2, pozycja = etykieta i teza) w przyklejonej lewej kolumnie plus pasek postępu czytania 2 px u góry okna.",
+      "mechanika": "Scrollspy: aktywna pozycja dostaje aria-current; pasek postępu = procent przewinięcia treści (role=progressbar); przy wąskich ekranach spis jest akordeonem details nad treścią, na desktopie sam wykaz przewija się wewnątrz kolumny. Bez JS zwykłe kotwice.",
+      "baza": {
+        "plik": "v7/artykul.html",
+        "kotwica": "spis"
+      },
+      "kod": {
+        "css": "artykul.css (CE-60)",
+        "js": "artykul.js (scrollspy, pasek postępu)"
+      },
+      "czesci": [
+        "pasek postępu",
+        "spis treści",
+        "metryka i przyciski udostępnij/drukuj"
+      ],
+      "warianty": {},
+      "uwagi": "",
+      "zrzut": {
+        "maxh": 800,
+        "przewin": "#spis"
+      }
+    },
+    "CE-61": {
+      "nazwa": "Kluczowe wnioski",
+      "grupa": "noty-i-cta",
+      "opis": "Obramowany boks na początku artykułu: nagłówek „Kluczowe wnioski” i lista pięciu zdań zaczerpniętych dosłownie z treści.",
+      "mechanika": "Statyczne.",
+      "baza": {
+        "plik": "v7/artykul.html",
+        "kotwica": "wnioski"
+      },
+      "kod": {
+        "css": "artykul.css (CE-61)",
+        "js": "–"
+      },
+      "czesci": [
+        "nagłówek",
+        "lista 3–5 zdań"
+      ],
+      "warianty": {},
+      "uwagi": "Zdania wybierane z tekstu autora, nie pisane na nowo (spec Centrum wiedzy §5.1).",
+      "zrzut": {
+        "maxh": 600
+      }
+    },
+    "CE-62": {
+      "nazwa": "Boks produktowy w treści",
+      "grupa": "noty-i-cta",
+      "opis": "Boks „Z tego artykułu” wstawiony raz w bieg tekstu: packshot, nazwa produktu, jedno zdanie z karty produktu i dwa przyciski (strona produktu, sklep).",
+      "mechanika": "Statyczne; poniżej 700 px packshot nad tekstem.",
+      "baza": {
+        "plik": "v7/artykul.html",
+        "kotwica": "produkt"
+      },
+      "kod": {
+        "css": "artykul.css (CE-62)",
+        "js": "–"
+      },
+      "czesci": [
+        "etykieta „Z tego artykułu”",
+        "packshot",
+        "nazwa i zdanie",
+        "2 przyciski"
+      ],
+      "warianty": {
+        "boczny": "w kolumnie bocznej strony kategorii, bez etykiety (centrum-wiedzy-kategoria.html#obok-produkt)"
+      },
+      "uwagi": "Jeden boks na artykuł, po sekcji, która uzasadnia produkt (życzenie klienta z 01.06: „kup teraz” przy wzmiance produktu).",
+      "zrzut": {
+        "maxh": 500
+      }
+    },
+    "CE-63": {
+      "nazwa": "Karta autora",
+      "grupa": "karty",
+      "opis": "Karta pod artykułem: pole pod zdjęcie, imię i nazwisko, rola, bio, link do wszystkich artykułów autora; pod nią wiersz konsultanta merytorycznego (z notą niezależności, gdy dotyczy).",
+      "mechanika": "Statyczne.",
+      "baza": {
+        "plik": "v7/artykul.html",
+        "kotwica": "autor"
+      },
+      "kod": {
+        "css": "artykul.css (CE-63)",
+        "js": "–"
+      },
+      "czesci": [
+        "karta autora",
+        "wiersz konsultanta"
+      ],
+      "warianty": {},
+      "uwagi": "Podpisy autorów obowiązkowe (Darek 10.08); dane w makiecie przykładowe – Google Doc nie podaje autorów.",
+      "zrzut": {
+        "maxh": 600
+      }
+    },
+    "CE-64": {
+      "nazwa": "Produkty wspomniane w artykule",
+      "grupa": "noty-i-cta",
+      "opis": "Poziomy pas nad kluczowymi wnioskami artykułu: nagłówek i rząd pozycji rozdzielonych cienkimi liniami – pole packshotu 112 × 112 px, nazwa produktu (maks. dwa wiersze), przycisk „Kup produkt” i cichy link do strony produktu. Bez zdań o produktach – tylko nazwy.",
+      "mechanika": "Od 900 px trzy pozycje dzielą kolumnę tekstu (ok. 240 px każda); poniżej rząd przewija się poziomo ze scroll-snap, na telefonie trzecia pozycja wystaje zza krawędzi z zanikiem po prawej. Bez JS i bez animacji.",
+      "baza": {
+        "plik": "v7/artykul.html",
+        "kotwica": "produkty-wspomniane"
+      },
+      "kod": {
+        "css": "artykul.css (CE-64, cw-a-mprod)",
+        "js": "–"
+      },
+      "czesci": [
+        "nagłówek pasa",
+        "pozycje: packshot, nazwa, przycisk, link"
+      ],
+      "warianty": {},
+      "uwagi": "Uwaga Mateusza 15.09: produkty wymienione w artykule widoczne u góry, każdy z przyciskiem „Kup produkt”. Boks „Z tego artykułu” (CE-62) w treści zostaje – decyzja, czy nie jest nadmiarowy.",
+      "zrzut": {
+        "maxh": 500
+      }
+    },
+    "CE-65": {
+      "nazwa": "Oś faz z akordeonem",
+      "grupa": "przelaczniki",
+      "opis": "Dwie kolumny we własnym, szerszym kontenerze (do 1800 px, marginesy 40 px, odstęp kolumn clamp(3rem, 8vw, 10rem)): po lewej kicker w ramce i nagłówek sekcji, pod nimi kwadratowy kadr aktywnej pozycji przyklejony do dolnej krawędzi okna (nagłówek przewija się ze stroną, kadr jedzie wzdłuż listy i nigdy nie nachodzi na nagłówek); po prawej pionowa oś z numerowanymi węzłami (numery krojem treści) i dużymi tytułami; otwarta pozycja rozwija pod tytułem panel: etykieta, skrót, boksy produktów z packshotem, przypis i przycisk pełnego opisu. Na telefonie jedna kolumna, kadr 4:3 wewnątrz panelu.",
+      "mechanika": "Akordeon: jedna pozycja otwarta naraz (klik, Enter, spacja), strzałki oraz Home i End przenoszą fokus między tytułami; kadr w lewej kolumnie przenika przy zmianie pozycji; gdy po zwinięciu pozycji powyżej otwierany tytuł wypada ponad okno, moduł dociąga go do górnej krawędzi; boksy produktów i przycisk otwierają lightboxy. Bez JS wszystkie panele otwarte i kadry w panelach; reduced-motion bez animacji.",
+      "baza": {
+        "plik": "v7/kukurydza.html",
+        "kotwica": "u-fazy"
+      },
+      "kod": {
+        "css": "ce/CE-65-os-faz.css",
+        "js": "ce/CE-65-os-faz.js"
+      },
+      "czesci": [
+        "blok nagłówka z kickerem w ramce",
+        "kadr aktywnej pozycji (kwadrat, przyklejony do dołu okna)",
+        "oś z numerowanymi węzłami",
+        "tytuł pozycji",
+        "panel: etykieta, skrót, boksy produktów, przypis, przycisk"
+      ],
+      "warianty": {},
+      "uwagi": "Wzór: ramka Figma „Frame 213” (Mateusz, 18.09.2026); decyzja Mateusza z 18.09: osobny content element. Zastąpił na Kukurydzy wariant z-lightboxem klocka CE-30. Na razie jedno wystąpienie (Kukurydza, fazy). Iteracja 9 (18.09 po południu, uwagi Mateusza): numery krojem treści, bez leadu, szeroki kontener, kicker EL-06 w ramce, kadr 1:1 przyklejony do dołu okna – poniżej 1600 px zatrzymuje się 96 px nad krawędzią, żeby nie wchodzić pod dok doradcy (zmienna --c5-tl-stage-bot).",
+      "zrzut": {
+        "maxh": 1100
+      }
+    },
+    "CE-66": {
+      "nazwa": "Tablica warunków",
+      "grupa": "przelaczniki",
+      "opis": "Ciemna tablica ośmiu warunków stanowiska: wspólny szkielet – wielki licznik i etykiety „Priorytet”, „Carbohort”, „Uzupełnienie” – jest nadrukowany raz i się nie rusza, zmienia się wyłącznie treść wybranego warunku (tytuł, trzy odpowiedzi, chipy produktów). Nad tablicą wybierak ośmiu kafli z numerem i nazwą warunku (4 × 2 na desktopie, przewijany rząd poniżej 640 px); bez JS klocek rozkłada się na osiem jasnych kart z numerem.",
+      "mechanika": "Zakładki z aktywacją automatyczną: kafel, klawiatura w tabliście (← → Home End, roving tabindex), przyciski poprzedni/następny z zawijaniem i przesunięcie palcem po tablicy (próg 40 px). Osiem paneli leży w jednej komórce siatki i dziedziczy jej tory przez subgrid, więc wysokość tablicy nie skacze, a etykiety nie drgną; licznik przewija taśmę cyfr (600 ms, zdublowane cyfry na zawinięcie 8 → 1 i 1 → 8), tytuł wjeżdża zza maski, trzy sloty wchodzą kaskadą co 70 ms. Autoprzełączanie co 8 s napędza pasek postępu na aktywnym kaflu: rusza przy co najmniej 50 % widoczności, pauzuje na hover i fokusie, gaśnie na stałe po pierwszej świadomej akcji i wraca przyciskiem pauzy; przy prefers-reduced-motion nie startuje, a przełączanie jest natychmiastowe.",
+      "baza": {
+        "plik": "v7/kukurydza.html",
+        "kotwica": "u-stanowisko"
+      },
+      "kod": {
+        "css": "ce/CE-66-tablica-warunkow.css",
+        "js": "ce/CE-66-tablica-warunkow.js"
+      },
+      "czesci": [
+        "nagłówek sekcji (kicker, h2, lead)",
+        "wybierak ośmiu kafli z paskiem postępu",
+        "licznik z taśmą cyfr",
+        "sterowanie: pauza, poprzedni, następny",
+        "stos ośmiu paneli: tytuł i trzy sloty z etykietami"
+      ],
+      "warianty": {},
+      "uwagi": "Uwaga Mateusza z 18.09.2026 (iteracja 9 Kukurydzy): osiem kart karuzeli miało wspólne elementy – numer i trzy etykiety – więc stoją na tablicy raz; nowy content element tylko dla tego miejsca. Zastąpił CE-46 (karuzela kart, wycofany). Chipy produktów z EL c5-chip w wersji na ciemnym tle, 32 px wysokości (stoją w zdaniu).",
+      "zrzut": {
+        "maxh": 1100
       }
     }
   },
@@ -1600,7 +1975,8 @@ window.CW_CE = {
       "klasa": "c5-kicker",
       "warianty": {
         "c5-kicker--center": "wyśrodkowany",
-        "c5-kicker--flush": "bez odstępu pod spodem"
+        "c5-kicker--flush": "bez odstępu pod spodem",
+        "c5-kicker--outline": "w ramce: obrys 1 px, narożniki 8 px, 0.75 rem – wyjątek Mateusza od ostrych narożników (18.09.2026, wzór: ramka Figma „Frame 213”); na razie tylko CE-65 na Kukurydzy"
       },
       "opis": "Nadtytuł sekcji: 0.875 rem, wersaliki, tracking .03em i duży odstęp do treści pod spodem. Dwanaście lokalnych nadpisań margin-bottom:0 czeka na wariant --flush.",
       "przyklad": "<span class=\"c5-kicker\">Czym jest CARBOMAT ECO</span><span class=\"c5-kicker c5-kicker--center\">Dla dociekliwych</span>",
@@ -1725,7 +2101,6 @@ window.CW_CE = {
         "wf-h2 (Kukurydza, 15 – waga 700 schodzi do 500)",
         "c5-params__title",
         "u-fk__title",
-        "u-end__t",
         "pp-liczby__title"
       ],
       "uwagi": "Warianty --tight i --sm nie są jeszcze w arkuszu; zamiana wf-h2 na Kukurydzy idzie w fali 2a, reszta w 2b.",
@@ -1733,8 +2108,7 @@ window.CW_CE = {
       "dzis": [
         "wf-h2",
         "c5-params__title",
-        "u-fk__title",
-        "u-end__t"
+        "u-fk__title"
       ]
     },
     "EL-10": {
@@ -2516,6 +2890,26 @@ window.CW_CE = {
         "c5-facts-sec, c5-dose-sec, c5-diff-sec, pp-scene-sec"
       ],
       "uwagi": "Na Kukurydzy sekcja jest niższa (76,8 px zamiast 89,6) przez lokalne nadpisanie u-num – do sprzątnięcia w fali 2b."
+    },
+    "EL-31": {
+      "nazwa": "Sufiks liczby",
+      "grupa": "dane",
+      "klasa": "c5-aff",
+      "warianty": {},
+      "opis": "Jednostka, procent, mnożnik albo słowo przy wielkiej liczbie: 0,24 wysokości liczby, w kolorze liczby, wyrównane do górnej krawędzi cyfr. Znaki plus i minus zostają w rozmiarze liczby. Kontener liczby: flex, align-items flex-start, gap .12em, line-height 1; przesunięcie dostraja zmienna --c5-aff-pt.",
+      "przyklad": "<p style=\"display:flex;align-items:flex-start;gap:.12em;margin:0;font-size:4.5rem;line-height:1;color:var(--w-text-primary)\">20–40<span class=\"c5-aff\">l/ha</span></p><p style=\"display:flex;align-items:flex-start;gap:.12em;margin:12px 0 0;font-size:4.5rem;line-height:1;color:var(--w-text-primary)\">+40<span class=\"c5-aff\">%</span></p>",
+      "przyklad_tlo": "jasne",
+      "kod": "ce/00-base.css – EL · Interface elements → EL-31",
+      "uzywany_w": [
+        "CE-24"
+      ],
+      "zastepuje": [
+        "u-num__unit",
+        "u-nb__unit",
+        "pp-liczba__aff (jednostki)",
+        "sufiksy w c5-mt-stat__val"
+      ],
+      "uwagi": "Uwagi Mateusza 15–17.09.2026: jednostki i symbol procentu małe, u górnej krawędzi cyfr, w kolorze liczby; jedna reguła dla wszystkich wystąpień CE-24."
     }
   }
 };

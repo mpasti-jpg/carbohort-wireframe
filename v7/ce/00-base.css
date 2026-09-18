@@ -16,11 +16,26 @@
 /* kotwice: bez przyklejonej belki nie potrzeba marginesu przewijania */
 [data-chapter]{scroll-margin-top:0;}
 
+/* `[hidden]` guard. The attribute carries only the UA `display:none`, and any
+   author declaration beats it – this layer sets `display:flex` on `.c5-note`
+   (EL-17), so `<p class="c5-note" hidden>` would stand on the page from the
+   first paint. `!important` is required: this file loads BEFORE the CE-NN
+   files and the page sheet, which set their own `display`. One rule here
+   replaces the per-page copies (prochnica-plus, kontakt, artykul,
+   centrum-wiedzy, uprawa). Pattern layer only – cw.css keeps its own
+   `.cw-acc [hidden]` rule for the kit accordion. */
+[hidden]{display:none !important;}
+
 /* --- Wspólne klocki nowego layoutu -------------------------------------- */
 .c5-wrap{max-width:1180px;margin-inline:auto;padding-inline:var(--w-space-5);}
 .c5-sec{padding-block:clamp(3.5rem,7vw,6.25rem);}
 .c5-kicker--center{text-align:center;}
 .c5-kicker{display:block;font-size:0.875rem;font-weight:var(--w-weight-medium);letter-spacing:.03em;text-transform:uppercase;margin-bottom:clamp(2rem,4vw,3.5rem);}
+/* EL-06, outline variant: the kicker in a hairline frame with 8 px corners –
+   the one rounded corner in the pattern, Mateusz's sanctioned exception of
+   18.09.2026 (model: Figma frame „Frame 213”). Used by CE-65 only for now;
+   every other kicker on every page stays as it is. */
+.c5-kicker--outline{display:inline-block;width:fit-content;padding:.4375rem .6875rem;border:1px solid var(--w-gray-900);border-radius:8px;font-size:.75rem;line-height:1;letter-spacing:.05em;}
 .c5-h1{font-size:clamp(2.1rem,4vw,3.125rem);line-height:1.12;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
 .c5-h2{font-size:clamp(1.7rem,3.2vw,2.5rem);line-height:1.15;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;max-width:784px;}
 .c5-h2--center{margin-inline:auto;text-align:center;}
@@ -157,6 +172,23 @@ html.lenis,html.lenis body{height:auto;}
    is sharp and every control is 44 px. One rule instead of the local patch
    that used to sit in prochnica-plus.css. */
 #main .wf-input,#main .wf-select,#main .wf-textarea{border-radius:0;min-height:44px;}
+
+/* EL-31 Number affix */
+/* The unit, percent sign, multiplier or word standing next to a big number:
+   0.24 of the number's size, the number's own colour and weight, its letters
+   flush with the TOP edge of the digits. Plus and minus are NOT affixes –
+   they stay at the number's size, because they read as part of the number.
+   The page's number container carries the other half of the contract:
+   `display:flex; align-items:flex-start; gap:.12em; line-height:1`.
+   `padding-top` counts in the affix's OWN em (0.24 of the number), so a single
+   value follows the number through every clamp() step. .44em was picked by
+   measuring the rendered pixels on Mata and Próchnica+ at 1280 and 375 px:
+   letters and `%` land within 1.7 px of the digits' top edge. A page whose
+   digits sit differently inside their box can override `--c5-aff-pt` on its
+   own container instead of changing the default here. The one glyph the rule
+   cannot lift is `×`: a multiplication sign is drawn on the math axis, so it
+   stands ~5 px lower than the digits' top edge whatever the padding. */
+.c5-aff{font-size:.24em;line-height:1;letter-spacing:0;font-weight:inherit;color:inherit;align-self:flex-start;white-space:nowrap;padding-top:var(--c5-aff-pt,.44em);}
 
 /* Reduced motion for the elements above – this block must stay AFTER their
    definitions: same specificity, so the later rule wins. */

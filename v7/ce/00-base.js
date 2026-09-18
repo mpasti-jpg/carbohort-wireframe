@@ -173,7 +173,10 @@ window.CX5 = (function () {
 
   /* --- Dok dr. Jurka: pojawia się po zejściu z hero ------------------------- */
   var dock = $("[data-jurek-dock]");
-  var hero = doc.getElementById("hero");
+  /* The dock hides while the opening block is on screen. Pages without an
+     `#hero` (Kontakt, the article template) opt in with `data-dock-hero`
+     on their opening section (15.09). */
+  var hero = doc.getElementById("hero") || doc.querySelector("[data-dock-hero]");
   function updateDock() {
     if (!dock || !hero) return;
     var past = window.scrollY > hero.offsetHeight * 0.6;
