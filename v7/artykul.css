@@ -1,0 +1,482 @@
+/* ===== artykul.css · Szablon artykułu Centrum wiedzy (V7) ==================
+   Page layer of `artykul.html` (contract:
+   40-strona-www/koncepcja/centrum-wiedzy-spec.md, sections 5, 5.1, 5.2, 8).
+   Loaded after tokens.css, wireframe.css, cw.css, ce/00-base.css and
+   ce/CE-17-faq.css, so everything here may rely on the c5-* base.
+
+   Five blocks get their base version on this page and are marked with a
+   CE-6N section header: CE-60 (table of contents plus reading progress), CE-61 (key
+   takeaways), CE-62 (in-text product box), CE-63 (author card) and CE-64
+   (the band of products the article names). The rest of the classes are the
+   page furniture of a reading view.
+
+   This page is deliberately still: no Lenis, no dot navigation, no reveal.
+   The only thing that moves is the 2 px progress bar, and even that stops at
+   prefers-reduced-motion (it jumps instead of sliding).
+
+   Prefix: `cw-a-`. Agent K defines `cw-k-` in centrum-wiedzy.css; until the
+   two sheets are unified this file defines everything it needs itself and
+   never redefines a class of the other one.               ================= */
+
+/* --- zmienne strony ------------------------------------------------------- */
+.cw-a-head,
+.cw-a-cover,
+.cw-a-layout,
+.cw-a-sec,
+.cw-a-nav {
+  --cw-a-side: 260px;      /* left column of the reading layout               */
+  --cw-a-col: 720px;       /* max width of the text column                    */
+  --cw-a-gap: clamp(2.5rem, 5vw, 4.5rem);  /* between the two columns         */
+  --cw-a-sticky: 30px;     /* sticky offset, one gutter of the pattern        */
+}
+
+/* ===== CE-60 · Pasek postępu czytania (część klocka „Spis treści") =========
+   2 px above the service menu; the width is the percentage of the article
+   already scrolled (JS). Fixed, never a scroll target, ignores pointer
+   events, and disappears in print. ======================================= */
+.cw-a-progress {
+  position: fixed; inset: 0 0 auto 0; height: 2px;
+  z-index: calc(var(--w-z-dropdown) + 1);
+  pointer-events: none; background: transparent;
+}
+.cw-a-progress__bar {
+  display: block; height: 100%; width: 0;
+  background: var(--w-gray-900);
+  transition: width 90ms linear;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cw-a-progress__bar { transition: none; }
+}
+
+/* ===== CE-08 wariant „artykul" · Nagłówek artykułu =========================
+   Not the product hero: no 100svh, no panel, no packshot. Breadcrumb at the
+   top (the reader has to know where they are before they start reading), then
+   chips, title and the author metric with the two icon buttons. ========== */
+.cw-a-head { padding-block: clamp(1rem, 2.5vw, 1.75rem) 0; }
+/* From 1100 px the reading grid is centred and 260 + gap + 720 wide; the
+   header content takes the same box, so the breadcrumb, the title, the rule
+   under the metric, the cover and the contents column share one left edge
+   (iteration 2, 15.09). */
+@media (min-width: 1100px) {
+  .cw-a-head .c5-wrap > * {
+    max-width: calc(var(--cw-a-side) + var(--cw-a-gap) + var(--cw-a-col));
+    margin-inline: auto;
+  }
+}
+.cw-a-crumbs { padding-block: 0 clamp(1.25rem, 3vw, 2rem); font-size: 0.75rem; }
+.cw-a-head__in {
+  display: flex; flex-direction: column; gap: clamp(1rem, 2.4vw, 1.5rem);
+  max-width: 900px;
+}
+.cw-a-head__chips { display: flex; flex-wrap: wrap; gap: var(--w-space-2); margin: 0; }
+.cw-a-h1 { max-width: 20ch; max-width: 900px; }
+
+/* metryka autora: pole pod zdjęcie 48 px, dwie linie opisu, przyciski z prawej */
+.cw-a-meta {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--w-space-4);
+  padding-block: clamp(0.75rem, 2vw, 1.25rem);
+  border-block: 1px solid var(--w-border-subtle);
+}
+.cw-a-meta__ph {
+  width: 48px; height: 48px; min-height: 0; flex: none;
+  color: var(--w-placeholder-ink);
+}
+.cw-a-meta__txt { flex: 1 1 16rem; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.cw-a-meta__txt p { margin: 0; }
+.cw-a-meta__who { font-size: 0.9375rem; }
+.cw-a-meta__name { font-weight: var(--w-weight-semibold); }
+.cw-a-meta__cons { font-size: 0.8125rem; color: var(--w-text-secondary); }
+.cw-a-tools { display: flex; gap: var(--w-space-2); flex: none; margin-left: auto; }
+
+/* komunikat „skopiowano" – żyje przy obu rzędach przycisków (nagłówek i bok) */
+.cw-a-msg { margin: 0; color: var(--w-text-primary); }
+
+/* ===== Okładka artykułu ====================================================
+   The first illustration of the article, promoted out of the text flow to a
+   cover under the header (decision of 15.09, spec section 5.3). It is as wide
+   as the whole reading layout – both columns – so the sticky column starts
+   below it. 21:9 from 900 px, 16:10 on a phone. Nothing moves here: no
+   parallax, no reveal, this is a page for reading. ======================= */
+.cw-a-cover {
+  /* the same maximum width and the same centring as the grid below:
+     260 + gap + 720, `margin-inline: auto` instead of justify-content */
+  max-width: calc(var(--cw-a-side) + var(--cw-a-gap) + var(--cw-a-col));
+  margin: clamp(1.5rem, 3.5vw, 2.25rem) auto 0;
+}
+.cw-a-cover__ph {
+  display: block; width: 100%; aspect-ratio: 16 / 10;
+  min-height: 0; border-radius: 0;
+}
+@media (min-width: 900px) {
+  .cw-a-cover__ph { aspect-ratio: 21 / 9; }
+}
+
+/* ===== Układ czytania: kolumna spisu + kolumna tekstu ======================
+   Below 1100 px one column in the DOM order: table of contents (as an
+   accordion), the band of products, key takeaways, text. From 1100 px the
+   aside moves into a sticky left column and the other three stack in the text
+   column, while the DOM order stays as it is. ============================ */
+.cw-a-layout {
+  display: flex; flex-direction: column;
+  gap: clamp(1.75rem, 4vw, 2.5rem);
+  padding-block: clamp(1.5rem, 4vw, 2.5rem) clamp(2rem, 5vw, 3.5rem);
+}
+.cw-a-body { max-width: var(--cw-a-col); font-size: 1.0625rem; line-height: 1.65; }
+.cw-a-body > p { margin: 0 0 1.15em; }
+.cw-a-body > p:last-child { margin-bottom: 0; }
+.cw-a-h2 { font-size: clamp(1.4rem, 2.4vw, 1.875rem); line-height: 1.2; max-width: var(--cw-a-col); }
+.cw-a-body > .cw-a-h2 { margin: clamp(2.25rem, 5vw, 3.25rem) 0 clamp(0.75rem, 1.6vw, 1.1rem); }
+.cw-a-body > .cw-a-h2:first-child { margin-top: 0; }
+.cw-a-h3 { margin: clamp(1.5rem, 3vw, 2rem) 0 clamp(0.4rem, 1vw, 0.7rem); }
+.cw-a-list { margin: 0 0 1.15em; padding-left: 1.2em; display: flex; flex-direction: column; gap: 0.4em; }
+.cw-a-list li { padding-left: 0.2em; }
+
+/* pole pod ilustrację: kadr 16:10, podpis neutralny */
+.cw-a-fig { margin: clamp(1.5rem, 3.4vw, 2.25rem) 0; }
+.cw-a-fig__ph { display: block; width: 100%; aspect-ratio: 16 / 10; min-height: 0; border-radius: 0; }
+.cw-a-fig__cap,
+.cw-a-cover__cap {
+  margin-top: var(--w-space-2);
+  font-size: 0.75rem; line-height: 1.45; color: var(--w-text-tertiary);
+}
+
+@media (min-width: 1100px) {
+  .cw-a-layout {
+    display: grid;
+    grid-template-columns: var(--cw-a-side) minmax(0, var(--cw-a-col));
+    column-gap: var(--cw-a-gap);
+    row-gap: clamp(1.75rem, 3vw, 2.5rem);
+    align-items: start; justify-content: center;
+  }
+  .cw-a-side {
+    grid-column: 1; grid-row: 1 / span 3; align-self: start;
+    position: sticky; top: var(--cw-a-sticky);
+    /* Eleven entries are taller than a laptop screen, so the column is capped
+       at the viewport and the LIST scrolls inside it – the heading of the
+       contents and the metric with „Udostępnij" / „Drukuj" stay put instead
+       of being pushed out of sight by a long article. The 240 px reserved
+       below are the summary row plus that metric; the column keeps its own
+       `overflow` as a safety net, in case the reserve ever falls short (the
+       list is NOT a flex item: `display:flex` on `details` is not something
+       every engine honours). */
+    max-height: calc(100svh - 2 * var(--cw-a-sticky));
+    overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin;
+  }
+  .cw-a-toc__nav {
+    max-height: calc(100svh - 2 * var(--cw-a-sticky) - 240px);
+    overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin;
+  }
+  .cw-a-mprod { grid-column: 2; grid-row: 1; }
+  .cw-a-key { grid-column: 2; grid-row: 2; }
+  .cw-a-body { grid-column: 2; grid-row: 3; }
+}
+
+/* ===== CE-60 · Spis treści (wersja bazowa) =================================
+   One `details` for both layouts: open and non-interactive in the sticky
+   column from 1100 px, a plain accordion below it. The active entry comes
+   from the scrollspy (`aria-current="true"`), marked by a rule on the left
+   and weight – never by colour alone. ==================================== */
+.cw-a-toc { border: 1px solid var(--w-border-default); background: var(--w-surface-page); }
+.cw-a-toc__sum {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--w-space-3); min-height: 44px; padding: 10px 16px;
+  cursor: pointer; list-style: none;
+}
+.cw-a-toc__sum::-webkit-details-marker { display: none; }
+.cw-a-toc__h {
+  margin: 0; font-size: 0.75rem; font-weight: var(--w-weight-medium);
+  letter-spacing: .04em; text-transform: uppercase; color: var(--w-text-secondary);
+}
+.cw-a-toc__chev { flex: none; transition: transform var(--w-duration-base) var(--w-ease); }
+.cw-a-toc[open] .cw-a-toc__chev { transform: rotate(180deg); }
+.cw-a-toc__nav { border-top: 1px solid var(--w-border-subtle); }
+.cw-a-toc__list { margin: 0; padding: var(--w-space-2) 0; list-style: none; }
+.cw-a-toc__link {
+  display: flex; flex-direction: column; gap: 1px;
+  padding: 6px 16px 6px 13px;
+  border-left: 3px solid transparent;
+  text-decoration: none; color: var(--w-text-secondary);
+}
+.cw-a-toc__link:hover { background: var(--w-surface-hover); color: var(--w-text-primary); }
+.cw-a-toc__lab { font-size: 0.8125rem; font-weight: var(--w-weight-medium); color: var(--w-text-primary); }
+.cw-a-toc__txt {
+  font-size: 0.75rem; line-height: 1.35;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.cw-a-toc__link[aria-current="true"] { border-left-color: var(--w-gray-900); background: var(--w-surface-subtle); }
+.cw-a-toc__link[aria-current="true"] .cw-a-toc__lab { font-weight: var(--w-weight-semibold); }
+
+/* skrócona metryka pod spisem – tylko w kolumnie bocznej, bo na wąskim ekranie
+   te same dane i te same przyciski stoją już w nagłówku artykułu */
+.cw-a-sidemeta { display: none; }
+@media (min-width: 1100px) {
+  .cw-a-sidemeta { display: flex; flex-direction: column; gap: var(--w-space-3); margin-top: var(--w-space-5); }
+  .cw-a-sidemeta .c5-btn { flex: 1 1 auto; }
+  .cw-a-toc__sum { pointer-events: none; }   /* na szerokim ekranie spis stoi otwarty */
+  .cw-a-toc__chev { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cw-a-toc__chev { transition: none; }
+}
+
+/* ===== CE-64 · Produkty wspomniane w artykule (wersja bazowa) ==============
+   A band above the key takeaways with the products the article names, and
+   nothing else: a packshot field, the name, „Kup produkt" and a quiet link to
+   the product page. No sentences about the products – the article is the
+   argument, the band is only the shortcut (spec section 5.3 point 2).
+
+   Mobile first: the row scrolls horizontally with scroll-snap, 176 px per
+   item, so nothing is hidden behind a „more" control. From 900 px the three
+   items share the 720 px text column (about 240 px each) and the scrolling
+   stops. Thin rules between the items and no fill – the framed boxes of this
+   page (CE-61 above the text, CE-62 inside it) stay the louder ones. ===== */
+.cw-a-mprod {
+  max-width: var(--cw-a-col);
+  border-block: 1px solid var(--w-border-default);
+  padding-block: clamp(1rem, 2.4vw, 1.35rem);
+}
+.cw-a-mprod__h {
+  margin: 0 0 clamp(0.75rem, 1.8vw, 1rem);
+  color: var(--w-text-secondary);
+}
+.cw-a-mprod__list {
+  display: flex; margin: 0; padding: 0; list-style: none;
+  overflow-x: auto; scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain; scrollbar-width: thin;
+}
+.cw-a-mprod__item {
+  /* 176 px is the floor, never the ceiling: the items grow into the free space
+     of a tablet and stop shrinking on a phone, where the row scrolls instead */
+  flex: 1 0 176px; min-width: 0; scroll-snap-align: start;
+  display: flex; flex-direction: column; gap: var(--w-space-3);
+  padding-inline: clamp(0.85rem, 2.5vw, 1.25rem);
+}
+.cw-a-mprod__item:first-child { padding-inline-start: 0; }
+.cw-a-mprod__item:last-child { padding-inline-end: 0; }
+.cw-a-mprod__item + .cw-a-mprod__item { border-left: 1px solid var(--w-border-subtle); }
+
+/* pole packshotu 112 × 112 px: jasne tło, obraz cały w kadrze.
+   The image FILLS the field and `object-fit: contain` does the letterboxing:
+   `max-height: 100%` on an auto-sized row is circular (the row would have to
+   know its height first), so a tall bottle simply burst out of the field. */
+.cw-a-mprod__shot {
+  display: block; flex: none;
+  width: 112px; height: 112px; padding: 8px;
+  background: var(--w-surface-subtle); border: 1px solid var(--w-border-subtle);
+}
+.cw-a-mprod__shot img {
+  display: block; width: 100%; height: 100%;
+  object-fit: contain; mix-blend-mode: multiply;
+}
+/* nazwa: maksymalnie dwa wiersze, bez zdania obok */
+.cw-a-mprod__name {
+  margin: 0;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+/* akcje jedna pod drugą – w pozycji 176 px przycisk i link nie zmieszczą się
+   obok siebie; `margin-top: auto` wyrównuje je w równym rzędzie */
+.cw-a-mprod__act {
+  flex-direction: column; align-items: flex-start;
+  gap: var(--w-space-2); margin-top: auto;
+}
+.cw-a-mprod__more { font-size: 0.8125rem; color: var(--w-text-secondary); }
+.cw-a-mprod__more:hover { color: var(--w-text-primary); }
+
+/* Phone: narrower items so the third product peeks in from the right edge
+   and the fade on that edge says „there is more" – a row that ends exactly on
+   an item looks complete and hides the rest (iteration 2, 15.09). */
+@media (max-width: 599px) {
+  .cw-a-mprod__item { flex-basis: 150px; }
+  .cw-a-mprod__shot { width: 96px; height: 96px; }
+  .cw-a-mprod__list {
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent);
+  }
+}
+@media (min-width: 900px) {
+  .cw-a-mprod__list { overflow-x: visible; scroll-snap-type: none; }
+  .cw-a-mprod__item { flex: 1 1 0; scroll-snap-align: none; }
+}
+
+/* ===== CE-61 · Kluczowe wnioski (wersja bazowa) ============================
+   The BLUF box at the top of the article: a framed list of single sentences
+   quoted from the text. Dark rule on top, so it reads as a summary and not as
+   a note. ================================================================ */
+.cw-a-key {
+  max-width: var(--cw-a-col);
+  border: 1px solid var(--w-border-default); border-top: 2px solid var(--w-gray-900);
+  background: var(--w-surface-page);
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+}
+.cw-a-key__h { font-size: clamp(1.125rem, 1.8vw, 1.375rem); margin: 0; }
+.cw-a-key__list {
+  margin: clamp(0.85rem, 2vw, 1.15rem) 0 0; padding: 0; list-style: none;
+  display: flex; flex-direction: column; gap: var(--w-space-3);
+  font-size: 0.9375rem; line-height: 1.55;
+}
+.cw-a-key__list li { position: relative; padding-left: 1.5rem; }
+.cw-a-key__list li::before {
+  content: ""; position: absolute; left: 0; top: 0.62em;
+  width: 10px; height: 1px; background: var(--w-gray-900);
+}
+
+/* ===== CE-62 · Boks produktowy w treści (wersja bazowa) ====================
+   One box per article, standing inside the text column where the copy names
+   the product. Packshot on the left, name, one sentence from the product page
+   and two buttons on the right; one column on a phone. ================== */
+.cw-a-prod {
+  margin: clamp(1.75rem, 4vw, 2.5rem) 0;
+  border: 1px solid var(--w-gray-900);
+  background: var(--w-surface-page);
+  padding: clamp(1.1rem, 2.6vw, 1.5rem);
+}
+.cw-a-prod__kicker { margin-bottom: var(--w-space-3); color: var(--w-text-secondary); }
+.cw-a-prod__in { display: flex; flex-wrap: wrap; align-items: center; gap: clamp(1rem, 3vw, 1.75rem); }
+.cw-a-prod__pack {
+  flex: none; width: clamp(96px, 22vw, 132px); height: auto;
+  object-fit: contain; mix-blend-mode: multiply;
+}
+.cw-a-prod__copy { flex: 1 1 15rem; min-width: 0; display: flex; flex-direction: column; gap: var(--w-space-3); }
+.cw-a-prod__copy h3 { margin: 0; }
+.cw-a-prod__lead { margin: 0; font-size: 0.9375rem; color: var(--w-text-secondary); }
+
+/* ===== CE-33 wariant „cytat" · Cytat wyróżniony ============================
+   Same anatomy as the base version on prochnica-plus.html#rzetelnosc-cytat
+   (rule on the left, typographic quotes from CSS, so the sentence in the HTML
+   stays exactly as the author wrote it) – smaller, because it stands inside a
+   720 px text column and not across a whole section. ===================== */
+.cw-a-quote {
+  margin: clamp(1.75rem, 4vw, 2.5rem) 0;
+  border-left: 2px solid var(--w-gray-900);
+  padding-left: clamp(1rem, 3vw, 1.75rem);
+}
+.cw-a-quote p {
+  margin: 0; font-size: clamp(1.125rem, 2vw, 1.4rem); line-height: 1.35;
+  font-weight: var(--w-weight-medium); letter-spacing: -0.01em; color: var(--w-text-primary);
+}
+.cw-a-quote p::before { content: "\201E"; }
+.cw-a-quote p::after { content: "\201D"; }
+
+/* ===== Sekcje pomocnicze pod treścią ======================================= */
+.cw-a-sec { padding-block: clamp(2.5rem, 5vw, 4rem); border-top: 1px solid var(--w-border-subtle); }
+.cw-a-sec.c5-band,                       /* jasny pas sam się oddziela */
+.cw-a-sec.c5-band + .cw-a-sec { border-top: 0; }
+.cw-a-col { max-width: 980px; }
+.cw-a-col .c5-faq { margin-top: clamp(1.25rem, 3vw, 2rem); }
+
+/* ===== CE-63 · Karta autora (wersja bazowa) ================================
+   The E-E-A-T signature of the article: the author with a photo field and a
+   link to everything they wrote, and under it the consultant row – one line
+   plus the first sentence of their biography. The independence note (dr
+   Próchnicki) is a `c5-note` added in the markup where it applies. ======= */
+.cw-a-author {
+  display: flex; flex-wrap: wrap; gap: clamp(1rem, 3vw, 1.75rem);
+  margin-top: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid var(--w-border-default); background: var(--w-surface-page);
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+}
+.cw-a-author__ph { flex: none; width: 96px; height: 96px; min-height: 0; border-radius: 0; }
+.cw-a-author__txt { flex: 1 1 18rem; min-width: 0; display: flex; flex-direction: column; gap: var(--w-space-2); }
+.cw-a-author__txt h3,
+.cw-a-author__txt p { margin: 0; }
+.cw-a-author__role { font-size: 0.9375rem; color: var(--w-text-secondary); }
+.cw-a-author__bio { display: flex; }
+
+.cw-a-cons {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--w-space-4);
+  margin-top: calc(-1px);
+  border: 1px solid var(--w-border-default); border-top-color: var(--w-border-subtle);
+  background: var(--w-surface-subtle);
+  padding: var(--w-space-4) clamp(1.25rem, 3vw, 1.75rem);
+}
+.cw-a-cons__ph { flex: none; width: 40px; height: 40px; min-height: 0; }
+.cw-a-cons__txt { flex: 1 1 18rem; min-width: 0; }
+.cw-a-cons__txt p { margin: 0; }
+.cw-a-cons__who { font-size: 0.9375rem; }
+.cw-a-cons__bio { font-size: 0.875rem; color: var(--w-text-secondary); }
+
+/* ===== CE-20 wariant „czytaj-dalej" · Siatka kart ==========================
+   Three cards without thumbnails (the decision of 10.08: no thumbnails on
+   article lists): two articles and one commercial card. Cards stretch to the
+   same height; only the title is a link, the whole card is not. ========== */
+.cw-a-next {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--w-space-5);
+  margin: clamp(1.5rem, 3vw, 2.25rem) 0 0; padding: 0; list-style: none;
+}
+.cw-a-next__card {
+  display: flex; flex-direction: column; gap: var(--w-space-3);
+  height: 100%;
+  border: 1px solid var(--w-border-default); background: var(--w-surface-page);
+  padding: clamp(1.1rem, 2.4vw, 1.5rem);
+  transition: border-color var(--w-duration-base) var(--w-ease);
+}
+.cw-a-next__card:hover { border-color: var(--w-gray-900); }
+.cw-a-next__card h3 { margin: 0; }
+.cw-a-next__card p { margin: 0; }
+.cw-a-next__card .c5-btnrow { margin-top: auto; }
+.cw-a-next__link { color: inherit; text-decoration: none; }
+.cw-a-next__link:hover { text-decoration: underline; text-underline-offset: 2px; }
+.cw-a-next__lead { font-size: 0.9375rem; color: var(--w-text-secondary); }
+.cw-a-next__card--prod { border-color: var(--w-gray-900); }
+@media (prefers-reduced-motion: reduce) {
+  .cw-a-next__card { transition: none; }
+}
+
+/* ===== CE-50 wariant „temat" · Formularz „Zaproponuj temat" ================
+   One column (the section version on the knowledge hub has two). Demo only –
+   nothing leaves the browser, the confirmation is a `role="status"` note. == */
+.cw-a-topic { margin-top: clamp(1rem, 2.5vw, 1.5rem); max-width: 620px; }
+.cw-a-topic__lead { margin: 0 0 clamp(1rem, 2.5vw, 1.5rem); }
+.cw-a-form { display: flex; flex-direction: column; gap: var(--w-space-4); align-items: flex-start; }
+.cw-a-form .wf-field { width: 100%; }
+.cw-a-check { display: flex; gap: var(--w-space-3); align-items: flex-start; font-size: 0.875rem; cursor: pointer; }
+.cw-a-check .wf-checkbox { flex: none; margin-top: 2px; }
+.cw-a-form__msg { width: 100%; }
+.cw-a-ask { margin-top: clamp(1.75rem, 4vw, 2.5rem); border-radius: 0; }
+.cw-a-ask .wf-ph--avatar { width: 48px; height: 48px; min-height: 0; flex: none; }
+
+/* ===== Poprzedni / następny artykuł ======================================== */
+.cw-a-nav { border-top: 1px solid var(--w-border-default); }
+.cw-a-nav__in {
+  display: flex; flex-wrap: wrap; gap: var(--w-space-5);
+  padding-block: clamp(1.25rem, 3vw, 2rem);
+}
+.cw-a-nav__item {
+  flex: 1 1 18rem; min-width: 0; margin: 0;
+  display: flex; flex-direction: column; gap: 2px;
+  text-decoration: none; color: inherit;
+}
+.cw-a-nav__item--next { text-align: right; align-items: flex-end; }
+.cw-a-nav__t { font-size: 0.9375rem; font-weight: var(--w-weight-medium); }
+a.cw-a-nav__item:hover .cw-a-nav__t { text-decoration: underline; text-underline-offset: 2px; }
+.cw-a-nav__t--soft { color: var(--w-text-tertiary); font-weight: var(--w-weight-regular); }
+
+/* ===== Druk ================================================================
+   The article and nothing else: no service chrome, no advisor dock, no table
+   of contents, no progress bar, no forms. ================================ */
+@media print {
+  .wf-navbar,
+  .cw-mobilenav,
+  .cw-scrim,
+  .wf-footer,
+  .cw-jurek,
+  .cw-jurek-backdrop,
+  .cw-a-progress,
+  .cw-a-side,
+  .cw-a-tools,
+  .cw-a-msg,
+  .cw-a-ask,
+  .cw-a-nav,
+  #zaproponuj,
+  .wf-sr-only { display: none !important; }
+  .cw-a-layout { display: block; padding-block: 0; }
+  .cw-a-cover, .cw-a-mprod, .cw-a-key, .cw-a-body, .cw-a-col, .cw-a-h2 { max-width: none; }
+  .cw-a-mprod__list { overflow: visible; }
+  .cw-a-sec { padding-block: 1.5rem; border-top: 1px solid #ccc; }
+  .cw-a-body { font-size: 11pt; }
+  .cw-a-h2, .cw-a-h3 { break-after: avoid; }
+  .cw-a-cover, .cw-a-fig, .cw-a-mprod, .cw-a-prod, .cw-a-quote, .cw-a-next__card { break-inside: avoid; }
+  .c5-faq__a { height: auto !important; opacity: 1 !important; }
+}

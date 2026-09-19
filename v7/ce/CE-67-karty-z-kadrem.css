@@ -1,0 +1,151 @@
+/* ===== CE-67 · Karty z przyklejonym kadrem (rejestr: ce-rejestr.js) ========
+   Prefix: c5-kk. Two columns from 900 px inside the wide container (EL-29
+   `c5-wrap--wide`): on the left the head and a 2 x 3 grid of numbered cards,
+   on the right a frame PINNED to the top edge of the window with the section
+   button lying on it. The frame stands still while the cards scroll past and
+   leaves with the end of the section; in the normal flow it starts level with
+   the kicker.
+   Pattern: Figma frame „Frame 222” (19.09.2026) – the layout and the mechanics
+   only. The type and the colours stay ours: grey scale, --w-* tokens, square
+   corners, no shadows (the outline kicker is Mateusz's one sanctioned round
+   corner). The card numbers are drawn by a CSS counter, so the six sentences
+   of the diagnostic package stay untouched in the HTML.
+   The frame keeps the same 20 px to the top, the bottom and the RIGHT edge of
+   the window (designer, 19.09): the height comes straight from the window and
+   the right edge bleeds `--c5-kk-bleed` into the 40 px side padding of the
+   wide container, so above 1800 px it stands 20 px inside the outer edge of
+   the container. The left column is untouched by that bleed – the `fr` tracks
+   are sized from the container, not from the items, so a negative margin on
+   the frame column widens only the frame.
+   What the frame does NOT take from the designer is the button on it: the
+   advisor dock (chrome.js, fixed, 560 px wide, centred, its top edge 80 px
+   above the bottom of the window) stands in front of the right column at
+   every width from 900 px up and would cover a button lying 28 px above the
+   bottom of the frame. In the pinned state the button therefore rises to
+   `--c5-kk-cta-bottom` (96 px – the dock's top edge is 60 px above the bottom
+   of the frame, so that leaves 36 px of air above it).
+   Below 900 px the block is one column in the order head -> frame -> h3 ->
+   cards: `.c5-kk__main` runs on `display:contents` there and the four parts
+   are ordered as flex items (the frame keeps 4 : 3 and is not pinned).
+   The cascade of the cards uses the reveal of this page (`u-reveal` +
+   `is-in` from uprawa.js); the resting state is visible, so without JS and
+   with reduced motion every card simply stands there.
+   Built for Kukurydza (#u-decyzje); no other page uses the block yet. ===== */
+
+.c5-kk{
+  /* the pinned frame: how far it stands from the top, the bottom and the right
+     edge of the window (the last one as a bleed into the container padding) */
+  --c5-kk-top:20px;
+  --c5-kk-bottom:20px;
+  --c5-kk-bleed:20px;
+  /* the card: its padding, the numbered node and the air under the node */
+  --c5-kk-pad:30px;
+  --c5-kk-node:24px;
+  --c5-kk-node-gap:var(--w-space-6);
+  /* the button lying on the frame */
+  --c5-kk-cta-x:24px;
+  --c5-kk-cta-bottom:28px;
+}
+
+/* --- head ----------------------------------------------------------------- */
+/* the kicker runs in the outline variant here (EL-06), so it keeps the metrics
+   of that variant – only the distance to the h2 belongs to the block */
+.c5-kk__head .c5-kicker{margin-bottom:var(--w-space-6);}
+/* the lead of this block is smaller and quieter than `.c5-lead` and it breaks
+   at about 33 rem, as in the frame (529 px at 1440) */
+.c5-kk__lead{margin-top:clamp(1rem,2vw,1.75rem);font-size:var(--w-font-sm-size);
+  line-height:var(--w-font-sm-lh);color:var(--w-text-tertiary);max-width:33rem;}
+
+/* --- cards ---------------------------------------------------------------- */
+.c5-kk__grid{display:grid;grid-template-columns:minmax(0,1fr);
+  column-gap:12px;row-gap:14px;counter-reset:c5-kk;}
+.c5-kk__card{counter-increment:c5-kk;display:flex;flex-direction:column;
+  align-items:flex-start;min-height:210px;padding:var(--c5-kk-pad);
+  background:var(--w-gray-100);color:var(--w-text-primary);
+  font-size:var(--w-font-sm-size);line-height:var(--w-font-sm-lh);}
+/* the numbered node: the look of `.c5-tl__no` (CE-65) – 24 px box, hairline
+   frame, 11 px numerals in the body typeface. Two differences follow from the
+   ground it stands on: the node of the axis needs a white fill to mask the
+   line behind it, this one is transparent on the light card, and the numbers
+   run 01-06 from the counter, so the sentences stay untouched. */
+.c5-kk__card::before{content:counter(c5-kk,decimal-leading-zero);
+  display:flex;align-items:center;justify-content:center;flex:none;
+  width:var(--c5-kk-node);height:var(--c5-kk-node);margin-bottom:var(--c5-kk-node-gap);
+  border:1px solid var(--w-border-strong);
+  font-family:inherit;font-size:0.6875rem;font-weight:var(--w-weight-medium);
+  font-variant-numeric:tabular-nums;letter-spacing:.02em;line-height:1;
+  color:var(--w-text-tertiary);}
+
+/* the cascade: the cards of one row enter together, so the stagger has to come
+   from the delay. `u-reveal` (uprawa.css) sets the `transition` shorthand, so
+   the delay has to win on specificity – hence the two classes here. */
+@media (prefers-reduced-motion: no-preference){
+  html.cx-js .c5-kk__grid > .c5-kk__card:nth-child(2){transition-delay:.06s;}
+  html.cx-js .c5-kk__grid > .c5-kk__card:nth-child(3){transition-delay:.12s;}
+  html.cx-js .c5-kk__grid > .c5-kk__card:nth-child(4){transition-delay:.18s;}
+  html.cx-js .c5-kk__grid > .c5-kk__card:nth-child(5){transition-delay:.24s;}
+  html.cx-js .c5-kk__grid > .c5-kk__card:nth-child(6){transition-delay:.3s;}
+}
+
+/* --- the frame and the button on it ---------------------------------------- */
+.c5-kk__media{position:relative;width:100%;aspect-ratio:4 / 3;background:var(--w-gray-100);}
+/* the source is wider than every box this block builds (4 : 3 on a phone,
+   about 3 : 4 when pinned), so `cover` always keeps the full height and cuts
+   the width – the framing of a given photo is one inline `object-position` on
+   the `img`, as on the phase photos of this page */
+.c5-kk__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+/* the button lies ON the frame, the full width of it less the side margins.
+   The 45 px of side padding the base button carries is meant to give a button
+   its width; this one already has one, and on a phone that padding is what
+   pushes „Zapytaj doradcę CarboHort” into a second line – hence EL-01's own
+   token instead of a `padding` override. */
+.c5-kk__cta{--c5-btn-px:24px;position:absolute;z-index:1;
+  left:var(--c5-kk-cta-x);right:var(--c5-kk-cta-x);bottom:var(--c5-kk-cta-bottom);}
+.c5-kk__cta:focus-visible{outline-color:var(--w-focus-ring-inverse);}
+
+@media (max-width:899px){
+  /* smaller numbers on a phone: less air in the card, tighter margins for the
+     button (still inside the 20-28 px the frame keeps) and no floor under the
+     card, so a short sentence does not drag 210 px of empty grey behind it */
+  .c5-kk{--c5-kk-pad:24px;--c5-kk-cta-x:20px;--c5-kk-cta-bottom:20px;}
+  .c5-kk__card{min-height:0;}
+  /* one column in the order head -> frame -> h3 -> cards. `.c5-kk__main` gives
+     up its box here, so its three children order themselves next to the frame
+     instead of standing under it as a group. */
+  .c5-kk__wrap{display:flex;flex-direction:column;}
+  .c5-kk__main{display:contents;}
+  .c5-kk__head{order:1;}
+  .c5-kk__side{order:2;margin-top:clamp(1.75rem,5vw,2.5rem);}
+  .c5-kk__h3{order:3;margin-top:clamp(1.75rem,5vw,2.5rem);}
+  .c5-kk__grid{order:4;margin-top:var(--w-space-5);}
+}
+
+/* two cards in a row already below the breakpoint (§14.3 point 4) */
+@media (min-width:640px){
+  .c5-kk__grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+
+@media (min-width:900px){
+  /* the button clears the advisor dock in the pinned state (see the head) */
+  .c5-kk{--c5-kk-cta-bottom:96px;}
+  /* 52 : 48 – in the frame 674 and 666 px at 1440, with a 40 px gap between
+     them (2.8vw resolves to exactly that width) */
+  .c5-kk__wrap{display:grid;grid-template-columns:minmax(0,52fr) minmax(0,48fr);
+    gap:clamp(2rem,2.8vw,3rem);}
+  /* NO `align-items`: the side column has to stretch over the whole row, because
+     that stretch is the room the pinned frame travels along */
+  .c5-kk__h3{margin-top:clamp(4rem,9vw,8.75rem);}
+  .c5-kk__grid{margin-top:clamp(1.5rem,2.8vw,2.5rem);}
+  /* the frame: pinned 20 px under the top edge of the window, 20 px of window
+     left under it and 20 px of the container padding taken on the right.
+     `max-height` is the safety net for a short left column (a wide, low
+     window): the frame then follows the column instead of hanging out of the
+     section. */
+  .c5-kk__side{margin-top:0;margin-right:calc(var(--c5-kk-bleed) * -1);}
+  .c5-kk__media{position:sticky;top:var(--c5-kk-top);aspect-ratio:auto;
+    height:calc(100svh - var(--c5-kk-top) - var(--c5-kk-bottom));max-height:100%;}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .c5-kk__card{transition:none;}
+}

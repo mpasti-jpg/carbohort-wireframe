@@ -12,7 +12,7 @@
    =========================================================================== */
 window.CW_CE = {
   "meta": {
-    "zaktualizowano": "2026-09-18",
+    "zaktualizowano": "2026-09-19",
     "katalogWersji": "v7/",
     "indeks": "ce-indeks.html",
     "opis": "Rejestr content elementów (CE) makiet CarboHort V5: metadane klocków. Wystąpienia wynikają ze znaczników data-ce w HTML stron – skanuje je _narzedzia/ce-indeks.py. Spec: 40-strona-www/koncepcja/content-elementy-spec.md."
@@ -234,11 +234,18 @@ window.CW_CE = {
       ],
       "warianty": {
         "polka": "półka czterech opakowań rodzin (Produkty)",
-        "kadr": "kadr zdjęcia uprawy zamiast packshotu (Kukurydza)",
+        "kadr": "kadr zdjęcia uprawy zamiast packshotu – od 19.09.2026 bez wystąpień, na Kukurydzy zastąpił go wariant kadr-w-tle",
+        "kadr-w-tle": "hero podstron upraw (decyzja Mateusza z 19.09.2026): duży kadr uprawy w tle całej sekcji, jednolity scrim, bez kickera; okruszki u góry po lewej, wielki H1 u dołu po lewej, lead i dwa przyciski u dołu po prawej, treść kończy się nad dokiem doradcy; kadr osiada ze skali 1,06, treść wchodzi kaskadą; poniżej 900 px H1 na kadrze, lead i przyciski pod nim (Kukurydza; modyfikator c5-hero--bg w ce/CE-08-hero.css; siłę scrimu ustawia strona zmienną --c5-hero-scrim, domyślnie .4, Kukurydza .35)",
         "player": "player filmu na panelu (Próchnica+)",
         "foto": "panel ze zdjęciem zamiast packshotu (o-firmie.html#hero)",
         "dzial": "jedna kolumna na dwie trzecie szerokości, wysokość wg treści, wyszukiwarka i przycisk przewodnika (centrum-wiedzy.html#hero, centrum-wiedzy-kategoria.html#hero)",
         "artykul": "nagłówek artykułu: okruszki, chipy, h1, metryka autora, przyciski udostępnij/drukuj (artykul.html#naglowek)"
+      },
+      "zrzuty_wariantow": {
+        "kadr-w-tle": {
+          "plik": "v7/kukurydza.html",
+          "kotwica": "hero"
+        }
       },
       "uwagi": "Domyślnie 1–2 packshoty na panelu (strony produktowe).",
       "zrzut": {
@@ -412,7 +419,7 @@ window.CW_CE = {
         "kotwica": "dawka"
       },
       "kod": {
-        "css": "ce/CE-14-sekcja-100svh.css (Kukurydza: własna u-dg, do scalenia)",
+        "css": "ce/CE-14-sekcja-100svh.css",
         "js": "ce/CE-14-sekcja-100svh.js"
       },
       "czesci": [
@@ -437,15 +444,24 @@ window.CW_CE = {
         "kotwica": "sezon-wiersze"
       },
       "kod": {
-        "css": "ce/CE-15-wiersze-packshot.css",
-        "js": "ce/CE-15-wiersze-packshot.js"
+        "css": "ce/CE-15-wiersze-packshot.css; wariant kaskada-z-odliczaniem: ce/CE-15-wiersze-packshot-proba.css (na razie tylko Produkty)",
+        "js": "ce/CE-15-wiersze-packshot.js; wariant kaskada-z-odliczaniem: ce/CE-15-wiersze-packshot-proba.js (na razie tylko Produkty)"
       },
       "czesci": [
         "nagłówek przyklejony",
         "wiersze: tytuł, scena, packshot, opis, przycisk"
       ],
-      "warianty": {},
-      "uwagi": "Na Produktach ten sam pin niesie „efekty w czasie”.",
+      "warianty": {
+        "kaskada-z-odliczaniem": "układ wg ramki Figma „Frame 224” i adnotacji Mateusza (19.09.2026; Produkty „Co dają – i kiedy to zobaczysz”): bez pinu – nagłówek sekcji w zwykłym biegu, pod nim trzy kolumny rozdzielone pionowymi liniami włosowymi w szerokim kontenerze (1800 px, marginesy 40 px), w każdej jedna karta-akordeon, karty kaskadą w dół (góra następnej = dół poprzedniej, suma wysokości stała); nagłówek karty: tytuł z lewej, etykieta czasu z prawej, ikona plus / minus w okręgu; otwarta karta: wiersz produktu z packshotem (link na stronę produktu, wzór EL-33) i opis ze znacznikiem; pierwsza karta otwarta od startu, karty wchodzą po kolei, wokół ikony minus rysuje się pierścień odliczający 5 s, po nim otwiera się następna karta (po trzeciej pierwsza), jedna otwarta naraz, wszystkie można zamknąć, każde kliknięcie wyłącza automat; automat tylko na szerokim ekranie i przy włączonym ruchu, stoi pod kursorem i przy fokusie; poniżej 900 px i bez JS jedna kolumna"
+      },
+      "zrzuty_wariantow": {
+        "kaskada-z-odliczaniem": {
+          "plik": "v7/produkty.html",
+          "kotwica": "co-daja-wiersze",
+          "maxh": 1100
+        }
+      },
+      "uwagi": "Do 19.09.2026 na Produktach ten sam pin niósł „efekty w czasie”; od iteracji 4 stoi tam wariant kaskada-z-odliczaniem (spec produkty-wzorzec-eco-spec §22). Ramka Mateusza używa treści „Kiedy stosować” z CARBOMAT ECO – do jego decyzji, czy kaskada zastąpi układ bazowy na stronach produktowych.",
       "zrzut": {
         "maxh": 1000
       }
@@ -1194,7 +1210,7 @@ window.CW_CE = {
     "CE-43": {
       "nazwa": "Przełącznik z paskiem proporcji",
       "grupa": "przelaczniki",
-      "opis": "Jedna kolumna: h3 i zdanie, rząd przycisków wyboru, poziomy pasek wypełnienia z etykietą, blok interpretacji (duża wartość, etykieta, akapity).",
+      "opis": "Jedna kolumna: h3 i zdanie, rząd przycisków wyboru, poziomy pasek wypełnienia z etykietą, blok interpretacji (duża wartość, etykieta, akapity). W szerokim kontenerze (Kukurydza, od 1280 px) trzy kolumny: pytanie | dawki i pasek | interpretacja.",
       "mechanika": "Przyciski aria-pressed ustawiają szerokość wypełnienia i pokazują swój blok tekstu; bez JS wszystkie bloki widoczne. uprawa.js (pasek potasu).",
       "baza": {
         "plik": "v7/kukurydza.html",
@@ -1250,7 +1266,7 @@ window.CW_CE = {
     "CE-45": {
       "nazwa": "Pudełka-przełączniki",
       "grupa": "przelaczniki",
-      "opis": "Rząd pudełek (tablist) z nazwą i podpisem wariantu, pod nimi panel treści aktywnego wariantu (tabela).",
+      "opis": "Rząd pudełek (tablist) z nazwą i podpisem wariantu, pod nimi panel treści aktywnego wariantu (tabela). W szerokim kontenerze (Kukurydza) od 1280 px pudełka stoją jako szyna po lewej, a panel obok; od 1600 px wiersze programu idą parami.",
       "mechanika": "Tablist ARIA z klawiaturą; klik pokazuje panel; bez JS wszystkie panele widoczne. uprawa.js (pudełka wariantów).",
       "baza": {
         "plik": "v7/kukurydza.html",
@@ -1298,7 +1314,7 @@ window.CW_CE = {
     "CE-47": {
       "nazwa": "Przelicznik",
       "grupa": "dane",
-      "opis": "Nagłówek, suwak powierzchni z wartością, siatka boksów wyników (wartość, jednostka, wiersz pomocniczy).",
+      "opis": "Nagłówek, suwak powierzchni z wartością, siatka boksów wyników (wartość, jednostka, wiersz pomocniczy). W szerokim kontenerze (Kukurydza) od 1560 px głowa sekcji stoi w lewej kolumnie obok przelicznika.",
       "mechanika": "Suwak przelicza dawki na bieżąco (data-calc w c5.js, grupowanie tysięcy), bez JS wartości domyślne.",
       "baza": {
         "plik": "v7/kukurydza.html",
@@ -1739,8 +1755,8 @@ window.CW_CE = {
     "CE-65": {
       "nazwa": "Oś faz z akordeonem",
       "grupa": "przelaczniki",
-      "opis": "Dwie kolumny we własnym, szerszym kontenerze (do 1800 px, marginesy 40 px, odstęp kolumn clamp(3rem, 8vw, 10rem)): po lewej kicker w ramce i nagłówek sekcji, pod nimi kwadratowy kadr aktywnej pozycji przyklejony do dolnej krawędzi okna (nagłówek przewija się ze stroną, kadr jedzie wzdłuż listy i nigdy nie nachodzi na nagłówek); po prawej pionowa oś z numerowanymi węzłami (numery krojem treści) i dużymi tytułami; otwarta pozycja rozwija pod tytułem panel: etykieta, skrót, boksy produktów z packshotem, przypis i przycisk pełnego opisu. Na telefonie jedna kolumna, kadr 4:3 wewnątrz panelu.",
-      "mechanika": "Akordeon: jedna pozycja otwarta naraz (klik, Enter, spacja), strzałki oraz Home i End przenoszą fokus między tytułami; kadr w lewej kolumnie przenika przy zmianie pozycji; gdy po zwinięciu pozycji powyżej otwierany tytuł wypada ponad okno, moduł dociąga go do górnej krawędzi; boksy produktów i przycisk otwierają lightboxy. Bez JS wszystkie panele otwarte i kadry w panelach; reduced-motion bez animacji.",
+      "opis": "Dwie kolumny we własnym, szerszym kontenerze (do 1800 px, marginesy 40 px, odstęp kolumn clamp(3rem, 8vw, 10rem)): po lewej przyklejona głowa sekcji – kicker w ramce i nagłówek – po prawej pionowa oś z numerowanymi węzłami (numery krojem treści) i dużymi tytułami; otwarta pozycja rozwija pod tytułem panel: od 1200 px kadr pozycji (6 : 7) po lewej i kolumna treści po prawej – etykieta, skrót, boksy produktów z packshotem, przypis i przycisk pełnego opisu; poniżej 1200 px kadr 4 : 3 stoi nad treścią.",
+      "mechanika": "Akordeon: jedna pozycja otwarta naraz (klik, Enter, spacja), strzałki oraz Home i End przenoszą fokus między tytułami; kadr wchodzi razem z panelem; gdy po zwinięciu pozycji powyżej otwierany tytuł wypada ponad okno, moduł dociąga go do górnej krawędzi; boksy produktów i przycisk otwierają lightboxy. Bez JS wszystkie panele otwarte z kadrami; reduced-motion bez animacji.",
       "baza": {
         "plik": "v7/kukurydza.html",
         "kotwica": "u-fazy"
@@ -1750,14 +1766,14 @@ window.CW_CE = {
         "js": "ce/CE-65-os-faz.js"
       },
       "czesci": [
-        "blok nagłówka z kickerem w ramce",
-        "kadr aktywnej pozycji (kwadrat, przyklejony do dołu okna)",
+        "blok nagłówka z kickerem w ramce (przyklejony)",
+        "kadr pozycji w otwartym panelu",
         "oś z numerowanymi węzłami",
         "tytuł pozycji",
         "panel: etykieta, skrót, boksy produktów, przypis, przycisk"
       ],
       "warianty": {},
-      "uwagi": "Wzór: ramka Figma „Frame 213” (Mateusz, 18.09.2026); decyzja Mateusza z 18.09: osobny content element. Zastąpił na Kukurydzy wariant z-lightboxem klocka CE-30. Na razie jedno wystąpienie (Kukurydza, fazy). Iteracja 9 (18.09 po południu, uwagi Mateusza): numery krojem treści, bez leadu, szeroki kontener, kicker EL-06 w ramce, kadr 1:1 przyklejony do dołu okna – poniżej 1600 px zatrzymuje się 96 px nad krawędzią, żeby nie wchodzić pod dok doradcy (zmienna --c5-tl-stage-bot).",
+      "uwagi": "Wzór: ramka Figma „Frame 213” (Mateusz, 18.09.2026); decyzja Mateusza z 18.09: osobny content element. Zastąpił na Kukurydzy wariant z-lightboxem klocka CE-30. Na razie jedno wystąpienie (Kukurydza, fazy). Iteracja 9 (18.09 po południu, uwagi Mateusza): numery krojem treści, bez leadu, szeroki kontener, kicker EL-06 w ramce, kadr 1:1 przyklejony do dołu okna – poniżej 1600 px zatrzymuje się 96 px nad krawędzią, żeby nie wchodzić pod dok doradcy. Iteracja 10 (19.09, uwaga Mateusza): kadr wrócił do otwartego panelu jak w ramce Figma, przyklejona scena zniknęła, głowa sekcji stała się przyklejona.",
       "zrzut": {
         "maxh": 1100
       }
@@ -1765,8 +1781,8 @@ window.CW_CE = {
     "CE-66": {
       "nazwa": "Tablica warunków",
       "grupa": "przelaczniki",
-      "opis": "Ciemna tablica ośmiu warunków stanowiska: wspólny szkielet – wielki licznik i etykiety „Priorytet”, „Carbohort”, „Uzupełnienie” – jest nadrukowany raz i się nie rusza, zmienia się wyłącznie treść wybranego warunku (tytuł, trzy odpowiedzi, chipy produktów). Nad tablicą wybierak ośmiu kafli z numerem i nazwą warunku (4 × 2 na desktopie, przewijany rząd poniżej 640 px); bez JS klocek rozkłada się na osiem jasnych kart z numerem.",
-      "mechanika": "Zakładki z aktywacją automatyczną: kafel, klawiatura w tabliście (← → Home End, roving tabindex), przyciski poprzedni/następny z zawijaniem i przesunięcie palcem po tablicy (próg 40 px). Osiem paneli leży w jednej komórce siatki i dziedziczy jej tory przez subgrid, więc wysokość tablicy nie skacze, a etykiety nie drgną; licznik przewija taśmę cyfr (600 ms, zdublowane cyfry na zawinięcie 8 → 1 i 1 → 8), tytuł wjeżdża zza maski, trzy sloty wchodzą kaskadą co 70 ms. Autoprzełączanie co 8 s napędza pasek postępu na aktywnym kaflu: rusza przy co najmniej 50 % widoczności, pauzuje na hover i fokusie, gaśnie na stałe po pierwszej świadomej akcji i wraca przyciskiem pauzy; przy prefers-reduced-motion nie startuje, a przełączanie jest natychmiastowe.",
+      "opis": "Tablica warunków w układzie z ramki Figma: po lewej pionowa lista ośmiu warunków stanowiska z numerowanymi węzłami, po prawej tytuł aktywnego warunku i jeden złożony pas – ciemne pole „Priorytet” zrośnięte z jasnym polem, w którym „Nasze produkty” (zdanie z programu i boksy produktów z packshotem) i „Uzupełnienie” stoją obok siebie, rozdzielone włosową linią. Osiem paneli leży w tych samych komórkach siatki co pola i dziedziczy jej tory przez subgrid, więc pas ma stałą wysokość dla każdego warunku, oba pola są równe co do piksela, a etykiety wszystkich warunków leżą w tym samym miejscu. Szeroki kontener (c5-wrap--wide), kicker w ramce, bez leadu.",
+      "mechanika": "Zakładki z aktywacją automatyczną: klik w pozycję listy, ↑ ↓ Home End z zawinięciem i roving tabindex, na telefonie przesunięcie palcem po pasie (próg 40 px, blokada kliknięcia, żeby przesunięcie nie otwierało popupu produktu). Przy zmianie tytuł wjeżdża zza maski, a treści pól wchodzą kaskadą co 70 ms – etykiety nigdy. Od 900 do 1199 px pas dzieli się 45 : 55, a jasne pole układa swoje dwie kolumny jedna pod drugą; poniżej 900 px lista jest poziomym przewijanym rzędem dosuwanym przez scrollLeft; bez JS zostaje osiem jasnych kart z numerem, przy reduced motion przełączanie jest natychmiastowe. Bez licznika, strzałek i autoprzełączania.",
       "baza": {
         "plik": "v7/kukurydza.html",
         "kotwica": "u-stanowisko"
@@ -1776,14 +1792,40 @@ window.CW_CE = {
         "js": "ce/CE-66-tablica-warunkow.js"
       },
       "czesci": [
-        "nagłówek sekcji (kicker, h2, lead)",
-        "wybierak ośmiu kafli z paskiem postępu",
-        "licznik z taśmą cyfr",
-        "sterowanie: pauza, poprzedni, następny",
-        "stos ośmiu paneli: tytuł i trzy sloty z etykietami"
+        "głowa sekcji: kicker w ramce, h2",
+        "pionowa lista ośmiu warunków z numerowanymi węzłami",
+        "tytuł aktywnego warunku",
+        "ciemne pole „Priorytet”",
+        "jasne pole: „Nasze produkty” (zdanie i boksy produktów) oraz „Uzupełnienie”"
       ],
       "warianty": {},
-      "uwagi": "Uwaga Mateusza z 18.09.2026 (iteracja 9 Kukurydzy): osiem kart karuzeli miało wspólne elementy – numer i trzy etykiety – więc stoją na tablicy raz; nowy content element tylko dla tego miejsca. Zastąpił CE-46 (karuzela kart, wycofany). Chipy produktów z EL c5-chip w wersji na ciemnym tle, 32 px wysokości (stoją w zdaniu).",
+      "uwagi": "Uwaga Mateusza z 18.09.2026 (iteracja 9 Kukurydzy): osiem kart karuzeli miało wspólne elementy – numer i trzy etykiety – więc stoją raz; nowy content element tylko dla tego miejsca, zastąpił CE-46 (karuzela kart, wycofany). 19.09.2026 (iteracja 10): przebudowany wg ramki Figma Mateusza „Frame 218” – pierwsza wersja (ciemna tablica z wielkim licznikiem, kafle 4 × 2, strzałki, pauza i autoprzełączanie co 8 s) zniknęła; kod klocka bez zmian, bo to to samo, jedyne wystąpienie. Etykieta pola „Nasze produkty” wg ramki (w dokumencie klienta kolumna nazywa się „Carbohort”).",
+      "zrzut": {
+        "maxh": 1100
+      }
+    },
+    "CE-67": {
+      "nazwa": "Karty z przyklejonym kadrem",
+      "grupa": "karty",
+      "opis": "Szeroka sekcja o dwóch kolumnach: po lewej głowa (kicker w ramce, h2, krótki lead), nagłówek h3 i siatka sześciu kart 2 × 3, każda z numerem w węźle i jednym zdaniem; po prawej kadr z przyciskiem leżącym u jego dołu. Karty czyta się po kolei, a kadr trzyma temat na oku przez cały czas czytania.",
+      "mechanika": "Kadr jest przyklejony 20 px od górnej, dolnej i prawej krawędzi okna (uwaga Mateusza z 19.09.2026; prawa krawędź wychodzi 20 px w margines kontenera, lewa kolumna trzyma 40 px), więc stoi nieruchomo, gdy karty przewijają się obok, a odjeżdża z końcem sekcji; przycisk na kadrze leży w stanie przyklejonym 96 px nad jego dołem, ponad dokiem doradcy; karty wchodzą kaskadą co 60 ms revealem strony. Poniżej 900 px kolumny znikają i porządek jest jeden: głowa, kadr 4 : 3 z przyciskiem, h3, karty (jedna kolumna, dwie od 640 px), bez przyklejania. Bez JS-u.",
+      "baza": {
+        "plik": "v7/kukurydza.html",
+        "kotwica": "u-decyzje"
+      },
+      "kod": {
+        "css": "ce/CE-67-karty-z-kadrem.css",
+        "js": ""
+      },
+      "czesci": [
+        "głowa: kicker w ramce, h2, lead",
+        "nagłówek h3 siatki",
+        "siatka sześciu kart z numerem w węźle",
+        "kadr przyklejony",
+        "przycisk na kadrze"
+      ],
+      "warianty": {},
+      "uwagi": "Wzór: ramka Figma „Frame 222” (Mateusz, 19.09.2026; układ i mechanika, styl wzorca V7). Na Kukurydzy zastąpił wystąpienie CE-14 (sekcja 100svh z listą i parallaksem, klasy u-dg). Na razie jedno wystąpienie.",
       "zrzut": {
         "maxh": 1100
       }
@@ -1809,7 +1851,8 @@ window.CW_CE = {
         "c5-btn--inv": "odwrócony – biały na ciemnym tle",
         "c5-btn--ondark": "ciemny przycisk na ciemnym pasie – działa tylko w kontekście .c5-params (CE-10)",
         "c5-btn--sm": "mały, 0.8125 rem, nadal 44 px wysokości",
-        "c5-btn--tight": "wąski boczny padding, gdy przyciski stoją ciasno"
+        "c5-btn--tight": "wąski boczny padding, gdy przyciski stoją ciasno",
+        "c5-btn--ghost": "konturowy na zdjęciu: biały obrys, tło rgb(0 0 0 / .3) – działa tylko w kontekście .c5-hero--bg (CE-08, wariant kadr-w-tle); bliźniak c5-pro__login z pasa PRO, do scalenia w fali 2b"
       },
       "opis": "Podstawowa akcja: ostre narożniki, obrys 1 px, etykieta małymi literami, ikona po lewej. Cel dotykowy 44 px siedzi w bazie – nie łata się go już punktowo, a boczny padding ustawia token --c5-btn-px zamiast ośmiu kontekstowych nadpisań.",
       "przyklad": "<div class=\"c5-btnrow\"><a class=\"c5-btn c5-btn--dark\" href=\"#\">kup teraz</a><a class=\"c5-btn c5-btn--light\" href=\"#\">dobierz dawki</a><a class=\"c5-btn c5-btn--light c5-btn--sm\" href=\"#\"><svg class=\"wf-icon\" aria-hidden=\"true\"><use href=\"#ti-file-text\"></use></svg> karta produktu</a><a class=\"c5-btn c5-btn--light c5-btn--sm c5-btn--tight\" href=\"#\">zaloguj się</a></div><div class=\"sg-ondark\"><a class=\"c5-btn c5-btn--inv\" href=\"#\">zamów próbkę</a></div>",
@@ -1976,7 +2019,7 @@ window.CW_CE = {
       "warianty": {
         "c5-kicker--center": "wyśrodkowany",
         "c5-kicker--flush": "bez odstępu pod spodem",
-        "c5-kicker--outline": "w ramce: obrys 1 px, narożniki 8 px, 0.75 rem – wyjątek Mateusza od ostrych narożników (18.09.2026, wzór: ramka Figma „Frame 213”); na razie tylko CE-65 na Kukurydzy"
+        "c5-kicker--outline": "w ramce: obrys 1 px, narożniki 8 px, 0.75 rem – wyjątek Mateusza od ostrych narożników (18.09.2026, wzór: ramki Figma Mateusza); na Kukurydzy w CE-65, CE-66 i CE-67"
       },
       "opis": "Nadtytuł sekcji: 0.875 rem, wersaliki, tracking .03em i duży odstęp do treści pod spodem. Dwanaście lokalnych nadpisań margin-bottom:0 czeka na wariant --flush.",
       "przyklad": "<span class=\"c5-kicker\">Czym jest CARBOMAT ECO</span><span class=\"c5-kicker c5-kicker--center\">Dla dociekliwych</span>",
@@ -2811,7 +2854,8 @@ window.CW_CE = {
       "grupa": "pojemniki",
       "klasa": "c5-wrap",
       "warianty": {
-        "c5-wrap--narrow": "węższa kolumna do czytania"
+        "c5-wrap--narrow": "węższa kolumna do czytania",
+        "c5-wrap--wide": "szeroki kontener: od 900 px maks. 1800 px i 40 px bocznego marginesu (ramki Figma Mateusza z 18–19.09.2026); decyzją Mateusza z 19.09.2026 stoi na nim cała Kukurydza (CE-65 ma te same liczby we własnym kontenerze, panel liczb wyrównany ręcznie); pozostałe strony przejdą przy swoich przebudowach"
       },
       "opis": "Środkowa kolumna strony: maksymalnie 1180 px, boczny padding 20 px, wyśrodkowana. Osiem identycznych kopii w arkuszach stron zeszło do jednej definicji – zmierzone wartości są na siedmiu stronach takie same.",
       "przyklad": "<div class=\"c5-wrap sg-ramka\"><p class=\"c5-p\">Wszystko, co czyta się w tekście, mieści się w tej kolumnie – pasy tła idą pełną szerokością, treść nigdy.</p></div>",
@@ -2910,6 +2954,61 @@ window.CW_CE = {
         "sufiksy w c5-mt-stat__val"
       ],
       "uwagi": "Uwagi Mateusza 15–17.09.2026: jednostki i symbol procentu małe, u górnej krawędzi cyfr, w kolorze liczby; jedna reguła dla wszystkich wystąpień CE-24."
+    },
+    "EL-32": {
+      "nazwa": "Węzeł z numerem",
+      "grupa": "dane",
+      "klasa": "c5-node",
+      "warianty": {
+        "c5-node--on": "pozycja aktywna: wypełnienie --w-gray-900, jasna cyfra"
+      },
+      "opis": "Mały kwadratowy znacznik z numerem: 24–25 px, obrys 1 px, cyfry 11 px krojem treści, tabelaryczne; stan aktywny wypełniony. Numeruje pozycje osi, listy albo karty. Dziś trzy lokalne kopie w klockach zbudowanych z ramek Figma Mateusza (18–19.09.2026).",
+      "przyklad": "<div class=\"sg-rzad\"><span class=\"c5-node\">01</span><span class=\"c5-node c5-node--on\">02</span><span class=\"c5-node\">03</span></div>",
+      "przyklad_tlo": "jasne",
+      "kod": "do dopisania w ce/00-base.css (fala 2b)",
+      "uzywany_w": [
+        "CE-65",
+        "CE-66",
+        "CE-67"
+      ],
+      "zastepuje": [
+        "c5-tl__no (CE-65, oś faz)",
+        "c5-cb__tabno (CE-66, tablica warunków)",
+        "c5-kk__card::before (CE-67, karty z kadrem – licznik CSS)"
+      ],
+      "uwagi": "W ramkach Figma węzły mają zaokrąglone narożniki – stylistykę ramek opracujemy później w indeksie CE (decyzja Mateusza 19.09.2026).",
+      "status": "planowane (fala 2b/2c)",
+      "dzis": [
+        "c5-tl__no",
+        "c5-cb__tabno",
+        "c5-kk__card::before"
+      ]
+    },
+    "EL-33": {
+      "nazwa": "Boks produktu z packshotem",
+      "grupa": "akcje",
+      "klasa": "c5-prodbox",
+      "warianty": {
+        "c5-prodbox--plain": "produkt bez mapy zastosowań i packshotu: obrys przerywany, ikona zamiast zdjęcia, bez strzałki"
+      },
+      "opis": "Klikalny boks produktu: ramka 1 px, packshot na jasnym polu, pełna nazwa produktu, strzałka; otwiera mapę zastosowań produktu (data-lightbox-open). Dziś dwie lokalne kopie: w panelach faz i na tablicy warunków.",
+      "przyklad": "<button class=\"c5-prodbox\" type=\"button\"><span class=\"c5-prodbox__pack\"></span><span class=\"c5-prodbox__name\">CARBOMAT ECO</span><svg class=\"wf-icon\" aria-hidden=\"true\"><use href=\"#ti-arrow-right\"></use></svg></button>",
+      "przyklad_tlo": "jasne",
+      "kod": "do dopisania w ce/00-base.css (fala 2b)",
+      "uzywany_w": [
+        "CE-65",
+        "CE-66"
+      ],
+      "zastepuje": [
+        "c5-tl__prod (CE-65, oś faz)",
+        "c5-cb__prod (CE-66, tablica warunków)"
+      ],
+      "uwagi": "Wzór: ramki Figma Mateusza „Frame 213” i „Frame 218”.",
+      "status": "planowane (fala 2b/2c)",
+      "dzis": [
+        "c5-tl__prod",
+        "c5-cb__prod"
+      ]
     }
   }
 };

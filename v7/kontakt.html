@@ -3,12 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Carbohort — Kontakt</title>
-<meta name="description" content="Skontaktuj się z Carbohort: kup w sklepie, dobierz program w konfiguratorze albo zapytaj o ofertę. Konkretne osoby do kontaktu, doradztwo agrotechniczne i szybkie oddzwonienie.">
+<title>Kontakt – szybki kontakt, działy i dystrybutorzy | Carbohort</title>
+<meta name="description" content="Zadzwoń do osób pierwszego kontaktu CarboHort, znajdź właściwy dział, napisz przez formularz albo skontaktuj się z dystrybutorem w swoim kraju. Jordanowo 11 F, 66-200 Jordanowo.">
 <link rel="stylesheet" href="tokens.css">
 <link rel="stylesheet" href="wireframe.css">
 <link rel="stylesheet" href="cw.css">
+  <link rel="stylesheet" href="ce/00-base.css">
+  <link rel="stylesheet" href="ce/00-reveal.css">
+  <link rel="stylesheet" href="kontakt.css">
 <script src="../status.js"></script>
+<script src="../ce-rejestr.js"></script>
 <script src="chrome.js"></script>
 </head>
 <body>
@@ -20,230 +24,449 @@
 
 <main id="main">
 
-  <!-- ===== BREADCRUMB ===== -->
-  <div class="wf-container">
-    <nav class="wf-breadcrumb" aria-label="Ścieżka okruszków">
-      <ol class="wf-cluster wf-items-center">
-        <li><a class="wf-link--quiet" href="home.html">Start</a></li>
-        <li><span class="wf-breadcrumb__sep" aria-hidden="true">/</span></li>
-        <li aria-current="page">Kontakt</li>
-      </ol>
-    </nav>
-  </div>
+  <!-- ===== 1. SZYBKI KONTAKT · CE-54 · kafle szybkiego kontaktu =============
+       Wersja bazowa nowego klocka: nagłówek strony i trzy duże kafle z osobą
+       pierwszego kontaktu. Numer jest linkiem `tel:` – na telefonie staje się
+       ciemnym przyciskiem „Zadzwoń" na całą szerokość kafla (styl domyślny),
+       a od 600 px wraca do dużej liczby (kontakt.css 10). Kod pod prefiksem
+       `kt-`, gotowy do wycięcia do `ce/`. ================================== -->
+  <section id="szybki-kontakt" class="kt-quick-sec" data-ce="CE-54" data-dock-hero>
+    <div class="c5-wrap">
 
-  <!-- ===== HERO ===== -->
-  <section class="wf-section wf-section--lg">
-    <div class="wf-container wf-grid wf-grid--2 wf-items-center" style="--wf-grid-min: 22rem;">
-      <div class="wf-stack wf-stack--5">
-        <span class="wf-overline">Kontakt</span>
-        <h1 class="wf-display">Porozmawiajmy o Twojej glebie</h1>
-        <p class="wf-lead wf-prose">Jesteśmy polskim, rodzinnym producentem — odbierasz telefon i rozmawiasz z konkretną osobą, nie z infolinią. Powiedz nam, czego potrzebujesz: dobierzemy program, przygotujemy ofertę albo pomożemy złożyć zamówienie.</p>
-        <div class="wf-cluster wf-gap-3">
-          <a class="wf-btn wf-btn--primary wf-btn--lg" href="#oferta">Zapytaj o ofertę</a>
-          <a class="wf-btn wf-btn--secondary wf-btn--lg" href="#osoby">Zobacz osoby do kontaktu</a>
-        </div>
+      <nav class="wf-breadcrumb kt-crumbs" aria-label="Okruszki">
+        <ol class="wf-cluster wf-items-center">
+          <li><a class="wf-link--quiet" href="home.html">Strona główna</a></li>
+          <li><span class="wf-breadcrumb__sep" aria-hidden="true">/</span></li>
+          <li aria-current="page">Kontakt</li>
+        </ol>
+      </nav>
+
+      <div class="kt-quick__head">
+        <span class="c5-kicker">Kontakt</span>
+        <h1 class="c5-h1">Potrzebujesz szybkiej konsultacji?</h1>
+        <p class="c5-lead">Nie wiesz, który produkt wybrać, jak go zastosować albo z kim skontaktować się w sprawie współpracy? Zadzwoń bezpośrednio do jednej z naszych osób pierwszego kontaktu.</p>
       </div>
-      <div class="wf-ph wf-ph--4x3" aria-hidden="true"><span class="wf-ph__label">Zespół Carbohort / biuro — twarze osób do kontaktu</span></div>
+
+      <ul class="kt-quick" role="list" data-reveal>
+        <li class="kt-quick__card">
+          <span class="wf-ph kt-quick__photo" aria-hidden="true"><svg class="wf-icon wf-icon--lg"><use href="#ti-user"></use></svg></span>
+          <h2 class="c5-h3 c5-h3--lg kt-quick__name">Dezyderiusz Mietlicki</h2>
+          <p class="kt-quick__role">Sprawy handlowe · dobór produktów</p>
+          <a class="c5-btn c5-btn--dark kt-quick__tel" href="tel:+48506066663">
+            <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-phone"></use></svg>
+            <span class="kt-quick__call">Zadzwoń&nbsp;·</span>
+            <span class="kt-quick__num">+48 506 066 663</span>
+          </a>
+          <a class="wf-link kt-quick__mail" href="mailto:dezyderiusz.mietlicki@carbohort.com">
+            <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-mail"></use></svg>
+            <span>dezyderiusz.mietlicki@carbohort.com</span>
+          </a>
+        </li>
+        <li class="kt-quick__card">
+          <span class="wf-ph kt-quick__photo" aria-hidden="true"><svg class="wf-icon wf-icon--lg"><use href="#ti-user"></use></svg></span>
+          <h2 class="c5-h3 c5-h3--lg kt-quick__name">Dariusz Dziadkowski</h2>
+          <p class="kt-quick__role">Sprzedaż i dystrybucja międzynarodowa · dobór produktów</p>
+          <a class="c5-btn c5-btn--dark kt-quick__tel" href="tel:+48518034023">
+            <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-phone"></use></svg>
+            <span class="kt-quick__call">Zadzwoń&nbsp;·</span>
+            <span class="kt-quick__num">+48 518 034 023</span>
+          </a>
+          <a class="wf-link kt-quick__mail" href="mailto:dariusz.dziadkowski@carbohort.com">
+            <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-mail"></use></svg>
+            <span>dariusz.dziadkowski@carbohort.com</span>
+          </a>
+        </li>
+        <li class="kt-quick__card">
+          <span class="wf-ph kt-quick__photo" aria-hidden="true"><svg class="wf-icon wf-icon--lg"><use href="#ti-user"></use></svg></span>
+          <h2 class="c5-h3 c5-h3--lg kt-quick__name">Radosław Łaźny</h2>
+          <p class="kt-quick__role">Doradztwo uprawowe</p>
+          <a class="c5-btn c5-btn--dark kt-quick__tel" href="tel:+48506383715">
+            <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-phone"></use></svg>
+            <span class="kt-quick__call">Zadzwoń&nbsp;·</span>
+            <span class="kt-quick__num">+48 506 383 715</span>
+          </a>
+          <a class="wf-link kt-quick__mail" href="mailto:doradca.uprawowy@gmail.com">
+            <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-mail"></use></svg>
+            <span>doradca.uprawowy@gmail.com</span>
+          </a>
+        </li>
+      </ul>
+
     </div>
   </section>
 
-  <!-- ===== KARTY ROUTUJĄCE ===== -->
-  <section class="wf-section wf-section--subtle">
-    <div class="wf-container wf-stack wf-stack--8">
-      <div class="wf-stack wf-stack--3" style="max-width:680px;">
-        <span class="wf-overline">Najkrótsza droga</span>
-        <h2 class="wf-h2">Czego dziś potrzebujesz?</h2>
-        <p class="wf-lead wf-t-secondary">Trzy najczęstsze sprawy — wybierz, a zaprowadzimy Cię prosto tam, gdzie trzeba. Jeśli żadna nie pasuje, niżej znajdziesz osoby i formularz.</p>
-      </div>
-      <div class="wf-grid wf-grid--3" style="--wf-grid-min: 15rem;">
-        <a class="wf-card wf-card--interactive" href="sklep.html"><div class="wf-card__body wf-stack wf-stack--3">
-          <h3 class="wf-h4">Kup w sklepie</h3>
-          <p class="wf-small wf-t-secondary">Wiesz, czego chcesz? Zamów drobnicę od ręki — bez logowania, cena bazowa jest jawna.</p>
-          <span class="wf-link--quiet wf-inline wf-small wf-w-semibold">Przejdź do sklepu <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></span>
-        </div></a>
-        <a class="wf-card wf-card--interactive" href="konfigurator.html"><div class="wf-card__body wf-stack wf-stack--3">
-          <h3 class="wf-h4">Dobierz program</h3>
-          <p class="wf-small wf-t-secondary">Nie wiesz, co i ile? Konfigurator dobierze produkty i dawki pod Twoją uprawę i skalę.</p>
-          <span class="wf-link--quiet wf-inline wf-small wf-w-semibold">Otwórz konfigurator <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></span>
-        </div></a>
-        <a class="wf-card wf-card--interactive" href="#oferta" style="border-color: var(--w-border-strong);"><div class="wf-card__body wf-stack wf-stack--3">
-          <div class="wf-cluster wf-cluster--between"><h3 class="wf-h4">Zapytaj o ofertę</h3><span class="wf-badge wf-badge--solid">PRO</span></div>
-          <p class="wf-small wf-t-secondary">Większa skala, paleta, zieleń miejska lub przetarg? Zostaw zapytanie — oddzwonimy z ceną netto.</p>
-          <span class="wf-link--quiet wf-inline wf-small wf-w-semibold">Wypełnij formularz <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></span>
-        </div></a>
-      </div>
+  <!-- ===== 2. WYBIERZ SPRAWĘ · pasek chipów (EL-16, nie CE) =================
+       Skrót do siedmiu długich wierszy działów. Chipy są zwykłymi kotwicami –
+       bez JS przenoszą do wiersza; z JS szyna CX5 przewija płynnie, a moduł
+       `kontakt.js 20` podświetla wiersz na 1,5 s. ========================== -->
+  <section id="sprawy" class="kt-cases-sec">
+    <div class="c5-wrap">
+      <h2 class="c5-h3 c5-h3--md kt-cases__title">Wybierz sprawę</h2>
+      <ul class="kt-cases" role="list">
+        <li><a class="c5-chip kt-case" href="#dzial-zamowienia">status zamówienia</a></li>
+        <li><a class="c5-chip kt-case" href="#dzial-spedycja">wysyłka i transport</a></li>
+        <li><a class="c5-chip kt-case" href="#dzial-zamowienia">faktury i płatności</a></li>
+        <li><a class="c5-chip kt-case" href="#dzial-handlowe">oferta hurtowa i współpraca</a></li>
+        <li><a class="c5-chip kt-case" href="#dzial-eksport">eksport i dystrybucja</a></li>
+        <li><a class="c5-chip kt-case" href="#dzial-doradztwo">doradztwo uprawowe</a></li>
+        <li><a class="c5-chip kt-case" href="#dzial-marketing">media i marketing</a></li>
+        <li><a class="c5-chip kt-case" href="#dzial-administracja">zatrudnienie i administracja</a></li>
+      </ul>
     </div>
   </section>
 
-  <!-- ===== OSOBY DO KONTAKTU ===== -->
-  <section class="wf-section" id="osoby">
-    <div class="wf-container wf-stack wf-stack--8">
-      <div class="wf-stack wf-stack--3" style="max-width:680px;">
-        <span class="wf-overline">Cztery osoby, jedna sprawa</span>
-        <h2 class="wf-h2">Z kim się skontaktować</h2>
-        <p class="wf-lead wf-t-secondary">Wybierz osobę odpowiedzialną za Twoją sprawę — trafisz od razu do właściwego działu, bez przełączania.</p>
-      </div>
-      <div class="wf-grid wf-grid--2" style="--wf-grid-min: 20rem;">
-        <article class="wf-card"><div class="wf-card__body wf-stack wf-stack--3">
-          <div class="wf-cluster wf-gap-3 wf-items-center">
-            <span class="wf-ph wf-ph--avatar" aria-hidden="true"></span>
-            <div class="wf-stack wf-stack--1"><h3 class="wf-h5">Dezyderiusz</h3><span class="wf-small wf-t-tertiary">Kontakt główny</span></div>
-          </div>
-          <p class="wf-small wf-t-secondary">Pierwszy kontakt, pytania ogólne, skierowanie do właściwej osoby. Nie wiesz, do kogo zadzwonić? Zacznij tutaj.</p>
-          <div class="wf-cluster wf-gap-2">
-            <a class="wf-btn wf-btn--secondary wf-btn--sm wf-inline" href="tel:+48000000000"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-message-2"></use></svg> Zadzwoń [tel.]</a>
-            <a class="wf-btn wf-btn--ghost wf-btn--sm wf-inline" href="mailto:kontakt@carbohort.pl"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-mail"></use></svg> E-mail</a>
-          </div>
-        </div></article>
+  <!-- ===== 3. SZUKASZ KONKRETNEGO DZIAŁU? · CE-55 · wiersze działów ========
+       Wersja bazowa nowego klocka: lista wierszy rozdzielonych cienkimi
+       liniami, każdy wiersz to trzy kolumny – dział z osobą, opis, kolumna
+       akcji z pełnym numerem i pełnym adresem. Poniżej 900 px kolumny idą
+       jedna pod drugą, przyciski na całą szerokość. Treść 1:1 z dokumentu
+       klienta. Kod pod prefiksem `kt-`. ================================== -->
+  <section id="dzialy" class="c5-sec kt-depts-sec" data-ce="CE-55">
+    <div class="c5-wrap">
+      <h2 class="c5-h2">Szukasz konkretnego działu?</h2>
 
-        <article class="wf-card"><div class="wf-card__body wf-stack wf-stack--3">
-          <div class="wf-cluster wf-gap-3 wf-items-center">
-            <span class="wf-ph wf-ph--avatar" aria-hidden="true"></span>
-            <div class="wf-stack wf-stack--1"><h3 class="wf-h5">Gosia</h3><span class="wf-small wf-t-tertiary">Obsługa zamówień</span></div>
-          </div>
-          <p class="wf-small wf-t-secondary">Status zamówienia, dostawa, faktury, zwroty i reklamacje. Wszystko, co dzieje się po złożeniu zamówienia.</p>
-          <div class="wf-cluster wf-gap-2">
-            <a class="wf-btn wf-btn--secondary wf-btn--sm wf-inline" href="tel:+48000000000"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-message-2"></use></svg> Zadzwoń [tel.]</a>
-            <a class="wf-btn wf-btn--ghost wf-btn--sm wf-inline" href="mailto:zamowienia@carbohort.pl"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-mail"></use></svg> E-mail</a>
-          </div>
-        </div></article>
+      <ul class="kt-depts" role="list" data-reveal>
 
-        <article class="wf-card"><div class="wf-card__body wf-stack wf-stack--3">
-          <div class="wf-cluster wf-gap-3 wf-items-center">
-            <span class="wf-ph wf-ph--avatar" aria-hidden="true"></span>
-            <div class="wf-stack wf-stack--1"><h3 class="wf-h5">Sylwia</h3><span class="wf-small wf-t-tertiary">Oferty i współpraca</span></div>
+        <li class="kt-dept" id="dzial-administracja">
+          <div class="kt-dept__who">
+            <h3 class="c5-h3 c5-h3--md">Administracja</h3>
+            <p class="kt-dept__person c5-muted">Maria Izabela Mietlicka</p>
           </div>
-          <p class="wf-small wf-t-secondary">Zapytania ofertowe, większe partie, opakowania zbiorcze, instytucje i przetargi oraz współpraca handlowa.</p>
-          <div class="wf-cluster wf-gap-2">
-            <a class="wf-btn wf-btn--secondary wf-btn--sm wf-inline" href="tel:+48000000000"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-message-2"></use></svg> Zadzwoń [tel.]</a>
-            <a class="wf-btn wf-btn--ghost wf-btn--sm wf-inline" href="mailto:oferty@carbohort.pl"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-mail"></use></svg> E-mail</a>
+          <div class="kt-dept__desc">
+            <p>Skontaktuj się w sprawach związanych z zatrudnieniem, administracją oraz bieżącymi sprawami organizacyjnymi firmy.</p>
           </div>
-        </div></article>
+          <div class="kt-dept__act">
+            <a class="c5-btn c5-btn--light c5-btn--sm" href="tel:+48505529574"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-phone"></use></svg> <span>+48 505 529 574</span></a>
+            <a class="c5-btn c5-btn--light c5-btn--sm" href="mailto:iza.mietlicka@carbohort.com"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-mail"></use></svg> <span>iza.mietlicka@carbohort.com</span></a>
+          </div>
+        </li>
 
-        <article class="wf-card" style="border-color: var(--w-border-strong);"><div class="wf-card__body wf-stack wf-stack--3">
-          <div class="wf-cluster wf-gap-3 wf-items-center">
-            <span class="wf-ph wf-ph--avatar" aria-hidden="true"></span>
-            <div class="wf-stack wf-stack--1"><div class="wf-cluster wf-gap-2 wf-items-center"><h3 class="wf-h5">Radek</h3><span class="wf-badge wf-badge--outline">Doradca</span></div><span class="wf-small wf-t-tertiary">Doradztwo agrotechniczne</span></div>
+        <li class="kt-dept" id="dzial-handlowe">
+          <div class="kt-dept__who">
+            <h3 class="c5-h3 c5-h3--md">Sprawy handlowe</h3>
+            <p class="kt-dept__person c5-muted">Dezyderiusz Mietlicki</p>
           </div>
-          <p class="wf-small wf-t-secondary">Dobór produktu pod uprawę, dawki, terminy i program na sezon. Rozmowa merytoryczna dla PRO i wymagających.</p>
-          <div class="wf-cluster wf-gap-2">
-            <a class="wf-btn wf-btn--primary wf-btn--sm wf-inline" href="tel:+48000000000"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-message-2"></use></svg> Telefon doradczy [tel.]</a>
-            <a class="wf-btn wf-btn--ghost wf-btn--sm wf-inline" href="mailto:doradztwo@carbohort.pl"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-mail"></use></svg> E-mail</a>
+          <div class="kt-dept__desc">
+            <p>Skontaktuj się w sprawie współpracy biznesowej, umów, zamówień hurtowych oraz innych spraw handlowych wymagających bezpośrednich ustaleń.</p>
+            <p>Uzyskasz również pomoc w doborze produktów oraz doradztwo dotyczące ich zastosowania w uprawach profesjonalnych i hobbystycznych.</p>
           </div>
-        </div></article>
-      </div>
+          <div class="kt-dept__act">
+            <a class="c5-btn c5-btn--light c5-btn--sm" href="tel:+48506066663"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-phone"></use></svg> <span>+48 506 066 663</span></a>
+            <a class="c5-btn c5-btn--light c5-btn--sm" href="mailto:dezyderiusz.mietlicki@carbohort.com"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-mail"></use></svg> <span>dezyderiusz.mietlicki@carbohort.com</span></a>
+          </div>
+        </li>
 
-      <!-- pasek dr Jurka -->
-      <div class="cw-ask">
-        <span class="wf-ph wf-ph--avatar" aria-hidden="true"></span>
-        <div class="cw-ask__txt wf-stack wf-stack--1">
-          <span class="wf-w-semibold">Wolisz najpierw spytać, zanim zadzwonisz?</span>
-          <span class="wf-small wf-t-secondary">dr Jurek pomoże wstępnie dobrać produkt i dawkę o każdej porze — a jeśli sprawa jest nietypowa, pokieruje do właściwej osoby z zespołu.</span>
-        </div>
-        <button type="button" class="wf-btn wf-btn--secondary" data-jurek-open>Zapytaj dr Jurka</button>
-      </div>
+        <li class="kt-dept" id="dzial-zamowienia">
+          <div class="kt-dept__who">
+            <h3 class="c5-h3 c5-h3--md">Zakupy, rozliczenia i obsługa zamówień detalicznych</h3>
+            <p class="kt-dept__person c5-muted">Małgorzata Zydor</p>
+          </div>
+          <div class="kt-dept__desc">
+            <p>Skontaktuj się, jeśli chcesz sprawdzić status zamówienia, dostępność produktów lub uzyskać informacje dotyczące realizacji zamówienia.</p>
+            <p>Tutaj wyjaśnisz również kwestie związane z fakturami i płatnościami, a także przedstawisz ofertę dotyczącą zaopatrzenia firmy.</p>
+          </div>
+          <div class="kt-dept__act">
+            <a class="c5-btn c5-btn--light c5-btn--sm" href="tel:+48880129208"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-phone"></use></svg> <span>+48 880 129 208</span></a>
+            <a class="c5-btn c5-btn--light c5-btn--sm" href="mailto:malgorzata.zydor@carbohort.com"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-mail"></use></svg> <span>malgorzata.zydor@carbohort.com</span></a>
+          </div>
+        </li>
+
+        <li class="kt-dept" id="dzial-spedycja">
+          <div class="kt-dept__who">
+            <h3 class="c5-h3 c5-h3--md">Spedycja i transport, obsługa zamówień detalicznych</h3>
+            <p class="kt-dept__person c5-muted">Adrian Łyszega</p>
+          </div>
+          <div class="kt-dept__desc">
+            <p>Uzyskasz informacje dotyczące wysyłki, terminu dostawy oraz organizacji transportu.</p>
+            <p>Skontaktuj się również w sprawach związanych z przewoźnikami, dokumentacją transportową oraz ofertami firm spedycyjnych i transportowych.</p>
+          </div>
+          <div class="kt-dept__act">
+            <a class="c5-btn c5-btn--light c5-btn--sm" href="tel:+48880129208"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-phone"></use></svg> <span>+48 880 129 208</span></a>
+            <a class="c5-btn c5-btn--light c5-btn--sm" href="mailto:adrian.lyszega@carbohort.com"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-mail"></use></svg> <span>adrian.lyszega@carbohort.com</span></a>
+          </div>
+        </li>
+
+        <li class="kt-dept" id="dzial-eksport">
+          <div class="kt-dept__who">
+            <h3 class="c5-h3 c5-h3--md">Sprzedaż i dystrybucja międzynarodowa</h3>
+            <p class="kt-dept__person c5-muted">Dariusz Dziadkowski</p>
+          </div>
+          <div class="kt-dept__desc">
+            <p>Skontaktuj się w sprawie dostępności produktów Carbohort na rynkach zagranicznych, zamówień eksportowych oraz organizacji dostaw poza Polskę.</p>
+            <p>Uzyskasz także informacje dotyczące współpracy z dystrybutorami, partnerstwa handlowego oraz warunków współpracy międzynarodowej.</p>
+            <p>Możesz również uzyskać pomoc w doborze produktów i ich zastosowaniu w uprawach profesjonalnych i hobbystycznych.</p>
+          </div>
+          <div class="kt-dept__act">
+            <a class="c5-btn c5-btn--light c5-btn--sm" href="tel:+48518034023"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-phone"></use></svg> <span>+48 518 034 023</span></a>
+            <a class="c5-btn c5-btn--light c5-btn--sm" href="mailto:dariusz.dziadkowski@carbohort.com"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-mail"></use></svg> <span>dariusz.dziadkowski@carbohort.com</span></a>
+          </div>
+        </li>
+
+        <li class="kt-dept" id="dzial-marketing">
+          <div class="kt-dept__who">
+            <h3 class="c5-h3 c5-h3--md">Marketing i media społecznościowe</h3>
+            <p class="kt-dept__person c5-muted">Sylwia Kobus</p>
+          </div>
+          <div class="kt-dept__desc">
+            <p>Skontaktuj się w sprawie mediów społecznościowych, publikacji, materiałów prasowych, współprac reklamowych oraz promocji marki Carbohort.</p>
+            <p>Tutaj możesz również zgłosić sprawy związane z materiałami graficznymi, treściami marketingowymi oraz komunikacją marki.</p>
+          </div>
+          <div class="kt-dept__act">
+            <a class="c5-btn c5-btn--light c5-btn--sm" href="tel:+48880187417"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-phone"></use></svg> <span>+48 880 187 417</span></a>
+            <a class="c5-btn c5-btn--light c5-btn--sm" href="mailto:sylwia.kobus@carbohort.com"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-mail"></use></svg> <span>sylwia.kobus@carbohort.com</span></a>
+          </div>
+        </li>
+
+        <li class="kt-dept" id="dzial-doradztwo">
+          <div class="kt-dept__who">
+            <h3 class="c5-h3 c5-h3--md">Doradztwo uprawowe</h3>
+            <p class="kt-dept__person c5-muted">Radosław Łaźny</p>
+          </div>
+          <div class="kt-dept__desc">
+            <p>Uzyskasz fachowe wsparcie dotyczące nawożenia, poprawy właściwości gleby oraz prowadzenia upraw.</p>
+            <p>Pomoże dobrać Ci odpowiednie produkty, dawki i terminy stosowania oraz przeanalizować problemy związane z kondycją roślin, glebą, niedoborami składników pokarmowych itp.</p>
+          </div>
+          <div class="kt-dept__act">
+            <a class="c5-btn c5-btn--light c5-btn--sm" href="tel:+48506383715"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-phone"></use></svg> <span>+48 506 383 715</span></a>
+            <a class="c5-btn c5-btn--light c5-btn--sm" href="mailto:doradca.uprawowy@gmail.com"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-mail"></use></svg> <span>doradca.uprawowy@gmail.com</span></a>
+          </div>
+        </li>
+
+      </ul>
     </div>
   </section>
 
-  <!-- ===== FORMULARZ „ZAPYTAJ O OFERTĘ" ===== -->
-  <section class="wf-section wf-section--subtle" id="oferta">
-    <div class="wf-container wf-stack wf-stack--8">
-      <div class="wf-stack wf-stack--3" style="max-width:680px;">
-        <span class="wf-overline">Zapytaj o ofertę</span>
-        <h2 class="wf-h2">Zostaw zapytanie — przygotujemy ofertę pod Ciebie</h2>
-        <p class="wf-lead wf-t-secondary">Im więcej o uprawie i skali, tym trafniejsza oferta. Wypełnienie zajmuje minutę — resztę dopytamy przez telefon.</p>
+  <!-- ===== 4. NAPISZ DO NAS · CE-50 wariant „kontakt" =======================
+       Ten sam klocek co „Zadaj pytanie" na Próchnicy+, w wariancie dwóch
+       kolumn: formularz (60 %) i panel danych firmy z polem pod mapę dojazdu
+       (40 %). Formularz jest demonstracyjny – nic nie wychodzi na serwer.
+       Dane firmy 1:1 z dokumentu klienta. ================================= -->
+  <section id="napisz" class="c5-sec c5-band kt-write-sec" data-ce="CE-50" data-ce-wariant="kontakt">
+    <div class="c5-wrap">
+      <div class="c5-head kt-write__head">
+        <h2 class="c5-h2">Napisz do nas</h2>
+        <p class="c5-lead">Wolisz napisać niż dzwonić? Wybierz temat, a wiadomość trafi do właściwego działu. Odpowiadamy w godzinach pracy: od poniedziałku do piątku, 8:00–16:00.</p>
       </div>
 
-      <div class="wf-grid wf-grid--2 wf-items-start" style="--wf-grid-min: 20rem;">
-        <div class="wf-card"><div class="wf-card__body">
-          <form class="wf-stack wf-stack--5" novalidate>
-            <div class="wf-grid wf-grid--2" style="--wf-grid-min: 12rem;">
-              <div class="wf-field">
-                <label class="wf-label" for="k-imie">Imię i nazwisko <span class="wf-req" aria-hidden="true">*</span><span class="wf-sr-only">(wymagane)</span></label>
-                <input class="wf-input" id="k-imie" type="text" placeholder="np. Jan Kowalski" autocomplete="name" required aria-required="true">
-              </div>
-              <div class="wf-field">
-                <label class="wf-label" for="k-tel">Telefon <span class="wf-req" aria-hidden="true">*</span><span class="wf-sr-only">(wymagane)</span></label>
-                <input class="wf-input" id="k-tel" type="tel" placeholder="np. 600 100 200" autocomplete="tel" required aria-required="true">
-              </div>
+      <div class="kt-write">
+
+        <div class="kt-form">
+          <form novalidate data-demo-form>
+            <div class="wf-field">
+              <label class="wf-label" for="kt-imie">Imię i nazwisko <span class="wf-req" aria-hidden="true">*</span> <span class="wf-sr-only">(pole wymagane)</span></label>
+              <input class="wf-input" type="text" id="kt-imie" name="kt-imie" autocomplete="name" required aria-required="true">
             </div>
             <div class="wf-field">
-              <label class="wf-label" for="k-email">E-mail <span class="wf-req" aria-hidden="true">*</span><span class="wf-sr-only">(wymagane)</span></label>
-              <input class="wf-input wf-input--invalid" id="k-email" type="email" placeholder="np. jan@gospodarstwo.pl" autocomplete="email" value="jan@" required aria-required="true" aria-invalid="true" aria-describedby="k-email-hint k-email-err">
-              <p class="wf-hint" id="k-email-hint">Wyślemy na ten adres ofertę i potwierdzenie.</p>
-              <p class="wf-error-text" id="k-email-err">Podaj poprawny adres e-mail, np. jan@gospodarstwo.pl.</p>
+              <label class="wf-label" for="kt-mail">E-mail <span class="wf-req" aria-hidden="true">*</span> <span class="wf-sr-only">(pole wymagane)</span></label>
+              <input class="wf-input" type="email" id="kt-mail" name="kt-mail" autocomplete="email" required aria-required="true">
             </div>
             <div class="wf-field">
-              <label class="wf-label" for="k-segment">Segment uprawy <span class="wf-req" aria-hidden="true">*</span><span class="wf-sr-only">(wymagane)</span></label>
-              <select class="wf-select" id="k-segment" required aria-required="true">
-                <option value="" selected disabled>Wybierz segment…</option>
-                <option>Sadownicze</option>
-                <option>Jagodowe</option>
-                <option>Warzywnicze</option>
-                <option>Zboża, rzepak, kukurydza</option>
-                <option>Zieleń miejska</option>
-                <option>Szkółki</option>
-                <option>Ogród / działka</option>
+              <label class="wf-label" for="kt-tel">Telefon</label>
+              <input class="wf-input" type="tel" id="kt-tel" name="kt-tel" autocomplete="tel" aria-describedby="kt-tel-hint">
+              <p class="wf-hint" id="kt-tel-hint">Jeśli wolisz, żebyśmy oddzwonili.</p>
+            </div>
+            <div class="wf-field">
+              <label class="wf-label" for="kt-temat">Temat <span class="wf-req" aria-hidden="true">*</span> <span class="wf-sr-only">(pole wymagane)</span></label>
+              <select class="wf-select" id="kt-temat" name="kt-temat" required aria-required="true">
+                <option value="">Wybierz temat</option>
+                <option>Pytanie o produkt lub dawkę</option>
+                <option>Zamówienie, wysyłka i dostępność</option>
+                <option>Faktury i płatności</option>
+                <option>Oferta hurtowa i współpraca handlowa</option>
+                <option>Dystrybucja zagraniczna</option>
+                <option>Media, marketing i współprace</option>
+                <option>Reklamacja</option>
                 <option>Inne</option>
               </select>
             </div>
             <div class="wf-field">
-              <label class="wf-label" for="k-uprawa">Uprawa i areał</label>
-              <input class="wf-input" id="k-uprawa" type="text" placeholder="np. sad jabłoniowy, 12 ha" aria-describedby="k-uprawa-hint">
-              <p class="wf-hint" id="k-uprawa-hint">Pomaga dobrać produkt i dawkę pod Twoją skalę.</p>
+              <label class="wf-label" for="kt-tresc">Wiadomość <span class="wf-req" aria-hidden="true">*</span> <span class="wf-sr-only">(pole wymagane)</span></label>
+              <textarea class="wf-textarea" id="kt-tresc" name="kt-tresc" rows="5" required aria-required="true"></textarea>
             </div>
-            <div class="wf-field">
-              <label class="wf-label" for="k-wiadomosc">Wiadomość</label>
-              <textarea class="wf-textarea" id="k-wiadomosc" rows="4" placeholder="Czego potrzebujesz — produkt, ilość, termin, pytanie."></textarea>
-            </div>
-            <div class="wf-field">
-              <label class="wf-choice">
-                <input class="wf-checkbox" type="checkbox" required aria-required="true">
-                <span class="wf-small">Akceptuję <a class="wf-link" href="#">politykę prywatności</a> i zgadzam się na kontakt w sprawie zapytania <span class="wf-w-semibold">(wymagane)</span>.</span>
-              </label>
-            </div>
-            <button class="wf-btn wf-btn--primary wf-btn--lg wf-btn--block wf-inline" type="submit">Wyślij zapytanie <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-send"></use></svg></button>
+            <label class="kt-check" for="kt-zgoda">
+              <input class="wf-checkbox" type="checkbox" id="kt-zgoda" name="kt-zgoda" required aria-required="true">
+              <span>Zgadzam się na kontakt w sprawie mojej wiadomości. <span class="c5-chip c5-chip--dashed">treść zgody do uzupełnienia</span></span>
+            </label>
+            <button type="submit" class="c5-btn c5-btn--dark"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-send"></use></svg> Wyślij wiadomość</button>
+            <p class="c5-note c5-note--dashed c5-note--sm kt-msg" data-demo-err role="alert" hidden><span>Uzupełnij pola oznaczone gwiazdką.</span></p>
+            <p class="c5-note c5-note--strong c5-note--sm kt-msg" data-demo-msg role="status" hidden><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-info-circle"></use></svg> <span>Makieta – formularz demonstracyjny. Nic nie zostało wysłane.</span></p>
           </form>
-        </div></div>
-
-        <div class="wf-stack wf-stack--5">
-          <div class="wf-alert">
-            <span class="wf-alert__icon"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-info-circle"></use></svg></span>
-            <div>
-              <p class="wf-alert__title">Oddzwonimy w 2 godziny</p>
-              <p class="wf-small wf-t-secondary">W godzinach pracy oddzwaniamy na zapytania ofertowe zwykle w ciągu 2 godzin. Poza godzinami — następnego dnia roboczego rano. Czas reakcji do potwierdzenia danymi Carbohort.</p>
-            </div>
-          </div>
-
-          <div class="wf-card"><div class="wf-card__body wf-stack wf-stack--3">
-            <h3 class="wf-h5">Dane firmy</h3>
-            <dl class="wf-stack wf-stack--2">
-              <div class="wf-stack wf-stack--1"><dt class="wf-overline wf-t-tertiary">Adres</dt><dd class="wf-small wf-t-secondary">Carbohort [pełna nazwa spółki]<br>[ulica i numer]<br>[kod pocztowy, miejscowość]</dd></div>
-              <div class="wf-stack wf-stack--1"><dt class="wf-overline wf-t-tertiary">Dane rejestrowe</dt><dd class="wf-small wf-t-secondary">NIP: [NIP] · REGON: [REGON]</dd></div>
-              <div class="wf-stack wf-stack--1"><dt class="wf-overline wf-t-tertiary">Centrala</dt><dd class="wf-small wf-t-secondary">tel.: [tel. centrala] · e-mail: kontakt@carbohort.pl</dd></div>
-              <div class="wf-stack wf-stack--1"><dt class="wf-overline wf-t-tertiary">Godziny</dt><dd class="wf-small wf-t-secondary">pon.–pt. [8:00–16:00]</dd></div>
-            </dl>
-            <p class="wf-caption wf-t-secondary">Dane firmy do uzupełnienia danymi Carbohort.</p>
-          </div></div>
-
-          <div class="wf-stack wf-stack--2">
-            <div class="wf-ph wf-ph--16x9" aria-hidden="true"><span class="wf-ph__label">Mapa dojazdu — lokalizacja firmy</span></div>
-            <p class="wf-caption wf-t-secondary">Interaktywna mapa dojazdu w wersji produkcyjnej.</p>
-          </div>
         </div>
+
+        <aside class="kt-aside" aria-label="Dane firmy">
+          <div class="kt-company">
+            <h3 class="c5-h3 c5-h3--md kt-company__title">Dane firmy</h3>
+            <dl class="kt-company__list">
+              <div class="kt-company__row">
+                <dt>Adres</dt>
+                <dd>CarboHort Sp. z o. o.<br>Jordanowo 11 F<br>66-200 Jordanowo</dd>
+              </div>
+              <div class="kt-company__row">
+                <dt>Dane rejestrowe</dt>
+                <dd>NIP: 923 169 45 10 · REGON: 302830736</dd>
+              </div>
+              <div class="kt-company__row">
+                <dt>Centrala</dt>
+                <dd><a class="wf-link" href="tel:+48506066663">tel.: +48 506 066 663</a> · <a class="wf-link" href="mailto:biuro@carbohort.com">e-mail: biuro@carbohort.com</a></dd>
+              </div>
+              <div class="kt-company__row">
+                <dt>Godziny</dt>
+                <dd>pon.–pt. 8:00–16:00</dd>
+              </div>
+            </dl>
+          </div>
+          <figure class="kt-locmap" id="mapa-dojazdu">
+            <span class="wf-ph kt-locmap__ph" aria-hidden="true"><svg class="wf-icon wf-icon--lg"><use href="#ti-map-pin"></use></svg></span>
+            <figcaption class="wf-caption">Mapa dojazdu – Jordanowo 11 F</figcaption>
+            <button type="button" class="c5-btn c5-btn--light c5-btn--sm" disabled><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-external-link"></use></svg> Otwórz w mapach</button>
+          </figure>
+        </aside>
+
       </div>
     </div>
   </section>
 
-  <!-- ===== WOLISZ DZIAŁAĆ SAM ===== -->
-  <section class="wf-section wf-section--lg wf-section--inverse">
-    <div class="wf-container wf-container--narrow wf-stack wf-stack--6 wf-center">
-      <h2 class="wf-h2 wf-t-inverse">Wolisz działać sam?</h2>
-      <p class="wf-lead wf-t-inverse">Nie musisz dzwonić, żeby ruszyć. Dobierz produkty i dawki w konfiguratorze, a wątpliwości rozwiej z dr Jurkiem — o każdej porze, bez czekania na oddzwonienie.</p>
-      <div class="wf-cluster wf-cluster--center wf-gap-3">
-        <a class="wf-btn wf-btn--primary wf-btn--lg" href="konfigurator.html">Otwórz konfigurator</a>
-        <button type="button" class="wf-btn wf-btn--ghost wf-btn--lg" data-jurek-open>Zapytaj dr Jurka</button>
+  <!-- ===== 5. NASI ZAGRANICZNI DYSTRYBUTORZY · CE-56 · mapa z listą =========
+       Wersja bazowa nowego klocka: pole pod mapę Europy z ponumerowanymi
+       pinezkami i siatka kart lokalizacji. Pinezka jest kotwicą do karty, więc
+       bez JS klik i tak przenosi do danych kontaktowych; z JS moduł
+       `kontakt.js 30` wiąże najechanie/fokus w obie strony. ================ -->
+  <section id="dystrybutorzy" class="c5-sec kt-dist-sec" data-ce="CE-56">
+    <div class="c5-wrap">
+      <div class="c5-head kt-dist__head">
+        <h2 class="c5-h2">Nasi zagraniczni dystrybutorzy</h2>
+        <p class="c5-lead">Poza Polską produkty CarboHort kupisz u naszych partnerów. Napisz lub zadzwoń bezpośrednio do dystrybutora w swoim kraju.</p>
       </div>
+
+      <div class="kt-dist">
+
+        <figure class="kt-eumap">
+          <div class="kt-eumap__frame">
+            <span class="wf-ph kt-eumap__ph" aria-hidden="true"></span>
+            <ul class="kt-pins" role="list">
+              <li><a class="kt-pin" data-pin="1" href="#dyst-bulgaria"><span class="wf-sr-only">Bułgaria, pozycja </span>1</a></li>
+              <li><a class="kt-pin" data-pin="2" href="#dyst-francja"><span class="wf-sr-only">Francja, pozycja </span>2</a></li>
+              <li><a class="kt-pin" data-pin="3" href="#dyst-holandia"><span class="wf-sr-only">Holandia, pozycja </span>3</a></li>
+              <li><a class="kt-pin" data-pin="4" href="#dyst-baltyckie"><span class="wf-sr-only">Kraje bałtyckie, pozycja </span>4</a></li>
+              <li><a class="kt-pin" data-pin="5" href="#dyst-niemcy"><span class="wf-sr-only">Niemcy, pozycja </span>5</a></li>
+              <li><a class="kt-pin" data-pin="6" href="#dyst-rumunia"><span class="wf-sr-only">Rumunia, pozycja </span>6</a></li>
+              <li><a class="kt-pin" data-pin="7" href="#dyst-slowacja"><span class="wf-sr-only">Słowacja, pozycja </span>7</a></li>
+              <li><a class="kt-pin" data-pin="8" href="#dyst-wegry"><span class="wf-sr-only">Węgry, pozycja </span>8</a></li>
+            </ul>
+          </div>
+          <figcaption class="wf-caption">mapa poglądowa</figcaption>
+        </figure>
+
+        <ul class="kt-dcards" role="list" data-reveal>
+
+          <li class="kt-dcard" id="dyst-bulgaria" data-pin="1">
+            <span class="c5-chip c5-chip--solid">BUŁGARIA</span>
+            <h3 class="c5-h3 c5-h3--sm">RIO AGRO</h3>
+            <p class="kt-dcard__who c5-muted">Gancho Aleksandrov</p>
+            <div class="kt-dcard__act">
+              <a class="c5-btn c5-btn--light c5-btn--sm" href="tel:+359896678734"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-phone"></use></svg> <span>+35 9896678734</span></a>
+              <a class="c5-btn c5-btn--light c5-btn--sm" href="mailto:galeksandrov@rioagro.com"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-mail"></use></svg> <span>galeksandrov@rioagro.com</span></a>
+            </div>
+          </li>
+
+          <li class="kt-dcard" id="dyst-francja" data-pin="2">
+            <span class="c5-chip c5-chip--solid">FRANCJA</span>
+            <h3 class="c5-h3 c5-h3--sm">AGROBIOTOP SAS</h3>
+            <p class="kt-dcard__who c5-muted">Stephane Pestel</p>
+            <div class="kt-dcard__act">
+              <a class="c5-btn c5-btn--light c5-btn--sm" href="tel:0622118536"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-phone"></use></svg> <span>0622118536</span></a>
+              <a class="c5-btn c5-btn--light c5-btn--sm" href="mailto:stephane.pestel@agrobiotop.com"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-mail"></use></svg> <span>stephane.pestel@agrobiotop.com</span></a>
+            </div>
+          </li>
+
+          <li class="kt-dcard" id="dyst-holandia" data-pin="3">
+            <span class="c5-chip c5-chip--solid">HOLANDIA</span>
+            <h3 class="c5-h3 c5-h3--sm">AGROVITAE VOF</h3>
+            <p class="kt-dcard__who c5-muted">Marco van Beusichem</p>
+            <div class="kt-dcard__act">
+              <a class="c5-btn c5-btn--light c5-btn--sm" href="tel:+31654950432"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-phone"></use></svg> <span>+31 6 54950432</span></a>
+              <a class="c5-btn c5-btn--light c5-btn--sm" href="mailto:info@agrovitae.nl"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-mail"></use></svg> <span>info@agrovitae.nl</span></a>
+            </div>
+          </li>
+
+          <li class="kt-dcard" id="dyst-baltyckie" data-pin="4">
+            <span class="c5-chip c5-chip--solid">KRAJE BAŁTYCKIE</span>
+            <h3 class="c5-h3 c5-h3--sm">UAB MODERNUS ŪKIS</h3>
+            <p class="kt-dcard__who c5-muted">Vilmantas Dilka</p>
+            <div class="kt-dcard__act">
+              <a class="c5-btn c5-btn--light c5-btn--sm" href="tel:+37065773907"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-phone"></use></svg> <span>+37065773907</span></a>
+              <a class="c5-btn c5-btn--light c5-btn--sm" href="mailto:mivenatrasos@gmail.com"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-mail"></use></svg> <span>mivenatrasos@gmail.com</span></a>
+            </div>
+          </li>
+
+          <li class="kt-dcard" id="dyst-niemcy" data-pin="5">
+            <span class="c5-chip c5-chip--solid">NIEMCY</span>
+            <h3 class="c5-h3 c5-h3--sm">WTZ GMBH</h3>
+            <p class="kt-dcard__who c5-muted">Julia Remih-Zumbusch</p>
+            <div class="kt-dcard__act">
+              <a class="c5-btn c5-btn--light c5-btn--sm" href="tel:+4915114819098"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-phone"></use></svg> <span>+49 151 148 190 98</span></a>
+              <a class="c5-btn c5-btn--light c5-btn--sm" href="mailto:j.remih-zumbusch@wtz-gmbh.de"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-mail"></use></svg> <span>j.remih-zumbusch@wtz-gmbh.de</span></a>
+            </div>
+          </li>
+
+          <li class="kt-dcard" id="dyst-rumunia" data-pin="6">
+            <span class="c5-chip c5-chip--solid">RUMUNIA</span>
+            <h3 class="c5-h3 c5-h3--sm">BIOFECONDA SRL</h3>
+            <p class="kt-dcard__who c5-muted">Horatiu Morariu</p>
+            <div class="kt-dcard__act">
+              <a class="c5-btn c5-btn--light c5-btn--sm" href="tel:+40728499606"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-phone"></use></svg> <span>+40 728499606</span></a>
+              <a class="c5-btn c5-btn--light c5-btn--sm" href="mailto:horatiu@bioconsult.ro"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-mail"></use></svg> <span>horatiu@bioconsult.ro</span></a>
+            </div>
+          </li>
+
+          <li class="kt-dcard" id="dyst-slowacja" data-pin="7">
+            <span class="c5-chip c5-chip--solid">SŁOWACJA</span>
+            <h3 class="c5-h3 c5-h3--sm">EKOHNOJIVA S. R. O.</h3>
+            <p class="kt-dcard__who c5-muted">Peter Servanský</p>
+            <div class="kt-dcard__act">
+              <a class="c5-btn c5-btn--light c5-btn--sm" href="tel:+421911909012"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-phone"></use></svg> <span>+ 421 911 909 012</span></a>
+              <a class="c5-btn c5-btn--light c5-btn--sm" href="mailto:servansky@gmail.com"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-mail"></use></svg> <span>servansky@gmail.com</span></a>
+            </div>
+          </li>
+
+          <li class="kt-dcard" id="dyst-wegry" data-pin="8">
+            <span class="c5-chip c5-chip--solid">WĘGRY</span>
+            <h3 class="c5-h3 c5-h3--sm">KÉKBAKONY KFT</h3>
+            <p class="kt-dcard__who c5-muted">Gábor Nyitrai</p>
+            <div class="kt-dcard__act">
+              <a class="c5-btn c5-btn--light c5-btn--sm" href="tel:+36202635119"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-phone"></use></svg> <span>+36 20 263 5119</span></a>
+              <a class="c5-btn c5-btn--light c5-btn--sm" href="mailto:bakony.rocks@gmail.com"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-mail"></use></svg> <span>bakony.rocks@gmail.com</span></a>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 6. INNE DROGI · CE-20 wariant „z-przyciskami" ====================
+       Zwykła siatka kart wzorca z przyciskiem w każdej karcie – trzy wyjścia
+       dla kogoś, kto nie musi dzwonić. ==================================== -->
+  <section id="inne-drogi" class="c5-sec c5-band kt-ways-sec" data-ce="CE-20" data-ce-wariant="z-przyciskami">
+    <div class="c5-wrap">
+      <h2 class="c5-h2">Nie musisz dzwonić, żeby ruszyć</h2>
+      <ul class="kt-ways" role="list" data-reveal>
+        <li class="kt-way">
+          <h3 class="c5-h3 c5-h3--md">Kupujesz w większych ilościach?</h3>
+          <p>Zamówienia hurtowe i konto z Twoją ceną obsługuje platforma B2B.</p>
+          <a class="c5-btn c5-btn--dark c5-btn--sm" href="platforma-b2b.html">Platforma B2B</a>
+        </li>
+        <li class="kt-way">
+          <h3 class="c5-h3 c5-h3--md">Chcesz sprzedawać produkty CarboHort?</h3>
+          <p>Dystrybutorów i partnerów handlowych zapraszamy do formularza partnerskiego.</p>
+          <a class="c5-btn c5-btn--dark c5-btn--sm" href="partner.html">Zostań partnerem</a>
+        </li>
+        <li class="kt-way">
+          <h3 class="c5-h3 c5-h3--md">Wolisz najpierw sam dobrać produkt?</h3>
+          <p>Konfigurator dobierze produkty i dawki pod Twoją uprawę i skalę; wątpliwości rozwiejesz z asystentem.</p>
+          <a class="c5-btn c5-btn--dark c5-btn--sm" href="konfigurator.html">Otwórz konfigurator</a>
+        </li>
+      </ul>
     </div>
   </section>
 
@@ -254,5 +477,10 @@
 <cw-dock></cw-dock>
 
 <script src="cw.js"></script>
+<!-- Lenis: slight scroll inertia (like serverobotics.com); the page scrolls natively without it -->
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
+<script src="ce/00-base.js"></script>
+<script src="kontakt.js"></script>
+<script src="ce-overlay.js"></script>
 </body>
 </html>

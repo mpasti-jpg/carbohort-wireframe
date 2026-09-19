@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>O żyzności gleb | Centrum wiedzy Carbohort</title>
+<meta name="description" content="Artykuły o tym, jak działa gleba, próchnica i węgiel brunatny: kwasy i substancje humusowe, humifikacja, retencja wody i nawożenie. Kategoria Centrum wiedzy CarboHort.">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="wireframe.css">
+<link rel="stylesheet" href="cw.css">
+  <link rel="stylesheet" href="ce/00-base.css">
+  <link rel="stylesheet" href="ce/CE-08-hero.css">
+  <link rel="stylesheet" href="centrum-wiedzy.css">
+<script src="../status.js"></script>
+<script src="../ce-rejestr.js"></script>
+<script src="chrome.js"></script>
+</head>
+<body>
+<a class="wf-sr-only" href="#main">Przejdź do treści</a>
+
+<cw-icons></cw-icons>
+
+<cw-navbar data-current="centrum-wiedzy"></cw-navbar>
+
+<main id="main">
+
+  <!-- ===== 1. HERO KATEGORII – CE-08 wariant „dzial" (spec §4) ============
+       Bez kropek nawigacji (strona jest krótka). Chipy podgrup działają jak
+       chipy nad indeksem – to te same przyciski `data-cw-filter`, więc klik w
+       hero ustawia filtr i przewija do listy. -->
+  <section id="hero" data-ce="CE-08" data-ce-wariant="dzial">
+    <div class="c5-wrap">
+      <div class="c5-hero c5-hero--dzial">
+        <div class="c5-hero__copy">
+          <nav class="wf-breadcrumb c5-hero__crumbs" aria-label="Okruszki">
+            <ol class="wf-cluster wf-items-center">
+              <li><a class="wf-link--quiet" href="home.html">Strona główna</a></li>
+              <li><span class="wf-breadcrumb__sep" aria-hidden="true">/</span></li>
+              <li><a class="wf-link--quiet" href="centrum-wiedzy.html">Centrum wiedzy</a></li>
+              <li><span class="wf-breadcrumb__sep" aria-hidden="true">/</span></li>
+              <li aria-current="page">O żyzności gleb</li>
+            </ol>
+          </nav>
+          <div class="c5-hero__copyin">
+            <span class="c5-kicker">Centrum wiedzy · kategoria</span>
+            <h1 class="c5-h1">O żyzności gleb</h1>
+            <div class="c5-hero__lead">
+              <p>Jak działa gleba, próchnica i węgiel brunatny: procesy, liczby i mity. Artykuły dla tych, którzy chcą wiedzieć dlaczego, zanim zdecydują ile.</p>
+            </div>
+            <div class="cw-k-herochips" role="group" aria-label="Podgrupy kategorii">
+              <button type="button" class="c5-chip" data-cw-filter="kwasy-i-substancje-humusowe" aria-pressed="false">Kwasy i substancje humusowe</button>
+              <button type="button" class="c5-chip" data-cw-filter="wegiel-brunatny-i-lignit" aria-pressed="false">Węgiel brunatny i lignit</button>
+              <button type="button" class="c5-chip" data-cw-filter="prochnica-i-nawozenie" aria-pressed="false">Próchnica i nawożenie</button>
+              <button type="button" class="c5-chip" data-cw-filter="woda-i-susza" aria-pressed="false">Woda i susza</button>
+            </div>
+            <p><a class="wf-link cw-k-more" href="centrum-wiedzy.html#kategorie">Szukasz porad o produktach?<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 2+3. LISTA KATEGORII + KOLUMNA BOCZNA (spec §4) ================
+       Od 1100 px lista i kolumna boczna stoją obok siebie, niżej kolumna
+       schodzi pod listę. Dziesiąty wiersz to artykuł zapowiedziany (nr 14):
+       bez linku, z chipem „w przygotowaniu", zawsze na końcu listy niezależnie
+       od sortowania (`data-cw-pin`). Stronicowanie zostaje widoczne przy jednej
+       stronie – tak wygląda lista, która się jeszcze nie rozrosła. -->
+  <section class="c5-sec">
+    <div class="c5-wrap">
+      <div class="cw-k-layout">
+
+        <div id="artykuly" data-ce="CE-57" data-ce-wariant="kategoria" data-cw-index>
+          <div class="cw-k-sechead">
+            <h2 class="c5-h2">Artykuły w tej kategorii</h2>
+            <p class="c5-src">10 artykułów</p>
+          </div>
+
+          <div class="cw-k-controls" data-js-only>
+            <div class="cw-k-filters" role="group" aria-label="Filtruj według podgrupy">
+              <button type="button" class="c5-chip" data-cw-filter="" aria-pressed="true">Wszystkie</button>
+              <button type="button" class="c5-chip" data-cw-filter="kwasy-i-substancje-humusowe" aria-pressed="false">Kwasy i substancje humusowe</button>
+              <button type="button" class="c5-chip" data-cw-filter="wegiel-brunatny-i-lignit" aria-pressed="false">Węgiel brunatny i lignit</button>
+              <button type="button" class="c5-chip" data-cw-filter="prochnica-i-nawozenie" aria-pressed="false">Próchnica i nawożenie</button>
+              <button type="button" class="c5-chip" data-cw-filter="woda-i-susza" aria-pressed="false">Woda i susza</button>
+            </div>
+            <div class="cw-k-tools">
+              <select class="wf-select" id="sortuj" name="sortuj" aria-label="Sortowanie listy" data-cw-sort>
+                <option value="nowe">Najnowsze</option>
+                <option value="stare">Najstarsze</option>
+                <option value="az">Tytuł A–Z</option>
+              </select>
+              <div class="cw-k-findbox">
+                <input class="wf-input" type="search" id="szukaj-lista" name="szukaj-lista" placeholder="Szukaj w artykułach" aria-label="Szukaj w artykułach" data-cw-search>
+                <button type="button" class="cw-k-findbox__go" data-cw-go aria-label="Pokaż wyniki"><svg class="wf-icon" aria-hidden="true"><use href="#ti-search"></use></svg></button>
+              </div>
+            </div>
+          </div>
+
+          <p class="c5-src cw-k-count" data-js-only aria-live="polite" data-cw-count>Pokazujemy 1–10 z 10 artykułów</p>
+
+          <ul class="cw-k-list" data-cw-list>
+            <li class="cw-k-list__item" data-kat="kwasy-i-substancje-humusowe" data-date="2026-09" data-title="10 najczęściej powtarzanych mitów na temat kwasów humusowych" data-search="10 najczesciej powtarzanych mitow na temat kwasow humusowych pomimo tego, ze preparaty zawierajace substancje humusowe, zwlaszcza kwasy, sa obecne na rynku od kilku dekad, wokol ich dzialania wciaz gromadzi sie wiele krzywdzacych mitow, nieporozumien i niedopowiedzen.">
+              <article class="cw-k-row">
+                <h3 class="c5-h3 c5-h3--md cw-k-row__title"><a href="artykul.html">10 najczęściej powtarzanych mitów na temat kwasów humusowych</a></h3>
+                <p class="cw-k-row__lead">Pomimo tego, że preparaty zawierające substancje humusowe, zwłaszcza kwasy, są obecne na rynku od kilku dekad, wokół ich działania wciąż gromadzi się wiele krzywdzących mitów, nieporozumień i niedopowiedzeń.</p>
+                <p class="c5-src cw-k-metasep cw-k-row__meta"><span class="c5-chip">Kwasy i substancje humusowe</span><span>Dariusz Dziadkowski</span><span>wrzesień 2026</span><span>15 min czytania</span></p>
+              </article>
+            </li>
+            <li class="cw-k-list__item" data-kat="kwasy-i-substancje-humusowe" data-date="2026-08" data-title="Chelatacja kationów przez substancje humusowe – niedoceniany mechanizm odżywiania roślin" data-search="chelatacja kationow przez substancje humusowe – niedoceniany mechanizm odzywiania roslin wspolczesne rolnictwo intensywne w stopniu bezprecedensowym opiera sie na stosowaniu mineralnych nawozow syntetycznych, ktore odpowiadaja za globalny poziom plonowania roslin uprawnych.">
+              <article class="cw-k-row">
+                <h3 class="c5-h3 c5-h3--md cw-k-row__title"><a href="artykul.html">Chelatacja kationów przez substancje humusowe – niedoceniany mechanizm odżywiania roślin</a></h3>
+                <p class="cw-k-row__lead">Współczesne rolnictwo intensywne w stopniu bezprecedensowym opiera się na stosowaniu mineralnych nawozów syntetycznych, które odpowiadają za globalny poziom plonowania roślin uprawnych.</p>
+                <p class="c5-src cw-k-metasep cw-k-row__meta"><span class="c5-chip">Kwasy i substancje humusowe</span><span>Dariusz Dziadkowski</span><span>sierpień 2026</span><span>8 min czytania</span></p>
+              </article>
+            </li>
+            <li class="cw-k-list__item" data-kat="prochnica-i-nawozenie" data-date="2026-07" data-title="Jaka jest różnica między humifikacją, a mineralizacją? Jak znaleźć równowagę?" data-search="jaka jest roznica miedzy humifikacja, a mineralizacja? jak znalezc rownowage? ogolna ocena kondycji gleby opiera sie na analizie jej wskaznikow fizycznych, takich jak tekstura, porowatosc, gestosc objetosciowa czy agregacja czastek, a takze parametrow chemicznych obejmujacych: odczyn ph, potencjal wymiany kationowej (pwk, *en.">
+              <article class="cw-k-row">
+                <h3 class="c5-h3 c5-h3--md cw-k-row__title"><a href="artykul.html">Jaka jest różnica między humifikacją, a mineralizacją? Jak znaleźć równowagę?</a></h3>
+                <p class="cw-k-row__lead">Ogólna ocena kondycji gleby opiera się na analizie jej wskaźników fizycznych, takich jak tekstura, porowatość, gęstość objętościowa czy agregacja cząstek, a także parametrów chemicznych obejmujących: odczyn pH, potencjał wymiany kationowej (PWK, *En.</p>
+                <p class="c5-src cw-k-metasep cw-k-row__meta"><span class="c5-chip">Próchnica i nawożenie</span><span>Dariusz Dziadkowski</span><span>lipiec 2026</span><span>11 min czytania</span></p>
+              </article>
+            </li>
+            <li class="cw-k-list__item" data-kat="woda-i-susza" data-date="2026-06" data-title="Po co mi próchnica do retencji wody w glebie, skoro i tak nie pada?" data-search="po co mi prochnica do retencji wody w glebie, skoro i tak nie pada? wspolczesny rolnik stoi przed ogromnym wyzwaniem, wynikajacym z postepujacych zmian klimatycznych, ktore objawiaja sie nie tylko wzrostem srednich temperatur, ale przede wszystkim drastycznymi zmianami w rozkladzie opadow.">
+              <article class="cw-k-row">
+                <h3 class="c5-h3 c5-h3--md cw-k-row__title"><a href="artykul.html">Po co mi próchnica do retencji wody w glebie, skoro i tak nie pada?</a></h3>
+                <p class="cw-k-row__lead">Współczesny rolnik stoi przed ogromnym wyzwaniem, wynikającym z postępujących zmian klimatycznych, które objawiają się nie tylko wzrostem średnich temperatur, ale przede wszystkim drastycznymi zmianami w rozkładzie opadów.</p>
+                <p class="c5-src cw-k-metasep cw-k-row__meta"><span class="c5-chip">Woda i susza</span><span>Dariusz Dziadkowski</span><span>czerwiec 2026</span><span>12 min czytania</span></p>
+              </article>
+            </li>
+            <li class="cw-k-list__item" data-kat="prochnica-i-nawozenie" data-date="2026-03" data-title="Czy stosowanie wyłącznie nawozów mineralnych wystarczy do utrzymania gleby w dobrym stanie?" data-search="czy stosowanie wylacznie nawozow mineralnych wystarczy do utrzymania gleby w dobrym stanie? wspolczesne rolnictwo przez dekady opieralo sie na przekonaniu, ze do uzyskania wysokich plonow wystarczy precyzyjne dostarczenie roslinom odpowiednich, rozpuszczalnych substancji mineralnych.">
+              <article class="cw-k-row">
+                <h3 class="c5-h3 c5-h3--md cw-k-row__title"><a href="artykul.html">Czy stosowanie wyłącznie nawozów mineralnych wystarczy do utrzymania gleby w dobrym stanie?</a></h3>
+                <p class="cw-k-row__lead">Współczesne rolnictwo przez dekady opierało się na przekonaniu, że do uzyskania wysokich plonów wystarczy precyzyjne dostarczenie roślinom odpowiednich, rozpuszczalnych substancji mineralnych.</p>
+                <p class="c5-src cw-k-metasep cw-k-row__meta"><span class="c5-chip">Próchnica i nawożenie</span><span>Dariusz Dziadkowski</span><span>marzec 2026</span><span>14 min czytania</span></p>
+              </article>
+            </li>
+            <li class="cw-k-list__item" data-kat="wegiel-brunatny-i-lignit" data-date="2026-02" data-title="Jakie są podobieństwa i różnice między produktami z lignitu (CarboHort), a węglem aktywnym i węglem aktywowanym w zastosowaniach rolniczych?" data-search="jakie sa podobienstwa i roznice miedzy produktami z lignitu (carbohort), a weglem aktywnym i weglem aktywowanym w zastosowaniach rolniczych? badania nad wykorzystaniem wegli wszelkiego pochodzenia byly prowadzone glownie w niemczech juz od konca xix wieku.">
+              <article class="cw-k-row">
+                <h3 class="c5-h3 c5-h3--md cw-k-row__title"><a href="artykul.html">Jakie są podobieństwa i różnice między produktami z lignitu (CarboHort), a węglem aktywnym i węglem aktywowanym w zastosowaniach rolniczych?</a></h3>
+                <p class="cw-k-row__lead">Badania nad wykorzystaniem węgli wszelkiego pochodzenia były prowadzone głównie w Niemczech już od końca XIX wieku.</p>
+                <p class="c5-src cw-k-metasep cw-k-row__meta"><span class="c5-chip">Węgiel brunatny i lignit</span><span>Dariusz Dziadkowski</span><span>luty 2026</span><span>17 min czytania</span></p>
+              </article>
+            </li>
+            <li class="cw-k-list__item" data-kat="woda-i-susza" data-date="2026-01" data-title="Jak zmaksymalizować retencję wody w glebie? Cztery filary efektywnego zarządzania wodą w gospodarstwie." data-search="jak zmaksymalizowac retencje wody w glebie? cztery filary efektywnego zarzadzania woda w gospodarstwie. w obliczu rosnacych wyzwan klimatycznych i koniecznosci optymalizacji kosztow produkcji efektywne wykorzystanie wody opadowej i z systemow irygacyjnych staje sie strategicznym priorytetem.">
+              <article class="cw-k-row">
+                <h3 class="c5-h3 c5-h3--md cw-k-row__title"><a href="artykul.html">Jak zmaksymalizować retencję wody w glebie? Cztery filary efektywnego zarządzania wodą w gospodarstwie.</a></h3>
+                <p class="cw-k-row__lead">W obliczu rosnących wyzwań klimatycznych i konieczności optymalizacji kosztów produkcji efektywne wykorzystanie wody opadowej i z systemów irygacyjnych staje się strategicznym priorytetem.</p>
+                <p class="c5-src cw-k-metasep cw-k-row__meta"><span class="c5-chip">Woda i susza</span><span>Dariusz Dziadkowski</span><span>styczeń 2026</span><span>9 min czytania</span></p>
+              </article>
+            </li>
+            <li class="cw-k-list__item" data-kat="wegiel-brunatny-i-lignit" data-date="2025-11" data-title="Czy węgiel brunatny nadaje się do użyźniania gleby?" data-search="czy wegiel brunatny nadaje sie do uzyzniania gleby? wegiel brunatny to nie tylko „paliwo kopalne” – jego mlodsze odmiany, zwlaszcza lignity, maja wyjatkowe wlasciwosci poprawiajace zyznosc gleby.">
+              <article class="cw-k-row">
+                <h3 class="c5-h3 c5-h3--md cw-k-row__title"><a href="artykul.html">Czy węgiel brunatny nadaje się do użyźniania gleby?</a></h3>
+                <p class="cw-k-row__lead">Węgiel brunatny to nie tylko „paliwo kopalne” – jego młodsze odmiany, zwłaszcza lignity, mają wyjątkowe właściwości poprawiające żyzność gleby.</p>
+                <p class="c5-src cw-k-metasep cw-k-row__meta"><span class="c5-chip">Węgiel brunatny i lignit</span><span>Dariusz Dziadkowski</span><span>listopad 2025</span><span>10 min czytania</span></p>
+              </article>
+            </li>
+            <li class="cw-k-list__item" data-kat="kwasy-i-substancje-humusowe" data-date="2025-09" data-title="Czym różnią się od siebie produkty humusowe? Na co zwracać uwagę?" data-search="czym roznia sie od siebie produkty humusowe? na co zwracac uwage? w ostatnich latach pojawilo sie wiele produktow reklamowanych jako „zawierajace kwasy humusowe”, w dodatku deklarowane ilosci tychze kwasow, delikatnie mowiac, w wielu przypadkach mijaja sie z prawda (bo jak np. taki biohumus moze zawierac ich ponad 50%…).">
+              <article class="cw-k-row">
+                <h3 class="c5-h3 c5-h3--md cw-k-row__title"><a href="artykul.html">Czym różnią się od siebie produkty humusowe? Na co zwracać uwagę?</a></h3>
+                <p class="cw-k-row__lead">W ostatnich latach pojawiło się wiele produktów reklamowanych jako „zawierające kwasy humusowe”, w dodatku deklarowane ilości tychże kwasów, delikatnie mówiąc, w wielu przypadkach mijają się z prawdą (bo jak np. taki biohumus może zawierać ich ponad 50%…).</p>
+                <p class="c5-src cw-k-metasep cw-k-row__meta"><span class="c5-chip">Kwasy i substancje humusowe</span><span>Dariusz Dziadkowski</span><span>wrzesień 2025</span><span>7 min czytania</span></p>
+              </article>
+            </li>
+            <li class="cw-k-list__item" data-kat="prochnica-i-nawozenie" data-date="2026-10" data-title="Czy substancje humusowe mogą ograniczyć zużycie nawozów mineralnych" data-search="czy substancje humusowe moga ograniczyc zuzycie nawozow mineralnych tekst gotowy, czeka na publikacje." data-cw-pin>
+              <article class="cw-k-row cw-k-row--soon">
+                <h3 class="c5-h3 c5-h3--md cw-k-row__title">Czy substancje humusowe mogą ograniczyć zużycie nawozów mineralnych</h3>
+                <p class="cw-k-row__lead">Tekst gotowy, czeka na publikację.</p>
+                <p class="c5-src cw-k-metasep cw-k-row__meta"><span class="c5-chip">Próchnica i nawożenie</span><span>Dariusz Dziadkowski</span><span>październik 2026</span><span>10 min czytania</span><span class="c5-chip c5-chip--dashed">w przygotowaniu</span></p>
+              </article>
+            </li>
+          </ul>
+
+          <p class="c5-note c5-note--soft cw-k-empty" data-cw-empty hidden><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-filter"></use></svg> <span>Nic nie pasuje do filtra – zobacz wszystkie.</span> <button type="button" class="c5-btn c5-btn--light c5-btn--sm" data-cw-clear>wyczyść filtry</button></p>
+
+          <nav class="cw-k-pager" aria-label="Stronicowanie" data-js-only data-cw-pager>
+            <button type="button" class="c5-btn c5-btn--light c5-btn--sm" data-cw-page="prev"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-left"></use></svg> Poprzednia</button>
+            <div class="cw-k-pager__nums" data-cw-nums></div>
+            <button type="button" class="c5-btn c5-btn--light c5-btn--sm" data-cw-page="next">Następna <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-right"></use></svg></button>
+          </nav>
+        </div>
+
+        <aside class="cw-k-side" id="obok" aria-label="Obok tej kategorii">
+
+          <!-- CE-62 wariant „boczny": wersja bazowa boksu produktowego stoi w
+               treści artykułu; tutaj packshot nad nazwą i przyciski w słupku.
+               Zdanie o CARBOHUMIC 1:1 z karty rodziny na produkty.html (Gama). -->
+          <div class="cw-k-prod" id="obok-produkt" data-ce="CE-62" data-ce-wariant="boczny">
+            <h2 class="c5-h3 c5-h3--md">Produkty, o których tu piszemy</h2>
+            <span class="cw-k-prod__shot"><img src="img/opakowania/kanister_20l.png" alt="CARBOHUMIC – kanister 20 l" width="576" height="847" loading="lazy" decoding="async"></span>
+            <h3 class="c5-h3 c5-h3--md cw-k-prod__name">CARBOHUMIC</h3>
+            <p class="cw-k-prod__txt">Próchnica w płynie do regeneracji gleby i&nbsp;biostymulacji roślin</p>
+            <div class="c5-btnrow">
+              <a class="c5-btn c5-btn--dark c5-btn--sm" href="carbohumic.html">strona produktu</a>
+              <a class="c5-btn c5-btn--light c5-btn--sm" href="sklep.html?grupa=carbohumic">kup w sklepie</a>
+            </div>
+          </div>
+
+          <!-- CE-53: ta sama anatomia wiersza co „Do pobrania" na stronie działu. -->
+          <div class="cw-k-panel" id="obok-poradniki" data-ce="CE-53">
+            <h2 class="c5-h3 c5-h3--md cw-k-panel__title">Poradniki PDF</h2>
+            <ul class="cw-k-doclist">
+              <li><div class="cw-k-docrow">
+                <h3 class="cw-k-docrow__name">Poradnik sadowniczy</h3>
+                <p class="c5-src cw-k-docrow__meta">PDF · CarboHort</p>
+              </div></li>
+              <li><div class="cw-k-docrow">
+                <h3 class="cw-k-docrow__name">Poradnik borówkowy</h3>
+                <p class="c5-src cw-k-docrow__meta">PDF · CarboHort</p>
+              </div></li>
+              <li><div class="cw-k-docrow">
+                <h3 class="cw-k-docrow__name">Poradnik szkółkarski</h3>
+                <p class="c5-src cw-k-docrow__meta">PDF · CarboHort</p>
+              </div></li>
+            </ul>
+            <p class="cw-k-docmore"><a class="wf-link cw-k-more" href="centrum-wiedzy.html#poradniki">Wszystkie pliki do pobrania<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></p>
+          </div>
+
+          <div class="cw-ask cw-k-ask" id="obok-przewodnik">
+            <span class="wf-ph" aria-hidden="true"><svg class="wf-icon wf-icon--lg"><use href="#ti-message-2"></use></svg></span>
+            <div class="cw-ask__txt">
+              <span class="cw-k-ask__name">Nie znalazłeś odpowiedzi na swoje pytanie? Zapytaj naszego przewodnika.</span>
+              <p>Przewodnik przeszuka wszystkie artykuły, karty produktów i poradniki i wskaże właściwy materiał.</p>
+            </div>
+            <button type="button" class="c5-btn c5-btn--light c5-btn--sm" data-jurek-open>zapytaj przewodnika</button>
+          </div>
+
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 4. PAS CTA – CE-23 wariant „dwa-przyciski" (spec §4) =========== -->
+  <section class="c5-sec c5-band" id="dalej">
+    <div class="c5-wrap">
+      <div class="cw-k-bar" id="dalej-pas" data-ce="CE-23" data-ce-wariant="dwa-przyciski">
+        <h2 class="c5-h3 c5-h3--lg">Chcesz zobaczyć, jak to działa w&nbsp;Twojej uprawie?</h2>
+        <div class="c5-btnrow">
+          <a class="c5-btn c5-btn--dark" href="uprawy.html">rodzaje upraw</a>
+          <a class="c5-btn c5-btn--light" href="konfigurator.html">konfigurator</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<cw-footer></cw-footer>
+
+<cw-dock></cw-dock>
+
+<script src="cw.js"></script>
+<!-- Lenis: slight scroll inertia (like serverobotics.com); the page scrolls natively without it -->
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
+<script src="ce/00-base.js"></script>
+<script src="centrum-wiedzy.js"></script>
+<script src="ce-overlay.js"></script>
+</body>
+</html>

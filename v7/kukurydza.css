@@ -18,65 +18,88 @@
 .u-h4{font-size:1.125rem;line-height:1.3;letter-spacing:-0.01em;}
 .u-lab,.u-defs dt{letter-spacing:.06em;}
 
-/* Etykiety placeholderów zostają widoczne: na stronie uprawy opisują kadr do
-   zamówienia u grafika (spec §9.0.5). `c5.css` chowa je dla stron produktowych,
-   gdzie placeholderów nie ma – tu tę regułę cofamy. */
-.wf-ph__label{display:inline;}
+/* page-specific: CE-08 hero, wariant „kadr-w-tle” (spec §14.2) – cały układ
+   wariantu (kadr w tle, scrim, dwie kolumny u dołu, telefon) siedzi w warstwie
+   wspólnej `ce/CE-08-hero.css`, bo ten hero dostaną wszystkie podstrony upraw.
+   Tutaj zostaje jedna liczba tej strony: siła scrimu. Zdjęcie kukurydzy jest
+   ciemne samo z siebie (strefa H1 ma średnią luminancję 0,013, strefa leadu
+   p95 0,25), więc wspólne .4 zjadałoby kadr bez zysku dla czytelności – .35
+   zostawia widoczne słońce, a leadowi daje zapas nad progiem 4,5 : 1 także
+   przy 1024 px, gdzie kolumna leadu wchodzi na jaśniejsze czubki liści (przy
+   .3 zmierzone 4,53 : 1). Domyślne .4 w warstwie wspólnej zostaje dla
+   podstron, które dopiero dostaną zdjęcia. */
+#hero .c5-hero--bg{--c5-hero-scrim:rgb(0 0 0 / .35);}
 
-/* page-specific: CE-08 hero – strona uprawy nie ma packshotów, więc prawy panel
-   wypełnia jeden kadr na całą powierzchnię, a lewa kolumna rozkłada odstępy
-   sama (`margin-block:auto` na copy). Reszta hero – z ce/CE-08-hero.css. */
-.c5-hero{flex:1 1 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,5vw,5rem);align-items:stretch;padding-block:0;min-height:0;}
-/* odstępy w lewej kolumnie robią `margin-block:auto` na copy i padding pod
-   okruszkami – własnego `gap` (z c5.css) ta kolumna mieć nie może */
-.c5-hero__copy{display:flex;flex-direction:column;gap:0;max-width:585px;}
-
-.c5-hero__frame{position:absolute;inset:0;border-radius:0;min-height:0;border:0;}
-.c5-hero__frame .wf-ph__label{max-width:min(100%,22rem);}
-.c5-hero__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+/* page-specific: CE-07 dot rail. The wide sections of this page (`c5-wrap--wide`,
+   40 px of side padding) reach under the rail at its shared position – 30 px
+   from the edge and 28 px wide, so its hit areas lay on the last 18 px of the
+   content between 900 and 1440 px. Here the rail moves into the 40 px margin:
+   no dot and no hit area touches the content any more. */
+@media (min-width:900px){.c5-dots{right:10px;}}
 
 /* page-specific: CTA końcowe – strona nie ma klocka CE-18, więc nie linkuje
    ce/CE-18-cta.css; ta jedna reguła zostaje tutaj (martwa dopóki CTA nie wróci). */
 .c5-cta{display:flex;flex-direction:column;align-items:center;gap:clamp(1.75rem,3.5vw,2.75rem);text-align:center;}
 
-@media (max-width:899px){
-  /* page-specific: CE-08 hero na telefonie – jedna kolumna bez packshotów */
-  .c5-hero{display:flex;flex-direction:column;gap:clamp(1.5rem,4vw,2.5rem);padding-block:clamp(2rem,6vw,3rem);}
-  .c5-hero__copy{display:contents;}
-}
-
-/* ===== 25 · Kluczowe liczby – ciemny kadr z trzema wierszami (spec §9.4) ====
-   Wzór: Parametry z CARBOMAT ECO (ciemne pole odsunięte o 30 px od krawędzi)
-   + układ wiersza z serverobotics (etykieta po lewej, wielka wartość po
-   prawej, cienka linia między wierszami) i typografia liczby z docshield
-   (duże cienkie cyfry, mała jednostka w tej samej linii, podpis pod etykietą).
-   Iteracja 6 (§10.2): kadr wystający i dolny pas pod niego zdjęte – zostaje
-   symetryczny padding, czyli zwykły odstęp pod trzecim wierszem.
-   `padding` skrótem nadpisuje `padding-block` z `.c5-sec` – rytm wobec
-   sąsiadów robi tu margines 30 px, taki sam jak odstęp panelu w hero. */
-.u-num{display:flex;flex-direction:column;justify-content:center;
+/* ===== 27 · Kluczowe liczby – trzy kolumny (spec §9.4, §11.3, §12.2) ======
+   Jedyna sekcja liczb strony od 18.09: Mateusz zostawił układ kolumnowy,
+   ciemny pas (blok 25) wyszedł razem ze swoimi regułami. Panel 30 px od
+   krawędzi okna, 70svh wysokości, na jasnym tle, rozdzielony na trzy kolumny
+   cienkimi liniami – wzór UPC Renewables „Track Record”. Kolumna czyta się:
+   chip, odstęp, liczba, podpis; kolumny dzielą tory wierszy rodzica przez
+   `subgrid`, więc liczby stoją w jednej linii, a podpisy zaczynają się na
+   jednej wysokości niezależnie od tego, na ile wierszy złamał się chip.
+   Bez obsługi `subgrid` kolumna jest zwykłą czterowierszową siatką: wiersze
+   przestają się zgadzać między kolumnami, nic poza tym. Bez nowego skryptu –
+   odliczanie to ta sama mechanika `data-count` z `uprawa.js`. ============ */
+.u-nb{display:flex;flex-direction:column;justify-content:center;
   margin-inline:var(--c5-gutter);margin-block:var(--c5-gutter);
   padding:clamp(3rem,6vw,5rem) clamp(1.5rem,4vw,4rem);
-  min-height:70svh;background:var(--w-gray-900);color:var(--w-gray-100);}
-.u-num__rows{display:flex;flex-direction:column;}
-.u-num__row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(1rem,3vw,3rem);
-  align-items:center;padding-block:clamp(1.25rem,2.5vw,2rem);border-top:1px solid rgb(255 255 255 / .18);}
-.u-num__row:last-child{border-bottom:1px solid rgb(255 255 255 / .18);}
-.u-num__key{display:flex;flex-direction:column;gap:var(--w-space-3);max-width:30rem;}
-.u-num__lab{font-size:1rem;line-height:1.35;color:var(--w-gray-300);}
-.u-num__chips{display:flex;flex-wrap:wrap;gap:var(--w-space-2);}
-/* wielka liczba: cienka, ciasno spacjowana, cyfry tej samej szerokości */
-.u-num__val{display:flex;align-items:baseline;justify-content:flex-end;gap:.18em;
-  font-size:clamp(4.5rem,11vw,10rem);line-height:1;font-weight:var(--w-weight-regular);
-  letter-spacing:-0.02em;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap;}
-.u-num__unit{font-size:.4em;letter-spacing:0;color:var(--w-gray-300);}
+  min-height:70svh;background:var(--w-surface-subtle);color:var(--w-text-primary);}
+.u-nb__cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  grid-template-rows:auto 1fr auto auto;}
+.u-nb__col{display:grid;grid-row:span 4;grid-template-rows:subgrid;
+  padding-inline:clamp(1.25rem,3vw,2.5rem);}
+.u-nb__col:first-child{padding-inline-start:0;}
+.u-nb__col:last-child{padding-inline-end:0;}
+.u-nb__col + .u-nb__col{border-left:1px solid var(--w-border-default);}
+.u-nb__chip{justify-self:start;align-self:start;}
+/* Row 2 keeps the chip away from the number; `1fr` lets it take the slack. */
+.u-nb__gap{min-height:clamp(2rem,6vh,4rem);}
+/* Wielka liczba: cienka, ciasno spacjowana, cyfry tej samej szerokości; trzy
+   stoją obok siebie, a „20–40 l/ha” to najszerszy łańcuch na stronie.
+   Kontener sufiksu (§12.2): `flex` + `align-items:flex-start` – sufiks EL-31
+   `c5-aff` z `ce/00-base.css` siada przy górnej krawędzi cyfr. */
+.u-nb__val{display:flex;align-items:flex-start;gap:.12em;
+  font-size:clamp(3rem,6.2vw,6.75rem);line-height:1;font-weight:var(--w-weight-regular);
+  letter-spacing:-0.03em;font-variant-numeric:tabular-nums;white-space:nowrap;
+  color:var(--w-text-primary);}
+.u-nb__cap{max-width:22rem;margin-top:var(--w-space-3);}
+.u-nb__chips{display:flex;flex-wrap:wrap;gap:var(--w-space-2);margin-top:var(--w-space-3);}
+
+/* Iteration 11 (§15.4): the whole page runs on the wide container, so the
+   panel lines up with it instead of keeping its own 30 px gutter – 40 px from
+   the window edges, capped at 1720 px (the 1800 px container minus its two
+   40 px paddings) and centred above that. The panel is a section, not a
+   `c5-wrap`, so the geometry is written by hand: `width` gives the 40 px
+   margins, `max-width` the cap, `margin-inline:auto` the centring. */
+@media (min-width:900px){
+  .u-nb{margin-inline:auto;width:calc(100% - 80px);max-width:1720px;}
+  /* Three 530 px columns: the caption may take a little more than the 22 rem
+     it needs at 1180 px without breaking the column's two-line rhythm. */
+  .u-nb__cap{max-width:26rem;}
+}
 
 @media (max-width:899px){
-  /* liczba pod etykietą, ciemne pole na całą szerokość */
-  .u-num{margin-inline:0;min-height:0;}
-  .u-num__row{grid-template-columns:minmax(0,1fr);gap:var(--w-space-4);}
-  .u-num__key{max-width:none;}
-  .u-num__val{justify-content:flex-start;text-align:left;font-size:clamp(3.5rem,18vw,6rem);}
+  /* Columns stack, so the vertical rules become one hairline above each
+     following block and the spacer rows go away with the subgrid. */
+  .u-nb{margin-inline:0;min-height:0;}
+  .u-nb__cols{grid-template-columns:minmax(0,1fr);grid-template-rows:none;}
+  .u-nb__col{grid-row:auto;grid-template-rows:none;
+    padding-inline:0;padding-block:var(--w-space-6);}
+  .u-nb__col + .u-nb__col{border-left:0;border-top:1px solid var(--w-border-default);}
+  .u-nb__gap{display:none;}
+  .u-nb__val{font-size:clamp(3.5rem,18vw,6rem);}
 }
 
 /* ===== 30 · Produkty: karta jako jeden link (spec §9.5, uwaga 2) ============
@@ -116,6 +139,21 @@ html.cx-js .u-prod__card{--u-prod-delay:0ms;
   font-size:var(--w-font-sm-size);line-height:var(--w-font-sm-lh);font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
 .u-prod__go .wf-icon{width:16px;height:16px;transition:transform var(--w-duration-fast) var(--w-ease);}
 .u-prod__card:hover .u-prod__go .wf-icon{transform:translateX(3px);}
+
+/* Iteration 11 (§15.4): the wide container buys a fifth column, not wider
+   cards – five in one row from 1500 px. Below that the row stays 3 + 2: at
+   1440 px five columns would leave 259 px per card, less than the two-line
+   product name and the `Forma / Najlepszy termin` list need. */
+@media (min-width:1500px){
+  .u-prod{grid-template-columns:repeat(5,minmax(0,1fr));}
+}
+/* The shared 710 px cap of the lead is ~85 characters a line in this font.
+   On the wide container the centred head has room to spare, so the lead is
+   held at the ~70 the rest of the page reads at. Kept inside the wide range,
+   so the layout below 900 px stays exactly as it was. */
+@media (min-width:900px){
+  #u-produkty .c5-lead{max-width:60ch;}
+}
 
 @media (prefers-reduced-motion: reduce){
   html.cx-js .u-prod__card{--u-prod-delay:0ms;transition:none;}
@@ -162,36 +200,67 @@ html.cx-js .u-rl__card{--u-rl-delay:0ms;
 .u-rl__ans{font-size:var(--w-font-h4-size);line-height:var(--w-font-h4-lh);
   font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
 
-/* Produkt w wierszu: packshot po lewej przez dwa wiersze, obok nazwa
-   i wskazówka „Mapa zastosowań". */
-.u-rl__prod{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;
-  column-gap:var(--w-space-3);row-gap:var(--w-space-1);
-  padding-top:var(--w-space-4);border-top:1px solid var(--w-border-subtle);}
-.u-rl__ph{grid-row:1 / span 2;display:grid;place-items:center;width:72px;aspect-ratio:4/3;
+/* Iteracja 7 (§11.4): the product name and the "Mapa zastosowań" hint are
+   gone – the answer sentence already names the product, so the packshot alone
+   carries the card (a `wf-sr-only` line in the markup keeps the link's purpose
+   readable for screen readers). Below 1100 px the packshot is a row under a
+   hairline; the column layout below moves it to the right of the sentence. */
+.u-rl__prod{display:flex;padding-top:var(--w-space-4);
+  border-top:1px solid var(--w-border-subtle);}
+.u-rl__ph{display:grid;place-items:center;width:88px;aspect-ratio:4/3;
   background:var(--w-gray-100);padding:8px;overflow:clip;}
 .u-rl__img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;
   transition:transform var(--w-duration-base) var(--w-ease);}
 .u-rl__card:hover .u-rl__img,.u-rl__card:focus-visible .u-rl__img{transform:scale(1.04);}
-.u-rl__n{color:var(--w-text-secondary);}
-.u-rl__go{display:inline-flex;align-items:center;gap:var(--w-space-2);white-space:nowrap;
-  font-size:var(--w-font-sm-size);line-height:var(--w-font-sm-lh);
-  font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
-.u-rl__go .wf-icon{width:16px;height:16px;flex:none;}
 
-/* Od 1100 px produkt staje się kolumną karty: packshot 96 px, nazwa
-   i wskazówka pod nim, wszystko wyśrodkowane. Stała szerokość kolumny trzyma
-   tor `auto` w ryzach – bez niej najdłuższa nazwa produktu rozpychałaby
-   kolumnę kosztem zdania. */
-@media (min-width:1100px){
+/* Od 1100 px produkt staje się kolumną karty: packshot 120 px na środku
+   kolumny i na połowie wysokości karty. Stała szerokość kolumny trzyma tor
+   `auto` w ryzach – bez niej packshot rozpychałby kolumnę kosztem zdania.
+   Górna granica z iteracji 11: powyżej 1440 px karty stoją po cztery w rzędzie
+   (niżej), więc karta ma 325–415 px i na kolumnę z packshotem nie ma już
+   miejsca – zdaniu zostałoby niecałe 130 px. */
+@media (min-width:1100px) and (max-width:1439px){
   .u-rl__card{grid-template-columns:minmax(0,1fr) auto;gap:var(--w-space-6);}
-  .u-rl__prod{grid-template-columns:minmax(0,1fr);justify-items:center;text-align:center;
-    align-self:start;width:156px;row-gap:var(--w-space-2);padding-top:0;border-top:0;}
-  .u-rl__ph{grid-row:auto;width:96px;}
+  .u-rl__prod{justify-content:center;align-self:center;width:132px;
+    padding-top:0;border-top:0;}
+  .u-rl__ph{width:120px;}
 }
 /* Poniżej 640 px jedna kolumna kart i ciaśniejszy padding karty. */
 @media (max-width:639px){
   .u-rl{grid-template-columns:minmax(0,1fr);}
   .u-rl__card{padding:var(--w-space-4);}
+}
+
+/* --- Iteration 11 (§15.4): the section on the wide container --------------
+   Four rules, one row, from 1440 px – the width goes into a fourth column,
+   not into wider cards (the card layout above switches back to the stacked
+   one there). The note keeps its own measure: stretched over the container
+   its single sentence would run past 200 characters in one line, so the box
+   ends where the text ends. */
+@media (min-width:1440px){
+  .u-rl{grid-template-columns:repeat(4,minmax(0,1fr));}
+}
+@media (min-width:900px){
+  #u-wybor-nota{max-width:36rem;}
+  /* 68 ch of the shared `u-measure` is ~89 characters a line at this size –
+     below 1280 px the reading is not in a column of its own yet. */
+  #u-wybor-potas .u-txt.u-measure{max-width:56ch;}
+}
+
+/* The potassium block reads across the container from 1280 px: question on
+   the left, dose buttons and the K₂O bar in the middle, reading on the right.
+   Stacked, the bar would be a 1700 px long rule with its interpretation alone
+   underneath in an empty field. The block is a `wf-stack`, so the row gap
+   stays the one the stack sets; only the columns are new.
+   `.u-kbar` has three children – doses, bar, texts – and the texts are placed
+   by hand in the second column across both rows; the other two fall into the
+   first column by auto-placement. */
+@media (min-width:1280px){
+  #u-wybor-potas{display:grid;grid-template-columns:minmax(0,24rem) minmax(0,1fr);
+    column-gap:clamp(2rem,4vw,4rem);align-items:start;}
+  #u-wybor-potas .u-kbar{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,22rem);
+    column-gap:clamp(2rem,4vw,4rem);row-gap:var(--w-space-5);align-items:start;}
+  #u-wybor-potas .u-kbar__texts{grid-column:2;grid-row:1 / span 2;}
 }
 
 @media (prefers-reduced-motion: reduce){
@@ -201,192 +270,122 @@ html.cx-js .u-rl__card{--u-rl-delay:0ms;
   .u-rl__card:hover .u-rl__img,.u-rl__card:focus-visible .u-rl__img{transform:none;}
 }
 
-/* ===== 40 · Program fazowy: lista faz + panel aktywnej fazy (spec §9.7) =====
-   Uwaga 4 Mateusza (14.09). Układ jak w liście warunków stanowiska z iteracji 5,
-   bo to ten sam gest: wiersze po lewej, treść po prawej. Trzy stany:
-   – bez JS   – dziesięć par wiersz–panel jeden pod drugim (wszystko widoczne);
-   – < 900 px – ten sam DOM działa jak akordeon (panel pod swoim wierszem);
-   – ≥ 900 px – dwie kolumny, wszystkie panele w jednym polu (grid-row 1 / -1),
-     widoczny tylko aktywny, przyklejony pod menu serwisu.
-   Oś, linia i kropki z iteracji 4 nie są już używane. ===================== */
-.u-fz__grid{margin-top:clamp(2rem,4vw,3.5rem);display:flex;flex-direction:column;gap:var(--w-space-2);}
-.u-fz__pair{display:flex;flex-direction:column;}
-
-/* wiersz: numer w mono + tytuł fazy, cel dotykowy co najmniej 44 px */
-.u-fz__row{display:flex;align-items:baseline;gap:var(--w-space-3);width:100%;min-height:44px;
-  font:inherit;text-align:left;padding:var(--w-space-4);background:var(--w-surface-page);
-  border:1px solid var(--w-border-default);border-radius:0;cursor:pointer;
-  transition:background var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);}
-.u-fz__row:hover{background:var(--w-surface-hover);}
-.u-fz__row[aria-expanded="true"]{border-color:var(--w-gray-900);background:var(--w-surface-subtle);}
-.u-fz__no{flex:none;font-family:var(--w-font-mono);font-size:var(--w-font-caption-size);line-height:var(--w-font-caption-lh);color:var(--w-text-tertiary);}
-.u-fz__t{font-size:var(--w-font-h5-size);line-height:var(--w-font-h5-lh);font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
-
-/* panel: skrót fazy, chipy produktów i wejście w pełny opis. Przenikanie
-   przy przełączeniu robi klasa `is-swap` z `uprawa.css` (JS zdejmuje ją
-   w następnej klatce), stąd przejście tylko na przezroczystości. */
-.u-fz__panel{display:flex;flex-direction:column;align-items:flex-start;gap:var(--w-space-4);
-  border:1px solid var(--w-border-strong);border-top:0;border-radius:0;padding:var(--w-space-5);
-  background:var(--w-surface-page);opacity:1;transition:opacity 180ms var(--w-ease);}
-.u-fz__lead{font-size:var(--w-font-body-size);line-height:var(--w-font-body-lh);color:var(--w-text-secondary);max-width:var(--w-measure);}
-.u-fz__src{max-width:var(--w-measure);}
-.u-fz__go{margin-top:var(--w-space-1);}
-
-@media (min-width:900px){
-  html.cx-js .u-fz__grid{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);
-    grid-template-rows:repeat(var(--u-fz-n,10),min-content) 1fr;
-    column-gap:var(--w-space-6);row-gap:var(--w-space-2);align-items:start;}
-  html.cx-js .u-fz__pair{display:contents;}
-  html.cx-js .u-fz__row{grid-column:1;}
-  /* panele leżą w jednym polu – widoczny jest tylko aktywny, więc nie nachodzą */
-  html.cx-js .u-fz__panel{grid-column:2;grid-row:1 / -1;position:sticky;
-    top:calc(var(--cx-navbar-h, 0px) + var(--c5-gutter));
-    border-top:1px solid var(--w-border-strong);padding:var(--w-space-6);min-height:22rem;}
-}
-@media (prefers-reduced-motion: reduce){
-  .u-fz__row{transition:none;}
-  .u-fz__panel{transition:none;}
-}
-
-/* ===== 50 · Decyzje przed sezonem – pakiet diagnostyczny (spec §9.8) =======
-   Układ „Dawkowanie" z wzorca (§3.7). Domyślnie (mobile) jedna kolumna
-   w kolejności DOM: nagłówek → kadr → lista → przycisk. Od 900 px sekcja ma
-   wysokość ekranu, marginesy 30 px, a kadr stoi w prawej kolumnie od górnej
-   krawędzi nagłówka do dolnej krawędzi przycisku. =========================== */
-.u-dg{padding-block:var(--c5-gutter);}
-.u-dg__grid{display:grid;gap:clamp(2rem,5vw,3rem);}
-.u-dg__top{display:flex;flex-direction:column;gap:clamp(1rem,2vw,1.5rem);}
-.u-dg__top .c5-kicker{margin-bottom:0;}
-/* prześwit na dok doradcy (80 px nad dolną krawędzią okna) – bez niego
-   przycisk wchodziłby pod dok w układzie na wysokość ekranu */
-.u-dg{--u-dg-dock:84px;}
-.u-dg__bottom{display:flex;flex-direction:column;gap:clamp(1.5rem,3vw,2.5rem);align-items:flex-start;}
-
-/* Numery w kółkach (1) (2) (3) – marker rysuje licznik CSS, więc zdania Darka
-   zostają nietknięte. Kółko to znacznik, nie boks układu, dlatego jedyny
-   okrągły narożnik w tej sekcji. Ikony z poprzedniej wersji listy znikają. */
-.u-dg__list{margin:0;padding:0;list-style:none;counter-reset:u-dg;display:flex;flex-direction:column;
-  gap:clamp(0.75rem,1.6vw,1.125rem);color:var(--w-text-secondary);
-  font-size:var(--w-font-sm-size);line-height:var(--w-font-sm-lh);max-width:560px;}
-.u-dg__list li{counter-increment:u-dg;display:grid;grid-template-columns:28px 1fr;gap:var(--w-space-4);align-items:start;}
-.u-dg__list li::before{content:counter(u-dg);display:flex;align-items:center;justify-content:center;
-  width:28px;height:28px;border:1px solid currentColor;border-radius:var(--w-radius-circle);
-  font-size:0.8125rem;line-height:1;color:var(--w-text-primary);}
-
-/* Parallax (wzorzec §13.6): ramka przycina kadr, kadr jest od niej wyższy
-   (114 %) i przesuwa się w niej o kilka procent. Bez ruchu (mobile / reduced /
-   bez JS) `--dg-par` nie jest ustawiane i kadr stoi wyśrodkowany. */
-.u-dg__media-wrap{position:relative;width:100%;aspect-ratio:4/3;max-height:70vh;overflow:hidden;}
-.u-dg__media{display:grid;width:100%;height:114%;min-height:0;border-radius:0;
-  transform:translateY(calc(var(--dg-par,-7) * 1%));will-change:transform;}
-/* etykieta placeholderu opisuje kadr do zamówienia u grafika – kopia wzorca
-   chowa `.wf-ph__label`, więc w tej sekcji przywracamy ją jawnie */
-.u-dg .wf-ph__label{display:block;max-width:min(100%,26rem);}
-
-@media (min-width:900px){
-  .u-dg{min-height:100svh;display:grid;align-items:stretch;}
-  .u-dg__grid{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto;
-    column-gap:clamp(2rem,5vw,5rem);row-gap:0;min-height:calc(100svh - 2*var(--c5-gutter));}
-  .u-dg__top{grid-column:1;grid-row:1;}
-  .u-dg__bottom{grid-column:1;grid-row:3;padding-bottom:var(--u-dg-dock);}
-  .u-dg__media-wrap{grid-column:2;grid-row:1 / -1;height:100%;max-height:none;aspect-ratio:auto;}
-}
-@media (prefers-reduced-motion: reduce){
-  .u-dg__media{transform:translateY(-7%);}
-}
-
-/* ===== 55 · Krytyczne fakty dla kukurydzy (spec §9.9, uwaga 5) =============
-   Domyślnie (mobile / ograniczony ruch / bez JS): napis u góry, kafelki
-   w jednej kolumnie (dwie od 640 px), bez obrotów i odsunięć.
-   Scena (≥900 px, no-preference, .cx-js): napis przyklejony na środku ekranu
-   przez cały tor (6 × 55 vh), kafelki rozstawione w torze nieregularnie –
-   `--i` to miejsce w torze, `--x` odsunięcie od środka, `--rot` obrót,
-   `--par` (liczy JS) parallax. Kafelki są nieprzezroczyste i leżą NAD
-   napisem, więc przejeżdżając zasłaniają go i schodzą z niego. ============= */
-/* w układzie statycznym tor jest zwykłą kolumną treści (marginesy jak
-   `c5-wrap`); w scenie idzie na pełną szerokość, żeby napis i kafelki miały
-   gdzie się rozjechać */
-.u-fk__track{position:relative;max-width:1180px;margin-inline:auto;padding-inline:var(--w-space-5);}
-.u-fk__title{font-size:clamp(2.5rem,6vw,5.5rem);line-height:1.04;font-weight:var(--w-weight-medium);
+/* ===== 55 · Krytyczne fakty dla kukurydzy (spec §9.9, §13.4) ===============
+   Wariant CE-44 `tlo-foto`. Domyślnie (mobile / ograniczony ruch / bez JS):
+   scena jako blok (kadr tła + napis, min. 70 svh), pod nią kafle w jednej
+   kolumnie (dwie od 640 px), bez przesunięć.
+   Scena (≥900 px, no-preference, .cx-js): kadr przyklejony na `top:0` na cały
+   ekran przez cały tor, a nad nim sześć nieprzezroczystych kafli w trzech
+   rozłącznych pasach – `--i` to miejsce w torze, `--lane` środek pasa,
+   `--a` profil prędkości, `--par` (liczy JS) przesunięcie. ================= */
+/* tor idzie od krawędzi do krawędzi (zdjęcie sceny nie ma marginesów);
+   marginesy kolumny treści bierze na siebie siatka kafli. Sekcja bez górnego
+   paddingu – dolny zostaje, bo pod torem stoi boks „Najważniejsza zasada". */
+.u-fk{padding-block:0 clamp(3.5rem,7vw,6.25rem);}
+.u-fk__track{position:relative;}
+.u-fk__stage{position:relative;z-index:0;display:grid;place-items:center;overflow:hidden;
+  min-height:70svh;padding:clamp(2.5rem,7vw,5rem) var(--w-space-5);}
+.u-fk__bg{position:absolute;inset:0;}
+/* kadr tła: jedno zdjęcie z drona na pełny ekran, kadrowane ze środka. Bez
+   `loading="lazy"` – zdjęcie jest tłem sceny, która przykleja się na `top:0`,
+   więc musi stać w kadrze w chwili przyklejenia, a nie dojeżdżać po nim. */
+.u-fk__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;}
+/* jednolity scrim (bez gradientów) – biały napis ma na czym stać. .25 zamiast
+   .35: kadr jest sam z siebie ciemny (średnia luminancja .04, p95 .14), więc
+   po wybraniu zdjęcia (18.09) scrim można było zdjąć o 10 punktów – biały
+   napis trzyma ponad 6:1 na najjaśniejszych liściach. */
+.u-fk__bg::after{content:"";position:absolute;inset:0;background:rgb(0 0 0 / .25);}
+.u-fk__title{position:relative;z-index:1;color:var(--w-text-inverse);
+  font-size:clamp(2.5rem,6vw,5.5rem);line-height:1.04;font-weight:var(--w-weight-medium);
   letter-spacing:-0.02em;text-align:center;margin-inline:auto;max-width:min(100%,20ch);}
-.u-fk__tiles{display:grid;gap:clamp(1rem,2.5vw,1.5rem);margin-top:clamp(2rem,5vw,3rem);}
+/* maska wyrazu: `overflow:hidden` z zapasem na dolne wydłużenia (y, j),
+   skasowanym ujemnym marginesem, żeby wiersze stały tam gdzie stały */
+.u-fk__w{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.14em;margin-bottom:-.14em;}
+.u-fk__w > span{display:inline-block;}
+.u-fk__tiles{display:grid;gap:clamp(1rem,2.5vw,1.5rem);
+  max-width:1180px;margin:clamp(2rem,5vw,3rem) auto 0;padding-inline:var(--w-space-5);}
 .u-fk__tile{display:flex;flex-direction:column;gap:var(--w-space-3);
   background:var(--w-surface-page);border:1px solid var(--w-border-default);border-radius:0;
   padding:clamp(1.25rem,2.4vw,1.75rem);}
 /* rozjazd 4: ECO scale (1.0625 rem) instead of the kit --w-font-h5-size */
 .u-fk__area{font-size:1.0625rem;line-height:1.3;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;color:var(--w-text-primary);}
 .u-fk__after{margin-top:clamp(2.5rem,5vw,4rem);}
+/* Iteration 11 (§15.4): the box under the scene rides the wide container, so
+   from 1100 px the overline moves into a column of its own and the sentence
+   keeps its measure – across 1720 px it would run over 200 characters a line.
+   The quote also grows to 2 rem there: at the 1.5 rem cap of the shared rule
+   the dark box would be half empty at 1920 px. Both values meet the shared
+   ones at 1100 px (24 px), so nothing jumps at the breakpoint. */
+@media (min-width:1100px){
+  .u-fk__after .u-quote{display:grid;grid-template-columns:minmax(0,12rem) minmax(0,1fr);
+    column-gap:clamp(2rem,4vw,4rem);align-items:start;}
+  .u-fk__after .u-quote p{font-size:clamp(1.5rem,2vw,2rem);max-width:52ch;}
+}
 
 @media (min-width:640px){
   .u-fk__tiles{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;}
 }
 
-/* --- Scena: napis przyklejony na środku, kafelki nad nim ------------------- */
+/* wejście napisu: każdy wyraz wyjeżdża spod dolnej krawędzi swojego wiersza,
+   kaskadą co 70 ms (`--wi` w znaczniku). Stan wyjściowy tylko z JS i bez
+   ograniczenia ruchu – inaczej napis jest po prostu widoczny. Bez animacji
+   wyjścia: klasę `.is-in` JS nadaje raz i już jej nie zdejmuje. */
+@media (prefers-reduced-motion: no-preference){
+  html.cx-js .u-fk__w > span{transform:translateY(110%);
+    transition:transform 520ms cubic-bezier(.2,.8,.2,1) calc(var(--wi,0) * 70ms);}
+  html.cx-js .u-fk__title.is-in .u-fk__w > span{transform:none;}
+}
+
+/* --- Scena: kadr przyklejony na cały ekran, kafle nad nim ------------------ */
 @media (min-width:900px) and (prefers-reduced-motion: no-preference){
-  /* tor: wjazd + sześć kroków + ogon, żeby napis stał na środku, dopóki
-     ostatni kafelek z niego nie zjedzie */
-  .cx-js .u-fk{--u-fk-step:55vh;--u-fk-lead:45vh;--u-fk-tail:25vh;}
-  .cx-js .u-fk__track{height:calc(var(--u-fk-lead) + 6 * var(--u-fk-step) + var(--u-fk-tail));max-width:none;padding-inline:0;}
-  /* `top:50svh` + przesunięcie o połowę własnej wysokości = napis stoi na
-     środku ekranu przez cały tor i odjeżdża dopiero z końcem sekcji */
-  .cx-js .u-fk__title{position:sticky;top:50svh;transform:translateY(-50%);z-index:0;}
-  .cx-js .u-fk__tiles{display:block;margin-top:0;}
+  /* tor = scena (100 svh) + wjazd pierwszego kafla + pięć kroków między
+     kaflami + ogon: ostatni (najwyższy) kafel schodzi z ekranu przez ≈ 52 vh,
+     a potem napis stoi sam jeszcze ok. 28 vh, zanim scena odjedzie ze stroną.
+     Razem 465 vh przy kroku 32 vh, czyli 2–3 kafle naraz w oknie. */
+  .cx-js .u-fk{--u-fk-lead:125vh;--u-fk-step:32vh;--u-fk-tail:80vh;}
+  .cx-js .u-fk__track{height:calc(100svh + var(--u-fk-lead) + 5 * var(--u-fk-step) + var(--u-fk-tail));}
+  .cx-js .u-fk__stage{position:sticky;top:0;height:100svh;min-height:0;}
+  .cx-js .u-fk__tiles{display:block;max-width:none;margin:0;padding:0;}
+  /* trzy rozłączne pasy (18 %, 50 %, 82 % szerokości toru = okna) w kolejności
+     L, P, Ś, L, P, Ś – sąsiednie kafle nigdy nie są w tym samym pasie */
   .cx-js .u-fk__tile{position:absolute;z-index:1;width:clamp(16rem,24vw,22rem);
     top:calc(var(--u-fk-lead) + var(--i,0) * var(--u-fk-step));
-    left:calc(50% + var(--x,0%));
-    transform:translate(-50%,var(--par,0px)) rotate(var(--rot,0deg));will-change:transform;}
+    left:var(--lane,50%);
+    transform:translate(-50%,var(--par,0px));will-change:transform;}
 }
 
-/* ===== 70 · Dobór do stanowiska – karuzela warunków (spec §10.5) ============
-   Own prefix: u-cr. Eight equal-height cards on a horizontal snap track that
-   lives inside `c5-wrap`, so the document never gets wider than the viewport
-   (the track is the only thing that scrolls sideways). Counter and arrows are
-   JS-only; without JS the track is a plain native scroller with every card
-   reachable. ======================================================== */
-
-/* header row: kicker + h2 + lead on the left, counter and arrows on the right */
-.u-cr__top{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--w-space-6);}
-.u-cr__intro{min-width:0;}
-.u-cr__ctl{display:none;}
-html.cx-js .u-cr__ctl{display:flex;align-items:center;gap:var(--w-space-4);flex:none;}
-.u-cr__count{font-family:var(--w-font-mono);font-size:var(--w-font-sm-size);line-height:1;color:var(--w-text-tertiary);white-space:nowrap;}
-.u-cr__navs{display:flex;gap:var(--w-space-2);}
-/* c5-btn--sm is a wide pill (25 px side padding); an icon-only arrow needs a square */
-.u-cr__nav{padding:0;width:var(--w-control-h-lg);height:var(--w-control-h-lg);flex:none;}
-.u-cr__nav[disabled]{opacity:.35;cursor:default;}
-
-/* the track and every ancestor need min-width:0, or the flex row would grow the page */
-.u-cr{display:flex;flex-direction:column;gap:var(--w-space-4);min-width:0;}
-.u-cr__track{display:flex;gap:var(--w-space-5);min-width:0;margin:0;padding:0 0 var(--w-space-1);list-style:none;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none;}
-.u-cr__track::-webkit-scrollbar{display:none;}
-.u-cr__track:focus-visible{outline:2px solid var(--w-focus-ring);outline-offset:4px;}
-/* while dragging with the mouse: grab cursor, no selection, snapping out of the way */
-.u-cr__track.is-drag{cursor:grabbing;user-select:none;scroll-snap-type:none;}
-
-/* two cards and a slice of the third on a desktop */
-.u-cr__slide{flex:0 0 clamp(20rem,46%,34rem);display:flex;min-width:0;scroll-snap-align:start;}
-.u-cr__card{flex:1 1 auto;display:flex;flex-direction:column;gap:var(--w-space-5);min-width:0;border:1px solid var(--w-border-default);border-radius:0;background:var(--w-surface-page);padding:var(--w-space-6);}
-.u-cr__hd{display:flex;flex-direction:column;gap:var(--w-space-2);}
-.u-cr__no{font-family:var(--w-font-mono);font-size:var(--w-font-caption-size);line-height:var(--w-font-caption-lh);color:var(--w-text-tertiary);}
-/* rozjazd 4: ECO scale (1.125 rem) instead of the kit --w-font-h4-size */
-.u-cr__t{font-size:1.125rem;line-height:1.3;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;color:var(--w-text-primary);}
-.u-cr__sec{display:flex;flex-direction:column;gap:var(--w-space-2);}
-.u-cr__prio{font-size:var(--w-font-h5-size);line-height:var(--w-font-h5-lh);font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
-
-/* progress bar = the shared u-rail component, but shown at every width here
-   (u-rail alone appears only below 900 px) and only when JS drives the thumb */
-.u-cr__rail{display:none;}
-html.cx-js .u-cr__rail{display:block;}
-
-@media (max-width:639px){
-  .u-cr__top{flex-direction:column;align-items:stretch;gap:var(--w-space-4);}
-  html.cx-js .u-cr__ctl{justify-content:space-between;}
-  .u-cr__slide{flex-basis:88%;}
-  .u-cr__card{padding:var(--w-space-5);}
+/* ===== 60 · Trzy warianty technologii (spec §9.10, §15.4) =================
+   Mechanika pudełek-przełączników siedzi w `uprawa.css`; ten blok dokłada
+   wyłącznie układ przy szerokim kontenerze (iteracja 11).
+   From 1280 px the three switches stand in a rail on the left and the open
+   panel takes the rest of the container: side by side across 1720 px they
+   would be three 570 px wide buttons over a list whose `dt` column swims in
+   space. The panels are placed in the second column WITHOUT a row, so with JS
+   the one visible panel sits next to the rail, and without JS all three stack
+   under each other in that same column instead of overlapping. ============ */
+@media (min-width:900px){
+  /* as in §30: the 710 px lead is ~89 characters a line here */
+  #u-warianty .c5-lead{max-width:60ch;}
 }
-
-@media (prefers-reduced-motion: reduce){
-  .u-cr__nav{transition:none;}
+@media (min-width:1280px){
+  #u-warianty [data-tabs-group]{display:grid;grid-template-columns:minmax(0,20rem) minmax(0,1fr);
+    column-gap:clamp(2rem,4vw,4rem);align-items:start;}
+  #u-warianty .u-vtabs{grid-column:1;grid-template-columns:minmax(0,1fr);}
+  #u-warianty .u-vpanel{grid-column:2;}
+  /* In the widened panel the answer column would otherwise run 90–130
+     characters a line. */
+  #u-warianty .u-row dd{max-width:60ch;}
+}
+/* From 1600 px the panel holds two rows of the programme side by side (six
+   rows = three pairs), which closes the empty field the capped `dd` leaves in
+   a single column. The hairlines have to follow: a vertical one inside the
+   pair, none under the last pair. */
+@media (min-width:1600px){
+  #u-warianty .u-rows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));}
+  #u-warianty .u-row{grid-template-columns:minmax(0,11rem) minmax(0,1fr);}
+  #u-warianty .u-row:nth-child(odd){border-right:1px solid var(--w-border-subtle);}
+  #u-warianty .u-row:nth-last-child(-n+2){border-bottom:0;}
+  #u-warianty .u-row dd{max-width:none;}
 }
 
 /* ===== 80 · Mieszaniny zbiornikowe – tabela zgodności (spec §10.6) =========
@@ -416,6 +415,34 @@ html.cx-js .u-mt__row{cursor:pointer;}
    last line of the product name, not under it */
 .u-mt__ar{display:inline-block;vertical-align:-0.125em;color:var(--w-icon-default);transition:transform var(--w-duration-base) var(--w-ease);}
 .u-mt__row:hover .u-mt__ar,.u-mt__row:focus-within .u-mt__ar{transform:translateX(3px);}
+
+/* --- Iteration 11 (§15.4): the section on the wide container --------------
+   The table itself takes the width well (four columns, `table-layout:fixed`),
+   but the 26 / 24,7 / 24,7 / 24,7 split of the 1180 px container gives the
+   product column 450 px at 1920 px while the practical note – the longest
+   text in the table – gets the same. From 1200 px the shares follow the text:
+   22 % product, 26 % combinations, 20 % avoid, 32 % note. */
+@media (min-width:1200px){
+  .u-mt__h:first-child{width:22%;}
+  .u-mt__h:nth-child(2){width:26%;}
+  .u-mt__h:nth-child(3){width:20%;}
+}
+/* The plant-protection footnote is 600 characters long: across the container
+   it would be one 190-character line. It runs in text columns instead – the
+   column width decides how many there are, so the footnote holds 45–65
+   characters a line at every width from 900 px up. From 1500 px it shares a
+   row with the closing sentence, which fills the right edge of the container
+   instead of leaving a field empty under the table. */
+@media (min-width:900px){
+  #przypis-sor .u-txt{column-width:20rem;column-gap:clamp(2rem,4vw,3rem);}
+  /* 68 ch of `u-measure` is ~84 characters a line at the body size */
+  #u-mieszaniny-tabela > .wf-body{max-width:60ch;}
+}
+@media (min-width:1500px){
+  #u-mieszaniny-tabela{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,26rem);
+    column-gap:clamp(2rem,4vw,4rem);align-items:start;}
+  #u-mieszaniny-tabela > .u-mt__box{grid-column:1 / -1;}
+}
 
 @media (max-width:899px){
   .u-mt,.u-mt tbody,.u-mt__row,.u-mt__c{display:block;width:auto;}
@@ -453,48 +480,124 @@ html.cx-js .u-mt__row{cursor:pointer;}
   padding-top:var(--w-space-3);border-top:1px solid var(--w-border-subtle);}
 .u-out__sub b{font-size:var(--w-font-h5-size);line-height:var(--w-font-h5-lh);}
 
-/* ===== 90 · Pas zamykający (spec §9.11) – port pasa PRO z CARBOMAT ECO =====
-   Ciemne tło, kadr na pełną szerokość kolumny treści z narożnikami 30 px
-   (jedyny sankcjonowany wyjątek od ostrych narożników), skalowany .5 → 1
-   przy przewijaniu (JS: 90-cta.js pisze `--u-end-s`). Bez ruchu (poniżej
-   900 px, reduced-motion, bez JS) kadr stoi w skali 1. */
-.u-end{background:var(--w-gray-600);color:var(--w-text-inverse);}
-.u-end .c5-wrap{display:flex;flex-direction:column;gap:clamp(2rem,5vw,3.5rem);}
-.u-end__media{position:relative;width:100%;aspect-ratio:16/10;border-radius:30px;overflow:hidden;
-  transform:scale(var(--u-end-s,1));transform-origin:center;will-change:transform;}
-.u-end__frame{position:absolute;inset:0;border-radius:0;min-height:0;border:0;}
-.u-end__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 45%;}
-/* Jednolity, delikatny scrim (bez gradientów) – włącza go modyfikator, żeby
-   nie przygaszał etykiety placeholdera, zanim wejdzie prawdziwe zdjęcie. */
-.u-end__media--photo::after{content:"";position:absolute;inset:0;background:rgb(0 0 0 / .25);}
-.u-end__grid{display:flex;flex-direction:column;gap:clamp(1.5rem,4vw,2.5rem);}
-.u-end__t{font-size:clamp(1.75rem,3vw,2.5rem);line-height:1.15;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;max-width:486px;}
-.u-end__acts{gap:var(--w-space-2);}
-.u-end__acts .c5-btn{--c5-btn-px:clamp(18px,2.2vw,32px);}
-.u-end__ghost{background:transparent;color:var(--w-text-inverse);border-color:rgb(255 255 255 / .6);}
-.u-end__ghost:hover{background:rgb(255 255 255 / .12);border-color:var(--w-text-inverse);}
-/* na ciemnym pasie pierścień fokusu musi być jasny (i ostry jak reszta V5) */
-.u-end a:focus-visible{outline-color:var(--w-focus-ring-inverse);border-radius:0;}
+/* Iteration 11 (§15.4): on the wide container the section reads across –
+   the head (which stays at the left edge of the container) in a column of its
+   own, the converter next to it. Stacked, the slider would be a 1700 px long
+   track and the four boxes 415 px wide fields with a 64 px packshot in them.
+   The head column also gives the long lead its measure: 24 rem is ~50
+   characters a line, the shared 710 px cap would be ~88 at this font. */
+@media (min-width:900px){
+  /* Between 900 and 1280 px the head still stands above the converter, so the
+     lead and the note under the boxes need the same caps as the rest of the
+     page: the shared 710 px / 68 ch run 85 and 81 characters a line here. */
+  #u-skala .c5-lead{max-width:60ch;}
+  #u-skala .wf-small.u-measure{max-width:60ch;}
+}
+/* From 1560 px – not earlier: the four result boxes move into the right column
+   with the converter, and they only hold their width (260–320 px, what the row
+   had at the 1180 px container) once the column is at least 1100 px. Between
+   900 and 1560 px the head stays above the converter and the boxes run across
+   the whole container, where they are 270–350 px wide. */
+@media (min-width:1560px){
+  #u-skala > .c5-wrap{display:grid;grid-template-columns:minmax(0,20rem) minmax(0,1fr);
+    column-gap:clamp(2rem,4vw,4rem);align-items:start;}
+}
+
+/* ===== 90 · Pas zamykający (spec §9.11, §13.5) – ustawienia CE-16 ==========
+   Pas stoi na bazowym klocku `ce/CE-16-pas-pro.*` (wariant „zamykajacy”, bez
+   akapitu): kadr rośnie ze środka na całą szerokość okna, a nagłówek i dwa
+   przyciski leżą NA kadrze. Tutaj zostaje wyłącznie to, co jest ustawieniem
+   podstrony: sam kadr (zdjęcie zbioru), narożniki 30 px, skala przy
+   przewijaniu (`--pro-s` pisze CE-16-pas-pro.js), kadrowanie zdjęcia, scrim
+   pod napisem i rozkład treści wokół kombajnu. Marginesu nad pasem nie
+   ustawiamy – poprzednia sekcja kończy się własnym paddingiem `c5-sec`. */
+/* narożniki 30 px – jedyny sankcjonowany wyjątek od ostrych narożników V5 */
+.c5-pro__media{position:relative;width:100%;aspect-ratio:16/10;border-radius:30px;overflow:hidden;}
+/* Na tym kadrze kombajn stoi dokładnie w środku, a oba boki są spokojne, więc
+   zdjęcie kadrujemy ze środka – wzorzec przesuwa swój kadr w górę (50 % 45 %
+   statycznie, 50 % 20 % na pasie z tekstem) pod zupełnie inne zdjęcie. */
+.c5-pro__img{object-position:50% 50%;}
+/* Przycisk widmo leży na rozświetlonym pyle: płaskie ciemne podłożenie (bez
+   gradientu) trzyma jego 16-pikselową etykietę powyżej 4,5:1 – sam scrim .4
+   daje tam ok. 3,5:1. Poniżej 900 px przycisk stoi na szarym pasie, gdzie
+   podłożenie tylko pogłębia tło, więc obowiązuje wszędzie. */
+.c5-pro__login{background:rgb(0 0 0 / .3);}
+.c5-pro__login:hover{background:rgb(0 0 0 / .45);border-color:var(--w-text-inverse);}
+/* No paragraph above the buttons in this variant: drop the margin the old
+   c5.css still puts on the button row, or the buttons hang 32 px below the
+   optical axis of the heading (the grid gap already spaces the stacked layout). */
+.c5-pro__grid .c5-btnrow{margin-top:0;}
 /* wiersz źródła – w biegu strony, pod pasem */
 .u-end__srcwrap{padding-block:clamp(1.5rem,3vw,2.5rem);}
 .u-end__src{text-align:center;color:var(--w-text-tertiary);}
+/* On the wide container the line would otherwise stand as a single 90-character
+   row; from 900 px it breaks into two centred lines like the rest of the page
+   reads (below 900 px it wraps on its own and nothing changes). */
+@media (min-width:900px){
+  .u-end__src{max-width:64ch;margin-inline:auto;}
+}
 
 @media (min-width:900px){
-  /* kadr nie zjada całego ekranu – nagłówek i przyciski wchodzą razem z nim
-     (ten sam limit co na pasie PRO wzorca w układzie statycznym) */
-  .u-end__media{max-height:min(56vh,520px);}
-  /* Kolumna przycisków bierze tyle, ile potrzebują etykiety (`max-content`),
+  /* statycznie (reduced / bez JS) kadr nad treścią nie zjada całego ekranu */
+  .c5-pro__media{max-height:min(56vh,520px);}
+  /* Kombajn zajmuje środek kadru (39–62 % szerokości zdjęcia; poniżej 1180 px
+     pas jest wyższy niż proporcja zdjęcia, więc boki są przycięte i maszyna
+     rośnie na ekranie do ok. 36–65 %), dlatego treść rozchodzi się na boki:
+     nagłówek w lewej strefie, kolumna przycisków w prawej.
+     Kolumna bierze tyle, ile potrzebują etykiety (`max-content`),
      a nie sztywne 486 px pasa PRO wzorca: etykiety z §9.13 są dłuższe niż
      kolumna wzorca i przy 900–1280 px wychodziły poza siatkę, dokładając
-     stronie poziome przewijanie. Dolna granica toru to 0, więc gdy miejsca
-     naprawdę brakuje, rząd zawija się (bez `flex-wrap: nowrap`) zamiast
-     wystawać poza pas. Same etykiety nadal nie łamią się w środku. */
-  .u-end__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,max-content);gap:clamp(2rem,6vw,6rem);align-items:center;}
-  .u-end__acts .c5-btn{white-space:nowrap;}
+     stronie poziome przewijanie. */
+  .c5-pro__grid{grid-template-columns:minmax(0,1fr) minmax(0,max-content);}
+  /* Nagłówek zawija się na dwa wiersze i zostaje w lewej strefie. Wzorcowe
+     486 px byłoby tu za dużo: przy 1024 px kadr jest przycięty na bokach
+     i maszyna zaczyna się już na 36 % szerokości okna, czyli ok. 370 px od
+     krawędzi – `28vw` cofa nagłówek przed nią na każdej szerokości (od
+     iteracji 11, bo szeroki kontener odsunął treść o 20 px w prawo i przy
+     30vw nagłówek wychodził poza lewą trzecią część okna), a 340 px trzyma
+     go w tej trzeciej części także przy 1920 px. */
+  .c5-pro__grid h2{max-width:min(340px,28vw);}
+  .c5-pro__side{max-width:none;}
+  /* Dwa przyciski jeden pod drugim, oba szerokości szerszej etykiety (kolumna
+     jest `max-content`, więc `stretch` wyrównuje je do najdłuższego napisu);
+     blok stoi przy prawej krawędzi kontenera, poza maską kombajnu. */
+  .c5-pro__grid .c5-btnrow{flex-direction:column;flex-wrap:nowrap;align-items:stretch;}
 }
-@media (max-width:899px){
-  .u-end__media{aspect-ratio:4/3;transform:none;}
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  .cx-js .c5-pro__media{position:absolute;inset:0;width:auto;aspect-ratio:auto;max-height:none;
+    transform:scale(var(--pro-s,1));transform-origin:center;will-change:transform;}
+  /* W tym stanie `.c5-pro` jest siatką, a `.c5-wrap` ma `margin-inline:auto` –
+     automatyczne marginesy w siatce zjadają wolne miejsce, więc kontener kurczy
+     się do treści i staje na środku okna. Na pasie PRO wzorca nie widać tego
+     (obie kolumny mają po 486 px), ale tutaj nagłówek jest wąski, a kolumna
+     przycisków `max-content`, więc bez tego cała treść zjeżdża na kombajn. */
+  .cx-js .c5-pro__grid{width:100%;}
+  /* kadrowanie ze środka także w stanie skalowanym (wzorzec: 50 % 20 %) */
+  html.cx-js .c5-pro__img{object-position:50% 50%;}
+  /* Scrim .4 zamiast wzorcowych .25: w strefie nagłówka p95 luminancji kadru
+     to .48 (rozświetlony pył), więc .25 dawałoby białemu napisowi tylko
+     2,6:1 – .4 podnosi go powyżej 3:1 wymaganych dla dużego tekstu.
+     Statycznie (poniżej 900 px, ograniczony ruch, bez JS) scrimu nie ma
+     w ogóle – tam nic nie leży na zdjęciu (wzorzec dokłada `::after` tylko
+     w tej medii). */
+  html.cx-js .c5-pro__media::after{background:rgb(0 0 0 / .4);}
 }
-@media (prefers-reduced-motion: reduce){
-  .u-end__media{transform:none;}
+/* Wąskie ekrany desktopowe: `c5-wrap` dochodzi do krawędzi okna, a przy prawej
+   krawędzi stoi nawigacja kropkowa (`.c5-dots`: szyna 28 px + gutter 30 px,
+   czyli 58 px od krawędzi okna). Przyciski są klikalne, więc nie mogą leżeć
+   pod szyną – a jednocześnie muszą zostać na prawo od kombajnu, który przy
+   niższym oknie zajmuje na ekranie więcej miejsca (pas jest wyższy niż
+   proporcja zdjęcia, więc boki kadru są przycięte). Blok przycisków dostaje
+   więc węższą kolumnę z zawijanymi etykietami. */
+@media (min-width:900px) and (max-width:1219px){
+  .c5-pro__grid .c5-btn{white-space:normal;text-align:center;}
+  /* 240 px zamiast 250: przy 900 px blok mieści się wtedy nie tylko poza samą
+     sylwetką maszyny, ale i poza całą maską 39–62 % kadru (dłuższa etykieta
+     zawija się na dwa wiersze, krótsza zostaje w jednym). */
+  .c5-pro__side{max-width:240px;}
 }
+/* Iteration 11 (§15.4): the odd rule that pushed the button block 48 px off
+   the dot rail is gone. It was written for the 1180 px container and a rail
+   30 px from the window edge; the band now runs on the wide container, so its
+   content always ends 40 px from the edge while the rail stands between 10 px
+   and 38 px – the buttons clear it at every width without help. */

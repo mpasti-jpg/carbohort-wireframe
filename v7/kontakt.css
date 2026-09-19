@@ -1,0 +1,251 @@
+/* ===== Kontakt · warstwa strony ==========================================
+   Ładowana po `ce/00-base.css` i `ce/00-reveal.css`. Trzy nowe klocki mają
+   tu swoje wersje bazowe – każdy pod własnym komentarzem „CE-5N · …" i pod
+   prefiksem `kt-`, żeby dało się je wyciąć do `v7/ce/` bez ruszania reszty
+   pliku:
+     · CE-54 – kafle szybkiego kontaktu (sekcja 10)
+     · CE-55 – wiersze działów (sekcja 30)
+     · CE-56 – mapa z listą lokalizacji (sekcja 50)
+   Poza nimi: pasek chipów (20), wariant „kontakt" formularza CE-50 (40)
+   i siatka kart CE-20 w wariancie z przyciskami (60).
+   Uwaga: typografia półpauzą, kod i komentarze po angielsku tam, gdzie
+   opisują mechanikę; nazwy klas nigdy nie wchodzą do kitu (`wf-*`). ===== */
+
+
+/* ===== 00 · Wspólne dla strony ============================================ */
+
+/* Long contact labels (35-character e-mail addresses) must be allowed to wrap
+   inside a small button instead of pushing the grid wider than the viewport.
+   Scoped to this page's action rows – the shared `c5-btn` stays single-line. */
+.kt-dept__act .c5-btn,
+.kt-dcard__act .c5-btn{--c5-btn-px:14px;justify-content:flex-start;text-align:left;
+  white-space:normal;overflow-wrap:anywhere;line-height:1.3;}
+.kt-dept__act .c5-btn > span,
+.kt-dcard__act .c5-btn > span{min-width:0;}
+
+/* Section rhythm: the page opens with a tool, not with a show – the first two
+   sections sit tighter than the `c5-sec` default. */
+.kt-quick-sec{padding-block:clamp(1.5rem,3.5vw,2.75rem) clamp(2rem,4vw,3rem);}
+.kt-cases-sec{padding-block:0 clamp(1.75rem,3.5vw,2.75rem);}
+.kt-depts-sec{padding-block:clamp(1.75rem,3.5vw,2.75rem) clamp(3.5rem,7vw,6.25rem);}
+
+
+/* ===== 10 · CE-54 · Kafle szybkiego kontaktu ==============================
+   Base version of the block: page head plus three equal cards with the person
+   of first contact. The phone number is a `tel:` link that IS a full-width
+   dark button on a phone (mobile-first default, Sylwia: "tapping the number
+   should start the call") and turns into a large tabular number from 600 px.
+   Parts: photo box 1:1 · name (h2) · role · phone · e-mail. ============== */
+
+.kt-crumbs{margin-bottom:clamp(1.25rem,2.5vw,2rem);}
+
+.kt-quick__head{display:flex;flex-direction:column;gap:var(--w-space-4);
+  margin-bottom:clamp(1.75rem,3.5vw,2.75rem);}
+.kt-quick__head .c5-kicker{margin-bottom:0;}
+
+.kt-quick{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--w-space-5);
+  margin:0;padding:0;list-style:none;}
+.kt-quick__card{display:flex;flex-direction:column;align-items:flex-start;gap:var(--w-space-3);
+  min-height:240px;background:var(--w-surface-page);border:1px solid var(--w-border-default);
+  padding:clamp(1.25rem,2.2vw,1.75rem);
+  transition:border-color var(--w-duration-base) var(--w-ease);}
+.kt-quick__card:hover{border-color:var(--w-gray-900);}
+
+/* photo box: a 96 px square in the corner of the card */
+.kt-quick__photo{width:96px;min-height:0;aspect-ratio:1/1;border-radius:0;align-self:flex-start;}
+
+.kt-quick__name{margin:0;}
+.kt-quick__role{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);
+  /* the role line pushes the number to the bottom edge of every card, so the
+     three numbers line up whatever the length of the role */
+  flex:1 1 auto;}
+
+/* phone: the mobile shape is the default (full-width dark button) */
+.kt-quick__tel{width:100%;--c5-btn-px:18px;font-variant-numeric:tabular-nums;}
+.kt-quick__call{font-weight:var(--w-weight-medium);}
+/* a phone number that breaks over two lines stops being a number to read */
+.kt-quick__num{white-space:nowrap;}
+
+.kt-quick__mail{display:inline-flex;align-items:center;gap:var(--w-space-2);
+  font-size:0.8125rem;color:var(--w-text-secondary);overflow-wrap:anywhere;min-height:44px;}
+.kt-quick__mail .wf-icon{opacity:.55;}
+
+@media (min-width:600px){
+  /* from a tablet up the number is read, not tapped – the button look goes
+     away and the digits become the biggest thing on the card */
+  .kt-quick__tel{width:auto;min-height:0;padding:0;gap:10px;
+    background:none;border:0;color:var(--w-text-primary);
+    font-size:clamp(1.5rem,3.2vw,2.25rem);line-height:1.15;letter-spacing:-0.01em;}
+  .kt-quick__tel:hover{background:none;color:var(--w-text-primary);text-decoration:underline;}
+  .kt-quick__tel .wf-icon{width:18px;height:18px;opacity:.55;}
+  .kt-quick__call{display:none;}
+}
+@media (min-width:900px){
+  /* three columns: the card is a third as wide, so the number needs its own,
+     tighter scale – the 600-899 scale would break „+48 506 066 663" in two */
+  .kt-quick__tel{font-size:clamp(1.25rem,2.35vw,1.875rem);}
+}
+@media (max-width:899px){
+  .kt-quick{grid-template-columns:minmax(0,1fr);}
+  .kt-quick__card{min-height:0;}
+}
+
+
+/* ===== 20 · Wybierz sprawę (chipy EL-16) ==================================
+   Plain anchors in chip clothing: without JS they jump to the row, with JS the
+   CX5 bus scrolls smoothly and `kontakt.js 20` lights the row up for 1.5 s. */
+
+.kt-cases__title{margin:0 0 var(--w-space-4);}
+.kt-cases{display:flex;flex-wrap:wrap;gap:var(--w-space-2);margin:0;padding:0;list-style:none;}
+.kt-case{min-height:34px;text-decoration:none;cursor:pointer;
+  transition:border-color var(--w-duration-base) var(--w-ease),color var(--w-duration-base) var(--w-ease);}
+.kt-case:hover{border-color:var(--w-gray-900);color:var(--w-text-primary);}
+
+@media (prefers-reduced-motion: reduce){ .kt-case{transition:none;} }
+
+
+/* ===== 30 · CE-55 · Wiersze działów =======================================
+   Base version of the block: rows separated by hairlines, each row a three
+   column grid – department with the person, the description, and the action
+   column with the full number and the full address. Below 900 px the columns
+   stack and the buttons run full width. `is-hot` (set for 1.5 s by the chips
+   or by a `#dzial-…` hash) outlines the row without moving the layout.
+   Parts: row · department + person · description · actions. ============== */
+
+.kt-depts{display:flex;flex-direction:column;margin:clamp(1.5rem,3vw,2.25rem) 0 0;
+  padding:0;list-style:none;}
+.kt-dept{display:grid;grid-template-columns:minmax(0,0.95fr) minmax(0,1.35fr) minmax(0,20rem);
+  gap:var(--w-space-5);align-items:start;padding:var(--w-space-5) var(--w-space-4);
+  border-top:1px solid var(--w-border-default);
+  scroll-margin-top:clamp(1rem,4vw,3rem);
+  transition:background var(--w-duration-base) var(--w-ease);}
+.kt-depts > li:last-child{border-bottom:1px solid var(--w-border-default);}
+.kt-dept:focus{outline:none;}
+
+.kt-dept__who{display:flex;flex-direction:column;gap:var(--w-space-2);}
+.kt-dept__who h3{margin:0;}
+.kt-dept__person{margin:0;font-size:0.9375rem;}
+
+.kt-dept__desc{display:flex;flex-direction:column;gap:var(--w-space-3);}
+.kt-dept__desc p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
+
+.kt-dept__act{display:flex;flex-direction:column;gap:var(--w-space-2);align-items:stretch;}
+
+/* highlight after a chip click or a #dzial-… hash: outline drawn inside the
+   row, so nothing shifts by a pixel */
+.kt-dept.is-hot{background:var(--w-surface-subtle);outline:1px solid var(--w-gray-900);outline-offset:-1px;}
+
+@media (max-width:899px){
+  .kt-dept{grid-template-columns:minmax(0,1fr);gap:var(--w-space-4);padding-inline:0;}
+}
+@media (prefers-reduced-motion: reduce){ .kt-dept{transition:none;} }
+
+
+/* ===== 40 · CE-50 wariant „kontakt" · formularz + dane firmy ==============
+   The Próchnica+ form block in a two-column variant: the form (60 %) and the
+   company panel with the field for a map (40 %). Nothing leaves the browser –
+   the demo message lives in `kontakt.js 10`. ============================= */
+
+.kt-write__head{margin-bottom:clamp(1.5rem,3vw,2.25rem);}
+.kt-write{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);
+  gap:clamp(1.5rem,3.5vw,3rem);align-items:start;}
+@media (max-width:899px){ .kt-write{grid-template-columns:minmax(0,1fr);} }
+
+.kt-form{background:var(--w-surface-page);border:1px solid var(--w-border-default);
+  padding:clamp(1.25rem,2.4vw,1.75rem);}
+.kt-form form{display:flex;flex-direction:column;gap:var(--w-space-4);}
+.kt-form .c5-btn{align-self:flex-start;}
+.kt-check{display:flex;gap:var(--w-space-3);align-items:flex-start;font-size:0.875rem;
+  color:var(--w-text-secondary);padding-block:var(--w-space-2);cursor:pointer;min-height:44px;}
+.kt-check .wf-checkbox{flex:none;margin-top:2px;}
+/* message row: EL-17 note in the tight padding the form needs (hiding is done
+   by the `[hidden]` guard in ce/00-base.css) */
+.kt-msg{margin:0;padding:var(--w-space-3) var(--w-space-4);color:var(--w-text-primary);}
+
+.kt-aside{display:flex;flex-direction:column;gap:var(--w-space-5);margin:0;}
+
+/* company panel – a framed box like CE-28 */
+.kt-company{background:var(--w-surface-page);border:1px solid var(--w-border-default);
+  padding:clamp(1.25rem,2.4vw,1.75rem);display:flex;flex-direction:column;gap:var(--w-space-4);}
+.kt-company__title{margin:0;}
+.kt-company__list{display:flex;flex-direction:column;gap:var(--w-space-4);margin:0;}
+.kt-company__row{display:flex;flex-direction:column;gap:var(--w-space-1);}
+.kt-company__row dt{font-size:0.75rem;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--w-text-secondary);}
+.kt-company__row dd{margin:0;font-size:0.9375rem;line-height:1.5;overflow-wrap:anywhere;}
+
+/* field for the map of the way in – 16:10, caption and a stub button below */
+.kt-locmap{display:flex;flex-direction:column;align-items:flex-start;gap:var(--w-space-3);margin:0;}
+.kt-locmap__ph{width:100%;min-height:0;aspect-ratio:16/10;border-radius:0;}
+
+
+/* ===== 50 · CE-56 · Mapa z listą lokalizacji ==============================
+   Base version of the block: on the left the field for a map of Europe with
+   numbered pins (positions in percent, below), on the right a 2 x 4 grid of
+   location cards. A pin is an anchor to its card, so a click works without JS
+   too; `kontakt.js 30` binds hover/focus both ways (`is-hot`).
+   Parts: map field · pins · cards (country, company, person, phone, e-mail). */
+
+.kt-dist__head{margin-bottom:clamp(1.5rem,3vw,2.25rem);}
+.kt-dist{display:grid;grid-template-columns:minmax(0,0.68fr) minmax(0,1fr);
+  gap:clamp(1.5rem,3.5vw,3rem);align-items:start;}
+
+.kt-eumap{display:flex;flex-direction:column;gap:var(--w-space-3);margin:0;}
+.kt-eumap__frame{position:relative;}
+.kt-eumap__ph{width:100%;min-height:0;aspect-ratio:4/5;border-radius:0;}
+
+.kt-pins{position:absolute;inset:0;margin:0;padding:0;list-style:none;}
+.kt-pin{position:absolute;transform:translate(-50%,-50%);
+  display:grid;place-items:center;width:var(--kt-pin-size,28px);height:var(--kt-pin-size,28px);
+  background:var(--w-surface-page);border:1px solid var(--w-gray-900);border-radius:0;
+  color:var(--w-text-primary);font-size:0.75rem;font-weight:var(--w-weight-semibold);
+  line-height:1;text-decoration:none;font-variant-numeric:tabular-nums;
+  transition:background var(--w-duration-base) var(--w-ease),color var(--w-duration-base) var(--w-ease);}
+/* neighbours (SK, HU, RO) sit close together – the one being read comes first */
+.kt-pin:hover,.kt-pin:focus-visible,.kt-pin.is-hot{background:var(--w-gray-900);color:var(--w-text-inverse);z-index:1;}
+
+/* pin positions on the field (left / top, in percent of the field) */
+.kt-pin[data-pin="1"]{left:62%;top:72%;}   /* BUŁGARIA */
+.kt-pin[data-pin="2"]{left:30%;top:58%;}   /* FRANCJA */
+.kt-pin[data-pin="3"]{left:38%;top:38%;}   /* HOLANDIA */
+.kt-pin[data-pin="4"]{left:60%;top:32%;}   /* KRAJE BAŁTYCKIE */
+.kt-pin[data-pin="5"]{left:42%;top:44%;}   /* NIEMCY */
+.kt-pin[data-pin="6"]{left:60%;top:62%;}   /* RUMUNIA */
+.kt-pin[data-pin="7"]{left:52%;top:52%;}   /* SŁOWACJA */
+.kt-pin[data-pin="8"]{left:53%;top:58%;}   /* WĘGRY */
+
+.kt-dcards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--w-space-4);
+  margin:0;padding:0;list-style:none;}
+.kt-dcard{display:flex;flex-direction:column;align-items:flex-start;gap:var(--w-space-2);
+  background:var(--w-surface-page);border:1px solid var(--w-border-default);
+  padding:clamp(1rem,1.8vw,1.25rem);scroll-margin-top:clamp(1rem,4vw,3rem);
+  transition:border-color var(--w-duration-base) var(--w-ease),background var(--w-duration-base) var(--w-ease);}
+.kt-dcard h3{margin:0;}
+.kt-dcard__who{margin:0;font-size:0.875rem;}
+.kt-dcard__act{display:flex;flex-direction:column;gap:var(--w-space-2);
+  align-items:stretch;width:100%;margin-top:var(--w-space-2);}
+.kt-dcard:hover,.kt-dcard.is-hot{border-color:var(--w-gray-900);background:var(--w-surface-subtle);}
+.kt-dcard:focus-within{border-color:var(--w-gray-900);}
+
+@media (max-width:899px){
+  .kt-dist{grid-template-columns:minmax(0,1fr);}
+  /* the field keeps its 4:5 – squeezing it to 4:3 would pull the pins of the
+     neighbouring countries on top of one another; the pins shrink instead */
+  .kt-eumap{--kt-pin-size:24px;}
+  .kt-dcards{grid-template-columns:minmax(0,1fr);}
+}
+@media (prefers-reduced-motion: reduce){
+  .kt-pin{transition:none;}
+  .kt-dcard{transition:none;}
+}
+
+
+/* ===== 60 · CE-20 wariant „z-przyciskami" · trzy wyjścia ================== */
+
+.kt-ways{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));
+  gap:var(--w-space-5);margin:clamp(1.5rem,3vw,2.5rem) 0 0;padding:0;list-style:none;}
+.kt-way{display:flex;flex-direction:column;align-items:flex-start;gap:var(--w-space-3);
+  background:var(--w-surface-page);border:1px solid var(--w-border-default);
+  padding:clamp(1.25rem,2.2vw,1.75rem);}
+.kt-way h3{margin:0;}
+.kt-way p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);flex:1 1 auto;}

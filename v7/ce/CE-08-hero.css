@@ -49,3 +49,121 @@
 @media (max-width:899px){
   .c5-hero__stage:has(> .pp-film){aspect-ratio:auto;max-height:none;}
 }
+
+/* --- wariant: kadr-w-tle (podstrony upraw; spec §14.2) ---------------------
+   Hero podstrony uprawy nie ma osobnego panelu ze zdjęciem: kadr leży w tle
+   całej sekcji od krawędzi do krawędzi okna, a treść stoi na nim w bieli.
+   Kickera nie ma (decyzja Mateusza z 19.09 dla wszystkich upraw), zostają
+   okruszki, H1, lead i dwa przyciski. Układ od 900 px: okruszki u góry po
+   lewej, u dołu dwie kolumny wyrównane do dolnej linii – wielki H1 po lewej
+   (ok. 12 znaków w wierszu), kolumna leadu z przyciskami po prawej. Dół
+   treści trzyma się `--c5-hero-dock` (96 px) nad krawędzią okna, bo w pasie
+   20–80 px nad dołem siedzi dok doradcy (`.cw-jurek`, 560 px, wyśrodkowany).
+   Przyciemnienie kadru to jednolity scrim `--c5-hero-scrim` (bez gradientów)
+   – po wejściu prawdziwego zdjęcia wartość do dostrojenia na stronie.
+   WSZYSTKIE reguły wiszą pod `.c5-hero--bg`, więc pozostałe strony linkujące
+   ten plik zostają bez zmiany. Znacznik: sekcja `#hero` › `.c5-hero.c5-hero--bg`
+   › `.c5-hero__bg[aria-hidden]` + `.c5-wrap.c5-wrap--wide.c5-hero__inner`
+   (okruszki, H1, `.c5-hero__side` z leadem i przyciskami). --------------- */
+/* Z kitowego `.c5-hero` (c5.css) trzeba tu zdjąć trzy rzeczy: `padding-block`
+   i `min-height` (odstępy odmierza siatka treści, wysokość ekranu daje
+   `#hero`) oraz `align-items:center` – w kolumnie flex centrowałoby kontener
+   treści w poprzek, a ten ma trzymać pełną szerokość okna i sam liczyć swoje
+   `max-width:1800px`. */
+.c5-hero--bg{--c5-hero-scrim:rgb(0 0 0 / .4);--c5-hero-dock:96px;
+  position:relative;display:flex;flex-direction:column;align-items:stretch;
+  padding-block:0;min-height:0;}
+
+/* Kadr w tle: wypełnia sekcję, przycina powiększenie z animacji wejścia.
+   `> *` obsługuje i placeholder, i docelowy `img.c5-hero__bgimg`. */
+.c5-hero--bg .c5-hero__bg{position:absolute;inset:0;overflow:hidden;background:var(--w-gray-900);}
+.c5-hero--bg .c5-hero__bg > *{position:absolute;inset:0;width:100%;height:100%;}
+.c5-hero--bg .c5-hero__bgimg{display:block;object-fit:cover;object-position:50% 50%;border:0;}
+/* płaski scrim – rysowany po dzieciach, więc leży na kadrze */
+.c5-hero--bg .c5-hero__bg::after{content:"";position:absolute;inset:0;background:var(--c5-hero-scrim);}
+/* Placeholder do czasu zdjęcia: ciemny, bez ramki i zaokrągleń. Etykieta
+   (opis kadru dla grafika) siada pod okruszkami po lewej – środek i dół kadru
+   zajmuje treść hero, a prawa strona kolumna leadu. */
+.c5-hero--bg .c5-hero__bg .wf-ph{--w-placeholder-fill:var(--w-gray-800);
+  --w-placeholder-stroke:var(--w-gray-700);--w-placeholder-ink:var(--w-gray-400);
+  border:0;border-radius:0;min-height:0;
+  place-items:start;padding:clamp(6rem,18vh,10rem) 40px 0;text-align:left;}
+
+/* Treść: okruszki w pierwszym wierszu, pusty wiersz rozpycha siatkę, dwie
+   kolumny siadają w trzecim wierszu na wspólnej dolnej linii. Prawa kolumna
+   rośnie z oknem do 34 rem (spec) – przy 1280 px stała szerokość zjadłaby
+   lewej tyle, że H1 łamałby się na trzy wiersze zamiast na dwa. `width:100%`
+   jest konieczne: `.c5-wrap` ma `margin-inline:auto`, a automatyczny margines
+   w poprzek kolumny flex blokuje rozciągnięcie – kontener zwijałby się do
+   szerokości treści zamiast trzymać swoje 1800 px. */
+.c5-hero--bg .c5-hero__inner{position:relative;z-index:1;flex:1 1 auto;width:100%;
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,clamp(20rem,30vw,34rem));
+  grid-template-rows:auto minmax(0,1fr) auto;
+  column-gap:clamp(2rem,4vw,4rem);
+  padding-block:clamp(1.25rem,2.2vw,1.75rem) var(--c5-hero-dock);
+  color:var(--w-text-inverse);}
+.c5-hero--bg .c5-hero__crumbs{grid-column:1 / -1;grid-row:1;align-self:start;
+  padding-bottom:0;color:rgb(255 255 255 / .75);}
+.c5-hero--bg .c5-hero__crumbs a:hover{color:var(--w-white);}
+/* H1: ok. 12 znaków w wierszu („Program uprawy / kukurydzy”) */
+.c5-hero--bg .c5-hero__title{grid-column:1;grid-row:3;align-self:end;
+  max-width:8.6em;margin:0;
+  font-size:clamp(3rem,6.4vw,6.5rem);line-height:1.02;letter-spacing:-0.025em;}
+.c5-hero--bg .c5-hero__side{grid-column:2;grid-row:3;align-self:end;
+  display:flex;flex-direction:column;gap:clamp(1.5rem,2.4vw,2rem);max-width:34rem;}
+.c5-hero--bg .c5-hero__lead{font-size:1.0625rem;line-height:1.55;
+  color:rgb(255 255 255 / .9);max-width:none;}
+
+/* Przyciski na kadrze: pierwszy jasny (`--inv`), drugi konturowy na ciemnym
+   – klasa lokalna wariantu, nie globalny przycisk. Fokus jasny. Para etykiet
+   nie mieści się w jednym rzędzie w kolumnie 34 rem, więc gdy rząd się łamie,
+   każdy przycisk bierze pełną szerokość kolumny (równe bloki, nie schodki). */
+.c5-hero--bg .c5-btnrow{gap:8px;}
+.c5-hero--bg .c5-btnrow > .c5-btn{flex:1 1 auto;--c5-btn-px:clamp(18px,2.6vw,45px);}
+.c5-hero--bg .c5-btn--ghost{background:rgb(0 0 0 / .3);color:var(--w-text-inverse);
+  border-color:rgb(255 255 255 / .7);}
+.c5-hero--bg .c5-btn--ghost:hover{background:rgb(0 0 0 / .15);border-color:var(--w-white);}
+.c5-hero--bg .c5-hero__inner :focus-visible{outline-color:var(--w-focus-ring-inverse);border-radius:0;}
+
+/* Wejście: kadr osiada ze skali 1,06, treść wchodzi krótką kaskadą. Tylko
+   przy JS i bez prośby o ograniczenie ruchu; stan spoczynkowy = widoczny. */
+@media (prefers-reduced-motion: no-preference){
+  html.cx-js .c5-hero--bg .c5-hero__bg > *{animation:c5HeroBgSettle 1.2s var(--w-ease) both;}
+  html.cx-js .c5-hero--bg .c5-hero__crumbs{animation:c5HeroRise .7s var(--w-ease) .05s both;}
+  html.cx-js .c5-hero--bg .c5-hero__title{animation:c5HeroRise .7s var(--w-ease) .15s both;}
+  html.cx-js .c5-hero--bg .c5-hero__side{animation:c5HeroRise .7s var(--w-ease) .28s both;}
+}
+@keyframes c5HeroBgSettle{from{transform:scale(1.06);}to{transform:scale(1);}}
+@keyframes c5HeroRise{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}
+
+/* Poniżej 900 px: kadr (min. 62 svh) z okruszkami u góry i H1 u dołu NA
+   kadrze, a lead i przyciski pod kadrem na zwykłym tle strony – długi cytat
+   nie leży na zdjęciu. Siatkę przejmuje `.c5-hero--bg`, bo kadr i treść mają
+   dzielić te same komórki; `.c5-hero__inner` oddaje swoje pudełko
+   (`display:contents`), więc boczne wcięcie wraca na dzieci. */
+@media (max-width:899px){
+  .c5-hero--bg{display:grid;grid-template-columns:minmax(0,1fr);
+    grid-template-rows:minmax(62svh,auto) auto;}
+  .c5-hero--bg .c5-hero__inner{display:contents;}
+  .c5-hero--bg .c5-hero__bg{position:relative;grid-area:1 / 1;}
+  .c5-hero--bg .c5-hero__bg .wf-ph{padding-inline:var(--w-space-5);}
+  .c5-hero--bg .c5-hero__crumbs,
+  .c5-hero--bg .c5-hero__title,
+  .c5-hero--bg .c5-hero__side{padding-inline:var(--w-space-5);}
+  .c5-hero--bg .c5-hero__crumbs{grid-area:1 / 1;align-self:start;
+    padding-top:clamp(1rem,4vw,1.5rem);}
+  .c5-hero--bg .c5-hero__title{grid-area:1 / 1;align-self:end;max-width:none;
+    padding-bottom:clamp(1.5rem,5vw,2rem);
+    font-size:clamp(2.5rem,10vw,3.75rem);line-height:1.04;}
+  .c5-hero--bg .c5-hero__side{grid-area:2 / 1;max-width:none;
+    padding-top:clamp(1.5rem,5vw,2rem);color:var(--w-text-primary);}
+  /* pod kadrem wraca ciemny tekst i para przycisków --dark / --light */
+  .c5-hero--bg .c5-hero__lead{font-size:1rem;color:var(--w-text-secondary);}
+  .c5-hero--bg .c5-btn--inv{background:var(--w-gray-900);color:var(--w-text-inverse);
+    border-color:var(--w-gray-900);}
+  .c5-hero--bg .c5-btn--inv:hover{background:var(--w-gray-700);border-color:var(--w-gray-700);}
+  .c5-hero--bg .c5-btn--ghost{background:var(--w-surface-page);color:var(--w-text-primary);
+    border-color:rgb(0 0 0 / .2);}
+  .c5-hero--bg .c5-btn--ghost:hover{background:var(--w-surface-page);border-color:var(--w-border-strong);}
+  .c5-hero--bg .c5-hero__side :focus-visible{outline-color:var(--w-focus-ring);}
+}

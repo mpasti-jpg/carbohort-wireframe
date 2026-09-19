@@ -1,0 +1,285 @@
+/* ===== Centrum wiedzy – warstwa strony działu i strony kategorii ===========
+   Prefix: `cw-k-`. Two pages share this file: centrum-wiedzy.html (dział) and
+   centrum-wiedzy-kategoria.html (kategoria). Spec:
+   40-strona-www/koncepcja/centrum-wiedzy-spec.md (§3, §4, §6, §8).
+
+   This page is the BASE VERSION of three new blocks, so their rules carry a
+   `CE-5N` marker: CE-57 (indeks artykułów), CE-58 (karty najnowszych),
+   CE-59 (nawigacja kategorii); the sidebar product box CE-62 is based on the
+   article page, here only its `boczny` variant.
+   Everything reusable (containers, sections, buttons, chips, notes, sources,
+   form fields) comes from ce/00-base.css – nothing is redefined here.
+
+   Rytm sekcji:
+     00 · Wspólne dla obu stron (gate bez JS, kontener czytania)
+     08 · CE-08 hero, wariant „dzial”
+     57 · CE-57 indeks artykułów (wiersze, sterowanie, stronicowanie)
+     58 · CE-58 karty najnowszych
+     59 · CE-59 nawigacja kategorii
+     53 · CE-53 dokumenty do pobrania
+     48 · CE-48 karty autorów, wariant „kompakt”
+     50 · CE-50 formularz „zaproponuj temat” + pas przewodnika
+     62 · CE-62 boks produktowy, wariant „boczny” (kategoria)
+     90 · Układ strony kategorii (lista + kolumna boczna)
+   ========================================================================= */
+
+/* ===== 00 · Wspólne ======================================================= */
+
+/* Bez JS nie ma czym filtrować ani stronicować – kontrolki są wtedy ukryte,
+   a wszystkie wiersze widoczne (spec §3.4). Bramka działa przez klasę `cx-js`
+   na <html> (wnosi ją szyna CX5), więc element zachowuje swój własny display –
+   nie podmieniamy go tutaj na `block`. */
+html:not(.cx-js) [data-js-only]{display:none;}
+html.cx-js [data-nojs-only]{display:none;}
+
+/* Nagłówek sekcji z licznikiem po prawej stronie. Lista ma się wygodnie czytać
+   (uwaga Mateusza), więc kolumna nie rozciąga się na całą szerokość. */
+.cw-k-sechead{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:var(--w-space-4);max-width:860px;}
+
+/* Metryka drobna (autor · data · czas): separator jest w CSS, nie w HTML-u, i
+   siedzi PO elemencie – przy zawinięciu kropka zostaje na końcu wiersza, a nie
+   otwiera następny. Chip ma własną ramkę, więc kropki po nim nie stawiamy. */
+.cw-k-metasep{display:flex;flex-wrap:wrap;align-items:center;gap:var(--w-space-2) var(--w-space-3);margin:0;}
+.cw-k-metasep > *:not(:last-child):not(.c5-chip)::after{content:"·";margin-left:var(--w-space-2);color:var(--w-text-disabled);}
+
+/* Link „tekst →”: ikona ze sprite'u jest w kicie elementem blokowym, więc
+   w zwykłym akapicie zawsze spadłaby do nowego wiersza. Inline-flex trzyma ją
+   przy tekście, a odstęp niesie `gap`, nie twarda spacja. */
+.cw-k-more{display:inline-flex;align-items:center;gap:var(--w-space-2);}
+.cw-k-more .wf-icon{flex:none;}
+
+/* Pas przewodnika: komponent `cw-ask` z cw.css w języku V7 – ostre narożniki
+   i biała płaszczyzna zamiast zaokrąglonego kafla. */
+.cw-k-ask{border-radius:0;background:var(--w-surface-page);align-items:flex-start;}
+/* kit daje .wf-ph min-height 120 px – awatar i pole pod zdjęcie autora są mniejsze */
+.cw-k-ask .wf-ph{flex:none;width:56px;height:56px;min-height:0;border-radius:var(--w-radius-circle);}
+.cw-k-ask__name{font-weight:var(--w-weight-semibold);display:block;}
+.cw-k-ask p{margin:var(--w-space-2) 0 0;font-size:0.9375rem;color:var(--w-text-secondary);}
+
+/* ===== 08 · CE-08 Hero, wariant „dzial” ==================================
+   Baza CE-08 (carbomat.html#hero) to pierwszy ekran z panelem po prawej.
+   Dział i kategoria nie mają panelu: jedna kolumna na dwie trzecie szerokości,
+   wysokość wyznacza treść, breadcrumb wraca na górę. Stąd te nadpisania –
+   plik strony ładuje się po ce/CE-08-hero.css. */
+/* zawężone przez :has(), żeby nadpisanie nie dotknęło hero innej strony,
+   gdyby kiedyś zlinkowała ten arkusz (ten sam zapis co w ce/CE-08-hero.css) */
+#hero:has(.c5-hero--dzial){display:block;min-height:0;}
+#hero:has(.c5-hero--dzial) > .c5-wrap{display:block;}
+.c5-hero--dzial{display:flex;flex-direction:column;gap:0;padding-block:clamp(2.25rem,5vw,4rem) clamp(1.5rem,3vw,2.5rem);}
+.c5-hero--dzial .c5-hero__copy{display:flex;flex-direction:column;gap:clamp(1.25rem,2.4vw,2rem);max-width:min(100%,745px);}
+.c5-hero--dzial .c5-hero__copyin{margin-block:0;padding-block:0;max-width:none;}
+.c5-hero--dzial .c5-hero__lead{max-width:none;}
+.c5-hero--dzial .c5-hero__crumbs{padding-bottom:0;order:0;}
+
+/* Wyszukiwarka hero: pole + przycisk ikonowy w jednej ramce, obok przycisk
+   przewodnika. Poniżej 640 px wszystko schodzi na jeden słupek. */
+.cw-k-find{display:flex;flex-wrap:wrap;gap:var(--w-space-3);align-items:stretch;}
+.cw-k-findbox{display:flex;align-items:stretch;border:1px solid var(--w-border-default);background:var(--w-surface-page);flex:1 1 320px;max-width:420px;}
+.cw-k-findbox .wf-input{border:0;min-height:44px;flex:1 1 auto;min-width:0;}
+.cw-k-findbox .wf-input:hover{border-color:transparent;}
+.cw-k-findbox__go{flex:none;display:grid;place-items:center;width:46px;background:none;border:0;border-left:1px solid var(--w-border-default);color:var(--w-text-primary);cursor:pointer;}
+.cw-k-findbox__go:hover{background:var(--w-surface-hover);}
+.cw-k-find .c5-btn{flex:0 0 auto;}
+@media (max-width:639px){
+  /* słupek: `flex-basis` przestaje być szerokością i staje się wysokością,
+     więc pole musi tu wrócić na `auto` – inaczej urosłoby do 320 px */
+  .cw-k-find{flex-direction:column;align-items:stretch;}
+  .cw-k-find .cw-k-findbox{flex:0 0 auto;max-width:none;}
+  .cw-k-find .c5-btn{align-self:flex-start;}
+}
+
+/* Chipy podgrup w hero kategorii: filtry listy, ten sam element co w CE-57. */
+.cw-k-herochips{display:flex;flex-wrap:wrap;gap:var(--w-space-2);}
+
+/* ===== 57 · CE-57 · Indeks artykułów =====================================
+   Lista wierszy BEZ MINIATUR (Mateusz + Sylwia 10.08) ze stronicowaniem po 10
+   pozycji, nie doładowywaniem. Wiersz: tytuł, dwie linie zajawki, metryka z
+   podgrupą, autorem, miesiącem i czasem czytania. Nad listą pasek sterowania:
+   chipy podgrup (aria-pressed), sortowanie i wyszukiwanie; pod listą
+   stronicowanie. Wszystko, co robi JS, jest bramkowane `data-js-only`. */
+/* Osiem chipów o długich nazwach zawsze zajmie kilka wierszy, więc sterowanie
+   idzie w dwa piętra: chipy, a pod nimi sortowanie i wyszukiwanie. Jeden wiersz
+   z chipami po lewej i narzędziami po prawej zostawiał dziurę w środku. */
+.cw-k-controls{display:flex;flex-direction:column;gap:var(--w-space-4);align-items:stretch;margin-top:clamp(1.5rem,3vw,2.25rem);max-width:860px;}
+.cw-k-filters{display:flex;flex-wrap:wrap;gap:var(--w-space-2);}
+/* Chip jako przycisk filtra: stan niesie obrys i grubość, nigdy sam kolor. */
+.cw-k-filters .c5-chip{cursor:pointer;min-height:36px;}
+.cw-k-filters .c5-chip:hover{border-color:var(--w-gray-900);color:var(--w-text-primary);}
+.cw-k-filters .c5-chip[aria-pressed="true"]{border-color:var(--w-gray-900);color:var(--w-text-primary);font-weight:var(--w-weight-semibold);background:var(--w-surface-hover);}
+.cw-k-tools{display:flex;flex-wrap:wrap;gap:var(--w-space-3);align-items:center;}
+.cw-k-tools .wf-select{flex:0 1 200px;}
+.cw-k-tools .cw-k-findbox{flex:1 1 240px;max-width:340px;}
+
+.cw-k-count{margin:clamp(1.25rem,2.5vw,1.75rem) 0 0;}
+
+.cw-k-list{list-style:none;margin:var(--w-space-4) 0 0;padding:0;max-width:860px;}
+.cw-k-row{display:flex;flex-direction:column;gap:var(--w-space-2);padding-block:clamp(1.1rem,2.2vw,1.5rem);border-top:1px solid var(--w-border-subtle);transition:border-color var(--w-duration-base) var(--w-ease);}
+.cw-k-list__item:last-child .cw-k-row{border-bottom:1px solid var(--w-border-subtle);}
+.cw-k-row__title{margin:0;}
+.cw-k-row__title a{color:inherit;text-decoration:none;}
+.cw-k-row:hover .cw-k-row__title a,
+.cw-k-row__title a:focus-visible{text-decoration:underline;}
+.cw-k-row__lead{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.cw-k-row__meta{margin:0;}
+/* Wiersz zapowiedzi (tekst gotowy, jeszcze nieopublikowany): bez linku,
+   stonowany – stan niesie chip „w przygotowaniu”, nie sam kolor. */
+.cw-k-row--soon .cw-k-row__title{color:var(--w-text-secondary);}
+
+/* Pusty wynik filtra – nota z przyciskiem czyszczącym (EL-17). */
+.cw-k-empty{margin-top:clamp(1.25rem,2.5vw,1.75rem);max-width:860px;flex-wrap:wrap;align-items:center;}
+.cw-k-empty .c5-btn{margin-left:auto;}
+
+/* Stronicowanie: „‹ Poprzednia”, numery, „Następna ›”. Przy jednej stronie
+   kontrolki zostają widoczne, ale nieaktywne (spec §4). */
+.cw-k-pager{display:flex;flex-wrap:wrap;gap:var(--w-space-2);align-items:center;margin-top:clamp(1.5rem,3vw,2.25rem);max-width:860px;}
+.cw-k-pager__nums{display:flex;gap:var(--w-space-2);margin-inline:var(--w-space-2);}
+.cw-k-pager__num{min-width:44px;min-height:44px;padding:10px 14px;font:inherit;font-size:0.9375rem;background:var(--w-surface-page);border:1px solid var(--w-border-default);color:var(--w-text-primary);cursor:pointer;}
+.cw-k-pager__num:hover:not(:disabled){border-color:var(--w-gray-900);}
+.cw-k-pager__num[aria-current="page"]{border-color:var(--w-gray-900);font-weight:var(--w-weight-semibold);background:var(--w-surface-hover);}
+.cw-k-pager .c5-btn[disabled],
+.cw-k-pager__num:disabled{background:var(--w-surface-subtle);color:var(--w-text-disabled);border-color:var(--w-border-subtle);cursor:not-allowed;}
+
+@media (max-width:899px){
+  /* dotyk: chip dostaje pełne pole 44 px, narzędzia idą na całą szerokość */
+  .cw-k-filters .c5-chip{min-height:44px;}
+  .cw-k-tools .wf-select,.cw-k-tools .cw-k-findbox{flex:1 1 100%;max-width:none;}
+}
+@media (prefers-reduced-motion: reduce){
+  .cw-k-row{transition:none;}
+}
+
+/* ===== 58 · CE-58 · Karty najnowszych ====================================
+   Trzy ostatnie artykuły: jedna duża karta z polem pod infografikę 16:9 po
+   lewej i dwie mniejsze jedna nad drugą po prawej (od 900 px), jedna kolumna
+   niżej. Karty nie mają miniatur – pole graficzne ma tylko karta wiodąca
+   (jedyny obraz działu). */
+.cw-k-latest{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);grid-template-rows:auto auto;gap:clamp(1.25rem,2.5vw,2rem);margin-top:clamp(1.5rem,3vw,2.25rem);align-items:stretch;}
+.cw-k-card{display:flex;flex-direction:column;gap:var(--w-space-3);align-items:flex-start;border:1px solid var(--w-border-default);background:var(--w-surface-page);padding:clamp(1.25rem,2.2vw,1.75rem);transition:border-color var(--w-duration-base) var(--w-ease);}
+.cw-k-card:hover{border-color:var(--w-gray-900);}
+.cw-k-card--lead{grid-row:1 / span 2;}
+.cw-k-card__fig{width:100%;aspect-ratio:16/9;border-radius:0;}
+.cw-k-card__title{margin:0;}
+.cw-k-card__title a{color:inherit;text-decoration:none;}
+.cw-k-card:hover .cw-k-card__title a,
+.cw-k-card__title a:focus-visible{text-decoration:underline;}
+.cw-k-card__lead{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.cw-k-card--lead .cw-k-card__lead{-webkit-line-clamp:4;}
+.cw-k-card__meta{margin:auto 0 0;}
+.cw-k-next{margin-top:clamp(1.25rem,2.5vw,1.75rem);}
+
+@media (max-width:899px){
+  .cw-k-latest{grid-template-columns:minmax(0,1fr);grid-template-rows:none;}
+  .cw-k-card--lead{grid-row:auto;}
+}
+@media (prefers-reduced-motion: reduce){
+  .cw-k-card{transition:none;}
+}
+
+/* ===== 59 · CE-59 · Nawigacja kategorii ==================================
+   Dwie grupy główne klienta jako obramowane boksy: nazwa z licznikiem, jedno
+   zdanie opisu i lista podgrup z licznikami. Nazwa grupy prowadzi na stronę
+   kategorii, podgrupa – na indeks z ustawionym filtrem. */
+.cw-k-cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(1.25rem,2.5vw,2rem);margin-top:clamp(1.5rem,3vw,2.25rem);}
+.cw-k-cat{display:flex;flex-direction:column;gap:var(--w-space-3);border:1px solid var(--w-border-default);background:var(--w-surface-page);padding:clamp(1.25rem,2.4vw,1.75rem);transition:border-color var(--w-duration-base) var(--w-ease);}
+.cw-k-cat:hover{border-color:var(--w-gray-900);}
+.cw-k-cat__head{display:flex;align-items:baseline;justify-content:space-between;gap:var(--w-space-3);}
+.cw-k-cat__name{margin:0;}
+.cw-k-cat__name a{color:inherit;text-decoration:none;}
+.cw-k-cat:hover .cw-k-cat__name a,
+.cw-k-cat__name a:focus-visible{text-decoration:underline;}
+.cw-k-cat__desc{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
+.cw-k-cat__subs{list-style:none;margin:var(--w-space-2) 0 0;padding:0;display:flex;flex-direction:column;}
+.cw-k-cat__subs > li{border-top:1px solid var(--w-border-subtle);}
+.cw-k-cat__subs > li:last-child{border-bottom:1px solid var(--w-border-subtle);}
+.cw-k-cat__sub{display:flex;align-items:center;gap:var(--w-space-3);min-height:44px;padding-block:var(--w-space-2);color:var(--w-text-primary);text-decoration:none;font-size:0.9375rem;}
+.cw-k-cat__sub:hover{text-decoration:underline;}
+.cw-k-cat__sub .wf-icon{flex:none;margin-left:auto;width:16px;height:16px;color:var(--w-icon-muted);}
+.cw-k-cat__n{flex:none;color:var(--w-text-secondary);font-size:0.8125rem;}
+
+/* ===== 53 · CE-53 · Dokumenty do pobrania ================================
+   Dwie listy wierszy „tytuł | metryka | Pobierz PDF”, anatomia z wersji
+   bazowej (prochnica-plus.html#wyniki-raporty), klasy własne strony. */
+.cw-k-docs{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(1.5rem,3.5vw,3rem);margin-top:clamp(1.5rem,3vw,2.25rem);}
+.cw-k-docgroup{display:flex;flex-direction:column;gap:var(--w-space-2);}
+.cw-k-doclist{list-style:none;margin:var(--w-space-2) 0 0;padding:0;display:flex;flex-direction:column;}
+.cw-k-docrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--w-space-2) var(--w-space-4);align-items:center;padding-block:var(--w-space-4);border-top:1px solid var(--w-border-subtle);}
+.cw-k-doclist > li:last-child .cw-k-docrow{border-bottom:1px solid var(--w-border-subtle);}
+.cw-k-docrow__name{margin:0;font-size:1rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+.cw-k-docrow__meta{margin:0;grid-column:1;}
+.cw-k-docrow .c5-btn{grid-column:2;grid-row:1 / span 2;}
+.cw-k-docmore{margin-top:clamp(1.5rem,3vw,2.25rem);}
+@media (max-width:599px){
+  .cw-k-docrow{grid-template-columns:minmax(0,1fr);}
+  .cw-k-docrow .c5-btn{grid-column:1;grid-row:auto;justify-self:start;}
+}
+
+/* ===== 48 · CE-48 · Karty autorów, wariant „kompakt” =====================
+   Wersja bazowa CE-48 (prochnica-plus.html#koordynatorzy) to karta z kadrem
+   4:3 i rozwijanym biogramem. Wariant kompaktowy: kwadratowe pole pod zdjęcie,
+   nazwisko, rola, dwa zdania – bez rozwijania. */
+.cw-k-authors{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(1.25rem,2.5vw,2rem);margin:clamp(1.5rem,3vw,2.25rem) 0 0;padding:0;}
+.cw-k-author{display:flex;flex-direction:column;gap:var(--w-space-3);align-items:flex-start;height:100%;border:1px solid var(--w-border-default);background:var(--w-surface-page);padding:clamp(1.25rem,2.2vw,1.75rem);transition:border-color var(--w-duration-base) var(--w-ease);}
+.cw-k-author:hover{border-color:var(--w-gray-900);}
+.cw-k-author__ph{width:88px;height:88px;min-height:0;border-radius:0;}
+.cw-k-author__name{margin:0;}
+.cw-k-author__role{margin:0;}
+.cw-k-author__bio{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
+@media (prefers-reduced-motion: reduce){
+  .cw-k-cat,.cw-k-author{transition:none;}
+}
+
+/* ===== 50 · CE-50 · Zaproponuj temat + przewodnik ========================
+   Wersja bazowa CE-50 to formularz Próchnicy+ (#zadaj-pytanie). Wariant
+   „temat”: dwa pola i przycisk po lewej, pas przewodnika po prawej. */
+.cw-k-topic{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(1.5rem,4vw,3.5rem);align-items:start;margin-top:clamp(1.5rem,3vw,2.25rem);}
+.cw-k-topic__copy{display:flex;flex-direction:column;gap:var(--w-space-4);}
+.cw-k-topic__form{display:flex;flex-direction:column;gap:var(--w-space-4);border:1px solid var(--w-border-default);background:var(--w-surface-page);padding:clamp(1.25rem,2.4vw,1.75rem);}
+.cw-k-topic__form form{display:flex;flex-direction:column;gap:var(--w-space-4);}
+.cw-k-topic__form .c5-btn{align-self:flex-start;}
+.cw-k-topic__hint{margin:0;}
+.cw-k-topic__msg{margin:0;padding:var(--w-space-3) var(--w-space-4);color:var(--w-text-primary);}
+.cw-k-topic__side{display:flex;flex-direction:column;gap:clamp(1.25rem,2.5vw,1.75rem);}
+@media (max-width:899px){
+  .cw-k-topic{grid-template-columns:minmax(0,1fr);}
+}
+
+/* ===== 62 · CE-62 · Boks produktowy, wariant „boczny” ====================
+   Wersja bazowa CE-62 stoi w treści artykułu (artykul.html) – tutaj wariant do
+   kolumny bocznej: packshot nad nazwą, jedno zdanie i dwa przyciski w słupku. */
+.cw-k-prod{display:flex;flex-direction:column;gap:var(--w-space-3);align-items:flex-start;border:1px solid var(--w-border-default);background:var(--w-surface-page);padding:clamp(1.25rem,2.2vw,1.5rem);}
+.cw-k-prod__shot{width:100%;display:grid;place-items:center;background:var(--w-gray-100);padding:var(--w-space-4);}
+.cw-k-prod__shot img{max-width:100%;height:auto;max-height:200px;width:auto;}
+.cw-k-prod__name{margin:0;}
+.cw-k-prod__txt{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
+.cw-k-prod .c5-btnrow{width:100%;}
+.cw-k-prod .c5-btn{flex:1 1 auto;--c5-btn-px:18px;}
+
+/* ===== 23 · CE-23 · Pas CTA, wariant „dwa-przyciski" =====================
+   Wersja bazowa CE-23 (produkty.html#wg-potrzeby-pas) to pas między kreskami z
+   tekstem po lewej i jednym przyciskiem po prawej. Wariant „dwa-przyciski”:
+   nagłówek po lewej, rząd dwóch przycisków po prawej. */
+.cw-k-bar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(1rem,3vw,2rem);align-items:center;border-top:1px solid var(--w-border-default);border-bottom:1px solid var(--w-border-default);padding-block:clamp(1.25rem,2.5vw,1.75rem);}
+.cw-k-bar > :first-child{margin:0;}
+@media (max-width:719px){
+  .cw-k-bar{grid-template-columns:minmax(0,1fr);}
+}
+
+/* ===== 90 · Układ strony kategorii ======================================= */
+/* Lista i kolumna boczna obok siebie od 1100 px, niżej kolumna boczna schodzi
+   pod listę (spec §4). */
+.cw-k-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(2rem,5vw,4rem);}
+.cw-k-side{display:flex;flex-direction:column;gap:clamp(1.25rem,2.5vw,2rem);}
+.cw-k-panel{display:flex;flex-direction:column;gap:var(--w-space-2);}
+.cw-k-panel__title{margin:0;}
+@media (min-width:1100px){
+  .cw-k-layout{grid-template-columns:minmax(0,1fr) 320px;align-items:start;}
+  .cw-k-layout .cw-k-list,
+  .cw-k-layout .cw-k-controls,
+  .cw-k-layout .cw-k-pager,
+  .cw-k-layout .cw-k-empty,
+  .cw-k-layout .cw-k-sechead{max-width:none;}
+}
+/* Kolumna boczna nie jest przyklejana: bywa wyższa od ekranu, a przyklejony
+   blok wyższy niż okno chowa własną stopkę. Przewija się razem z listą. */

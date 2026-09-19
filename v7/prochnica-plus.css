@@ -18,10 +18,6 @@
 
 #main [id]{scroll-margin-top:0;}
 
-/* Chowane są wyłącznie panele akordeonów i komunikat formularza. Komunikat
-   ma display:flex, który wygrywa z domyślnym `display:none` przeglądarki. */
-[hidden]{display:none !important;}
-
 /* Dostępność (DS §5b): --w-text-tertiary przy rozmiarze caption nie przechodzi
    AA, a podpisy pod placeholderami stoją także w pasmach. Na tej stronie
    podpisy idą więc na --w-text-secondary. */
@@ -497,22 +493,24 @@ html.pp-lock{overflow:hidden;}
 .pp-liczba + .pp-liczba{border-top:1px solid rgb(255 255 255 / .18);}
 .pp-liczba__label{font-size:0.9375rem;line-height:1.45;color:var(--w-gray-300);max-width:38ch;}
 .pp-liczba__note{display:block;margin-top:var(--w-space-2);font-size:0.8125rem;color:var(--w-gray-400);}
-.pp-liczba__num{display:flex;align-items:flex-end;justify-content:flex-end;
+/* Kontener sufiksu EL-31 (`c5-aff`): wyrównanie GÓRĄ, odstęp tylko przed
+   sufiksem – prefiks „+" stoi w rozmiarze liczby tuż przy cyfrze, więc nie
+   może go rozepchnąć wspólny `gap`. Przesunięcie sufiksu bierzemy domyślne
+   z `ce/00-base.css`; o resztę dba `line-height` kołowrotka niżej. */
+.pp-liczba__num{display:flex;align-items:flex-start;justify-content:flex-end;
   font-size:clamp(4.5rem,11vw,10rem);line-height:1;font-weight:var(--w-weight-medium);
   letter-spacing:-0.03em;font-variant-numeric:tabular-nums;}
-/* Prefiks „+" i sufiks „lata" w tej samej linii, 40 % wielkości liczby.
-   Okienko cyfry ma overflow:hidden, więc jego linia bazowa jest syntetyzowana z
-   dolnej krawędzi – wyrównujemy dołami, a afiks podnosimy o różnicę linii
-   bazowych (0,19 wysokości cyfry ≈ 0,32 wysokości afiksu). */
-.pp-liczba__aff{font-size:.4em;line-height:1;padding-bottom:.32em;}
-.pp-odo + .pp-liczba__aff{margin-left:.14em;}
+.pp-odo + .c5-aff{margin-left:.12em;}
 
 /* --- Kołowrotek cyfr -------------------------------------------------------
    Każda cyfra to okno wysokości jednej cyfry, a w nim taśma z kolejnymi
    wartościami (na dole cel, wyżej droga do niego). Start: taśma przesunięta w
    górę o całą swoją długość, więc w oknie stoi 0; animacja sprowadza ją do 0,
    czyli cyfry przesuwają się od góry do dołu. Wszystko na transformie. */
-.pp-odo{--pp-odo-h:1.06em;display:inline-flex;}
+/* `line-height` równe wysokości okienka: bez JS i przy ograniczonym ruchu stoi
+   tu zwyczajny tekst, a ma siedzieć dokładnie tam, gdzie cyfra w taśmie – inaczej
+   sufiks celowałby w dwie różne krawędzie. */
+.pp-odo{--pp-odo-h:1.06em;display:inline-flex;line-height:var(--pp-odo-h);}
 .pp-odo__wrap{display:inline-flex;}
 .pp-odo__d{display:block;height:var(--pp-odo-h);overflow:hidden;}
 .pp-odo__strip{display:block;transform:translateY(calc(var(--pp-i,0) * var(--pp-odo-h) * -1));will-change:transform;}

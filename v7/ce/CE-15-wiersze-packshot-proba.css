@@ -1,0 +1,155 @@
+/* ===== CE-15 (trial) · Cascade of three accordions with a countdown ==========
+   Trial version of CE-15 „Wiersze z packshotem”, built to the Figma frame
+   „Frame 224” (303:2863) and to Mateusz's annotations of 19.09.2026.
+   Linked by produkty.html ONLY (spec §22.2). The shared block
+   ce/CE-15-wiersze-packshot.css/.js stays untouched until Mateusz accepts this
+   trial (spec §21.0.1), so carbomat.html keeps the pinned rows; the CE registry
+   and the CE index are not regenerated either.
+
+   Layout from 900 px: three equal columns of the wide container
+   (.c5-wrap--wide, EL-29), item i in column i and row i – so the top of card
+   n+1 is the bottom of card n with no measuring in JS. Four hairlines stand on
+   the column boundaries, 20 px above and below the cascade; the cards keep 6 px
+   off the lines. A closed card is a 70 px hairline box, an open one is a white
+   field on the light band, its outline turned transparent so the two states
+   have exactly the same geometry. The open height is one shared value
+   (--c5-casc-h, measured by the module from the tallest panel), which keeps the
+   cascade and the lines the same height whichever card is open, and lets the
+   closing and the opening card animate in parallel without moving the page.
+
+   Below 900 px: one column, an ordinary accordion – no lines, no countdown
+   ring. Without JS (no [data-casc="on"]): every panel is open and the icon
+   shows a minus, so all three moments read at once.
+
+   The product row is the third local copy of EL-33 „Boks produktu z
+   packshotem” (model: .c5-tl__prod in ce/CE-65-os-faz.css); EL-33 has no shared
+   code yet, so the rules are repeated here on purpose. ===== */
+
+.c5-casc{
+  /* closed card: 68 px of button + 2 px of hairline = the 70 px of the frame */
+  --c5-casc-closed:68px;
+  --c5-casc-pad:clamp(1rem,1.3vw,1.125rem);
+  --c5-casc-inset:6px;          /* air between a card and the hairline       */
+  --c5-casc-bleed:20px;         /* how far the lines run past the cascade    */
+  /* the automatic change swaps the open card for another one of the same
+     height; Chrome's scroll anchoring would still answer that with a few px of
+     scroll, which reads as a jerk under Lenis – the reader stays put instead */
+  overflow-anchor:none;}
+
+.c5-casc__stage{position:relative;margin-top:clamp(2rem,4vw,3rem);}
+.c5-casc__list{list-style:none;margin:0;padding:0;}
+.c5-casc__item{position:relative;min-width:0;
+  border:1px solid var(--w-border-default);background:none;
+  transition:background-color var(--c5-acc) var(--w-ease),border-color var(--c5-acc) var(--w-ease);}
+.c5-casc__item + .c5-casc__item{margin-top:var(--w-space-3);}
+/* open: a white field on the light band; the outline only turns transparent,
+   so the header keeps the pixel height it has when the card is closed */
+.c5-casc__item[data-open]{background:var(--w-surface-page);border-color:transparent;}
+
+/* --- header: title left, moment right, icon last – in both states ---------- */
+.c5-casc__h{margin:0;font-weight:var(--w-weight-regular);}
+.c5-casc__btn{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;
+  gap:var(--w-space-3);width:100%;min-height:var(--c5-casc-closed);
+  padding:var(--w-space-3) var(--c5-casc-pad);
+  border:0;background:none;font:inherit;text-align:left;color:inherit;cursor:pointer;}
+.c5-casc__btn:focus-visible{outline:2px solid var(--w-gray-900);outline-offset:-2px;}
+.c5-casc__t{font-size:0.9375rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;
+  color:var(--w-text-primary);}
+.c5-casc__when{font-size:0.9375rem;color:var(--w-text-tertiary);}
+
+/* --- plus / minus in a ring, the ring doubling as the countdown ------------ */
+.c5-casc__icon{display:block;width:24px;height:24px;}
+.c5-casc__icon svg{display:block;width:100%;height:100%;}
+.c5-casc__ring{fill:none;stroke:var(--w-border-strong);stroke-width:1;}
+/* r = 11 → circumference 69.12; the dash starts at the top and is wound off
+   by the animation. At rest the whole circle sits in the gap, so nothing shows. */
+.c5-casc__ring--run{stroke:var(--w-gray-900);stroke-dasharray:69.12;stroke-dashoffset:69.12;
+  transform:rotate(-90deg);transform-origin:50% 50%;}
+.c5-casc__item[data-casc-timer] .c5-casc__ring--run{animation:c5-casc-count 5s linear forwards;}
+/* only the VALUE of the attribute changes, so the ring holds its position */
+.c5-casc__item[data-casc-timer="hold"] .c5-casc__ring--run{animation-play-state:paused;}
+@keyframes c5-casc-count{from{stroke-dashoffset:69.12;}to{stroke-dashoffset:0;}}
+.c5-casc__sign{fill:none;stroke:var(--w-text-secondary);stroke-width:1;}
+.c5-casc__sign--v{transition:opacity var(--c5-acc) var(--w-ease);}
+.c5-casc__item[data-open] .c5-casc__sign--v{opacity:0;}
+/* without JS every panel is open, so every card wears the open state */
+.c5-casc:not([data-casc="on"]) .c5-casc__sign--v{opacity:0;}
+.c5-casc:not([data-casc="on"]) .c5-casc__item{background:var(--w-surface-page);border-color:transparent;}
+
+/* --- panel ----------------------------------------------------------------- */
+.c5-casc__panel{overflow:hidden;}
+.c5-casc[data-casc="on"] .c5-casc__panel{height:0;transition:height var(--c5-acc) var(--w-ease);}
+.c5-casc[data-casc="on"] .c5-casc__item[data-open] .c5-casc__panel{height:var(--c5-casc-h,auto);}
+.c5-casc__panelin{display:flex;flex-direction:column;gap:var(--w-space-5);
+  padding:var(--w-space-1) var(--c5-casc-pad) var(--c5-casc-pad);}
+
+/* --- product row (local copy of EL-33) ------------------------------------- */
+.c5-casc__prod{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:var(--w-space-3);
+  align-items:center;min-height:56px;padding:var(--w-space-2) var(--w-space-3);
+  background:var(--w-surface-page);border:1px solid var(--w-border-default);
+  font-size:var(--w-font-sm-size);line-height:var(--w-font-sm-lh);
+  font-weight:var(--w-weight-medium);color:var(--w-text-primary);text-decoration:none;
+  transition:border-color var(--w-duration-base) var(--w-ease);}
+.c5-casc__prod:hover,.c5-casc__prod:focus-visible{border-color:var(--w-gray-900);}
+.c5-casc__pack{display:flex;align-items:center;justify-content:center;
+  width:56px;height:42px;background:var(--w-gray-100);}
+.c5-casc__pack img{width:100%;height:100%;object-fit:contain;}
+.c5-casc__prodn{min-width:0;}
+.c5-casc__prod > .wf-icon{justify-self:end;color:var(--w-text-tertiary);}
+
+/* --- description with the square marker ------------------------------------ */
+.c5-casc__txt{position:relative;margin:0;padding-left:18px;
+  font-size:0.9375rem;line-height:1.55;color:var(--w-text-secondary);}
+.c5-casc__txt::before{content:"";position:absolute;left:0;top:.55em;
+  width:6px;height:6px;background:var(--w-gray-400);}
+
+/* --- hairlines: hidden until the cascade actually stands in columns --------- */
+.c5-casc__lines{display:none;}
+
+/* ===== the cascade proper (>= 900 px, with the module running) =============
+   Without JS nothing switches, so three open cards in three columns would read
+   as one card per column and two empty holes – the fallback stays one column. */
+@media (min-width:900px){
+  .c5-casc[data-casc="on"] .c5-casc__list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+    align-items:start;row-gap:0;column-gap:0;}
+  .c5-casc[data-casc="on"] .c5-casc__item{margin-inline:var(--c5-casc-inset);}
+  .c5-casc[data-casc="on"] .c5-casc__item + .c5-casc__item{margin-top:0;}
+  .c5-casc[data-casc="on"] .c5-casc__item:nth-child(1){grid-column:1;grid-row:1;}
+  .c5-casc[data-casc="on"] .c5-casc__item:nth-child(2){grid-column:2;grid-row:2;}
+  .c5-casc[data-casc="on"] .c5-casc__item:nth-child(3){grid-column:3;grid-row:3;}
+  /* the four lines: the stage is the content box of the wide container, so
+     0 % and 100 % land exactly where the outer columns begin and end */
+  .c5-casc[data-casc="on"] .c5-casc__lines{display:block;position:absolute;
+    top:calc(var(--c5-casc-bleed) * -1);bottom:calc(var(--c5-casc-bleed) * -1);
+    left:0;right:0;pointer-events:none;}
+  .c5-casc__lines i{position:absolute;top:0;bottom:0;width:1px;background:var(--w-border-subtle);}
+  .c5-casc__lines i:nth-child(1){left:0;}
+  .c5-casc__lines i:nth-child(2){left:33.3333%;}
+  .c5-casc__lines i:nth-child(3){left:66.6667%;}
+  .c5-casc__lines i:nth-child(4){right:0;}
+  /* one column has the reading width of the page, not of a third of the window */
+  .c5-casc:not([data-casc="on"]) .c5-casc__list{max-width:1180px;margin-inline:auto;}
+}
+
+/* ===== entrance: the cards arrive one after another ========================
+   Only where the scroll mechanics run (>= 900 px, no reduced motion) and only
+   the first time the cascade shows up – the module adds `is-in` once. A
+   transform changes nothing in the layout, so the panel heights measured at
+   start stay right. The open/close wash rides in the same shorthand, otherwise
+   this rule would drop it. */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  .cx-js .c5-casc[data-casc="on"] .c5-casc__item{opacity:0;transform:translateY(18px);
+    transition:opacity .5s cubic-bezier(.2,.7,.2,1),transform .5s cubic-bezier(.2,.7,.2,1),
+      background-color var(--c5-acc) var(--w-ease),border-color var(--c5-acc) var(--w-ease);}
+  .cx-js .c5-casc[data-casc="on"].is-in .c5-casc__item{opacity:1;transform:none;}
+  .cx-js .c5-casc[data-casc="on"].is-in .c5-casc__item:nth-child(2){transition-delay:.12s;}
+  .cx-js .c5-casc[data-casc="on"].is-in .c5-casc__item:nth-child(3){transition-delay:.24s;}
+}
+
+/* ===== reduced motion: no entrance, no countdown, no transitions ==========
+   This block must stay AFTER the definitions above – same specificity, so the
+   later rule wins. The module keeps the countdown off anyway (CX5.motionOn). */
+@media (prefers-reduced-motion: reduce){
+  .c5-casc__item,.c5-casc__panel,.c5-casc__prod,.c5-casc__sign--v{transition:none;}
+  .c5-casc__item[data-casc-timer] .c5-casc__ring--run{animation:none;}
+}

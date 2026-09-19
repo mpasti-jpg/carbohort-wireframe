@@ -1,0 +1,305 @@
+/* ===== CE-66 · Tablica warunków (rejestr: ce-rejestr.js) ===================
+   Prefix: c5-cb (condition board). Rebuilt on 19.09 to Mateusz's own frame
+   (Figma „Frame 218”, spec §14.5). The board of iteration 9 – giant odometer,
+   4 × 2 tile selector, prev/next, pause and auto-advance – is gone. What is
+   left is the frame's reading order: a vertical list of the eight conditions
+   on the left, and on the right the title of the active one over ONE composite
+   strip: a dark „Priorytet” field (~37 % of the strip) joined to a light field
+   that carries „Nasze produkty” and „Uzupełnienie” side by side, split by a
+   hairline.
+
+   The frame gives layout and mechanics; the language stays ours – greyscale,
+   `--w-*` tokens, sharp corners, body typeface. The frame's green becomes
+   `--w-gray-900`, its light grey `--w-gray-100`, and the only rounded thing on
+   the page is the outlined kicker (EL-06).
+
+   Geometry of the frame at 1440 px, carried over as ratios so it survives
+   every width: list : details = 23 : 77 with a `clamp(2.5rem,8vw,7.25rem)`
+   gutter (the spec's „29 : 71” counts that gutter inside the left share);
+   inside the strip 359 : 334 : 288, which is the frame's 359 px dark field and
+   its 622 px light field cut at the hairline – the 40 px field padding lives
+   ON THE ITEMS, so the tracks stay pure ratios and the hairline lands on the
+   track boundary by itself.
+
+   The strip is still one grid and still uses the trick of §13.3, which is the
+   point of this element:
+     · the two fields, the hairline and the eight panels sit in the SAME cells,
+       the stack and every panel inherit the tracks with `subgrid`,
+     · so the strip is as tall as the tallest condition and never jumps, the
+       two fields are equal in height by construction, and the field labels of
+       all eight conditions land on the same pixel row – which is why they are
+       never animated and read as printed once,
+     · a panel waiting its turn is hidden with `visibility`, not `display`, so
+       it keeps sizing the shared tracks.
+   Motion lives in the two inner layers only: the title slides up from behind a
+   mask, the three values cascade 70 ms apart. Labels stay put.
+
+   Without JS (`html.cx-js` absent) the list, the fields and the hairline
+   disappear and the eight panels render as ordinary light cards with their
+   number – the same content, no mechanics.
+   ========================================================================= */
+
+.c5-cb{
+  /* --- frame geometry ---------------------------------------------------- */
+  --c5-cb-node:25px;                             /* numbered node, as CE-65    */
+  --c5-cb-nodegap:12px;                          /* node -> condition name     */
+  --c5-cb-pitch:32px;                            /* visual row pitch of the list */
+  --c5-cb-pad:clamp(1.25rem,3.4vw,2.5rem);       /* field padding, 40 px >= 1176 */
+  --c5-cb-labgap:1.75rem;                        /* field label -> its content   */
+  --c5-cb-titlegap:clamp(1.5rem,2.8vw,2.5rem);   /* title -> strip               */
+  --c5-cb-colgap:clamp(2.5rem,8vw,7.25rem);      /* list -> details              */
+  /* --- motion ------------------------------------------------------------ */
+  --c5-cb-out:120ms;                             /* leaving panel              */
+  --c5-cb-in:420ms;                              /* entering title and values  */
+  --c5-cb-stagger:70ms;
+  --c5-cb-ease:cubic-bezier(.2,.8,.2,1);
+}
+/* A 32 px pitch is a 32 px target. Touch gets the WCAG 2.5.8 minimum instead of
+   overlapping hit areas, which would make the boundary between two rows fall
+   inside the neighbour's visible box. */
+@media (pointer:coarse){.c5-cb{--c5-cb-pitch:44px;}}
+
+/* the frame breaks the h2 after „warunków” – 34 rem does that at every size */
+.c5-cb .c5-h2{max-width:34rem;}
+/* the frame sets the kicker close to the h2 (56 px between their tops), not at
+   the pattern's default distance */
+.c5-cb .c5-kicker{margin-bottom:1.5rem;}
+
+/* --- Dwie kolumny: lista i szczegóły -------------------------------------- */
+.c5-cb__cols{
+  margin-top:clamp(2.5rem,5.5vw,5rem);
+  display:grid;grid-template-columns:minmax(0,1fr);
+  gap:clamp(1.5rem,4vw,2.25rem);
+}
+/* `html.cx-js` on purpose: without JS the list is `display:none`, which takes
+   it OUT of the grid flow entirely – auto-placement would then drop the cards
+   into the 24fr track and make them 300 px wide. Without JS this stays one
+   column at every width. */
+@media (min-width:900px){
+  html.cx-js .c5-cb__cols{grid-template-columns:minmax(0,24fr) minmax(0,76fr);gap:var(--c5-cb-colgap);align-items:start;}
+}
+
+/* --- Lista ośmiu warunków -------------------------------------------------
+   Below 900 px a scrolled row of chips (the module brings the active one into
+   view with `scrollLeft`); from 900 px the frame's vertical list. */
+.c5-cb__list{display:none;}
+html.cx-js .c5-cb__list{
+  display:flex;gap:.5rem;
+  overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none;
+}
+html.cx-js .c5-cb__list::-webkit-scrollbar{display:none;}
+
+.c5-cb__tab{
+  display:grid;grid-template-columns:var(--c5-cb-node) minmax(0,1fr);
+  column-gap:var(--c5-cb-nodegap);align-items:center;
+  font:inherit;text-align:left;color:var(--w-text-secondary);
+  background:none;border:0;border-radius:0;cursor:pointer;
+  transition:color var(--w-duration-base) var(--w-ease);
+}
+.c5-cb__tabno{
+  display:flex;align-items:center;justify-content:center;
+  width:var(--c5-cb-node);height:var(--c5-cb-node);
+  border:1px solid var(--w-border-strong);background:var(--w-surface-page);
+  font-family:inherit;font-size:.6875rem;font-weight:var(--w-weight-medium);
+  font-variant-numeric:tabular-nums;letter-spacing:.02em;line-height:1;
+  color:var(--w-text-tertiary);
+  transition:background var(--w-duration-base) var(--w-ease),
+             border-color var(--w-duration-base) var(--w-ease),
+             color var(--w-duration-base) var(--w-ease);
+}
+.c5-cb__tabt{font-size:.9375rem;line-height:1.3;letter-spacing:-0.01em;}
+.c5-cb__tab:hover{color:var(--w-text-primary);}
+.c5-cb__tab:hover .c5-cb__tabno{border-color:var(--w-gray-900);}
+.c5-cb__tab:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:2px;}
+.c5-cb__tab[aria-selected="true"]{color:var(--w-text-primary);}
+.c5-cb__tab[aria-selected="true"] .c5-cb__tabt{font-weight:var(--w-weight-medium);}
+.c5-cb__tab[aria-selected="true"] .c5-cb__tabno{background:var(--w-gray-900);border-color:var(--w-gray-900);color:var(--w-text-inverse);}
+
+@media (max-width:899px){
+  /* a fixed basis, not `auto`: chips of one width let the next one peek in and
+     say the row scrolls – a nowrap chip as wide as its name fills the screen
+     and reads as a bar */
+  html.cx-js .c5-cb__tab{
+    flex:0 0 clamp(10.5rem,62%,14rem);min-height:44px;padding:.5rem .75rem;
+    background:var(--w-surface-page);border:1px solid var(--w-border-default);
+    scroll-snap-align:start;
+  }
+  html.cx-js .c5-cb__tab[aria-selected="true"]{background:var(--w-gray-900);border-color:var(--w-gray-900);color:var(--w-text-inverse);}
+  /* on the inverted chip the node is an outline, not a filled square */
+  html.cx-js .c5-cb__tab[aria-selected="true"] .c5-cb__tabno{background:transparent;border-color:rgb(255 255 255 / .55);color:var(--w-text-inverse);}
+}
+@media (min-width:900px){
+  html.cx-js .c5-cb__list{display:block;overflow:visible;}
+  html.cx-js .c5-cb__tab{width:100%;min-height:var(--c5-cb-pitch);padding-block:calc((var(--c5-cb-pitch) - var(--c5-cb-node)) / 2);align-items:start;}
+  /* our condition names are longer than the frame's mock, so the longest one
+     wraps below ~1500 px. The node then belongs beside the FIRST line, not in
+     the middle of the block: `1.3em` is the name's own line box, and `em`
+     resolves on the name, so the nudge follows its size. */
+  html.cx-js .c5-cb__tabt{padding-top:calc((var(--c5-cb-node) - 1.3em) / 2);}
+}
+
+/* --- Szczegóły: tytuł i złożony pas pól -----------------------------------
+   Phone track map (one column):
+     1 tytuł · 2+3 Priorytet · 4+5 Nasze produkty · 6+7 Uzupełnienie
+   `gap` stays 0 everywhere – every distance is padding on an item, so all
+   eight panels contribute the same box to the shared tracks. */
+.c5-cb__det{display:block;}
+html.cx-js .c5-cb__det{
+  display:grid;grid-template-columns:minmax(0,1fr);
+  grid-template-rows:auto auto auto auto auto auto auto;
+  gap:0;touch-action:pan-y;                /* horizontal swipe belongs to us */
+}
+
+.c5-cb__fld,.c5-cb__vr{display:none;}
+html.cx-js .c5-cb__fld{display:block;}
+html.cx-js .c5-cb__fld--dark{grid-area:2 / 1 / 4 / -1;background:var(--w-gray-900);}
+html.cx-js .c5-cb__fld--lite{grid-area:4 / 1 / -1 / -1;background:var(--w-gray-100);}
+
+/* --- Stos paneli ----------------------------------------------------------
+   Without JS a plain card grid; with JS the subgrid stack over the fields. */
+.c5-cb__stack{display:grid;gap:var(--w-space-4);grid-template-columns:minmax(0,1fr);}
+.c5-cb__panel{display:flex;flex-direction:column;gap:var(--w-space-4);border:1px solid var(--w-border-default);padding:var(--w-space-6);}
+/* Both subgrids repeat the parent's gutters, and they have to say it out loud:
+   a subgrid with a narrower gutter lets its items grow into the parent's, a
+   wider one makes every parent track grow by the difference. The card layout's
+   `gap` above is wrong here, so the value is stated, not inherited. */
+html.cx-js .c5-cb__stack,html.cx-js .c5-cb__panel{column-gap:0;row-gap:0;}
+html.cx-js .c5-cb__stack{
+  grid-area:1 / 1 / -1 / -1;
+  grid-template-columns:subgrid;grid-template-rows:subgrid;
+}
+html.cx-js .c5-cb__panel{
+  grid-area:1 / 1 / -1 / -1;display:grid;
+  grid-template-columns:subgrid;grid-template-rows:subgrid;
+  border:0;padding:0;visibility:hidden;
+}
+html.cx-js .c5-cb__panel.is-on,html.cx-js .c5-cb__panel.is-out{visibility:visible;}
+html.cx-js .c5-cb__panel.is-on{z-index:2;}
+html.cx-js .c5-cb__panel.is-out{z-index:1;}
+/* the panel covers the dark field, so its ring goes OUTSIDE the strip */
+html.cx-js .c5-cb__panel:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:4px;}
+
+/* --- Tytuł warunku -------------------------------------------------------- */
+.c5-cb__t{font-size:1.125rem;line-height:1.3;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;color:var(--w-text-primary);}
+.c5-cb__no{display:block;margin-bottom:.375rem;font-size:.6875rem;line-height:1;letter-spacing:.06em;font-variant-numeric:tabular-nums;color:var(--w-text-tertiary);}
+html.cx-js .c5-cb__no{display:none;}
+html.cx-js .c5-cb__t{
+  grid-area:1 / 1 / 2 / -1;align-self:start;
+  padding-bottom:var(--c5-cb-titlegap);
+  font-size:clamp(1.5rem,2.3vw,2.125rem);line-height:1.2;font-weight:var(--w-weight-regular);
+}
+/* maska tytułu: `padding-bottom` z ujemnym marginesem zostawia miejsce na
+   ogonki liter („p”, „j”), nie oddając go układowi – tytuł nadal wjeżdża zza
+   dolnej krawędzi maski */
+.c5-cb__tw{display:block;overflow:hidden;padding-bottom:.14em;margin-bottom:-.14em;}
+.c5-cb__ti{display:block;}
+
+/* --- Pola: etykieta + treść ----------------------------------------------- */
+.c5-cb__lab{
+  display:block;font-size:.75rem;line-height:1.4;letter-spacing:.08em;
+  text-transform:uppercase;font-weight:var(--w-weight-medium);color:var(--w-text-tertiary);
+}
+/* the frame's 4 px square in front of every field label */
+.c5-cb__lab::before{content:"";display:inline-block;width:4px;height:4px;margin-right:.4375rem;vertical-align:.18em;background:var(--w-gray-900);}
+.c5-cb__val{font-size:.9375rem;line-height:1.55;color:var(--w-text-secondary);}
+.c5-cb__val p{margin:0;}
+/* „Priorytet” without JS is the key line of a light card; on the dark field it
+   is the frame's large, regular-weight sentence */
+.c5-cb__val--a{font-size:1.0625rem;line-height:1.4;font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+html.cx-js .c5-cb__val--a{font-size:clamp(1.25rem,1.8vw,1.5rem);line-height:1.25;font-weight:var(--w-weight-regular);color:var(--w-text-inverse);}
+html.cx-js .c5-cb__lab--a{color:rgb(255 255 255 / .62);}
+html.cx-js .c5-cb__lab--a::before{background:var(--w-text-inverse);}
+
+html.cx-js .c5-cb__lab{padding:var(--c5-cb-pad) var(--c5-cb-pad) 0;}
+html.cx-js .c5-cb__val{padding:var(--c5-cb-labgap) var(--c5-cb-pad) var(--c5-cb-pad);}
+html.cx-js .c5-cb__lab--a{grid-area:2 / 1;}
+html.cx-js .c5-cb__val--a{grid-area:3 / 1;--i:0;}
+html.cx-js .c5-cb__lab--b{grid-area:4 / 1;}
+html.cx-js .c5-cb__val--b{grid-area:5 / 1;padding-bottom:0;--i:1;}
+html.cx-js .c5-cb__lab--c{grid-area:6 / 1;}
+html.cx-js .c5-cb__val--c{grid-area:7 / 1;--i:2;}
+
+/* --- Boksy produktów (jak w CE-65: ramka, packshot, nazwa, strzałka) ------- */
+.c5-cb__prods{display:flex;flex-direction:column;gap:5px;margin-top:var(--w-space-4);}
+.c5-cb__prod{
+  display:grid;grid-template-columns:45px minmax(0,1fr) auto;gap:.625rem;
+  align-items:center;width:100%;min-height:69px;padding:9px 10px;
+  background:var(--w-surface-page);border:1px solid var(--w-border-default);border-radius:0;
+  font:inherit;font-size:var(--w-font-sm-size);line-height:1.3;font-weight:var(--w-weight-medium);
+  color:var(--w-text-primary);text-align:left;cursor:pointer;
+  transition:border-color var(--w-duration-base) var(--w-ease);
+}
+.c5-cb__prod:hover,.c5-cb__prod:focus-visible{border-color:var(--w-gray-900);}
+.c5-cb__prod:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:var(--w-focus-ring-offset);}
+.c5-cb__pack{display:flex;align-items:center;justify-content:center;width:45px;height:50px;background:var(--w-gray-100);}
+.c5-cb__pack img{width:100%;height:100%;object-fit:contain;}
+.c5-cb__prodn{min-width:0;}
+.c5-cb__prod > .wf-icon{justify-self:end;color:var(--w-text-tertiary);}
+
+/* --- 640 px: dwie karty bez JS -------------------------------------------- */
+@media (min-width:640px){
+  .c5-cb__stack{grid-template-columns:repeat(2,minmax(0,1fr));}
+  html.cx-js .c5-cb__stack{grid-template-columns:subgrid;}
+}
+
+/* --- 900 px: pas dwóch pól obok siebie ------------------------------------
+   Between 900 and 1199 px the strip is already the frame's two joined fields,
+   but the light one stacks its two columns: at 1024 px the frame's 359 : 622
+   cut would leave „Nasze produkty” about 150 px of usable width, which is
+   narrower than a product box. Ratio 45 : 55 instead, hairline hidden.
+     kolumny  1 Priorytet · 2 Nasze produkty + Uzupełnienie
+     wiersze  1 tytuł · 2 etykiety · 3 treści · 4 etykieta · 5 treść */
+@media (min-width:900px){
+  html.cx-js .c5-cb__det{grid-template-columns:minmax(0,45fr) minmax(0,55fr);grid-template-rows:auto auto auto auto auto;}
+  html.cx-js .c5-cb__fld--dark{grid-area:2 / 1 / -1 / 2;}
+  html.cx-js .c5-cb__fld--lite{grid-area:2 / 2 / -1 / -1;}
+  html.cx-js .c5-cb__lab--a{grid-area:2 / 1;}
+  html.cx-js .c5-cb__val--a{grid-area:3 / 1;}
+  html.cx-js .c5-cb__lab--b{grid-area:2 / 2;}
+  html.cx-js .c5-cb__val--b{grid-area:3 / 2;padding-bottom:var(--c5-cb-pad);}
+  html.cx-js .c5-cb__lab--c{grid-area:4 / 2;}
+  html.cx-js .c5-cb__val--c{grid-area:5 / 2;}
+}
+
+/* --- 1200 px: pełna geometria ramki ---------------------------------------
+     kolumny  1 Priorytet (359) · 2 Nasze produkty (334) · 3 Uzupełnienie (288)
+     wiersze  1 tytuł · 2 etykiety · 3 treści
+   The 40 px padding is on the items, so the tracks are the frame's fields with
+   their padding folded in: 40+254+40 = 334 and 40+208+40 = 288, and the
+   hairline at the 2 / 3 boundary lands exactly where the frame drew it. */
+@media (min-width:1200px){
+  html.cx-js .c5-cb__det{grid-template-columns:minmax(0,359fr) minmax(0,334fr) minmax(0,288fr);grid-template-rows:auto auto auto;}
+  html.cx-js .c5-cb__fld--dark{grid-area:2 / 1 / -1 / 2;}
+  html.cx-js .c5-cb__fld--lite{grid-area:2 / 2 / -1 / -1;}
+  html.cx-js .c5-cb__vr{display:block;grid-area:2 / 3 / -1 / 4;justify-self:start;width:1px;margin-block:2.25rem;background:var(--w-border-default);}
+  html.cx-js .c5-cb__lab--b{grid-area:2 / 2;}
+  html.cx-js .c5-cb__val--b{grid-area:3 / 2;}
+  html.cx-js .c5-cb__lab--c{grid-area:2 / 3;}
+  html.cx-js .c5-cb__val--c{grid-area:3 / 3;}
+}
+
+/* --- Ruch: wyjście panelu, wejście tytułu i treści ------------------------
+   The off state carries NO transition, so a panel that has finished leaving
+   resets instantly behind its own `visibility:hidden`. Labels are never
+   touched – they sit on the same pixel row in all eight panels. */
+html.cx-js .c5-cb__ti{transform:translateY(110%);}
+html.cx-js .c5-cb__val{opacity:0;transform:translateY(14px);}
+html.cx-js .c5-cb__panel.is-on .c5-cb__ti{transform:none;transition:transform var(--c5-cb-in) var(--c5-cb-ease) var(--c5-cb-out);}
+html.cx-js .c5-cb__panel.is-on .c5-cb__val{
+  opacity:1;transform:none;
+  transition:opacity var(--c5-cb-in) var(--c5-cb-ease) calc(var(--c5-cb-out) + var(--i) * var(--c5-cb-stagger)),
+             transform var(--c5-cb-in) var(--c5-cb-ease) calc(var(--c5-cb-out) + var(--i) * var(--c5-cb-stagger));
+}
+html.cx-js .c5-cb__panel.is-out .c5-cb__ti,
+html.cx-js .c5-cb__panel.is-out .c5-cb__val{
+  opacity:0;transform:translateY(-6px);
+  transition:opacity var(--c5-cb-out) var(--w-ease),transform var(--c5-cb-out) var(--w-ease);
+}
+
+/* --- Bez ruchu: przełączanie natychmiastowe ------------------------------- */
+@media (prefers-reduced-motion: reduce){
+  .c5-cb__tab,.c5-cb__tabno,.c5-cb__prod{transition:none;}
+  html.cx-js .c5-cb__ti,html.cx-js .c5-cb__val,
+  html.cx-js .c5-cb__panel.is-on .c5-cb__ti,html.cx-js .c5-cb__panel.is-on .c5-cb__val,
+  html.cx-js .c5-cb__panel.is-out .c5-cb__ti,html.cx-js .c5-cb__panel.is-out .c5-cb__val{opacity:1;transform:none;transition:none;}
+}

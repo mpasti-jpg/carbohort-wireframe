@@ -1,0 +1,179 @@
+/* ===== CE-65 · Oś faz z akordeonem (rejestr: ce-rejestr.js) =====
+   Two columns from 900 px: on the left the head of the section – the outlined
+   kicker and the h2, sticky so the column does not stand empty along ten
+   phases – on the right a vertical axis of numbered nodes with large titles.
+   One phase is open at a time; its panel drops under the title and carries the
+   photo of the phase, the label, the summary, the product boxes, the sources
+   and the button that opens the full description in a lightbox.
+   Iteration 10 (19.09.2026, uwaga 4 of Mateusz): the photo goes back INTO the
+   open panel, where the frame has it – the square stage pinned to the bottom
+   of the window, its track and the exception for the advisor dock are gone.
+   From 1200 px the panel stands on two columns: the photo (6 : 7) on the left,
+   the text column on the right; below that the photo keeps its 4 : 3 place
+   above the text. 1200 px is where the right column of the section can hold a
+   15 rem photo next to a text column that still reads – at 900-1024 px the
+   text would be left with some 11 rem, so there the phone order stands.
+   Pattern: Figma frame „Frame 213” (18.09.2026) – the layout only. The type
+   and the colours stay ours: grey scale, --w-* tokens, square corners, no
+   shadows (the outline kicker is Mateusz's one sanctioned round corner).
+   Every panel holds its own <figure> and nothing moves it any more, so the
+   photos are in place at every width, with JS and without it. Without JS every
+   panel is open and the axis is drawn by CSS alone.
+   Built for Kukurydza (#u-fazy); no other page uses the block yet. ===== */
+
+.c5-tl{
+  /* node box, the gap between the node and the title, and the title metrics –
+     the phone block below redefines the three inputs, the derived values
+     follow on their own */
+  --c5-tl-node:24px;
+  --c5-tl-gap:var(--w-space-5);
+  --c5-tl-title:clamp(1.25rem,2.1vw,2.25rem);
+  --c5-tl-title-lh:1.25;
+  --c5-tl-row-pad:var(--w-space-4);
+  /* the node is centred on the FIRST line of the title, not on the whole row */
+  --c5-tl-node-top:calc((var(--c5-tl-title) * var(--c5-tl-title-lh) - var(--c5-tl-node)) / 2);
+  /* distance from the top edge of an item to the centre of its node – where
+     the axis starts on the first item and ends on the last one */
+  --c5-tl-line:calc(var(--c5-tl-row-pad) + var(--c5-tl-node-top) + var(--c5-tl-node) / 2);
+  /* the open panel on two columns (from 1200 px): the photo column, the air
+     between the two columns, and how far the head stops from the top edge of
+     the window once it sticks */
+  --c5-tl-fig:clamp(15rem,23vw,24.5rem);   /* 23vw, not 27: at 1280 px the text column keeps about 21 rem */
+  --c5-tl-panel-gap:clamp(1.5rem,4vw,3.5rem);
+  --c5-tl-head-top:40px;
+}
+
+/* --- left column: the head ----------------------------------------------- */
+/* the kicker runs in the outline variant here (EL-06), so it keeps the metrics
+   of that variant – only the distance to the h2 belongs to the block */
+.c5-tl__side .c5-kicker{margin-bottom:var(--w-space-4);}
+
+/* --- right column: the axis ---------------------------------------------- */
+.c5-tl__list{list-style:none;margin:0;padding:0;}
+.c5-tl__item{position:relative;}
+/* one 1 px segment per item; the first one starts at its node, the last one
+   ends at its node, so the line runs exactly between the two centres */
+.c5-tl__item::before{content:"";position:absolute;left:calc(var(--c5-tl-node) / 2 - 0.5px);
+  top:0;bottom:0;width:1px;background:var(--w-border-default);}
+.c5-tl__item:first-child::before{top:var(--c5-tl-line);}
+.c5-tl__item:last-child::before{bottom:auto;height:var(--c5-tl-line);}
+
+.c5-tl__h{margin:0;font-weight:inherit;}
+.c5-tl__row{display:grid;grid-template-columns:var(--c5-tl-node) minmax(0,1fr);
+  gap:var(--c5-tl-gap);align-items:start;width:100%;min-height:56px;
+  padding:var(--c5-tl-row-pad) 0;background:none;border:0;border-radius:0;
+  font:inherit;text-align:left;color:var(--w-text-primary);cursor:pointer;}
+/* uwaga 1 (18.09): the numerals follow the body typeface, not the mono one, and
+   they are small – the node is a marker on the axis, not a label to read */
+.c5-tl__no{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;
+  width:var(--c5-tl-node);height:var(--c5-tl-node);margin-top:var(--c5-tl-node-top);
+  border:1px solid var(--w-border-strong);background:var(--w-surface-page);
+  font-family:inherit;font-size:0.6875rem;font-weight:var(--w-weight-medium);
+  font-variant-numeric:tabular-nums;letter-spacing:.02em;line-height:1;
+  color:var(--w-text-tertiary);
+  transition:background var(--w-duration-base) var(--w-ease),
+             border-color var(--w-duration-base) var(--w-ease),
+             color var(--w-duration-base) var(--w-ease);}
+.c5-tl__t{font-size:var(--c5-tl-title);line-height:var(--c5-tl-title-lh);
+  font-weight:var(--w-weight-regular);letter-spacing:-0.01em;}
+.c5-tl__row:hover .c5-tl__no{border-color:var(--w-gray-900);}
+.c5-tl__row[aria-expanded="true"] .c5-tl__no{background:var(--w-gray-900);
+  border-color:var(--w-gray-900);color:var(--w-text-inverse);}
+.c5-tl__row[aria-expanded="true"] .c5-tl__t{font-weight:var(--w-weight-medium);}
+
+/* --- panel of the open phase --------------------------------------------- */
+.c5-tl__panel{overflow:hidden;height:0;opacity:0;
+  transition:height var(--c5-acc) var(--w-ease),opacity var(--c5-acc-fade) var(--w-ease);}
+.c5-tl__item[data-open] .c5-tl__panel{opacity:1;}
+/* nothing can open the panels without JS – they stay open (§0) */
+html:not(.cx-js) .c5-tl__panel{height:auto;opacity:1;}
+/* one child element: CX5.panelSet measures it to animate the height */
+.c5-tl__panelin{display:flex;flex-direction:column;gap:var(--w-space-4);
+  padding-left:calc(var(--c5-tl-node) + var(--c5-tl-gap));padding-bottom:var(--w-space-8);
+  max-width:640px;}
+/* everything the phase says, in one column of its own – that is what lets the
+   photo stand beside the whole of it from 1200 px */
+.c5-tl__body{display:flex;flex-direction:column;align-items:flex-start;
+  gap:var(--w-space-4);min-width:0;}
+.c5-tl__lead{font-size:var(--w-font-body-size);line-height:var(--w-font-body-lh);
+  color:var(--w-text-secondary);max-width:62ch;}
+.c5-tl__go{margin-top:var(--w-space-1);}
+
+/* --- product boxes -------------------------------------------------------- */
+.c5-tl__prods{display:flex;flex-direction:column;gap:var(--w-space-2);width:100%;max-width:420px;}
+.c5-tl__prod{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:var(--w-space-3);
+  align-items:center;width:100%;min-height:56px;padding:var(--w-space-2) var(--w-space-3);
+  background:var(--w-surface-page);border:1px solid var(--w-border-default);border-radius:0;
+  font:inherit;font-size:var(--w-font-sm-size);line-height:var(--w-font-sm-lh);
+  font-weight:var(--w-weight-medium);color:var(--w-text-primary);text-align:left;
+  transition:border-color var(--w-duration-base) var(--w-ease);}
+button.c5-tl__prod{cursor:pointer;}
+button.c5-tl__prod:hover,button.c5-tl__prod:focus-visible{border-color:var(--w-gray-900);}
+/* a product with no map and no packshot („CARBOHUMIC BIOMAS”): same box,
+   dashed stroke, an icon in place of the packshot and no arrow */
+.c5-tl__prod--plain{grid-template-columns:auto minmax(0,1fr);border-style:dashed;
+  color:var(--w-text-secondary);}
+.c5-tl__pack{display:flex;align-items:center;justify-content:center;
+  width:56px;height:42px;background:var(--w-gray-100);}
+.c5-tl__pack img{width:100%;height:100%;object-fit:contain;}
+.c5-tl__prodn{min-width:0;}
+.c5-tl__prod > .wf-icon{justify-self:end;color:var(--w-text-tertiary);}
+.c5-tl__pack .wf-icon{color:var(--w-text-tertiary);}
+
+/* --- the frame of a phase ------------------------------------------------- */
+/* it lives in its panel at every width: above the text as 4 : 3, beside it as
+   6 : 7 from 1200 px */
+.c5-tl__fig{position:relative;width:100%;max-width:420px;margin:0;
+  aspect-ratio:4 / 3;background:var(--w-gray-100);}
+.c5-tl__ph{position:absolute;inset:0;border:0;border-radius:0;min-height:0;}
+.c5-tl__ph .wf-ph__label{max-width:min(100%,22rem);}
+.c5-tl__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+/* the photo arrives with the panel; the only move of its own is a short fade,
+   so one decoded late does not pop in when the height is already there */
+html.cx-js .c5-tl__fig{opacity:0;transition:opacity 240ms var(--w-ease);}
+html.cx-js .c5-tl__item[data-open] .c5-tl__fig{opacity:1;}
+
+@media (min-width:900px){
+  /* Uwagi 5 i 6 (18.09): this one section runs wider than the rest of the page
+     – nearly the whole window, 1800 px at most, 40 px of air on the sides –
+     and the two columns stand far apart. `.c5-wrap` keeps its own numbers
+     below 900 px and on every other section. */
+  .c5-tl__wrap{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);
+    gap:clamp(3rem,8vw,10rem);max-width:1800px;padding-inline:40px;}
+  /* Uwaga 4 (19.09): the head is all that is left in the left column, so it
+     travels with the list instead of standing alone at the top. It is some
+     200 px tall and sits at the top of the window, far from the advisor dock
+     at the bottom; `align-self:start` is what gives it the room to move – a
+     grid item stretched over the whole row has nowhere to stick. */
+  .c5-tl__side{display:flex;flex-direction:column;align-self:start;
+    position:sticky;top:var(--c5-tl-head-top);}
+  /* the axis starts level with the h2, so it skips the kicker above it – the
+     outline kicker is its font size + 2 x .4375rem padding + 2 x 1px border */
+  .c5-tl__list{padding-top:calc(0.75rem + 0.875rem + 2px + var(--w-space-4) - var(--c5-tl-row-pad));}
+}
+
+/* Uwaga 4 (19.09), Figma „Frame 213”: from here the open panel stands on two
+   columns – the photo on the left, the text on the right – and may grow to
+   70 rem. The threshold is arithmetic, not taste: the panel gets 8/12 of the
+   container less the gap and the indent to the axis, so at 900 px it is about
+   450 px wide and a 15 rem photo would leave the text some 11 rem. Below
+   1200 px the panel therefore keeps the one-column order of the phone. */
+@media (min-width:1200px){
+  .c5-tl__panelin{flex-direction:row;align-items:flex-start;
+    gap:var(--c5-tl-panel-gap);max-width:70rem;}
+  .c5-tl__fig{flex:none;width:var(--c5-tl-fig);max-width:none;aspect-ratio:6 / 7;}
+  .c5-tl__body{flex:1 1 auto;}
+}
+
+@media (max-width:899px){
+  /* one column: head, then the axis at full width */
+  .c5-tl{--c5-tl-node:22px;--c5-tl-gap:var(--w-space-4);
+    --c5-tl-title:1.125rem;--c5-tl-row-pad:var(--w-space-3);}
+  .c5-tl__list{margin-top:clamp(1.5rem,5vw,2.5rem);}
+  .c5-tl__panelin{max-width:none;}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .c5-tl__panel,.c5-tl__no,.c5-tl__prod{transition:none;}
+  html.cx-js .c5-tl__fig{transition:none;}
+}

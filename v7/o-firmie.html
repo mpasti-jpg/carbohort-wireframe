@@ -3,12 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Carbohort — O nas: polski, rodzinny producent poprawiaczy gleby z lignitu</title>
-<meta name="description" content="Carbohort to polska, rodzinna firma z polskim surowcem i ponad 10-letnim doświadczeniem. Produkujemy w Polsce poprawiacze gleby CARBOMAT, CARBOHUMIC i CARBOMAT HUMIC. Dbając o glebę, inwestujemy w przyszłe pokolenia.">
+<title>O nas – rodzinna firma budująca przyszłość polskiej gleby | Carbohort</title>
+<meta name="description" content="CarboHort to rodzinna firma z Jordanowa, która z polskiego węgla brunatnego – lignitu – wytwarza podłoża, dodatki do gleby i ekstrakty humusowe. Certyfikaty, badania, ludzie i wartości.">
 <link rel="stylesheet" href="tokens.css">
 <link rel="stylesheet" href="wireframe.css">
 <link rel="stylesheet" href="cw.css">
+  <link rel="stylesheet" href="ce/00-base.css">
+  <link rel="stylesheet" href="ce/00-reveal.css">
+  <link rel="stylesheet" href="ce/CE-07-nawigacja-kropkowa.css">
+  <link rel="stylesheet" href="ce/CE-08-hero.css">
+  <link rel="stylesheet" href="ce/CE-16-pas-pro.css">
+  <link rel="stylesheet" href="o-firmie.css">
 <script src="../status.js"></script>
+<script src="../ce-rejestr.js"></script>
 <script src="chrome.js"></script>
 </head>
 <body>
@@ -18,270 +25,557 @@
 
 <cw-navbar data-current="o-firmie"></cw-navbar>
 
+<!-- ===== Nawigacja po podstronie: kropki przy prawej krawędzi (scrollspy),
+     wzorzec CARBOMAT ECO. Dziewięć rozdziałów – motto zamykające kropki nie
+     dostaje (spec §13). -->
+<nav id="nawigacja-kropki" class="c5-dots" aria-label="Rozdziały strony O nas" data-dots data-ce="CE-07">
+  <ol>
+    <li><a class="c5-dots__link" href="#hero" data-dot="hero"><span class="c5-dots__label">Start</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#w-liczbach" data-dot="liczby"><span class="c5-dots__label">W liczbach</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#co-robimy" data-dot="co-robimy"><span class="c5-dots__label">Co robimy</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#najstarsza-nowosc" data-dot="najstarsza-nowosc"><span class="c5-dots__label">Dlaczego węgiel</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#wartosci" data-dot="wartosci"><span class="c5-dots__label">Wartości</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#ludzie" data-dot="ludzie"><span class="c5-dots__label">Ludzie</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#dowody" data-dot="dowody"><span class="c5-dots__label">Dowody</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#gdzie-jestesmy" data-dot="gdzie-jestesmy"><span class="c5-dots__label">Gdzie jesteśmy</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#porozmawiajmy" data-dot="porozmawiajmy"><span class="c5-dots__label">Kontakt</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+  </ol>
+</nav>
+
 <main id="main">
 
-  <!-- ===== HERO ===== -->
-  <section class="wf-section wf-section--lg">
-    <div class="wf-container wf-grid wf-grid--2 wf-items-center" style="--wf-grid-min: 22rem;">
-      <div class="wf-stack wf-stack--6">
-        <span class="wf-overline">O nas</span>
-        <h1 class="wf-display">Polska, rodzinna firma, która naprawia glebę u źródła.</h1>
-        <p class="wf-lead wf-prose">Jesteśmy producentem poprawiaczy gleby z lignitu i leonardytu. Pracujemy na polskim węglu brunatnym z krajowych kopalni i przetwarzamy go w Polsce na preparaty, które odbudowują próchnicę, strukturę i retencję wody. Nie sprzedajemy obietnic — pokazujemy, jak to działa, i odpowiadamy za to nazwiskiem rodziny.</p>
-        <div class="wf-cluster wf-gap-3">
-          <a class="wf-btn wf-btn--primary wf-btn--lg" href="produkty.html">Poznaj nasze produkty</a>
-          <a class="wf-btn wf-btn--secondary wf-btn--lg" href="kontakt.html">Skontaktuj się z nami</a>
+  <!-- ===== 1. HERO (spec §3) – wariant „foto": na panelu stoi pole pod zdjęcie
+       zespołu, nie packshot. Copy leadu 1:1 ze starej strony (intro home). -->
+  <section id="hero" data-chapter="hero" data-ce="CE-08" data-ce-wariant="foto">
+    <div class="c5-wrap">
+      <div class="c5-hero">
+        <div class="c5-hero__copy">
+          <div class="c5-hero__copyin">
+            <span class="c5-kicker">O nas · firma rodzinna · Jordanowo, województwo lubuskie</span>
+            <h1 class="c5-h1">Rodzinna firma budująca przyszłość polskiej gleby</h1>
+            <div class="c5-hero__lead">
+              <p>CarboHort to rodzinna firma wykorzystująca naturalne złoża miękkiego węgla brunatnego – lignitu, znajdującego się na terenie Polski. Zastosowanie węgla brunatnego – „czarnego złota" w uprawie roślin nie jest tematem nowym, lecz niestety mocno zapomnianym. Żartujemy, że to tak naprawdę najstarsza nowość, którą chcemy na nowo przedstawić polskim rolnikom i ogrodnikom.</p>
+              <p>Naszą działalność rozpoczęliśmy z myślą o współtworzeniu nowej jakości upraw w pełnej zgodzie z naturą, a także w trosce o pogarszający się stan gleb w Polsce.</p>
+            </div>
+            <div class="c5-btnrow">
+              <a class="c5-btn c5-btn--dark" href="produkty.html">Poznaj nasze produkty</a>
+              <a class="c5-btn c5-btn--light" href="kontakt.html">Porozmawiaj z nami</a>
+            </div>
+          </div>
+          <nav class="wf-breadcrumb c5-hero__crumbs" aria-label="Okruszki">
+            <ol class="wf-cluster wf-items-center">
+              <li><a class="wf-link--quiet" href="home.html">Strona główna</a></li>
+              <li><span class="wf-breadcrumb__sep" aria-hidden="true">/</span></li>
+              <li aria-current="page">O nas</li>
+            </ol>
+          </nav>
         </div>
-        <div class="wf-cluster wf-gap-4">
-          <span class="wf-small wf-t-tertiary">Polski surowiec</span>
-          <span class="wf-small wf-t-tertiary">Ponad 10 lat doświadczenia</span>
-          <span class="wf-small wf-t-tertiary">Produkcja w Polsce</span>
+        <!-- Jedyne miejsce na stronie, gdzie ma stanąć prawdziwa rodzina –
+             bez zdjęcia poglądowego (spec §3). -->
+        <div class="c5-hero__stage on-hero__stage">
+          <svg class="wf-icon wf-icon--lg on-hero__ico" aria-hidden="true"><use href="#ti-photo"></use></svg>
+          <span class="c5-chip c5-chip--dashed on-hero__chip">zdjęcie zespołu przy zakładzie w Jordanowie</span>
         </div>
       </div>
-      <div class="wf-ph wf-ph--16x9" aria-hidden="true"><span class="wf-ph__label">Zakład produkcyjny Carbohort z lotu ptaka</span></div>
     </div>
   </section>
 
-  <!-- ===== BREADCRUMB ===== -->
-  <div class="wf-container">
-    <nav class="wf-breadcrumb" aria-label="Breadcrumb">
-      <ol>
-        <li><a class="wf-link--quiet" href="home.html">Start</a></li>
-        <li><span class="wf-breadcrumb__sep" aria-hidden="true">/</span></li>
-        <li><span aria-current="page">O nas</span></li>
+  <!-- ===== 2. W LICZBACH (spec §4) – ciemny kadr z kołowrotkiem cyfr,
+       port `pp-liczby` z Próchnicy+ pod prefiksem `on-`. Każdy wiersz ma
+       etykietę i przypis ze źródłem liczby; bez JS stoi wartość końcowa. -->
+  <section class="c5-sec on-dark" id="w-liczbach" data-chapter="liczby" data-ce="CE-24" data-ce-wariant="kolowrotek">
+    <div class="c5-wrap on-nums">
+      <h2 class="c5-h2 on-nums__title">CarboHort w liczbach</h2>
+      <ul class="on-nums__rows" data-reveal data-reveal-group>
+
+        <li class="on-num">
+          <span class="on-num__label">
+            rok pierwszeństwa patentowego podłoża CARBOMAT – od tego czasu pracujemy z lignitem
+            <span class="c5-src c5-src--ondark on-num__src">zgłoszenie PL 41004814 z 03.11.2014, patent EP 3 014 985 A1</span>
+          </span>
+          <span class="on-num__val"><span class="on-odo" data-on-odo="2014">2014</span></span>
+        </li>
+
+        <li class="on-num">
+          <span class="on-num__label">
+            certyfikaty ekologiczne IUNG-PIB: CARBOHUMIC, CARBOMAT ECO, CARBOMAT HUMIC
+            <span class="c5-src c5-src--ondark on-num__src">wykaz IUNG-PIB: NE/495/2019 · NE/567/2021 · NE/808/2024</span>
+          </span>
+          <span class="on-num__val"><span class="on-odo" data-on-odo="3">3</span></span>
+        </li>
+
+        <li class="on-num">
+          <span class="on-num__label">
+            krajów, w których produkty CarboHort mają dystrybutorów
+            <span class="c5-src c5-src--ondark on-num__src">Bułgaria, Francja, Holandia, kraje bałtyckie, Niemcy, Rumunia, Słowacja, Węgry</span>
+          </span>
+          <span class="on-num__val"><span class="on-odo" data-on-odo="8">8</span></span>
+        </li>
+
+        <li class="on-num">
+          <span class="on-num__label">
+            gospodarstw w programie badawczym Próchnica+ (2025–2028)
+            <span class="c5-src c5-src--ondark on-num__src">program Próchnica+</span>
+          </span>
+          <span class="on-num__val"><span class="on-odo" data-on-odo="6">6</span></span>
+        </li>
+
+        <li class="on-num">
+          <span class="on-num__label">
+            recenzowanych publikacji naukowych o podłożu CARBOMAT plus rozprawa doktorska
+            <span class="c5-src c5-src--ondark on-num__src">SGGW, dr inż. Radosław Łaźny</span>
+          </span>
+          <span class="on-num__val"><span class="on-odo" data-on-odo="5">5</span></span>
+        </li>
+
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== 3. CO ROBIMY (spec §5) – trzy kroki „surowiec → zakład → produkty"
+       i rząd czterech rodzin. Dwa klocki CE-20 w jednej sekcji. -->
+  <section class="c5-sec" id="co-robimy" data-chapter="co-robimy">
+    <div class="c5-wrap">
+      <span class="c5-kicker">Co robimy</span>
+      <div class="c5-head">
+        <h2 class="c5-h2">Jeden surowiec, cztery rodziny produktów</h2>
+        <p class="c5-lead">Wszystkie produkty firmowane logiem CarboHort pochodzą z przetworzenia węgla brunatnego i przeznaczone są do stosowania w każdym gatunku roślin trawiastych, zielnych, krzewów i drzew obecnych w naszych ogrodach i na naszych polach.</p>
+      </div>
+
+      <!-- Kroki: numer 01–03, tytuł, akapit; na desktopie cienka strzałka
+           między kartami (CSS, ::after na dwóch pierwszych krokach). -->
+      <ol class="on-steps" id="co-robimy-kroki" data-reveal data-reveal-group data-ce="CE-20" data-ce-wariant="numerowane">
+        <li class="on-step">
+          <span class="on-step__no">01</span>
+          <h3 class="c5-h3 c5-h3--md on-step__h">Surowiec</h3>
+          <p>Do tych celów nadaje się – po odpowiednim przetworzeniu – jedynie „młody" węgiel brunatny, tzw. lignit, znajdujący się w płytkich złożach, o stosunkowo niedużym stopniu skarbonizowania.</p>
+          <p>Surowiec pochodzi z naturalnych złóż węgla brunatnego na terenie Polski.</p>
+        </li>
+        <li class="on-step">
+          <span class="on-step__no">02</span>
+          <h3 class="c5-h3 c5-h3--md on-step__h">Zakład w Jordanowie</h3>
+          <p>Surowiec frakcjonujemy i odsiewamy w naszym zakładzie w Jordanowie (województwo lubuskie). CARBOMAT ECO powstaje bez żadnej obróbki chemicznej, a CARBOHUMIC to ekstrakt humusowy z tego samego lignitu.</p>
+        </li>
+        <li class="on-step">
+          <span class="on-step__no">03</span>
+          <h3 class="c5-h3 c5-h3--md on-step__h">Produkty</h3>
+          <p>Cztery rodziny produktów – sypkie i płynne, do gleby, do podłoża i na liść – dla rolników, sadowników, szkółek i ogrodów.</p>
+        </li>
       </ol>
-    </nav>
-  </div>
 
-  <!-- ===== KIM JESTEŚMY / HISTORIA ===== -->
-  <section class="wf-section wf-section--subtle" id="kim-jestesmy">
-    <div class="wf-container wf-stack wf-stack--8">
-      <div class="wf-stack wf-stack--3" style="max-width:680px;">
-        <span class="wf-overline">Kim jesteśmy</span>
-        <h2 class="wf-h2">Rodzinna firma z własnym surowcem — od złoża po gotowy preparat.</h2>
-        <p class="wf-lead wf-t-secondary">Stawiamy na polski surowiec — węgiel brunatny z krajowych kopalni — i pełną kontrolę produkcji w Polsce: od doboru i parametrów surowca, przez recepturę, po to, co trafia do worka i kanistra.</p>
+      <!-- Rodziny: packshot na jasnym polu, nazwa, jedno zdanie 1:1 z kart
+           rodzin na produkty.html (sekcja Gama), link na stronę produktu. -->
+      <div class="on-fams" id="co-robimy-rodziny" data-reveal data-reveal-group data-ce="CE-20" data-ce-wariant="z-przyciskami">
+        <article class="on-fam">
+          <span class="on-fam__stage"><img class="on-fam__pack" src="img/opakowania/worek_20l.png" alt="CARBOMAT ECO – worek 20 l" width="578" height="875" loading="lazy" decoding="async"></span>
+          <h3 class="c5-h3 c5-h3--md on-fam__name">CARBOMAT ECO</h3>
+          <p>Jeden składnik, który pracuje w&nbsp;glebie latami</p>
+          <a class="wf-link on-fam__go" href="carbomat.html" aria-label="Poznaj CARBOMAT ECO">Poznaj <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+        </article>
+        <article class="on-fam">
+          <span class="on-fam__stage"><img class="on-fam__pack" src="img/opakowania/kanister_20l.png" alt="CARBOHUMIC – kanister 20 l" width="576" height="847" loading="lazy" decoding="async"></span>
+          <h3 class="c5-h3 c5-h3--md on-fam__name">CARBOHUMIC</h3>
+          <p>Próchnica w płynie do regeneracji gleby i&nbsp;biostymulacji roślin</p>
+          <a class="wf-link on-fam__go" href="carbohumic.html" aria-label="Poznaj CARBOHUMIC">Poznaj <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+        </article>
+        <article class="on-fam">
+          <span class="on-fam__stage"><img class="on-fam__pack" src="img/opakowania/torba_1l_2l.png" alt="CARBOMAT HUMIC – opakowanie poglądowe" width="657" height="1000" loading="lazy" decoding="async"></span>
+          <h3 class="c5-h3 c5-h3--md on-fam__name">CARBOMAT HUMIC</h3>
+          <p>Jeden produkt, trzy zastosowania: kondycjoner, nawóz, biostymulator</p>
+          <a class="wf-link on-fam__go" href="carbomat-humic.html" aria-label="Poznaj CARBOMAT HUMIC">Poznaj <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+        </article>
+        <article class="on-fam">
+          <span class="on-fam__stage"><img class="on-fam__pack" src="img/opakowania/mata_uprawowa.png" alt="CARBOMAT Mata Uprawowa – rękaw 100 × 20 × 8 cm" width="1000" height="313" loading="lazy" decoding="async"></span>
+          <h3 class="c5-h3 c5-h3--md on-fam__name">CARBOMAT Mata Uprawowa</h3>
+          <p>Nowa generacja mat uprawowych dla profesjonalistów</p>
+          <a class="wf-link on-fam__go" href="carbomat-mata.html" aria-label="Poznaj CARBOMAT Mata Uprawowa">Poznaj <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+        </article>
       </div>
 
-      <div class="wf-grid wf-grid--3" style="--wf-grid-min: 15rem;">
-        <article class="wf-card"><div class="wf-card__body wf-stack wf-stack--3">
-          <h3 class="wf-h5">Polski surowiec</h3>
-          <p class="wf-small wf-t-secondary">Surowiec pochodzi z naszego złoża młodego węgla brunatnego. Dzięki temu znamy jego parametry i powtarzalnie je utrzymujemy — bez loterii dostaw od pośredników.</p>
-        </div></article>
-        <article class="wf-card"><div class="wf-card__body wf-stack wf-stack--3">
-          <h3 class="wf-h5">Ponad 10 lat na polu</h3>
-          <p class="wf-small wf-t-secondary">Od ponad dekady pracujemy z lignitem i kwasami humusowymi — z sadownikami, plantatorami i ogrodnikami. To doświadczenie zaszyte jest w recepturach i dawkach.</p>
-        </div></article>
-        <article class="wf-card"><div class="wf-card__body wf-stack wf-stack--3">
-          <h3 class="wf-h5">Produkcja w Polsce</h3>
-          <p class="wf-small wf-t-secondary">Wytwarzamy w Polsce, blisko surowca. Krótki łańcuch oznacza mniejszy ślad transportowy i pełną kontrolę jakości na każdym etapie.</p>
-        </div></article>
+      <div class="c5-btnrow on-fams__more">
+        <a class="c5-btn c5-btn--dark" href="produkty.html">Wszystkie produkty</a>
+        <a class="c5-btn c5-btn--light" href="sklep.html">Sklep</a>
       </div>
+    </div>
+  </section>
 
-      <div class="wf-stack wf-stack--2">
-        <div class="wf-ph wf-ph--16x9" aria-hidden="true"><span class="wf-ph__label">Odkrywka / złoże lignitu — ściana surowca, skala maszyn</span></div>
-        <p class="wf-caption wf-t-secondary">Nasze złoże lignitu — punkt wyjścia każdego produktu Carbohort.</p>
-      </div>
-
-      <div class="wf-alert">
-        <span class="wf-alert__icon"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-info-circle"></use></svg></span>
-        <div><span class="wf-alert__title">Dane do potwierdzenia.</span> <span class="wf-small wf-t-secondary">Dokładny staż firmy, status prawny złoża i lokalizacja zakładu zostaną doprecyzowane przed publikacją — w makiecie trzymamy sformułowania ogólne.</span></div>
-      </div>
-
-      <div class="cw-ask">
-        <span class="wf-ph wf-ph--avatar" aria-hidden="true"></span>
-        <div class="cw-ask__txt wf-stack wf-stack--1">
-          <span class="wf-w-semibold">Nie wiesz, czy to surowiec dla Twojej gleby?</span>
-          <span class="wf-small wf-t-secondary">Opowiem, czym lignit różni się od torfu i biowęgla i kiedy ma sens na Twoim polu.</span>
+  <!-- ===== 4. NAJSTARSZA NOWOŚĆ (spec §6) – wiersz zdjęcie | opis z parallaksem
+       kadru, port `c5-who` z CARBOMAT HUMIC pod prefiksem `on-who`.
+       Nagłówek jako h2, żeby kolejność nagłówków szła po kolei (§0.6). -->
+  <section class="c5-sec" id="najstarsza-nowosc" data-chapter="najstarsza-nowosc" data-ce="CE-36">
+    <div class="c5-wrap">
+      <article class="on-who">
+        <div class="on-who__media" data-on-who-media>
+          <span class="wf-ph on-who__ph" aria-hidden="true"><svg class="wf-icon wf-icon--lg"><use href="#ti-photo"></use></svg></span>
         </div>
-        <button type="button" class="wf-btn wf-btn--secondary" data-jurek-open>Zapytaj dr Jurka</button>
+        <div class="on-who__body" data-reveal data-reveal-group>
+          <span class="c5-kicker on-who__kicker">Dlaczego węgiel brunatny</span>
+          <h2 class="on-who__name">Najstarsza nowość</h2>
+          <p>Pierwsze, bardzo proste próby wykorzystania węgla brunatnego do poprawy jakości gleb robiono już w Niemczech i Polsce ponad 100 lat temu. Wojny światowe, a później gwałtowny rozwój przemysłu przerwały te prace aż do lat 50. ubiegłego wieku i dopiero teraz wiedza i nowoczesne technologie pozwalają na pełne wykorzystanie potencjału węgla brunatnego w uprawie roślin.</p>
+          <p>Jako CarboHort chcemy zmienić szkodliwe dla środowiska i ludzi postrzeganie i użytkowanie węgla brunatnego. Wykorzystywanie tego surowca wcale nie musi ograniczać się wyłącznie do spalania, prowadzącego do marnowania jego potencjału, ale czegoś wręcz przeciwnego, czyli do wsparcia procesu poprawy jakości gleb w Polsce.</p>
+          <div class="c5-btnrow">
+            <a class="c5-btn c5-btn--light c5-btn--sm" href="artykul.html">Czy węgiel brunatny nadaje się do użyźniania gleby?</a>
+            <a class="c5-btn c5-btn--light c5-btn--sm" href="centrum-wiedzy.html">Więcej w Centrum wiedzy</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== 5. WARTOŚCI (spec §7) – lista tytułów po lewej, przyklejony panel
+       opisu po prawej; port modułu 50 z produkty.js (`c5pr-paths`) pod
+       prefiksem `on-val`. Tytuły i akapity 1:1 ze starej strony (home,
+       „Nasze cele i wartości"). Bez JS widać wszystkie cztery karty. -->
+  <section class="c5-sec" id="wartosci" data-chapter="wartosci">
+    <div class="c5-wrap">
+      <span class="c5-kicker">Nasze cele i wartości</span>
+      <div class="c5-head">
+        <h2 class="c5-h2">Po co to robimy</h2>
+      </div>
+
+      <div id="wartosci-lista" class="on-val" role="group" data-vals aria-label="Nasze cele i wartości" data-ce="CE-30">
+        <ol class="on-val__list">
+
+          <li class="on-val__row">
+            <button type="button" class="on-val__tab" id="wartosc-01-tab" data-val="1">
+              <span class="on-val__no">01</span>
+              <span class="on-val__t">Zmiana paradygmatu dotyczącego użytkowania węgla brunatnego</span>
+              <svg class="wf-icon wf-icon--sm on-val__chev" aria-hidden="true"><use href="#ti-chevron-down"></use></svg>
+            </button>
+            <div class="on-val__panel" id="wartosc-01" data-val-panel="1">
+              <article class="on-val__card">
+                <figure class="on-val__fig">
+                  <img class="on-val__img" src="img/foto/prochnica-04-person-carrying-soil.jpg" alt="" loading="lazy" decoding="async">
+                  <figcaption class="on-val__cap">zdjęcie poglądowe</figcaption>
+                </figure>
+                <span class="on-val__cno">01</span>
+                <h3 class="on-val__h">Zmiana paradygmatu dotyczącego użytkowania węgla brunatnego</h3>
+                <p>Chcemy zmienić sposób myślenia, pokazać, że węgiel brunatny to nie tylko spalanie i emisja CO2 do atmosfery, a tym samym przyspieszanie globalnego ocieplania klimatu, ale coś wręcz odwrotnego – sekwestracja CO2, która odbywa się z powietrza za sprawą uprawianych roślin, ale też z poziomu gleby poprzez przechwytywanie dwutlenku węgla przez węgiel organiczny / biowęgiel (Corg).</p>
+              </article>
+            </div>
+          </li>
+
+          <li class="on-val__row">
+            <button type="button" class="on-val__tab" id="wartosc-02-tab" data-val="2">
+              <span class="on-val__no">02</span>
+              <span class="on-val__t">Inicjatywy oddolne, mające na celu poprawę zdrowia poprzez spożywanie zdrowej żywności</span>
+              <svg class="wf-icon wf-icon--sm on-val__chev" aria-hidden="true"><use href="#ti-chevron-down"></use></svg>
+            </button>
+            <div class="on-val__panel" id="wartosc-02" data-val-panel="2">
+              <article class="on-val__card">
+                <figure class="on-val__fig">
+                  <img class="on-val__img" src="img/foto/prochnica-06-leafy-greens-rows.jpg" alt="" loading="lazy" decoding="async">
+                  <figcaption class="on-val__cap">zdjęcie poglądowe</figcaption>
+                </figure>
+                <span class="on-val__cno">02</span>
+                <h3 class="on-val__h">Inicjatywy oddolne, mające na celu poprawę zdrowia poprzez spożywanie zdrowej żywności</h3>
+                <p>Zależy nam na zmobilizowaniu ludzi do posiadania choćby niewielkich upraw; ogródki przydomowe czy te na dachach budynków, zielniki na parapecie albo tarasie, warzywniki w szkołach – innymi słowy wszystko, co pozwoli poczuć satysfakcję z wyhodowania własnych, smacznych, zdrowych i ekologicznych plonów. Jedząc własne produkty mamy całkowitą pewność co do ich jakości.</p>
+              </article>
+            </div>
+          </li>
+
+          <li class="on-val__row">
+            <button type="button" class="on-val__tab" id="wartosc-03-tab" data-val="3">
+              <span class="on-val__no">03</span>
+              <span class="on-val__t">Ochrona środowiska poprzez stosowanie środków neutralnych dla przyrody</span>
+              <svg class="wf-icon wf-icon--sm on-val__chev" aria-hidden="true"><use href="#ti-chevron-down"></use></svg>
+            </button>
+            <div class="on-val__panel" id="wartosc-03" data-val-panel="3">
+              <article class="on-val__card">
+                <figure class="on-val__fig">
+                  <img class="on-val__img" src="img/foto/prochnica-01-rows-of-crops-sunset.jpg" alt="" loading="lazy" decoding="async">
+                  <figcaption class="on-val__cap">zdjęcie poglądowe</figcaption>
+                </figure>
+                <span class="on-val__cno">03</span>
+                <h3 class="on-val__h">Ochrona środowiska poprzez stosowanie środków neutralnych dla przyrody</h3>
+                <p>Obecnie zachodzi wiele zjawisk mających bardzo niekorzystny wpływ na otaczające nas środowisko naturalne w tym przede wszystkim gleby. Wymienić należy chociażby niekontrolowaną i nadmierną urbanizację, rozbudowę transportu wysokoemisyjnego czy degradację gleb wskutek intensywnej gospodarki człowieka. Wszystko to sprawia, że powierzchnia ziemi uprawnej na świecie kurczy się rocznie o ok. 1%. Warto w tym miejscu przypomnieć, że na wytworzenie 1 cm gleby w naturalnych warunkach potrzeba 100-500 lat.</p>
+              </article>
+            </div>
+          </li>
+
+          <li class="on-val__row">
+            <button type="button" class="on-val__tab" id="wartosc-04-tab" data-val="4">
+              <span class="on-val__no">04</span>
+              <span class="on-val__t">Zmiana przyzwyczajeń w uprawach szklarniowych i polowych</span>
+              <svg class="wf-icon wf-icon--sm on-val__chev" aria-hidden="true"><use href="#ti-chevron-down"></use></svg>
+            </button>
+            <div class="on-val__panel" id="wartosc-04" data-val-panel="4">
+              <article class="on-val__card">
+                <figure class="on-val__fig">
+                  <img class="on-val__img" src="img/foto/prochnica-05-vineyard-rolling-hills.jpg" alt="" loading="lazy" decoding="async">
+                  <figcaption class="on-val__cap">zdjęcie poglądowe</figcaption>
+                </figure>
+                <span class="on-val__cno">04</span>
+                <h3 class="on-val__h">Zmiana przyzwyczajeń w uprawach szklarniowych i polowych</h3>
+                <p>Uważamy, że w produkcji żywności nie ma dróg na skróty. W pogoni za zyskiem, obniżaniem kosztów lub dominującą estetyką upraw dopuściliśmy się ustępstw, które w dłuższej perspektywie negatywnie odbiją się na naszym zdrowiu i otaczającym nas środowisku. Chcemy zmotywować jak największą liczbę producentów żywności do wzięcia odpowiedzialności za zdrowie innych ludzi i otoczenie, w którym żyją. Chcemy także zachęcić obywateli do decydowania się w większości na produkty lokalne, unikając tym samym dalekobieżnych transportów i masowych fabryk warzyw i owoców.</p>
+              </article>
+            </div>
+          </li>
+
+        </ol>
+      </div>
+
+      <p class="c5-note c5-note--soft on-val__note"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-seeding"></use></svg> <span><span class="wf-w-semibold">Oddajemy przyrodzie dużo więcej niż pożyczamy.</span> Oprócz niezliczonej ilości roślin posadzonych z wykorzystaniem naszych produktów, wspieramy sadzenie nowych drzew wspólnie z posadzimy.pl</span></p>
+    </div>
+  </section>
+
+  <!-- ===== 6. LUDZIE (spec §8) – siatka kart biogramów, port `pp-team`
+       / `pp-person` / `pp-more` z Próchnicy+ pod prefiksem `on-`.
+       Biogramy dr. Łaźnego i dr. Próchnickiego 1:1 z prochnica-plus.html. -->
+  <section class="c5-sec" id="ludzie" data-chapter="ludzie" data-ce="CE-48" data-ce-wariant="siatka">
+    <div class="c5-wrap">
+      <span class="c5-kicker">Zespół</span>
+      <div class="c5-head">
+        <h2 class="c5-h2">Za marką stoją konkretni ludzie</h2>
+        <p class="c5-lead">Jesteśmy firmą rodzinną z Jordanowa. Osoba, która odbiera telefon, odpowiada też za produkt i za to, co Ci doradzi – i za rok będzie tą samą osobą.</p>
+      </div>
+
+      <ul class="on-team" data-reveal data-reveal-group>
+
+        <li><div class="on-person">
+          <span class="wf-ph on-person__ph" aria-hidden="true"><svg class="wf-icon wf-icon--lg"><use href="#ti-photo"></use></svg></span>
+          <h3 class="on-person__name">Dezyderiusz Mietlicki</h3>
+          <p class="on-person__role">Sprawy handlowe – współpraca biznesowa, zamówienia hurtowe, dobór produktów i doradztwo</p>
+          <span class="c5-chip c5-chip--dashed">bio do uzupełnienia</span>
+        </div></li>
+
+        <li><div class="on-person">
+          <span class="wf-ph on-person__ph" aria-hidden="true"><svg class="wf-icon wf-icon--lg"><use href="#ti-photo"></use></svg></span>
+          <h3 class="on-person__name">Dariusz Dziadkowski</h3>
+          <p class="on-person__role">Sprzedaż i dystrybucja międzynarodowa; autor artykułów Strefy wiedzy</p>
+          <span class="c5-chip c5-chip--dashed">bio do uzupełnienia</span>
+        </div></li>
+
+        <li><div class="on-person">
+          <span class="wf-ph on-person__ph" aria-hidden="true"><svg class="wf-icon wf-icon--lg"><use href="#ti-photo"></use></svg></span>
+          <h3 class="on-person__name">Sylwia Kobus</h3>
+          <p class="on-person__role">Marketing i media społecznościowe</p>
+          <span class="c5-chip c5-chip--dashed">bio do uzupełnienia</span>
+        </div></li>
+
+        <li><div class="on-person">
+          <span class="wf-ph on-person__ph" aria-hidden="true"><svg class="wf-icon wf-icon--lg"><use href="#ti-photo"></use></svg></span>
+          <h3 class="on-person__name">Małgorzata Zydor</h3>
+          <p class="on-person__role">Zakupy, rozliczenia i obsługa zamówień detalicznych</p>
+          <span class="c5-chip c5-chip--dashed">bio do uzupełnienia</span>
+        </div></li>
+
+        <li><div class="on-person">
+          <span class="wf-ph on-person__ph" aria-hidden="true"><svg class="wf-icon wf-icon--lg"><use href="#ti-photo"></use></svg></span>
+          <h3 class="on-person__name">Adrian Łyszega</h3>
+          <p class="on-person__role">Spedycja i transport, obsługa zamówień detalicznych</p>
+          <span class="c5-chip c5-chip--dashed">bio do uzupełnienia</span>
+        </div></li>
+
+        <li><div class="on-person">
+          <span class="wf-ph on-person__ph" aria-hidden="true"><svg class="wf-icon wf-icon--lg"><use href="#ti-photo"></use></svg></span>
+          <h3 class="on-person__name">Maria Izabela Mietlicka</h3>
+          <p class="on-person__role">Administracja</p>
+          <span class="c5-chip c5-chip--dashed">bio do uzupełnienia</span>
+        </div></li>
+
+        <li><div class="on-person">
+          <span class="wf-ph on-person__ph" aria-hidden="true"><svg class="wf-icon wf-icon--lg"><use href="#ti-photo"></use></svg></span>
+          <h3 class="on-person__name">Dr inż. Radosław Łaźny</h3>
+          <p class="on-person__role">Doradztwo uprawowe (Plon Expert)</p>
+          <p>Ekspert w dziedzinie międzynarodowej produkcji roślin warzywnych i jagodowych. Naukowiec, praktyk i doradca w dziedzinie upraw roślin warzywnych i jagodowych metodą hydroponiczną z wykorzystaniem podłoża stałego oraz produkcji warzyw w polu metodą konwencjonalną i ekologiczną.</p>
+          <div class="on-disc" id="bio-lazny"><div class="on-discin">
+            <p>Autor i współautor publikacji naukowych. Specjalizuje się także w rekultywacji gleb i ograniczaniu negatywnego wpływu działalności człowieka na mikrobiom glebowy oraz samą glebę.</p>
+            <p>Właściciel firmy Plon Expert, prowadzącej doradztwo agronomiczne w Europie i poza jej granicami. To niezależna firma agronomiczna, oferująca gotowe rozwiązania dla produkcji warzywniczej i jagodowej.</p>
+            <p>Propaguje świadomą produkcję żywności oraz działania zmierzające do ograniczenia negatywnego wpływu rolnictwa i ogrodnictwa na środowisko naturalne.</p>
+          </div></div>
+          <button type="button" class="on-more" data-on-disc aria-expanded="false" aria-controls="bio-lazny" data-label-more="czytaj dalej" data-label-less="zwiń"><span data-on-disc-label>czytaj dalej</span><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button>
+        </div></li>
+
+        <li><div class="on-person">
+          <span class="wf-ph on-person__ph" aria-hidden="true"><svg class="wf-icon wf-icon--lg"><use href="#ti-photo"></use></svg></span>
+          <h3 class="on-person__name">Dr inż. Jerzy Próchnicki</h3>
+          <p class="on-person__role">Niezależny ekspert rolniczy</p>
+          <p>Doktor nauk rolniczych, absolwent Akademii Rolniczej we Wrocławiu, z 45-letnim stażem pracy bezpośrednio w rolnictwie jak i w korporacjach pracujących na rzecz rolnictwa w Polsce, Europie oraz globalnie, gdzie zajmował się rozwojem produktów i nowych technologii rolniczych oraz bezpieczeństwem środowiska.</p>
+          <div class="on-disc" id="bio-prochnicki"><div class="on-discin">
+            <p>Obecnie ekspert start-up’ów biotechnologicznych oraz podmiotów zajmujących się innowacyjnymi technologiami rolniczymi, autor szeregu publikacji (ekspertyzy, prezentacje, artykuły, szkolenia, warsztaty) w zakresie Rolnictwa 4.0, „Europejskiego Zielonego Ładu”, nowych technologii w rolnictwie, regeneracji i odbudowy żyzności gleby, redukcji emisji gazów cieplarnianych etc.</p>
+            <p>Współzałożyciel i członek zarządu Polskiego Stowarzyszenia Zrównoważonego Rolnictwa i Żywności, autor i współautor, a także główny redaktor Poradnika Rolnictwa Zrównoważonego oraz Akademii Zrównoważenia – lekcji on-line.</p>
+            <p>Autor szeregu publikacji, prezentacji, szkoleń i tłumaczeń publikacji o żyzności i regeneracji gleb rolniczych, sadowniczych, rolnictwie węglowym, zdrowiu owadów zapylających, likwidacji pozostałości po zabiegach ochrony roślin. Tłumacz na język polski książki „Rewitalizacja gleby. Diagnoza, użyźnienie, ochrona” autorstwa Francisa Bucaille.</p>
+          </div></div>
+          <button type="button" class="on-more" data-on-disc aria-expanded="false" aria-controls="bio-prochnicki" data-label-more="czytaj dalej" data-label-less="zwiń"><span data-on-disc-label>czytaj dalej</span><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button>
+          <p class="c5-note c5-note--strong on-person__indep"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-info-circle"></use></svg> <span>Ekspert niezależny – wspiera nas merytorycznie, nie prowadzi sprzedaży produktów Carbohort.</span></p>
+        </div></li>
+
+      </ul>
+
+      <div class="c5-btnrow on-team__more">
+        <a class="c5-btn c5-btn--light" href="kontakt.html#dzialy">Dane kontaktowe działów <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
       </div>
     </div>
   </section>
 
-  <!-- ===== CO ROBIMY ===== -->
-  <section class="wf-section" id="co-robimy">
-    <div class="wf-container wf-stack wf-stack--8">
-      <div class="wf-stack wf-stack--3" style="max-width:680px;">
-        <span class="wf-overline">Co robimy</span>
-        <h2 class="wf-h2">Trzy rodziny produktów — jedna logika odbudowy gleby.</h2>
-        <p class="wf-lead wf-t-secondary">Z tego samego surowca robimy trzy uzupełniające się rodziny preparatów: jedne pracują na strukturze gleby, inne dokarmiają roślinę i życie biologiczne. Dobiera się je razem — baza doglebowa plus uzupełnienia.</p>
+  <!-- ===== 7. DOWODY (spec §9) – dwie listy wierszy z akcją, port `pp-reports`
+       z Próchnicy+ pod prefiksem `on-doc`. Przyciski bez podpiętego PDF-a są
+       wyłączone (atrybut disabled jak w wersji bazowej), nie „martwe" linki. -->
+  <section class="c5-sec c5-band" id="dowody" data-chapter="dowody">
+    <div class="c5-wrap">
+      <span class="c5-kicker">Certyfikaty, badania, wyróżnienia</span>
+      <div class="c5-head">
+        <h2 class="c5-h2">Dokumenty zamiast deklaracji</h2>
+        <p class="c5-lead">Każdy produkt ma decyzję dopuszczającą do obrotu, trzy mają certyfikat ekologiczny, a podłoże CARBOMAT – patent i publikacje recenzowane. Numery dokumentów podajemy wprost.</p>
       </div>
 
-      <div class="wf-grid wf-grid--3" style="--wf-grid-min: 15rem;">
-        <article class="wf-card"><div class="wf-card__body wf-stack wf-stack--3">
-          <h3 class="wf-h5">CARBOMAT</h3>
-          <p class="wf-small wf-t-secondary">Sypki, doglebowy. Surowy lignit, który na lata przebudowuje strukturę i retencję gleby — fundament programu.</p>
-          <a class="wf-link--quiet wf-inline wf-small" href="carbomat.html">Poznaj rodzinę <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
-        </div></article>
-        <article class="wf-card"><div class="wf-card__body wf-stack wf-stack--3">
-          <h3 class="wf-h5">CARBOHUMIC</h3>
-          <p class="wf-small wf-t-secondary">Płynny, doglebowy i nalistny. „Próchnica w płynie" – kondycjonuje glebę i biostymuluje roślinę.</p>
-          <a class="wf-link--quiet wf-inline wf-small" href="carbohumic.html">Poznaj rodzinę <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
-        </div></article>
-        <article class="wf-card"><div class="wf-card__body wf-stack wf-stack--3">
-          <h3 class="wf-h5">CARBOMAT HUMIC</h3>
-          <p class="wf-small wf-t-secondary">Węgiel aktywowany, 3 w 1: kondycjoner + potas + biostymulator; podnosi pH zakwaszonych pól.</p>
-          <a class="wf-link--quiet wf-inline wf-small" href="carbomat-humic.html">Poznaj rodzinę <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
-        </div></article>
-      </div>
+      <div id="dowody-listy" class="on-docs" data-ce="CE-53" data-ce-wariant="dokumenty">
 
-      <div class="wf-cluster wf-gap-3">
-        <a class="wf-btn wf-btn--primary wf-btn--lg" href="produkty.html">Zobacz całą gamę produktów</a>
-        <a class="wf-btn wf-btn--secondary wf-btn--lg" href="konfigurator.html">Dobierz w konfiguratorze</a>
+        <h3 class="c5-band__title on-docs__h">Certyfikaty i decyzje</h3>
+        <ul class="on-docs__list" data-reveal data-reveal-group>
+          <li><div class="on-doc">
+            <h4 class="on-doc__name">Certyfikat ekologiczny IUNG-PIB – CARBOHUMIC</h4>
+            <p class="on-doc__meta">wykaz nawozów i środków poprawiających właściwości gleby zakwalifikowanych do stosowania w rolnictwie ekologicznym, nr NE/495/2019</p>
+            <button type="button" class="c5-btn c5-btn--light c5-btn--sm" disabled><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-text"></use></svg> Zobacz dokument</button>
+          </div></li>
+          <li><div class="on-doc">
+            <h4 class="on-doc__name">Certyfikat ekologiczny IUNG-PIB – CARBOMAT ECO</h4>
+            <p class="on-doc__meta">nr NE/567/2021</p>
+            <button type="button" class="c5-btn c5-btn--light c5-btn--sm" disabled><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-text"></use></svg> Zobacz dokument</button>
+          </div></li>
+          <li><div class="on-doc">
+            <h4 class="on-doc__name">Certyfikat ekologiczny IUNG-PIB – CARBOMAT HUMIC</h4>
+            <p class="on-doc__meta">nr NE/808/2024 (zgodność z rozporządzeniami (UE) 2018/848 i 2021/1165)</p>
+            <button type="button" class="c5-btn c5-btn--light c5-btn--sm" disabled><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-text"></use></svg> Zobacz dokument</button>
+          </div></li>
+          <li><div class="on-doc">
+            <h4 class="on-doc__name">FiBL – CARBOHUMIC</h4>
+            <p class="on-doc__meta">holenderski wykaz środków produkcji dla rolnictwa ekologicznego</p>
+            <button type="button" class="c5-btn c5-btn--light c5-btn--sm" disabled><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-text"></use></svg> Zobacz dokument</button>
+          </div></li>
+          <li><div class="on-doc">
+            <h4 class="on-doc__name">Decyzje Ministra Rolnictwa i Rozwoju Wsi o wprowadzeniu do obrotu</h4>
+            <p class="on-doc__meta">CARBOMAT ECO G-971/20 · CARBOMAT HUMIC G-1528/24 · CARBOHUMIC CALBOR G-1733/25</p>
+            <button type="button" class="c5-btn c5-btn--light c5-btn--sm" disabled><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-text"></use></svg> Zobacz dokument</button>
+          </div></li>
+          <li><div class="on-doc">
+            <h4 class="on-doc__name">Certyfikat Producent Lubuski</h4>
+            <p class="on-doc__meta">dołączamy do grona oficjalnych producentów regionalnych województwa lubuskiego</p>
+            <button type="button" class="c5-btn c5-btn--light c5-btn--sm" disabled><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-text"></use></svg> Zobacz dokument</button>
+          </div></li>
+        </ul>
+
+        <h3 class="c5-band__title on-docs__h">Nauka i wyróżnienia</h3>
+        <ul class="on-docs__list" data-reveal data-reveal-group>
+          <li><div class="on-doc">
+            <h4 class="on-doc__name">Nagroda im. prof. Szczepana A. Pieniążka (2020) · CARBOHUMIC</h4>
+            <p class="on-doc__meta">za najbardziej innowacyjny i wnoszący istotny wkład w rozwój polskiego ogrodnictwa produkt</p>
+            <button type="button" class="c5-btn c5-btn--light c5-btn--sm" disabled><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-text"></use></svg> Zobacz dokument</button>
+          </div></li>
+          <li><div class="on-doc">
+            <h4 class="on-doc__name">Dyplom Ministra Rolnictwa i Rozwoju Wsi</h4>
+            <p class="on-doc__meta">Opracowanie i wdrożenie do praktyki ogrodniczej innowacyjnego podłoża CARBOMAT do bezglebowej uprawy roślin szklarniowych</p>
+            <button type="button" class="c5-btn c5-btn--light c5-btn--sm" disabled><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-text"></use></svg> Zobacz dokument</button>
+          </div></li>
+          <li><div class="on-doc">
+            <h4 class="on-doc__name">Zgłoszenie patentowe EP 3 014 985 A1</h4>
+            <p class="on-doc__meta">podłoże do bezglebowej uprawy roślin z węgla brunatnego, pierwszeństwo 03.11.2014</p>
+            <button type="button" class="c5-btn c5-btn--light c5-btn--sm" disabled><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-text"></use></svg> Zobacz dokument</button>
+          </div></li>
+          <li><div class="on-doc">
+            <h4 class="on-doc__name">Badania SGGW</h4>
+            <p class="on-doc__meta">rozprawa doktorska i pięć publikacji recenzowanych o podłożu CARBOMAT (dr inż. Radosław Łaźny)</p>
+            <a class="c5-btn c5-btn--light c5-btn--sm" href="centrum-wiedzy.html#poradniki"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-text"></use></svg> Czytaj w Centrum wiedzy</a>
+          </div></li>
+          <li><div class="on-doc">
+            <h4 class="on-doc__name">Program badawczy Próchnica+</h4>
+            <p class="on-doc__meta">sześć gospodarstw, 2025–2028</p>
+            <a class="c5-btn c5-btn--light c5-btn--sm" href="prochnica-plus.html"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-flask"></use></svg> Strona programu</a>
+          </div></li>
+          <li><div class="on-doc">
+            <h4 class="on-doc__name">Analizy laboratoryjne</h4>
+            <p class="on-doc__meta">PCBC (2022, surowy CARBOMAT), Fitosoil (2026, CARBOMAT HUMIC), WZO Pleszew (2022/2024, mata)</p>
+            <button type="button" class="c5-btn c5-btn--light c5-btn--sm" disabled><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-download"></use></svg> Pobierz analizy</button>
+          </div></li>
+        </ul>
+
       </div>
     </div>
   </section>
 
-  <!-- ===== POLSKOŚĆ / SUROWIEC / PRODUKCJA PL ===== -->
-  <section class="wf-section wf-section--subtle" id="polskosc">
-    <div class="wf-container wf-grid wf-grid--2 wf-items-center" style="--wf-grid-min: 22rem;">
-      <div class="wf-stack wf-stack--4">
-        <span class="wf-overline">Polski surowiec, polska produkcja</span>
-        <h2 class="wf-h2">Od polskiego złoża po polski worek — krótki, kontrolowany łańcuch.</h2>
-        <p class="wf-body wf-prose">Surowiec — polski węgiel brunatny z krajowych kopalni — przetwarzamy w Polsce. Odpowiadamy za jakość na każdym etapie produkcji: od doboru i parametrów surowca, przez recepturę, po pakowanie.</p>
-        <ul class="wf-list wf-list--plain">
-          <li class="wf-inline"><svg class="wf-icon wf-icon--sm wf-icon--muted" aria-hidden="true"><use href="#ti-check"></use></svg> <span class="wf-small wf-t-secondary">Polski surowiec — znamy i utrzymujemy parametry surowca.</span></li>
-          <li class="wf-inline"><svg class="wf-icon wf-icon--sm wf-icon--muted" aria-hidden="true"><use href="#ti-check"></use></svg> <span class="wf-small wf-t-secondary">Przetwarzanie i pakowanie w Polsce, blisko surowca.</span></li>
-          <li class="wf-inline"><svg class="wf-icon wf-icon--sm wf-icon--muted" aria-hidden="true"><use href="#ti-check"></use></svg> <span class="wf-small wf-t-secondary">Krótki łańcuch — mniejszy ślad transportowy, pełna kontrola jakości.</span></li>
+  <!-- ===== 8. GDZIE JESTEŚMY (spec §10) – nowy klocek CE-56: mapa poglądowa
+       z pinezkami po lewej, lista ośmiu krajów po prawej. Najechanie na wiersz
+       podświetla pinezkę i odwrotnie (klasa `is-hot`, moduł w o-firmie.js).
+       Wersja bazowa stoi na `kontakt.html#dystrybutorzy` (prefiks `kt-eumap`);
+       to jest jej wariant `o-nas` na prefiksie `on-map`. -->
+  <section class="c5-sec" id="gdzie-jestesmy" data-chapter="gdzie-jestesmy" data-ce="CE-56" data-ce-wariant="o-nas">
+    <div class="c5-wrap">
+      <span class="c5-kicker">Gdzie jesteśmy</span>
+      <div class="c5-head">
+        <h2 class="c5-h2">Z Jordanowa do ośmiu krajów</h2>
+      </div>
+
+      <div class="on-map" data-on-map>
+        <div class="on-map__side">
+          <address class="on-map__addr">
+            <span class="on-map__co">CarboHort Sp. z o.o.</span>
+            Jordanowo 11 F<br>
+            66-200 Jordanowo<br>
+            województwo lubuskie
+          </address>
+          <div class="c5-btnrow">
+            <a class="c5-btn c5-btn--dark c5-btn--sm" href="kontakt.html">Kontakt i działy</a>
+            <a class="c5-btn c5-btn--light c5-btn--sm" href="kontakt.html#mapa-dojazdu"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-map-pin"></use></svg> Dojazd</a>
+          </div>
+
+          <figure class="on-map__fig">
+            <div class="on-map__frame" role="img" aria-label="Mapa poglądowa Europy z zaznaczonym zakładem w Jordanowie i ośmioma rynkami dystrybucji">
+              <span class="on-map__home" style="--x:56%;--y:39%" aria-hidden="true"><span class="on-map__homelbl">Jordanowo</span></span>
+              <span class="on-map__pin" data-on-pin="bulgaria" style="--x:76%;--y:69%" aria-hidden="true"></span>
+              <span class="on-map__pin" data-on-pin="francja" style="--x:33%;--y:52%" aria-hidden="true"></span>
+              <span class="on-map__pin" data-on-pin="holandia" style="--x:38%;--y:34%" aria-hidden="true"></span>
+              <span class="on-map__pin" data-on-pin="baltyckie" style="--x:73%;--y:22%" aria-hidden="true"></span>
+              <span class="on-map__pin" data-on-pin="niemcy" style="--x:46%;--y:42%" aria-hidden="true"></span>
+              <span class="on-map__pin" data-on-pin="rumunia" style="--x:75%;--y:60%" aria-hidden="true"></span>
+              <span class="on-map__pin" data-on-pin="slowacja" style="--x:65%;--y:49%" aria-hidden="true"></span>
+              <span class="on-map__pin" data-on-pin="wegry" style="--x:65%;--y:56%" aria-hidden="true"></span>
+            </div>
+            <figcaption class="on-map__cap">mapa poglądowa</figcaption>
+          </figure>
+        </div>
+
+        <ul class="on-map__list" data-reveal data-reveal-group>
+          <li><a class="on-map__row" href="kontakt.html#dyst-bulgaria" data-on-row="bulgaria"><span class="c5-chip c5-chip--solid on-map__c">Bułgaria</span><span class="on-map__firm">RIO AGRO</span></a></li>
+          <li><a class="on-map__row" href="kontakt.html#dyst-francja" data-on-row="francja"><span class="c5-chip c5-chip--solid on-map__c">Francja</span><span class="on-map__firm">AGROBIOTOP SAS</span></a></li>
+          <li><a class="on-map__row" href="kontakt.html#dyst-holandia" data-on-row="holandia"><span class="c5-chip c5-chip--solid on-map__c">Holandia</span><span class="on-map__firm">AGROVITAE VOF</span></a></li>
+          <li><a class="on-map__row" href="kontakt.html#dyst-baltyckie" data-on-row="baltyckie"><span class="c5-chip c5-chip--solid on-map__c">Kraje bałtyckie</span><span class="on-map__firm">UAB MODERNUS ŪKIS</span></a></li>
+          <li><a class="on-map__row" href="kontakt.html#dyst-niemcy" data-on-row="niemcy"><span class="c5-chip c5-chip--solid on-map__c">Niemcy</span><span class="on-map__firm">WTZ GMBH</span></a></li>
+          <li><a class="on-map__row" href="kontakt.html#dyst-rumunia" data-on-row="rumunia"><span class="c5-chip c5-chip--solid on-map__c">Rumunia</span><span class="on-map__firm">BIOFECONDA SRL</span></a></li>
+          <li><a class="on-map__row" href="kontakt.html#dyst-slowacja" data-on-row="slowacja"><span class="c5-chip c5-chip--solid on-map__c">Słowacja</span><span class="on-map__firm">EKOHNOJIVA S. R. O.</span></a></li>
+          <li><a class="on-map__row" href="kontakt.html#dyst-wegry" data-on-row="wegry"><span class="c5-chip c5-chip--solid on-map__c">Węgry</span><span class="on-map__firm">KÉKBAKONY KFT.</span></a></li>
         </ul>
       </div>
-      <div class="wf-stack wf-stack--2">
-        <div class="wf-ph wf-ph--4x3" aria-hidden="true"><span class="wf-ph__label">Hala produkcyjna w Polsce — linia pakowania</span></div>
-        <p class="wf-caption wf-t-secondary">Produkcja blisko surowca — w pełni polski łańcuch dostaw.</p>
+    </div>
+  </section>
+
+  <!-- ===== 9. POROZMAWIAJMY (spec §11) – pas CE-16 w wariancie „kontakt":
+       zdjęcie skaluje się przy przewijaniu, nagłówek po lewej, akapit i dwa
+       przyciski po prawej. -->
+  <section class="c5-pro" id="porozmawiajmy" data-chapter="porozmawiajmy" data-pro data-ce="CE-16" data-ce-wariant="kontakt">
+    <div class="c5-pro__media" data-pro-media aria-hidden="true">
+      <img class="c5-pro__img" src="img/foto/pro.jpg" alt="" loading="lazy" decoding="async">
+    </div>
+    <div class="c5-wrap c5-pro__grid">
+      <h2>Wolisz porozmawiać z człowiekiem?</h2>
+      <div class="c5-pro__side">
+        <p>Odbierze ktoś z tej strony, nie infolinia. Zadzwoń lub napisz do właściwego działu – a jeśli chcesz sprzedawać nasze produkty albo prowadzić z nami program polowy, zostań partnerem.</p>
+        <div class="c5-btnrow">
+          <a class="c5-btn c5-btn--inv" href="kontakt.html">Kontakt</a>
+          <a class="c5-btn c5-pro__login" href="partner.html">Zostań partnerem</a>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== WARTOŚCI / MISJA ===== -->
-  <section class="wf-section" id="wartosci">
-    <div class="wf-container wf-stack wf-stack--8">
-      <div class="wf-stack wf-stack--3" style="max-width:680px;">
-        <span class="wf-overline">Dlaczego to robimy</span>
-        <h2 class="wf-h2">Dbając o glebę, inwestujemy w przyszłe pokolenia.</h2>
-        <p class="wf-lead wf-t-secondary">Gleba to nie zasób bez dna. Zubożona z próchnicy nie utrzyma wody ani plonu — a odbudowa trwa lata. Robimy preparaty, które przyspieszają tę odbudowę, bo wierzymy, że zdrowa gleba to majątek przekazywany dalej, nie zużywany do końca.</p>
-      </div>
-
-      <div class="wf-alert">
-        <span class="wf-alert__icon"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-info-circle"></use></svg></span>
-        <div><span class="wf-alert__title">Nasze motto: „Dbając o glebę, inwestujemy w przyszłe pokolenia."</span> <span class="wf-small wf-t-secondary">To nie hasło na worek — to powód, dla którego mówimy o efektach uczciwie, z ramą czasową, zamiast obiecywać cuda w jeden sezon.</span></div>
-      </div>
-
-      <div class="wf-grid wf-grid--2" style="--wf-grid-min: 20rem;">
-        <article class="wf-card"><div class="wf-card__body wf-stack wf-stack--3">
-          <h3 class="wf-h5">Uczciwie o efektach</h3>
-          <p class="wf-small wf-t-secondary">Retencja, próchnica, plon — to „zależy" od gleby, dawki i czasu. Pokazujemy własne dane i ramę horyzontu, nie magiczne procenty wyrwane z kontekstu.</p>
-        </div></article>
-        <article class="wf-card"><div class="wf-card__body wf-stack wf-stack--3">
-          <h3 class="wf-h5">Myślenie pokoleniowe</h3>
-          <p class="wf-small wf-t-secondary">Jako rodzinna firma patrzymy dalej niż jeden sezon sprzedaży. Glebę traktujemy jak kapitał, który ma służyć tym, którzy przyjdą po nas.</p>
-        </div></article>
-      </div>
-
-      <div class="wf-stack wf-stack--2">
-        <div class="wf-ph wf-ph--16x9" aria-hidden="true"><span class="wf-ph__label">Pole / korzeń w zdrowej, ciemnej glebie</span></div>
-        <p class="wf-caption wf-t-secondary">Zdrowa gleba dziś to plon i woda dla kolejnych pokoleń.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== ZESPÓŁ ===== -->
-  <section class="wf-section wf-section--subtle" id="zespol">
-    <div class="wf-container wf-stack wf-stack--8">
-      <div class="wf-stack wf-stack--3" style="max-width:680px;">
-        <span class="wf-overline">Zespół</span>
-        <h2 class="wf-h2">Za marką stoją konkretni ludzie — rodzina i zespół Carbohort.</h2>
-        <p class="wf-lead wf-t-secondary">Rodzinna firma, w której decyzje podejmują ludzie z imienia i nazwiska. Poniżej miejsce na zespół — nazwiska, role i zdjęcia uzupełnimy przed publikacją.</p>
-      </div>
-
-      <div class="wf-grid wf-grid--4" style="--wf-grid-min: 12rem;">
-        <div class="wf-stack wf-stack--2 wf-center">
-          <span class="wf-ph wf-ph--avatar" aria-hidden="true"></span>
-          <span class="wf-w-semibold">[Imię i nazwisko]</span>
-          <span class="wf-small wf-t-tertiary">Założyciel / właściciel</span>
-        </div>
-        <div class="wf-stack wf-stack--2 wf-center">
-          <span class="wf-ph wf-ph--avatar" aria-hidden="true"></span>
-          <span class="wf-w-semibold">[Imię i nazwisko]</span>
-          <span class="wf-small wf-t-tertiary">Produkcja i technologia</span>
-        </div>
-        <div class="wf-stack wf-stack--2 wf-center">
-          <span class="wf-ph wf-ph--avatar" aria-hidden="true"></span>
-          <span class="wf-w-semibold">[Imię i nazwisko]</span>
-          <span class="wf-small wf-t-tertiary">Doradztwo agronomiczne</span>
-        </div>
-        <div class="wf-stack wf-stack--2 wf-center">
-          <span class="wf-ph wf-ph--avatar" aria-hidden="true"></span>
-          <span class="wf-w-semibold">[Imię i nazwisko]</span>
-          <span class="wf-small wf-t-tertiary">Sprzedaż i obsługa klienta</span>
-        </div>
-      </div>
-      <p class="wf-caption wf-t-secondary">Nazwiska, role i zdjęcia zespołu do uzupełnienia danymi Carbohort.</p>
-    </div>
-  </section>
-
-  <!-- ===== WIARYGODNOŚĆ / CERTYFIKATY ===== -->
-  <section class="wf-section" id="wiarygodnosc">
-    <div class="wf-container wf-stack wf-stack--8">
-      <div class="wf-stack wf-stack--3" style="max-width:680px;">
-        <span class="wf-overline">Wiarygodność</span>
-        <h2 class="wf-h2">Certyfikaty i rejestracja, nie deklaracje.</h2>
-        <p class="wf-lead wf-t-secondary">Naszą jakość potwierdzają niezależne instytucje i rejestracja w Ministerstwie Rolnictwa. Produkty z ekocertyfikatem można stosować w rolnictwie ekologicznym — to twarde dokumenty, a nie słowo producenta.</p>
-      </div>
-
-      <div class="wf-grid" style="--wf-grid-min: 10rem;">
-        <div class="wf-stack wf-stack--2 wf-center">
-          <span class="wf-ph wf-ph--logo" aria-hidden="true"><span class="wf-ph__label">logo</span></span>
-          <span class="wf-small wf-t-secondary">Certyfikat ekologiczny IUNG</span>
-        </div>
-        <div class="wf-stack wf-stack--2 wf-center">
-          <span class="wf-ph wf-ph--logo" aria-hidden="true"><span class="wf-ph__label">logo</span></span>
-          <span class="wf-small wf-t-secondary">FiBL</span>
-        </div>
-        <div class="wf-stack wf-stack--2 wf-center">
-          <span class="wf-ph wf-ph--logo" aria-hidden="true"><span class="wf-ph__label">logo</span></span>
-          <span class="wf-small wf-t-secondary">SKAL</span>
-        </div>
-        <div class="wf-stack wf-stack--2 wf-center">
-          <span class="wf-ph wf-ph--logo" aria-hidden="true"><span class="wf-ph__label">logo</span></span>
-          <span class="wf-small wf-t-secondary">Rejestracja MRiRW</span>
-        </div>
-      </div>
-
-      <div class="wf-alert">
-        <span class="wf-alert__icon"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-info-circle"></use></svg></span>
-        <div><span class="wf-alert__title">Dokumenty udostępniamy na życzenie.</span> <span class="wf-small wf-t-secondary">Pełne dokumenty (numery certyfikatów, zakres rejestracji, karty produktów) udostępniamy na życzenie i przy zamówieniach instytucjonalnych. Logotypy, pisownię nazw i zakres ekocertyfikatu potwierdzamy przed publikacją.</span></div>
-      </div>
-
-      <div><a class="wf-btn wf-btn--secondary wf-inline" href="kontakt.html">Napisz do nas <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></div>
-    </div>
-  </section>
-
-  <!-- ===== PARTNERZY / WSPÓŁPRACA ===== -->
-  <section class="wf-section wf-section--subtle" id="partnerzy">
-    <div class="wf-container wf-grid wf-grid--2 wf-items-center" style="--wf-grid-min: 22rem;">
-      <div class="wf-stack wf-stack--4">
-        <span class="wf-overline">Partnerzy i współpraca</span>
-        <h2 class="wf-h2">Budujemy sieć partnerów — dystrybutorów i doradców.</h2>
-        <p class="wf-body wf-prose">Pracujemy z dystrybutorami, doradcami agronomicznymi i gospodarstwami w całej Polsce. Jeśli chcesz oferować produkty Carbohort lub współpracować przy programach polowych — odezwij się.</p>
-        <div class="wf-cluster wf-gap-3">
-          <a class="wf-btn wf-btn--primary" href="partner.html">Zostań partnerem</a>
-          <a class="wf-btn wf-btn--link wf-inline" href="prochnica-plus.html">Program Próchnica+ <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
-        </div>
-      </div>
-      <div class="wf-grid" style="--wf-grid-min: 8rem;">
-        <span class="wf-ph wf-ph--logo" aria-hidden="true"><span class="wf-ph__label">partner</span></span>
-        <span class="wf-ph wf-ph--logo" aria-hidden="true"><span class="wf-ph__label">partner</span></span>
-        <span class="wf-ph wf-ph--logo" aria-hidden="true"><span class="wf-ph__label">partner</span></span>
-        <span class="wf-ph wf-ph--logo" aria-hidden="true"><span class="wf-ph__label">partner</span></span>
-        <span class="wf-ph wf-ph--logo" aria-hidden="true"><span class="wf-ph__label">partner</span></span>
-        <span class="wf-ph wf-ph--logo" aria-hidden="true"><span class="wf-ph__label">partner</span></span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== MOTTO ===== -->
-  <section class="wf-section wf-section--inverse">
-    <div class="wf-container wf-container--narrow wf-stack wf-stack--2 wf-center">
-      <p class="wf-h3 wf-t-inverse">„Dbając o glebę, inwestujemy w przyszłe pokolenia."</p>
+  <!-- ===== 10. MOTTO (spec §12) – ciemny boks z cytatem klienta. Bez kropki
+       w nawigacji i bez przycisków. -->
+  <section class="c5-sec" id="motto" data-ce="CE-33" data-ce-wariant="ciemny-boks">
+    <div class="c5-wrap">
+      <blockquote class="on-quote">
+        <span class="on-quote__t">Zespół CarboHort</span>
+        <p>„Ziemia nie należy do nas. Pożyczamy ją od naszych dzieci."</p>
+      </blockquote>
     </div>
   </section>
 
@@ -292,5 +586,12 @@
 <cw-dock></cw-dock>
 
 <script src="cw.js"></script>
+<!-- Lenis: slight scroll inertia (like serverobotics.com); the page scrolls natively without it -->
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
+<script src="ce/00-base.js"></script>
+<script src="ce/CE-07-nawigacja-kropkowa.js"></script>
+<script src="ce/CE-16-pas-pro.js"></script>
+<script src="o-firmie.js"></script>
+<script src="ce-overlay.js"></script>
 </body>
 </html>

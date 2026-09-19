@@ -356,8 +356,8 @@
 
 /* the packshot field has a fixed height, so the names line up across the cards of a path */
 .c5pr-pcard{position:relative;height:var(--pc-h);display:grid;grid-template-columns:minmax(0,1fr);align-content:start;gap:6px;padding:var(--w-space-5);background:var(--w-gray-150);transition:background var(--w-duration-base) var(--w-ease);}
-/* the section is a c5-band (#fafafa), so the card field goes one step darker – like the plate
-   of the season strip on this page – and one step darker again under the pointer / focus */
+/* the section is a c5-band (#fafafa), so the card field goes one step darker to keep the
+   contrast it would have on white – and one step darker again under the pointer / focus */
 .c5pr-pcard:focus-within{background:var(--w-gray-200);}
 .c5pr-pcard__media{display:flex;align-items:center;justify-content:center;height:var(--pc-media-open);min-height:0;overflow:hidden;transition:height var(--w-duration-base) var(--w-ease);}
 .c5pr-pcard__pack{width:auto;height:auto;max-width:62%;max-height:82%;object-fit:contain;}
@@ -464,40 +464,14 @@
   .cx-js .c5-fx__head .c5-h2{font-size:clamp(1.375rem,2vw,1.75rem);}
   .cx-js .c5-fx__fact .c5-fx__body{font-size:0.8125rem;}
 }
-/* on the light band the block takes the band colour, so the rows do not read as a white card */
-.c5-band .c5-season{background:var(--w-surface-subtle);}
-.c5-season__row:last-child{border-bottom:1px solid var(--w-border-default);}
-/* page-specific: overrides .c5-season__head from ce/CE-15-wiersze-packshot.css */
-/* the title button keeps the 50 px closed row, but its hit area is 44 px tall
-   (padding-block 10 px balanced by margin-block -10 px) */
-.c5-season__head{grid-column:1;padding:10px 0;margin-block:-10px;background:none;border:0;font:inherit;font-size:1rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;text-align:left;cursor:pointer;
-  color:var(--w-gray-400);transition:color .2s var(--w-ease);}
-/* Entrance: the rows fade in from below once, the first time the block shows up on screen
-   (IntersectionObserver adds `is-in`), 90 ms apart – only where the scroll mechanics run.
-   A transform does not change the layout height, so the block measurement in JS and the
-   sticky `top` stay correct in the start state. */
-@media (min-width:900px) and (prefers-reduced-motion: no-preference){
-  .cx-js .c5-season__row{opacity:0;transform:translateY(24px);
-    transition:opacity .5s cubic-bezier(.2,.7,.2,1),transform .5s cubic-bezier(.2,.7,.2,1);}
-  .cx-js .c5-season.is-in .c5-season__row{opacity:1;transform:none;}
-  .cx-js .c5-season.is-in .c5-season__row:nth-child(2){transition-delay:.09s;}
-  .cx-js .c5-season.is-in .c5-season__row:nth-child(3){transition-delay:.18s;}
-}
-/* on the band (#fafafa) the plate goes one step darker to keep the contrast it has on white */
-.c5-band .c5-season__plate{background:var(--w-gray-150);}
-.c5-season__info p{margin:0;}
-
-@media (prefers-reduced-motion: reduce){
-  .c5-season__head{transition:none;}
-}
-
 /* --- Knowledge blocks (former inline layer): table of materials + soil optimum ---------- */
 .c5pr-two{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(1.5rem,3vw,3rem);align-items:start;margin-top:clamp(2.5rem,5vw,4rem);}
 @media (max-width:899px){ .c5pr-two{grid-template-columns:minmax(0,1fr);} }
 /* stacked variant: one under the other, each block full width (Mateusz 12.09 and 14.09) */
 .c5pr-two--stack{grid-template-columns:minmax(0,1fr);}
-/* after the pinned rows the blocks get a longer run-up – the pin leaves the screen first */
-.c5-season-pin + .c5pr-two{margin-top:clamp(3.5rem,7vw,6rem);}
+/* after the cascade (CE-15 trial, spec §22.2) the blocks get a longer run-up – the same air
+   the pinned rows used to leave behind them, now measured from the new root */
+.c5-casc + .c5-wrap > .c5pr-two{margin-top:clamp(3.5rem,7vw,6rem);}
 /* Soil optimum: one 100 % scale of three shares; labels in the same grid. */
 .c5pr-mix{margin-top:var(--w-space-2);}
 .c5pr-mix__bar{display:grid;grid-template-columns:50fr 25fr 25fr;height:clamp(56px,6.5vw,84px);border:1px solid var(--w-gray-900);}

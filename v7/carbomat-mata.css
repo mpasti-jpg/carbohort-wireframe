@@ -346,8 +346,13 @@ html.cx-js .c5-params__row{flex:1 1 auto;align-content:center;}
 .c5-stats__row + .c5-stats__row{border-top:1px solid rgb(255 255 255 / .18);}
 .c5-stats__txt{display:flex;flex-direction:column;gap:var(--w-space-2);max-width:46rem;}
 .c5-stats .c5-mt-stat__lab{font-size:1rem;line-height:1.4;color:rgb(255 255 255 / .85);}
+/* Wartość jest kontenerem sufiksu EL-31 (`c5-aff`): cyfry i sufiks to osobne
+   elementy flex wyrównane GÓRĄ, odstęp między nimi daje `gap`. Spacje w treści
+   („do 18,4×”, „−1119,4 m³/ha”) zostają w DOM-ie, ale zwijają się na krawędzi
+   elementu, więc widać wyłącznie odstęp z `gap`. */
 .c5-stats .c5-mt-stat__val{font-size:clamp(3rem,7.5vw,6.5rem);font-weight:var(--w-weight-medium);
-  letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap;}
+  letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap;
+  display:flex;align-items:flex-start;justify-content:flex-end;gap:.12em;}
 
 /* Wejście liczb: wiersze wjeżdżają raz, od dołu, co 90 ms – tak samo jak kroki
    Sezonu we wzorcu ECO. Klasę `is-in` dokłada 55-dowod.js przy pierwszym
@@ -366,7 +371,8 @@ html.cx-js .c5-params__row{flex:1 1 auto;align-content:center;}
   /* wąski ekran: etykieta nad wartością, wszystko do lewej; wartość może
      złamać się przed „m³/ha”, żeby najdłuższa liczba nie rozpychała strony */
   .c5-stats__row{grid-template-columns:1fr;gap:var(--w-space-3);}
-  .c5-stats .c5-mt-stat__val{font-size:clamp(2.5rem,13vw,4rem);text-align:left;white-space:normal;}
+  .c5-stats .c5-mt-stat__val{font-size:clamp(2.5rem,13vw,4rem);white-space:normal;
+    justify-content:flex-start;flex-wrap:wrap;}
 }
 
 /* --- Nagłówek bloku dowodowego (wspólny dla karty i strony lightboxa) ------- */
@@ -416,8 +422,6 @@ html.cx-js .c5-params__row{flex:1 1 auto;align-content:center;}
 .c5-lb .c5-iconbtn{display:none;}
 .c5-lb__scroll{display:flex;flex-direction:column;gap:clamp(2.5rem,5vw,4rem);}
 .c5-lb__page{display:flex;flex-direction:column;gap:var(--w-space-5);}
-/* `hidden` na stronie musi wygrać z `display:flex` powyżej (JS chowa strony atrybutem) */
-.c5-lb__page[hidden]{display:none;}
 .c5-lb__src{margin-top:var(--w-space-3);}
 /* stopka strony SGGW: publikacje, na których opierają się jej liczby */
 .c5-lb__pubs{display:flex;flex-direction:column;gap:var(--w-space-3);align-items:flex-start;border-top:1px solid var(--w-gray-900);padding-top:clamp(1.25rem,2.5vw,1.75rem);}

@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="ce/CE-08-hero.css">
 <link rel="stylesheet" href="ce/CE-09-marquee.css">
 <link rel="stylesheet" href="ce/CE-12-scena-faktow-proba.css">
-<link rel="stylesheet" href="ce/CE-15-wiersze-packshot.css">
+<link rel="stylesheet" href="ce/CE-15-wiersze-packshot-proba.css">
 <link rel="stylesheet" href="ce/CE-16-pas-pro.css">
 <link rel="stylesheet" href="ce/CE-17-faq.css">
 <link rel="stylesheet" href="ce/CE-18-cta.css">
@@ -1252,79 +1252,85 @@
     </div>
   </section>
 
-  <!-- ===== 65 · CO DAJĄ – effects over time (pinned rows) + knowledge blocks =====
-       Spec §10. The former light band inside "Jak działają" is its own section now (dot
-       "Co dają"). Part 1 ports the CARBOMAT ECO "Sezon" pin: the heading pins for the cycle,
-       the block enters in the page flow with row 1 open, sticks by its bottom edge, the
-       scroll opens rows 2 and 3, then everything leaves together. Without motion it is a
-       click accordion with row 1 open; without JS every row is open. One packshot per row.
+  <!-- ===== 65 · CO DAJĄ – cascade of three accordions with a countdown + knowledge blocks =====
+       Spec §22, Figma frame „Frame 224”. The former light band inside "Jak działają" is its
+       own section now (dot "Co dają"). Part 1 is the trial variant of CE-15: the pin is gone,
+       the heading runs in the normal flow and the three moments of the timeline stand in three
+       columns of a wide container, each card starting where the one to its left ends, with
+       hairlines on the column boundaries. One card is open at a time – the first one at start;
+       a ring around its minus icon counts 5 s and the next card takes over, and any click
+       stops that for good. Below 900 px, with reduced motion and without JS the same DOM is a
+       plain accordion – without JS all three are open. The mechanics live in
+       ce/CE-15-wiersze-packshot-proba.css/.js, linked by this page only.
        Part 2: knowledge blocks in the normal flow with a one-shot fade-in (data-reveal). -->
   <!-- Co dają i kiedy to widać + porównanie materiałów (jasny pas) -->
   <section class="c5-sec c5-band" id="co-daja" data-chapter="co-daja">
-    <div class="c5-wrap">
-      <div id="co-daja-wiersze" class="c5-season-pin" data-season-pin data-ce="CE-15" data-ce-od="#co-daja">
-        <!-- The heading lives in the pin container (absolutely, so it takes no room in the
-             flow): after the cycle it leaves upwards together with the rows instead of
-             disappearing. No background – nothing may cover the rows. -->
-        <div class="c5-season-headwrap" data-season-headwrap>
-          <div class="c5-season-head" data-season-head>
-            <div class="c5-head">
-              <span class="c5-kicker c5-kicker--center">Efekty w czasie</span>
-              <h2 class="c5-h2 c5-h2--center">Co dają – i kiedy to zobaczysz.</h2>
-              <p class="c5-lead c5-lead--center">Efekty rozkładają się w czasie. Dlatego rozdzielamy to, co widać w sezonie, od tego, co buduje się latami.</p>
-            </div>
-          </div>
-        </div>
-        <div class="c5-season-pin__spacer" data-season-spacer aria-hidden="true"></div>
-        <div class="c5-season">
-          <div class="c5-season__row" data-open="true">
-            <button type="button" class="c5-season__head" data-season="1" aria-expanded="true" aria-controls="season-1">W sezonie</button>
-            <div class="c5-season__scene">
-              <span class="c5-season__plate" aria-hidden="true"></span>
-              <img class="c5-season__pack" src="img/opakowania/kanister_20l.png" alt="CARBOHUMIC filtrowany – kanister 20 l">
-            </div>
-            <div class="c5-season__panel" id="season-1">
-              <div class="c5-season__panelin">
-                <div class="c5-season__info">
-                  <h3>Wsparcie rośliny</h3>
-                  <p class="c5-muted">Biostymulacja doglebowa (CARBOHUMIC filtrowany, CARBOMAT HUMIC) i wzmocnienie nalistne (MAXI PLUS, w sadzie CALBOR): wsparcie metabolizmu, wykorzystania składników i regeneracji po stresie.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="c5-season__row">
-            <button type="button" class="c5-season__head" data-season="2" aria-expanded="false" aria-controls="season-2">2–5 lat</button>
-            <div class="c5-season__scene">
-              <span class="c5-season__plate" aria-hidden="true"></span>
-              <img class="c5-season__pack" src="img/opakowania/beczka_200l.png" alt="CARBOHUMIC niefiltrowany – beczka 200 l">
-            </div>
-            <div class="c5-season__panel" id="season-2">
-              <div class="c5-season__panelin">
-                <div class="c5-season__info">
-                  <h3>Budowa gleby</h3>
-                  <p class="c5-muted">Budowa próchnicy i struktury (CARBOHUMIC niefiltrowany, CARBOMAT HUMIC): lepsze gospodarowanie wodą, sprawniejszy kompleks sorpcyjny, aktywniejszy mikrobiom.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="c5-season__row">
-            <button type="button" class="c5-season__head" data-season="3" aria-expanded="false" aria-controls="season-3">Ponad 20 lat</button>
-            <div class="c5-season__scene">
-              <span class="c5-season__plate" aria-hidden="true"></span>
-              <img class="c5-season__pack" src="img/opakowania/worek_20l.png" alt="CARBOMAT ECO – worek 20 l">
-            </div>
-            <div class="c5-season__panel" id="season-3">
-              <div class="c5-season__panelin">
-                <div class="c5-season__info">
-                  <h3>Trwały wkład</h3>
-                  <p class="c5-muted">Jednorazowy wkład lignitu (CARBOMAT ECO): trwała – nawet powyżej 20 lat – inwestycja w jakość i strukturę gleby, próchnicę oraz retencję wody.</p>
-                </div>
-              </div>
-            </div>
-          </div>
+    <div id="co-daja-wiersze" class="c5-casc" data-casc data-ce="CE-15" data-ce-wariant="kaskada-z-odliczaniem" data-ce-od="#co-daja">
+      <div class="c5-wrap">
+        <div class="c5-head">
+          <span class="c5-kicker c5-kicker--center">Efekty w czasie</span>
+          <h2 class="c5-h2 c5-h2--center">Co dają – i kiedy to zobaczysz.</h2>
+          <p class="c5-lead c5-lead--center">Efekty rozkładają się w czasie. Dlatego rozdzielamy to, co widać w sezonie, od tego, co buduje się latami.</p>
         </div>
       </div>
+      <!-- The cascade gets the whole window (EL-29 wide container): the stage inside it is
+           the content box, so the four hairlines sit exactly on the column boundaries. -->
+      <div class="c5-wrap c5-wrap--wide">
+        <div class="c5-casc__stage">
+          <span class="c5-casc__lines" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <ol class="c5-casc__list">
+            <!-- every header ships aria-expanded="true": without JS every panel is open -->
+            <li class="c5-casc__item">
+              <h3 class="c5-casc__h">
+                <button type="button" class="c5-casc__btn" aria-expanded="true" aria-controls="co-daja-1">
+                  <span class="c5-casc__t">Wsparcie rośliny</span>
+                  <span class="c5-casc__when">W sezonie</span>
+                  <span class="c5-casc__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle class="c5-casc__ring" cx="12" cy="12" r="11"/><circle class="c5-casc__ring c5-casc__ring--run" cx="12" cy="12" r="11"/><path class="c5-casc__sign" d="M6.5 12h11"/><path class="c5-casc__sign c5-casc__sign--v" d="M12 6.5v11"/></svg></span>
+                </button>
+              </h3>
+              <div class="c5-casc__panel" id="co-daja-1">
+                <div class="c5-casc__panelin">
+                  <a class="c5-casc__prod" href="carbohumic.html#wariant-filtrowany"><span class="c5-casc__pack"><img src="img/opakowania/kanister_20l.png" alt="CARBOHUMIC filtrowany – kanister 20 l"></span><span class="c5-casc__prodn">CARBOHUMIC filtrowany</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+                  <p class="c5-casc__txt">Biostymulacja doglebowa (CARBOHUMIC filtrowany, CARBOMAT HUMIC) i wzmocnienie nalistne (MAXI PLUS, w sadzie CALBOR): wsparcie metabolizmu, wykorzystania składników i regeneracji po stresie.</p>
+                </div>
+              </div>
+            </li>
+            <li class="c5-casc__item">
+              <h3 class="c5-casc__h">
+                <button type="button" class="c5-casc__btn" aria-expanded="true" aria-controls="co-daja-2">
+                  <span class="c5-casc__t">Budowa gleby</span>
+                  <span class="c5-casc__when">2–5 lat</span>
+                  <span class="c5-casc__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle class="c5-casc__ring" cx="12" cy="12" r="11"/><circle class="c5-casc__ring c5-casc__ring--run" cx="12" cy="12" r="11"/><path class="c5-casc__sign" d="M6.5 12h11"/><path class="c5-casc__sign c5-casc__sign--v" d="M12 6.5v11"/></svg></span>
+                </button>
+              </h3>
+              <div class="c5-casc__panel" id="co-daja-2">
+                <div class="c5-casc__panelin">
+                  <a class="c5-casc__prod" href="carbohumic.html#wariant-niefiltrowany"><span class="c5-casc__pack"><img src="img/opakowania/beczka_200l.png" alt="CARBOHUMIC niefiltrowany – beczka 200 l"></span><span class="c5-casc__prodn">CARBOHUMIC niefiltrowany</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+                  <p class="c5-casc__txt">Budowa próchnicy i struktury (CARBOHUMIC niefiltrowany, CARBOMAT HUMIC): lepsze gospodarowanie wodą, sprawniejszy kompleks sorpcyjny, aktywniejszy mikrobiom.</p>
+                </div>
+              </div>
+            </li>
+            <li class="c5-casc__item">
+              <h3 class="c5-casc__h">
+                <button type="button" class="c5-casc__btn" aria-expanded="true" aria-controls="co-daja-3">
+                  <span class="c5-casc__t">Trwały wkład</span>
+                  <span class="c5-casc__when">Ponad 20 lat</span>
+                  <span class="c5-casc__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle class="c5-casc__ring" cx="12" cy="12" r="11"/><circle class="c5-casc__ring c5-casc__ring--run" cx="12" cy="12" r="11"/><path class="c5-casc__sign" d="M6.5 12h11"/><path class="c5-casc__sign c5-casc__sign--v" d="M12 6.5v11"/></svg></span>
+                </button>
+              </h3>
+              <div class="c5-casc__panel" id="co-daja-3">
+                <div class="c5-casc__panelin">
+                  <a class="c5-casc__prod" href="carbomat.html#wariant-eco"><span class="c5-casc__pack"><img src="img/opakowania/worek_20l.png" alt="CARBOMAT ECO – worek 20 l"></span><span class="c5-casc__prodn">CARBOMAT ECO</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+                  <p class="c5-casc__txt">Jednorazowy wkład lignitu (CARBOMAT ECO): trwała – nawet powyżej 20 lat – inwestycja w jakość i strukturę gleby, próchnicę oraz retencję wody.</p>
+                </div>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
 
+    <div class="c5-wrap">
       <!-- Ramka „Baza i wzmocnienie robią co innego" zdjęta na prośbę Mateusza
            (komentarz w podglądzie, 12.09): to samo mówi rozpiska wyżej, tabela
            w sekcji „Doglebowo czy nalistnie" i FAQ o suszy. -->
@@ -1726,7 +1732,7 @@
 <script src="ce/00-base.js"></script>
 <script src="ce/CE-07-nawigacja-kropkowa.js"></script>
 <script src="ce/CE-12-scena-faktow-proba.js"></script>
-<script src="ce/CE-15-wiersze-packshot.js"></script>
+<script src="ce/CE-15-wiersze-packshot-proba.js"></script>
 <script src="ce/CE-16-pas-pro-proba.js"></script>
 <script src="ce/CE-17-faq.js"></script>
 <script src="produkty.js"></script>
