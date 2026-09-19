@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laboratorium · CE-65 „Oś faz z akordeonem” · CarboHort</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Strona demonstracyjna klocka CE-65 „Oś faz z akordeonem” – stan z Kukurydzy do 19.09.2026, zanim program fazowy przeszedł na CE-68.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231E1C1A'/%3E%3Ccircle cx='16' cy='16' r='8.5' fill='none' stroke='%2387C063' stroke-width='3'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../wireframe.css">
+<link rel="stylesheet" href="../cw.css">
+<script src="../chrome.js"></script>
+<link rel="stylesheet" href="../c5.css">
+<link rel="stylesheet" href="../uprawa.css">
+<link rel="stylesheet" href="../ce/00-base.css">
+<link rel="stylesheet" href="../ce/CE-65-os-faz.css">
+<style>
+/* Page layer of the demo, in place of kukurydza.css: the ECO type scale of
+   `u-lab` (the only page rule the block leans on) and the one-line note at the
+   top. Kukurydza carries no other CE-65 rule of its own – checked 19.09.2026,
+   the grep for `c5-tl` over kukurydza.css/js comes back empty. */
+.u-lab,.u-defs dt{letter-spacing:.06em;}
+body{background:var(--w-surface-page);}
+.lab-note{margin:0;padding:14px var(--c5-gutter);border-bottom:1px solid var(--w-border-subtle);
+  font-family:var(--w-font-sans);font-size:0.8125rem;line-height:1.45;color:var(--w-text-secondary);}
+/* the block opens its first phase on load; on this page nothing stands above
+   it, so the section keeps the air it has on the page */
+#u-fazy{padding-block:clamp(3rem,7vw,6rem);}
+</style>
+</head>
+<body>
+
+<cw-icons></cw-icons>
+
+<main id="main">
+<p class="lab-note">Strona demonstracyjna klocka CE-65 – stan z Kukurydzy do 19.09.2026; pełne opisy faz i mapy zastosowań otwierają się na stronie uprawy</p>
+
+<!-- ===== 40 · PROGRAM FAZOWY: CE-65 „Oś faz z akordeonem” (spec §12.4, §13.2, §14.4) =====
+     Uwaga 4 Mateusza (19.09, ramka Figma „Frame 213”): kadr otwartej fazy wraca
+     do panelu i stoi po lewej stronie opisu – przyklejona scena razem ze swoim
+     torem znika. W lewej kolumnie sekcji zostaje kicker w ramce i nagłówek; od
+     900 px jedzie przyklejony, żeby kolumna nie była pusta przy dziesięciu
+     fazach. Po prawej pionowa oś z numerowanymi węzłami i dużymi tytułami;
+     otwarta faza rozwija pod tytułem panel z etykietą, skrótem, boksami
+     produktów i przyciskiem pełnego opisu (lightbox bez zmian). Od 1200 px
+     panel idzie na dwie kolumny jak w ramce – kadr 6:7 po lewej, treść po
+     prawej; niżej kadr 4:3 nad treścią. Sekcja ma własny, szerszy kontener
+     (do 1800 px, marginesy 40 px) – iteracja 9.
+     Klocek żyje w warstwie wspólnej: ce/CE-65-os-faz.css + ce/CE-65-os-faz.js;
+     lista z panelem z iteracji 5 znika w całości razem ze swoimi klasami.
+     Treść faz – cytaty ze Skrótu programu, przeniesione co do znaku
+     z poprzedniej wersji sekcji. ===== -->
+<section class="c5-sec c5-tl" id="u-fazy" data-chapter="u-fazy" data-ce="CE-65" data-tl>
+  <div class="c5-wrap c5-tl__wrap">
+    <div class="c5-tl__side">
+      <span class="c5-kicker c5-kicker--outline u-reveal">Program fazowy</span>
+      <div class="c5-head u-reveal">
+        <h2 class="c5-h2">Program fazowy od ścierniska do zbioru</h2>
+      </div>
+    </div>
+    <ol class="c5-tl__list">
+      <li class="c5-tl__item" data-tl-item>
+        <h3 class="c5-tl__h"><button class="c5-tl__row" type="button" id="tl-row-1" aria-expanded="true" aria-controls="tl-panel-1"><span class="c5-tl__no" aria-hidden="true">01</span><span class="c5-tl__t">Po zbiorze przedplonu i jesienne przygotowanie pola</span></button></h3>
+        <div class="c5-tl__panel" id="tl-panel-1" role="region" aria-labelledby="tl-row-1">
+          <div class="c5-tl__panelin">
+            <figure class="c5-tl__fig" aria-hidden="true"><img class="c5-tl__img" src="../img/foto/kukurydza-faza-01.jpg" alt="" width="1200" height="1200" loading="lazy" decoding="async"></figure>
+            <div class="c5-tl__body">
+              <span class="u-lab">Po zbiorze przedplonu</span>
+              <p class="c5-tl__lead">Analiza gleby, rozdrobnienie resztek, regulacja pH i stosunku kationów według potrzeb. Uprawa poplonu do likwidacji zimą lub wczesną wiosną. Tu może być nawożenie P, K Mg, S i mikroelementów Zn, Mn, B przed lub po poplonach</p>
+              <div class="c5-tl__prods">
+                <button class="c5-tl__prod" type="button" data-lightbox-open="produkt-187" aria-label="Mapa zastosowań: CARBOHUMIC filtrowany 187 mesh"><span class="c5-tl__pack"><img src="../img/opakowania/kanister_20l.png" alt="" loading="lazy" decoding="async"></span><span class="c5-tl__prodn">CARBOHUMIC filtrowany 187 mesh</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></button>
+                <button class="c5-tl__prod" type="button" data-lightbox-open="produkt-20" aria-label="Mapa zastosowań: CARBOHUMIC niefiltrowany 20 mesh"><span class="c5-tl__pack"><img src="../img/opakowania/mauzer_1000l_1500l.png" alt="" loading="lazy" decoding="async"></span><span class="c5-tl__prodn">CARBOHUMIC niefiltrowany 20 mesh</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></button>
+                <button class="c5-tl__prod" type="button" data-lightbox-open="produkt-eco" aria-label="Mapa zastosowań: CARBOMAT ECO"><span class="c5-tl__pack"><img src="../img/opakowania/worek_1000l_1500l.png" alt="" loading="lazy" decoding="async"></span><span class="c5-tl__prodn">CARBOMAT ECO</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></button>
+              </div>
+              <p class="c5-src">CARBOHUMIC filtrowany 187 mesh lub CARBOHUMIC niefiltrowany 20 mesh pod uprawę poplonu jesiennego; CARBOMAT ECO tylko jako zabieg strategiczny przed siewem poplonu</p>
+              <a class="c5-btn c5-btn--dark c5-btn--sm c5-tl__go" href="#faza-3-1" data-lightbox-open="faza-3-1">Pełny opis fazy <svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="c5-tl__item" data-tl-item>
+        <h3 class="c5-tl__h"><button class="c5-tl__row" type="button" id="tl-row-2" aria-expanded="true" aria-controls="tl-panel-2"><span class="c5-tl__no" aria-hidden="true">02</span><span class="c5-tl__t">Wczesna wiosna i przygotowanie przedsiewne</span></button></h3>
+        <div class="c5-tl__panel" id="tl-panel-2" role="region" aria-labelledby="tl-row-2">
+          <div class="c5-tl__panelin">
+            <figure class="c5-tl__fig" aria-hidden="true"><img class="c5-tl__img" src="../img/foto/kukurydza-faza-02.jpg" alt="" width="1200" height="1200" loading="lazy" decoding="async"></figure>
+            <div class="c5-tl__body">
+              <span class="u-lab">Przed siewem</span>
+              <p class="c5-tl__lead">Ewentualna korekta struktury gleby – głębosz, nawożenie N wg bilansu azotu po zimie (inne najlepiej jesienią) z uwzględnieniem systemu optymalizacji wykorzystania N (inhibitory)</p>
+              <div class="c5-tl__prods">
+                <button class="c5-tl__prod" type="button" data-lightbox-open="produkt-humic" aria-label="Mapa zastosowań: CARBOMAT HUMIC"><span class="c5-tl__pack"><img src="../img/opakowania/worek_20l.png" alt="" loading="lazy" decoding="async"></span><span class="c5-tl__prodn">CARBOMAT HUMIC</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></button>
+                <button class="c5-tl__prod" type="button" data-lightbox-open="produkt-187" aria-label="Mapa zastosowań: CARBOHUMIC filtrowany 187 mesh"><span class="c5-tl__pack"><img src="../img/opakowania/kanister_20l.png" alt="" loading="lazy" decoding="async"></span><span class="c5-tl__prodn">CARBOHUMIC filtrowany 187 mesh</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></button>
+              </div>
+              <p class="c5-src">CARBOMAT HUMIC do 150 kg do podsiewacza albo CARBOHUMIC filtrowany 187 mesh – aplikacja poniżej głębokości siewu lub współrzędowa w systemie aplikacji nawozów płynnych.</p>
+              <a class="c5-btn c5-btn--dark c5-btn--sm c5-tl__go" href="#faza-3-2" data-lightbox-open="faza-3-2">Pełny opis fazy <svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="c5-tl__item" data-tl-item>
+        <h3 class="c5-tl__h"><button class="c5-tl__row" type="button" id="tl-row-3" aria-expanded="true" aria-controls="tl-panel-3"><span class="c5-tl__no" aria-hidden="true">03</span><span class="c5-tl__t">Siew i kiełkowanie – BBCH 00–09</span></button></h3>
+        <div class="c5-tl__panel" id="tl-panel-3" role="region" aria-labelledby="tl-row-3">
+          <div class="c5-tl__panelin">
+            <figure class="c5-tl__fig" aria-hidden="true"><img class="c5-tl__img" src="../img/foto/kukurydza-faza-03.jpg" alt="" width="1200" height="1200" loading="lazy" decoding="async"></figure>
+            <div class="c5-tl__body">
+              <span class="u-lab">Siew</span>
+              <p class="c5-tl__lead">Właściwy termin, obsada, bezpieczny nawóz startowy.</p>
+              <a class="c5-btn c5-btn--dark c5-btn--sm c5-tl__go" href="#faza-3-3" data-lightbox-open="faza-3-3">Pełny opis fazy <svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="c5-tl__item" data-tl-item>
+        <h3 class="c5-tl__h"><button class="c5-tl__row" type="button" id="tl-row-4" aria-expanded="true" aria-controls="tl-panel-4"><span class="c5-tl__no" aria-hidden="true">04</span><span class="c5-tl__t">Wschody i 1–3 liście – BBCH 10–13</span></button></h3>
+        <div class="c5-tl__panel" id="tl-panel-4" role="region" aria-labelledby="tl-row-4">
+          <div class="c5-tl__panelin">
+            <figure class="c5-tl__fig" aria-hidden="true"><img class="c5-tl__img" src="../img/foto/kukurydza-faza-04.jpg" alt="" width="1200" height="1200" loading="lazy" decoding="async"></figure>
+            <div class="c5-tl__body">
+              <span class="u-lab">BBCH 10–13</span>
+              <p class="c5-tl__lead">Nie przeszkadzać wschodom kukurydzy, szybko reagować na zaskorupienie, chłód, fitotoksyczność lub niedobory.</p>
+              <a class="c5-btn c5-btn--dark c5-btn--sm c5-tl__go" href="#faza-3-4" data-lightbox-open="faza-3-4">Pełny opis fazy <svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="c5-tl__item" data-tl-item>
+        <h3 class="c5-tl__h"><button class="c5-tl__row" type="button" id="tl-row-5" aria-expanded="true" aria-controls="tl-panel-5"><span class="c5-tl__no" aria-hidden="true">05</span><span class="c5-tl__t">4–8 liści – BBCH 14–18: najważniejszy termin</span></button></h3>
+        <div class="c5-tl__panel" id="tl-panel-5" role="region" aria-labelledby="tl-row-5">
+          <div class="c5-tl__panelin">
+            <figure class="c5-tl__fig" aria-hidden="true"><img class="c5-tl__img" src="../img/foto/kukurydza-faza-05.jpg" alt="" width="1200" height="1200" loading="lazy" decoding="async"></figure>
+            <div class="c5-tl__body">
+              <span class="u-lab">BBCH 14–16</span>
+              <p class="c5-tl__lead">Ewentualna druga dawka N, ewentualnie cynk, obserwacja stresu</p>
+              <div class="c5-tl__prods">
+                <button class="c5-tl__prod" type="button" data-lightbox-open="produkt-maxi" aria-label="Mapa zastosowań: CARBOHUMIC MAXI PLUS"><span class="c5-tl__pack"><img src="../img/opakowania/kanister_5l.png" alt="" loading="lazy" decoding="async"></span><span class="c5-tl__prodn">CARBOHUMIC MAXI PLUS</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></button>
+              </div>
+              <p class="c5-src">CARBOHUMIC MAXI PLUS jako zabieg interwencyjny lub zapobiegawczy</p>
+              <a class="c5-btn c5-btn--dark c5-btn--sm c5-tl__go" href="#faza-3-5" data-lightbox-open="faza-3-5">Pełny opis fazy <svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="c5-tl__item" data-tl-item>
+        <h3 class="c5-tl__h"><button class="c5-tl__row" type="button" id="tl-row-6" aria-expanded="true" aria-controls="tl-panel-6"><span class="c5-tl__no" aria-hidden="true">06</span><span class="c5-tl__t">Intensywny wzrost – BBCH 19–39</span></button></h3>
+        <div class="c5-tl__panel" id="tl-panel-6" role="region" aria-labelledby="tl-row-6">
+          <div class="c5-tl__panelin">
+            <figure class="c5-tl__fig" aria-hidden="true"><img class="c5-tl__img" src="../img/foto/kukurydza-faza-06.jpg" alt="" width="1200" height="1200" loading="lazy" decoding="async"></figure>
+            <div class="c5-tl__body">
+              <span class="u-lab">BBCH 19–39</span>
+              <p class="c5-tl__lead">Woda, azot, magnez, siarka bor i mangan według potrzeb tylko dolistnie w oprysku</p>
+              <div class="c5-tl__prods">
+                <button class="c5-tl__prod" type="button" data-lightbox-open="produkt-maxi" aria-label="Mapa zastosowań: CARBOHUMIC MAXI PLUS"><span class="c5-tl__pack"><img src="../img/opakowania/kanister_5l.png" alt="" loading="lazy" decoding="async"></span><span class="c5-tl__prodn">CARBOHUMIC MAXI PLUS</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></button>
+              </div>
+              <p class="c5-src">CARBOHUMIC MAXI PLUS tylko przy uzasadnieniu</p>
+              <a class="c5-btn c5-btn--dark c5-btn--sm c5-tl__go" href="#faza-3-6" data-lightbox-open="faza-3-6">Pełny opis fazy <svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="c5-tl__item" data-tl-item>
+        <h3 class="c5-tl__h"><button class="c5-tl__row" type="button" id="tl-row-7" aria-expanded="true" aria-controls="tl-panel-7"><span class="c5-tl__no" aria-hidden="true">07</span><span class="c5-tl__t">Wiechowanie, pylenie i znamionowanie – BBCH 51–69</span></button></h3>
+        <div class="c5-tl__panel" id="tl-panel-7" role="region" aria-labelledby="tl-row-7">
+          <div class="c5-tl__panelin">
+            <figure class="c5-tl__fig" aria-hidden="true"><img class="c5-tl__img" src="../img/foto/kukurydza-faza-07.jpg" alt="" width="1200" height="1200" loading="lazy" decoding="async" style="object-position:50% 35%"></figure>
+            <div class="c5-tl__body">
+              <span class="u-lab">BBCH 51–69</span>
+              <p class="c5-tl__lead">Ochrona zapylenia przez wodę i zdrowotność roślin</p>
+              <a class="c5-btn c5-btn--dark c5-btn--sm c5-tl__go" href="#faza-3-7" data-lightbox-open="faza-3-7">Pełny opis fazy <svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="c5-tl__item" data-tl-item>
+        <h3 class="c5-tl__h"><button class="c5-tl__row" type="button" id="tl-row-8" aria-expanded="true" aria-controls="tl-panel-8"><span class="c5-tl__no" aria-hidden="true">08</span><span class="c5-tl__t">Zawiązywanie i nalewanie ziarna – BBCH 71–87</span></button></h3>
+        <div class="c5-tl__panel" id="tl-panel-8" role="region" aria-labelledby="tl-row-8">
+          <div class="c5-tl__panelin">
+            <figure class="c5-tl__fig" aria-hidden="true"><img class="c5-tl__img" src="../img/foto/kukurydza-faza-08.jpg" alt="" width="1200" height="1200" loading="lazy" decoding="async"></figure>
+            <div class="c5-tl__body">
+              <span class="u-lab">BBCH 71–87</span>
+              <p class="c5-tl__lead">Ochrona liścia, nalewanie ziarna, brak rutynowych koktajli Zabiegi na omacnicę prosowiankę</p>
+              <a class="c5-btn c5-btn--dark c5-btn--sm c5-tl__go" href="#faza-3-8" data-lightbox-open="faza-3-8">Pełny opis fazy <svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="c5-tl__item" data-tl-item>
+        <h3 class="c5-tl__h"><button class="c5-tl__row" type="button" id="tl-row-9" aria-expanded="true" aria-controls="tl-panel-9"><span class="c5-tl__no" aria-hidden="true">09</span><span class="c5-tl__t">Dojrzewanie i zbiór – BBCH 89</span></button></h3>
+        <div class="c5-tl__panel" id="tl-panel-9" role="region" aria-labelledby="tl-row-9">
+          <div class="c5-tl__panelin">
+            <figure class="c5-tl__fig" aria-hidden="true"><img class="c5-tl__img" src="../img/foto/kukurydza-faza-09.jpg" alt="" width="1200" height="1200" loading="lazy" decoding="async"></figure>
+            <div class="c5-tl__body">
+              <span class="u-lab">BBCH 89</span>
+              <p class="c5-tl__lead">Termin zbioru dobierz odpowiednio do wilgotności ziarna, pogody, kosztu suszenia i ryzyka wylegania lub pojawu chorób fuzaryjnych.</p>
+              <a class="c5-btn c5-btn--dark c5-btn--sm c5-tl__go" href="#faza-4-9" data-lightbox-open="faza-4-9">Pełny opis fazy <svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="c5-tl__item" data-tl-item>
+        <h3 class="c5-tl__h"><button class="c5-tl__row" type="button" id="tl-row-10" aria-expanded="true" aria-controls="tl-panel-10"><span class="c5-tl__no" aria-hidden="true">10</span><span class="c5-tl__t">Resztki pożniwne kukurydzy</span></button></h3>
+        <div class="c5-tl__panel" id="tl-panel-10" role="region" aria-labelledby="tl-row-10">
+          <div class="c5-tl__panelin">
+            <figure class="c5-tl__fig" aria-hidden="true"><img class="c5-tl__img" src="../img/foto/kukurydza-faza-10.jpg" alt="" width="1200" height="1200" loading="lazy" decoding="async"></figure>
+            <div class="c5-tl__body">
+              <span class="u-lab">Po zbiorze</span>
+              <p class="c5-tl__lead">Równomierne rozdrobnienie, wilgoć, płytkie wymieszanie/mulczowanie lub pozostawienie na powierzchni gleby</p>
+              <div class="c5-tl__prods">
+                <button class="c5-tl__prod" type="button" data-lightbox-open="produkt-187" aria-label="Mapa zastosowań: CARBOHUMIC filtrowany 187 mesh"><span class="c5-tl__pack"><img src="../img/opakowania/kanister_20l.png" alt="" loading="lazy" decoding="async"></span><span class="c5-tl__prodn">CARBOHUMIC filtrowany 187 mesh</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></button>
+                <span class="c5-tl__prod c5-tl__prod--plain"><span class="c5-tl__pack"><svg class="wf-icon" aria-hidden="true"><use href="#ti-package"></use></svg></span><span class="c5-tl__prodn">CARBOHUMIC BIOMAS</span></span>
+              </div>
+              <p class="c5-src">CARBOHUMIC filtrowany 187 mesh, opcjonalnie mikroorganizmy</p>
+              <p class="c5-src">Można dać CARBOHUMIC BIOMAS</p>
+              <a class="c5-btn c5-btn--dark c5-btn--sm c5-tl__go" href="#faza-4-10" data-lightbox-open="faza-4-10">Pełny opis fazy <svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+</main>
+
+<script src="../cw.js"></script>
+<script src="../c5.js"></script>
+<script src="../uprawa.js"></script>
+<script src="../ce/00-base.js"></script>
+<script src="../ce/CE-65-os-faz.js"></script>
+</body>
+</html>

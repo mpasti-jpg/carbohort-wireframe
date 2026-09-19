@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laboratorium · CE-44 „Napis z kaflami” · CarboHort</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Strona demonstracyjna klocka CE-44 „Napis z kaflami” – wersja bazowa z Próchnicy+ do 19.09.2026, zanim sekcja „Oczekiwane długofalowe korzyści” przeszła na wariant tlo-foto.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231E1C1A'/%3E%3Ccircle cx='16' cy='16' r='8.5' fill='none' stroke='%2387C063' stroke-width='3'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../wireframe.css">
+<link rel="stylesheet" href="../cw.css">
+<script src="../chrome.js"></script>
+<link rel="stylesheet" href="../c5.css">
+<link rel="stylesheet" href="../ce/00-base.css">
+<style>
+/* Page layer of the demo, in place of prochnica-plus.css. Block 45 below is the
+   CE-44 base as it stood on Próchnica+ until 19.09.2026, copied to the letter;
+   above it only the three page rules the block leans on: the page gutter token,
+   the reveal start state that 00-base.js 02 hands out, and the note at the top.
+   Checked 19.09.2026: the grep for `pp-kor` / `pp-kslot` / `pp-kcard` over
+   prochnica-plus.css comes back with block 45 alone. */
+:root{--c5-gutter:30px;}
+body{background:var(--w-surface-page);}
+.lab-note{margin:0;padding:14px var(--c5-gutter);border-bottom:1px solid var(--w-border-subtle);
+  font-family:var(--w-font-sans);font-size:0.8125rem;line-height:1.45;color:var(--w-text-secondary);}
+/* reveal of [data-reveal] – the start class comes from 00-base.js 02 (block 00
+   of prochnica-plus.css on the page itself) */
+.pp-reveal{opacity:.001;transform:translateY(12px);
+  transition:opacity .45s var(--w-ease),transform .45s var(--w-ease);}
+.pp-reveal.is-in{opacity:1;transform:none;}
+@media (prefers-reduced-motion: reduce){
+  .pp-reveal{opacity:1;transform:none;transition:none;}
+}
+
+/* ===== 45 · Oczekiwane długofalowe korzyści – karty nad napisem (spec §7) ====
+   Domyślnie (mobile / ograniczony ruch / bez JS) to zwykły nagłówek i siatka
+   ośmiu kart z jednorazowym fade-in – cały tekst korzyści zawsze widoczny.
+   Od 900 px z JS i pełnym ruchem: napis stoi przyklejony na środku ekranu przez
+   cały tor (≈ 8 × 55 vh), a karty płyną obok niego z własnym odsunięciem
+   (--pp-x), obrotem (--pp-rot) i prędkością (data-pp-speed → --pp-y z JS),
+   więc raz po raz nachodzą na napis. Karty są nieprzezroczyste. */
+.pp-kor{overflow-x:clip;}
+.pp-kor__track{position:relative;}
+.pp-kor__title{font-size:clamp(1.75rem,4.4vw,3rem);line-height:1.08;font-weight:var(--w-weight-medium);
+  letter-spacing:-0.02em;text-align:center;text-wrap:balance;margin:0;}
+.pp-kor__list{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--w-space-4);
+  margin:clamp(1.5rem,3vw,2.25rem) 0 0;padding:0;list-style:none;}
+@media (min-width:700px){ .pp-kor__list{grid-template-columns:repeat(2,minmax(0,1fr));} }
+.pp-kslot{display:flex;}
+.pp-kcard{display:flex;flex-direction:column;gap:var(--w-space-3);width:100%;
+  border:1px solid var(--w-border-default);background:var(--w-surface-page);
+  padding:clamp(1.1rem,2.2vw,1.5rem);}
+.pp-kcard__h{margin:0;font-size:1rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;line-height:1.3;}
+.pp-kcard__body{display:flex;flex-direction:column;gap:var(--w-space-3);}
+.pp-kcard__body p{margin:0;font-size:0.9375rem;line-height:1.55;color:var(--w-text-secondary);}
+
+/* --- Tor z przyklejonym napisem (tylko z JS, od 900 px, pełny ruch) -------- */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  .cx-js .pp-kor{padding-block:clamp(3.5rem,7vw,6.25rem) 0;}
+  /* Napis: pudełko na wysokość ekranu przyklejone do górnej krawędzi, napis w
+     jego pionowym środku. Ujemny margines pod spodem wciąga karty na napis –
+     to ten sam kadr, nie dwa oddzielne bloki. */
+  .cx-js .pp-kor__titlebox{position:sticky;top:0;z-index:0;height:100svh;
+    display:grid;place-items:center;margin-bottom:-100svh;pointer-events:none;}
+  .cx-js .pp-kor__title{font-size:clamp(2.5rem,6vw,5.5rem);line-height:1.02;max-width:14ch;}
+  .cx-js .pp-kor__list{display:block;position:relative;z-index:1;margin:0;}
+  .cx-js .pp-kslot{display:flex;align-items:center;justify-content:center;min-height:55vh;}
+  /* left = odsunięcie od środka kolumny (procent szerokości toru), transform =
+     parallax z JS + stały obrót karty */
+  .cx-js .pp-kcard{position:relative;left:var(--pp-x,0);width:min(22rem,40%);
+    transform:translateY(var(--pp-y,0px)) rotate(var(--pp-rot,0deg));
+    border-color:var(--w-border-subtle);box-shadow:0 24px 60px rgb(0 0 0 / .10);
+    will-change:transform;}
+}
+</style>
+</head>
+<body>
+
+<cw-icons></cw-icons>
+
+<main id="main">
+<p class="lab-note">Strona demonstracyjna klocka CE-44 – wersja bazowa z Próchnicy+ do 19.09.2026; na samej stronie sekcja stoi dziś na wariancie <code>tlo-foto</code></p>
+
+<!-- ===== A3b. Oczekiwane długofalowe korzyści – LP l. 25–32, copy 1:1
+     (wyprowadzone z „Założeń” po uwadze 3 Mateusza, spec §7).
+     Duży napis stoi przyklejony na środku ekranu przez cały tor sekcji,
+     a osiem kart przepływa obok niego nieregularnie: naprzemiennie z
+     lewej i prawej, z własnym odsunięciem (--pp-x), obrotem (--pp-rot)
+     i prędkością (--pp-speed), więc raz po raz nachodzą na napis.
+     Karty są nieprzezroczyste – cały tekst korzyści jest zawsze widoczny
+     (dotychczasowa szuflada „rozwiń” znika, spec §11). Poniżej 900 px,
+     przy ograniczonym ruchu i bez JS: napis normalnie, karty w siatce. -->
+<section class="c5-sec pp-kor" id="korzysci" data-ppkor data-ce="CE-44">
+  <div class="pp-kor__track c5-wrap">
+
+    <div class="pp-kor__titlebox">
+      <h3 class="pp-kor__title">Oczekiwane długofalowe korzyści</h3>
+    </div>
+
+    <ul class="pp-kor__list">
+      <li class="pp-kslot" data-reveal>
+        <article class="pp-kcard" style="--pp-x:-28%;--pp-rot:-3deg;" data-pp-speed="1.15">
+          <span class="cw-feat-icon"><svg class="wf-icon" aria-hidden="true"><use href="#ti-droplet"></use></svg></span>
+          <h4 class="pp-kcard__h">Lepsza gospodarka wodna.</h4>
+          <div class="pp-kcard__body"><p>Czyli wzrost pojemności wodnej gleby, wolniejsze przesychanie profilu, mniejsze straty wody przy upałach, potencjalnie mniej cykli nawadniania / niższe dawki wody.</p></div>
+        </article>
+      </li>
+      <li class="pp-kslot" data-reveal>
+        <article class="pp-kcard" style="--pp-x:26%;--pp-rot:2.5deg;" data-pp-speed="0.78">
+          <span class="cw-feat-icon"><svg class="wf-icon" aria-hidden="true"><use href="#ti-stack-2"></use></svg></span>
+          <h4 class="pp-kcard__h">Ograniczenie erozji i spływu powierzchniowego.</h4>
+          <div class="pp-kcard__body"><p>Więcej próchnicy + lepsza struktura agregatowa to mniejsze zaskorupianie, lepsza infiltracja, mniejsza podatność na erozję wodną i wietrzną, mniej wymywania składników poza strefę korzeniową.</p></div>
+        </article>
+      </li>
+      <li class="pp-kslot" data-reveal>
+        <article class="pp-kcard" style="--pp-x:-17%;--pp-rot:3.5deg;" data-pp-speed="0.9">
+          <span class="cw-feat-icon"><svg class="wf-icon" aria-hidden="true"><use href="#ti-flask"></use></svg></span>
+          <h4 class="pp-kcard__h">Większa dostępność mikroelementów i stabilniejsze pH w strefie korzeniowej.</h4>
+          <div class="pp-kcard__body"><p>Wzrost materii organicznej oznacza większą pojemność sorpcyjną, wymianę kationową, buforowanie pH, wiązanie i stopniowe uwalnianie mikroelementów, mniejsze ryzyko niedoborów pokarmowych (blokad i strat).</p></div>
+        </article>
+      </li>
+      <li class="pp-kslot" data-reveal>
+        <article class="pp-kcard" style="--pp-x:30%;--pp-rot:-2deg;" data-pp-speed="1.26">
+          <span class="cw-feat-icon"><svg class="wf-icon" aria-hidden="true"><use href="#ti-seeding"></use></svg></span>
+          <h4 class="pp-kcard__h">Lepszy rozwój systemu korzeniowego i witalność roślin.</h4>
+          <div class="pp-kcard__body"><p>Długofalowo oczekujemy bardziej rozbudowanego systemu korzeniowego, łatwiejszej penetracji gleby, większej odporności na stresy (woda, temperatura, zasolenie), szybszej regeneracji po zbiorach, cięciu bądź stresie.</p></div>
+        </article>
+      </li>
+      <li class="pp-kslot" data-reveal>
+        <article class="pp-kcard" style="--pp-x:-30%;--pp-rot:2deg;" data-pp-speed="0.72">
+          <span class="cw-feat-icon"><svg class="wf-icon" aria-hidden="true"><use href="#ti-leaf"></use></svg></span>
+          <h4 class="pp-kcard__h">Spadek presji chorób odglebowych.</h4>
+          <div class="pp-kcard__body"><p>Liczymy na odbudowę i stabilizację mikrobiomu glebowego (co wynika w pierwszej kolejności ze zbuforowania, a potem uregulowania habitatu konkurujących ze sobą mikroorganizmów pożytecznych z patogenami, naturalnie występującymi w miejscu uprawy), mniejsze ryzyko chorób systemu korzeniowego, bardziej stabilną fitosanitarność stanowiska w kolejnych latach.</p></div>
+        </article>
+      </li>
+      <li class="pp-kslot" data-reveal>
+        <article class="pp-kcard" style="--pp-x:21%;--pp-rot:-4deg;" data-pp-speed="1.08">
+          <span class="cw-feat-icon"><svg class="wf-icon" aria-hidden="true"><use href="#ti-rotate"></use></svg></span>
+          <h4 class="pp-kcard__h">Wzrost odporności systemu produkcji.</h4>
+          <div class="pp-kcard__body"><p>Aspekt ten nie dotyczy wyłącznie samego plonu, ale też np. zmniejszenie wrażliwości na błędy agrotechniczne i/lub warunki klimatyczno-pogodowe, co przekłada się na zwiększenie przewidywalności produkcji.</p></div>
+        </article>
+      </li>
+      <li class="pp-kslot" data-reveal>
+        <article class="pp-kcard" style="--pp-x:-24%;--pp-rot:4deg;" data-pp-speed="0.84">
+          <span class="cw-feat-icon"><svg class="wf-icon" aria-hidden="true"><use href="#ti-chart-line"></use></svg></span>
+          <h4 class="pp-kcard__h">Wzrost wartości ziemi i trwała poprawa stanowiska.</h4>
+          <div class="pp-kcard__body"><p>Zwiększenie klasy gleby to bezdyskusyjnie wyższy benefit kapitałowy, co przekłada się na trwałą wartość gospodarstwa i wprowadza większą elastyczność pod kątem kolejnych upraw (inny gatunek lub odmiana).</p></div>
+        </article>
+      </li>
+      <li class="pp-kslot" data-reveal>
+        <article class="pp-kcard" style="--pp-x:28%;--pp-rot:-3.5deg;" data-pp-speed="1.3">
+          <span class="cw-feat-icon"><svg class="wf-icon" aria-hidden="true"><use href="#ti-file-text"></use></svg></span>
+          <h4 class="pp-kcard__h">Zgodność z trendami rynkowymi i regulacyjnymi.</h4>
+          <div class="pp-kcard__body"><p>Coraz większe i coraz bardziej restrykcyjne wymagania i regulacje wymuszają zmiany w produkcji rolnej. Kładzie się coraz większy nacisk na zrównoważoną produkcję, oczekiwania sieci/odbiorców co do „zrównoważoności” produkcji i dostarczania żywności bez pozostałości, a także spełniania standardów środowiskowych.</p></div>
+        </article>
+      </li>
+    </ul>
+
+  </div>
+</section>
+
+</main>
+
+<script src="../cw.js"></script>
+<script src="../c5.js"></script>
+<script src="../ce/00-base.js"></script>
+<script>
+/* ===== 45 · Korzyści: karty płynące z różną prędkością nad napisem =========
+   Każda karta dostaje własną prędkość (data-pp-speed 0.7–1.3). Przesunięcie
+   liczymy z pozycji JEJ SLOTU w oknie (slot nie jest transformowany, więc
+   pomiar nie karmi się własnym wynikiem): p = 0 gdy slot wchodzi dołem, 1 gdy
+   wychodzi górą, a przesunięcie = (0.5 − p) × wysokość okna × (1 − prędkość).
+   Wartości < 1 wyprzedzają scroll, > 1 zostają w tyle – dzięki temu karty
+   rozjeżdżają się względem siebie i nachodzą na napis w różnych momentach.
+   Tylko transform, tylko przy CX5.motionOn(); niżej układ jest siatką. */
+(function () {
+  "use strict";
+  var $ = CX5.$, $$ = CX5.$$, clamp = CX5.clamp;
+  var sec = $("[data-ppkor]");
+  if (!sec) return;
+  var slots = $$(".pp-kslot", sec).map(function (slot) {
+    var card = $(".pp-kcard", slot);
+    return { slot: slot, card: card, speed: parseFloat(card && card.getAttribute("data-pp-speed")) || 1 };
+  }).filter(function (it) { return it.card; });
+  if (!slots.length) return;
+  var on = false;
+
+  function update() {
+    if (!on) return;
+    var vh = window.innerHeight;
+    /* read first, write second – nie mieszamy pomiarów z zapisami */
+    var ys = slots.map(function (it) {
+      var r = it.slot.getBoundingClientRect();
+      var p = clamp((vh - r.top) / (vh + r.height), 0, 1);
+      return (0.5 - p) * vh * (1 - it.speed);
+    });
+    slots.forEach(function (it, i) { it.card.style.setProperty("--pp-y", ys[i].toFixed(1) + "px"); });
+  }
+  function measure() {
+    on = CX5.motionOn();
+    if (!on) slots.forEach(function (it) { it.card.style.removeProperty("--pp-y"); });
+  }
+  CX5.register({ scroll: update, resize: measure });
+})();
+</script>
+</body>
+</html>
