@@ -1,0 +1,194 @@
+/* ===== CE-68 · Akordeon faz z panelem (rejestr: ce-rejestr.js) ==============
+   Iteration 12 (19.09.2026, uwaga 2 of Mateusz), pattern: Figma frame
+   „Frame 223” – the layout and the mechanics only. The type, the colours and
+   the square corners stay ours (the outline kicker is the one sanctioned round
+   corner); the frame draws rounded panels and boxes, we do not.
+
+   One column line runs through the whole section: the h2, every row text and
+   everything the open phase says start at the middle of the container, while
+   the number chip and the photo live in the left half. Ten rows of 72 px, a
+   1 px line above each closed one; the open phase turns into a light panel the
+   full width of the container, and its own row is the panel's first line.
+   A closed row reads the TITLE of the phase, an open one its LABEL – the title
+   then stands inside the panel, where the frame has it. Both sit in the button
+   and CSS swaps them on `aria-expanded`; the accessible name of the button is
+   the `aria-label` („NN title”), so it never changes with the state.
+   The photo sits in the bottom left corner of the panel, 20 px from its left
+   and bottom edges, 7 : 5 out of a square source; the button closes the text
+   column 52 px above the same edge.
+   Below 900 px everything folds into one column, the photo first.
+   Without JS every panel is open (`html:not(.cx-js)`), which is also the state
+   the markup ships in – `aria-expanded="true"` on all ten rows.
+   Built for Kukurydza (#u-fazy); CE-65, the block it replaces there, stays
+   alive on v7/lab/ce-65-os-faz.html. ======================================= */
+
+.c5-fa{
+  /* the three inputs of the geometry – the phone block below redefines them */
+  --c5-fa-col:50%;        /* where the right column starts: middle of the container */
+  --c5-fa-inset:20px;     /* chip and photo, measured from the container edge */
+  --c5-fa-row:72px;       /* height of a closed row */
+  --c5-fa-no:24px;        /* the number chip */
+  /* measure of the text column and width of the photo, both as a share of
+     their half of the container: 606 px and 425 px of 680 px at 1440. The cap
+     on the text keeps the lead near 75 characters when the container grows to
+     1720 px at 1920; the photo is capped with it, so the two keep the 0.7
+     proportion of the frame instead of the photo towering over a short phase. */
+  --c5-fa-txt:min(89%,40rem);
+  --c5-fa-fig:min(62.5%,28rem);
+  --c5-fa-gap:10px;       /* air above and below the open phase */
+  --c5-fa-btm:20px;       /* panel bottom -> photo */
+  --c5-fa-btn:32px;       /* photo bottom line -> button (together: 52 px) */
+  --c5-fa-open:.35s;      /* the panel height, uwaga 2: slower than the shared .2 s */
+}
+
+/* --- head of the section -------------------------------------------------- */
+/* not sticky: this block has no empty left column to fill, the phases run
+   under the head and the head scrolls away with them */
+.c5-fa__head{display:grid;grid-template-columns:var(--c5-fa-col) minmax(0,1fr);
+  align-items:start;}
+.c5-fa__head .c5-kicker{margin-bottom:0;}
+.c5-fa__head .c5-h2{max-width:15em;}
+.c5-fa__list{list-style:none;margin:clamp(3rem,12vw,11rem) 0 0;padding:0;
+  border-bottom:1px solid var(--w-border-subtle);}
+
+/* --- a row ---------------------------------------------------------------- */
+.c5-fa__item{position:relative;}
+/* the 1 px line belongs to the closed row above which it runs; the open phase
+   has none, its panel edge does that work */
+.c5-fa__item::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;
+  background:var(--w-border-subtle);}
+
+.c5-fa__h{margin:0;font-weight:inherit;}
+.c5-fa__row{display:grid;grid-template-columns:var(--c5-fa-col) minmax(0,1fr);
+  align-items:center;width:100%;min-height:var(--c5-fa-row);padding:0;
+  background:none;border:0;border-radius:0;font:inherit;text-align:left;
+  color:var(--w-text-primary);cursor:pointer;}
+/* EL-32 in a local copy: a 1 px marker, digits in the body typeface, tabular,
+   set 20 px inside the container – not a label to read, a place to count from */
+.c5-fa__no{justify-self:start;display:flex;align-items:center;justify-content:center;
+  width:var(--c5-fa-no);height:var(--c5-fa-no);margin-left:var(--c5-fa-inset);
+  border:1px solid var(--w-border-strong);background:var(--w-surface-page);
+  font-family:inherit;font-size:0.6875rem;font-weight:var(--w-weight-medium);
+  font-variant-numeric:tabular-nums;letter-spacing:.02em;line-height:1;
+  color:var(--w-text-tertiary);
+  transition:border-color var(--w-duration-base) var(--w-ease);}
+.c5-fa__row:hover .c5-fa__no{border-color:var(--w-gray-900);}
+.c5-fa__rowtxt{min-width:0;font-size:0.9375rem;line-height:1.35;
+  font-weight:var(--w-weight-regular);}
+/* one of the two texts at a time; `aria-expanded` is the switch, so the state
+   of the row and what it reads can never drift apart */
+.c5-fa__row[aria-expanded="true"] .c5-fa__t,
+.c5-fa__row[aria-expanded="false"] .c5-fa__lab{display:none;}
+.c5-fa__lab{color:var(--w-text-secondary);}
+
+/* --- the open phase ------------------------------------------------------- */
+/* the panel is the item itself: background from the container edge to the
+   container edge, the row as its first line, 10 px of air above and below */
+.c5-fa__item[data-open],
+html:not(.cx-js) .c5-fa__item{background:var(--w-surface-subtle);
+  margin-block:var(--c5-fa-gap);}
+.c5-fa__item[data-open]::before,
+html:not(.cx-js) .c5-fa__item::before{display:none;}
+
+.c5-fa__panel{overflow:hidden;height:0;opacity:0;
+  transition:height var(--c5-fa-open) var(--w-ease),opacity var(--c5-acc-fade) var(--w-ease);}
+.c5-fa__item[data-open] .c5-fa__panel{opacity:1;}
+/* nothing can open the panels without JS – they stay open */
+html:not(.cx-js) .c5-fa__panel{height:auto;opacity:1;}
+/* one child element: CX5.panelSet measures it to animate the height */
+.c5-fa__panelin{display:grid;grid-template-columns:var(--c5-fa-col) minmax(0,1fr);
+  align-items:start;padding-bottom:var(--c5-fa-btm);}
+
+/* everything the phase says, in the right column, on the section's column line */
+.c5-fa__body{grid-column:2;display:flex;flex-direction:column;align-items:flex-start;
+  width:var(--c5-fa-txt);min-width:0;padding-bottom:var(--c5-fa-btn);}
+/* the title of the open phase is a <p>, so it would take the grey the kit gives
+   paragraphs – it has to read as strongly as the titles in the closed rows */
+.c5-fa__pt{margin:0;font-size:clamp(1.25rem,1.7vw,1.5rem);line-height:1.25;
+  font-weight:var(--w-weight-medium);letter-spacing:-0.01em;color:var(--w-text-primary);}
+.c5-fa__lead{margin:clamp(2rem,4.2vw,3.75rem) 0 0;font-size:var(--w-font-body-size);
+  line-height:1.3;color:var(--w-text-secondary);}
+.c5-fa__prods{display:flex;flex-direction:column;align-items:flex-start;
+  gap:var(--w-space-2);margin-top:var(--w-space-10);max-width:100%;}
+.c5-fa__body .c5-src{margin:var(--w-space-6) 0 0;font-size:var(--w-font-sm-size);
+  line-height:1.45;color:var(--w-text-secondary);}
+.c5-fa__body .c5-src + .c5-src{margin-top:var(--w-space-2);}
+/* the button closes the column and takes all of it (frame: 606 px at 1440) */
+.c5-fa__go{width:100%;margin-top:var(--w-space-10);}
+/* From 900 px the button always stands in the bottom zone of the panel, next to
+   the photo (frame: photo 20 px, button 52 px above the panel edge) – also in a
+   phase with no products and no note, where the photo is taller than the text:
+   the column stretches to the row, the 40 px minimum moves onto the element
+   above the button and the button takes the slack. */
+@media (min-width:900px){
+  .c5-fa__body{align-self:stretch;}
+  .c5-fa__body > :nth-last-child(2){margin-bottom:var(--w-space-10);}
+  .c5-fa__go{margin-top:auto;}
+}
+
+/* --- product boxes (local copy of EL-33) ---------------------------------- */
+/* each box is as wide as what it says, and they stand one under another – the
+   frame puts CARBOMAT HUMIC at 222 px next to a 320 px neighbour */
+.c5-fa__prod{display:inline-grid;grid-template-columns:auto minmax(0,1fr) auto;
+  gap:12px;align-items:center;min-height:69px;max-width:100%;
+  padding:9px 12px 9px 13px;background:var(--w-surface-page);
+  border:1px solid var(--w-border-default);border-radius:0;
+  font:inherit;font-size:var(--w-font-sm-size);line-height:1.35;
+  font-weight:var(--w-weight-medium);color:var(--w-text-primary);text-align:left;
+  transition:border-color var(--w-duration-base) var(--w-ease);}
+button.c5-fa__prod{cursor:pointer;}
+button.c5-fa__prod:hover,button.c5-fa__prod:focus-visible{border-color:var(--w-gray-900);}
+/* a product with no map and no packshot („CARBOHUMIC BIOMAS”): same box,
+   dashed stroke, an icon in place of the packshot and no arrow */
+.c5-fa__prod--plain{grid-template-columns:auto minmax(0,1fr);border-style:dashed;
+  color:var(--w-text-secondary);}
+.c5-fa__pack{display:flex;align-items:center;justify-content:center;
+  width:45px;height:50px;background:var(--w-gray-100);}
+.c5-fa__pack img{width:100%;height:100%;object-fit:contain;}
+.c5-fa__pack .wf-icon{color:var(--w-text-tertiary);}
+.c5-fa__prodn{min-width:0;}
+.c5-fa__prod > .wf-icon{justify-self:end;color:var(--w-text-tertiary);}
+
+/* --- the frame of a phase -------------------------------------------------- */
+/* bottom left corner of the panel, 20 px from both edges; the source files are
+   square, the crop is 7 : 5 and `object-position` is set per phase in the page
+   wherever the subject would be cut */
+/* the photo is taken out of the flow of the figure: on the phone the figure is
+   a flex item, and there the 1 : 1 of the source would floor its height
+   (`min-height:auto`) and beat the 7 : 5 */
+.c5-fa__fig{position:relative;grid-column:1;align-self:end;justify-self:start;
+  width:var(--c5-fa-fig);margin:0 0 0 var(--c5-fa-inset);
+  aspect-ratio:7 / 5;background:var(--w-gray-100);}
+.c5-fa__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+/* the photo arrives with the panel; the only move of its own is a short fade,
+   so one decoded late does not pop in when the height is already there */
+html.cx-js .c5-fa__fig{opacity:0;transition:opacity 240ms var(--w-ease);}
+html.cx-js .c5-fa__item[data-open] .c5-fa__fig{opacity:1;}
+
+@media (max-width:899px){
+  /* one column: kicker over the head, row as number + text on one line, and in
+     the panel the photo first, then the text of the phase */
+  .c5-fa{--c5-fa-col:auto;--c5-fa-inset:0px;--c5-fa-row:64px;--c5-fa-no:22px;
+    --c5-fa-txt:100%;--c5-fa-fig:100%;--c5-fa-btm:0px;--c5-fa-btn:0px;}
+  .c5-fa__head{display:block;}
+  .c5-fa__head .c5-kicker{margin-bottom:var(--w-space-4);}
+  .c5-fa__head .c5-h2{max-width:none;}
+  .c5-fa__list{margin-top:clamp(1.75rem,6vw,3rem);}
+  .c5-fa__row{grid-template-columns:var(--c5-fa-no) minmax(0,1fr);gap:var(--w-space-4);
+    padding:var(--w-space-3) 0;}
+  .c5-fa__item[data-open],
+  html:not(.cx-js) .c5-fa__item{padding-inline:var(--w-space-4);
+    margin-inline:calc(var(--w-space-4) * -1);}
+  .c5-fa__panelin{display:flex;flex-direction:column;gap:var(--w-space-5);
+    padding-bottom:var(--w-space-6);}
+  .c5-fa__fig{order:-1;align-self:stretch;margin:0;}
+  .c5-fa__body{width:100%;padding-bottom:0;}
+  .c5-fa__lead{margin-top:var(--w-space-4);}
+  .c5-fa__prods{margin-top:var(--w-space-5);}
+  .c5-fa__go{margin-top:var(--w-space-6);}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .c5-fa__panel,.c5-fa__no,.c5-fa__prod{transition:none;}
+  html.cx-js .c5-fa__fig{transition:none;}
+}

@@ -21,14 +21,28 @@
 /* page-specific: CE-08 hero, wariant „kadr-w-tle” (spec §14.2) – cały układ
    wariantu (kadr w tle, scrim, dwie kolumny u dołu, telefon) siedzi w warstwie
    wspólnej `ce/CE-08-hero.css`, bo ten hero dostaną wszystkie podstrony upraw.
-   Tutaj zostaje jedna liczba tej strony: siła scrimu. Zdjęcie kukurydzy jest
-   ciemne samo z siebie (strefa H1 ma średnią luminancję 0,013, strefa leadu
-   p95 0,25), więc wspólne .4 zjadałoby kadr bez zysku dla czytelności – .35
-   zostawia widoczne słońce, a leadowi daje zapas nad progiem 4,5 : 1 także
-   przy 1024 px, gdzie kolumna leadu wchodzi na jaśniejsze czubki liści (przy
-   .3 zmierzone 4,53 : 1). Domyślne .4 w warstwie wspólnej zostaje dla
-   podstron, które dopiero dostaną zdjęcia. */
-#hero .c5-hero--bg{--c5-hero-scrim:rgb(0 0 0 / .35);}
+   Tutaj zostaje jedna liczba tej strony: siła scrimu.
+   Iteration 12 (spec §16.2, Mateusz 19.09: the overlay made the frame gloomy –
+   the photo is nearly black in its lower part anyway): the scrim drops from .35
+   to a barely visible .15 and the copy keeps its legibility from the soft text
+   shadow of the shared variant (`--c5-hero-shadow`), which does not dim the
+   photo. Measured white-vs-glyph-edge contrast of the lead at the background's
+   p95: 4.7–8.8 : 1 from 1100 px up. Below 1100 px the scrim stays at .25: from
+   900 px the narrow lead column climbs onto the haze next to the sun (5.2 : 1
+   at 1024 px; 3.9 : 1 at 900 px, up from 3.5 : 1 before), and on a phone the
+   breadcrumb stands on the bright sky. The shared default .4 stays for the
+   pages that still wait for their photos.
+   Iteration 14 (19.09 late evening): Mateusz replaced the misty sunrise with a
+   bright drone shot – blue sky, sunlit rows to the horizon. The numbers above
+   describe the old photo; the scrim values stay (.15 / .25), the picture is
+   not dimmed any further and the shadows of the shared variant were retuned
+   instead. On the new photo the glyph-edge contrast is lower (lead about
+   4.2 : 1 at 1440–1920 px, 2.9 : 1 at 1280 x 720; h1 5–6 : 1) – accepted for
+   the prototype: high-quality material first, full legibility later. */
+#hero .c5-hero--bg{--c5-hero-scrim:rgb(0 0 0 / .15);}
+@media (max-width:1099px){
+  #hero .c5-hero--bg{--c5-hero-scrim:rgb(0 0 0 / .25);}
+}
 
 /* page-specific: CE-07 dot rail. The wide sections of this page (`c5-wrap--wide`,
    40 px of side padding) reach under the rail at its shared position – 30 px

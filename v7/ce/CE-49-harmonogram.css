@@ -1,0 +1,227 @@
+/* ===== CE-49 · Harmonogram na osi – rebuilt 19.09.2026 after Figma frames 251:844 / 251:894 / 251:928
+   (spec prochnica-plus-wzorzec-eco-spec §18.7). Class prefix: c5-hz. =====
+
+   Three layouts out of one markup, because the eleven stages are the single
+   source of data (term, name, description, state chip, warning) and they must
+   stay readable with no JS at all:
+
+   1. no JS          – years hidden, every stage stacked one under another;
+   2. below 900 px   – same list, panels collapsed, a tap expands one stage;
+   3. 900 px with JS – the canvas from the Figma frames: a row of years on top,
+      vertical lines = events in time. The space between line i and line i+1
+      belongs to event i: hovering it shows the minimal description glued to the
+      side of that line at cursor height, a click expands the segment and puts
+      the full card between the two lines while every other line slides over.
+
+   Geometry is computed in ce/CE-49-harmonogram.js and handed over as custom
+   properties: --hx (x of the line / year band), --hw (width of the segment or
+   band), --hy (y of the floating minimal description), --i (stagger order).
+   The markup keeps the BASE geometry only: --n on the items and on the
+   "jesteśmy tutaj" marker, --l/--w on the years.
+
+   Visual language stays V7: grey scale, sharp corners, kit typography, --w-*
+   tokens. The frames only give the layout and the mechanics. */
+
+.c5-hz{
+  --hz-gap:16px;          /* distance between a line and the panel next to it */
+  --hz-mini-w:300px;      /* width of the minimal (hover) description         */
+  --hz-h:620px;           /* canvas height – §18.7 asks for ~620 px           */
+  margin-top:clamp(1.5rem,3vw,2.5rem);
+  display:flex;flex-direction:column;gap:clamp(0.75rem,1.6vw,1.25rem);
+}
+
+/* --- row of years ---------------------------------------------------------
+   Decoration tied to the axis, so it only exists where the axis exists. */
+.c5-hz__years{display:none;margin:0;padding:0;list-style:none;}
+
+/* --- canvas ---------------------------------------------------------------
+   Static by default: the list is a plain column of stages. */
+.c5-hz__canvas{position:relative;}
+.c5-hz__list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;}
+
+/* --- one stage ------------------------------------------------------------ */
+.c5-hz__item{position:relative;padding-left:clamp(1rem,2.5vw,1.5rem);
+  border-left:1px solid var(--w-border-strong);}
+.c5-hz__item + .c5-hz__item{margin-top:clamp(1.25rem,3vw,2rem);}
+.c5-hz__item[data-state="done"]{border-left-color:var(--w-gray-900);}
+
+/* The button carries the whole hit area; in the static list it is just the
+   caption row, on the canvas it becomes the segment between two lines. */
+.c5-hz__line{display:block;width:100%;padding:0;border:0;background:transparent;
+  font:inherit;color:inherit;text-align:left;cursor:pointer;}
+.c5-hz__line:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);
+  outline-offset:2px;}
+.c5-hz__cap{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--w-space-2);
+  font-size:1.0625rem;line-height:1.3;}
+.c5-hz__cap b{font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+.c5-hz__cap i{font-style:normal;font-size:0.75rem;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--w-text-secondary);}
+
+/* The drawn line and the state marker exist only on the canvas. */
+.c5-hz__vis,.c5-hz__mark{display:none;}
+
+/* --- panel: the same node serves the hover preview and the open card ------ */
+.c5-hz__panel{display:flex;flex-direction:column;align-items:flex-start;
+  gap:var(--w-space-2);margin-top:var(--w-space-3);}
+.c5-hz__term{margin:0;font-size:0.75rem;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--w-text-secondary);}
+.c5-hz__fig{margin:0;display:flex;flex-direction:column;gap:var(--w-space-2);
+  width:100%;max-width:21.25rem;}
+.c5-hz__ph{width:100%;aspect-ratio:4/3;border-radius:0;display:grid;place-items:center;}
+.c5-hz__ph .wf-icon{color:var(--w-text-secondary);}
+.c5-hz__name{margin:0;font-size:clamp(1.25rem,1.6vw,1.5rem);line-height:1.2;
+  font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+.c5-hz__desc{margin:0;font-size:0.9375rem;line-height:1.55;max-width:32em;
+  color:var(--w-text-secondary);}
+.c5-hz__panel .c5-chip{width:max-content;}
+
+/* --- "jesteśmy tutaj" ----------------------------------------------------- */
+.c5-hz__now{display:block;font-size:0.6875rem;line-height:1.2;
+  color:var(--w-text-secondary);}
+.c5-hz__now i{display:none;}
+
+/* No JS: the line button has nothing to do, so it steps aside and the panel
+   alone carries the stage – term, photo, state, heading, copy, warning. */
+.c5-hz:not(.is-ready) .c5-hz__line{display:none;}
+.c5-hz:not(.is-ready) .c5-hz__panel{margin-top:0;}
+
+/* =========================================================================
+   WITH JS: panels are collapsed – one stage is open at a time.
+   ========================================================================= */
+.c5-hz.is-ready .c5-hz__panel{display:none;}
+.c5-hz.is-ready .c5-hz__item.is-open .c5-hz__panel{display:flex;}
+
+/* Below 900 px the row itself is the heading (and the control), so the open
+   panel does not repeat the term and the name – the button's accessible name
+   carries both for a screen reader. */
+@media (max-width:899px){
+  .c5-hz.is-ready .c5-hz__item.is-open .c5-hz__term,
+  .c5-hz.is-ready .c5-hz__item.is-open .c5-hz__name{display:none;}
+  .c5-hz.is-ready .c5-hz__item.is-open .c5-hz__line{margin-bottom:var(--w-space-3);}
+}
+
+/* =========================================================================
+   CANVAS (900 px and up, JS on)
+   ========================================================================= */
+@media (min-width:900px){
+  /* A year label starts WHERE ITS YEAR STARTS – left edge on the boundary, never
+     centred in the range, or the lines of early spring read as the year before
+     (frame 251:844). A hairline under the label marks that boundary. The inner
+     span is what the script measures; it slides by --hoff when the last label
+     would run off the canvas, and fades out when its range gets too tight. */
+  .cx-js .c5-hz.is-ready .c5-hz__years{position:relative;display:block;height:3em;}
+  .cx-js .c5-hz.is-ready .c5-hz__years > li{position:absolute;top:0;bottom:0;left:0;
+    width:var(--hw,0px);transform:translateX(var(--hx,0px));
+    text-align:left;white-space:nowrap;
+    font-size:clamp(1.125rem,1.3vw,1.75rem);line-height:1.15;
+    font-variant-numeric:tabular-nums;color:var(--w-text-primary);
+    transition:transform .6s var(--w-ease),width .6s var(--w-ease);}
+  .cx-js .c5-hz.is-ready .c5-hz__years > li::before{content:"";position:absolute;
+    left:0;bottom:0;width:1px;height:9px;background:var(--w-border-default);}
+  .cx-js .c5-hz.is-ready .c5-hz__years > li > span{display:inline-block;
+    transform:translateX(var(--hoff,0px));
+    transition:transform .6s var(--w-ease),opacity var(--w-duration-base) var(--w-ease);}
+  .cx-js .c5-hz.is-ready .c5-hz__years > li.is-tight > span{opacity:0;}
+
+  .cx-js .c5-hz.is-ready .c5-hz__canvas{height:max(var(--hz-h),60svh);}
+  .cx-js .c5-hz.is-ready .c5-hz__list{display:block;height:100%;}
+
+  /* one event = one absolutely placed segment; the line sits on its left edge */
+  .cx-js .c5-hz.is-ready .c5-hz__item{position:absolute;top:0;left:0;height:100%;
+    width:var(--hw,24px);transform:translateX(var(--hx,0px));
+    margin:0;padding:0;border:0;
+    transition:transform .6s var(--w-ease),width .6s var(--w-ease);}
+  .cx-js .c5-hz.is-ready .c5-hz__line{position:absolute;inset:0;width:100%;height:100%;
+    transition:background var(--w-duration-base) var(--w-ease);}
+  .cx-js .c5-hz.is-ready .c5-hz__line:hover{background:rgb(0 0 0 / .022);}
+  .cx-js .c5-hz.is-ready .c5-hz__line:focus-visible{outline-offset:-2px;
+    background:rgb(0 0 0 / .035);}
+  .cx-js .c5-hz.is-ready .c5-hz__cap{display:none;}
+
+  .cx-js .c5-hz.is-ready .c5-hz__vis{display:block;position:absolute;top:0;left:0;
+    width:1px;height:100%;background:var(--w-border-default);
+    transition:background var(--w-duration-base) var(--w-ease),
+               width var(--w-duration-base) var(--w-ease);}
+  .cx-js .c5-hz.is-ready .c5-hz__item[data-state="done"] .c5-hz__vis{background:var(--w-gray-900);}
+  .cx-js .c5-hz.is-ready .c5-hz__item[data-state="doing"] .c5-hz__vis{background:var(--w-border-strong);}
+  .cx-js .c5-hz.is-ready .c5-hz__line:hover .c5-hz__vis,
+  .cx-js .c5-hz.is-ready .c5-hz__line:focus-visible .c5-hz__vis,
+  .cx-js .c5-hz.is-ready .c5-hz__item.is-open .c5-hz__vis{width:2px;background:var(--w-gray-900);}
+
+  /* state marker sits on the top of its own line, centred on it */
+  .cx-js .c5-hz.is-ready .c5-hz__mark{display:grid;place-items:center;position:absolute;
+    top:0;left:0;transform:translateX(-50%);width:24px;height:24px;border-radius:0;
+    background:var(--w-gray-200);color:var(--w-text-primary);}
+
+  /* --- open card: sits in the gap the segment has just made --------------- */
+  .cx-js .c5-hz.is-ready .c5-hz__item.is-open{z-index:40;}
+  .cx-js .c5-hz.is-ready .c5-hz__item.is-open .c5-hz__panel{position:absolute;top:0;
+    left:var(--hz-gap);width:calc(100% - var(--hz-gap) * 2);max-height:100%;
+    margin:0;padding:0;background:var(--w-surface-page);}
+  /* the frame gives the photo the full width of the card; capped so that the
+     tallest stage (photo + chip + two lines of copy + warning) still fits 620 px */
+  .cx-js .c5-hz.is-ready .c5-hz__item.is-open .c5-hz__fig{max-width:26rem;}
+
+  /* --- minimal description: glued to the side of the line, follows cursor Y */
+  .cx-js .c5-hz.is-ready .c5-hz__item.is-mini{z-index:50;}
+  .cx-js .c5-hz.is-ready .c5-hz__item.is-mini .c5-hz__panel{display:flex;position:absolute;
+    top:var(--hy,0px);left:var(--hz-gap);width:var(--hz-mini-w);margin:0;
+    padding:14px;background:var(--w-surface-page);border:1px solid var(--w-border-subtle);
+    pointer-events:none;}
+  /* right edge of the canvas: the panel flips to the left side of the line */
+  .cx-js .c5-hz.is-ready .c5-hz__item.is-mini.is-flip .c5-hz__panel{left:auto;
+    right:calc(100% + var(--hz-gap));align-items:flex-end;text-align:right;}
+  /* the kit gives .wf-ph a 120 px floor – the 60 px thumbnail has to undo it */
+  .cx-js .c5-hz.is-ready .c5-hz__item.is-mini .c5-hz__fig{width:60px;}
+  .cx-js .c5-hz.is-ready .c5-hz__item.is-mini .c5-hz__ph{aspect-ratio:1/1;
+    min-height:0;height:60px;}
+  .cx-js .c5-hz.is-ready .c5-hz__item.is-mini .c5-hz__name{font-size:1.0625rem;}
+  .cx-js .c5-hz.is-ready .c5-hz__item.is-mini .wf-caption,
+  .cx-js .c5-hz.is-ready .c5-hz__item.is-mini .c5-hz__desc,
+  .cx-js .c5-hz.is-ready .c5-hz__item.is-mini .c5-chip,
+  .cx-js .c5-hz.is-ready .c5-hz__item.is-mini .pp-ms__warn{display:none;}
+
+  /* --- "jesteśmy tutaj": a quiet tick at the bottom of the canvas --------- */
+  .cx-js .c5-hz.is-ready .c5-hz__now{position:absolute;bottom:0;left:0;
+    transform:translateX(var(--hx,0px));z-index:30;pointer-events:none;
+    display:flex;flex-direction:column;align-items:center;gap:4px;width:0;
+    transition:transform .6s var(--w-ease);}
+  .cx-js .c5-hz.is-ready .c5-hz__now i{display:block;order:2;width:1px;height:26px;
+    background:var(--w-border-strong);}
+  .cx-js .c5-hz.is-ready .c5-hz__now small{order:1;white-space:nowrap;
+    background:var(--w-surface-page);padding:0 6px;}
+}
+
+/* --- entry: the lines draw themselves top down, then the markers appear ---- */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  .cx-js .c5-hz.is-ready .c5-hz__vis{transform:scaleY(0);transform-origin:top;
+    transition:transform .5s var(--w-ease) calc(var(--i,0) * 55ms),
+               background var(--w-duration-base) var(--w-ease),
+               width var(--w-duration-base) var(--w-ease);}
+  .cx-js .c5-hz.is-ready.is-in .c5-hz__vis{transform:none;}
+  .cx-js .c5-hz.is-ready .c5-hz__mark,
+  .cx-js .c5-hz.is-ready .c5-hz__now{opacity:0;}
+  .cx-js .c5-hz.is-ready.is-in .c5-hz__mark{opacity:1;
+    transition:opacity .3s var(--w-ease) calc(var(--i,0) * 55ms + .34s);}
+  .cx-js .c5-hz.is-ready.is-in .c5-hz__now{opacity:1;
+    transition:opacity .3s var(--w-ease) .8s,transform .6s var(--w-ease);}
+}
+
+/* Resize and first paint: geometry jumps instead of sliding. The selector has
+   to outweigh the canvas rules above, hence the same prefix plus .is-still. */
+.cx-js .c5-hz.is-ready.is-still .c5-hz__item,
+.cx-js .c5-hz.is-ready.is-still .c5-hz__years > li,
+.cx-js .c5-hz.is-ready.is-still .c5-hz__years > li > span,
+.cx-js .c5-hz.is-ready.is-still .c5-hz__now{transition:none;}
+
+@media (prefers-reduced-motion: reduce){
+  /* Every interaction keeps working – only the movement goes away. Same
+     weight as the canvas rules and later in the file, so this one wins. */
+  .c5-hz__item,.c5-hz__years > li,.c5-hz__now,.c5-hz__vis,.c5-hz__mark,.c5-hz__line,
+  .cx-js .c5-hz.is-ready .c5-hz__item,
+  .cx-js .c5-hz.is-ready .c5-hz__years > li,
+  .cx-js .c5-hz.is-ready .c5-hz__years > li > span,
+  .cx-js .c5-hz.is-ready .c5-hz__now,
+  .cx-js .c5-hz.is-ready .c5-hz__vis,
+  .cx-js .c5-hz.is-ready .c5-hz__line{transition:none;}
+}

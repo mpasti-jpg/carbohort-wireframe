@@ -51,6 +51,14 @@
 
 /* dots are round on purpose: they are markers, not layout boxes (like .c5-way__ico) */
 
+/* page-specific: CE-07 dot rail. After the CE-12 scene moved to the Frame 206
+   layout its photo panel is no longer bound by the 1180 px container – it reaches
+   20 px from the right edge of a container as wide as the window (up to 1800 px),
+   so at the shared position of the rail (30 px from the edge, 28 px wide) its hit
+   areas lay on 38 px of the panel at 1440 px. Here the rail moves into the margin,
+   exactly as on Produkty, Kukurydza and Próchnica+. */
+@media (min-width:900px){.c5-dots{right:10px;}}
+
 /* Czas dobrany do zmierzonej długości połowy toru, żeby tempo w pikselach było
    takie jak na stronie CARBOMAT ECO (zmierzone 13.09 na 1280 px: połowa toru
    4704 px / 42 s = 112 px/s). Połowa toru HUMIC-a mierzy 4810 px, więc 43 s daje
@@ -209,68 +217,63 @@ html.c5-pop-lock{overflow:hidden;}
   .c5-pop__panel,.c5-pop-overlay{transition:none;}
 }
 
-.c5-facts-panel__ph{width:100%;aspect-ratio:4/5;max-height:min(62vh,520px);}
+/* --- CE-12 „Scena faktów" – eight steps, the Frame 206 layout (19.09.2026) ---
+   The machinery of the scene lives in ce/CE-12-scena-faktow-proba.css, which this
+   page links instead of the shared ce/CE-12-scena-faktow.css. What stays here is
+   only what depends on the CONTENT of this page: the order of the static layout,
+   the knobs of the block (one declaration on the root of the section) and the type
+   scale of the scene. Not a single rule copied from the sheet of the block. */
 
-/* Kadry siedzą w DOM-ie razem (w panelu), więc w biegu przeplata je `order`:
-   kadr, jego opis, jego ilustracja. Każdy z kroków 2-6 ma własny boks, a kadr
-   zdjęcia jest dla nich jeden – stoi raz, przed krokiem 2. W scenie wszystkie
-   te elementy mają jawne miejsce w siatce, więc `order` steruje tam już tylko
-   kolejnością malowania. */
-.c5-facts-panel__ph[data-fact-bg="1"]{order:1;} .c5-fact[data-fact="1"]{order:2;} .c5-viz[data-fact-viz="1"]{order:3;}
-.c5-facts-panel__ph[data-fact-bg="2-6"]{order:4;}
-.c5-fact[data-fact="2"]{order:5;} .c5-viz[data-fact-viz="2"]{order:6;}
-.c5-fact[data-fact="3"]{order:7;} .c5-viz[data-fact-viz="3"]{order:8;}
-.c5-fact[data-fact="4"]{order:9;} .c5-viz[data-fact-viz="4"]{order:10;}
-.c5-fact[data-fact="5"]{order:11;} .c5-viz[data-fact-viz="5"]{order:12;}
-.c5-fact[data-fact="6"]{order:13;} .c5-viz[data-fact-viz="6"]{order:14;}
-.c5-facts-panel__ph[data-fact-bg="7"]{order:15;} .c5-fact[data-fact="7"]{order:16;} .c5-viz[data-fact-viz="7"]{order:17;}
-.c5-facts-panel__ph[data-fact-bg="8"]{order:18;} .c5-fact[data-fact="8"]{order:19;} .c5-viz[data-fact-viz="8"]{order:20;}
+/* The knobs of the block, all in one declaration (CE-12 contract §2.5):
+   · the step of the track: eight steps instead of five, so shorter than the
+     default (480 px / 80 % of the window) – CE-12-scena-faktow-proba.js reads it;
+   · the height of the illustration box: eight figures, among them the purity table
+     (9 rows) and two bar charts – at the default 62 svh they were short of height,
+     exactly as on Próchnica+. */
+#czym-jest{--fx-step-min:420;--fx-step-vh:0.7;--c5-fx-viz-h:clamp(360px,68svh,760px);}
 
-.c5-facts-progress__mark:nth-child(2){left:12.5%;}
-.c5-facts-progress__mark:nth-child(3){left:25%;}
-.c5-facts-progress__mark:nth-child(4){left:37.5%;}
-.c5-facts-progress__mark:nth-child(5){left:50%;}
-.c5-facts-progress__mark:nth-child(6){left:62.5%;}
-.c5-facts-progress__mark:nth-child(7){left:75%;}
-.c5-facts-progress__mark:nth-child(8){left:87.5%;}
+/* The frames sit together in the DOM (inside the panel), so in the static flow
+   `order` interleaves them: the frame, its description, its illustration. Each of
+   the steps 2-6 has a box of its own while the photo frame is one for all of them
+   – it stands once, before step 2. In the scene all of these elements are
+   positioned against the scene, so `order` changes nothing there. */
+#czym-jest .c5-fx__panel > [data-fx-bg="1"]{order:1;} #czym-jest .c5-fx__fact[data-fx-fact="1"]{order:2;} #czym-jest .c5-viz[data-fx-viz="1"]{order:3;}
+#czym-jest .c5-fx__panel > [data-fx-bg="2-6"]{order:4;}
+#czym-jest .c5-fx__fact[data-fx-fact="2"]{order:5;} #czym-jest .c5-viz[data-fx-viz="2"]{order:6;}
+#czym-jest .c5-fx__fact[data-fx-fact="3"]{order:7;} #czym-jest .c5-viz[data-fx-viz="3"]{order:8;}
+#czym-jest .c5-fx__fact[data-fx-fact="4"]{order:9;} #czym-jest .c5-viz[data-fx-viz="4"]{order:10;}
+#czym-jest .c5-fx__fact[data-fx-fact="5"]{order:11;} #czym-jest .c5-viz[data-fx-viz="5"]{order:12;}
+#czym-jest .c5-fx__fact[data-fx-fact="6"]{order:13;} #czym-jest .c5-viz[data-fx-viz="6"]{order:14;}
+#czym-jest .c5-fx__panel > [data-fx-bg="7"]{order:15;} #czym-jest .c5-fx__fact[data-fx-fact="7"]{order:16;} #czym-jest .c5-viz[data-fx-viz="7"]{order:17;}
+#czym-jest .c5-fx__panel > [data-fx-bg="8"]{order:18;} #czym-jest .c5-fx__fact[data-fx-fact="8"]{order:19;} #czym-jest .c5-viz[data-fx-viz="8"]{order:20;}
 
 /* the drawing scales with the box; max-height keeps a tall viewBox inside it
    (default preserveAspectRatio letterboxes it instead of overflowing) */
 .c5-viz__body svg:not(.wf-icon){width:100%;height:auto;max-height:100%;color:inherit;}
 
-/* Układ statyczny na szerokim ekranie (reduced motion albo brak JS): pola
-   zdjęć nie mogą rozlewać się na całą szerokość kolumny. */
-@media (min-width:900px){
-  /* static wide layout: a band, not a full column */
-  .c5-facts-panel__ph{max-width:480px;max-height:min(46vh,420px);}
-}
-
-/* --- Scena: sticky 100svh w wysokim torze (JS ustawia wysokość toru) -------- */
+/* --- Scena: skala typografii tej strony ------------------------------------ */
 @media (min-width:900px) and (prefers-reduced-motion: no-preference){
-  .cx-js .c5-facts-panel__ph{position:absolute;inset:0;height:100%;max-width:none;max-height:none;aspect-ratio:auto;
-    opacity:0;transition:opacity .45s var(--w-ease);will-change:opacity;}
-  .cx-js .c5-facts-panel__ph[data-on="true"]{opacity:1;}
-  /* wash under the illustration box – white text on .78 black must not fight
-     the lighter patches of the photograph; the bright lab frame (04, step 8)
-     needs a touch more, the rest keeps .25 */
-  .cx-js .c5-facts-panel::after{content:"";position:absolute;inset:0;
-    background:rgb(0 0 0 / var(--facts-wash,.25));transition:background .45s var(--w-ease);}
-  .cx-js .c5-facts-panel:has(> [data-fact-bg="8"][data-on="true"]){--facts-wash:.35;}
-  .cx-js .c5-facts-head{grid-row:1;grid-column:1;align-self:start;z-index:2;background:var(--w-surface-page);padding-bottom:var(--w-space-4);}
   /* w scenie nagłówek jest odrobinę mniejszy – najdłuższy opis (krok 7) musi
      zmieścić się pod nim na ekranie 800 px bez wchodzenia w nagłówek */
-  .cx-js .c5-facts-head .c5-h2{font-size:clamp(1.5rem,2.6vw,2.125rem);}
-  /* osiem kroków na jednym ekranie: opis jest ciaśniejszy niż w statycznym
-     układzie, bo najdłuższy (krok 7 – akapit i cztery punkty) musi zmieścić
-     się nad paskiem progresu */
-  .cx-js .c5-facts-flow > .c5-fact .c5-fact__body{font-size:0.875rem;line-height:1.5;}
+  .cx-js #czym-jest .c5-fx__head .c5-h2{font-size:clamp(1.5rem,2.6vw,2.125rem);}
+  /* eight steps on one screen: the description is tighter than in the static
+     layout, because the longest of them (step 7 – a paragraph and four points)
+     has to fit above the reserve of the advisor dock */
+  .cx-js #czym-jest .c5-fx__body{font-size:0.875rem;line-height:1.5;}
 }
-/* Niskie okna (np. 1280×720): nagłówek i opis dostają ciaśniejszą skalę, żeby
-   najdłuższy punkt nadal mieścił się nad paskiem progresu. */
+/* Low windows (e.g. 1280x720): the heading and the description take a tighter
+   scale, so that the longest point still fits between the heading and the
+   advisor dock. */
 @media (min-width:900px) and (prefers-reduced-motion: no-preference) and (max-height:780px){
-  .cx-js .c5-facts-head .c5-h2{font-size:clamp(1.375rem,2.2vw,1.75rem);}
-  .cx-js .c5-facts-flow > .c5-fact .c5-fact__body{font-size:0.8125rem;line-height:1.45;}
-  .cx-js .c5-facts-flow > .c5-fact .c5-fact__body ul{gap:var(--w-space-1);}
+  .cx-js #czym-jest .c5-fx__head .c5-h2{font-size:clamp(1.375rem,2.2vw,1.75rem);}
+  .cx-js #czym-jest .c5-fx__body{font-size:0.8125rem;line-height:1.45;}
+  .cx-js #czym-jest .c5-fx__body ul{gap:var(--w-space-1);}
+  /* The purity table (step 8) has nine rows – it is the one that sets the height
+     of the box. At 68 svh it fitted everywhere except the 1280x720 window, where
+     the last row went under the edge (measured: 21 px; in the layout from before
+     19.09.2026 it was 50 px short). On a low window the box therefore takes
+     74 svh – still one knob of the block, no rule copied from the trial sheet. */
+  #czym-jest{--c5-fx-viz-h:clamp(360px,74svh,760px);}
 }
 
 /* --- KIEDY STOSOWAĆ: dwa panele fotograficzne + pas PRO (spec §16.1) --------
@@ -352,6 +355,6 @@ html.c5-pop-lock{overflow:hidden;}
    między nimi zamiast marginesów na akapitach */
 .c5-faq__answer{display:flex;flex-direction:column;gap:var(--w-space-3);}
 
-/* page-specific: CE-12 – osiem kroków zamiast pięciu, więc krok toru jest
-   krótszy niż domyślny (480 px / 80 % okna). Czyta go CE-12-scena-faktow.js. */
-.c5-facts-sec{--facts-step-min:420;--facts-step-vh:0.7;}
+/* The knobs of the CE-12 scene (the step of the track, the height of the
+   illustration box) stand in the „Scena faktów" block above – one declaration on
+   the root of the section. */

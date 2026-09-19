@@ -1,0 +1,93 @@
+/* ===== CE-69 · Wstęp sekcji z kadrem i kaflami – Figma frame 306:2942
+   (spec prochnica-plus-wzorzec-eco-spec §18.2). Class prefix: c5-opener. =====
+   Section opener built of two bands. Top band: two equal columns – copy on the
+   left (kicker, statement heading, muted description), a tall photo frame on
+   the right (12 : 13, the proportion of the frame). Bottom band: the same grid
+   split 1fr 1fr 2fr – two facts as grey tiles and a wide product box.
+   Layout and mechanics come from the frame, the look stays with the V7 pattern:
+   grey scale, sharp corners, --w-* tokens. No JS of its own – the entrance is
+   the [data-reveal] bus from ce/00-base.js. ===== */
+
+/* --- Top band: copy + photo frame ---------------------------------------- */
+.c5-opener__top{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:40px;align-items:start;}
+
+/* The kicker of this block sits right above the heading (the pattern default
+   pushes it 2–3.5 rem away, which the frame does not do). */
+.c5-opener__copy .c5-kicker{margin-bottom:var(--w-space-5);}
+/* The statement heading takes the whole column; `max-width` of .c5-h2 (784 px)
+   still keeps the line length readable on a 1800 px container. */
+.c5-opener__desc{margin:clamp(2rem,4vw,3.75rem) 0 0;max-width:34rem;
+  font-size:0.9375rem;line-height:1.6;color:var(--w-text-secondary);}
+
+.c5-opener__shot{margin:0;display:flex;flex-direction:column;gap:var(--w-space-3);}
+.c5-opener__shot img{display:block;width:100%;aspect-ratio:12/13;object-fit:cover;
+  border-radius:0;background:var(--w-gray-100);}
+
+/* --- Bottom band: two tiles + product box -------------------------------- */
+.c5-opener__row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,2fr);
+  gap:20px;margin-top:45px;align-items:stretch;}
+
+/* Tile: icon at the top, name and sentence pinned to the bottom edge. */
+.c5-opener__tile{display:flex;flex-direction:column;min-height:350px;
+  background:var(--w-gray-100);padding:32px;}
+.c5-opener__ico{flex:none;width:32px;height:32px;color:var(--w-text-primary);}
+.c5-opener__tfoot{margin-top:auto;padding-top:var(--w-space-6);}
+.c5-opener__tname{margin:0;}
+.c5-opener__tdesc{margin:var(--w-space-3) 0 0;font-size:0.9375rem;line-height:1.6;
+  color:var(--w-text-secondary);}
+
+/* Product box: packshot and copy side by side, buttons across the whole box. */
+.c5-opener__prod{display:flex;flex-direction:column;gap:var(--w-space-6);
+  min-height:350px;border:1px solid var(--w-border-default);
+  background:var(--w-surface-page);padding:32px;}
+.c5-opener__prodtop{display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr);
+  gap:clamp(1.5rem,2.5vw,2.5rem);align-items:start;}
+.c5-opener__pack{display:grid;place-items:center;background:var(--w-gray-100);
+  padding:var(--w-space-4);}
+.c5-opener__pack img{display:block;height:180px;width:auto;max-width:100%;object-fit:contain;}
+.c5-opener__prodname{margin:0;font-size:1rem;line-height:1.45;
+  font-weight:var(--w-weight-medium);letter-spacing:-0.01em;color:var(--w-text-primary);}
+.c5-opener__feats{margin:var(--w-space-5) 0 0;padding:0;list-style:none;
+  display:flex;flex-direction:column;gap:var(--w-space-3);}
+.c5-opener__feats li{display:flex;gap:var(--w-space-3);align-items:flex-start;
+  font-size:0.9375rem;line-height:1.5;color:var(--w-text-secondary);}
+.c5-opener__feats .wf-icon{flex:none;width:16px;height:16px;margin-top:3px;
+  color:var(--w-text-primary);}
+/* Two buttons on the bottom edge, roughly 3 : 2 of the box width. */
+.c5-opener__btns{display:grid;grid-template-columns:3fr 2fr;gap:var(--w-space-2);
+  margin-top:auto;}
+.c5-opener__btns .c5-btn{--c5-btn-px:16px;width:100%;}
+
+/* --- Entrance: 80 ms stagger over the [data-reveal] bus ------------------- */
+.c5-opener__top > *:nth-child(2){transition-delay:.08s;}
+.c5-opener__row > *:nth-child(1){transition-delay:.08s;}
+.c5-opener__row > *:nth-child(2){transition-delay:.16s;}
+.c5-opener__row > *:nth-child(3){transition-delay:.24s;}
+
+/* --- Below 1100 px: tiles side by side, product box across both ----------- */
+@media (max-width:1099px){
+  .c5-opener__row{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .c5-opener__prod{grid-column:1 / -1;min-height:0;}
+}
+
+/* --- Below 900 px: one column, photo frame 4 : 3 -------------------------- */
+@media (max-width:899px){
+  .c5-opener__top{grid-template-columns:minmax(0,1fr);gap:clamp(1.5rem,4vw,2.5rem);}
+  .c5-opener__shot img{aspect-ratio:4/3;}
+  .c5-opener__row{margin-top:clamp(1.5rem,4vw,2.5rem);}
+  .c5-opener__tile{min-height:260px;padding:clamp(1.25rem,4vw,2rem);}
+  .c5-opener__prod{padding:clamp(1.25rem,4vw,2rem);}
+}
+
+/* --- Below 600 px: everything in one column ------------------------------- */
+@media (max-width:599px){
+  .c5-opener__row{grid-template-columns:minmax(0,1fr);}
+  .c5-opener__prodtop{grid-template-columns:minmax(0,1fr);}
+  .c5-opener__pack img{height:150px;}
+  .c5-opener__btns{grid-template-columns:minmax(0,1fr);}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .c5-opener__top > *,.c5-opener__row > *{transition-delay:0s;}
+}

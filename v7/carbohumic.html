@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="ce/CE-09-marquee.css">
   <link rel="stylesheet" href="ce/CE-10-parametry.css">
   <link rel="stylesheet" href="ce/CE-11-warianty-taby.css">
-  <link rel="stylesheet" href="ce/CE-12-scena-faktow.css">
+  <link rel="stylesheet" href="ce/CE-12-scena-faktow-proba.css">
   <link rel="stylesheet" href="ce/CE-13-scena-produktu.css">
   <link rel="stylesheet" href="ce/CE-14-sekcja-100svh.css">
   <link rel="stylesheet" href="ce/CE-16-pas-pro.css">
@@ -558,30 +558,43 @@
   </section>
 
   <!-- ===== 5. CZYM JEST – scena sterowana przewijaniem (spec §3, wzorzec §3.5) =====
-       Nagłówek i panel zdjęcia stoją w miejscu przez całą sekcję, a cztery opisy
-       wymieniają się przy dolnej krawędzi lewej kolumny. Ilustracja każdego punktu
-       żyje w boksie o stałym rozmiarze na panelu zdjęcia.
+       Panel zdjęcia stoi w miejscu przez całą sekcję, a cztery opisy wymieniają
+       się przy dolnej krawędzi lewej kolumny. Ilustracja każdego punktu żyje
+       w boksie o stałym rozmiarze na panelu zdjęcia.
        Iteracja 2 (spec §11.2): dawny punkt 01 „Ile trwa powstawanie stabilnej
        próchnicy" wraz z ilustracją osi czasu wyszedł stąd do osobnej sekcji
-       #czas-prochnicy nad „Czym jest"; zostają cztery punkty, tagi 01–04,
-       trzy znaczniki na pasku progresu i cztery warstwy tła. Opisy „Co zawiera?"
-       i „Dlaczego wersja płynna a nie sypka?" są skrócone wg spec §11.3.
+       #czas-prochnicy nad „Czym jest"; zostają cztery punkty, tagi 01–04
+       i cztery warstwy tła. Opisy „Co zawiera?" i „Dlaczego wersja płynna
+       a nie sypka?" są skrócone wg spec §11.3.
+       Wdrożenie stanu indeksu CE (spec §12): sekcja stoi na układzie wg ramki
+       Figma „Frame 206” (`ce/CE-12-scena-faktow-proba.css/.js`, znaczniki
+       `c5-fx*`) w wariancie `bez-naglowka` – kicker, H2 i lead wychodzą PONAD
+       tor (reguła Mateusza: lead nigdy nie wchodzi do sceny), a w scenie
+       zostaje sam fakt: tytuł, kreska 1 px z postępem slajdu, opis i licznik
+       „01/04”. Wspólny pasek progresu znika, panel zdjęcia nie jest już
+       przyciemniany. Bez przełącznika wariantów (to narzędzie recenzji
+       Produktów), więc blok nagłówka jest jedynym `[data-fx-head]` i nigdy
+       nie niesie `hidden`.
        DOM order = układ statyczny (mobile / reduced motion / bez JS): nagłówek,
        a potem trójki zdjęcie / tytuł+opis / ilustracja. Panel zdjęcia to
        `display:contents` poza sceną, więc te same warstwy stoją raz jako tło
-       panelu, a raz w biegu przy swoim opisie. Stary akordeon
-       (.c5-fact__btn / .c5-fact__panel) i lista .c5-facts__list znikają. -->
-  <section class="c5-sec c5-facts-sec" id="czym-jest" data-chapter="czym-jest" data-facts data-ce="CE-12">
-    <div class="c5-facts-track" data-facts-track>
-      <div class="c5-facts-stage c5-wrap">
+       panelu, a raz w biegu przy swoim opisie. -->
+  <section class="c5-sec c5-fx" id="czym-jest" data-chapter="czym-jest" data-fx data-ce="CE-12" data-ce-wariant="bez-naglowka">
 
-        <div class="c5-facts-head">
-          <span class="c5-kicker">Czym jest</span>
+    <div class="c5-fx__above c5-wrap" data-fx-head="bez-naglowka">
+      <div data-reveal>
+        <span class="c5-kicker">Czym jest</span>
+        <div class="c5-head">
           <h2 class="c5-h2">CARBOHUMIC to substancja najbardziej zbliżona do trwałej i&nbsp;stabilnej próchnicy glebowej, bogatej w&nbsp;złożone kwasy humusowe.</h2>
-          <p class="c5-lead c5-facts-lead">To najcenniejsze organiczne składniki Twojej gleby.</p>
+          <p class="c5-lead">To najcenniejsze organiczne składniki Twojej gleby.</p>
         </div>
+      </div>
+    </div>
 
-        <div class="c5-facts-flow">
+    <div class="c5-fx__track" data-fx-track>
+      <div class="c5-fx__stage">
+
+        <div class="c5-fx__flow">
 
           <!-- Warstwy zdjęć: jedna na punkt, przełączane razem z opisem.
                ⚠ tymczasowe – to zdjęcia surowca z sesji CARBOMAT ECO (wspólny
@@ -589,21 +602,23 @@
                Docelowe kadry CARBOHUMIC wg zasoby/brand/zdjecia-carbohumic/README.md.
                Są dekoracją pod boksem ilustracji, dlatego alt="" i aria-hidden
                na panelu; kadrowanie każdej warstwy ustawia CSS. -->
-          <div class="c5-facts-panel" aria-hidden="true">
-            <img class="c5-facts-panel__img" data-fact-bg="1" data-on="true" src="img/foto/czym-jest-1.jpg" alt="" loading="lazy" decoding="async">
-            <img class="c5-facts-panel__img" data-fact-bg="2" src="img/foto/czym-jest-2.jpg" alt="" loading="lazy" decoding="async">
-            <img class="c5-facts-panel__img" data-fact-bg="3" src="img/foto/czym-jest-4.jpg" alt="" loading="lazy" decoding="async">
-            <img class="c5-facts-panel__img" data-fact-bg="4" src="img/foto/czym-jest-5.jpg" alt="" loading="lazy" decoding="async">
+          <div class="c5-fx__panel" aria-hidden="true">
+            <img class="c5-fx__img" data-fx-bg="1" data-on="true" src="img/foto/czym-jest-1.jpg" alt="" loading="lazy" decoding="async">
+            <img class="c5-fx__img" data-fx-bg="2" src="img/foto/czym-jest-2.jpg" alt="" loading="lazy" decoding="async">
+            <img class="c5-fx__img" data-fx-bg="3" src="img/foto/czym-jest-4.jpg" alt="" loading="lazy" decoding="async">
+            <img class="c5-fx__img" data-fx-bg="4" src="img/foto/czym-jest-5.jpg" alt="" loading="lazy" decoding="async">
           </div>
 
-          <div class="c5-fact is-on" data-fact="1">
-            <h3 class="c5-fact__title">Pochodzenie</h3>
-            <div class="c5-fact__body">
+          <div class="c5-fx__fact" data-fx-fact="1">
+            <h3 class="c5-fx__title">Pochodzenie</h3>
+            <div class="c5-fx__line" aria-hidden="true"><span class="c5-fx__fill"></span></div>
+            <div class="c5-fx__body">
               <p>CARBOHUMIC to płynny ekstrakt substancji humusowych pozyskiwany z młodego węgla brunatnego, czyli lignitu, oraz leonardytu. Surowce te powstały z prehistorycznej i czystej materii roślinnej, która przez bardzo długi czas ulegała naturalnym przemianom geologicznym i humifikacji. Można ją porównać do skoncentrowanej, dojrzałej frakcji próchnicy, której naturalne tworzenie w glebie zajmuje wiele lat. CARBOHUMIC pozwala dostarczyć ją w płynnej, łatwej do aplikacji i wysoko przyswajalnej formie.</p>
             </div>
+            <span class="c5-fx__count" aria-hidden="true">01/04</span>
           </div>
 
-          <figure class="c5-viz" data-fact-viz="1" data-on="true">
+          <figure class="c5-viz" data-fx-viz="1" data-on="true">
             <span class="c5-viz__tag">01 · Pochodzenie</span>
             <div class="c5-viz__body">
               <svg viewBox="0 0 420 230" role="img" aria-label="Droga surowca: lignit i leonardyt trafiają do ekstrakcji, z której powstaje płynny ekstrakt substancji humusowych">
@@ -626,14 +641,16 @@
             <figcaption class="c5-src c5-src--ondark">Skoncentrowana, dojrzała frakcja próchnicy w formie łatwej do aplikacji.</figcaption>
           </figure>
 
-          <div class="c5-fact" data-fact="2">
-            <h3 class="c5-fact__title">Jak działa?</h3>
-            <div class="c5-fact__body">
+          <div class="c5-fx__fact" data-fx-fact="2">
+            <h3 class="c5-fx__title">Jak działa?</h3>
+            <div class="c5-fx__line" aria-hidden="true"><span class="c5-fx__fill"></span></div>
+            <div class="c5-fx__body">
               <p>Główną rolą CARBOHUMICu nie jest klasyczne dostarczanie składników pokarmowych, lecz przekształcanie środowiska, w którym rozwijają się rośliny. Preparat wspiera budowę struktury gleby, jej zdolność do zatrzymywania wody i składników odżywczych oraz aktywność życia biologicznego. W ten sposób pomaga stworzyć lepsze warunki dla rozwoju korzeni i efektywniejszego wykorzystania stosowanych nawozów.</p>
             </div>
+            <span class="c5-fx__count" aria-hidden="true">02/04</span>
           </div>
 
-          <figure class="c5-viz" data-fact-viz="2">
+          <figure class="c5-viz" data-fx-viz="2">
             <span class="c5-viz__tag">02 · Działanie</span>
             <div class="c5-viz__body">
               <ul class="c5-viz__list">
@@ -646,9 +663,10 @@
             <figcaption class="c5-src c5-src--ondark">CARBOHUMIC przekształca środowisko, w którym rozwijają się rośliny – nie zastępuje nawożenia.</figcaption>
           </figure>
 
-          <div class="c5-fact" data-fact="3">
-            <h3 class="c5-fact__title">Co zawiera?</h3>
-            <div class="c5-fact__body">
+          <div class="c5-fx__fact" data-fx-fact="3">
+            <h3 class="c5-fx__title">Co zawiera?</h3>
+            <div class="c5-fx__line" aria-hidden="true"><span class="c5-fx__fill"></span></div>
+            <div class="c5-fx__body">
               <!-- Iteracja 2 (spec §11.3): opis skrócony o ok. 35 % na polecenie
                    Mateusza, bez nowych faktów; trzy frakcje dostają kwadratowe
                    znaczniki (klasa c5hu-sq) zamiast domyślnych kropek. -->
@@ -660,9 +678,10 @@
               </ul>
               <p>Połączenie tych frakcji sprawia, że CARBOHUMIC działa na kilku poziomach jednocześnie.</p>
             </div>
+            <span class="c5-fx__count" aria-hidden="true">03/04</span>
           </div>
 
-          <figure class="c5-viz" data-fact-viz="3">
+          <figure class="c5-viz" data-fx-viz="3">
             <span class="c5-viz__tag">03 · Frakcje – wersja filtrowana</span>
             <div class="c5-viz__body">
               <!-- ⚠️ Te udziały są WYŁĄCZNIE wersji filtrowanej (dokument 29.07). Wersja
@@ -683,17 +702,19 @@
             <figcaption class="c5-src c5-src--ondark">Udziały w suchej masie wersji filtrowanej wg dokumentu producenta (29.07). Wersja niefiltrowana ma wg karty produktu ok. 50,0% kwasów humusowych, w tym huminowe ok. 49,0% i fulwowe ok. 1,4%.</figcaption>
           </figure>
 
-          <div class="c5-fact" data-fact="4">
-            <h3 class="c5-fact__title">Dlaczego wersja płynna a&nbsp;nie sypka?</h3>
-            <div class="c5-fact__body">
+          <div class="c5-fx__fact" data-fx-fact="4">
+            <h3 class="c5-fx__title">Dlaczego wersja płynna a&nbsp;nie sypka?</h3>
+            <div class="c5-fx__line" aria-hidden="true"><span class="c5-fx__fill"></span></div>
+            <div class="c5-fx__body">
               <!-- Iteracja 2 (spec §11.3): dwa akapity skrócone o ok. 30 %,
                    wszystkie twierdzenia zachowane. -->
               <p>Wersję płynną wybieramy, gdy zależy nam na szybkim, równomiernym i precyzyjnym dostarczeniu substancji humusowych do gleby. Ekstrakcja uwalnia aktywne frakcje z lignitu do zawiesiny, więc po aplikacji od razu rozchodzą się z wodą w strefie korzeniowej. Zabieg wykonasz opryskiwaczem, belką herbicydową, przez nawadnianie albo polewając, a dawkę łatwo dopasować do stanu gleby i rozłożyć na kilka aplikacji w sezonie.</p>
               <p>CARBOMAT ECO działa inaczej: to sypki, naturalny lignit, który po wymieszaniu z glebą stopniowo uwalnia swoje właściwości. To inwestycja wieloletnia w zasobność gleby, zwłaszcza lekkiej, zdegradowanej lub ubogiej w materię organiczną, ale wymaga rozsiewu, większej ilości produktu na start i zwykle mechanicznego wymieszania z glebą.</p>
             </div>
+            <span class="c5-fx__count" aria-hidden="true">04/04</span>
           </div>
 
-          <figure class="c5-viz" data-fact-viz="4">
+          <figure class="c5-viz" data-fx-viz="4">
             <span class="c5-viz__tag">04 · Płynny czy sypki</span>
             <div class="c5-viz__body">
               <div class="cw-scrollx" tabindex="0">
@@ -711,18 +732,6 @@
             <figcaption class="c5-src c5-src--ondark">Zestawienie na podstawie opisu producenta. <a class="wf-link--muted" href="carbomat.html">Zobacz CARBOMAT ECO</a></figcaption>
           </figure>
 
-        </div>
-
-        <!-- Pasek progresu zamiast dividerów: wypełnienie = postęp globalny,
-             trzy znaczniki dzielą tor na cztery odcinki. Widoczny tylko
-             w scenie sterowanej przewijaniem. -->
-        <div class="c5-facts-prog" data-facts-prog>
-          <div class="c5-facts-progress" role="progressbar" aria-valuemin="0" aria-valuemax="4" aria-valuenow="1" aria-label="Postęp – punkt z czterech">
-            <span class="c5-facts-progress__fill"></span>
-            <span class="c5-facts-progress__mark"></span>
-            <span class="c5-facts-progress__mark"></span>
-            <span class="c5-facts-progress__mark"></span>
-          </div>
         </div>
 
       </div>
@@ -1300,8 +1309,13 @@
        po prawej. We wzorcu pas jest `div` w sekcji „Sezon"; tutaj stoi jako
        osobna sekcja między „Doglebowo czy nalistnie" a FAQ.
        Media: placeholder 3:2 – docelowe zdjęcie (pole, sad, plantacja lub
-       szkółka) wg zasoby/brand/zdjecia-carbohumic/README.md. -->
-  <section class="c5-pro" id="uprawy-profesjonalne" data-pro data-ce="CE-16">
+       szkółka) wg zasoby/brand/zdjecia-carbohumic/README.md.
+       Wdrożenie stanu indeksu CE (spec §12): wariant `pozny-wzrost`
+       (`ce/CE-16-pas-pro-proba.js`) – kadr stoi na połowie szerokości, dopóki
+       górna krawędź pasa jest niżej niż 35 % okna, potem rośnie do pełnej przy
+       2 % od góry, a nakładka przyciemniająca narasta razem z nim (`--pro-o`).
+       Markup identyczny z bazą: zmienia się skrypt i atrybut wariantu. -->
+  <section class="c5-pro" id="uprawy-profesjonalne" data-pro data-ce="CE-16" data-ce-wariant="pozny-wzrost">
     <div class="c5-pro__media" data-pro-media aria-hidden="true">
       <div class="c5-pro__ph">
         <span class="c5-pro__phlabel">foto · uprawy profesjonalne</span>
@@ -1449,10 +1463,10 @@
 <script src="ce/CE-07-nawigacja-kropkowa.js"></script>
 <script src="ce/CE-10-parametry.js"></script>
 <script src="ce/CE-11-warianty-taby.js"></script>
-<script src="ce/CE-12-scena-faktow.js"></script>
+<script src="ce/CE-12-scena-faktow-proba.js"></script>
 <script src="ce/CE-13-scena-produktu.js"></script>
 <script src="ce/CE-14-sekcja-100svh.js"></script>
-<script src="ce/CE-16-pas-pro.js"></script>
+<script src="ce/CE-16-pas-pro-proba.js"></script>
 <script src="ce/CE-17-faq.js"></script>
 <script src="carbohumic.js"></script>
 <script src="ce-overlay.js"></script>

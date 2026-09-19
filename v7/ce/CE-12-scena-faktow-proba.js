@@ -1,8 +1,10 @@
 /* ===== CE-12 · Scena faktów – TRIAL VERSION (Figma Frame 206, 18.09.2026) ====
-   Trial rebuild of the CE-12 scene, linked ONLY by produkty.html and only until
-   Mateusz accepts one of the two header variants (spec §21.3). The shared
-   ce/CE-12-scena-faktow.js is left untouched, so every other page of the pattern
-   keeps today's scene.
+   Rebuild of the CE-12 scene after Frame 206. The shared ce/CE-12-scena-faktow.js
+   is left untouched, so every page still on the old layout keeps today's scene.
+   19.09.2026: no longer the trial of a single page – this module now drives the
+   CE-12 scene of six pages of the pattern (the header variants of produkty.html
+   are still under review, spec §21.3; the `-proba` name waits for a rename
+   coordinated with the Próchnica+ session).
 
    The track is tall (sticky stage + one step per fact), the stage inside it is
    sticky and spans the whole window. Position on the axis = scroll position: the
@@ -59,10 +61,17 @@
     }
 
     /* Exactly one header block stands in the DOM at a time. In the scene it is the
-       variant under review, everywhere else the one that carries the lead. */
+       variant under review, everywhere else the one that carries the lead.
+       A section that ships a SINGLE header block has no alternative to switch to, so
+       that block is simply the header of the section and stays visible in every
+       layout – whatever the variant and whatever motionOn() says. Without this guard
+       a lone "z-naglowkiem" block lost its kicker and H2 below 900 px and with
+       reduced motion, where `want` is always "bez-naglowka" (guard added 19.09.2026;
+       the `hidden` is cleared, not only left alone, so the markup may carry it). */
     function applyHeads() {
       var want = CX5.motionOn() ? (sec.getAttribute("data-ce-wariant") || "z-naglowkiem") : "bez-naglowka";
-      heads.forEach(function (h) { h.hidden = h.getAttribute("data-fx-head") !== want; });
+      if (heads.length === 1) heads[0].hidden = false;
+      else heads.forEach(function (h) { h.hidden = h.getAttribute("data-fx-head") !== want; });
       btns.forEach(function (b) {
         b.setAttribute("aria-pressed", b.getAttribute("data-fx-var") === sec.getAttribute("data-ce-wariant") ? "true" : "false");
       });

@@ -9,6 +9,13 @@
 /* Braki danych zostają WIDOCZNE – nie chowamy ich pod kreską ani pod milczeniem */
 .c5-mt-gap{opacity:.6;}
 
+/* page-specific: CE-07 dot rail. Since 19.09.2026 the CE-12 scene stands on the
+   Frame 206 layout, whose photo panel fills the right half of a container as wide
+   as the window (up to 1800 px), so at the rail's shared position – 30 px from the
+   edge, 28 px wide – its hit areas lie on the panel. Here the rail moves into the
+   margin, exactly as on Produkty, Kukurydza and Próchnica+. */
+@media (min-width:900px){.c5-dots{right:10px;}}
+
 /* --- Placeholder zdjęcia (spec §0) ----------------------------------------
    Do czasu wygenerowania fotografii (Nano Banana Pro, Mateusz) każde zdjęcie
    stoi jako pole `--w-gray-200` z etykietą w lewym dolnym rogu; nazwa pliku
@@ -249,42 +256,46 @@ html.cx-js .c5-params__row{flex:1 1 auto;align-content:center;}
   .c5-cmp2{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;}
 }
 
-/* ===== 50 · Czym jest – scena sterowana przewijaniem (spec §9, §21.3) =====
-   Port ECO §6/§13.5. Nagłówek sekcji (kicker, H2, pełny lead) jest zwykłym
-   wyśrodkowanym blokiem NAD torem – nie wchodzi do sceny. Dalej dwa układy
-   z jednego DOM-u:
-   · domyślny (mobile / reduced motion / bez JS) – jedna kolumna, wszystko
-     widoczne: tło punktu, a potem para „opis + ilustracja”;
-   · scena (≥900 px, no-preference, .cx-js) – sticky na 100svh: jeden opis
-     naraz, wyśrodkowany w pionie nad paskiem progresu, a po prawej panel tła
-     z boksem ilustracji o stałym rozmiarze.
-   Kolejność DOM = kolejność statyczna; siatka sceny tylko przestawia elementy. */
-/* Outside the scene the track is not a box at all: the stage flows straight
-   in the section, so nothing reserves scene height in the static layout. */
-/* page-specific: overrides CE-12 – outside the scene the track is not a box at all. */
-.c5-facts-track{display:contents;height:auto;}
-/* Section head: a normal centred block, styled by the shared `.c5-kicker` /
-   `.c5-h2` / `.c5-lead` rules - it only needs the gap down to the scene. */
-/* page-specific: overrides CE-12 – the head stands above the track (spacing only). */
-.c5-facts-head{margin-bottom:clamp(2rem,4vw,3rem);}
+/* ===== 50 · Czym jest – scena sterowana przewijaniem (spec §9, §21.3, §22) =====
+   Since 19.09.2026 the scene stands on the „Frame 206” layout of the CE index
+   (`ce/CE-12-scena-faktow-proba.css/.js`), variant `bez-naglowka`: the head of the
+   section (kicker, H2, the full lead) stays an ordinary centred block ABOVE the
+   track, and in the scene the fact stands at the BOTTOM edge of the left column
+   carrying a progress line and a counter „0N/05” of its own.
+   ⚠️ The root of the block is `#czym-jest-scena` (a container INSIDE the section),
+   because the section `#czym-jest` also holds the CE-23 cross-sell band – see
+   spec §22.2. The whole machinery of the scene lives in the trial sheet; what
+   stays here is only what depends on the CONTENT of this page: the colour of the
+   placeholder label, the order of the static layout, the lightening of the SVG
+   fills and the scale of the description on a low window. The height of the
+   illustration box is retuned with a variable, never with a copy of a rule. */
 
-.c5-facts-panel__ph{display:block;width:100%;aspect-ratio:4/5;max-height:min(62vh,520px);background:var(--w-gray-700);}
-.c5-facts-panel__ph::after{color:rgb(255 255 255 / .6);}
+/* page-specific: CE-12 knob (spec §22.4). Fact 2 carries a 150 px ring with a
+   two-line caption AND a two-item list, and the Frame 206 layout narrows the
+   illustration box from ~460 px to ~374 px at 1440, 333 px at 1280. Measured in
+   Chrome on a grid of 19 window sizes: with the sheet's default the content of
+   fact 2 spills out of the box on every window shorter than ~820 px (29 px at
+   1280x720, 4 px at 1366x768). Hence the floor of 560 px – the height fact 2
+   needs. `68svh` and the 760 px ceiling are the values of the shared sheet and
+   of Próchnica+, so from ~824 px of window height up nothing changes; `min(…,86svh)`
+   keeps the floor from pushing the box out of the photo panel in a short window
+   (the panel is the window less 2 x 20 px). */
+#czym-jest-scena{--c5-fx-viz-h:clamp(min(560px,86svh),68svh,760px);}
 
-/* Warstwy tła siedzą w DOM-ie razem (w panelu), więc w biegu przeplata je
-   `order`: tło punktu, jego opis, jego ilustracja. W scenie wszystkie te
-   elementy mają jawne miejsce w siatce, więc `order` steruje tam już tylko
-   kolejnością malowania (panel zostaje pod spodem). */
-.c5-facts-panel__ph[data-fact-bg="1"]{order:1;} .c5-fact[data-fact="1"]{order:2;} .c5-viz[data-fact-viz="1"]{order:3;}
-.c5-facts-panel__ph[data-fact-bg="2"]{order:4;} .c5-fact[data-fact="2"]{order:5;} .c5-viz[data-fact-viz="2"]{order:6;}
-.c5-facts-panel__ph[data-fact-bg="3"]{order:7;} .c5-fact[data-fact="3"]{order:8;} .c5-viz[data-fact-viz="3"]{order:9;}
-.c5-facts-panel__ph[data-fact-bg="4"]{order:10;} .c5-fact[data-fact="4"]{order:11;} .c5-viz[data-fact-viz="4"]{order:12;}
-.c5-facts-panel__ph[data-fact-bg="5"]{order:13;} .c5-fact[data-fact="5"]{order:14;} .c5-viz[data-fact-viz="5"]{order:15;}
+/* placeholder geometry comes from the shared sheet – only the label colour is ours */
+.c5-fx__ph{background:var(--w-gray-700);}
+.c5-fx__ph::after{color:rgb(255 255 255 / .6);}
 
-.c5-facts-progress__mark:nth-child(2){left:20%;}
-.c5-facts-progress__mark:nth-child(3){left:40%;}
-.c5-facts-progress__mark:nth-child(4){left:60%;}
-.c5-facts-progress__mark:nth-child(5){left:80%;}
+/* The background layers sit together in the DOM (inside the panel), so in the
+   static flow `order` interleaves them: the background of a point, its
+   description, its illustration. In the scene all of them are positioned
+   absolutely, so there `order` only rules the paint order (the panel stays
+   underneath). */
+.c5-fx__ph[data-fx-bg="1"]{order:1;} .c5-fx__fact[data-fx-fact="1"]{order:2;} .c5-viz[data-fx-viz="1"]{order:3;}
+.c5-fx__ph[data-fx-bg="2"]{order:4;} .c5-fx__fact[data-fx-fact="2"]{order:5;} .c5-viz[data-fx-viz="2"]{order:6;}
+.c5-fx__ph[data-fx-bg="3"]{order:7;} .c5-fx__fact[data-fx-fact="3"]{order:8;} .c5-viz[data-fx-viz="3"]{order:9;}
+.c5-fx__ph[data-fx-bg="4"]{order:10;} .c5-fx__fact[data-fx-fact="4"]{order:11;} .c5-viz[data-fx-viz="4"]{order:12;}
+.c5-fx__ph[data-fx-bg="5"]{order:13;} .c5-fx__fact[data-fx-fact="5"]{order:14;} .c5-viz[data-fx-viz="5"]{order:15;}
 
 /* Ilustracje przyszły z jasnej sekcji bazy, więc ich neutralne wypełnienia są
    zapisane tokenem `--w-gray-200`; na ciemnym boksie czytałyby się prawie jak
@@ -292,40 +303,15 @@ html.cx-js .c5-params__row{flex:1 1 auto;align-content:center;}
 .c5-viz svg [fill="var(--w-gray-200)"]{fill:rgb(255 255 255 / .3);}
 .c5-viz svg [stroke="var(--w-gray-200)"]{stroke:rgb(255 255 255 / .25);}
 
-/* Układ statyczny na szerokim ekranie (reduced motion albo brak JS): pola
-   tła nie mogą rozlewać się na całą szerokość kolumny. */
-@media (min-width:900px){
-  .c5-facts-panel__ph{max-width:480px;max-height:min(46vh,420px);}
-}
-
-/* --- Scena: sticky 100svh w wysokim torze (JS ustawia wysokość toru) -------- */
-@media (min-width:900px) and (prefers-reduced-motion: no-preference){
-  /* the scroll track is a real box only in the scene - JS sets its height.
-     The section keeps its own padding now: the head above the track is a
-     normal block and needs the usual room over it. */
-  .cx-js .c5-facts-track{display:block;}
-  .cx-js .c5-facts-panel__ph{position:absolute;inset:0;height:100%;max-width:none;max-height:none;aspect-ratio:auto;
-    opacity:0;transition:opacity .45s var(--w-ease);will-change:opacity;}
-  .cx-js .c5-facts-panel__ph[data-on="true"]{opacity:1;}
-  /* wash pod boksem ilustracji – biały tekst na .78 czerni nie może walczyć
-     z jaśniejszymi partiami zdjęcia */
-  .cx-js .c5-facts-panel::after{content:"";position:absolute;inset:0;
-    background:rgb(0 0 0 / var(--facts-wash,.25));transition:background .45s var(--w-ease);}
-  /* Opis jest wyśrodkowany w pionie, ale nie w całej scenie: rezerwa na pasek
-     progresu i prześwit doka siedzi jako `padding-bottom`, więc tekst środkuje
-     się w polu NAD paskiem i nigdy na niego nie wchodzi. */
-  /* page-specific: overrides CE-12 – the description is centred, not bottom-aligned. */
-  .cx-js .c5-facts-flow > .c5-fact{grid-row:1;grid-column:1;align-self:center;max-width:none;padding-bottom:calc(var(--c5-facts-prog) + var(--c5-facts-dock));opacity:0;transform:translateY(12px);transition:opacity .18s var(--w-ease),transform .18s var(--w-ease);}
-}
-/* Niskie okna (np. 1280×720): opis dostaje ciaśniejszą skalę, żeby najdłuższy
-   punkt nadal mieścił się nad paskiem progresu. */
+/* Low windows (e.g. 1280x720): the description takes a tighter scale, so that the
+   longest point still fits above the clearance of the advisor dock. */
 @media (min-width:900px) and (prefers-reduced-motion: no-preference) and (max-height:780px){
-  .cx-js .c5-facts-flow > .c5-fact .c5-fact__body{font-size:0.875rem;}
+  .cx-js .c5-fx__body{font-size:0.875rem;}
 }
 
 /* pas „Ta sama organika…” domyka rozdział – odstęp od dołu niesie już padding
    sekcji, więc pas potrzebuje tylko marginesu górnego */
-.c5-facts-sec .c5-mt-cross{margin-top:clamp(3rem,6vw,5rem);}
+#czym-jest .c5-mt-cross{margin-top:clamp(3rem,6vw,5rem);}
 
 /* ===== 55 · Dowód – liczby, karty-zajawki i lightbox (spec §10, §21.5) =====
    Dwa stany tej samej treści: bez JS lightbox renderuje się jako zwykły blok
@@ -734,8 +720,11 @@ html:not(.cx-js) .c5-tco__h{cursor:default;}
    przy przewijaniu od wąskiego kadru (.5) do pełnej szerokości (1); po lewej
    nagłówek, po prawej akapity i dwa przyciski. Bez ruchu (mobile / reduced /
    bez JS): kadr statyczny nad treścią, 16:10, bez skalowania. -------------- */
-/* page-specific: overrides CE-16 – air above the band (the previous section ends flush). */
-.c5-pro{position:relative;background:var(--w-gray-600);color:var(--w-text-inverse);overflow:hidden;margin-top:clamp(3rem,6vw,5rem);}
+/* page-specific: CE-16 – air above the band (the previous section ends flush).
+   `position/background/color/overflow` stay in ce/CE-16-pas-pro.css 18; the shared
+   sheet deliberately leaves `margin-top` to the page, because on CARBOMAT ECO and
+   CARBOMAT HUMIC the band sits inside a section and here it is one of its own. */
+.c5-pro{margin-top:clamp(3rem,6vw,5rem);}
 /* narożniki 30 px – jedyny wyjątek od ostrych narożników V5, na wyraźne
    życzenie Mateusza */
 .c5-pro__media{position:relative;width:100%;aspect-ratio:16/10;border-radius:30px;overflow:hidden;}

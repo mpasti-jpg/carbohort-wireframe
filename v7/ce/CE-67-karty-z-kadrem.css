@@ -134,7 +134,16 @@
     gap:clamp(2rem,2.8vw,3rem);}
   /* NO `align-items`: the side column has to stretch over the whole row, because
      that stretch is the room the pinned frame travels along */
-  .c5-kk__h3{margin-top:clamp(4rem,9vw,8.75rem);}
+  /* A tall window (Mateusz, 19.09 evening): when the left column is shorter than
+     the pinned frame, the whole block is on screen at once and the row is as
+     high as the frame – the h3 with its cards then stands on the bottom line of
+     the frame (20 px above the window edge) instead of leaving the slack under
+     the cards. The minimum distance head -> h3 moves onto the head and
+     `margin-top:auto` on the h3 takes whatever the row has left; in a lower
+     window the column is the taller one, there is no slack and nothing moves. */
+  .c5-kk__main{display:flex;flex-direction:column;}
+  .c5-kk__head{margin-bottom:clamp(4rem,9vw,8.75rem);}
+  .c5-kk__h3{margin-top:auto;}
   .c5-kk__grid{margin-top:clamp(1.5rem,2.8vw,2.5rem);}
   /* the frame: pinned 20 px under the top edge of the window, 20 px of window
      left under it and 20 px of the container padding taken on the right.

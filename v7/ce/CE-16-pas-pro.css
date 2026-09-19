@@ -1,5 +1,5 @@
 /* ===== CE-16 · Pas PRO (rejestr: ce-rejestr.js) =====
-   Dark strip for the professional audience: a media frame scaling from .72 to 1
+   Dark strip for the professional audience: a media frame scaling from .5 to 1
    while it scrolls, heading on the left, paragraph and two buttons on the right.
    Merged from carbomat.css „Pas PRO"; carbomat-mata.css, carbohumic.css,
    carbomat-humic.css and produkty.css carry the same rules.
@@ -12,7 +12,7 @@
 
 /* --- Pas PRO (spec §8, wzór sensiq.co) -------------------------------------
    Szare tło, zdjęcie absolutne skalowane przy przewijaniu od wąskiego kadru
-   (.72) do pełnej szerokości (1); po lewej nagłówek, po prawej akapit i dwa
+   (.5) do pełnej szerokości (1); po lewej nagłówek, po prawej akapit i dwa
    przyciski. Bez ruchu (mobile / reduced / bez JS): zdjęcie statyczne nad
    treścią, 16:10, bez skalowania. */
 .c5-pro{position:relative;background:var(--w-gray-600);color:var(--w-text-inverse);overflow:hidden;}
@@ -51,6 +51,12 @@
   /* bez gradientów – jednolity, delikatny scrim (§13.8). .25 zamiast .15:
      jasny big bag stoi dokładnie pod pierwszymi wierszami akapitu po prawej. */
   .cx-js .c5-pro__media::after{content:"";position:absolute;inset:0;background:rgb(0 0 0 / .25);}
+  /* Variant „pozny-wzrost”: ce/CE-16-pas-pro-proba.js sets --pro-o (0 -> 1) together
+     with the growth, so the scrim is absent while the frame holds its start width.
+     Without the variable – the shared module, no JS, the module not run yet – the
+     fallback 1 keeps the constant .25 scrim above, i.e. the base mechanics unchanged.
+     Moved here from produkty.css on 19.09.2026 so no page repeats it. */
+  .cx-js .c5-pro__media::after{opacity:var(--pro-o,1);}
 }
 
 /* `.c5-pro`, `.c5-pro__media` i `.c5-pro__side p` zostają w <strona>.css –

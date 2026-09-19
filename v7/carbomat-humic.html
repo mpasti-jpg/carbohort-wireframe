@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="ce/CE-08-hero.css">
   <link rel="stylesheet" href="ce/CE-09-marquee.css">
   <link rel="stylesheet" href="ce/CE-10-parametry.css">
-  <link rel="stylesheet" href="ce/CE-12-scena-faktow.css">
+  <link rel="stylesheet" href="ce/CE-12-scena-faktow-proba.css">
   <link rel="stylesheet" href="ce/CE-16-pas-pro.css">
   <link rel="stylesheet" href="ce/CE-17-faq.css">
   <link rel="stylesheet" href="ce/CE-18-cta.css">
@@ -552,43 +552,56 @@
        The heading and the photo panel stand still through the whole section,
        and eight descriptions swap one at a time at the bottom edge of the left
        column. Steps 2-6 are the five functions of one product: they share one
-       photo (data-fact-bg="2-6"), but each of them has its own illustration
+       photo (data-fx-bg="2-6"), but each of them has its own illustration
        box (spec 16.4).
        DOM order = static layout (mobile / reduced motion / no JS): photo,
        step(s), illustration box; `order` in the CSS interleaves the photo
        layers, which sit together inside the panel. Copy 1:1 with the version
        before the rebuild (an accordion of four topics), the five functions
-       split into five steps; step 7 reworded on Mateusz's instruction (16.3). -->
-  <section class="c5-sec c5-facts-sec" id="czym-jest" data-chapter="czym-jest" data-facts data-ce="CE-12" data-ce-wariant="osiem-krokow">
-    <div class="c5-facts-track" data-facts-track>
-      <div class="c5-facts-stage c5-wrap">
+       split into five steps; step 7 reworded on Mateusz's instruction (16.3).
 
-        <div class="c5-facts-head">
+       19.09.2026 – the scene moved to the CE-12 layout of Figma Frame 206
+       (ce/CE-12-scena-faktow-proba.css/.js), variant `z-naglowkiem`: the photo
+       panel fills the right half of a container as wide as the window (up to
+       1800 px), the illustration box floats in its middle on a blurred wash, and
+       the current step stands at the bottom of the left column – title, a 1 px
+       line filled by the progress of that step, description and the NN/08
+       counter. The single header block stays in the scene (the page has no lead,
+       so nothing has to leave it); the module never hides a lone header block.
+       The global progress bar with seven marks is gone – every step carries its
+       own line and counter instead. -->
+  <section class="c5-sec c5-fx" id="czym-jest" data-chapter="czym-jest" data-fx data-ce="CE-12" data-ce-wariant="z-naglowkiem">
+    <div class="c5-fx__track" data-fx-track>
+      <div class="c5-fx__stage">
+
+        <div class="c5-fx__head" data-fx-head="z-naglowkiem">
           <span class="c5-kicker">Czym jest</span>
           <h2 class="c5-h2">Przetworzony lignit do formy węgla aktywowanego.</h2>
         </div>
 
-        <div class="c5-facts-flow">
+        <div class="c5-fx__flow">
 
           <!-- Cztery kadry na scenę: jeden do kroku 1, jeden wspólny dla kroku
                2-6 (pięć funkcji), jeden do kroku 7 i jeden do kroku 8. Zdjęć
                HUMIC jeszcze nie ma - placeholdery, prompty w spec §11. -->
-          <div class="c5-facts-panel" aria-hidden="true">
-            <div class="c5-facts-panel__ph c5-ph c5-ph--dark" data-fact-bg="1" data-on="true"><span class="c5-ph__label">foto 4:5 · czym jest 01</span></div>
-            <div class="c5-facts-panel__ph c5-ph c5-ph--dark" data-fact-bg="2-6"><span class="c5-ph__label">foto 4:5 · czym jest 02</span></div>
-            <div class="c5-facts-panel__ph c5-ph c5-ph--dark" data-fact-bg="7"><span class="c5-ph__label">foto 4:5 · czym jest 03</span></div>
-            <div class="c5-facts-panel__ph c5-ph c5-ph--dark" data-fact-bg="8"><span class="c5-ph__label">foto 4:5 · czym jest 04</span></div>
+          <div class="c5-fx__panel" aria-hidden="true">
+            <div class="c5-fx__ph c5-ph c5-ph--dark" data-fx-bg="1" data-on="true"><span class="c5-ph__label">foto 4:5 · czym jest 01</span></div>
+            <div class="c5-fx__ph c5-ph c5-ph--dark" data-fx-bg="2-6"><span class="c5-ph__label">foto 4:5 · czym jest 02</span></div>
+            <div class="c5-fx__ph c5-ph c5-ph--dark" data-fx-bg="7"><span class="c5-ph__label">foto 4:5 · czym jest 03</span></div>
+            <div class="c5-fx__ph c5-ph c5-ph--dark" data-fx-bg="8"><span class="c5-ph__label">foto 4:5 · czym jest 04</span></div>
           </div>
 
-          <div class="c5-fact is-on" data-fact="1">
-            <h3 class="c5-fact__title">Pochodzenie produktu</h3>
-            <div class="c5-fact__body">
+          <div class="c5-fx__fact" data-fx-fact="1">
+            <h3 class="c5-fx__title">Pochodzenie produktu</h3>
+            <div class="c5-fx__line" aria-hidden="true"><span class="c5-fx__fill"></span></div>
+            <div class="c5-fx__body">
               <!-- literówka w źródle: „CAR HUMIC" → CARBOMAT HUMIC -->
               <p>CARBOMAT HUMIC powstaje z naturalnego lignitu, jednak w przeciwieństwie do surowego węgla brunatnego jest produktem poddanym zaawansowanemu procesowi ekstrakcji i aktywacji substancji humusowych. Dzięki temu najcenniejsze składniki odpowiedzialne za poprawę jakości gleby oraz rozwój roślin są znacznie łatwiej dostępne i szybciej zaczynają działać. Efektem jest produkt, który nie tylko wspiera rośliny od pierwszych etapów wzrostu, ale również stopniowo poprawia strukturę, żyzność i aktywność biologiczną gleby. To połączenie szybkiego działania z długofalowym wpływem na kondycję gleby.</p>
             </div>
+            <span class="c5-fx__count" aria-hidden="true">01/08</span>
           </div>
 
-          <figure class="c5-viz" data-fact-viz="1" data-on="true">
+          <figure class="c5-viz" data-fx-viz="1" data-on="true">
             <span class="c5-viz__tag">01 · Pochodzenie</span>
             <div class="c5-viz__body">
               <svg viewBox="0 0 420 210" role="img" aria-label="Droga surowca: naturalny lignit przechodzi ekstrakcję i aktywację substancji humusowych, dzięki czemu stają się one łatwo dostępne dla roślin">
@@ -611,14 +624,16 @@
             <figcaption class="c5-src c5-src--ondark">Ten sam rodzaj surowca co w CARBOMAT ECO – lignit – ale po ekstrakcji i aktywacji substancji humusowych, stąd szybsze działanie.</figcaption>
           </figure>
 
-          <div class="c5-fact" data-fact="2">
-            <h3 class="c5-fact__title">Kondycjoner gleby</h3>
-            <div class="c5-fact__body">
+          <div class="c5-fx__fact" data-fx-fact="2">
+            <h3 class="c5-fx__title">Kondycjoner gleby</h3>
+            <div class="c5-fx__line" aria-hidden="true"><span class="c5-fx__fill"></span></div>
+            <div class="c5-fx__body">
               <p>CARBOMAT HUMIC wspiera tworzenie stabilnej, gruzełkowatej struktury gleby oraz procesy odpowiedzialne za odbudowę próchnicy. Poprawia napowietrzenie, ułatwia rozwój korzeni i zwiększa żyzność stanowiska. Regularne stosowanie pozwala stopniowo odbudowywać potencjał gleby, dlatego korzyści są widoczne nie tylko w bieżącym sezonie, ale również w kolejnych latach.</p>
             </div>
+            <span class="c5-fx__count" aria-hidden="true">02/08</span>
           </div>
 
-          <figure class="c5-viz" data-fact-viz="2">
+          <figure class="c5-viz" data-fx-viz="2">
             <span class="c5-viz__tag">02 · Kondycjoner gleby</span>
             <div class="c5-viz__body">
               <svg viewBox="0 0 420 250" role="img" aria-label="Zbita gleba przechodzi w stabilną strukturę gruzełkową z prześwitami, w której swobodnie rozwijają się korzenie">
@@ -650,14 +665,16 @@
             <figcaption class="c5-src c5-src--ondark">Stabilna, gruzełkowata struktura gleby: napowietrzenie, rozwój korzeni, odbudowa próchnicy.</figcaption>
           </figure>
 
-          <div class="c5-fact" data-fact="3">
-            <h3 class="c5-fact__title">Stabilizacja pH gleby</h3>
-            <div class="c5-fact__body">
+          <div class="c5-fx__fact" data-fx-fact="3">
+            <h3 class="c5-fx__title">Stabilizacja pH gleby</h3>
+            <div class="c5-fx__line" aria-hidden="true"><span class="c5-fx__fill"></span></div>
+            <div class="c5-fx__body">
               <p>Naturalnie wysokie pH produktu wspomaga ograniczanie zakwaszenia gleby oraz zwiększa jej zdolności buforowe. W efekcie poprawiają się warunki do pobierania składników pokarmowych, a gleba dłużej utrzymuje optymalny odczyn. To szczególnie istotne na stanowiskach o niskim pH.</p>
             </div>
+            <span class="c5-fx__count" aria-hidden="true">03/08</span>
           </div>
 
-          <figure class="c5-viz" data-fact-viz="3">
+          <figure class="c5-viz" data-fx-viz="3">
             <span class="c5-viz__tag">03 · Stabilizacja pH</span>
             <div class="c5-viz__body">
               <div class="wf-stack wf-stack--2">
@@ -685,18 +702,20 @@
             <figcaption class="c5-src c5-src--ondark">Wysokie pH produktu ogranicza zakwaszenie i zwiększa zdolności buforowe gleby.</figcaption>
           </figure>
 
-          <div class="c5-fact" data-fact="4">
-            <h3 class="c5-fact__title">Źródło łatwo dostępnego potasu</h3>
-            <div class="c5-fact__body">
+          <div class="c5-fx__fact" data-fx-fact="4">
+            <h3 class="c5-fx__title">Źródło łatwo dostępnego potasu</h3>
+            <div class="c5-fx__line" aria-hidden="true"><span class="c5-fx__fill"></span></div>
+            <div class="c5-fx__body">
               <!-- ⚠️ KOLIZJA CLAIMU: dokument (l. 351) mówi „co umożliwia całkowite wyeliminowanie
                    nawozów potasowych ze stosowanej agrotechniki". Publikujemy brzmienie samego Darka
                    z 21.07 (AC #30867): „Pozwala zasadniczo zredukować stosowane nawożenie potasowe."
                    – obietnica do obrony zamiast obietnicy nie do obrony. Do domknięcia z Darkiem. -->
               <p>Zawiera około 6% K₂O (tj. około 60 kg w tonie), dostarczając roślinom łatwo przyswajalny potas już od początku wegetacji. Pozwala zasadniczo zredukować stosowane nawożenie potasowe.</p>
             </div>
+            <span class="c5-fx__count" aria-hidden="true">04/08</span>
           </div>
 
-          <figure class="c5-viz" data-fact-viz="4">
+          <figure class="c5-viz" data-fx-viz="4">
             <span class="c5-viz__tag">04 · Potas</span>
             <div class="c5-viz__body">
               <div class="wf-stack wf-stack--2">
@@ -711,14 +730,16 @@
             <figcaption class="c5-src c5-src--ondark">Zawartość potasu wg materiału producenta (ok. 6% K₂O, ok. 60 kg/t).</figcaption>
           </figure>
 
-          <div class="c5-fact" data-fact="5">
-            <h3 class="c5-fact__title">Biostymulator i nawóz</h3>
-            <div class="c5-fact__body">
+          <div class="c5-fx__fact" data-fx-fact="5">
+            <h3 class="c5-fx__title">Biostymulator i nawóz</h3>
+            <div class="c5-fx__line" aria-hidden="true"><span class="c5-fx__fill"></span></div>
+            <div class="c5-fx__body">
               <p>Bogactwo kwasów humusowych oraz aktywowanego węgla organicznego pobudza rozwój mikroorganizmów glebowych, wspiera wzrost korzeni i poprawia wykorzystanie składników pokarmowych. Dzięki temu rośliny lepiej radzą sobie z suszą, okresowym zalaniem czy innymi czynnikami stresowymi.</p>
             </div>
+            <span class="c5-fx__count" aria-hidden="true">05/08</span>
           </div>
 
-          <figure class="c5-viz" data-fact-viz="5">
+          <figure class="c5-viz" data-fx-viz="5">
             <span class="c5-viz__tag">05 · Biostymulator i nawóz</span>
             <div class="c5-viz__body">
               <svg viewBox="0 0 420 250" role="img" aria-label="Roślina rozwija głębszy system korzeniowy w otoczeniu mikroorganizmów glebowych, dzięki czemu lepiej znosi suszę, zalanie i stres">
@@ -754,14 +775,16 @@
             <figcaption class="c5-src c5-src--ondark">Pobudza mikroorganizmy glebowe, wspiera wzrost korzeni i odporność na suszę czy zalanie.</figcaption>
           </figure>
 
-          <div class="c5-fact" data-fact="6">
-            <h3 class="c5-fact__title">Zwiększa retencję wody i składników odżywczych</h3>
-            <div class="c5-fact__body">
+          <div class="c5-fx__fact" data-fx-fact="6">
+            <h3 class="c5-fx__title">Zwiększa retencję wody i składników odżywczych</h3>
+            <div class="c5-fx__line" aria-hidden="true"><span class="c5-fx__fill"></span></div>
+            <div class="c5-fx__body">
               <p>Aktywowany węgiel organiczny poprawia zdolność gleby do magazynowania wody oraz zatrzymywania składników pokarmowych w strefie korzeniowej. Dzięki temu są one dłużej dostępne dla roślin, co przekłada się na lepsze wykorzystanie nawożenia i większą odporność upraw na okresowe niedobory wody. Dodatek węgla aktywowanego do gleby to także skuteczniejsza sekwestracja dwutlenku węgla.</p>
             </div>
+            <span class="c5-fx__count" aria-hidden="true">06/08</span>
           </div>
 
-          <figure class="c5-viz" data-fact-viz="6">
+          <figure class="c5-viz" data-fx-viz="6">
             <span class="c5-viz__tag">06 · Retencja</span>
             <div class="c5-viz__body">
               <svg viewBox="0 0 420 250" role="img" aria-label="Przekrój gruzełka: w porach zatrzymane są woda oraz składniki pokarmowe – potas i azot amonowy – a węgiel trafiający do gleby wiąże dwutlenek węgla">
@@ -790,9 +813,10 @@
             <figcaption class="c5-src c5-src--ondark">Magazynuje wodę i składniki w strefie korzeniowej; węgiel w glebie to także sekwestracja CO₂.</figcaption>
           </figure>
 
-          <div class="c5-fact" data-fact="7">
-            <h3 class="c5-fact__title">Bogaty kompleks związków organicznych</h3>
-            <div class="c5-fact__body">
+          <div class="c5-fx__fact" data-fx-fact="7">
+            <h3 class="c5-fx__title">Bogaty kompleks związków organicznych</h3>
+            <div class="c5-fx__line" aria-hidden="true"><span class="c5-fx__fill"></span></div>
+            <div class="c5-fx__body">
               <!-- reworded and shortened on Mateusz's instruction 14.09 (spec 16.3): the same facts, no new ones -->
               <p>CARBOMAT HUMIC to wieloskładnikowy kompleks materii organicznej z biomasy roślinnej sprzed milionów lat. Oprócz substancji humusowych dostarcza glebie stabilny węgiel organiczny, naturalne minerały i związki bioaktywne, które odbudowują jej potencjał biologiczny i fizyczny. Zawiera:</p>
               <ul>
@@ -802,9 +826,10 @@
                 <li>kilkadziesiąt naturalnych chelatów mineralnych z makro-, mikroelementami i pierwiastkami śladowymi.</li>
               </ul>
             </div>
+            <span class="c5-fx__count" aria-hidden="true">07/08</span>
           </div>
 
-          <figure class="c5-viz" data-fact-viz="7">
+          <figure class="c5-viz" data-fx-viz="7">
             <span class="c5-viz__tag">07 · Kompleks organiczny</span>
             <div class="c5-viz__body">
               <div class="c5-barchart" role="img" aria-label="Skład CARBOMAT HUMIC w suchej masie wg aktualnej analizy: materia organiczna około 50 procent, ekstrakt humusowy około 48 procent, kwasy huminowe około 45 procent, węgiel organiczny około 28 procent, kwasy fulwowe około 2,5 procent">
@@ -818,9 +843,10 @@
             <figcaption class="c5-src c5-src--ondark">Wartości w suchej masie – aktualna analiza laboratoryjna (06.2026).</figcaption>
           </figure>
 
-          <div class="c5-fact" data-fact="8">
-            <h3 class="c5-fact__title">Czysty i bezpieczny dla gleby</h3>
-            <div class="c5-fact__body">
+          <div class="c5-fx__fact" data-fx-fact="8">
+            <h3 class="c5-fx__title">Czysty i bezpieczny dla gleby</h3>
+            <div class="c5-fx__line" aria-hidden="true"><span class="c5-fx__fill"></span></div>
+            <div class="c5-fx__body">
               <p>CARBOMAT HUMIC powstaje z naturalnej materii organicznej, poddawanej rygorystycznej kontroli jakości. Produkt charakteryzuje się wysoką czystością mikrobiologiczną oraz bardzo niską zawartością niepożądanych pierwiastków, dzięki czemu może być bezpiecznie stosowany w gospodarstwach dbających o długoterminową żyzność gleby.</p>
               <ul>
                 <li>Brak wykrytych patogenów Salmonella spp. – nie wykryto obecności bakterii Salmonella w badanej próbce.</li>
@@ -828,9 +854,10 @@
                 <li>Niska zawartość metali ciężkich – pełne wyniki w tabeli czystości.</li>
               </ul>
             </div>
+            <span class="c5-fx__count" aria-hidden="true">08/08</span>
           </div>
 
-          <figure class="c5-viz" data-fact-viz="8">
+          <figure class="c5-viz" data-fx-viz="8">
             <span class="c5-viz__tag">08 · Czystość</span>
             <div class="c5-viz__body">
               <div class="cw-scrollx" tabindex="0">
@@ -852,22 +879,6 @@
             <figcaption class="c5-src c5-src--ondark">Aktualna analiza laboratoryjna (06.2026), wartości na próbce produktu.</figcaption>
           </figure>
 
-        </div>
-
-        <!-- Pasek progresu zamiast dividerów: wypełnienie = postęp globalny,
-             siedem znaczników dzieli tor na osiem odcinków. Widoczny tylko
-             w scenie sterowanej przewijaniem. -->
-        <div class="c5-facts-prog" data-facts-prog>
-          <div class="c5-facts-progress" role="progressbar" aria-valuemin="0" aria-valuemax="8" aria-valuenow="1" aria-label="Postęp – punkt z ośmiu">
-            <span class="c5-facts-progress__fill"></span>
-            <span class="c5-facts-progress__mark"></span>
-            <span class="c5-facts-progress__mark"></span>
-            <span class="c5-facts-progress__mark"></span>
-            <span class="c5-facts-progress__mark"></span>
-            <span class="c5-facts-progress__mark"></span>
-            <span class="c5-facts-progress__mark"></span>
-            <span class="c5-facts-progress__mark"></span>
-          </div>
         </div>
 
       </div>
@@ -933,8 +944,13 @@
     <!-- ===== Pas PRO: kanał sprzedażowy profesjonalny (zgoda Darka, l. 376) =====
          Układ wg sensiq.co: szare tło, media skalowane przy przewijaniu od
          połowy do pełnej szerokości, nagłówek po lewej, akapit i dwa przyciski
-         po prawej. Zdjęcia jeszcze nie ma – placeholder (prompt w spec §11). -->
-    <div class="c5-pro" id="kanal-sprzedazy" data-pro data-ce="CE-16">
+         po prawej. Zdjęcia jeszcze nie ma – placeholder (prompt w spec §11).
+         19.09.2026 – variant `pozny-wzrost` (ce/CE-16-pas-pro-proba.js): the crop
+         stands still at half width until the top edge of the band passes 35 % of the
+         window and only then grows to full size, and the overlay fades in with it
+         (--pro-o), so the photo is not dimmed while it stands. Same markup as the
+         base variant; the opacity rule lives in ce/CE-16-pas-pro.css. -->
+    <div class="c5-pro" id="kanal-sprzedazy" data-pro data-ce="CE-16" data-ce-wariant="pozny-wzrost">
       <div class="c5-pro__media" data-pro-media aria-hidden="true">
         <div class="c5-pro__ph c5-ph"><span class="c5-ph__label">foto 3:2 · uprawy polowe · big bag</span></div>
       </div>
@@ -1110,8 +1126,8 @@
 <script src="ce/00-base.js"></script>
 <script src="ce/CE-07-nawigacja-kropkowa.js"></script>
 <script src="ce/CE-10-parametry.js"></script>
-<script src="ce/CE-12-scena-faktow.js"></script>
-<script src="ce/CE-16-pas-pro.js"></script>
+<script src="ce/CE-12-scena-faktow-proba.js"></script>
+<script src="ce/CE-16-pas-pro-proba.js"></script>
 <script src="ce/CE-17-faq.js"></script>
 <script src="carbomat-humic.js"></script>
 <script src="ce-overlay.js"></script>

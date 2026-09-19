@@ -2,6 +2,14 @@
    Klocki wzorca i warstwa wspólna leżą w katalogu ce/ (ładowane wyżej).
    Tutaj zostają wyłącznie klocki unikalne tej podstrony i nadpisania
    treściowe klocków wspólnych. ===== */
+
+/* page-specific: CE-07 dot rail. Since 19.09.2026 the photo panel of the CE-12
+   scene runs to 20 px from the right edge of the window, so at its shared
+   position – 30 px from the edge and 28 px wide – the rail would lie on the
+   panel. Here it moves into the margin, exactly as on Produkty, Kukurydza and
+   Próchnica+. */
+@media (min-width:900px){.c5-dots{right:10px;}}
+
 /* page-specific: CE-08 – hero stage and packshot geometry of the two ECO
    packages; the pattern block only sets the frame.
    Panel: 30 px od góry, dołu i prawej krawędzi ekranu; §14.2 – bez zdjęcia
@@ -47,49 +55,65 @@
 }
 
 /* page-specific: CE-12 – five facts of ECO: photo crops, their place in the
-   reading order and the progress marks; all of it is page content.
-   Kadr per warstwa. W scenie panel jest wyższy niż szeroki, więc widać całą
-   wysokość zdjęcia, a przycina się poziom; w układzie statycznym odwrotnie –
-   stąd obie wartości dobrane pod temat kadru. */
-.c5-facts-panel__img[data-fact-bg="1"]{object-position:42% 46%;}  /* ściana pokładu po lewej */
-.c5-facts-panel__img[data-fact-bg="2"]{object-position:50% 52%;}  /* kopczyk z korzeniami */
-.c5-facts-panel__img[data-fact-bg="3"]{object-position:50% 54%;}  /* dwie kupki na deskach */
-.c5-facts-panel__img[data-fact-bg="4"]{object-position:55% 56%;}  /* miska i zlewka */
-.c5-facts-panel__img[data-fact-bg="5"]{object-position:50% 58%;}  /* makro z korzeniem */
+   reading order and the type scale of the scene; all of it depends on the
+   CONTENT of this page. The machinery lives in
+   ce/CE-12-scena-faktow-proba.css, which this page links since 19.09.2026
+   instead of the shared ce/CE-12-scena-faktow.css (spec §15).
+   Crop per layer: in the scene the panel is taller than it is wide, so the whole
+   height of the photo shows and the crop takes the width away; in the static
+   layout it is the other way round – hence both values are picked for the subject
+   of the frame. */
 
-/* Warstwy zdjęć siedzą w DOM-ie razem (w panelu), więc w biegu przeplata je
-   `order`: zdjęcie punktu, jego opis, jego ilustracja. W scenie wszystkie te
-   elementy mają jawne miejsce w siatce, więc `order` steruje tam już tylko
-   kolejnością malowania (panel zostaje pod spodem). */
-.c5-facts-panel__img[data-fact-bg="1"]{order:1;} .c5-fact[data-fact="1"]{order:2;} .c5-viz[data-fact-viz="1"]{order:3;}
-.c5-facts-panel__img[data-fact-bg="2"]{order:4;} .c5-fact[data-fact="2"]{order:5;} .c5-viz[data-fact-viz="2"]{order:6;}
-.c5-facts-panel__img[data-fact-bg="3"]{order:7;} .c5-fact[data-fact="3"]{order:8;} .c5-viz[data-fact-viz="3"]{order:9;}
-.c5-facts-panel__img[data-fact-bg="4"]{order:10;} .c5-fact[data-fact="4"]{order:11;} .c5-viz[data-fact-viz="4"]{order:12;}
-.c5-facts-panel__img[data-fact-bg="5"]{order:13;} .c5-fact[data-fact="5"]{order:14;} .c5-viz[data-fact-viz="5"]{order:15;}
+/* The knob of the block (CE-12 contract §2.5), one declaration on the root of the
+   section: the wash of the illustration box. Frame 206 dropped the darkening of
+   the photo panel, and the photos of steps 03 and 04 are the brightest ones of
+   this page (boards in daylight, a bowl and a beaker on a lab bench), so on the
+   .55 of the sheet the tag of the box measured 4.04 and 3.35 : 1 and the caption
+   of 04 measured 4.60 – below AA (independent QA, defect D-01). .78 is the value
+   .c5-viz carries everywhere outside the scene, so the box looks the same in both
+   layouts and keeps the blur of Frame 206. Measured in Chrome at 1440x900 and
+   1920x1080, in the middle of every step: the lowest number of the section is now
+   the tag of step 04, 5.22 / 5.17 median and 4.89 / 4.88 at the 5th percentile.
+   ONE value for the whole section on purpose – the box is not to change colour
+   from step to step. */
+#czym-jest{--c5-fx-viz-bg:rgb(20 20 20 / .78);}
 
-.c5-facts-progress__mark:nth-child(2){left:20%;}
-.c5-facts-progress__mark:nth-child(3){left:40%;}
-.c5-facts-progress__mark:nth-child(4){left:60%;}
-.c5-facts-progress__mark:nth-child(5){left:80%;}
+.c5-fx__img[data-fx-bg="1"]{object-position:42% 46%;}  /* ściana pokładu po lewej */
+.c5-fx__img[data-fx-bg="2"]{object-position:50% 52%;}  /* kopczyk z korzeniami */
+.c5-fx__img[data-fx-bg="3"]{object-position:50% 54%;}  /* dwie kupki na deskach */
+.c5-fx__img[data-fx-bg="4"]{object-position:55% 56%;}  /* miska i zlewka */
+.c5-fx__img[data-fx-bg="5"]{object-position:50% 58%;}  /* makro z korzeniem */
+
+/* The photo layers sit together in the DOM (inside the panel), so in the static
+   flow `order` interleaves them: the photo of a point, its description, its
+   illustration. In the scene all of them are positioned against the scene, so
+   `order` changes nothing there. */
+.c5-fx__panel > [data-fx-bg="1"]{order:1;} .c5-fx__fact[data-fx-fact="1"]{order:2;} .c5-viz[data-fx-viz="1"]{order:3;}
+.c5-fx__panel > [data-fx-bg="2"]{order:4;} .c5-fx__fact[data-fx-fact="2"]{order:5;} .c5-viz[data-fx-viz="2"]{order:6;}
+.c5-fx__panel > [data-fx-bg="3"]{order:7;} .c5-fx__fact[data-fx-fact="3"]{order:8;} .c5-viz[data-fx-viz="3"]{order:9;}
+.c5-fx__panel > [data-fx-bg="4"]{order:10;} .c5-fx__fact[data-fx-fact="4"]{order:11;} .c5-viz[data-fx-viz="4"]{order:12;}
+.c5-fx__panel > [data-fx-bg="5"]{order:13;} .c5-fx__fact[data-fx-fact="5"]{order:14;} .c5-viz[data-fx-viz="5"]{order:15;}
 
 /* --- Scena: sticky 100svh w wysokim torze (JS ustawia wysokość toru) -------- */
 @media (min-width:900px) and (prefers-reduced-motion: no-preference){
-  /* wash under the illustration box – white text on .78 black must not fight
-     the lighter patches of the photograph; the bright lab frame (04) needs
-     a touch more, the rest keeps .25 */
-  .cx-js .c5-facts-panel::after{content:"";position:absolute;inset:0;
-    background:rgb(0 0 0 / var(--facts-wash,.25));transition:background .45s var(--w-ease);}
-  .cx-js .c5-facts-panel:has(> [data-fact-bg="4"][data-on="true"]){--facts-wash:.35;}
-  .cx-js .c5-facts-head{grid-row:1;grid-column:1;align-self:start;z-index:2;background:var(--w-surface-page);padding-bottom:var(--w-space-4);}
   /* w scenie nagłówek jest odrobinę mniejszy – najdłuższy opis musi zmieścić się
      pod nim na ekranie 800 px bez wchodzenia w nagłówek */
-  .cx-js .c5-facts-head .c5-h2{font-size:clamp(1.5rem,2.6vw,2.125rem);}
+  .cx-js .c5-fx__head .c5-h2{font-size:clamp(1.5rem,2.6vw,2.125rem);}
 }
-/* Niskie okna (np. 1280×720): nagłówek i opis dostają ciaśniejszą skalę, żeby
-   najdłuższy punkt nadal mieścił się nad paskiem progresu. */
+/* Low windows (e.g. 1280x720): the heading and the description take a tighter
+   scale, so that the longest point still fits under the heading (the line and the
+   title are tightened by the sheet of the block itself). */
 @media (min-width:900px) and (prefers-reduced-motion: no-preference) and (max-height:780px){
-  .cx-js .c5-facts-head .c5-h2{font-size:clamp(1.375rem,2.2vw,1.75rem);}
-  .cx-js .c5-facts-flow > .c5-fact .c5-fact__body{font-size:0.875rem;}
+  .cx-js .c5-fx__head .c5-h2{font-size:clamp(1.375rem,2.2vw,1.75rem);}
+  .cx-js .c5-fx__fact .c5-fx__body{font-size:0.875rem;}
+}
+/* Narrow desktop (900-1279 px): the left column is at its narrowest there (about
+   411 px at 1024 px against 594 px at 1440 px) and the fact block stands above the
+   88 px reserved for the advisor dock, so the longest point (03, two paragraphs)
+   ran into the sticky heading. The step is the one Produkty uses; it comes after
+   the height threshold, because it is the tighter of the two. */
+@media (min-width:900px) and (max-width:1279px) and (prefers-reduced-motion: no-preference){
+  .cx-js .c5-fx__fact .c5-fx__body{font-size:0.8125rem;}
 }
 
 /* --- JAK STOSOWAĆ: dwie sceny produktowe sterowane przewijaniem ------------ */
@@ -154,14 +178,18 @@
   .cx-js .c5-season.is-in .c5-season__row:nth-child(3){transition-delay:.18s;}
 }
 
-/* page-specific: CE-16 – ECO keeps the grey ground, the 30 px corners and the
-   frame proportions of the strip.
-   --- Pas PRO (spec §8, wzór sensiq.co) -------------------------------------
-   Szare tło, zdjęcie absolutne skalowane przy przewijaniu od wąskiego kadru
-   (.72) do pełnej szerokości (1); po lewej nagłówek, po prawej akapit i dwa
-   przyciski. Bez ruchu (mobile / reduced / bez JS): zdjęcie statyczne nad
-   treścią, 16:10, bez skalowania. */
-.c5-pro{position:relative;background:var(--w-gray-600);color:var(--w-text-inverse);overflow:hidden;margin-top:clamp(3rem,6vw,5rem);}
+/* page-specific: CE-16 – ECO keeps the 30 px corners and the frame proportions
+   of the strip. The band itself (grey ground, inverse text, overflow) comes
+   from ce/CE-16-pas-pro.css since 18.09.2026 – what stays here is the margin,
+   because on this page the band sits INSIDE the „Sezon" section.
+   --- Pas PRO (spec §8, after sensiq.co) ------------------------------------
+   Grey ground, the photo absolutely positioned and scaled on scroll from a narrow
+   frame (.5) to the full width (1); heading on the left, a paragraph and two
+   buttons on the right. Since 19.09.2026 the variant „pozny-wzrost" (spec §15.1):
+   the frame holds half the width until the top edge of the band passes 35 % of the
+   window, then it grows, and the scrim comes in together with it. Without motion
+   (mobile / reduced / no JS): a static photo above the text, 16:10, no scaling. */
+.c5-pro{margin-top:clamp(3rem,6vw,5rem);}
 /* narożniki 30 px – jedyny wyjątek od ostrych narożników V5, na wyraźne
    życzenie Mateusza (§13.8) */
 .c5-pro__media{position:relative;width:100%;aspect-ratio:16/10;border-radius:30px;overflow:hidden;}

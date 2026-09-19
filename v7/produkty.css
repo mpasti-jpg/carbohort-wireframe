@@ -2,10 +2,12 @@
    Klocki wzorca i warstwa wspólna leżą w katalogu ce/ (ładowane wyżej).
    Tutaj zostają wyłącznie klocki unikalne tej podstrony i nadpisania
    treściowe klocków wspólnych. ===== */
-/* page-specific: overrides .c5-hero__stage from ce/CE-08-hero.css */
-/* Panel: 30 px od góry, dołu i prawej krawędzi ekranu; §14.2 – bez zdjęcia
-   w tle i bez pasa gradientu, jednolita jasna szarość pod packshotami */
-.c5-hero__stage{position:relative;overflow:hidden;container-type:inline-size;margin-block:var(--c5-gutter);min-height:calc(100svh - var(--cx-navbar-h, 0px) - 2 * var(--c5-gutter));background:var(--w-gray-100);}
+/* page-specific: the ONLY difference against .c5-hero__stage from ce/CE-08-hero.css –
+   the panel is an inline-size container, so the shelf below can size its packs in cqw.
+   The panel itself (30 px from the top, bottom and right edge of the screen; §14.2 –
+   no background photo, no gradient band, one flat light grey) comes from the pattern
+   and was repeated here word for word until 19.09.2026. */
+.c5-hero__stage{container-type:inline-size;}
 /* Produkty Carbohort (spec §4): a shelf of the four families instead of the CARBOMAT ECO pair.
    H (--c5-pack-h) = bag height = 42 % of the panel height (its minimum height: the screen minus
    the menu and the 30 px margins), 240-480 px, but never more than the panel width minus the
@@ -34,6 +36,13 @@
 
 /* dots are round on purpose: they are markers, not layout boxes (like .c5-way__ico) */
 
+/* page-specific: CE-07 dot rail. The widest blocks of this page (the cascade of CE-15
+   and the photo panel of the CE-12 scene) reach under the rail at its shared position –
+   30 px from the edge and 28 px wide, so its hit areas lay on the last 12 px of the
+   cascade card between 1024 and 1440 px and on 38 px of the scene panel at 1440 px.
+   Here the rail moves into the margin, exactly as on Kukurydza and Próchnica+. */
+@media (min-width:900px){.c5-dots{right:10px;}}
+
 /* ===== 00+ · Produkty Carbohort – additions to the pattern base (spec §3) ===== */
 /* placeholder with a label saying which photo goes here (from carbomat-mata.css) */
 .c5-ph{position:relative;background:var(--w-gray-200);overflow:hidden;}
@@ -55,7 +64,7 @@
 /* below 900 px the button drops under the text; the icon stays beside the text */
 @media (max-width:899px){.c5pr-bar{grid-template-columns:auto minmax(0,1fr);}.c5pr-bar > .c5-btn{grid-column:2;justify-self:start;}}
 /* anchors without a sticky bar: land 30 px below the top edge */
-.c5pr-goal[id],.c5pr-paths__panel[id],.c5-faq__item[id],#certyfikaty{scroll-margin-top:var(--c5-gutter);}
+.c5pr-goal[id],.c5-faq__item[id],#certyfikaty{scroll-margin-top:var(--c5-gutter);}
 
 /* Produkty Carbohort (spec §5): an empty square until the dedicated photo exists
    (target file names in the HTML comment above the section) */
@@ -278,7 +287,8 @@
    8.2 ten paths from one DOM – cards without JS (the default below), tabs >= 900 px and an
        accordion < 900 px; 50-wg-potrzeby.js sets data-paths="tabs|acc" and the ARIA roles;
    8.3 "Żadna ścieżka nie pasuje?" uses the shared strip .c5pr-bar from 00-base.css.
-   Anchor offsets (.c5pr-goal[id], .c5pr-paths__panel[id]) live in 00-base.css. */
+   Anchor offsets (.c5pr-goal[id]) stand in the "00+ · additions" block at the top of
+   this sheet; .c5pr-paths__panel disappeared with the layout of iteration 3. */
 
 /* --- 8.1 Goal index ------------------------------------------------------------------- */
 .c5pr-goals{margin-top:clamp(2.5rem,5vw,4rem);}
@@ -550,11 +560,9 @@
   /* in the scene the frame covers the band and scales around its centre (pattern ECO 80) */
   .cx-js .c5-pro__media{position:absolute;inset:0;margin:0;width:auto;max-width:none;aspect-ratio:auto;max-height:none;
     transform:scale(var(--pro-s,1));transform-origin:center;will-change:transform;}
-  /* trial „pozny-wzrost” (spec §21.4): the constant .25 scrim of ce/CE-16-pas-pro.css now rides
-     the growth – 0 while the frame holds its start width, full when it reaches the band. The
-     fallback 1 keeps today's behaviour whenever the variable is missing (no JS, module not run
-     yet, shared ce/CE-16-pas-pro.js linked back). */
-  .cx-js .c5-pro__media::after{opacity:var(--pro-o,1);}
+  /* The scrim of the „pozny-wzrost” variant (spec §21.4) – `opacity:var(--pro-o,1)` on the
+     ::after – moved to ce/CE-16-pas-pro.css on 19.09.2026, so every page of the pattern
+     carries it and the fallback 1 keeps the base mechanics untouched. */
 }
 
 /* --- FAQ: pytanie z lewej, odpowiedź z prawej ------------------------------- */

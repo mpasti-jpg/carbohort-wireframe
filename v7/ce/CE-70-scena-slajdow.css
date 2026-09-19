@@ -1,0 +1,170 @@
+/* ===== CE-70 · Scena slajdów na tle wideo – Figma frame 280:2120
+   (spec prochnica-plus-wzorzec-eco-spec §18.3). Class prefix: c5-vs. =========
+
+   One DOM, two layouts:
+   · static (below 900 px, reduced motion, no JS) – the poster as an ordinary
+     16 : 9 frame on a dark field, then the cards one under another in reading
+     order; the slide index is hidden, nothing moves;
+   · scene (>= 900 px, no-preference, .cx-js) – a tall track whose stage is
+     sticky, 100 svh, the full width of the window and clipped: a looping video
+     fills it, a flat scrim sits over it, the slide index stands at the left
+     edge and ONE card at a time floats in the middle. Scroll position drives
+     the cards: card i rides in from below, parks, then leaves upward while
+     card i + 1 rides in behind it. The module writes only two custom
+     properties per card – `--vs-t` (-1 above … 0 centre … 1 below) and
+     `--vs-travel` (how far that is in pixels) – so a scroll pass never touches
+     layout.
+
+   The card itself is the pattern's light box (--w-gray-50, 10 px padding,
+   sharp corners): a square dark illustration on the left, the title and the
+   description of the step on the right. Every illustration part carries its
+   own c5-vs class, so the block does not depend on the page sheet – the
+   Próchnica+ block 40 (pp-scene) can be dropped without touching this file.
+   ========================================================================= */
+
+/* --- Static layout --------------------------------------------------------- */
+.c5-vs__track{position:relative;height:auto;}
+
+/* Hook for the CE index screenshot (ce-rejestr.js -> zrzut.przewin), not used
+   by the scene. Scrolling ITS top edge to the top of the window leaves card 1
+   standing in the middle of the stage – the same place the index button "01"
+   jumps to (u = 0.65 of one segment, and one segment is --vs-step-*, the very
+   numbers the module measures the track with, so it holds at any window
+   height). Zero size, out of flow, out of the reading and tab order. */
+.c5-vs__shot{position:absolute;left:0;width:0;height:0;overflow:hidden;pointer-events:none;
+  top:calc(.65 * max(var(--vs-step-min,620px), var(--vs-step-vh,1.1) * 100svh));}
+.c5-vs__stage{position:relative;background:var(--w-gray-900);color:#fff;
+  padding:clamp(1.25rem,4vw,2.5rem);display:flex;flex-direction:column;gap:clamp(1.5rem,4vw,2.5rem);}
+.c5-vs__bg{position:relative;display:block;}
+/* outside the scene the video never runs – the poster stands in for it */
+.c5-vs__video,.c5-vs__scrim{display:none;}
+.c5-vs__still{display:block;width:100%;aspect-ratio:16/9;max-height:52svh;object-fit:cover;background:var(--w-gray-800);}
+.c5-vs__index{display:none;}
+.c5-vs__cards{display:flex;flex-direction:column;gap:clamp(1.25rem,3vw,2rem);margin:0;padding:0;}
+
+/* --- Card ------------------------------------------------------------------ */
+.c5-vs__card{background:var(--w-gray-50);color:var(--w-text-primary);padding:10px;border-radius:0;
+  display:grid;grid-template-columns:minmax(0,1fr);gap:0;align-items:center;
+  /* the card is the query container of the illustration: 1 cqw = 1 % of the
+     card's content box, so the square of the box is written once, exactly,
+     and holds in the scene and in the static stack alike */
+  container-type:inline-size;}
+@media (min-width:600px){
+  .c5-vs__card{grid-template-columns:minmax(0,1fr) minmax(0,1fr);}
+}
+.c5-vs__txt{padding:clamp(1.25rem,3vw,2.5rem);display:flex;flex-direction:column;gap:var(--w-space-4);}
+.c5-vs__title{font-size:clamp(1.125rem,1.6vw,1.5rem);line-height:1.22;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+.c5-vs__body{display:flex;flex-direction:column;gap:var(--w-space-3);font-size:0.9375rem;line-height:1.55;color:var(--w-text-secondary);}
+.c5-vs__body p{margin:0;}
+.c5-vs__body ul{margin:0;}
+.c5-vs__body .wf-list{padding-left:0;}
+
+/* A wide window without the scene (reduced motion, no JS): the stack keeps the
+   measure of the card in the scene instead of spreading over the whole page. */
+@media (min-width:900px){
+  .c5-vs__stage{align-items:center;}
+  .c5-vs__bg,.c5-vs__cards{width:min(800px,100%);}
+}
+
+/* --- Square illustration box: dark field, inverted colours ------------------
+   The square is a FLOOR, not a cage: the box is as tall as it is wide (100 cqw
+   in one column, 50 cqw beside the text) and grows downwards when a longer step
+   needs it, instead of squeezing the caption. On the windows the frame was
+   drawn for (1440–1920 px) every step fits the square exactly. */
+.c5-vs__viz{position:relative;margin:0;min-height:100cqw;align-self:center;
+  background:var(--w-gray-800);color:#fff;
+  display:flex;flex-direction:column;gap:var(--w-space-4);padding:clamp(1rem,2.2vw,1.75rem);}
+@media (min-width:600px){
+  .c5-vs__viz{min-height:50cqw;}
+}
+.c5-vs__viz .c5-viz__tag{color:rgb(255 255 255 / .6);}
+.c5-vs__viz .c5-viz__body{flex:1;}
+.c5-vs__viz .wf-ph{width:100%;background:rgb(255 255 255 / .06);border-color:rgb(255 255 255 / .3);color:rgb(255 255 255 / .75);border-radius:0;}
+.c5-vs__viz :focus-visible{outline-color:var(--w-focus-ring-inverse);}
+
+/* crops of the plot – rows of chips */
+.c5-vs__chips{display:flex;flex-wrap:wrap;gap:8px;}
+
+/* quarter layout – four bands of three rows plus the reference outside it */
+.c5-vs__plot{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--w-space-2);}
+.c5-vs__field{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;
+  border:1px solid rgb(255 255 255 / .45);background:rgb(255 255 255 / .45);}
+.c5-vs__band{display:flex;flex-direction:column;gap:6px;background:var(--w-gray-800);padding:var(--w-space-2);}
+.c5-vs__rows{display:flex;gap:3px;}
+.c5-vs__rows i{display:block;width:10px;height:16px;border:1px solid rgb(255 255 255 / .5);background:transparent;}
+.c5-vs__band--t200 .c5-vs__rows i{background:rgb(255 255 255 / .35);border-color:rgb(255 255 255 / .6);}
+.c5-vs__band--t500 .c5-vs__rows i{background:rgb(255 255 255 / .7);border-color:rgb(255 255 255 / .8);}
+.c5-vs__bname{font-size:0.8125rem;font-weight:var(--w-weight-medium);line-height:1.3;}
+.c5-vs__bsub{font-size:0.75rem;line-height:1.4;color:rgb(255 255 255 / .6);}
+.c5-vs__ref{display:flex;flex-direction:column;gap:4px;border:1px dashed rgb(255 255 255 / .5);padding:var(--w-space-2);}
+
+/* rhythm of the year – three nodes on one line */
+.c5-vs__steps{display:flex;flex-direction:column;align-items:flex-start;gap:var(--w-space-3);}
+.c5-vs__step{display:flex;align-items:center;gap:var(--w-space-3);font-size:0.8125rem;line-height:1.35;color:rgb(255 255 255 / .8);}
+.c5-vs__node{flex:none;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;
+  border:1px solid rgb(255 255 255 / .6);font-size:0.75rem;font-variant-numeric:tabular-nums;}
+.c5-vs__join{display:block;width:1px;height:var(--w-space-4);margin-left:13px;background:rgb(255 255 255 / .35);}
+
+/* --- Slide index (scene only, styles kept here so the scene block owns them) - */
+.c5-vs__index ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px;}
+.c5-vs__idx{display:flex;align-items:center;gap:12px;min-height:44px;padding:4px 8px 4px 0;
+  font:inherit;text-align:left;color:#fff;opacity:.6;background:none;border:0;border-radius:0;cursor:pointer;
+  transition:opacity var(--w-duration-base) var(--w-ease);}
+.c5-vs__idx:hover{opacity:.85;}
+.c5-vs__idx[aria-current="true"]{opacity:1;}
+.c5-vs__idx:focus-visible{opacity:1;outline:2px solid var(--w-focus-ring-inverse);outline-offset:2px;}
+.c5-vs__idxnum{flex:none;width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;
+  border:1px solid rgb(255 255 255 / .5);font-size:0.6875rem;letter-spacing:.04em;font-variant-numeric:tabular-nums;}
+.c5-vs__idx[aria-current="true"] .c5-vs__idxnum{border-color:#fff;}
+.c5-vs__idxtxt{font-size:0.875rem;line-height:1.3;max-width:150px;}
+
+/* --- Scene: sticky stage in a tall track (JS sets the track height) --------- */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  .cx-js .c5-vs{
+    /* the card of the frame: 800 px on a wide window, never more than 60 % of it */
+    --c5-vs-card-w:min(800px,60vw);
+    /* the index keeps the left edge of the window (28–40 px, spec §18.3) */
+    --c5-vs-side:clamp(28px,2.6vw,40px);
+    /* one flat scrim over the video, enough for white text on a bright frame */
+    --c5-vs-scrim:rgb(0 0 0 / .45);
+    /* length of ONE slide on the track – the module reads both (spec §18.3:
+       N x ~110 svh of scrolling above the pinned stage) */
+    --vs-step-vh:1.1;
+    --vs-step-min:620px;
+  }
+  .cx-js .c5-vs__stage{position:sticky;top:0;height:100svh;overflow:hidden;
+    display:block;padding:0;gap:0;background:var(--w-gray-900);}
+
+  /* `width:auto` undoes the measure the static stack keeps on a wide window */
+  .cx-js .c5-vs__bg{position:absolute;inset:0;width:auto;}
+  .cx-js .c5-vs__video{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .cx-js .c5-vs__still{display:none;}
+  .cx-js .c5-vs__scrim{display:block;position:absolute;inset:0;background:var(--c5-vs-scrim);}
+
+  .cx-js .c5-vs__index{display:block;position:absolute;left:var(--c5-vs-side);top:50%;transform:translateY(-50%);z-index:3;}
+
+  /* every card sits in the same place; only the transform tells them apart */
+  .cx-js .c5-vs__cards{position:absolute;inset:0;width:auto;display:block;gap:0;}
+  .cx-js .c5-vs__card{position:absolute;left:50%;top:50%;width:var(--c5-vs-card-w);z-index:2;
+    transform:translate3d(-50%,-50%,0) translate3d(0,calc(var(--vs-t,0) * var(--vs-travel,60svh)),0);
+    will-change:transform;}
+  .cx-js .c5-vs__card[data-off="true"]{visibility:hidden;}
+}
+
+/* The index shows its titles only where the card leaves room for them: the card
+   is centred and 60 vw wide, so below ~1300 px the two would collide – there the
+   numbers alone mark the place in the scene (spec §18.3). */
+@media (min-width:900px) and (max-width:1299.98px) and (prefers-reduced-motion: no-preference){
+  .cx-js .c5-vs__idxtxt{display:none;}
+  .cx-js .c5-vs__idx{padding-right:0;}
+}
+
+/* Low windows: the card must not touch the top and bottom edges of the stage. */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference) and (max-height:760px){
+  .cx-js .c5-vs{--c5-vs-card-w:min(720px,56vw);}
+  .cx-js .c5-vs__txt{padding:clamp(1rem,2.4vw,1.75rem);}
+  /* the illustration takes the tightest step so the square still holds it */
+  .cx-js .c5-vs__viz{padding:clamp(0.875rem,1.6vw,1.25rem);gap:var(--w-space-3);}
+  .cx-js .c5-vs__band,.cx-js .c5-vs__ref{padding:var(--w-space-2);}
+  .cx-js .c5-vs__rows i{height:14px;}
+}

@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="ce/CE-08-hero.css">
 <link rel="stylesheet" href="ce/CE-09-marquee.css">
 <link rel="stylesheet" href="ce/CE-10-parametry.css">
-<link rel="stylesheet" href="ce/CE-12-scena-faktow.css">
+<link rel="stylesheet" href="ce/CE-12-scena-faktow-proba.css">
 <link rel="stylesheet" href="ce/CE-16-pas-pro.css">
 <link rel="stylesheet" href="ce/CE-17-faq.css">
 <link rel="stylesheet" href="ce/CE-18-cta.css">
@@ -652,10 +652,24 @@
        track - inside the stage only the active fact is left. The stage no
        longer holds a head, so nothing in the scene has to be measured for it.
        DOM order = układ statyczny (mobile / reduced motion / bez JS): nagłówek,
-       a potem trójki tło / tytuł+opis / ilustracja. -->
-  <section class="c5-sec c5-facts-sec" id="czym-jest" data-chapter="czym-jest" data-facts>
+       a potem trójki tło / tytuł+opis / ilustracja.
+       19.09.2026 (spec §22): the scene moves to the Frame 206 layout of the CE
+       index (ce/CE-12-scena-faktow-proba.*), variant `bez-naglowka` - the head
+       with the lead keeps standing above the track, the fact now stands at the
+       BOTTOM of the left column and carries its own progress line and counter.
+       ⚠️ The root of CE-12 is the inner container below, NOT the section: this
+       section holds a second block (CE-23 cross-sell), which must stay outside
+       the CE root, and the module reads the variant from the [data-fx] element
+       (CE-12-scena-faktow-proba.js 72). The occurrence keeps its anchor
+       #czym-jest-scena, the section stays the chapter of the dot rail. -->
+  <section class="c5-sec" id="czym-jest" data-chapter="czym-jest">
 
-    <div class="c5-wrap c5-facts-head">
+    <!-- CE-12 root: the head above the track + the track itself. Its two children keep
+         the indentation of the section on purpose - the container is a wrapper, not a
+         level of the layout, and re-indenting 180 lines would only hide the change. -->
+    <div id="czym-jest-scena" class="c5-fx" data-fx data-ce="CE-12" data-ce-wariant="bez-naglowka" data-ce-od="#czym-jest">
+
+    <div class="c5-fx__above c5-wrap" data-fx-head="bez-naglowka">
       <span class="c5-kicker c5-kicker--center">Czym jest</span>
       <div class="c5-head">
         <h2 class="c5-h2 c5-h2--center">Podłoże, które aktywnie wspiera roślinę – nie tylko utrzymuje jej korzenie.</h2>
@@ -663,30 +677,32 @@
       </div>
     </div>
 
-    <div id="czym-jest-scena" class="c5-facts-track" data-facts-track data-ce="CE-12" data-ce-wariant="naglowek-nad-scena" data-ce-od="#czym-jest">
-      <div class="c5-facts-stage c5-wrap">
+    <div class="c5-fx__track" data-fx-track>
+      <div class="c5-fx__stage">
 
-        <div class="c5-facts-flow">
+        <div class="c5-fx__flow">
 
           <!-- Warstwy tła panelu: jedna na punkt, przełączane razem z opisem.
                Do czasu zdjęć placeholdery (pliki docelowe img/foto/mata-czym-jest-1…5.jpg,
                4:5, spec §17). Są dekoracją pod boksem ilustracji – aria-hidden na panelu. -->
-          <div class="c5-facts-panel" aria-hidden="true">
-            <div class="c5-ph c5-facts-panel__ph" data-fact-bg="1" data-on="true" data-ph="foto · woda i powietrze"></div>
-            <div class="c5-ph c5-facts-panel__ph" data-fact-bg="2" data-ph="foto · substancje aktywne"></div>
-            <div class="c5-ph c5-facts-panel__ph" data-fact-bg="3" data-ph="foto · efektywność"></div>
-            <div class="c5-ph c5-facts-panel__ph" data-fact-bg="4" data-ph="foto · czystość"></div>
-            <div class="c5-ph c5-facts-panel__ph" data-fact-bg="5" data-ph="foto · bufor"></div>
+          <div class="c5-fx__panel" aria-hidden="true">
+            <div class="c5-ph c5-fx__ph" data-fx-bg="1" data-on="true" data-ph="foto · woda i powietrze"></div>
+            <div class="c5-ph c5-fx__ph" data-fx-bg="2" data-ph="foto · substancje aktywne"></div>
+            <div class="c5-ph c5-fx__ph" data-fx-bg="3" data-ph="foto · efektywność"></div>
+            <div class="c5-ph c5-fx__ph" data-fx-bg="4" data-ph="foto · czystość"></div>
+            <div class="c5-ph c5-fx__ph" data-fx-bg="5" data-ph="foto · bufor"></div>
           </div>
 
-          <div class="c5-fact is-on" data-fact="1">
-            <h3 class="c5-fact__title">Optymalny balans wody i&nbsp;powietrza</h3>
-            <div class="c5-fact__body">
+          <div class="c5-fx__fact" data-fx-fact="1">
+            <h3 class="c5-fx__title">Optymalny balans wody i&nbsp;powietrza</h3>
+            <div class="c5-fx__line" aria-hidden="true"><span class="c5-fx__fill"></span></div>
+            <div class="c5-fx__body">
               <p>Odpowiednio dobrane uziarnienie lignitu oraz jego wysoka zdolność sorpcji zapewniają korzystne proporcje wody, powietrza i składników pokarmowych w strefie korzeniowej. Dzięki temu korzenie mają stały dostęp do tlenu, wilgoci i niezbędnych minerałów, co sprzyja ich prawidłowemu rozwojowi oraz stabilnemu wzrostowi i owocowaniu roślin.</p>
             </div>
+            <span class="c5-fx__count" aria-hidden="true">01/05</span>
           </div>
 
-          <figure class="c5-viz" data-fact-viz="1" data-on="true">
+          <figure class="c5-viz" data-fx-viz="1" data-on="true">
             <span class="c5-viz__tag">01 · Woda i powietrze</span>
             <div class="c5-viz__body">
               <svg viewBox="0 0 420 250" role="img" aria-label="Schemat przekroju maty: uziarnienie lignitu rozdziela strefę korzeniową na wodę, powietrze i składniki pokarmowe">
@@ -709,14 +725,16 @@
             <figcaption class="c5-src c5-src--ondark">Schemat poglądowy – uziarnienie lignitu i sorpcja regulują proporcje wody i powietrza wokół korzeni.</figcaption>
           </figure>
 
-          <div class="c5-fact" data-fact="2">
-            <h3 class="c5-fact__title">Bogactwo naturalnych substancji aktywnych</h3>
-            <div class="c5-fact__body">
+          <div class="c5-fx__fact" data-fx-fact="2">
+            <h3 class="c5-fx__title">Bogactwo naturalnych substancji aktywnych</h3>
+            <div class="c5-fx__line" aria-hidden="true"><span class="c5-fx__fill"></span></div>
+            <div class="c5-fx__body">
               <p>Carbomat zawiera naturalną materię organiczną bogatą w kwasy humusowe i huminowe, węgiel organiczny, mikroelementy oraz bioaktywne związki organiczne. Substancje te wspierają procesy odżywiania roślin, poprawiają warunki w strefie korzeniowej i zwiększają efektywność wykorzystania składników pokarmowych. Tworzą również korzystne środowisko dla rozwoju zbilansowanej mikroflory wokół korzeni.</p>
             </div>
+            <span class="c5-fx__count" aria-hidden="true">02/05</span>
           </div>
 
-          <figure class="c5-viz" data-fact-viz="2">
+          <figure class="c5-viz" data-fx-viz="2">
             <span class="c5-viz__tag">02 · Substancje aktywne</span>
             <div class="c5-viz__body">
               <div class="c5-viz__ring">
@@ -739,14 +757,16 @@
             <figcaption class="c5-src c5-src--ondark">Udział frakcji humusowych w lignicie – wg naszych opracowań i badań SGGW, zależny od partii surowca. Oznaczenia dla gotowej maty <span class="c5-mt-gap">w uzupełnieniu</span>.</figcaption>
           </figure>
 
-          <div class="c5-fact" data-fact="3">
-            <h3 class="c5-fact__title">Maksymalizacja potencjału roślin przy mniejszych nakładach</h3>
-            <div class="c5-fact__body">
+          <div class="c5-fx__fact" data-fx-fact="3">
+            <h3 class="c5-fx__title">Maksymalizacja potencjału roślin przy mniejszych nakładach</h3>
+            <div class="c5-fx__line" aria-hidden="true"><span class="c5-fx__fill"></span></div>
+            <div class="c5-fx__body">
               <p>Carbomat pomaga stworzyć stabilne środowisko dla korzeni, w którym woda i składniki pokarmowe są lepiej magazynowane i wykorzystywane przez roślinę. Efektem jest bardziej efektywne odżywianie, potencjalnie wyższe plony o lepszych parametrach jakościowych oraz możliwość optymalizacji kosztów nawożenia.</p>
             </div>
+            <span class="c5-fx__count" aria-hidden="true">03/05</span>
           </div>
 
-          <figure class="c5-viz" data-fact-viz="3">
+          <figure class="c5-viz" data-fx-viz="3">
             <span class="c5-viz__tag">03 · Efektywność</span>
             <div class="c5-viz__body">
               <svg viewBox="0 0 420 250" role="img" aria-label="Obieg: woda i pożywka trafiają do maty, mata magazynuje je i oddaje roślinie, ograniczając straty">
@@ -766,14 +786,16 @@
             <figcaption class="c5-src c5-src--ondark">Schemat poglądowy – sorpcja lignitu magazynuje wodę i składniki, zamiast oddawać je do drenażu.</figcaption>
           </figure>
 
-          <div class="c5-fact" data-fact="4">
-            <h3 class="c5-fact__title">Czystość i bezpieczeństwo dla roślin przez wiele sezonów</h3>
-            <div class="c5-fact__body">
+          <div class="c5-fx__fact" data-fx-fact="4">
+            <h3 class="c5-fx__title">Czystość i bezpieczeństwo dla roślin przez wiele sezonów</h3>
+            <div class="c5-fx__line" aria-hidden="true"><span class="c5-fx__fill"></span></div>
+            <div class="c5-fx__body">
               <p>Carbomat dzięki naturalnemu pochodzeniu i stabilnej strukturze tworzy bezpieczne oraz przewidywalne środowisko dla systemu korzeniowego. Jest wolny od patogenów i niepożądanych zanieczyszczeń, a jego właściwości biologiczne i fizyczne pomagają utrzymać równowagę w strefie korzeniowej również w kolejnych latach użytkowania.</p>
             </div>
+            <span class="c5-fx__count" aria-hidden="true">04/05</span>
           </div>
 
-          <figure class="c5-viz" data-fact-viz="4">
+          <figure class="c5-viz" data-fx-viz="4">
             <span class="c5-viz__tag">04 · Czystość</span>
             <div class="c5-viz__body">
               <svg viewBox="0 0 420 150" role="img" aria-label="Pięć kolejnych sezonów uprawy na tym samym rękawie, każdy oznaczony jako sezon w pełni użytkowy">
@@ -794,14 +816,16 @@
             <figcaption class="c5-src c5-src--ondark">Pięć sezonów uprawy na tym samym rękawie – na tyle projektujemy matę.</figcaption>
           </figure>
 
-          <div class="c5-fact" data-fact="5">
-            <h3 class="c5-fact__title">Podłoże, które wybacza błędy</h3>
-            <div class="c5-fact__body">
+          <div class="c5-fx__fact" data-fx-fact="5">
+            <h3 class="c5-fx__title">Podłoże, które wybacza błędy</h3>
+            <div class="c5-fx__line" aria-hidden="true"><span class="c5-fx__fill"></span></div>
+            <div class="c5-fx__body">
               <p>Carbomat zachowuje przewidywalność prowadzenia uprawy – umożliwia kontrolę parametrów takich jak pH i EC oraz pracę w różnych systemach nawadniania i technologiach uprawowych. Jednocześnie, dzięki wysokiej pojemności sorpcyjnej, działa jak naturalny bufor ograniczający stres roślin w okresach chwilowych zaburzeń, takich jak przegrzanie lub wychłodzenie maty, przerwy w dostawie wody czy krótkotrwałe acz skokowe wahania chemiczne w strefie korzeniowej.</p>
             </div>
+            <span class="c5-fx__count" aria-hidden="true">05/05</span>
           </div>
 
-          <figure class="c5-viz" data-fact-viz="5">
+          <figure class="c5-viz" data-fx-viz="5">
             <span class="c5-viz__tag">05 · Bufor</span>
             <div class="c5-viz__body">
               <svg viewBox="0 0 420 220" role="img" aria-label="Wykres poglądowy: warunki zewnętrzne mocno się wahają, warunki w strefie korzeniowej pozostają wyrównane">
@@ -818,23 +842,13 @@
 
         </div>
 
-        <!-- Pasek progresu zamiast dividerów: wypełnienie = postęp globalny,
-             cztery znaczniki dzielą tor na pięć odcinków. Widoczny tylko
-             w scenie sterowanej przewijaniem. -->
-        <div class="c5-facts-prog" data-facts-prog>
-          <div class="c5-facts-progress" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="1" aria-label="Postęp – punkt z pięciu">
-            <span class="c5-facts-progress__fill"></span>
-            <span class="c5-facts-progress__mark"></span>
-            <span class="c5-facts-progress__mark"></span>
-            <span class="c5-facts-progress__mark"></span>
-            <span class="c5-facts-progress__mark"></span>
-          </div>
-        </div>
-
       </div>
     </div>
 
-    <!-- Pas „Ta sama organika…” – dawny `.c5-alert`, bez placeholdera (spec §9) -->
+    </div><!-- /#czym-jest-scena – koniec korzenia CE-12 -->
+
+    <!-- Pas „Ta sama organika…” – dawny `.c5-alert`, bez placeholdera (spec §9).
+         ⚠️ Stoi POZA korzeniem CE-12: to osobny klocek (CE-23) tej samej sekcji. -->
     <div class="c5-wrap">
       <div id="czym-jest-cross" class="c5-mt-cross" data-ce="CE-23" data-ce-wariant="kreski-gora-dol">
         <p><span class="wf-w-semibold">Ta sama organika, co w CARBOMAT ECO.</span><br>
@@ -1528,8 +1542,13 @@
        szare tło, zdjęcie skaluje się przy przewijaniu od wąskiego kadru do
        pełnej szerokości, narożniki 30 px, nagłówek po lewej, akapity i dwa
        przyciski po prawej. Uwaga Darka (l. 276): wzmianka, że to samo podłoże
-       jest wykorzystywane w uprawie doniczkowej. -->
-  <section class="c5-pro" id="dla-kogo" data-chapter="dla-kogo" data-pro data-ce="CE-16">
+       jest wykorzystywane w uprawie doniczkowej.
+       19.09.2026 (spec §22): the band moves to the `pozny-wzrost` variant of the
+       CE index - the crop HOLDS at half width until the top edge of the band
+       reaches 35 % of the window, then grows to full width at 2 %; the scrim
+       grows with it (ce/CE-16-pas-pro-proba.js). The markup is the same as the
+       base variant, the module is what changes. -->
+  <section class="c5-pro" id="dla-kogo" data-chapter="dla-kogo" data-pro data-ce="CE-16" data-ce-wariant="pozny-wzrost">
     <div class="c5-pro__media" data-pro-media aria-hidden="true">
       <div class="c5-ph c5-pro__ph" data-ph="foto · uprawa bezglebowa pod osłonami"></div>
       <!-- foto: img/foto/mata-dla-kogo.jpg -->
@@ -1616,8 +1635,8 @@
 <script src="ce/00-base.js"></script>
 <script src="ce/CE-07-nawigacja-kropkowa.js"></script>
 <script src="ce/CE-10-parametry.js"></script>
-<script src="ce/CE-12-scena-faktow.js"></script>
-<script src="ce/CE-16-pas-pro.js"></script>
+<script src="ce/CE-12-scena-faktow-proba.js"></script>
+<script src="ce/CE-16-pas-pro-proba.js"></script>
 <script src="ce/CE-17-faq.js"></script>
 <script src="carbomat-mata.js"></script>
 <script src="ce-overlay.js"></script>

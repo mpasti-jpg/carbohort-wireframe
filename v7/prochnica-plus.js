@@ -3,104 +3,71 @@
    wcześniej). Tutaj zostają wyłącznie moduły klocków unikalnych tej podstrony.
    Bez własnej definicji `window.CX5` i bez `CX5.start()` – szyna startuje sama
    na DOMContentLoaded. ==================================================== */
-/* ===== 40 · Sceny sterowane przewijaniem: Założenia i cele, Metodologia =====
-   Port modułu 50 „Czym jest" z CARBOMAT ECO (spec §6, §12). Tor jest wysoki
-   (100svh + N × krok), scena w środku jest sticky. Pozycja na osi = pozycja
-   scrolla; w pętli czytamy wyłącznie prostokąt toru, a wynik zapisujemy w
-   custom property i klasach. Moduł obsługuje KAŻDĄ sekcję [data-ppscene], więc
-   Metodologia (sześć kroków) nie potrzebuje własnego kodu. Poniżej 900 px,
-   przy ograniczonym ruchu i bez JS sekcja jest statyczna – cała treść
-   widoczna (CSS). */
+/* ===== 40 · Scroll-driven scene of „Założenia i cele" and „Metodologia" =====
+   Removed 19.09.2026 (iteration 2): both sections left this module. #zalozenia
+   now runs on CE-70 (`ce/CE-70-scena-slajdow.js`) and #metodologia on the CE-12
+   trial (`ce/CE-12-scena-faktow-proba.js`), so nothing on the page carries
+   [data-ppscene] any more. Block 40 of the sheet keeps only the illustration
+   boxes of the Metodologia figures – they have no script of their own. */
+
+/* ===== 45 · Korzyści: napis z masek i kafle nad sceną (CE-44 `tlo-foto`) ====
+   Port modułu 55 z Kukurydzy (spec §18.4). Scenę (kadr tła na cały ekran,
+   `position: sticky`) trzyma CSS. JS robi dwie rzeczy i czyta na to jeden
+   prostokąt – toru:
+   (1) Napis. Scena stoi na górze toru, więc jej górna krawędź to krawędź toru,
+   dopóki nie przyklei się na 0 (a wtedy warunek i tak jest spełniony).
+   Przy `top` ≤ 35 % wysokości okna nadajemy `.is-in` – raz, bez animacji
+   wyjścia; wchodzi na każdej szerokości, także przy wejściu z dołu strony.
+   (2) Kafle. Dla postępu `q` kafla przez okno (0 = górna krawędź na dolnej
+   krawędzi okna, 1 = dolna krawędź na górnej) przesunięcie wynosi
+   `--par = (h + th) · (q − g(q))`, gdzie `g(q) = a·q + (1 − a)(0.5 + 4(q − 0.5)³)`
+   i `a` (0,30–0,44) siedzi w znaczniku. Kafel wjeżdża i wyjeżdża szybciej niż
+   strona, a w środku okna zwalnia do czytania; poza 0–1 przesunięcia nie ma,
+   więc ruch łączy się płynnie z biegiem strony. Pozycje naturalne mierzymy raz
+   i przy `resize`; poniżej 900 px i przy ograniczonym ruchu kafle stoją
+   w siatce – kasujemy `--par`. */
 (function () {
   "use strict";
-  var $ = CX5.$, $$ = CX5.$$, clamp = CX5.clamp;
-
-  $$("[data-ppscene]").forEach(function (sec) {
-    var track = $("[data-ppscene-track]", sec);
-    var stage = $(".pp-scene", sec);
-    var steps = $$(".pp-step", sec);
-    var vizs = $$("[data-ppviz]", sec);
-    var bgs = $$("[data-ppbg]", sec);
-    var bar = $("[data-ppprog]", sec);
-    if (!track || !stage || !steps.length) return;
-    var STEPS = steps.length;
-    var stageH = 0, idx = -1;
-
-    function show(i) {
-      if (i === idx) return;
-      idx = i;
-      steps.forEach(function (s, n) { s.classList.toggle("is-on", n === i); });
-      vizs.forEach(function (v) { v.setAttribute("data-on", +v.getAttribute("data-ppviz") === i + 1 ? "true" : "false"); });
-      /* photo layer of the panel switches with the topic (spec §6) */
-      bgs.forEach(function (b) { b.setAttribute("data-on", +b.getAttribute("data-ppbg") === i + 1 ? "true" : "false"); });
-      if (bar) {
-        var title = $(".pp-step__title", steps[i]);
-        bar.setAttribute("aria-valuenow", String(i + 1));
-        if (title) bar.setAttribute("aria-valuetext", title.textContent);
-      }
-    }
-    function measure() {
-      if (!CX5.motionOn()) {
-        track.style.height = "";
-        sec.style.removeProperty("--pp-p");
-        stageH = 0;
-        idx = -1;
-        show(0);
-        return;
-      }
-      stageH = stage.offsetHeight;
-      /* krok = 80 % wysokości okna, nie mniej niż 480 px */
-      var step = Math.max(480, Math.round(window.innerHeight * 0.8));
-      track.style.height = (stageH + step * STEPS) + "px";
-    }
-    function update() {
-      if (!stageH) return;
-      var r = track.getBoundingClientRect();
-      var span = r.height - stageH;
-      var p = span > 0 ? clamp(-r.top / span, 0, 1) : 0;
-      sec.style.setProperty("--pp-p", p.toFixed(4));
-      show(Math.min(STEPS - 1, Math.floor(p * STEPS)));
-    }
-    CX5.register({ scroll: update, resize: measure });
-  });
-})();
-
-/* ===== 45 · Korzyści: karty płynące z różną prędkością nad napisem =========
-   Każda karta dostaje własną prędkość (data-pp-speed 0.7–1.3). Przesunięcie
-   liczymy z pozycji JEJ SLOTU w oknie (slot nie jest transformowany, więc
-   pomiar nie karmi się własnym wynikiem): p = 0 gdy slot wchodzi dołem, 1 gdy
-   wychodzi górą, a przesunięcie = (0.5 − p) × wysokość okna × (1 − prędkość).
-   Wartości < 1 wyprzedzają scroll, > 1 zostają w tyle – dzięki temu karty
-   rozjeżdżają się względem siebie i nachodzą na napis w różnych momentach.
-   Tylko transform, tylko przy CX5.motionOn(); niżej układ jest siatką. */
-(function () {
-  "use strict";
-  var $ = CX5.$, $$ = CX5.$$, clamp = CX5.clamp;
-  var sec = $("[data-ppkor]");
+  var sec = CX5.$("[data-ppkor]");
   if (!sec) return;
-  var slots = $$(".pp-kslot", sec).map(function (slot) {
-    var card = $(".pp-kcard", slot);
-    return { slot: slot, card: card, speed: parseFloat(card && card.getAttribute("data-pp-speed")) || 1 };
-  }).filter(function (it) { return it.card; });
-  if (!slots.length) return;
-  var on = false;
+  var track = CX5.$("[data-ppkor-track]", sec);
+  var title = CX5.$("[data-ppkor-title]", sec);
+  var tiles = CX5.$$("[data-ppkor-tile]", sec);
+  if (!track || !tiles.length) return;
+  /* profil prędkości siedzi w atrybucie `style` znacznika – czytamy go raz */
+  var eases = tiles.map(function (t) {
+    return parseFloat(t.style.getPropertyValue("--a")) || 0.35;
+  });
+  var tops = [], hts = [], off = false, shown = false;
+
+  function measure() {
+    for (var i = 0; i < tiles.length; i++) {
+      tops[i] = tiles[i].offsetTop;
+      hts[i] = tiles[i].offsetHeight;
+    }
+  }
 
   function update() {
-    if (!on) return;
-    var vh = window.innerHeight;
-    /* read first, write second – nie mieszamy pomiarów z zapisami */
-    var ys = slots.map(function (it) {
-      var r = it.slot.getBoundingClientRect();
-      var p = clamp((vh - r.top) / (vh + r.height), 0, 1);
-      return (0.5 - p) * vh * (1 - it.speed);
-    });
-    slots.forEach(function (it, i) { it.card.style.setProperty("--pp-y", ys[i].toFixed(1) + "px"); });
+    var h = window.innerHeight;
+    var r = track.getBoundingClientRect();
+    if (!shown && title && r.top <= 0.35 * h) { title.classList.add("is-in"); shown = true; }
+    if (!CX5.motionOn()) {
+      if (!off) { tiles.forEach(function (t) { t.style.removeProperty("--par"); }); off = true; }
+      return;
+    }
+    off = false;
+    for (var i = 0; i < tiles.length; i++) {
+      var span = h + hts[i];
+      var q = span > 0 ? (h - (r.top + tops[i])) / span : 0;
+      var par = 0;
+      if (q > 0 && q < 1) {
+        var a = eases[i], u = q - 0.5;
+        par = span * (q - (a * q + (1 - a) * (0.5 + 4 * u * u * u)));
+      }
+      tiles[i].style.setProperty("--par", par.toFixed(1) + "px");
+    }
   }
-  function measure() {
-    on = CX5.motionOn();
-    if (!on) slots.forEach(function (it) { it.card.style.removeProperty("--pp-y"); });
-  }
-  CX5.register({ scroll: update, resize: measure });
+  CX5.register({ scroll: update, resize: function () { measure(); update(); } });
 })();
 
 /* ===== 50 · Uczestnicy programu – dwa przyciski na karcie ==================
@@ -337,150 +304,42 @@
   CX5.register({ resize: arm });
 })();
 
-/* ===== 65 · Harmonogram programu: oś czasu (styl S1 z laboratorium) ========
-   Przeniesione z warstwy 99 BEZ ZMIAN mechaniki (spec §4). Sekcja NIGDY nie
-   wchodzi w drogę przewijaniu strony. Etap zmieniają wyłącznie: przyciski,
-   węzły osi, klawiatura (strzałki lewo/prawo, Home, End przy fokusie na sekcji
-   lub w niej) i przesunięcie palcem >= 40 px. Żadnego nasłuchu kółka, scrolla
-   ani IntersectionObservera – i nigdzie preventDefault na wheel/touchmove.
+/* ===== 65 · Harmonogram programu ==========================================
+   Przebudowany 19.09.2026 (spec §18.7): mechanika klocka CE-49 mieszka teraz
+   w `ce/CE-49-harmonogram.js`. Stary moduł osi S1 (`pp-os`) usunięty.
+   ====================================================================== */
 
-   Wszystkie jedenaście etapów, geometria osi (--n na węzłach, --l/--w na
-   latach) i stan startowy stoją w HTML-u; skrypt tylko przełącza klasy,
-   licznik, datę i --a na torze, więc bez JS sekcja pokazuje komplet. ====== */
+/* ===== 70 · Rzetelność: delikatny parallaks kadru w tle (spec §18.9) =======
+   Kadr sekcji przesuwa się o maks. ±40 px wobec strony – tyle, żeby zdjęcie
+   „oddychało", i nie więcej (Mateusz: animacje mają dodawać tylko smaku).
+   Ruch liczymy z pozycji sekcji w oknie na zdarzeniu scroll szyny CX5 (rAF),
+   bez nasłuchu `wheel` i bez przechwytywania przewijania. Poniżej 900 px
+   i przy `prefers-reduced-motion` zmienna znika i obraz stoi; obraz ma zapas
+   60 px u góry i u dołu, więc przesunięcie nigdy nie odsłania krawędzi. */
 (function () {
   "use strict";
-  var doc = document, $ = CX5.$, $$ = CX5.$$;
-  function reduced() { return CX5.reducedMQ.matches; }
-
-  var box = $("[data-os]");
+  var sec = CX5.$("#rzetelnosc");
+  var box = sec && CX5.$(".pp-rz__bg", sec);
   if (!box) return;
-  var slides = $$(".pp-os__slide", box);
-  var nodes = $$("[data-os-node]", box);
-  var track = $("[data-os-track]", box);
-  var prev = $("[data-os-prev]", box);
-  var next = $("[data-os-next]", box);
-  var counter = $("[data-os-i]", box);
-  var termEl = $("[data-os-term]", box);
-  var yearEl = $("[data-os-year]", box);
-  var N = slides.length;
-  if (!N || nodes.length !== N || !track || !prev || !next || !counter || !termEl || !yearEl) return;
+  var AMP = 40;
+  var off = false;
 
-  /* Pozycje węzłów czytamy z markupu – jedno źródło geometrii. */
-  var pos = nodes.map(function (b) { return b.style.getPropertyValue("--n") || "0%"; });
-  var idx = 0;
-  slides.forEach(function (s, k) { if (s.classList.contains("is-active")) idx = k; });
-  var curYear = slides[idx].getAttribute("data-year");
-  var dropT = null;
-
-  function apply(i) {
-    var m = slides[i], instant = reduced();
-    idx = i;
-
-    slides.forEach(function (s, k) {
-      if (k === i) {
-        s.classList.add("is-active");
-        s.removeAttribute("aria-hidden");
-        if (!instant) {
-          s.classList.add("is-enter");
-          void s.offsetWidth;              /* reflow: przejście ma od czego startować */
-          s.classList.remove("is-enter");
-        }
-      } else {
-        s.classList.remove("is-active", "is-enter");
-        s.setAttribute("aria-hidden", "true");
-      }
-    });
-
-    counter.textContent = String(i + 1);
-
-    /* Termin tylko wtedy, gdy niesie więcej niż sam rok. */
-    var term = m.getAttribute("data-term") || "";
-    var year = m.getAttribute("data-year") || "";
-    termEl.textContent = (term === year) ? "" : term;
-
-    /* Rok podmieniamy WYŁĄCZNIE przy zmianie roku: stary w górę, nowy z dołu. */
-    if (year !== curYear) {
-      curYear = year;
-      var old = yearEl.querySelector("b.is-in");
-      if (old) {
-        old.classList.remove("is-in");
-        old.classList.add("is-out");
-        if (dropT) clearTimeout(dropT);
-        dropT = setTimeout(function () {
-          if (old.parentNode) old.parentNode.removeChild(old);
-        }, instant ? 0 : 400);
-      }
-      var nb = doc.createElement("b");
-      nb.textContent = year;
-      yearEl.appendChild(nb);
-      void nb.offsetWidth;
-      nb.classList.add("is-in");
+  function frame() {
+    if (!CX5.motionOn()) {
+      if (!off) { box.classList.remove("is-parallax"); sec.style.removeProperty("--pp-rz-y"); off = true; }
+      return;
     }
-
-    nodes.forEach(function (b, k) {
-      if (k === i) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current");
-    });
-    track.style.setProperty("--a", pos[i]);
-    prev.disabled = (i === 0);
-    next.disabled = (i === N - 1);
-    centre(instant);
+    off = false;
+    var r = sec.getBoundingClientRect();
+    var h = window.innerHeight || 1;
+    if (r.bottom < -120 || r.top > h + 120) { box.classList.remove("is-parallax"); return; }
+    box.classList.add("is-parallax");
+    /* -1 = sekcja tuż pod oknem, 0 = na jego środku, 1 = tuż nad nim */
+    var p = CX5.clamp((h / 2 - (r.top + r.height / 2)) / (h / 2 + r.height / 2), -1, 1);
+    sec.style.setProperty("--pp-rz-y", (p * AMP).toFixed(1) + "px");
   }
 
-  /* Linijka węższa niż treść (telefon): aktywny węzeł dosuwamy do środka
-     TORU – przewija się tor, nigdy strona. */
-  function centre(instant) {
-    if (track.scrollWidth <= track.clientWidth + 2) return;
-    var b = nodes[idx].getBoundingClientRect(), t = track.getBoundingClientRect();
-    var left = track.scrollLeft + (b.left + b.width / 2) - (t.left + t.width / 2);
-    left = Math.max(0, Math.min(track.scrollWidth - track.clientWidth, left));
-    if (track.scrollTo) track.scrollTo({ left: left, behavior: instant ? "auto" : "smooth" });
-    else track.scrollLeft = left;
-  }
-
-  function go(i) {
-    i = Math.max(0, Math.min(N - 1, i));
-    if (i === idx) return;
-    apply(i);
-  }
-
-  prev.addEventListener("click", function () { go(idx - 1); });
-  next.addEventListener("click", function () { go(idx + 1); });
-  nodes.forEach(function (b, k) {
-    b.addEventListener("click", function () { go(k); });
-  });
-
-  box.addEventListener("keydown", function (e) {
-    var k = e.key, to = null;
-    if (k === "ArrowRight") to = idx + 1;
-    else if (k === "ArrowLeft") to = idx - 1;
-    else if (k === "Home") to = 0;
-    else if (k === "End") to = N - 1;
-    if (to === null) return;
-    e.preventDefault();
-    go(to);
-  });
-
-  var pid = null, px = 0, py = 0;
-  box.addEventListener("pointerdown", function (e) {
-    var t = e.target;
-    if (t && t.closest && t.closest("button, .pp-os__track")) return;
-    pid = e.pointerId; px = e.clientX; py = e.clientY;
-  });
-  box.addEventListener("pointerup", function (e) {
-    if (pid === null || e.pointerId !== pid) return;
-    pid = null;
-    var dx = e.clientX - px, dy = e.clientY - py;
-    if (Math.abs(dx) >= 40 && Math.abs(dx) > Math.abs(dy)) go(idx + (dx < 0 ? 1 : -1));
-  });
-  box.addEventListener("pointercancel", function () { pid = null; });
-
-  /* Start: dopiero teraz chowamy pozostałe etapy – bez JS widać komplet. */
-  box.classList.add("is-ready");
-  slides.forEach(function (s, k) { if (k !== idx) s.setAttribute("aria-hidden", "true"); });
-  prev.disabled = (idx === 0);
-  next.disabled = (idx === N - 1);
-  centre(true);
-  CX5.register({ resize: function () { centre(true); } });
+  CX5.register({ scroll: frame, resize: frame });
 })();
 
 /* ===== 75 · Formularz demonstracyjny ======================================
@@ -499,369 +358,16 @@
 })();
 
 /* ===== 80 · Metodologia – bez własnego kodu ================================
-   Scena sześciu tematów jest tą samą sceną co „Założenia i cele": obsługuje ją
-   moduł 40 (`js/40-zalozenia.js`), który uruchamia się dla KAŻDEJ sekcji
-   [data-ppscene] i czyta liczbę kroków z DOM-u. Ten plik zostaje jako miejsce
-   na ewentualne różnice Metodologii – celowo pusty. */
+   Od iteracji 2 (spec §18.4b) sceną sześciu kroków steruje moduł próby CE-12
+   `ce/CE-12-scena-faktow-proba.js`: uruchamia się dla KAŻDEJ sekcji [data-fx],
+   czyta liczbę kroków z DOM-u, a wariant bierze z `data-ce-wariant` sekcji –
+   u nas `bez-naglowka` na stałe, bez przełącznika podglądu. Ten blok zostaje
+   jako miejsce na ewentualne różnice Metodologii – celowo pusty. */
 
-/* ===== 85 · Etapy prac – wspólna oś Gantta z filtrami (spec §13) ===========
-   Wykres powstaje z DOM-u: czyta sześć osi `.pp-tl` (termin, nazwa, opis, stan,
-   relacja) i układa je w jednym widoku – wiersz na gospodarstwo, kolumna na
-   miesiąc (XI 2025 → XII 2026) plus zbiorcze 2027 i 2028. Kolejny uczestnik =
-   kolejny blok `[data-etapy-block]` w HTML i kolejny wiersz tutaj; nic w
-   skrypcie nie jest wpisane na sztywno poza kalendarzem kolumn.
-   Zdarzenia o zachodzących terminach idą na kolejne pasy tego samego wiersza
-   (pakowanie w pasy jak na Gantcie). Opis: dymek przy kaflu na hover/fokus,
-   klik przypina kartę pod wykresem (`aria-live`). Bez JS nic się nie dzieje –
-   zostaje sześć osi pod spodem. ========================================== */
-(function () {
-  "use strict";
-  var doc = document;
-  var $ = CX5.$, $$ = CX5.$$;
-  var SVGNS = "http://www.w3.org/2000/svg";
-
-  var src = $("[data-etapy-src]");
-  var mount = $("[data-gantt]");
-  if (!src || !mount) return;
-
-  /* --- 1. kalendarz kolumn ------------------------------------------------ */
-  /* months XI 2025 … XII 2026, then two roll-up columns for 2027 and 2028 */
-  var ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"];
-  var COLS = [{ y: 2025, m: 11 }, { y: 2025, m: 12 }];
-  for (var mi = 1; mi <= 12; mi++) COLS.push({ y: 2026, m: mi });
-  COLS.push({ y: 2027 }, { y: 2028 });
-  var NOW_COL = 10;                                   /* wrzesień 2026 – „jesteśmy tutaj" */
-
-  var MONTHS = [["stycz", 1], ["lut", 2], ["marz", 3], ["marc", 3], ["kwie", 4], ["maj", 5], ["maja", 5],
-                ["czerw", 6], ["lip", 7], ["sierp", 8], ["wrze", 9], ["paździer", 10],
-                ["listopad", 11], ["grud", 12]];
-  var SEASONS = [["wiosn", 3, 5], ["lato", 6, 8], ["latem", 6, 8], ["jesie", 9, 11], ["zim", 12, 12]];
-
-  function colOf(y, m) {
-    if (y <= 2025) return m >= 12 ? 1 : 0;
-    if (y === 2026) return CX5.clamp(1 + m, 2, 13);
-    if (y === 2027) return 14;
-    return 15;
-  }
-  function monthsIn(part) {
-    for (var i = 0; i < MONTHS.length; i++) if (part.indexOf(MONTHS[i][0]) >= 0) return [MONTHS[i][1], MONTHS[i][1]];
-    for (var j = 0; j < SEASONS.length; j++) if (part.indexOf(SEASONS[j][0]) >= 0) return [SEASONS[j][1], SEASONS[j][2]];
-    return null;
-  }
-  function yearIn(part, fallback) {
-    var m = part.match(/20\d\d/);
-    return m ? parseInt(m[0], 10) : fallback;
-  }
-  /* „marzec–kwiecień 2026" -> cols III..IV 2026; „listopad 2025" -> one column */
-  function parseTerm(text) {
-    var s = (text || "").toLowerCase().replace(/\s+/g, " ");
-    var year = yearIn(s, 2026);
-    var parts = s.split("–");
-    var a = monthsIn(parts[0]) || [1, 12];
-    var b = monthsIn(parts[parts.length - 1]) || a;
-    var ya = yearIn(parts[0], year), yb = yearIn(parts[parts.length - 1], year);
-    var from = colOf(ya, a[0]), to = colOf(yb, b[1]);
-    if (to < from) to = from;
-    return { a: from, b: to };
-  }
-
-  /* --- 2. odczyt gospodarstw i zdarzeń z DOM-u ---------------------------- */
-  var farms = $$("[data-etapy-block]", src).map(function (block) {
-    var head = $(".pp-varname", block);
-    var items = $$(".pp-ms", block).map(function (li) {
-      var term = $(".pp-ms__term", li), name = $(".pp-ms__name", li);
-      return {
-        li: li,
-        term: term ? term.textContent.trim() : "",
-        name: name ? name.textContent.trim() : "",
-        state: li.getAttribute("data-state") || "todo",
-        film: !!$(".pp-rel", li),
-        span: parseTerm(term ? term.textContent : "")
-      };
-    });
-    return {
-      key: block.getAttribute("data-etapy-block"),
-      who: block.getAttribute("data-gospodarz") || "",
-      crop: block.getAttribute("data-uprawa") || "",
-      full: head ? head.textContent.replace(/\s+/g, " ").trim() : "",
-      items: items,
-      lanes: 1
-    };
-  }).filter(function (f) { return f.key && f.items.length; });
-  if (!farms.length) return;
-
-  /* lane packing: an event goes to the first lane whose last event ended earlier */
-  farms.forEach(function (f) {
-    var ends = [];
-    f.items.slice().sort(function (x, y) { return x.span.a - y.span.a; }).forEach(function (it) {
-      var l = 0;
-      while (l < ends.length && ends[l] >= it.span.a) l++;
-      it.lane = l;
-      ends[l] = it.span.b;
-    });
-    f.lanes = Math.max(1, ends.length);
-  });
-
-  var byKey = {};
-  farms.forEach(function (f) { byKey[f.key] = f; });
-
-  /* --- 3. klocki DOM ------------------------------------------------------ */
-  function el(tag, cls, txt) {
-    var n = doc.createElement(tag);
-    if (cls) n.className = cls;
-    if (txt != null) n.textContent = txt;
-    return n;
-  }
-  function icon(id, cls) {
-    var s = doc.createElementNS(SVGNS, "svg");
-    s.setAttribute("class", "wf-icon" + (cls ? " " + cls : ""));
-    s.setAttribute("aria-hidden", "true");
-    var u = doc.createElementNS(SVGNS, "use");
-    u.setAttribute("href", "#" + id);
-    s.appendChild(u);
-    return s;
-  }
-  function srOnly(txt) { return el("span", "wf-sr-only", txt); }
-
-  var STATE_ICON = { done: "ti-check", doing: "ti-clock", todo: "ti-calendar", na: "ti-minus" };
-
-  /* --- 4. szkielet: filtry, wykres, karta przypięta, dymek ---------------- */
-  var filters = el("div", "pp-gt__filters");
-  filters.setAttribute("role", "group");
-  filters.setAttribute("aria-label", "Filtr gospodarstw");
-
-  var scroll = el("div", "pp-gt__scroll");
-  scroll.tabIndex = 0;
-  scroll.setAttribute("role", "group");
-  scroll.setAttribute("aria-label", "Etapy prac gospodarstw – oś czasu, przewijana w poziomie");
-  scroll.setAttribute("data-lenis-prevent", "");
-  var grid = el("div", "pp-gt__grid");
-  grid.style.setProperty("--pp-cols", String(COLS.length));
-  scroll.appendChild(grid);
-
-  var pin = el("div", "pp-gt__pin");
-  pin.setAttribute("aria-live", "polite");
-  var bubble = el("div", "pp-gt__bubble");
-  bubble.hidden = true;
-
-  mount.appendChild(filters);
-  mount.appendChild(scroll);
-  mount.appendChild(pin);
-  mount.appendChild(bubble);
-
-  /* --- 5. filtry ---------------------------------------------------------- */
-  var allMode = true, active = {};
-  var chips = [];
-
-  function chip(label, key, ico) {
-    var b = el("button", "pp-gt__chip");
-    b.type = "button";
-    if (ico) b.appendChild(icon(ico));
-    b.appendChild(el("span", null, label));
-    if (key) b.setAttribute("data-farm", key);
-    b.addEventListener("click", function () {
-      if (!key) { allMode = true; active = {}; }
-      else if (allMode) { allMode = false; active = {}; active[key] = true; }
-      else if (active[key]) {
-        delete active[key];
-        if (!Object.keys(active).length) allMode = true;
-      } else active[key] = true;
-      syncChips();
-      render();
-    });
-    chips.push({ btn: b, key: key });
-    filters.appendChild(b);
-    return b;
-  }
-  function syncChips() {
-    chips.forEach(function (c) {
-      c.btn.setAttribute("aria-pressed", String(c.key ? (!allMode && !!active[c.key]) : allMode));
-    });
-  }
-  chip("wszystkie gospodarstwa", null, "ti-filter");
-  farms.forEach(function (f) { chip(f.who || f.full, f.key, "ti-leaf"); });
-  syncChips();
-
-  function visible(f) { return allMode || !!active[f.key]; }
-
-  /* --- 6. karta opisu (dymek i wersja przypięta mają tę samą treść) ------- */
-  function cardFor(it, farm) {
-    var card = el("div", "pp-gt__card");
-    card.appendChild(el("span", "pp-gt__card-farm", farm.full));
-    /* verbatim clone of the milestone: term, name, description, state, relation */
-    var body = el("div", "pp-ms");
-    body.setAttribute("data-state", it.state);
-    var clone = it.li.cloneNode(true);
-    $$("[id]", clone).forEach(function (n) { n.removeAttribute("id"); });
-    $$("[data-reveal]", clone).forEach(function (n) { n.removeAttribute("data-reveal"); });
-    $$(".pp-reveal", clone).forEach(function (n) { n.classList.remove("pp-reveal", "is-in"); });
-    while (clone.firstChild) body.appendChild(clone.firstChild);
-    card.appendChild(body);
-    return card;
-  }
-
-  var pinnedKey = null, pinnedIdx = -1;
-
-  function unpin() {
-    pin.textContent = "";
-    pinnedKey = null; pinnedIdx = -1;
-    $$(".pp-gt__tile.is-pinned", grid).forEach(function (t) { t.classList.remove("is-pinned"); });
-  }
-  function doPin(farm, idx) {
-    pin.textContent = "";
-    var box = el("div", "pp-gt__pinned");
-    var x = el("button", "pp-gt__pinclose");
-    x.type = "button";
-    x.setAttribute("aria-label", "zamknij");
-    x.appendChild(icon("ti-x"));
-    x.addEventListener("click", unpin);
-    box.appendChild(x);
-    box.appendChild(cardFor(farm.items[idx], farm));
-    pin.appendChild(box);
-    pinnedKey = farm.key; pinnedIdx = idx;
-    markPinned();
-  }
-  function markPinned() {
-    $$(".pp-gt__tile", grid).forEach(function (t) {
-      t.classList.toggle("is-pinned",
-        t.getAttribute("data-farm") === pinnedKey && t.getAttribute("data-idx") === String(pinnedIdx));
-    });
-  }
-
-  function hideBubble() { if (!bubble.hidden) { bubble.hidden = true; bubble.textContent = ""; } }
-  function showBubble(tile, it, farm) {
-    if (!CX5.wideMQ.matches) return;
-    bubble.textContent = "";
-    bubble.appendChild(cardFor(it, farm));
-    bubble.hidden = false;
-    var gr = mount.getBoundingClientRect(), tr = tile.getBoundingClientRect();
-    var w = bubble.offsetWidth;
-    var left = CX5.clamp(tr.left - gr.left, 0, Math.max(0, gr.width - w));
-    bubble.style.left = Math.round(left) + "px";
-    bubble.style.top = Math.round(tr.bottom - gr.top + 8) + "px";
-  }
-
-  /* --- 7. rysowanie wykresu ---------------------------------------------- */
-  function render() {
-    grid.textContent = "";
-    var rows = farms.filter(visible);
-    /* rows must be EXPLICIT: the column guides span `2 / -1`, and a negative
-       line only counts back from the end of the explicit grid */
-    var lanes = 0;
-    rows.forEach(function (f) { lanes += f.lanes; });
-    grid.style.gridTemplateRows = "auto repeat(" + lanes + ", minmax(52px, auto))";
-
-    /* nagłówki kolumn + linie prowadzące */
-    var corner = el("div", "pp-gt__h pp-gt__h--corner");
-    corner.appendChild(el("span", "pp-gt__corner-t", "gospodarstwo"));
-    grid.appendChild(corner);
-    COLS.forEach(function (c, i) {
-      var h = el("div", "pp-gt__h" + (i === NOW_COL ? " pp-gt__h--now" : ""));
-      h.style.gridColumn = String(i + 2);
-      h.appendChild(el("span", "pp-gt__m", c.m ? ROMAN[c.m - 1] : String(c.y)));
-      if (c.m) h.appendChild(el("span", "pp-gt__y", String(c.y)));
-      if (i === NOW_COL) h.appendChild(el("span", "pp-gt__nowlab", "jesteśmy tutaj"));
-      grid.appendChild(h);
-      var g = el("div", "pp-gt__guide" + (i === NOW_COL ? " pp-gt__guide--now" : ""));
-      g.style.gridColumn = String(i + 2);
-      grid.appendChild(g);
-    });
-
-    /* wiersze gospodarstw */
-    var row = 2;
-    rows.forEach(function (f) {
-      var band = el("div", "pp-gt__band");
-      band.id = "etapy-" + f.key;
-      band.setAttribute("data-band", f.key);
-      band.style.gridRow = row + " / span " + f.lanes;
-      grid.appendChild(band);
-
-      var name = el("div", "pp-gt__name");
-      name.setAttribute("data-band", f.key);
-      name.style.gridRow = row + " / span " + f.lanes;
-      name.appendChild(el("span", "pp-gt__farm", f.who || f.full));
-      var cropChip = el("span", "pp-gt__cropchip");
-      cropChip.appendChild(icon("ti-leaf"));
-      cropChip.appendChild(el("span", null, f.crop));
-      if (f.crop) name.appendChild(cropChip);
-      grid.appendChild(name);
-
-      f.items.forEach(function (it, idx) {
-        var t = el("button", "pp-gt__tile");
-        t.type = "button";
-        t.setAttribute("data-state", it.state);
-        t.setAttribute("data-farm", f.key);
-        t.setAttribute("data-idx", String(idx));
-        t.style.gridColumn = (it.span.a + 2) + " / " + (it.span.b + 3);
-        t.style.gridRow = String(row + it.lane);
-        t.appendChild(srOnly("pokaż opis"));
-        var top = el("span", "pp-gt__top");
-        top.appendChild(icon(STATE_ICON[it.state] || "ti-calendar", "wf-icon--sm"));
-        /* a one-column bar has no room for the term and its month is already in
-           the column header – the term stays in the accessible name and the card */
-        top.appendChild(el("span", it.span.b > it.span.a ? "pp-gt__term" : "wf-sr-only", it.term));
-        if (it.film) top.appendChild(icon("ti-player-play", "wf-icon--sm"));
-        t.appendChild(top);
-        t.appendChild(el("span", "pp-gt__ev", it.name));
-        if (it.state === "doing") t.appendChild(el("span", "pp-gt__pulse"));
-
-        t.addEventListener("mouseenter", function () { showBubble(t, it, f); });
-        t.addEventListener("mouseleave", hideBubble);
-        t.addEventListener("focus", function () { showBubble(t, it, f); });
-        t.addEventListener("blur", hideBubble);
-        t.addEventListener("click", function (e) {
-          if (e.detail > 0) hideBubble();
-          if (pinnedKey === f.key && pinnedIdx === idx) unpin();
-          else doPin(f, idx);
-        });
-        grid.appendChild(t);
-      });
-      row += f.lanes;
-    });
-    markPinned();
-  }
-
-  /* --- 8. skok z kart uczestników: przewiń do wiersza i podświetl go ------ */
-  var hlT = null;
-  function focusFarm(key) {
-    var f = byKey[key];
-    if (!f) return;
-    if (!visible(f)) { active[key] = true; syncChips(); render(); }
-    var band = $('[data-band="' + key + '"]', grid);
-    if (!band) return;
-    var r = band.getBoundingClientRect();
-    var off = Math.min(220, window.innerHeight * 0.28);
-    CX5.scrollTo(window.scrollY + r.top - off, CX5.reducedMQ.matches ? "auto" : "smooth");
-    var nodes = $$('[data-band="' + key + '"]', grid);
-    nodes.forEach(function (n) { n.classList.add("is-target"); });
-    if (hlT) window.clearTimeout(hlT);
-    hlT = window.setTimeout(function () {
-      nodes.forEach(function (n) { n.classList.remove("is-target"); });
-    }, 1200);
-  }
-
-  /* --- 9. start ----------------------------------------------------------- */
-  /* the timelines keep their content but hand over the anchors to the chart rows */
-  $$("[data-etapy-block]", src).forEach(function (b) {
-    if (b.id) b.id = b.id + "-lista";
-  });
-  src.hidden = true;
-  mount.hidden = false;
-  render();
-
-  /* deep link: #etapy-<klucz> trafia w wiersz wykresu, nie w ukrytą oś.
-     Dopiero po `load` – wcześniej układ jeszcze się przesuwa (zdjęcia, sceny),
-     a skok liczony z bieżących pozycji trafiłby w próżnię. */
-  var hash = (location.hash || "").replace("#etapy-", "");
-  if (location.hash.indexOf("#etapy-") === 0 && byKey[hash]) {
-    window.addEventListener("load", function () {
-      window.setTimeout(function () { focusFarm(hash); }, 160);
-    });
-  }
-
-  scroll.addEventListener("scroll", hideBubble, { passive: true });
-  CX5.register({ scroll: hideBubble, resize: hideBubble });
-  CX5.ppEtapy = { focusFarm: focusFarm };
-})();
+/* ===== 85 · Etapy prac – kod klocka mieszka w ce/CE-51-os-gantta.js ========
+   Przebudowa 19.09 (spec §18.10) przeniosła oś Gantta do warstwy wspólnej
+   `ce/`, razem ze źródłem treści i kartą okresu. Blok zostaje jako ślad po
+   numeracji – moduł 50 (przyciski „etapy prac") rozmawia z klockiem przez
+   `CX5.ppEtapy.focusFarm`, które publikuje CE-51. ======================== */
 
 

@@ -71,6 +71,13 @@
    treści w poprzek, a ten ma trzymać pełną szerokość okna i sam liczyć swoje
    `max-width:1800px`. */
 .c5-hero--bg{--c5-hero-scrim:rgb(0 0 0 / .4);--c5-hero-dock:96px;
+  /* soft shadows under the copy on the photo: legibility without dimming the
+     frame – no gradients, nothing visible as a shape. The small copy (crumbs,
+     lead) takes the tighter, denser one; the big headline a wide, light one.
+     Both were retuned on 19.09 for a bright, sunlit photo (glossy leaf
+     highlights under the text), where the frame itself must stay untouched. */
+  --c5-hero-shadow:0 0 2px rgb(0 0 0 / .7),0 0 10px rgb(0 0 0 / .7),0 0 24px rgb(0 0 0 / .6),0 0 48px rgb(0 0 0 / .45);
+  --c5-hero-shadow-h1:0 0 3px rgb(0 0 0 / .35),0 0 24px rgb(0 0 0 / .45),0 0 60px rgb(0 0 0 / .4);
   position:relative;display:flex;flex-direction:column;align-items:stretch;
   padding-block:0;min-height:0;}
 
@@ -103,16 +110,16 @@
   padding-block:clamp(1.25rem,2.2vw,1.75rem) var(--c5-hero-dock);
   color:var(--w-text-inverse);}
 .c5-hero--bg .c5-hero__crumbs{grid-column:1 / -1;grid-row:1;align-self:start;
-  padding-bottom:0;color:rgb(255 255 255 / .75);}
+  padding-bottom:0;color:var(--w-white);text-shadow:var(--c5-hero-shadow);}
 .c5-hero--bg .c5-hero__crumbs a:hover{color:var(--w-white);}
 /* H1: ok. 12 znaków w wierszu („Program uprawy / kukurydzy”) */
 .c5-hero--bg .c5-hero__title{grid-column:1;grid-row:3;align-self:end;
-  max-width:8.6em;margin:0;
+  max-width:8.6em;margin:0;text-shadow:var(--c5-hero-shadow-h1);
   font-size:clamp(3rem,6.4vw,6.5rem);line-height:1.02;letter-spacing:-0.025em;}
 .c5-hero--bg .c5-hero__side{grid-column:2;grid-row:3;align-self:end;
   display:flex;flex-direction:column;gap:clamp(1.5rem,2.4vw,2rem);max-width:34rem;}
 .c5-hero--bg .c5-hero__lead{font-size:1.0625rem;line-height:1.55;
-  color:rgb(255 255 255 / .9);max-width:none;}
+  color:var(--w-white);text-shadow:var(--c5-hero-shadow);max-width:none;}
 
 /* Przyciski na kadrze: pierwszy jasny (`--inv`), drugi konturowy na ciemnym
    – klasa lokalna wariantu, nie globalny przycisk. Fokus jasny. Para etykiet
@@ -158,7 +165,7 @@
   .c5-hero--bg .c5-hero__side{grid-area:2 / 1;max-width:none;
     padding-top:clamp(1.5rem,5vw,2rem);color:var(--w-text-primary);}
   /* pod kadrem wraca ciemny tekst i para przycisków --dark / --light */
-  .c5-hero--bg .c5-hero__lead{font-size:1rem;color:var(--w-text-secondary);}
+  .c5-hero--bg .c5-hero__lead{font-size:1rem;color:var(--w-text-secondary);text-shadow:none;}
   .c5-hero--bg .c5-btn--inv{background:var(--w-gray-900);color:var(--w-text-inverse);
     border-color:var(--w-gray-900);}
   .c5-hero--bg .c5-btn--inv:hover{background:var(--w-gray-700);border-color:var(--w-gray-700);}

@@ -18,6 +18,11 @@
 
 #main [id]{scroll-margin-top:0;}
 
+/* page-specific: CE-07 – przy szerokim kontenerze (1800 px, §18.0 pkt 4)
+   treść dochodzi bliżej krawędzi okna, więc kropki nawigacji wsuwamy w sam
+   margines: 10 px zamiast domyślnych 30 px z ce/CE-07 (spec §18.11). */
+.c5-dots{right:10px;}
+
 /* Dostępność (DS §5b): --w-text-tertiary przy rozmiarze caption nie przechodzi
    AA, a podpisy pod placeholderami stoją także w pasmach. Na tej stronie
    podpisy idą więc na --w-text-secondary. */
@@ -30,8 +35,9 @@
 .pp-tile__name{font-size:1.0625rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;margin:0;}
 /* Pigułka stanu to element c5-chip (EL-16, ce/00-base.css); stan niesie styl
    obrysu: --solid „w toku”, --dashed „zaplanowane”, --dotted „nie dotyczy”.
-   Tu zostaje tylko miejsce pigułki w kamieniu, wierszu osi i pustym slocie. */
-.pp-ms .c5-chip,.pp-os__slide .c5-chip,.pp-empty .c5-chip{width:max-content;margin-top:var(--w-space-1);}
+   Tu zostaje tylko miejsce pigułki w kamieniu i w pustym slocie (wiersz osi S1
+   `pp-os__slide` odpadł razem z blokiem 65, przebudowa CE-49 z 19.09). */
+.pp-ms .c5-chip,.pp-empty .c5-chip{width:max-content;margin-top:var(--w-space-1);}
 .pp-ms__warn{font-size:0.8125rem;color:var(--w-text-secondary);}
 
 /* page-specific: CE-08 – nadpisanie siatki hero (c5.css + ce/CE-08): bez
@@ -77,87 +83,26 @@
   .c5-marq__item:nth-child(n+5){display:none;}
 }
 
-/* ===== 30 · O PROGRAMIE: cztery karty (spec §5) =============================
-   Trzy karty akapitów wstępu + karta produktu badanego. Siatka wg spec:
-   4 kolumny od 1100 px, 2 kolumny 700–1099 px, 1 poniżej. Karty wchodzą
-   jednorazowym fade-inem ze stopniowaniem 80 ms (klasę dokłada 02-reveal.js).
+/* ===== 30 · O PROGRAMIE – blok pusty od 19.09 (iteracja 2, spec §18.2) ======
+   Sekcja stoi na klocku CE-69; cały jej styl przeniósł się do
+   `ce/CE-69-wstep-z-kadrem.css` (prefiks `c5-opener`). Dawne klasy
+   `pp-manifest` / `pp-mcard` zniknęły ze strony i nie używa ich nic innego.
    ===================================================================== */
-.pp-manifest{display:grid;grid-template-columns:minmax(0,1fr);
-  gap:var(--w-space-5);margin-top:clamp(1.5rem,3vw,2.25rem);padding:0;list-style:none;}
-@media (min-width:700px){ .pp-manifest{grid-template-columns:repeat(2,minmax(0,1fr));} }
-@media (min-width:1100px){ .pp-manifest{grid-template-columns:repeat(4,minmax(0,1fr));} }
-.pp-mcard{display:flex;flex-direction:column;gap:var(--w-space-4);height:100%;
-  border:1px solid var(--w-border-default);background:var(--w-surface-page);
-  padding:clamp(1.25rem,2.4vw,1.75rem);
-  transition:border-color var(--w-duration-base) var(--w-ease);}
-.pp-mcard:hover{border-color:var(--w-gray-900);}
-.pp-mcard p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
 
-/* Karta produktu badanego: packshot na jasnoszarym polu, pod nim zdanie
-   i dwa przyciski; przyciski trzymają się dołu karty. */
-.pp-mcard__pack{display:grid;place-items:center;background:var(--w-gray-100);padding:var(--w-space-4);}
-.pp-mcard__pack img{display:block;height:140px;width:auto;max-width:100%;object-fit:contain;}
-/* Przyciski przy dolnej krawędzi karty, jeden pod drugim na całą szerokość –
-   w czterech kolumnach etykiety i tak zawijają, a równa szerokość trzyma je
-   w porządku. */
-.pp-mcard--prod .c5-btnrow{margin-top:auto;gap:var(--w-space-2);flex-direction:column;align-items:stretch;}
-.pp-mcard--prod .c5-btn{--c5-btn-px:16px;}
+/* ===== 40 · Boksy ilustracji sceny „Metodologia" ============================
+   (pp-sviz, pp-layout, pp-lband, pp-dots, pp-cal2, pp-stack)
+   Po iteracji 2 (19.09.2026) z bloku zostały wyłącznie klocki wizuali i ciemny
+   boks, w którym stoją. Reguły sceny sterowanej przewijaniem (`pp-scene*`,
+   `pp-step*`, `pp-prog*`, `pp-chips`, kadrowania `#zalozenia`) usunięte razem
+   z modułem 40 w `prochnica-plus.js`: `#zalozenia` przeszło na CE-70,
+   `#metodologia` na próbę CE-12 (znaczniki `c5-fx*`, blok 80 niżej).
+   Figury Metodologii noszą obie klasy – `c5-viz` (pozycja i przenikanie
+   w scenie CE-12) oraz `pp-sviz` (odwrócone kolory klocków na ciemnym polu).
 
-/* Stopniowanie wejścia kart (80 ms) – transition-delay wygrywa z .pp-reveal. */
-.pp-manifest > li:nth-child(2){transition-delay:.08s;}
-.pp-manifest > li:nth-child(3){transition-delay:.16s;}
-.pp-manifest > li:nth-child(4){transition-delay:.24s;}
-
-@media (prefers-reduced-motion: reduce){
-  .pp-mcard{transition:none;}
-  .pp-manifest > li{transition-delay:0s;}
-}
-
-/* ===== 40 · Sceny sterowane przewijaniem (Założenia i cele, Metodologia) =====
-   Port modułu 50 „Czym jest" ze strony CARBOMAT ECO (spec §6 i §12). Jeden
-   zestaw reguł obsługuje obie sceny – różnią się wyłącznie liczbą kroków,
-   zdjęciami (kadrowanie niżej / w 80-metodologia.css) i leadem w nagłówku.
-
-   Dwa układy z jednego DOM-u:
-   · domyślny (mobile / ograniczony ruch / bez JS) – jedna kolumna, wszystko
-     widoczne: nagłówek, a potem pary „temat + ilustracja"; panel zdjęć to
-     dekoracja, więc w tym układzie w ogóle nie wchodzi;
-   · scena (≥ 900 px, no-preference, .cx-js) – sticky 100svh: nagłówek u góry
-     lewej kolumny, jeden temat naraz przy dolnej krawędzi, pasek progresu pod
-     nim, po prawej panel zdjęcia z boksem ilustracji o stałym rozmiarze.
-   Kolejność DOM = kolejność czytania; siatka sceny tylko przestawia elementy. */
-.pp-scene__track{height:auto;}
-.pp-scene{display:flex;flex-direction:column;gap:clamp(2rem,4vw,3rem);}
-.pp-scene__head{display:flex;flex-direction:column;gap:clamp(1rem,2vw,1.5rem);}
-.pp-scene__head .c5-kicker{margin-bottom:0;}
-.pp-scene__head .c5-h2{max-width:560px;}
-.pp-scene__lead{display:flex;flex-direction:column;gap:var(--w-space-3);max-width:560px;}
-
-/* Panel zdjęć: czysta dekoracja sceny (aria-hidden), poza sceną nie istnieje. */
-.pp-scene__panel{display:none;}
-
-.pp-scene__flow{display:flex;flex-direction:column;gap:clamp(1.75rem,3.5vw,2.75rem);margin:0;padding:0;}
-.pp-step{display:flex;flex-direction:column;gap:var(--w-space-3);max-width:640px;}
-.pp-step__title{font-size:clamp(1.125rem,1.8vw,1.5rem);line-height:1.22;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
-.pp-step__body{display:flex;flex-direction:column;gap:var(--w-space-3);font-size:0.9375rem;line-height:1.55;color:var(--w-text-secondary);}
-.pp-step__body ul{margin:0;}
-.pp-step__body .wf-list{padding-left:0;}
-
-/* Pasek progresu ma sens tylko w scenie sterowanej przewijaniem. */
-.pp-scene__prog{display:none;}
-.pp-prog{position:relative;height:2px;background:var(--w-gray-200);}
-.pp-prog__fill{position:absolute;inset:0;background:var(--w-gray-900);transform:scaleX(var(--pp-p,0));transform-origin:left center;will-change:transform;}
-/* znaczniki dzielą tor na tyle odcinków, ile jest tematów – widać, ile
-   brakuje do kolejnego opisu */
-.pp-prog__mark{position:absolute;top:50%;width:1px;height:8px;margin-top:-4px;
-  left:calc(var(--pp-m,1) / var(--pp-steps,4) * 100%);background:var(--w-gray-400);}
-
-/* --- Klocki wizuali (przeniesione z warstwy 99, bloki 3 i 14) --------------
-   Drobne elementy wspólne dla ilustracji obu scen: pigułki upraw, siatka
-   punktów poboru, kalendarz dwuslotowy, lista technologii kontrolnej oraz
-   schemat kwatery (cztery pasy po 3 rzędy + referencja poza kwaterą).
+   --- Klocki wizuali (przeniesione z warstwy 99, bloki 3 i 14) --------------
+   Siatka punktów poboru, kalendarz dwuslotowy, lista technologii kontrolnej
+   oraz schemat kwatery (cztery pasy po 3 rzędy + referencja poza kwaterą).
    Wariant NIGDY nie jest niesiony samym wypełnieniem – każdy pas ma etykietę. */
-.pp-chips{display:flex;flex-wrap:wrap;gap:8px;}
 .pp-dots{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1rem,4vw,2rem);
   justify-items:center;border:1px solid var(--w-border-default);padding:clamp(1rem,3vw,1.75rem);}
 .pp-dots i{width:13px;height:13px;background:var(--w-gray-900);display:block;}
@@ -231,85 +176,42 @@
   .pp-sviz .pp-cal2{grid-template-columns:minmax(0,1fr);}
 }
 
-/* Układ statyczny na szerokim ekranie (ograniczony ruch albo brak JS):
-   ilustracja jest pasem, nie całą kolumną. */
-@media (min-width:900px){
-  .pp-scene__flow{align-items:flex-start;}
-  .pp-step{max-width:640px;}
-}
-
-/* --- Scena: sticky 100svh w wysokim torze (JS ustawia wysokość toru) -------- */
-@media (min-width:900px) and (prefers-reduced-motion: no-preference){
-  .cx-js .pp-scene-sec{padding-block:0;}
-  .cx-js .pp-scene{
-    --pp-gap:clamp(2rem,6vw,8rem);
-    --pp-progh:40px;
-    /* prześwit na dok doradcy, który pływa nad dolną krawędzią okna */
-    --pp-dock:58px;
-    position:sticky;top:0;height:100svh;
-    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr);
-    gap:0 var(--pp-gap);padding-block:var(--c5-gutter);
-  }
-  /* Panel wraca jako boks w kolumnie 2 – warstwy zdjęć leżą jedna na drugiej,
-     widoczna jest tylko ta z data-on="true" (crossfade .45 s). */
-  .cx-js .pp-scene__flow > .pp-scene__panel{display:block;position:relative;grid-row:1;grid-column:2;
-    align-self:stretch;height:100%;background:var(--w-gray-700);overflow:hidden;}
-  .cx-js .pp-scene__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 55%;
-    opacity:0;transition:opacity .45s var(--w-ease);will-change:opacity;}
-  .cx-js .pp-scene__bg[data-on="true"]{opacity:1;}
-  /* nakładka pod boksem ilustracji – biały tekst nie może walczyć z jasnymi
-     partiami zdjęcia */
-  .cx-js .pp-scene__panel::after{content:"";position:absolute;inset:0;background:rgb(0 0 0 / .3);}
-  .cx-js .pp-scene__head{grid-row:1;grid-column:1;align-self:start;z-index:2;
-    background:var(--w-surface-page);padding-bottom:var(--w-space-4);}
-  /* w scenie nagłówek jest odrobinę mniejszy – najdłuższy temat musi zmieścić
-     się pod nim na ekranie 800 px bez wchodzenia w nagłówek */
-  .cx-js .pp-scene__head .c5-h2{font-size:clamp(1.5rem,2.6vw,2.125rem);}
-  .cx-js .pp-scene__head .c5-kicker{margin-bottom:0;}
-  /* Warstwa temat + ilustracja leży na całej scenie: tematy w lewej kolumnie
-     przy dolnej krawędzi, ilustracje wyśrodkowane w prawej – wszystkie w tej
-     samej komórce siatki, więc wymieniają się w miejscu. */
-  .cx-js .pp-scene__flow{grid-row:1;grid-column:1 / -1;display:grid;
-    grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr);gap:0 var(--pp-gap);}
-  .cx-js .pp-scene__flow > .pp-step{grid-row:1;grid-column:1;align-self:end;max-width:none;
-    padding-bottom:calc(var(--pp-progh) + var(--pp-dock));
-    opacity:0;transform:translateY(12px);transition:opacity .18s var(--w-ease),transform .18s var(--w-ease);}
-  .cx-js .pp-scene__flow > .pp-step.is-on{opacity:1;transform:none;transition-duration:.26s;}
-  .cx-js .pp-scene__flow > .pp-sviz{grid-row:1;grid-column:2;align-self:center;justify-self:center;
-    width:clamp(300px,78%,560px);height:clamp(360px,64svh,600px);max-width:none;
-    opacity:0;visibility:hidden;transition:opacity .22s var(--w-ease),visibility 0s linear .22s;}
-  .cx-js .pp-scene__flow > .pp-sviz[data-on="true"]{opacity:1;visibility:visible;transition:opacity .22s var(--w-ease);}
-  .cx-js .pp-scene__prog{grid-row:1;grid-column:1;align-self:end;display:block;margin-bottom:var(--pp-dock);}
-}
-/* Niskie okna (np. 1280×720): nagłówek i temat dostają ciaśniejszą skalę, żeby
-   najdłuższy temat nadal mieścił się nad paskiem progresu. */
-@media (min-width:900px) and (prefers-reduced-motion: no-preference) and (max-height:820px){
-  .cx-js .pp-scene{--pp-progh:32px;}
-  .cx-js .pp-scene__head .c5-h2{font-size:clamp(1.375rem,2.2vw,1.75rem);}
-  .cx-js .pp-scene__flow > .pp-step .pp-step__body{font-size:0.875rem;}
-  .cx-js .pp-scene__flow > .pp-step .pp-step__title{font-size:clamp(1.0625rem,1.5vw,1.25rem);}
-}
-
-/* --- Kadrowanie zdjęć sceny „Założenia i cele" ----------------------------- */
-#zalozenia .pp-scene__bg[data-ppbg="1"]{object-position:50% 60%;}  /* siewka w glebie */
-#zalozenia .pp-scene__bg[data-ppbg="2"]{object-position:50% 52%;}  /* rzędy upraw o zachodzie */
-#zalozenia .pp-scene__bg[data-ppbg="3"]{object-position:50% 50%;}  /* rzędy w niskim słońcu */
-#zalozenia .pp-scene__bg[data-ppbg="4"]{object-position:50% 45%;}  /* gleba w dłoniach */
-
-/* ===== 45 · Oczekiwane długofalowe korzyści – karty nad napisem (spec §7) ====
-   Domyślnie (mobile / ograniczony ruch / bez JS) to zwykły nagłówek i siatka
-   ośmiu kart z jednorazowym fade-in – cały tekst korzyści zawsze widoczny.
-   Od 900 px z JS i pełnym ruchem: napis stoi przyklejony na środku ekranu przez
-   cały tor (≈ 8 × 55 vh), a karty płyną obok niego z własnym odsunięciem
-   (--pp-x), obrotem (--pp-rot) i prędkością (data-pp-speed → --pp-y z JS),
-   więc raz po raz nachodzą na napis. Karty są nieprzezroczyste. */
-.pp-kor{overflow-x:clip;}
+/* ===== 45 · Oczekiwane długofalowe korzyści – CE-44 wariant `tlo-foto` (§18.4)
+   Port bloku 55 z Kukurydzy (`u-fk*` → `pp-kor*`, klasy strony zostają).
+   Domyślnie (mobile / ograniczony ruch / bez JS): scena jako blok (kadr tła
+   + napis, min. 70 svh), pod nią kafle w jednej kolumnie (dwie od 700 px),
+   bez przesunięć – cały tekst korzyści zawsze widoczny.
+   Scena (≥ 900 px, no-preference, .cx-js): kadr przyklejony na `top:0` na cały
+   ekran przez cały tor, a nad nim osiem nieprzezroczystych kafli w trzech
+   rozłącznych pasach – `--i` to miejsce w torze, `--lane` środek pasa,
+   `--a` profil prędkości, `--par` (liczy JS) przesunięcie. ================= */
+/* tor idzie od krawędzi do krawędzi (zdjęcie sceny nie ma marginesów);
+   marginesy kolumny treści bierze na siebie siatka kafli. Sekcja bez górnego
+   paddingu – scena zaczyna się tam, gdzie kończy się poprzednia sekcja. */
+.pp-kor{padding-block:0 clamp(3.5rem,7vw,6.25rem);}
 .pp-kor__track{position:relative;}
-.pp-kor__title{font-size:clamp(1.75rem,4.4vw,3rem);line-height:1.08;font-weight:var(--w-weight-medium);
-  letter-spacing:-0.02em;text-align:center;text-wrap:balance;margin:0;}
-.pp-kor__list{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--w-space-4);
-  margin:clamp(1.5rem,3vw,2.25rem) 0 0;padding:0;list-style:none;}
-@media (min-width:700px){ .pp-kor__list{grid-template-columns:repeat(2,minmax(0,1fr));} }
+.pp-kor__stage{position:relative;z-index:0;display:grid;place-items:center;overflow:hidden;
+  min-height:70svh;padding:clamp(2.5rem,7vw,5rem) var(--w-space-5);}
+.pp-kor__bg{position:absolute;inset:0;}
+/* kadr tła: jedno zdjęcie na pełny ekran, kadrowane ze środka. Bez
+   `loading="lazy"` – zdjęcie jest tłem sceny, która przykleja się na `top:0`,
+   więc musi stać w kadrze w chwili przyklejenia, a nie dojeżdżać po nim. */
+.pp-kor__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;}
+/* Jednolity scrim (bez gradientów). Kadr jest jaśniejszy niż na Kukurydzy
+   (średnia luminancja .31 wobec .04), więc tamte .25 tutaj nie wystarczają.
+   Przy .58 biały napis trzyma 6,95 : 1 na p95 i 5,69 : 1 NA NAJJAŚNIEJSZYM
+   pikselu pod napisem – zmierzone na zrzuconym kadrze przy ukrytym napisie
+   w 1440 × 900 i 1920 × 1080 (19.09, `qa/C/qa-korzysci.py`). */
+.pp-kor__bg::after{content:"";position:absolute;inset:0;background:rgb(0 0 0 / .58);}
+.pp-kor__title{position:relative;z-index:1;color:var(--w-text-inverse);
+  font-size:clamp(2.5rem,6vw,5.5rem);line-height:1.04;font-weight:var(--w-weight-medium);
+  letter-spacing:-0.02em;text-align:center;margin-inline:auto;margin-block:0;max-width:min(100%,16ch);}
+/* maska wyrazu: `overflow:hidden` z zapasem na dolne wydłużenia (y, j),
+   skasowanym ujemnym marginesem, żeby wiersze stały tam gdzie stały */
+.pp-kor__w{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.14em;margin-bottom:-.14em;}
+.pp-kor__w > span{display:inline-block;}
+.pp-kor__tiles{display:grid;gap:clamp(1rem,2.5vw,1.5rem);list-style:none;
+  max-width:1180px;margin:clamp(2rem,5vw,3rem) auto 0;padding-inline:var(--w-space-5);}
 .pp-kslot{display:flex;}
 .pp-kcard{display:flex;flex-direction:column;gap:var(--w-space-3);width:100%;
   border:1px solid var(--w-border-default);background:var(--w-surface-page);
@@ -318,56 +220,93 @@
 .pp-kcard__body{display:flex;flex-direction:column;gap:var(--w-space-3);}
 .pp-kcard__body p{margin:0;font-size:0.9375rem;line-height:1.55;color:var(--w-text-secondary);}
 
-/* --- Tor z przyklejonym napisem (tylko z JS, od 900 px, pełny ruch) -------- */
-@media (min-width:900px) and (prefers-reduced-motion: no-preference){
-  .cx-js .pp-kor{padding-block:clamp(3.5rem,7vw,6.25rem) 0;}
-  /* Napis: pudełko na wysokość ekranu przyklejone do górnej krawędzi, napis w
-     jego pionowym środku. Ujemny margines pod spodem wciąga karty na napis –
-     to ten sam kadr, nie dwa oddzielne bloki. */
-  .cx-js .pp-kor__titlebox{position:sticky;top:0;z-index:0;height:100svh;
-    display:grid;place-items:center;margin-bottom:-100svh;pointer-events:none;}
-  .cx-js .pp-kor__title{font-size:clamp(2.5rem,6vw,5.5rem);line-height:1.02;max-width:14ch;}
-  .cx-js .pp-kor__list{display:block;position:relative;z-index:1;margin:0;}
-  .cx-js .pp-kslot{display:flex;align-items:center;justify-content:center;min-height:55vh;}
-  /* left = odsunięcie od środka kolumny (procent szerokości toru), transform =
-     parallax z JS + stały obrót karty */
-  .cx-js .pp-kcard{position:relative;left:var(--pp-x,0);width:min(22rem,40%);
-    transform:translateY(var(--pp-y,0px)) rotate(var(--pp-rot,0deg));
-    border-color:var(--w-border-subtle);box-shadow:0 24px 60px rgb(0 0 0 / .10);
-    will-change:transform;}
+@media (min-width:700px){
+  .pp-kor__tiles{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;}
 }
 
-/* ===== 50 · Uczestnicy programu – siatka kart 3 × 2 (spec §8) ===============
-   Karuzela ze strzałkami i licznikiem znika: sześć gospodarstw stoi naraz w
-   siatce (3 kolumny ≥ 1100 px, 2 w przedziale 700–1099 px, 1 poniżej). Karta
-   niesie placeholder zdjęcia 4:3 z etykietą, chip uprawy, nazwę, gospodarza,
-   uprawę, lokalizację, pierwszy akapit profilu i dwa przyciski: „zobacz
-   profil" (pop-up z fragmentu 52) i „etapy prac" (wiersz wykresu z 85).
-   Tokeny --w-*, ostre narożniki, skala szarości; cele dotykowe 44 px. ====== */
-.pp-farms{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--w-space-5);
-  margin:clamp(1.5rem,3vw,2.25rem) 0 0;padding:0;list-style:none;}
-@media (max-width:1099px){ .pp-farms{grid-template-columns:repeat(2,minmax(0,1fr));} }
-@media (max-width:699px){ .pp-farms{grid-template-columns:minmax(0,1fr);} }
+/* wejście napisu: każdy wyraz wyjeżdża spod dolnej krawędzi swojego wiersza,
+   kaskadą co 70 ms (`--wi` w znaczniku). Stan wyjściowy tylko z JS i bez
+   ograniczenia ruchu – inaczej napis jest po prostu widoczny. Bez animacji
+   wyjścia: klasę `.is-in` JS nadaje raz i już jej nie zdejmuje. */
+@media (prefers-reduced-motion: no-preference){
+  html.cx-js .pp-kor__w > span{transform:translateY(110%);
+    transition:transform 520ms cubic-bezier(.2,.8,.2,1) calc(var(--wi,0) * 70ms);}
+  html.cx-js .pp-kor__title.is-in .pp-kor__w > span{transform:none;}
+}
 
-.pp-farm{display:flex;flex-direction:column;gap:var(--w-space-2);align-items:flex-start;
+/* --- Scena: kadr przyklejony na cały ekran, kafle nad nim ------------------ */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  /* tor = scena (100 svh) + wjazd pierwszego kafla + siedem kroków między
+     kaflami + ogon: ostatni kafel schodzi z ekranu, a potem napis stoi sam
+     jeszcze ok. 30 vh, zanim scena odjedzie ze stroną. Krok 32 vh daje 2–3
+     kafle naraz w oknie. */
+  .cx-js .pp-kor{--pp-kor-lead:125vh;--pp-kor-step:32vh;--pp-kor-tail:80vh;}
+  .cx-js .pp-kor__track{height:calc(100svh + var(--pp-kor-lead) + 7 * var(--pp-kor-step) + var(--pp-kor-tail));}
+  .cx-js .pp-kor__stage{position:sticky;top:0;height:100svh;min-height:0;}
+  .cx-js .pp-kor__tiles{display:block;max-width:none;margin:0;padding:0;}
+  /* trzy rozłączne pasy (18 %, 50 %, 82 % szerokości toru = okna) w kolejności
+     L, P, Ś, L, P, Ś, L, P – sąsiednie kafle nigdy nie są w tym samym pasie */
+  .cx-js .pp-kslot{position:absolute;z-index:1;display:block;width:clamp(16rem,24vw,22rem);
+    top:calc(var(--pp-kor-lead) + var(--i,0) * var(--pp-kor-step));
+    left:var(--lane,50%);
+    transform:translate(-50%,var(--par,0px));will-change:transform;}
+  .cx-js .pp-kcard{border-color:var(--w-border-subtle);box-shadow:0 24px 60px rgb(0 0 0 / .18);}
+}
+
+/* ===== 50 · Uczestnicy programu – siatka kart poziomych 2 × 3 (spec §18.5) ==
+   Karuzela ze strzałkami i licznikiem znika: sześć gospodarstw stoi naraz w
+   siatce dwóch kolumn i trzech wierszy, w zwykłym kontenerze 1180 px (uwaga
+   Mateusza z 19.09 – reszta strony idzie na 1800 px).
+   Karta jest pozioma: kadr zdjęcia po lewej (40 % szerokości, wypełnia całą
+   wysokość karty, bez marginesu), po prawej chip uprawy, nazwa gospodarstwa,
+   gospodarz, dwie linie „Uprawa / Lokalizacja" i – przy dolnej krawędzi –
+   dwa przyciski: „zobacz profil" (pop-up z fragmentu 52) i „etapy prac"
+   (wiersz wykresu z 85). Akapit opisu zniknął z karty (§18.12); pełny opis
+   jest w profilu, który wchodzi do pop-upu.
+   Karty w wierszu mają równą wysokość (domyślne `stretch` siatki), przyciski
+   równają się do dołu przez `margin-top:auto` w kolumnie treści.
+   Skok szerokości: 2 kolumny kart poziomych ≥ 1000 px, jedna kolumna kart
+   poziomych 700–999 px (wąska kolumna dusiłaby dwa przyciski w jednym
+   wierszu), poniżej 700 px kadr nad treścią.
+   Tokeny --w-*, ostre narożniki, skala szarości; cele dotykowe 44 px. ====== */
+.pp-farms{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--w-space-5);
+  margin:clamp(1.5rem,3vw,2.25rem) 0 0;padding:0;list-style:none;}
+@media (max-width:999px){ .pp-farms{grid-template-columns:minmax(0,1fr);} }
+
+.pp-farm{display:grid;grid-template-columns:minmax(0,40fr) minmax(0,60fr);
+  align-items:stretch;
   border:1px solid var(--w-border-default);background:var(--w-surface-page);
-  padding:clamp(1.1rem,2.2vw,1.5rem);
   transition:border-color var(--w-duration-base) var(--w-ease);}
 .pp-farm:hover{border-color:var(--w-gray-900);}
-.pp-farm__ph{width:100%;aspect-ratio:4/3;min-height:0;border-radius:0;margin-bottom:var(--w-space-2);}
+/* Kadr wypełnia całą wysokość karty – proporcja jest wynikiem treści obok,
+   dlatego bez `aspect-ratio`; minimum trzyma karty wizualnie równe. Z obrysu
+   placeholdera zostaje tylko prawa krawędź: jest linią między kadrem a
+   treścią, a na pozostałych bokach pokrywałaby się z obrysem karty. */
+.pp-farm__ph{width:100%;align-self:stretch;min-height:230px;border-radius:0;
+  border-block:0;border-inline-start:0;}
 /* 00-base.css chowa .wf-ph__label (placeholdery wzorca są nieopisane), a tutaj
    etykieta jest potrzebna – klient wie, jakie zdjęcie ma dostarczyć (§11). */
 .pp-ph__label{position:absolute;left:10px;bottom:8px;z-index:1;max-width:calc(100% - 20px);
   font-size:0.6875rem;line-height:1.2;letter-spacing:.04em;text-transform:uppercase;
   color:var(--w-placeholder-ink);pointer-events:none;}
-.pp-farm__crop{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--w-gray-900);
+.pp-farm__body{display:flex;flex-direction:column;gap:var(--w-space-2);
+  min-width:0;padding:clamp(1.1rem,2.2vw,1.5rem);}
+/* chip zwęża się do treści – reszta kolumny idzie na pełną szerokość */
+.pp-farm__crop{display:inline-flex;align-self:flex-start;align-items:center;gap:6px;
+  border:1px solid var(--w-gray-900);
   padding:3px 10px;font-size:0.75rem;letter-spacing:.04em;text-transform:uppercase;}
 .pp-farm__name{font-size:1.0625rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;margin:0;}
 .pp-farm__who{margin:0;font-size:0.9375rem;}
 .pp-farm__meta{margin:0;font-size:0.875rem;color:var(--w-text-secondary);}
-.pp-farm__lead{margin:var(--w-space-2) 0 0;padding-top:var(--w-space-3);
-  border-top:1px solid var(--w-border-subtle);font-size:0.9375rem;color:var(--w-text-secondary);}
 .pp-farm__btns{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:var(--w-space-4);}
+
+/* Poniżej 700 px: jedna kolumna, kadr nad treścią – linią podziału jest wtedy
+   dolna krawędź kadru, a nie prawa. */
+@media (max-width:699px){
+  .pp-farm{grid-template-columns:minmax(0,1fr);}
+  .pp-farm__ph{aspect-ratio:4/3;min-height:0;
+    border-inline:0;border-block-end:1px solid var(--w-placeholder-stroke);}
+}
 
 @media (prefers-reduced-motion: reduce){
   .pp-farm{transition:none;}
@@ -438,22 +377,39 @@ html.pp-lock{overflow:hidden;}
 }
 
 /* ===== 55 · KOORDYNATORZY: dwie karty biogramów z „czytaj dalej" ===========
-   Przeniesione z warstwy 99 bez zmian (spec §9). Razem z nimi uniwersalna
-   szuflada `pp-disc` (klon mechaniki `.c5-fact__panel` z c5.css) – wysokość
-   animuje skrypt, CSS trzyma tylko przejście i wygaszenie. ============== */
-.pp-disc{overflow:hidden;height:0;opacity:0;
+   Treść i mechanika jak od 14.09 (spec §9); 19.09 zmienia się sam układ –
+   §18.6, opis przy siatce niżej. Razem z kartami uniwersalna szuflada
+   `pp-disc` (klon mechaniki `.c5-fact__panel` z c5.css) – wysokość animuje
+   skrypt, CSS trzyma tylko przejście i wygaszenie. ====================== */
+/* Bez JS szuflada stoi otwarta – cały biogram jest do przeczytania w kolejności
+   czytania, a nieczynny przycisk „czytaj dalej" znika. Z JS (klasa `cx-js` od
+   00-base.js) moduł 55 zwija ją na starcie przez `panelSet` i od tej pory
+   prowadzi wysokość stylem inline – dlatego stan zwinięty wisi na `.cx-js`,
+   a nie na samym `.pp-disc`. */
+.pp-disc{overflow:hidden;
   transition:height var(--c5-acc) var(--w-ease),opacity var(--c5-acc-fade) var(--w-ease);}
-.pp-disc[data-open="true"]{opacity:1;}
+html.cx-js .pp-disc{height:0;opacity:0;}
+html.cx-js .pp-disc[data-open="true"]{opacity:1;}
+html:not(.cx-js) #koordynatorzy .pp-more{display:none;}
 .pp-discin{overflow:hidden;min-height:0;display:flex;flex-direction:column;gap:var(--w-space-3);}
 .pp-discin p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
 
-.pp-team{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:var(--w-space-5);
+/* 19.09 (§18.6): jedna kolumna, dwie karty jedna pod drugą w zwykłym
+   kontenerze 1180 px; karta pozioma – mniejszy kadr 200 px w proporcji 4 : 5
+   po lewej, treść po prawej. Poniżej 700 px kadr nad treścią. */
+.pp-team{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--w-space-5);
   margin:clamp(1.5rem,3vw,2.25rem) 0 0;padding:0;list-style:none;}
-.pp-person{display:flex;flex-direction:column;gap:var(--w-space-3);border:1px solid var(--w-border-default);
+.pp-person{display:grid;grid-template-columns:200px minmax(0,1fr);gap:clamp(1.25rem,2.6vw,2rem);
+  align-items:start;border:1px solid var(--w-border-default);
   background:var(--w-surface-page);padding:clamp(1.25rem,2.2vw,1.75rem);
   transition:border-color var(--w-duration-base) var(--w-ease);}
 .pp-person:hover{border-color:var(--w-gray-900);}
-.pp-person > .wf-ph{width:100%;aspect-ratio:4/3;border-radius:0;}
+.pp-person__ph{width:200px;aspect-ratio:4/5;min-height:0;border-radius:0;}
+/* Miara wiersza: w kontenerze 1180 px kolumna treści miałaby ponad 800 px,
+   czyli ok. 110 znaków w wierszu – za dużo, żeby biogram czytało się wygodnie.
+   Kolumna zostaje przy lewej krawędzi, a nadmiar idzie w prawy margines. */
+.pp-person__body{display:flex;flex-direction:column;gap:var(--w-space-3);
+  min-width:0;max-width:60ch;}
 .pp-person p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
 /* Nota „ekspert niezależny”: element c5-note --strong (EL-17) w ciaśniejszym
    padding'u 12/16 – EL-17 nie ma wariantu ciasnego. */
@@ -467,38 +423,49 @@ html.pp-lock{overflow:hidden;}
 /* Stopniowanie wejścia kart (80 ms). */
 .pp-team > li:nth-child(2){transition-delay:.08s;}
 
+@media (max-width:699px){
+  .pp-person{grid-template-columns:minmax(0,1fr);gap:var(--w-space-4);}
+}
+
 @media (prefers-reduced-motion: reduce){
   .pp-disc,.pp-more .wf-icon,.pp-person{transition:none;}
   .pp-team > li{transition-delay:0s;}
 }
 
-/* ===== 60 · Program w liczbach – ciemny kadr z kołowrotkiem (spec §10) ======
-   Kadr z marginesem 30 px na wysokość ekranu (jak Parametry na CARBOMAT ECO),
-   tytuł u góry po lewej, cztery wiersze „etykieta | wielka liczba" rozdzielone
-   cienkimi liniami. Cyfry to pionowe taśmy 0–9 przewijane od góry do dołu –
-   taśmy buduje JS, więc bez JS i przy ograniczonym ruchu w kodzie stoi
-   zwyczajna liczba. */
+/* ===== 60 · Program w liczbach – CE-24 wariant `kafle-2x2` (spec §18.8) =====
+   Ciemny kadr z marginesem 30 px na wysokość ekranu zostaje (jak Parametry na
+   CARBOMAT ECO). Iteracja 2 (uwagi Mateusza `8e9194e7` i `edf4be0a`, ramka
+   306:2941): tytuł dostaje duży odstęp od górnej krawędzi kadru, a cztery
+   wiersze zamieniają się w siatkę 2 × 2 kafli o ton jaśniejszych od kadru –
+   w kaflu wielka liczba przy górnej krawędzi po prawej, etykieta przy dolnej
+   po lewej. Cyfry to pionowe taśmy 0–9 przewijane od góry do dołu – taśmy
+   buduje JS (moduł 60), więc bez JS i przy ograniczonym ruchu w kodzie stoi
+   zwyczajna liczba. Mechanika kołowrotka bez zmian. */
 .pp-dark{position:relative;min-height:100svh;margin-inline:var(--c5-gutter);overflow:clip;
   background:var(--w-gray-900);color:var(--w-text-inverse);padding-block:var(--c5-gutter);}
 /* pierścień fokusu na ciemnym tle (przeniesione z warstwy 99) */
 .pp-dark :focus-visible{outline-color:var(--w-focus-ring-inverse);}
-.pp-liczby{display:flex;flex-direction:column;gap:clamp(2rem,5vw,4rem);
-  min-height:calc(100svh - 2 * var(--c5-gutter));}
+.pp-liczby{display:flex;flex-direction:column;gap:clamp(1.5rem,3vw,2.5rem);
+  min-height:calc(100svh - 2 * var(--c5-gutter));
+  padding-block:clamp(4rem,8vw,7.5rem) clamp(1.5rem,3vw,2.5rem);}
 .pp-liczby__title{font-size:clamp(2rem,4vw,3.25rem);max-width:none;}
-/* wiersze lądują w dolnej części kadru – jak na wzorze z uwagi 6 */
-.pp-liczby__rows{display:flex;flex-direction:column;margin:auto 0 0;padding:0 0 58px;list-style:none;}
+/* Siatka 2 × 2 wypełnia resztę wysokości kadru (kafle rosną razem z nim). */
+.pp-liczby__rows{flex:1 1 auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;margin:0;padding:0;list-style:none;}
 
-.pp-liczba{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--w-space-5);align-items:center;
-  padding-block:clamp(.35rem,1vw,.75rem);}
-.pp-liczba + .pp-liczba{border-top:1px solid rgb(255 255 255 / .18);}
-.pp-liczba__label{font-size:0.9375rem;line-height:1.45;color:var(--w-gray-300);max-width:38ch;}
-.pp-liczba__note{display:block;margin-top:var(--w-space-2);font-size:0.8125rem;color:var(--w-gray-400);}
+/* Kafel: liczba przy górnej krawędzi po prawej, etykieta przy dolnej po lewej;
+   środek zostaje pusty – tak jak w ramce. */
+.pp-liczba{display:flex;flex-direction:column;justify-content:space-between;
+  gap:var(--w-space-6);min-height:280px;background:rgb(255 255 255 / .05);
+  padding:clamp(1.5rem,2.4vw,2rem);}
+.pp-liczba__label{font-size:1.25rem;line-height:1.35;color:var(--w-gray-200);max-width:38ch;}
+.pp-liczba__note{display:block;margin-top:var(--w-space-3);font-size:0.8125rem;color:var(--w-gray-400);}
 /* Kontener sufiksu EL-31 (`c5-aff`): wyrównanie GÓRĄ, odstęp tylko przed
    sufiksem – prefiks „+" stoi w rozmiarze liczby tuż przy cyfrze, więc nie
    może go rozepchnąć wspólny `gap`. Przesunięcie sufiksu bierzemy domyślne
    z `ce/00-base.css`; o resztę dba `line-height` kołowrotka niżej. */
 .pp-liczba__num{display:flex;align-items:flex-start;justify-content:flex-end;
-  font-size:clamp(4.5rem,11vw,10rem);line-height:1;font-weight:var(--w-weight-medium);
+  font-size:clamp(3.5rem,7vw,8.5rem);line-height:1;font-weight:var(--w-weight-medium);
   letter-spacing:-0.03em;font-variant-numeric:tabular-nums;}
 .pp-odo + .c5-aff{margin-left:.12em;}
 
@@ -518,189 +485,57 @@ html.pp-lock{overflow:hidden;}
 .pp-odo.is-roll .pp-odo__strip{transition:transform 1.1s cubic-bezier(.2,.7,.2,1);transition-delay:var(--pp-delay,0ms);}
 
 @media (max-width:699px){
-  .pp-liczba{grid-template-columns:minmax(0,1fr);gap:var(--w-space-2);
-    padding-block:clamp(.75rem,3vw,1.25rem);}
-  .pp-liczba__num{justify-content:flex-start;font-size:clamp(3.25rem,15vw,6rem);}
-  .pp-liczba__label{max-width:none;}
+  /* jedna kolumna kafli (spec §18.8) */
+  .pp-liczby__rows{grid-template-columns:minmax(0,1fr);}
+  .pp-liczba{min-height:0;gap:var(--w-space-5);}
+  .pp-liczba__num{font-size:clamp(3.25rem,15vw,6rem);}
+  .pp-liczba__label{font-size:1.0625rem;max-width:none;}
 }
 @media (prefers-reduced-motion: reduce){
   .pp-odo.is-roll .pp-odo__strip{transition:none;}
 }
 
-/* ===== 65 · HARMONOGRAM PROGRAMU: oś czasu (styl S1 „Edytorial") ===========
-   Przeniesione z warstwy 99 bez zmian mechaniki i wymiarów (spec §4, §16).
-   Strzałki osi to element `c5-iconbtn` (EL-02), pigułka stanu kamienia to
-   element `c5-chip` (EL-16) – oba w `ce/00-base.css`; `.pp-ms__warn` stoi
-   we fragmencie 00 jako klocek wspólny.
+/* ===== 65 · HARMONOGRAM PROGRAMU ==========================================
+   Przebudowany 19.09.2026 (spec §18.7): cały klocek CE-49 wraz ze stylami
+   mieszka teraz w `ce/CE-49-harmonogram.css` (prefiks c5-hz). Stary słownik
+   `pp-os-*` (oś S1 z 12.09) usunięty – nic go już nie używa.
    ===================================================================== */
 
-/* Strzałki osi i lat to element c5-iconbtn (EL-02, ce/00-base.css) – 44 px,
-   obrys kitu, stan disabled i wyłączone przejście przy reduced motion. */
+/* ===== 70 · RZETELNOŚĆ: zdjęcie w tle + trzy karty ze szkła (spec §18.9) ====
+   Iteracja 2, uwaga Mateusza `7bf3730a`. Sekcja bierze zdjęcie na całą
+   szerokość okna, kładzie na nie jednolity scrim i stawia na nim nagłówek,
+   cytat i trzy karty zasad (CE-20 wariant `szklane`). Cudzysłowy cytatu
+   dokłada CSS, więc tekst w HTML zostaje co do znaku.
+   SCRIM: czerń .65 – zmierzone na pikselach zrzutu (QA agenta A, skrypt
+   `qa/A/kontrast.py`) biel ma nad zdjęciem 6,2–7,6 : 1, a przez szkło karty
+   (biel .12) nie mniej niż 5,3 : 1 w najjaśniejszym punkcie. =========== */
+.pp-rz{position:relative;isolation:isolate;overflow:clip;
+  background:var(--w-gray-900);color:var(--w-text-inverse);}
+/* Kadr w tle: obraz wyższy od sekcji o zapas parallaksu (2 × 60 px), więc
+   przesunięcie nigdy nie odsłania krawędzi. */
+.pp-rz__bg{position:absolute;inset:0;z-index:-1;overflow:hidden;}
+.pp-rz__bg img{position:absolute;left:0;top:-60px;width:100%;height:calc(100% + 120px);
+  object-fit:cover;transform:translate3d(0,var(--pp-rz-y,0px),0);}
+.pp-rz__bg.is-parallax img{will-change:transform;}
+.pp-rz__bg::after{content:"";position:absolute;inset:0;background:rgb(0 0 0 / .65);}
+.pp-rz__in{position:relative;}
+.pp-rz .c5-h2,.pp-rz .c5-band__title{color:var(--w-text-inverse);}
+/* Podtytuł na jednej osi z nagłówkiem i cytatem (w szerokim kontenerze
+   wersja do lewej odrywała się od reszty sekcji). */
+.pp-rz__sub{margin-top:clamp(2.5rem,5vw,4rem);text-align:center;}
+.pp-rz__src{position:absolute;right:var(--c5-gutter);bottom:var(--w-space-5);margin:0;}
+.pp-rz :focus-visible{outline-color:var(--w-focus-ring-inverse);}
 
-/* --- 8a. HARMONOGRAM PROGRAMU: oś czasu (styl S1 „Edytorial” z laboratorium)
-   Wdrożenie 12.09.2026 wyboru Mateusza z `lab/harmonogram.html`: układ S1
-   przetłumaczony na język makiety (tokeny --w-*, szarość, radius 0, typografia
-   kitu, ikony ze sprite'u, zero bibliotek). JEDNA ZMIANA WOBEC LABORATORIUM:
-   sekcja NIGDY nie wchodzi w drogę przewijaniu strony – etap zmieniają tylko
-   strzałki, węzły osi, klawiatura i przesunięcie palcem. Żadnego przypinania
-   ani przechwytywania kółka.
-
-   Słownik pp-os-* jest własny; z sąsiedztwa pożyczamy tylko gotowe elementy
-   (.c5-iconbtn, .wf-ph, .wf-caption) i pigułkę stanu kamienia
-   (.c5-chip, .pp-ms__warn) wspólną z osiami w „Etapach prac”. Stan nigdy
-   samym tonem: ikona + etykieta + kształt obrysu. Ruch: tylko opacity
-   i transform, wszystko gaśnie przy reduced motion (§16). */
-
-.pp-os{--pp-os-rw:100%;--pp-os-line:30px;
-  margin-top:clamp(1.25rem,2.5vw,2rem);display:flex;flex-direction:column;
-  gap:clamp(1.25rem,2.5vw,2.25rem);}
-.pp-os:focus-visible{outline:2px solid var(--w-focus-ring);outline-offset:6px;}
-
-/* --- licznik „n / 11” ------------------------------------------------------ */
-.pp-os__head{display:flex;align-items:baseline;justify-content:flex-end;}
-.pp-os__counter{margin:0;font-size:0.8125rem;letter-spacing:.08em;
-  font-variant-numeric:tabular-nums;color:var(--w-text-secondary);white-space:nowrap;}
-.pp-os__counter b{font-weight:var(--w-weight-semibold);color:var(--w-text-primary);}
-
-/* --- treść etapu: data + opis po lewej, makieta zdjęcia po prawej --------- */
-/* Zdjęcie spina oba wiersze i zwykle jest wyższe niż tekst. Dwa równe wiersze
-   plus data dosunięta do dołu pierwszego, a etap do góry drugiego, ustawiają
-   parę data+opis w pionie na wysokości zdjęcia – tak jak w S1. */
-.pp-os__body{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);
-  grid-template-rows:minmax(0,1fr) minmax(0,1fr);
-  grid-template-areas:"date photo" "slide photo";
-  column-gap:clamp(2rem,4vw,4rem);row-gap:clamp(1rem,2.5vw,1.5rem);}
-
-.pp-os__date{grid-area:date;align-self:end;display:flex;flex-direction:column;
-  align-items:flex-start;gap:var(--w-space-3);min-width:0;}
-.pp-os__term{font-size:0.75rem;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--w-text-secondary);border-top:1px solid var(--w-gray-900);
-  padding-top:var(--w-space-2);min-width:min(18rem,100%);}
-.pp-os__term:empty{display:none;}
-.pp-os__year{position:relative;display:block;min-width:0;
-  font-size:clamp(3.5rem,8vw,7rem);line-height:0.9;font-weight:var(--w-weight-medium);
-  letter-spacing:-0.03em;font-variant-numeric:tabular-nums;color:var(--w-text-primary);}
-.pp-os__year b{display:block;font-weight:inherit;}
-.pp-os__year b.is-out{position:absolute;top:0;left:0;}
-
-/* Bez JS wszystkie etapy stoją w kolumnie rozdzielone cienką kreską. */
-.pp-os__slides{grid-area:slide;align-self:start;display:flex;flex-direction:column;min-width:0;}
-.pp-os__slide{display:flex;flex-direction:column;align-items:flex-start;
-  gap:var(--w-space-3);min-width:0;}
-.pp-os__slide + .pp-os__slide{margin-top:clamp(1.25rem,3vw,2rem);
-  border-top:1px solid var(--w-border-subtle);padding-top:clamp(1.25rem,3vw,2rem);}
-.pp-os__term2{margin:0;font-size:0.75rem;letter-spacing:.06em;text-transform:uppercase;
-  color:var(--w-text-secondary);}
-.pp-os__name{font-size:clamp(1.375rem,2.4vw,2rem);line-height:1.12;
-  font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
-.pp-os__desc{margin:0;font-size:1.0625rem;line-height:1.55;max-width:32em;
-  color:var(--w-text-secondary);}
-/* Odstępy w etapie trzyma `gap`, pigułka nie dokłada własnego marginesu. */
-.pp-os__slide .c5-chip{margin-top:0;}
-/* „następny krok” niesie grubszy obrys pigułki, nie sam ton. */
-.pp-os__slide[data-next="true"] .c5-chip{border-style:solid;border-width:2px;
-  border-color:var(--w-gray-900);color:var(--w-text-primary);
-  font-weight:var(--w-weight-semibold);padding:4px 10px;}
-
-/* Z JS widać jeden etap; wchodzący wjeżdża z dołu (klasę zdejmuje skrypt). */
-.pp-os.is-ready .pp-os__term2{display:none;}
-.pp-os.is-ready .pp-os__slides{display:block;}
-.pp-os.is-ready .pp-os__slide{display:none;}
-.pp-os.is-ready .pp-os__slide + .pp-os__slide{margin-top:0;border-top:0;padding-top:0;}
-.pp-os.is-ready .pp-os__slide.is-active{display:flex;
-  transition:opacity var(--w-duration-slow) var(--w-ease),transform var(--w-duration-slow) var(--w-ease);}
-.pp-os.is-ready .pp-os__slide.is-active.is-enter{opacity:0;transform:translateY(14px);transition:none;}
-
-/* Makieta zdjęcia: kreska-łodyga, podpis, ramka 4:5 (S1). */
-.pp-os__photo{grid-area:photo;justify-self:end;align-self:start;margin:0;
-  display:flex;flex-direction:column;width:100%;min-width:0;max-width:19rem;
-  gap:var(--w-space-2);}
-.pp-os__photo::before{content:"";order:1;align-self:center;width:1px;height:2.5rem;
-  background:var(--w-border-strong);}
-.pp-os__photo .wf-caption{order:2;text-align:center;}
-.pp-os__ph{order:3;width:100%;aspect-ratio:4/5;border-radius:0;display:grid;place-items:center;}
-
-/* --- oś: linijka, węzły wg daty, lata, znacznik „teraz” ------------------- */
-.pp-os__axis{display:flex;align-items:flex-start;gap:clamp(0.35rem,1vw,1rem);}
-.pp-os__prev,.pp-os__next{flex:none;margin-top:8px;}
-.pp-os__track{position:relative;flex:1 1 auto;min-width:0;height:88px;}
-.pp-os__rail{position:relative;width:var(--pp-os-rw);height:100%;}
-
-.pp-os__line{position:absolute;top:var(--pp-os-line);left:0;width:100%;height:1px;
-  background:var(--w-border-strong);}
-.pp-os__line::after{content:"";position:absolute;top:1px;left:0;width:100%;height:6px;
-  background-image:repeating-linear-gradient(to right,
-    var(--w-border-strong) 0 1px,transparent 1px 2.5%);}
-.pp-os__fill{position:absolute;top:var(--pp-os-line);left:0;width:var(--a,0%);height:2px;
-  background:var(--w-gray-900);transition:width 420ms var(--w-ease);}
-
-.pp-os__nodes{position:absolute;inset:0;margin:0;padding:0;list-style:none;}
-.pp-os__nodes > li{position:static;}
-.pp-os__node{position:absolute;top:0;left:var(--n,0%);transform:translateX(-50%);
-  width:44px;height:44px;padding:0;border:0;background:none;color:inherit;font:inherit;
-  display:flex;justify-content:center;align-items:flex-start;cursor:pointer;}
-.pp-os__tick{display:block;margin-top:22px;width:1px;height:14px;
-  background:var(--w-border-strong);}
-.pp-os__node:hover .pp-os__tick{background:var(--w-gray-900);}
-.pp-os__node[aria-current="step"] .pp-os__tick{width:2px;height:18px;background:var(--w-gray-900);}
-.pp-os__label{position:absolute;top:46px;left:50%;transform:translateX(-50%);display:none;
-  padding:2px 8px;font-size:0.6875rem;letter-spacing:.05em;text-transform:uppercase;
-  white-space:nowrap;background:var(--w-gray-900);color:var(--w-text-inverse);}
-.pp-os__node[aria-current="step"] .pp-os__label{display:block;}
-
-.pp-os__years{position:absolute;bottom:0;left:0;width:100%;height:1.2em;
-  margin:0;padding:0;list-style:none;}
-.pp-os__years > li{position:absolute;top:0;left:var(--l,0%);width:var(--w,0%);
-  text-align:center;font-size:0.75rem;letter-spacing:.08em;text-transform:uppercase;
-  font-variant-numeric:tabular-nums;color:var(--w-text-secondary);}
-.pp-os__years > li::before{content:"";position:absolute;top:-14px;left:0;width:1px;height:11px;
-  background:var(--w-border-default);}
-
-/* Znacznik „jesteśmy tutaj”: dłuższa szara kreska i wyciszony podpis nad
-   linią. Bez animacji, bez powiększenia – pokazujemy, nie promujemy. */
-.pp-os__now{position:absolute;top:2px;left:var(--n,0%);transform:translateX(-50%);
-  display:flex;flex-direction:column-reverse;align-items:center;gap:4px;
-  pointer-events:none;z-index:2;}
-.pp-os__now i{display:block;width:1px;height:22px;background:var(--w-border-strong);}
-.pp-os__now small{font-size:0.6875rem;line-height:1.2;color:var(--w-text-secondary);
-  white-space:nowrap;background:var(--w-surface-page);padding:0 4px;}
-
-@media (max-width:899px){
-  .pp-os{--pp-os-rw:660px;--pp-os-line:22px;}
-  .pp-os__body{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto auto;
-    grid-template-areas:"date" "slide" "photo";row-gap:clamp(1rem,4vw,1.5rem);}
-  .pp-os__date{align-self:start;}
-  .pp-os__year{font-size:clamp(2.75rem,13vw,4rem);}
-  .pp-os__photo{justify-self:stretch;max-width:none;}
-  .pp-os__photo::before{display:none;}
-  .pp-os__photo .wf-caption{text-align:left;}
-  .pp-os__ph{aspect-ratio:16/9;}
-  /* Linijka przewijana w poziomie; przyciski zostają na miejscu, a wcięcie
-     22 px daje miejsce skrajnym węzłom (0 % i 100 %). */
-  .pp-os__track{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;
-    padding-inline:22px;height:80px;}
-  .pp-os__track::-webkit-scrollbar{display:none;}
-  .pp-os__tick{margin-top:14px;}
-  .pp-os__label{top:38px;}
-  .pp-os__years > li::before{top:-12px;height:9px;}
-}
-
-@media (prefers-reduced-motion: reduce){
-  /* Harmonogram: podmiana etapu natychmiastowa, oś bez przejścia. */
-  .pp-os__slide,.pp-os__fill,.pp-os__year b,.pp-os__tick{transition:none;}
-  .pp-os__year b{opacity:1;transform:none;}
-  .pp-os__year b.is-out{opacity:0;}
-}
-
-/* ===== 70 · RZETELNOŚĆ: cytat + trzy kafelki zasad =========================
-   Przeniesione z warstwy 99 bez zmian (spec §2, wiersz 70). Cudzysłowy dokłada
-   CSS, więc tekst w HTML zostaje co do znaku. ========================== */
 .pp-quote{margin:clamp(1.5rem,3vw,2.25rem) 0 0;max-width:900px;
   border-left:2px solid var(--w-gray-900);padding-left:clamp(1rem,3vw,2rem);}
 .pp-quote p{margin:0;font-size:clamp(1.25rem,2.4vw,1.75rem);line-height:1.35;
   font-weight:var(--w-weight-medium);letter-spacing:-0.01em;color:var(--w-text-primary);}
 .pp-quote p::before{content:"\201E";}
 .pp-quote p::after{content:"\201D";}
+/* Cytat na zdjęciu: wyśrodkowany blok, kreska i tekst w bieli. */
+.pp-rz .pp-quote{margin-inline:auto;border-left-color:rgb(255 255 255 / .7);}
+.pp-rz .pp-quote p{color:var(--w-text-inverse);}
+
 .pp-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
   gap:var(--w-space-5);margin:clamp(1.5rem,3vw,2.25rem) 0 0;padding:0;list-style:none;}
 .pp-tile-rule{display:flex;flex-direction:column;gap:var(--w-space-3);height:100%;
@@ -710,13 +545,29 @@ html.pp-lock{overflow:hidden;}
 .pp-tile-rule:hover{border-color:var(--w-gray-900);}
 .pp-tile-rule p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
 
+/* CE-20 wariant `szklane`: karta na zdjęciu. Bez obsługi `backdrop-filter`
+   zostaje czerń .5 – ten sam kontrast, tylko bez rozmycia tła. */
+.pp-tiles--glass .pp-tile-rule{background:rgb(0 0 0 / .5);
+  border-color:rgb(255 255 255 / .28);color:var(--w-text-inverse);}
+.pp-tiles--glass .pp-tile-rule:hover{border-color:rgb(255 255 255 / .6);}
+.pp-tiles--glass .pp-tile-rule p{color:var(--w-text-inverse);}
+.pp-tiles--glass .cw-feat-icon{border-color:rgb(255 255 255 / .45);color:var(--w-text-inverse);}
+@supports (backdrop-filter: blur(14px)) or (-webkit-backdrop-filter: blur(14px)){
+  .pp-tiles--glass .pp-tile-rule{background:rgb(255 255 255 / .12);
+    -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);}
+}
+
 /* Stopniowanie wejścia kafelków (80 ms). */
 .pp-tiles > li:nth-child(2){transition-delay:.08s;}
 .pp-tiles > li:nth-child(3){transition-delay:.16s;}
 
+@media (max-width:899px){
+  .pp-rz__src{right:var(--w-space-5);bottom:var(--w-space-4);}
+}
 @media (prefers-reduced-motion: reduce){
   .pp-tile-rule{transition:none;}
   .pp-tiles > li{transition-delay:0s;}
+  .pp-rz__bg img{transform:none;}
 }
 
 /* ===== 75 · ZADAJ PYTANIE: formularz demonstracyjny + zdjęcie zespołu ======
@@ -737,166 +588,86 @@ html.pp-lock{overflow:hidden;}
 .pp-askviz{display:flex;flex-direction:column;gap:var(--w-space-3);margin:0;}
 .pp-askviz .wf-ph{width:100%;aspect-ratio:4/3;border-radius:0;}
 
-/* ===== 80 · Metodologia – ta sama scena, sześć tematów (spec §12) ==========
-   Reguły sceny siedzą w 40-zalozenia.css; tutaj tylko to, czym Metodologia
-   różni się od Założeń: lead pod h2 w przyklejonej kolumnie (musi zostawić
-   miejsce najdłuższemu tematowi) i kadrowanie sześciu zdjęć panelu. */
-@media (min-width:900px) and (prefers-reduced-motion: no-preference){
-  /* Nagłówek z leadem jest wyższy niż w Założeniach – w scenie lead schodzi do
-     skali małego tekstu, żeby temat 01 (najdłuższy na stronie) zmieścił się
-     pod nim nad paskiem progresu. */
-  .cx-js .pp-scene-sec--lead .pp-scene__head{gap:var(--w-space-4);}
-  .cx-js .pp-scene-sec--lead .pp-scene__lead{font-size:0.875rem;line-height:1.5;max-width:486px;gap:var(--w-space-2);}
-  .cx-js .pp-scene-sec--lead .pp-scene__flow > .pp-step .pp-step__body{font-size:0.875rem;}
+/* ===== 80 · Metodologia – CE-12 wariant `bez-naglowka` (spec §18.4b) =======
+   Układ i mechanikę niesie próba z Produktów (`ce/CE-12-scena-faktow-proba.css`,
+   znaczniki `c5-fx*`), której NIE wolno tutaj zmieniać. Tutaj zostaje wyłącznie
+   to, co zależy od TREŚCI tej strony: nagłówek nad torem, kadrowanie sześciu
+   zdjęć panelu, `order` układu statycznego i dopasowanie dotychczasowych figur
+   ilustracji (`pp-sviz` z bloku 40) do boksu nowego układu. */
+
+/* Lead pod h2 w bloku nad torem – dwa akapity jeden pod drugim (klasa `c5-lead`
+   z kitu jest jednym boksem tekstu). */
+.pp-fxlead{display:flex;flex-direction:column;gap:var(--w-space-3);margin-top:var(--w-space-5);}
+
+/* Listy w opisach kroków są listami kitu (`wf-list`), które niosą własne
+   wcięcie w `li`; wcięcie `ul` z próby dołożyłoby drugie. */
+#metodologia .c5-fx__body .wf-list{padding-left:0;}
+
+/* Figury ilustracji zostają na klasach z bloku 40 (odwrócone kolory klocków
+   wizuali), ale w układzie nowej sceny pudełko ma dostać rozmiar z próby, a nie
+   proporcję 4 : 5 z `.c5-viz` – inaczej w układzie statycznym schemat kwatery
+   nie mieści się w kadrze i jest przycinany. */
+#metodologia .c5-viz{aspect-ratio:auto;max-height:none;}
+
+/* Warstwy zdjęć leżą razem w panelu, więc w biegu strony `order` przeplata je
+   z opisami: tło tematu, jego opis, jego ilustracja. W scenie każdy element
+   jest ustawiony względem sceny, więc `order` niczego tam nie zmienia. */
+#metodologia .c5-fx__panel > [data-fx-bg="1"]{order:1;} #metodologia .c5-fx__fact[data-fx-fact="1"]{order:2;} #metodologia .c5-viz[data-fx-viz="1"]{order:3;}
+#metodologia .c5-fx__panel > [data-fx-bg="2"]{order:4;} #metodologia .c5-fx__fact[data-fx-fact="2"]{order:5;} #metodologia .c5-viz[data-fx-viz="2"]{order:6;}
+#metodologia .c5-fx__panel > [data-fx-bg="3"]{order:7;} #metodologia .c5-fx__fact[data-fx-fact="3"]{order:8;} #metodologia .c5-viz[data-fx-viz="3"]{order:9;}
+#metodologia .c5-fx__panel > [data-fx-bg="4"]{order:10;} #metodologia .c5-fx__fact[data-fx-fact="4"]{order:11;} #metodologia .c5-viz[data-fx-viz="4"]{order:12;}
+#metodologia .c5-fx__panel > [data-fx-bg="5"]{order:13;} #metodologia .c5-fx__fact[data-fx-fact="5"]{order:14;} #metodologia .c5-viz[data-fx-viz="5"]{order:15;}
+#metodologia .c5-fx__panel > [data-fx-bg="6"]{order:16;} #metodologia .c5-fx__fact[data-fx-fact="6"]{order:17;} #metodologia .c5-viz[data-fx-viz="6"]{order:18;}
+
+/* Układ statyczny na szerokim ekranie (ograniczony ruch albo brak JS): scena
+   nie jest sceną, więc kolumna treści jedzie w tym samym szerokim kontenerze
+   co nagłówek nad torem. Obie reguły są celowo rozdzielone – wspólny selektor
+   wygrałby specyficznością ze sceną i wepchnął jej warstwy o 40 px do środka. */
+@media (min-width:900px) and (prefers-reduced-motion: reduce){
+  #metodologia .c5-fx__stage{max-width:1800px;padding-inline:40px;}
 }
-@media (min-width:900px) and (prefers-reduced-motion: no-preference) and (max-height:900px){
-  /* Niższe okna: nagłówek z leadem musi zejść o kilkadziesiąt pikseli, żeby
-     temat 01 (najdłuższy na stronie) zaczynał się pod nim, a nie na nim.
-     Lead dostaje pełną szerokość kolumny (mniej wierszy) i ciaśniejszą
-     interlinię, a odstępy w nagłówku maleją. */
-  .cx-js .pp-scene-sec--lead .pp-scene__head{gap:var(--w-space-3);padding-bottom:var(--w-space-2);}
-  .cx-js .pp-scene-sec--lead .pp-scene__lead{font-size:0.8125rem;line-height:1.45;max-width:520px;gap:var(--w-space-1);}
-  .cx-js .pp-scene-sec--lead .pp-scene__flow > .pp-step .pp-step__body{font-size:0.8125rem;line-height:1.5;}
-  .cx-js .pp-scene-sec--lead .pp-scene__flow > .pp-step .pp-step__body .wf-list{gap:var(--w-space-1);}
+@media (min-width:900px){
+  html:not(.cx-js) #metodologia .c5-fx__stage{max-width:1800px;padding-inline:40px;}
 }
 
-@media (min-width:900px) and (prefers-reduced-motion: no-preference) and (max-height:760px){
-  /* Laptop 1280×720: ostatni stopień ścisku – mniejszy h2 i lead, ciaśniejszy
-     pasek progresu i prześwit doku. Niżej scena i tak nie ma sensu, ale i tu
-     temat 01 musi zaczynać się pod nagłówkiem. */
-  .cx-js .pp-scene-sec--lead .pp-scene{--pp-progh:28px;--pp-dock:52px;}
-  .cx-js .pp-scene-sec--lead .pp-scene__head{gap:var(--w-space-2);}
-  .cx-js .pp-scene-sec--lead .pp-scene__head .c5-h2{font-size:1.375rem;}
-  .cx-js .pp-scene-sec--lead .pp-scene__head .c5-kicker{font-size:0.8125rem;}
-  .cx-js .pp-scene-sec--lead .pp-scene__lead{font-size:0.75rem;line-height:1.4;}
-  .cx-js .pp-scene-sec--lead .pp-scene__flow > .pp-step .pp-step__body{line-height:1.45;}
+/* --- Scena tej strony ------------------------------------------------------
+   Najdłuższe opisy to 01 (akapit + trzy pozycje listy + akapit) i 05 (dwa długie
+   akapity); strefa opisu jest tak wysoka jak najdłuższy z nich i musi zmieścić
+   się nad prześwitem doku, więc przy niższych oknach copy schodzi o stopień. */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  .cx-js #metodologia .c5-fx__body{line-height:1.5;gap:10px;}
+  .cx-js #metodologia .c5-fx__body .wf-list{gap:var(--w-space-2);}
+  /* Boks ilustracji tej strony jest o kilka procent wyższy niż na Produktach:
+     schemat kwatery (figura 01) to najwyższy klocek wizuali w serwisie i przy
+     62 svh z próby wychodził poza pole, które przycina zawartość. */
+  .cx-js #metodologia .c5-fx__flow > .c5-viz{height:clamp(360px,68svh,760px);}
+}
+@media (min-width:900px) and (prefers-reduced-motion: no-preference) and (max-height:1000px){
+  .cx-js #metodologia .c5-fx__body{font-size:0.875rem;}
+  .cx-js #metodologia .c5-fx__body .wf-list{gap:var(--w-space-1);}
+}
+/* Wąski desktop (900–1279 px): lewa kolumna jest tu najwęższa, więc najdłuższy
+   opis potrzebuje najciaśniejszego stopnia niezależnie od wysokości okna. */
+@media (min-width:900px) and (max-width:1279px) and (prefers-reduced-motion: no-preference){
+  .cx-js #metodologia .c5-fx__body{font-size:0.8125rem;}
+}
+@media (min-width:900px) and (prefers-reduced-motion: no-preference) and (max-height:780px){
+  .cx-js #metodologia .c5-fx__body{font-size:0.8125rem;line-height:1.45;}
 }
 
 /* --- Kadrowanie zdjęć sceny „Metodologia" ---------------------------------- */
-#metodologia .pp-scene__bg[data-ppbg="1"]{object-position:50% 50%;}  /* rzędy w niskim słońcu */
-#metodologia .pp-scene__bg[data-ppbg="2"]{object-position:50% 45%;}  /* gleba w dłoniach */
-#metodologia .pp-scene__bg[data-ppbg="3"]{object-position:50% 60%;}  /* siewka w glebie */
-#metodologia .pp-scene__bg[data-ppbg="4"]{object-position:50% 55%;}  /* rzędy warzyw liściowych */
-#metodologia .pp-scene__bg[data-ppbg="5"]{object-position:50% 52%;}  /* rzędy upraw o zachodzie */
-#metodologia .pp-scene__bg[data-ppbg="6"]{object-position:50% 48%;}  /* winnica na wzgórzach */
+#metodologia .c5-fx__img[data-fx-bg="1"]{object-position:50% 50%;}  /* rzędy w niskim słońcu */
+#metodologia .c5-fx__img[data-fx-bg="2"]{object-position:50% 45%;}  /* gleba w dłoniach */
+#metodologia .c5-fx__img[data-fx-bg="3"]{object-position:50% 60%;}  /* siewka w glebie */
+#metodologia .c5-fx__img[data-fx-bg="4"]{object-position:50% 55%;}  /* rzędy warzyw liściowych */
+#metodologia .c5-fx__img[data-fx-bg="5"]{object-position:50% 52%;}  /* rzędy upraw o zachodzie */
+#metodologia .c5-fx__img[data-fx-bg="6"]{object-position:50% 48%;}  /* winnica na wzgórzach */
 
-/* ===== 85 · Etapy prac – wspólna oś Gantta z filtrami (spec §13) ===========
-   Jeden widok zamiast sześciu osi: wiersz = gospodarstwo (lepka kolumna nazw),
-   kolumny = miesiące XI 2025 → XII 2026 plus zbiorcze 2027 i 2028, kafle =
-   zdarzenia (termin + nazwa) rozstawione w kolumnie swojego terminu; zdarzenia
-   o zachodzących terminach idą na kolejne pasy tego samego wiersza.
-   Materiał niesie stan, ale NIGDY sam: kafel ma ikonę + ton + pełną etykietę
-   stanu w karcie opisu. Wykres buduje 85-etapy.js z sześciu osi `.pp-tl`,
-   które zostają w DOM-ie jako wersja bez JS. ============================== */
-.pp-gt{position:relative;margin-top:clamp(1.25rem,2.5vw,2rem);}
-
-/* --- filtry gospodarstw (zamiast tabów c5-ways, §11) ---------------------- */
-.pp-gt__filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:var(--w-space-4);}
-.pp-gt__chip{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 16px;
-  font:inherit;font-size:0.875rem;line-height:1.2;text-align:left;cursor:pointer;
-  border:1px solid var(--w-border-default);border-radius:0;
-  background:var(--w-surface-page);color:var(--w-text-primary);
-  transition:background var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);}
-.pp-gt__chip:hover{border-color:var(--w-gray-900);}
-.pp-gt__chip[aria-pressed="true"]{background:var(--w-gray-900);border-color:var(--w-gray-900);color:var(--w-text-inverse);}
-.pp-gt__chip .wf-icon{width:16px;height:16px;opacity:.7;}
-
-/* --- kontener wykresu ----------------------------------------------------- */
-.pp-gt__scroll{position:relative;overflow-x:auto;overscroll-behavior-x:contain;
-  border:1px solid var(--w-border-default);background:var(--w-surface-page);}
-.pp-gt__scroll:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:-2px;}
-.pp-gt__grid{display:grid;
-  grid-template-columns:var(--pp-name,16rem) repeat(var(--pp-cols,16),minmax(5.5rem,1fr));
-  grid-auto-rows:minmax(52px,auto);align-items:stretch;}
-
-/* nagłówki kolumn – lepkie u góry wewnątrz kontenera */
-.pp-gt__h{grid-row:1;position:sticky;top:0;z-index:2;
-  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:1px;
-  padding:8px 6px;text-align:center;background:var(--w-surface-page);
-  border-bottom:1px solid var(--w-border-strong);}
-.pp-gt__h--corner{grid-column:1;left:0;z-index:4;align-items:flex-start;text-align:left;
-  padding-inline:var(--w-space-4);border-right:1px solid var(--w-border-strong);}
-.pp-gt__m{font-size:0.8125rem;font-weight:var(--w-weight-medium);letter-spacing:.04em;}
-.pp-gt__y{font-size:0.625rem;letter-spacing:.04em;color:var(--w-text-secondary);}
-.pp-gt__corner-t{font-size:0.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--w-text-secondary);}
-.pp-gt__h--now .pp-gt__m{color:var(--w-text-primary);}
-.pp-gt__nowlab{font-size:0.5625rem;line-height:1.1;letter-spacing:.04em;text-transform:uppercase;
-  color:var(--w-text-secondary);}
-
-/* linie kolumn i pionowa linia „jesteśmy tutaj" */
-.pp-gt__guide{grid-row:2 / -1;z-index:0;pointer-events:none;border-right:1px solid var(--w-border-subtle);}
-.pp-gt__guide--now{border-left:2px dashed var(--w-gray-900);opacity:.45;}
-
-/* pas wiersza + lepka kolumna nazw */
-.pp-gt__band{grid-column:1 / -1;z-index:0;border-bottom:1px solid var(--w-border-default);
-  transition:background var(--w-duration-base) var(--w-ease);}
-.pp-gt__name{grid-column:1;position:sticky;left:0;z-index:3;
-  display:flex;flex-direction:column;justify-content:center;gap:6px;
-  padding:var(--w-space-3) var(--w-space-4);background:var(--w-surface-page);
-  border-right:1px solid var(--w-border-strong);border-bottom:1px solid var(--w-border-default);
-  transition:background var(--w-duration-base) var(--w-ease);}
-.pp-gt__band.is-target,.pp-gt__name.is-target{background:var(--w-gray-100);}
-.pp-gt__farm{font-size:0.9375rem;font-weight:var(--w-weight-medium);line-height:1.25;letter-spacing:-0.01em;}
-.pp-gt__cropchip{display:inline-flex;align-items:center;gap:5px;width:max-content;
-  border:1px solid var(--w-gray-900);padding:1px 8px;
-  font-size:0.6875rem;letter-spacing:.04em;text-transform:uppercase;}
-.pp-gt__cropchip .wf-icon{width:12px;height:12px;}
-
-/* --- kafle zdarzeń -------------------------------------------------------- */
-.pp-gt__tile{position:relative;z-index:1;display:flex;flex-direction:column;justify-content:center;gap:2px;
-  margin:4px 3px;padding:5px 8px;min-height:44px;min-width:0;font:inherit;text-align:left;
-  border:1px solid var(--w-border-strong);border-radius:0;background:var(--w-surface-page);
-  color:var(--w-text-primary);cursor:pointer;
-  transition:box-shadow var(--w-duration-base) var(--w-ease);}
-.pp-gt__top{display:flex;align-items:center;gap:4px;min-width:0;}
-.pp-gt__term{font-size:0.625rem;letter-spacing:.04em;text-transform:uppercase;
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.pp-gt__ev{font-size:0.75rem;font-weight:var(--w-weight-medium);line-height:1.2;
-  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;}
-.pp-gt__tile .wf-icon{width:12px;height:12px;flex:none;}
-/* stan: materiał + ikona (ton nigdy sam) */
-.pp-gt__tile[data-state="done"]{background:var(--w-gray-900);border-color:var(--w-gray-900);color:var(--w-text-inverse);}
-.pp-gt__tile[data-state="doing"]{border-width:2px;border-color:var(--w-gray-900);}
-.pp-gt__tile[data-state="todo"]{border-style:dotted;color:var(--w-text-secondary);}
-.pp-gt__tile[data-state="na"]{border-style:dashed;border-color:var(--w-border-subtle);
-  background:transparent;color:var(--w-text-disabled);}
-.pp-gt__pulse{position:absolute;top:-5px;left:-5px;width:9px;height:9px;background:var(--w-gray-900);}
-@keyframes pp-gt-pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.3;transform:scale(.65);}}
-.pp-gt__tile[data-state="doing"] .pp-gt__pulse{animation:pp-gt-pulse 1.8s var(--w-ease) infinite;}
-.pp-gt__tile:hover{box-shadow:0 0 0 2px var(--w-gray-900);}
-.pp-gt__tile:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:2px;}
-.pp-gt__tile.is-pinned{box-shadow:0 0 0 2px var(--w-gray-900);}
-
-/* --- karta opisu: dymek przy kaflu i wersja przypięta pod wykresem -------- */
-.pp-gt__bubble{position:absolute;z-index:20;width:min(26rem,100%);
-  background:var(--w-surface-page);border:1px solid var(--w-gray-900);
-  box-shadow:0 18px 40px rgb(0 0 0 / .14);padding:var(--w-space-4);pointer-events:none;}
-.pp-gt__pin{margin-top:var(--w-space-4);}
-.pp-gt__pinned{position:relative;border:1px solid var(--w-gray-900);background:var(--w-surface-page);
-  padding:var(--w-space-4) var(--w-space-5);padding-right:calc(var(--w-space-5) + 44px);}
-.pp-gt__pinclose{position:absolute;top:6px;right:6px;display:grid;place-items:center;
-  width:44px;height:44px;padding:0;border:1px solid var(--w-border-default);border-radius:0;
-  background:var(--w-surface-page);color:var(--w-text-primary);cursor:pointer;}
-.pp-gt__pinclose:hover{background:var(--w-gray-100);}
-.pp-gt__card{display:flex;flex-direction:column;gap:var(--w-space-2);}
-.pp-gt__card-farm{font-size:0.75rem;letter-spacing:.04em;text-transform:uppercase;color:var(--w-text-secondary);}
-/* klon kamienia milowego gubi chrome osi – ramkę i odstęp daje karta */
-.pp-gt__card .pp-ms{width:auto;flex:0 1 auto;border:0;padding:0;background:transparent;}
-.pp-gt__card .pp-ms::before{display:none;}
-.pp-gt__card .pp-rel{margin-top:var(--w-space-3);}
-
-@media (max-width:899px){
-  /* dymek nie ma sensu na dotyku – opis ląduje w karcie pod wykresem */
-  .pp-gt__bubble{display:none;}
-}
-@media (max-width:699px){
-  .pp-gt__grid{--pp-name:11rem;}
-  .pp-gt__name{padding:var(--w-space-3);}
-}
-@media (prefers-reduced-motion: reduce){
-  .pp-gt__tile,.pp-gt__band,.pp-gt__name,.pp-gt__chip,.pp-ms,.pp-rels .pp-rel{transition:none;}
-  .pp-gt__tile[data-state="doing"] .pp-gt__pulse{animation:none;}
-}
+/* ===== 85 · Etapy prac – styl klocka mieszka w ce/CE-51-os-gantta.css ======
+   Przebudowa 19.09 (spec §18.10) przeniosła oś Gantta do warstwy wspólnej
+   `ce/` razem z kartą okresu; tutaj zostaje tylko ślad po numeracji. Blok 85b
+   niżej trzyma typografię źródła treści (`pp-tl*`, `pp-ms*`) i sloty relacji
+   (`pp-rel*`), z których korzysta wersja bez JS i klon w karcie. ========= */
 
 /* ===== 85b · Oś kamieni milowych i sloty relacji (przeniesione z warstwy
    legacy 11–12.09). Sześć osi stoi pod wykresem jako wersja bez JS i jako
@@ -904,8 +675,8 @@ html.pp-lock{overflow:hidden;}
    opisu korzystają z tej samej typografii. ============================ */
 
 /* --- 8. OŚ KAMIENI MILOWYCH („Etapy prac”, sześć gospodarstw) -------------- */
-/* Od 12.09.2026 obsługuje WYŁĄCZNIE sześć osi w „Etapach prac” – harmonogram
-   programu ma własny słownik pp-os-* (blok 8a niżej).
+/* Obsługuje WYŁĄCZNIE sześć osi w „Etapach prac”; harmonogram programu stoi od
+   19.09.2026 na klocku CE-49 w `ce/CE-49-harmonogram.css` i nie ma tu nic.
    Mobile: lista pionowa z torem po lewej. Od 900 px: przewijany w poziomie rząd
    grup rocznych z ciągłym torem, wypełnionym do pinezki „jesteśmy tutaj”.
    Stan kamienia niesie ikona + etykieta + ton, nigdy sam kolor. */

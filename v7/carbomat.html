@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="ce/CE-09-marquee.css">
   <link rel="stylesheet" href="ce/CE-10-parametry.css">
   <link rel="stylesheet" href="ce/CE-11-warianty-taby.css">
-  <link rel="stylesheet" href="ce/CE-12-scena-faktow.css">
+  <link rel="stylesheet" href="ce/CE-12-scena-faktow-proba.css">
   <link rel="stylesheet" href="ce/CE-13-scena-produktu.css">
   <link rel="stylesheet" href="ce/CE-14-sekcja-100svh.css">
   <link rel="stylesheet" href="ce/CE-15-wiersze-packshot.css">
@@ -356,10 +356,16 @@
     </div>
   </section>
 
-  <!-- ===== 4. CZYM JEST – scena sterowana przewijaniem (spec §6) =====
-       Nagłówek i panel zdjęcia stoją w miejscu przez całą sekcję, a pięć
-       opisów wymienia się przy dolnej krawędzi lewej kolumny. Ilustracja
-       każdego punktu żyje w boksie o stałym rozmiarze na panelu zdjęcia.
+  <!-- ===== 4. CZYM JEST – scena sterowana przewijaniem (spec §6, §15) =====
+       Od 19.09.2026 na układzie CE-12 wg ramki Figma „Frame 206" (spec §15):
+       scena zajmuje okno do 1800 px, panel zdjęcia bierze jego prawą połowę
+       z marginesem 20 px i NIE jest przyciemniany – ciemność daje sam boks
+       ilustracji (`backdrop-filter`). Kicker i H2 stoją w scenie (wariant
+       `z-naglowkiem`), a bieżący fakt przy dolnej krawędzi lewej kolumny:
+       tytuł, linia 1 px z wypełnieniem postępu bieżącego kroku i pod nią opis
+       z licznikiem po prawej. Każdy fakt niesie własną linię i licznik, więc
+       blok stoi przy dole niezależnie od długości opisu; wspólnego paska
+       progresu nie ma.
        Treść 1:1 z dokumentu 24.07. Punkt „Pełny mechanizm: jak lignit buduje
        próchnicę" – Darek sam poddaje w wątpliwość („AI mocno popłynęło") →
        NIE wdrożony, decyzja u Mateusza.
@@ -368,38 +374,43 @@
        zdjęcie (§13.5). Panel zdjęcia to `display:contents` poza sceną, więc te
        same warstwy stoją raz jako tło panelu, a raz w biegu przy swoim opisie.
        Układ dwukolumnowy składa z tych samych elementów siatka w @media niżej. -->
-  <section class="c5-sec c5-facts-sec" id="czym-jest" data-chapter="czym-jest" data-facts data-ce="CE-12">
-    <div class="c5-facts-track" data-facts-track>
-      <div class="c5-facts-stage c5-wrap">
+  <section class="c5-sec c5-fx" id="czym-jest" data-chapter="czym-jest" data-fx data-ce="CE-12" data-ce-wariant="z-naglowkiem">
+    <div class="c5-fx__track" data-fx-track>
+      <div class="c5-fx__stage">
 
-        <div class="c5-facts-head">
+        <!-- Jedyny blok nagłówka sekcji: w scenie przyklejony u góry lewej
+             kolumny, poza nią zwykły blok nad faktami. Bez `hidden` w źródle –
+             modułowy strażnik nigdy nie chowa bloku, który stoi sam. -->
+        <div class="c5-fx__head" data-fx-head="z-naglowkiem">
           <span class="c5-kicker">Czym jest carbomat</span>
           <h2 class="c5-h2">Skondensowana próchnica, najbardziej wartościowa materia organiczna.</h2>
         </div>
 
-        <div class="c5-facts-flow">
+        <div class="c5-fx__flow">
 
           <!-- Warstwy zdjęć: jedna na punkt, przełączane razem z opisem (§13.5).
                Zdjęcia P2–P5 z §13.9 (01 pokład lignitu, 02 gleba z korzeniami,
                03 ściółka obok bryłek, 04 kadr laboratoryjny, 05 makro gruzełek).
                Są dekoracją pod boksem ilustracji, dlatego alt="" i aria-hidden
                na panelu; kadrowanie każdej warstwy ustawia CSS. -->
-          <div class="c5-facts-panel" aria-hidden="true">
-            <img class="c5-facts-panel__img" data-fact-bg="1" data-on="true" src="img/foto/czym-jest-1.jpg" alt="" loading="lazy" decoding="async">
-            <img class="c5-facts-panel__img" data-fact-bg="2" src="img/foto/czym-jest-2.jpg" alt="" loading="lazy" decoding="async">
-            <img class="c5-facts-panel__img" data-fact-bg="3" src="img/foto/czym-jest-3.jpg" alt="" loading="lazy" decoding="async">
-            <img class="c5-facts-panel__img" data-fact-bg="4" src="img/foto/czym-jest-4.jpg" alt="" loading="lazy" decoding="async">
-            <img class="c5-facts-panel__img" data-fact-bg="5" src="img/foto/czym-jest-5.jpg" alt="" loading="lazy" decoding="async">
+          <div class="c5-fx__panel" aria-hidden="true">
+            <img class="c5-fx__img" data-fx-bg="1" data-on="true" src="img/foto/czym-jest-1.jpg" alt="" loading="lazy" decoding="async">
+            <img class="c5-fx__img" data-fx-bg="2" src="img/foto/czym-jest-2.jpg" alt="" loading="lazy" decoding="async">
+            <img class="c5-fx__img" data-fx-bg="3" src="img/foto/czym-jest-3.jpg" alt="" loading="lazy" decoding="async">
+            <img class="c5-fx__img" data-fx-bg="4" src="img/foto/czym-jest-4.jpg" alt="" loading="lazy" decoding="async">
+            <img class="c5-fx__img" data-fx-bg="5" src="img/foto/czym-jest-5.jpg" alt="" loading="lazy" decoding="async">
           </div>
 
-          <div class="c5-fact is-on" data-fact="1">
-            <h3 class="c5-fact__title">Węgiel, który nie musi być paliwem</h3>
-            <div class="c5-fact__body">
+          <div class="c5-fx__fact" data-fx-fact="1">
+            <h3 class="c5-fx__title">Węgiel, który nie musi być paliwem</h3>
+            <div class="c5-fx__line" aria-hidden="true"><span class="c5-fx__fill"></span></div>
+            <div class="c5-fx__body">
               <p>Lignit to najmłodsza forma węgla brunatnego – materia organiczna z prastarych drzew, zatrzymana na etapie stabilnego i trwałego humusu. Surowiec ten nie musi kojarzyć się wyłącznie z energetyką. Coraz bardziej odkrywamy jego ogromny potencjał jako naturalnego składnika wspierającego zdrowe i żyzne gleby. Co więcej, zamiast być spalanym i emitować CO₂ do atmosfery, lignit zastosowany w glebie wspiera proces sekwestracji CO₂, czyli długotrwałego wiązania dwutlenku węgla.</p>
             </div>
+            <span class="c5-fx__count" aria-hidden="true">01/05</span>
           </div>
 
-          <figure class="c5-viz" data-fact-viz="1" data-on="true">
+          <figure class="c5-viz" data-fx-viz="1" data-on="true">
             <span class="c5-viz__tag">01 · Pochodzenie</span>
             <div class="c5-viz__body">
               <svg viewBox="0 0 420 250" role="img" aria-label="Dwie drogi tego samego surowca: spalony oddaje dwutlenek węgla do atmosfery, zastosowany w glebie wiąże węgiel na lata">
@@ -420,14 +431,16 @@
             <figcaption class="c5-src c5-src--ondark">Lignit zatrzymany na etapie stabilnego humusu. Zastosowany w glebie zamiast spalony – wspiera sekwestrację CO₂.</figcaption>
           </figure>
 
-          <div class="c5-fact" data-fact="2">
-            <h3 class="c5-fact__title">Najbardziej zasobna substancja organiczna w&nbsp;kwasy humusowe i&nbsp;fulwowe</h3>
-            <div class="c5-fact__body">
+          <div class="c5-fx__fact" data-fx-fact="2">
+            <h3 class="c5-fx__title">Najbardziej zasobna substancja organiczna w&nbsp;kwasy humusowe i&nbsp;fulwowe</h3>
+            <div class="c5-fx__line" aria-hidden="true"><span class="c5-fx__fill"></span></div>
+            <div class="c5-fx__body">
               <p>W przeciwieństwie do młodej materii organicznej, takiej jak komposty, biohumus, lignina czy produkty roślinne, lignit zawiera dojrzałe formy humusu o złożonej, trwałej strukturze. Dzięki temu wykazuje znacznie większą zdolność do poprawy właściwości gleby – zwiększa jej pojemność sorpcyjną, wspiera zatrzymywanie wody i składników pokarmowych oraz tworzy korzystne środowisko dla rozwoju korzeni i mikroorganizmów glebowych. To właśnie wysoki stopień humifikacji sprawia, że lignit działa długofalowo, pomagając odbudować żyzność i strukturę gleby. Zawartość kwasów humusowych w lignitach różni się w zależności od pokładu, ale może sięgać nawet 70% suchej masy.</p>
             </div>
+            <span class="c5-fx__count" aria-hidden="true">02/05</span>
           </div>
 
-          <figure class="c5-viz" data-fact-viz="2">
+          <figure class="c5-viz" data-fx-viz="2">
             <span class="c5-viz__tag">02 · Zasobność</span>
             <div class="c5-viz__body">
               <div class="c5-viz__ring">
@@ -448,16 +461,18 @@
             <figcaption class="c5-src c5-src--ondark">Zawartość kwasów humusowych różni się zależnie od pokładu.</figcaption>
           </figure>
 
-          <div class="c5-fact" data-fact="3">
-            <h3 class="c5-fact__title">Lignit to najbardziej dojrzała i&nbsp;stabilna forma materii organicznej</h3>
-            <div class="c5-fact__body">
+          <div class="c5-fx__fact" data-fx-fact="3">
+            <h3 class="c5-fx__title">Lignit to najbardziej dojrzała i&nbsp;stabilna forma materii organicznej</h3>
+            <div class="c5-fx__line" aria-hidden="true"><span class="c5-fx__fill"></span></div>
+            <div class="c5-fx__body">
               <p>O wartości materii organicznej nie decyduje wyłącznie jej ilość, ale przede wszystkim stopień jej przekształcenia i stabilności. Świeża biomasa, kompost czy torf zawierają głównie młodszą materię organiczną, która stosunkowo szybko ulega dalszemu rozkładowi. Lignit natomiast jest efektem milionów lat naturalnej humifikacji i kondensacji związków organicznych i zawiera wysoko przekształconą, stabilną materię humusową o znacznie większej trwałości i zdolności do długotrwałego oddziaływania w glebie. Świeże nośniki materii organicznej jak kompost, obornik, biohumus są dopiero na początku tej drogi.</p>
               <p>Całkowita zawartość substancji organicznej (% suchej masy) pokazuje „ile materii organicznej jest w materiale". Stopień humifikacji i stabilności tej materii pokazuje „jak długo i jak skutecznie działa w glebie".</p>
             </div>
+            <span class="c5-fx__count" aria-hidden="true">03/05</span>
           </div>
 
           <!-- 03 · Stabilność – wykres przeniesiony z treści akordeonu -->
-          <figure class="c5-viz" data-fact-viz="3">
+          <figure class="c5-viz" data-fx-viz="3">
             <span class="c5-viz__tag">03 · Stabilność</span>
             <div class="c5-viz__body">
               <div class="c5-barchart" role="img" aria-label="Porównanie stopnia humifikacji i stabilności materii organicznej: lignit bardzo wysoki, torf wysoki do średniego, biohumus średni, kompost dojrzały średni, obornik niski do średniego, świeża biomasa bardzo niski">
@@ -472,15 +487,17 @@
             <figcaption class="c5-src c5-src--ondark">Stopień humifikacji i stabilności materii organicznej – porównanie jakościowe wg materiałów producenta.</figcaption>
           </figure>
 
-          <div class="c5-fact" data-fact="4">
-            <h3 class="c5-fact__title">Nasz lignit jest wolny od zanieczyszczeń i&nbsp;nadmiaru metali ciężkich</h3>
-            <div class="c5-fact__body">
+          <div class="c5-fx__fact" data-fx-fact="4">
+            <h3 class="c5-fx__title">Nasz lignit jest wolny od zanieczyszczeń i&nbsp;nadmiaru metali ciężkich</h3>
+            <div class="c5-fx__line" aria-hidden="true"><span class="c5-fx__fill"></span></div>
+            <div class="c5-fx__body">
               <p>Carbomat ECO dostarcza glebie cennej materii organicznej bez ryzyka nadmiernego wprowadzania metali ciężkich. Bardzo niska zawartość pierwiastków takich jak kadm, rtęć, arsen czy ołów potwierdza wysoką jakość surowca. Zawarte w nim kwasy humusowe dodatkowo wspierają naturalną stabilizację środowiska glebowego.</p>
             </div>
+            <span class="c5-fx__count" aria-hidden="true">04/05</span>
           </div>
 
           <!-- 04 · Czystość – tabela przeniesiona z treści akordeonu -->
-          <figure class="c5-viz" data-fact-viz="4">
+          <figure class="c5-viz" data-fx-viz="4">
             <span class="c5-viz__tag">04 · Czystość</span>
             <div class="c5-viz__body">
               <div class="cw-scrollx" tabindex="0">
@@ -501,9 +518,10 @@
             <figcaption class="c5-src c5-src--ondark">Badanie akredytowanego laboratorium PCBC S.A. (2022).</figcaption>
           </figure>
 
-          <div class="c5-fact" data-fact="5">
-            <h3 class="c5-fact__title">Każda gruzełka Carbomatu ECO to ogromny mikrokosmos</h3>
-            <div class="c5-fact__body">
+          <div class="c5-fx__fact" data-fx-fact="5">
+            <h3 class="c5-fx__title">Każda gruzełka Carbomatu ECO to ogromny mikrokosmos</h3>
+            <div class="c5-fx__line" aria-hidden="true"><span class="c5-fx__fill"></span></div>
+            <div class="c5-fx__body">
               <p>Carbomat ECO charakteryzuje się naturalnie rozwiniętą strukturą porowatą – około 60% objętości stanowią pory. Dzięki temu działa jak naturalny regulator środowiska glebowego, który:</p>
               <ul>
                 <li>magazynuje wodę w strukturze mikroporów, ograniczając przesychanie gleby,</li>
@@ -511,9 +529,10 @@
                 <li>zwiększa powierzchnię aktywną sorpcyjnie, na której mogą być zatrzymywane składniki pokarmowe – ujemny ładunek grup funkcyjnych w kwasach humusowych pozwala wiązać kationy potasu, wapnia, magnezu, azotu (amonowy) i wielu innych mikroelementów.</li>
               </ul>
             </div>
+            <span class="c5-fx__count" aria-hidden="true">05/05</span>
           </div>
 
-          <figure class="c5-viz" data-fact-viz="5">
+          <figure class="c5-viz" data-fx-viz="5">
             <span class="c5-viz__tag">05 · Struktura</span>
             <div class="c5-viz__body">
               <div class="c5-viz__ring">
@@ -540,19 +559,6 @@
             <figcaption class="c5-src c5-src--ondark">Przekrój poglądowy – proporcja porów wg opracowania producenta.</figcaption>
           </figure>
 
-        </div>
-
-        <!-- Pasek progresu zamiast dividerów: wypełnienie = postęp globalny,
-             cztery znaczniki dzielą tor na pięć odcinków. Widoczny tylko
-             w scenie sterowanej przewijaniem. -->
-        <div class="c5-facts-prog" data-facts-prog>
-          <div class="c5-facts-progress" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="1" aria-label="Postęp – punkt z pięciu">
-            <span class="c5-facts-progress__fill"></span>
-            <span class="c5-facts-progress__mark"></span>
-            <span class="c5-facts-progress__mark"></span>
-            <span class="c5-facts-progress__mark"></span>
-            <span class="c5-facts-progress__mark"></span>
-          </div>
         </div>
 
       </div>
@@ -791,8 +797,12 @@
     <!-- Pas PRO – copy 1:1 z V4; Darek 24.07: „Fajne, podoba mi się taka narracja."
          Układ wg sensiq.co: szare tło, zdjęcie skaluje się przy przewijaniu od
          wąskiego kadru do pełnej szerokości, nagłówek po lewej, akapit i dwa
-         przyciski po prawej. -->
-    <div class="c5-pro" id="uprawy-profesjonalne" data-pro data-ce="CE-16">
+         przyciski po prawej.
+         Od 19.09.2026 wariant „pozny-wzrost" (spec §15.1): kadr stoi na połowie
+         szerokości pasa, dopóki jego górna krawędź jest niżej niż 35 % okna,
+         potem rośnie do pełnej przy 2 % od góry; razem ze wzrostem wchodzi
+         scrim (`--pro-o` 0 -> 1 mnoży stałe .25 z warstwy wspólnej). -->
+    <div class="c5-pro" id="uprawy-profesjonalne" data-pro data-ce="CE-16" data-ce-wariant="pozny-wzrost">
       <div class="c5-pro__media" data-pro-media aria-hidden="true">
         <img class="c5-pro__img" src="img/foto/pro.jpg" alt="Biały big bag na palecie w międzyrzędziu plantacji borówki, obok sadownik z tabletem" loading="lazy" decoding="async">
       </div>
@@ -895,11 +905,11 @@
 <script src="ce/CE-07-nawigacja-kropkowa.js"></script>
 <script src="ce/CE-10-parametry.js"></script>
 <script src="ce/CE-11-warianty-taby.js"></script>
-<script src="ce/CE-12-scena-faktow.js"></script>
+<script src="ce/CE-12-scena-faktow-proba.js"></script>
 <script src="ce/CE-13-scena-produktu.js"></script>
 <script src="ce/CE-14-sekcja-100svh.js"></script>
 <script src="ce/CE-15-wiersze-packshot.js"></script>
-<script src="ce/CE-16-pas-pro.js"></script>
+<script src="ce/CE-16-pas-pro-proba.js"></script>
 <script src="ce/CE-17-faq.js"></script>
 <script src="carbomat.js"></script>
 <script src="ce-overlay.js"></script>

@@ -39,6 +39,12 @@
 
 /* dots are round on purpose: they are markers, not layout boxes (like .c5-icoframe--circle) */
 
+/* page-specific: CE-07 dot rail. The CE-12 scene container is the whole window up to
+   1800 px, so its photo panel now ends 20 px from the right edge and runs under the rail
+   at its shared position – 30 px from the edge and 28 px wide. Here the rail moves into
+   the margin, exactly as on Produkty, Kukurydza and Próchnica+. */
+@media (min-width:900px){.c5-dots{right:10px;}}
+
 .c5hu-todo{color:var(--w-text-tertiary);}
 /* EL-17 (wave 2a): the note anatomy (frame, icon, paddings, `--strong` /
    `--soft`) now lives in ce/00-base.css as `c5-note`. Only the gap above a
@@ -208,108 +214,121 @@
   .cx-js .c5hu-time__stop.is-on .c5hu-time__txt{transform:none;}
 }
 
-/* page-specific: overrides .c5-facts-head .c5-h2 from ce/CE-12 */
-.c5-facts-head .c5-h2{max-width:620px;}
-/* Lead pod H2 – mniejszy od leadów sekcyjnych, bo dzieli miejsce z opisami */
-.c5-facts-lead{font-size:0.9375rem;max-width:486px;}
+/* ===== 50 · Czym jest – CE-12 wariant `bez-naglowka` (spec §12) =============
+The layout and the mechanics come from the trial sheet of Produkty
+(`ce/CE-12-scena-faktow-proba.css`, the `c5-fx*` markers), which must NOT be
+edited from here. What stays below is only what depends on the CONTENT of this
+page: the measure of the head above the track, the crops of the four panel
+photos, the `order` of the static layout, the square bullets of the fraction list
+and the type scale of the description in the scene. The height, the width and the
+wash of the illustration box are set by the `--c5-fx-viz-h`, `--c5-fx-viz-w` and
+`--c5-fx-viz-bg` knobs on the root of the section – no rule of the trial sheet is
+copied here. */
+
+/* The head of the section moved above the track (variant `bez-naglowka`), so it
+   stands in an ordinary 1180 px container. The H2 of this page is 124 characters
+   long and without a measure it would run the full width of that container;
+   620 px is the same value the head carried inside the scene until now. The lead
+   went back to a plain `c5-lead` – the `c5-facts-lead` class left the scene
+   together with the head. */
+#czym-jest .c5-fx__above .c5-h2{max-width:620px;}
 
 /* Kadr per warstwa. W scenie panel jest wyższy niż szeroki, więc widać całą
    wysokość zdjęcia, a przycina się poziom; w układzie statycznym odwrotnie –
    stąd obie wartości dobrane pod temat kadru. ⚠ zdjęcia tymczasowe (surowiec
    z sesji CARBOMAT ECO), numeracja plików nie odpowiada numerom punktów. */
-.c5-facts-panel__img[data-fact-bg="1"]{object-position:42% 46%;}  /* czym-jest-1: ściana pokładu po lewej */
-.c5-facts-panel__img[data-fact-bg="2"]{object-position:50% 52%;}  /* czym-jest-2: kopczyk z korzeniami */
-.c5-facts-panel__img[data-fact-bg="3"]{object-position:55% 56%;}  /* czym-jest-4: miska i zlewka */
-.c5-facts-panel__img[data-fact-bg="4"]{object-position:50% 58%;}  /* czym-jest-5: makro z korzeniem */
+#czym-jest .c5-fx__img[data-fx-bg="1"]{object-position:42% 46%;}  /* czym-jest-1: ściana pokładu po lewej */
+#czym-jest .c5-fx__img[data-fx-bg="2"]{object-position:50% 52%;}  /* czym-jest-2: kopczyk z korzeniami */
+#czym-jest .c5-fx__img[data-fx-bg="3"]{object-position:55% 56%;}  /* czym-jest-4: miska i zlewka */
+#czym-jest .c5-fx__img[data-fx-bg="4"]{object-position:50% 58%;}  /* czym-jest-5: makro z korzeniem */
 
-/* Warstwy zdjęć siedzą w DOM-ie razem (w panelu), więc w biegu przeplata je
-   `order`: zdjęcie punktu, jego opis, jego ilustracja. W scenie wszystkie te
-   elementy mają jawne miejsce w siatce, więc `order` steruje tam już tylko
-   kolejnością malowania (panel zostaje pod spodem). */
-.c5-facts-panel__img[data-fact-bg="1"]{order:1;} .c5-fact[data-fact="1"]{order:2;} .c5-viz[data-fact-viz="1"]{order:3;}
-.c5-facts-panel__img[data-fact-bg="2"]{order:4;} .c5-fact[data-fact="2"]{order:5;} .c5-viz[data-fact-viz="2"]{order:6;}
-.c5-facts-panel__img[data-fact-bg="3"]{order:7;} .c5-fact[data-fact="3"]{order:8;} .c5-viz[data-fact-viz="3"]{order:9;}
-.c5-facts-panel__img[data-fact-bg="4"]{order:10;} .c5-fact[data-fact="4"]{order:11;} .c5-viz[data-fact-viz="4"]{order:12;}
+/* The photo layers sit together in the DOM (inside the panel), so in the static
+   flow `order` interleaves them: the photo of a point, its description, its
+   illustration. In the scene every element is positioned against the scene, so
+   `order` changes nothing there. */
+#czym-jest .c5-fx__panel > [data-fx-bg="1"]{order:1;} #czym-jest .c5-fx__fact[data-fx-fact="1"]{order:2;} #czym-jest .c5-viz[data-fx-viz="1"]{order:3;}
+#czym-jest .c5-fx__panel > [data-fx-bg="2"]{order:4;} #czym-jest .c5-fx__fact[data-fx-fact="2"]{order:5;} #czym-jest .c5-viz[data-fx-viz="2"]{order:6;}
+#czym-jest .c5-fx__panel > [data-fx-bg="3"]{order:7;} #czym-jest .c5-fx__fact[data-fx-fact="3"]{order:8;} #czym-jest .c5-viz[data-fx-viz="3"]{order:9;}
+#czym-jest .c5-fx__panel > [data-fx-bg="4"]{order:10;} #czym-jest .c5-fx__fact[data-fx-fact="4"]{order:11;} #czym-jest .c5-viz[data-fx-viz="4"]{order:12;}
 
-/* Lista trzech frakcji w punkcie „Co zawiera?" – kwadratowe znaczniki zamiast
-   domyślnych kropek (uwaga Mateusza 14.09, spec §11.3). */
+/* The list of three fractions in the point „Co zawiera?" – square bullets instead
+   of the default discs (Mateusz, 14.09, spec §11.3). `padding-left:0` drops the
+   indent a `ul` gets from the trial sheet (`.c5-fx__body ul`, the same 0-1-1
+   specificity, and the sheet of the page loads later), because `li` already
+   carries that indent. */
 ul.c5hu-sq{list-style:none;padding-left:0;}
 .c5hu-sq li{position:relative;padding-left:1.1rem;}
 .c5hu-sq li::before{content:"";position:absolute;left:0;top:.52em;width:6px;height:6px;background:var(--w-gray-900);}
 
-.c5-facts-progress__mark:nth-child(2){left:25%;}
-.c5-facts-progress__mark:nth-child(3){left:50%;}
-.c5-facts-progress__mark:nth-child(4){left:75%;}
-
-/* link w podpisie (05 → CARBOMAT ECO) musi być jasny, kit daje mu szarość */
+/* the link in the caption (04 → CARBOMAT ECO) has to be light; the kit greys it */
 .c5-viz .wf-link--muted{color:rgb(255 255 255 / .85);}
 .c5-viz .wf-link--muted:hover{color:#fff;}
 
-/* page-specific: tightens the CE-12 pinned scene (.c5-facts-stage/.c5-facts-flow) for this page */
-/* --- Scena: sticky 100svh w wysokim torze (JS ustawia wysokość toru) -------- */
-@media (min-width:900px) and (prefers-reduced-motion: no-preference){
-  .cx-js .c5-facts-stage{
-    --c5-facts-gap:clamp(2rem,6vw,8rem);
-    --c5-facts-prog:40px;
-    /* prześwit na dok doradcy, który pływa nad dolną krawędzią okna */
-    --c5-facts-dock:58px;
-    position:sticky;top:0;height:100svh;
-    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr);
-    gap:0 var(--c5-facts-gap);padding-block:var(--c5-gutter);
-  }
-  /* wash under the illustration box – white text on .78 black must not fight
-     the lighter patches of the photograph; the bright lab frame (04) needs
-     a touch more, the rest keeps .25 */
-  .cx-js .c5-facts-panel::after{content:"";position:absolute;inset:0;
-    background:rgb(0 0 0 / var(--facts-wash,.25));transition:background .45s var(--w-ease);}
-  .cx-js .c5-facts-panel:has(> [data-fact-bg="3"][data-on="true"]){--facts-wash:.35;}
-  .cx-js .c5-facts-head{grid-row:1;grid-column:1;align-self:start;z-index:2;background:var(--w-surface-page);padding-bottom:var(--w-space-4);}
-  /* W scenie nagłówek jest wyraźnie mniejszy niż w biegu strony: H2 tej strony
-     ma 124 znaki (wzorzec 68), a pod nim musi zmieścić się najdłuższy punkt. */
-  .cx-js .c5-facts-head{gap:clamp(0.75rem,1.4vw,1rem);}
-  .cx-js .c5-facts-head .c5-h2{font-size:clamp(1.25rem,1.9vw,1.625rem);max-width:none;}
-  .cx-js .c5-facts-lead{font-size:0.875rem;}
-  /* Warstwa opis+ilustracja leży na całej scenie: opisy w lewej kolumnie przy
-     dolnej krawędzi, ilustracje wyśrodkowane w prawej – wszystkie w jednej
-     komórce siatki, więc wymieniają się w miejscu. */
-  .cx-js .c5-facts-flow{grid-row:1;grid-column:1 / -1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr);gap:0 var(--c5-facts-gap);}
-  .cx-js .c5-facts-flow > .c5-fact{grid-row:1;grid-column:1;align-self:end;max-width:none;padding-bottom:calc(var(--c5-facts-prog) + var(--c5-facts-dock));opacity:0;transform:translateY(12px);transition:opacity .18s var(--w-ease),transform .18s var(--w-ease);}
-  .cx-js .c5-facts-flow > .c5-viz{grid-row:1;grid-column:2;align-self:center;justify-self:center;width:clamp(300px,78%,560px);height:clamp(360px,64svh,600px);aspect-ratio:auto;max-width:none;max-height:none;opacity:0;visibility:hidden;transition:opacity .22s var(--w-ease),visibility 0s linear .22s;}
-  /* Punkty 3 i 4 są najdłuższe (skład z trzema frakcjami, dwa akapity
-     porównania), a opis ma się zmieścić między nagłówkiem a paskiem progresu –
-     w scenie cała typografia opisu schodzi o stopień niżej niż w biegu. */
-  .cx-js .c5-facts-flow > .c5-fact{gap:10px;}
-  .cx-js .c5-facts-flow > .c5-fact .c5-fact__body{font-size:0.875rem;line-height:1.5;gap:10px;}
-  .cx-js .c5-facts-flow > .c5-fact .c5-fact__body ul{gap:6px;}
+/* --- Scena tej strony -------------------------------------------------------
+The illustration box is taller and wider than the 62 svh / 26 % default of the
+trial sheet, because the tightest illustration is 04 (a 2 x 4 table with long
+cells). Height: 68 svh (612 px at 1440 x 900) – the same value Próchnica+ needed.
+The width of the static layout keeps its default (1180 px), because this page does
+not move to the wide EL-29 container. */
+/* The default width of the trial sheet (26 % of the container, floor 330 px) is
+   picked for an illustration that is a diagram; at 330 px the table of 04 breaks
+   its cells so badly that it needs 666 px of height – more than any low window
+   offers. A floor of 430 px takes that break away (the need drops to 487 px) and
+   rules wherever 26 % gives less, that is below 1654 px of width; the percentage,
+   the 520 px ceiling and the collision limit `calc(50% - 88px)` stay as the trial
+   sheet has them, so 1920 x 1080 and 1680 x 1050 look exactly as before, while
+   1024 x 768 and 900 x 700 take as much as the limit allows (424 and 362 px). */
+/* The wash of the box, third knob of this declaration. The photo of step 03 (the
+   bowl and the beaker on a lab bench) is the brightest of the four, and Frame 206
+   no longer darkens the panel under the box, so on the .55 of the sheet the tag
+   measured 4.11 : 1 at 1440 x 900 and 3.74 at 1920 x 1080, with the caption at
+   4.66 / 4.54 – at or below AA (independent QA, defect D-01, measured on CARBOMAT
+   ECO and repeated here). .78 is the value .c5-viz carries everywhere outside the
+   scene, so the box looks the same in both layouts and keeps the blur. After the
+   change the lowest number of the section is the tag of step 03: 5.74 / 5.51
+   median and 5.10 / 4.99 at the 5th percentile. One value for all four steps. */
+#czym-jest{--c5-fx-viz-h:clamp(360px,68svh,760px);
+  --c5-fx-viz-w:min(clamp(430px,26%,520px),calc(50% - 88px));
+  --c5-fx-viz-bg:rgb(20 20 20 / .78);}
+/* On a low window 68 svh is not enough even for the widened box (1280 x 720 gives
+   490 px against the 509 needed), so below 1440 px the box takes whatever height
+   is left ABOVE the advisor dock: it is centred in the panel (20 px from the top
+   and from the bottom), so for its lower edge to stand 88 px above the lower edge
+   of the window its height has to be 100svh - 176 px. With the box widened this
+   rule is enough on the whole grid of windows except 900 x 700 – there the
+   collision limit holds the box at 362 px and the table gets a scale step of its
+   own below. */
+@media (min-width:900px) and (max-width:1439px) and (prefers-reduced-motion: no-preference){
+  #czym-jest{--c5-fx-viz-h:min(760px,calc(100svh - 176px));}
 }
-/* Węższe okna (900–1199 px): kolumna opisu jest tam najwęższa, więc bierze
-   więcej miejsca kosztem odstępu i panelu ilustracji. */
+
+/* The description of 03 („Co zawiera?": a paragraph, three list items and another
+   paragraph) is the longest on this page, and in the new layout the fact block
+   grows UPWARDS from the 88 px reserved for the advisor dock. The base layout had
+   four scale steps here, because the scene still held the head with its lead; once
+   that moved above the track the column is free, and the measurement (Chrome, the
+   middle of every step) shows that the default scale of the trial sheet
+   (0.9375 rem) fits with room to spare everywhere from 1280 px up – the top edge
+   of description 03 stands 340 px below the edge of the window at 1440 x 900 and
+   104 px at 1280 x 720. It gets tight only on narrow windows, where the text
+   column is half as wide: 38 px at 1024 x 768 and -76 px (text outside the window)
+   at 900 x 700. The scale steps therefore stay only there. */
 @media (min-width:900px) and (max-width:1199px) and (prefers-reduced-motion: no-preference){
-  .cx-js .c5-facts-stage{--c5-facts-gap:clamp(1.5rem,4vw,3rem);grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);}
-  .cx-js .c5-facts-flow{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);}
-  .cx-js .c5-facts-flow > .c5-viz{width:min(100%,360px);}
+  .cx-js #czym-jest .c5-fx__title{font-size:clamp(1rem,1.4vw,1.1875rem);}
+  .cx-js #czym-jest .c5-fx__body{font-size:0.8125rem;line-height:1.5;gap:8px;}
+  .cx-js #czym-jest .c5-fx__body ul{gap:5px;}
 }
-/* Okna do 1000 px wysokości (768, 800, 900): nagłówek na trzy wiersze
-   i ciaśniejszy opis – inaczej punkt „Co zawiera?" (akapit + trzy pozycje
-   listy) wchodziłby pod nagłówek. */
-@media (min-width:900px) and (prefers-reduced-motion: no-preference) and (max-height:1000px){
-  .cx-js .c5-facts-head .c5-h2{font-size:clamp(1.0625rem,1.5vw,1.3125rem);}
-  .cx-js .c5-facts-flow > .c5-fact .c5-fact__title{font-size:clamp(1rem,1.4vw,1.1875rem);}
-  .cx-js .c5-facts-flow > .c5-fact .c5-fact__body{font-size:0.8125rem;gap:8px;}
-  .cx-js .c5-facts-flow > .c5-fact .c5-fact__body ul{gap:5px;}
-}
-/* Niskie okna (np. 1280×720): pasek progresu bliżej opisu i jeszcze ciaśniejszy
-   opis – najdłuższy punkt nadal ma się mieścić nad paskiem. */
-/* page-specific: overrides the CE-12 scene on low windows */
-@media (min-width:900px) and (prefers-reduced-motion: no-preference) and (max-height:780px){
-  .cx-js .c5-facts-stage{--c5-facts-prog:32px;}
-  .cx-js .c5-facts-head{gap:0.625rem;}
-  .cx-js .c5-facts-flow > .c5-fact .c5-fact__body{font-size:0.78125rem;}
-}
-/* Okno wąskie i niskie naraz (np. 900×700) – najciaśniejszy stopień skali. */
+/* A window narrow and low at once (e.g. 900 x 700) – the tightest scale step.
+   Here the table of 04 comes down as the only one: at 900 px the collision limit
+   holds the box at 362 px, so the table needs 558 px of height while 524 are left
+   above the dock. One step down in type and tighter cells give 452 px, that is
+   72 px to spare. Outside this one window the table keeps the size of the kit. */
 @media (min-width:900px) and (max-width:1199px) and (prefers-reduced-motion: no-preference) and (max-height:740px){
-  .cx-js .c5-facts-flow > .c5-fact .c5-fact__body{font-size:0.75rem;gap:6px;}
-  .cx-js .c5-facts-flow > .c5-fact .c5-fact__body ul{gap:4px;}
+  .cx-js #czym-jest .c5-fx__body{font-size:0.75rem;gap:6px;}
+  .cx-js #czym-jest .c5-fx__body ul{gap:4px;}
+  .cx-js #czym-jest .c5-viz .wf-table{font-size:0.8125rem;}
+  .cx-js #czym-jest .c5-viz .wf-table th,
+  .cx-js #czym-jest .c5-viz .wf-table td{padding:6px 8px;}
 }
 
 /* --- JAK STOSOWAĆ: dwie sceny produktowe, N kadrów = N terminów ------------ */

@@ -1,11 +1,22 @@
 /* ===== CE-12 · Scena faktów – TRIAL VERSION (Figma Frame 206, 18.09.2026) ====
-   Trial rebuild of the CE-12 scene, linked ONLY by produkty.html and only until
-   Mateusz accepts one of the two header variants (spec §21.3). The shared
-   ce/CE-12-scena-faktow.css is left untouched, so every other page of the
-   pattern keeps today's scene.
-   Self-contained on purpose: the page drops the link to the shared file, so the
-   illustration box (.c5-viz*) and the bar chart (.c5-bar*, .c5-barchart – also
-   used by the "Dowód" section of this page) travel with this sheet.
+   Rebuild of the CE-12 scene after the Figma frame. The `-proba` name comes from
+   its first day, when produkty.html was the only page on it and Mateusz was still
+   to accept one of the two header variants (spec §21.3); the shared
+   ce/CE-12-scena-faktow.css keeps the layout from before that frame and has no
+   page left on it.
+   Self-contained on purpose: a page that links this sheet drops the link to the
+   shared one, so the illustration box (.c5-viz*) and the bar chart (.c5-bar*,
+   .c5-barchart – used outside the scene as well, e.g. by the "Dowód" section of
+   produkty.html) travel with this sheet.
+
+   19.09.2026 – this is no longer the trial of a single page: the Frame 206 layout
+   carries the CE-12 scene of SIX pages of the pattern – produkty, prochnica-plus,
+   carbomat, carbomat-mata, carbohumic and carbomat-humic. The `-proba` name stays
+   until the rename can be coordinated with the Próchnica+ session (renaming means
+   editing prochnica-plus.html, which belongs to that session). Whatever a page has
+   to retune goes through the knobs described right below – no page-level copy of a
+   rule from this sheet. The content layer of every one of those pages lives in the
+   stylesheet of the page itself.
 
    Two layouts out of one DOM:
    · static (below 900 px, reduced motion, no JS) – one column, everything
@@ -22,13 +33,43 @@
      the length of the description (orchestrator's call, 18.09).
 
    Layout classes carry the c5-fx prefix, hooks are data-fx*. What depends on the
-   CONTENT of the page (photo crops, the `order` of the static layout, the type
-   scale of the scene head) stays in produkty.css. ========================== */
+   CONTENT of a page (photo crops, the `order` of the static layout, the type
+   scale of the scene head) stays in the stylesheet of that page. ============ */
+
+/* --- What a page may retune -------------------------------------------------
+   Five knobs, carrying the values this sheet has had since 18.09.2026, so a page
+   that sets nothing looks exactly as it did. A page retunes them with ONE
+   declaration on the root of its section, e.g.
+     #metodologia{--c5-fx-viz-h:clamp(360px,68svh,760px);
+                  --c5-fx-static-max:1800px;--c5-fx-static-pad:40px;}
+   --c5-fx-viz-w joined them on 19.09.2026: an illustration that is a table or a
+   chart needs more width on a narrow window than the 26 % of the default gives.
+   --c5-fx-viz-bg joined them the same evening, after the independent QA (defect
+   D-01): this layout dropped the wash over the photo panel, so on a BRIGHT photo
+   the box no longer carries enough darkness of its own and its tag, caption and
+   body fall under 4.5 : 1. It is the one knob with NO declaration below, because
+   the scene draws the box in two different colours today: rgb(20 20 20 / .55)
+   plus a blur where backdrop-filter works and rgb(20 20 20 / .78) where it does
+   not. A single declared default could only hold one of the two, so each branch
+   keeps its own value as the fallback of its var() and a page that sets the knob
+   gives both branches the same colour. Greyscale only, as the pattern says.
+   The two static knobs sit OUTSIDE the scene media query on purpose: they also
+   rule the layout below 900 px, with reduced motion and without JS. --------- */
+.c5-fx{--c5-fx-viz-h:clamp(340px,62svh,760px);
+  /* Safe range of the width: the box is centred in the photo panel (from 50 % of
+     the container to --c5-fx-edge from its right edge), so every px of width takes
+     half a px of clearance from EACH side. Up to calc(50% - 56px) the text column
+     keeps its full --c5-fx-gap and a dot rail standing 10 px from the right edge of
+     the window (28 px wide, EL-29) stays clear; the default below keeps 16 px more
+     than that. Above calc(50% - --c5-fx-edge) the box stops fitting the panel. */
+  --c5-fx-viz-w:min(clamp(330px,26%,520px),calc(50% - 88px));
+  --c5-fx-static-max:1180px;--c5-fx-static-pad:var(--w-space-5);}
 
 /* --- Static layout --------------------------------------------------------- */
 .c5-fx__track{height:auto;}
 /* outside the scene the stage is an ordinary page container */
-.c5-fx__stage{max-width:1180px;margin-inline:auto;padding-inline:var(--w-space-5);
+.c5-fx__stage{max-width:var(--c5-fx-static-max,1180px);margin-inline:auto;
+  padding-inline:var(--c5-fx-static-pad,var(--w-space-5));
   display:flex;flex-direction:column;gap:clamp(2rem,4vw,3rem);}
 .c5-fx__above{margin-bottom:clamp(2rem,4vw,3rem);}
 .c5-fx__head{display:flex;flex-direction:column;gap:clamp(1rem,2vw,1.5rem);}
@@ -49,6 +90,9 @@
 .c5-fx__body{display:flex;flex-direction:column;gap:var(--w-space-3);font-size:0.9375rem;line-height:1.55;color:var(--w-text-secondary);}
 .c5-fx__body p{margin:0;}
 .c5-fx__body ul{margin:0;padding-left:1.35rem;display:flex;flex-direction:column;gap:var(--w-space-2);}
+/* Kit lists (.wf-list) carry their own indent in the <li>, so the rule above would
+   add a second one. Until 19.09.2026 every page using them had to undo it itself. */
+.c5-fx__body .wf-list{padding-left:0;}
 
 /* line + counter belong to the scene only */
 .c5-fx__line,.c5-fx__count{display:none;}
@@ -117,8 +161,12 @@
     opacity:0;transition:opacity .45s var(--w-ease);will-change:opacity;}
   .cx-js .c5-fx__img[data-on="true"],.cx-js .c5-fx__ph[data-on="true"]{opacity:1;}
   /* the dock floats over the bottom edge of the window, right where the placeholder
-     label sits – in the scene the label goes to the top-left corner of the panel */
-  .cx-js .c5-fx__ph::after{top:12px;bottom:auto;left:14px;}
+     label sits – in the scene the label goes to the top-left corner of the panel.
+     Two conventions live in the pattern: `content:attr(data-ph)` on ::after
+     (produkty.css, carbomat-mata.css) and a child <span class="c5-ph__label">
+     (carbomat-humic.css). Both are moved, so no page has to repeat the rule. */
+  .cx-js .c5-fx__ph::after,
+  .cx-js .c5-fx__ph > .c5-ph__label{top:12px;bottom:auto;left:14px;}
 
   /* One fact at a time, standing at the BOTTOM of the left column: all five sit in
      the same place (same insets), so the swap is a cross-fade. Three rows – title,
@@ -142,15 +190,19 @@
   /* the illustration box floats in the middle of the photo panel: the same rect,
      a fixed size and auto margins centre it on both axes */
   .cx-js .c5-fx__flow > .c5-viz{position:absolute;left:50%;right:var(--c5-fx-edge);top:var(--c5-fx-edge);bottom:var(--c5-fx-edge);
-    width:min(clamp(330px,26%,520px),calc(50% - 88px));height:clamp(340px,62svh,760px);margin:auto;
+    width:var(--c5-fx-viz-w,min(clamp(330px,26%,520px),calc(50% - 88px)));height:var(--c5-fx-viz-h,clamp(340px,62svh,760px));margin:auto;
     max-width:none;max-height:none;aspect-ratio:auto;
+    background:var(--c5-fx-viz-bg,rgb(20 20 20 / .78));
     opacity:0;visibility:hidden;transition:opacity .22s var(--w-ease),visibility 0s linear .22s;}
   .cx-js .c5-fx__flow > .c5-viz[data-on="true"]{opacity:1;visibility:visible;transition:opacity .22s var(--w-ease);}
   /* Frame 206: the illustration keeps its content, only its background changes –
      a lighter dark wash plus a blur of the photo behind it. Without support for
-     backdrop-filter the box stays at the old .78 black. */
+     backdrop-filter the box stays at the old .78 black – that is the fallback of
+     the line above, which repeats what .c5-viz carries anyway and only adds the
+     --c5-fx-viz-bg knob to it. The knob rules BOTH branches; the static layout
+     below 900 px, with reduced motion and without JS, keeps the .78 of .c5-viz. */
   @supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
-    .cx-js .c5-fx__flow > .c5-viz{background:rgb(20 20 20 / .55);
+    .cx-js .c5-fx__flow > .c5-viz{background:var(--c5-fx-viz-bg,rgb(20 20 20 / .55));
       -webkit-backdrop-filter:blur(18px) saturate(.9);backdrop-filter:blur(18px) saturate(.9);}
   }
 }

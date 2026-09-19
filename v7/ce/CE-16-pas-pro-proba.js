@@ -1,7 +1,11 @@
 /* ===== CE-16 · Pas PRO – trial build „pozny-wzrost" (spec §21.4, §21.8) =====
-   Trial version of the CE-16 module, written on 18.09.2026 and linked ONLY by
-   produkty.html while Mateusz decides whether it replaces the shared file. The
-   shared ce/CE-16-pas-pro.js stays untouched and keeps serving every other page.
+   Trial version of the CE-16 module, written on 18.09.2026 for produkty.html.
+   Since 19.09.2026 FIVE pages link it – produkty, carbomat, carbomat-mata,
+   carbohumic and carbomat-humic – while Mateusz decides whether it replaces the
+   shared file. The shared ce/CE-16-pas-pro.js stays untouched and still serves the
+   bands that do not take this pace: `zamykajacy` on kukurydza and `kontakt` on
+   o-firmie. The `-proba` rename waits for the Próchnica+ session, together with
+   the CE-12 one.
 
    What changes against the shared module: the frame no longer starts at a fixed
    .5 of its own and no longer moves from the first moment the band shows up. It
