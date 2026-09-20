@@ -18,6 +18,37 @@
 .u-h4{font-size:1.125rem;line-height:1.3;letter-spacing:-0.01em;}
 .u-lab,.u-defs dt{letter-spacing:.06em;}
 
+/* ===== 05 · Typografia nagłówków i kickerów (iteracja 16, Mateusz 20.09.2026)
+   Siedem uwag z artefaktu mówi to samo: „popraw fonty na nowe" i „popraw
+   kicker". Nowe = krój i plakietka, które CARBOMAT ECO wprowadził 20.09 rano
+   (rejestr: CE-12 `glass-i-zielen`, ramki „Frame 140-8475" i „Frame 140-8364"),
+   a Produkty tego samego dnia rozciągnęły na całą stronę (produkty.css blok 05).
+   Tu tak samo: jedna strona nie może nieść dwóch stylów kickera naraz, więc
+   wszystkie głowy sekcji czytają się jednakowo. Zmienia się WYŁĄCZNIE krój
+   i plakietka – rozmiary, miary i rytm pod kickerem zostają, bo uwaga dotyczyła
+   fontów, nie układu. Ramka „Frame 285-2238" (Stanowisko) pokazuje dokładnie
+   ten zestaw: plakietka z obrysem i nagłówek szeryfowy w ciemnej zieleni.
+   ⚠️ H1 hero też wchodzi na nowy krój – Mateusz nie komentował hero, ale
+   dwa kroje nagłówków na jednej stronie byłyby rozjazdem; do potwierdzenia. */
+@font-face{
+  font-family:"P22 Mackinac Pro";
+  src:url("font/P22MackinacPro-Book.woff2") format("woff2");
+  font-weight:400;
+  font-style:normal;
+  font-display:swap;
+}
+/* Book to jedyny krój w vaulcie, więc waga schodzi do 400 – cokolwiek grubszego
+   przeglądarka dorobiłaby sztucznym pogrubieniem. `font-display:swap` trzyma
+   nagłówek czytelny w Interze od pierwszej klatki. */
+.c5-h1,.c5-h2{font-family:"P22 Mackinac Pro",var(--w-font-sans);font-weight:400;}
+/* EL-06 w metrykach ramki: padding 9 px, promień 8 px, 13/14 px, ciemnozielony
+   tusz projektu zamiast czerni kitu. Klasa bazowa jest `inline-block`
+   z `width:fit-content`, więc wyśrodkowana głowa potrzebuje z powrotem bloku
+   i marginesów `auto`. */
+.c5-kicker--outline{padding:9px;border-color:#0c2b1c;border-radius:8px;
+  font-size:13px;line-height:14px;letter-spacing:.03em;color:#0c2b1c;}
+.c5-kicker--outline.c5-kicker--center{display:block;width:fit-content;margin-inline:auto;}
+
 /* page-specific: CE-08 hero, wariant „kadr-w-tle” (spec §14.2) – cały układ
    wariantu (kadr w tle, scrim, dwie kolumny u dołu, telefon) siedzi w warstwie
    wspólnej `ce/CE-08-hero.css`, bo ten hero dostaną wszystkie podstrony upraw.
@@ -154,13 +185,12 @@ html.cx-js .u-prod__card{--u-prod-delay:0ms;
 .u-prod__go .wf-icon{width:16px;height:16px;transition:transform var(--w-duration-fast) var(--w-ease);}
 .u-prod__card:hover .u-prod__go .wf-icon{transform:translateX(3px);}
 
-/* Iteration 11 (§15.4): the wide container buys a fifth column, not wider
-   cards – five in one row from 1500 px. Below that the row stays 3 + 2: at
-   1440 px five columns would leave 259 px per card, less than the two-line
-   product name and the `Forma / Najlepszy termin` list need. */
-@media (min-width:1500px){
-  .u-prod{grid-template-columns:repeat(5,minmax(0,1fr));}
-}
+/* Iteration 16 (Mateusz, 20.09.2026): „Zachowaj układ trójkolumnowy.
+   Maksymalna szerokość kontenera treści tego CE to 1180 px". Piąta kolumna
+   z iteracji 11 była kupiona szerokim kontenerem – na 1180 px pięć kart
+   miałoby po 215 px, czyli mniej, niż potrzebuje dwuwierszowa nazwa produktu
+   i lista „Forma / Najlepszy termin”. Zostaje siatka 3 + 2 z `uprawa.css`,
+   gdzie karta ma 368 px. */
 /* The shared 710 px cap of the lead is ~85 characters a line in this font.
    On the wide container the centred head has room to spare, so the lead is
    held at the ~70 the rest of the page reads at. Kept inside the wide range,
@@ -245,15 +275,13 @@ html.cx-js .u-rl__card{--u-rl-delay:0ms;
   .u-rl__card{padding:var(--w-space-4);}
 }
 
-/* --- Iteration 11 (§15.4): the section on the wide container --------------
-   Four rules, one row, from 1440 px – the width goes into a fourth column,
-   not into wider cards (the card layout above switches back to the stacked
-   one there). The note keeps its own measure: stretched over the container
-   its single sentence would run past 200 characters in one line, so the box
-   ends where the text ends. */
-@media (min-width:1440px){
-  .u-rl{grid-template-columns:repeat(4,minmax(0,1fr));}
-}
+/* --- Iteration 16: the section back on the 1180 px container ---------------
+   Mateusz, 20.09.2026: „Maksymalna szerokość kontenera treści dla tego CE
+   wynosi 1180 px". The fourth column of iteration 11 lived on the wide
+   container – at 1180 px four rule cards would be 265 px wide, and the
+   longest condition („Jeśli gleba jest silnie zdegradowana…") needs more
+   than that, so the grid stays 2 × 2 at every width. The note keeps its own
+   measure, which is now narrower than the container anyway. */
 @media (min-width:900px){
   #u-wybor-nota{max-width:36rem;}
   /* 68 ch of the shared `u-measure` is ~89 characters a line at this size –
@@ -261,21 +289,15 @@ html.cx-js .u-rl__card{--u-rl-delay:0ms;
   #u-wybor-potas .u-txt.u-measure{max-width:56ch;}
 }
 
-/* The potassium block reads across the container from 1280 px: question on
-   the left, dose buttons and the K₂O bar in the middle, reading on the right.
-   Stacked, the bar would be a 1700 px long rule with its interpretation alone
-   underneath in an empty field. The block is a `wf-stack`, so the row gap
-   stays the one the stack sets; only the columns are new.
-   `.u-kbar` has three children – doses, bar, texts – and the texts are placed
-   by hand in the second column across both rows; the other two fall into the
-   first column by auto-placement. */
-@media (min-width:1280px){
-  #u-wybor-potas{display:grid;grid-template-columns:minmax(0,24rem) minmax(0,1fr);
-    column-gap:clamp(2rem,4vw,4rem);align-items:start;}
-  #u-wybor-potas .u-kbar{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,22rem);
-    column-gap:clamp(2rem,4vw,4rem);row-gap:var(--w-space-5);align-items:start;}
-  #u-wybor-potas .u-kbar__texts{grid-column:2;grid-row:1 / span 2;}
-}
+/* Iteration 16 – two comments of Mateusz (20.09.2026) on this block: „Nagłówek
+   i ten tekst daj nad wykresem z tabami dawka produktu" and, on the reading
+   beside the bar, „To możesz przenieść pod wykres". Both say the same thing:
+   the block reads TOP DOWN – head, doses, bar, reading – and not across three
+   columns. The three-column layout of iteration 11 only made sense on the
+   1700 px container, which this section no longer stands on; at 1180 px the
+   bar is no longer a rule running across the screen, so nothing is lost.
+   The DOM order was already this one, so it is enough that no rule reshuffles
+   it: everything the `@media (min-width:1280px)` block used to set is gone. */
 
 @media (prefers-reduced-motion: reduce){
   html.cx-js .u-rl__card{--u-rl-delay:0ms;transition:none;}
@@ -507,15 +529,24 @@ html.cx-js .u-mt__row{cursor:pointer;}
   #u-skala .c5-lead{max-width:60ch;}
   #u-skala .wf-small.u-measure{max-width:60ch;}
 }
-/* From 1560 px – not earlier: the four result boxes move into the right column
-   with the converter, and they only hold their width (260–320 px, what the row
-   had at the 1180 px container) once the column is at least 1100 px. Between
-   900 and 1560 px the head stays above the converter and the boxes run across
-   the whole container, where they are 270–350 px wide. */
-@media (min-width:1560px){
-  #u-skala > .c5-wrap{display:grid;grid-template-columns:minmax(0,20rem) minmax(0,1fr);
-    column-gap:clamp(2rem,4vw,4rem);align-items:start;}
-}
+/* Iteration 16 (Mateusz, 20.09.2026): „Nagłówek, lead i kicker umieść nad
+   paskiem z powierzchnią uprawy" – the head column of iteration 11 is gone.
+   It only appeared from 1560 px and only on the wide container; the section
+   now stands on 1180 px, where the head belongs above the converter anyway.
+   The kicker and the heading keep the left edge, like the lead – the second
+   half of the same comment. */
+
+/* Koszt produktu w boksie wyniku (iteracja 16, uwaga Mateusza z 20.09.2026 –
+   ceny podał wprost ze sklepu). Ten sam wzorzec co wiersz wody: własny
+   `data-calc-out` w środku boksu, wartość mniejsza od głównej, żeby hierarchia
+   boksu została. `data-lo`/`data-hi` to już złotówki na hektar (dawka × cena
+   jednostkowa), więc przelicznik `c5.js` zostaje nietknięty. */
+.u-out__cost{display:flex;flex-direction:column;gap:var(--w-space-1);
+  padding-top:var(--w-space-3);border-top:1px solid var(--w-border-subtle);}
+.u-out__cost b{font-size:var(--w-font-h5-size);line-height:var(--w-font-h5-lh);}
+/* Nota cenowa ma teraz dwa akapity – podstawa cen i zastrzeżenie, że warianty
+   są alternatywami. Bez odstępu zlałyby się w jeden blok drobnego druku. */
+.u-cost p + p{margin-top:var(--w-space-3);}
 
 /* ===== 90 · Pas zamykający (spec §9.11, §13.5) – ustawienia CE-16 ==========
    Pas stoi na bazowym klocku `ce/CE-16-pas-pro.*` (wariant „zamykajacy”, bez
@@ -615,3 +646,68 @@ html.cx-js .u-mt__row{cursor:pointer;}
    30 px from the window edge; the band now runs on the wide container, so its
    content always ends 40 px from the edge while the rail stands between 10 px
    and 38 px – the buttons clear it at every width without help. */
+
+/* ===== 90b · Pas zamykający wg ramki „Frame 186-253” (iteracja 16) =========
+   Uwaga Mateusza z 20.09.2026: „Zdjęcie w tle zostaw na pełną szerokość
+   ekranu, natomiast teksty po lewej i przyciski po prawej są w ramach
+   kontenera z treścią o maksymalnej szerokości 1180 px. Typografia i przyciski
+   odwzoruj z [Frame 186-253]".
+   Kontener załatwia HTML – `c5-wrap` zamiast `c5-wrap--wide`; kadr i tak leży
+   pod `.c5-pro`, czyli na pełną szerokość okna, i nic go nie ogranicza.
+   Reszta to ta sama warstwa wyglądu, którą z tej ramki wziął CARBOMAT ECO
+   (rejestr: CE-16 wariant `zielen-i-scrim`, carbomat.css „Pas PRO”) i którą
+   20.09 przejęły Produkty. KAŻDY selektor jest zamknięty w `#u-cta`, bo
+   `ce/CE-16-pas-pro.css` obsługuje osiem stron, a `.c5-btn` z `ce/00-base.css`
+   cały serwis – stąd nic nie może wyciekać.
+   Z ramki: 52/53 px nagłówek, zielony przycisk podstawowy #86D574 z tuszem
+   #0C2B1C, promienie 20 px, wysokość 56 px, odstęp 11 px, obwódka
+   drugorzędnego rgb(255 255 255 / .5).
+   NIE z ramki: (1) podłożenie rgb(0 0 0 / .3) pod przyciskiem drugorzędnym
+   zostaje – to poprawka czytelności z iteracji 5, etykieta leży na
+   rozświetlonym pyle i bez niej schodzi poniżej 4,5 : 1; (2) tło pasa
+   zostaje `--w-gray-600`, bo kadr zakrywa je w całości, a Mateusz pisał
+   o typografii i przyciskach; (3) znaku marki z przycisku ramki nie
+   dorysowujemy – nie ma go w sprite. */
+#u-cta{
+  --pro-btn:#86D574;             /* wypełnienie przycisku podstawowego */
+  --pro-btn-ink:#0C2B1C;         /* etykieta przycisku podstawowego */
+  --pro-btn-hover:#77C169;       /* hoveru nie ma w ramce – jeden krok niżej */
+  --pro-line:rgb(255 255 255 / .5);
+  --pro-r:20px;
+}
+/* 52 px / 53 px; 3.6vw trafia w 52 px przy 1440 px ramki. Nagłówek jest teraz
+   na Mackinacu (blok 05), więc w tej samej szerokości kolumny mieści się mniej
+   znaków – kolumna rośnie z 340 na 420 px, bo kontener 1180 px cofnął treść
+   od krawędzi okna i lewa strefa nie sięga już sylwetki kombajnu. */
+/* Nagłówek pasa nie nosi klasy `c5-h2` (klocek wspólny stylizuje go po
+   znaczniku), więc reguła kroju z bloku 05 go nie łapie – a w ramce jest
+   wyraźnie szeryfowy, tak jak reszta nagłówków tej strony po iteracji 16.
+   ⚠️ Na Produktach ten sam pas (#dla-profesjonalistow) został przy Interze –
+   tam zmiana kroju to jedna linia, gdy Mateusz zdecyduje. */
+#u-cta .c5-pro__grid h2{font-family:"P22 Mackinac Pro",var(--w-font-sans);font-weight:400;
+  font-size:clamp(1.875rem,3.6vw,3.25rem);line-height:1.02;}
+@media (min-width:900px){
+  #u-cta .c5-pro__grid h2{max-width:min(420px,34vw);}
+}
+/* --- przyciski z ramki ----------------------------------------------------- */
+/* 11 px między nimi, wobec 8 px z klocka wspólnego */
+#u-cta .c5-btnrow{gap:11px;}
+/* Oba: 56 px wysokości, narożniki 20 px. Przy etykiecie 1rem w pudełku 1.25
+   podstawowy daje 18 + 20 + 18 = 56 dokładnie – ale dopiero, gdy zniknie
+   obramowanie 1 px z `.c5-btn`, a ramka i tak rysuje go bez obramowania.
+   Drugorzędny zachowuje swoje 15 px paddingu, czyli brakuje mu 4 px –
+   dopina je `min-height`. */
+#u-cta .c5-pro__grid .c5-btn{
+  min-height:56px;line-height:1.25;border-radius:var(--pro-r);--c5-btn-px:24px;}
+#u-cta .c5-btn--inv{
+  background:var(--pro-btn);color:var(--pro-btn-ink);border:0;
+  padding:18px 24px;}
+#u-cta .c5-btn--inv:hover{background:var(--pro-btn-hover);}
+#u-cta .c5-pro__login{
+  border-color:var(--pro-line);padding:15px 24px;}
+/* klocek wspólny rozjaśnia obwódkę na hover – przywracamy, bo selektor
+   z identyfikatorem wygrałby z `.c5-pro__login:hover` */
+#u-cta .c5-pro__login:hover{border-color:var(--w-text-inverse);}
+/* klocek wspólny prostuje pierścień fokusu (`border-radius:0`), bo narożniki
+   V5 są ostre; tu przyciski są okrągłe, więc pierścień idzie za nimi */
+#u-cta a:focus-visible{border-radius:var(--pro-r);}

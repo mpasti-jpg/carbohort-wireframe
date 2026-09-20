@@ -8,10 +8,17 @@
    that carries „Nasze produkty” and „Uzupełnienie” side by side, split by a
    hairline.
 
-   The frame gives layout and mechanics; the language stays ours – greyscale,
-   `--w-*` tokens, sharp corners, body typeface. The frame's green becomes
-   `--w-gray-900`, its light grey `--w-gray-100`, and the only rounded thing on
-   the page is the outlined kicker (EL-06).
+   Iteration 16 (20.09.2026) reversed one half of that: until then the frame
+   gave layout and mechanics only and the language stayed ours – greyscale,
+   sharp corners – with the frame's green rendered as `--w-gray-900`. Mateusz
+   then pointed at two further frames („Frame 285-2289” for the list, „Frame
+   285-2334” for the strip) with „Zrób to, aby bardziej wyglądało jak
+   w projekcie", so the colour and the corners come from the design as well:
+   the „Priorytet” field is green, both fields are rounded 20 px, the active
+   node of the list is a green outline instead of a black square, and the
+   little square in front of every field label is the brand green. Sizes,
+   measures, tracks, motion and the typeface are untouched – see the knobs
+   below for what exactly changed and how to roll it back.
 
    Geometry of the frame at 1440 px, carried over as ratios so it survives
    every width: list : details = 23 : 77 with a `clamp(2.5rem,8vw,7.25rem)`
@@ -48,6 +55,23 @@
   --c5-cb-labgap:1.75rem;                        /* field label -> its content   */
   --c5-cb-titlegap:clamp(1.5rem,2.8vw,2.5rem);   /* title -> strip               */
   --c5-cb-colgap:clamp(2.5rem,8vw,7.25rem);      /* list -> details              */
+  /* --- warstwa wyglądu z ramek „Frame 285-2289” i „Frame 285-2334” --------
+     Uwagi Mateusza z 20.09.2026 („Zrób to, aby bardziej wyglądało jak
+     w projekcie"). Wartości zdjęte z pikseli obu ramek. Klocek ma jedno
+     wystąpienie w serwisie (Kukurydza, #u-stanowisko), więc idą wprost do
+     warstwy wspólnej, a nie w nadpisania strony.
+     ⚠️ Kontrast: biały tekst na #4CA039 to 3,3 : 1 – dla zdania „Priorytet”
+     (21 px, waga zwykła) próg AA wynosi 4,5 : 1. Wartość jest prosto z ramki,
+     świadomie; wycofanie to jedna linia – #3F862F daje 4,5 : 1 przy tym samym
+     charakterze koloru. Ta sama uwaga dotyczy cyfr aktywnego węzła listy
+     (11 px, `aria-hidden`, znaczenie niesie nazwa warunku obok). */
+  --c5-cb-prio-bg:#4CA039;                       /* pole „Priorytet”, ramka 2334 */
+  --c5-cb-lite-bg:#F6F6F6;                       /* pole jasne, ramka 2334       */
+  --c5-cb-accent:#4CA039;                        /* aktywny węzeł listy, r. 2289 */
+  --c5-cb-mark:#71C35F;                          /* kwadracik przed etykietą     */
+  --c5-cb-r:20px;                                /* promień obu pól, ramka 2334  */
+  --c5-cb-node-r:6px;                            /* promień węzła, ramka 2289    */
+  --c5-cb-prod-r:10px;                           /* promień boksu produktu       */
   /* --- motion ------------------------------------------------------------ */
   --c5-cb-out:120ms;                             /* leaving panel              */
   --c5-cb-in:420ms;                              /* entering title and values  */
@@ -99,7 +123,7 @@ html.cx-js .c5-cb__list::-webkit-scrollbar{display:none;}
 .c5-cb__tabno{
   display:flex;align-items:center;justify-content:center;
   width:var(--c5-cb-node);height:var(--c5-cb-node);
-  border:1px solid var(--w-border-strong);background:var(--w-surface-page);
+  border:1px solid var(--w-border-strong);border-radius:var(--c5-cb-node-r);background:var(--w-surface-page);
   font-family:inherit;font-size:.6875rem;font-weight:var(--w-weight-medium);
   font-variant-numeric:tabular-nums;letter-spacing:.02em;line-height:1;
   color:var(--w-text-tertiary);
@@ -113,7 +137,11 @@ html.cx-js .c5-cb__list::-webkit-scrollbar{display:none;}
 .c5-cb__tab:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:2px;}
 .c5-cb__tab[aria-selected="true"]{color:var(--w-text-primary);}
 .c5-cb__tab[aria-selected="true"] .c5-cb__tabt{font-weight:var(--w-weight-medium);}
-.c5-cb__tab[aria-selected="true"] .c5-cb__tabno{background:var(--w-gray-900);border-color:var(--w-gray-900);color:var(--w-text-inverse);}
+/* Ramka „Frame 285-2289”: aktywny węzeł to zielony obrys z zielonymi cyframi,
+   nie czarny kwadrat z białymi. Stan telefonu (pasek chipów poniżej 900 px)
+   nadpisuje tę regułę niżej i zostaje przy ciemnym chipie – ramka opisuje
+   wyłącznie pionową listę desktopową. */
+.c5-cb__tab[aria-selected="true"] .c5-cb__tabno{background:transparent;border-color:var(--c5-cb-accent);color:var(--c5-cb-accent);}
 
 @media (max-width:899px){
   /* a fixed basis, not `auto`: chips of one width let the next one peek in and
@@ -152,8 +180,8 @@ html.cx-js .c5-cb__det{
 
 .c5-cb__fld,.c5-cb__vr{display:none;}
 html.cx-js .c5-cb__fld{display:block;}
-html.cx-js .c5-cb__fld--dark{grid-area:2 / 1 / 4 / -1;background:var(--w-gray-900);}
-html.cx-js .c5-cb__fld--lite{grid-area:4 / 1 / -1 / -1;background:var(--w-gray-100);}
+html.cx-js .c5-cb__fld--dark{grid-area:2 / 1 / 4 / -1;background:var(--c5-cb-prio-bg);border-radius:var(--c5-cb-r);}
+html.cx-js .c5-cb__fld--lite{grid-area:4 / 1 / -1 / -1;background:var(--c5-cb-lite-bg);border-radius:var(--c5-cb-r);}
 
 /* --- Stos paneli ----------------------------------------------------------
    Without JS a plain card grid; with JS the subgrid stack over the fields. */
@@ -200,15 +228,17 @@ html.cx-js .c5-cb__t{
   text-transform:uppercase;font-weight:var(--w-weight-medium);color:var(--w-text-tertiary);
 }
 /* the frame's 4 px square in front of every field label */
-.c5-cb__lab::before{content:"";display:inline-block;width:4px;height:4px;margin-right:.4375rem;vertical-align:.18em;background:var(--w-gray-900);}
+.c5-cb__lab::before{content:"";display:inline-block;width:4px;height:4px;margin-right:.4375rem;vertical-align:.18em;background:var(--c5-cb-mark);}
 .c5-cb__val{font-size:.9375rem;line-height:1.55;color:var(--w-text-secondary);}
 .c5-cb__val p{margin:0;}
 /* „Priorytet” without JS is the key line of a light card; on the dark field it
    is the frame's large, regular-weight sentence */
 .c5-cb__val--a{font-size:1.0625rem;line-height:1.4;font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
 html.cx-js .c5-cb__val--a{font-size:clamp(1.25rem,1.8vw,1.5rem);line-height:1.25;font-weight:var(--w-weight-regular);color:var(--w-text-inverse);}
-html.cx-js .c5-cb__lab--a{color:rgb(255 255 255 / .62);}
-html.cx-js .c5-cb__lab--a::before{background:var(--w-text-inverse);}
+/* Na zielonym polu ramka pisze etykietę pełną bielą, nie przygaszoną –
+   przy 3,3 : 1 samego tła krycie .62 zeszłoby do 1,9 : 1. */
+html.cx-js .c5-cb__lab--a{color:var(--w-text-inverse);}
+html.cx-js .c5-cb__lab--a::before{background:var(--c5-cb-mark);}
 
 html.cx-js .c5-cb__lab{padding:var(--c5-cb-pad) var(--c5-cb-pad) 0;}
 html.cx-js .c5-cb__val{padding:var(--c5-cb-labgap) var(--c5-cb-pad) var(--c5-cb-pad);}
@@ -224,7 +254,7 @@ html.cx-js .c5-cb__val--c{grid-area:7 / 1;--i:2;}
 .c5-cb__prod{
   display:grid;grid-template-columns:45px minmax(0,1fr) auto;gap:.625rem;
   align-items:center;width:100%;min-height:69px;padding:9px 10px;
-  background:var(--w-surface-page);border:1px solid var(--w-border-default);border-radius:0;
+  background:var(--w-surface-page);border:1px solid var(--w-border-default);border-radius:var(--c5-cb-prod-r);
   font:inherit;font-size:var(--w-font-sm-size);line-height:1.3;font-weight:var(--w-weight-medium);
   color:var(--w-text-primary);text-align:left;cursor:pointer;
   transition:border-color var(--w-duration-base) var(--w-ease);

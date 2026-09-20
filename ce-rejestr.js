@@ -509,7 +509,7 @@ window.CW_CE = {
         "rząd 2 przycisków"
       ],
       "warianty": {
-        "zamykajacy": "bez akapitu: nagłówek po lewej, dwa przyciski po prawej, oba na kadrze (Kukurydza; od 18.09.2026 na bazowym kodzie klocka zamiast własnego portu u-end)",
+        "zamykajacy": "bez akapitu: nagłówek po lewej, dwa przyciski po prawej, oba na kadrze (Kukurydza; od 18.09.2026 na bazowym kodzie klocka zamiast własnego portu u-end). Od 20.09.2026 (uwaga Mateusza: „Zdjęcie w tle zostaw na pełną szerokość ekranu, natomiast teksty po lewej i przyciski po prawej są w ramach kontenera z treścią o maksymalnej szerokości 1180 px. Typografia i przyciski odwzoruj z Frame 186-253”) kadr zostaje pełnoekranowy, a treść wraca z c5-wrap--wide na c5-wrap; typografia i przyciski jak w wariancie zielen-i-scrim – nagłówek 52/53 px na P22 Mackinac Pro, zielony przycisk podstawowy #86D574 z tuszem #0C2B1C, promienie 20 px, wysokość 56 px, odstęp 11 px, obwódka drugorzędnego rgb(255 255 255 / .5). Nadpisania zamknięte w #u-cta w kukurydza.css, bez nowego modułu; zostaje podłożenie rgb(0 0 0 / .3) pod przyciskiem drugorzędnym (poprawka czytelności na rozświetlonym pyle) i tło pasa --w-gray-600, bo kadr zakrywa je w całości",
         "kontakt": "pas zamykający rozmową: nagłówek po lewej, po prawej akapit i akcje kontaktowe. Na O nas (#porozmawiajmy) dwa przyciski, Kontakt i Zostań partnerem; na stronie głównej (#kontakt, 20.09.2026) numer telefonu jako duży link tel: z cyframi tabelarycznymi, wiersz godzin drobnym drukiem, dwa przyciski i cichy link do wszystkich działów",
         "pozny-wzrost": "kadr stoi na 50 % szerokości ekranu, dopóki górna krawędź pasa jest niżej niż 35 % wysokości okna, potem rośnie i pełny rozmiar osiąga 2 % od góry okna; nakładka przyciemniająca narasta razem ze wzrostem, więc w postoju zdjęcie jest bez przyciemnienia (uwagi Mateusza z 18.09.2026; od 19.09.2026 na pięciu stronach: Produkty, CARBOMAT ECO, CARBOMAT MATA, CARBOHUMIC, CARBOMAT HUMIC)",
         "zielen-i-scrim": "sama warstwa wyglądu nałożona na mechanikę pozny-wzrost, wg ramki Figma „Frame 186-253”, bez własnego modułu – nadpisania zamknięte w #uprawy-profesjonalne w carbomat.css (20.09.2026, CARBOMAT ECO): tło pasa #777771 zamiast --w-gray-600, nagłówek 52/53 px, akapit 21/26 px w pełnej bieli zamiast krycia .75, przycisk podstawowy w zieleni #86D574 z tekstem #0C2B1C, promieniem 20 px i paddingiem 18/24 px, przycisk drugorzędny z obwódką rgb(255 255 255 / .5), odstęp między przyciskami 11 px; kadr to zdjęcie sadu zakotwiczone dołem pod ukośnym gradientem #1A2405 o kryciu 30/10/10/30 %, rozciągniętym na cały pas z podłogą .55 + .45 × --pro-o. Copy zostaje dzisiejsze – uwaga dotyczyła typografii i przycisków, nie treści; ikony znaku marki z przycisku podstawowego nie odwzorowano, bo nie ma jej w sprite, a ikon się nie dorysowuje"
@@ -1271,7 +1271,7 @@ window.CW_CE = {
     "CE-43": {
       "nazwa": "Przełącznik z paskiem proporcji",
       "grupa": "przelaczniki",
-      "opis": "Jedna kolumna: h3 i zdanie, rząd przycisków wyboru, poziomy pasek wypełnienia z etykietą, blok interpretacji (duża wartość, etykieta, akapity). W szerokim kontenerze (Kukurydza, od 1280 px) trzy kolumny: pytanie | dawki i pasek | interpretacja.",
+      "opis": "Jedna kolumna z góry na dół: h3 i zdanie, rząd przycisków wyboru, poziomy pasek wypełnienia z etykietą, blok interpretacji (duża wartość, etykieta, akapity). Do 20.09.2026 na Kukurydzy od 1280 px rozchodził się na trzy kolumny (pytanie | dawki i pasek | interpretacja); dwie uwagi Mateusza z tego dnia („Nagłówek i ten tekst daj nad wykresem z tabami dawka produktu”, „To możesz przenieść pod wykres”) zdjęły ten układ – blok czyta się w jednej kolumnie na każdej szerokości, a sekcja stoi na kontenerze 1180 px, więc pasek nie jest już kreską przez cały ekran.",
       "mechanika": "Przyciski aria-pressed ustawiają szerokość wypełnienia i pokazują swój blok tekstu; bez JS wszystkie bloki widoczne. uprawa.js (pasek potasu).",
       "baza": {
         "plik": "v7/kukurydza.html",
@@ -1327,7 +1327,7 @@ window.CW_CE = {
     "CE-45": {
       "nazwa": "Pudełka-przełączniki",
       "grupa": "przelaczniki",
-      "opis": "Rząd pudełek (tablist) z nazwą i podpisem wariantu, pod nimi panel treści aktywnego wariantu (tabela). W szerokim kontenerze (Kukurydza) od 1280 px pudełka stoją jako szyna po lewej, a panel obok; od 1600 px wiersze programu idą parami.",
+      "opis": "Rząd pudełek (tablist) z nazwą i podpisem wariantu, pod nimi panel treści aktywnego wariantu (tabela). Od 1280 px pudełka stoją jako szyna po lewej, a panel obok; od 1600 px wiersze programu idą parami. Na Kukurydzy sekcja wróciła 20.09.2026 na kontener 1180 px, więc układ parami zostaje poza jej zasięgiem.",
       "mechanika": "Tablist ARIA z klawiaturą; klik pokazuje panel; bez JS wszystkie panele widoczne. uprawa.js (pudełka wariantów).",
       "baza": {
         "plik": "v7/kukurydza.html",
@@ -1375,7 +1375,7 @@ window.CW_CE = {
     "CE-47": {
       "nazwa": "Przelicznik",
       "grupa": "dane",
-      "opis": "Nagłówek, suwak powierzchni z wartością, siatka boksów wyników (wartość, jednostka, wiersz pomocniczy). W szerokim kontenerze (Kukurydza) od 1560 px głowa sekcji stoi w lewej kolumnie obok przelicznika.",
+      "opis": "Nagłówek, suwak powierzchni z wartością, siatka boksów wyników (wartość, jednostka, wiersze pomocnicze). Głowa sekcji – kicker, h2 i lead – stoi NAD paskiem powierzchni, wyrównana do lewej (uwaga Mateusza z 20.09.2026; kolumna głowy obok przelicznika, którą wprowadzał szeroki kontener od 1560 px, zniknęła razem z nim). Boks wyniku może nieść wiersze pomocnicze z własnym `data-calc-out`: woda do zabiegu i koszt produktu brutto (etykieta mówi „brutto” przy każdej liczbie, nie tylko w nocie pod tabelą – decyzja Mateusza z 20.09.2026) – `data-lo`/`data-hi` są tam już w złotówkach na hektar (dawka × cena jednostkowa), więc przelicznik `c5.js` zostaje nietknięty.",
       "mechanika": "Suwak przelicza dawki na bieżąco (data-calc w c5.js, grupowanie tysięcy), bez JS wartości domyślne.",
       "baza": {
         "plik": "v7/kukurydza.html",
@@ -1856,7 +1856,7 @@ window.CW_CE = {
     "CE-66": {
       "nazwa": "Tablica warunków",
       "grupa": "przelaczniki",
-      "opis": "Tablica warunków w układzie z ramki Figma: po lewej pionowa lista ośmiu warunków stanowiska z numerowanymi węzłami, po prawej tytuł aktywnego warunku i jeden złożony pas – ciemne pole „Priorytet” zrośnięte z jasnym polem, w którym „Nasze produkty” (zdanie z programu i boksy produktów z packshotem) i „Uzupełnienie” stoją obok siebie, rozdzielone włosową linią. Osiem paneli leży w tych samych komórkach siatki co pola i dziedziczy jej tory przez subgrid, więc pas ma stałą wysokość dla każdego warunku, oba pola są równe co do piksela, a etykiety wszystkich warunków leżą w tym samym miejscu. Szeroki kontener (c5-wrap--wide), kicker w ramce, bez leadu.",
+      "opis": "Tablica warunków w układzie z ramki Figma: po lewej pionowa lista ośmiu warunków stanowiska z numerowanymi węzłami, po prawej tytuł aktywnego warunku i jeden złożony pas – zielone pole „Priorytet” zrośnięte z jasnym polem, w którym „Nasze produkty” (zdanie z programu i boksy produktów z packshotem) i „Uzupełnienie” stoją obok siebie, rozdzielone włosową linią. Osiem paneli leży w tych samych komórkach siatki co pola i dziedziczy jej tory przez subgrid, więc pas ma stałą wysokość dla każdego warunku, oba pola są równe co do piksela, a etykiety wszystkich warunków leżą w tym samym miejscu. Szeroki kontener (c5-wrap--wide), kicker w ramce, bez leadu. Warstwa wyglądu z 20.09.2026 (ramki Figma „Frame 285-2289” – lista, i „Frame 285-2334” – pas; trzy uwagi Mateusza „Zrób to, aby bardziej wyglądało jak w projekcie”): pole „Priorytet” w zieleni #4CA039 zamiast czerni, oba pola z promieniem 20 px, aktywny węzeł listy to zielony obrys z zielonymi cyframi zamiast czarnego kwadratu z białymi (promień 6 px), kwadracik przed każdą etykietą w zieleni marki #71C35F, etykieta na zieleni pełną bielą zamiast krycia .62, boks produktu z promieniem 10 px. Wszystko na pokrętłach --c5-cb-prio-bg / --c5-cb-lite-bg / --c5-cb-accent / --c5-cb-mark / --c5-cb-r / --c5-cb-node-r / --c5-cb-prod-r w module wspólnym – klocek ma jedno wystąpienie, więc nie potrzebuje nadpisań strony. ⚠️ Kontrast: biel na #4CA039 to 3,3 : 1, a zdanie „Priorytet” ma 21 px wagi zwykłej (próg AA 4,5 : 1); wartość jest prosto z ramki, świadomie, wycofanie to jedna linia (#3F862F daje 4,5 : 1). Pasek chipów poniżej 900 px zostaje przy ciemnym chipie – ramki opisują wyłącznie listę desktopową. Wielkości, miary, tory siatki, ruch i krój bez zmian.",
       "mechanika": "Zakładki z aktywacją automatyczną: klik w pozycję listy, ↑ ↓ Home End z zawinięciem i roving tabindex, na telefonie przesunięcie palcem po pasie (próg 40 px, blokada kliknięcia, żeby przesunięcie nie otwierało popupu produktu). Przy zmianie tytuł wjeżdża zza maski, a treści pól wchodzą kaskadą co 70 ms – etykiety nigdy. Od 900 do 1199 px pas dzieli się 45 : 55, a jasne pole układa swoje dwie kolumny jedna pod drugą; poniżej 900 px lista jest poziomym przewijanym rzędem dosuwanym przez scrollLeft; bez JS zostaje osiem jasnych kart z numerem, przy reduced motion przełączanie jest natychmiastowe. Bez licznika, strzałek i autoprzełączania.",
       "baza": {
         "plik": "v7/kukurydza.html",
@@ -2320,7 +2320,7 @@ window.CW_CE = {
       "warianty": {
         "c5-kicker--center": "wyśrodkowany",
         "c5-kicker--flush": "bez odstępu pod spodem",
-        "c5-kicker--outline": "w ramce: obrys 1 px, narożniki 8 px, 0.75 rem – wyjątek Mateusza od ostrych narożników (18.09.2026, wzór: ramki Figma Mateusza); na Kukurydzy w CE-66, CE-67 i CE-68 (CE-65 na stronie demonstracyjnej)"
+        "c5-kicker--outline": "w ramce: obrys 1 px, narożniki 8 px, 0.75 rem – wyjątek Mateusza od ostrych narożników (18.09.2026, wzór: ramki Figma Mateusza); na Kukurydzy w CE-66, CE-67 i CE-68 (CE-65 na stronie demonstracyjnej). Od 20.09.2026 plakietka stoi na KAŻDEJ głowie sekcji Kukurydzy (siedem uwag Mateusza „popraw kicker”), w metrykach ramki – padding 9 px, promień 8 px, 13/14 px, tusz #0c2b1c – regułą strony w kukurydza.css, tak jak wcześniej na Produktach (produkty.css blok 05) i na CARBOMAT ECO; jedna strona nie niesie dwóch stylów kickera naraz"
       },
       "opis": "Nadtytuł sekcji: 0.875 rem, wersaliki, tracking .03em i duży odstęp do treści pod spodem. Dwanaście lokalnych nadpisań margin-bottom:0 czeka na wariant --flush.",
       "przyklad": "<span class=\"c5-kicker\">Czym jest CARBOMAT ECO</span><span class=\"c5-kicker c5-kicker--center\">Dla dociekliwych</span>",
@@ -3156,7 +3156,7 @@ window.CW_CE = {
       "klasa": "c5-wrap",
       "warianty": {
         "c5-wrap--narrow": "węższa kolumna do czytania",
-        "c5-wrap--wide": "szeroki kontener: od 900 px maks. 1800 px i 40 px bocznego marginesu (ramki Figma Mateusza z 18–19.09.2026); decyzją Mateusza z 19.09.2026 stoi na nim cała Kukurydza (CE-65 ma te same liczby we własnym kontenerze, panel liczb wyrównany ręcznie); pozostałe strony przejdą przy swoich przebudowach; od 19.09.2026 także Próchnica+ (poza Uczestnikami i Koordynatorami, które zostają na 1180 px)"
+        "c5-wrap--wide": "szeroki kontener: od 900 px maks. 1800 px i 40 px bocznego marginesu (ramki Figma Mateusza z 18–19.09.2026); decyzją Mateusza z 19.09.2026 stała na nim cała Kukurydza, a 20.09.2026 sześć jej sekcji wróciło na 1180 px (Produkty, Zasada wyboru, Warianty, Mieszaniny, Skala, pas zamykający – w tym ostatnim kadr zostaje pełnoekranowy, wąska jest tylko treść); szeroki kontener został tam, gdzie stoją klocki budowane wprost z ramek Figma: hero, liczby, program fazowy, decyzje, fakty i tablica warunków (CE-65 ma te same liczby we własnym kontenerze, panel liczb wyrównany ręcznie); pozostałe strony przejdą przy swoich przebudowach; od 19.09.2026 także Próchnica+ (poza Uczestnikami i Koordynatorami, które zostają na 1180 px)"
       },
       "opis": "Środkowa kolumna strony: maksymalnie 1180 px, boczny padding 20 px, wyśrodkowana. Osiem identycznych kopii w arkuszach stron zeszło do jednej definicji – zmierzone wartości są na siedmiu stronach takie same.",
       "przyklad": "<div class=\"c5-wrap sg-ramka\"><p class=\"c5-p\">Wszystko, co czyta się w tekście, mieści się w tej kolumnie – pasy tła idą pełną szerokością, treść nigdy.</p></div>",
