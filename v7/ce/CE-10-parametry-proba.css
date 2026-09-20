@@ -1,0 +1,147 @@
+/* ===== CE-10 · Parametry na wideo – trial build „figma" (spec §16.4) ========
+   ONLY carbomat.html links this file. The shared ce/CE-10-parametry.css keeps
+   serving carbomat-mata.html, carbohumic.html and carbomat-humic.html together
+   with their page-level overrides, so nothing written here can reach them.
+   Copied from the shared file on 20.09.2026 and rebuilt against Figma frames
+   140-8369 (table) and 140-8364 (kicker + heading):
+     · the table is eight separate tiles instead of ruled rows – tinted glass
+       background, 15 px corners, 20 px padding, 68 px tall, 7 px apart, and no
+       borders, no rules, no alternating rows;
+     · a kicker sits above the heading and the heading runs 46/54 px, weight
+       regular (the P22 Mackinac @font-face itself lives in carbomat.css – this
+       file only sets the metrics);
+     · „Pobierz aktualną analizę" loses its underline and its icon and moves to
+       the left edge of the table, 7 px below it;
+     · the section gains a scroll-driven intro (bottom of this file).
+   The variant „z-tabami" of the shared file is NOT copied – this page has no
+   parameter tabs, and the Mata keeps its own copy. ======================= */
+
+/* --- PARAMETRY: film wyznacza granice sekcji (spec §13.3, §14.4) ----------
+   Sekcja na pełny ekran; warstwa mediów i treść leżą w tej samej komórce
+   siatki, więc warstwa nie dokłada wysokości – sekcja jest tak wysoka jak treść
+   (min. 100svh). Warstwa jest przyklejona, treść przewija się po niej.
+   §14.4: sekcja nie ma własnego ciemnego tła ani ramki – kadrem jest cała
+   sekcja z 30 px marginesu z lewej i prawej, a `overflow:clip` (nie `hidden`,
+   które zrobiłoby ze sekcji kontener przewijania i zabiło sticky) trzyma
+   przyklejone wideo w jej granicach. --------------------------------------- */
+.c5-params{position:relative;display:grid;grid-template-columns:minmax(0,1fr);min-height:100svh;margin-inline:var(--c5-gutter);overflow:clip;color:var(--w-text-inverse);}
+/* Figma 140-8369 gives no variables and none of these three values sits on a
+   token scale, so they stay raw – as knobs, so one line takes the tiles back. */
+.c5-params{--c5-params-tile-bg:rgb(255 255 255 / .07);--c5-params-tile-radius:15px;--c5-params-tile-gap:7px;}
+/* The scrim is OURS, not the frame's – Figma 140-8369 shows the content only and
+   says nothing about the section background. .4 is the value the section has
+   carried so far; it is a knob because the strength has to be re-measured every
+   time the picture under it changes (§16.2 pkt 4). */
+.c5-params{--c5-params-scrim:.4;}
+.c5-params > *{grid-area:1 / 1;}
+.c5-params__bg{position:sticky;top:0;align-self:start;height:100svh;z-index:0;}
+.c5-params__frame{position:absolute;inset:0;overflow:hidden;}
+/* jedna klasa dla <img> i przyszłego <video> – podmiana to jeden element */
+.c5-params__media{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;}
+.c5-params__frame::after{content:"";position:absolute;inset:0;background:rgb(0 0 0 / var(--c5-params-scrim));pointer-events:none;}
+/* Odstępy liczone w vh, żeby treść mieściła się na ekranie i była wyśrodkowana;
+   u dołu dodatkowe 58 px prześwitu na dok doradcy. */
+.c5-params__body{position:relative;z-index:1;min-height:100svh;display:grid;align-content:center;padding-block:clamp(1.5rem,5vh,4rem) calc(clamp(1.5rem,5vh,4rem) + 58px);}
+
+/* --- kicker i nagłówek (Frame 140-8364) -----------------------------------
+   The kicker is EL-06 `c5-kicker--outline` with the metrics of the frame: no
+   fill, a 1 px white hairline, 10 px corners, 9/12 px of padding, 13/14 px of
+   uppercase text tracked 0,39 px (= .03em), 24 px above the heading. The
+   metrics are overridden HERE, inside the section, so the outline kicker of
+   every other page (CE-65) stays exactly as it is. */
+.c5-params__head{text-align:center;margin-bottom:var(--w-space-12);}
+.c5-params__kicker{margin:0 auto var(--w-space-6);padding:9px 12px;border-color:var(--w-white);border-radius:10px;color:var(--w-text-inverse);font-size:0.8125rem;line-height:14px;letter-spacing:.03em;}
+/* 46/54 px, tracking −1,288 px = −0,028 em; rodzina z carbomat.css */
+.c5-params__title{font-size:clamp(2rem,3.6vw,2.875rem);line-height:1.174;font-weight:var(--w-weight-regular);letter-spacing:-0.028em;text-align:center;margin:0;}
+
+/* --- tabela: osiem kafelków (Frame 140-8369) ------------------------------
+   68 px wysokości wynika z 20 + 28 + 20, więc stoi tu jako `min-height` – dłuższa
+   nazwa parametru ma się zawinąć, a nie wyjść poza kafelek. Boks nazwy 259 px
+   przy lewej krawędzi, boks wartości 270 px dociśnięty do prawej, rozjazd
+   między nimi robi `space-between` (tak jak flex w ramce). */
+.c5-params__rows{display:flex;flex-direction:column;gap:var(--c5-params-tile-gap);margin:0;}
+.c5-params__row{display:flex;align-items:center;justify-content:space-between;gap:var(--w-space-4);min-height:68px;padding:var(--w-space-5);border-radius:var(--c5-params-tile-radius);background:var(--c5-params-tile-bg);-webkit-backdrop-filter:blur(6.7px);backdrop-filter:blur(6.7px);}
+.c5-params__row dt{flex:0 1 259px;min-width:0;font-size:var(--w-font-h5-size);line-height:28px;font-weight:var(--w-weight-regular);}
+/* Value box: 270 px, `white-space:nowrap` and the 8 px gap to the footnote – all
+   three straight from the frame. It is a MINIMUM, not a fixed width, because
+   Inter runs wider than the Instrument Sans of the frame: in row 1 the value and
+   „(dwie odmiany)" together measure ~273 px, and a hard 270 would wrap them and
+   push that one tile to 104 px. The box grows by those few pixels instead, the
+   right edge stays put and all eight tiles keep the 68 px of the frame. */
+.c5-params__row dd{flex:0 0 auto;min-width:270px;display:flex;flex-wrap:nowrap;white-space:nowrap;gap:var(--w-space-2);margin:0;font-size:var(--w-font-h5-size);line-height:28px;font-weight:var(--w-weight-regular);}
+.c5-params__row .c5-dim{opacity:.6;}
+
+/* --- „Pobierz aktualną analizę" (Frame 140-8369) ---------------------------
+   Adnotacja projektanta: „Dodaję pod tabelą". 7 px pod tabelą – ten sam odstęp
+   co między kafelkami – do lewej krawędzi tabeli, 16 px, waga średnia, pełna
+   biel, bez podkreślenia i bez ikony. Podkreślenie wraca na hover i na fokusie:
+   ramka nie pokazuje stanów, a link bez żadnego sygnału klikalności to jedyna
+   rzecz, której nie da się odczytać z makiety. */
+.c5-params__dl{display:flex;align-items:center;justify-content:flex-start;gap:var(--w-space-2);margin-top:var(--c5-params-tile-gap);font-size:var(--w-font-body-size);font-weight:var(--w-weight-medium);color:inherit;text-decoration:none;transition:opacity var(--w-duration-base) var(--w-ease);}
+.c5-params__dl:hover,.c5-params__dl:focus-visible{text-decoration:underline;}
+.c5-params__actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:clamp(1.75rem,3.5vw,2.75rem);}
+.c5-params .c5-btn--ondark{background:var(--w-gray-900);color:var(--w-text-inverse);border-color:rgb(0 0 0 / .2);}
+.c5-params .c5-btn--ondark:hover{background:var(--w-gray-800);}
+/* EL-14: the source line itself is `c5-src c5-src--ondark` from the 00 layer;
+   only its place inside the frame stays here. Figma does not show this line –
+   it shows a fragment of the section – and a fact needs its source, so it stays
+   (§16.4 pyt. do Mateusza). */
+.c5-params .c5-src{text-align:center;margin-top:var(--w-space-5);}
+
+@media (max-width:899px){
+  /* na wąskich ekranach kadr ma 16 px marginesu z boków (§14.4) */
+  .c5-params{margin-inline:16px;}
+  /* 259 + 270 px nie mieści się w wąskiej kolumnie – oba boksy zwalniają
+     szerokość, wartość zostaje dociśnięta do prawej krawędzi kafelka, a przypis
+     może się zawinąć pod wartość, zamiast wypychać kafelek poza ekran */
+  .c5-params__row dt{flex:1 1 auto;}
+  .c5-params__row dd{flex:0 1 auto;min-width:0;flex-wrap:wrap;white-space:normal;justify-content:flex-end;}
+}
+@media (max-width:599px){
+  /* kafelek zostaje (tło, promień, padding), kolumny idą jedna pod drugą */
+  .c5-params__row{flex-direction:column;align-items:flex-start;gap:2px;}
+  .c5-params__row dt,.c5-params__row dd{flex:0 0 auto;width:100%;}
+  .c5-params__row dd{justify-content:flex-start;}
+}
+@media (prefers-reduced-motion: reduce){
+  .c5-params__dl{transition:none;}
+}
+
+/* --- wejście sterowane przewijaniem (spec §16.4, uwaga Mateusza 11:20) -----
+   Four steps off ONE progress value written by the module, so the reader gets a
+   moment of nothing but the video before the content covers it:
+     --pv-g     the crop rises from the bottom and widens to the full section,
+     --pv-o     only then does the dark scrim grow over it,
+     --pv-h     then the kicker with the heading,
+     --pv-rows  then the rows, one after another (--i sets each row's delay).
+   The module adds `is-anim` only while CX5.motionOn() is true, so NO class –
+   no JS, a script error, reduced motion, a window under 900 px – switches every
+   rule below off at once and the section stands in its end state from the first
+   frame. Only clip-path, opacity and transform move; nothing here triggers
+   layout, and the video is never scaled (a crop opens, the picture does not
+   stretch). */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  /* 21 % z każdej strony = kadr startowy szerokości 58 %; 18 % od góry trzyma go
+     przy dolnej krawędzi, więc wjeżdża od dołu jako wąski pas, a nie od razu
+     całą powierzchnią */
+  .c5-params.is-anim .c5-params__frame{clip-path:inset(calc((1 - var(--pv-g,1)) * 18%) calc((1 - var(--pv-g,1)) * 21%) 0 calc((1 - var(--pv-g,1)) * 21%));}
+  .c5-params.is-anim .c5-params__frame::after{opacity:var(--pv-o,0);}
+  .c5-params.is-anim .c5-params__head{opacity:var(--pv-h,0);transform:translateY(calc((1 - var(--pv-h,0)) * 20px));}
+  /* row i starts .08 of the phase after row i-1 and takes .34 to arrive; the
+     link, the buttons and the source line ride in as the last step (--i: 8) */
+  .c5-params.is-anim .c5-params__row,
+  .c5-params.is-anim .c5-params__dl,
+  .c5-params.is-anim .c5-params__actions,
+  .c5-params.is-anim .c5-src{--t:clamp(0,calc((var(--pv-rows,0) - var(--i,0) * .08) / .34),1);opacity:var(--t);transform:translateY(calc((1 - var(--t)) * 14px));}
+  .c5-params.is-anim .c5-params__row:nth-child(1){--i:0;}
+  .c5-params.is-anim .c5-params__row:nth-child(2){--i:1;}
+  .c5-params.is-anim .c5-params__row:nth-child(3){--i:2;}
+  .c5-params.is-anim .c5-params__row:nth-child(4){--i:3;}
+  .c5-params.is-anim .c5-params__row:nth-child(5){--i:4;}
+  .c5-params.is-anim .c5-params__row:nth-child(6){--i:5;}
+  .c5-params.is-anim .c5-params__row:nth-child(7){--i:6;}
+  .c5-params.is-anim .c5-params__row:nth-child(8){--i:7;}
+  .c5-params.is-anim .c5-params__dl,
+  .c5-params.is-anim .c5-params__actions,
+  .c5-params.is-anim .c5-src{--i:8;}
+}

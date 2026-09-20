@@ -286,8 +286,8 @@ window.CW_CE = {
         "kotwica": "parametry"
       },
       "kod": {
-        "css": "ce/CE-10-parametry.css (wariant z-tabami w pliku)",
-        "js": "ce/CE-10-parametry.js"
+        "css": "ce/CE-10-parametry.css (wariant z-tabami w pliku); wariant kafelki-z-wejsciem: ce/CE-10-parametry-proba.css (tylko CARBOMAT ECO)",
+        "js": "ce/CE-10-parametry.js; wariant kafelki-z-wejsciem: ce/CE-10-parametry-proba.js (tylko CARBOMAT ECO)"
       },
       "czesci": [
         "warstwa wideo z maską",
@@ -298,9 +298,10 @@ window.CW_CE = {
         "przypis"
       ],
       "warianty": {
-        "z-tabami": "dwa zestawy parametrów przełączane tabami nad tabelą (Mata)"
+        "z-tabami": "dwa zestawy parametrów przełączane tabami nad tabelą (Mata)",
+        "kafelki-z-wejsciem": "układ i wejście wg ramek Figma „Frame 140-8364” (kicker) i „Frame 140-8369” (tabela), uwagi Mateusza z 20.09.2026 (CARBOMAT ECO „Parametry”): kicker to pigułka bez tła z obrysem 1 px w bieli, promień 10 px, wersaliki 13/14 px, 24 px nad nagłówkiem; nagłówek wyśrodkowany na P22 Mackinac Pro Book 46/54 px; tabela to nie wiersze z liniami, tylko osiem osobnych kafelków – tło rgb(255 255 255 / .07) z rozmyciem 6,7 px, promień 15 px na czterech rogach każdego, wysokość 68 px, odstęp 7 px, bez obramowań i bez naprzemiennych teł; link do analizy pod tabelą bez podkreślenia i bez ikony; wejście sterowane przewijaniem w czterech krokach – kadr wjeżdża od dołu i rozszerza się na pełną szerokość, potem narasta ciemna nakładka, potem kicker z nagłówkiem, na końcu wiersze jeden po drugim, żeby przez chwilę było widać samą warstwę mediów; animacja wisi na .c5-params__media, więc powrót ze zdjęcia na wideo to podmiana jednego znacznika; przy reduced-motion, bez JS i poniżej 900 px wszystko stoi w stanie końcowym od pierwszej klatki"
       },
-      "uwagi": "Uwaga o kontraście linii źródła .c5-params__src jest nieaktualna od fali 2a: wszystkie cztery wystąpienia klocka (CARBOMAT ECO, CARBOMAT MATA, CARBOHUMIC, CARBOMAT HUMIC) stoją na c5-src c5-src--ondark (biel .8 z ce/00-base.css). Klasa .c5-params__src została już tylko w kicie c5.css i na pdp.html, czyli stronie bez znaczników data-ce.",
+      "uwagi": "Uwaga o kontraście linii źródła .c5-params__src jest nieaktualna od fali 2a: wszystkie cztery wystąpienia klocka (CARBOMAT ECO, CARBOMAT MATA, CARBOHUMIC, CARBOMAT HUMIC) stoją na c5-src c5-src--ondark (biel .8 z ce/00-base.css). Klasa .c5-params__src została już tylko w kicie c5.css i na pdp.html, czyli stronie bez znaczników data-ce. Wariant kafelki-z-wejsciem linkuje wyłącznie carbomat.html – ce/CE-10-parametry.* zostają nietknięte dla CARBOMAT MATA, CARBOHUMIC i CARBOMAT HUMIC; spec carbomat-eco-spec §16.4. Sekcja nie ma znacznika data-ce-wariant, więc indeks pokaże wariant tylko z rejestru. Do decyzji Mateusza: treść nagłówka wzięta z ramki („Parametry produktu w suchej masie”, bez kropki środkowej dzisiejszej strony) to zmiana treści, nie tylko formy, a w warstwie mediów stoi tymczasowo zdjęcie parametry-tlo.jpg do czasu dostarczenia nowego filmu (§16.8).",
       "zrzut": {
         "maxh": 900
       }
@@ -315,8 +316,8 @@ window.CW_CE = {
         "kotwica": "ktory-dla-mnie"
       },
       "kod": {
-        "css": "ce/CE-11-warianty-taby.css (Próchnica+: kit c5.css)",
-        "js": "ce/CE-11-warianty-taby.js (Próchnica+: c5.js)"
+        "css": "ce/CE-11-warianty-taby.css (Próchnica+: kit c5.css); wariant karty-w-taby: ce/CE-11-warianty-taby-proba.css (tylko CARBOMAT ECO)",
+        "js": "ce/CE-11-warianty-taby.js (Próchnica+: c5.js); wariant karty-w-taby: ce/CE-11-warianty-taby-proba.js (tylko CARBOMAT ECO)"
       },
       "czesci": [
         "tablist",
@@ -325,9 +326,19 @@ window.CW_CE = {
       ],
       "warianty": {
         "trzy-warianty": "trzy taby i trzy bloki (CARBOHUMIC)",
-        "taby-lat": "taby lat i bloki lat w Wynikach (Próchnica+, kit c5)"
+        "taby-lat": "taby lat i bloki lat w Wynikach (Próchnica+, kit c5)",
+        "karty-w-taby": "karta i tab to jeden element w ruchu (button.c5-way), wg ramek Figma „Frame 310-461” (stan kart) i „Frame 310-418” (stan tabów) oraz trzech adnotacji projektanta (20.09.2026, CARBOMAT ECO „Który dla mnie”): pudełka wjeżdżają wyrównane do dolnej krawędzi okna (20 px nad nią), najpierw rysuje się sam obrys rosnący dwoma końcami ze środka dolnej krawędzi, potem wchodzą etykieta sposobu aplikacji, packshot i nazwa produktu, na końcu karta traci zdjęcie i nazwę, kurczy się 426 → 70 px i przykleja u góry jako tab. Szerokość, pozycje w poziomie i promień 10 px nie są animowane w ogóle – pasek to flex o równych kolumnach, więc oba stany są identyczne z definicji. Napęd to jedna wielkość p liczona z pustego pasa rozbiegu [data-ways-rail] stojącego przed paskiem; cała oś czasu jest odwracalna przy przewijaniu w górę, a przejście w zwykły sticky top:0 następuje dokładnie przy p = 1, bez skoku. Aktywny tab niesie zielony obrys #71C35F pokazujący postęp przewinięcia bloku wariantu pod linią przyklejonego paska – rośnie dwoma końcami ze środka lewej krawędzi i zapala się dopiero od p = 0,62 (przełącznik data-progress=„sekcja” na [data-variants] przestawia licznik na cały pojemnik sekcji); nieaktywne taby noszą tylko szary obrys, ciemne wypełnienie aktywnego tabu znika. Oba obrysy to ścieżki SVG z pathLength=„1”, więc dasharray operuje udziałem, nie pikselami, i jest poprawny przy każdej wysokości pudełka. Kicker to pigułka c5-kicker--outline (EL-06), H2 na P22 Mackinac Pro Book wagi 400 w 54/63 px, a panel wariantu stoi w dwóch kolumnach: kafel #F9F7F5 o proporcji 700/690 z packshotem i przyciskami wielkości opakowania nałożonymi na dole, obok kolumna z nazwą 40 px, siatką korzyści i parametrami (Aplikacja, Gdzie najlepiej, pH z chipami, Frakcja). Ceny przeniosły się z tabelki cennika na te przyciski (decyzja Mateusza z 20.09.2026, liczby co do znaku z AC #30867) – szkło rgb(0 0 0 / --c5-pkg-veil) z backdrop-filter: blur(10px), ikona koszyka i ukryty dopisek „– dodaj do koszyka”. Taby nawigują (przewijają do bloku), nie przełączają paneli, a roving tabindex jest zsynchronizowany ze scrollspy; strzałki, Home i End przenoszą fokus. Poniżej 900 px, przy reduced-motion i bez JS układ statyczny: pasek nieprzyklejony, taby jeden pod drugim, oba panele rozwinięte, przyciski opakowań pod packshotem"
       },
-      "uwagi": "Cennik opakowań w bloku wariantu to element interfejsu wspólny z CE-28 (lista opakowań).",
+      "zrzuty_wariantow": {
+        "karty-w-taby": {
+          "plik": "v7/carbomat.html",
+          "kotwica": "ktory-dla-mnie",
+          "ruch": true,
+          "przewin": "#wariant-eco .c5-var__tiles",
+          "czekaj": 900
+        }
+      },
+      "uwagi": "Cennik opakowań w bloku wariantu to element interfejsu wspólny z CE-28 (lista opakowań). Wariant karty-w-taby (20.09.2026) linkuje wyłącznie carbomat.html – własne moduły ce/CE-11-warianty-taby-proba.css i .js, bo ce/CE-11-warianty-taby.* obsługują także carbohumic.html, a tamtejsza reguła .c5-ways--3 zakłada tab 56 px i ciemne tło; pliki wspólne, ce/00-base.*, chrome.js, kit i carbohumic.html zostają nietknięte; spec carbomat-eco-spec §17 (osobno §17.5). Sekcja nie ma znacznika data-ce-wariant, więc indeks pokaże wariant tylko z rejestru. Mechanika jest napisana na dowolną liczbę kart – nigdzie nie ma dwójki ani w CSS (.c5-way{flex:1 1 0}), ani w JS (pętle chodzą po tym, co znajdą) – i sprawdzona realnie na trzech tabach wstrzykniętych do podglądu; czeka na przeniesienie na CARBOHUMIC w wersji trzech tabów, która w tej rundzie nie była ruszana (decyzja Mateusza z 20.09.2026: tu dwie karty, bo są dwa produkty). Kontrast przycisków opakowań podniesiony z wartości ramki rgb(0 0 0 / .2), czyli 1,71 : 1, do 4,53 : 1 pokrętłem --c5-pkg-veil: .52 (nadpisanie #ktory-dla-mnie .c5-pkg w carbomat.css) – to kontrolka niosąca cenę, więc ubytek czytelności byłby dotkliwszy niż przy przypisie; wycofanie to jedna linia. Do decyzji Mateusza: czy taby mają nawigować (tak jest teraz) czy przełączać panele, co liczy postęp (blok wariantu czy cała sekcja), czy sekcja zostaje w c5-wrap 1180 px zamiast pełnoekranowej ramki, czy H2 i lead zostają w pełnym brzmieniu, czy dok doradcy ma ustąpić kartom wjeżdżającym przy dolnej krawędzi (pokrętło --c5-bottom-gap, dziś 20 px), oraz znacznik korzyści 16 × 16 i ikona „seeding” z ramki – obu nie ma w sprite, więc zostały puste miejsca. Po przeniesieniu cen na przyciski reguły .c5-price* w carbomat.css (linie 44–54 i blok @media max-width:599px) to martwy kod.",
       "zrzut": {
         "maxh": 1400
       }
@@ -357,7 +368,8 @@ window.CW_CE = {
         "osiem-krokow": "8 kroków, kroki 2–6 na wspólnym zdjęciu (CARBOMAT HUMIC) – bez wystąpień od 19.09.2026: liczba kroków jest treścią, a długość kroku toru ustawiają zmienne --fx-step-min i --fx-step-vh, więc CARBOMAT HUMIC stoi dziś na wariancie z-naglowkiem",
         "z-leadem": "dwa akapity leadu przyklejone razem z nagłówkiem (Próchnica+ Metodologia) – bez wystąpień od 19.09.2026, Metodologia przeszła na wariant bez-naglowka",
         "z-naglowkiem": "układ wg ramki Figma „Frame 206” z kickerem i H2 w scenie, bez leadu: jeden blok nagłówka przyklejony u góry lewej kolumny, przy dole jeden fakt naraz – tytuł, cienka linia z postępem bieżącego slajdu, opis i licznik „02/05” (Mateusz, 18.09.2026; od 19.09.2026 Produkty #jak-dzialaja, CARBOMAT ECO #czym-jest jako baza klocka i CARBOMAT HUMIC #czym-jest – osiem kroków, --fx-step-min 420, --fx-step-vh 0,7)",
-        "bez-naglowka": "ten sam układ bez kickera i H2 w scenie – kicker, H2 i lead stoją nad torem jako zwykły nagłówek sekcji (reguła Mateusza: lead nigdy w scenie); od 19.09.2026 Próchnica+ #metodologia, CARBOMAT MATA #czym-jest-scena (korzeń klocka to wewnętrzny kontener w sekcji #czym-jest) i CARBOHUMIC #czym-jest, a na Produktach do obejrzenia przełącznikiem podglądu"
+        "bez-naglowka": "ten sam układ bez kickera i H2 w scenie – kicker, H2 i lead stoją nad torem jako zwykły nagłówek sekcji (reguła Mateusza: lead nigdy w scenie); od 19.09.2026 Próchnica+ #metodologia, CARBOMAT MATA #czym-jest-scena (korzeń klocka to wewnętrzny kontener w sekcji #czym-jest) i CARBOHUMIC #czym-jest, a na Produktach do obejrzenia przełącznikiem podglądu",
+        "glass-i-zielen": "sama warstwa wyglądu nałożona na układ z-naglowkiem, wg ramek Figma „Frame 140-8475” (kicker i nagłówek), „Frame 256-1419” (karta faktu) i „Frame 140-8542”/„Frame 140-8543” (karty wizualizacji), bez własnego modułu – nadpisania zamknięte w #czym-jest w carbomat.css (20.09.2026, CARBOMAT ECO): kicker to plakietka c5-kicker--outline (EL-06) z obrysem #0c2b1c, promieniem 8 px i paddingiem 9 px, 24 px nad nagłówkiem; nagłówek 46/51 px w kolorze #0c2b1c na kolumnie 661 px, na P22 Mackinac Pro Book wagi 400 (decyzja Mateusza z 20.09.2026); karta faktu: tytuł 24 px wagi 400 bez trackingu, opis 14 px w #777771, licznik 11 px, tor paska czerń przy kryciu .1, a pasek postępu w zieleni #71C35F; karty wizualizacji: tło rgb(53 46 40 / .43) na pokrętle --c5-fx-viz-bg, promień 24 px i efekt Glass z ramki – Frost 60 jako backdrop-filter: blur(18px), Refraction 47 z Depth 80 jako krawędź inset, Light 0 % czyli bez poświaty (Dispersion 25 i Splay 34 nie mają odpowiednika w CSS); słupki tylko w zakresie .c5-viz, bo .c5-bar żyje też poza kartami. Mechanika, ikony i layout części informacyjnej bez zmian – obie adnotacje projektanta opisują dzisiejsze zachowanie"
       },
       "zrzuty_wariantow": {
         "z-naglowkiem": {
@@ -376,7 +388,7 @@ window.CW_CE = {
           "czekaj": 900
         }
       },
-      "uwagi": "Liczba kroków (4–8) jest treścią; jeden moduł czyta ją z DOM. Dobór wariantu: sekcja z leadem → bez-naglowka, sekcja bez leadu → z-naglowkiem z jednym blokiem nagłówka. Zmienne do nadpisywania na korzeniu sekcji: --c5-fx-viz-h, --c5-fx-viz-w, --c5-fx-viz-bg, --c5-fx-static-max, --c5-fx-static-pad (domyślne = wartości sprzed 19.09.2026), obok --fx-step-min i --fx-step-vh; --c5-fx-viz-bg (tło boksu ilustracji w scenie, dopisane 19.09.2026 po niezależnym QA) jako jedyne nie ma deklaracji domyślnej, bo scena maluje boks w dwóch gałęziach – rgb(20 20 20 / .55) z rozmyciem przy backdrop-filter i rgb(20 20 20 / .78) bez niego – i każda trzyma swoją wartość jako fallback; na jasnych zdjęciach treść boksu schodziła poniżej AA, więc CARBOMAT ECO i CARBOHUMIC ustawiają rgb(20 20 20 / .78); warstwa wspólna niesie też regułę .c5-fx__body .wf-list{padding-left:0} i etykietę placeholdera .c5-ph__label. 19.09.2026 układ przeszedł z próby na sześć stron (spece: produkty-wzorzec-eco §23, carbomat-eco §15, carbomat-mata §22, carbohumic §12, carbomat-humic §17). Do decyzji Mateusza: wybór A/B i zdjęcie przełącznika podglądu na Produktach, przemianowanie plików -proba, przyjęcie kosztów układu (licznik 0N/0M, zniknięcie paska progresu z role=progressbar, panel zdjęcia bez przyciemnienia).",
+      "uwagi": "Liczba kroków (4–8) jest treścią; jeden moduł czyta ją z DOM. Dobór wariantu: sekcja z leadem → bez-naglowka, sekcja bez leadu → z-naglowkiem z jednym blokiem nagłówka. Zmienne do nadpisywania na korzeniu sekcji: --c5-fx-viz-h, --c5-fx-viz-w, --c5-fx-viz-bg, --c5-fx-static-max, --c5-fx-static-pad (domyślne = wartości sprzed 19.09.2026), obok --fx-step-min i --fx-step-vh; --c5-fx-viz-bg (tło boksu ilustracji w scenie, dopisane 19.09.2026 po niezależnym QA) jako jedyne nie ma deklaracji domyślnej, bo scena maluje boks w dwóch gałęziach – rgb(20 20 20 / .55) z rozmyciem przy backdrop-filter i rgb(20 20 20 / .78) bez niego – i każda trzyma swoją wartość jako fallback; na jasnych zdjęciach treść boksu schodziła poniżej AA, więc CARBOMAT ECO i CARBOHUMIC ustawiają rgb(20 20 20 / .78); warstwa wspólna niesie też regułę .c5-fx__body .wf-list{padding-left:0} i etykietę placeholdera .c5-ph__label. 19.09.2026 układ przeszedł z próby na sześć stron (spece: produkty-wzorzec-eco §23, carbomat-eco §15, carbomat-mata §22, carbohumic §12, carbomat-humic §17). Do decyzji Mateusza: wybór A/B i zdjęcie przełącznika podglądu na Produktach, przemianowanie plików -proba, przyjęcie kosztów układu (licznik 0N/0M, zniknięcie paska progresu z role=progressbar, panel zdjęcia bez przyciemnienia). Wariant glass-i-zielen (20.09.2026) linkuje wyłącznie carbomat.html: to nadpisania w carbomat.css zamknięte w #czym-jest, bez nowego modułu i bez znacznika data-ce-wariant – sekcja nadal niesie data-ce-wariant=„z-naglowkiem”, a ce/CE-12-scena-faktow-proba.* i pozostałe pięć stron zostają nietknięte; spec carbomat-eco-spec §16.5. Kontrast przyjęty świadomie: Mateusz 20.09.2026 wybrał wartość tła prosto z Figmy, więc przypisy w kartach wizualizacji schodzą do 2,09–4,95 : 1 (krok 04 najgorszy: etykieta 4,64, przypis 2,09, treść boksu 3,49) i defekt D-01 wraca – wycofanie to jedna linia --c5-fx-viz-bg.",
       "zrzut": {
         "maxh": 900,
         "ruch": true,
@@ -447,24 +459,32 @@ window.CW_CE = {
         "kotwica": "sezon-wiersze"
       },
       "kod": {
-        "css": "ce/CE-15-wiersze-packshot.css; wariant kaskada-z-odliczaniem: ce/CE-15-wiersze-packshot-proba.css (na razie tylko Produkty)",
-        "js": "ce/CE-15-wiersze-packshot.js; wariant kaskada-z-odliczaniem: ce/CE-15-wiersze-packshot-proba.js (na razie tylko Produkty)"
+        "css": "ce/CE-15-wiersze-packshot.css; wariant kaskada-z-odliczaniem: ce/CE-15-wiersze-packshot-proba.css (na razie tylko Produkty); wariant kaskada-z-pinem: ce/CE-15-wiersze-packshot-pin.css (tylko CARBOMAT ECO)",
+        "js": "ce/CE-15-wiersze-packshot.js; wariant kaskada-z-odliczaniem: ce/CE-15-wiersze-packshot-proba.js (na razie tylko Produkty); wariant kaskada-z-pinem: ce/CE-15-wiersze-packshot-pin.js (tylko CARBOMAT ECO)"
       },
       "czesci": [
         "nagłówek przyklejony",
         "wiersze: tytuł, scena, packshot, opis, przycisk"
       ],
       "warianty": {
-        "kaskada-z-odliczaniem": "układ wg ramki Figma „Frame 224” i adnotacji Mateusza (19.09.2026; Produkty „Co dają – i kiedy to zobaczysz”): bez pinu – nagłówek sekcji w zwykłym biegu, pod nim trzy kolumny rozdzielone pionowymi liniami włosowymi w szerokim kontenerze (1800 px, marginesy 40 px), w każdej jedna karta-akordeon, karty kaskadą w dół (góra następnej = dół poprzedniej, suma wysokości stała); nagłówek karty: tytuł z lewej, etykieta czasu z prawej, ikona plus / minus w okręgu; otwarta karta: wiersz produktu z packshotem (link na stronę produktu, wzór EL-33) i opis ze znacznikiem; pierwsza karta otwarta od startu, karty wchodzą po kolei, wokół ikony minus rysuje się pierścień odliczający 5 s, po nim otwiera się następna karta (po trzeciej pierwsza), jedna otwarta naraz, wszystkie można zamknąć, każde kliknięcie wyłącza automat; automat tylko na szerokim ekranie i przy włączonym ruchu, stoi pod kursorem i przy fokusie; poniżej 900 px i bez JS jedna kolumna"
+        "kaskada-z-odliczaniem": "układ wg ramki Figma „Frame 224” i adnotacji Mateusza (19.09.2026; Produkty „Co dają – i kiedy to zobaczysz”): bez pinu – nagłówek sekcji w zwykłym biegu, pod nim trzy kolumny rozdzielone pionowymi liniami włosowymi w szerokim kontenerze (1800 px, marginesy 40 px), w każdej jedna karta-akordeon, karty kaskadą w dół (góra następnej = dół poprzedniej, suma wysokości stała); nagłówek karty: tytuł z lewej, etykieta czasu z prawej, ikona plus / minus w okręgu; otwarta karta: wiersz produktu z packshotem (link na stronę produktu, wzór EL-33) i opis ze znacznikiem; pierwsza karta otwarta od startu, karty wchodzą po kolei, wokół ikony minus rysuje się pierścień odliczający 5 s, po nim otwiera się następna karta (po trzeciej pierwsza), jedna otwarta naraz, wszystkie można zamknąć, każde kliknięcie wyłącza automat; automat tylko na szerokim ekranie i przy włączonym ruchu, stoi pod kursorem i przy fokusie; poniżej 900 px i bez JS jedna kolumna",
+        "kaskada-z-pinem": "ta sama kaskada trzech akordeonów, ale jako pin sterowany przewijaniem – wg ramki Figma „Frame 308-179” i adnotacji projektanta (20.09.2026; CARBOMAT ECO „Kiedy stosować”): sekcja stoi w jednym miejscu, nagłówek i kicker widoczne przez cały pin, najpierw wchodzi oś czasu (trzy etykiety i trzy klamry 457 × 30 px, promień 20 px na górnych narożnikach), dopiero po niej karty; start z pierwszą kartą rozwiniętą i resztą zwiniętą, każdy krótki scroll zamyka bieżącą kartę i otwiera następną, a po ostatniej wszystkie zostają zwinięte i dopiero wtedy strona jedzie dalej. Z wariantu kaskada-z-odliczaniem zostaje bez zmian: trzy kolumny rozdzielone liniami włosowymi, inset 6 px, karta zwinięta 70 px, stała suma wysokości 462 px, kaskada „dół n = góra n+1”, wejście po kolei i komplet fallbacków; odpada pierścień odliczający 5 s i zapętlenie, bo adnotacja opisuje pin, a nie odliczanie. Wygląd: promienie 7 i 12 px, tło karty otwartej #FBFBF9, znacznik 4 × 4 px w zieleni #71C35F, opis 15 px w czerni, wiersz produktu 406 × 69 px bez szarej podkładki i bez strzałki, packshot 45 × 50 px; klasy c5-casc*, poniżej 900 px, przy reduced-motion i bez JS trzy pozycje rozwinięte"
       },
       "zrzuty_wariantow": {
         "kaskada-z-odliczaniem": {
           "plik": "v7/produkty.html",
           "kotwica": "co-daja-wiersze",
           "maxh": 1100
+        },
+        "kaskada-z-pinem": {
+          "plik": "v7/carbomat.html",
+          "kotwica": "sezon-wiersze",
+          "ruch": true,
+          "przewin": "#sezon-wiersze [data-casc-pin]",
+          "czekaj": 900
         }
       },
-      "uwagi": "Do 19.09.2026 na Produktach ten sam pin niósł „efekty w czasie”; od iteracji 4 stoi tam wariant kaskada-z-odliczaniem (spec produkty-wzorzec-eco-spec §22). Ramka Mateusza używa treści „Kiedy stosować” z CARBOMAT ECO – do jego decyzji, czy kaskada zastąpi układ bazowy na stronach produktowych.",
+      "uwagi": "Do 19.09.2026 na Produktach ten sam pin niósł „efekty w czasie”; od iteracji 4 stoi tam wariant kaskada-z-odliczaniem (spec produkty-wzorzec-eco-spec §22). Ramka Mateusza używa treści „Kiedy stosować” z CARBOMAT ECO – do jego decyzji, czy kaskada zastąpi układ bazowy na stronach produktowych. Wariant kaskada-z-pinem linkuje wyłącznie carbomat.html (własne moduły ce/CE-15-wiersze-packshot-pin.css/.js), bo usunięcie pierścienia oraz zmiana promieni, tła, znacznika i wiersza produktu dotknęłyby Produktów stojących na ce/CE-15-wiersze-packshot-proba.* – te pliki zostają nietknięte; spec carbomat-eco-spec §16.6. Do decyzji Mateusza: zaokrąglenia 7/12/20 px łamią ostre narożniki linii V5, tytuł karty po otwarciu ustępuje miejsca etykiecie czasu, a zieleń #71C35F wchodzi jako kolor marki do kitu w skali szarości.",
       "zrzut": {
         "maxh": 1000
       }
@@ -491,9 +511,10 @@ window.CW_CE = {
       "warianty": {
         "zamykajacy": "bez akapitu: nagłówek po lewej, dwa przyciski po prawej, oba na kadrze (Kukurydza; od 18.09.2026 na bazowym kodzie klocka zamiast własnego portu u-end)",
         "kontakt": "pas zamykający rozmową: nagłówek po lewej, po prawej akapit i akcje kontaktowe. Na O nas (#porozmawiajmy) dwa przyciski, Kontakt i Zostań partnerem; na stronie głównej (#kontakt, 20.09.2026) numer telefonu jako duży link tel: z cyframi tabelarycznymi, wiersz godzin drobnym drukiem, dwa przyciski i cichy link do wszystkich działów",
-        "pozny-wzrost": "kadr stoi na 50 % szerokości ekranu, dopóki górna krawędź pasa jest niżej niż 35 % wysokości okna, potem rośnie i pełny rozmiar osiąga 2 % od góry okna; nakładka przyciemniająca narasta razem ze wzrostem, więc w postoju zdjęcie jest bez przyciemnienia (uwagi Mateusza z 18.09.2026; od 19.09.2026 na pięciu stronach: Produkty, CARBOMAT ECO, CARBOMAT MATA, CARBOHUMIC, CARBOMAT HUMIC)"
+        "pozny-wzrost": "kadr stoi na 50 % szerokości ekranu, dopóki górna krawędź pasa jest niżej niż 35 % wysokości okna, potem rośnie i pełny rozmiar osiąga 2 % od góry okna; nakładka przyciemniająca narasta razem ze wzrostem, więc w postoju zdjęcie jest bez przyciemnienia (uwagi Mateusza z 18.09.2026; od 19.09.2026 na pięciu stronach: Produkty, CARBOMAT ECO, CARBOMAT MATA, CARBOHUMIC, CARBOMAT HUMIC)",
+        "zielen-i-scrim": "sama warstwa wyglądu nałożona na mechanikę pozny-wzrost, wg ramki Figma „Frame 186-253”, bez własnego modułu – nadpisania zamknięte w #uprawy-profesjonalne w carbomat.css (20.09.2026, CARBOMAT ECO): tło pasa #777771 zamiast --w-gray-600, nagłówek 52/53 px, akapit 21/26 px w pełnej bieli zamiast krycia .75, przycisk podstawowy w zieleni #86D574 z tekstem #0C2B1C, promieniem 20 px i paddingiem 18/24 px, przycisk drugorzędny z obwódką rgb(255 255 255 / .5), odstęp między przyciskami 11 px; kadr to zdjęcie sadu zakotwiczone dołem pod ukośnym gradientem #1A2405 o kryciu 30/10/10/30 %, rozciągniętym na cały pas z podłogą .55 + .45 × --pro-o. Copy zostaje dzisiejsze – uwaga dotyczyła typografii i przycisków, nie treści; ikony znaku marki z przycisku podstawowego nie odwzorowano, bo nie ma jej w sprite, a ikon się nie dorysowuje"
       },
-      "uwagi": "Na CARBOMAT ECO i CARBOMAT HUMIC stoi wewnątrz sekcji Sezon, na pozostałych jako osobna sekcja. Wariant pozny-wzrost: spec produkty-wzorzec-eco-spec §21.4, §21.8 i §23. Otwarty u Mateusza kontrast białego tekstu na nieprzyciemnionym zdjęciu w fazie postoju: na Produktach akapit min. 2,32 : 1, na CARBOMAT ECO zmierzone minimum akapitu spada z 1,78 na 1,19 (mediana z 6,40 na 5,26), stan końcowy pasa bez zmian. Kukurydza (zamykajacy) i O nas (kontakt) zostają na module bazowym – przejście na pozny-wzrost do decyzji.",
+      "uwagi": "Na CARBOMAT ECO i CARBOMAT HUMIC stoi wewnątrz sekcji Sezon, na pozostałych jako osobna sekcja. Wariant pozny-wzrost: spec produkty-wzorzec-eco-spec §21.4, §21.8 i §23. Otwarty u Mateusza kontrast białego tekstu na nieprzyciemnionym zdjęciu w fazie postoju: na Produktach akapit min. 2,32 : 1, na CARBOMAT ECO zmierzone minimum akapitu spada z 1,78 na 1,19 (mediana z 6,40 na 5,26), stan końcowy pasa bez zmian. Kukurydza (zamykajacy) i O nas (kontakt) zostają na module bazowym – przejście na pozny-wzrost do decyzji. Wariant zielen-i-scrim (20.09.2026) linkuje wyłącznie carbomat.html: to nadpisania w carbomat.css zamknięte w #uprawy-profesjonalne, bez nowego modułu i bez znacznika data-ce-wariant – pas nadal niesie data-ce-wariant=„pozny-wzrost”, a ce/CE-16-pas-pro*.* i pozostałe strony zostają nietknięte; spec carbomat-eco-spec §16.7. Zdjęcie eco-pro-sad.jpg zastępuje img/foto/pro.jpg tylko tutaj – ten sam plik niosą jeszcze o-firmie.html i produkty.html. Nowy kadr jest jaśniejszy, więc scrim przeniesiono na cały pas z podłogą .55: kontrast akapitu w postoju rośnie z 1,19 na 5,58, czyli otwarta u Mateusza pozycja kontrastu dotyczy już tylko stron bez tego nadpisania.",
       "zrzut": {
         "maxh": 900
       }

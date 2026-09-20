@@ -12,12 +12,12 @@
   <link rel="stylesheet" href="ce/CE-07-nawigacja-kropkowa.css">
   <link rel="stylesheet" href="ce/CE-08-hero.css">
   <link rel="stylesheet" href="ce/CE-09-marquee.css">
-  <link rel="stylesheet" href="ce/CE-10-parametry.css">
-  <link rel="stylesheet" href="ce/CE-11-warianty-taby.css">
+  <link rel="stylesheet" href="ce/CE-10-parametry-proba.css">
+  <link rel="stylesheet" href="ce/CE-11-warianty-taby-proba.css">
   <link rel="stylesheet" href="ce/CE-12-scena-faktow-proba.css">
   <link rel="stylesheet" href="ce/CE-13-scena-produktu.css">
   <link rel="stylesheet" href="ce/CE-14-sekcja-100svh.css">
-  <link rel="stylesheet" href="ce/CE-15-wiersze-packshot.css">
+  <link rel="stylesheet" href="ce/CE-15-wiersze-packshot-pin.css">
   <link rel="stylesheet" href="ce/CE-16-pas-pro.css">
   <link rel="stylesheet" href="ce/CE-17-faq.css">
   <link rel="stylesheet" href="ce/CE-18-cta.css">
@@ -59,8 +59,11 @@
        wyśrodkowany, breadcrumb zszedł z góry sekcji na dół lewej kolumny.
        Iteracja 4 (spec §14.2): panel bez zdjęcia w tle – jednolita jasna szarość;
        lista zaufania przeniesiona do sekcji „Zalety" (marquee, §14.3);
-       breadcrumb jaśniejszy. Na panelu stoją dwa opakowania nałożone na siebie:
-       worek 20 l i mniejsza torebka 1 l / 2 l przy jego prawej krawędzi. -->
+       breadcrumb jaśniejszy. Na panelu stoją dwa opakowania nałożone na siebie.
+       Iteracja „Figma" (spec §16.3): drugim opakowaniem jest big bag 1000 l
+       zamiast torebki 1 l / 2 l, więc role wielkości się odwracają – big bag
+       jest największy w gamie i stoi z tyłu jako element dominujący, worek 20 l
+       stoi przed nim jako mniejszy. -->
   <section id="hero" data-chapter="hero" data-ce="CE-08">
     <div class="c5-wrap">
       <div class="c5-hero">
@@ -89,10 +92,14 @@
           </nav>
         </div>
         <div class="c5-hero__stage">
-          <!-- dwa opakowania jak na półce: worek z tyłu, torebka z przodu (kolejność
-               w DOM decyduje o nakładaniu – bez z-index i bez cieni) -->
-          <img class="c5-hero__pack" src="img/opakowania/worek_20l.png" alt="CARBOMAT ECO – worek 20 l">
-          <img class="c5-hero__pack c5-hero__pack--sm" src="img/opakowania/torba_1l_2l.png" alt="CARBOMAT ECO – torebka 1 l / 2 l">
+          <!-- dwa opakowania jak na półce: big bag 1000 l z tyłu, worek 20 l przed
+               nim (kolejność w DOM decyduje o nakładaniu – bez z-index i bez cieni),
+               oba na wspólnej linii podłoża. Wspólne pudełko grupy pilnuje, żeby
+               kompozycja mieściła się w panelu i szerokością, i wysokością. -->
+          <div class="c5-hero__packs">
+            <img class="c5-hero__pack" src="img/opakowania/worek_1000l_1500l.png" alt="CARBOMAT ECO – big bag 1000 l">
+            <img class="c5-hero__pack c5-hero__pack--sm" src="img/opakowania/worek_20l.png" alt="CARBOMAT ECO – worek 20 l">
+          </div>
         </div>
       </div>
     </div>
@@ -168,21 +175,38 @@
        warstwa mediów. Treść leży nad mediami i to ona się przewija, nie wideo.
        Iteracja 4 (spec §14.4): bez osobnego ciemnego tła i bez ramki – kadrem
        jest cała sekcja (30 px marginesu z boków), film stoi w niej od pierwszego
-       piksela i jest widoczny przez całą jej wysokość. -->
+       piksela i jest widoczny przez całą jej wysokość.
+       Iteration „Figma" (spec §16.4): a kicker above the heading (frame 140-8364),
+       the heading on P22 Mackinac Pro, the table rebuilt as eight separate tiles
+       (frame 140-8369) and a scroll-driven intro – the crop widens, then the
+       scrim, then the heading, then the rows one by one. Look and motion live in
+       the page-only pair ce/CE-10-parametry-proba.css / .js; the @font-face sits
+       in carbomat.css. Table copy is unchanged, character for character. -->
   <section class="c5-params" id="parametry" data-chapter="parametry" data-params data-ce="CE-10">
     <!-- warstwa mediów musi stać w DOM PRZED treścią (leży pod nią) -->
     <div class="c5-params__bg" aria-hidden="true">
       <div class="c5-params__frame">
-        <!-- pętla makro gruzełek §13.9 V1 (1280×720, 10 s, bez audio); przy ograniczonym
-             ruchu JS zdejmuje autoplay i zatrzymuje wideo na plakacie -->
+        <!-- The new loop delivered by Mateusz on 20.09.2026, replacing the still
+             photo that stood here while it was being generated, and the earlier
+             film he called too dark and too grim (spec §16.1 note 1, §16.8).
+             Hands at ground level sifting dark soil in warm back light.
+             1280x720, no audio, 20 s: the source is 10 s whose first and last
+             frame differ by 44/255, so it is mounted forward-then-reversed and
+             the loop closes without a jump. This file is ECO's own – the shared
+             img/wideo/parametry.mp4 still serves CARBOMAT MATA and CARBOHUMIC
+             and must not be overwritten. -->
         <video class="c5-params__media" autoplay muted loop playsinline preload="metadata"
-               poster="img/wideo/parametry-poster.jpg" aria-hidden="true">
-          <source src="img/wideo/parametry.mp4" type="video/mp4">
+               poster="img/wideo/parametry-eco-poster.jpg" aria-hidden="true">
+          <source src="img/wideo/parametry-eco.mp4" type="video/mp4">
         </video>
       </div>
     </div>
     <div class="c5-wrap c5-params__body">
-      <h2 class="c5-params__title">Parametry produktu · w suchej masie</h2>
+      <!-- kicker + nagłówek wchodzą razem, jako jeden krok animacji (spec §16.4) -->
+      <div class="c5-params__head">
+        <span class="c5-kicker c5-kicker--outline c5-params__kicker">Parametry</span>
+        <h2 class="c5-params__title">Parametry produktu w suchej masie</h2>
+      </div>
       <dl class="c5-params__rows">
         <div class="c5-params__row"><dt>Odczyn (pH)</dt><dd>4,5–5,0 · 6,0–6,5 <span class="c5-dim">(dwie odmiany)</span></dd></div>
         <div class="c5-params__row"><dt>Sucha masa</dt><dd>~87%</dd></div>
@@ -194,7 +218,9 @@
         <div class="c5-params__row"><dt>Fosfor (P₂O₅)</dt><dd>~0,5%</dd></div>
       </dl>
       <!-- ⚠ realne PDF-y (raport PCBC + karta produktu + certyfikaty) do podpięcia – stuby jak w V4 -->
-      <a class="c5-params__dl" href="centrum-wiedzy.html#magazyn"><svg class="wf-icon" aria-hidden="true"><use href="#ti-download"></use></svg> Pobierz aktualną analizę</a>
+      <!-- 7 px pod tabelą, do lewej, bez podkreślenia i bez ikony – adnotacja
+           projektanta w ramce 140-8369 brzmi „Dodaję pod tabelą" -->
+      <a class="c5-params__dl" href="centrum-wiedzy.html#magazyn">Pobierz aktualną analizę</a>
       <div class="c5-params__actions">
         <a class="c5-btn c5-btn--sm c5-btn--ondark" href="centrum-wiedzy.html#magazyn"><svg class="wf-icon" aria-hidden="true"><use href="#ti-file-text"></use></svg> Karta produktu</a>
         <a class="c5-btn c5-btn--sm c5-btn--ondark" href="centrum-wiedzy.html#magazyn"><svg class="wf-icon" aria-hidden="true"><use href="#ti-file-invoice"></use></svg> Certyfikaty</a>
@@ -203,155 +229,168 @@
     </div>
   </section>
 
-  <!-- ===== 3. KTÓRY DLA MNIE (przełącznik wariantu → pełna karta) =====
+  <!-- ===== 3. KTÓRY DLA MNIE (CE-11 – cards riding in, morphing into tabs) =====
        Copy 1:1 z dokumentu 24.07; ceny wg AC #30867 (21.07).
-       Układ bloku wariantu wg screena Mateusza 13.09 (13.11.22): nazwa na środku,
-       scena „kafle | packshot | kafle", pod nią dwie kolumny. -->
+       Rebuilt 20.09.2026 after the Figma frames 310:461 (cards) and 310:418
+       (tabs + expanded variant), spec §17. Two states of ONE box, driven by
+       scrolling only: the boxes ride in aligned to the bottom edge of the
+       window with the outline drawing itself from the bottom, then they shrink
+       to 70 px and stick to the top as tabs; the active tab carries a green
+       outline showing the scroll progress of its variant block.
+       The machinery is in ce/CE-11-warianty-taby-proba.css/.js – a copy of the
+       shared module, linked by THIS page only, because the base files also run
+       carbohumic.html (three tabs).
+       The tabs still only NAVIGATE: both variant blocks lie one under another
+       and stay readable, which is also what the no-JS fallback shows.
+       Prices stay (decision of 20.09) but move onto the package buttons –
+       character for character the numbers of the previous pricing table. -->
   <section class="c5-sec" id="ktory-dla-mnie" data-chapter="ktory-dla-mnie" data-ce="CE-11">
     <div class="c5-wrap">
-      <span class="c5-kicker c5-kicker--center">Który dla mnie</span>
+      <span class="c5-kicker c5-kicker--outline c5-kicker--center">Który dla mnie</span>
       <div class="c5-head">
         <h2 class="c5-h2 c5-h2--center">Dwa warianty, dwie czynności: przemieszać z&nbsp;glebą albo rozsypać po powierzchni.</h2>
         <p class="c5-lead c5-lead--center">Zastosuj ten sam surowiec zarówno w czasie zakładania plantacji bądź sadzenia roślin, kiedy chcesz wnieść do gleby cenną materię organiczną lub w przypadku upraw już istniejących w postaci ściółki.</p>
       </div>
 
-      <!-- Taby: nie przełączają widoczności – przewijają do bloków leżących pod sobą -->
       <div class="c5-variants" data-variants>
-      <div class="c5-ways" role="tablist" aria-label="Warianty CARBOMAT ECO" data-tabs>
-        <button type="button" class="c5-way" role="tab" data-tab="eco" aria-selected="true" aria-controls="wariant-eco">
-          <span class="c5-icoframe c5-icoframe--circle"><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrows-sort"></use></svg></span>
-          <span>Dodatek do gleby</span>
-        </button>
-        <button type="button" class="c5-way" role="tab" data-tab="sciolka" aria-selected="false" aria-controls="wariant-sciolka">
-          <span class="c5-icoframe c5-icoframe--circle"><svg class="wf-icon" aria-hidden="true"><use href="#ti-stack-2"></use></svg></span>
-          <span>Ściółka</span>
-        </button>
-      </div>
+        <!-- Runway: the scroll budget of the intro. Zero height without motion. -->
+        <div class="c5-ways__rail" data-ways-rail aria-hidden="true"></div>
 
-      <!-- Blok: CARBOMAT ECO -->
-      <div class="c5-variant" id="wariant-eco" data-variant-block="eco">
-        <h3 class="c5-variant__name">CARBOMAT ECO</h3>
-        <div class="c5-var__scene">
-          <div class="c5-var__tiles">
-            <p class="c5-var__tile">Optymalizacja właściwości fizycznych i chemicznych gleby</p>
-            <p class="c5-var__tile">Trwałe użyźnienie i stabilizacja odczynu gleby</p>
-            <p class="c5-var__tile">Rozwój systemu korzeniowego</p>
-          </div>
-          <img class="c5-var__pack" src="img/opakowania/worek_20l.png" alt="CARBOMAT ECO – worek 20 l">
-          <div class="c5-var__tiles">
-            <p class="c5-var__tile">Budowa magazynu na składniki odżywcze i wodę w glebie</p>
-            <p class="c5-var__tile">Działa ochronnie na glebę, przeciwdziała chorobom</p>
-          </div>
+        <div class="c5-ways" role="tablist" aria-label="Warianty CARBOMAT ECO" data-tabs>
+          <!-- Every tab is the box itself: ring (drawn outline + green progress),
+               head (icon + mode label, the only content of the tab state) and
+               card (packshot + product name, the card state only).
+               pathLength="1" lets the dash fraction ignore the box size. -->
+          <button type="button" class="c5-way" role="tab" data-tab="eco" aria-selected="true" aria-controls="wariant-eco">
+            <span class="c5-way__ring" aria-hidden="true">
+              <svg class="c5-way__svg" viewBox="0 0 452 70" preserveAspectRatio="none" focusable="false">
+                <path class="c5-way__edge" data-edge pathLength="1" vector-effect="non-scaling-stroke" d=""></path>
+                <path class="c5-way__edge" data-edge pathLength="1" vector-effect="non-scaling-stroke" d=""></path>
+                <path class="c5-way__prog" data-prog pathLength="1" vector-effect="non-scaling-stroke" d=""></path>
+                <path class="c5-way__prog" data-prog pathLength="1" vector-effect="non-scaling-stroke" d=""></path>
+              </svg>
+            </span>
+            <span class="c5-way__head">
+              <svg class="wf-icon c5-way__ico" aria-hidden="true"><use href="#ti-arrows-sort"></use></svg>
+              <span class="c5-way__label">Dodatek do gleby</span>
+            </span>
+            <span class="c5-way__card">
+              <img class="c5-way__pack" src="img/opakowania/worek_20l.png" alt="">
+              <span class="c5-way__name">CARBOMAT ECO</span>
+            </span>
+          </button>
+          <button type="button" class="c5-way" role="tab" data-tab="sciolka" aria-selected="false" aria-controls="wariant-sciolka">
+            <span class="c5-way__ring" aria-hidden="true">
+              <svg class="c5-way__svg" viewBox="0 0 452 70" preserveAspectRatio="none" focusable="false">
+                <path class="c5-way__edge" data-edge pathLength="1" vector-effect="non-scaling-stroke" d=""></path>
+                <path class="c5-way__edge" data-edge pathLength="1" vector-effect="non-scaling-stroke" d=""></path>
+                <path class="c5-way__prog" data-prog pathLength="1" vector-effect="non-scaling-stroke" d=""></path>
+                <path class="c5-way__prog" data-prog pathLength="1" vector-effect="non-scaling-stroke" d=""></path>
+              </svg>
+            </span>
+            <span class="c5-way__head">
+              <svg class="wf-icon c5-way__ico" aria-hidden="true"><use href="#ti-stack-2"></use></svg>
+              <span class="c5-way__label">Ściółka</span>
+            </span>
+            <span class="c5-way__card">
+              <img class="c5-way__pack" src="img/opakowania/worek_1000l_1500l.png" alt="">
+              <span class="c5-way__name">CARBOMAT ECO Ściółka</span>
+            </span>
+          </button>
         </div>
-        <div class="c5-var__cols">
-          <div class="c5-var__col">
-            <div class="c5-variant__block">
-              <span class="c5-label">Aplikacja:</span>
-              <p class="c5-muted">Wymieszaj z glebą lub stwórz własną mieszankę podłoża.</p>
+
+        <!-- Blok: CARBOMAT ECO -->
+        <div class="c5-variant" id="wariant-eco" data-variant-block="eco">
+          <div class="c5-var__grid">
+            <div class="c5-var__pack">
+              <img class="c5-var__packimg" src="img/opakowania/worek_20l.png" alt="CARBOMAT ECO – worek 20 l">
+              <!-- Ceny brutto wg Darka (AC #30867): big bagi – niższa cena = pH 4,5–5,0, wyższa = 6,0–6,5 -->
+              <div class="c5-var__pkgs">
+                <a class="c5-pkg" href="sklep.html?grupa=carbomat"><span class="c5-pkg__name">worek 20 l</span><span class="c5-pkg__val">43 zł</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-shopping-cart"></use></svg><span class="wf-sr-only">– dodaj do koszyka</span></a>
+                <a class="c5-pkg" href="sklep.html?grupa=carbomat"><span class="c5-pkg__name">big bag 1000 l</span><span class="c5-pkg__val">600–650 zł</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-shopping-cart"></use></svg><span class="wf-sr-only">– dodaj do koszyka</span></a>
+                <a class="c5-pkg" href="sklep.html?grupa=carbomat"><span class="c5-pkg__name">big bag 1500 l</span><span class="c5-pkg__val">800–850 zł</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-shopping-cart"></use></svg><span class="wf-sr-only">– dodaj do koszyka</span></a>
+              </div>
             </div>
-            <div class="c5-variant__block">
-              <span class="c5-label">Gdzie najlepiej:</span>
-              <p class="c5-muted">Każdy rodzaj gleby o niskiej zawartości materii organicznej bądź poprawy struktury, uprawy doniczkowe</p>
-            </div>
-            <div class="c5-variant__block">
-              <span class="c5-label">pH:</span>
-              <ul class="c5-muted">
-                <li>4,5–5,0 pH – dla roślin kwasolubnych jak borówka, wrzosowate, różaneczniki, azalie</li>
-                <li>6,0–6,5 pH – odmiana uniwersalna dla większości grup roślin</li>
+            <div class="c5-var__info">
+              <h3 class="c5-variant__name">CARBOMAT ECO</h3>
+              <!-- The bullet of the frame (four squares over a rule) is not in the
+                   sprite and icons are not drawn here, so the 16 px slot stays empty. -->
+              <ul class="c5-var__tiles">
+                <li class="c5-var__tile"><span class="c5-var__tileico" aria-hidden="true"></span><span>Optymalizacja właściwości fizycznych i chemicznych gleby</span></li>
+                <li class="c5-var__tile"><span class="c5-var__tileico" aria-hidden="true"></span><span>Trwałe użyźnienie i stabilizacja odczynu gleby</span></li>
+                <li class="c5-var__tile"><span class="c5-var__tileico" aria-hidden="true"></span><span>Rozwój systemu korzeniowego</span></li>
+                <li class="c5-var__tile"><span class="c5-var__tileico" aria-hidden="true"></span><span>Budowa magazynu na składniki odżywcze i wodę w glebie</span></li>
+                <li class="c5-var__tile"><span class="c5-var__tileico" aria-hidden="true"></span><span>Działa ochronnie na glebę, przeciwdziała chorobom</span></li>
               </ul>
-            </div>
-            <div class="c5-variant__block">
-              <span class="c5-label">Frakcja:</span>
-              <p class="c5-muted">0,1–2 mm&ensp;|&ensp;2–4 mm&ensp;|&ensp;4–8 mm</p>
-              <!-- Frakcje wg AC #30867; kierunek „pył 0,1–2 tylko w odmianie o niskim pH" – nie publikujemy do potwierdzenia oferty -->
-            </div>
-          </div>
-          <div class="c5-var__col">
-            <div class="c5-variant__block">
-              <span class="c5-label">Opakowania:</span>
-              <div class="c5-price">
-                <!-- Ceny brutto wg Darka (AC #30867): big bagi – niższa cena = pH 4,5–5,0, wyższa = 6,0–6,5 -->
-                <div class="c5-price__row">
-                  <img class="c5-price__thumb" src="img/opakowania/worek_20l.png" alt="">
-                  <div class="c5-price__body"><span class="c5-price__name">worek 20 l</span><a class="c5-btn c5-btn--light c5-btn--sm" href="sklep.html?grupa=carbomat"><svg class="wf-icon" aria-hidden="true"><use href="#ti-plus"></use></svg> dodaj do koszyka</a></div>
-                  <span class="c5-price__val">43 zł</span>
+              <div class="c5-var__params">
+                <div class="c5-variant__block">
+                  <span class="c5-label">Aplikacja:</span>
+                  <p class="c5-muted">Wymieszaj z glebą lub stwórz własną mieszankę podłoża.</p>
                 </div>
-                <div class="c5-price__row">
-                  <img class="c5-price__thumb" src="img/opakowania/worek_1000l_1500l.png" alt="">
-                  <div class="c5-price__body"><span class="c5-price__name">big bag 1000 l</span><a class="c5-btn c5-btn--light c5-btn--sm" href="sklep.html?grupa=carbomat"><svg class="wf-icon" aria-hidden="true"><use href="#ti-plus"></use></svg> dodaj do koszyka</a></div>
-                  <span class="c5-price__val">600–650 zł</span>
+                <div class="c5-variant__block">
+                  <span class="c5-label">Gdzie najlepiej:</span>
+                  <p class="c5-muted">Każdy rodzaj gleby o niskiej zawartości materii organicznej bądź poprawy struktury, uprawy doniczkowe</p>
                 </div>
-                <div class="c5-price__row">
-                  <img class="c5-price__thumb" src="img/opakowania/worek_1000l_1500l.png" alt="">
-                  <div class="c5-price__body"><span class="c5-price__name">big bag 1500 l</span><a class="c5-btn c5-btn--light c5-btn--sm" href="sklep.html?grupa=carbomat"><svg class="wf-icon" aria-hidden="true"><use href="#ti-plus"></use></svg> dodaj do koszyka</a></div>
-                  <span class="c5-price__val">800–850 zł</span>
+                <div class="c5-variant__block">
+                  <span class="c5-label">pH:</span>
+                  <ul class="c5-ph">
+                    <li><span class="c5-chip c5-ph__chip">4,5–5,0 pH</span><span class="c5-muted">dla roślin kwasolubnych jak borówka, wrzosowate, różaneczniki, azalie</span></li>
+                    <li><span class="c5-chip c5-ph__chip">6,0–6,5 pH</span><span class="c5-muted">odmiana uniwersalna dla większości grup roślin</span></li>
+                  </ul>
+                </div>
+                <div class="c5-variant__block">
+                  <span class="c5-label">Frakcja:</span>
+                  <p class="c5-muted">0,1–2 mm&ensp;|&ensp;2–4 mm&ensp;|&ensp;4–8 mm</p>
+                  <!-- Frakcje wg AC #30867; kierunek „pył 0,1–2 tylko w odmianie o niskim pH" – nie publikujemy do potwierdzenia oferty -->
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Blok: CARBOMAT ECO Ściółka (leży pod poprzednim, oba widoczne) -->
-      <div class="c5-variant" id="wariant-sciolka" data-variant-block="sciolka">
-        <h3 class="c5-variant__name">CARBOMAT ECO Ściółka</h3>
-        <div class="c5-var__scene">
-          <div class="c5-var__tiles">
-            <p class="c5-var__tile">Chroni glebę przed erozją i nadmiernym odparowaniem</p>
-            <p class="c5-var__tile">Wzbogaca glebę w materię organiczną i substancje humusowe</p>
-            <p class="c5-var__tile">Obniżenie pH gleb i podłoży pod istniejące uprawy kwasolubne</p>
-          </div>
-          <img class="c5-var__pack" src="img/opakowania/worek_1000l_1500l.png" alt="CARBOMAT ECO Ściółka – big bag 1000/1500 l">
-          <div class="c5-var__tiles">
-            <p class="c5-var__tile">W przeciwieństwie do kory, nie powoduje głodu azotowego</p>
-            <p class="c5-var__tile">Tworzy siedlisko dla pożytecznych mikroorganizmów</p>
-          </div>
-        </div>
-        <div class="c5-var__cols">
-          <div class="c5-var__col">
-            <div class="c5-variant__block">
-              <span class="c5-label">Aplikacja:</span>
-              <p class="c5-muted">Rozsyp wokół roślin lub w rzędach – bez mieszania.</p>
+        <!-- Blok: CARBOMAT ECO Ściółka (leży pod poprzednim, oba widoczne) -->
+        <div class="c5-variant" id="wariant-sciolka" data-variant-block="sciolka">
+          <div class="c5-var__grid">
+            <div class="c5-var__pack">
+              <img class="c5-var__packimg" src="img/opakowania/worek_1000l_1500l.png" alt="CARBOMAT ECO Ściółka – big bag 1000/1500 l">
+              <!-- Ceny brutto wg Darka (AC #30867): Ściółka „odpowiednio jak dla pH 4" -->
+              <div class="c5-var__pkgs">
+                <a class="c5-pkg" href="sklep.html?grupa=carbomat"><span class="c5-pkg__name">worek 20 l</span><span class="c5-chip">nowość</span><span class="c5-pkg__val">43 zł</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-shopping-cart"></use></svg><span class="wf-sr-only">– dodaj do koszyka</span></a>
+                <a class="c5-pkg" href="sklep.html?grupa=carbomat"><span class="c5-pkg__name">big bag 1000 l</span><span class="c5-pkg__val">600 zł</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-shopping-cart"></use></svg><span class="wf-sr-only">– dodaj do koszyka</span></a>
+                <a class="c5-pkg" href="sklep.html?grupa=carbomat"><span class="c5-pkg__name">big bag 1500 l</span><span class="c5-pkg__val">800 zł</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-shopping-cart"></use></svg><span class="wf-sr-only">– dodaj do koszyka</span></a>
+              </div>
             </div>
-            <div class="c5-variant__block">
-              <span class="c5-label">Gdzie najlepiej:</span>
-              <p class="c5-muted">Uprawy borówki, krzewów i drzew ozdobnych – doniczki, rzędy i rabaty lub w przypadku chęci zakwaszenia gleby.</p>
-            </div>
-            <div class="c5-variant__block">
-              <span class="c5-label">pH:</span>
-              <p class="c5-muted">produkt dostępny wyłącznie o niższym odczynie</p>
-            </div>
-            <div class="c5-variant__block">
-              <span class="c5-label">Frakcja:</span>
-              <!-- 8–20 mm wg dotychczasowego kanonu (karta/V4); dokument 24.07 nie podaje frakcji Ściółki -->
-              <p class="c5-muted">8–20 mm</p>
-            </div>
-          </div>
-          <div class="c5-var__col">
-            <div class="c5-variant__block">
-              <span class="c5-label">Opakowania:</span>
-              <div class="c5-price">
-                <!-- Ceny brutto wg Darka (AC #30867): Ściółka „odpowiednio jak dla pH 4" -->
-                <div class="c5-price__row">
-                  <img class="c5-price__thumb" src="img/opakowania/worek_20l.png" alt="">
-                  <div class="c5-price__body"><span class="c5-price__name">worek 20 l <span class="c5-chip">nowość</span></span><a class="c5-btn c5-btn--light c5-btn--sm" href="sklep.html?grupa=carbomat"><svg class="wf-icon" aria-hidden="true"><use href="#ti-plus"></use></svg> dodaj do koszyka</a></div>
-                  <span class="c5-price__val">43 zł</span>
+            <div class="c5-var__info">
+              <h3 class="c5-variant__name">CARBOMAT ECO Ściółka</h3>
+              <ul class="c5-var__tiles">
+                <li class="c5-var__tile"><span class="c5-var__tileico" aria-hidden="true"></span><span>Chroni glebę przed erozją i nadmiernym odparowaniem</span></li>
+                <li class="c5-var__tile"><span class="c5-var__tileico" aria-hidden="true"></span><span>Wzbogaca glebę w materię organiczną i substancje humusowe</span></li>
+                <li class="c5-var__tile"><span class="c5-var__tileico" aria-hidden="true"></span><span>Obniżenie pH gleb i podłoży pod istniejące uprawy kwasolubne</span></li>
+                <li class="c5-var__tile"><span class="c5-var__tileico" aria-hidden="true"></span><span>W przeciwieństwie do kory, nie powoduje głodu azotowego</span></li>
+                <li class="c5-var__tile"><span class="c5-var__tileico" aria-hidden="true"></span><span>Tworzy siedlisko dla pożytecznych mikroorganizmów</span></li>
+              </ul>
+              <div class="c5-var__params">
+                <div class="c5-variant__block">
+                  <span class="c5-label">Aplikacja:</span>
+                  <p class="c5-muted">Rozsyp wokół roślin lub w rzędach – bez mieszania.</p>
                 </div>
-                <div class="c5-price__row">
-                  <img class="c5-price__thumb" src="img/opakowania/worek_1000l_1500l.png" alt="">
-                  <div class="c5-price__body"><span class="c5-price__name">big bag 1000 l</span><a class="c5-btn c5-btn--light c5-btn--sm" href="sklep.html?grupa=carbomat"><svg class="wf-icon" aria-hidden="true"><use href="#ti-plus"></use></svg> dodaj do koszyka</a></div>
-                  <span class="c5-price__val">600 zł</span>
+                <div class="c5-variant__block">
+                  <span class="c5-label">Gdzie najlepiej:</span>
+                  <p class="c5-muted">Uprawy borówki, krzewów i drzew ozdobnych – doniczki, rzędy i rabaty lub w przypadku chęci zakwaszenia gleby.</p>
                 </div>
-                <div class="c5-price__row">
-                  <img class="c5-price__thumb" src="img/opakowania/worek_1000l_1500l.png" alt="">
-                  <div class="c5-price__body"><span class="c5-price__name">big bag 1500 l</span><a class="c5-btn c5-btn--light c5-btn--sm" href="sklep.html?grupa=carbomat"><svg class="wf-icon" aria-hidden="true"><use href="#ti-plus"></use></svg> dodaj do koszyka</a></div>
-                  <span class="c5-price__val">800 zł</span>
+                <div class="c5-variant__block">
+                  <span class="c5-label">pH:</span>
+                  <p class="c5-muted">produkt dostępny wyłącznie o niższym odczynie</p>
+                </div>
+                <div class="c5-variant__block">
+                  <span class="c5-label">Frakcja:</span>
+                  <!-- 8–20 mm wg dotychczasowego kanonu (karta/V4); dokument 24.07 nie podaje frakcji Ściółki -->
+                  <p class="c5-muted">8–20 mm</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
       </div><!-- /.c5-variants – tu kończy się przyklejenie tabów -->
     </div>
   </section>
@@ -382,7 +421,7 @@
              kolumny, poza nią zwykły blok nad faktami. Bez `hidden` w źródle –
              modułowy strażnik nigdy nie chowa bloku, który stoi sam. -->
         <div class="c5-fx__head" data-fx-head="z-naglowkiem">
-          <span class="c5-kicker">Czym jest carbomat</span>
+          <span class="c5-kicker c5-kicker--outline">Czym jest carbomat</span>
           <h2 class="c5-h2">Skondensowana próchnica, najbardziej wartościowa materia organiczna.</h2>
         </div>
 
@@ -724,73 +763,93 @@
        JS keeps it open before the pin) – the header and the block enter in the
        normal flow of the page and only pin later (§14.7). -->
   <section class="c5-sec" id="sezon" data-chapter="sezon" style="padding-bottom:0;">
-    <div class="c5-wrap">
-      <div id="sezon-wiersze" class="c5-season-pin" data-season-pin data-ce="CE-15">
+    <!-- CE-15, wariant „kaskada-z-pinem" wg ramki Figma 308-179 (spec §16.6).
+         Sekcja przypina się na czas cyklu: nagłówek z kickerem stoi widoczny,
+         a każdy krótki scroll przesuwa kaskadę o jedną pozycję – pierwsza karta
+         startuje otwarta, potem druga, potem trzecia, a ostatni takt zamyka
+         wszystkie i pin puszcza stronę dalej. Żadnego odliczania ani
+         zapętlenia. Nad kaskadą oś czasu: trzy etykiety i trzy klamry, które
+         wchodzą PRZED kartami (adnotacja projektanta).
+         Pliki modułu: ce/CE-15-wiersze-packshot-pin.css/.js – linkuje je
+         wyłącznie ta strona; wspólny CE-15 i próba CE-15 (Produkty) zostają
+         nietknięte. -->
+    <div id="sezon-wiersze" class="c5-casc c5-casc-pin" data-casc data-ce="CE-15" data-ce-wariant="kaskada-z-pinem">
       <!-- Nagłówek żyje w kontenerze pinu (absolutnie, więc nie zajmuje miejsca
            w biegu) – dzięki temu po zakończeniu cyklu odjeżdża w górę razem
-           z krokami, zamiast znikać. Kicker jedzie i przykleja się razem z H2
+           z kartami, zamiast znikać. Kicker jedzie i przykleja się razem z H2
            i leadem (uwaga Mateusza z 13.09); nagłówek bez własnego tła, żeby
-           nic nie zasłaniało kroków. -->
-      <div class="c5-season-headwrap" data-season-headwrap>
-        <div class="c5-season-head" data-season-head>
-          <div class="c5-head">
-            <span class="c5-kicker c5-kicker--center">Kiedy stosować</span>
-            <h2 class="c5-h2 c5-h2--center">Produkty w rytmie sezonu.</h2>
-            <p class="c5-lead c5-lead--center">CARBOMAT ECO to pierwszy krok systemu: bazę zakładasz raz, a w sezonie pracują produkty płynne.</p>
+           nic nie zasłaniało kaskady. -->
+      <div class="c5-casc-headwrap" data-casc-headwrap>
+        <div class="c5-casc-head" data-casc-head>
+          <div class="c5-wrap">
+            <div class="c5-head">
+              <span class="c5-kicker c5-kicker--center">Kiedy stosować</span>
+              <h2 class="c5-h2 c5-h2--center">Produkty w rytmie sezonu.</h2>
+              <p class="c5-lead c5-lead--center">CARBOMAT ECO to pierwszy krok systemu: bazę zakładasz raz, a w sezonie pracują produkty płynne.</p>
+            </div>
           </div>
         </div>
       </div>
-      <div class="c5-season-pin__spacer" data-season-spacer aria-hidden="true"></div>
-      <div class="c5-season">
-        <div class="c5-season__row" data-open="true">
-          <button type="button" class="c5-season__head" data-season="1" aria-expanded="true" aria-controls="season-1">Start · przygotowanie gleby</button>
-          <div class="c5-season__scene">
-            <span class="c5-season__plate" aria-hidden="true"></span>
-            <img class="c5-season__pack" src="img/opakowania/worek_20l.png" alt="CARBOMAT ECO – worek 20 l">
-          </div>
-          <div class="c5-season__panel" id="season-1">
-            <div class="c5-season__panelin">
-            <div class="c5-season__info">
-              <h3>CARBOMAT ECO – baza doglebowa</h3>
-              <p class="c5-muted">Stosujesz raz, gdy gleba jest odkryta – przy sadzeniu lub zakładaniu uprawy. Potem już jej nie rozkopujesz, żeby nie niszczyć budowanej próchnicy.</p>
-              <a class="c5-btn c5-btn--light c5-btn--sm" href="sklep.html?grupa=carbomat"><svg class="wf-icon" aria-hidden="true"><use href="#ti-plus"></use></svg> dodaj do koszyka</a>
-            </div>
-          </div>
-          </div>
+      <div class="c5-casc-pin__spacer" data-casc-spacer aria-hidden="true"></div>
+      <!-- Kaskada dostaje całe okno (szeroki kontener EL-29): scena w środku to
+           jego content box, więc cztery linie włosowe siadają dokładnie na
+           granicach kolumn, a klamry osi mają szerokość kolumny. -->
+      <div class="c5-wrap c5-wrap--wide" data-casc-pin>
+        <!-- Oś czasu. Zakresy powtarza tytuł każdej karty, więc dla czytnika
+             ekranu jest to dekoracja. -->
+        <div class="c5-casc__axis" aria-hidden="true">
+          <div class="c5-casc__ax"><span class="c5-casc__axl">początek uprawy</span><span class="c5-casc__axb"></span></div>
+          <div class="c5-casc__ax"><span class="c5-casc__axl">w roku</span><span class="c5-casc__axb"></span></div>
+          <div class="c5-casc__ax"><span class="c5-casc__axl">w sezonie</span><span class="c5-casc__axb"></span></div>
         </div>
-        <div class="c5-season__row">
-          <button type="button" class="c5-season__head" data-season="2" aria-expanded="false" aria-controls="season-2">W roku · wiosna i jesień</button>
-          <div class="c5-season__scene">
-            <span class="c5-season__plate" aria-hidden="true"></span>
-            <img class="c5-season__pack" src="img/opakowania/kanister_5l.png" alt="CARBOHUMIC niefiltrowany – kanister 5 l">
-          </div>
-          <div class="c5-season__panel" id="season-2">
-            <div class="c5-season__panelin">
-            <div class="c5-season__info">
-              <h3>CARBOHUMIC niefiltrowany – uzupełnienie doglebowe</h3>
-              <p class="c5-muted">Płynne kwasy humusowe podajesz bez rozkopywania – podlewając. Zabiegi można powtarzać, kilka razy w roku.</p>
-              <a class="c5-btn c5-btn--light c5-btn--sm" href="carbohumic.html">zobacz produkt</a>
-            </div>
-          </div>
-          </div>
+        <div class="c5-casc__stage">
+          <span class="c5-casc__lines" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <ol class="c5-casc__list">
+            <!-- każdy nagłówek wyjeżdża z aria-expanded="true": bez JS wszystkie panele są otwarte -->
+            <li class="c5-casc__item">
+              <h3 class="c5-casc__h">
+                <button type="button" class="c5-casc__btn" aria-expanded="true" aria-controls="season-1">
+                  <span class="c5-casc__t">Start · przygotowanie gleby</span>
+                  <span class="c5-casc__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle class="c5-casc__ring" cx="12" cy="12" r="11"/><path class="c5-casc__sign" d="M6.5 12h11"/><path class="c5-casc__sign c5-casc__sign--v" d="M12 6.5v11"/></svg></span>
+                </button>
+              </h3>
+              <div class="c5-casc__panel" id="season-1">
+                <div class="c5-casc__panelin">
+                  <a class="c5-casc__prod" href="sklep.html?grupa=carbomat"><span class="c5-casc__pack"><img src="img/opakowania/worek_20l.png" alt="CARBOMAT ECO – worek 20 l"></span><span class="c5-casc__prodn">CARBOMAT ECO – baza doglebowa</span></a>
+                  <p class="c5-casc__txt">Stosujesz raz, gdy gleba jest odkryta – przy sadzeniu lub zakładaniu uprawy. Potem już jej nie rozkopujesz, żeby nie niszczyć budowanej próchnicy.</p>
+                </div>
+              </div>
+            </li>
+            <li class="c5-casc__item">
+              <h3 class="c5-casc__h">
+                <button type="button" class="c5-casc__btn" aria-expanded="true" aria-controls="season-2">
+                  <span class="c5-casc__t">W roku · wiosna i jesień</span>
+                  <span class="c5-casc__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle class="c5-casc__ring" cx="12" cy="12" r="11"/><path class="c5-casc__sign" d="M6.5 12h11"/><path class="c5-casc__sign c5-casc__sign--v" d="M12 6.5v11"/></svg></span>
+                </button>
+              </h3>
+              <div class="c5-casc__panel" id="season-2">
+                <div class="c5-casc__panelin">
+                  <a class="c5-casc__prod" href="carbohumic.html"><span class="c5-casc__pack"><img src="img/opakowania/kanister_5l.png" alt="CARBOHUMIC niefiltrowany – kanister 5 l"></span><span class="c5-casc__prodn">CARBOHUMIC niefiltrowany – uzupełnienie doglebowe</span></a>
+                  <p class="c5-casc__txt">Płynne kwasy humusowe podajesz bez rozkopywania – podlewając. Zabiegi można powtarzać, kilka razy w roku.</p>
+                </div>
+              </div>
+            </li>
+            <li class="c5-casc__item">
+              <h3 class="c5-casc__h">
+                <button type="button" class="c5-casc__btn" aria-expanded="true" aria-controls="season-3">
+                  <span class="c5-casc__t">W sezonie · wzrost i owocowanie</span>
+                  <span class="c5-casc__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle class="c5-casc__ring" cx="12" cy="12" r="11"/><path class="c5-casc__sign" d="M6.5 12h11"/><path class="c5-casc__sign c5-casc__sign--v" d="M12 6.5v11"/></svg></span>
+                </button>
+              </h3>
+              <div class="c5-casc__panel" id="season-3">
+                <div class="c5-casc__panelin">
+                  <a class="c5-casc__prod" href="carbohumic.html"><span class="c5-casc__pack"><img src="img/opakowania/butelka_1l.png" alt="MAXI PLUS – butelka 1 l"></span><span class="c5-casc__prodn">MAXI PLUS, w sadzie CALBOR – wzmocnienie nalistne</span></a>
+                  <p class="c5-casc__txt">MAXI PLUS w fazie wzrostu, CALBOR na jakość owocu (wyłącznie sady). Opryski nalistne można powtarzać kilka razy w sezonie.</p>
+                </div>
+              </div>
+            </li>
+          </ol>
         </div>
-        <div class="c5-season__row" style="border-bottom:1px solid var(--w-border-default);">
-          <button type="button" class="c5-season__head" data-season="3" aria-expanded="false" aria-controls="season-3">W sezonie · wzrost i owocowanie</button>
-          <div class="c5-season__scene">
-            <span class="c5-season__plate" aria-hidden="true"></span>
-            <img class="c5-season__pack" src="img/opakowania/butelka_1l.png" alt="MAXI PLUS – butelka 1 l">
-          </div>
-          <div class="c5-season__panel" id="season-3">
-            <div class="c5-season__panelin">
-            <div class="c5-season__info">
-              <h3>MAXI PLUS, w sadzie CALBOR – wzmocnienie nalistne</h3>
-              <p class="c5-muted">MAXI PLUS w fazie wzrostu, CALBOR na jakość owocu (wyłącznie sady). Opryski nalistne można powtarzać kilka razy w sezonie.</p>
-              <a class="c5-btn c5-btn--light c5-btn--sm" href="carbohumic.html">zobacz produkty</a>
-            </div>
-          </div>
-          </div>
-        </div>
-      </div>
       </div>
     </div>
 
@@ -801,10 +860,13 @@
          Od 19.09.2026 wariant „pozny-wzrost" (spec §15.1): kadr stoi na połowie
          szerokości pasa, dopóki jego górna krawędź jest niżej niż 35 % okna,
          potem rośnie do pełnej przy 2 % od góry; razem ze wzrostem wchodzi
-         scrim (`--pro-o` 0 -> 1 mnoży stałe .25 z warstwy wspólnej). -->
+         scrim (`--pro-o` 0 -> 1 mnoży stałe .25 z warstwy wspólnej).
+         Iteracja „Figma" (spec §16.7, Frame 186-253): kadr sadu zamiast kadru
+         z big bagiem, tło pasa #777771, typografia i przyciski z ramki. Copy
+         zostaje dzisiejsze – ramka skraca akapit, a uwaga dotyczy formy. -->
     <div class="c5-pro" id="uprawy-profesjonalne" data-pro data-ce="CE-16" data-ce-wariant="pozny-wzrost">
       <div class="c5-pro__media" data-pro-media aria-hidden="true">
-        <img class="c5-pro__img" src="img/foto/pro.jpg" alt="Biały big bag na palecie w międzyrzędziu plantacji borówki, obok sadownik z tabletem" loading="lazy" decoding="async">
+        <img class="c5-pro__img" src="img/foto/eco-pro-sad.jpg" alt="Dłoń zrywa dojrzałe jabłko z gałęzi w sadzie, zdjęcie pod słońce w ciepłym popołudniowym świetle" loading="lazy" decoding="async">
       </div>
       <div class="c5-wrap c5-pro__grid">
         <h2>Prowadzisz uprawę profesjonalną – sad, plantację, pole lub szkółkę?</h2>
@@ -903,12 +965,12 @@
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
 <script src="ce/00-base.js"></script>
 <script src="ce/CE-07-nawigacja-kropkowa.js"></script>
-<script src="ce/CE-10-parametry.js"></script>
-<script src="ce/CE-11-warianty-taby.js"></script>
+<script src="ce/CE-10-parametry-proba.js"></script>
+<script src="ce/CE-11-warianty-taby-proba.js"></script>
 <script src="ce/CE-12-scena-faktow-proba.js"></script>
 <script src="ce/CE-13-scena-produktu.js"></script>
 <script src="ce/CE-14-sekcja-100svh.js"></script>
-<script src="ce/CE-15-wiersze-packshot.js"></script>
+<script src="ce/CE-15-wiersze-packshot-pin.js"></script>
 <script src="ce/CE-16-pas-pro-proba.js"></script>
 <script src="ce/CE-17-faq.js"></script>
 <script src="carbomat.js"></script>

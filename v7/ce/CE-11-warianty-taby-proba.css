@@ -1,0 +1,216 @@
+/* ===== CE-11 · Warianty na tabach – próba „karty w taby" =====================
+   LINKED BY carbomat.html ONLY. The base module ce/CE-11-warianty-taby.css is
+   also linked by carbohumic.html (three tabs, .c5-ways--3), so the rebuild of
+   the ECO section lives here and the base file stays untouched – same habit as
+   CE-10-parametry-proba.* (spec §17.5).
+
+   What this file adds over the base module: two states of ONE box, driven by
+   scrolling only (Figma frames 310:461 and 310:418).
+     1. the boxes ride in aligned to the BOTTOM edge of the window, the outline
+        drawing itself from the bottom centre outwards,
+     2. once a box is tall enough, the mode label, the packshot and the product
+        name fade in,
+     3. further scrolling drops the packshot and the name, the box shrinks to
+        70 px and sticks to the TOP edge of the window as a tab,
+     4. the active tab carries a green #71C35F outline that shows how far the
+        reader has scrolled through the matching variant block; it grows with
+        two ends symmetrically out of the middle of the left edge.
+   Width, horizontal position and the 10 px radius are identical in both states
+   – one box in motion, never two components swapped for one another.
+
+   The number of tabs is NOT hard-wired: the bar is a flex row of equal columns,
+   so the same block carries two tabs here and three on CARBOHUMIC.
+
+   Everything scroll-driven is gated behind [data-ce11="ruch"], which the JS
+   half of the module sets only when CX5.motionOn() is true (>= 900 px and no
+   prefers-reduced-motion). Without JS, with reduced motion and below 900 px the
+   section is the plain static layout of this file: every product reachable, no
+   pinning, no animation, nothing trapped in a half-finished state.
+   ========================================================================== */
+
+/* --- Section values from the frames; each one rolls back in a single line -- */
+.c5-variants{
+  --c5-ink:#0C2B1C;                 /* „Dark" – headings, labels, tabs */
+  --c5-body:#777771;                /* „Body" – parameter copy */
+  --c5-edge:rgb(0 0 0 / .12);       /* outline of cards and tabs */
+  --c5-green:#71C35F;               /* progress outline (same green as in #czym-jest) */
+  --c5-panel:#F9F7F5;               /* background of the packshot panel */
+  --c5-r:10px;                      /* radius of card, tab and panel */
+  --c5-r-ctl:11px;                  /* radius of package button and pH chip */
+  --c5-tab-h:70px;                  /* tab height – the end state */
+  --c5-card-h:426px;                /* card height – the start state (JS shortens it on a low window) */
+  --c5-gap:20px;                    /* card to card = tab to tab */
+  /* The runway is 0 px tall: the scroll budget of the intro comes from the
+     window height, not from this box. Every pixel added here pushes the
+     section heading further up at the moment the cards are full size. */
+  --c5-rail-h:0px;
+  /* How far the bottom edge of the cards stays above the window edge (the
+     frame says 20 px). This is the one knob that clears the advisor dock if it
+     ever covers the product name on a card. */
+  --c5-bottom-gap:20px;
+  /* Glass of the package buttons: the fill is exactly the frame value (flat
+     20 % alpha), the blur is tuned to how the frame looks. White on that fill
+     measures 1.71:1 – reported, not silently fixed (spec §16.2 pt 4); .52
+     would be the smallest step to 4.5:1. */
+  --c5-pkg-veil:.2;
+  --c5-pkg-blur:10px;
+  position:relative;margin-top:clamp(2rem,4vw,3.5rem);
+}
+
+/* --- The tab bar ------------------------------------------------------------
+   Without motion the bar is NOT pinned: the fallback asks for a static section,
+   and pinning comes only with the motion layer below. Flex rather than grid, so
+   that the number of tabs is free – two on CARBOMAT ECO, three on CARBOHUMIC,
+   with no change in CSS. */
+.c5-ways{position:static;top:0;z-index:80;display:flex;align-items:flex-end;
+  gap:var(--c5-gap);background:var(--w-surface-page);padding-block:6px;}
+.c5-way{position:relative;flex:1 1 0;min-width:0;height:var(--c5-tab-h);
+  display:block;padding:0;font:inherit;text-align:center;
+  background:var(--w-surface-page);color:var(--c5-ink);
+  border:1px solid var(--c5-edge);border-radius:var(--c5-r);cursor:pointer;}
+.c5-way:focus-visible{outline:2px solid var(--c5-ink);outline-offset:3px;}
+
+/* The „icon + label" row – the only content of the tab state; on a card it
+   stands 24 px below its top edge. Without motion it is simply centred in the
+   70 px tab. */
+.c5-way__head{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);
+  display:flex;align-items:center;justify-content:center;gap:var(--c5-gap);}
+.c5-way__ico{flex:none;width:var(--c5-ico,32px);height:var(--c5-ico,32px);}
+.c5-way__label{font-size:18px;line-height:28px;letter-spacing:-0.01em;
+  font-weight:var(--w-weight-medium);color:var(--c5-ink);}
+
+/* Packshot and product name – the card state only; without motion they are not rendered. */
+.c5-way__card{display:none;}
+.c5-way__ring{display:none;}
+
+/* The runway marks the flow position of the bar, which is what drives the
+   timeline. Zero height without motion. */
+.c5-ways__rail{display:none;}
+
+/* --- Variant block ----------------------------------------------------------- */
+.c5-variant{padding-top:clamp(2rem,4vw,3rem);}
+.c5-variant + .c5-variant{margin-top:clamp(3rem,7vw,6rem);}
+
+/* Two columns after frame 310:418: packshot panel 700 | copy column 606, gap
+   93 px. Proportions rather than pixels – the section stands in c5-wrap. */
+.c5-var__grid{display:grid;grid-template-columns:minmax(0,700fr) minmax(0,606fr);
+  gap:clamp(2rem,6.5vw,93px);align-items:start;}
+
+/* Packshot panel: the warm white of the frame, packshot 287 × 435 in a 700 × 690 field */
+.c5-var__pack{position:relative;display:flex;align-items:center;justify-content:center;
+  aspect-ratio:700/690;background:var(--c5-panel);border-radius:var(--c5-r);padding:26px;}
+.c5-var__packimg{max-width:41%;max-height:63%;width:auto;height:auto;object-fit:contain;}
+
+/* Package size buttons laid over the bottom of the panel (annotation 3):
+   26 px from its left edge, 14 px above the bottom, 9 px apart. */
+.c5-var__pkgs{position:absolute;left:26px;right:26px;bottom:14px;
+  display:flex;flex-wrap:wrap;gap:9px;}
+.c5-pkg{display:inline-flex;align-items:center;gap:12px;min-height:44px;
+  padding:12px 15px;border:0;border-radius:var(--c5-r-ctl);
+  background:rgb(0 0 0 / var(--c5-pkg-veil));
+  -webkit-backdrop-filter:blur(var(--c5-pkg-blur));backdrop-filter:blur(var(--c5-pkg-blur));
+  color:var(--w-text-inverse);font:inherit;font-size:16px;line-height:20px;
+  text-decoration:none;cursor:pointer;}
+.c5-pkg:hover{background:rgb(0 0 0 / calc(var(--c5-pkg-veil) + .1));}
+.c5-pkg:focus-visible{outline:2px solid var(--w-text-inverse);outline-offset:2px;}
+.c5-pkg .wf-icon{flex:none;width:16px;height:16px;opacity:1;}
+.c5-pkg__val{font-weight:var(--w-weight-medium);}
+/* the „nowość" badge on glass – same copy, only legible on the dark fill */
+.c5-pkg .c5-chip{padding:2px 8px;font-size:10px;line-height:1.4;letter-spacing:.06em;
+  border-radius:6px;border-color:rgb(255 255 255 / .55);color:var(--w-text-inverse);}
+/* Without backdrop-filter only the fill is left – then we do not fake the glass */
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .c5-pkg{background:rgb(0 0 0 / calc(var(--c5-pkg-veil) + .08));}
+}
+
+/* --- Copy column -------------------------------------------------------------- */
+.c5-var__info{display:flex;flex-direction:column;padding-top:clamp(0px,5.3vw,76px);}
+.c5-variant__name{margin:0;font-size:clamp(1.75rem,2.8vw,2.5rem);line-height:1.15;
+  letter-spacing:-0.02em;font-weight:var(--w-weight-regular);text-align:left;color:var(--c5-ink);}
+
+/* Benefit grid 2 × 3 (frame: icon 16, icon to text 44, column to column 60).
+   The number of items is free – the two columns fill themselves. */
+.c5-var__tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  column-gap:60px;row-gap:29px;margin:clamp(2rem,4.2vw,60px) 0 0;padding:0;list-style:none;}
+.c5-var__tile{display:grid;grid-template-columns:16px minmax(0,1fr);column-gap:28px;
+  align-items:start;margin:0;font-size:16px;line-height:1.25;color:var(--c5-ink);}
+/* ⚠ The bullet of the frame (four squares over a rule) has no counterpart in
+   the sprite; icons are not drawn here, so only the 16 × 16 slot is kept. */
+.c5-var__tileico{display:block;width:16px;height:16px;}
+
+/* Parameters: one column, label 22 px Regular, copy 16/24 px */
+.c5-var__params{display:flex;flex-direction:column;gap:45px;margin-top:clamp(2rem,4.5vw,65px);}
+.c5-variant__block{display:flex;flex-direction:column;gap:16px;}
+.c5-var__info .c5-label{font-size:22px;line-height:28px;letter-spacing:-0.02em;
+  font-weight:var(--w-weight-regular);color:var(--c5-ink);}
+.c5-var__info .c5-muted{margin:0;font-size:16px;line-height:24px;color:var(--c5-body);}
+
+/* pH: a „chip + description" row instead of a list bullet */
+.c5-ph{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:16px;}
+.c5-ph li{display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+/* the description sits NEXT TO the chip and wraps inside itself */
+.c5-ph li .c5-muted{flex:1 1 240px;min-width:0;}
+.c5-ph__chip{flex:none;min-height:44px;padding:12px 15px;border-radius:var(--c5-r-ctl);
+  border:1px solid var(--w-border-default);background:var(--w-surface-page);
+  color:var(--c5-body);font-size:16px;line-height:20px;letter-spacing:normal;
+  text-transform:none;font-weight:var(--w-weight-regular);}
+
+/* --- Motion layer: the card-to-tab morph ------------------------------------
+   Switched on by the JS half with data-ce11="ruch" on [data-variants]; every
+   number below comes from a knob the JS recomputes on each frame:
+     --c5-box-h    current height of the box (card -> tab)
+     --c5-m        0 = card, 1 = tab (drives the morph)
+     --c5-ways-top sticky offset: window bottom -> window top
+     --c5-head-in / --c5-card-in / --c5-panel-in  thresholds of content entry
+     --c5-edge-p / --c5-prog-p  drawn share of the outline (grey / green) */
+[data-ce11="ruch"] .c5-ways__rail{display:block;height:var(--c5-rail-h);}
+[data-ce11="ruch"] .c5-ways{position:sticky;top:var(--c5-ways-top,0px);
+  height:calc(var(--c5-tab-h) + 12px);
+  transition:transform .25s var(--w-ease),opacity .25s var(--w-ease);}
+/* the bar hides upwards as soon as the next section shows up from below (spec §13.4) */
+[data-ce11="ruch"] .c5-ways.is-out{transform:translateY(-110%);opacity:0;pointer-events:none;}
+[data-ce11="ruch"]{--c5-ico:calc(26px + 6px * var(--c5-m,0));}
+/* The SVG draws the outline, so the box gives up its 1 px border – that makes
+   the height from JS, the drawing area and the visible edge one and the same. */
+[data-ce11="ruch"] .c5-way{height:var(--c5-box-h,var(--c5-tab-h));border:0;}
+[data-ce11="ruch"] .c5-way__head{top:calc(24px - 5px * var(--c5-m,0));transform:none;
+  height:var(--c5-ico);opacity:var(--c5-head-in,0);}
+[data-ce11="ruch"] .c5-way__ring{display:block;position:absolute;inset:0;pointer-events:none;}
+[data-ce11="ruch"] .c5-way__card{display:block;position:absolute;inset:0;overflow:hidden;
+  border-radius:var(--c5-r);opacity:var(--c5-card-in,0);pointer-events:none;}
+/* packshot 118 × 178, 117 px below the top edge of the 426 px card – kept as
+   shares, so a lower window shortens the card without breaking the composition */
+[data-ce11="ruch"] .c5-way__pack{position:absolute;left:50%;top:27.46%;height:41.78%;
+  width:auto;transform:translateX(-50%);object-fit:contain;}
+/* product name 40 px above the bottom edge of the card */
+[data-ce11="ruch"] .c5-way__name{position:absolute;left:8px;right:8px;bottom:9.39%;
+  font-size:clamp(1.25rem,2.1vw,1.875rem);line-height:1.23;letter-spacing:-0.01em;
+  font-weight:var(--w-weight-medium);color:var(--c5-ink);}
+/* the variant panel fades in only as the cards start to shrink; focus inside
+   uncovers it at once, so a keyboard reader is never left in the dark */
+[data-ce11="ruch"] .c5-variant{opacity:var(--c5-panel-in,0);}
+[data-ce11="ruch"] .c5-variant:focus-within{opacity:1;}
+
+/* Outline: the grey one draws from the middle of the BOTTOM edge in both
+   directions, the green one from the middle of the LEFT edge in both
+   directions (geometry measured on the image 52 export). pathLength="1" makes
+   the drawn share independent of the size of the box. */
+.c5-way__svg{display:block;width:100%;height:100%;overflow:visible;}
+.c5-way__edge{fill:none;stroke:var(--c5-edge);stroke-width:1;
+  stroke-dasharray:var(--c5-edge-p,1) 1;}
+.c5-way__prog{fill:none;stroke:var(--c5-green);stroke-width:1;
+  stroke-dasharray:var(--c5-prog-p,0) 1;}
+
+/* --- Below 900 px: the static layout ---------------------------------------- */
+@media (max-width:899px){
+  .c5-ways{flex-wrap:wrap;}
+  .c5-way{flex:1 1 100%;}
+  .c5-var__grid{grid-template-columns:minmax(0,1fr);gap:24px;}
+  .c5-var__info{padding-top:0;}
+  .c5-var__tiles{grid-template-columns:minmax(0,1fr);}
+  .c5-var__params{gap:32px;}
+  /* the panel grows vertically, the buttons move below the packshot – still glass */
+  .c5-var__pack{aspect-ratio:auto;flex-direction:column;gap:18px;}
+  .c5-var__packimg{max-width:70%;max-height:none;height:clamp(180px,52vw,320px);}
+  .c5-var__pkgs{position:static;justify-content:center;}
+}
