@@ -59,7 +59,7 @@ window.CW_CE = {
     "CE-02": {
       "nazwa": "Mega-menu",
       "grupa": "wspolne",
-      "opis": "Panel rozwijany pod nagłówkiem: nagłówek panelu, kolumny odnośników albo boksy produktowe, stopka panelu. Trzy warianty układu zależnie od treści działu.",
+      "opis": "Panel rozwijany pod nagłówkiem: nagłówek panelu, kolumny odnośników, boksy produktowe albo grupy upraw, stopka panelu. Cztery warianty układu zależnie od treści działu.",
       "mechanika": "Otwierany wyzwalaczem z nagłówka (data-open, aria-controls), zamykany klikiem poza panelem albo Escape; tło przyciemnione przez cw-scrim. Obsługa w cw.js.",
       "baza": {
         "plik": "v7/chrome.js",
@@ -76,21 +76,29 @@ window.CW_CE = {
       ],
       "warianty": {
         "szerokie": "cztery boksy produktowe (Produkty Carbohort)",
-        "domyslne": "trzy kolumny list (Rodzaje upraw)",
-        "waskie": "jedna lista (Programy i badania)"
+        "domyslne": "trzy kolumny list – bez wystąpień od 20.09.2026, zastąpiony wariantem „grupy”",
+        "waskie": "jedna lista (Programy i badania)",
+        "grupy": "pięć grup upraw na pełną szerokość kontenera (Rodzaje upraw, 20.09.2026): tytuł grupy z kreską 2 px, lista pozycji na szynie wyróżnień, a grupa Rolnicze rozbita na dwie karty sezonów – Ozime z ikoną „ti-snowflake” i Jare z ikoną „ti-sun”. Pozycja ze swoją stroną jest linkiem ze strzałką, pozostałe 28 to spany „cw-crop--soon”. Spec: 40-strona-www/koncepcja/menu-rodzaje-upraw-spec.md"
       },
       "uwagi": "CE zagnieżdżony w CE-01; ukryty do otwarcia.",
       "zrzut": {
         "strona": "v7/carbomat.html",
         "klik": "[data-mega-trigger][aria-controls=\"mega-produkty\"]",
         "maxh": 700
+      },
+      "zrzuty_wariantow": {
+        "grupy": {
+          "plik": "v7/carbomat.html",
+          "kotwica": "mega-uprawy",
+          "klik": "[data-mega-trigger][aria-controls=\"mega-uprawy\"]"
+        }
       }
     },
     "CE-03": {
       "nazwa": "Nawigacja mobilna",
       "grupa": "wspolne",
-      "opis": "Panel nawigacji rozwijany pod paskiem nagłówka na wąskich ekranach: lista działów z pozycjami drugiego poziomu i CTA.",
-      "mechanika": "Otwierany przyciskiem menu z nagłówka, z przyciemnieniem tła; pozycja bieżąca podświetlona (data-nav na obu poziomach). Obsługa w cw.js.",
+      "opis": "Panel nawigacji rozwijany pod paskiem nagłówka na wąskich ekranach: lista działów z CTA, a pod etykietą „Rodzaje upraw” pięć rozwijanych grup upraw z tą samą treścią i tymi samymi stanami pozycji co mega-menu (od 20.09.2026).",
+      "mechanika": "Otwierany przyciskiem menu z nagłówka, z przyciemnieniem tła; pozycja bieżąca podświetlona (data-nav na obu poziomach). Grupy upraw to natywne znaczniki „details” ze wspólnym atrybutem „name”, więc otwarta zostaje jedna i działają bez JS; grupę bieżącej uprawy otwiera funkcja „markCurrent” z chrome.js. Reszta obsługi w cw.js.",
       "baza": {
         "plik": "v7/chrome.js",
         "kotwica": "mobilenav"
@@ -101,7 +109,9 @@ window.CW_CE = {
       },
       "czesci": [
         "lista działów",
-        "pozycje drugiego poziomu",
+        "etykieta działu upraw",
+        "pięć rozwijanych grup upraw",
+        "karty sezonów Ozime i Jare w grupie Rolnicze",
         "CTA"
       ],
       "warianty": {},

@@ -100,7 +100,7 @@
 <span class="etk">Kod</span><p><code>wireframe.css (wf-navbar) + cw.css (cw-nav, cw-brand)</code> · <code>chrome.js (szablon NAVBAR) + cw.js (mega-menu)</code></p>
 <span class="etk">Uwagi</span><p class="mut">Jeden plik dla całego serwisu: zmiana w menu = edycja chrome.js, nigdy podstron.</p>
 <a class="btn" href="v7/chrome.js">Wersja bazowa – chrome.js</a>
-<span class="etk">Występuje na</span><p>każda podstrona (chrome.js) – element wspólny, wstawiany do DOM przez <a href="v7/chrome.js"><code>chrome.js</code></a> (linia 137).</p>
+<span class="etk">Występuje na</span><p>każda podstrona (chrome.js) – element wspólny, wstawiany do DOM przez <a href="v7/chrome.js"><code>chrome.js</code></a> (linia 146).</p>
 </div>
 <div class="ce__shot"><a href="ce-indeks/img/CE-01.png"><img src="ce-indeks/img/CE-01.png" alt="Zrzut CE-01 – Nagłówek serwisu" loading="lazy"></a></div>
 </article>
@@ -108,28 +108,28 @@
 <article class="ce" id="CE-02">
 <div class="ce__info">
 <div class="ce__head"><span class="kod"><a href="#CE-02">CE-02</a></span><h3 class="ce__nazwa">Mega-menu</h3><span class="gr-et">Elementy wspólne serwisu (chrome.js)</span></div>
-<p>Panel rozwijany pod nagłówkiem: nagłówek panelu, kolumny odnośników albo boksy produktowe, stopka panelu. Trzy warianty układu zależnie od treści działu.</p>
+<p>Panel rozwijany pod nagłówkiem: nagłówek panelu, kolumny odnośników, boksy produktowe albo grupy upraw, stopka panelu. Cztery warianty układu zależnie od treści działu.</p>
 <span class="etk">Mechanika</span><p>Otwierany wyzwalaczem z nagłówka (data-open, aria-controls), zamykany klikiem poza panelem albo Escape; tło przyciemnione przez cw-scrim. Obsługa w cw.js.</p>
 <span class="etk">Części</span><div class="chips"><span class="chip">nagłówek panelu</span><span class="chip">kolumny odnośników albo boksy</span><span class="chip">stopka panelu</span></div>
-<span class="etk">Warianty</span><ul class="war"><li><code>szerokie</code> – cztery boksy produktowe (Produkty Carbohort)</li><li><code>domyslne</code> – trzy kolumny list (Rodzaje upraw)</li><li><code>waskie</code> – jedna lista (Programy i badania)</li></ul>
+<span class="etk">Warianty</span><ul class="war"><li><code>szerokie</code> – cztery boksy produktowe (Produkty Carbohort)</li><li><code>domyslne</code> – trzy kolumny list – bez wystąpień od 20.09.2026, zastąpiony wariantem „grupy”</li><li><code>waskie</code> – jedna lista (Programy i badania)</li><li><code>grupy</code> – pięć grup upraw na pełną szerokość kontenera (Rodzaje upraw, 20.09.2026): tytuł grupy z kreską 2 px, lista pozycji na szynie wyróżnień, a grupa Rolnicze rozbita na dwie karty sezonów – Ozime z ikoną „ti-snowflake” i Jare z ikoną „ti-sun”. Pozycja ze swoją stroną jest linkiem ze strzałką, pozostałe 28 to spany „cw-crop--soon”. Spec: 40-strona-www/koncepcja/menu-rodzaje-upraw-spec.md</li></ul>
 <span class="etk">Kod</span><p><code>cw.css (cw-mega)</code> · <code>chrome.js (szablon NAVBAR) + cw.js</code></p>
 <span class="etk">Uwagi</span><p class="mut">CE zagnieżdżony w CE-01; ukryty do otwarcia.</p>
 <a class="btn" href="v7/chrome.js">Wersja bazowa – chrome.js</a>
-<span class="etk">Występuje na</span><p>każda podstrona (chrome.js) – element wspólny, wstawiany do DOM przez <a href="v7/chrome.js"><code>chrome.js</code></a> (linia 143).</p>
+<span class="etk">Występuje na</span><p>każda podstrona (chrome.js) – element wspólny, wstawiany do DOM przez <a href="v7/chrome.js"><code>chrome.js</code></a> (linia 152).</p>
 </div>
-<div class="ce__shot"><a href="ce-indeks/img/CE-02.png"><img src="ce-indeks/img/CE-02.png" alt="Zrzut CE-02 – Mega-menu" loading="lazy"></a></div>
+<div class="ce__shot"><a href="ce-indeks/img/CE-02.png"><img src="ce-indeks/img/CE-02.png" alt="Zrzut CE-02 – Mega-menu" loading="lazy"></a><figure class="ce__war"><figcaption class="etk">Wariant: <code>grupy</code></figcaption><a href="ce-indeks/img/CE-02--wariant-grupy.png"><img src="ce-indeks/img/CE-02--wariant-grupy.png" alt="Zrzut CE-02 – wariant grupy" loading="lazy"></a></figure></div>
 </article>
 
 <article class="ce" id="CE-03">
 <div class="ce__info">
 <div class="ce__head"><span class="kod"><a href="#CE-03">CE-03</a></span><h3 class="ce__nazwa">Nawigacja mobilna</h3><span class="gr-et">Elementy wspólne serwisu (chrome.js)</span></div>
-<p>Panel nawigacji rozwijany pod paskiem nagłówka na wąskich ekranach: lista działów z pozycjami drugiego poziomu i CTA.</p>
-<span class="etk">Mechanika</span><p>Otwierany przyciskiem menu z nagłówka, z przyciemnieniem tła; pozycja bieżąca podświetlona (data-nav na obu poziomach). Obsługa w cw.js.</p>
-<span class="etk">Części</span><div class="chips"><span class="chip">lista działów</span><span class="chip">pozycje drugiego poziomu</span><span class="chip">CTA</span></div>
+<p>Panel nawigacji rozwijany pod paskiem nagłówka na wąskich ekranach: lista działów z CTA, a pod etykietą „Rodzaje upraw” pięć rozwijanych grup upraw z tą samą treścią i tymi samymi stanami pozycji co mega-menu (od 20.09.2026).</p>
+<span class="etk">Mechanika</span><p>Otwierany przyciskiem menu z nagłówka, z przyciemnieniem tła; pozycja bieżąca podświetlona (data-nav na obu poziomach). Grupy upraw to natywne znaczniki „details” ze wspólnym atrybutem „name”, więc otwarta zostaje jedna i działają bez JS; grupę bieżącej uprawy otwiera funkcja „markCurrent” z chrome.js. Reszta obsługi w cw.js.</p>
+<span class="etk">Części</span><div class="chips"><span class="chip">lista działów</span><span class="chip">etykieta działu upraw</span><span class="chip">pięć rozwijanych grup upraw</span><span class="chip">karty sezonów Ozime i Jare w grupie Rolnicze</span><span class="chip">CTA</span></div>
 <span class="etk">Kod</span><p><code>cw.css (cw-mobilenav)</code> · <code>chrome.js (szablon NAVBAR) + cw.js</code></p>
 <span class="etk">Uwagi</span><p class="mut">Widoczna tylko poniżej progu mobilnego.</p>
 <a class="btn" href="v7/chrome.js">Wersja bazowa – chrome.js</a>
-<span class="etk">Występuje na</span><p>każda podstrona (chrome.js) – element wspólny, wstawiany do DOM przez <a href="v7/chrome.js"><code>chrome.js</code></a> (linia 242).</p>
+<span class="etk">Występuje na</span><p>każda podstrona (chrome.js) – element wspólny, wstawiany do DOM przez <a href="v7/chrome.js"><code>chrome.js</code></a> (linia 296).</p>
 </div>
 <div class="ce__shot"><a href="ce-indeks/img/CE-03.png"><img src="ce-indeks/img/CE-03.png" alt="Zrzut CE-03 – Nawigacja mobilna" loading="lazy"></a></div>
 </article>
@@ -142,7 +142,7 @@
 <span class="etk">Części</span><div class="chips"><span class="chip">4 kolumny</span><span class="chip">pas dolny</span></div>
 <span class="etk">Kod</span><p><code>wireframe.css (wf-footer)</code> · <code>chrome.js (szablon FOOTER)</code></p>
 <a class="btn" href="v7/chrome.js">Wersja bazowa – chrome.js</a>
-<span class="etk">Występuje na</span><p>każda podstrona (chrome.js) – element wspólny, wstawiany do DOM przez <a href="v7/chrome.js"><code>chrome.js</code></a> (linia 259).</p>
+<span class="etk">Występuje na</span><p>każda podstrona (chrome.js) – element wspólny, wstawiany do DOM przez <a href="v7/chrome.js"><code>chrome.js</code></a> (linia 384).</p>
 </div>
 <div class="ce__shot"><a href="ce-indeks/img/CE-04.png"><img src="ce-indeks/img/CE-04.png" alt="Zrzut CE-04 – Stopka serwisu" loading="lazy"></a></div>
 </article>
@@ -156,7 +156,7 @@
 <span class="etk">Kod</span><p><code>cw.css (cw-jurek)</code> · <code>chrome.js (szablon DOCK) + cw.js + moduł 00 stron (updateDock)</code></p>
 <span class="etk">Uwagi</span><p class="mut">Element position: fixed – etykieta nakładki pojawia się, gdy dok jest widoczny.</p>
 <a class="btn" href="v7/chrome.js">Wersja bazowa – chrome.js</a>
-<span class="etk">Występuje na</span><p>każda podstrona (chrome.js) – element wspólny, wstawiany do DOM przez <a href="v7/chrome.js"><code>chrome.js</code></a> (linia 296).</p>
+<span class="etk">Występuje na</span><p>każda podstrona (chrome.js) – element wspólny, wstawiany do DOM przez <a href="v7/chrome.js"><code>chrome.js</code></a> (linia 421).</p>
 </div>
 <div class="ce__shot"><a href="ce-indeks/img/CE-05.png"><img src="ce-indeks/img/CE-05.png" alt="Zrzut CE-05 – Dok doradcy" loading="lazy"></a></div>
 </article>
@@ -170,7 +170,7 @@
 <span class="etk">Kod</span><p><code>chrome.js (STATUS_CSS)</code> · <code>chrome.js (renderStatus)</code></p>
 <span class="etk">Uwagi</span><p class="mut">Nakładka CE stoi tuż nad plakietką.</p>
 <a class="btn" href="v7/chrome.js">Wersja bazowa – chrome.js</a>
-<span class="etk">Występuje na</span><p>każda podstrona (chrome.js) – element wspólny, wstawiany do DOM przez <a href="v7/chrome.js"><code>chrome.js</code></a> (linia 409).</p>
+<span class="etk">Występuje na</span><p>każda podstrona (chrome.js) – element wspólny, wstawiany do DOM przez <a href="v7/chrome.js"><code>chrome.js</code></a> (linia 539).</p>
 </div>
 <div class="ce__shot"><a href="ce-indeks/img/CE-06.png"><img src="ce-indeks/img/CE-06.png" alt="Zrzut CE-06 – Plakietka stanu prac" loading="lazy"></a></div>
 </article>

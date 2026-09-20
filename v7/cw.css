@@ -72,7 +72,6 @@
 /* Wąski dropdown (np. „Programy i badania" – pojedyncze pozycje) */
 .cw-mega--narrow { width: auto; min-width: 14rem; }
 .cw-mega__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--w-space-8); align-items: stretch; }
-.cw-mega__grid--3 { grid-template-columns: 1.2fr 1fr 1fr; }
 .cw-mega__col { display: flex; flex-direction: column; }
 .cw-mega__foot {
   margin-top: var(--w-space-5); padding-top: var(--w-space-4);
@@ -123,8 +122,103 @@
 
 /* Wyraźny odstęp nagłówka kolumny od jej listy (obie mega-menu). */
 .cw-mega__list { display: flex; flex-direction: column; gap: var(--w-space-2); margin-top: var(--w-space-4); }
-/* CTA kolumny („Wszystkie uprawy") wyrównany do dołu kolumny, jak przycisk. */
-.cw-mega__col > .wf-btn { margin-top: auto; align-self: flex-start; }
+
+/* =====================================================================
+   Mega „Rodzaje upraw" – wariant „grupy" (CE-02, 20.09.2026).
+   Spec: 40-strona-www/koncepcja/menu-rodzaje-upraw-spec.md
+
+   Pięć grup obok siebie; Rolnicze rozbite na dwie karty sezonów, bo to
+   jedyny podział, którego nie da się odczytać z samych nazw roślin.
+   Trzy kanały, każdy niesie DOKŁADNIE jedną informację – stąd czytelność
+   bez koloru:
+     · gruba kreska pod tytułem  → granica grupy,
+     · szyna z lewej + waga 600  → pozycja wyróżniona,
+     · ton tekstu + strzałka     → pozycja ma już swoją stronę.
+   Listy (.cw-crops__list, .cw-crop) są wspólne z nawigacją mobilną –
+   różnice mobilne siedzą niżej, w sekcji nawigacji mobilnej.
+   Skala szarości i wyłącznie tokeny kitu.
+   ===================================================================== */
+.cw-mega--crops {
+  max-height: calc(100dvh - 7rem);
+  overflow-y: auto; overscroll-behavior: contain;
+}
+
+/* 981–1199 px: dwa rzędy po trzy równe tory (Rolnicze zajmuje dwa).
+   Od 1200 px jeden rząd pięciu torów. Rolnicze trzyma udział 2,35fr ze spec
+   (mieści dwie karty), a pozostałe 4fr są rozdane wedle długości nazw, nie po
+   równo: „Borówka amerykańska" potrzebuje 188 px, „Kapustne" 77 px – przy
+   czterech równych torach najdłuższa nazwa nie mieści się w jednej linii na
+   oknie 1200 px. Suma torów to wciąż 6,35fr. Kolejność w DOM = kolejność
+   dokumentu klienta, nigdzie order. */
+.cw-crops {
+  display: grid; align-items: start;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--w-space-8) var(--w-space-6);
+}
+.cw-crops__group--split { grid-column: span 2; }
+@media (min-width: 1200px) {
+  .cw-crops {
+    grid-template-columns:
+      minmax(0, 1.3fr) minmax(0, 1.1fr) minmax(0, 0.7fr)
+      minmax(0, 2.35fr) minmax(0, 0.9fr);
+  }
+  .cw-crops__group--split { grid-column: auto; }
+}
+
+/* Tytuł grupy – tekst, nie link (strony segmentów są poza tą zmianą).
+   Kreska 2 px w tonie tekstu to główna kotwica rozdzielająca grupy. */
+.cw-crops__title {
+  display: block; font-size: 1rem; line-height: 1.35;
+  font-weight: var(--w-weight-semibold); color: var(--w-text-primary);
+  padding-bottom: var(--w-space-3); margin-bottom: var(--w-space-4);
+  border-bottom: 2px solid var(--w-text-primary);
+}
+
+/* Szyna wyróżnień: pionowa linia biegnie przy liście, a każdy element
+   przykrywa swój odcinek przezroczystym obrysem. Wyróżniony zaciemnia go. */
+.cw-crops__list { display: flex; flex-direction: column; border-left: 2px solid var(--w-border-subtle); }
+.cw-crops__list > li { margin-left: -2px; border-left: 2px solid transparent; padding-left: var(--w-space-3); }
+.cw-crops__list > li.is-featured { border-left-color: var(--w-text-primary); }
+
+.cw-crop {
+  display: flex; align-items: center; gap: var(--w-space-1);
+  padding: 5px 0; font-size: var(--w-font-sm-size); line-height: 1.35;
+  color: var(--w-text-primary); text-decoration: none; white-space: nowrap;
+}
+.cw-crops__list > li.is-featured .cw-crop { font-weight: var(--w-weight-semibold); }
+/* Bez strony: sam ton, żadnej reakcji na kursor – to nie jest cel kliknięcia. */
+.cw-crop--soon { color: var(--w-text-tertiary); cursor: default; }
+.cw-crop__go { color: var(--w-icon-muted); transition: transform var(--w-duration-base) var(--w-ease); }
+a.cw-crop:hover { text-decoration: underline; text-underline-offset: 2px; }
+a.cw-crop:hover .cw-crop__go { color: var(--w-text-primary); transform: translateX(2px); }
+a.cw-crop[aria-current="page"] { text-decoration: underline; text-underline-offset: 2px; }
+a.cw-crop:focus-visible {
+  outline: var(--w-focus-ring-width) solid var(--w-focus-ring);
+  outline-offset: var(--w-focus-ring-offset); border-radius: var(--w-radius-xs);
+}
+
+/* Ozime / Jare – dwie osobne karty, nie dwie listy pod wspólnym tytułem.
+   Obrys + wypełnienie + ikona w kole dają cztery krawędzie rozdzielające
+   sezony; sama etykieta tekstowa się zlewała (uwaga Mateusza z 20.09). */
+.cw-crops__split {
+  display: grid; align-items: start;          /* karta kończy się na swojej treści */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--w-space-3);
+}
+.cw-crops__season {
+  background: var(--w-surface-subtle); border: 1px solid var(--w-border-default);
+  border-radius: var(--w-radius-md); padding: var(--w-space-4) var(--w-space-3);
+}
+.cw-crops__season-head { display: flex; align-items: center; gap: var(--w-space-2); margin-bottom: var(--w-space-3); }
+.cw-crops__season-icon {
+  display: inline-grid; place-items: center; flex: none; width: 28px; height: 28px;
+  border-radius: var(--w-radius-circle); background: var(--w-surface-raised);
+  border: 1px solid var(--w-border-default); color: var(--w-icon-default);
+}
+.cw-crops__season-name {
+  font-size: var(--w-font-caption-size); font-weight: var(--w-weight-semibold);
+  letter-spacing: var(--w-tracking-wide); text-transform: uppercase;
+  color: var(--w-text-primary);
+}
 
 /* Page scrim shown while a mega/dock is open (dim + click-to-close). */
 .cw-scrim {
@@ -142,10 +236,37 @@
 }
 .cw-mobilenav[data-open="true"] { display: block; }
 .cw-mobilenav .wf-navitem { font-size: var(--w-font-body-size); }
-/* Drugi poziom w nawigacji mobilnej: konkretne uprawy pod „Rodzaje upraw".
-   Mega-menu ma na to osobną kolumnę, na mobile hierarchię niesie wcięcie. */
+/* Drugi poziom w nawigacji mobilnej: nazwy grup upraw pod „Rodzaje upraw".
+   Mega-menu ma na to osobne kolumny, na mobile hierarchię niesie wcięcie. */
 .cw-mobilenav__sub { padding-left: var(--w-space-8); font-size: var(--w-font-sm-size);
   color: var(--w-text-secondary); }
+
+/* --- Grupy upraw w nawigacji mobilnej (CE-03, 20.09.2026) ---------------
+   Ta sama treść i te same stany pozycji co w mega-menu, tyle że pięć grup
+   siedzi w natywnych <details> (dotyk bez JS; wspólny name = otwarta jedna).
+   Spec: 40-strona-www/koncepcja/menu-rodzaje-upraw-spec.md                */
+/* „Rodzaje upraw" przestało być linkiem do huba – zostaje etykietą działu. */
+.cw-mobilenav__label { color: var(--w-text-primary); font-weight: var(--w-weight-semibold); cursor: default; }
+.cw-mobilenav__label:hover { background: none; }
+/* Nazwa grupy jest ciemniejsza od pozycji działów, ale NIE grubsza od etykiety
+   „Rodzaje upraw" – hierarchia idzie tonem, nie trzema wagami naraz. */
+.cw-mobilenav__group > summary {
+  justify-content: space-between; min-height: var(--w-tap-min); cursor: pointer;
+  color: var(--w-text-primary);
+  list-style: none;                       /* znacznik domyślny out, mamy szewron */
+}
+.cw-mobilenav__group > summary::-webkit-details-marker { display: none; }
+.cw-mobilenav__chev { color: var(--w-icon-muted); transition: transform var(--w-duration-base) var(--w-ease); }
+.cw-mobilenav__group[open] > summary .cw-mobilenav__chev { transform: rotate(180deg); }
+/* Szyna listy staje pod początkiem nazwy grupy – widać, że to jej zawartość.
+   Panel nawigacji jest na całą szerokość okna (padding: … 0), więc prawy
+   margines dokładamy tu; bez niego obrys karty sezonu siada na krawędzi. */
+.cw-mobilenav__group > .cw-crops__list,
+.cw-mobilenav__group > .cw-crops__split {
+  margin: var(--w-space-1) var(--w-space-6) var(--w-space-3) var(--w-space-8);
+}
+.cw-mobilenav .cw-crops__split { grid-template-columns: minmax(0, 1fr); gap: var(--w-space-2); }
+.cw-mobilenav .cw-crop { min-height: 40px; padding-block: var(--w-space-2); }
 
 /* --- dr Jurek — floating dock (this genuinely floats → shadow allowed) --- */
 .cw-jurek-backdrop {

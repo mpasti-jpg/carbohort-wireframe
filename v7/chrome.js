@@ -29,6 +29,13 @@
      wyniesieniem chrome do tego pliku.
    - Sprite to suma ikon używanych w całym serwisie. Dokładanie ikony na
      jednej podstronie nie wymaga ruszania pozostałych.
+   - Mega-menu „Rodzaje upraw" (#mega-uprawy, wariant CE-02 „grupy", 20.09.2026)
+     to pięć grup i 31 pozycji z listy klienta: tytuły grup są tekstem, nie
+     linkiem, a stronę mają tylko Borówka amerykańska, Kukurydza i Ziemniak –
+     reszta to <span class="cw-crop--soon">. Poniżej 980 px ta sama treść wraca
+     w #mobilenav jako pięć <details>. Obie listy muszą zostać identyczne;
+     pilnuje tego regresja _narzedzia/qa-menu.py. Spec:
+     40-strona-www/koncepcja/menu-rodzaje-upraw-spec.md.
 
    data-ce attributes mark content elements (CE) of the site: the registry
    of codes and names lives in ../ce-rejestr.js, the highlighting overlay
@@ -120,7 +127,9 @@
   <path d="M15 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
   <path d="M17 17h-11v-14h-2" />
   <path d="M6 5l14 1l-1 7h-13" /></symbol>
+  <symbol id="ti-snowflake" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M10 4l2 1l2 -1" /><path d="M12 2v6.5l3 1.72" /><path d="M17.928 6.268l.134 2.232l1.866 1.232" /><path d="M20.66 7l-5.629 3.25l.01 3.458" /><path d="M19.928 14.268l-1.866 1.232l-.134 2.232" /><path d="M20.66 17l-5.629 -3.25l-2.99 1.738" /><path d="M14 20l-2 -1l-2 1" /><path d="M12 22v-6.5l-3 -1.72" /><path d="M6.072 17.732l-.134 -2.232l-1.866 -1.232" /><path d="M3.34 17l5.629 -3.25l-.01 -3.458" /><path d="M4.072 9.732l1.866 -1.232l.134 -2.232" /><path d="M3.34 7l5.629 3.25l2.99 -1.738" /></symbol>
   <symbol id="ti-stack-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4l-8 4l8 4l8 -4l-8 -4" /><path d="M4 12l8 4l8 -4" /><path d="M4 16l8 4l8 -4" /></symbol>
+  <symbol id="ti-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" /></symbol>
   <symbol id="ti-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7l16 0" />
   <path d="M10 11l0 6" />
   <path d="M14 11l0 6" />
@@ -183,34 +192,79 @@
       </div>
       <div class="cw-haspopup">
         <button class="cw-nav-trigger" data-mega-trigger aria-haspopup="true" aria-expanded="false" aria-controls="mega-uprawy">Rodzaje upraw <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button>
-        <div class="cw-mega" id="mega-uprawy" data-ce="CE-02" data-ce-wariant="domyslne" data-open="false" role="region" aria-label="Rodzaje upraw">
-          <div class="cw-mega__grid cw-mega__grid--3">
-            <div class="cw-mega__col">
-              <span class="wf-overline wf-t-tertiary">Uprawy profesjonalne</span>
-              <div class="cw-mega__list">
-                <a class="wf-link--quiet wf-small" href="sadownicze.html">Sadownicze</a>
-                <a class="wf-link--quiet wf-small" href="jagodowe.html">Jagodowe</a>
-                <a class="wf-link--quiet wf-small" href="warzywnicze.html">Warzywnicze</a>
-                <a class="wf-link--quiet wf-small" href="zboza.html">Zboża, rzepak, kukurydza</a>
-                <a class="wf-link--quiet wf-small" href="szkolki.html">Szkółki</a>
+        <div class="cw-mega cw-mega--wide cw-mega--crops" id="mega-uprawy" data-ce="CE-02" data-ce-wariant="grupy" data-open="false" role="region" aria-label="Rodzaje upraw">
+          <div class="cw-crops">
+            <div class="cw-crops__group">
+              <span class="cw-crops__title">Jagodowe</span>
+              <ul class="cw-crops__list">
+                <li class="is-featured"><a class="cw-crop" data-nav="borowka" data-nav-parent="uprawy" href="borowka.html">Borówka amerykańska<svg class="wf-icon wf-icon--sm cw-crop__go" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></li>
+                <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Malina</span></li>
+                <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Truskawka</span></li>
+                <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Porzeczka</span></li>
+                <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Aronia</span></li>
+                <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Winogrono</span></li>
+              </ul>
+            </div>
+            <div class="cw-crops__group">
+              <span class="cw-crops__title">Sadownicze</span>
+              <ul class="cw-crops__list">
+                <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Jabłoń</span></li>
+                <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Grusza</span></li>
+                <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Czereśnia</span></li>
+                <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Wiśnia</span></li>
+                <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Morela / Brzoskwinia</span></li>
+              </ul>
+            </div>
+            <div class="cw-crops__group">
+              <span class="cw-crops__title">Warzywnicze</span>
+              <ul class="cw-crops__list">
+                <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Papryka</span></li>
+                <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Ogórek</span></li>
+                <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Pomidor</span></li>
+                <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Kapustne</span></li>
+              </ul>
+            </div>
+            <div class="cw-crops__group cw-crops__group--split">
+              <span class="cw-crops__title">Rolnicze</span>
+              <div class="cw-crops__split">
+                <div class="cw-crops__season">
+                  <div class="cw-crops__season-head">
+                    <span class="cw-crops__season-icon"><svg class="wf-icon" aria-hidden="true"><use href="#ti-snowflake"></use></svg></span>
+                    <span class="cw-crops__season-name">Ozime</span>
+                  </div>
+                  <ul class="cw-crops__list">
+                    <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Rzepak ozimy</span></li>
+                    <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Pszenica ozima</span></li>
+                    <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Pszenżyto ozime</span></li>
+                    <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Jęczmień ozimy</span></li>
+                    <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Żyto</span></li>
+                  </ul>
+                </div>
+                <div class="cw-crops__season">
+                  <div class="cw-crops__season-head">
+                    <span class="cw-crops__season-icon"><svg class="wf-icon" aria-hidden="true"><use href="#ti-sun"></use></svg></span>
+                    <span class="cw-crops__season-name">Jare</span>
+                  </div>
+                  <ul class="cw-crops__list">
+                    <li class="is-featured"><a class="cw-crop" data-nav="kukurydza" data-nav-parent="uprawy" href="kukurydza.html">Kukurydza<svg class="wf-icon wf-icon--sm cw-crop__go" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></li>
+                    <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Słonecznik</span></li>
+                    <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Soja</span></li>
+                    <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Burak cukrowy</span></li>
+                    <li class="is-featured"><a class="cw-crop" data-nav="ziemniak" data-nav-parent="uprawy" href="ziemniak.html">Ziemniak<svg class="wf-icon wf-icon--sm cw-crop__go" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></li>
+                    <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Jęczmień jary</span></li>
+                    <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Owies</span></li>
+                  </ul>
+                </div>
               </div>
             </div>
-            <div class="cw-mega__col">
-              <span class="wf-overline wf-t-tertiary">Wybrane uprawy</span>
-              <div class="cw-mega__list">
-                <a class="wf-link--quiet wf-small" href="ziemniak.html">Ziemniak</a>
-                <a class="wf-link--quiet wf-small" href="kukurydza.html">Kukurydza</a>
-                <a class="wf-link--quiet wf-small" href="borowka.html">Borówka</a>
-              </div>
-            </div>
-            <div class="cw-mega__col">
-              <span class="wf-overline wf-t-tertiary">Ogród i działka</span>
-              <div class="cw-mega__list">
-                <a class="wf-link--quiet wf-small" href="trawnik.html">Trawnik</a>
-                <a class="wf-link--quiet wf-small" href="ogrod.html">Ogród / działka</a>
-                <a class="wf-link--quiet wf-small" href="krzewy.html">Krzewy i tuje</a>
-              </div>
-              <a class="wf-btn wf-btn--secondary wf-btn--sm" href="uprawy.html">Wszystkie uprawy</a>
+            <div class="cw-crops__group">
+              <span class="cw-crops__title">Rośliny ozdobne</span>
+              <ul class="cw-crops__list">
+                <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Trawnik</span></li>
+                <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Liściaste</span></li>
+                <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Iglaste</span></li>
+                <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Kwasolubne</span></li>
+              </ul>
             </div>
           </div>
           <div class="cw-mega__foot">
@@ -241,10 +295,81 @@
   </div>
   <nav class="cw-mobilenav wf-container" id="mobilenav" data-ce="CE-03" data-open="false" aria-label="Menu mobilne">
     <a class="wf-navitem" data-nav="produkty" href="produkty.html">Produkty Carbohort</a>
-    <a class="wf-navitem" data-nav="uprawy" href="uprawy.html">Rodzaje upraw</a>
-    <a class="wf-navitem cw-mobilenav__sub" data-nav="ziemniak" data-nav-parent="uprawy" href="ziemniak.html">Ziemniak</a>
-    <a class="wf-navitem cw-mobilenav__sub" data-nav="kukurydza" data-nav-parent="uprawy" href="kukurydza.html">Kukurydza</a>
-    <a class="wf-navitem cw-mobilenav__sub" data-nav="borowka" data-nav-parent="uprawy" href="borowka.html">Borówka</a>
+    <p class="wf-navitem cw-mobilenav__label" data-nav="uprawy">Rodzaje upraw</p>
+    <!-- Ta sama treść co w #mega-uprawy: pięć grup, 31 pozycji, te same stany.
+         Obie listy trzyma w zgodzie regresja _narzedzia/qa-menu.py. -->
+    <details class="cw-mobilenav__group" name="cw-uprawy">
+      <summary class="wf-navitem cw-mobilenav__sub">Jagodowe<svg class="wf-icon wf-icon--sm cw-mobilenav__chev" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+      <ul class="cw-crops__list">
+        <li class="is-featured"><a class="cw-crop" data-nav="borowka" data-nav-parent="uprawy" href="borowka.html">Borówka amerykańska<svg class="wf-icon wf-icon--sm cw-crop__go" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></li>
+        <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Malina</span></li>
+        <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Truskawka</span></li>
+        <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Porzeczka</span></li>
+        <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Aronia</span></li>
+        <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Winogrono</span></li>
+      </ul>
+    </details>
+    <details class="cw-mobilenav__group" name="cw-uprawy">
+      <summary class="wf-navitem cw-mobilenav__sub">Sadownicze<svg class="wf-icon wf-icon--sm cw-mobilenav__chev" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+      <ul class="cw-crops__list">
+        <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Jabłoń</span></li>
+        <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Grusza</span></li>
+        <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Czereśnia</span></li>
+        <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Wiśnia</span></li>
+        <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Morela / Brzoskwinia</span></li>
+      </ul>
+    </details>
+    <details class="cw-mobilenav__group" name="cw-uprawy">
+      <summary class="wf-navitem cw-mobilenav__sub">Warzywnicze<svg class="wf-icon wf-icon--sm cw-mobilenav__chev" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+      <ul class="cw-crops__list">
+        <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Papryka</span></li>
+        <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Ogórek</span></li>
+        <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Pomidor</span></li>
+        <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Kapustne</span></li>
+      </ul>
+    </details>
+    <details class="cw-mobilenav__group" name="cw-uprawy">
+      <summary class="wf-navitem cw-mobilenav__sub">Rolnicze<svg class="wf-icon wf-icon--sm cw-mobilenav__chev" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+      <div class="cw-crops__split">
+        <div class="cw-crops__season">
+          <div class="cw-crops__season-head">
+            <span class="cw-crops__season-icon"><svg class="wf-icon" aria-hidden="true"><use href="#ti-snowflake"></use></svg></span>
+            <span class="cw-crops__season-name">Ozime</span>
+          </div>
+          <ul class="cw-crops__list">
+            <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Rzepak ozimy</span></li>
+            <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Pszenica ozima</span></li>
+            <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Pszenżyto ozime</span></li>
+            <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Jęczmień ozimy</span></li>
+            <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Żyto</span></li>
+          </ul>
+        </div>
+        <div class="cw-crops__season">
+          <div class="cw-crops__season-head">
+            <span class="cw-crops__season-icon"><svg class="wf-icon" aria-hidden="true"><use href="#ti-sun"></use></svg></span>
+            <span class="cw-crops__season-name">Jare</span>
+          </div>
+          <ul class="cw-crops__list">
+            <li class="is-featured"><a class="cw-crop" data-nav="kukurydza" data-nav-parent="uprawy" href="kukurydza.html">Kukurydza<svg class="wf-icon wf-icon--sm cw-crop__go" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></li>
+            <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Słonecznik</span></li>
+            <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Soja</span></li>
+            <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Burak cukrowy</span></li>
+            <li class="is-featured"><a class="cw-crop" data-nav="ziemniak" data-nav-parent="uprawy" href="ziemniak.html">Ziemniak<svg class="wf-icon wf-icon--sm cw-crop__go" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></li>
+            <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Jęczmień jary</span></li>
+            <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Owies</span></li>
+          </ul>
+        </div>
+      </div>
+    </details>
+    <details class="cw-mobilenav__group" name="cw-uprawy">
+      <summary class="wf-navitem cw-mobilenav__sub">Rośliny ozdobne<svg class="wf-icon wf-icon--sm cw-mobilenav__chev" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+      <ul class="cw-crops__list">
+        <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Trawnik</span></li>
+        <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Liściaste</span></li>
+        <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Iglaste</span></li>
+        <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Kwasolubne</span></li>
+      </ul>
+    </details>
     <a class="wf-navitem" data-nav="prochnica-plus" href="prochnica-plus.html">Programy i badania</a>
     <a class="wf-navitem" data-nav="centrum-wiedzy" href="centrum-wiedzy.html">Centrum wiedzy</a>
     <a class="wf-navitem" data-nav="o-firmie" href="o-firmie.html">O nas</a>
@@ -321,6 +446,11 @@
     Array.prototype.forEach.call(els, function (el) {
       el.setAttribute("aria-current", "page");
       if (el.classList.contains("wf-navitem")) el.className += " wf-w-semibold";
+      /* Pozycja siedząca w rozwijanej grupie (uprawy w nawigacji mobilnej) ma
+         być widoczna od razu, bez rozwijania grupy ręką – otwieramy jej
+         <details>. Grupy mają wspólny atrybut name, więc otwarta zostaje jedna. */
+      var det = el.closest && el.closest("details");
+      if (det) det.open = true;
     });
     var el = els[0];
     /* Pozycja drugiego poziomu podświetla też swojego rodzica, żeby nie zgubić
