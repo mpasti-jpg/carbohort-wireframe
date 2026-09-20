@@ -1,0 +1,211 @@
+/* ===== CE-74 · Taby potrzeb z kartami produktów (rejestr: ce-rejestr.js) ==================================
+   Prefix: c5-nt. New block of the shared layer, built for the home page.
+
+   A segmented switch of three needs and one panel each: grid 4 / 8 – on the
+   left the need title, a chip, the description and a 4:3 frame from the field,
+   on the right three product cards in a row (the third tab: one wide card).
+   Card = a 4:5 packshot field on grey with a floor line, name, chips, one
+   sentence, links. Every panel stays in the DOM; without JS (no .c5h-js on
+   <html>) they stand one under another.
+
+   Pattern rules: grey scale and --w-* / --c5- tokens, sharp corners, no
+   gradients, no shadows on cards. The block lives in the shared layer, so a
+   change here shows on every page that links it. A change wanted in one place
+   only is a new variant or a new CE with the next number, never an edit of the
+   shared rules. Comments in English, never the em dash.
+
+   Registry: the entry of this block lives in ce-rejestr.js (typographic quotes
+   only in its texts).
+   ===================================================================== */
+
+/* The root of the block is the section, so it only carries the knobs; the
+   switch, the panels and the row of links stand in `__body`, which takes the
+   shared head gap from `.c5h-head + *`. */
+.c5-nt{
+  --c5-nt-floor:82%;        /* where the floor line crosses the packshot field */
+  --c5-nt-rise:24px;        /* how far a packshot rises when its panel enters */
+}
+.c5-nt__body{display:flex;flex-direction:column;gap:clamp(2rem,4vw,3.25rem);}
+
+/* ===== The segmented switch ============================================
+   Three positions, each a label with the kind of product under it. The marker
+   is one absolutely placed rectangle moved by JS (transform + size), and the
+   labels sit above it in `difference`, so the white title and the grey caption
+   invert exactly under the marker and never need a colour of their own while
+   it travels. Without JS the switch is not shown at all: the panels then stand
+   one under another and each carries its own heading. */
+.c5-nt__seg{display:none;position:relative;width:fit-content;max-width:100%;
+  grid-auto-flow:column;padding:4px;
+  background:var(--w-surface-page);border:1px solid var(--w-border-default);}
+.c5h-js .c5-nt__seg{display:grid;}
+.c5-nt__thumb{position:absolute;left:0;top:0;width:0;height:0;
+  background:var(--w-gray-900);pointer-events:none;
+  transition:transform .5s var(--w-ease),width .5s var(--w-ease),height .5s var(--w-ease);}
+.c5-nt__tab{display:flex;flex-direction:column;align-items:flex-start;gap:5px;
+  padding:12px clamp(1rem,2vw,1.75rem);font:inherit;text-align:left;
+  background:none;border:0;border-radius:0;cursor:pointer;}
+.c5-nt__tab:focus-visible{outline:2px solid var(--w-gray-900);outline-offset:3px;}
+.c5-nt__tab[aria-selected="true"]{cursor:default;}
+.c5-nt__tab[aria-selected="false"]:hover{background:var(--w-surface-hover);}
+.c5-nt__lbl,.c5-nt__sub{position:relative;mix-blend-mode:difference;
+  white-space:nowrap;}
+.c5-nt__lbl{color:#fff;font-size:1rem;font-weight:var(--w-weight-medium);
+  letter-spacing:-0.01em;line-height:1.2;}
+.c5-nt__sub{color:#b0b0b0;font-size:0.75rem;line-height:1.2;letter-spacing:.04em;}
+/* before the script measures the marker, the chosen tab carries its own fill */
+.c5-nt__seg:not([data-ready]) .c5-nt__tab[aria-selected="true"]{background:var(--w-gray-900);}
+
+/* ===== Panels ==========================================================
+   The chosen panel stays in the flow; the one leaving lies over it for the
+   length of the swap. `flow-root` keeps the margins of the panel inside the
+   wrapper, so the leaving (absolute) panel cannot drop by their height. */
+.c5-nt__panels{position:relative;display:flow-root;}
+.c5h-js .c5-nt__panel:not([data-on]):not([data-leaving]){display:none;}
+.c5-nt__panel[data-leaving]{position:absolute;top:0;left:0;right:0;pointer-events:none;}
+.c5-nt__panel + .c5-nt__panel{margin-top:clamp(3rem,6vw,5rem);}
+.c5h-js .c5-nt__panel + .c5-nt__panel{margin-top:0;}
+.c5-nt__panel:focus-visible{outline:2px solid var(--w-gray-900);outline-offset:8px;}
+
+.c5-nt__grid{display:grid;gap:clamp(1.75rem,3.5vw,2.5rem);}
+.c5-nt__side{display:flex;flex-direction:column;gap:var(--w-space-4);min-width:0;}
+.c5-nt__h{margin:0;font-size:clamp(1.25rem,1.6vw,1.75rem);line-height:1.2;
+  font-weight:var(--w-weight-medium);letter-spacing:-0.015em;}
+.c5-nt__desc{margin:0;font-size:0.9375rem;line-height:1.55;
+  color:var(--w-text-secondary);}
+/* the frame from the field; the page fills it with its own placeholder
+   dialect (c5-ph + data-ph) until a real photograph arrives */
+.c5-nt__field{width:100%;aspect-ratio:4 / 3;}
+
+/* ===== Product card ====================================================
+   A 4:5 field of light grey with a hairline floor at 82 % of its height; the
+   packshot stands on that line (contain, aligned to the bottom). Everything
+   under the field grows downwards and the links are pinned to the bottom edge,
+   so the three cards of a row end on one line. */
+.c5-nt__cards{display:grid;grid-template-columns:minmax(0,1fr);
+  gap:clamp(1.25rem,2.2vw,1.75rem);align-items:stretch;}
+.c5-nt__card{display:flex;flex-direction:column;gap:var(--w-space-3);height:100%;
+  min-width:0;}
+.c5-nt__shot{position:relative;aspect-ratio:4 / 5;background:var(--w-gray-100);
+  overflow:hidden;}
+.c5-nt__floor{position:absolute;left:8%;right:8%;top:var(--c5-nt-floor);
+  height:1px;background:var(--w-border-strong);}
+/* An absolutely placed replaced element keeps its intrinsic size when the
+   width is auto, so the box is given a width and a height outright: its bottom
+   edge lands exactly on the floor line and `contain` stands the pack on it. */
+.c5-nt__img{position:absolute;left:20%;top:19%;width:60%;
+  height:calc(var(--c5-nt-floor) - 19%);
+  object-fit:contain;object-position:center bottom;}
+.c5-nt__name{margin:0;font-size:1rem;font-weight:var(--w-weight-semibold);
+  letter-spacing:.01em;line-height:1.25;color:var(--w-text-primary);}
+.c5-nt__chips{display:flex;flex-wrap:wrap;gap:6px;}
+.c5-nt__chips .c5-chip{padding:3px 9px;font-size:0.6875rem;}
+/* a restriction is a state, so it takes a stroke style, never a colour */
+.c5-nt__chips .c5-chip--dashed{border-color:var(--w-gray-900);color:var(--w-text-primary);}
+.c5-nt__s{margin:0;font-size:0.875rem;line-height:1.5;color:var(--w-text-secondary);}
+.c5-nt__acts{display:flex;flex-direction:column;align-items:flex-start;gap:8px;
+  margin-top:auto;padding-top:var(--w-space-3);
+  border-top:1px solid var(--w-border-subtle);}
+.c5-nt__more{display:inline-flex;align-items:center;gap:8px;min-height:24px;
+  font-size:0.875rem;font-weight:var(--w-weight-medium);color:var(--w-text-primary);
+  text-decoration:underline;text-underline-offset:4px;}
+.c5-nt__more .wf-icon{transition:transform var(--w-duration-base) var(--w-ease);}
+.c5-nt__more:hover .wf-icon{transform:translateX(4px);}
+.c5-nt__buy{font-size:0.8125rem;color:var(--w-text-tertiary);
+  text-decoration:underline;text-underline-offset:3px;}
+.c5-nt__buy:hover{color:var(--w-text-primary);}
+
+/* ===== The wide card (one product fills the row) =======================
+   It always takes the whole row of cards, whatever number of tracks the row
+   has at this width. */
+.c5-nt__wide{grid-column:1 / -1;display:grid;grid-template-columns:minmax(0,1fr);
+  gap:clamp(1.25rem,2.4vw,2rem);align-items:center;}
+.c5-nt__wshot{position:relative;aspect-ratio:16 / 10;background:var(--w-gray-100);
+  overflow:hidden;}
+.c5-nt__wshot .c5-nt__img{left:8%;width:84%;top:16%;height:calc(var(--c5-nt-floor) - 16%);}
+.c5-nt__wbody{display:flex;flex-direction:column;gap:var(--w-space-3);min-width:0;}
+.c5-nt__facts{display:flex;flex-direction:column;margin:var(--w-space-2) 0 0;
+  padding:0;list-style:none;font-size:0.875rem;line-height:1.5;
+  color:var(--w-text-secondary);border-top:1px solid var(--w-border-subtle);}
+.c5-nt__facts li{padding:10px 0;border-bottom:1px solid var(--w-border-subtle);}
+.c5-nt__wbody .c5-btnrow{margin-top:var(--w-space-3);}
+
+/* ===== Row of links under the tabs ===================================== */
+.c5-nt__links{display:flex;flex-wrap:wrap;align-items:center;
+  gap:var(--w-space-4) clamp(1.25rem,2.5vw,2.25rem);
+  padding-top:clamp(1.5rem,3vw,2.25rem);border-top:1px solid var(--w-border-subtle);}
+.c5-nt__link{display:inline-flex;align-items:center;gap:8px;min-height:44px;
+  font-size:0.9375rem;font-weight:var(--w-weight-medium);color:var(--w-text-primary);
+  text-decoration:underline;text-underline-offset:4px;}
+.c5-nt__link .wf-icon{transition:transform var(--w-duration-base) var(--w-ease);}
+.c5-nt__link:hover .wf-icon{transform:translateX(4px);}
+
+/* ===== Widths ==========================================================
+   From 1200 px the panel is the 4 / 8 grid of the spec and three cards stand
+   in a row. Between 900 and 1199 the left column would leave the cards about
+   250 px each, so the description moves above them as a wide strip and the
+   cards keep the full width. Below 900 px everything is one column, the
+   packshot field gets shorter (16:10) and the frame from the field closes the
+   panel. */
+@media (min-width:900px){
+  .c5-nt__cards{grid-template-columns:repeat(3,minmax(0,1fr));}
+  .c5-nt__wide{grid-template-columns:minmax(0,5fr) minmax(0,7fr);}
+  .c5-nt__wshot{aspect-ratio:4 / 3;}
+}
+@media (min-width:900px) and (max-width:1199px){
+  .c5-nt__grid{grid-template-columns:minmax(0,1fr);}
+  /* the need reads as a strip: heading and description on the left, the frame
+     from the field beside them, and the cards keep the whole width below */
+  /* `auto 1fr`: the tall frame spans both rows, and without an explicit track
+     list the spare height would be split between them and push the
+     description away from its heading */
+  .c5-nt__side{display:grid;grid-template-columns:minmax(0,1fr) 34%;
+    grid-template-rows:auto 1fr;
+    column-gap:40px;row-gap:var(--w-space-3);align-items:start;}
+  .c5-nt__h{grid-column:1;grid-row:1;}
+  .c5-nt__desc{grid-column:1;grid-row:2;}
+  .c5-nt__field{grid-column:2;grid-row:1 / span 2;}
+}
+@media (min-width:1200px){
+  .c5-nt__grid{grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:40px;
+    align-items:stretch;}
+  /* The frame follows the description at one step of air and then GROWS to the
+     bottom edge of the row of cards. `flex:1 1 auto` keeps the 4:3 ratio as
+     the smallest it may be (the flex base size comes from the ratio) and lets
+     the free space of the column stretch it further, so the column never ends
+     with a gap between the copy and the picture. */
+  .c5-nt__field{margin-top:var(--w-space-4);flex:1 1 auto;}
+}
+@media (max-width:899px){
+  /* Touch targets: 44 px of height for every link of a card and of the row
+     under the tabs. Done with padding and a minimum height, so the type scale
+     of the block does not move. */
+  .c5-nt__more,.c5-nt__buy{display:inline-flex;align-items:center;min-height:44px;}
+  .c5-nt__acts{gap:0;}
+  .c5-nt__shot{aspect-ratio:16 / 10;}
+  .c5-nt__shot .c5-nt__img{left:30%;width:40%;top:14%;height:calc(var(--c5-nt-floor) - 14%);}
+  /* one column: heading, description, cards, then the frame from the field.
+     `display:contents` lets the frame leave the side column, so the grid gap
+     drops to one step and the two blocks that need air take a margin. */
+  .c5-nt__grid{display:flex;flex-direction:column;gap:var(--w-space-4);}
+  .c5-nt__side{display:contents;}
+  .c5-nt__cards{order:1;margin-top:var(--w-space-4);gap:clamp(1.75rem,6vw,2.5rem);}
+  .c5-nt__field{order:2;margin-top:var(--w-space-4);}
+  .c5-nt__seg{width:100%;grid-auto-flow:row;grid-template-columns:repeat(3,minmax(0,1fr));}
+  .c5-nt__tab{padding:10px 7px;gap:3px;}
+  .c5-nt__lbl{font-size:0.75rem;letter-spacing:-0.005em;white-space:normal;}
+  .c5-nt__sub{font-size:0.625rem;letter-spacing:.02em;white-space:normal;}
+  .c5-nt__links{flex-direction:column;align-items:stretch;gap:var(--w-space-2);}
+  .c5-nt__links .c5-btn{width:100%;}
+}
+
+/* Forced colours (Windows high contrast): `difference` would put white on
+   white, so the labels take the system colours and the marker the highlight. */
+@media (forced-colors:active){
+  .c5-nt__lbl,.c5-nt__sub{mix-blend-mode:normal;color:inherit;}
+  .c5-nt__thumb{forced-color-adjust:none;background:Highlight;}
+  .c5-nt__tab[aria-selected="true"] .c5-nt__lbl,
+  .c5-nt__tab[aria-selected="true"] .c5-nt__sub{forced-color-adjust:none;color:HighlightText;}
+}
+@media (prefers-reduced-motion:reduce){
+  .c5-nt__thumb,.c5-nt__more .wf-icon,.c5-nt__link .wf-icon{transition:none;}
+}

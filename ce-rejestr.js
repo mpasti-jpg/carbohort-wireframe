@@ -12,7 +12,7 @@
    =========================================================================== */
 window.CW_CE = {
   "meta": {
-    "zaktualizowano": "2026-09-19",
+    "zaktualizowano": "2026-09-20",
     "katalogWersji": "v7/",
     "indeks": "ce-indeks.html",
     "opis": "Rejestr content elementów (CE) makiet CarboHort V5: metadane klocków. Wystąpienia wynikają ze znaczników data-ce w HTML stron – skanuje je _narzedzia/ce-indeks.py. Spec: 40-strona-www/koncepcja/content-elementy-spec.md."
@@ -490,7 +490,7 @@ window.CW_CE = {
       ],
       "warianty": {
         "zamykajacy": "bez akapitu: nagłówek po lewej, dwa przyciski po prawej, oba na kadrze (Kukurydza; od 18.09.2026 na bazowym kodzie klocka zamiast własnego portu u-end)",
-        "kontakt": "pas „Wolisz porozmawiać z człowiekiem?” z przyciskami Kontakt i Zostań partnerem (o-firmie.html#porozmawiajmy)",
+        "kontakt": "pas zamykający rozmową: nagłówek po lewej, po prawej akapit i akcje kontaktowe. Na O nas (#porozmawiajmy) dwa przyciski, Kontakt i Zostań partnerem; na stronie głównej (#kontakt, 20.09.2026) numer telefonu jako duży link tel: z cyframi tabelarycznymi, wiersz godzin drobnym drukiem, dwa przyciski i cichy link do wszystkich działów",
         "pozny-wzrost": "kadr stoi na 50 % szerokości ekranu, dopóki górna krawędź pasa jest niżej niż 35 % wysokości okna, potem rośnie i pełny rozmiar osiąga 2 % od góry okna; nakładka przyciemniająca narasta razem ze wzrostem, więc w postoju zdjęcie jest bez przyciemnienia (uwagi Mateusza z 18.09.2026; od 19.09.2026 na pięciu stronach: Produkty, CARBOMAT ECO, CARBOMAT MATA, CARBOHUMIC, CARBOMAT HUMIC)"
       },
       "uwagi": "Na CARBOMAT ECO i CARBOMAT HUMIC stoi wewnątrz sekcji Sezon, na pozostałych jako osobna sekcja. Wariant pozny-wzrost: spec produkty-wzorzec-eco-spec §21.4, §21.8 i §23. Otwarty u Mateusza kontrast białego tekstu na nieprzyciemnionym zdjęciu w fazie postoju: na Produktach akapit min. 2,32 : 1, na CARBOMAT ECO zmierzone minimum akapitu spada z 1,78 na 1,19 (mediana z 6,40 na 5,26), stan końcowy pasa bez zmian. Kukurydza (zamykajacy) i O nas (kontakt) zostają na module bazowym – przejście na pozny-wzrost do decyzji.",
@@ -606,7 +606,7 @@ window.CW_CE = {
         "ostrzegawcze": "karta z ikoną x na przygaszonym tle",
         "sloty-poziome": "miniatura 16:9 obok tekstu (Próchnica+)",
         "miejsca-na-wykresy": "numer, placeholder 16:9, podpis",
-        "szerokie": "dwie szerokie karty",
+        "szerokie": "dwie szerokie karty obok siebie w ramce 1 px: ramka ikony, tytuł, zdanie i strzałka w rogu; cały kafel jest linkiem, na hover i fokus tło o ton ciemniejsze i strzałka o 4 px w prawo, poniżej 900 px jeden kafel pod drugim",
         "czytaj-dalej": "trzy karty: dwa artykuły i jedna strona komercyjna (artykul.html#dalej-karty)",
         "szklane": "karty ze szkła na zdjęciu w tle sekcji: rozmycie tła pod kartą (backdrop-filter), półprzezroczyste jasne wypełnienie, jasny obrys, biały tekst, ostre narożniki (Próchnica+ #rzetelnosc-kafle, od 19.09.2026)"
       },
@@ -677,7 +677,7 @@ window.CW_CE = {
         "kotwica": "wg-potrzeby-pas"
       },
       "kod": {
-        "css": "per strona: c5-cmp2__cta, c5-mt-cross, c5-proofs__cta, c5pr-bar, c5-who__note",
+        "css": "per strona: c5-cmp2__cta, c5-mt-cross, c5-proofs__cta, c5pr-bar, c5-who__note; wariant ciemny: c5h-cfg w home.css ===== 60",
         "js": "brak"
       },
       "czesci": [
@@ -685,17 +685,26 @@ window.CW_CE = {
         "ikona (opcjonalnie)",
         "tekst",
         "h4 (opcjonalnie)",
-        "1–2 przyciski"
+        "1–2 przyciski",
+        "motyw z linii: cztery puste pola-kroki (opcjonalnie)"
       ],
       "warianty": {
         "z-ikona": "ikona przed tekstem, kreski góra i dół",
         "kreski-gora-dol": "bez ikony, kreski góra i dół (Mata cross-sell)",
         "dwa-przyciski": "tekst i dwa przyciski, tylko kreska górna",
-        "z-naglowkiem": "h4 w lewej kolumnie, tekst i przycisk w prawej"
+        "z-naglowkiem": "h4 w lewej kolumnie, tekst i przycisk w prawej",
+        "ciemny": "pas na najciemniejszym tokenie, jasny tekst, na całą szerokość kontenera zamiast kresek: po lewej (7 kolumn) kicker w ramce o jasnym obrysie, h3 i akapit, po prawej (5 kolumn, wyrównanie do prawej krawędzi) dyskretny motyw z linii – cztery puste pola-kroki połączone kreską, bez podpisów – główny przycisk w wersji jasnej (c5-btn--inv) i pod nim cichy link. Jedyna ciemna płaszczyzna swojej sekcji, więc mówi, gdzie zaczyna się wybieranie. Statyczny; poniżej 900 px jedna kolumna, prawa strona schodzi pod tekst i wyrównuje się do lewej. Obrys kickera i pierścienie fokusu przechodzą na wersje jasne."
       },
       "uwagi": "Pięć różnych klas o tym samym kształcie – kandydat do jednej klasy w fazie 2.",
       "zrzut": {
         "maxh": 300
+      },
+      "zrzuty_wariantow": {
+        "ciemny": {
+          "plik": "v7/home.html",
+          "kotwica": "uprawy-konfigurator",
+          "maxh": 420
+        }
       }
     },
     "CE-24": {
@@ -708,8 +717,8 @@ window.CW_CE = {
         "kotwica": "dowod-liczby"
       },
       "kod": {
-        "css": "per strona: c5-stats (Mata), u-nb (Kukurydza, wariant kolumny), pp-liczby (Próchnica+, wariant kafle-2x2); sufiksy: ce/00-base.css EL-31",
-        "js": "carbomat-mata.js ===== 55 / uprawa.js data-count / prochnica-plus.js ===== 60"
+        "css": "per strona: c5-stats (Mata), u-nb (Kukurydza, wariant kolumny), pp-liczby (Próchnica+, wariant kafle-2x2); sufiksy: ce/00-base.css EL-31; c5h-nums (strona główna, wariant rzad)",
+        "js": "carbomat-mata.js ===== 55 / uprawa.js data-count / prochnica-plus.js ===== 60 / home.js ===== 40 (kołowrotek pod prefiksem c5h-odo)"
       },
       "czesci": [
         "tytuł",
@@ -720,7 +729,8 @@ window.CW_CE = {
         "odliczanie": "liczby odliczają od zera (mechanika data-count z uprawa.js; na Kukurydzy razem z wariantem kolumny)",
         "kolowrotek": "cyfry wjeżdżają kołowrotkiem (mechanika z Próchnicy+; od 19.09.2026 pracuje w układzie kafle-2x2, sam wariant bez własnych wystąpień)",
         "kolumny": "jasny panel, trzy kolumny rozdzielone pionowymi liniami: chip nad liczbą, wielka liczba z małą jednostką u górnej krawędzi cyfr, podpis pod liczbą (wersja alternatywna sekcji liczb; Kukurydza od 18.09 – decyzja Mateusza)",
-        "kafle-2x2": "ciemny kadr, tytuł z dużym odstępem od górnej krawędzi, pod nim siatka 2 × 2 kafli o ton jaśniejszych od tła: wielka liczba przy górnej krawędzi kafla po prawej, etykieta i nota przy dolnej po lewej; cyfry wjeżdżają kołowrotkiem (Próchnica+ od 19.09.2026 – uwaga Mateusza, inspiracja: ramka Figma 306:2941)"
+        "kafle-2x2": "ciemny kadr, tytuł z dużym odstępem od górnej krawędzi, pod nim siatka 2 × 2 kafli o ton jaśniejszych od tła: wielka liczba przy górnej krawędzi kafla po prawej, etykieta i nota przy dolnej po lewej; cyfry wjeżdżają kołowrotkiem (Próchnica+ od 19.09.2026 – uwaga Mateusza, inspiracja: ramka Figma 306:2941)",
+        "rzad": "ciemny kadr na szerokość kontenera (nie na wysokość ekranu): mały tytuł u góry po lewej, pod nim pięć kolumn rozdzielonych pionowymi liniami włosowymi, w kolumnie wielka liczba, etykieta i drobne źródło przy dolnej krawędzi kadru. Wersja pasowa klocka – sekcja pod nią zaczyna się wysoko na stronie, więc liczby są wstępem do dowodu, a nie osobnym ekranem (strona główna od 20.09.2026). Od 1280 px pięć kolumn, między 900 a 1279 px podział 3 + 2, poniżej 900 px wiersze: liczba po lewej, etykieta po prawej, źródło pod nimi na całej szerokości"
       },
       "zrzuty_wariantow": {
         "kolumny": {
@@ -730,6 +740,10 @@ window.CW_CE = {
         "kafle-2x2": {
           "plik": "v7/prochnica-plus.html",
           "kotwica": "w-liczbach"
+        },
+        "rzad": {
+          "plik": "v7/home.html",
+          "kotwica": "dowod"
         }
       },
       "uwagi": "Wzór: serverobotics.com (uwaga Mateusza 14.09). Jednostka i sufiksy (%, +) małe i wyrównane do górnej krawędzi cyfr (uwaga Mateusza 15.09) – od 18.09 jako element EL-31 c5-aff (0,24 em, kolor liczby) na wszystkich wystąpieniach: Mata, Próchnica+, Kukurydza; wariant kolumny – wzór UPC Renewables i Yerevan (zrzuty 15.09). Nazwa klocka zmieniona 18.09 z „Ciemny pas liczb”, bo doszła jasna wersja alternatywna.",
@@ -881,8 +895,8 @@ window.CW_CE = {
         "kotwica": "z-czym-laczyc-lista"
       },
       "kod": {
-        "css": "per strona: c5hu-mixlist, c5-tco, on-val; wariant akordeon-z-odliczaniem: c5pr-acc i c5pr-pcard w produkty.css",
-        "js": "carbohumic.js ===== 72; wariant akordeon-z-odliczaniem: produkty.js ===== 50"
+        "css": "per strona: c5hu-mixlist, c5-tco, on-val; wariant akordeon-z-odliczaniem: c5pr-acc i c5pr-pcard w produkty.css; wariant z-kadrem: c5h-crops w home.css ===== 60",
+        "js": "carbohumic.js ===== 72; wariant akordeon-z-odliczaniem: produkty.js ===== 50; wariant z-kadrem: home.js ===== 60"
       },
       "czesci": [
         "lista tytułów",
@@ -891,16 +905,22 @@ window.CW_CE = {
       ],
       "warianty": {
         "z-lightboxem": "panel ma przycisk otwierający pełny opis w lightboxie (Kukurydza fazy do 18.09; sekcję przejął CE-65, wariant bez wystąpień)",
-        "akordeon-z-odliczaniem": "akordeon na szerokość kontenera wg ramki Figma „Frame 207” (Mateusz, 18.09.2026; Produkty, ścieżki wg sytuacji): otwarta pozycja ma duży tytuł, po lewej opis z notami, ostrzeżeniem i linkami, po prawej karty produktów z packshotem (po dwie w rzędzie, kolejne zawijają się do następnego wiersza; cała karta prowadzi na stronę produktu, „Kup produkt” odsłania się pod opisem na karcie, a packshot maleje); pierwsza pozycja otwarta od początku, odliczanie 5 s z paskiem na górnej linii następnej pozycji otwiera kolejną i zamyka poprzednią, klik otwiera dowolną albo zamyka otwartą i wyłącza automat, kotwica pozycji otwiera ją i zatrzymuje automat; automat tylko na szerokim ekranie i przy włączonym ruchu, pod kursorem i przy fokusie odliczanie stoi"
+        "akordeon-z-odliczaniem": "akordeon na szerokość kontenera wg ramki Figma „Frame 207” (Mateusz, 18.09.2026; Produkty, ścieżki wg sytuacji): otwarta pozycja ma duży tytuł, po lewej opis z notami, ostrzeżeniem i linkami, po prawej karty produktów z packshotem (po dwie w rzędzie, kolejne zawijają się do następnego wiersza; cała karta prowadzi na stronę produktu, „Kup produkt” odsłania się pod opisem na karcie, a packshot maleje); pierwsza pozycja otwarta od początku, odliczanie 5 s z paskiem na górnej linii następnej pozycji otwiera kolejną i zamyka poprzednią, klik otwiera dowolną albo zamyka otwartą i wyłącza automat, kotwica pozycji otwiera ją i zatrzymuje automat; automat tylko na szerokim ekranie i przy włączonym ruchu, pod kursorem i przy fokusie odliczanie stoi",
+        "z-kadrem": "wariant strony głównej (uprawy): po lewej lista sześciu grup upraw rozdzielona liniami włosowymi – numer w węźle, duży tytuł 28–44 px, przygaszony podpis pod tytułem i chevron; otwarta pozycja rozwija się w miejscu (grid 0fr → 1fr) i pokazuje chipy-linki stron upraw, dwa przyciski („Zobacz uprawę”, „Dobierz produkty i dawki”), a w razie potrzeby drugi, cichy link doboru. Po prawej nie ma panelu opisu, tylko przyklejony kadr: sześć warstw zdjęć jedna na drugiej, widoczna ta z wybranej pozycji, w lewym dolnym rogu jasna plakietka z numerem i nazwą grupy. Kadr stoi pod nagłówkiem serwisu (20 px zapasu) i kończy się 96 px nad dołem okna, ponad dokiem doradcy; zmiana kadru to wycieranie clip-path od dolnej krawędzi w górę w 0,7 s z osiadaniem skali 1,04 → 1, a poprzednie zdjęcie zostaje nieruchomo pod spodem, żeby wycieranie nie odsłaniało pustej sceny. Klik wybiera (nigdy nie zamyka – jedna pozycja jest zawsze otwarta), fokus i najechanie tylko podglądają kadr, strzałki oraz Home i End przenoszą fokus między nagłówkami wierszy; kotwice #uprawy-sad, #uprawy-jagodowe, #uprawy-warzywa, #uprawy-pole, #uprawy-szkolka i #uprawy-ogrod otwierają swoją pozycję. Poniżej 900 px akordeon z kadrem 4 : 3 wewnątrz otwartej pozycji, nad przyciskami. Bez JS-u wszystkie pozycje rozwinięte, lista na całą szerokość kontenera, kadry ukryte."
       },
       "zrzuty_wariantow": {
         "akordeon-z-odliczaniem": {
           "plik": "v7/produkty.html",
           "kotwica": "wg-potrzeby-sciezki",
           "maxh": 1100
+        },
+        "z-kadrem": {
+          "plik": "v7/home.html",
+          "kotwica": "uprawy",
+          "maxh": 1100
         }
       },
-      "uwagi": "Trzy implementacje tej samej mechaniki (Carbohumic, Mata, O nas) – kandydat do konsolidacji. Do 18.09.2026 bazą były ścieżki na Produktach; po ich przebudowie na wariant akordeon-z-odliczaniem (spec produkty-wzorzec-eco-spec §21.2 i §21.8) baza przeszła na CARBOHUMIC „Z czym łączyć”.",
+      "uwagi": "Trzy implementacje tej samej mechaniki (Carbohumic, Mata, O nas) – kandydat do konsolidacji. Do 18.09.2026 bazą były ścieżki na Produktach; po ich przebudowie na wariant akordeon-z-odliczaniem (spec produkty-wzorzec-eco-spec §21.2 i §21.8) baza przeszła na CARBOHUMIC „Z czym łączyć”. Wariant z-kadrem (strona główna, 20.09.2026) zamienia panel opisu na przyklejony kadr i przenosi treść pozycji do rozwinięcia w liście – czwarta implementacja tej mechaniki, więc konsolidacja klocka jest coraz pilniejsza.",
       "zrzut": {
         "maxh": 900
       }
@@ -962,7 +982,7 @@ window.CW_CE = {
       "nazwa": "Cytat lub zasada",
       "grupa": "noty-i-cta",
       "opis": "Wyróżnione jedno zdanie lub akapit: duży cytat z pionową kreską i cudzysłowami z CSS, ciemny boks z etykietą wersalikami, albo pasek pod grubą kreską z etykietą i zdaniem.",
-      "mechanika": "Statyczne (opcjonalnie reveal).",
+      "mechanika": "Statyczne (opcjonalnie reveal). W wersji ze strony głównej JS dzieli cytat na wyrazy i podnosi ich krycie z .25 do 1 kolejno, w miarę jak dolna krawędź cytatu przejeżdża od 85 % do 40 % wysokości okna (jedna zmienna na akapicie, rampa liczona w CSS); tylko przy CX5.motionOn(), bez JS i przy ograniczonym ruchu pełne krycie.",
       "baza": {
         "plik": "v7/prochnica-plus.html",
         "kotwica": "rzetelnosc-cytat"
@@ -978,7 +998,7 @@ window.CW_CE = {
       "warianty": {
         "ciemny-boks": "ciemne tło, etykieta wersalikami, duży akapit (Kukurydza)",
         "pasek-zasady": "gruba kreska górna, etykieta i wytłuszczone zdanie w jednym wierszu (Carbohumic)",
-        "cytat": "blockquote z kreską i cudzysłowami; na Próchnicy+ od 19.09.2026 biały, na zdjęciu w tle sekcji"
+        "cytat": "blockquote z kreską i cudzysłowami; na Próchnicy+ od 19.09.2026 biały, na zdjęciu w tle sekcji; na stronie głównej (#motto, 20.09.2026) wyśrodkowany, bardzo duży (36–84 px, miara ok. 10 em, łamanie balance), bez kreski, pod nim wezwanie i podpis wersalikami"
       },
       "uwagi": "",
       "zrzut": {
@@ -1042,28 +1062,39 @@ window.CW_CE = {
       "nazwa": "Wiersz zdjęcie | opis",
       "grupa": "karty",
       "opis": "Dwie równe kolumny wyrównane do środka: kadr zdjęcia 4:5 z jednej strony, z drugiej nazwa, zajawka, blok dawek i przycisk; kolejne wiersze naprzemiennie.",
-      "mechanika": "Parallax kadru z pozycji przewijania, wejście kolumny opisu (reveal), przycisk otwiera pop-up z pełną kartą (CE-37); poniżej 900 px zdjęcie nad tekstem. Moduł 40.",
+      "mechanika": "Parallax kadru z pozycji przewijania, wejście kolumny opisu (reveal), przycisk otwiera pop-up z pełną kartą (CE-37); poniżej 900 px zdjęcie nad tekstem. Moduł 40. W wariancie „z-wartosciami” zamiast parallaksu kadr jest przyklejony (sticky, 40 px od góry, wysokość ograniczona do okna pomniejszonego o odstęp od doka doradcy), a przycisk odtwarzania otwiera natywny dialog z wideo ładowanym dopiero na żądanie (preload „none”): film rusza po otwarciu, zamknięcie (×, Escape, klik w tło) zatrzymuje go i przewija na początek, fokus wraca na kartę; bez JS karta jest zwykłym linkiem do pliku mp4.",
       "baza": {
         "plik": "v7/carbomat-humic.html",
         "kotwica": "wariant-pro"
       },
       "kod": {
-        "css": "carbomat-humic.css (c5-who)",
-        "js": "carbomat-humic.js ===== 40"
+        "css": "carbomat-humic.css (c5-who); wariant z-wartosciami: home.css blok 90 (c5h-about, c5h-vals, c5h-film)",
+        "js": "carbomat-humic.js ===== 40; wariant z-wartosciami: home.js blok 90 (nakładka filmu)"
       },
       "czesci": [
         "kadr zdjęcia",
         "h3",
         "zajawka",
         "blok dawek",
-        "przycisk"
+        "przycisk",
+        "trzy wartości: ramka ikony, nazwa, zdanie",
+        "karta filmu: kadr 16:9, przycisk odtwarzania, podpis, zdanie",
+        "rząd domykający: przycisk i dwa linki ze strzałką"
       ],
       "warianty": {
-        "odwrocony": "opis po lewej, zdjęcie po prawej"
+        "odwrocony": "opis po lewej, zdjęcie po prawej",
+        "z-wartosciami": "siatka 6 / 6 wyrównana do góry: po lewej kadr 4:5 przyklejony na czas prawej kolumny, po prawej kicker i nagłówek sekcji, akapit intro, wyróżniony akapit z kreską po lewej, trzy wartości jako wiersze rozdzielone liniami (ramka ikony, nazwa, zdanie), karta filmu w ramce (kadr 16:9 z plakatem, kwadratowy przycisk odtwarzania, podpis i zdanie) i rząd domykający: przycisk oraz dwa linki ze strzałką; poniżej 900 px kadr 4:3 nad treścią (strona główna #o-nas)"
       },
-      "uwagi": "",
+      "uwagi": "Wariant „z-wartosciami” (strona główna, 20.09.2026) nie korzysta ze wspólnych klas c5-who – ma własny kod lokalny strony, bo kolumna opisu niesie cztery bloki zamiast jednego; przy konsolidacji fali 2 oba układy schodzą do jednego pliku w v7/ce/.",
       "zrzut": {
         "maxh": 900
+      },
+      "zrzuty_wariantow": {
+        "z-wartosciami": {
+          "plik": "v7/home.html",
+          "kotwica": "o-nas",
+          "maxh": 1100
+        }
       }
     },
     "CE-37": {
@@ -1632,17 +1663,26 @@ window.CW_CE = {
         "kotwica": "kategorie"
       },
       "kod": {
-        "css": "centrum-wiedzy.css ===== 59 (cw-k-cats)",
+        "css": "centrum-wiedzy.css ===== 59 (cw-k-cats); wariant kompakt: c5h-kn__band, c5h-kn__cat, c5h-kn__row w home.css ===== 80",
         "js": "–"
       },
       "czesci": [
         "2 boksy grup głównych",
         "listy podgrup z licznikami"
       ],
-      "warianty": {},
+      "warianty": {
+        "kompakt": "wariant zajawkowy (strona główna): boksy kategorii bez zdania opisu, bez listy podgrup i bez liczników – zostaje sama nazwa grupy jako link ze strzałką, która dosuwa się o 4 px przy najechaniu i fokusie, a obrys boksu ciemnieje. Strona główna nie podaje liczb, których nie ma w źródłach, dlatego liczniki artykułów wypadają razem z podgrupami. Pas biegnie w rytmie 7 / 5: po lewej dwa boksy kategorii obok siebie, po prawej dwa wiersze wyjścia – poradniki upraw (ikona pliku, zdanie, cichy link do #poradniki) i przewodnik (ikona rozmowy, zdanie, przycisk z data-jurek-open otwierający dok doradcy). Statyczne, wejście kaskadą revealem strony; poniżej 900 px wszystko w jednej kolumnie."
+      },
       "uwagi": "",
       "zrzut": {
         "maxh": 700
+      },
+      "zrzuty_wariantow": {
+        "kompakt": {
+          "plik": "v7/home.html",
+          "kotwica": "wiedza-kategorie",
+          "maxh": 420
+        }
       }
     },
     "CE-60": {
@@ -1922,6 +1962,152 @@ window.CW_CE = {
         "ruch": true,
         "przewin": "#zalozenia [data-vs-shot]",
         "czekaj": 900
+      }
+    },
+    "CE-71": {
+      "nazwa": "Pas wejść sytuacyjnych",
+      "grupa": "karty",
+      "opis": "Pas komórek tuż pod hero, na całą szerokość szerokiego kontenera, rozdzielonych liniami włosowymi, wysokość ok. 112 px. Pierwsza, wąska komórka to nadpis sekcji wersalikami („Co uprawiasz?”), dalej idzie siedem wejść. Komórka: numer w kwadratowym węźle 24 px i strzałka w jednym wierszu u góry, przy dolnej krawędzi etykieta 18 px semibold i przygaszony podpis 13 px, dla którego komórka zawsze rezerwuje dwa wiersze – dzięki temu etykiety wszystkich komórek stoją na jednej linii. Pięć komórek to zwykłe linki, szósta otwiera panel z listą linków, siódma jest ciemna i w całości jest numerem telefonu. Sprite nie ma symboli upraw, więc zamiast siedmiu przybliżonych ikon każda komórka niesie numer – jedna konwencja dla całego pasa.",
+      "mechanika": "Czysty CSS, zero JS-u w części krytycznej. Linie włosowe to 1 px odstępu siatki: tło rysuje je w przerwach, komórki zasłaniają resztę, a ta sama reguła obsługuje oba układy. Hover i :focus-visible dają tło o ton ciemniejsze i przesuwają strzałkę o 4 px. Komórka „Mam już produkt” to przycisk z popovertarget i natywny [popover] z wejściem przez @starting-style; js/10-hero.js ustawia panel pod kaflem (position:fixed, korekta przy przewijaniu i zmianie rozmiaru), a gdy przeglądarka nie zna popovera, @supports not selector(:popover-open) zamienia listę w zwykły blok pod pasem i pięć linków zostaje dostępnych bez skryptu. Wejście: komórki kaskadą revealem strony (data-reveal). Poniżej 900 px siatka 2 × 3 z nadpisem nad nią i komórką telefonu na całą szerokość; trzy rzędy kafli mają równą wysokość (tory fr), zero przewijania w bok.",
+      "baza": {
+        "plik": "v7/home.html",
+        "kotwica": "sytuacje"
+      },
+      "kod": {
+        "css": "ce/CE-71-pas-wejsc.css",
+        "js": "brak (popover natywny; pozycjonowanie panelu w home.js)"
+      },
+      "czesci": [
+        "komórka-etykieta z nadpisem sekcji",
+        "komórka wejścia: numer w węźle, strzałka, etykieta, podpis",
+        "komórka z popoverem i listą linków",
+        "ciemna komórka z numerem telefonu"
+      ],
+      "warianty": {},
+      "uwagi": "Zbudowany dla strony głównej (spec „home-spec.md” §5.1) jako „lekki rozdzielacz – wybierz sytuację” z panelu ekspertów. Hero nad nim jest o 112 px niższe niż okno, więc pas wystaje nad linię zgięcia. Tory kolumn nie są równe: komórka telefonu mieści numer i godziny w jednym wierszu, komórka-etykieta tylko dwa słowa. Poniżej ok. 1400 px dłuższe etykiety („Ogród i trawnik”, „Mam już produkt”) łamią się na dwa wiersze i pas rośnie do ok. 140 px. Na razie jedno wystąpienie.",
+      "zrzut": {
+        "strona": "v7/home.html",
+        "kotwica": "sytuacje",
+        "maxh": 260,
+        "przewin": "#sytuacje"
+      }
+    },
+    "CE-72": {
+      "nazwa": "Scena profilu gleby",
+      "grupa": "sceny",
+      "opis": "Przypięta scena o dwóch kolumnach w szerokim kontenerze (5 / 7). Lewa kolumna: u góry głowa sekcji (kicker w ramce, h2, lead), pod nią indeks pięciu tytułów problemów – wszystkie widoczne, aktywny wyróżniony wypełnionym węzłem z numerem, pozostałe przygaszone – a przy dolnej krawędzi okna szczegół bieżącego kroku: tytuł, linia postępu kroku, zdanie problemu, etykieta „Co z tym robimy” ze zdaniem odpowiedzi, link i licznik „02/05”. Po kroku piątym wchodzi krok szósty, bez numeru w indeksie, z przyciskiem zamiast linku. Prawa kolumna: jasnoszary panel na wysokość okna z marginesem 20 px, a w nim ręcznie napisany inline SVG – rysunek techniczny przekroju gleby w skali szarości (miarka głębokości 0–40 cm ze znacznikiem postępu sceny, poziom próchniczny, podglebie z kreskowaniem, kamienie, spękania, gruzełki lignitu, krople wody, korzenie, punkty życia mikrobiologicznego, kwadraciki składników, skala odczynu z trzema strefami) oraz drobny podpis „Schemat poglądowy”. Cały SVG jest aria-hidden – każde jego słowo stoi w treści po lewej.",
+      "mechanika": "Tor sekcji = scena 100svh plus sześć kroków po 0,7 × 100svh (pokrętła --sp-step-vh i --sp-step-min), scena position:sticky;top:0; krok wybiera pozycja przewijania liczona z szyny CX5. Stan rysunku jest kumulatywny: klasy is-s1…is-s6 dokładają się na korzeniu sekcji, więc każda naprawa zostaje na kolejnych krokach, a naprawa bieżącego kroku wchodzi dopiero kawałek w krok (próg z histerezą), żeby czytelnik zobaczył najpierw problem, a potem jego naprawę. Przejścia 600–900 ms cubic-bezier(.16,1,.3,1), kaskady po --d; pętle (spadające krople, dryf punktów życia, wędrówka składników) stoją, gdy scena jest poza oknem (IntersectionObserver) i przy reduced-motion. --sp-p to postęp całej sceny (znacznik na miarce), --sp-f postęp kroku (wypełnienie linii). Klik w pozycję indeksu przewija do swojego kroku przez CX5.scrollTo (Lenis, gdy działa); Tab przechodzi przez indeks i link kroku i wyprowadza dalej, bo nieaktywne kroki są visibility:hidden. O układzie decyduje jedna klasa, którą moduł stawia na korzeniu: is-scene (przypięta scena), is-tabs (poniżej 900 px albo w oknie za niskim, żeby treść utrzymała 96 px odstępu od doka doradcy: indeks staje się zawijanym tablistem chipów ze strzałkami i roving tabindex, pod nim SVG, pod nim panel wybranego kroku, a krok końcowy zostaje na dole), is-flat (reduced-motion: bez pinu, wszystkie kroki jeden pod drugim, rysunek w stanie końcowym). Bez JS-u nie ma żadnej z tych klas, a stanem domyślnym każdej reguły rysunku jest stan końcowy, więc strona bez skryptu jest kompletna. Pomocniczy parametr adresu ?sp=1…6 otwiera stronę na wskazanym kroku.",
+      "baza": {
+        "plik": "v7/home.html",
+        "kotwica": "gleba"
+      },
+      "kod": {
+        "css": "ce/CE-72-scena-profilu-gleby.css",
+        "js": "ce/CE-72-scena-profilu-gleby.js"
+      },
+      "czesci": [
+        "głowa sceny: kicker w ramce, h2, lead",
+        "indeks pięciu tytułów z węzłami numerów",
+        "szczegół kroku: tytuł, linia postępu, problem, „Co z tym robimy”, link, licznik",
+        "krok końcowy z przyciskiem",
+        "panel ilustracji z inline SVG przekroju gleby",
+        "podpis „Schemat poglądowy”"
+      ],
+      "warianty": {},
+      "uwagi": "Zbudowana dla strony głównej (spec „home-spec.md” §5.3) jako odpowiedź na prośbę klienta o „bajer z glebą – przekształcenie gleby ubogiej w żyzną”. Mechanika toru i przypięcia idzie za CE-12 „-proba”. Rysunek jest poglądowy: docelowa ilustracja albo animacja powstanie na etapie UI Design. Poniżej 900 px rysunek ma ok. 335 px szerokości, więc miarka i skala odczynu tracą swoje podpisy (mikrotypografia byłaby nieczytelna), a etykieta bieżącego kroku rośnie; nic przez to nie ginie, bo SVG jest aria-hidden. Na razie jedno wystąpienie.",
+      "zrzut": {
+        "strona": "v7/home.html",
+        "kotwica": "gleba",
+        "maxh": 900,
+        "ruch": true,
+        "przewin": "#gleba"
+      }
+    },
+    "CE-73": {
+      "nazwa": "Oś kroków z horyzontem efektu",
+      "grupa": "dane",
+      "opis": "Szeroka sekcja (kontener do 1800 px, marginesy 40 px) złożona z dwóch części pod wspólną głową. U góry oś procesu: cztery kolumny pod jedną poziomą linią 1 px, na linii kwadratowe węzły 30 px z numerami 01–04, pod każdym węzłem tytuł kroku i jedno zdanie. Niżej, oddzielony dużym odstępem, horyzont efektu: nadpis, wspólna oś czasu z dwoma odcinkami w proporcji 1 : 4 (nad paskiem etykieta okresu, pod paskiem znacznik czasu i treść), pierwszy pasek ciemny, drugi w średniej szarości; pod osią dopisek i link. Pasek ma 12 px wysokości i obrys 1 px.",
+      "mechanika": "Linia osi wypełnia się od lewej (scaleX) wraz z przejściem sekcji przez okno: postęp 0 przy 80 % wysokości okna, 1 przy 35 %; węzeł zapala się (ciemne wypełnienie, jasna cyfra), gdy wypełnienie do niego dochodzi – moduł mierzy położenie każdego węzła na linii. Kolumny wchodzą kaskadą revealem strony. Odcinki horyzontu wypełniają się od lewej po wejściu w widok (600 ms i 900 ms). Mechanika scrollowa tylko za CX5.motionOn(); bez JS, poniżej 900 px i przy reduced-motion linia jest pełna, wszystkie węzły zapalone, a paski w stanie końcowym. Poniżej 900 px oś staje pionowo: węzły po lewej, linia wypełnia się w pionie, horyzont rozpada się na dwa wiersze z własnymi paskami, których szerokość trzyma proporcję 1 : 4.",
+      "baza": {
+        "plik": "v7/home.html",
+        "kotwica": "jak-pomagamy"
+      },
+      "kod": {
+        "css": "ce/CE-73-os-krokow.css",
+        "js": "ce/CE-73-os-krokow.js"
+      },
+      "czesci": [
+        "głowa sekcji: kicker w ramce, h2, lead",
+        "oś: linia z wypełnieniem + cztery węzły z numerami",
+        "kolumna kroku: tytuł i zdanie",
+        "horyzont: nadpis, dwa odcinki 1 : 4 z etykietami i znacznikami czasu",
+        "dopisek i link pod osią czasu"
+      ],
+      "warianty": {},
+      "uwagi": "Zbudowany dla strony głównej (spec 40-strona-www/koncepcja/home-spec.md §5.4). Węzeł z numerem to lokalna kopia elementu EL-32 w skali osi (30 px) – do zgrania przy fali 2b, gdy powstanie klasa c5-node. Horyzont efektu rozdziela pierwszy sezon od 2–5 lat: to wyróżnik treściowy strony głównej, żaden z 14 przejrzanych konkurentów tego nie podaje. Na razie jedno wystąpienie.",
+      "zrzut": {
+        "strona": "v7/home.html",
+        "kotwica": "jak-pomagamy",
+        "maxh": 900
+      }
+    },
+    "CE-74": {
+      "nazwa": "Taby potrzeb z kartami produktów",
+      "grupa": "przelaczniki",
+      "opis": "Szeroka sekcja (kontener do 1800 px, marginesy 40 px): głowa po lewej, pod leadem przełącznik segmentowy z trzema pozycjami – w każdej etykieta potrzeby, a pod nią mniejszym drukiem rodzaj produktu. Panel pozycji to siatka 4 / 8: po lewej nagłówek h3 powtarzający etykietę, opis potrzeby i kadr zdjęcia 4 : 3 „z terenu” przy dolnej krawędzi kolumny, po prawej trzy karty produktu w rzędzie. Karta: pole packshotu 4 : 5 na jasnoszarym tle z linią podłogi na 82 % wysokości (packshot stoi na linii), nazwa, rząd chipów postaci i sposobu aplikacji, jedno zdanie, a przy dolnej krawędzi – nad cienką linią – link „Poznaj produkt” ze strzałką i cichy link do sklepu. Wariant szerokiej karty: jeden produkt zajmuje cały rząd, packshot po lewej, po prawej nazwa, chipy, zdanie, trzy fakty jako lista z liniami i dwa przyciski. Pod tabami rząd linków: przycisk drugorzędny i dwa linki ze strzałką.",
+      "mechanika": "Taby wg wzorca ARIA z automatyczną aktywacją: klik, strzałki w obie osie, Home i End, roving tabindex; znacznik aktywnej pozycji przesuwa się i zmienia rozmiar (transform), a etykiety leżą nad nim w trybie „difference”, więc odwracają kolor dokładnie pod znacznikiem. Przejście: stary panel gaśnie (160 ms) i odjeżdża w stronę przeciwną do wyboru, nowy wchodzi – kolumna opisu, potem karty kaskadą co 70 ms, packshoty podnoszą się o 24 px znad linii podłogi; wysokość kontenera paneli przechodzi płynnie, więc treść pod sekcją nie skacze. Deep linki na id paneli przez CX5.onHash (start, load, Back i Forward). Wszystkie panele zostają w DOM: bez JS przełącznik się nie pokazuje, a panele stoją jeden pod drugim, każdy ze swoim nagłówkiem. Między 900 a 1199 px opis i kadr stają obok siebie w pasie nad kartami; poniżej 900 px przełącznik ma trzy równe kolumny z etykietą łamaną na dwa wiersze, panel jest jedną kolumną (opis, karty jedna pod drugą z niższym polem packshotu 16 : 10, kadr z terenu na końcu).",
+      "baza": {
+        "plik": "v7/home.html",
+        "kotwica": "produkty"
+      },
+      "kod": {
+        "css": "ce/CE-74-taby-potrzeb.css",
+        "js": "ce/CE-74-taby-potrzeb.js"
+      },
+      "czesci": [
+        "głowa sekcji: kicker w ramce, h2, lead",
+        "przełącznik segmentowy: etykieta potrzeby + rodzaj produktu pod nią",
+        "kolumna opisu: h3, akapit, kadr 4 : 3 z terenu",
+        "karta produktu: pole packshotu z linią podłogi, nazwa, chipy, zdanie, linki",
+        "szeroka karta jednego produktu: packshot, nazwa, chipy, zdanie, lista faktów, dwa przyciski",
+        "rząd linków pod tabami"
+      ],
+      "warianty": {},
+      "uwagi": "Zbudowany dla strony głównej (spec 40-strona-www/koncepcja/home-spec.md §5.6). Gama dzielona po potrzebie, nie po marce – decyzja treściowa klienta: „dopiero po kliknięciu użytkownik trafia do konkretnych produktów”. Mechanika tabów i packshot na linii podłogi przejęte z CE-39 (produkty.css / produkty.js blok 30), bez przeciągania packshotu i bez linku „Porównaj” w belce. Chip ograniczenia (CALBOR: wyłącznie uprawy sadownicze) niesie styl obrysu, nigdy koloru – zgodnie z EL-16. Kadry „z terenu” to na razie placeholdery dialektu 2 strony (c5-ph + data-ph); opisy zdjęć w spec §8. Na razie jedno wystąpienie.",
+      "zrzut": {
+        "strona": "v7/home.html",
+        "kotwica": "produkty",
+        "maxh": 1100
+      }
+    },
+    "CE-75": {
+      "nazwa": "Zajawka programu z osią kamieni",
+      "grupa": "karty",
+      "opis": "Szeroka sekcja o dwóch kolumnach 5 / 7 (kontener do 1800 px, marginesy 40 px). Po lewej cały program: chip przerywany z opisem logo, pasek stanu między dwiema kreskami z kwadratowym znacznikiem „na żywo”, nagłówek h2, lead, zdanie-zasada wyróżnione grubą kreską po lewej, dwie liczby z jednostką i podpisem, linia koordynacji naukowej z notą o niezależności eksperta drobnym drukiem i dwa przyciski. Po prawej wysoki kadr 4 : 5, a na jego dolnej krawędzi jasna karta z poziomą osią pięciu kamieni: daty nad linią, opisy pod linią, punkt bieżący z większym węzłem i ciemną plakietką. Karta jest wsunięta 20 px od prawej i dolnej krawędzi kadru, a w lewo sięga poza jego krawędź, więc widać pasek zdjęcia, który mówi, co leży na czym.",
+      "mechanika": "Kadr ma lekki parallaks z szyny: warstwa zdjęcia jest wyższa od ramki, przesuw biegnie od −6 do 0 procent jej wysokości i istnieje tylko przy CX5.motionOn(). Odcinek osi do punktu bieżącego jest ciemny i dorysowuje się od lewej w 0,9 s, gdy oś pierwszy raz wchodzi w okno; węzły wchodzą kaskadą wspólnym revealem, dalsza część osi zostaje jasna i przerywana. Znacznik „na żywo” w pasku stanu i węzeł punktu bieżącego pulsują kwadratowym pierścieniem. Wysokość kadru prowadzi pierwszy wiersz siatki, dzięki czemu karta trzyma się dolnej krawędzi kadru także wtedy, gdy kolumna treści jest wyższa. Poniżej 900 px kolejność zmienia wyłącznie kadr (4 : 3, na górze) – karta zostaje za treścią, żeby oś nie wyprzedzała programu w czytaniu; oś staje pionowo: linia po lewej, węzły jeden pod drugim, odcinek przebyty ciągły i ciemny, dalszy przerywany. Bez JS-u i przy reduced-motion wszystko stoi narysowane: kadr bez parallaksu, oś z ciemnym odcinkiem, bez pulsu.",
+      "baza": {
+        "plik": "v7/home.html",
+        "kotwica": "prochnica-plus"
+      },
+      "kod": {
+        "css": "ce/CE-75-zajawka-programu.css",
+        "js": "ce/CE-75-zajawka-programu.js"
+      },
+      "czesci": [
+        "chip przerywany z opisem logo programu",
+        "pasek stanu ze znacznikiem „na żywo”",
+        "nagłówek h2 i lead",
+        "zdanie-zasada na grubej kresce",
+        "dwie liczby z jednostką i podpisem",
+        "linia koordynacji naukowej z notą o niezależności",
+        "dwa przyciski",
+        "wysoki kadr 4 : 5 z parallaksem",
+        "karta z osią pięciu kamieni i plakietką punktu bieżącego"
+      ],
+      "warianty": {},
+      "uwagi": "Zbudowany dla nowej strony głównej (spec home-spec.md §5.8). Oś mówi tym samym językiem co CE-49 i CE-51 (stany kamieni, znacznik „jesteśmy tutaj”), ale jest zajawką, nie harmonogramem: pięć punktów bez mechaniki otwierania. Liczby świadomie bez EL-31 (c5-aff) – sufiks podnosi się do górnej krawędzi cyfr tylko przy naprawdę dużej liczbie. Chip opisu logo korzysta z klasy strony c5h-phchip; na stronie bez niej zostaje zwykły c5-chip--dashed. Na razie jedno wystąpienie.",
+      "zrzut": {
+        "maxh": 1100
       }
     }
   },

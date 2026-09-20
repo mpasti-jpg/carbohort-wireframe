@@ -1,0 +1,233 @@
+/* ===== CE-75 · Zajawka programu z osią kamieni (rejestr: ce-rejestr.js) ==================================
+   Prefix: c5-pg. New block of the shared layer, built for the home page.
+
+   Grid 5 / 7: on the left the programme status bar, the heading, the lead, the
+   highlighted sentence, two numbers, the line of scientific coordination and
+   two buttons; on the right a tall frame and, across its bottom edge, a light
+   card with the milestone axis (five nodes in a row).
+   The frame is capped at --c5-pg-figw and hugs the right edge of its column,
+   so it keeps its 4 : 5 on a wide screen instead of growing into a landscape
+   band; the card takes the whole column, which leaves it sticking out to the
+   left of the frame and gives the five milestones room to break.
+   The frame is decorative (alt=""), the card is content: below 900 px only the
+   frame moves to the top with `order`, the card keeps its place after the text,
+   so the reading order never leaves the axis before the programme.
+
+   Pattern rules: grey scale and --w-* / --c5- tokens, sharp corners, no
+   gradients, no shadows on cards. The block lives in the shared layer, so a
+   change here shows on every page that links it. A change wanted in one place
+   only is a new variant or a new CE with the next number, never an edit of the
+   shared rules. Comments in English, never the em dash.
+
+   Registry: zasoby/kod/ce-rejestr.js, entry CE-75.
+   ===================================================================== */
+
+.c5-pg{
+  /* The frame is sized by its HEIGHT and takes its width from 4 : 5, so the
+     ratio holds at every width instead of turning into a landscape band in a
+     wide column. The height also gives row 1 of the grid a definite size,
+     which is what lets the card hang on the bottom edge of the frame even
+     when the left column is the taller one. */
+  --c5-pg-figh:clamp(560px,60vw,880px);
+  --c5-pg-cardx:20px;      /* card inset from the right and bottom of the frame */
+  --c5-pg-bleed:110px;     /* how far the card reaches left, past the frame */
+  --c5-pg-par:-6;          /* parallax of the photo layer, per cent of its height */
+  --c5-pg-when:1.625rem;   /* the date row of a milestone */
+  --c5-pg-noderow:34px;    /* the row the axis line runs through */
+  --c5-pg-node:10px;       /* a milestone node */
+  --c5-pg-nodenow:16px;    /* the „jesteśmy tutaj” node */
+}
+
+/* --- the two columns ------------------------------------------------------ */
+.c5-pg__grid{display:flex;flex-direction:column;gap:clamp(1.75rem,5vw,2.5rem);}
+.c5-pg__body{display:flex;flex-direction:column;align-items:flex-start;
+  gap:clamp(1.125rem,2vw,1.625rem);}
+.c5-pg__h{margin:0;}
+.c5-pg__lead{margin:0;}
+
+/* --- the status bar ------------------------------------------------------- */
+/* One line of four facts between two hairlines, with a marker in front that
+   says the programme is running now. The marker is a square, like every node
+   in V7, and it breathes instead of blinking. */
+.c5-pg__state{display:flex;align-items:flex-start;gap:12px;margin:0;
+  padding-block:10px;border-block:1px solid var(--w-border-subtle);
+  align-self:stretch;
+  font-size:var(--w-font-sm-size);line-height:1.45;color:var(--w-text-secondary);}
+.c5-pg__live{position:relative;flex:none;width:8px;height:8px;margin-top:.45em;
+  background:var(--w-gray-900);}
+.c5-pg__live::after{content:"";position:absolute;inset:-4px;
+  border:1px solid var(--w-gray-900);
+  animation:c5-pg-pulse 2.4s cubic-bezier(.16,1,.3,1) infinite;}
+@keyframes c5-pg-pulse{
+  0%{transform:scale(.6);opacity:.55;}
+  70%{transform:scale(1.9);opacity:0;}
+  100%{transform:scale(1.9);opacity:0;}
+}
+
+/* --- the sentence that carries the whole programme ------------------------ */
+.c5-pg__rule{margin:0;padding-left:clamp(1rem,1.6vw,1.375rem);
+  border-left:3px solid var(--w-gray-900);
+  font-size:clamp(1.0625rem,1.5vw,1.25rem);line-height:1.4;
+  font-weight:var(--w-weight-medium);letter-spacing:-0.01em;
+  color:var(--w-text-primary);}
+
+/* --- the two numbers ------------------------------------------------------ */
+/* Neither number is big enough for EL-31 (`c5-aff` lifts a unit to the top of
+   a large numeral); at this size the unit simply follows the digit. */
+.c5-pg__nums{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(1.25rem,2.5vw,2.5rem);align-self:stretch;}
+.c5-pg__num{display:flex;flex-direction:column;gap:6px;min-width:0;}
+.c5-pg__numv{display:flex;align-items:baseline;gap:.35em;margin:0;
+  font-size:clamp(2.25rem,3.4vw,3rem);line-height:1;
+  font-weight:var(--w-weight-medium);letter-spacing:-0.02em;
+  font-variant-numeric:tabular-nums;}
+.c5-pg__numu{font-size:.42em;font-weight:var(--w-weight-regular);letter-spacing:0;}
+.c5-pg__numl{margin:0;font-size:var(--w-font-sm-size);line-height:1.45;
+  color:var(--w-text-secondary);}
+
+/* --- scientific coordination --------------------------------------------- */
+/* The note belongs to the first of the two names; the dotted underline is what
+   ties them together, because on the home page both names stand in one line. */
+.c5-pg__sci{display:flex;flex-direction:column;gap:10px;align-self:stretch;
+  padding-top:clamp(.5rem,1vw,1rem);}
+.c5-pg__scil{margin:0;font-size:var(--w-font-sm-size);line-height:1.5;
+  color:var(--w-text-secondary);}
+.c5-pg__sciname{color:var(--w-text-primary);
+  border-bottom:1px dotted var(--w-border-strong);}
+.c5-pg__indep{display:flex;gap:8px;align-items:flex-start;margin:0;}
+.c5-pg__indep > .wf-icon{flex:none;margin-top:1px;color:var(--w-icon-muted);}
+
+.c5-pg__go{margin-top:clamp(.25rem,1vw,.75rem);}
+
+/* --- the frame ------------------------------------------------------------ */
+/* The photo layer is taller than the frame, so the shift never uncovers an
+   edge: --c5-pg-par runs from -6 to 0 (per cent of the layer height) while the
+   frame travels through the window. The module removes the property when the
+   bus has no motion, and the picture stands still. */
+.c5-pg__fig{position:relative;order:-1;margin:0;overflow:hidden;
+  width:100%;aspect-ratio:4 / 3;background:var(--w-gray-200);}
+.c5-pg__img{position:absolute;inset:-6% 0 auto;width:100%;height:118%;
+  object-fit:cover;
+  transform:translateY(calc(var(--c5-pg-par,-6) * 1%));will-change:transform;}
+
+/* --- the card with the axis ----------------------------------------------- */
+.c5-pg__card{position:relative;z-index:1;
+  background:var(--w-surface-page);border:1px solid var(--w-border-default);
+  padding:clamp(1.25rem,2.2vw,1.875rem);}
+
+.c5-pg__axis{position:relative;list-style:none;margin:0;padding:0;}
+.c5-pg__ms{position:relative;min-width:0;}
+.c5-pg__when{margin:0;font-size:0.8125rem;line-height:1.3;
+  font-weight:var(--w-weight-medium);letter-spacing:-0.01em;
+  font-variant-numeric:tabular-nums;color:var(--w-text-primary);}
+.c5-pg__what{margin:0;font-size:0.75rem;line-height:1.4;color:var(--w-text-secondary);}
+
+/* the node: a square, like every numbered marker of V7. Done is filled, what
+   is still ahead of us is an outline. */
+.c5-pg__node{position:relative;flex:none;width:var(--c5-pg-node);
+  height:var(--c5-pg-node);background:var(--w-surface-page);
+  border:1px solid var(--w-border-strong);}
+.c5-pg__ms--done .c5-pg__node{background:var(--w-gray-900);border-color:var(--w-gray-900);}
+.c5-pg__ms--now .c5-pg__node{width:var(--c5-pg-nodenow);height:var(--c5-pg-nodenow);
+  background:var(--w-gray-900);border-color:var(--w-gray-900);}
+.c5-pg__ms--now .c5-pg__node::after{content:"";position:absolute;inset:-5px;
+  border:1px solid var(--w-gray-900);
+  animation:c5-pg-pulse 2.4s cubic-bezier(.16,1,.3,1) infinite;}
+
+/* the plate that names the point we are standing on. `block` + `fit-content`
+   keeps it on a line of its own in both layouts: inline-block would let the
+   description of the milestone run alongside it in the column layout. */
+.c5-pg__here{display:block;width:fit-content;margin-bottom:6px;padding:3px 8px;
+  background:var(--w-gray-900);color:var(--w-text-inverse);
+  font-size:0.6875rem;line-height:1.3;font-weight:var(--w-weight-medium);
+  letter-spacing:.04em;text-transform:uppercase;}
+
+/* --- the axis in a column (phone and narrow window) ----------------------- */
+/* The line stands on the left and every milestone draws the segment UNDER its
+   own node: solid and dark for what is behind us, dashed for what is ahead. */
+.c5-pg__ms{display:grid;grid-template-columns:var(--c5-pg-nodenow) minmax(0,1fr);
+  column-gap:14px;padding-bottom:var(--w-space-5);}
+.c5-pg__ms:last-child{padding-bottom:0;}
+.c5-pg__when{grid-column:2;}
+.c5-pg__what{grid-column:2;margin-top:4px;}
+.c5-pg__node{grid-column:1;grid-row:1 / span 2;justify-self:center;align-self:start;
+  margin-top:3px;}
+.c5-pg__ms:not(:last-child)::before{content:"";position:absolute;
+  left:calc(var(--c5-pg-nodenow) / 2);top:22px;bottom:4px;width:0;
+  border-left:1px dashed var(--w-border-strong);}
+/* what is behind us is drawn solid and dark; the specificity has to match the
+   rule above, or the dashed style of the future would win */
+.c5-pg__ms--done:not(:last-child)::before{border-left-style:solid;
+  border-left-color:var(--w-gray-900);}
+
+@media (min-width:900px){
+  /* Two rows: row 1 is exactly as high as the frame, row 2 takes whatever the
+     left column has left over. The card lives in ROW 1 with `align-self:end`,
+     so it hangs on the bottom edge of the frame and does not follow the
+     programme text down when that column is the taller one. */
+  .c5-pg__grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);
+    grid-template-rows:var(--c5-pg-figh) auto;column-gap:40px;align-items:start;}
+  .c5-pg__body{grid-column:1;grid-row:1 / span 2;}
+  .c5-pg__fig{grid-column:2;grid-row:1;order:0;aspect-ratio:auto;
+    height:var(--c5-pg-figh);width:calc(var(--c5-pg-figh) * 4 / 5);max-width:100%;
+    margin-inline-start:auto;}
+  /* the card lies across the bottom of the frame: inset from its right and
+     bottom edge, reaching --c5-pg-bleed past its left edge into the free part
+     of the column, so the strip of photo that stays visible says which of the
+     two is on top */
+  .c5-pg__card{grid-column:2;grid-row:1;z-index:1;
+    align-self:end;justify-self:end;
+    width:min(calc(100% - var(--c5-pg-cardx)),
+      calc(var(--c5-pg-figh) * 4 / 5 + var(--c5-pg-bleed)));
+    margin:0 var(--c5-pg-cardx) var(--c5-pg-cardx) 0;}
+}
+
+/* --- the axis in a row ----------------------------------------------------
+   From 1200 px, and not from the breakpoint of the layout: the plate of the
+   current point runs in one line (`nowrap`) and needs about 100 px, and below
+   1200 px a fifth of the card is narrower than that, so the plate would either
+   break in two or reach into the milestone next to it. Under that width the
+   axis simply stays in its column form, which reads better there anyway. */
+@media (min-width:1200px){
+  /* five milestones in a row: dates over the line, descriptions under it. The
+     nodes land at 10, 30, 50, 70 and 90 per cent of the axis, so the line runs
+     between the first and the last of them and the dark part stops at the
+     second – the point we are standing on. */
+  .c5-pg__axis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+    column-gap:12px;}
+  .c5-pg__axis::before,.c5-pg__axis::after{content:"";position:absolute;
+    left:10%;top:calc(var(--c5-pg-when) + var(--c5-pg-noderow) / 2);}
+  .c5-pg__axis::before{right:10%;height:0;
+    border-top:1px dashed var(--w-border-strong);}
+  .c5-pg__axis::after{right:70%;height:1px;background:var(--w-gray-900);
+    transform-origin:left center;}
+
+  .c5-pg__ms{display:grid;grid-template-columns:none;
+    grid-template-rows:var(--c5-pg-when) var(--c5-pg-noderow) auto;
+    justify-items:center;text-align:center;padding-bottom:0;column-gap:0;}
+  .c5-pg__ms::before{display:none;}
+  .c5-pg__when{grid-column:auto;}
+  .c5-pg__what{grid-column:auto;margin-top:0;}
+  .c5-pg__node{grid-column:auto;grid-row:2;justify-self:center;align-self:center;
+    margin-top:0;}
+  /* one line, centred on its node; the tighter tracking and padding keep the
+     plate inside its fifth of the card at 1200 px */
+  .c5-pg__here{margin-inline:auto;white-space:nowrap;padding-inline:7px;
+    letter-spacing:.03em;}
+}
+
+/* --- entrances ------------------------------------------------------------ */
+/* The dark half of the line is drawn from the left when the axis first shows
+   up (the nodes cascade through the shared reveal of [data-reveal]). The guard
+   is the same as in ce/00-reveal.css, so without JS, below 900 px and at
+   reduced motion the line simply stands there, drawn. */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  html.cx-js .c5-pg__axis::after{transform:scaleX(0);
+    transition:transform .9s cubic-bezier(.16,1,.3,1);}
+  html.cx-js .c5-pg__axis.is-in::after{transform:scaleX(1);}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .c5-pg__live::after,.c5-pg__ms--now .c5-pg__node::after{animation:none;opacity:0;}
+  .c5-pg__img{transform:none;}
+}

@@ -1,0 +1,159 @@
+/* ===== CE-73 · Oś kroków z horyzontem efektu (rejestr: ce-rejestr.js) ==================================
+   Prefix: c5-st. New block of the shared layer, built for the home page.
+
+   Four steps in four columns under one line, numbers in nodes sitting on the
+   line. Below them the horizon bar: two segments in about 1 : 4 on one time
+   axis with their captions. On a phone the steps stack with a vertical line on
+   the left and the horizon becomes two rows.
+
+   Pattern rules: grey scale and --w-* / --c5- tokens, sharp corners, no
+   gradients, no shadows on cards. The block lives in the shared layer, so a
+   change here shows on every page that links it. A change wanted in one place
+   only is a new variant or a new CE with the next number, never an edit of the
+   shared rules. Comments in English, never the em dash.
+
+   Registry: the entry of this block lives in ce-rejestr.js (typographic quotes
+   only in its texts).
+   ===================================================================== */
+
+/* The root of the block is the section itself, so it only carries the knobs;
+   the stack of the three parts lives in `__body`, one level lower, next to the
+   head of the section (it takes the shared head gap from `.c5h-head + *`). */
+.c5-st{
+  --c5-st-node:30px;          /* side of the numbered node (EL-32, local copy) */
+  --c5-st-gap:clamp(20px,2.4vw,40px);
+  --c5-st-bar:12px;           /* height of a horizon segment */
+}
+.c5-st__body{display:flex;flex-direction:column;gap:clamp(3rem,6vw,5.5rem);}
+
+/* ===== The axis of four steps ==========================================
+   The line is one absolutely placed element spanning the whole row, drawn at
+   the height of the node centres; the dark fill inside it is the only thing
+   the scroll moves (scaleX). Default state = complete: without JS, below
+   900 px and with reduced motion the line is full and every node is lit, so
+   the section never reads as half finished. The module adds `data-st` to the
+   axis, which hands both over to the progress variable. */
+.c5-st__axis{position:relative;}
+.c5-st__line{position:absolute;left:0;right:0;top:calc(var(--c5-st-node) / 2);
+  height:1px;background:var(--w-border-default);}
+.c5-st__fill{display:block;width:100%;height:100%;background:var(--w-gray-900);
+  transform:scaleX(1);transform-origin:left center;}
+.c5-st__axis[data-st] .c5-st__fill{transform:scaleX(var(--c5-st-p,0));}
+
+.c5-st__steps{display:grid;grid-template-columns:minmax(0,1fr);
+  gap:clamp(2rem,4vw,2.75rem);margin:0;padding:0;list-style:none;}
+.c5-st__step{position:relative;display:flex;flex-direction:column;
+  gap:clamp(.75rem,1.4vw,1.125rem);min-width:0;}
+
+/* Node: a 1 px square with the step number, standing on the line. Lit = filled
+   with the darkest ink and a light digit. EL-32 in a local copy, as on
+   Kukurydza (c5-fa__no), one size up because it sits on a wide axis. */
+.c5-st__node{display:flex;align-items:center;justify-content:center;
+  width:var(--c5-st-node);height:var(--c5-st-node);
+  background:var(--w-gray-900);border:1px solid var(--w-gray-900);
+  color:var(--w-text-inverse);
+  font-size:0.75rem;font-weight:var(--w-weight-medium);line-height:1;
+  font-variant-numeric:tabular-nums;letter-spacing:.02em;}
+.c5-st__axis[data-st] .c5-st__node{background:var(--w-surface-page);
+  border-color:var(--w-border-strong);color:var(--w-text-tertiary);
+  transition:background-color .35s var(--w-ease),border-color .35s var(--w-ease),
+    color .35s var(--w-ease);}
+.c5-st__axis[data-st] .c5-st__step[data-on] .c5-st__node{
+  background:var(--w-gray-900);border-color:var(--w-gray-900);
+  color:var(--w-text-inverse);}
+
+.c5-st__t{margin:0;font-size:clamp(1.25rem,1.55vw,1.75rem);line-height:1.18;
+  font-weight:var(--w-weight-medium);letter-spacing:-0.015em;}
+.c5-st__p{margin:0;font-size:0.9375rem;line-height:1.55;
+  color:var(--w-text-secondary);max-width:34ch;}
+
+@media (min-width:900px){
+  .c5-st__steps{grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--c5-st-gap);
+    align-items:start;}
+  /* two lines of room for every title, so the sentences below start on one
+     line whatever a single title does */
+  .c5-st__t{min-height:2.36em;}
+}
+
+/* Phone: the axis turns and runs down the left edge; the nodes keep their
+   place on it and the copy moves to the right of the line. */
+@media (max-width:899px){
+  .c5-st{--c5-st-node:26px;}
+  /* touch target: 44 px of height for the link under the time axis */
+  .c5-st__link{min-height:44px;}
+  .c5-st__body{gap:clamp(2.5rem,9vw,3.5rem);}
+  .c5-st__line{left:calc(var(--c5-st-node) / 2);top:0;bottom:0;right:auto;
+    width:1px;height:auto;}
+  .c5-st__fill{transform:scaleY(1);transform-origin:top center;}
+  .c5-st__axis[data-st] .c5-st__fill{transform:scaleY(var(--c5-st-p,0));}
+  .c5-st__step{padding-left:calc(var(--c5-st-node) + 20px);}
+  .c5-st__node{position:absolute;left:0;top:0;}
+}
+
+/* ===== Horizon of the effect ===========================================
+   One time axis, two segments about 1 : 4: the first season and the two to
+   five years after it. Four explicit rows keep the parts of both segments on
+   the same lines whatever the copy does, while the markup stays grouped by
+   segment (a screen reader reads a segment as a whole). */
+.c5-st__hz{display:flex;flex-direction:column;gap:clamp(1.25rem,2.4vw,2rem);}
+.c5-st__hzh{margin:0;font-size:clamp(1.25rem,1.55vw,1.75rem);line-height:1.2;
+  font-weight:var(--w-weight-medium);letter-spacing:-0.015em;}
+
+.c5-st__tl{display:grid;grid-template-columns:1fr 4fr;column-gap:6px;row-gap:0;}
+.c5-st__part{display:contents;}
+.c5-st__lbl{grid-row:1;align-self:end;padding-bottom:var(--w-space-3);
+  font-size:1rem;font-weight:var(--w-weight-medium);line-height:1.25;
+  letter-spacing:-0.01em;color:var(--w-text-primary);}
+.c5-st__bar{grid-row:2;display:block;height:var(--c5-st-bar);
+  border:1px solid var(--w-gray-900);overflow:hidden;}
+.c5-st__barf{display:block;width:100%;height:100%;background:var(--w-gray-900);}
+/* The second segment is the long, slow one: the same axis, a lighter fill, so
+   the difference reads at a glance without a second colour. */
+.c5-st__part--b .c5-st__barf{background:var(--w-gray-400);}
+.c5-st__tick{grid-row:3;justify-self:end;display:flex;flex-direction:column;
+  align-items:flex-end;gap:5px;font-size:0.75rem;line-height:1.2;
+  color:var(--w-text-secondary);font-variant-numeric:tabular-nums;}
+.c5-st__tick::before{content:"";width:1px;height:10px;background:var(--w-gray-900);}
+.c5-st__seg{grid-row:4;margin:0;padding-top:var(--w-space-3);
+  font-size:0.9375rem;line-height:1.5;color:var(--w-text-secondary);}
+
+.c5-st__foot{display:flex;flex-wrap:wrap;align-items:baseline;
+  gap:var(--w-space-3) clamp(1rem,2.5vw,2rem);margin:0;}
+.c5-st__foot p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
+.c5-st__link{display:inline-flex;align-items:center;gap:8px;
+  font-size:0.9375rem;font-weight:var(--w-weight-medium);
+  color:var(--w-text-primary);text-decoration:underline;text-underline-offset:4px;}
+.c5-st__link .wf-icon{transition:transform var(--w-duration-base) var(--w-ease);}
+.c5-st__link:hover .wf-icon{transform:translateX(4px);}
+
+/* Phone: two rows, each with its own bar; the 1 : 4 ratio survives as the
+   width of the bar inside its row (--c5-st-bw on the segment). */
+@media (max-width:899px){
+  .c5-st__tl{grid-template-columns:minmax(0,1fr);row-gap:clamp(1.5rem,5vw,2rem);}
+  .c5-st__part{display:flex;flex-direction:column;align-items:stretch;gap:0;}
+  /* in a flex column `align-self` works across the inline axis, so the
+     bottom-alignment the grid rows need would push the label to the right */
+  .c5-st__lbl{align-self:stretch;}
+  .c5-st__lbl,.c5-st__bar,.c5-st__tick,.c5-st__seg{grid-row:auto;}
+  .c5-st__bar{width:var(--c5-st-bw,100%);}
+  /* the mark still sits at the END of its own bar, so the two rows read as
+     one scale even though they no longer share a line */
+  .c5-st__tick{align-self:flex-start;align-items:flex-end;
+    width:var(--c5-st-bw,100%);margin-top:6px;}
+  .c5-st__tick::before{display:none;}
+}
+
+/* Entry of the segments: the fills sweep from the left once the horizon first
+   enters the window, 600 ms and 900 ms, behind the same gates as the reveal of
+   the page. Without JS, on a phone and with reduced motion both bars are full
+   from the start. */
+@media (min-width:900px) and (prefers-reduced-motion:no-preference){
+  .cx-js .c5-st__hz[data-reveal] .c5-st__barf{transform:scaleX(0);transform-origin:left center;}
+  .cx-js .c5-st__hz[data-reveal].is-in .c5-st__barf{transform:none;
+    transition:transform .6s var(--w-ease) .25s;}
+  .cx-js .c5-st__hz[data-reveal].is-in .c5-st__part--b .c5-st__barf{
+    transition-duration:.9s;transition-delay:.35s;}
+}
+@media (prefers-reduced-motion:reduce){
+  .c5-st__fill,.c5-st__node,.c5-st__barf,.c5-st__link .wf-icon{transition:none;}
+}

@@ -1,0 +1,1392 @@
+/* ===== 00 baza ===========================================================
+   home.css – the home page layer (V7), built from numbered blocks; block 00 is
+   the shared base of the page, the following blocks belong to the sections.
+
+   What lives here: only what the WHOLE page shares and what ce/00-base.css
+   does not already give. Nothing here may duplicate the pattern layer – if a
+   rule belongs to one section, it belongs to that section's block; if it
+   belongs to every page of the pattern, it belongs to ce/ and is a separate
+   job. Grey scale and --w-* / --c5-* tokens only: no new colours, no
+   gradients, sharp corners (the outline kicker is the one sanctioned round
+   corner). Comments in English, never the em dash.
+
+   SECTION RHYTHM – read before adding anything. The page has ONE geometry,
+   taken 1:1 from Kukurydza (the newest page on the wide container):
+     <section class="c5-sec" id="…" data-chapter="…" data-ce="CE-NN">
+       <div class="c5-wrap c5-wrap--wide"> … </div>
+     </section>
+   `.c5-sec` (ce/00-base.css) gives padding-block clamp(3.5rem,7vw,6.25rem);
+   `.c5-wrap--wide` (EL-29) gives max-width 1800 px and 40 px of side padding
+   from 900 px. Kukurydza adds NO rhythm system of its own and neither do we.
+   Mixing 1180 px and 1800 px on one page leaves a visible step (up to 270 px
+   at 1920), so every section of home stays on --wide. Two modifiers below are
+   the only permitted deviation, for bands that carry their own height. ===== */
+
+/* --- Section rhythm modifiers (use sparingly, comment why) --------------- */
+.c5h-sec--flush{padding-block:0;}
+.c5h-sec--tight{padding-block:clamp(2rem,4vw,3.25rem);}
+
+/* --- Dock clearance ------------------------------------------------------
+   The advisor dock (chrome.js) is fixed, 560 px wide, centred, its top edge
+   about 80 px above the bottom of the window. Anything pinned to the bottom
+   edge stops at this distance. One number for the whole page, so the scenes
+   of A, B and C cannot drift apart. */
+:root{--c5h-dock:96px;}
+
+/* --- CE-07 dot rail on the wide container --------------------------------
+   The shared position (30 px from the edge, 28 px wide) puts the hit areas of
+   the rail on the last 18 px of the content between 900 and 1440 px. On the
+   wide container the rail moves into the 40 px side margin instead. Same rule
+   as on Kukurydza and six other pages; do not solve it any other way. */
+@media (min-width:900px){.c5-dots{right:10px;}}
+
+/* ===== 00 · Głowa sekcji (EL-06 + EL-09 + EL-12) =========================
+   The one head of every section on this page:
+
+     <div class="c5h-head" data-reveal>
+       <span class="c5-kicker c5-kicker--outline">Diagnoza</span>
+       <div class="c5-head">
+         <h2 class="c5-h2">…</h2>
+         <p class="c5-lead">…</p>       (optional)
+       </div>
+     </div>
+
+   The kicker is EL-06 in its `--outline` variant (a framed label, 8 px radius
+   – Mateusz's one exception to the sharp corners of V7). Its shared
+   margin-bottom is dropped here, because the gap is the flex gap of the head.
+   `data-reveal` on the head makes its two children come in 90 ms apart
+   (ce/00-reveal.css); the attribute is optional and does nothing below 900 px,
+   at reduced motion or without JS. ===================================== */
+.c5h-head{display:flex;flex-direction:column;align-items:flex-start;
+  gap:clamp(1.25rem,2.4vw,2rem);}
+.c5h-head > .c5-kicker{margin-bottom:0;}
+/* Centred variant: for a section whose whole head stands in the middle. */
+.c5h-head--center{align-items:center;text-align:center;}
+.c5h-head--center .c5-h2{margin-inline:auto;}
+.c5h-head--center .c5-lead{margin-inline:auto;}
+/* Distance from the head to the body of the section. Sections that need
+   another value set --c5h-headgap on their own root. */
+.c5h-head + *{margin-top:var(--c5h-headgap,clamp(2.5rem,5vw,4.5rem));}
+
+/* --- „Head on the left, content on the right” ----------------------------
+   The second head layout of the page: from 900 px the head keeps a narrow
+   column and the body of the section stands next to it. The ratio is a
+   variable, because the spec asks for 5/7, 7/5, 6/6 and 4/8 in different
+   sections – set --c5h-split on the element, e.g. style="--c5h-split:7fr 5fr".
+   Below 900 px it is one column and the head sits on top, so the reading
+   order of the markup (head first) is also the reading order on a phone. */
+.c5h-split{display:grid;gap:clamp(2rem,4vw,3rem);}
+.c5h-split > .c5h-head + *{margin-top:0;}
+@media (min-width:900px){
+  .c5h-split{grid-template-columns:var(--c5h-split,minmax(0,5fr) minmax(0,7fr));
+    gap:40px;align-items:start;}
+}
+
+/* ===== 00 · Siatka 12 kolumn ============================================
+   One grid for the whole page: below 900 px a single column, from 900 px
+   twelve tracks with a 40 px gutter (the gutter of the wide container).
+   A child declares its span through a variable, so the markup carries the
+   number and the stylesheet carries no dozen span classes:
+
+     <div class="c5h-grid">
+       <div class="c5h-col" style="--c5h-span:5"> … </div>
+       <div class="c5h-col" style="--c5h-span:7"> … </div>
+     </div>
+
+   `minmax(0,1fr)` keeps a long unbreakable string (a phone number, a product
+   name) from pushing the track wider than its share – the usual cause of a
+   horizontal scrollbar. ================================================== */
+.c5h-grid{display:grid;gap:var(--c5h-gap,var(--w-space-6));
+  grid-template-columns:minmax(0,1fr);}
+.c5h-col{min-width:0;}
+@media (min-width:900px){
+  .c5h-grid{grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--c5h-gap,40px);}
+  .c5h-col{grid-column:span var(--c5h-span,12);}
+}
+
+/* ===== 00 · Placeholder zdjęcia ==========================================
+   V7 has two incompatible placeholder dialects. This page uses ONE of them:
+   dialect 2, the `data-ph` + ::after one from produkty.css and
+   carbomat-mata.css (the pattern page this skeleton comes from). Copied
+   here unchanged, because .c5-ph lives in no shared stylesheet yet.
+   Do NOT bring in the `<span class="c5-ph__label">` dialect from
+   carbomat-humic.css – one page, one dialect.
+
+     <div class="c5h-r4x3 c5-ph" data-ph="foto 4:3 · rozsiew lignitu na polu"
+          aria-hidden="true"></div>
+
+   Label convention: `<typ> <proporcje> · <co ma tam być>`, lower case.
+   A placeholder that carries meaning (not decoration) takes a role instead of
+   aria-hidden: role="img" aria-label="Zdjęcie poglądowe: …". ============= */
+.c5-ph{position:relative;background:var(--w-gray-200);overflow:hidden;}
+.c5-ph::after{content:attr(data-ph);position:absolute;left:10px;bottom:8px;
+  font-size:0.75rem;line-height:1.2;color:var(--w-gray-500);}
+.c5-ph--dark{background:var(--w-gray-800);}
+.c5-ph--dark::after{color:rgb(255 255 255 / .7);}
+
+/* Frame proportions, page-local so the ratio stays out of the dialect. */
+.c5h-r16x9{aspect-ratio:16/9;}
+.c5h-r4x3{aspect-ratio:4/3;}
+.c5h-r1x1{aspect-ratio:1/1;}
+.c5h-r4x5{aspect-ratio:4/5;}
+
+/* --- Dashed chip describing a picture (EL-16 `c5-chip--dashed`) ----------
+   For the frames where a REAL photo has to stand and no stand-in may be
+   shown (the team photo, the programme logo). The chip is the neutral,
+   publishable way of saying what belongs there – the repo is public, so no
+   working marks go into visible copy. Inside a frame it lies on the bottom
+   left; the frame needs position:relative. Sentence case, not the uppercase
+   of the base chip, because this is a description and not a label. */
+.c5h-phchip{text-transform:none;letter-spacing:0;
+  background:var(--w-surface-page);color:var(--w-text-secondary);}
+.c5h-phchip--in{position:absolute;left:12px;bottom:12px;
+  max-width:calc(100% - 24px);}
+
+/* ===== 00 · Drobiazgi typograficzne =====================================
+   Two line-breaking hints, scoped to #main so the header, the footer and the
+   dock (chrome.js) keep their own typography. `balance` evens out the last
+   line of a short heading, `pretty` keeps a single word off the last line of
+   a paragraph. Both degrade to nothing in browsers without support. The h1 is
+   left out on purpose: the hero animates it word by word. =============== */
+#main h2,#main h3{text-wrap:balance;}
+#main p,#main li,#main figcaption,#main dd{text-wrap:pretty;}
+/* Opt-out for a heading that is broken by hand (<br> or &nbsp;). */
+#main .c5h-nobalance{text-wrap:wrap;}
+
+/* ===== 10 hero =========================================================
+   This block is appended to home.css in file-name order; block 00 carries
+   the shared head, grid, placeholder and rhythm.
+
+   CE-08 `kadr-w-tle` on the home page: the kicker above the H1 (home is the one
+   page of the pattern whose hero has one), the A/B heading switch of the
+   mock-up, the settling of the frame (scale 1.06 -> 1) and its parallax.
+   Height 100svh minus the menu minus 112 px, so the entry band peeks above the
+   fold. Scrim and shadows: set --c5-hero-scrim / --c5-hero-shadow on the
+   section, do not edit ce/CE-08-hero.css.
+
+   The tail of the block holds the two page-level numbers of the trust marquee
+   (CE-09 `z-ikona`): the duration follows the LENGTH of the track and the gap
+   follows the fact that this page runs the band without thumbnails.
+
+   Rules: class prefixes c5-<klocek> for a shared block, c5h- for a page-local
+   one. Interface elements come from the EL registry (c5-btn, c5-kicker,
+   c5-chip, c5-note, c5-h3, c5-src); from the kit only wf-icon, wf-link,
+   wf-sr-only and the form fields. Grey scale and --w-* / --c5-* tokens only,
+   sharp corners, no gradients. Comments in English, never the em dash. ===== */
+
+/* --- Height, scrim and the two frosted plates ---------------------------
+   The shared variant fills the window below the menu. Home takes the height of
+   the entry band (CE-71) off that, so its first cells stand above the bottom
+   edge of the window and the page announces that it continues. The band is one
+   row of 112 px only where the labels fit one line; under about 1400 px they
+   break and the band grows, so the number is a variable, not a constant.
+
+   Contrast: a bright, sunlit photo cannot carry white copy on its own, and a
+   text shadow does not count towards WCAG. So the copy takes two frosted
+   plates (the language of the CE-20 variant „szklane”): blur plus a flat dark
+   fill, sharp corners, no gradient. The plates sit under the copy only, the
+   rest of the frame stays bright. The scrim goes to .28, which is what the
+   headline needs where it crosses a lit leaf. Everything is scoped to #hero,
+   so ce/CE-08-hero.css stays untouched and no other page sees it. */
+@media (min-width:900px){
+  #hero{--c5h-band:144px;
+    min-height:calc(100svh - var(--cx-navbar-h, 0px) - var(--c5h-band));}
+  #hero .c5-hero--bg{--c5-hero-scrim:rgb(0 0 0 / .28);}
+  /* the right column grows by the padding of its plate */
+  #hero .c5-hero--bg .c5-hero__inner{
+    grid-template-columns:minmax(0,1fr) minmax(0,clamp(22rem,33vw,38rem));}
+}
+@media (min-width:1400px){
+  #hero{--c5h-band:124px;}
+}
+@media (min-width:1500px){
+  #hero{--c5h-band:134px;}
+}
+@media (max-width:899px){
+  #hero .c5-hero--bg{--c5-hero-scrim:rgb(0 0 0 / .28);}
+}
+
+/* The plate under the lead, the buttons and the advisor link. The fallback
+   without backdrop-filter has no photo to frost, so it carries the darkness
+   on its own. */
+.c5h-plate{background:rgb(10 10 10 / .58);}
+@supports (backdrop-filter:blur(14px)) or (-webkit-backdrop-filter:blur(14px)){
+  .c5h-plate{background:rgb(10 10 10 / .44);
+    -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);}
+}
+#hero .c5-hero__side{padding:clamp(24px,2.2vw,32px);
+  background:rgb(10 10 10 / .58);max-width:none;}
+@supports (backdrop-filter:blur(14px)) or (-webkit-backdrop-filter:blur(14px)){
+  #hero .c5-hero__side{background:rgb(10 10 10 / .44);
+    -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);}
+}
+
+/* A laptop window (768-820 px tall) has to carry the same opening, so the
+   plate and its copy take the tighter step; without it the hero grows past its
+   budget and pushes the entry band below the fold. */
+@media (min-width:900px) and (max-height:820px){
+  #hero .c5-hero__side{padding:20px;gap:clamp(1rem,1.6vw,1.25rem);}
+  #hero .c5-hero__lead{font-size:1rem;line-height:1.5;}
+  #hero .c5h-hero__ask{min-height:40px;}
+}
+
+/* --- Kicker above the H1 -------------------------------------------------
+   The shared variant has no kicker at all, so the pair is wrapped in one grid
+   item and takes the cell the H1 used to take. The lockup is a one-column
+   grid: the kicker is placed by itself in the first row, the H1 keeps the
+   `grid-row` of the shared rule in a row of its own. The kicker rides its own
+   small frosted label, which is a box of its own: the category phrase has to
+   read wherever the crop of the photo lands. */
+.c5h-hero__lockup{display:grid;grid-template-columns:minmax(0,1fr);}
+#hero .c5h-hero__lockup{grid-column:1;grid-row:3;align-self:end;}
+#hero .c5h-hero__lockup > .c5h-hero__kbox{grid-column:1;grid-row:1;
+  justify-self:start;margin-bottom:clamp(0.75rem,1.4vw,1.25rem);
+  padding:9px 15px;background:rgb(10 10 10 / .58);}
+@supports (backdrop-filter:blur(12px)) or (-webkit-backdrop-filter:blur(12px)){
+  #hero .c5h-hero__lockup > .c5h-hero__kbox{background:rgb(10 10 10 / .46);
+    -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);}
+}
+#hero .c5h-hero__lockup > .c5-hero__title{grid-column:1;grid-row:2;align-self:auto;}
+#hero .c5h-hero__kicker{display:block;max-width:44rem;margin-bottom:0;
+  font-size:0.8125rem;letter-spacing:.06em;color:var(--w-white);}
+/* The crop pages carry a headline of about twelve characters a line; the one
+   here is three sentences, so the step down one size keeps it at three lines
+   and leaves the lead column its weight. */
+#hero .c5-hero--bg .c5-hero__title{font-size:clamp(2.25rem,4.6vw,4.25rem);
+  max-width:11em;line-height:1.04;letter-spacing:-0.022em;
+  text-shadow:0 0 3px rgb(0 0 0 / .55),0 0 22px rgb(0 0 0 / .6),0 0 60px rgb(0 0 0 / .5);}
+
+/* --- Third action: a quiet link on the plate, not a third button ---------
+   Opens the advisor dock through the shared hook [data-jurek-open].
+   A button, because it opens a panel and goes nowhere; styled as a link with
+   an icon so the pair of buttons above keeps its weight. */
+.c5h-hero__ask{display:inline-flex;align-items:center;gap:var(--w-space-3);
+  align-self:flex-start;min-height:44px;
+  padding:0;font:inherit;font-size:0.9375rem;font-weight:var(--w-weight-medium);
+  color:var(--w-white);
+  background:none;border:0;border-bottom:1px solid rgb(255 255 255 / .45);
+  border-radius:0;cursor:pointer;
+  transition:border-color var(--w-duration-base) var(--w-ease);}
+.c5h-hero__ask:hover{border-bottom-color:var(--w-white);}
+.c5h-hero__ask .wf-icon{opacity:.85;}
+
+/* --- Review pill „Nagłówek: A · B” ---------------------------------------
+   Top right corner of the hero, in the row the crop pages give to the
+   breadcrumb. Same shape as the variant pill of CE-12 on Produkty (dashed
+   frame, upper-case label, two buttons with aria-pressed), redrawn here for a
+   dark frame because this page does not link the CE-12 sheet. */
+.c5h-hpill{display:inline-flex;align-items:center;gap:2px;padding:3px 4px 3px 12px;
+  border:1px dashed rgb(255 255 255 / .55);background:rgb(0 0 0 / .28);}
+#hero .c5h-hpill{grid-column:2;grid-row:1;justify-self:end;align-self:start;}
+.c5h-hpill__txt{font-size:0.75rem;line-height:1.45;letter-spacing:.04em;
+  text-transform:uppercase;color:rgb(255 255 255 / .8);}
+.c5h-hpill__sep{color:rgb(255 255 255 / .5);}
+.c5h-hpill__btn{display:inline-flex;align-items:center;justify-content:center;
+  min-width:34px;min-height:34px;padding:6px 10px;font:inherit;font-size:0.75rem;
+  letter-spacing:.04em;color:rgb(255 255 255 / .85);background:none;
+  border:1px solid transparent;border-radius:0;cursor:pointer;
+  transition:background var(--w-duration-base) var(--w-ease),color var(--w-duration-base) var(--w-ease);}
+.c5h-hpill__btn:hover{background:rgb(255 255 255 / .16);}
+.c5h-hpill__btn[aria-pressed="true"]{background:var(--w-white);color:var(--w-gray-900);}
+
+/* --- Entrance: the H1 comes in word by word ------------------------------
+   The shared file raises the whole headline in one piece; here the module
+   splits it into words, so that animation is switched off and each word runs
+   its own, 45 ms after the one before. Only with JS, only where the pattern
+   allows motion. The words are ordinary spans inside the h1, so the headline
+   is one string for a screen reader and nothing carries aria-hidden. */
+html.cx-js #hero .c5-hero__title{animation:none;}
+@media (prefers-reduced-motion: no-preference){
+  html.cx-js #hero .c5h-hero__kicker{animation:c5HeroRise .7s var(--w-ease) .05s both;}
+  html.cx-js #hero .c5h-hpill{animation:c5HeroRise .7s var(--w-ease) .05s both;}
+  html.cx-js #hero .c5-hero__title.is-split .c5h-word{
+    display:inline-block;
+    animation:c5hWordIn .6s var(--w-ease) both;
+    animation-delay:calc(var(--i, 0) * 45ms + .12s);}
+}
+@keyframes c5hWordIn{from{opacity:0;transform:translateY(.4em);}to{opacity:1;transform:none;}}
+
+/* Parallax of the frame: the module writes the offset into the independent
+   `translate` property, so the `transform` of the settling animation in
+   ce/CE-08-hero.css keeps running untouched. */
+#hero .c5-hero__bgimg{will-change:translate;}
+
+/* --- Below 900 px --------------------------------------------------------
+   The shared variant lays the frame out as one grid cell with the H1 on it.
+   On a phone the whole of the first screen has to carry the opening, so the
+   frame keeps 42 svh instead of 62 and everything under it closes up: kicker,
+   headline, lead and the first button stand above the fold. The plate under
+   the right column goes away here, because below the frame the copy is back
+   on the page background in dark type. */
+@media (max-width:899px){
+  #hero{min-height:0;}
+  #hero .c5-hero--bg{grid-template-rows:minmax(0,42svh) auto;}
+  /* .c5-hero__inner is display:contents here, so its z-index goes with the box
+     and the frame, which IS positioned, would paint over what is left in that
+     cell. The two boxes that lie on the frame take the stacking order back. */
+  #hero .c5h-hero__lockup,#hero .c5h-hpill{position:relative;z-index:1;}
+  #hero .c5h-hero__lockup{grid-area:1 / 1;align-self:end;
+    padding-inline:var(--w-space-5);padding-bottom:clamp(0.875rem,3.5vw,1.25rem);}
+  #hero .c5h-hero__lockup > .c5h-hero__kbox{margin-bottom:8px;padding:7px 12px;}
+  #hero .c5h-hero__lockup > .c5-hero__title{padding:0;
+    font-size:clamp(1.5rem,7.4vw,2.25rem);line-height:1.08;}
+  #hero .c5h-hero__kicker{max-width:none;font-size:0.6875rem;line-height:1.35;}
+  #hero .c5h-hpill{grid-area:1 / 1;align-self:start;justify-self:end;
+    margin:clamp(0.625rem,2.6vw,0.875rem) var(--w-space-5) 0 0;}
+  #hero .c5-hero__side{padding:clamp(0.875rem,3.6vw,1.25rem) var(--w-space-5) 0;
+    background:none;-webkit-backdrop-filter:none;backdrop-filter:none;
+    gap:clamp(0.75rem,3vw,1.125rem);}
+  #hero .c5-hero__lead{font-size:0.9375rem;line-height:1.5;}
+  #hero .c5-hero__lead p{margin:0;}
+  /* under the frame the copy stands on the page background again */
+  #hero .c5h-hero__ask{color:var(--w-text-primary);
+    border-bottom-color:var(--w-border-strong);}
+  #hero .c5h-hero__ask:hover{border-bottom-color:var(--w-gray-900);}
+}
+
+/* ===== 12 marquee zaufania (CE-09 `z-ikona`) ==============================
+   Numbers that follow the content of THIS page, exactly where the shared sheet
+   asks for them (ce/CE-09-marquee.css). On home the band is a line of trust
+   under the hero, not a statement slide, so it takes a smaller size than the
+   product pages and about 120 px of height instead of 320; the icon follows
+   the type. The band runs without the photo thumbnails, so the items need more
+   air between them, and the track carries six long items instead of four short
+   ones, so the duration grows with it to keep the speed of the pattern (about
+   68 px/s). With reduced motion the track stands still and the duplicated half
+   of it, which exists only to make the loop seamless, is dropped. ======== */
+#zaufanie{--c5-marq-gap:clamp(1.75rem,3.4vw,3.25rem);
+  padding-block:clamp(1.875rem,3.4vw,2.75rem);}
+#zaufanie .c5-marq__txt{font-size:clamp(18px,2.2vw,34px);}
+#zaufanie .c5-marq__ico{width:clamp(16px,1.4vw,22px);height:clamp(16px,1.4vw,22px);}
+#zaufanie .c5-marq__track{animation-duration:60s;}
+@media (prefers-reduced-motion: reduce){
+  #zaufanie .c5-marq__item[aria-hidden="true"]{display:none;}
+}
+
+/* ===== 30 jak pomagamy =========================================================
+   This block is part of home.css; block 00 carries the shared head, grid,
+   placeholder and rhythm.
+
+   ONLY the nested CE-23 advisor band of section 4. Everything that belongs to
+   the step axis and the effect horizon goes to ce/CE-73-os-krokow.css, because
+   that block is shared.
+
+   Rules: class prefixes c5-<klocek> for a shared block, c5h- for a page-local
+   one. Interface elements come from the EL registry (c5-btn, c5-kicker,
+   c5-chip, c5-note, c5-h3, c5-src); from the kit only wf-icon, wf-link,
+   wf-sr-only and the form fields. Grey scale and --w-* / --c5-* tokens only,
+   sharp corners, no gradients. Comments in English, never the em dash. ===== */
+
+/* --- CE-23 „Pas CTA”, variant „z-ikona” ---------------------------------
+   A band between two hairlines, four tracks from 1120 px: icon frame, the two
+   sentences, the row of question chips, the button. Below that the chips get
+   their own line, and on a phone the whole band stacks. The shape follows
+   .c5pr-bar (produkty.css) – the same CE, one track more, because this band
+   carries the chips as well as the button. */
+.c5h-ask{display:grid;grid-template-columns:auto minmax(0,1fr);
+  gap:clamp(1rem,2vw,1.5rem) clamp(1rem,2vw,1.75rem);align-items:center;
+  border-top:1px solid var(--w-gray-900);
+  border-bottom:1px solid var(--w-border-default);
+  padding:clamp(1.5rem,3vw,2.25rem) 0;}
+.c5h-ask__ico{color:var(--w-gray-900);}
+.c5h-ask__ico .wf-icon{width:20px;height:20px;}
+.c5h-ask__txt{margin:0;font-size:0.9375rem;line-height:1.5;}
+.c5h-ask__lead{font-weight:var(--w-weight-semibold);color:var(--w-text-primary);}
+
+/* The chips are buttons; a chip is a question, so it keeps sentence case and
+   loses the letter-spacing of the base chip (EL-16). */
+.c5h-ask__chips{display:flex;flex-wrap:wrap;gap:8px;min-width:0;}
+.c5h-ask__chip{padding:9px 14px;font-size:0.8125rem;text-transform:none;
+  letter-spacing:0;color:var(--w-text-primary);cursor:pointer;
+  transition:background-color var(--w-duration-base) var(--w-ease),
+    border-color var(--w-duration-base) var(--w-ease);}
+.c5h-ask__chip:hover{background:var(--w-surface-hover);border-color:var(--w-gray-900);}
+.c5h-ask__btn{white-space:nowrap;}
+
+@media (min-width:900px){
+  .c5h-ask{grid-template-columns:auto minmax(0,20rem) minmax(0,1fr) auto;}
+}
+@media (min-width:900px) and (max-width:1119px){
+  /* three tracks: the chips drop to a line of their own under the sentences */
+  .c5h-ask{grid-template-columns:auto minmax(0,1fr) auto;}
+  .c5h-ask__chips{grid-column:2 / -1;}
+}
+@media (max-width:899px){
+  /* touch target: the question chips reach 44 px through padding alone */
+  .c5h-ask__chip{min-height:44px;}
+  .c5h-ask{grid-template-columns:auto minmax(0,1fr);row-gap:var(--w-space-5);}
+  .c5h-ask__chips,.c5h-ask__btn{grid-column:1 / -1;}
+  .c5h-ask__btn{justify-self:start;}
+}
+@media (max-width:479px){
+  .c5h-ask__btn{width:100%;}
+}
+
+/* ===== 40 dowod =========================================================
+   This block is part of home.css; block 00 carries the shared head, grid,
+   placeholder and rhythm.
+
+   Section 5: the dark number band (CE-24 `rzad`), the retention experiment with
+   its horizontal bars (CE-41), the „to zależy” note (EL-17) and the document
+   rows (CE-53 `dokumenty`). Final values stay in the HTML; the bars and the
+   counters only animate what is already there.
+
+   Rules: class prefixes c5-<klocek> for a shared block, c5h- for a page-local
+   one. Interface elements come from the EL registry (c5-btn, c5-kicker,
+   c5-chip, c5-note, c5-h3, c5-src); from the kit only wf-icon, wf-link,
+   wf-sr-only and the form fields. Grey scale and --w-* / --c5-* tokens only,
+   sharp corners, no gradients. Comments in English, never the em dash. ===== */
+
+/* ===== 40.1 · CE-24 „Pas liczb”, variant „rzad” =========================
+   A dark frame the width of the container: small title top left, under it five
+   columns parted by hairlines, each one number, label and source. The variant
+   differs from the base (one number per ROW, screen height) by standing the
+   numbers side by side in ONE row, so the band stays a strip and the section
+   below it starts high on the page. */
+.c5h-nums{background:var(--w-gray-950);color:var(--w-text-inverse);
+  padding:clamp(1.75rem,3.2vw,2.75rem) clamp(1.25rem,2.4vw,2.5rem);}
+.c5h-nums__title{margin:0 0 clamp(1.75rem,3.4vw,3rem);
+  font-size:0.8125rem;font-weight:var(--w-weight-medium);letter-spacing:.06em;
+  text-transform:uppercase;color:rgb(255 255 255 / .7);}
+.c5h-nums__row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+  margin:0;padding:0;list-style:none;}
+.c5h-num{display:flex;flex-direction:column;gap:var(--w-space-3);min-width:0;
+  padding-inline:clamp(1rem,1.6vw,1.75rem);}
+.c5h-num + .c5h-num{border-left:1px solid rgb(255 255 255 / .2);}
+.c5h-num:first-child{padding-left:0;}
+.c5h-num:last-child{padding-right:0;}
+.c5h-num__val{display:flex;align-items:flex-start;gap:.12em;line-height:1;
+  font-size:clamp(3.5rem,5vw,7rem);font-weight:var(--w-weight-medium);
+  letter-spacing:-0.035em;font-variant-numeric:tabular-nums;}
+.c5h-num__lbl{font-size:0.9375rem;line-height:1.45;color:rgb(255 255 255 / .92);}
+.c5h-num__src{margin-top:auto;padding-top:var(--w-space-2);}
+
+/* --- Digit reel (mechanics ported from o-firmie.css 10 / CE-24 „kolowrotek”)
+   Every digit is a window one digit high holding a strip of values, the target
+   at the bottom and the way to it above. The strip starts pushed up by its own
+   length, so a 0 stands in the window, and the animation brings it back to 0:
+   the digits roll from top to bottom. The script builds the strips, so without
+   JS and with reduced motion the plain number of the markup simply stands
+   there. Transform only. */
+.c5h-odo{--c5h-odo-h:1.06em;display:inline-flex;}
+.c5h-odo__wrap{display:inline-flex;}
+.c5h-odo__d{display:block;height:var(--c5h-odo-h);overflow:hidden;}
+.c5h-odo__strip{display:block;will-change:transform;
+  transform:translateY(calc(var(--c5h-i,0) * var(--c5h-odo-h) * -1));}
+.c5h-odo__strip > span{display:block;height:var(--c5h-odo-h);line-height:var(--c5h-odo-h);}
+.c5h-odo.is-roll .c5h-odo__strip{transition:transform 1.1s cubic-bezier(.2,.7,.2,1);
+  transition-delay:var(--c5h-delay,0ms);}
+
+/* 1100-1279 px: the five columns stay, one step smaller. Breaking them into
+   3 + 2 would leave an empty cell in the second row, and five numbers are the
+   whole point of the band. */
+@media (min-width:1100px) and (max-width:1279px){
+  .c5h-num{padding-inline:clamp(.75rem,1.2vw,1.25rem);}
+  .c5h-num__val{font-size:clamp(2.5rem,4.2vw,3.5rem);letter-spacing:-0.03em;}
+  .c5h-num__lbl{font-size:0.875rem;line-height:1.4;}
+  .c5h-num__src{font-size:0.6875rem;}
+}
+/* Under 1100 px a column would be about 190 px wide, too little for a big
+   number and a four-line label: the band turns into rows, the number on the
+   left and the label with its source on the right. One track for every number
+   (subgrid), so the labels start on one line down the whole band. */
+@media (max-width:1099px){
+  .c5h-nums__row{grid-template-columns:minmax(4.5rem,auto) minmax(0,1fr);}
+  .c5h-num{display:grid;grid-template-columns:subgrid;grid-column:1 / -1;
+    align-items:baseline;gap:var(--w-space-2) var(--w-space-5);
+    padding:var(--w-space-5) 0 0;border-left:0;}
+  .c5h-num:first-child{padding-top:0;}
+  .c5h-num + .c5h-num{border-top:1px solid rgb(255 255 255 / .2);}
+  .c5h-num__val{grid-column:1;font-size:clamp(2rem,5vw,3.25rem);letter-spacing:-0.02em;}
+  .c5h-num__lbl{grid-column:2;font-size:0.9375rem;}
+  /* the source keeps the left edge of the LABEL, not of the dark panel */
+  .c5h-num__src{grid-column:2;margin-top:0;padding-top:var(--w-space-1);}
+}
+@media (max-width:899px){
+  .c5h-nums{padding-inline:var(--w-space-4);}
+  .c5h-num{gap:var(--w-space-2) var(--w-space-4);}
+  .c5h-num__lbl{font-size:0.875rem;}
+}
+/* No subgrid (older engines): a plain two-track row per item, the reading
+   order and the hairlines stay the same. */
+@supports not (grid-template-columns:subgrid){
+  @media (max-width:1099px){
+    .c5h-nums__row{grid-template-columns:minmax(0,1fr);}
+    .c5h-num{grid-template-columns:minmax(4.5rem,auto) minmax(0,1fr);grid-column:auto;}
+  }
+}
+
+/* ===== 40.2 · CE-41 – doświadczenie retencyjne w ramce ==================
+   The framed block and the bar chart take the visual language of
+   produkty.html#dowod-bloki (.c5pr-block + .c5-barchart), rebuilt here because
+   the page does not load c5.css. Row: label | track | value. The scale is
+   50 % = the whole track, so the numbers of the experiment keep their
+   proportions; the last row runs past its value and says so with a chevron. */
+.c5h-proof{margin-top:clamp(2.5rem,5vw,4rem);row-gap:clamp(2rem,4vw,3rem);}
+.c5h-side{display:flex;flex-direction:column;gap:clamp(1.5rem,3vw,2.25rem);}
+/* Under 1200 px the 7 / 5 split leaves the bar labels about 140 px and every
+   one of them wraps, so the two halves stand one under another instead. */
+@media (min-width:900px) and (max-width:1199px){
+  /* grid-column, not --c5h-span: the span variable is inline on the element
+     and an inline custom property wins over any rule in this sheet */
+  .c5h-proof > .c5h-col{grid-column:span 12;}
+}
+
+/* The frame fills its column, so the two halves of the grid end on one line;
+   the footnote is pushed to its bottom edge instead of leaving a void there. */
+.c5h-block{display:flex;flex-direction:column;gap:var(--w-space-4);height:100%;
+  border:1px solid var(--w-border-default);background:var(--w-surface-page);
+  padding:clamp(1.25rem,2.2vw,2rem);}
+.c5h-block__sub{margin:0;font-size:0.875rem;color:var(--w-text-secondary);}
+.c5h-block > .c5-src{margin-top:auto;padding-top:var(--w-space-2);}
+.c5h-chart{display:flex;flex-direction:column;gap:clamp(.75rem,1.4vw,1.125rem);
+  margin-top:var(--w-space-2);}
+.c5h-bar{display:grid;grid-template-columns:minmax(7.5rem,32%) minmax(0,1fr) minmax(4.25rem,auto);
+  gap:var(--w-space-3);align-items:center;font-size:var(--w-font-sm-size);}
+.c5h-bar__lbl{min-width:0;color:var(--w-text-secondary);}
+.c5h-bar__track{position:relative;height:14px;background:var(--w-gray-100);
+  border:1px solid var(--w-border-subtle);}
+.c5h-bar__fill{display:block;width:var(--bw,0%);height:100%;background:var(--w-gray-900);}
+/* „over”: the value runs past the scale, so a caret picks up where the fill
+   ends and steps over the right edge of the track. --bw sits on the row, not
+   on the fill, so both can read it. */
+.c5h-bar__more{position:absolute;top:50%;left:var(--bw,0%);display:flex;
+  margin-left:3px;transform:translateY(-50%);color:var(--w-text-primary);}
+.c5h-bar__val{text-align:right;font-variant-numeric:tabular-nums;
+  font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+.c5h-bar--over .c5h-bar__lbl{color:var(--w-text-primary);}
+
+/* The chart grows once the block first enters, behind the same gates as the
+   page reveal: with reduced motion, on a phone and without JS the bars simply
+   stand at their full length. Only the fill scales, so the width (--bw) it was
+   given never moves.
+
+   EVERY FILL RUNS ON ONE CLOCK (900 ms, one start). A stagger on the fills
+   would make the chart lie: a longer bar starting 90 ms later is shorter than
+   a nearby short one for most of the run, and these values sit 12 % apart, so
+   no delay short enough to keep the true order is worth seeing. The cascade
+   stays where it costs nothing: the ROWS come in 90 ms apart, and a row that
+   is still arriving carries a fill at the same progress as the rest. */
+@media (min-width:900px) and (prefers-reduced-motion:no-preference){
+  .cx-js [data-reveal] .c5h-bar{opacity:0;transform:translateY(10px);}
+  .cx-js [data-reveal].is-in .c5h-bar{opacity:1;transform:none;
+    transition:opacity .45s var(--w-ease),transform .45s var(--w-ease);}
+  .cx-js [data-reveal].is-in .c5h-bar:nth-child(2){transition-delay:.09s;}
+  .cx-js [data-reveal].is-in .c5h-bar:nth-child(3){transition-delay:.18s;}
+  .cx-js [data-reveal].is-in .c5h-bar:nth-child(4){transition-delay:.27s;}
+  .cx-js [data-reveal].is-in .c5h-bar:nth-child(n+5){transition-delay:.36s;}
+  .cx-js [data-reveal] .c5h-bar__fill{transform:scaleX(0);transform-origin:left center;}
+  .cx-js [data-reveal].is-in .c5h-bar__fill{transform:none;
+    transition:transform .9s var(--w-ease) .2s;}
+  .cx-js [data-reveal] .c5h-bar__more{opacity:0;}
+  .cx-js [data-reveal].is-in .c5h-bar__more{opacity:1;transition:opacity .3s var(--w-ease) 1.15s;}
+}
+@media (max-width:599px){
+  .c5h-bar{grid-template-columns:minmax(0,1fr) minmax(3.75rem,auto);
+    gap:var(--w-space-2) var(--w-space-3);}
+  .c5h-bar__lbl{grid-column:1 / -1;}
+}
+
+/* ===== 40.3 · Nota „to zależy” (EL-17) ================================== */
+.c5h-note{padding:clamp(1.125rem,2vw,1.5rem) clamp(1.25rem,2.2vw,1.75rem);}
+.c5h-note__body{display:flex;flex-direction:column;gap:var(--w-space-3);min-width:0;}
+.c5h-note__body p{line-height:1.55;color:var(--w-text-secondary);}
+.c5h-note__body strong{color:var(--w-text-primary);font-weight:var(--w-weight-semibold);}
+
+/* ===== 40.4 · CE-53 „Lista wierszy z akcją”, variant „dokumenty” ========
+   Rows parted by hairlines: title, numbers under it, arrow on the right. The
+   whole row is the link (one target, 44 px tall), and the arrow steps 4 px
+   right on hover and on focus. */
+.c5h-docs{display:flex;flex-direction:column;gap:var(--w-space-4);}
+.c5h-docs__h{margin:0;}
+.c5h-docs__list{display:flex;flex-direction:column;margin:0;padding:0;list-style:none;
+  border-top:1px solid var(--w-border-subtle);}
+.c5h-docs__list > li{border-bottom:1px solid var(--w-border-subtle);}
+.c5h-doc{display:grid;grid-template-columns:minmax(0,1fr) auto;
+  align-items:center;gap:2px var(--w-space-4);
+  padding:var(--w-space-4) 0;text-decoration:none;color:inherit;}
+.c5h-doc__name{grid-column:1;font-size:0.9375rem;font-weight:var(--w-weight-medium);
+  line-height:1.35;color:var(--w-text-primary);}
+.c5h-doc__meta{grid-column:1;font-size:0.75rem;line-height:1.45;
+  color:var(--w-text-tertiary);}
+.c5h-doc__arr{grid-column:2;grid-row:1 / span 2;color:var(--w-text-secondary);
+  transition:transform var(--w-duration-base) var(--w-ease),color var(--w-duration-base) var(--w-ease);}
+.c5h-doc:hover .c5h-doc__name{text-decoration:underline;text-underline-offset:4px;}
+.c5h-doc:hover .c5h-doc__arr,.c5h-doc:focus-visible .c5h-doc__arr{
+  transform:translateX(4px);color:var(--w-text-primary);}
+.c5h-docs__more{margin-top:var(--w-space-2);}
+
+@media (prefers-reduced-motion:reduce){
+  .c5h-doc__arr,.c5h-bar__fill,.c5h-odo__strip{transition:none;}
+}
+
+/* ===== 60 uprawy =========================================================
+   Section 7: the crop list with its pinned frame panel (CE-30 `z-kadrem`) and
+   the dark configurator band (CE-23 `ciemny`). The frame stops --c5h-dock
+   above the bottom of the window.
+
+   Rules: class prefixes c5-<klocek> for a shared block, c5h- for a page-local
+   one. Interface elements come from the EL registry (c5-btn, c5-kicker,
+   c5-chip, c5-note, c5-h3, c5-src); from the kit only wf-icon, wf-link,
+   wf-sr-only and the form fields. Grey scale and --w-* / --c5-* tokens only,
+   sharp corners, no gradients. Comments in English, never the em dash. ===== */
+
+/* --- geometry of the block ------------------------------------------------
+   The pinned frame starts one navbar plus 20 px below the top edge of the
+   window and never comes closer than --c5h-dock (96 px, block 00) to the
+   bottom, where the advisor dock floats. The 760 px cap keeps the frame from
+   towering over the list on a tall screen: at 1440 x 900 the list is about
+   760 px high, so the two columns end together. */
+.c5h-crops{--c5h-crops-top:calc(var(--cx-navbar-h, 0px) + 20px);
+  --c5h-crops-max:760px;
+  --c5h-crops-no:24px;                 /* the numbered node, EL-32 local copy */
+  --c5h-crops-gap:clamp(1rem,1.6vw,1.5rem);   /* node -> title, title -> chevron */
+  --c5h-crops-wipe:.7s;}
+
+/* --- the list ------------------------------------------------------------- */
+/* Hairlines separate the rows and close the list top and bottom, so the
+   column reads as one object next to the frame. */
+.c5h-crops__list{list-style:none;margin:0;padding:0;
+  border-block:1px solid var(--w-border-subtle);}
+.c5h-crops__row + .c5h-crops__row{border-top:1px solid var(--w-border-subtle);}
+.c5h-crops__h{margin:0;font-weight:inherit;}
+
+/* --- the row button ------------------------------------------------------- */
+/* Three columns: the node, the title block, the chevron. `align-items:start`
+   puts the node and the chevron on the FIRST line of the title (the title is
+   large and the subtitle sits under it), which centring on the whole block
+   would not do. */
+.c5h-crops__tab{display:grid;grid-template-columns:auto minmax(0,1fr) auto;
+  align-items:start;gap:var(--c5h-crops-gap);width:100%;
+  padding:clamp(1.125rem,1.8vw,1.625rem) 0;
+  background:none;border:0;border-radius:0;font:inherit;text-align:left;
+  color:var(--w-text-primary);cursor:pointer;}
+.c5h-crops__tab:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);
+  outline-offset:-2px;}
+
+/* EL-32 in a local copy: 24 px box, hairline frame, 11 px tabular numerals in
+   the body typeface. The open row fills it, so the eye finds the open group
+   from the numbers alone. */
+.c5h-crops__no{display:flex;align-items:center;justify-content:center;flex:none;
+  width:var(--c5h-crops-no);height:var(--c5h-crops-no);
+  margin-top:clamp(3px,.45vw,7px);
+  border:1px solid var(--w-border-strong);background:var(--w-surface-page);
+  font-family:inherit;font-size:0.6875rem;font-weight:var(--w-weight-medium);
+  font-variant-numeric:tabular-nums;letter-spacing:.02em;line-height:1;
+  color:var(--w-text-tertiary);
+  transition:background var(--w-duration-base) var(--w-ease),
+    border-color var(--w-duration-base) var(--w-ease),
+    color var(--w-duration-base) var(--w-ease);}
+
+.c5h-crops__tt{display:flex;flex-direction:column;gap:.375rem;min-width:0;}
+.c5h-crops__t{font-size:clamp(1.75rem,2.4vw,2.5rem);line-height:1.08;
+  letter-spacing:-0.02em;font-weight:var(--w-weight-medium);
+  color:var(--w-text-tertiary);
+  transition:color var(--w-duration-base) var(--w-ease);}
+.c5h-crops__sub{font-size:var(--w-font-sm-size);line-height:1.4;
+  color:var(--w-text-tertiary);}
+.c5h-crops__chev{flex:none;margin-top:clamp(7px,.75vw,11px);
+  color:var(--w-icon-muted);
+  transition:transform var(--w-duration-base) var(--w-ease),
+    color var(--w-duration-base) var(--w-ease);}
+.c5h-crops__tab[aria-expanded="true"] .c5h-crops__chev{transform:rotate(180deg);
+  color:var(--w-icon-default);}
+
+/* the open row: the title goes to full black and the node fills */
+.c5h-crops__row[data-open] .c5h-crops__t{color:var(--w-text-primary);}
+.c5h-crops__row[data-open] .c5h-crops__no{background:var(--w-gray-900);
+  border-color:var(--w-gray-900);color:var(--w-text-inverse);}
+
+/* Hover is a preview, never the only way in (spec §0.5): it lifts the title
+   out of the grey and shows the frame, and it exists only on a device that
+   really hovers. */
+@media (hover:hover){
+  .c5h-crops__tab:hover .c5h-crops__t{color:var(--w-text-secondary);}
+  .c5h-crops__tab:hover .c5h-crops__no{border-color:var(--w-gray-900);}
+  .c5h-crops__row[data-open] .c5h-crops__tab:hover .c5h-crops__t{color:var(--w-text-primary);}
+}
+
+/* --- the open panel -------------------------------------------------------- */
+/* grid 0fr -> 1fr: the row animates to the height of its own content, so no
+   script has to measure anything. Both boxes clip: the track sizes the CONTENT
+   box of the item, so at 0fr its padding would still stand 32 px high, and the
+   panel is what cuts that off. */
+.c5h-crops__panel{display:grid;grid-template-rows:0fr;overflow:hidden;
+  transition:grid-template-rows .38s cubic-bezier(.16,1,.3,1);}
+.c5h-crops__panel > *{overflow:hidden;min-height:0;}
+.c5h-crops__row[data-open] > .c5h-crops__panel{grid-template-rows:1fr;}
+
+/* The content lines up with the title, past the node. SIDE padding only:
+   vertical padding is added to the minimum contribution of a grid item, so
+   with it the 0fr track would never reach zero (it stopped at 32 px). The air
+   above and below comes from margins on the first and last child, which the
+   item clips away when it is closed. The 4 px on the right keep a focus ring
+   off the edge. */
+.c5h-crops__in{display:flex;flex-direction:column;align-items:flex-start;
+  gap:var(--w-space-4);
+  padding-inline:calc(var(--c5h-crops-no) + var(--c5h-crops-gap)) 4px;}
+.c5h-crops__in > :first-child{margin-top:4px;}
+.c5h-crops__in > :last-child{margin-bottom:clamp(1.25rem,2vw,1.75rem);}
+
+/* crop pages of the group: a chip is a link with an arrow (EL-16 + EL-23) */
+.c5h-crops__chips{display:flex;flex-wrap:wrap;gap:8px;}
+.c5h-crops__chip{gap:8px;text-decoration:none;
+  transition:border-color var(--w-duration-base) var(--w-ease),
+    color var(--w-duration-base) var(--w-ease);}
+.c5h-crops__chip .wf-icon{width:14px;height:14px;
+  transition:transform var(--w-duration-base) var(--w-ease);}
+.c5h-crops__chip:hover,.c5h-crops__chip:focus-visible{border-color:var(--w-gray-900);
+  color:var(--w-text-primary);}
+.c5h-crops__chip:hover .wf-icon{transform:translateX(3px);}
+
+/* the second, quiet way out of a row (Jagodowe -> the blueberry group of the
+   configurator): a link that does not pretend to be a button */
+.c5h-crops__quiet{display:inline-flex;align-items:center;gap:8px;
+  font-size:var(--w-font-sm-size);color:var(--w-text-secondary);
+  text-decoration:underline;text-underline-offset:4px;
+  text-decoration-color:var(--w-border-strong);
+  transition:color var(--w-duration-base) var(--w-ease);}
+.c5h-crops__quiet .wf-icon{width:14px;height:14px;
+  transition:transform var(--w-duration-base) var(--w-ease);}
+.c5h-crops__quiet:hover{color:var(--w-text-primary);
+  text-decoration-color:var(--w-gray-900);}
+.c5h-crops__quiet:hover .wf-icon{transform:translateX(3px);}
+
+/* --- the frame inside a row (phone only) ----------------------------------- */
+.c5h-crops__mfig{position:relative;align-self:stretch;width:100%;margin:0;
+  background:var(--w-gray-200);overflow:hidden;}
+.c5h-crops__mimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+
+/* --- the pinned frame column ----------------------------------------------- */
+/* Hidden until the layout that needs it: below 900 px the frame lives inside
+   the row, and without JS there is no chosen row to illustrate. */
+.c5h-crops__side{display:none;}
+.c5h-crops__stage{position:relative;overflow:hidden;background:var(--w-gray-200);}
+
+/* every frame lies in the same box; the shown one is on top */
+.c5h-crops__fig{position:absolute;inset:0;margin:0;visibility:hidden;z-index:0;}
+/* the frame that was on display stays put UNDER the new one, so the wipe
+   uncovers a picture and never the empty stage */
+.c5h-crops__fig[data-prev]{visibility:visible;z-index:1;}
+.c5h-crops__fig[data-on]{visibility:visible;z-index:2;
+  animation:c5h-crops-wipe var(--c5h-crops-wipe) cubic-bezier(.16,1,.3,1) both;}
+/* wiping from the bottom edge upwards: the top inset of the visible rectangle
+   runs 100% -> 0, and the picture settles from a 4 per cent overscale */
+@keyframes c5h-crops-wipe{
+  from{clip-path:inset(100% 0 0 0);transform:scale(1.04);}
+  to{clip-path:inset(0 0 0 0);transform:none;}
+}
+.c5h-crops__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.c5h-crops__ph{position:absolute;inset:0;}
+/* the label of a stand-in runs under the caption plate: the top left corner is
+   the only part of a pinned frame the advisor dock can never reach */
+.c5h-crops__ph::after{top:68px;bottom:auto;left:20px;right:20px;}
+
+/* The plate in the TOP left corner: which group the picture shows. It used to
+   lie at the bottom, where the dock (fixed, 560 px, centred, its top edge 80 px
+   above the bottom of the window) covered it by up to 36 px once the frame was
+   pinned and its bottom edge reached the foot of the window. */
+.c5h-crops__cap{position:absolute;left:20px;top:20px;z-index:1;
+  display:inline-flex;align-items:center;gap:10px;
+  max-width:calc(100% - 24px);padding:9px 14px;
+  background:var(--w-surface-page);color:var(--w-text-primary);
+  font-size:var(--w-font-sm-size);line-height:1.3;
+  font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+.c5h-crops__capno{flex:none;font-size:0.6875rem;font-variant-numeric:tabular-nums;
+  letter-spacing:.06em;font-weight:var(--w-weight-regular);
+  color:var(--w-text-tertiary);}
+
+/* --- touch targets below 900 px -------------------------------------------
+   Every link of an open row is a finger target on a phone, so each one keeps
+   44 px of height. Only the box grows: the type stays where it is. */
+@media (max-width:899px){
+  .c5h-crops__chip{min-height:44px;padding-block:9px;}
+  .c5h-crops__quiet{min-height:44px;}
+}
+
+@media (min-width:900px){
+  .c5h-crops__mfig{display:none;}
+  html.c5h-js .c5h-crops__side{display:block;}
+  /* pinned for the length of the section: the list scrolls, the frame stands */
+  .c5h-crops__stage{position:sticky;top:var(--c5h-crops-top);
+    height:min(calc(100svh - var(--c5h-crops-top) - var(--c5h-dock)),
+      var(--c5h-crops-max));}
+}
+
+/* --- without JS ------------------------------------------------------------ */
+/* Every group open, the list across the whole width, no frames: the section
+   says all six groups and both of everyone's links with no script at all. */
+html:not(.c5h-js) .c5h-crops__panel{grid-template-rows:1fr;}
+html:not(.c5h-js) .c5h-crops__side{display:none;}
+html:not(.c5h-js) .c5h-crops__mfig{display:none;}
+html:not(.c5h-js) .c5h-crops__chev{display:none;}
+html:not(.c5h-js) .c5h-crops__tab{cursor:default;}
+html:not(.c5h-js) .c5h-crops__t{color:var(--w-text-primary);}
+/* the list takes the whole container once there is no frame beside it.
+   `grid-column` and not `--c5h-span`: the span is an inline custom property on
+   the column and a stylesheet cannot outrank an inline declaration. */
+html:not(.c5h-js) .c5h-crops__main{grid-column:1 / -1;}
+
+@media (prefers-reduced-motion: reduce){
+  .c5h-crops__panel,.c5h-crops__t,.c5h-crops__no,.c5h-crops__chev,
+  .c5h-crops__chip,.c5h-crops__quiet{transition:none;}
+  .c5h-crops__chip .wf-icon,.c5h-crops__quiet .wf-icon{transition:none;}
+  .c5h-crops__fig[data-on]{animation:none;}
+}
+
+/* ===== 60 · CE-23 „ciemny” – the configurator band =========================
+   The band closes the section across the whole container: 7 / 5, the text on
+   the left, the way in on the right. The one dark surface of this section, so
+   the reader cannot miss where the choosing happens. */
+.c5h-cfg{margin-top:clamp(2.5rem,5vw,4.5rem);display:grid;
+  gap:clamp(1.75rem,3vw,2.5rem);padding:clamp(1.75rem,3.2vw,3rem);
+  background:var(--w-gray-950);color:var(--w-text-inverse);}
+.c5h-cfg :focus-visible{outline-color:var(--w-focus-ring-inverse);}
+
+.c5h-cfg__body{display:flex;flex-direction:column;align-items:flex-start;
+  gap:clamp(.875rem,1.4vw,1.25rem);}
+/* the outline kicker carries a dark frame by default (EL-06); on this surface
+   it takes a light one instead */
+.c5h-cfg__kicker{margin-bottom:0;border-color:rgb(255 255 255 / .45);
+  color:var(--w-text-inverse);}
+.c5h-cfg__h{font-size:clamp(1.5rem,2.4vw,2.25rem);line-height:1.14;
+  letter-spacing:-0.02em;}
+.c5h-cfg__p{margin:0;max-width:60ch;color:rgb(255 255 255 / .78);}
+
+.c5h-cfg__side{display:flex;flex-direction:column;align-items:flex-start;
+  gap:clamp(1.25rem,2vw,1.75rem);}
+/* the step motif: four empty fields on a line, no captions – the shape of the
+   three or four questions the lead promises, and nothing more */
+.c5h-cfg__steps{display:flex;align-items:center;}
+.c5h-cfg__steps > span{flex:none;width:26px;height:26px;
+  border:1px solid rgb(255 255 255 / .3);}
+.c5h-cfg__steps > span + span{position:relative;margin-left:34px;}
+.c5h-cfg__steps > span + span::before{content:"";position:absolute;
+  right:100%;top:50%;width:34px;height:1px;background:rgb(255 255 255 / .25);}
+.c5h-cfg__quiet{display:inline-flex;align-items:center;gap:8px;
+  font-size:var(--w-font-sm-size);color:rgb(255 255 255 / .75);
+  text-decoration:underline;text-underline-offset:4px;
+  text-decoration-color:rgb(255 255 255 / .35);
+  transition:color var(--w-duration-base) var(--w-ease);}
+.c5h-cfg__quiet .wf-icon{width:14px;height:14px;
+  transition:transform var(--w-duration-base) var(--w-ease);}
+.c5h-cfg__quiet:hover{color:var(--w-text-inverse);
+  text-decoration-color:rgb(255 255 255 / .7);}
+.c5h-cfg__quiet:hover .wf-icon{transform:translateX(3px);}
+
+@media (max-width:899px){
+  .c5h-cfg__quiet{min-height:44px;}
+}
+@media (min-width:900px){
+  .c5h-cfg{grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:40px;
+    align-items:center;}
+  .c5h-cfg__side{align-items:flex-end;text-align:right;}
+}
+@media (prefers-reduced-motion: reduce){
+  .c5h-cfg__quiet,.c5h-cfg__quiet .wf-icon{transition:none;}
+}
+
+/* ===== 80 wiedza =========================================================
+   Section 9: three newest articles (CE-58) and the two category tiles plus the
+   guides row (CE-59 `kompakt`). Entrance cascade only, no other mechanics.
+
+   Rules: class prefixes c5-<klocek> for a shared block, c5h- for a page-local
+   one. Interface elements come from the EL registry (c5-btn, c5-kicker,
+   c5-chip, c5-note, c5-h3, c5-src); from the kit only wf-icon, wf-link,
+   wf-sr-only and the form fields. Grey scale and --w-* / --c5-* tokens only,
+   sharp corners, no gradients. Comments in English, never the em dash. ===== */
+
+/* --- head: the heading on the left, the long lead on the right ------------ */
+/* The lead of this section is three lines of definition copy; under the
+   heading it would run the whole 1800 px of the container. `c5h-split` (block
+   00) puts it in the 7fr column and the measure below holds it near 62
+   characters on the widest screen. */
+.c5h-kn__intro{display:flex;flex-direction:column;align-items:flex-start;
+  gap:clamp(.75rem,1.4vw,1.125rem);}
+.c5h-kn__intro .c5-lead{margin:0;max-width:62ch;}
+.c5h-kn__metric{margin:0;}
+
+/* --- the three newest ------------------------------------------------------ */
+.c5h-kn__cards{display:grid;grid-template-columns:minmax(0,1fr);
+  gap:clamp(1rem,2vw,1.5rem);margin-top:clamp(1.75rem,3.2vw,2.5rem);}
+
+/* The whole card is the link: the heading inside it stays a heading, so the
+   list of articles is still a list of headings for a screen reader. */
+.c5h-kn__card{display:flex;flex-direction:column;align-items:flex-start;
+  gap:var(--w-space-3);min-width:0;
+  padding:clamp(1rem,1.7vw,1.5rem);
+  border:1px solid var(--w-border-default);background:var(--w-surface-page);
+  color:var(--w-text-primary);text-decoration:none;
+  transition:border-color var(--w-duration-base) var(--w-ease);}
+.c5h-kn__card:hover,.c5h-kn__card:focus-visible{border-color:var(--w-gray-900);}
+/* The field keeps a true 16 : 9, so the stand-in has the shape of what will
+   stand there. Its width is capped: on the 1800 px container the leading card
+   is up to 1050 px wide and a full-width 16 : 9 field would be 590 px tall,
+   which pushes the section past a screen and a half and leaves the two cards
+   beside it stretched around an empty middle. 26 rem holds the leading card
+   near the height of the two together. */
+.c5h-kn__fig{width:min(100%,26rem);}
+.c5h-kn__t{margin:0;}
+.c5h-kn__card:hover .c5h-kn__t,.c5h-kn__card:focus-visible .c5h-kn__t{
+  text-decoration:underline;text-underline-offset:3px;}
+/* the foot sits on the bottom line of the card, so the three cards share it */
+.c5h-kn__foot{display:flex;align-items:center;justify-content:space-between;
+  gap:var(--w-space-4);align-self:stretch;margin-top:auto;
+  padding-top:var(--w-space-4);}
+/* The two cards beside the leading one carry no picture, so pushing their
+   metric to the bottom line left about 100 px of empty card in the middle.
+   There the author line follows the title straight away and only the arrow
+   stays in the corner, where it belongs as the sign of a link. */
+.c5h-kn__card:not(.c5h-kn__card--lead){position:relative;
+  padding-bottom:calc(clamp(1rem,1.7vw,1.5rem) + var(--w-space-6));}
+.c5h-kn__card:not(.c5h-kn__card--lead) .c5h-kn__foot{margin-top:0;padding-top:0;}
+.c5h-kn__card:not(.c5h-kn__card--lead) .c5h-kn__arrow{position:absolute;
+  right:clamp(1rem,1.7vw,1.5rem);bottom:clamp(1rem,1.7vw,1.5rem);}
+.c5h-kn__meta{min-width:0;}
+.c5h-kn__arrow{flex:none;color:var(--w-icon-muted);
+  transition:transform var(--w-duration-base) var(--w-ease),
+    color var(--w-duration-base) var(--w-ease);}
+.c5h-kn__card:hover .c5h-kn__arrow,.c5h-kn__card:focus-visible .c5h-kn__arrow{
+  transform:translateX(4px);color:var(--w-icon-default);}
+
+/* --- CE-59 „kompakt”: categories and the two ways on --------------------- */
+.c5h-kn__band{display:grid;grid-template-columns:minmax(0,1fr);
+  gap:clamp(1rem,2vw,1.5rem);margin-top:clamp(1rem,2vw,1.5rem);}
+.c5h-kn__cats{display:grid;grid-template-columns:minmax(0,1fr);
+  gap:clamp(1rem,2vw,1.5rem);}
+/* A category is one line: its name, and the arrow that says where it leads.
+   The base block carries counters and subgroup lists; this variant has neither,
+   because the home page states no numbers it cannot source. */
+.c5h-kn__cat{margin:0;}
+.c5h-kn__cat > a{display:flex;align-items:center;justify-content:space-between;
+  gap:var(--w-space-4);min-height:76px;height:100%;
+  padding:var(--w-space-4) clamp(1.125rem,1.9vw,1.75rem);
+  border:1px solid var(--w-border-default);background:var(--w-surface-page);
+  color:inherit;text-decoration:none;
+  transition:border-color var(--w-duration-base) var(--w-ease);}
+.c5h-kn__cat > a:hover,.c5h-kn__cat > a:focus-visible{border-color:var(--w-gray-900);}
+.c5h-kn__cat > a:hover .c5h-kn__arrow{transform:translateX(4px);
+  color:var(--w-icon-default);}
+
+.c5h-kn__side{display:flex;flex-direction:column;
+  gap:clamp(1rem,2vw,1.5rem);}
+/* icon, sentence, way out – one row, wrapping to two lines on a narrow screen */
+.c5h-kn__row{display:flex;flex-wrap:wrap;align-items:center;
+  gap:var(--w-space-3) var(--w-space-4);flex:1 1 auto;
+  padding:var(--w-space-4) clamp(1.125rem,1.9vw,1.75rem);
+  border:1px solid var(--w-border-default);background:var(--w-surface-page);}
+.c5h-kn__ico{flex:none;color:var(--w-icon-muted);}
+.c5h-kn__rowt{flex:1 1 14rem;min-width:0;margin:0;
+  font-size:var(--w-font-sm-size);line-height:1.5;color:var(--w-text-secondary);}
+.c5h-kn__quiet{display:inline-flex;align-items:center;gap:8px;flex:none;
+  font-size:var(--w-font-sm-size);font-weight:var(--w-weight-medium);
+  color:var(--w-text-primary);
+  text-decoration:underline;text-underline-offset:4px;
+  text-decoration-color:var(--w-border-strong);
+  transition:text-decoration-color var(--w-duration-base) var(--w-ease);}
+.c5h-kn__quiet .wf-icon{width:14px;height:14px;
+  transition:transform var(--w-duration-base) var(--w-ease);}
+.c5h-kn__quiet:hover{text-decoration-color:var(--w-gray-900);}
+.c5h-kn__quiet:hover .wf-icon{transform:translateX(3px);}
+
+.c5h-kn__more{margin-top:clamp(1.5rem,2.6vw,2rem);}
+
+/* a quiet link is still a finger target on a phone: the box grows, not the type */
+@media (max-width:899px){
+  .c5h-kn__quiet{min-height:44px;}
+}
+
+@media (min-width:900px){
+  /* the same 7 / 5 rhythm three times over: the leading card, the categories
+     and the closing band all break on the same line */
+  .c5h-kn__cards{grid-template-columns:minmax(0,7fr) minmax(0,5fr);
+    gap:clamp(1rem,2vw,1.5rem) 40px;align-items:stretch;}
+  .c5h-kn__card--lead{grid-row:1 / span 2;}
+  .c5h-kn__band{grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:40px;}
+  .c5h-kn__cats{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .c5h-kn__card,.c5h-kn__arrow,.c5h-kn__cat > a,
+  .c5h-kn__quiet,.c5h-kn__quiet .wf-icon{transition:none;}
+}
+
+/* ===== 90 o nas =========================================================
+   Section 10 (CE-36 `z-wartosciami`): the 6 / 6 row, the three values as icon
+   rows, the film card and its dialog overlay. At the foot of the block also
+   the few page-level rules of section 11 (CE-17 FAQ).
+
+   Grey scale and --w-* / --c5-* tokens only, sharp corners, no gradients;
+   interface elements from the EL registry. Never the em dash. ========== */
+
+/* --- The 6 / 6 row -------------------------------------------------------
+   The head of this section stands in the right column, over the copy (spec
+   §5.10), so both columns start at the top edge and the picture begins at the
+   line of the kicker. Below 900 px the shared grid collapses to one column and
+   the markup order (frame, then copy) is the reading order the spec asks for. */
+.c5h-about__row{align-items:start;}
+
+/* Left column. The frame takes its column, but never more height than the
+   window leaves it: the sticky offset above it (40 px) and the dock clearance
+   below it (--c5h-dock, 96 px, block 00) come off the window height, and a 4:5
+   crop is 0.8 of what is left. That is the second cap. Without it the frame
+   would be 1100 px tall on a 1920 px screen, the sticky column would have
+   nothing to slide against and the chip at its foot would sit under the
+   advisor dock. */
+.c5h-about__frame{width:100%;
+  max-width:min(100%,calc((100svh - 40px - var(--c5h-dock)) * 0.8));
+  display:grid;place-items:center;}
+.c5h-about__ico{width:28px;height:28px;color:var(--w-gray-400);}
+
+@media (min-width:900px){
+  /* The copy column is the taller one, so the picture follows it to the bottom
+     of the row instead of leaving a column of empty grey. `align-self:start`
+     is what gives the sticky box room to travel inside the grid area. */
+  .c5h-about__media{position:sticky;top:40px;align-self:start;}
+}
+@media (max-width:899px){
+  /* On a phone the frame stands above the copy and takes a shallower crop, so
+     the first lines of the section are not pushed a screen and a half down. */
+  .c5h-about__frame{aspect-ratio:4/3;max-width:none;}
+}
+
+/* Right column. One measure for the whole column (40 rem): on the wide
+   container a 6 / 12 track is up to 880 px, which is far past a readable line
+   length, and a paragraph, a values row and the film card all reading to the
+   same edge is what holds the column together. */
+.c5h-about__body{display:flex;flex-direction:column;align-items:flex-start;
+  gap:clamp(1.5rem,3vw,2.25rem);max-width:min(100%,42rem);
+  /* the head is one item of this column, so the column gap is its whole
+     distance to the copy; block 00 measures that gap from the section head
+     down to a body that starts lower on the page than this one does */
+  --c5h-headgap:0;}
+.c5h-about__intro{margin:0;font-size:clamp(1rem,1.1vw,1.0625rem);line-height:1.6;
+  color:var(--w-text-secondary);}
+/* The sentence about continuity answers an objection of its own (the buyer who
+   asks who will pick up the phone next year), so it leaves the body copy: a
+   rule on the left, a size up and the primary ink. */
+.c5h-about__cont{margin:0;border-left:2px solid var(--w-gray-900);
+  padding-left:clamp(1rem,2vw,1.5rem);
+  font-size:clamp(1.0625rem,1.5vw,1.3125rem);line-height:1.4;
+  font-weight:var(--w-weight-medium);letter-spacing:-0.01em;color:var(--w-text-primary);}
+
+/* Reading order on a phone: kicker, heading, frame, then the copy. The copy
+   column dissolves into the one-column grid (display:contents), so its head
+   becomes a grid item of its own and can step over the frame with `order`.
+   Nothing is duplicated in the DOM and the layout above 900 px is untouched.
+   The grid gap takes over from the flex gap of the dissolved column, so it is
+   set to the same value. This block stands after the column declaration on
+   purpose: it overrides its `display`. */
+@media (max-width:899px){
+  .c5h-about__row{--c5h-gap:clamp(1.5rem,3vw,2.25rem);}
+  .c5h-about__body{display:contents;}
+  .c5h-about__body > .c5h-head{order:-1;}
+}
+
+/* --- Three values as rows ------------------------------------------------
+   Rules between the rows instead of three boxes: the values are one list, not
+   three cards, and the page already carries enough framed blocks. */
+.c5h-vals{list-style:none;margin:0;padding:0;width:100%;}
+.c5h-val{display:grid;grid-template-columns:auto minmax(0,1fr);
+  gap:clamp(1rem,2vw,1.5rem);align-items:start;
+  border-top:1px solid var(--w-border-default);padding-block:clamp(1rem,2vw,1.375rem);}
+.c5h-val:last-child{border-bottom:1px solid var(--w-border-default);}
+.c5h-val__ico{color:var(--w-gray-900);}
+.c5h-val__ico .wf-icon{width:20px;height:20px;}
+.c5h-val__body{display:flex;flex-direction:column;gap:6px;}
+.c5h-val__name{margin:0;}
+.c5h-val__txt{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
+
+/* --- Film card -----------------------------------------------------------
+   Poster, a square play button and one caption line, all inside one frame;
+   the sentence sits under it. The card is a plain link to the file, so it
+   works with JS off; the module only intercepts the click. */
+.c5h-film{width:100%;border:1px solid var(--w-border-default);
+  transition:border-color var(--w-duration-base) var(--w-ease);}
+.c5h-film:hover{border-color:var(--w-gray-900);}
+.c5h-film__card{display:block;text-decoration:none;color:inherit;}
+.c5h-film__frame{position:relative;display:block;aspect-ratio:16/9;overflow:hidden;
+  background:var(--w-gray-200);}
+.c5h-film__poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+/* Sharp corners: V7 has no round play control anywhere (the closest pattern,
+   `c5-mt-media__ico` on CARBOMAT MATA, is a square), so this one is a square
+   too. Dark fill, because the poster is a bright, hazy forest. */
+.c5h-film__play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  display:grid;place-items:center;width:64px;height:64px;
+  background:var(--w-gray-900);color:var(--w-text-inverse);
+  transition:background var(--w-duration-base) var(--w-ease);}
+.c5h-film__play .wf-icon{width:24px;height:24px;}
+.c5h-film__card:hover .c5h-film__play,
+.c5h-film__card:focus-visible .c5h-film__play{background:var(--w-gray-700);}
+.c5h-film__cap{display:block;padding:clamp(.875rem,1.6vw,1.125rem) clamp(1rem,2vw,1.375rem) 0;
+  font-size:0.9375rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+.c5h-film__txt{margin:0;padding:6px clamp(1rem,2vw,1.375rem) clamp(1rem,2vw,1.375rem);
+  font-size:0.9375rem;color:var(--w-text-secondary);}
+
+/* --- The player overlay --------------------------------------------------
+   A native dialog: the browser gives the modal behaviour, the backdrop and
+   Escape, the module gives play on open and pause plus rewind on close. Flat
+   dark backdrop, no gradient. */
+.c5h-film__dlg{width:min(1100px,calc(100vw - 2 * var(--c5-gutter)));max-width:none;
+  max-height:calc(100svh - 2 * var(--c5-gutter));
+  margin:auto;padding:0;background:var(--w-gray-900);border:0;border-radius:0;
+  color:var(--w-text-inverse);overflow:visible;}
+.c5h-film__dlg::backdrop{background:rgb(0 0 0 / .78);}
+.c5h-film__panel{position:relative;display:block;}
+.c5h-film__video{display:block;width:100%;height:auto;max-height:calc(100svh - 2 * var(--c5-gutter));
+  background:var(--w-gray-900);}
+/* The close button sits above the film, not over its top right corner, so it
+   never covers the picture; on a narrow screen it moves onto the frame. */
+.c5h-film__x{position:absolute;right:0;top:-56px;background:var(--w-surface-page);}
+@media (max-width:599px){
+  .c5h-film__x{top:6px;right:6px;}
+}
+@media (prefers-reduced-motion: reduce){
+  .c5h-film,.c5h-film__play{transition:none;}
+}
+
+/* --- Closing actions -----------------------------------------------------
+   One button, then the two quiet links on their own row: the three labels are
+   wider than the column at every size, so stacking them is the deliberate
+   version of the wrap that would happen anyway. */
+.c5h-about__acts{display:flex;flex-direction:column;align-items:flex-start;
+  gap:clamp(1.25rem,2.4vw,1.75rem);}
+.c5h-about__links{display:flex;flex-wrap:wrap;gap:clamp(1rem,2vw,1.75rem);}
+.c5h-alink{display:inline-flex;align-items:center;gap:8px;font-size:0.9375rem;
+  font-weight:var(--w-weight-medium);}
+.c5h-alink .wf-icon{transition:transform var(--w-duration-base) var(--w-ease);}
+.c5h-alink:hover .wf-icon,.c5h-alink:focus-visible .wf-icon{transform:translateX(4px);}
+/* Touch targets (W-6): on a phone every arrow link is a 44 px row, here and in
+   the answers of the FAQ. The type does not change, only the box around it. */
+@media (max-width:899px){
+  .c5h-alink{min-height:44px;}
+}
+@media (prefers-reduced-motion: reduce){
+  .c5h-alink .wf-icon{transition:none;}
+}
+
+/* ===== 92 FAQ (CE-17) ====================================================
+   Section 11 has no stylesheet of its own in this workshop, so its handful of
+   rules ride in this block: it is the same owner and it is concatenated just
+   before section 11 would be.
+
+   The pattern (ce/CE-17-faq.css) leaves two things to the page: the `.c5-faq`
+   container, whose top margin follows whatever stands above the accordion, and
+   the inside of an answer. Here the head of the section already sets that
+   distance (`c5h-head + *` in block 00), so the container only needs to be the
+   column the pattern expects. ========================================== */
+.c5-faq{display:flex;flex-direction:column;}
+/* Answers on this page carry paragraphs and a row of links, not one string of
+   text, so the inner box becomes a column with its own rhythm. */
+.c5h-faq .c5-faq__ain{display:flex;flex-direction:column;gap:var(--w-space-4);}
+.c5h-faq .c5-faq__ain p{margin:0;line-height:1.6;}
+/* The links close the answer: one row, wrapping, with room above them. */
+.c5h-faq__links{display:flex;flex-wrap:wrap;gap:clamp(1rem,2vw,1.75rem);
+  margin-top:var(--w-space-1);}
+.c5h-faq__links .c5h-alink{color:var(--w-text-primary);}
+
+/* The head of the section keeps the left column and the accordion stands next
+   to it. On the 1800 px container the pattern geometry (question, then the
+   answer column at the far right) left about 1300 px between a short question
+   and its chevron; inside an 8 / 12 track the row is a readable line again.
+   Page-local, `ce/CE-17-faq.css` untouched. A little more of the row goes to
+   the question, because the answers here are short. */
+@media (min-width:900px){
+  #faq .c5-faq__item{grid-template-columns:minmax(0,1fr) minmax(0,460px);}
+}
+/* The head and the list stand side by side only where both still read well:
+   from 1600 px. Narrower than that, a 4 / 12 head plus the answer column would
+   push the questions onto two lines (and below about 1200 px squeeze them into
+   270 px), so the head goes back over the accordion and the list takes the
+   full container, exactly as the rest of the page does. The pairing is there
+   for the wide end, where the pattern geometry alone left about 1300 px
+   between a short question and its chevron. */
+@media (max-width:1599px){
+  #faq .c5h-split{display:block;}
+  #faq .c5h-split > .c5h-head + *{margin-top:clamp(2.5rem,5vw,4.5rem);}
+}
+
+/* ===== 94 kontakt =========================================================
+   Section 12: the copy on the CE-16 `kontakt` band (big tel: link, hours,
+   three actions) and the two wide purchase tiles below it (CE-20 `szerokie`).
+   The growth of the frame itself comes from ce/CE-16-pas-pro.css.
+
+   Grey scale and --w-* / --c5-* tokens only, sharp corners, no gradients;
+   interface elements from the EL registry. Never the em dash. ========== */
+
+/* --- The frame of the band ------------------------------------------------
+   The pattern keeps only the mechanics; the frame belongs to the page. Copied
+   from o-firmie.css, which runs the same variant, with one change: 16:10
+   instead of 3:2, because the source picture is a portrait (933 x 1400) and a
+   deeper crop would leave the hands half outside the band.
+   30 px corners are the one sanctioned exception to the sharp corners of V7. */
+.c5-pro__media{position:relative;width:100%;aspect-ratio:16/10;border-radius:30px;
+  overflow:hidden;background:var(--w-gray-500);}
+/* page-specific: overrides .c5-pro__side p from ce/CE-16-pas-pro.css.
+   .85 rather than the .75 of the pattern: on this frame the copy column lies
+   over the lit hand, and the two values differ by about a full contrast step
+   there (see the note on the scrim below). */
+.c5-pro__side p{margin:0;color:var(--w-text-inverse);opacity:.85;}
+
+@media (max-width:899px){
+  /* static: the frame stands above the content, 30 px from the screen edges */
+  .c5-pro__media{margin:var(--c5-gutter) var(--c5-gutter) 0;width:auto;}
+}
+@media (prefers-reduced-motion: reduce){
+  /* without motion the frame does not scale: it stands above the content */
+  .c5-pro__media{margin-inline:auto;max-width:calc(100% - 2 * var(--c5-gutter));}
+}
+@media (min-width:900px){
+  /* static (reduced / no JS): the frame above the content does not eat the screen */
+  .c5-pro__media{margin:var(--c5-gutter) auto 0;width:auto;
+    max-width:calc(100% - 2 * var(--c5-gutter));max-height:min(56vh,520px);}
+}
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  /* in the scene the frame covers the band and scales around its centre */
+  .cx-js .c5-pro__media{position:absolute;inset:0;margin:0;width:auto;max-width:none;
+    aspect-ratio:auto;max-height:none;
+    transform:scale(var(--pro-s,1));transform-origin:center;will-change:transform;}
+  /* In this state `.c5-pro` is a grid and `.c5-wrap` has margin-inline:auto, so
+     the automatic margins eat the free space and the container shrinks to its
+     content. The pattern does not show it (both its columns are 486 px); here
+     the heading column is elastic, so without this the copy drifts inward.
+     Same fix as the closing band of Kukurydza. */
+  .cx-js .c5-pro__grid{width:100%;}
+  /* Scrim .48 instead of the pattern .25, flat fill as always (no gradient).
+     Measured on the built page at 1440 x 900, with the copy hidden so only the
+     frame is read: under the paragraph the pattern value leaves peaks of .29
+     luminance, which is 3.0:1 for pure white and about 2.4:1 for the .75 ink
+     of the pattern. At .48 the same peak is .18 and the paragraph, at .85,
+     clears 4:1 across the column. The closing band of Kukurydza carries the
+     same override for the same reason (.4 over a dusty combine). The
+     photograph here is a stand-in (spec §8), so the value is reviewed with the
+     final one. */
+  html.cx-js .c5-pro__media::after{background:rgb(0 0 0 / .48);}
+}
+
+/* --- Copy on the band ----------------------------------------------------
+   The wide container is 1800 px, so the pattern ratio (rest / 486 px) would
+   leave a canyon between the heading and the column. The heading keeps the
+   left third, the copy column takes 560 px – the width the phone number needs
+   at its largest size. */
+@media (min-width:900px){
+  .c5-pro__grid{grid-template-columns:minmax(0,1fr) minmax(0,560px);}
+  .c5-pro__grid h2{max-width:min(520px,34vw);}
+  .c5-pro__side{max-width:560px;}
+}
+/* Below 1360 px the band is as tall as the window while the copy column keeps
+   its full height, and the button row ended 8 px under the advisor dock at
+   1280 x 800. The band is vertically centred, so padding at its foot lifts the
+   whole column by half of it: 40 px puts the buttons 12 px clear of the dock
+   at 1280 and at 1100. */
+@media (min-width:900px) and (max-width:1359px){
+  .c5-pro__grid{padding-bottom:calc(clamp(2.5rem,6vw,5rem) + 40px);}
+}
+
+/* The number is the first conversion of the page (C1), so it is the largest
+   thing on the band after the heading. Tabular figures keep the groups even,
+   nowrap keeps it off two lines: at its smallest size (32 px) it measures
+   about 270 px, which still fits the 335 px column of a 375 px screen. */
+.c5h-call{display:flex;flex-direction:column;align-items:flex-start;gap:6px;}
+.c5h-tel{display:inline-block;font-size:clamp(2rem,3vw,3.5rem);line-height:1.05;
+  font-weight:var(--w-weight-medium);letter-spacing:-0.02em;
+  font-variant-numeric:tabular-nums;white-space:nowrap;
+  color:var(--w-text-inverse);text-decoration:none;}
+.c5h-tel:hover{text-decoration:underline;text-underline-offset:6px;}
+.c5-pro__side .c5h-hours{font-size:0.875rem;}
+
+/* The third action is a link, not a third button: it leads deeper into the
+   Contact page rather than starting a conversation. */
+.c5h-quiet{display:inline-flex;align-items:center;gap:8px;width:fit-content;
+  font-size:0.9375rem;color:rgb(255 255 255 / .8);text-decoration:none;
+  border-bottom:1px solid rgb(255 255 255 / .35);padding-bottom:2px;
+  transition:color var(--w-duration-base) var(--w-ease),
+             border-color var(--w-duration-base) var(--w-ease);}
+.c5h-quiet:hover,.c5h-quiet:focus-visible{color:var(--w-text-inverse);
+  border-color:var(--w-text-inverse);}
+.c5h-quiet .wf-icon{transition:transform var(--w-duration-base) var(--w-ease);}
+.c5h-quiet:hover .wf-icon,.c5h-quiet:focus-visible .wf-icon{transform:translateX(4px);}
+
+/* --- Two wide purchase tiles (CE-20 `szerokie`) --------------------------
+   They stand below the band, in the flow of the page, so they need their own
+   vertical rhythm: the band carries no bottom padding of a section. */
+.c5h-buy__wrap{padding-block:clamp(2.5rem,5vw,4.5rem);}
+.c5h-buy{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(1rem,2vw,1.5rem);margin:0;padding:0;list-style:none;}
+.c5h-buy > li{display:flex;}
+.c5h-buy__tile{display:grid;grid-template-columns:auto minmax(0,1fr) auto;
+  align-items:start;gap:clamp(1rem,2vw,1.5rem);width:100%;
+  border:1px solid var(--w-border-default);background:var(--w-surface-page);
+  padding:clamp(1.25rem,2.4vw,2rem);text-decoration:none;color:inherit;
+  transition:background var(--w-duration-base) var(--w-ease),
+             border-color var(--w-duration-base) var(--w-ease);}
+.c5h-buy__tile:hover,.c5h-buy__tile:focus-visible{background:var(--w-surface-subtle);
+  border-color:var(--w-gray-900);}
+.c5h-buy__ico{color:var(--w-gray-900);}
+.c5h-buy__ico .wf-icon{width:20px;height:20px;}
+.c5h-buy__body{display:flex;flex-direction:column;gap:8px;}
+.c5h-buy__name{margin:0;}
+.c5h-buy__txt{font-size:0.9375rem;line-height:1.5;color:var(--w-text-secondary);}
+.c5h-buy__arrow{margin-top:12px;color:var(--w-gray-900);
+  transition:transform var(--w-duration-base) var(--w-ease);}
+.c5h-buy__tile:hover .c5h-buy__arrow,
+.c5h-buy__tile:focus-visible .c5h-buy__arrow{transform:translateX(4px);}
+
+@media (max-width:899px){
+  /* one tile under the other; the icon and the arrow keep their row */
+  .c5h-buy{grid-template-columns:minmax(0,1fr);}
+  /* Touch targets (W-6). The number is conversion C1, so it is the one that
+     has to be easy to hit: 34 px of type becomes a 44 px target without
+     changing the type. The quiet link trades its underline border for a text
+     underline, so the rule stays on the words while the box grows. */
+  .c5h-tel{display:inline-flex;align-items:center;min-height:44px;}
+  .c5h-quiet{min-height:44px;padding-bottom:0;border-bottom:0;
+    text-decoration:underline;text-decoration-color:rgb(255 255 255 / .35);
+    text-underline-offset:5px;}
+  .c5h-quiet:hover,.c5h-quiet:focus-visible{text-decoration-color:var(--w-text-inverse);}
+}
+@media (prefers-reduced-motion: reduce){
+  .c5h-quiet,.c5h-quiet .wf-icon,.c5h-buy__tile,.c5h-buy__arrow{transition:none;}
+}
+
+/* ===== 96 motto =========================================================
+   Section 13 (CE-33 `cytat`): the big centred quote, words brightening from
+   opacity .25 to 1 with the scroll. Full opacity at reduced motion.
+
+   Grey scale and --w-* / --c5-* tokens only, sharp corners, no gradients;
+   interface elements from the EL registry. Never the em dash. ========== */
+
+/* The last section before the footer: more air than the section rhythm gives,
+   because this is the breath after thirteen sections of argument. */
+.c5h-motto{padding-block:clamp(5rem,11vw,10rem);}
+.c5h-motto__fig{margin:0;display:flex;flex-direction:column;align-items:center;
+  gap:clamp(2rem,4vw,3.25rem);text-align:center;}
+.c5h-motto__q{margin:0;}
+
+/* About ten of the quote's own em per line, which is roughly eighteen
+   characters: the sentence then breaks into three lines at every size, and
+   `balance` evens them out. The measure is in em, so it follows the clamp
+   instead of needing a breakpoint of its own. */
+.c5h-motto__t{margin:0 auto;max-width:min(100%,10em);
+  font-size:clamp(2.25rem,5.5vw,5.25rem);line-height:1.08;
+  font-weight:var(--w-weight-medium);letter-spacing:-0.02em;
+  text-wrap:balance;color:var(--w-text-primary);}
+
+/* One word of the quote. The brightening is a single custom property on the
+   paragraph (--mp, 0 to 1) read against the word's own index: each word needs
+   1 / 1.5 of its slot to reach full ink, so two words are always in transit
+   and the line moves as a wave rather than as a row of switches.
+   Without the property (no JS, reduced motion, below 900 px) the fallback 1
+   puts every word at full opacity. */
+.c5h-motto__w{opacity:clamp(.25,
+  .25 + .75 * ((var(--mp,1) * var(--mn,1) - var(--mi,0)) * 1.5), 1);}
+
+.c5h-motto__cap{display:flex;flex-direction:column;align-items:center;gap:var(--w-space-3);}
+.c5h-motto__call{font-size:clamp(1.0625rem,1.8vw,1.375rem);line-height:1.3;
+  font-weight:var(--w-weight-medium);letter-spacing:-0.01em;color:var(--w-text-secondary);}
+.c5h-motto__sig{font-size:var(--w-font-overline-size);line-height:var(--w-font-overline-lh);
+  letter-spacing:var(--w-tracking-wide);text-transform:uppercase;color:var(--w-text-tertiary);}
+
+@media (prefers-reduced-motion: reduce){
+  .c5h-motto__w{opacity:1;}
+}

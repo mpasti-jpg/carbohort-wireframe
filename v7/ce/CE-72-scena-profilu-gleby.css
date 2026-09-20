@@ -1,0 +1,378 @@
+/* ===== CE-72 · Scena profilu gleby (rejestr: ce-rejestr.js) ==================================
+   Prefix: c5-sp. New block of the shared layer, built for the home page.
+
+   The pinned scene of the page. Track = one 100svh scene plus six steps of
+   0.7 x 100svh; the scene is position:sticky;top:0. Grid 5 / 7 inside the wide
+   container: on the left the head, the index of the five problems and the
+   detail of the active step at the bottom edge; on the right a light panel the
+   height of the window holding an inline SVG. The bottom edge of the copy
+   stays --c5h-dock above the bottom of the window.
+
+   Three layouts out of one DOM, chosen by the module through ONE class on the
+   root, never by guessing from a media query:
+   · (no class) and `is-flat` – everything in the flow, the index gone, all six
+     steps one under the other, the drawing in its final state. This is also
+     what a page WITHOUT JS gets, which is why every default below is the final
+     state and the earlier ones are written as html.c5h-js .c5-sp:not(.is-sN).
+   · `is-tabs` – below 900 px: the index is a wrapping tablist of chips, the
+     chosen step stands under the drawing, the closing step stays at the end.
+   · `is-scene` – the pinned scene.
+
+   The state of the drawing is cumulative: is-s1 … is-s6 pile up on the root,
+   so every repair stays on for the steps that follow. data-sp-on carries the
+   CURRENT step, which is what the annotation lane reads; --sp-p is the
+   progress of the whole scene (the marker on the depth ruler) and --sp-f the
+   progress of the current step (the line under its title).
+
+   Pattern rules: grey scale and --w-* / --c5- tokens, sharp corners, no
+   gradients, no shadows on cards. The block lives in the shared layer, so a
+   change here shows on every page that links it. A change wanted in one place
+   only is a new variant or a new CE with the next number, never an edit of the
+   shared rules. Comments in English, never the em dash.
+
+   Registry: the entry of this block lives in ce-rejestr.js (typographic quotes
+   only in its texts).
+   ===================================================================== */
+
+.c5-sp{
+  /* the two knobs of the track, read by the module from the computed style */
+  --sp-step-vh:.7;
+  --sp-step-min:420px;
+  /* one easing and one duration for every change of state */
+  --sp-ease:cubic-bezier(.16,1,.3,1);
+  --sp-dur:.72s;
+  --sp-dur-long:.9s;
+  /* ink of the drawing */
+  --sp-panel:var(--w-gray-100);
+  --sp-body:var(--w-white);
+  --sp-frame:var(--w-gray-500);
+  --sp-hatch:var(--w-gray-300);
+  --sp-hum-0:var(--w-gray-200);
+  --sp-hum-1:var(--w-gray-500);
+  --sp-ink:var(--w-gray-900);
+  --sp-line:var(--w-gray-700);
+  --sp-soft:var(--w-gray-500);
+  --sp-faint:var(--w-gray-400);
+  --c5h-headgap:clamp(1.5rem,3vw,2.25rem);
+}
+
+/* ===== Layout ============================================================ */
+
+/* --- Flow layout: the default, and what a page without JS gets ----------- */
+.c5-sp__track{position:relative;}
+.c5-sp__stage{display:flex;flex-direction:column;gap:clamp(2rem,5vw,3rem);}
+.c5-sp__col{display:contents;}
+.c5-sp__panel{order:3;position:relative;display:flex;flex-direction:column;
+  gap:var(--w-space-3);background:var(--sp-panel);padding:clamp(1rem,3vw,1.5rem);}
+.c5-sp__detail{order:4;display:flex;flex-direction:column;
+  gap:clamp(2rem,4vw,2.75rem);}
+.c5-sp__viz{display:flex;align-items:center;justify-content:center;min-height:0;}
+/* the flex and grid gaps of this block carry the rhythm, so the shared head
+   spacing of the page is taken off and added back where the scene needs it */
+.c5-sp .c5h-head + *{margin-top:0;}
+.c5-sp__svg{display:block;width:100%;height:auto;max-height:56svh;
+  font-family:inherit;}
+.c5-sp__cap{align-self:flex-end;}
+/* the index is a way of moving around the scene; where every step is already
+   on screen it would only repeat the titles */
+.c5-sp__index{display:none;}
+
+/* --- The step --------------------------------------------------------- */
+.c5-sp__step{display:grid;grid-template-columns:minmax(0,1fr) auto;
+  gap:0 var(--w-space-4);max-width:42rem;}
+.c5-sp__title{grid-column:1 / -1;}
+.c5-sp__line{grid-column:1 / -1;position:relative;height:1px;
+  margin-block:14px 16px;background:var(--w-gray-300);}
+.c5-sp__fill{position:absolute;inset:0;background:var(--w-gray-900);
+  transform:scaleX(var(--sp-f,1));transform-origin:left center;will-change:transform;}
+.c5-sp__body{grid-column:1;display:flex;flex-direction:column;gap:var(--w-space-4);}
+.c5-sp__problem{margin:0;font-size:0.9375rem;line-height:1.55;
+  color:var(--w-text-secondary);}
+.c5-sp__do{margin:0;font-size:0.9375rem;line-height:1.55;color:var(--w-text-primary);}
+.c5-sp__dolabel{display:block;margin-bottom:4px;font-size:0.75rem;line-height:1.45;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--w-text-tertiary);}
+.c5-sp__link{display:inline-flex;align-items:center;gap:var(--w-space-3);
+  align-self:flex-start;min-height:44px;font-size:0.9375rem;
+  font-weight:var(--w-weight-medium);color:var(--w-text-primary);
+  text-decoration:none;border-bottom:1px solid var(--w-gray-900);
+  transition:gap var(--w-duration-base) var(--w-ease);}
+.c5-sp__link:hover{gap:var(--w-space-4);}
+.c5-sp__link .wf-icon{opacity:.6;}
+.c5-sp__count{grid-column:2;grid-row:3;align-self:start;font-size:0.75rem;
+  line-height:1.45;letter-spacing:.06em;color:var(--w-text-tertiary);
+  font-variant-numeric:tabular-nums;}
+.c5-sp__step--end .c5-sp__problem{font-size:1.0625rem;color:var(--w-text-primary);}
+
+/* --- The index --------------------------------------------------------- */
+.c5-sp__index{margin:0;padding:0;list-style:none;}
+.c5-sp__ixbtn{display:flex;align-items:center;gap:var(--w-space-4);width:100%;
+  padding:0;font:inherit;text-align:left;background:none;border:0;border-radius:0;
+  cursor:pointer;color:var(--w-text-tertiary);
+  transition:color var(--w-duration-base) var(--w-ease);}
+.c5-sp__ixnum{flex:none;display:grid;place-items:center;width:26px;height:26px;
+  border:1px solid var(--w-border-default);font-size:0.6875rem;line-height:1;
+  font-variant-numeric:tabular-nums;
+  transition:background var(--w-duration-base) var(--w-ease),
+    border-color var(--w-duration-base) var(--w-ease),
+    color var(--w-duration-base) var(--w-ease);}
+.c5-sp__ixtxt{font-size:0.9375rem;line-height:1.3;}
+.c5-sp__ixbtn:hover{color:var(--w-text-primary);}
+.c5-sp__ixbtn.is-on{color:var(--w-text-primary);}
+.c5-sp__ixbtn.is-on .c5-sp__ixnum{background:var(--w-gray-900);
+  border-color:var(--w-gray-900);color:var(--w-text-inverse);}
+
+/* --- `is-tabs`: below 900 px the index is a wrapping tablist ------------ */
+.c5-sp.is-tabs .c5-sp__index{display:flex;flex-wrap:wrap;gap:8px;}
+.c5-sp.is-tabs .c5-sp__ixbtn{width:auto;gap:var(--w-space-3);min-height:44px;
+  padding:8px 14px 8px 8px;border:1px solid var(--w-border-default);}
+.c5-sp.is-tabs .c5-sp__ixbtn.is-on{border-color:var(--w-gray-900);}
+.c5-sp.is-tabs .c5-sp__ixtxt{font-size:0.875rem;}
+/* one step at a time; the closing step stays at the end of the section, so the
+   conclusion is readable without hunting for it */
+.c5-sp.is-tabs .c5-sp__step[hidden]{display:none;}
+
+/* Flow layout on a wide window (reduced motion, no JS): the plate must not
+   stretch across the whole container, the same call CE-12 makes for its
+   static layout. */
+@media (min-width:900px){
+  .c5-sp:not(.is-scene) .c5-sp__panel{width:100%;max-width:580px;}
+  .c5-sp:not(.is-scene) .c5-sp__svg{max-height:min(66svh,640px);}
+}
+
+/* ===== The pinned scene ================================================== */
+@media (min-width:900px){
+  .c5-sp.is-scene{padding-block:0;}
+  .c5-sp.is-scene .c5-sp__stage{position:sticky;top:0;height:100svh;
+    display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);
+    column-gap:clamp(2rem,4vw,4rem);gap:0 clamp(2rem,4vw,4rem);}
+  .c5-sp.is-scene .c5-sp__col{display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;
+    padding-block:var(--c5-gutter) var(--c5h-dock,96px);min-height:0;}
+  .c5-sp.is-scene .c5h-head{grid-row:1;}
+  .c5-sp.is-scene .c5-sp__index{grid-row:2;display:flex;flex-direction:column;
+    margin-top:var(--c5h-headgap);}
+  .c5-sp.is-scene .c5-sp__detail{grid-row:4;display:grid;margin-top:0;
+    gap:0;order:0;}
+  .c5-sp.is-scene .c5-sp__ixbtn{padding-block:8px;
+    border-top:1px solid var(--w-border-subtle);}
+
+  /* Head of a pinned scene: the column is 5 of 12 and the whole scene has to
+     hold one window, so the heading takes a step down from the page scale and
+     the gaps close up. Same call as the scene of CE-12, where the scale of the
+     head belongs to the section, not to the page. */
+  .c5-sp.is-scene{--c5h-headgap:clamp(1.25rem,2.4vw,1.75rem);}
+  .c5-sp.is-scene .c5h-head{gap:clamp(1rem,1.8vw,1.5rem);}
+  .c5-sp.is-scene .c5-head{gap:clamp(0.75rem,1.4vw,1.1rem);}
+  .c5-sp.is-scene .c5-h2{font-size:clamp(1.6rem,2.2vw,2.15rem);line-height:1.15;}
+  .c5-sp.is-scene .c5-sp__ix:last-child .c5-sp__ixbtn{
+    border-bottom:1px solid var(--w-border-subtle);}
+
+  /* every step in the same cell, aligned to the bottom edge, so the swap is a
+     cross-fade and the last line always ends in the same place */
+  .c5-sp.is-scene .c5-sp__step{grid-area:1 / 1;align-self:end;max-width:none;
+    opacity:0;visibility:hidden;transform:translateY(12px);
+    transition:opacity .2s var(--w-ease),transform .2s var(--w-ease),
+      visibility 0s linear .2s;}
+  .c5-sp.is-scene .c5-sp__step.is-on{opacity:1;visibility:visible;transform:none;
+    transition:opacity .3s var(--w-ease),transform .3s var(--w-ease);}
+
+  /* the panel keeps 20 px of the stage on three sides (Frame 206) */
+  .c5-sp.is-scene .c5-sp__panel{order:0;margin-block:20px;min-height:0;
+    padding:clamp(1rem,1.6vw,1.5rem);
+    /* The plate keeps the height of the window (as the scene of CE-12 does),
+       but nothing drawn in it may slide under the advisor dock, so the bottom
+       padding carries the clearance the dock needs minus the 20 px margin the
+       panel already holds. */
+    padding-bottom:calc(var(--c5h-dock,96px) - 20px);}
+  .c5-sp.is-scene .c5-sp__viz{flex:1 1 auto;}
+  .c5-sp.is-scene .c5-sp__svg{width:auto;height:100%;max-width:100%;max-height:none;}
+}
+
+/* Low windows: the copy zone takes the room it needs from the head. */
+@media (min-width:900px) and (max-height:840px){
+  .c5-sp.is-scene{--c5h-headgap:clamp(1rem,2vw,1.5rem);}
+  .c5-sp.is-scene .c5-sp__col{padding-top:20px;}
+  .c5-sp.is-scene .c5h-head{gap:clamp(0.875rem,1.6vw,1.25rem);}
+  .c5-sp.is-scene .c5-head{gap:clamp(0.75rem,1.4vw,1rem);}
+  .c5-sp.is-scene .c5-h2{font-size:clamp(1.5rem,2vw,1.9rem);}
+  .c5-sp.is-scene .c5-sp__line{margin-block:10px 12px;}
+  .c5-sp.is-scene .c5-sp__ixbtn{padding-block:6px;}
+  .c5-sp.is-scene .c5-sp__body{gap:var(--w-space-3);}
+}
+/* Still lower (a 720 px window): the copy of the scene takes the small step of
+   the scale. Under that the module drops the pin on its own, because no size
+   of type keeps the copy --c5h-dock clear of the bottom edge. */
+@media (min-width:900px) and (max-height:780px){
+  .c5-sp.is-scene .c5-sp__problem,
+  .c5-sp.is-scene .c5-sp__do,
+  .c5-sp.is-scene .c5-sp__link{font-size:0.875rem;}
+  .c5-sp.is-scene .c5-sp__ixtxt{font-size:0.875rem;}
+  .c5-sp.is-scene .c5-lead{font-size:0.9375rem;}
+  .c5-sp.is-scene .c5-sp__link{min-height:38px;}
+}
+
+/* ===== The drawing ======================================================
+   Everything below is written twice: the DEFAULT is the final state, and the
+   earlier states hang off html.c5h-js .c5-sp:not(.is-sN), so a page without
+   JS is complete and the module only has to add classes. `is-ready` lets the
+   first frame land without a transition. ================================ */
+.c5-sp__svg{--sp-t:var(--sp-dur);}
+.c5-sp:not(.is-ready) .c5-sp__svg *{transition:none !important;}
+
+.c5-sp__sub{fill:var(--sp-body);}
+.c5-sp__hatchline{stroke:var(--sp-hatch);stroke-width:1;}
+.c5-sp__frame{fill:none;stroke:var(--sp-frame);stroke-width:1;}
+.c5-sp__ground{stroke:var(--sp-ink);stroke-width:1.5;}
+
+/* humus horizon: darkens and thickens in is-s2 */
+.c5-sp__hum{fill:var(--sp-hum-1);transform-box:fill-box;transform-origin:50% 0%;
+  transform:scaleY(1.9);
+  transition:fill var(--sp-dur-long) var(--sp-ease),transform var(--sp-dur-long) var(--sp-ease);}
+html.c5h-js .c5-sp:not(.is-s2) .c5-sp__hum{fill:var(--sp-hum-0);transform:scaleY(1);}
+
+/* stones and the depth ruler are always there */
+.c5-sp__stones ellipse{fill:var(--w-gray-200);stroke:var(--sp-soft);stroke-width:1;}
+.c5-sp__ruleaxis,.c5-sp__ruletick{stroke:var(--sp-faint);stroke-width:1;}
+.c5-sp__rulenum,.c5-sp__ruleunit{fill:var(--w-text-tertiary);font-size:13px;}
+.c5-sp__ruleunit{font-size:11px;letter-spacing:.04em;}
+.c5-sp__rulemark path{fill:var(--sp-ink);}
+.c5-sp__rulemark{transform:translateY(calc(var(--sp-p,1) * 480px));
+  transition:transform .2s linear;}
+
+/* surface cracks: the entry state only */
+.c5-sp__cracks path{fill:none;stroke:var(--sp-line);stroke-width:1.5;stroke-linecap:round;}
+.c5-sp__cracks{opacity:0;transition:opacity var(--sp-dur) var(--sp-ease);}
+html.c5h-js .c5-sp:not(.is-s1) .c5-sp__cracks{opacity:1;}
+
+/* lignite crumbs: cascade in with is-s1 */
+.c5-sp__gran{fill:var(--sp-ink);opacity:1;transform:none;
+  transition:opacity var(--sp-dur) var(--sp-ease),transform var(--sp-dur) var(--sp-ease);
+  transition-delay:calc(var(--d,0) * 40ms);}
+html.c5h-js .c5-sp:not(.is-s1) .c5-sp__gran{opacity:0;transform:translateY(-10px);
+  transition-delay:0s;}
+
+/* water: the loop of falling drops belongs to the entry state, the held drops
+   to is-s1 and everything after it */
+.c5-sp__falls path{fill:var(--sp-soft);}
+.c5-sp__falls{opacity:0;}
+html.c5h-js .c5-sp:not(.is-s1) .c5-sp__falls{opacity:1;}
+.c5-sp__held circle{fill:var(--w-white);stroke:var(--sp-line);stroke-width:1.5;}
+.c5-sp__held .c5-sp__ring{fill:none;stroke:var(--sp-line);stroke-width:1;}
+.c5-sp__drop{opacity:1;transition:opacity var(--sp-dur) var(--sp-ease);
+  transition-delay:calc(var(--d,0) * 60ms);}
+html.c5h-js .c5-sp:not(.is-s1) .c5-sp__drop{opacity:0;transition-delay:0s;}
+
+/* microbial life: is-s3 */
+.c5-sp__mic{fill:var(--sp-line);opacity:1;
+  transition:opacity var(--sp-dur) var(--sp-ease);
+  transition-delay:calc(var(--d,0) * 35ms);}
+html.c5h-js .c5-sp:not(.is-s3) .c5-sp__mic{opacity:0;transition-delay:0s;}
+
+/* nutrients moving towards the roots: is-s4 */
+.c5-sp__nut{fill:none;stroke:var(--sp-line);stroke-width:1.5;opacity:1;
+  transition:opacity var(--sp-dur) var(--sp-ease);
+  transition-delay:calc(var(--d,0) * 45ms);}
+html.c5h-js .c5-sp:not(.is-s4) .c5-sp__nut{opacity:0;transition-delay:0s;}
+
+/* roots: shallow until is-s4, then down through the profile */
+.c5-sp__root{fill:none;stroke:var(--sp-line);stroke-width:2;stroke-linecap:round;
+  stroke-dasharray:100;stroke-dashoffset:0;
+  transition:stroke-dashoffset var(--sp-dur-long) var(--sp-ease);}
+.c5-sp__root--fine{stroke-width:1.2;}
+html.c5h-js .c5-sp:not(.is-s4) .c5-sp__root{stroke-dashoffset:62;}
+html.c5h-js .c5-sp:not(.is-s4) .c5-sp__root--fine{stroke-dashoffset:100;}
+
+/* the plant: one growth step per state */
+.c5-sp__stem{fill:none;stroke:var(--sp-ink);stroke-width:3;stroke-linecap:round;
+  stroke-dasharray:100;stroke-dashoffset:0;
+  transition:stroke-dashoffset var(--sp-dur-long) var(--sp-ease);}
+html.c5h-js .c5-sp:not(.is-s1) .c5-sp__stem{stroke-dashoffset:72;}
+html.c5h-js .c5-sp.is-s1:not(.is-s2) .c5-sp__stem{stroke-dashoffset:58;}
+html.c5h-js .c5-sp.is-s2:not(.is-s3) .c5-sp__stem{stroke-dashoffset:44;}
+html.c5h-js .c5-sp.is-s3:not(.is-s4) .c5-sp__stem{stroke-dashoffset:30;}
+html.c5h-js .c5-sp.is-s4:not(.is-s5) .c5-sp__stem{stroke-dashoffset:16;}
+.c5-sp__leaf{fill:var(--sp-body);stroke:var(--sp-ink);stroke-width:1.5;stroke-linejoin:round;
+  transform-box:fill-box;transform-origin:0% 50%;opacity:1;transform:none;
+  transition:opacity var(--sp-dur) var(--sp-ease),transform var(--sp-dur) var(--sp-ease);}
+/* the two cotyledons of the seedling: the entry state and the first repair,
+   gone once the plant carries leaves of its own */
+.c5-sp__coty{opacity:0;}
+html.c5h-js .c5-sp:not(.is-s2) .c5-sp__coty{opacity:1;}
+html.c5h-js .c5-sp:not(.is-s1) .c5-sp__leaf--1,
+html.c5h-js .c5-sp:not(.is-s2) .c5-sp__leaf--2,
+html.c5h-js .c5-sp:not(.is-s3) .c5-sp__leaf--3,
+html.c5h-js .c5-sp:not(.is-s4) .c5-sp__leaf--4,
+html.c5h-js .c5-sp:not(.is-s5) .c5-sp__leaf--5{opacity:0;transform:scaleX(.25);}
+
+/* reaction scale: the marker enters the middle zone in is-s5 */
+.c5-sp__phbar{fill:none;stroke:var(--sp-faint);stroke-width:1;}
+.c5-sp__phzone{fill:var(--w-gray-200);
+  transition:fill var(--sp-dur) var(--sp-ease);}
+html.c5h-js .c5-sp:not(.is-s5) .c5-sp__phzone{fill:transparent;}
+.c5-sp__phdiv{stroke:var(--sp-faint);stroke-width:1;}
+.c5-sp__phtxt{fill:var(--w-text-tertiary);font-size:13px;}
+.c5-sp__phtxt--on{fill:var(--w-text-tertiary);
+  transition:fill var(--sp-dur) var(--sp-ease);}
+.c5-sp__phmark path{fill:var(--sp-ink);}
+.c5-sp__phmark{transform:translateY(430px);
+  transition:transform var(--sp-dur-long) var(--sp-ease);}
+html.c5h-js .c5-sp:not(.is-s5) .c5-sp__phmark{transform:translateY(310px);}
+.c5-sp.is-s5 .c5-sp__phtxt--on{fill:var(--w-text-primary);}
+
+/* the annotation lane: one label at a time, for the CURRENT step */
+.c5-sp__tag text{fill:var(--w-text-primary);font-size:15px;}
+.c5-sp__tag path{fill:none;stroke:var(--sp-soft);stroke-width:1;}
+.c5-sp__tag circle{fill:var(--sp-soft);}
+.c5-sp__tag{opacity:0;transition:opacity var(--sp-dur) var(--sp-ease);}
+.c5-sp[data-sp-on="1"] .c5-sp__tag--1,
+.c5-sp[data-sp-on="2"] .c5-sp__tag--2,
+.c5-sp[data-sp-on="3"] .c5-sp__tag--3,
+.c5-sp[data-sp-on="4"] .c5-sp__tag--4,
+.c5-sp[data-sp-on="5"] .c5-sp__tag--5{opacity:1;}
+
+/* the closing caption */
+.c5-sp__final{fill:var(--w-text-primary);font-size:20px;letter-spacing:-0.01em;
+  opacity:1;transition:opacity var(--sp-dur) var(--sp-ease);}
+html.c5h-js .c5-sp:not(.is-s6) .c5-sp__final{opacity:0;}
+
+/* --- The plate on a phone ------------------------------------------------
+   Below 900 px the drawing is about 335 px wide, which is a third of the room
+   it has in the scene: type meant for the plate would come out at five or six
+   pixels. The two scales lose their figures and their words, which are micro
+   type nobody could read anyway, and keep their marks; the label of the
+   current step and the closing caption grow instead. Nothing is lost with
+   them: the whole drawing is aria-hidden and every word of it stands in the
+   copy under it. ------------------------------------------------------- */
+@media (max-width:899px){
+  .c5-sp__rulenum,.c5-sp__ruleunit,.c5-sp__phtxt{display:none;}
+  .c5-sp__tag text{font-size:27px;}
+  .c5-sp__final{font-size:34px;}
+  .c5-sp__tag path,.c5-sp__frame,.c5-sp__phbar,.c5-sp__phdiv{stroke-width:1.5;}
+}
+
+/* --- Loops: only where the pattern allows motion, only in view ---------- */
+@media (prefers-reduced-motion: no-preference){
+  html.c5h-js .c5-sp__fall{animation:c5spFall 3.4s linear infinite;
+    animation-delay:calc(var(--d,0) * .58s);}
+  html.c5h-js .c5-sp__mic{animation:c5spDrift 7s ease-in-out infinite alternate;
+    animation-delay:calc(var(--d,0) * .3s);}
+  html.c5h-js .c5-sp__nut{animation:c5spPull 6.5s ease-in-out infinite;
+    animation-delay:calc(var(--d,0) * .7s);}
+  html.c5h-js .c5-sp.is-off .c5-sp__fall,
+  html.c5h-js .c5-sp.is-off .c5-sp__mic,
+  html.c5h-js .c5-sp.is-off .c5-sp__nut{animation-play-state:paused;}
+}
+@keyframes c5spFall{
+  0%{transform:translateY(0);opacity:0;}
+  8%{opacity:.95;}
+  86%{opacity:.95;}
+  100%{transform:translateY(445px);opacity:0;}
+}
+@keyframes c5spDrift{
+  from{transform:translate(0,0);}
+  to{transform:translate(6px,-5px);}
+}
+@keyframes c5spPull{
+  0%{transform:translate(0,0);}
+  60%{transform:translate(46px,18px);}
+  100%{transform:translate(0,0);}
+}
