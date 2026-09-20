@@ -170,19 +170,14 @@
   });
   wrap.addEventListener("pointercancel", function () { swipe = null; });
 
-  /* --- „Porównaj": focus only ---------------------------------------------------------
-     No preventDefault – the shared handler in 00-base.js pushes #porownanie and scrolls.
-     This listener runs first (on the link, before the delegated document listener) and moves
-     focus to the table container without scrolling; the shared handler then leaves focus alone,
-     because it is no longer on the link. Modifier and middle clicks stay ordinary links. */
-  var tableBox = doc.querySelector(".c5pr-tabwrap");
-  if (compare && tableBox) {
-    compare.addEventListener("click", function (e) {
-      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-      if (!doc.getElementById("porownanie")) return;
-      tableBox.focus({ preventScroll: true });
-    });
-  }
+  /* --- „Porównaj": opens the comparison overlay ----------------------------------------
+     Until 19.09.2026 the link only scrolled to the section and moved focus to the table. Since
+     20.09 (Mateusz's comment in the preview) the whole comparison lives in a lightbox, so the
+     link carries `data-lightbox-open="porownanie"` and module 45 owns the click: it calls
+     preventDefault, opens the dialog and puts focus inside it. Nothing to do here – the
+     reference to the link stays only for the tab bar layout above. Without JS the href still
+     leads to the block, which then stands in the flow of the page. */
+  void compare;
 
   /* --- start ------------------------------------------------------------------------ */
   panels.forEach(function (p, i) {
@@ -268,10 +263,206 @@
       if (on) { markColumns([], false); return; }          /* second click clears the highlight */
       b.setAttribute("aria-pressed", "true");
       markColumns(b.getAttribute("data-cols").split(/\s+/), true);
-      /* the table sits above the cards: scroll up to it, 30 px above its top edge */
+      /* the table sits above the cards: come back up to it, 30 px above its top edge.
+         Since 20.09.2026 the section lives inside the lightbox, so the panel is what
+         scrolls – the page underneath is locked and must not move. Outside the overlay
+         (no JS never gets here; a future inline use would) the page scrolls as before. */
       var gutter = parseFloat(window.getComputedStyle(doc.documentElement).getPropertyValue("--c5-gutter")) || 0;
+      var pane = box.closest ? box.closest("[data-lightbox-scroll]") : null;
+      if (pane) {
+        var top = pane.scrollTop + box.getBoundingClientRect().top - pane.getBoundingClientRect().top - gutter;
+        top = Math.max(0, top);
+        if (pane.scrollTo) pane.scrollTo({ top: top, behavior: motion() ? "smooth" : "auto" });
+        else pane.scrollTop = top;
+        return;
+      }
       CX5.scrollTo(box.getBoundingClientRect().top + window.scrollY - gutter, motion() ? "smooth" : "auto");
     });
+  });
+})();
+
+/* ===== 45 · Lightbox porównania – CE-25 (20.09.2026) ==========================
+   Ported from `carbomat-mata.js ===== 55` (itself a port of the maize lightbox), with the
+   page list kept generic even though this page has exactly ONE page of content: the module
+   costs nothing extra for it and a second page would work the day it is written.
+   Differences against the source: no footer, so no counter and no previous / next; the box
+   is a direct child of <main>, so the background list is simply the rest of <main> plus the
+   site chrome; on entry through #porownanie the page is parked on the Gama section above,
+   because that is where the block stands without JS and where closing the dialog should land.
+   Without JS none of this runs and `.c5-lb` stays a plain block in the flow of the page.
+   This module adds `is-js`, the dialog semantics (role / aria-modal / aria-label are set
+   here, never in the markup) and the overlay behaviour: open from a trigger or from the hash,
+   close with X / Escape / a click beside the panel, a focus trap, focus back on the opener and
+   a background scroll lock (html overflow + `CX5.lenis`). ==================== */
+(function () {
+  "use strict";
+  var doc = document, $ = CX5.$, $$ = CX5.$$;
+  var boxes = $$("[data-lightbox]");
+  if (!boxes.length) return;
+
+  var byPage = {};          /* page id -> instance */
+  var live = null;          /* instance currently open */
+  var opener = null;        /* element that opened it */
+
+  var list = boxes.map(function (box) {
+    var pages = $$("[data-lightbox-page]", box);
+    var inst = {
+      box: box,
+      pages: pages,
+      ids: pages.map(function (p) { return p.getAttribute("data-lightbox-page"); }),
+      scroll: $("[data-lightbox-scroll]", box),
+      now: null
+    };
+    inst.ids.forEach(function (id) { byPage[id] = inst; });
+    return inst;
+  }).filter(function (e) { return e.ids.length; });
+  if (!list.length) return;
+
+  /* --- background: inert while the dialog is open --------------------------- */
+  function bgNodes(box) {
+    return $$("main > *").filter(function (n) { return n !== box; })
+      .concat($$("cw-navbar, cw-footer, cw-dock, .c5-dots"));
+  }
+  function bgInert(box, on) { bgNodes(box).forEach(function (n) { n.inert = on; }); }
+
+  function focusables(box) {
+    return $$('a[href], button:not([disabled]), input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])', box)
+      .filter(function (n) { return n.offsetWidth > 0 || n.offsetHeight > 0; });
+  }
+
+  /* --- background scroll lock ----------------------------------------------- */
+  var locked = false, savedOverflow = "";
+  function lock(on) {
+    if (on === locked) return;
+    locked = on;
+    if (on) {
+      savedOverflow = doc.documentElement.style.overflow;
+      doc.documentElement.style.overflow = "hidden";
+      if (CX5.lenis && CX5.lenis.stop) CX5.lenis.stop();
+    } else {
+      doc.documentElement.style.overflow = savedOverflow;
+      if (CX5.lenis && CX5.lenis.start) CX5.lenis.start();
+    }
+  }
+
+  /* `file://` refuses replaceState – the lightbox works, the address bar does not */
+  function hashSet(v) {
+    if (!window.history || !history.replaceState) return;
+    try { history.replaceState(null, "", v || (location.pathname + location.search)); } catch (e) { /* ignored */ }
+  }
+
+  function show(inst, id, setHash) {
+    var i = inst.ids.indexOf(id);
+    if (i < 0) return;
+    inst.now = id;
+    inst.pages.forEach(function (p, j) { p.hidden = j !== i; });
+    inst.box.setAttribute("aria-labelledby", id + "-t");
+    if (inst.scroll) inst.scroll.scrollTop = 0;
+    if (setHash !== false) hashSet("#" + id);
+  }
+
+  function close(returnFocus) {
+    if (!live) return;
+    var inst = live, who = opener;
+    live = null; opener = null;
+    inst.box.setAttribute("data-open", "false");
+    inst.box.setAttribute("aria-hidden", "true");
+    inst.box.inert = true;
+    bgInert(inst.box, false);
+    lock(false);
+    hashSet(null);
+    if (returnFocus !== false && who && who.focus) who.focus();
+  }
+
+  function openPage(id, who) {
+    var inst = byPage[id];
+    if (!inst) return;
+    if (live && live !== inst) close(false);
+    var already = live === inst;
+    show(inst, id, true);
+    if (already) return;
+    live = inst; opener = who || null;
+    inst.box.removeAttribute("aria-hidden");
+    inst.box.inert = false;
+    inst.box.setAttribute("data-open", "true");
+    bgInert(inst.box, true);
+    lock(true);
+    var f = focusables(inst.box);
+    (f[0] || inst.box).focus();
+  }
+
+  /* --- Escape and the focus trap -------------------------------------------- */
+  doc.addEventListener("keydown", function (e) {
+    if (!live) return;
+    if (e.key === "Escape") { e.preventDefault(); close(); return; }
+    if (e.key !== "Tab") return;
+    var f = focusables(live.box);
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && doc.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && doc.activeElement === last) { e.preventDefault(); first.focus(); }
+    else if (!live.box.contains(doc.activeElement)) { e.preventDefault(); first.focus(); }
+  });
+
+  list.forEach(function (inst) {
+    inst.box.classList.add("is-js");
+    inst.box.setAttribute("role", "dialog");
+    inst.box.setAttribute("aria-modal", "true");
+    var label = inst.box.getAttribute("data-lightbox");
+    if (label) inst.box.setAttribute("aria-label", label);
+    inst.box.tabIndex = -1;
+    inst.box.setAttribute("data-open", "false");
+    inst.box.setAttribute("aria-hidden", "true");
+    inst.box.inert = true;
+    /* Lenis swallows wheel events while it is stopped – the panel scrolls natively */
+    if (inst.scroll) inst.scroll.setAttribute("data-lenis-prevent", "");
+    show(inst, inst.ids[0], false);
+
+    inst.box.addEventListener("click", function (ev) {
+      if (ev.target === inst.box) { close(); return; }   /* click beside the panel = overlay */
+      var a = ev.target.closest ? ev.target.closest('a[href^="#"]') : null;
+      if (!a || !inst.box.contains(a)) return;
+      /* a link into the page underneath („Certyfikaty…", „Nie wiem, którego potrzebuję",
+         „Doglebowo czy nalistnie"): close first, then scroll there */
+      ev.preventDefault();
+      var target = doc.getElementById(a.getAttribute("href").slice(1));
+      close(false);
+      if (target) CX5.scrollTo(target.getBoundingClientRect().top + window.scrollY);
+    });
+  });
+
+  $$("[data-lightbox-close]").forEach(function (b) {
+    b.addEventListener("click", function () { close(); });
+  });
+  $$("[data-lightbox-open]").forEach(function (b) {
+    b.addEventListener("click", function (ev) {
+      if (ev.button !== 0 || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey) return;
+      ev.preventDefault();
+      openPage(b.getAttribute("data-lightbox-open"), b);
+    });
+  });
+
+  /* --- hash: #porownanie opens the dialog, also on entry --------------------- */
+  var first = (location.hash || "").replace("#", "");
+  if (byPage[first]) {
+    /* the browser jumped to the inline block before we hid it – park the page on the
+       section above, so closing the dialog lands where the block stands without JS */
+    var host = byPage[first].box.previousElementSibling;
+    while (host && host.nodeName !== "SECTION") host = host.previousElementSibling;
+    if (host) window.scrollTo(0, Math.round(host.getBoundingClientRect().top + window.scrollY));
+    openPage(first, null);
+  }
+  window.addEventListener("hashchange", function () {
+    var id = (location.hash || "").replace("#", "");
+    if (byPage[id]) openPage(id, null);
+  });
+  /* tell the shared bus that this hash is handled here (ce/00-base.js §3): a module that
+     returns true keeps the bus from scrolling to the element inside the fixed dialog */
+  if (CX5.onHash) CX5.onHash(function (hash) {
+    var id = (hash || "").replace("#", "");
+    if (!byPage[id]) return false;
+    openPage(id, null);
+    return true;
   });
 })();
 

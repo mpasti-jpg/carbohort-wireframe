@@ -39,7 +39,6 @@
   <ol>
     <li><a class="c5-dots__link" href="#hero" data-dot="hero"><span class="c5-dots__label">Start</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
     <li><a class="c5-dots__link" href="#gama" data-dot="gama"><span class="c5-dots__label">Gama</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
-    <li><a class="c5-dots__link" href="#porownanie" data-dot="porownanie"><span class="c5-dots__label">Porównanie</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
     <li><a class="c5-dots__link" href="#wg-potrzeby" data-dot="wg-potrzeby"><span class="c5-dots__label">Wg potrzeby</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
     <li><a class="c5-dots__link" href="#jak-dzialaja" data-dot="jak-dzialaja"><span class="c5-dots__label">Jak działają</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
     <li><a class="c5-dots__link" href="#co-daja" data-dot="co-daja"><span class="c5-dots__label">Co dają</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
@@ -57,26 +56,22 @@
        Lead odziedziczony ze zweryfikowanej wersji V4 tej strony; drugie zdanie
        (wspólny mianownik gamy) zbudowane z leadów czterech stron produktowych
        i z sekcji „Czym jest" dokumentu 29.07 – to warstwa UI, nie copy klienta.
-       Pattern CARBOMAT ECO (spec §4, 14.09.2026): the hero fills the first screen below
-       the site menu, copy centred vertically in the left column, the breadcrumb moved from
-       the top of the section to the bottom of that column; the right column is a light
-       panel with a shelf of the four families. The trust list left the hero for the
-       marquee right below (#zaufanie); the image placeholder is gone. -->
-  <section id="hero" data-chapter="hero" data-ce="CE-08" data-ce-wariant="polka">
-    <div class="c5-wrap">
+       Układ od 20.09.2026 (komentarze Mateusza w artefakcie, wariant CE-08
+       „linia-produktow"): sekcja bierze całą szerokość okna, kontener treści
+       stoi na EL-29 (max 1800 px, marginesy 40 px), w górnym rzędzie kicker
+       z nagłówkiem po lewej i lead z przyciskami po prawej – tam, gdzie do
+       19.09 stał panel z packshotami – a pod nimi cała gama w jednej linii
+       na całą szerokość okna minus 40 px z każdej strony. Wysokość sekcji
+       nadal na cały ekran pod menu serwisu.
+       Wariant „polka" (panel z czterema packshotami) zostaje w indeksie CE
+       na stronie demonstracyjnej lab/ce-08-polka.html. -->
+  <section id="hero" data-chapter="hero" data-ce="CE-08" data-ce-wariant="linia-produktow">
+    <div class="c5-wrap c5-wrap--wide">
       <div class="c5-hero">
         <div class="c5-hero__copy">
           <div class="c5-hero__copyin">
-            <span class="c5-kicker">Produkty Carbohort</span>
+            <span class="c5-kicker c5-kicker--outline">Produkty Carbohort</span>
             <h1 class="c5-h1">Kompletna gama produktów na bazie lignitu.</h1>
-            <div class="c5-hero__lead">
-              <p>Z polskiego lignitu i leonardytu robimy poprawiacze gleby: odbudowują próchnicę, strukturę, retencję wody i życie biologiczne. Rozdzielamy to, co naprawia glebę na lata, od tego, co wspiera roślinę w sezonie.</p>
-              <p>Cztery rodziny, jeden mechanizm: materia organiczna i substancje humusowe z węgla brunatnego. Różni je <span class="wf-w-semibold">postać</span>, <span class="wf-w-semibold">sposób aplikacji</span> i <span class="wf-w-semibold">tempo działania</span> – nie zadanie.</p>
-            </div>
-            <div class="c5-btnrow">
-              <a class="c5-btn c5-btn--dark" href="#wg-potrzeby">nie wiem, czego potrzebuję</a>
-              <a class="c5-btn c5-btn--light" href="#porownanie">porównaj parametry</a>
-            </div>
           </div>
           <nav class="wf-breadcrumb c5-hero__crumbs" aria-label="Okruszki">
             <ol class="wf-cluster wf-items-center">
@@ -86,23 +81,24 @@
             </ol>
           </nav>
         </div>
-        <div class="c5-hero__stage">
-          <!-- Shelf of the four families (spec §4): canister 20 l · bag 20 l with the pouch
-               1 l / 2 l overlapping its right edge · growing sleeve lying in front along the
-               base. DOM order decides the overlap (no z-index, no shadows): the sleeve is last,
-               so it covers the bases of the standing packs.
-               ⚠️ CARBOMAT HUMIC has no packaging in the canon (backlog: prices and packaging
-               for 5 of 6 products) – on the shelf the shared 20 l bag stands in for it, the same
-               stand-in carbomat-humic.html uses („opakowanie poglądowe"). To be confirmed by
-               Mateusz (spec §19.1); alternative: three standing packs without the sleeve. -->
-          <div class="c5pr-shelf">
-            <img class="c5pr-shelf__pack c5pr-shelf__pack--kanister" src="img/opakowania/kanister_20l.png" alt="CARBOHUMIC – kanister 20 l" width="576" height="847">
-            <img class="c5pr-shelf__pack c5pr-shelf__pack--worek" src="img/opakowania/worek_20l.png" alt="CARBOMAT ECO – worek 20 l" width="578" height="875">
-            <img class="c5pr-shelf__pack c5pr-shelf__pack--torba" src="img/opakowania/torba_1l_2l.png" alt="CARBOMAT ECO – torebka 1 l / 2 l" width="657" height="1000">
-            <img class="c5pr-shelf__pack c5pr-shelf__pack--mata" src="img/opakowania/mata_uprawowa.png" alt="CARBOMAT MATA UPRAWOWA – rękaw 100 × 20 × 8 cm" width="1000" height="313">
+        <div class="c5-hero__side">
+          <div class="c5-hero__lead">
+            <p>Z polskiego lignitu i leonardytu robimy poprawiacze gleby: odbudowują próchnicę, strukturę, retencję wody i życie biologiczne. Rozdzielamy to, co naprawia glebę na lata, od tego, co wspiera roślinę w sezonie.</p>
+            <p>Cztery rodziny, jeden mechanizm: materia organiczna i substancje humusowe z węgla brunatnego. Różni je <span class="wf-w-semibold">postać</span>, <span class="wf-w-semibold">sposób aplikacji</span> i <span class="wf-w-semibold">tempo działania</span> – nie zadanie.</p>
+          </div>
+          <div class="c5-btnrow">
+            <a class="c5-btn c5-btn--dark" href="#wg-potrzeby">nie wiem, czego potrzebuję</a>
+            <a class="c5-btn c5-btn--light" href="#porownanie" data-lightbox-open="porownanie">porównaj parametry</a>
           </div>
         </div>
       </div>
+    </div>
+    <!-- Cała gama w jednej linii – mock-up Mateusza z 20.09.2026 („all products in
+         line.png", oryginał w zasoby/brand/opakowania-mockupy/). Wersja web to JPEG
+         na bieli, bo obraz leży na białym tle strony, a PNG z kanałem alfa ważył
+         1,3 MB. Kolejność opakowań jest częścią mock-upu, nie naszą decyzją. -->
+    <div class="c5pr-line">
+      <img class="c5pr-line__img" src="img/opakowania/gama-w-linii.jpg" alt="Opakowania całej gamy w jednej linii: butelka 1 l, torebka, kanister 20 l, big bag, mauzer 1000 l, beczka 200 l, worek 20 l i rękaw maty uprawowej" width="2400" height="658" fetchpriority="high" decoding="async">
     </div>
   </section>
 
@@ -128,11 +124,11 @@
     <ul class="c5-marq__track">
       <li class="c5-marq__item">
         <span class="c5-marq__txt">Polski, rodzinny producent</span>
-        <span class="c5-marq__thumb c5-marq__thumb--ph" aria-hidden="true"></span>
+        <img class="c5-marq__thumb" src="img/foto/produkty-zaufanie-producent.jpg" alt="" width="96" height="96" loading="lazy" decoding="async">
       </li>
       <li class="c5-marq__item">
         <span class="c5-marq__txt">Rejestracje MRiRW – zakres per produkt</span>
-        <span class="c5-marq__thumb c5-marq__thumb--ph" aria-hidden="true"></span>
+        <img class="c5-marq__thumb" src="img/foto/produkty-zaufanie-rejestracje.jpg" alt="" width="96" height="96" loading="lazy" decoding="async">
       </li>
       <li class="c5-marq__item">
         <span class="c5-marq__txt">Certyfikaty ekologiczne – zakres per produkt</span>
@@ -140,11 +136,11 @@
       </li>
       <li class="c5-marq__item">
         <span class="c5-marq__txt">Polski, rodzinny producent</span>
-        <span class="c5-marq__thumb c5-marq__thumb--ph" aria-hidden="true"></span>
+        <img class="c5-marq__thumb" src="img/foto/produkty-zaufanie-producent.jpg" alt="" width="96" height="96" loading="lazy" decoding="async">
       </li>
       <li class="c5-marq__item">
         <span class="c5-marq__txt">Rejestracje MRiRW – zakres per produkt</span>
-        <span class="c5-marq__thumb c5-marq__thumb--ph" aria-hidden="true"></span>
+        <img class="c5-marq__thumb" src="img/foto/produkty-zaufanie-rejestracje.jpg" alt="" width="96" height="96" loading="lazy" decoding="async">
       </li>
       <li class="c5-marq__item">
         <span class="c5-marq__txt">Certyfikaty ekologiczne – zakres per produkt</span>
@@ -152,11 +148,11 @@
       </li>
       <li class="c5-marq__item" aria-hidden="true">
         <span class="c5-marq__txt">Polski, rodzinny producent</span>
-        <span class="c5-marq__thumb c5-marq__thumb--ph"></span>
+        <img class="c5-marq__thumb" src="img/foto/produkty-zaufanie-producent.jpg" alt="" width="96" height="96" loading="lazy" decoding="async">
       </li>
       <li class="c5-marq__item" aria-hidden="true">
         <span class="c5-marq__txt">Rejestracje MRiRW – zakres per produkt</span>
-        <span class="c5-marq__thumb c5-marq__thumb--ph"></span>
+        <img class="c5-marq__thumb" src="img/foto/produkty-zaufanie-rejestracje.jpg" alt="" width="96" height="96" loading="lazy" decoding="async">
       </li>
       <li class="c5-marq__item" aria-hidden="true">
         <span class="c5-marq__txt">Certyfikaty ekologiczne – zakres per produkt</span>
@@ -164,11 +160,11 @@
       </li>
       <li class="c5-marq__item" aria-hidden="true">
         <span class="c5-marq__txt">Polski, rodzinny producent</span>
-        <span class="c5-marq__thumb c5-marq__thumb--ph"></span>
+        <img class="c5-marq__thumb" src="img/foto/produkty-zaufanie-producent.jpg" alt="" width="96" height="96" loading="lazy" decoding="async">
       </li>
       <li class="c5-marq__item" aria-hidden="true">
         <span class="c5-marq__txt">Rejestracje MRiRW – zakres per produkt</span>
-        <span class="c5-marq__thumb c5-marq__thumb--ph"></span>
+        <img class="c5-marq__thumb" src="img/foto/produkty-zaufanie-rejestracje.jpg" alt="" width="96" height="96" loading="lazy" decoding="async">
       </li>
       <li class="c5-marq__item" aria-hidden="true">
         <span class="c5-marq__txt">Certyfikaty ekologiczne – zakres per produkt</span>
@@ -200,7 +196,7 @@
        the studio glow behind the product is removed (the floor shadow and the gradient stay). -->
   <section class="c5-sec c5pr-studio" id="gama" data-chapter="gama" data-ce="CE-39">
     <div class="c5-wrap">
-      <span class="c5-kicker c5-kicker--center">Gama</span>
+      <span class="c5-kicker c5-kicker--outline c5-kicker--center">Gama</span>
       <div class="c5-head">
         <h2 class="c5-h2 c5-h2--center">Która rodzina jest dla Ciebie?</h2>
         <p class="c5-lead c5-lead--center">Cztery rodziny produktów własnych. Wybierz rodzinę, a zobaczysz, w jakiej postaci jest produkt, co się z nim robi i dla kogo jest – stąd przejdziesz wprost na jego stronę.</p>
@@ -215,7 +211,7 @@
             <button type="button" class="c5pr-seg__tab" role="tab" id="gama-tab-humic" aria-controls="gama-panel-humic" aria-selected="false" tabindex="-1" data-key="humic"><span class="c5pr-seg__lbl">CARBOMAT HUMIC</span></button>
             <button type="button" class="c5pr-seg__tab" role="tab" id="gama-tab-carbohumic" aria-controls="gama-panel-carbohumic" aria-selected="false" tabindex="-1" data-key="carbohumic"><span class="c5pr-seg__lbl">CARBOHUMIC</span></button>
           </div>
-          <a class="c5pr-show__compare" href="#porownanie" data-gama-compare aria-label="Porównaj parametry czterech rodzin">Porównaj</a>
+          <a class="c5pr-show__compare" href="#porownanie" data-gama-compare data-lightbox-open="porownanie" aria-label="Porównaj parametry czterech rodzin">Porównaj</a>
         </div>
 
         <div class="c5pr-show__panels">
@@ -347,6 +343,11 @@
           </div>
 
         </div>
+
+        <!-- Wide button under the show (comment of 2026-09-20): the same overlay as the
+             „Porównaj" link in the tab bar, only impossible to miss. Without JS it is an
+             ordinary in-page link to the block that then stands in the flow. -->
+        <a class="c5-btn c5-btn--dark c5pr-show__full" href="#porownanie" data-lightbox-open="porownanie">Pełna tabela porównawcza</a>
       </div>
 
       <!-- Ramka „Dwie podobne nazwy, dwie różne role" i zdanie o produktach
@@ -356,218 +357,234 @@
     </div>
   </section>
 
-  <!-- ===== 3. PORÓWNANIE TECHNIKALIÓW – serce tej strony =====
-       Zamówienie Darka wprost (dokument 29.07, l. 284–294): „podstawowa tabela
-       z technikaliami dla wszystkich produktów doglebowych, płynnych i sypkich
-       (…) Od razu już widać pierwsze dane dla klienta do porównania z resztą
-       produktów. Zaznaczylibyśmy też, że w suchej masie. Podpiąłbym guziczek
-       z aktualną analizą. Fajnie byłoby też dodać guzik »Pobierz kartę
-       produktu« dla każdego produktu."
-       Kolejność wierszy wg jego listy: odczyn → sucha masa → substancje
-       humusowe (kwasy humusowe / fulwowe) → materia organiczna → węgiel
-       organiczny → azot → potas → fosfor. Nad nimi dwa wiersze orientacyjne
-       (postać i baza odniesienia), bez których zestawienie wprowadza w błąd.
+  <!-- ===== 3. PORÓWNANIE TECHNIKALIÓW – od 20.09.2026 w lightboksie =====
+       Mateusz (komentarze w artefakcie, 20.09): „Całą tą sekcję z tabelą porównawczą
+       przenosimy na popup/lightbox który otwiera się po kliknięciu w przycisk »porównaj«
+       przy tabach powyżej”, a bloki „jak czytać tabelę” jadą razem z nią, „ponieważ
+       bezpośrednio jej dotyczą”. Klocek nakładki to CE-25 przeniesiony z CARBOMAT MATA
+       (tam trzy strony i licznik, tutaj jedna strona, więc stopka i licznik odpadają).
+       Bez JS `.c5-lb` jest zwykłym blokiem w biegu strony – dokładnie tam, gdzie sekcja
+       stała do 19.09 – więc treść nigdy nie znika, zmienia się tylko oprawa. -->
+  <div class="c5-lb c5pr-lb" id="porownanie-lb" data-lightbox="Technikalia czterech rodzin · pełna tabela porównawcza" data-ce="CE-25" data-ce-wariant="jednostronicowy">
+    <div class="c5-lb__panel">
+      <button type="button" class="c5-iconbtn c5-iconbtn--sm" data-lightbox-close aria-label="Zamknij porównanie"><svg class="wf-icon" aria-hidden="true"><use href="#ti-x"></use></svg></button>
+      <div class="c5-lb__scroll" data-lightbox-scroll>
+    <!-- ===== 3. PORÓWNANIE TECHNIKALIÓW – serce tej strony =====
+         Zamówienie Darka wprost (dokument 29.07, l. 284–294): „podstawowa tabela
+         z technikaliami dla wszystkich produktów doglebowych, płynnych i sypkich
+         (…) Od razu już widać pierwsze dane dla klienta do porównania z resztą
+         produktów. Zaznaczylibyśmy też, że w suchej masie. Podpiąłbym guziczek
+         z aktualną analizą. Fajnie byłoby też dodać guzik »Pobierz kartę
+         produktu« dla każdego produktu."
+         Kolejność wierszy wg jego listy: odczyn → sucha masa → substancje
+         humusowe (kwasy humusowe / fulwowe) → materia organiczna → węgiel
+         organiczny → azot → potas → fosfor. Nad nimi dwa wiersze orientacyjne
+         (postać i baza odniesienia), bez których zestawienie wprowadza w błąd.
 
-       ⚠️ KAŻDA liczba przepisana 1:1 z sekcji „Parametry" odpowiedniej strony
-       produktowej – tabela zbiorcza nie może mówić czegoś innego niż karta.
-       ⚠️ CARBOMAT ECO – „substancje humusowe do ~70%": tej liczby NIE wpisujemy
-       do kolumny produktu. Dokument 29.07 (l. 58) podaje 70% dla KWASÓW
-       HUMUSOWYCH W LIGNITACH W OGÓLE, nie dla produktu; publikowanie jej jako
-       parametru produktu to defekt §10.1 analizy 29.07, zgłoszony w backlogu
-       (jest dziś na carbomat.html – do przeformułowania tam).
-       ⚠️ MATA – N, P i K pochodzą z analizy ŚWIEŻEGO PODŁOŻA w mg/dm³, czyli
-       w innej jednostce niż procenty s.m. w pozostałych kolumnach; sucha masa
-       i węgiel organiczny gotowej maty to znany brak u producenta (backlog).
-       ⚠️ CARBOHUMIC – dane wyłącznie dla wersji filtrowanej; rozpiska dla
-       niefiltrowanej i OGRODU nie została jeszcze uzupełniona przez Darka
-       (dokument 29.07, l. 419). -->
-  <section class="c5-sec c5pr-techsheet" id="porownanie" data-chapter="porownanie" data-techsheet data-ce="CE-40">
-    <!-- Own content element since 14.09.2026 (Mateusz, artifact comment on the section title): no
-         video background and no tie to the „Parametry on video" CE of the product pages. A light
-         datasheet with a centred head like the other sections; on wide screens the header row of
-         the table sticks to the top edge while the rows scroll, on narrow screens the parameter
-         column sticks to the left edge while the four families scroll sideways (spec §7). -->
-    <div class="c5-wrap">
-      <span class="c5-kicker c5-kicker--center">Porównanie</span>
-      <div class="c5-head">
-        <!-- Tytuł zawężony do tego, co tabela realnie pokazuje: cztery rodziny
-             doglebowe (kolumny). MAXI PLUS i CALBOR są produktami nalistnymi i mają
-             własne zestawienie w sekcji „Doglebowo czy nalistnie", więc „cała gama"
-             obiecywała komplet, którego tu nie ma. -->
-        <h2 class="c5-h2 c5-h2--center">Technikalia czterech rodzin · w suchej masie</h2>
-      </div>
-
-      <div class="cw-scrollx c5pr-tabwrap" tabindex="0">
-        <table class="c5pr-tab">
-          <caption class="wf-sr-only">Porównanie parametrów czterech rodzin produktów CarboHort: postać, baza odniesienia, odczyn, sucha masa, substancje humusowe, materia organiczna, węgiel organiczny, azot, potas i fosfor</caption>
-          <!-- Columns with data-col are highlighted by the „pokaż w tabeli" buttons of the note cards
-               below (module 40). Since 14.09 the Gama section does not touch the table (spec §6.3). -->
-          <colgroup><col><col data-col="eco"><col data-col="mata"><col data-col="humic"><col data-col="carbohumic"></colgroup>
-          <thead>
-            <tr>
-              <th scope="col">Parametr</th>
-              <th scope="col" data-col="eco">CARBOMAT ECO</th>
-              <th scope="col" data-col="mata">CARBOMAT MATA UPRAWOWA</th>
-              <th scope="col" data-col="humic">CARBOMAT HUMIC</th>
-              <th scope="col" data-col="carbohumic">CARBOHUMIC <span class="c5pr-dim">filtrowany</span></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">Postać</th>
-              <td>sypki</td>
-              <td>rękaw uprawowy</td>
-              <td>sypki</td>
-              <td>płynny</td>
-            </tr>
-            <tr>
-              <th scope="row">Baza odniesienia</th>
-              <td>surowy lignit<span class="c5-src">bez obróbki poza frakcjonowaniem</span></td>
-              <td>gotowe podłoże<span class="c5-src">80% lignit + 20% włókno kokosowe</span></td>
-              <td>wyekstrahowany i aktywowany koncentrat</td>
-              <td>płynny ekstrakt<span class="c5-src">187 mesh / 80 µm</span></td>
-            </tr>
-            <tr>
-              <th scope="row">Odczyn (pH)</th>
-              <td>4,5–5,0 · 6,0–6,5 <span class="c5-src">dwie odmiany</span></td>
-              <td>6,0–6,5</td>
-              <td>9–11 <span class="c5-src">w analizie 9,84</span></td>
-              <td>8,00–10,00</td>
-            </tr>
-            <tr>
-              <th scope="row">Sucha masa</th>
-              <td>~87%</td>
-              <td><span class="c5-chip c5-chip--dashed">dane w uzupełnieniu</span></td>
-              <td>~56%</td>
-              <td>12,0–15,0%</td>
-            </tr>
-            <tr>
-              <th scope="row">Substancje humusowe</th>
-              <!-- ⚠️ Dopisek „w lignicie jako surowcu do ~70% s.m." USUNIĘTY z tej komórki:
-                   stał w jednym wierszu obok „30–40% frakcji humusowych" maty, czyli dwóch
-                   różnych oznaczeń TEGO SAMEGO surowca, i czytany był jako sprzeczność.
-                   Parametr surowca zostaje tam, gdzie jest opisany z kontekstem: sekcja
-                   „Jak działają" (rozwinięcie 02 i tabela materiałów) oraz blok rozbrajający
-                   pod tabelą. Pozycja otwarta w backlogu (jedna liczba frakcji humusowych
-                   lignitu dla całej rodziny – do rozstrzygnięcia z Darkiem). -->
-              <td><span class="c5-chip c5-chip--dashed">oznaczenie dla produktu – dane w uzupełnieniu</span></td>
-              <td>30–40% frakcji humusowych<span class="c5-src">w s.m. lignitu, który stanowi 80% składu maty</span></td>
-              <td>~48%<span class="c5-src">huminowe ~45% · fulwowe ~2,5%</span></td>
-              <td>50–60%<span class="c5-src">huminowe 41–49% · fulwowe 9–11%</span></td>
-            </tr>
-            <tr>
-              <th scope="row">Materia organiczna</th>
-              <td>~92%</td>
-              <td>80–90%<span class="c5-src">w s.m. lignitu, który stanowi 80% składu maty</span></td>
-              <td>~50%</td>
-              <td>40,0–50,0%</td>
-            </tr>
-            <tr>
-              <th scope="row">Węgiel organiczny</th>
-              <td>~51%</td>
-              <td><span class="c5-chip c5-chip--dashed">dane w uzupełnieniu</span></td>
-              <td>~28%</td>
-              <!-- ⚠️ 54,7% C org. przy materii organicznej 40,0–50,0% – węgiel organiczny
-                   nie może przekraczać materii organicznej, w której się zawiera. Źródło
-                   jest znane i zbugowane: dokument 29.07 ma w tym miejscu sklejony wiersz
-                   („Materia organiczna potas | węgiel organiczny ok. 54,7%"). Liczby nie
-                   uzgadniamy samodzielnie – zostaje wartość z dokumentu z widocznym
-                   kwalifikatorem, pozycja otwarta w backlogu. -->
-              <td>ok. 54,7%<span class="c5-src">wartość z dokumentu producenta – do potwierdzenia (koliduje z materią organiczną)</span></td>
-            </tr>
-            <tr>
-              <th scope="row">Azot (N)</th>
-              <td>~0,11%</td>
-              <td>3 / 3,2 mg/dm³<span class="c5-src">N-NO₃ / N-NH₄ w świeżym podłożu – inna jednostka</span></td>
-              <td>~0,64%</td>
-              <td>ok. 0,12%</td>
-            </tr>
-            <tr>
-              <th scope="row">Potas (K₂O)</th>
-              <td>~0,6%</td>
-              <td>156 mg/dm³<span class="c5-src">K (nie K₂O) w świeżym podłożu – inna jednostka; carbomat-mata.html podpisuje ten wiersz „Potas (K)"</span></td>
-              <td>~11,3%<span class="c5-src">≈6% na produkcie, ok. 60 kg K₂O w tonie</span></td>
-              <td>ok. 2,11%</td>
-            </tr>
-            <tr>
-              <th scope="row">Fosfor (P₂O₅)</th>
-              <td>~0,5%</td>
-              <td>107 mg/dm³<span class="c5-src">P (nie P₂O₅) w świeżym podłożu – inna jednostka; carbomat-mata.html podpisuje ten wiersz „Fosfor (P)"</span></td>
-              <td>~0,02%</td>
-              <td>ok. 0,50%</td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr>
-              <th scope="row"><span class="c5pr-dim">Dokumenty</span></th>
-              <!-- ⚠️ STUBY: realne PDF-y (raporty laboratoryjne i karty produktów) do podpięcia.
-                   Decyzja 27.07: przy produktach udostępniamy oryginalny dokument z laboratorium
-                   i odświeżamy go co roku. Karta produktu MATY jeszcze NIE ISTNIEJE, więc w jej
-                   kolumnie zamiast guzika stoi widoczny brak – tak jak w tabeli certyfikatów. -->
-              <td><div class="c5pr-tab__acts">
-                <a class="c5pr-doc" href="centrum-wiedzy.html#magazyn"><svg class="wf-icon" aria-hidden="true"><use href="#ti-flask"></use></svg> Aktualna analiza</a>
-                <a class="c5pr-doc" href="centrum-wiedzy.html#magazyn"><svg class="wf-icon" aria-hidden="true"><use href="#ti-external-link"></use></svg> Pobierz kartę produktu</a>
-              </div></td>
-              <td><div class="c5pr-tab__acts">
-                <a class="c5pr-doc" href="centrum-wiedzy.html#magazyn"><svg class="wf-icon" aria-hidden="true"><use href="#ti-flask"></use></svg> Aktualna analiza</a>
-                <span class="c5-chip c5-chip--dashed">karta produktu w przygotowaniu</span>
-              </div></td>
-              <td><div class="c5pr-tab__acts">
-                <a class="c5pr-doc" href="centrum-wiedzy.html#magazyn"><svg class="wf-icon" aria-hidden="true"><use href="#ti-flask"></use></svg> Aktualna analiza</a>
-                <a class="c5pr-doc" href="centrum-wiedzy.html#magazyn"><svg class="wf-icon" aria-hidden="true"><use href="#ti-external-link"></use></svg> Pobierz kartę produktu</a>
-              </div></td>
-              <td><div class="c5pr-tab__acts">
-                <a class="c5pr-doc" href="centrum-wiedzy.html#magazyn"><svg class="wf-icon" aria-hidden="true"><use href="#ti-flask"></use></svg> Aktualna analiza</a>
-                <a class="c5pr-doc" href="centrum-wiedzy.html#magazyn"><svg class="wf-icon" aria-hidden="true"><use href="#ti-external-link"></use></svg> Pobierz kartę produktu</a>
-              </div></td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-
-      <p class="c5-src c5pr-techsheet__src">Zawartości podajemy w suchej masie, jeśli przy wartości nie zaznaczono inaczej. Źródła: badanie akredytowanego laboratorium PCBC S.A. (2022) i karta produktu – CARBOMAT ECO · analizy WZO Pleszew (2022) i badania SGGW – MATA · aktualna analiza laboratoryjna (06.2026) – CARBOMAT HUMIC · dokument producenta (29.07) i karta produktu – CARBOHUMIC.</p>
-
-      <!-- Jak czytać tabelę: cztery uwagi, bez których zestawienie wprowadza klienta
-           w błąd. Treść 1:1 z poprzednich bloków; na prośbę Mateusza (komentarz
-           w podglądzie, 12.09) inaczej zaprezentowane: zasada ogólna szeroko, a trzy
-           uwagi kolumnowe jako karty z przyciskiem podświetlającym własną kolumnę
-           w tabeli wyżej. Since 14.09 this is a mechanism local to this section – the Gama
-           „Porównaj" link only scrolls here and moves focus to the table (spec §6.3, §7). -->
-      <div class="c5pr-read">
-        <div class="c5pr-read__lead">
-          <h3 class="c5pr-read__h">Dlaczego tych liczb nie porównujesz wprost</h3>
-          <p>Każdy produkt ma inną postać i inną bazę odniesienia: surowy lignit, gotowe podłoże, wyekstrahowany koncentrat i płynny ekstrakt. Kolumny nie mówią więc, który produkt jest „mocniejszy" – mówią, ile czego zawiera dana postać. O efekcie w polu decyduje dostępność składników dla roślin i sposób aplikacji, nie sama zawartość w tabeli.</p>
+         ⚠️ KAŻDA liczba przepisana 1:1 z sekcji „Parametry" odpowiedniej strony
+         produktowej – tabela zbiorcza nie może mówić czegoś innego niż karta.
+         ⚠️ CARBOMAT ECO – „substancje humusowe do ~70%": tej liczby NIE wpisujemy
+         do kolumny produktu. Dokument 29.07 (l. 58) podaje 70% dla KWASÓW
+         HUMUSOWYCH W LIGNITACH W OGÓLE, nie dla produktu; publikowanie jej jako
+         parametru produktu to defekt §10.1 analizy 29.07, zgłoszony w backlogu
+         (jest dziś na carbomat.html – do przeformułowania tam).
+         ⚠️ MATA – N, P i K pochodzą z analizy ŚWIEŻEGO PODŁOŻA w mg/dm³, czyli
+         w innej jednostce niż procenty s.m. w pozostałych kolumnach; sucha masa
+         i węgiel organiczny gotowej maty to znany brak u producenta (backlog).
+         ⚠️ CARBOHUMIC – dane wyłącznie dla wersji filtrowanej; rozpiska dla
+         niefiltrowanej i OGRODU nie została jeszcze uzupełniona przez Darka
+         (dokument 29.07, l. 419). -->
+        <section class="c5-lb__page c5pr-techsheet" id="porownanie" data-lightbox-page="porownanie" data-techsheet data-ce="CE-40" data-ce-wariant="w-lightboxie">
+      <!-- Own content element since 14.09.2026 (Mateusz, artifact comment on the section title): no
+           video background and no tie to the „Parametry on video" CE of the product pages. A light
+           datasheet with a centred head like the other sections; on wide screens the header row of
+           the table sticks to the top edge while the rows scroll, on narrow screens the parameter
+           column sticks to the left edge while the four families scroll sideways (spec §7). -->
+      <div class="c5-wrap">
+        <span class="c5-kicker c5-kicker--outline c5-kicker--center">Porównanie</span>
+        <div class="c5-head">
+          <!-- Tytuł zawężony do tego, co tabela realnie pokazuje: cztery rodziny
+               doglebowe (kolumny). MAXI PLUS i CALBOR są produktami nalistnymi i mają
+               własne zestawienie w sekcji „Doglebowo czy nalistnie", więc „cała gama"
+               obiecywała komplet, którego tu nie ma. -->
+          <h2 class="c5-h2 c5-h2--center" id="porownanie-t">Technikalia czterech rodzin · w suchej masie</h2>
         </div>
-        <div class="c5pr-read__grid">
-          <!-- ⚠️ Blok nie może obiecywać, że „zostawiamy to pole puste": carbomat.html w sekcji
-             #parametry nadal publikuje wiersz „Substancje humusowe | do ~70% (zależnie od
-             pokładu)" pod podpisem PCBC S.A. 2022, więc serwis mówiłby dwie różne rzeczy.
-             Defekt do domknięcia na carbomat.html – pozycja „Substancje humusowe do ~70%"
-             w 40-strona-www/backlog.md (analiza 29.07 §10.1). Tutaj brzmienie neutralne. -->
-          <div class="c5-note c5-note--rule c5pr-note">
-            <h4 class="c5pr-note__h">CARBOMAT ECO – 70% dotyczy surowca</h4>
-            <p>Zawartość kwasów humusowych w lignitach różni się w zależności od pokładu i może sięgać nawet 70% suchej masy. To parametr surowca, nie oznaczenie gotowego produktu – a oznaczenie dla samego CARBOMAT ECO jest w uzupełnieniu. Z tego samego powodu nie zestawiaj tej liczby z wynikiem maty (30–40% frakcji humusowych): to dwa różne oznaczenia tego samego surowca, a nie dwie wartości tego samego parametru.</p>
-            <button type="button" class="c5-btn c5-btn--sm c5-btn--light" data-cols="eco" aria-pressed="false"><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-up"></use></svg> pokaż w tabeli</button>
+
+        <div class="cw-scrollx c5pr-tabwrap" tabindex="0">
+          <table class="c5pr-tab">
+            <caption class="wf-sr-only">Porównanie parametrów czterech rodzin produktów CarboHort: postać, baza odniesienia, odczyn, sucha masa, substancje humusowe, materia organiczna, węgiel organiczny, azot, potas i fosfor</caption>
+            <!-- Columns with data-col are highlighted by the „pokaż w tabeli" buttons of the note cards
+                 below (module 40). Since 14.09 the Gama section does not touch the table (spec §6.3). -->
+            <colgroup><col><col data-col="eco"><col data-col="mata"><col data-col="humic"><col data-col="carbohumic"></colgroup>
+            <thead>
+              <tr>
+                <th scope="col">Parametr</th>
+                <th scope="col" data-col="eco">CARBOMAT ECO</th>
+                <th scope="col" data-col="mata">CARBOMAT MATA UPRAWOWA</th>
+                <th scope="col" data-col="humic">CARBOMAT HUMIC</th>
+                <th scope="col" data-col="carbohumic">CARBOHUMIC <span class="c5pr-dim">filtrowany</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Postać</th>
+                <td>sypki</td>
+                <td>rękaw uprawowy</td>
+                <td>sypki</td>
+                <td>płynny</td>
+              </tr>
+              <tr>
+                <th scope="row">Baza odniesienia</th>
+                <td>surowy lignit<span class="c5-src">bez obróbki poza frakcjonowaniem</span></td>
+                <td>gotowe podłoże<span class="c5-src">80% lignit + 20% włókno kokosowe</span></td>
+                <td>wyekstrahowany i aktywowany koncentrat</td>
+                <td>płynny ekstrakt<span class="c5-src">187 mesh / 80 µm</span></td>
+              </tr>
+              <tr>
+                <th scope="row">Odczyn (pH)</th>
+                <td>4,5–5,0 · 6,0–6,5 <span class="c5-src">dwie odmiany</span></td>
+                <td>6,0–6,5</td>
+                <td>9–11 <span class="c5-src">w analizie 9,84</span></td>
+                <td>8,00–10,00</td>
+              </tr>
+              <tr>
+                <th scope="row">Sucha masa</th>
+                <td>~87%</td>
+                <td><span class="c5-chip c5-chip--dashed">dane w uzupełnieniu</span></td>
+                <td>~56%</td>
+                <td>12,0–15,0%</td>
+              </tr>
+              <tr>
+                <th scope="row">Substancje humusowe</th>
+                <!-- ⚠️ Dopisek „w lignicie jako surowcu do ~70% s.m." USUNIĘTY z tej komórki:
+                     stał w jednym wierszu obok „30–40% frakcji humusowych" maty, czyli dwóch
+                     różnych oznaczeń TEGO SAMEGO surowca, i czytany był jako sprzeczność.
+                     Parametr surowca zostaje tam, gdzie jest opisany z kontekstem: sekcja
+                     „Jak działają" (rozwinięcie 02 i tabela materiałów) oraz blok rozbrajający
+                     pod tabelą. Pozycja otwarta w backlogu (jedna liczba frakcji humusowych
+                     lignitu dla całej rodziny – do rozstrzygnięcia z Darkiem). -->
+                <td><span class="c5-chip c5-chip--dashed">oznaczenie dla produktu – dane w uzupełnieniu</span></td>
+                <td>30–40% frakcji humusowych<span class="c5-src">w s.m. lignitu, który stanowi 80% składu maty</span></td>
+                <td>~48%<span class="c5-src">huminowe ~45% · fulwowe ~2,5%</span></td>
+                <td>50–60%<span class="c5-src">huminowe 41–49% · fulwowe 9–11%</span></td>
+              </tr>
+              <tr>
+                <th scope="row">Materia organiczna</th>
+                <td>~92%</td>
+                <td>80–90%<span class="c5-src">w s.m. lignitu, który stanowi 80% składu maty</span></td>
+                <td>~50%</td>
+                <td>40,0–50,0%</td>
+              </tr>
+              <tr>
+                <th scope="row">Węgiel organiczny</th>
+                <td>~51%</td>
+                <td><span class="c5-chip c5-chip--dashed">dane w uzupełnieniu</span></td>
+                <td>~28%</td>
+                <!-- ⚠️ 54,7% C org. przy materii organicznej 40,0–50,0% – węgiel organiczny
+                     nie może przekraczać materii organicznej, w której się zawiera. Źródło
+                     jest znane i zbugowane: dokument 29.07 ma w tym miejscu sklejony wiersz
+                     („Materia organiczna potas | węgiel organiczny ok. 54,7%"). Liczby nie
+                     uzgadniamy samodzielnie – zostaje wartość z dokumentu z widocznym
+                     kwalifikatorem, pozycja otwarta w backlogu. -->
+                <td>ok. 54,7%<span class="c5-src">wartość z dokumentu producenta – do potwierdzenia (koliduje z materią organiczną)</span></td>
+              </tr>
+              <tr>
+                <th scope="row">Azot (N)</th>
+                <td>~0,11%</td>
+                <td>3 / 3,2 mg/dm³<span class="c5-src">N-NO₃ / N-NH₄ w świeżym podłożu – inna jednostka</span></td>
+                <td>~0,64%</td>
+                <td>ok. 0,12%</td>
+              </tr>
+              <tr>
+                <th scope="row">Potas (K₂O)</th>
+                <td>~0,6%</td>
+                <td>156 mg/dm³<span class="c5-src">K (nie K₂O) w świeżym podłożu – inna jednostka; carbomat-mata.html podpisuje ten wiersz „Potas (K)"</span></td>
+                <td>~11,3%<span class="c5-src">≈6% na produkcie, ok. 60 kg K₂O w tonie</span></td>
+                <td>ok. 2,11%</td>
+              </tr>
+              <tr>
+                <th scope="row">Fosfor (P₂O₅)</th>
+                <td>~0,5%</td>
+                <td>107 mg/dm³<span class="c5-src">P (nie P₂O₅) w świeżym podłożu – inna jednostka; carbomat-mata.html podpisuje ten wiersz „Fosfor (P)"</span></td>
+                <td>~0,02%</td>
+                <td>ok. 0,50%</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th scope="row"><span class="c5pr-dim">Dokumenty</span></th>
+                <!-- ⚠️ STUBY: realne PDF-y (raporty laboratoryjne i karty produktów) do podpięcia.
+                     Decyzja 27.07: przy produktach udostępniamy oryginalny dokument z laboratorium
+                     i odświeżamy go co roku. Karta produktu MATY jeszcze NIE ISTNIEJE, więc w jej
+                     kolumnie zamiast guzika stoi widoczny brak – tak jak w tabeli certyfikatów. -->
+                <td><div class="c5pr-tab__acts">
+                  <a class="c5pr-doc" href="centrum-wiedzy.html#magazyn"><svg class="wf-icon" aria-hidden="true"><use href="#ti-flask"></use></svg> Aktualna analiza</a>
+                  <a class="c5pr-doc" href="centrum-wiedzy.html#magazyn"><svg class="wf-icon" aria-hidden="true"><use href="#ti-external-link"></use></svg> Pobierz kartę produktu</a>
+                </div></td>
+                <td><div class="c5pr-tab__acts">
+                  <a class="c5pr-doc" href="centrum-wiedzy.html#magazyn"><svg class="wf-icon" aria-hidden="true"><use href="#ti-flask"></use></svg> Aktualna analiza</a>
+                  <span class="c5-chip c5-chip--dashed">karta produktu w przygotowaniu</span>
+                </div></td>
+                <td><div class="c5pr-tab__acts">
+                  <a class="c5pr-doc" href="centrum-wiedzy.html#magazyn"><svg class="wf-icon" aria-hidden="true"><use href="#ti-flask"></use></svg> Aktualna analiza</a>
+                  <a class="c5pr-doc" href="centrum-wiedzy.html#magazyn"><svg class="wf-icon" aria-hidden="true"><use href="#ti-external-link"></use></svg> Pobierz kartę produktu</a>
+                </div></td>
+                <td><div class="c5pr-tab__acts">
+                  <a class="c5pr-doc" href="centrum-wiedzy.html#magazyn"><svg class="wf-icon" aria-hidden="true"><use href="#ti-flask"></use></svg> Aktualna analiza</a>
+                  <a class="c5pr-doc" href="centrum-wiedzy.html#magazyn"><svg class="wf-icon" aria-hidden="true"><use href="#ti-external-link"></use></svg> Pobierz kartę produktu</a>
+                </div></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <p class="c5-src c5pr-techsheet__src">Zawartości podajemy w suchej masie, jeśli przy wartości nie zaznaczono inaczej. Źródła: badanie akredytowanego laboratorium PCBC S.A. (2022) i karta produktu – CARBOMAT ECO · analizy WZO Pleszew (2022) i badania SGGW – MATA · aktualna analiza laboratoryjna (06.2026) – CARBOMAT HUMIC · dokument producenta (29.07) i karta produktu – CARBOHUMIC.</p>
+
+        <!-- Jak czytać tabelę: cztery uwagi, bez których zestawienie wprowadza klienta
+             w błąd. Treść 1:1 z poprzednich bloków; na prośbę Mateusza (komentarz
+             w podglądzie, 12.09) inaczej zaprezentowane: zasada ogólna szeroko, a trzy
+             uwagi kolumnowe jako karty z przyciskiem podświetlającym własną kolumnę
+             w tabeli wyżej. Since 14.09 this is a mechanism local to this section – the Gama
+             „Porównaj" link only scrolls here and moves focus to the table (spec §6.3, §7). -->
+        <div class="c5pr-read">
+          <div class="c5pr-read__lead">
+            <h3 class="c5pr-read__h">Dlaczego tych liczb nie porównujesz wprost</h3>
+            <p>Każdy produkt ma inną postać i inną bazę odniesienia: surowy lignit, gotowe podłoże, wyekstrahowany koncentrat i płynny ekstrakt. Kolumny nie mówią więc, który produkt jest „mocniejszy" – mówią, ile czego zawiera dana postać. O efekcie w polu decyduje dostępność składników dla roślin i sposób aplikacji, nie sama zawartość w tabeli.</p>
           </div>
-          <div class="c5-note c5-note--rule c5pr-note">
-            <h4 class="c5pr-note__h">CARBOMAT HUMIC – koncentrat, nie surowiec</h4>
-            <p>CARBOMAT HUMIC to wyekstrahowany i aktywowany koncentrat substancji humusowych o suchej masie ~56%, a CARBOMAT ECO to surowy lignit – inna postać produktu i inna baza odniesienia. Niższe liczby w kolumnie nie oznaczają słabszego produktu.</p>
-            <button type="button" class="c5-btn c5-btn--sm c5-btn--light" data-cols="humic" aria-pressed="false"><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-up"></use></svg> pokaż w tabeli</button>
-          </div>
-          <div class="c5-note c5-note--rule c5pr-note">
-            <h4 class="c5pr-note__h">MATA i CARBOHUMIC – jednostki i zakres</h4>
-            <p>Azot, potas i fosfor maty pochodzą z analizy świeżego podłoża i są podane w mg/dm³, a nie w procentach suchej masy – w macie oznaczono pierwiastek (K, P), a nie tlenek (K₂O, P₂O₅), więc tych trzech pól nie zestawiaj w pionie. Parametry CARBOHUMIC dotyczą wyłącznie wersji filtrowanej; rozpiska dla wersji niefiltrowanej i linii OGRÓD jest w uzupełnieniu. Produkty nalistne – CARBOHUMIC MAXI PLUS i CARBOHUMIC CALBOR – mają osobne zestawienie w sekcji <a class="wf-link--muted" href="#doglebowo-czy-nalistnie">Doglebowo czy nalistnie</a>.</p>
-            <button type="button" class="c5-btn c5-btn--sm c5-btn--light" data-cols="mata carbohumic" aria-pressed="false"><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-up"></use></svg> pokaż w tabeli</button>
+          <div class="c5pr-read__grid">
+            <!-- ⚠️ Blok nie może obiecywać, że „zostawiamy to pole puste": carbomat.html w sekcji
+               #parametry nadal publikuje wiersz „Substancje humusowe | do ~70% (zależnie od
+               pokładu)" pod podpisem PCBC S.A. 2022, więc serwis mówiłby dwie różne rzeczy.
+               Defekt do domknięcia na carbomat.html – pozycja „Substancje humusowe do ~70%"
+               w 40-strona-www/backlog.md (analiza 29.07 §10.1). Tutaj brzmienie neutralne. -->
+            <div class="c5-note c5-note--rule c5pr-note">
+              <h4 class="c5pr-note__h">CARBOMAT ECO – 70% dotyczy surowca</h4>
+              <p>Zawartość kwasów humusowych w lignitach różni się w zależności od pokładu i może sięgać nawet 70% suchej masy. To parametr surowca, nie oznaczenie gotowego produktu – a oznaczenie dla samego CARBOMAT ECO jest w uzupełnieniu. Z tego samego powodu nie zestawiaj tej liczby z wynikiem maty (30–40% frakcji humusowych): to dwa różne oznaczenia tego samego surowca, a nie dwie wartości tego samego parametru.</p>
+              <button type="button" class="c5-btn c5-btn--sm c5-btn--light" data-cols="eco" aria-pressed="false"><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-up"></use></svg> pokaż w tabeli</button>
+            </div>
+            <div class="c5-note c5-note--rule c5pr-note">
+              <h4 class="c5pr-note__h">CARBOMAT HUMIC – koncentrat, nie surowiec</h4>
+              <p>CARBOMAT HUMIC to wyekstrahowany i aktywowany koncentrat substancji humusowych o suchej masie ~56%, a CARBOMAT ECO to surowy lignit – inna postać produktu i inna baza odniesienia. Niższe liczby w kolumnie nie oznaczają słabszego produktu.</p>
+              <button type="button" class="c5-btn c5-btn--sm c5-btn--light" data-cols="humic" aria-pressed="false"><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-up"></use></svg> pokaż w tabeli</button>
+            </div>
+            <div class="c5-note c5-note--rule c5pr-note">
+              <h4 class="c5pr-note__h">MATA i CARBOHUMIC – jednostki i zakres</h4>
+              <p>Azot, potas i fosfor maty pochodzą z analizy świeżego podłoża i są podane w mg/dm³, a nie w procentach suchej masy – w macie oznaczono pierwiastek (K, P), a nie tlenek (K₂O, P₂O₅), więc tych trzech pól nie zestawiaj w pionie. Parametry CARBOHUMIC dotyczą wyłącznie wersji filtrowanej; rozpiska dla wersji niefiltrowanej i linii OGRÓD jest w uzupełnieniu. Produkty nalistne – CARBOHUMIC MAXI PLUS i CARBOHUMIC CALBOR – mają osobne zestawienie w sekcji <a class="wf-link--muted" href="#doglebowo-czy-nalistnie">Doglebowo czy nalistnie</a>.</p>
+              <button type="button" class="c5-btn c5-btn--sm c5-btn--light" data-cols="mata carbohumic" aria-pressed="false"><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-up"></use></svg> pokaż w tabeli</button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="c5pr-techsheet__actions">
-        <a class="c5-btn c5-btn--sm c5-btn--light" href="#certyfikaty"><svg class="wf-icon" aria-hidden="true"><use href="#ti-check"></use></svg> Certyfikaty i rejestracje per produkt</a>
-        <a class="c5-btn c5-btn--sm c5-btn--light" href="#wg-potrzeby"><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrows-sort"></use></svg> Nie wiem, którego potrzebuję</a>
+        <div class="c5pr-techsheet__actions">
+          <a class="c5-btn c5-btn--sm c5-btn--light" href="#certyfikaty"><svg class="wf-icon" aria-hidden="true"><use href="#ti-check"></use></svg> Certyfikaty i rejestracje per produkt</a>
+          <a class="c5-btn c5-btn--sm c5-btn--light" href="#wg-potrzeby"><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrows-sort"></use></svg> Nie wiem, którego potrzebuję</a>
+        </div>
+      </div>
+        </section>
       </div>
     </div>
-  </section>
+  </div>
+
 
   <!-- ===== 4. WG POTRZEBY – ścieżka decyzyjna =====
        Najważniejsza sekcja sprzedażowa tej strony: klient nie myśli nazwami
@@ -582,7 +599,7 @@
        cards without JS (50-wg-potrzeby.js sets data-paths and the roles). -->
   <section class="c5-sec c5-band" id="wg-potrzeby" data-chapter="wg-potrzeby">
     <div class="c5-wrap">
-      <span class="c5-kicker c5-kicker--center">Wg potrzeby</span>
+      <span class="c5-kicker c5-kicker--outline c5-kicker--center">Wg potrzeby</span>
       <div class="c5-head">
         <h2 class="c5-h2 c5-h2--center">Powiedz, co chcesz zrobić – wskażemy produkt i&nbsp;powód.</h2>
         <p class="c5-lead c5-lead--center">Dziesięć sytuacji, w których klienci do nas trafiają. Znajdź swoją i przejdź prosto na stronę właściwego produktu. Jeśli żadna nie pasuje – skorzystaj z konfiguratora albo zapytaj dr Jurka.</p>
@@ -617,8 +634,7 @@
             <span class="c5pr-goal__go"><a class="wf-link" href="#sciezka-01">nowe nasadzenie</a> · <a class="wf-link" href="#sciezka-07">produkt płynny</a></span>
           </li>
           <li class="c5pr-goal" id="jakosc">
-            <!-- foto: produkty-cel-jakosc.jpg (4:3) – placeholder until the photo exists (spec §17) -->
-            <div class="c5pr-goal__media c5-ph" data-ph="foto 4:3 · jakość i trwałość owocu" aria-hidden="true"></div>
+            <div class="c5pr-goal__media"><img src="img/foto/produkty-cel-jakosc.jpg" alt="" loading="lazy" decoding="async"></div>
             <span class="c5pr-goal__name">Jakość i&nbsp;trwałość owocu</span>
             <p class="c5pr-goal__txt">CARBOHUMIC CALBOR nalistnie dostarcza wapń i&nbsp;bor: jędrność, kaliber i&nbsp;trwałość pozbiorcza owoców.</p>
             <span class="c5pr-goal__go"><a class="wf-link" href="#sciezka-09">wsparcie w&nbsp;sezonie</a></span>
@@ -632,14 +648,14 @@
           </li>
           <li class="c5pr-goal" id="ph">
             <!-- foto: produkty-cel-ph.jpg (4:3) – placeholder until the photo exists (spec §17) -->
-            <div class="c5pr-goal__media c5-ph" data-ph="foto 4:3 · odczyn gleby" aria-hidden="true"></div>
+            <div class="c5pr-goal__media"><img src="img/foto/produkty-cel-ph.jpg" alt="" loading="lazy" decoding="async"></div>
             <span class="c5pr-goal__name">Uregulować pH gleby</span>
             <p class="c5pr-goal__txt">Odczyn regulujemy w&nbsp;dwie strony: CARBOMAT HUMIC (pH 9–11) podnosi odczyn gleb zakwaszonych, a&nbsp;CARBOMAT ECO o&nbsp;pH 4,5–5,0 jest dla roślin kwasolubnych.</p>
             <span class="c5pr-goal__go"><a class="wf-link" href="#sciezka-05">gleba zakwaszona</a> · <a class="wf-link" href="#sciezka-04">kwasolubne</a></span>
           </li>
           <li class="c5pr-goal" id="bez-torfu">
             <!-- foto: produkty-cel-bez-torfu.jpg (4:3) – placeholder until the photo exists (spec §17) -->
-            <div class="c5pr-goal__media c5-ph" data-ph="foto 4:3 · podłoże bez torfu" aria-hidden="true"></div>
+            <div class="c5pr-goal__media"><img src="img/foto/produkty-cel-bez-torfu.jpg" alt="" loading="lazy" decoding="async"></div>
             <span class="c5pr-goal__name">Podłoże bez torfu</span>
             <p class="c5pr-goal__txt">Lignit jest trwałym, organicznym komponentem własnych mieszanek, a&nbsp;CARBOMAT MATA UPRAWOWA zastępuje wełnę mineralną i&nbsp;kokos.</p>
             <span class="c5pr-goal__go"><a class="wf-link" href="#sciezka-10">własne podłoże</a> · <a class="wf-link" href="#sciezka-06">uprawa bezglebowa</a></span>
@@ -1057,7 +1073,7 @@
          layout shows. -->
     <div class="c5-fx__above c5-wrap" data-fx-head="bez-naglowka">
       <div class="c5-head">
-        <span class="c5-kicker c5-kicker--center">Jak działają</span>
+        <span class="c5-kicker c5-kicker--outline c5-kicker--center">Jak działają</span>
         <h2 class="c5-h2 c5-h2--center">Naprawiamy glebę, wzmacniamy roślinę.</h2>
         <p class="c5-lead c5-lead--center">Wszystko, co robimy, opiera się na jednym surowcu: młodym węglu brunatnym. Pięć rzeczy, które warto o nim wiedzieć, zanim wybierzesz konkretny produkt.</p>
       </div>
@@ -1070,7 +1086,7 @@
              lines stand in the block above – exactly one of the two is ever visible
              (the module keeps `hidden` in sync). -->
         <div class="c5-fx__head" data-fx-head="z-naglowkiem" hidden>
-          <span class="c5-kicker">Jak działają</span>
+          <span class="c5-kicker c5-kicker--outline">Jak działają</span>
           <h2 class="c5-h2">Naprawiamy glebę, wzmacniamy roślinę.</h2>
         </div>
 
@@ -1087,8 +1103,7 @@
             <img class="c5-fx__img" data-fx-bg="2" src="img/foto/czym-jest-2.jpg" alt="" loading="lazy" decoding="async">
             <img class="c5-fx__img" data-fx-bg="3" src="img/foto/czym-jest-3.jpg" alt="" loading="lazy" decoding="async">
             <img class="c5-fx__img" data-fx-bg="4" src="img/foto/czym-jest-5.jpg" alt="" loading="lazy" decoding="async">
-            <!-- foto: img/foto/produkty-jak-dzialaja-5.jpg -->
-            <div class="c5-fx__ph c5-ph c5-ph--dark" data-fx-bg="5" data-ph="foto 4:5 · postać produktu: sypki i płynny"></div>
+            <img class="c5-fx__img" data-fx-bg="5" src="img/foto/produkty-jak-dzialaja-5.jpg" alt="" loading="lazy" decoding="async">
           </div>
 
           <div class="c5-fx__fact" data-fx-fact="1">
@@ -1268,7 +1283,7 @@
     <div id="co-daja-wiersze" class="c5-casc" data-casc data-ce="CE-15" data-ce-wariant="kaskada-z-odliczaniem" data-ce-od="#co-daja">
       <div class="c5-wrap">
         <div class="c5-head">
-          <span class="c5-kicker c5-kicker--center">Efekty w czasie</span>
+          <span class="c5-kicker c5-kicker--outline c5-kicker--center">Efekty w czasie</span>
           <h2 class="c5-h2 c5-h2--center">Co dają – i kiedy to zobaczysz.</h2>
           <p class="c5-lead c5-lead--center">Efekty rozkładają się w czasie. Dlatego rozdzielamy to, co widać w sezonie, od tego, co buduje się latami.</p>
         </div>
@@ -1421,7 +1436,7 @@
        when the block enters. -->
   <section class="c5-sec" id="dowod" data-chapter="dowod">
     <div class="c5-wrap">
-      <span class="c5-kicker c5-kicker--center">Dowód</span>
+      <span class="c5-kicker c5-kicker--outline c5-kicker--center">Dowód</span>
       <div class="c5-head">
         <h2 class="c5-h2 c5-h2--center">Sprawdź, nie wierz na słowo.</h2>
         <p class="c5-lead c5-lead--center">Każdą liczbę podajemy ze źródłem i z ramą. Wyniki własne oznaczamy jako wstępne – pełne dane z pola wejdą po programie Próchnica+.</p>
@@ -1517,16 +1532,34 @@
        .c5-alert with a wf-ph placeholder. -->
   <section class="c5-sec c5-band" id="doglebowo-czy-nalistnie" data-chapter="doglebowo-czy-nalistnie">
     <div class="c5-wrap">
-      <span class="c5-kicker c5-kicker--center">Doglebowo czy nalistnie?</span>
+      <span class="c5-kicker c5-kicker--outline c5-kicker--center">Doglebowo czy nalistnie?</span>
       <div class="c5-head">
         <h2 class="c5-h2 c5-h2--center">Kondycjonowanie, a&nbsp;biostymulacja kwasami humusowymi</h2>
         <p class="c5-lead c5-lead--center">Aplikacja doglebowa i nalistna nie konkurują ze sobą, lecz wzajemnie się uzupełniają. Doglebowo pracujemy nad właściwościami fizycznymi, biologicznymi i chemicznymi gleby i strefą korzeniową, a nalistnie odpowiadamy na bieżące potrzeby rośliny.</p>
       </div>
       <p class="c5-lead c5-lead--center" style="margin-top:var(--w-space-4);">Gleba buduje potencjał rośliny, z kolei liść pozwala szybko uruchomić wsparcie wtedy, gdy korzeń nie nadąża za jej potrzebami.</p>
 
-      <div id="doglebowo-tabela" class="c5pr-cmp cw-scrollx" tabindex="0" data-ce="CE-22" data-ce-wariant="porownawcza" data-ce-od="#doglebowo-czy-nalistnie">
+      <div id="doglebowo-tabela" class="c5pr-cmp cw-scrollx" tabindex="0" data-ce="CE-22" data-ce-wariant="z-packshotami" data-ce-od="#doglebowo-czy-nalistnie">
         <table class="wf-table">
-          <thead><tr><th scope="col">Aplikacja doglebowa</th><th scope="col">Aplikacja nalistna</th></tr></thead>
+          <!-- Zdjęcia nad etykietami kolumn – wariant z-packshotami CE-22 (metryki pola 1:1
+               z carbohumic.html), ale z kadrem SPOSOBU APLIKACJI, nie z packshotem. Mateusz,
+               komentarz w artefakcie 20.09: „powyżej, gdzie mówimy o aplikacji doglebowej
+               oraz aplikacji nalistnej (…) możemy zastosować zdjęcia poglądowe sposobu
+               aplikacji, a nie samych produktów" – produkty stoją w kartach pod tabelą.
+               Docelowe pliki: img/foto/produkty-aplikacja-doglebowa.jpg i
+               img/foto/produkty-aplikacja-nalistna.jpg (1:1, prompty w specu §25). -->
+          <thead>
+            <tr>
+              <th scope="col">
+                <span class="c5pr-cmp__shot c5pr-cmp__shot--foto"><img src="img/foto/produkty-aplikacja-doglebowa.jpg" alt="" loading="lazy" decoding="async"></span>
+                Aplikacja doglebowa
+              </th>
+              <th scope="col">
+                <span class="c5pr-cmp__shot c5pr-cmp__shot--foto"><img src="img/foto/produkty-aplikacja-nalistna.jpg" alt="" loading="lazy" decoding="async"></span>
+                Aplikacja nalistna
+              </th>
+            </tr>
+          </thead>
           <tbody data-reveal>
             <tr><td>Oddziałuje przede wszystkim na glebę i strefę korzeniową</td><td>Oddziałuje bezpośrednio na aktywne części rośliny</td></tr>
             <tr><td>Poprawia strukturę, retencję i pojemność sorpcyjną</td><td>Wspiera bieżący metabolizm, fotosyntezę i transport składników</td></tr>
@@ -1542,8 +1575,10 @@
 
       <div id="doglebowo-nalistne" class="c5pr-foliar" data-reveal data-ce="CE-20" data-ce-wariant="z-przyciskami">
         <div class="c5pr-foliar__card">
-          <!-- foto: img/foto/produkty-maxi-plus.jpg -->
-          <div class="c5-ph c5pr-foliar__ph" data-ph="foto 16:10 · CARBOHUMIC MAXI PLUS · oprysk nalistny" aria-hidden="true"></div>
+          <!-- Zdjęcie produktu, nie sceny (komentarz Mateusza 20.09: „lepiej tutaj dać
+               zdjęcia produktu, bo mówimy bezpośrednio o produkcie"). Packshot linii
+               dolistnej: butelka 1 l – ta sama, którą CARBOHUMIC pokazuje przy MAXI PLUS. -->
+          <div class="c5pr-foliar__shot"><img src="img/opakowania/butelka_1l.png" alt="CARBOHUMIC MAXI PLUS – butelka 1 l" loading="lazy" decoding="async"></div>
           <h3 class="c5pr-foliar__name">CARBOHUMIC MAXI PLUS</h3>
           <p>Skoncentrowany preparat humusowy do aplikacji nalistnej, przeznaczony do wspierania roślin w czasie intensywnego wzrostu oraz po wystąpieniu niekorzystnych warunków.</p>
           <dl class="c5pr-foliar__rows">
@@ -1564,7 +1599,10 @@
 
         <div class="c5pr-foliar__card">
           <!-- foto: img/foto/produkty-calbor.jpg -->
-          <div class="c5-ph c5pr-foliar__ph" data-ph="foto 16:10 · CARBOHUMIC CALBOR · sad po kwitnieniu" aria-hidden="true"></div>
+          <!-- ⚠️ Kanon nie przypisuje opakowania osobno do CALBOR-u: linia dolistna ma
+               20 l / 5 l / 1 l (30-produkty/carbohumic.md). Baniak 5 l stoi tu jako
+               opakowanie poglądowe – do potwierdzenia przy wymianie kart produktów. -->
+          <div class="c5pr-foliar__shot"><img src="img/opakowania/kanister_5l.png" alt="CARBOHUMIC CALBOR – opakowanie poglądowe, baniak 5 l" loading="lazy" decoding="async"></div>
           <h3 class="c5pr-foliar__name">CARBOHUMIC CALBOR</h3>
           <p>Chelat wysokiej jakości kwasów humusowych z wapniem i borem oraz dodatkiem azotu i potasu. Wsparcie roślin w okresach zwiększonego zapotrzebowania na składniki związane z budową i stabilnością tkanek.</p>
           <dl class="c5pr-foliar__rows">
@@ -1611,10 +1649,11 @@
        by ce/CE-16-pas-pro-proba.js – linked by this page only, until Mateusz accepts it. -->
   <section class="c5-pro" id="dla-profesjonalistow" data-pro data-ce="CE-16" data-ce-wariant="pozny-wzrost">
     <div class="c5-pro__media" data-pro-media aria-hidden="true">
-      <!-- ⚠ temporary: img/foto/pro.jpg of the CARBOMAT ECO series (big bag on a pallet – the
-           paragraph mentions the big bag). Target file: img/foto/produkty-pro.jpg (3:2, pallet,
-           IBC tank and drum, spec §17). -->
-      <img class="c5-pro__img" src="img/foto/pro.jpg" alt="" loading="lazy" decoding="async">
+      <!-- Own frame of this page since 20.09.2026 (prompt in zasoby/brand/zdjecia-produkty/README.md):
+           pallet with a big bag, an IBC tank and a drum at the edge of a field at dusk, the packs
+           in the right third and the left two thirds quiet and dark, because the heading and the
+           paragraph lie there in white. -->
+      <img class="c5-pro__img" src="img/foto/produkty-pro.jpg" alt="" loading="lazy" decoding="async">
     </div>
     <div class="c5-wrap c5-pro__grid">
       <h2>Prowadzisz gospodarstwo, sad, szkółkę albo zamawiasz większe ilości?</h2>
@@ -1631,7 +1670,7 @@
   <!-- ===== 9. FAQ poziomu gamy + moduł „zadaj pytanie" ===== -->
   <section class="c5-sec" id="faq" data-chapter="faq" data-ce="CE-17">
     <div class="c5-wrap">
-      <span class="c5-kicker">FAQ</span>
+      <span class="c5-kicker c5-kicker--outline">FAQ</span>
       <h2 class="c5-h2">Najczęstsze pytania o naszą gamę</h2>
 
       <div class="c5-faq">

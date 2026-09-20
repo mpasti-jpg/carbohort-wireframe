@@ -2,36 +2,73 @@
    Klocki wzorca i warstwa wspólna leżą w katalogu ce/ (ładowane wyżej).
    Tutaj zostają wyłącznie klocki unikalne tej podstrony i nadpisania
    treściowe klocków wspólnych. ===== */
-/* page-specific: the ONLY difference against .c5-hero__stage from ce/CE-08-hero.css –
-   the panel is an inline-size container, so the shelf below can size its packs in cqw.
-   The panel itself (30 px from the top, bottom and right edge of the screen; §14.2 –
-   no background photo, no gradient band, one flat light grey) comes from the pattern
-   and was repeated here word for word until 19.09.2026. */
-.c5-hero__stage{container-type:inline-size;}
-/* Produkty Carbohort (spec §4): a shelf of the four families instead of the CARBOMAT ECO pair.
-   H (--c5-pack-h) = bag height = 42 % of the panel height (its minimum height: the screen minus
-   the menu and the 30 px margins), 240-480 px, but never more than the panel width minus the
-   30 px margins can hold. The panel is an inline-size container, so the width limit uses cqw;
-   cqh is not used – Chrome resolves it to 0 when the panel height comes from min-height.
-   The group is 1.45 H wide (the lying sleeve sets the width; the standing row is 1.44 H =
-   canister .56 + bag .66 + pouch .36 - .14 overlap). Standing packs share one bottom line and
-   get a height only (width from the image ratio), so nothing is stretched; the pouch overlaps
-   the bag's right edge as on the CARBOMAT ECO hero; the sleeve lies in front along the base
-   (.06 H below it) and is last in the DOM, so it covers the bases without z-index. */
-.c5pr-shelf{--c5-pack-h:min(clamp(240px,calc((100svh - var(--cx-navbar-h, 0px) - 2 * var(--c5-gutter)) * .42),480px),calc((100cqw - 2 * var(--c5-gutter) - 24px) / 1.45));position:absolute;left:50%;top:calc(50% - var(--c5-pack-h) * .13);transform:translate(-50%,-50%);display:flex;align-items:flex-end;height:var(--c5-pack-h);}
-.c5pr-shelf__pack{display:block;flex:none;width:auto;max-width:none;object-fit:contain;}
-.c5pr-shelf__pack--kanister{height:calc(var(--c5-pack-h) * .82);}
-.c5pr-shelf__pack--worek{height:var(--c5-pack-h);}
-.c5pr-shelf__pack--torba{height:calc(var(--c5-pack-h) * .55);margin-left:calc(var(--c5-pack-h) * -.14);}
-/* sleeve lies lower and smaller in front: it overlaps only the bottom 12–21 % of the standing packs;
-   the shelf is lifted by .13 H so the whole group stays centred in the panel */
-.c5pr-shelf__pack--mata{position:absolute;left:50%;bottom:calc(var(--c5-pack-h) * -.26);width:calc(var(--c5-pack-h) * 1.2);height:auto;transform:translateX(-50%);}
+/* ===== HERO · wariant CE-08 „linia-produktow" (20.09.2026) ===================
+   Komentarze Mateusza w artefakcie: (1) „Wykorzystaj całą szerokość ekranu dla tego
+   CE, z ograniczeniem dla kontenera treści: maksymalna szerokość 1800px. Marginesy,
+   prawa i lewa strona: 40 px", (2) „Lead i przyciski po prawej stronie od nagłówka
+   w prawej kolumnie, tam gdzie teraz są zdjęcia produktów (Packshoty). A zdjęcia
+   packshotów zamień na to zdjęcie (…) i umieść je poniżej. Wyrównaj na całą
+   szerokość ekranu z lewym i prawym marginesem około 40 pikseli", (3) „Wysokość
+   całej sekcji nadal na 100% wysokości ekranu".
+   Kontener treści to EL-29 `c5-wrap--wide` z warstwy wspólnej – dokładnie 1800 px
+   i 40 px marginesu, więc nie powstaje druga miara o tym samym znaczeniu. Linia
+   opakowań stoi POZA tym kontenerem, bo ma iść do krawędzi okna.
+   Sekcja jest gridem dwóch rzędów: treść bierze tyle, ile potrzebuje, a linia
+   opakowań wypełnia resztę ekranu i przy niskim oknie sama się zmniejsza
+   (`object-fit:contain`), zamiast wypychać hero poniżej krawędzi.
+   Stary wariant „polka" (panel z czterema packshotami) razem z regułami półki
+   przeniósł się na stronę demonstracyjną lab/ce-08-polka.html – tutaj nie ma po
+   nim ani jednej reguły. Plik wspólny ce/CE-08-hero.css nietknięty: wszystko, co
+   niżej, jest zamknięte w #hero tej strony. ================================= */
+/* Fixed height, not just a floor: with `min-height` alone the row of the photo is
+   sized by the photo's own height, so at 1280x720 the hero grew 144 px past the
+   screen. A definite height lets the photo row take exactly what is left and the
+   image scale down inside it (`height:100%` + `object-fit:contain`). */
+#hero{display:flex;flex-direction:column;height:calc(100svh - var(--cx-navbar-h, 0px));}
+#hero > .c5-wrap{display:block;flex:0 0 auto;}
+#hero .c5-hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:clamp(2rem,5vw,5rem);align-items:start;padding-top:clamp(2rem,5vw,4rem);}
+/* the copy column may use its half of 1800 px – the 585 px of the pattern were cut
+   to the narrow column of the old layout */
+#hero .c5-hero__copy{max-width:none;}
+#hero .c5-hero__copyin{margin-block:0;padding-block:0;gap:clamp(1rem,2vw,1.5rem);}
+/* the breadcrumb leaves the bottom edge of the screen: in this layout the bottom of
+   the section belongs to the line of packs, so it sits under the heading instead */
+#hero .c5-hero__crumbs{padding-block:clamp(1.5rem,3vw,2.5rem) 0;}
+/* right column: the lead where the packshot panel used to stand, buttons under it */
+#hero .c5-hero__side{display:flex;flex-direction:column;gap:clamp(1.5rem,3vw,2.25rem);
+  padding-top:clamp(0.5rem,1.6vw,1.25rem);}
+#hero .c5-hero__lead{max-width:640px;}
+
+/* the line of packs: full window width minus 40 px, always sitting on the bottom
+   edge of the section; `contain` keeps the mock-up whole on every window */
+.c5pr-line{flex:1 1 auto;display:flex;align-items:flex-end;justify-content:center;min-height:0;
+  padding:clamp(1.5rem,3vw,2.5rem) 40px clamp(1.5rem,3vw,2.5rem);}
+.c5pr-line__img{display:block;width:100%;height:100%;object-fit:contain;object-position:center bottom;}
+
+/* Low window: the copy row eats the screen and leaves the line of packs a strip.
+   Two tightening steps, the same idea the CE-12 scene uses on this page – the
+   heading comes down, the air around it comes down, the photo gets its room back. */
+@media (min-width:900px) and (max-height:820px){
+  #hero .c5-hero{padding-top:clamp(1rem,2.5vw,2rem);gap:clamp(1.5rem,3.5vw,3rem);}
+  #hero .c5-h1{font-size:clamp(1.75rem,3vw,2.5rem);}
+  #hero .c5-hero__lead{font-size:1rem;}
+  #hero .c5-hero__crumbs{padding-block:clamp(0.75rem,1.6vw,1.25rem) 0;}
+  .c5pr-line{padding-block:clamp(0.75rem,1.6vw,1.25rem);}
+}
+@media (min-width:900px) and (max-width:1279px){
+  #hero .c5-h1{font-size:clamp(1.75rem,3vw,2.25rem);}
+}
 
 @media (max-width:899px){
-  .c5-hero__stage{order:2;margin-block:0;min-height:0;aspect-ratio:4/5;max-height:70vh;}
-  /* shelf: H = 40 % of the 4:5 panel (spec §4) – the panel is min(1.25 × width, 70vh) tall,
-     so H = min(50cqw, 28vh); same width limit */
-  .c5pr-shelf{--c5-pack-h:min(50cqw,28vh,calc((100cqw - 2 * var(--c5-gutter) - 24px) / 1.45));}
+  /* one column: copy -> lead and buttons -> line of packs; no full-screen height */
+  #hero{display:block;height:auto;}
+  #hero .c5-hero{display:flex;flex-direction:column;gap:clamp(1.5rem,4vw,2.5rem);
+    padding-block:clamp(2rem,6vw,3rem) 0;}
+  #hero .c5-hero__copy{display:flex;flex-direction:column;}
+  #hero .c5-hero__crumbs{order:3;padding-block:var(--w-space-4) 0;}
+  #hero .c5-hero__side{padding-top:0;}
+  .c5pr-line{padding:clamp(1.5rem,5vw,2.5rem) 20px;}
 }
 
 /* dots are round on purpose: they are markers, not layout boxes (like .c5-way__ico) */
@@ -43,12 +80,40 @@
    Here the rail moves into the margin, exactly as on Kukurydza and Próchnica+. */
 @media (min-width:900px){.c5-dots{right:10px;}}
 
+/* ===== 05 · Typografia nagłówków i kickerów (komentarz Mateusza, 20.09.2026) =====
+   „Wprowadź nowe fonty nagłówka i kicker" – the display face and the outlined kicker
+   badge that CARBOMAT ECO introduced the same morning (registry: CE-12 variant
+   glass-i-zielen, frames „Frame 140-8475" and „Frame 140-8364"), here across the whole
+   page: one page cannot carry two kicker styles at once, so every section head reads the
+   same. ONLY the family and the badge change – the sizes, the measures, the rhythm below
+   the kicker and the ink of the headings stay as they were, because the comment was about
+   the fonts, not about the layout. ============================================= */
+@font-face{
+  font-family:"P22 Mackinac Pro";
+  src:url("font/P22MackinacPro-Book.woff2") format("woff2");
+  font-weight:400;
+  font-style:normal;
+  font-display:swap;
+}
+/* Book is the only cut in the vault, so the weight comes down to 400 – anything heavier
+   would have the browser synthesise a fake bold. `font-display:swap` keeps the heading
+   readable in Inter from the first frame. */
+/* The PRO band writes its heading as a bare <h2> inside .c5-pro__grid, so the two
+   class selectors miss it – and Mateusz spotted it in the preview („Czy ta sekcja nie
+   powinna mieć tego nagłówka innym fontem?"). It is the same level of heading as the
+   rest of the page, so it takes the same face. */
+.c5-h1,.c5-h2,#dla-profesjonalistow .c5-pro__grid h2{font-family:"P22 Mackinac Pro",var(--w-font-sans);font-weight:400;}
+/* EL-06 with the metrics of the frame: 9 px padding, 8 px radius, 13/14 px, the very dark
+   green ink of the design, not the black of the kit. The base class is inline-block with
+   width:fit-content, so a centred head needs the block box and auto margins back. */
+.c5-kicker--outline{padding:9px;border-color:#0c2b1c;border-radius:8px;
+  font-size:13px;line-height:14px;letter-spacing:.03em;color:#0c2b1c;}
+.c5-kicker--outline.c5-kicker--center{display:block;width:fit-content;margin-inline:auto;}
+
 /* ===== 00+ · Produkty Carbohort – additions to the pattern base (spec §3) ===== */
-/* placeholder with a label saying which photo goes here (from carbomat-mata.css) */
-.c5-ph{position:relative;background:var(--w-gray-200);overflow:hidden;}
-.c5-ph::after{content:attr(data-ph);position:absolute;left:10px;bottom:8px;font-size:0.75rem;line-height:1.2;color:var(--w-gray-500);}
-.c5-ph--dark{background:var(--w-gray-800);}
-.c5-ph--dark::after{color:rgb(255 255 255 / .7);}
+/* Warstwa placeholderów (.c5-ph, .c5-marq__thumb--ph, .c5-fx__ph) zniknęła 20.09.2026:
+   Mateusz wygenerował dziewięć brakujących zdjęć, więc na tej stronie nie ma już ani
+   jednego pola zastępczego. Gdyby wróciło – reguły stoją w carbomat-mata.css. */
 /* one-time fade-in for sections without a pattern analogue (carbohumic.css 72) */
 
 /* --- Wspólne drobiazgi ----------------------------------------------------- */
@@ -66,9 +131,6 @@
 /* anchors without a sticky bar: land 30 px below the top edge */
 .c5pr-goal[id],.c5-faq__item[id],#certyfikaty{scroll-margin-top:var(--c5-gutter);}
 
-/* Produkty Carbohort (spec §5): an empty square until the dedicated photo exists
-   (target file names in the HTML comment above the section) */
-.c5-marq__thumb--ph{display:block;background:var(--w-gray-300);}
 @media (prefers-reduced-motion: reduce){
   .c5-marq__item:nth-child(n+4){display:none;}
 }
@@ -123,6 +185,10 @@
    flow-root: margines studia zostaje w panelu – inaczej wypływa przez rodziców
    i wychodzący (absolutny) panel opadałby o jego wysokość. */
 .c5pr-show__panels{position:relative;display:flow-root;}
+/* the wide button under the show (comment of 2026-09-20) – the second, unmissable way into
+   the comparison overlay; the quiet „Porównaj" link stays up in the tab bar. Full width of
+   the content column, 56 px tall, so it reads as a band rather than as a button in a row. */
+.c5pr-show__full{display:flex;justify-content:center;width:100%;margin-top:clamp(2rem,4vw,3rem);min-height:56px;}
 .c5pr-js .c5pr-fam:not([data-on]):not([data-leaving]){display:none;}
 .c5pr-fam[data-leaving]{position:absolute;top:0;left:0;right:0;pointer-events:none;}
 .c5pr-fam + .c5pr-fam{margin-top:clamp(3.5rem,7vw,6rem);}
@@ -282,6 +348,55 @@
   .c5pr-tab tr > :first-child{position:sticky;left:0;z-index:1;background:var(--w-surface-page);box-shadow:inset -1px 0 0 var(--w-border-subtle);}
 }
 
+/* ===== 45 · Lightbox porównania – CE-25 przeniesiony z CARBOMAT MATA (20.09.2026) =====
+   Mateusz, komentarze w artefakcie 20.09: cała sekcja z tabelą (razem z blokami „jak czytać
+   tabelę") mieszka od teraz w nakładce, którą otwiera „Porównaj" przy tabach i nowy szeroki
+   przycisk pod pokazem. Klasy i mechanika 1:1 z `carbomat-mata.css ===== 55` – jedyne różnice
+   biorą się stąd, że strona ma JEDNĄ stronę treści i szeroką tabelę:
+   · stopka z licznikiem i krokami nie istnieje (jedna strona), więc nie ma jej w markupie;
+   · panel jest szerszy (1280 px zamiast 1040), bo tabela ma pięć kolumn;
+   · kontener treści (`.c5-wrap`) gubi w nakładce swoją szerokość i gutter – panel ma własne.
+   Bez `is-js` (czyli bez JS) `.c5-lb` jest zwykłym blokiem w biegu strony, dokładnie tam, gdzie
+   sekcja stała do 19.09: żadna treść nie znika. ================================= */
+.c5-lb{display:block;max-width:1180px;margin:clamp(2.5rem,5vw,4rem) auto 0;padding-inline:var(--w-space-5);}
+.c5-lb__panel{display:flex;flex-direction:column;min-height:0;}
+.c5-lb .c5-iconbtn{display:none;}
+.c5-lb__scroll{display:flex;flex-direction:column;}
+.c5-lb__page{display:flex;flex-direction:column;}
+
+/* --- the overlay itself (only with JS) ------------------------------------- */
+.c5-lb.is-js{display:none;position:fixed;inset:0;z-index:var(--w-z-toast);place-items:center;padding:var(--c5-gutter);max-width:none;margin:0;background:rgb(0 0 0 / .55);}
+.c5-lb.is-js[data-open="true"]{display:grid;animation:c5-lb-in 200ms var(--w-ease);}
+/* min-width:0 on the panel, the scroller and the page – without it the 1050 px wide table
+   sets the min-content width of the grid item and the panel grows past the window on a
+   phone (measured: 914 px inside a 375 px window). The table scrolls inside .cw-scrollx,
+   so the panel may shrink below it. */
+.c5-lb.is-js .c5-lb__panel{position:relative;width:100%;min-width:0;max-width:1280px;max-height:calc(100svh - 2 * var(--c5-gutter));background:var(--w-surface-page);border:1px solid var(--w-border-default);}
+.c5-lb.is-js .c5-lb__scroll,.c5-lb.is-js .c5-lb__page{min-width:0;}
+.c5-lb.is-js[data-open="true"] .c5-lb__panel{animation:c5-lb-panel-in 220ms var(--w-ease);}
+.c5-lb.is-js .c5-iconbtn{display:grid;position:absolute;top:var(--w-space-4);right:var(--w-space-4);z-index:2;}
+.c5-lb.is-js .c5-lb__scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:clamp(1.25rem,3vw,2.5rem);}
+.c5-lb.is-js .c5-lb__page{animation:c5-lb-page-in 180ms var(--w-ease);}
+/* the content wrapper of the page inside the panel: the panel already carries the measure
+   and the padding, so the wrapper only fills it */
+.c5-lb.is-js .c5-wrap{max-width:none;padding-inline:0;}
+/* the close button sits over the top right corner. On a wide panel the centred head
+   passes well clear of it; on a narrow one the kicker runs straight under the button,
+   so the scroller opens a strip as tall as the button plus its margin. */
+@media (max-width:899px){
+  .c5-lb.is-js .c5-lb__scroll{padding-top:calc(var(--w-space-4) + var(--w-control-h-md) + 8px);}
+}
+@keyframes c5-lb-in{from{opacity:0;}to{opacity:1;}}
+@keyframes c5-lb-panel-in{from{transform:scale(.98);}to{transform:none;}}
+@keyframes c5-lb-page-in{from{opacity:0;}to{opacity:1;}}
+@media (max-width:899px){
+  .c5-lb.is-js{padding:16px;}
+  .c5-lb.is-js .c5-lb__panel{max-width:none;max-height:calc(100svh - 32px);}
+}
+@media (prefers-reduced-motion:reduce){
+  .c5-lb.is-js[data-open="true"],.c5-lb.is-js[data-open="true"] .c5-lb__panel,.c5-lb.is-js .c5-lb__page{animation:none;}
+}
+
 /* ===== 50 · Wg potrzeby – goal index with photos + paths as two columns (spec §8) =====
    8.1 six goal cards: 4:3 photo on top, :target outlines the whole card (mega-menu anchors);
    8.2 ten paths from one DOM – cards without JS (the default below), tabs >= 900 px and an
@@ -319,7 +434,7 @@
 /* overflow-anchor: the countdown moves the large title from one row to the next, and Chrome's
    scroll anchoring would answer that with a few px of scroll – with Lenis running that reads as
    a jerk. The automatic change must leave the page exactly where the reader left it. */
-.c5pr-acc{--pc-w:clamp(240px,26vw,340px);--pc-gap:20px;--pc-h:350px;--pc-media:180px;--pc-media-open:120px;margin-top:clamp(3rem,6vw,5rem);overflow-anchor:none;}
+.c5pr-acc{--pc-w:clamp(240px,26vw,340px);--pc-gap:20px;--pc-h:350px;--pc-media:139px;--pc-media-open:100px;margin-top:clamp(3rem,6vw,5rem);overflow-anchor:none;}
 .c5pr-acc__list{list-style:none;margin:0;padding:0;}
 .c5pr-acc__item{position:relative;border-top:1px solid var(--w-border-default);scroll-margin-top:var(--c5-gutter);}
 .c5pr-acc__item:last-child{border-bottom:1px solid var(--w-border-default);}
@@ -335,10 +450,15 @@
 .c5pr-acc__btn{display:block;width:100%;min-height:44px;padding:20px 0;border:0;background:none;font:inherit;font-size:1.25rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;line-height:1.3;text-align:left;color:var(--w-text-primary);cursor:pointer;
   transition:font-size var(--c5-acc) var(--w-ease),padding var(--c5-acc) var(--w-ease),color var(--w-duration-base) var(--w-ease);}
 .c5pr-acc__btn:focus-visible{outline:2px solid var(--w-gray-900);outline-offset:-2px;border-radius:0;}
-.c5pr-acc[data-acc="on"] .c5pr-acc__btn{font-size:1rem;color:var(--w-gray-500);}
+/* closed row, measured off the frame (20.09.2026, „odwzoruj bardziej szczegółowo wygląd CE"):
+   15 px in the ink of the body text, 22 px of air above and below – the 62 px pitch the frame
+   draws between two hairlines. The grey of the earlier build is gone: in the frame the closed
+   titles are as black as the open one, only smaller. */
+.c5pr-acc[data-acc="on"] .c5pr-acc__btn{font-size:0.9375rem;font-weight:var(--w-weight-regular);line-height:1.2;padding:22px 0;color:var(--w-text-primary);}
 /* the open row breathes: air above the large title and between the title and the panel (§21.8.4);
    both paddings ride the same transition as the panel height, so nothing jumps */
-.c5pr-acc[data-acc="on"] .c5pr-acc__item[data-open] .c5pr-acc__btn{font-size:clamp(1.5rem,2.6vw,2.25rem);font-weight:var(--w-weight-regular);line-height:1.15;padding:clamp(2rem,4vw,3.5rem) 0 clamp(2rem,3.4vw,3rem);color:var(--w-text-primary);}
+/* the open title tops out at the frame's 35 px (it read 36 px until 20.09) */
+.c5pr-acc[data-acc="on"] .c5pr-acc__item[data-open] .c5pr-acc__btn{font-size:clamp(1.5rem,2.6vw,2.1875rem);font-weight:var(--w-weight-regular);line-height:1.2;letter-spacing:0;padding:clamp(2rem,4vw,3.5rem) 0 clamp(2rem,3.4vw,3rem);color:var(--w-text-primary);}
 @media (hover:hover){
   .c5pr-acc[data-acc="on"] .c5pr-acc__btn:hover{color:var(--w-text-primary);}
 }
@@ -349,8 +469,9 @@
 .c5pr-acc__in{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:clamp(3rem,8vw,7.875rem);align-items:start;padding-bottom:var(--w-space-10);}
 
 /* left zone: description, notes, warning, text links */
-.c5pr-acc__copy{display:flex;flex-direction:column;gap:var(--w-space-4);max-width:22.5rem;padding-top:6px;}
-.c5pr-acc__copy p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
+/* the frame: 358 px of measure, 16 px / 1.3 in the body grey of the design (#777771) */
+.c5pr-acc__copy{display:flex;flex-direction:column;gap:var(--w-space-4);max-width:358px;padding-top:6px;}
+.c5pr-acc__copy p{margin:0;font-size:1rem;line-height:1.3;color:#777771;}
 .c5pr-acc__notes{display:flex;flex-direction:column;gap:var(--w-space-2);margin:0;padding:0;list-style:none;}
 .c5pr-acc__notes li{display:flex;gap:var(--w-space-3);align-items:flex-start;font-size:0.9375rem;color:var(--w-text-primary);}
 .c5pr-acc__notes .wf-icon{flex:none;margin-top:3px;color:var(--w-icon-default);}
@@ -365,15 +486,22 @@
 .c5pr-acc__cards{display:grid;grid-template-columns:repeat(2,var(--pc-w));gap:var(--pc-gap);margin:0;padding:0;list-style:none;width:calc(var(--pc-w)*2 + var(--pc-gap));}
 
 /* the packshot field has a fixed height, so the names line up across the cards of a path */
-.c5pr-pcard{position:relative;height:var(--pc-h);display:grid;grid-template-columns:minmax(0,1fr);align-content:start;gap:6px;padding:var(--w-space-5);background:var(--w-gray-150);transition:background var(--w-duration-base) var(--w-ease);}
-/* the section is a c5-band (#fafafa), so the card field goes one step darker to keep the
-   contrast it would have on white – and one step darker again under the pointer / focus */
-.c5pr-pcard:focus-within{background:var(--w-gray-200);}
+/* Card geometry straight off the frame (20.09.2026): 340 × 350 px, 10 px radius, 32 px of side
+   padding and 40 px above the packshot field, which is 139 px tall; the name sits 38 px under
+   it, the description 15 px under the name on a 275 px measure. Below 1440 px the card narrows
+   with --pc-w, so the paddings ride a clamp whose top is the frame value. The fill is the
+   frame's #f6f6f6 – the 60 % opacity of the Figma layer is not reproduced: over the #fafafa
+   band it would leave the card all but invisible. */
+.c5pr-pcard{position:relative;height:var(--pc-h);display:grid;grid-template-columns:minmax(0,1fr);align-content:start;gap:0;border-radius:10px;
+  padding:clamp(24px,3vw,40px) clamp(20px,2.4vw,32px) clamp(20px,2.4vw,32px);background:#f6f6f6;transition:background var(--w-duration-base) var(--w-ease);}
+.c5pr-pcard:focus-within{background:var(--w-gray-150);}
 .c5pr-pcard__media{display:flex;align-items:center;justify-content:center;height:var(--pc-media-open);min-height:0;overflow:hidden;transition:height var(--w-duration-base) var(--w-ease);}
-.c5pr-pcard__pack{width:auto;height:auto;max-width:62%;max-height:82%;object-fit:contain;}
-.c5pr-pcard__tick{position:absolute;top:var(--w-space-5);right:var(--w-space-5);color:var(--w-text-primary);}
-.c5pr-pcard__name{margin:0;font-size:0.9375rem;color:var(--w-text-primary);}
-.c5pr-pcard__txt{margin:0;font-size:0.875rem;line-height:1.45;color:var(--w-text-secondary);}
+.c5pr-pcard__pack{width:auto;height:auto;max-width:62%;max-height:100%;object-fit:contain;}
+/* the check of the frame: 32 px, the green of the design, 24 px down and 26 px in from the
+   top right corner of the card */
+.c5pr-pcard__tick{position:absolute;top:24px;right:26px;width:32px;height:32px;color:#86d574;}
+.c5pr-pcard__name{margin:38px 0 0;font-size:0.875rem;font-weight:var(--w-weight-semibold);line-height:1.2;color:var(--w-text-primary);}
+.c5pr-pcard__txt{margin:15px 0 0;max-width:275px;font-size:0.875rem;line-height:1.25;color:var(--w-text-primary);}
 /* the whole card is the link to the product page; the buy button rides above it */
 .c5pr-pcard__link{color:inherit;text-decoration:none;}
 .c5pr-pcard__link::after{content:"";position:absolute;inset:0;z-index:1;}
@@ -390,12 +518,12 @@
   .c5pr-pcard__buy{position:absolute;left:var(--w-space-5);bottom:var(--w-space-5);margin:0;opacity:0;visibility:hidden;transition:opacity var(--w-duration-base) var(--w-ease),visibility 0s linear var(--w-duration-base);}
   .c5pr-pcard:hover .c5pr-pcard__buy,
   .c5pr-pcard:focus-within .c5pr-pcard__buy{opacity:1;visibility:visible;transition-delay:0s;}
-  .c5pr-pcard:hover{background:var(--w-gray-200);}
+  .c5pr-pcard:hover{background:var(--w-gray-150);}
 }
 
 /* --- narrow window: plain accordion, cards in one column, two from ~560 px ------------------ */
 @media (max-width:899px){
-  .c5pr-acc{--pc-h:330px;--pc-media-open:150px;}
+  .c5pr-acc{--pc-h:330px;--pc-media:130px;--pc-media-open:130px;}
   .c5pr-acc__timer{display:none;}
   .c5pr-acc[data-acc="on"] .c5pr-acc__item[data-open] .c5pr-acc__btn{font-size:1.375rem;padding:clamp(1.5rem,5vw,2rem) 0 clamp(1.25rem,4vw,1.75rem);}
   .c5pr-acc__in{grid-template-columns:minmax(0,1fr);row-gap:var(--w-space-5);padding-bottom:var(--w-space-8);}
@@ -428,9 +556,6 @@
    The machinery lives in ce/CE-12-scena-faktow-proba.css, which this page links
    instead of the shared ce/CE-12-scena-faktow.css. */
 
-/* the placeholder of layer 05 sits one step lighter than .c5-ph--dark, so the
-   dark illustration box still reads as a box on top of it */
-.c5-fx__ph{background:var(--w-gray-700);}
 /* Crop per layer (⚠ temporary photos of the CARBOMAT ECO series). In the scene the
    panel is almost square (half the window by its full height), in the static layout
    it is a 4:5 band – the values suit both. */
@@ -498,6 +623,64 @@
 .c5pr-block .wf-table{font-size:var(--w-font-sm-size);}
 .c5pr-more{margin-top:clamp(2rem,4vw,3rem);display:flex;flex-direction:column;gap:var(--w-space-3);}
 
+/* --- 60b · CE-12 wariant „glass-i-zielen" – warstwa wyglądu (20.09.2026) -----
+   Wynik sprawdzenia indeksu CE: klocek CE-12 dostał 20.09 na CARBOMAT ECO nowy
+   wariant wyglądu (rejestr: „glass-i-zielen", ramki „Frame 256-1419" karta faktu
+   i „Frame 140-8542"/„Frame 140-8543" karty wizualizacji). Wariant nie ma
+   własnego modułu – to same nadpisania zamknięte w sekcji, więc wchodzi tu 1:1
+   z `carbomat.css #czym-jest`, tyle że pod `#jak-dzialaja`.
+   NIE przenosimy z tamtej strony metryk NAGŁÓWKA sceny (46/51 px, miara 661 px,
+   dwa kroki dla niskiego i wąskiego okna): są dopasowane do copy CARBOMAT ECO,
+   a tutaj nagłówek jest dłuższy i ma inną liczbę kroków – ryzyko nachodzenia na
+   blok faktu jest realne, tamta sesja opisała je wprost. Nagłówek dostał nowy
+   krój regułą strony (blok 05), reszta zostaje na skali tej strony.
+   `.c5-viz*` i `.c5-bar*` niosą też wykres w sekcji „Dowód", dlatego każdy
+   selektor jest zakotwiczony w #jak-dzialaja. ------------------------------- */
+#jak-dzialaja{
+  /* the wash of the illustration box, one value for the whole section (the knob
+     of ce/CE-12-scena-faktow-proba.css; reaches both branches of the scene and
+     never the static layout, which keeps its own rgb(20 20 20 / .78)) */
+  --c5-fx-viz-bg:rgb(53 46 40 / .43);
+}
+/* 24 px between the badge and the heading, on both layouts */
+#jak-dzialaja .c5-fx__head{gap:24px;}
+
+/* --- fact card (Frame 256-1419): type and colour only, mechanics untouched --- */
+#jak-dzialaja .c5-fx__title{font-weight:var(--w-weight-regular);line-height:1.2;
+  letter-spacing:normal;color:#000;}
+#jak-dzialaja .c5-fx__body{font-size:14px;line-height:1.3;color:#777771;}
+#jak-dzialaja .c5-fx__count{font-size:11px;line-height:1.2;letter-spacing:normal;color:#000;}
+/* the hairline: black at 10 %, the fill: the green of the design */
+#jak-dzialaja .c5-fx__line{background:rgb(0 0 0 / .1);}
+#jak-dzialaja .c5-fx__fill{background:#71C35F;}
+
+/* --- illustration box: the Glass material of the frame ----------------------
+   Frost 60 -> backdrop blur 18px; Refraction 47 with Depth 80 -> an inset
+   hairline instead of refraction, which CSS has not got; Light 0 % -> no sheen;
+   Dispersion 25 and Splay 34 have no CSS equivalent and are left out on purpose
+   rather than faked (the same reading as on CARBOMAT ECO, backlog). */
+#jak-dzialaja .c5-viz{border-radius:24px;padding:24px;
+  -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+  box-shadow:inset 0 1px 0 rgb(255 255 255 / .10),
+             inset 0 -1px 0 rgb(0 0 0 / .12);}
+/* without backdrop-filter there is no photo to frost, so the inset edge would
+   read as a border with nothing behind it */
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  #jak-dzialaja .c5-viz{box-shadow:none;}
+}
+/* the number badge: 16 px, no case change, white on a black wash at 20 % */
+#jak-dzialaja .c5-viz__tag{align-self:flex-start;padding:12px 15px;border-radius:11px;
+  background:rgb(0 0 0 / .2);font-size:16px;line-height:normal;letter-spacing:normal;
+  text-transform:none;color:#fff;}
+/* bars and caption inside the box – never the bare .c5-bar* of „Dowód" */
+#jak-dzialaja .c5-viz .c5-bar__track{height:6px;border:0;border-radius:2px;
+  background:rgb(255 255 255 / .12);}
+#jak-dzialaja .c5-viz .c5-bar__fill{border-radius:2px;background:rgb(255 255 255 / .7);}
+#jak-dzialaja .c5-viz .c5-muted{font-size:9px;line-height:14px;letter-spacing:.03em;
+  text-transform:uppercase;color:#fff;}
+#jak-dzialaja .c5-viz .c5-src--ondark{font-size:clamp(0.75rem,0.98vw,0.875rem);
+  line-height:1.571;color:rgb(255 255 255 / .5);}
+
 /* ===== 70 · Dowód – two proof blocks stacked at full width + certificates (spec §11) =====
    Blocks and the bar chart come from 65 (.c5pr-two, .c5pr-block) and 60 (.c5-barchart). */
 .c5pr-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--w-space-5);margin-top:clamp(1.5rem,3vw,2.25rem);}
@@ -527,10 +710,32 @@
 .c5pr-cmp.cw-scrollx{overflow-y:hidden;}
 .c5pr-cmp .wf-table{min-width:640px;}
 .c5pr-cmp .wf-table th,.c5pr-cmp .wf-table td{width:50%;vertical-align:top;}
+/* Packshoty nad etykietami kolumn – wariant CE-22 „z-packshotami", metryki 1:1 z
+   `carbohumic.css` (.c5hu-cmp__shot): kwadratowe pole --w-gray-100 na całą szerokość
+   kolumny do 220 px, produkt wpisany w 72 % jego wysokości. Packshot leży absolutnie,
+   bo bez tego jego własne proporcje rozpychają kwadrat (butelka 321 × 812 robiła
+   z pola 220 px pole 220 × 456). Nazwa produktu pod etykietą kolumny – na stronie
+   o całej gamie sam kształt opakowania nie mówi, o co chodzi. */
+.c5pr-cmp thead th{text-align:center;}
+.c5pr-cmp__shot{position:relative;display:block;width:100%;max-width:220px;aspect-ratio:1;
+  margin:0 auto var(--w-space-3);background:var(--w-gray-100);}
+.c5pr-cmp__shot img{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  height:72%;width:auto;max-width:82%;object-fit:contain;}
+/* wariant z kadrem sposobu aplikacji (od 20.09.2026): zdjęcie wypełnia kwadrat,
+   inaczej niż packshot, który stoi w nim ze światłem dookoła */
+.c5pr-cmp__shot--foto img{position:absolute;inset:0;width:100%;height:100%;max-width:none;
+  transform:none;object-fit:cover;}
+@media (max-width:899px){
+  .c5pr-cmp__shot{max-width:140px;}
+}
 .c5pr-foliar{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:var(--w-space-5);margin-top:clamp(2rem,4vw,3rem);}
 .c5pr-foliar__card{display:flex;flex-direction:column;gap:var(--w-space-3);border:1px solid var(--w-border-default);padding:clamp(1.25rem,2.2vw,1.75rem);}
-/* photo placeholder 16:10 (.c5-ph carries the grey field and the label) */
-.c5pr-foliar__ph{aspect-ratio:16/10;width:100%;}
+/* Karta produktu nalistnego pokazuje PRODUKT (komentarz Mateusza 20.09), więc zamiast
+   kadru 16:10 stoi w niej pole z packshotem – te same metryki co pola nad kolumnami
+   tabeli wyżej: jasne pole i produkt wpisany w 72 % jego wysokości. */
+.c5pr-foliar__shot{position:relative;display:block;width:100%;aspect-ratio:16/10;background:var(--w-gray-100);}
+.c5pr-foliar__shot img{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  height:72%;width:auto;max-width:82%;object-fit:contain;}
 .c5pr-foliar__name{font-size:1.25rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
 .c5pr-foliar__card p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
 .c5pr-foliar__rows{display:flex;flex-direction:column;margin:0;}
@@ -572,3 +777,78 @@
 /* the gap above the accordion belongs to the FAQ section; the „Dla dociekliwych” block
    (same element, variant --plain) sits inside a block and keeps its own rhythm */
 #faq .c5-faq{margin-top:clamp(8rem,12vw,10.25rem);}
+
+/* ===== 80 · Pas PRO – wariant wyglądu „zielen-i-scrim" (20.09.2026) ==========
+   Druga zmiana z indeksu CE dotycząca klocka z tej strony: CE-16 dostał 20.09 na
+   CARBOMAT ECO warstwę wyglądu wg ramki „Frame 186-253" (rejestr: wariant
+   „zielen-i-scrim" nałożony na mechanikę „pozny-wzrost", którą ta strona ma od
+   18.09). Wariant nie ma własnego modułu – to nadpisania zamknięte w sekcji, więc
+   wchodzą tu 1:1 z `carbomat.css #uprawy-profesjonalne`, pod #dla-profesjonalistow.
+   Nie przenosimy z tamtej strony KADRU: ramka pokazuje sad zakotwiczony dołem, a tu
+   w warstwie mediów stoi paleta z big bagiem (zdjęcie tymczasowe serii ECO), które
+   przy dolnym kotwiczeniu traci produkt – kadr zostaje na dzisiejszym ustawieniu.
+   Copy bez zmian. Przy okazji zamyka się otwarta pozycja §23.6 pkt 5: w fazie postoju
+   nakładki nie było wcale i akapit schodził do 2,32 : 1, a podłoga .55 stawia go
+   z powrotem nad progiem AA.
+   Każdy selektor zamknięty w #dla-profesjonalistow – ce/CE-16-pas-pro.css obsługuje
+   sześć stron, a .c5-btn z ce/00-base.css cały serwis. ======================= */
+#dla-profesjonalistow{
+  --pro-bg:#777771;              /* section ground of the frame */
+  --pro-btn:#86D574;             /* primary button fill */
+  --pro-btn-ink:#0C2B1C;         /* primary button label */
+  --pro-btn-hover:#77C169;       /* hover is not in the frame – one step down */
+  --pro-line:rgb(255 255 255 / .5);
+  --pro-r:20px;
+  background:var(--pro-bg);
+}
+/* 52 px / 53 px; 3.6vw hits 52 px at the 1440 px of the frame */
+#dla-profesjonalistow .c5-pro__grid h2{font-size:clamp(2rem,3.6vw,3.25rem);line-height:1.02;}
+/* 21 px / 26 px in full white – it was base size at opacity .75 */
+#dla-profesjonalistow .c5-pro__side p{font-size:1.3125rem;line-height:1.24;opacity:1;}
+/* on one column 21 px would give about 25 characters to a line */
+@media (max-width:899px){
+  #dla-profesjonalistow .c5-pro__side p{font-size:1.0625rem;}
+}
+/* 11 px between the buttons, against 8 px from the shared block */
+#dla-profesjonalistow .c5-btnrow{gap:11px;}
+#dla-profesjonalistow .c5-pro__grid .c5-btn{min-height:56px;line-height:1.25;border-radius:var(--pro-r);--c5-btn-px:24px;}
+#dla-profesjonalistow .c5-btn--inv{background:var(--pro-btn);color:var(--pro-btn-ink);border:0;padding:18px 24px;}
+#dla-profesjonalistow .c5-btn--inv:hover{background:var(--pro-btn-hover);}
+#dla-profesjonalistow .c5-pro__login{border-color:var(--pro-line);padding:15px 24px;}
+/* the shared block lightens the border on hover – restore it, the ID selector wins */
+#dla-profesjonalistow .c5-pro__login:hover{border-color:var(--w-text-inverse);}
+/* the shared block squares the focus ring off; here the buttons are round */
+#dla-profesjonalistow a:focus-visible{border-radius:var(--pro-r);}
+
+/* The wash: the flat black scrim of the shared block gives way to the diagonal olive
+   of the frame, spread over the WHOLE band (ground + photo) and riding the growth from
+   a floor instead of from zero – during the hold it is .55 of the frame values, at the
+   end of growth exactly them. Three knobs on the section root, so the strength can be
+   dialled or the layer dropped in one line. Both guards of the shared block are kept,
+   so the static layout (below 900 px, reduced motion, no JS – there the frame stands
+   above the text and there is nothing to darken) is untouched. */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  html.cx-js #dla-profesjonalistow{
+    /* Back to the values of Frame 186-253 since 20.09.2026, when the band got its own
+       photo (`produkty-pro.jpg`: packs in the right third, the left two thirds a dark
+       field at dusk). Between 19:00 and 22:00 these knobs stood at .50 / .35, because
+       the borrowed CARBOMAT ECO frame had a WHITE big bag in the middle and the values
+       of the design left the paragraph at 4,00 : 1. On the new photo the frame's own
+       numbers measure 12,69 : 1 for the heading and 11,42 : 1 for the paragraph (5th
+       percentile, white text, screenshot with the text hidden, 1440 x 900 and
+       1920 x 1080) – so the deviation had no reason to stay. */
+    --pro-wash-a:.30;      /* Frame 186-253: the two ends of the diagonal */
+    --pro-wash-b:.10;      /* Frame 186-253: the lighter band in the middle */
+    --pro-wash-floor:.55;  /* how much of it is already there during the hold */
+  }
+  html.cx-js #dla-profesjonalistow .c5-pro__media::after{content:none;}
+  html.cx-js #dla-profesjonalistow::after{content:"";position:absolute;inset:0;
+    pointer-events:none;
+    background:linear-gradient(-65.66deg,
+      rgb(26 36 5 / var(--pro-wash-a)) 37.09%,
+      rgb(26 36 5 / var(--pro-wash-b)) 52.41%,
+      rgb(26 36 5 / var(--pro-wash-b)) 60.07%,
+      rgb(26 36 5 / var(--pro-wash-a)) 75.39%);
+    opacity:calc(var(--pro-wash-floor)
+      + (1 - var(--pro-wash-floor)) * var(--pro-o, 1));}
+}

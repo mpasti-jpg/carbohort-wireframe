@@ -233,7 +233,8 @@ window.CW_CE = {
         "panel z mediami"
       ],
       "warianty": {
-        "polka": "półka czterech opakowań rodzin (Produkty)",
+        "polka": "półka czterech opakowań rodzin na jasnym panelu po prawej; od 20.09.2026 bez wystąpienia na stronie – Produkty przeszły na wariant linia-produktow, a ten został na stronie demonstracyjnej v7/lab/ce-08-polka.html (wzorzec „wersja alternatywna, stara zostaje w indeksie” jak przy CE-65 i CE-44)",
+        "linia-produktow": "wariant Produktów od 20.09.2026 (komentarze Mateusza w artefakcie): sekcja bierze całą szerokość okna, kontener treści stoi na EL-29 c5-wrap--wide (1800 px, marginesy 40 px). W górnym rzędzie dwie kolumny: kicker i H1 po lewej, lead z dwoma przyciskami po prawej – tam, gdzie wariant polka trzymał panel z packshotami; okruszki schodzą pod nagłówek, bo dolna krawędź sekcji należy teraz do zdjęcia. Pod rzędem cała gama w jednej linii (mock-up klienta) na całą szerokość okna minus 40 px z każdej strony, przyklejona do dolnej krawędzi i skalowana object-fit:contain, więc przy niskim oknie maleje, zamiast wypychać hero. Wysokość sekcji nadal 100 svh minus pasek menu. Kod: produkty.css blok HERO (nic w warstwie wspólnej)",
         "kadr": "kadr zdjęcia uprawy zamiast packshotu – od 19.09.2026 bez wystąpień, na Kukurydzy zastąpił go wariant kadr-w-tle",
         "kadr-w-tle": "hero podstron upraw (decyzja Mateusza z 19.09.2026): duży kadr uprawy w tle całej sekcji, jednolity scrim, bez kickera; okruszki u góry po lewej, wielki H1 u dołu po lewej, lead i dwa przyciski u dołu po prawej, treść kończy się nad dokiem doradcy; kadr osiada ze skali 1,06, treść wchodzi kaskadą; poniżej 900 px H1 na kadrze, lead i przyciski pod nim (Kukurydza; modyfikator c5-hero--bg w ce/CE-08-hero.css; siłę scrimu ustawia strona zmienną --c5-hero-scrim, domyślnie .4, Kukurydza .35)",
         "player": "player filmu na panelu (Próchnica+)",
@@ -369,7 +370,7 @@ window.CW_CE = {
         "z-leadem": "dwa akapity leadu przyklejone razem z nagłówkiem (Próchnica+ Metodologia) – bez wystąpień od 19.09.2026, Metodologia przeszła na wariant bez-naglowka",
         "z-naglowkiem": "układ wg ramki Figma „Frame 206” z kickerem i H2 w scenie, bez leadu: jeden blok nagłówka przyklejony u góry lewej kolumny, przy dole jeden fakt naraz – tytuł, cienka linia z postępem bieżącego slajdu, opis i licznik „02/05” (Mateusz, 18.09.2026; od 19.09.2026 Produkty #jak-dzialaja, CARBOMAT ECO #czym-jest jako baza klocka i CARBOMAT HUMIC #czym-jest – osiem kroków, --fx-step-min 420, --fx-step-vh 0,7)",
         "bez-naglowka": "ten sam układ bez kickera i H2 w scenie – kicker, H2 i lead stoją nad torem jako zwykły nagłówek sekcji (reguła Mateusza: lead nigdy w scenie); od 19.09.2026 Próchnica+ #metodologia, CARBOMAT MATA #czym-jest-scena (korzeń klocka to wewnętrzny kontener w sekcji #czym-jest) i CARBOHUMIC #czym-jest, a na Produktach do obejrzenia przełącznikiem podglądu",
-        "glass-i-zielen": "sama warstwa wyglądu nałożona na układ z-naglowkiem, wg ramek Figma „Frame 140-8475” (kicker i nagłówek), „Frame 256-1419” (karta faktu) i „Frame 140-8542”/„Frame 140-8543” (karty wizualizacji), bez własnego modułu – nadpisania zamknięte w #czym-jest w carbomat.css (20.09.2026, CARBOMAT ECO): kicker to plakietka c5-kicker--outline (EL-06) z obrysem #0c2b1c, promieniem 8 px i paddingiem 9 px, 24 px nad nagłówkiem; nagłówek 46/51 px w kolorze #0c2b1c na kolumnie 661 px, na P22 Mackinac Pro Book wagi 400 (decyzja Mateusza z 20.09.2026); karta faktu: tytuł 24 px wagi 400 bez trackingu, opis 14 px w #777771, licznik 11 px, tor paska czerń przy kryciu .1, a pasek postępu w zieleni #71C35F; karty wizualizacji: tło rgb(53 46 40 / .43) na pokrętle --c5-fx-viz-bg, promień 24 px i efekt Glass z ramki – Frost 60 jako backdrop-filter: blur(18px), Refraction 47 z Depth 80 jako krawędź inset, Light 0 % czyli bez poświaty (Dispersion 25 i Splay 34 nie mają odpowiednika w CSS); słupki tylko w zakresie .c5-viz, bo .c5-bar żyje też poza kartami. Mechanika, ikony i layout części informacyjnej bez zmian – obie adnotacje projektanta opisują dzisiejsze zachowanie"
+        "glass-i-zielen": "sama warstwa wyglądu nałożona na układ z-naglowkiem, wg ramek Figma „Frame 140-8475” (kicker i nagłówek), „Frame 256-1419” (karta faktu) i „Frame 140-8542”/„Frame 140-8543” (karty wizualizacji), bez własnego modułu – nadpisania zamknięte w #czym-jest w carbomat.css (20.09.2026, CARBOMAT ECO): kicker to plakietka c5-kicker--outline (EL-06) z obrysem #0c2b1c, promieniem 8 px i paddingiem 9 px, 24 px nad nagłówkiem; nagłówek 46/51 px w kolorze #0c2b1c na kolumnie 661 px, na P22 Mackinac Pro Book wagi 400 (decyzja Mateusza z 20.09.2026); karta faktu: tytuł 24 px wagi 400 bez trackingu, opis 14 px w #777771, licznik 11 px, tor paska czerń przy kryciu .1, a pasek postępu w zieleni #71C35F; karty wizualizacji: tło rgb(53 46 40 / .43) na pokrętle --c5-fx-viz-bg, promień 24 px i efekt Glass z ramki – Frost 60 jako backdrop-filter: blur(18px), Refraction 47 z Depth 80 jako krawędź inset, Light 0 % czyli bez poświaty (Dispersion 25 i Splay 34 nie mają odpowiednika w CSS); słupki tylko w zakresie .c5-viz, bo .c5-bar żyje też poza kartami. Mechanika, ikony i layout części informacyjnej bez zmian – obie adnotacje projektanta opisują dzisiejsze zachowanie. Od 20.09.2026 także na Produktach (#jak-dzialaja, produkty.css ===== 60b): karta faktu, zielony pasek postępu, plakietka numeru i szkło boksu 1:1, ale BEZ metryk nagłówka sceny (46/51 px, miara 661 px, dwa kroki okna) – są dopasowane do copy CARBOMAT ECO, a nagłówek Produktów jest dłuższy; krój nagłówków i kicker-plakietka wchodzą tam regułą strony na wszystkie sekcje, nie tylko na scenę"
       },
       "zrzuty_wariantow": {
         "z-naglowkiem": {
@@ -512,7 +513,7 @@ window.CW_CE = {
         "zamykajacy": "bez akapitu: nagłówek po lewej, dwa przyciski po prawej, oba na kadrze (Kukurydza; od 18.09.2026 na bazowym kodzie klocka zamiast własnego portu u-end). Od 20.09.2026 (uwaga Mateusza: „Zdjęcie w tle zostaw na pełną szerokość ekranu, natomiast teksty po lewej i przyciski po prawej są w ramach kontenera z treścią o maksymalnej szerokości 1180 px. Typografia i przyciski odwzoruj z Frame 186-253”) kadr zostaje pełnoekranowy, a treść wraca z c5-wrap--wide na c5-wrap; typografia i przyciski jak w wariancie zielen-i-scrim – nagłówek 52/53 px na P22 Mackinac Pro, zielony przycisk podstawowy #86D574 z tuszem #0C2B1C, promienie 20 px, wysokość 56 px, odstęp 11 px, obwódka drugorzędnego rgb(255 255 255 / .5). Nadpisania zamknięte w #u-cta w kukurydza.css, bez nowego modułu; zostaje podłożenie rgb(0 0 0 / .3) pod przyciskiem drugorzędnym (poprawka czytelności na rozświetlonym pyle) i tło pasa --w-gray-600, bo kadr zakrywa je w całości",
         "kontakt": "pas zamykający rozmową: nagłówek po lewej, po prawej akapit i akcje kontaktowe. Na O nas (#porozmawiajmy) dwa przyciski, Kontakt i Zostań partnerem; na stronie głównej (#kontakt, 20.09.2026) numer telefonu jako duży link tel: z cyframi tabelarycznymi, wiersz godzin drobnym drukiem, dwa przyciski i cichy link do wszystkich działów",
         "pozny-wzrost": "kadr stoi na 50 % szerokości ekranu, dopóki górna krawędź pasa jest niżej niż 35 % wysokości okna, potem rośnie i pełny rozmiar osiąga 2 % od góry okna; nakładka przyciemniająca narasta razem ze wzrostem, więc w postoju zdjęcie jest bez przyciemnienia (uwagi Mateusza z 18.09.2026; od 19.09.2026 na pięciu stronach: Produkty, CARBOMAT ECO, CARBOMAT MATA, CARBOHUMIC, CARBOMAT HUMIC)",
-        "zielen-i-scrim": "sama warstwa wyglądu nałożona na mechanikę pozny-wzrost, wg ramki Figma „Frame 186-253”, bez własnego modułu – nadpisania zamknięte w #uprawy-profesjonalne w carbomat.css (20.09.2026, CARBOMAT ECO): tło pasa #777771 zamiast --w-gray-600, nagłówek 52/53 px, akapit 21/26 px w pełnej bieli zamiast krycia .75, przycisk podstawowy w zieleni #86D574 z tekstem #0C2B1C, promieniem 20 px i paddingiem 18/24 px, przycisk drugorzędny z obwódką rgb(255 255 255 / .5), odstęp między przyciskami 11 px; kadr to zdjęcie sadu zakotwiczone dołem pod ukośnym gradientem #1A2405 o kryciu 30/10/10/30 %, rozciągniętym na cały pas z podłogą .55 + .45 × --pro-o. Copy zostaje dzisiejsze – uwaga dotyczyła typografii i przycisków, nie treści; ikony znaku marki z przycisku podstawowego nie odwzorowano, bo nie ma jej w sprite, a ikon się nie dorysowuje"
+        "zielen-i-scrim": "sama warstwa wyglądu nałożona na mechanikę pozny-wzrost, wg ramki Figma „Frame 186-253”, bez własnego modułu – nadpisania zamknięte w #uprawy-profesjonalne w carbomat.css (20.09.2026, CARBOMAT ECO): tło pasa #777771 zamiast --w-gray-600, nagłówek 52/53 px, akapit 21/26 px w pełnej bieli zamiast krycia .75, przycisk podstawowy w zieleni #86D574 z tekstem #0C2B1C, promieniem 20 px i paddingiem 18/24 px, przycisk drugorzędny z obwódką rgb(255 255 255 / .5), odstęp między przyciskami 11 px; kadr to zdjęcie sadu zakotwiczone dołem pod ukośnym gradientem #1A2405 o kryciu 30/10/10/30 %, rozciągniętym na cały pas z podłogą .55 + .45 × --pro-o. Copy zostaje dzisiejsze – uwaga dotyczyła typografii i przycisków, nie treści; ikony znaku marki z przycisku podstawowego nie odwzorowano, bo nie ma jej w sprite, a ikon się nie dorysowuje. Od 20.09.2026 także na Produktach (#dla-profesjonalistow, produkty.css ===== 80): typografia, przyciski, pas i nakładka 1:1 z wartościami ramki. Przez pierwsze trzy godziny stały tam podkręcone pokrętła --pro-wash-a .50 i --pro-wash-b .35, bo strona pożyczała kadr z CARBOMAT ECO z białym big bagiem w środku i wartości ramki dawały kontrast GORSZY niż zastąpiony scrim (5. percentyl: nagłówek 2,17 wobec 3,15, akapit 4,00 wobec 5,16). Wieczorem strona dostała własny kadr (paczki w prawej jednej trzeciej, po lewej ciemne pole o zmierzchu) i wartości ramki wróciły: 12,69 : 1 dla nagłówka, 11,42 : 1 dla akapitu. Wniosek do przeniesienia wariantu dalej: liczby nakładki są dopasowane do ZDJĘCIA z ramki, nie do dowolnego kadru – pokrętła są właśnie po to"
       },
       "uwagi": "Na CARBOMAT ECO i CARBOMAT HUMIC stoi wewnątrz sekcji Sezon, na pozostałych jako osobna sekcja. Wariant pozny-wzrost: spec produkty-wzorzec-eco-spec §21.4, §21.8 i §23. Otwarty u Mateusza kontrast białego tekstu na nieprzyciemnionym zdjęciu w fazie postoju: na Produktach akapit min. 2,32 : 1, na CARBOMAT ECO zmierzone minimum akapitu spada z 1,78 na 1,19 (mediana z 6,40 na 5,26), stan końcowy pasa bez zmian. Kukurydza (zamykajacy) i O nas (kontakt) zostają na module bazowym – przejście na pozny-wzrost do decyzji. Wariant zielen-i-scrim (20.09.2026) linkuje wyłącznie carbomat.html: to nadpisania w carbomat.css zamknięte w #uprawy-profesjonalne, bez nowego modułu i bez znacznika data-ce-wariant – pas nadal niesie data-ce-wariant=„pozny-wzrost”, a ce/CE-16-pas-pro*.* i pozostałe strony zostają nietknięte; spec carbomat-eco-spec §16.7. Zdjęcie eco-pro-sad.jpg zastępuje img/foto/pro.jpg tylko tutaj – ten sam plik niosą jeszcze o-firmie.html i produkty.html. Nowy kadr jest jaśniejszy, więc scrim przeniesiono na cały pas z podłogą .55: kontrast akapitu w postoju rośnie z 1,19 na 5,58, czyli otwarta u Mateusza pozycja kontrastu dotyczy już tylko stron bez tego nadpisania.",
       "zrzut": {
@@ -621,7 +622,7 @@ window.CW_CE = {
         "z-ikona": "ikona w kółku, tytuł, akapit",
         "numerowane": "numer porządkowy zamiast ikony",
         "ze-zdjeciem": "zdjęcie 4:3 u góry karty",
-        "z-przyciskami": "zdjęcie lub packshot, opis, rząd przycisków przy dolnej krawędzi; na Próchnicy+ od 19.09.2026 karta pozioma – zdjęcie po lewej 40 %, treść po prawej, siatka 2 × 3 w kontenerze 1180 px, bez akapitu opisu (opis w pop-upie profilu)",
+        "z-przyciskami": "zdjęcie lub packshot, opis, rząd przycisków przy dolnej krawędzi; na Próchnicy+ od 19.09.2026 karta pozioma – zdjęcie po lewej 40 %, treść po prawej, siatka 2 × 3 w kontenerze 1180 px, bez akapitu opisu (opis w pop-upie profilu) Na Produktach (#doglebowo-nalistne) karty niosą od 20.09.2026 pole z packshotem zamiast kadru 16:10 („lepiej tutaj dać zdjęcia produktu, bo mówimy bezpośrednio o produkcie” – komentarz Mateusza): metryki pola jak w CE-22 z-packshotami, MAXI PLUS = butelka 1 l, CALBOR = baniak 5 l jako opakowanie poglądowe (kanon nie przypisuje opakowania osobno temu produktowi)",
         "produktowe": "packshot na szarym polu, cała karta jednym linkiem (Kukurydza)",
         "kafle-danych": "wartość x → y, mini-wykres słupków, chip stanu (Mata)",
         "ostrzegawcze": "karta z ikoną x na przygaszonym tle",
@@ -680,7 +681,7 @@ window.CW_CE = {
       "warianty": {
         "porownawcza": "kolumny = porównywane pozycje (2×6, 3 podłoża)",
         "danych": "kolumny liczbowe wyrównane do prawej (analiza, certyfikaty)",
-        "z-packshotami": "packshoty nad etykietami kolumn (CARBOHUMIC)",
+        "z-packshotami": "kwadratowe pole zdjęcia nad etykietą każdej kolumny (do 220 px, temat na 72 % wysokości, 140 px poniżej 900 px). Czym jest zdjęcie, decyduje treść sekcji: na CARBOHUMIC-u packshot produktu, na Produktach od 20.09.2026 kadr SPOSOBU aplikacji (#doglebowo-tabela, dziś placeholdery – prompty w zasoby/brand/zdjecia-produkty/README.md), bo o produktach mówią dopiero karty pod tabelą. Tego samego dnia z nagłówków Produktów zniknęły nazwy produktów, które szły w parze z packshotami",
         "klikalne-wiersze": "klik w wiersz otwiera stronę lightboxa (Kukurydza)"
       },
       "uwagi": "Tabela technikaliów na Produktach to osobny CE-40 (ma własną mechanikę).",
@@ -793,9 +794,10 @@ window.CW_CE = {
         "licznik"
       ],
       "warianty": {
-        "popup-produktu": "strona = mapa zastosowań produktu z packshotem w nagłówku i własną stopką (Kukurydza)"
+        "popup-produktu": "strona = mapa zastosowań produktu z packshotem w nagłówku i własną stopką (Kukurydza)",
+        "jednostronicowy": "jedna strona treści zamiast N, więc stopka, licznik i przyciski poprzednia/następna nie istnieją; panel szerszy (1280 px), bo niesie tabelę pięciu kolumn, a kontener treści gubi w nakładce swoją miarę i gutter. Klasy i moduł 1:1 z bazy; kod strony w produkty.css ===== 45 / produkty.js ===== 45 (Produkty „Technikalia czterech rodzin”, 20.09.2026)"
       },
-      "uwagi": "Treść stron lightboxa to zwykłe klocki (np. CE-20) oznaczone jako zagnieżdżone.",
+      "uwagi": "Treść stron lightboxa to zwykłe klocki (np. CE-20) oznaczone jako zagnieżdżone. Od 20.09.2026 druga implementacja: Produkty – cała sekcja CE-40 przeniesiona do nakładki (wariant jednostronicowy).",
       "zrzut": {
         "hash": "dowod-sggw",
         "maxh": 800
@@ -926,7 +928,7 @@ window.CW_CE = {
       ],
       "warianty": {
         "z-lightboxem": "panel ma przycisk otwierający pełny opis w lightboxie (Kukurydza fazy do 18.09; sekcję przejął CE-65, wariant bez wystąpień)",
-        "akordeon-z-odliczaniem": "akordeon na szerokość kontenera wg ramki Figma „Frame 207” (Mateusz, 18.09.2026; Produkty, ścieżki wg sytuacji): otwarta pozycja ma duży tytuł, po lewej opis z notami, ostrzeżeniem i linkami, po prawej karty produktów z packshotem (po dwie w rzędzie, kolejne zawijają się do następnego wiersza; cała karta prowadzi na stronę produktu, „Kup produkt” odsłania się pod opisem na karcie, a packshot maleje); pierwsza pozycja otwarta od początku, odliczanie 5 s z paskiem na górnej linii następnej pozycji otwiera kolejną i zamyka poprzednią, klik otwiera dowolną albo zamyka otwartą i wyłącza automat, kotwica pozycji otwiera ją i zatrzymuje automat; automat tylko na szerokim ekranie i przy włączonym ruchu, pod kursorem i przy fokusie odliczanie stoi",
+        "akordeon-z-odliczaniem": "akordeon na szerokość kontenera wg ramki Figma „Frame 207” (Mateusz, 18.09.2026; Produkty, ścieżki wg sytuacji): otwarta pozycja ma duży tytuł, po lewej opis z notami, ostrzeżeniem i linkami, po prawej karty produktów z packshotem (po dwie w rzędzie, kolejne zawijają się do następnego wiersza; cała karta prowadzi na stronę produktu, „Kup produkt” odsłania się pod opisem na karcie, a packshot maleje); pierwsza pozycja otwarta od początku, odliczanie 5 s z paskiem na górnej linii następnej pozycji otwiera kolejną i zamyka poprzednią, klik otwiera dowolną albo zamyka otwartą i wyłącza automat, kotwica pozycji otwiera ją i zatrzymuje automat; automat tylko na szerokim ekranie i przy włączonym ruchu, pod kursorem i przy fokusie odliczanie stoi Runda wierności 20.09.2026 („odwzoruj bardziej szczegółowo wygląd CE”): karta 10 px promienia i tło #f6f6f6 z ramki (bez 60 % krycia warstwy Figmy – nad pasem #fafafa kafel byłby niewidoczny), zielony znacznik 32 px #86d574 w prawym górnym rogu, packshot w polu 139 px, nazwa 14 px semibold 38 px pod nim, opis 14 px na mierze 275 px, wiersze zamknięte 15 px w czerni i podziałce 62 px, tytuł otwarty 35 px, opis pozycji 16 px/1,3 w #777771 na mierze 358 px",
         "z-kadrem": "wariant strony głównej (uprawy): po lewej lista sześciu grup upraw rozdzielona liniami włosowymi – numer w węźle, duży tytuł 28–44 px, przygaszony podpis pod tytułem i chevron; otwarta pozycja rozwija się w miejscu (grid 0fr → 1fr) i pokazuje chipy-linki stron upraw, dwa przyciski („Zobacz uprawę”, „Dobierz produkty i dawki”), a w razie potrzeby drugi, cichy link doboru. Po prawej nie ma panelu opisu, tylko przyklejony kadr: sześć warstw zdjęć jedna na drugiej, widoczna ta z wybranej pozycji, w lewym dolnym rogu jasna plakietka z numerem i nazwą grupy. Kadr stoi pod nagłówkiem serwisu (20 px zapasu) i kończy się 96 px nad dołem okna, ponad dokiem doradcy; zmiana kadru to wycieranie clip-path od dolnej krawędzi w górę w 0,7 s z osiadaniem skali 1,04 → 1, a poprzednie zdjęcie zostaje nieruchomo pod spodem, żeby wycieranie nie odsłaniało pustej sceny. Klik wybiera (nigdy nie zamyka – jedna pozycja jest zawsze otwarta), fokus i najechanie tylko podglądają kadr, strzałki oraz Home i End przenoszą fokus między nagłówkami wierszy; kotwice #uprawy-sad, #uprawy-jagodowe, #uprawy-warzywa, #uprawy-pole, #uprawy-szkolka i #uprawy-ogrod otwierają swoją pozycję. Poniżej 900 px akordeon z kadrem 4 : 3 wewnątrz otwartej pozycji, nad przyciskami. Bez JS-u wszystkie pozycje rozwinięte, lista na całą szerokość kontenera, kadry ukryte."
       },
       "zrzuty_wariantow": {
@@ -1185,10 +1187,11 @@ window.CW_CE = {
       "czesci": [
         "tablist",
         "link Porównaj",
+        "szeroki przycisk pełnej tabeli",
         "panele rodzin: packshot, nazwa, obietnica, przyciski, dl"
       ],
       "warianty": {},
-      "uwagi": "Wzór: rivian.com/r1s.",
+      "uwagi": "Wzór: rivian.com/r1s. Od 20.09.2026 „Porównaj” i szeroki przycisk „Pełna tabela porównawcza” pod pokazem otwierają nakładkę CE-25 z tabelą CE-40 zamiast przewijać do sekcji.",
       "zrzut": {
         "maxh": 1100
       }
@@ -1203,8 +1206,8 @@ window.CW_CE = {
         "kotwica": "porownanie"
       },
       "kod": {
-        "css": "produkty.css ===== 40 (c5pr-techsheet)",
-        "js": "produkty.js ===== 40"
+        "css": "produkty.css ===== 40 (c5pr-techsheet) + ===== 45 (nakładka)",
+        "js": "produkty.js ===== 40 + ===== 45 (nakładka)"
       },
       "czesci": [
         "tabela",
@@ -1213,9 +1216,12 @@ window.CW_CE = {
         "karty uwag sterujące",
         "rząd przycisków"
       ],
-      "warianty": {},
-      "uwagi": "Osobny CE, nie port Parametrów (CE-10) – decyzja Mateusza 14.09.",
+      "warianty": {
+        "w-lightboxie": "ta sama treść i mechanika, tylko nie w biegu strony: sekcja jest jedyną stroną nakładki CE-25 (wariant jednostronicowy), którą otwiera link „Porównaj” przy tabach CE-39 i nowy szeroki przycisk „Pełna tabela porównawcza” pod pokazem. Razem z tabelą weszły do nakładki przypis i trzy karty „jak czytać tabelę”, bo dotyczą wprost tabeli. Bez JS blok stoi w biegu strony dokładnie tam, gdzie stała sekcja – treść nigdy nie znika; rozdział znika za to z nawigacji kropkowej, a „pokaż w tabeli” przewija panel nakładki zamiast strony (Produkty, 20.09.2026, komentarze Mateusza w artefakcie)"
+      },
+      "uwagi": "Osobny CE, nie port Parametrów (CE-10) – decyzja Mateusza 14.09. Od 20.09.2026 jedyne wystąpienie stoi w nakładce (wariant w-lightboxie).",
       "zrzut": {
+        "hash": "porownanie",
         "maxh": 1400
       }
     },
