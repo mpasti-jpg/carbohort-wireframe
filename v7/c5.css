@@ -257,7 +257,8 @@
 .c5-pro .c5-wrap{position:relative;z-index:1;}
 .c5-pro__grid{display:flex;flex-direction:column;gap:22px;max-width:486px;}
 .c5-pro__grid h2{font-size:clamp(1.5rem,2.6vw,2rem);font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
-.c5-pro__grid p{color:var(--w-text-inverse);opacity:.6;}
+/* .85 instead of .6: the paragraph reached only about 4.0:1 on the dark band (shop QA, 28.09.2026). */
+.c5-pro__grid p{color:var(--w-text-inverse);opacity:.85;}
 .c5-pro__grid .c5-btnrow{margin-top:clamp(2rem,5vw,4.5rem);flex-wrap:nowrap;align-items:center;gap:var(--w-space-2);}
 .c5-pro__link{white-space:nowrap;}
 .c5-pro__link{color:var(--w-text-inverse);text-decoration:underline;text-underline-offset:3px;font-weight:var(--w-weight-medium);padding:12px 24px;}
@@ -299,6 +300,9 @@
 /* --- Dok dr Jurka: pojawia się po zejściu z hero ----------------------------- */
 .cw-jurek{transition:opacity .3s ease,visibility .3s ease;}
 .cw-jurek.cx-dockhide{opacity:0;visibility:hidden;pointer-events:none;}
+/* An opened dock stays visible above #hero too: buttons with data-jurek-open
+   (e.g. in the shop banner) must not open an invisible dock (28.09.2026). */
+.cw-jurek[data-open="true"].cx-dockhide{opacity:1;visibility:visible;pointer-events:auto;}
 
 /* --- Responsywność ----------------------------------------------------------- */
 @media (max-width:899px){

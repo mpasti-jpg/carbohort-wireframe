@@ -130,6 +130,123 @@
     if (dock && dock.getAttribute("data-open") === "true") { setDock(false); return; }
   });
 
+  /* --- Cart preview on hover (28.09.2026, round 3) ----------------------
+     Spec 40-strona-www/koncepcja/sklep-v7-spec.md §12.11. A panel under the
+     header lists the lines of the shop cart (sessionStorage "cw_cart_items",
+     written by sklep-wspolne.js) while the pointer rests on the cart icon or
+     on the panel. Only with a fine pointer from 980 px and never on the cart
+     page; a click on the icon still opens the cart. */
+  (function () {
+    var link = $("a.cw-cart"), panel = $("[data-cw-minicart]");
+    if (!link || !panel || !window.matchMedia) return;
+    /* Not on the cart page – found by its main element, because in the
+       artifact viewer the address is not koszyk.html. */
+    if ($("[data-ks]") || /(^|\/)koszyk\.html$/.test(location.pathname)) return;
+    var mq = window.matchMedia("(hover: hover) and (pointer: fine) and (min-width: 980px)");
+    var tOpen = null, tClose = null;
+
+    function items() {
+      if (window.CWSklep) return window.CWSklep.items();
+      try { var a = JSON.parse(sessionStorage.getItem("cw_cart_items") || "[]"); return Array.isArray(a) ? a : []; }
+      catch (_) { return []; }
+    }
+    function fmt(n) {
+      if (window.CWSklep) return window.CWSklep.fmt(n);
+      var p = (Math.round(n * 100) / 100).toFixed(2).split(".");
+      return p[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ") + (p[1] === "00" ? "" : "," + p[1]) + " zł";
+    }
+    function plural(n, one, few, many) {
+      if (n === 1) return one;
+      var d = n % 10, t = n % 100;
+      return (d >= 2 && d <= 4 && (t < 12 || t > 14)) ? few : many;
+    }
+    function esc(s) {
+      return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+      });
+    }
+    /* Keeps ranges like "6,0–6,5" on one line. */
+    function nowrap(html) { return html.replace(/(\S*\d–\d\S*)/g, '<span class="cw-nowrap">$1</span>'); }
+    function render() {
+      var list = items();
+      if (!list.length) {
+        panel.innerHTML = '<div class="cw-minicart__empty"><p>Twój koszyk jest pusty.</p>' +
+          '<a class="wf-btn wf-btn--secondary wf-btn--sm" href="sklep.html">Przejdź do sklepu</a></div>';
+        return;
+      }
+      var n = 0, sum = 0, rows = "";
+      list.forEach(function (it) {
+        n += it.qty; sum += it.price * it.qty;
+        var href = (it.url || "sklep.html") + (it.pack ? "#" + it.pack : "");
+        rows += '<li class="cw-minicart__item">' +
+          '<a class="cw-minicart__thumb" href="' + esc(href) + '" tabindex="-1" aria-hidden="true">' +
+            (it.img ? '<img src="' + esc(it.img) + '" alt="">' : "") + "</a>" +
+          '<div class="cw-minicart__txt">' +
+            '<a class="cw-minicart__name" href="' + esc(href) + '">' + nowrap(esc(it.name)) + "</a>" +
+            '<span class="cw-minicart__pack">' + esc(it.packLabel) + "</span>" +
+            '<span class="cw-minicart__qty">' + it.qty + " × " + fmt(it.price) + "</span>" +
+          "</div>" +
+          '<b class="cw-minicart__sum">' + fmt(it.price * it.qty) + "</b></li>";
+      });
+      panel.innerHTML =
+        '<div class="cw-minicart__head"><p class="cw-minicart__title">W koszyku</p>' +
+          '<div class="cw-minicart__nav" data-mc-nav hidden>' +
+            '<button type="button" class="wf-btn wf-btn--ghost wf-btn--icon wf-btn--sm" data-mc-prev aria-label="Poprzednie pozycje"><svg class="wf-icon" aria-hidden="true"><use href="#ti-chevron-left"></use></svg></button>' +
+            '<button type="button" class="wf-btn wf-btn--ghost wf-btn--icon wf-btn--sm" data-mc-next aria-label="Następne pozycje"><svg class="wf-icon" aria-hidden="true"><use href="#ti-chevron-right"></use></svg></button>' +
+          "</div></div>" +
+        '<ul class="cw-minicart__list" data-mc-list>' + rows + "</ul>" +
+        '<div class="cw-minicart__bar">' +
+          '<span class="cw-minicart__count">' + n + " " + plural(n, "opakowanie", "opakowania", "opakowań") + " w koszyku</span>" +
+          '<span class="cw-minicart__total">Wartość produktów <b>' + fmt(sum) + "</b></span>" +
+          '<a class="wf-btn wf-btn--secondary wf-btn--sm" href="koszyk.html">Koszyk</a>' +
+          '<a class="wf-btn wf-btn--primary wf-btn--sm" href="checkout.html">Przejdź do kasy</a>' +
+        "</div>";
+      wireScroll();
+    }
+    /* Arrows only when the row overflows; each click moves by ~one view. */
+    function wireScroll() {
+      var ul = $("[data-mc-list]", panel), nav = $("[data-mc-nav]", panel);
+      if (!ul || !nav) return;
+      var prev = $("[data-mc-prev]", panel), next = $("[data-mc-next]", panel);
+      function sync() {
+        var over = ul.scrollWidth > ul.clientWidth + 2;
+        nav.hidden = !over;
+        prev.disabled = ul.scrollLeft <= 2;
+        next.disabled = ul.scrollLeft + ul.clientWidth >= ul.scrollWidth - 2;
+      }
+      prev.addEventListener("click", function () { ul.scrollBy({ left: -ul.clientWidth * 0.9, behavior: "smooth" }); });
+      next.addEventListener("click", function () { ul.scrollBy({ left: ul.clientWidth * 0.9, behavior: "smooth" }); });
+      ul.addEventListener("scroll", sync, { passive: true });
+      requestAnimationFrame(sync);
+    }
+    function isOpen() { return panel.getAttribute("data-open") === "true"; }
+    function show() {
+      clearTimeout(tClose);
+      if (isOpen()) return;
+      if (openMega) closeMega(false);
+      render();
+      panel.setAttribute("data-open", "true");
+    }
+    function hide() { clearTimeout(tOpen); panel.setAttribute("data-open", "false"); }
+    function enter() {
+      if (!mq.matches) return;
+      clearTimeout(tClose);
+      if (!isOpen()) { clearTimeout(tOpen); tOpen = setTimeout(show, 150); }
+    }
+    function leave() {
+      clearTimeout(tOpen);
+      if (isOpen()) { clearTimeout(tClose); tClose = setTimeout(hide, 250); }
+    }
+    link.addEventListener("mouseenter", enter);
+    link.addEventListener("mouseleave", leave);
+    panel.addEventListener("mouseenter", function () { clearTimeout(tClose); });
+    panel.addEventListener("mouseleave", leave);
+    doc.addEventListener("keydown", function (e) { if (e.key === "Escape" && isOpen()) hide(); });
+    $$("[data-mega-trigger]").forEach(function (t) { t.addEventListener("click", hide); });
+    window.addEventListener("cw:cart", function () { if (isOpen()) { render(); } });
+    if (mq.addEventListener) mq.addEventListener("change", function () { if (!mq.matches) hide(); });
+  })();
+
   /* --- Cart badge (demo: sessionStorage count) ------------------------- */
   try {
     var n = parseInt(sessionStorage.getItem("cw_cart") || "0", 10) || 0;

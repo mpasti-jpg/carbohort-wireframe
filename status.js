@@ -1,30 +1,13 @@
-/* ===========================================================================
-   status.js – JEDYNE ŹRÓDŁO STANU PODSTRON
-   ---------------------------------------------------------------------------
-   Ten plik zasila trzy rzeczy naraz:
-     1. plakietkę „Status: …" w lewym dolnym rogu każdej podstrony (chrome.js),
-     2. tabelę informacyjną stan-podstron.html (generator),
-     3. blok tabeli w 40-strona-www/stan-podstron.md (ten sam generator).
-
-   ⚠️ ETAP I ETYKIETĘ USTAWIA WYŁĄCZNIE MATEUSZ. Agent ich nie zgaduje.
-      Numer sekcji też pochodzi od niego (kolejność z górnej nawigacji).
-      "wTabeli": false = plik jest w katalogu, ale nie pokazujemy go w tabelach.
-      Póki `etap` jest null, plakietka mówi „do ustalenia”, a pole `prop`
-      trzyma propozycję agenta do potwierdzenia (nigdy nie jest pokazywana
-      klientowi jako stan faktyczny).
-
-   Po każdej zmianie w tym pliku:
-     python3 zasoby/kod/_narzedzia/stan-tabela.py
-   Robi to za Ciebie skrypt deployu, więc ręcznie tylko przy podglądzie.
-   =========================================================================== */
+/* status.js – public copy of the page-state manifest (generated at deploy;
+   the vault keeps the full file with internal notes). */
 window.CW_STATUS = {
   "meta": {
-    "zaktualizowano": "2026-09-07",
+    "zaktualizowano": "2026-09-28",
     "projektAC": 837,
     "bazaAC": "https://pm.bizwebstudio.pl/projects/837/tasks/",
-    "live": "https://mpasti-jpg.github.io/carbohort-wireframe/v5/",
+    "live": "https://mpasti-jpg.github.io/carbohort-wireframe/v7/",
     "tabelaLive": "https://mpasti-jpg.github.io/carbohort-wireframe/stan-podstron.html",
-    "katalogWersji": "v5/"
+    "katalogWersji": "v7/"
   },
   "etapy": {
     "lofi": "Lo-Fi",
@@ -64,8 +47,7 @@ window.CW_STATUS = {
       "etap": "lofi",
       "etykieta": "projektowanie",
       "ac": 31562,
-      "data": "25.07",
-      "uwaga": "Dwie martwe kotwice, brak social i telefonu. Sekcja „Program” do przepisania pod nową Próchnicę+. Przebudowa po projekcie UI sklepu"
+      "data": "20.09"
     },
     "produkty.html": {
       "sekcja": "2. Produkty Carbohort",
@@ -73,9 +55,7 @@ window.CW_STATUS = {
       "etap": null,
       "etykieta": null,
       "ac": null,
-      "prop": "hifi",
-      "data": "02.08",
-      "uwaga": "Filar całej gamy. Do zdjęcia przed bramką: „węgiel aktywowany” (3×) i −1119 m³/ha (2×)"
+      "data": "20.09"
     },
     "carbomat.html": {
       "sekcja": "2. Produkty Carbohort",
@@ -83,8 +63,7 @@ window.CW_STATUS = {
       "etap": "hifi",
       "etykieta": "poprawki",
       "ac": 31223,
-      "data": "26.07",
-      "uwaga": "Jedyna strona w projekcie UI (Figma, 14 uwag Sylwii z 13.08). Poszła do projektowania z pominięciem bramek – przypadek, którego nie powtarzamy"
+      "data": "19.09"
     },
     "carbomat-mata.html": {
       "sekcja": "2. Produkty Carbohort",
@@ -92,8 +71,7 @@ window.CW_STATUS = {
       "etap": "hifi",
       "etykieta": "poprawki",
       "ac": 31563,
-      "data": "02.08",
-      "uwaga": "⚠️ Cztery blokady publikacyjne (patogeny, woda, korzenie, cykle) – przed akceptacją"
+      "data": "19.09"
     },
     "carbohumic.html": {
       "sekcja": "2. Produkty Carbohort",
@@ -101,8 +79,7 @@ window.CW_STATUS = {
       "etap": "hifi",
       "etykieta": "poprawki",
       "ac": 31564,
-      "data": "02.08",
-      "uwaga": "Sprzeczność o mieszaniu ze środkami ochrony roślin; pH filtrowanego w trzech wersjach"
+      "data": "19.09"
     },
     "carbomat-humic.html": {
       "sekcja": "2. Produkty Carbohort",
@@ -110,8 +87,7 @@ window.CW_STATUS = {
       "etap": "hifi",
       "etykieta": "poprawki",
       "ac": 31565,
-      "data": "02.08",
-      "uwaga": "„Węgiel aktywowany” 4× w pliku, w tym w tytule i opisie meta – to tożsamość strony, osobna decyzja treściowa"
+      "data": "19.09"
     },
     "uprawy.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -119,8 +95,7 @@ window.CW_STATUS = {
       "etap": "lofi",
       "etykieta": "informacje",
       "ac": 30722,
-      "data": "07.09",
-      "uwaga": "Sekcja „Program dla jednej rośliny” z kaflami roślin. Do zrobienia: kategorie wg podziału Darka z 04.08"
+      "data": "07.09"
     },
     "kukurydza.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -128,8 +103,7 @@ window.CW_STATUS = {
       "etap": "lofi",
       "etykieta": "akceptacja",
       "ac": 31566,
-      "data": "07.09",
-      "uwaga": "Nowa, 13 sekcji. Trzeci wzorzec strony pojedynczej uprawy; jedyna uprawa z programem po recenzji"
+      "data": "20.09"
     },
     "ziemniak.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -137,8 +111,7 @@ window.CW_STATUS = {
       "etap": "lofi",
       "etykieta": "akceptacja",
       "ac": 31567,
-      "data": "07.09",
-      "uwaga": "Pierwszy wzorzec strony pojedynczej uprawy, skala BBCH. ⚠️ Brak zejścia z żadnej strony segmentowej"
+      "data": "07.09"
     },
     "borowka.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -146,8 +119,7 @@ window.CW_STATUS = {
       "etap": "lofi",
       "etykieta": "akceptacja",
       "ac": 31568,
-      "data": "07.09",
-      "uwaga": "Wzorzec na uprawie wieloletniej: jednostki na roślinę i metr rzędu, dwa scenariusze plantacji"
+      "data": "07.09"
     },
     "sadownicze.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -155,9 +127,7 @@ window.CW_STATUS = {
       "etap": null,
       "etykieta": null,
       "ac": null,
-      "prop": "lofi",
-      "data": "25.07",
-      "uwaga": "Segment. Czeka na ranking G1–G7 i model matrycy z 10.08. ⚠️ Punkt „Badamy” do przepisania pod nową Próchnicę+"
+      "data": "25.07"
     },
     "jagodowe.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -165,9 +135,7 @@ window.CW_STATUS = {
       "etap": null,
       "etykieta": null,
       "ac": null,
-      "prop": "lofi",
-      "data": "07.09",
-      "uwaga": "Segment. Zejście na borówkę dodane; do rozgraniczenia zakres segmentu wobec strony borówki"
+      "data": "07.09"
     },
     "warzywnicze.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -175,9 +143,7 @@ window.CW_STATUS = {
       "etap": null,
       "etykieta": null,
       "ac": null,
-      "prop": "lofi",
-      "data": "25.07",
-      "uwaga": "⚠️ CARBOHUMIC CALBOR w warzywach wbrew rejestracji G-1733/25 – do zdjęcia od ręki"
+      "data": "25.07"
     },
     "zboza.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -185,9 +151,7 @@ window.CW_STATUS = {
       "etap": null,
       "etykieta": null,
       "ac": null,
-      "prop": "lofi",
-      "data": "07.09",
-      "uwaga": "Segment. Poleca MAXI PLUS na polu wbrew decyzji z 06.08; stara dawka próbna"
+      "data": "07.09"
     },
     "szkolki.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -195,9 +159,7 @@ window.CW_STATUS = {
       "etap": null,
       "etykieta": null,
       "ac": null,
-      "prop": "lofi",
-      "data": "25.07",
-      "uwaga": "Segment zostaje; persona do ustalenia"
+      "data": "25.07"
     },
     "trawnik.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -205,9 +167,7 @@ window.CW_STATUS = {
       "etap": null,
       "etykieta": null,
       "ac": null,
-      "prop": "lofi",
-      "data": "25.07",
-      "uwaga": "Wdrożyć pięć odpowiedzi klienta na obiekcje hobbysty 1:1"
+      "data": "25.07"
     },
     "ogrod.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -215,9 +175,7 @@ window.CW_STATUS = {
       "etap": null,
       "etykieta": null,
       "ac": null,
-      "prop": "lofi",
-      "data": "25.07",
-      "uwaga": "Kobiety rdzeniem segmentu – język i wizual do zmiany"
+      "data": "25.07"
     },
     "krzewy.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -225,9 +183,7 @@ window.CW_STATUS = {
       "etap": null,
       "etykieta": null,
       "ac": null,
-      "prop": "lofi",
-      "data": "25.07",
-      "uwaga": "Jak ogród i działka"
+      "data": "25.07"
     },
     "zielen.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -235,9 +191,7 @@ window.CW_STATUS = {
       "etap": null,
       "etykieta": null,
       "ac": null,
-      "prop": null,
-      "data": "25.07",
-      "uwaga": "❄️ Persona odłożona 06.08. Zdjęta z nawigacji i hubu 07.09 – strona osierocona, wejście tylko adresem wprost"
+      "data": "25.07"
     },
     "prochnica-plus.html": {
       "sekcja": "4. Programy i badania",
@@ -245,8 +199,7 @@ window.CW_STATUS = {
       "etap": "lofi",
       "etykieta": "akceptacja",
       "ac": 31569,
-      "data": "06.09",
-      "uwaga": "Hub programu wieloletniego: 12 sekcji, 6 gospodarstw, oś 2025–2028. 13 pytań do klienta w backlogu"
+      "data": "19.09"
     },
     "centrum-wiedzy.html": {
       "sekcja": "5. Centrum wiedzy",
@@ -254,9 +207,23 @@ window.CW_STATUS = {
       "etap": null,
       "etykieta": null,
       "ac": null,
-      "prop": "lofi",
-      "data": "25.07",
-      "uwaga": "⚠️ Zakładka „Rolnik” się nie otwiera; układ z 10.08 niewdrożony; 13 artykułów Darka czeka"
+      "data": "15.09"
+    },
+    "centrum-wiedzy-kategoria.html": {
+      "sekcja": "5. Centrum wiedzy",
+      "nazwa": "Centrum wiedzy – kategoria",
+      "etap": null,
+      "etykieta": null,
+      "ac": null,
+      "data": "15.09"
+    },
+    "artykul.html": {
+      "sekcja": "5. Centrum wiedzy",
+      "nazwa": "Centrum wiedzy – artykuł",
+      "etap": null,
+      "etykieta": null,
+      "ac": null,
+      "data": "15.09"
     },
     "o-firmie.html": {
       "sekcja": "6. O nas",
@@ -264,9 +231,7 @@ window.CW_STATUS = {
       "etap": null,
       "etykieta": null,
       "ac": null,
-      "prop": "lofi",
-      "data": "25.07",
-      "uwaga": "⚠️ „Nasze złoże” – firma złoża nie ma; trzy rodziny zamiast czterech; osiem pytań faktograficznych"
+      "data": "15.09"
     },
     "kontakt.html": {
       "sekcja": "7. Kontakt",
@@ -274,8 +239,7 @@ window.CW_STATUS = {
       "etap": "lofi",
       "etykieta": "informacje",
       "ac": 31570,
-      "data": "25.07",
-      "uwaga": "Formularz bez modelu danych; wszystkie dane kontaktowe zmyślone"
+      "data": "15.09"
     },
     "konfigurator.html": {
       "sekcja": "8. Konfigurator",
@@ -283,8 +247,7 @@ window.CW_STATUS = {
       "etap": "lofi",
       "etykieta": "informacje",
       "ac": 30721,
-      "data": "08.09",
-      "uwaga": "Przebudowany od nowa: 4 pytania, 11 grup, dawki ze źródłami (11 orientacyjnych z zaleceniem konsultacji). Komplet do akceptacji Darka: dokument czytelny, pełna logika i arkusz werdyktów w zasoby/dokumenty/konfigurator (87 pozycji z numerami, 15 pytań P-1…P-15)"
+      "data": "08.09"
     },
     "sklep.html": {
       "sekcja": "9. Sklep",
@@ -292,19 +255,23 @@ window.CW_STATUS = {
       "etap": null,
       "etykieta": null,
       "ac": 31512,
-      "prop": "hifi",
-      "data": "10.08",
-      "uwaga": "Katalog realny: 49 SKU w 20 kartach. Kierunek przyjęty 10.08 (akceptacja dorozumiana). Brak warstwy promocyjnej; termin 30.09"
+      "data": "28.09"
     },
     "pdp.html": {
       "sekcja": "9. Sklep",
-      "nazwa": "Karta produktu",
+      "nazwa": "Karta produktu – CARBOMAT ECO pH 6,0–6,5",
       "etap": null,
       "etykieta": null,
       "ac": 31512,
-      "prop": "hifi",
-      "data": "10.08",
-      "uwaga": "Cel kodów QR z etykiet. Potrzebne karty per SKU (49 pozycji), dziś jest jedna"
+      "data": "28.09"
+    },
+    "pdp-kwasny.html": {
+      "sekcja": "9. Sklep",
+      "nazwa": "Karta produktu – CARBOMAT ECO pH 4,5–5,0",
+      "etap": null,
+      "etykieta": null,
+      "ac": null,
+      "data": "28.09"
     },
     "koszyk.html": {
       "sekcja": "9. Sklep",
@@ -312,9 +279,7 @@ window.CW_STATUS = {
       "etap": null,
       "etykieta": null,
       "ac": null,
-      "prop": "lofi",
-      "data": "25.07",
-      "uwaga": "Ceny demonstracyjne sprzed katalogu; do przebudowy po akceptacji sklepu"
+      "data": "28.09"
     },
     "checkout.html": {
       "sekcja": "9. Sklep",
@@ -322,9 +287,7 @@ window.CW_STATUS = {
       "etap": null,
       "etykieta": null,
       "ac": null,
-      "prop": "lofi",
-      "data": "25.07",
-      "uwaga": "Bez płatności (D2); sprzeczne SLA z potwierdzeniem"
+      "data": "25.07"
     },
     "potwierdzenie.html": {
       "sekcja": "9. Sklep",
@@ -332,9 +295,7 @@ window.CW_STATUS = {
       "etap": null,
       "etykieta": null,
       "ac": null,
-      "prop": "lofi",
-      "data": "25.07",
-      "uwaga": "Jak kasa"
+      "data": "25.07"
     },
     "platforma-b2b.html": {
       "sekcja": "10. Platforma B2B",
@@ -342,9 +303,7 @@ window.CW_STATUS = {
       "etap": null,
       "etykieta": null,
       "ac": 31514,
-      "prop": "lofi",
-      "data": "25.07",
-      "uwaga": "Warstwa 1 zmian gotowa do wykonania bez pytań; trzy nowe ekrany przed wyceną"
+      "data": "25.07"
     },
     "rejestracja.html": {
       "sekcja": "10. Platforma B2B",
@@ -352,9 +311,7 @@ window.CW_STATUS = {
       "etap": null,
       "etykieta": null,
       "ac": null,
-      "prop": "lofi",
-      "data": "25.07",
-      "uwaga": "Jeden próg, weryfikacja po fakcie; zdjąć segment zieleni miejskiej"
+      "data": "25.07"
     },
     "potwierdzenie-b2b.html": {
       "sekcja": "10. Platforma B2B",
@@ -362,9 +319,7 @@ window.CW_STATUS = {
       "etap": null,
       "etykieta": null,
       "ac": null,
-      "prop": "lofi",
-      "data": "25.07",
-      "uwaga": "Duplikuje sekcję w panelu; obietnica pakietu dokumentów bez pokrycia"
+      "data": "25.07"
     },
     "admin.html": {
       "sekcja": "10. Platforma B2B",
@@ -372,9 +327,7 @@ window.CW_STATUS = {
       "etap": null,
       "etykieta": null,
       "ac": null,
-      "prop": "lofi",
-      "data": "24.07",
-      "uwaga": "Narzędzie wewnętrzne; słownik statusów niespójny z panelem klienta"
+      "data": "24.07"
     },
     "partner.html": {
       "sekcja": "Pozostałe",
@@ -382,9 +335,7 @@ window.CW_STATUS = {
       "etap": null,
       "etykieta": null,
       "ac": null,
-      "prop": "lofi",
-      "data": "25.07",
-      "uwaga": "W sekcji „Pozostałe\" do czasu decyzji o numeracji – tak jak przyszłe podstrony opisowe (regulaminy, cookies). Persona doradcy odłożona 06.08, więc otwarte zostaje też to, czy strona zostaje"
+      "data": "25.07"
     },
     "zalecenia.html": {
       "sekcja": "Poza tabelą",
@@ -392,20 +343,7 @@ window.CW_STATUS = {
       "etap": null,
       "etykieta": null,
       "ac": null,
-      "prop": null,
       "data": "25.07",
-      "uwaga": "❌ Do usunięcia (decyzja 10.08: QR → karta produktu). Zdjęta z tabeli 07.09 na polecenie Mateusza. Plik nadal leży w katalogu, bo 44 linki w 15 podstronach czekają na przepięcie",
-      "wTabeli": false
-    },
-    "carbomat-v2.html": {
-      "sekcja": "Poza tabelą",
-      "nazwa": "CARBOMAT – layout V2",
-      "etap": null,
-      "etykieta": null,
-      "ac": null,
-      "prop": null,
-      "data": "10.07",
-      "uwaga": "Koncept layoutu, nigdy na live, pomijany w każdym pushu. Do przeniesienia do archiwum-wersji",
       "wTabeli": false
     }
   }

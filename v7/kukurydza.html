@@ -29,11 +29,11 @@
 
 <cw-navbar data-current="kukurydza"></cw-navbar>
 
-<!-- ===== 10 · NAWIGACJA KROPKOWA (spec §9.12) =====
-     Zastępuje pasek subnawigacji (zdjęty w iteracji 5). Osiem rozdziałów w
-     kolejności sekcji; scrollspy chodzi po `data-chapter`, etykiety wjeżdżają
-     po najechaniu na nav. Przycisk „Dobierz produkty" z dawnego paska ma
-     odpowiedniki w hero, w popupach i w domknięciu. -->
+
+
+
+
+
 <nav id="nawigacja-kropki" class="c5-dots" aria-label="Rozdziały strony: program uprawy kukurydzy" data-dots data-ce="CE-07">
   <ol>
     <li><a class="c5-dots__link" href="#hero" data-dot="hero"><span class="c5-dots__label">Start</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
@@ -49,17 +49,17 @@
 
 <main id="main">
 
-  <!-- ===== 20 · HERO (spec §9.3, §14.2; wariant CE-08 „kadr-w-tle”) =====
-       Cały pierwszy ekran pod menu serwisu wypełnia kadr uprawy: zdjęcie leży
-       w tle całej sekcji od krawędzi do krawędzi okna, treść stoi na nim
-       w bieli. Bez kickera i bez osobnego panelu ze zdjęciem w prawej kolumnie
-       (decyzja Mateusza z 19.09 dla wszystkich podstron upraw). Okruszki
-       u góry po lewej, u dołu dwie kolumny wyrównane do dolnej linii: wielki
-       H1 po lewej, kolumna leadu z przyciskami po prawej; dół treści trzyma
-       się nad dokiem doradcy. Lead to cytat z programu (w. 39) bez zmian.
-       Wspólne reguły wariantu: ce/CE-08-hero.css (blok „kadr-w-tle”).
-       Poniżej 900 px kadr zostaje z okruszkami i H1, a lead i przyciski
-       schodzą pod niego na zwykłe tło strony. -->
+  
+
+
+
+
+
+
+
+
+
+
   <section id="hero" data-chapter="hero" data-ce="CE-08" data-ce-wariant="kadr-w-tle">
     <div class="c5-hero c5-hero--bg">
       <div class="c5-hero__bg" aria-hidden="true">
@@ -91,14 +91,14 @@
     </div>
   </section>
 
-  <!-- ===== 27 · KLUCZOWE LICZBY (spec §9.4, §11.3, §12.2) =====
-       Jedyna sekcja liczb strony: decyzja Mateusza z 17–18.09 – zostaje układ
-       kolumnowy, ciemny pas z bloku 25 znika razem ze swoim arkuszem. Jasny
-       panel 30 px od krawędzi okna, trzy kolumny rozdzielone cienkimi liniami
-       (UPC Renewables „Track Record”), w kolumnie: chip, odstęp, wielka liczba
-       z sufiksem przy górnej krawędzi cyfr (EL-31 `c5-aff`) i podpis pod spodem
-       (slajd Yerevan). Treść bez zmian – odliczanie robi mechanika `data-count`
-       z `uprawa.js`. -->
+  
+
+
+
+
+
+
+
   <section class="c5-sec u-nb" id="u-liczby" data-ce="CE-24" data-ce-wariant="kolumny">
     <div class="u-nb__cols u-reveal">
       <div class="u-nb__col">
@@ -122,12 +122,12 @@
     </div>
   </section>
 
-<!-- ===== 30 · PRODUKTY: pięć kart, cała karta otwiera mapę zastosowań =====
-     Uwaga 2 Mateusza (14.09): linki „Strona produktu” znikają z kart – razem
-     z „Kup produkt” wracają w stopce popupu (fragment 95). Karta jest jednym
-     linkiem `data-lightbox-open`, dokładnie jak karta fazy w iteracji 4.
-     Packshoty wg spec §9.0.5 (`object-fit: contain` na polu --w-gray-100).
-     Trzy kolumny (3 + 2) od 900 px, niżej karuzela ze wskaźnikiem. ===== -->
+
+
+
+
+
+
 <section class="c5-sec" id="u-produkty" data-chapter="u-produkty" data-ce="CE-20" data-ce-wariant="produktowe">
   <div class="c5-wrap">
     <span class="c5-kicker c5-kicker--outline c5-kicker--center u-reveal">Produkty</span>
@@ -188,14 +188,14 @@
   </div>
 </section>
 
-<!-- ===== 35 · ZASADA WYBORU PREPARATU DOGLEBOWEGO (spec §10.4) =============
-     Iteracja 6, uwaga 3 Mateusza: scena sterowana przewijaniem („nie pasuje do
-     tego rodzaju treści") ustępuje siatce 2 × 2 kart reguł. Karta czyta się
-     jak zdanie Darka: warunek u góry, strzałka w dół zamiast słowa „to",
-     odpowiedź na dole, a po prawej produkt, którego odpowiedź dotyczy.
-     Cała karta jest linkiem do mapy zastosowań (jak karta produktu i karta
-     fazy), więc bez JS zostaje zwykły odnośnik do sekcji popupu.
-     Pod siatką, bez zmian: nota w. 143 i blok potasu. -->
+
+
+
+
+
+
+
+
 <section class="c5-sec" id="u-wybor">
   <div class="c5-wrap wf-stack wf-stack--8">
 
@@ -305,20 +305,20 @@
   </div>
 </section>
 
-<!-- ===== 40 · PROGRAM FAZOWY: CE-68 „Akordeon faz z panelem” (spec §16.3) =====
-     Iteracja 12 (19.09.2026, uwaga 2 Mateusza), ramka Figma „Frame 223”:
-     program fazowy przechodzi z osi CE-65 na akordeon w siatce 50/50. Głowa
-     sekcji nie jest przyklejona – kicker w ramce po lewej, nagłówek od połowy
-     kontenera. Dziesięć wierszy po 72 px, każdy z linią nad sobą, numerem przy
-     lewej krawędzi i tekstem od połowy kontenera; wiersz zamknięty pokazuje
-     tytuł fazy, otwarty – etykietę, a tytuł schodzi do panelu.
-     Otwarta faza to jasny panel na całą szerokość kontenera: w prawej kolumnie
-     tytuł, opis, boksy produktów jeden pod drugim, nota i przycisk pełnego
-     opisu na szerokość kolumny, w lewej kadr 7 : 5 w dolnym rogu (20 px od
-     lewej i dolnej krawędzi panelu). Lightboxy faz i produktów bez zmian.
-     Klocek żyje w warstwie wspólnej: ce/CE-68-akordeon-faz.css + .js.
-     CE-65 zostaje czynny – jego bazą jest teraz v7/lab/ce-65-os-faz.html.
-     Treść faz – cytaty ze Skrótu programu, przeniesione co do znaku. ===== -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <section class="c5-sec c5-fa" id="u-fazy" data-chapter="u-fazy" data-ce="CE-68" data-fa>
   <div class="c5-wrap c5-wrap--wide c5-fa__wrap">
     <div class="c5-fa__head">
@@ -487,13 +487,13 @@
   </div>
 </section>
 
-<!-- ===== 50 · NAJWAŻNIEJSZE DECYZJE PRZED SEZONEM (spec §14.3) ==============
-     CE-67 „Karty z przyklejonym kadrem" wg ramki Figma „Frame 222" (19.09):
-     szeroki kontener, po lewej głowa i sześć kart minimalnego pakietu
-     diagnostycznego (2 × 3), po prawej kadr przyklejony do górnej krawędzi
-     okna z przyciskiem leżącym na kadrze. Numery kart rysuje licznik CSS,
-     więc zdania Darka zostają nietknięte. Kolejność DOM = kolejność czytania;
-     poniżej 900 px kadr wchodzi między głowę a h3 (kolejność z §14.3 p. 4). -->
+
+
+
+
+
+
+
 <section class="c5-sec c5-kk" id="u-decyzje" data-chapter="u-decyzje" data-ce="CE-67">
   <div class="c5-wrap c5-wrap--wide c5-kk__wrap">
 
@@ -526,19 +526,19 @@
   </div>
 </section>
 
-<!-- ===== 55 · KRYTYCZNE FAKTY DLA KUKURYDZY (spec §9.9, §13.4) ==============
-     Wariant CE-44 `tlo-foto`: jedno zdjęcie na pełny ekran stoi przez cały tor.
-     Pierwszym dzieckiem toru jest scena (`u-fk__stage`) przyklejona na `top:0`
-     z wysokością 100 svh – kadr tła, jednolity scrim i napis na środku. Napis
-     wchodzi raz, wyraz po wyrazie z maski (klasę `.is-in` daje JS, gdy górna
-     krawędź sceny mija 35 % wysokości okna), bez animacji wyjścia.
-     Sześć nieprzezroczystych kafli jedzie nad sceną w trzech rozłącznych
-     pasach: --i = miejsce w torze, --lane = środek pasa (18 %, 50 %, 82 %
-     szerokości okna), --a = profil prędkości (szybki wjazd, zwolnienie
-     w środku okna, szybki wyjazd; przesunięcie liczy JS przy motionOn()).
-     Pełna treść każdego faktu jest zawsze widoczna – przycisk „więcej" znika.
-     Poniżej 900 px, przy ograniczonym ruchu i bez JS: scena jako blok
-     z kadrem i napisem, pod nią kafle w kolumnie (dwie od 640 px). -->
+
+
+
+
+
+
+
+
+
+
+
+
+
 <section class="c5-sec u-fk" id="u-fakty" data-fk>
   <div id="u-fakty-scena" class="u-fk__track" data-fk-track data-ce="CE-44" data-ce-wariant="tlo-foto" data-ce-od="#u-fakty">
 
@@ -603,10 +603,10 @@
   </div>
 </section>
 
-<!-- ===== 60 · TRZY WARIANTY TECHNOLOGII (spec §9.10) =====
-     Mechanika bez zmian (pudełka-przełączniki z iteracji 4). Zmiana wizualna:
-     odstępy i nagłówek wzorca – kicker, h2 i lead wyśrodkowane jak w „Który
-     dla mnie”, bez tła `wf-section--subtle`. ===== -->
+
+
+
+
 <section class="c5-sec" id="u-warianty" data-chapter="u-warianty" data-ce="CE-45">
   <div class="c5-wrap wf-stack wf-stack--10">
     <div class="u-reveal">
@@ -662,23 +662,23 @@
   </div>
 </section>
 
-<!-- ===== 70 · DOBÓR DO STANOWISKA: CE-66 „Tablica warunków” (spec §14.5) =====
-     Uwaga 6 Mateusza (19.09, ramka Figma „Frame 218”): klocek przebudowany do
-     jego własnego rysunku. Licznik, kafle 4 × 2, strzałki, pauza i
-     autoprzełączanie znikają. Zostaje układ z ramki: po lewej pionowa lista
-     ośmiu warunków z numerowanymi węzłami, po prawej tytuł aktywnego warunku,
-     a pod nim JEDEN złożony pas – ciemne pole „Priorytet” zrośnięte z jasnym
-     polem, w którym „Nasze produkty” (etykieta z ramki; w dokumencie klienta
-     kolumna nazywa się „Carbohort”) i „Uzupełnienie” stoją obok siebie,
-     rozdzielone włosową linią. Lead nad sekcją znika – w ramce go nie ma.
-     Osiem paneli leży w tych samych komórkach siatki co pola i dziedziczy jej
-     tory przez `subgrid`, więc pas ma stałą wysokość, oba pola są równe co do
-     piksela, a etykiety wszystkich warunków leżą w tym samym miejscu.
-     Treść ośmiu warunków bez zmian co do znaku; chipy produktów ustępują
-     boksom z packshotem, jak w CE-65.
-     Klocek żyje w warstwie wspólnej: ce/CE-66-tablica-warunkow.css + .js.
-     Bez JS lista i pola znikają, a panele są zwykłymi jasnymi kartami
-     z numerem. ===== -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <section class="c5-sec c5-cb" id="u-stanowisko" data-chapter="u-stanowisko" data-ce="CE-66" data-cb>
   <div class="c5-wrap c5-wrap--wide">
     <span class="c5-kicker c5-kicker--outline u-reveal">Stanowisko</span>
@@ -779,12 +779,12 @@
   </div>
 </section>
 
-<!-- ===== 80 · MIESZANINY ZBIORNIKOWE (spec §10.6) =====
-     Uwaga 5 Mateusza (iteracja 6): pięć kart produktów z iteracji 5 ustępuje
-     jednej tabeli `u-mt` z nagłówkami kolumn z dokumentu. Pierwsza komórka to
-     link do mapy zastosowań (packshot + nazwa + strzałka); klik w dowolne
-     miejsce wiersza uruchamia ten sam link. Karty zasad, przypis ŚOR i zdanie
-     zamykające bez zmian. ===== -->
+
+
+
+
+
+
 <section class="c5-sec" id="u-mieszaniny" data-chapter="u-mieszaniny">
   <div class="c5-wrap wf-stack wf-stack--10">
     <div class="u-reveal">
@@ -885,13 +885,13 @@
   </div>
 </section>
 
-<!-- ===== 85 · ILE PRODUKTU NA TWOJE POLE (spec §9.10, §10.3) =====
-     Przelicznik `data-calc` i suwak bez zmian. Iteracja 6 (uwaga 2 Mateusza):
-     woda do zabiegu przestaje być osobnym boksem – siedzi w obu boksach
-     CARBOHUMIC filtrowanego 187 mesh jako wiersz pomocniczy `u-out__sub`
-     z własnym `data-calc-out`. Wartość główna boksu stoi w DOM przed tym
-     wierszem, bo `c5.js` bierze pierwszy znacznik b w elemencie z `data-calc-out`.
-     Zostają cztery boksy z prawdziwymi packshotami (64 px). ===== -->
+
+
+
+
+
+
+
 <section class="c5-sec" id="u-skala" data-chapter="u-skala" data-ce="CE-47">
   <div class="c5-wrap wf-stack wf-stack--8">
     <div class="u-reveal">
@@ -972,14 +972,14 @@
   </div>
 </section>
 
-  <!-- ===== 90 · DOMKNIĘCIE – pas zamykający (spec §9.11, §13.5, wzorzec §3.9)
-       Bazowy klocek CE-16 (`ce/CE-16-pas-pro.*`) jak na pozostałych podstronach:
-       kadr rośnie ze środka na całą szerokość okna, a nagłówek i przyciski leżą
-       NA kadrze – nagłówek po lewej, przyciski po prawej. Wariant „zamykajacy"
-       to pas bez akapitu. Kombajn stoi w środku kadru, więc od 900 px nagłówek
-       zawija się na dwa wiersze w lewej strefie, a dwa przyciski stoją jeden
-       pod drugim w prawej – ustawienia w bloku 90 `kukurydza.css`.
-       Wiersz źródła zostaje w biegu strony, pod pasem. -->
+  
+
+
+
+
+
+
+
   <section class="c5-pro" id="u-cta" data-pro data-ce="CE-16" data-ce-wariant="zamykajacy">
     <div class="c5-pro__media" data-pro-media aria-hidden="true">
       <img class="c5-pro__img" src="img/foto/kukurydza-zbior.jpg" alt="" width="2000" height="1116" loading="lazy" decoding="async">
@@ -995,14 +995,14 @@
     </div>
   </section>
 
-<!-- Wiersz „Źródło treści” zdjęty w iteracji 16 (uwaga Mateusza z 20.09:
-     „Usuń tę informację"). Źródło zostaje w spec-u i w dzienniku buildu. -->
 
-<!-- ===== 95 · POPUP PRODUKTU (mapa zastosowań, 5 stron) =====
-     Iteracja 5 (spec §9.5, uwagi Mateusza 2 i 3 z 14.09): bez strzałek
-     poprzedni/następny produkt i bez wspólnej stopki – każda strona popupu ma
-     własną stopkę ze swoim adresem strony produktu i swoim adresem w sklepie.
-     W nagłówku strony stoi prawdziwy packshot (§9.0.5). -->
+
+
+
+
+
+
+
 <div class="u-overlay" data-overlay hidden></div>
 
 <div class="u-lightbox" id="u-lightbox-produkty" data-lightbox role="dialog" aria-modal="true" aria-label="Mapa zastosowań produktu" data-ce="CE-25" data-ce-wariant="popup-produktu">
@@ -1234,7 +1234,7 @@
 </div>
 
 
-<!-- ===== LIGHTBOX FAZ (tresc rozdzialow 3.1-4.10, 1:1 z programu) ===== -->
+
 <div class="u-lightbox" id="u-lightbox" data-lightbox role="dialog" aria-modal="true" aria-label="Pełny opis fazy" data-ce="CE-25">
   <div class="u-lightbox__panel">
     <button class="u-lightbox__close" type="button" data-lightbox-close aria-label="Zamknij opis fazy"><svg class="wf-icon" aria-hidden="true"><use href="#ti-x"></use></svg></button>
@@ -1628,7 +1628,7 @@
 <script src="cw.js"></script>
 <script src="c5.js"></script>
 <script src="uprawa.js"></script>
-<!-- Lenis: slight scroll inertia (like serverobotics.com); the page scrolls natively without it -->
+
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
 <script src="ce/00-base.js"></script>
 <script src="ce/CE-07-nawigacja-kropkowa.js"></script>

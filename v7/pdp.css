@@ -1,0 +1,312 @@
+/* =====================================================================
+   pdp.css – shop product card V7 (28.09.2026): CARBOMAT ECO pH 6,0–6,5
+   (pdp.html) and pH 4,5–5,0 (pdp-kwasny.html). One sheet, two pages.
+   Spec: 40-strona-www/koncepcja/sklep-v7-spec.md §6 (round 2), §12.9 and
+   §12.14 (round 3, on.com pattern): photo slider + simple buy column with
+   "Połącz z" under the button, three full-width accordions, "O produkcie"
+   with key facts (open on desktop, accordions on phones), PRO band,
+   "Zobacz też".
+
+   Load order: tokens → wireframe → cw → c5 → sklep-wspolne → pdp.
+   Shared shop parts (price with promotion, quantity stepper, quick view,
+   buttons, the wide container) live in sklep-wspolne.css; layout blocks
+   (c5-wrap, c5-kicker, c5-pro, c5-btn) in c5.css. Here only what the card
+   adds. Prefix c5pd-, tokens --w-* only, sharp corners, greys only.
+   ===================================================================== */
+
+/* --- Page chrome ------------------------------------------------------- */
+/* Skip link: off-screen until it gets focus (the kit has no rule for it). */
+.c5pd-skip { position: absolute; left: -9999px; top: 0; z-index: var(--w-z-toast); }
+.c5pd-skip:focus { left: var(--w-space-4); top: var(--w-space-2); padding: 10px 16px; background: var(--w-gray-900); color: var(--w-text-inverse); }
+
+/* A display rule on an element must not beat [hidden] in the buy column. */
+.c5pd-buycol [hidden] { display: none !important; }
+
+.c5pd-crumbs [aria-current="page"] { color: var(--w-text-primary); font-weight: var(--w-weight-semibold); }
+
+/* --- Top: slider on the left, buy column on the right (§12.14 item 1) --
+   Phones: breadcrumbs, slider, buy column. From 900 px the slider takes
+   64% and spans both rows; breadcrumbs sit on top of the buy column. */
+.c5pd-top { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-areas: "crumbs" "gallery" "buy"; row-gap: var(--w-space-5); padding-block: var(--w-space-5) clamp(2.5rem, 5vw, 4rem); }
+.c5pd-crumbs { grid-area: crumbs; min-width: 0; }
+.c5pd-gallery { grid-area: gallery; min-width: 0; }
+.c5pd-buycol { grid-area: buy; }
+@media (min-width: 900px) {
+  .c5pd-top { grid-template-columns: minmax(0, 64fr) minmax(0, 36fr); grid-template-rows: auto 1fr; grid-template-areas: "gallery crumbs" "gallery buy"; column-gap: clamp(40px, 5vw, 96px); row-gap: var(--w-space-4); align-items: start; }
+  /* Both columns stick; pdp.js keeps their `top` in range (two-way logic
+     of §6.2). The slider is lower than the window, so in practice it just
+     stays in view next to the longer buy column – no empty field. */
+  .c5pd-col { position: sticky; top: var(--w-space-6); align-self: start; }
+}
+
+/* Slider: one large square frame with the edge of the next one peeking,
+   scroll-snap for fingers and trackpads, arrows and a counter below. */
+.c5pd-gallery { display: flex; flex-direction: column; gap: 6px; margin-inline: calc(-1 * var(--w-space-5)); }
+.c5pd-shots { position: relative; display: flex; gap: 10px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; padding-inline: var(--w-space-5); scroll-padding-inline: var(--w-space-5); scrollbar-width: none; }
+.c5pd-shots::-webkit-scrollbar { display: none; }
+/* The track takes the focus (arrow keys scroll it); the ring goes inside. */
+.c5pd-shots:focus-visible { outline-offset: -2px; }
+.c5pd-shot { position: relative; flex: 0 0 min(86%, 26rem); aspect-ratio: 1; overflow: hidden; background: var(--w-gray-100); scroll-snap-align: start; }
+.c5pd-shot img { width: 100%; height: 100%; object-fit: cover; }
+/* Pack mock-ups: whole object with room around it. */
+.c5pd-shot--pack img { object-fit: contain; padding: 12%; }
+/* Frame of a photo still to be generated (spec §9). */
+.c5pd-shot--todo { display: grid; place-items: center; padding: var(--w-space-6); border: 1px dashed var(--w-border-strong); background: var(--w-placeholder-fill); }
+.c5pd-shot__todo { display: flex; flex-direction: column; align-items: center; gap: var(--w-space-3); max-width: 20rem; text-align: center; font-size: 0.875rem; line-height: 1.45; color: var(--w-text-secondary); }
+.c5pd-shot__todo .wf-icon { width: 28px; height: 28px; color: var(--w-icon-muted); }
+.c5pd-slider__nav { display: flex; align-items: center; gap: 2px; padding-inline: calc(var(--w-space-5) - 12px); }
+.c5pd-slider__btn { display: grid; place-items: center; width: 44px; height: 44px; color: var(--w-text-primary); transition: background var(--w-duration-base) var(--w-ease); }
+.c5pd-slider__btn:hover { background: var(--w-gray-100); }
+.c5pd-slider__btn[aria-disabled="true"] { color: var(--w-gray-300); background: none; cursor: default; }
+.c5pd-slider__count { margin-left: 10px; font-size: 0.875rem; letter-spacing: .02em; font-variant-numeric: tabular-nums; color: var(--w-text-primary); }
+@media (min-width: 900px) {
+  .c5pd-gallery { margin-inline: 0; }
+  .c5pd-shots { padding-inline: 0; scroll-padding-inline: 0; }
+  /* The frame fits the window with the arrows under it (header, margins
+     and the arrow row ≈ 190 px); at least 26rem on short windows. */
+  .c5pd-shot { flex-basis: min(86%, max(26rem, calc(100svh - 190px))); }
+  .c5pd-slider__nav { padding-inline: 0; margin-left: -12px; }
+}
+
+/* --- Buy column: kicker, H1, price, short text, switches, cart, shipping,
+   "Połącz z" (§12.14 item 1; kicker K14 unchanged) ---------------------- */
+.c5pd-buycol { display: flex; flex-direction: column; gap: var(--w-space-6); min-width: 0; }
+.c5pd-head { display: flex; flex-direction: column; gap: 10px; }
+.c5pd-buycol .c5-kicker { margin-bottom: 0; font-size: 0.8125rem; color: var(--w-text-secondary); }
+.c5pd-h1 { font-size: clamp(1.875rem, 2.5vw, 2.25rem); line-height: 1.12; font-weight: var(--w-weight-medium); letter-spacing: -0.015em; color: var(--w-text-primary); }
+/* Keeps "pH 6,0–6,5" in one piece when a heading or label wraps. */
+.c5pd-nowrap { white-space: nowrap; }
+/* "pH" stays as written inside uppercase labels. */
+.c5pd-ph { text-transform: none; }
+
+.c5pd-pricebox { display: flex; flex-direction: column; gap: 2px; margin-top: 4px; }
+.c5pd-price { font-size: 1.5rem; line-height: 1.2; letter-spacing: -0.01em; }
+.c5pd-price .cws-price { gap: 4px 10px; }
+.c5pd-price .cws-price__pct { align-self: center; font-size: 0.75rem; }
+
+/* Full short description at the top of "O produkcie" (the buy column keeps two sentences). */
+.c5pd-about__lead { max-width: 46em; margin: 0 0 clamp(1.5rem, 3vw, 2.5rem); font-size: 1.0625rem; line-height: 1.65; color: var(--w-text-secondary); }
+.c5pd-intro { display: flex; flex-direction: column; gap: 10px; font-size: 0.9375rem; line-height: 1.6; color: var(--w-text-secondary); }
+/* "Więcej o produkcie": jump to the full description further down. */
+.c5pd-more a { display: inline-flex; align-items: center; gap: 6px; font-weight: var(--w-weight-medium); }
+
+/* Switches and cart: variant → pack → fraction → quantity + cart → shipping */
+.c5pd-buy { container-type: inline-size; display: flex; flex-direction: column; gap: var(--w-space-5); scroll-margin-top: var(--w-space-6); }
+.c5pd-field { min-width: 0; margin: 0; padding: 0; border: 0; }
+.c5pd-label { display: block; margin-bottom: 10px; padding: 0; font-size: 0.8125rem; font-weight: var(--w-weight-semibold); line-height: 1.3; letter-spacing: .02em; text-transform: uppercase; color: var(--w-text-primary); }
+.c5pd-hint { margin: -4px 0 10px; font-size: 0.8125rem; line-height: 1.45; color: var(--w-text-secondary); }
+.c5pd-note { font-size: 0.8125rem; line-height: 1.45; color: var(--w-text-tertiary); }
+.c5pd-field .c5pd-note { margin-top: 8px; }
+
+.c5pd-opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.c5pd-opts--packs { grid-template-columns: minmax(0, 1fr); }
+.c5pd-opts--vals { grid-template-columns: repeat(auto-fit, minmax(5.5rem, 1fr)); }
+
+/* One option: pH variant link, pack radio or fraction radio. */
+.c5pd-opt { position: relative; display: flex; flex-direction: column; justify-content: center; gap: 3px; min-height: 48px; padding: 10px 14px; border: 1px solid var(--w-border-strong); border-radius: 0; background: var(--w-surface-page); color: var(--w-text-primary); font-size: 0.9375rem; line-height: 1.3; text-decoration: none; cursor: pointer; transition: background var(--w-duration-base) var(--w-ease), border-color var(--w-duration-base) var(--w-ease), color var(--w-duration-base) var(--w-ease); }
+.c5pd-opt:hover { border-color: var(--w-gray-900); }
+.c5pd-opt:focus-visible { border-radius: 0; }
+.c5pd-opt input { position: absolute; width: 1px; height: 1px; margin: 0; opacity: 0; pointer-events: none; }
+.c5pd-opt:has(input:focus-visible) { outline: var(--w-focus-ring-width) solid var(--w-focus-ring); outline-offset: 2px; }
+.c5pd-opt.is-on, .c5pd-opt[aria-current="page"] { background: var(--w-gray-900); border-color: var(--w-gray-900); color: var(--w-text-inverse); }
+.c5pd-opt__name { font-weight: var(--w-weight-medium); }
+.c5pd-opt__sub { font-size: 0.75rem; color: var(--w-text-tertiary); }
+.c5pd-opt[aria-current="page"] .c5pd-opt__sub { color: var(--w-gray-300); }
+.c5pd-opt .cws-price { gap: 2px 6px; }
+.c5pd-opt.is-on .cws-price__now { color: var(--w-text-inverse); }
+.c5pd-opt.is-on .cws-price__old { color: var(--w-gray-300); }
+.c5pd-opt.is-on .cws-price__pct { background: var(--w-surface-page); color: var(--w-text-primary); }
+.c5pd-opt--val { align-items: center; min-height: 44px; padding: 9px 10px; text-align: center; }
+/* Narrow column: pack name on the left, price on the right, one a row. */
+.c5pd-opts--packs .c5pd-opt { flex-direction: row; flex-wrap: wrap; align-items: baseline; justify-content: space-between; column-gap: 12px; }
+@container (min-width: 25rem) {
+  .c5pd-opts--packs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .c5pd-opts--packs .c5pd-opt { flex-direction: column; align-items: flex-start; justify-content: flex-start; }
+}
+
+/* Quantity and "Dodaj do koszyka" in one row; the button drops under the
+   stepper when the column is narrow. */
+.c5pd-addrow { display: flex; flex-wrap: wrap; align-items: stretch; gap: 8px; }
+.c5pd-addrow .cws-qty { flex: none; }
+.c5pd-add { flex: 1 1 11rem; min-height: 48px; padding-inline: 16px; }
+.c5pd-total { margin-top: -8px; font-size: 0.9375rem; font-weight: var(--w-weight-medium); color: var(--w-text-primary); font-variant-numeric: tabular-nums; }
+
+/* Live region: always rendered (so screen readers hear it), boxed once
+   filled; empty it takes no room in the column. */
+.c5pd-fb { font-size: 0.875rem; line-height: 1.5; color: var(--w-text-primary); }
+.c5pd-fb:empty { margin-top: calc(-1 * var(--w-space-5)); }
+.c5pd-fb:not(:empty) { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 10px 14px; border-left: 2px solid var(--w-gray-900); background: var(--w-gray-100); }
+
+.c5pd-ship { display: flex; align-items: flex-start; gap: 10px; font-size: 0.875rem; line-height: 1.5; color: var(--w-text-secondary); }
+.c5pd-ship .wf-icon { flex: none; width: 18px; height: 18px; margin-top: 1px; color: var(--w-icon-default); }
+
+.c5pd-small { font-size: 0.8125rem; line-height: 1.5; color: var(--w-text-secondary); }
+
+/* --- "Połącz z" under the button: a row of small cards (§12.14 item 1) -- */
+.c5pd-connect { display: flex; flex-direction: column; gap: 6px; padding-top: var(--w-space-5); border-top: 1px solid var(--w-border-default); }
+.c5pd-connect__h { font-size: 1rem; font-weight: var(--w-weight-semibold); line-height: 1.3; letter-spacing: -0.01em; color: var(--w-text-primary); }
+.c5pd-connect__lead { font-size: 0.875rem; line-height: 1.5; color: var(--w-text-secondary); }
+/* position: relative keeps the screen-reader-only spans (absolute) inside
+   the scrolling rows, so they cannot widen the page. */
+.c5pd-pairs { position: relative; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(10rem, 1fr); gap: 10px; margin-top: 8px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.c5pd-pairs::-webkit-scrollbar { display: none; }
+.c5pd-pair { display: flex; flex-direction: column; min-width: 0; border: 1px solid var(--w-border-default); background: var(--w-surface-page); scroll-snap-align: start; }
+.c5pd-pair__thumb { display: block; height: 132px; background: var(--w-gray-100); }
+.c5pd-pair__thumb img { display: block; width: 100%; height: 100%; padding: 14px; object-fit: contain; }
+.c5pd-pair__body { display: flex; flex: 1; flex-direction: column; gap: 4px; padding: 10px 12px 12px; }
+.c5pd-pair__name { font-size: 0.875rem; font-weight: var(--w-weight-semibold); line-height: 1.3; color: var(--w-text-primary); }
+.c5pd-pair__txt { font-size: 0.8125rem; line-height: 1.45; color: var(--w-text-secondary); }
+.c5pd-pair__price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 6px; margin-top: auto; padding-top: 6px; font-size: 0.875rem; color: var(--w-text-primary); }
+.c5pd-pair .cws-btn { gap: 6px; width: 100%; min-height: 36px; margin-top: 8px; padding: 6px 12px; font-size: 0.875rem; }
+@media (pointer: coarse) { .c5pd-pair .cws-btn { min-height: 44px; } }
+/* 30-day lowest price under an "od … zł" with a reduction. */
+.c5pd-from__low { flex-basis: 100%; font-size: 0.75rem; font-weight: 400; color: var(--w-text-tertiary); }
+
+/* --- Three full-width accordions (§12.14 item 2): rule, uppercase title,
+   plus on the right; native <details>, collapsed on start. -------------- */
+.c5pd-info { padding-bottom: clamp(1rem, 2vw, 1.5rem); }
+.c5pd-infos { border-top: 1px solid var(--w-gray-900); }
+.c5pd-acc { border-bottom: 1px solid var(--w-gray-900); interpolate-size: allow-keywords; }
+.c5pd-acc > summary { display: flex; align-items: center; justify-content: space-between; gap: var(--w-space-4); padding-block: 22px; list-style: none; cursor: pointer; color: var(--w-text-primary); }
+.c5pd-acc > summary::-webkit-details-marker { display: none; }
+.c5pd-acc > summary:focus-visible { outline: var(--w-focus-ring-width) solid var(--w-focus-ring); outline-offset: 2px; }
+@media (hover: hover) { .c5pd-acc > summary:hover .c5pd-acc__title { text-decoration: underline; text-underline-offset: 4px; } }
+.c5pd-acc__title { font-size: 0.9375rem; font-weight: var(--w-weight-medium); line-height: 1.3; letter-spacing: .08em; text-transform: uppercase; color: inherit; }
+.c5pd-acc > summary .wf-icon { flex: none; width: 22px; height: 22px; }
+.c5pd-acc[open] .c5pd-acc__plus, .c5pd-acc:not([open]) .c5pd-acc__minus { display: none; }
+/* Height animation of the opening panel (browsers without ::details-content
+   simply open it at once). */
+.c5pd-acc::details-content { block-size: 0; overflow: clip; transition: block-size var(--w-duration-base) var(--w-ease), content-visibility var(--w-duration-base) allow-discrete; }
+.c5pd-acc[open]::details-content { block-size: auto; }
+.c5pd-acc__body { display: flex; flex-direction: column; align-items: flex-start; gap: var(--w-space-4); padding-bottom: clamp(1.5rem, 3vw, 2.25rem); font-size: 0.9375rem; line-height: 1.6; color: var(--w-text-secondary); }
+.c5pd-acc__body > p { max-width: 70ch; }
+.c5pd-docs { display: flex; flex-wrap: wrap; gap: 8px; }
+.c5pd-docs .c5-btn { padding-inline: 16px; }
+
+/* Parametry produktu. */
+.c5pd-params { width: 100%; max-width: 784px; border-collapse: collapse; font-size: 0.9375rem; }
+.c5pd-params th, .c5pd-params td { padding-block: 11px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--w-border-default); }
+.c5pd-params tr:first-child th, .c5pd-params tr:first-child td { border-top: 1px solid var(--w-border-default); }
+.c5pd-params th { width: 50%; padding-right: var(--w-space-4); font-weight: var(--w-weight-medium); color: var(--w-text-primary); }
+.c5pd-params td { color: var(--w-text-secondary); font-variant-numeric: tabular-nums; }
+.c5pd-src { max-width: 784px; font-size: 0.75rem; line-height: 1.5; color: var(--w-text-tertiary); }
+
+/* --- "O produkcie" (§12.14 item 3, K13) -------------------------------
+   Key facts with icons and "Sprawdzi się, gdy" first, then the sections.
+   From 900 px open sections: a rule above each, the H3 on the left, the
+   content on the right, nothing to toggle. Below 900 px pdp.js marks the
+   list .is-ready and every H3 shows a button that opens and closes its
+   section (class is-open – no [hidden], which the artifact viewer forces
+   to display: none). Without the script every section stays open. */
+.c5pd-about { padding-block: clamp(2rem, 4vw, 3rem) clamp(3.5rem, 7vw, 6rem); }
+.c5pd-h2 { margin-bottom: clamp(1.25rem, 2.5vw, 2rem); font-size: clamp(1.625rem, 3vw, 2.25rem); line-height: 1.15; font-weight: var(--w-weight-medium); letter-spacing: -0.01em; color: var(--w-text-primary); }
+
+/* Key facts: icon, uppercase label, large value, a rule under each. */
+.c5pd-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 var(--w-space-5); margin: 0 0 clamp(1.5rem, 3vw, 2.5rem); }
+.c5pd-fact { position: relative; display: flex; flex-direction: column; gap: 4px; min-width: 0; padding: 16px 0 16px 42px; border-bottom: 1px solid var(--w-gray-900); }
+.c5pd-fact dt { font-size: 0.6875rem; font-weight: var(--w-weight-medium); line-height: 1.3; letter-spacing: .08em; text-transform: uppercase; color: var(--w-text-secondary); }
+.c5pd-fact dt .wf-icon { position: absolute; left: 0; top: 18px; width: 28px; height: 28px; color: var(--w-text-primary); }
+.c5pd-fact dd { margin: 0; font-size: 1.0625rem; font-weight: var(--w-weight-medium); line-height: 1.25; color: var(--w-text-primary); }
+.c5pd-fact__note { display: block; margin-top: 2px; font-size: 0.75rem; font-weight: 400; line-height: 1.35; color: var(--w-text-tertiary); }
+@media (min-width: 900px) {
+  .c5pd-facts { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 clamp(16px, 2vw, 32px); }
+  .c5pd-fact { padding: 20px 0 20px 52px; }
+  .c5pd-fact dt .wf-icon { top: 22px; width: 36px; height: 36px; }
+  .c5pd-fact dd { font-size: 1.375rem; }
+}
+
+.c5pd-fit { display: flex; flex-direction: column; margin-bottom: clamp(2rem, 4vw, 3rem); }
+.c5pd-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.c5pd-chip { padding: 5px 11px; border: 1px solid var(--w-border-default); font-size: 0.8125rem; letter-spacing: .02em; color: var(--w-text-secondary); }
+
+.c5pd-secs { border-bottom: 1px solid var(--w-border-default); }
+.c5pd-sec { padding-block: 18px 28px; border-top: 1px solid var(--w-border-default); }
+.c5pd-sec__h { margin-bottom: var(--w-space-4); font-size: clamp(1.25rem, 2vw, 1.5rem); font-weight: var(--w-weight-medium); line-height: 1.25; letter-spacing: -0.01em; color: var(--w-text-primary); }
+.c5pd-sec__txt { display: block; }
+.c5pd-sec__btn { display: none; }
+.c5pd-sec__body { container-type: inline-size; font-size: 1rem; line-height: 1.6; color: var(--w-text-secondary); }
+.c5pd-sec__inner { display: flex; flex-direction: column; gap: var(--w-space-5); }
+
+@media (max-width: 899px) {
+  .c5pd-secs.is-ready .c5pd-sec { padding-block: 0; }
+  .c5pd-secs.is-ready .c5pd-sec__h { margin-bottom: 0; }
+  .c5pd-secs.is-ready .c5pd-sec__txt { display: none; }
+  .c5pd-secs.is-ready .c5pd-sec__btn { display: flex; align-items: center; justify-content: space-between; gap: var(--w-space-4); width: 100%; padding-block: 18px; font: inherit; line-height: inherit; letter-spacing: inherit; text-align: left; color: inherit; }
+  .c5pd-secs.is-ready .c5pd-sec__btn .wf-icon { transition: transform var(--w-duration-base) var(--w-ease); }
+  .c5pd-secs.is-ready .c5pd-sec__btn[aria-expanded="true"] .wf-icon { transform: rotate(180deg); }
+  /* Closed: no height and out of the focus order (visibility); the height
+     change is animated through grid rows (0fr ↔ 1fr). */
+  .c5pd-secs.is-ready .c5pd-sec__body { display: grid; grid-template-rows: 0fr; visibility: hidden; transition: grid-template-rows var(--w-duration-slow) var(--w-ease), visibility 0s linear var(--w-duration-slow); }
+  .c5pd-secs.is-ready .c5pd-sec.is-open .c5pd-sec__body { grid-template-rows: 1fr; visibility: visible; transition: grid-template-rows var(--w-duration-slow) var(--w-ease), visibility 0s; }
+  .c5pd-secs.is-ready .c5pd-sec__inner { min-height: 0; overflow: hidden; }
+  /* Bottom air inside the clipped part, so a closed section keeps no gap. */
+  .c5pd-secs.is-ready .c5pd-sec__inner::after { content: ""; flex: none; height: 12px; }
+}
+@media (max-width: 899px) and (hover: hover) {
+  .c5pd-secs.is-ready .c5pd-sec__btn:hover .c5pd-sec__label { text-decoration: underline; text-underline-offset: 3px; }
+}
+@media (min-width: 900px) {
+  .c5pd-sec { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); gap: clamp(40px, 5vw, 96px); align-items: start; padding-block: clamp(1.75rem, 3vw, 2.75rem); }
+  /* The heading keeps company with a long section while it scrolls. */
+  .c5pd-sec__h { position: sticky; top: var(--w-space-6); margin-bottom: 0; }
+}
+
+/* Co zyskujesz: four tiles – one column, two from 34rem, four from 56rem of
+   section width. */
+.c5pd-gains { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--w-space-8) var(--w-space-6); }
+@container (min-width: 34rem) { .c5pd-gains { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@container (min-width: 56rem) { .c5pd-gains { grid-template-columns: repeat(4, minmax(0, 1fr)); } .c5pd-gain p { font-size: 0.9375rem; } }
+.c5pd-gain { display: flex; flex-direction: column; gap: var(--w-space-2); }
+.c5pd-gain__img { width: 100%; height: auto; aspect-ratio: 4 / 3; margin-bottom: var(--w-space-2); object-fit: cover; background: var(--w-gray-100); }
+.c5pd-gain__title { font-size: 1.125rem; font-weight: var(--w-weight-medium); line-height: 1.3; letter-spacing: -0.01em; color: var(--w-text-primary); }
+
+/* Jak stosować: recipes + frame side by side from 44rem of section width. */
+.c5pd-howto { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--w-space-6); align-items: start; }
+@container (min-width: 44rem) { .c5pd-howto { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(2rem, 4vw, 3.5rem); } }
+.c5pd-steps li { padding-block: 14px; border-top: 1px solid var(--w-border-subtle); }
+.c5pd-steps li:first-child { padding-top: 0; border-top: 0; }
+.c5pd-steps b { font-weight: var(--w-weight-semibold); color: var(--w-text-primary); }
+.c5pd-howto__more { margin-top: var(--w-space-4); }
+.c5pd-howto__img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; background: var(--w-gray-100); }
+
+/* Najczęstsze pytania: answer under the question. */
+.c5pd-qas { display: flex; flex-direction: column; max-width: 784px; }
+.c5pd-qa { display: flex; flex-direction: column; gap: 6px; padding-block: var(--w-space-4); border-top: 1px solid var(--w-border-subtle); }
+.c5pd-qa:first-child { padding-top: 0; border-top: 0; }
+.c5pd-qa__q { font-size: 1.0625rem; font-weight: var(--w-weight-semibold); line-height: 1.35; color: var(--w-text-primary); }
+
+.c5pd-about__more { margin-top: var(--w-space-6); }
+
+/* --- PRO band (§6.7): c5-pro from c5.css with a photo and three actions - */
+.c5pd-pro .c5-pro__grid { max-width: min(34rem, calc(50% - var(--w-space-8))); }
+.c5pd-pro .c5-pro__grid .c5-btnrow { flex-wrap: wrap; row-gap: var(--w-space-2); }
+.c5pd-pro .c5-btn { padding-inline: 28px; }
+.c5pd-pro .c5-pro__link { padding-inline: 14px; }
+.c5pd-pro__img { width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 899px) {
+  .c5pd-pro .c5-pro__grid { max-width: none; }
+}
+
+/* --- "Zobacz też" (§12.14 item 4): four cards like on the list; a
+   swipeable row below 900 px. ------------------------------------------- */
+.c5pd-also { padding-block: clamp(3rem, 6vw, 5rem); }
+.c5pd-also__list { position: relative; display: grid; grid-auto-flow: column; grid-auto-columns: min(72%, 17rem); gap: 12px; margin-inline: calc(-1 * var(--w-space-5)); padding-inline: var(--w-space-5); overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-inline: var(--w-space-5); scrollbar-width: none; }
+.c5pd-also__list::-webkit-scrollbar { display: none; }
+.c5pd-also__card { display: flex; flex-direction: column; min-width: 0; border: 1px solid var(--w-border-default); background: var(--w-surface-page); scroll-snap-align: start; }
+.c5pd-also__shot { position: relative; display: block; aspect-ratio: 1; overflow: hidden; background: var(--w-gray-100); }
+.c5pd-also__shot img { position: absolute; inset: 0; width: 100%; height: 100%; padding: 12%; object-fit: contain; }
+.c5pd-also__body { display: flex; flex: 1; flex-direction: column; gap: 4px; padding: var(--w-space-3) var(--w-space-4) var(--w-space-4); }
+.c5pd-also__name { font-size: 1rem; font-weight: var(--w-weight-medium); line-height: 1.25; letter-spacing: -0.01em; color: var(--w-text-primary); }
+.c5pd-also__name a { text-decoration: none; }
+.c5pd-also__name a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.c5pd-also__price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 6px; margin-top: auto; padding-top: var(--w-space-2); font-size: 1.0625rem; font-variant-numeric: tabular-nums; color: var(--w-text-primary); }
+.c5pd-also__add { width: 100%; margin-top: var(--w-space-3); padding-inline: 12px; }
+@media (min-width: 900px) {
+  .c5pd-also__list { grid-auto-flow: row; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-inline: 0; padding-inline: 0; overflow: visible; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .c5pd-opt, .c5pd-slider__btn, .c5pd-sec__btn .wf-icon { transition: none !important; }
+  .c5pd-acc::details-content { transition: none; }
+  .c5pd-secs.is-ready .c5pd-sec__body, .c5pd-secs.is-ready .c5pd-sec.is-open .c5pd-sec__body { transition: none; }
+}

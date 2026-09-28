@@ -33,6 +33,16 @@
 /* --- Nav with mega-menus (project extends wf-navbar links) --------------- */
 .cw-nav { display: flex; align-items: center; gap: var(--w-space-5); }
 @media (max-width: 980px) { .cw-nav { display: none; } }
+/* 981–1199 px: the full bar needs about 1080 px, so it is set a little tighter
+   instead of letting the buttons on the right break into two or three rows
+   (found in the shop QA, 28.09.2026). From 1200 px nothing changes. */
+@media (min-width: 981px) and (max-width: 1199px) {
+  .wf-navbar__inner { gap: 12px; }
+  .cw-nav { gap: 10px; }
+  .cw-nav .cw-nav-trigger, .cw-nav .wf-navbar__link { font-size: 13px; }
+  .wf-navbar__inner .wf-cluster { gap: 6px; flex-wrap: nowrap; }
+  .wf-navbar__inner .wf-cluster .wf-btn--sm:not(.wf-btn--icon) { padding-inline: 8px; }
+}
 
 .cw-haspopup { position: relative; }
 /* Trigger matches a wf-navbar__link but is a real <button> (disclosure). */
@@ -87,6 +97,9 @@
   padding-bottom: var(--w-space-4); margin-bottom: var(--w-space-5);
   border-bottom: 1px solid var(--w-border-subtle);
 }
+/* Two buttons on the right of the head: the whole range and the shop. */
+.cw-mega__actions { display: flex; flex-wrap: wrap; gap: var(--w-space-2); }
+.cw-mega__actions .wf-btn { gap: var(--w-space-2); }
 .cw-mega__layout {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -318,6 +331,49 @@ a.cw-crop:focus-visible {
 
 /* --- Cart count helper (wraps wf-badge--count usage) -------------------- */
 .cw-cart { position: relative; }
+/* cw.js and sklep-wspolne.js hide the counter at 0 with [hidden], but the kit's
+   display:grid on .wf-count outranks the browser's [hidden] rule (28.09.2026). */
+.cw-cart .wf-count[hidden] { display: none; }
+
+/* --- Cart preview under the header (28.09.2026, round 3) -----------------
+   Spec sklep-v7-spec.md §12.11. Same geometry as the wide mega panel: the
+   content container of the header, floating, so the kit's shadow is allowed.
+   A transparent strip above the panel bridges the gap under the icon, so the
+   pointer can travel from the icon into the panel without closing it. */
+.cw-minicart {
+  position: absolute; top: calc(100% + var(--w-space-3));
+  left: var(--w-page-padding-lg); right: var(--w-page-padding-lg);
+  z-index: var(--w-z-dropdown); display: none;
+  background: var(--w-surface-raised); border: 1px solid var(--w-border-subtle);
+  border-radius: var(--w-radius-lg); box-shadow: var(--w-shadow-lg);
+}
+.cw-minicart[data-open="true"] { display: block; }
+.cw-minicart::before { content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: calc(var(--w-space-3) + 2px); }
+.cw-minicart__head { display: flex; align-items: center; justify-content: space-between; gap: var(--w-space-4); padding: var(--w-space-5) var(--w-space-6) 0; }
+.cw-minicart__title { font-weight: var(--w-weight-semibold); color: var(--w-text-primary); }
+.cw-minicart__nav { display: flex; gap: var(--w-space-2); }
+.cw-minicart__nav[hidden] { display: none; }
+.cw-minicart__list {
+  list-style: none; margin: 0; padding: var(--w-space-4) var(--w-space-6) var(--w-space-5);
+  display: grid; grid-auto-flow: column; gap: var(--w-space-6);
+  grid-auto-columns: max(18rem, calc((100% - 2 * var(--w-space-6)) / 3));
+  overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--w-space-6); scrollbar-width: none;
+}
+.cw-minicart__list::-webkit-scrollbar { display: none; }
+.cw-minicart__item { display: grid; grid-template-columns: 88px minmax(0, 1fr) auto; gap: var(--w-space-4); align-items: start; scroll-snap-align: start; }
+.cw-minicart__thumb { display: grid; place-items: center; width: 88px; height: 88px; padding: 8px; background: var(--w-gray-100); }
+.cw-minicart__thumb img { max-width: 72px; max-height: 72px; width: auto; height: auto; object-fit: contain; }
+.cw-minicart__txt { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.cw-minicart__name { font-weight: var(--w-weight-medium); color: var(--w-text-primary); text-decoration: none; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.cw-minicart__name:hover { text-decoration: underline; }
+.cw-minicart .cw-nowrap { white-space: nowrap; }
+.cw-minicart__pack, .cw-minicart__qty { font-size: var(--w-font-sm-size); color: var(--w-text-secondary); }
+.cw-minicart__sum { font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--w-text-primary); }
+.cw-minicart__bar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--w-space-3) var(--w-space-5); padding: var(--w-space-4) var(--w-space-6); border-top: 1px solid var(--w-border-subtle); background: var(--w-gray-100); border-radius: 0 0 var(--w-radius-lg) var(--w-radius-lg); }
+.cw-minicart__count { margin-right: auto; color: var(--w-text-secondary); }
+.cw-minicart__total { font-variant-numeric: tabular-nums; }
+.cw-minicart__total b { margin-left: var(--w-space-2); color: var(--w-text-primary); }
+.cw-minicart__empty { display: flex; align-items: center; justify-content: space-between; gap: var(--w-space-4); padding: var(--w-space-5) var(--w-space-6); }
 
 /* --- Feature icon chip (ikona Tabler w ramce, np. „jak działają") -------- */
 .cw-feat-icon {

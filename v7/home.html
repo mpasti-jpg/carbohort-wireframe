@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kwasy humusowe i węgiel brunatny do gleby | Carbohort</title>
 <meta name="description" content="Polski, rodzinny producent poprawiaczy gleby z lignitu i kwasów humusowych: CARBOMAT ECO, CARBOHUMIC, CARBOMAT HUMIC. Próchnica, retencja wody, dobór do uprawy.">
-<!-- Pre-paint flag for the JS-only modes of this page (tab panels instead of a
-     stack, the pinned soil scene). Without JS every panel stays in the flow. -->
+
+
 <script>document.documentElement.classList.add("c5h-js");</script>
 <link rel="stylesheet" href="tokens.css">
 <link rel="stylesheet" href="wireframe.css">
@@ -116,15 +116,15 @@
 
 <cw-icons></cw-icons>
 
-<!-- data-current="" (empty) = home page: no menu item is highlighted. -->
+
 <cw-navbar data-current=""></cw-navbar>
 
-<!-- ===== CE-07 · Dot navigation at the right edge (scrollspy) =====
-     One dot per section carrying data-chapter. Eleven chapters – the shared
-     stylesheet staggers the labels up to eleven positions, so this list is at
-     its limit: a twelfth dot needs a new rule in ce/CE-07-nawigacja-kropkowa.css.
-     Hidden below 900 px; the rail moves to right:10px on the wide container
-     (see the block 00 of home.css). -->
+
+
+
+
+
+
 <nav id="nawigacja-kropki" class="c5-dots" aria-label="Rozdziały strony głównej" data-dots data-ce="CE-07">
   <ol>
     <li><a class="c5-dots__link" href="#hero" data-dot="hero"><span class="c5-dots__label">Start</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
@@ -143,13 +143,13 @@
 
 <main id="main">
 
-  <!-- ===== 0. HERO (spec §5.0) – CE-08, wariant „kadr-w-tle”: one frame behind
-       the whole section, H1 at the bottom left, lead and actions at the bottom
-       right on a frosted plate. Home is the one page of the pattern whose hero
-       also carries a kicker: it holds the category phrase, so the kicker and
-       the H1 travel together in one lockup.
-       The A/B control of the heading is a tool of the mock-up and goes away
-       with the decision on the wording; it is also reachable as ?h1=b. -->
+  
+
+
+
+
+
+
   <section id="hero" data-chapter="hero" data-ce="CE-08" data-ce-wariant="kadr-w-tle">
     <div class="c5-hero c5-hero--bg">
       <div class="c5-hero__bg" aria-hidden="true">
@@ -187,14 +187,14 @@
     </div>
   </section>
 
-  <!-- ===== 1. PAS WEJŚĆ (spec §5.1) – CE-71 „Pas wejść sytuacyjnych”.
-       Seven cells in one row, hairlines between them, about 112 px high:
-       five crop entries, one „Mam już produkt” popover and a dark phone cell.
-       The overline of the section stands as the narrow label cell on the left,
-       so the whole band is one strip peeking above the fold.
-       The sprite carries no crop symbols, so every cell is numbered instead:
-       one convention for all seven rather than seven approximate icons.
-       No section dot (spec §3). -->
+  
+
+
+
+
+
+
+
   <section class="c5-sec c5h-sec--flush c5-en" id="sytuacje" data-ce="CE-71">
     <div class="c5-wrap c5-wrap--wide">
       <ul class="c5-en__row" data-reveal>
@@ -282,10 +282,10 @@
 
       </ul>
 
-      <!-- Native popover of cell 06. Where the browser has one it is placed
-           under the tile; where it has none, the stylesheet turns it into an
-           ordinary block under the band, so the five links stay reachable
-           without any script. -->
+      
+
+
+
       <div class="c5-en__pop" id="c5-en-produkty" popover aria-label="Mam już produkt">
         <ul class="c5-en__poplist">
           <li><a class="c5-en__poplink" href="carbomat.html#jak-stosowac">CARBOMAT ECO</a></li>
@@ -298,12 +298,12 @@
     </div>
   </section>
 
-  <!-- ===== 2. MARQUEE ZAUFANIA (spec §5.2) – CE-09, wariant „z-ikona”:
-       a seamless horizontal band of trust items with sprite icons instead of
-       thumbnails, pure CSS. No section dot (spec §3). The root carries its own
-       padding-block, so it is NOT a c5-sec and it is full-bleed (no c5-wrap).
-       Half the track has to stay wider than a 2560 px window, so the item list
-       is doubled in the markup. -->
+  
+
+
+
+
+
   <section class="c5-marq" id="zaufanie" aria-label="Linia zaufania" data-ce="CE-09" data-ce-wariant="z-ikona">
     <ul class="c5-marq__track">
       <li class="c5-marq__item">
@@ -345,14 +345,14 @@
     </ul>
   </section>
 
-  <!-- ===== 3. SCENA PROFILU GLEBY (spec §5.3) – CE-72. The one pinned scene of
-       the page: a soil profile that repairs itself step by step with the
-       scroll. Left column: head, index of the five problems, the detail of the
-       active step; right column: an inline SVG on a light panel.
-       The whole drawing is aria-hidden: every word of it stands in the copy on
-       the left. Below 900 px the index becomes a tablist of chips, at reduced
-       motion and without JS the scene unrolls in the flow with the drawing in
-       its final state. Helper ?sp=1…6 jumps to a step. -->
+  
+
+
+
+
+
+
+
   <section class="c5-sec c5-sp" id="gleba" data-chapter="gleba" data-ce="CE-72" data-sp>
     <div class="c5-wrap c5-wrap--wide">
       <div class="c5-sp__track" data-sp-track>
@@ -473,12 +473,12 @@
 
           <div class="c5-sp__panel">
             <div class="c5-sp__viz">
-              <!-- Soil profile plate. Every state is a class on the root of the
-                   section (is-s1…is-s6, cumulative), the current step is
-                   data-sp-on, and the depth marker follows --sp-p. The default
-                   below, with no class at all, is the FINAL state, so a page
-                   without JS shows a complete drawing. Ground line at y=200,
-                   profile 0-40 cm over 480 units, sky for the full plant. -->
+              
+
+
+
+
+
               <svg class="c5-sp__svg" viewBox="0 0 800 750" aria-hidden="true" focusable="false">
                 <defs>
                   <pattern id="c5-sp-hatch" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
@@ -486,7 +486,7 @@
                   </pattern>
                 </defs>
 
-                <!-- depth ruler 0-40 cm; the arrow on it is the progress of the scene -->
+                
                 <g class="c5-sp__rule">
                   <line class="c5-sp__ruleaxis" x1="70" y1="200" x2="70" y2="680"></line>
                   <line class="c5-sp__ruletick" x1="60" y1="200" x2="70" y2="200"></line>
@@ -507,12 +507,12 @@
                   </g>
                 </g>
 
-                <!-- the soil body: subsoil with its hatching, then the humus horizon -->
+                
                 <rect class="c5-sp__sub" x="95" y="200" width="560" height="480"></rect>
                 <rect class="c5-sp__hatch" x="95" y="200" width="560" height="480" fill="url(#c5-sp-hatch)"></rect>
                 <rect class="c5-sp__hum" x="95" y="200" width="560" height="48"></rect>
 
-                <!-- stones -->
+                
                 <g class="c5-sp__stones">
                   <ellipse cx="178" cy="525" rx="27" ry="16" transform="rotate(-12 178 525)"></ellipse>
                   <ellipse cx="536" cy="576" rx="31" ry="18" transform="rotate(8 536 576)"></ellipse>
@@ -521,7 +521,7 @@
                   <ellipse cx="238" cy="392" rx="15" ry="10" transform="rotate(-20 238 392)"></ellipse>
                 </g>
 
-                <!-- surface cracks: the entry state, gone from is-s1 -->
+                
                 <g class="c5-sp__cracks">
                   <path d="M140 200 l7 15 l-9 13 l7 13"></path>
                   <path d="M236 200 l-7 13 l8 14 l-5 11"></path>
@@ -530,7 +530,7 @@
                   <path d="M628 200 l5 14 l-7 11 l5 12"></path>
                 </g>
 
-                <!-- lignite crumbs: appear in a cascade in is-s1 -->
+                
                 <g class="c5-sp__grans">
                   <rect class="c5-sp__gran" style="--d:0" x="118" y="218" width="14" height="8" rx="3"></rect>
                   <rect class="c5-sp__gran" style="--d:1" x="166" y="238" width="12" height="8" rx="3"></rect>
@@ -550,7 +550,7 @@
                   <rect class="c5-sp__gran" style="--d:15" x="560" y="273" width="12" height="7" rx="3"></rect>
                 </g>
 
-                <!-- water: falling in the entry state, held beside the crumbs from is-s1 -->
+                
                 <g class="c5-sp__falls">
                   <g transform="translate(150,208)"><g class="c5-sp__fall" style="--d:0"><path d="M0 -9 C 4 -4, 7 -1, 7 3 A 7 7 0 1 1 -7 3 C -7 -1, -4 -4, 0 -9 Z"></path></g></g>
                   <g transform="translate(268,208)"><g class="c5-sp__fall" style="--d:1"><path d="M0 -9 C 4 -4, 7 -1, 7 3 A 7 7 0 1 1 -7 3 C -7 -1, -4 -4, 0 -9 Z"></path></g></g>
@@ -566,7 +566,7 @@
                   <g class="c5-sp__drop" style="--d:4" transform="translate(592,258)"><circle r="4.5"></circle><circle class="c5-sp__ring" r="9"></circle></g>
                 </g>
 
-                <!-- nutrients drifting towards the roots, from is-s4 -->
+                
                 <g class="c5-sp__nuts">
                   <rect class="c5-sp__nut" style="--d:0" x="206" y="313" width="9" height="9"></rect>
                   <rect class="c5-sp__nut" style="--d:1" x="262" y="367" width="9" height="9"></rect>
@@ -576,7 +576,7 @@
                   <rect class="c5-sp__nut" style="--d:5" x="262" y="546" width="9" height="9"></rect>
                 </g>
 
-                <!-- roots: shallow in the entry state, deep from is-s4 -->
+                
                 <g class="c5-sp__roots">
                   <path class="c5-sp__root" pathLength="100" d="M470 200 C 468 243, 448 279, 432 326 C 420 364, 414 404, 410 453"></path>
                   <path class="c5-sp__root" pathLength="100" d="M470 200 C 478 240, 496 273, 512 316 C 526 354, 532 390, 534 435"></path>
@@ -589,7 +589,7 @@
                   <path class="c5-sp__root c5-sp__root--fine" pathLength="100" d="M471 440 C 496 465, 508 486, 518 510"></path>
                 </g>
 
-                <!-- microbial life around the roots, from is-s3 -->
+                
                 <g class="c5-sp__mics">
                   <circle class="c5-sp__mic" style="--d:0" cx="430" cy="266" r="2.6"></circle>
                   <circle class="c5-sp__mic" style="--d:1" cx="502" cy="274" r="2.2"></circle>
@@ -611,8 +611,8 @@
                   <circle class="c5-sp__mic" style="--d:17" cx="388" cy="304" r="2.2"></circle>
                 </g>
 
-                <!-- the ground line and the plant on it: a weak seedling with two
-                     drooping cotyledons in the entry state, one leaf per repair -->
+                
+
                 <line class="c5-sp__ground" x1="95" y1="200" x2="655" y2="200"></line>
                 <g class="c5-sp__plant">
                   <path class="c5-sp__stem" pathLength="100" d="M470 200 C 467 148, 473 92, 470 30"></path>
@@ -625,11 +625,11 @@
                   <g transform="translate(469,48) scale(1.18)"><path class="c5-sp__leaf c5-sp__leaf--5" d="M0 0 C 24 -20, 60 -30, 96 -20 C 64 2, 26 12, 0 0 Z"></path></g>
                 </g>
 
-                <!-- frame of the monolith, drawn last so nothing crosses it -->
+                
                 <rect class="c5-sp__frame" x="95" y="200" width="560" height="480"></rect>
 
-                <!-- reaction scale: three zones, no numbers; the marker enters
-                     the middle zone in is-s5 -->
+                
+
                 <g class="c5-sp__ph">
                   <rect class="c5-sp__phzone" x="690" y="370" width="24" height="120"></rect>
                   <rect class="c5-sp__phbar" x="690" y="250" width="24" height="360"></rect>
@@ -643,8 +643,8 @@
                   </g>
                 </g>
 
-                <!-- one annotation lane: the label of the current step with its
-                     leader line; the reaction step is annotated at its scale -->
+                
+
                 <g class="c5-sp__tags">
                   <g class="c5-sp__tag c5-sp__tag--1">
                     <text x="104" y="166">woda zatrzymana przy gruzełkach</text>
@@ -684,13 +684,13 @@
     </div>
   </section>
 
-  <!-- ===== 4. JAK POMAGAMY – CE-73 „Oś kroków z horyzontem efektu”
-       with a nested CE-23 advisor band.
-       The four steps stand on one line whose fill follows the scroll and
-       lights the numbered nodes as it reaches them; the horizon below splits
-       the effect into the first season and the two to five years after it.
-       The three chips of the band open the advisor dock with the question
-       already typed into the field and send nothing. -->
+  
+
+
+
+
+
+
   <section class="c5-sec c5-st" id="jak-pomagamy" data-chapter="jak-pomagamy" data-ce="CE-73">
     <div class="c5-wrap c5-wrap--wide">
       <div class="c5h-head" data-reveal>
@@ -751,8 +751,8 @@
           </div>
         </div>
 
-        <!-- CE-23 „Pas CTA”, variant „z-ikona”: the advisor band. The chips are
-             buttons, not links: they fill the dock field and send nothing. -->
+        
+
         <div class="c5h-ask" id="jak-pomagamy-asystent" data-ce="CE-23" data-ce-wariant="z-ikona">
           <span class="c5-icoframe c5-icoframe--square c5h-ask__ico" aria-hidden="true"><svg class="wf-icon"><use href="#ti-message-2"></use></svg></span>
           <p class="c5h-ask__txt"><span class="c5h-ask__lead">Masz problem z glebą? Zapytaj naszego asystenta.</span><br>
@@ -769,13 +769,13 @@
     </div>
   </section>
 
-  <!-- ===== 5. DOWÓD – CE-24 „Pas liczb”, variant „rzad”, with a nested
-       CE-41 (the retention experiment and the „to zależy” note) and a nested
-       CE-53 „dokumenty”.
-       Five numbers in one dark frame, then a 7 / 5 grid: the retention bars on
-       the left, the note and the document rows on the right. Every number and
-       every bar value stands in the markup, so the section reads the same
-       without JS. Every figure carries its source. -->
+  
+
+
+
+
+
+
   <section class="c5-sec c5h-dowod" id="dowod" data-chapter="dowod" data-ce="CE-24" data-ce-wariant="rzad">
     <div class="c5-wrap c5-wrap--wide">
       <div class="c5h-head" data-reveal>
@@ -875,12 +875,12 @@
     </div>
   </section>
 
-  <!-- ===== 6. PRODUKTY – CE-74 „Taby potrzeb z kartami produktów”.
-       Three tabs by need, not by brand; every panel stays in the DOM, so
-       without JS they stand one under another, each with its own heading.
-       Deep links: #produkty-gleba, #produkty-rosliny, #produkty-bez-gleby.
-       Two products share a packshot file, so the alt text names the product
-       and its pack. -->
+  
+
+
+
+
+
   <section class="c5-sec c5-nt" id="produkty" data-chapter="produkty" data-ce="CE-74">
     <div class="c5-wrap c5-wrap--wide">
       <div class="c5h-head" data-reveal>
@@ -910,8 +910,8 @@
         </div>
 
         <div class="c5-nt__panels">
-          <!-- role="tabpanel", aria-labelledby and tabindex are set by the
-               module; without JS the panels are ordinary blocks of content. -->
+          
+
 
           <div class="c5-nt__panel" id="produkty-gleba" data-on>
             <div class="c5-nt__grid">
@@ -1065,16 +1065,16 @@
     </div>
   </section>
 
-  <!-- ===== 7. UPRAWY I KONFIGURATOR – CE-30 „Lista z panelem opisu”, variant
-       „z-kadrem”, with a nested CE-23 „ciemny” configurator band.
-       The list is the only content: six rows, one of them open, with the crop
-       chips and the two buttons of the open group. The frame column on the
-       right is decorative (aria-hidden) – it repeats what the open row says,
-       so a screen reader hears the list once.
-       Six frames stand in the pinned stage for the wide layout and six more,
-       4 : 3, inside the rows for the phone; the hidden copy is never fetched
-       (display:none + loading="lazy"). Without JS the stage and the phone
-       frames are hidden and every row stands open. -->
+  
+
+
+
+
+
+
+
+
+
   <section class="c5-sec c5h-uprawy" id="uprawy" data-chapter="uprawy" data-ce="CE-30" data-ce-wariant="z-kadrem">
     <div class="c5-wrap c5-wrap--wide">
       <div class="c5h-head" data-reveal>
@@ -1276,9 +1276,9 @@
         </div>
       </div>
 
-      <!-- CE-23 „ciemny”: the configurator band closes the section on the full
-           width of the container. The step motif is decorative – four empty
-           fields joined by a line, no captions. -->
+      
+
+
       <div class="c5h-cfg" id="uprawy-konfigurator" data-ce="CE-23" data-ce-wariant="ciemny" data-reveal>
         <div class="c5h-cfg__body">
           <span class="c5-kicker c5-kicker--outline c5h-cfg__kicker">Konfigurator</span>
@@ -1294,11 +1294,11 @@
     </div>
   </section>
 
-  <!-- ===== 8. PRÓCHNICA+ – CE-75 „Zajawka programu z osią kamieni”, new.
-       Grid 5 / 7: the programme on the left, a tall frame on the right with a
-       light card of five milestones lying across its bottom edge. The frame is
-       decorative, the card is content, so on a phone only the frame moves to
-       the top (order) and the card keeps its place after the text. -->
+  
+
+
+
+
   <section class="c5-sec c5-pg" id="prochnica-plus" data-chapter="prochnica-plus" data-ce="CE-75">
     <div class="c5-wrap c5-wrap--wide">
       <div class="c5-pg__grid">
@@ -1367,13 +1367,13 @@
     </div>
   </section>
 
-  <!-- ===== 9. CENTRUM WIEDZY – CE-58 „Karty najnowszych” with a nested
-       CE-59 „kompakt” category navigation. A deliberately compact section:
-       entrance cascade, no other mechanics.
-       The head runs split (heading left, the long lead right), the three
-       articles run 7 / 5 with the leading card on the left, and the closing
-       band repeats that rhythm: two categories on the left, the guides and the
-       advisor on the right. Every card is one link. -->
+  
+
+
+
+
+
+
   <section class="c5-sec c5h-wiedza" id="wiedza" data-chapter="wiedza" data-ce="CE-58">
     <div class="c5-wrap c5-wrap--wide">
       <div class="c5h-split">
@@ -1414,8 +1414,8 @@
         </a>
       </div>
 
-      <!-- CE-59 „kompakt”: the two main categories without the counters and the
-           subgroup lists of the base block, next to the two ways on from here. -->
+      
+
       <div class="c5h-kn__band" id="wiedza-kategorie" data-ce="CE-59" data-ce-wariant="kompakt" data-reveal>
         <div class="c5h-kn__cats">
           <h3 class="c5-h3 c5-h3--md c5h-kn__cat"><a href="centrum-wiedzy-kategoria.html">O żyzności gleb<svg class="wf-icon c5h-kn__arrow" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></h3>
@@ -1441,17 +1441,17 @@
     </div>
   </section>
 
-  <!-- ===== 10. O NAS (spec §5.10) – CE-36 „Wiersz zdjęcie | opis”, variant
-       „z-wartosciami”: a 6 / 6 grid, on the left a 4:5 frame, on the right the
-       copy, three values as icon rows, the film card and the buttons.
-       The left frame stays a placeholder on purpose: a real photograph of the
-       family and the team belongs there, so no stand-in picture is shown and
-       the dashed chip says what the slot is for (same convention as the hero
-       of o-firmie.html). From 900 px the frame is sticky, because the right
-       column is the taller one.
-       The film opens on demand only: a native dialog with
-       <video preload="none">, so nothing is fetched before the click. Without
-       JS the card is an ordinary link to the file. -->
+  
+
+
+
+
+
+
+
+
+
+
   <section class="c5-sec c5h-about" id="o-nas" data-chapter="o-nas" data-ce="CE-36" data-ce-wariant="z-wartosciami">
     <div class="c5-wrap c5-wrap--wide">
       <div class="c5h-grid c5h-about__row">
@@ -1523,8 +1523,8 @@
       </div>
     </div>
 
-    <!-- The player overlay. Closed dialogs are display:none, so with JS off or
-         before the first click the browser fetches neither poster nor film. -->
+    
+
     <dialog class="c5h-film__dlg" id="film-narodziny-lignitu" data-film-dialog aria-label="Narodziny lignitu, film, 54 sekundy">
       <div class="c5h-film__panel">
         <button type="button" class="c5-iconbtn c5h-film__x" data-film-close aria-label="Zamknij film"><svg class="wf-icon" aria-hidden="true"><use href="#ti-x"></use></svg></button>
@@ -1533,12 +1533,12 @@
     </dialog>
   </section>
 
-  <!-- ===== 11. FAQ (spec §5.11) – CE-17: question on the left, answer on the
-       right from 900 px, all collapsed at start, one open at a time; without
-       JS every answer is visible. The accordion itself lives in a .c5-faq
-       wrapper INSIDE the section (pattern: carbomat.html).
-       The FAQPage JSON-LD in the head answers these six questions 1:1, in plain
-       text; the two are edited together. -->
+  
+
+
+
+
+
   <section class="c5-sec c5h-faq" id="faq" data-chapter="faq" data-ce="CE-17">
     <div class="c5-wrap c5-wrap--wide">
       <div class="c5h-split" style="--c5h-split:4fr 8fr">
@@ -1611,13 +1611,13 @@
     </div>
   </section>
 
-  <!-- ===== 12. KONTAKT I ZAKUP (spec §5.12) – CE-16 „Pas PRO”, variant
-       „kontakt”: the frame grows with the scroll, heading on the left, copy and
-       buttons on the right. Below the band two wide purchase tiles (CE-20
-       „szerokie”).
-       The root of CE-16 is NOT a c5-sec: it carries class c5-pro and data-pro,
-       the module ce/CE-16-pas-pro.js drives it (the base module, the same one
-       o-firmie.html uses for this variant). -->
+  
+
+
+
+
+
+
   <section class="c5-pro c5h-kontakt" id="kontakt" data-chapter="kontakt" data-pro data-ce="CE-16" data-ce-wariant="kontakt">
     <div class="c5-pro__media" data-pro-media aria-hidden="true">
       <img class="c5-pro__img" src="img/foto/prochnica-04-person-carrying-soil.jpg" alt="" width="933" height="1400" loading="lazy" decoding="async" style="object-position:50% 63%">
@@ -1639,9 +1639,9 @@
     </div>
   </section>
 
-  <!-- Two wide purchase tiles under the band (CE-20 „szerokie”): the second
-       conversion of the page, one tile per way of buying. The whole tile is
-       the link, so the target is the tile and not a label inside it. -->
+  
+
+
   <div class="c5-wrap c5-wrap--wide c5h-buy__wrap">
     <ul class="c5h-buy" id="kontakt-zakup" role="list" data-reveal data-ce="CE-20" data-ce-wariant="szerokie" data-ce-od="#kontakt">
       <li>
@@ -1667,10 +1667,10 @@
     </ul>
   </div>
 
-  <!-- ===== 13. MOTTO (spec §5.13) – CE-33, variant „cytat”: the client's
-       closing line, big and centred, words brightening one after another with
-       the scroll (opacity .25 -> 1); full opacity at reduced motion.
-       No section dot (spec §3). -->
+  
+
+
+
   <section class="c5-sec c5h-motto" id="motto" data-ce="CE-33" data-ce-wariant="cytat">
     <div class="c5-wrap c5-wrap--wide">
       <figure class="c5h-motto__fig">
@@ -1692,7 +1692,7 @@
 <cw-dock></cw-dock>
 
 <script src="cw.js"></script>
-<!-- Lenis: slight scroll inertia (like serverobotics.com); the page scrolls natively without it -->
+
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
 <script src="ce/00-base.js"></script>
 <script src="ce/CE-07-nawigacja-kropkowa.js"></script>

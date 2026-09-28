@@ -12,7 +12,7 @@
    =========================================================================== */
 window.CW_CE = {
   "meta": {
-    "zaktualizowano": "2026-09-20",
+    "zaktualizowano": "2026-09-28",
     "katalogWersji": "v7/",
     "indeks": "ce-indeks.html",
     "opis": "Rejestr content elementów (CE) makiet CarboHort V5: metadane klocków. Wystąpienia wynikają ze znaczników data-ce w HTML stron – skanuje je _narzedzia/ce-indeks.py. Spec: 40-strona-www/koncepcja/content-elementy-spec.md."
@@ -32,28 +32,42 @@ window.CW_CE = {
     "CE-01": {
       "nazwa": "Nagłówek serwisu",
       "grupa": "wspolne",
-      "opis": "Pasek nagłówka na całą szerokość: wordmark po lewej, główna nawigacja z trzema wyzwalaczami mega-menu na środku, przycisk CTA i przycisk menu mobilnego po prawej. Renderowany przez chrome.js ze znacznika cw-navbar.",
-      "mechanika": "Wyzwalacze otwierają mega-menu (aria-expanded, przyciemnienie tła), pozycja bieżąca podświetlona z data-current; poniżej progu mobilnego pasek pokazuje przycisk otwierający nawigację mobilną. Obsługa w cw.js.",
+      "opis": "Pasek nagłówka na całą szerokość: wordmark po lewej, główna nawigacja na środku (trzy wyzwalacze mega-menu i trzy linki działów), po prawej przycisk Konfiguratora, przycisk „Sklep”, ikona koszyka z licznikiem opakowań i przycisk menu mobilnego. Pod paskiem, na szerokość kontenera, wysuwa się podgląd koszyka (od 28.09.2026). Renderowany przez chrome.js ze znacznika cw-navbar.",
+      "mechanika": "Wyzwalacze otwierają mega-menu (aria-expanded, przyciemnienie tła), pozycja bieżąca podświetlona z data-current; poniżej progu mobilnego pasek pokazuje przycisk otwierający nawigację mobilną. Licznik przy ikonie koszyka i jej etykietę dostępną odświeża sklep-wspolne.js, na stronach bez tego skryptu cw.js czyta liczbę z sessionStorage. Podgląd koszyka: po najechaniu na ikonę koszyka (tylko wskaźnik z kursorem, od 980 px, nigdy na stronie koszyka) po 150 ms wysuwa się pod nagłówkiem panel – pozycje w rzędzie (miniatura opakowania, nazwa, opakowanie, „3 × 39 zł”, wartość; strzałki przewijania, gdy pozycje się nie mieszczą) i pasek z liczbą opakowań, wartością produktów oraz przyciskami „Koszyk” i „Przejdź do kasy”; przy pustym koszyku zdanie i „Przejdź do sklepu”. Zamyka się 250 ms po zjechaniu kursorem z ikony i panelu, Escape albo przy otwarciu mega-menu; klik w ikonę dalej prowadzi do koszyka, na dotyku panelu nie ma. Dane z sessionStorage cw_cart_items, przerysowanie przy zdarzeniu cw:cart. Obsługa w cw.js.",
       "baza": {
         "plik": "v7/chrome.js",
         "kotwica": "serwis-naglowek"
       },
       "kod": {
-        "css": "wireframe.css (wf-navbar) + cw.css (cw-nav, cw-brand)",
-        "js": "chrome.js (szablon NAVBAR) + cw.js (mega-menu)"
+        "css": "wireframe.css (wf-navbar) + cw.css (cw-nav, cw-brand, cw-cart, cw-minicart)",
+        "js": "chrome.js (szablon NAVBAR) + cw.js (mega-menu, podgląd koszyka, licznik) + sklep-wspolne.js (licznik na stronach sklepu)"
       },
       "czesci": [
         "wordmark",
-        "3 wyzwalacze mega-menu",
-        "przycisk CTA",
+        "3 wyzwalacze mega-menu i 3 linki działów",
+        "przycisk Konfiguratora",
+        "przycisk „Sklep”",
+        "ikona koszyka z licznikiem",
+        "podgląd koszyka (cw-minicart)",
         "przycisk menu mobilnego",
         "przyciemnienie tła (cw-scrim)"
       ],
-      "warianty": {},
-      "uwagi": "Jeden plik dla całego serwisu: zmiana w menu = edycja chrome.js, nigdy podstron.",
+      "warianty": {
+        "podglad-koszyka": "stan, nie osobny układ: nagłówek z otwartym podglądem koszyka (od 28.09.2026, spec sklep-v7-spec §12.11). Zrzut z makiety demonstracyjnej v7/lab/ce-01-podglad-koszyka.html, która wczytuje przykładowy koszyk z makiety koszyka (trzy pozycje, sześć opakowań, 877 zł) i otwiera podgląd przez cw.js"
+      },
+      "uwagi": "Jeden plik dla całego serwisu: zmiana w menu = edycja chrome.js, nigdy podstron. 28.09.2026 z paska zniknął „Zaloguj” (link do platformy B2B zostaje w stopce) i doszedł podgląd koszyka (spec sklep-v7-spec §8 i §12.11).",
       "zrzut": {
         "strona": "v7/carbomat.html",
         "maxh": 200
+      },
+      "zrzuty_wariantow": {
+        "podglad-koszyka": {
+          "plik": "v7/lab/ce-01-podglad-koszyka.html",
+          "kotwica": "cw-minicart",
+          "od": "#serwis-naglowek",
+          "czekaj": 900,
+          "maxh": 500
+        }
       }
     },
     "CE-02": {
@@ -70,17 +84,17 @@ window.CW_CE = {
         "js": "chrome.js (szablon NAVBAR) + cw.js"
       },
       "czesci": [
-        "nagłówek panelu",
+        "nagłówek panelu (w wariancie szerokim z dwoma przyciskami)",
         "kolumny odnośników albo boksy",
         "stopka panelu"
       ],
       "warianty": {
-        "szerokie": "cztery boksy produktowe (Produkty Carbohort)",
+        "szerokie": "cztery boksy produktowe (Produkty Carbohort); w nagłówku panelu dwa przyciski – „Poznaj całą gamę produktów” (jasny) i „Przejdź do sklepu” (ciemny, z ikoną koszyka, od 28.09.2026)",
         "domyslne": "trzy kolumny list – bez wystąpień od 20.09.2026, zastąpiony wariantem „grupy”",
         "waskie": "jedna lista (Programy i badania)",
         "grupy": "pięć grup upraw na pełną szerokość kontenera (Rodzaje upraw, 20.09.2026): tytuł grupy z kreską 2 px, lista pozycji na szynie wyróżnień, a grupa Rolnicze rozbita na dwie karty sezonów – Ozime z ikoną „ti-snowflake” i Jare z ikoną „ti-sun”. Pozycja ze swoją stroną jest linkiem ze strzałką, pozostałe 28 to spany „cw-crop--soon”. Spec: 40-strona-www/koncepcja/menu-rodzaje-upraw-spec.md"
       },
-      "uwagi": "CE zagnieżdżony w CE-01; ukryty do otwarcia.",
+      "uwagi": "CE zagnieżdżony w CE-01; ukryty do otwarcia. Przycisk „Przejdź do sklepu” w panelu Produkty Carbohort (28.09.2026, spec sklep-v7-spec §12.15): kto otwiera ten dział, szukając sklepu, ma do niego jedno kliknięcie; w menu mobilnym „Sklep” jest ostatnią pozycją.",
       "zrzut": {
         "strona": "v7/carbomat.html",
         "klik": "[data-mega-trigger][aria-controls=\"mega-produkty\"]",
@@ -510,8 +524,8 @@ window.CW_CE = {
         "kotwica": "uprawy-profesjonalne"
       },
       "kod": {
-        "css": "ce/CE-16-pas-pro.css (od 19.09.2026 niesie też regułę krycia nakładki .cx-js .c5-pro__media::after{opacity:var(--pro-o,1)}, przeniesioną z produkty.css)",
-        "js": "ce/CE-16-pas-pro.js (Kukurydza, O nas); wariant pozny-wzrost: ce/CE-16-pas-pro-proba.js (Produkty, CARBOMAT ECO, CARBOMAT MATA, CARBOHUMIC, CARBOMAT HUMIC)"
+        "css": "ce/CE-16-pas-pro.css (od 19.09.2026 niesie też regułę krycia nakładki .cx-js .c5-pro__media::after{opacity:var(--pro-o,1)}, przeniesioną z produkty.css); wariant kadr-z-prawej: kit c5.css (c5-pro, c5-pro__photo, c5-pro__grid) + nadpisania strony – sklep.html <style> blok „PAS PRO” (c5sk-pro) i pdp.css (c5pd-pro)",
+        "js": "ce/CE-16-pas-pro.js (Kukurydza, O nas); wariant pozny-wzrost: ce/CE-16-pas-pro-proba.js (Produkty, CARBOMAT ECO, CARBOMAT MATA, CARBOHUMIC, CARBOMAT HUMIC); wariant kadr-z-prawej: brak (statyczny)"
       },
       "czesci": [
         "kadr",
@@ -523,11 +537,19 @@ window.CW_CE = {
         "zamykajacy": "bez akapitu: nagłówek po lewej, dwa przyciski po prawej, oba na kadrze (Kukurydza; od 18.09.2026 na bazowym kodzie klocka zamiast własnego portu u-end). Od 20.09.2026 (uwaga Mateusza: „Zdjęcie w tle zostaw na pełną szerokość ekranu, natomiast teksty po lewej i przyciski po prawej są w ramach kontenera z treścią o maksymalnej szerokości 1180 px. Typografia i przyciski odwzoruj z Frame 186-253”) kadr zostaje pełnoekranowy, a treść wraca z c5-wrap--wide na c5-wrap; typografia i przyciski jak w wariancie zielen-i-scrim – nagłówek 52/53 px na P22 Mackinac Pro, zielony przycisk podstawowy #86D574 z tuszem #0C2B1C, promienie 20 px, wysokość 56 px, odstęp 11 px, obwódka drugorzędnego rgb(255 255 255 / .5). Nadpisania zamknięte w #u-cta w kukurydza.css, bez nowego modułu; zostaje podłożenie rgb(0 0 0 / .3) pod przyciskiem drugorzędnym (poprawka czytelności na rozświetlonym pyle) i tło pasa --w-gray-600, bo kadr zakrywa je w całości",
         "kontakt": "pas zamykający rozmową: nagłówek po lewej, po prawej akapit i akcje kontaktowe. Na O nas (#porozmawiajmy) dwa przyciski, Kontakt i Zostań partnerem; na stronie głównej (#kontakt, 20.09.2026) numer telefonu jako duży link tel: z cyframi tabelarycznymi, wiersz godzin drobnym drukiem, dwa przyciski i cichy link do wszystkich działów",
         "pozny-wzrost": "kadr stoi na 50 % szerokości ekranu, dopóki górna krawędź pasa jest niżej niż 35 % wysokości okna, potem rośnie i pełny rozmiar osiąga 2 % od góry okna; nakładka przyciemniająca narasta razem ze wzrostem, więc w postoju zdjęcie jest bez przyciemnienia (uwagi Mateusza z 18.09.2026; od 19.09.2026 na pięciu stronach: Produkty, CARBOMAT ECO, CARBOMAT MATA, CARBOHUMIC, CARBOMAT HUMIC)",
-        "zielen-i-scrim": "sama warstwa wyglądu nałożona na mechanikę pozny-wzrost, wg ramki Figma „Frame 186-253”, bez własnego modułu – nadpisania zamknięte w #uprawy-profesjonalne w carbomat.css (20.09.2026, CARBOMAT ECO): tło pasa #777771 zamiast --w-gray-600, nagłówek 52/53 px, akapit 21/26 px w pełnej bieli zamiast krycia .75, przycisk podstawowy w zieleni #86D574 z tekstem #0C2B1C, promieniem 20 px i paddingiem 18/24 px, przycisk drugorzędny z obwódką rgb(255 255 255 / .5), odstęp między przyciskami 11 px; kadr to zdjęcie sadu zakotwiczone dołem pod ukośnym gradientem #1A2405 o kryciu 30/10/10/30 %, rozciągniętym na cały pas z podłogą .55 + .45 × --pro-o. Copy zostaje dzisiejsze – uwaga dotyczyła typografii i przycisków, nie treści; ikony znaku marki z przycisku podstawowego nie odwzorowano, bo nie ma jej w sprite, a ikon się nie dorysowuje. Od 20.09.2026 także na Produktach (#dla-profesjonalistow, produkty.css ===== 80): typografia, przyciski, pas i nakładka 1:1 z wartościami ramki. Przez pierwsze trzy godziny stały tam podkręcone pokrętła --pro-wash-a .50 i --pro-wash-b .35, bo strona pożyczała kadr z CARBOMAT ECO z białym big bagiem w środku i wartości ramki dawały kontrast GORSZY niż zastąpiony scrim (5. percentyl: nagłówek 2,17 wobec 3,15, akapit 4,00 wobec 5,16). Wieczorem strona dostała własny kadr (paczki w prawej jednej trzeciej, po lewej ciemne pole o zmierzchu) i wartości ramki wróciły: 12,69 : 1 dla nagłówka, 11,42 : 1 dla akapitu. Wniosek do przeniesienia wariantu dalej: liczby nakładki są dopasowane do ZDJĘCIA z ramki, nie do dowolnego kadru – pokrętła są właśnie po to"
+        "zielen-i-scrim": "sama warstwa wyglądu nałożona na mechanikę pozny-wzrost, wg ramki Figma „Frame 186-253”, bez własnego modułu – nadpisania zamknięte w #uprawy-profesjonalne w carbomat.css (20.09.2026, CARBOMAT ECO): tło pasa #777771 zamiast --w-gray-600, nagłówek 52/53 px, akapit 21/26 px w pełnej bieli zamiast krycia .75, przycisk podstawowy w zieleni #86D574 z tekstem #0C2B1C, promieniem 20 px i paddingiem 18/24 px, przycisk drugorzędny z obwódką rgb(255 255 255 / .5), odstęp między przyciskami 11 px; kadr to zdjęcie sadu zakotwiczone dołem pod ukośnym gradientem #1A2405 o kryciu 30/10/10/30 %, rozciągniętym na cały pas z podłogą .55 + .45 × --pro-o. Copy zostaje dzisiejsze – uwaga dotyczyła typografii i przycisków, nie treści; ikony znaku marki z przycisku podstawowego nie odwzorowano, bo nie ma jej w sprite, a ikon się nie dorysowuje. Od 20.09.2026 także na Produktach (#dla-profesjonalistow, produkty.css ===== 80): typografia, przyciski, pas i nakładka 1:1 z wartościami ramki. Przez pierwsze trzy godziny stały tam podkręcone pokrętła --pro-wash-a .50 i --pro-wash-b .35, bo strona pożyczała kadr z CARBOMAT ECO z białym big bagiem w środku i wartości ramki dawały kontrast GORSZY niż zastąpiony scrim (5. percentyl: nagłówek 2,17 wobec 3,15, akapit 4,00 wobec 5,16). Wieczorem strona dostała własny kadr (paczki w prawej jednej trzeciej, po lewej ciemne pole o zmierzchu) i wartości ramki wróciły: 12,69 : 1 dla nagłówka, 11,42 : 1 dla akapitu. Wniosek do przeniesienia wariantu dalej: liczby nakładki są dopasowane do ZDJĘCIA z ramki, nie do dowolnego kadru – pokrętła są właśnie po to",
+        "kadr-z-prawej": "wersja pasa z kitu c5.css na stronach sklepu (sklep.html, pdp.html, pdp-kwasny.html; od 28.09.2026): statyczne zdjęcie img/foto/pro.jpg na prawej połowie pasa, na całą jego wysokość (cover), po lewej kolumna tekstu – nagłówek, akapit, przycisk „Zapytaj o ofertę” (c5-btn--inv) i dwa linki: „Zaloguj się do platformy” i „Załóż konto”. Bez skalowania kadru i bez nakładki. Na liście produktów linki stoją we własnym wierszu pod przyciskiem, na karcie produktu w jednym rzędzie z nim. Poniżej 900 px zdjęcie 220 px w biegu pasa – na liście nad tekstem, na karcie produktu pod nim (kolejność w HTML)"
       },
-      "uwagi": "Na CARBOMAT ECO i CARBOMAT HUMIC stoi wewnątrz sekcji Sezon, na pozostałych jako osobna sekcja. Wariant pozny-wzrost: spec produkty-wzorzec-eco-spec §21.4, §21.8 i §23. Otwarty u Mateusza kontrast białego tekstu na nieprzyciemnionym zdjęciu w fazie postoju: na Produktach akapit min. 2,32 : 1, na CARBOMAT ECO zmierzone minimum akapitu spada z 1,78 na 1,19 (mediana z 6,40 na 5,26), stan końcowy pasa bez zmian. Kukurydza (zamykajacy) i O nas (kontakt) zostają na module bazowym – przejście na pozny-wzrost do decyzji. Wariant zielen-i-scrim (20.09.2026) linkuje wyłącznie carbomat.html: to nadpisania w carbomat.css zamknięte w #uprawy-profesjonalne, bez nowego modułu i bez znacznika data-ce-wariant – pas nadal niesie data-ce-wariant=„pozny-wzrost”, a ce/CE-16-pas-pro*.* i pozostałe strony zostają nietknięte; spec carbomat-eco-spec §16.7. Zdjęcie eco-pro-sad.jpg zastępuje img/foto/pro.jpg tylko tutaj – ten sam plik niosą jeszcze o-firmie.html i produkty.html. Nowy kadr jest jaśniejszy, więc scrim przeniesiono na cały pas z podłogą .55: kontrast akapitu w postoju rośnie z 1,19 na 5,58, czyli otwarta u Mateusza pozycja kontrastu dotyczy już tylko stron bez tego nadpisania.",
+      "uwagi": "Na CARBOMAT ECO i CARBOMAT HUMIC stoi wewnątrz sekcji Sezon, na pozostałych jako osobna sekcja. Wariant pozny-wzrost: spec produkty-wzorzec-eco-spec §21.4, §21.8 i §23. Otwarty u Mateusza kontrast białego tekstu na nieprzyciemnionym zdjęciu w fazie postoju: na Produktach akapit min. 2,32 : 1, na CARBOMAT ECO zmierzone minimum akapitu spada z 1,78 na 1,19 (mediana z 6,40 na 5,26), stan końcowy pasa bez zmian. Kukurydza (zamykajacy) i O nas (kontakt) zostają na module bazowym – przejście na pozny-wzrost do decyzji. Wariant zielen-i-scrim (20.09.2026) linkuje wyłącznie carbomat.html: to nadpisania w carbomat.css zamknięte w #uprawy-profesjonalne, bez nowego modułu i bez znacznika data-ce-wariant – pas nadal niesie data-ce-wariant=„pozny-wzrost”, a ce/CE-16-pas-pro*.* i pozostałe strony zostają nietknięte; spec carbomat-eco-spec §16.7. Zdjęcie eco-pro-sad.jpg zastępuje img/foto/pro.jpg tylko tutaj – ten sam plik niosą jeszcze o-firmie.html i produkty.html. Nowy kadr jest jaśniejszy, więc scrim przeniesiono na cały pas z podłogą .55: kontrast akapitu w postoju rośnie z 1,19 na 5,58, czyli otwarta u Mateusza pozycja kontrastu dotyczy już tylko stron bez tego nadpisania. Wariant kadr-z-prawej (28.09.2026) to ta sama rola na starszej implementacji z kitu: strony sklepu nie ładują ce/CE-16-pas-pro.* ani ce/00-base.css; trzy akcje (oferta, logowanie do platformy, konto) wg spec sklep-v7-spec §5.5 i §6.7. Przejście na moduł klocka – przy fali 2b.",
       "zrzut": {
         "maxh": 900
+      },
+      "zrzuty_wariantow": {
+        "kadr-z-prawej": {
+          "plik": "v7/pdp.html",
+          "kotwica": "dla-profesjonalistow",
+          "maxh": 700
+        }
       }
     },
     "CE-17": {
@@ -540,8 +562,8 @@ window.CW_CE = {
         "kotwica": "faq"
       },
       "kod": {
-        "css": "ce/CE-17-faq.css",
-        "js": "ce/CE-17-faq.js"
+        "css": "ce/CE-17-faq.css; wariant informacje: pdp.css (c5pd-info, c5pd-acc)",
+        "js": "ce/CE-17-faq.js; wariant informacje: brak (natywne details)"
       },
       "czesci": [
         "kicker + h2",
@@ -550,11 +572,20 @@ window.CW_CE = {
       "warianty": {
         "z-nota": "nota o statusie odpowiedzi między nagłówkiem a akordeonem (CARBOHUMIC)",
         "dla-dociekliwych": "wariant c5-faq--plain: pytanie nad odpowiedzią, pełna szerokość, h4 i przycisk do Centrum wiedzy (Produkty, dawny CE-42)",
-        "plain": "trzy pytania pod artykułem, odpowiedzi ze zdań tekstu (artykul.html#faq)"
+        "plain": "trzy pytania pod artykułem, odpowiedzi ze zdań tekstu (artykul.html#faq)",
+        "informacje": "trzy akordeony informacji o produkcie na pełną szerokość szerokiego kontenera, pod górną częścią karty produktu sklepu (pdp.html, pdp-kwasny.html; od 28.09.2026, wzór on.com): czarna linia 1 px nad i pod każdą pozycją, tytuł wersalikami z rozstrzeleniem .08 em, plus po prawej (minus po otwarciu), bez kickera i nagłówka sekcji. Natywne details: wszystkie zwinięte na starcie, dowolna liczba otwartych naraz, wysokość otwarcia animowana przez ::details-content (bez animacji przy reduced-motion). W treści tabela parametrów z wierszem metali ciężkich i źródłem, akapit o wysyłce i przyciski dokumentów PDF"
       },
-      "uwagi": "Moduł „zadaj pytanie” zdjęty 13.09. Jeden moduł ce/CE-17-faq.js obsługuje kilka akordeonów na stronie (zakres per blok).",
+      "uwagi": "Moduł „zadaj pytanie” zdjęty 13.09. Jeden moduł ce/CE-17-faq.js obsługuje kilka akordeonów na stronie (zakres per blok). Wariant informacje (28.09.2026) ma własną mechanikę natywnych details i nie linkuje ce/CE-17-faq.* – strony sklepu stoją na kicie c5.css.",
       "zrzut": {
         "maxh": 900
+      },
+      "zrzuty_wariantow": {
+        "informacje": {
+          "plik": "v7/pdp.html",
+          "kotwica": "informacje",
+          "klik": "#informacje details:nth-of-type(2) > summary",
+          "maxh": 500
+        }
       }
     },
     "CE-18": {
@@ -618,8 +649,8 @@ window.CW_CE = {
         "kotwica": "jaka-gleba-kafle"
       },
       "kod": {
-        "css": "per strona: c5-mt-grid, c5hu-tiles/c5hu-mix, c5pr-goals/c5pr-foliar/c5pr-read, u-cards/u-rules, pp-cards/pp-tiles/pp-rels/pp-charts",
-        "js": "reveal: ce/00-base.js ===== 02 (dawne moduły 72 na Carbohumic i Produktach oraz 02 na Próchnicy+ zeszły do warstwy wspólnej 14.09.2026), u-reveal (uprawa.js)"
+        "css": "per strona: c5-mt-grid, c5hu-tiles/c5hu-mix, c5pr-goals/c5pr-foliar/c5pr-read, u-cards/u-rules, pp-cards/pp-tiles/pp-rels/pp-charts; sklep: pdp.css (c5pd-also, c5pd-connect, c5pd-pairs), koszyk.css (c5ks-more, c5ks-rec)",
+        "js": "reveal: ce/00-base.js ===== 02 (dawne moduły 72 na Carbohumic i Produktach oraz 02 na Próchnicy+ zeszły do warstwy wspólnej 14.09.2026), u-reveal (uprawa.js); sklep: pdp.js ===== 2 (ceny „od … zł”), koszyk.js (dobór „Dorzuć do zamówienia”), przyciski otwierają szybki podgląd z sklep-wspolne.js (CE-76)"
       },
       "czesci": [
         "karty: ikona / numer / zdjęcie / packshot",
@@ -640,11 +671,32 @@ window.CW_CE = {
         "miejsca-na-wykresy": "numer, placeholder 16:9, podpis",
         "szerokie": "dwie szerokie karty obok siebie w ramce 1 px: ramka ikony, tytuł, zdanie i strzałka w rogu; cały kafel jest linkiem, na hover i fokus tło o ton ciemniejsze i strzałka o 4 px w prawo, poniżej 900 px jeden kafel pod drugim",
         "czytaj-dalej": "trzy karty: dwa artykuły i jedna strona komercyjna (artykul.html#dalej-karty)",
-        "szklane": "karty ze szkła na zdjęciu w tle sekcji: rozmycie tła pod kartą (backdrop-filter), półprzezroczyste jasne wypełnienie, jasny obrys, biały tekst, ostre narożniki (Próchnica+ #rzetelnosc-kafle, od 19.09.2026)"
+        "szklane": "karty ze szkła na zdjęciu w tle sekcji: rozmycie tła pod kartą (backdrop-filter), półprzezroczyste jasne wypełnienie, jasny obrys, biały tekst, ostre narożniki (Próchnica+ #rzetelnosc-kafle, od 19.09.2026)",
+        "sklepowe": "karty produktów sklepu – „Zobacz też” na karcie produktu (pdp.html, pdp-kwasny.html; od 28.09.2026): nagłówek sekcji i cztery karty jak na liście produktów – kadr 1 : 1 z makietą opakowania na jasnoszarym tle, nazwa, cena „od … zł” (przy obniżce z najniższą ceną z 30 dni), ciemny przycisk „Dodaj do koszyka” na całą szerokość karty, który otwiera szybki podgląd (CE-76); każda karta niesie własny JSON w data-cw-product. Od 900 px cztery kolumny, niżej rząd przewijany w poziomie ze scroll-snap. Nazwa jest linkiem tylko przy produkcie z własną kartą (druga odmiana CARBOMAT ECO)",
+        "dorzuc": "„Dorzuć do zamówienia” pod koszykiem (koszyk.html; od 28.09.2026): nagłówek, zdanie i do czterech kart sklepowych z jasnym przyciskiem „Dodaj do koszyka” (kasa zostaje jedynym ciemnym przyciskiem strony). Karty rysuje koszyk.js: dla każdego produktu z koszyka pierwszy produkt stosowany razem z nim, którego w koszyku jeszcze nie ma, braki dopełnia stała lista „najczęściej wybierane”; przy pustym koszyku sama lista stała pod nagłówkiem „Najczęściej wybierane” z notą. Przeliczenie po każdej zmianie koszyka; dwie kolumny poniżej 900 px, cztery od 900 px",
+        "polacz-z": "„Połącz z” w kolumnie zakupu karty produktu (pdp.html, pdp-kwasny.html; od 28.09.2026, zagnieżdżony w CE-82): pod przyciskiem „Dodaj do koszyka”, za linią – nagłówek, zdanie i rząd dwóch małych kart: pasek miniatury 132 px na jasnoszarym tle, nazwa, jedno zdanie, cena „od …” i jasny przycisk „+ Dodaj”, który otwiera szybki podgląd (CE-76); rząd przewija się w poziomie ze scroll-snap, gdy karty się nie mieszczą"
       },
-      "uwagi": "Najczęstszy klocek serwisu (ponad 20 wystąpień) z osobnymi klasami na każdej stronie – pierwszy kandydat do konsolidacji kodu (faza 2).",
+      "uwagi": "Najczęstszy klocek serwisu (ponad 20 wystąpień) z osobnymi klasami na każdej stronie – pierwszy kandydat do konsolidacji kodu (faza 2). Warianty sklepowe, dorzuc i polacz-z (28.09.2026) dzielą anatomię karty z kartą listy produktów w CE-78 (kadr z makietą opakowania, nazwa, cena, przycisk szybkiego podglądu) – kandydat na element interfejsu w style guide.",
       "zrzut": {
         "maxh": 900
+      },
+      "zrzuty_wariantow": {
+        "sklepowe": {
+          "plik": "v7/pdp.html",
+          "kotwica": "zobacz-tez",
+          "maxh": 800
+        },
+        "dorzuc": {
+          "plik": "v7/koszyk.html",
+          "kotwica": "dorzuc",
+          "klik": "[data-ks-sample]",
+          "maxh": 800
+        },
+        "polacz-z": {
+          "plik": "v7/pdp.html",
+          "kotwica": "polacz-z",
+          "maxh": 600
+        }
       }
     },
     "CE-21": {
@@ -709,7 +761,7 @@ window.CW_CE = {
         "kotwica": "wg-potrzeby-pas"
       },
       "kod": {
-        "css": "per strona: c5-cmp2__cta, c5-mt-cross, c5-proofs__cta, c5pr-bar, c5-who__note; wariant ciemny: c5h-cfg w home.css ===== 60",
+        "css": "per strona: c5-cmp2__cta, c5-mt-cross, c5-proofs__cta, c5pr-bar, c5-who__note; wariant ciemny: c5h-cfg w home.css ===== 60; wariant cichy: sklep.html <style> (c5sk-hurt)",
         "js": "brak"
       },
       "czesci": [
@@ -725,7 +777,8 @@ window.CW_CE = {
         "kreski-gora-dol": "bez ikony, kreski góra i dół (Mata cross-sell)",
         "dwa-przyciski": "tekst i dwa przyciski, tylko kreska górna",
         "z-naglowkiem": "h4 w lewej kolumnie, tekst i przycisk w prawej",
-        "ciemny": "pas na najciemniejszym tokenie, jasny tekst, na całą szerokość kontenera zamiast kresek: po lewej (7 kolumn) kicker w ramce o jasnym obrysie, h3 i akapit, po prawej (5 kolumn, wyrównanie do prawej krawędzi) dyskretny motyw z linii – cztery puste pola-kroki połączone kreską, bez podpisów – główny przycisk w wersji jasnej (c5-btn--inv) i pod nim cichy link. Jedyna ciemna płaszczyzna swojej sekcji, więc mówi, gdzie zaczyna się wybieranie. Statyczny; poniżej 900 px jedna kolumna, prawa strona schodzi pod tekst i wyrównuje się do lewej. Obrys kickera i pierścienie fokusu przechodzą na wersje jasne."
+        "ciemny": "pas na najciemniejszym tokenie, jasny tekst, na całą szerokość kontenera zamiast kresek: po lewej (7 kolumn) kicker w ramce o jasnym obrysie, h3 i akapit, po prawej (5 kolumn, wyrównanie do prawej krawędzi) dyskretny motyw z linii – cztery puste pola-kroki połączone kreską, bez podpisów – główny przycisk w wersji jasnej (c5-btn--inv) i pod nim cichy link. Jedyna ciemna płaszczyzna swojej sekcji, więc mówi, gdzie zaczyna się wybieranie. Statyczny; poniżej 900 px jedna kolumna, prawa strona schodzi pod tekst i wyrównuje się do lewej. Obrys kickera i pierścienie fokusu przechodzą na wersje jasne.",
+        "cichy": "jedno zdanie drobnym drukiem (13 px) z linkiem w tekście zamiast przycisku, na jasnoszarym pasie na całą szerokość okna z linią pod spodem, tekst w szerokim kontenerze; bez ikony i kresek (sklep.html, nad listą produktów: „Kupujesz w większych ilościach albo potrzebujesz stałych dostaw? Zapytaj o ofertę”; od 28.09.2026, spec sklep-v7-spec §5.5 i §12.3)"
       },
       "uwagi": "Pięć różnych klas o tym samym kształcie – kandydat do jednej klasy w fazie 2.",
       "zrzut": {
@@ -736,6 +789,11 @@ window.CW_CE = {
           "plik": "v7/home.html",
           "kotwica": "uprawy-konfigurator",
           "maxh": 420
+        },
+        "cichy": {
+          "plik": "v7/sklep.html",
+          "kotwica": "pasek-hurtowy",
+          "maxh": 120
         }
       }
     },
@@ -2145,6 +2203,294 @@ window.CW_CE = {
       "uwagi": "Zbudowany dla nowej strony głównej (spec home-spec.md §5.8). Oś mówi tym samym językiem co CE-49 i CE-51 (stany kamieni, znacznik „jesteśmy tutaj”), ale jest zajawką, nie harmonogramem: pięć punktów bez mechaniki otwierania. Liczby świadomie bez EL-31 (c5-aff) – sufiks podnosi się do górnej krawędzi cyfr tylko przy naprawdę dużej liczbie. Chip opisu logo korzysta z klasy strony c5h-phchip; na stronie bez niej zostaje zwykły c5-chip--dashed. Na razie jedno wystąpienie.",
       "zrzut": {
         "maxh": 1100
+      }
+    },
+    "CE-76": {
+      "nazwa": "Szybki podgląd produktu",
+      "grupa": "nakladki",
+      "opis": "Okno ze skrótem karty produktu, otwierane przyciskami „dodaj do koszyka” w całym sklepie. Od 900 px panel do 1040 px w dwóch kolumnach 11 : 10: po lewej kwadratowy kadr z makietą wybranego opakowania na jasnoszarym tle (dwie makiety przy zestawie, pole zastępcze przy produktach partnerów), przyklejony, gdy formularz przewija się w panelu; po prawej meta, nazwa (H2), cena z obniżką i najniższą ceną z 30 dni, jedno–dwa zdania opisu, link „Zobacz pełną kartę produktu”, przełącznik odmiany (pH), opakowania z cenami, frakcja z podpowiedzią, liczba opakowań, suma, „Dodaj do koszyka” z „Anuluj” i zdanie o wysyłce. Poniżej 900 px jedna kolumna z niskim paskiem makiety nad treścią, poniżej 600 px arkusz przy dolnej krawędzi ekranu. Po dodaniu okno przechodzi w stan „Dodano do koszyka”: miniatura, nazwa, opakowanie × liczba i wartość, stan koszyka, „Przejdź do koszyka” i „Kontynuuj zakupy”.",
+      "mechanika": "Otwiera je każdy element data-cw-open wewnątrz hosta data-cw-product (delegacja kliknięć; data-cw-pack wybiera opakowanie na start) albo CWSklep.open(). Okno powstaje w skrypcie przy pierwszym otwarciu i jest dopinane na końcu body. Fokus na wybranym opakowaniu, pułapka fokusu, Escape, klik w tło i „Anuluj” zamykają, fokus wraca na przycisk, który je otworzył; przewijanie strony zablokowane (cws-lock). Przełącznik odmiany przerysowuje okno w miejscu, gdy druga odmiana ma hosta na stronie (zachowuje opakowanie, liczbę i frakcję), inaczej jest linkiem do jej karty z kotwicą opakowania. Zmiana opakowania podmienia makietę, cenę i kotwicę linku do pełnej karty, suma liczy się na bieżąco; link do pełnej karty znika, gdy karta jest bieżącą stroną. „Dodaj do koszyka” zapisuje pozycję (sessionStorage cw_cart_items), odświeża licznik w nagłówku i wysyła zdarzenie cw:cart.",
+      "baza": {
+        "plik": "v7/sklep-wspolne.js",
+        "kotwica": "szybki-podglad"
+      },
+      "kod": {
+        "css": "sklep-wspolne.css (cws-dlg, cws-qv, cws-packs, cws-qty, cws-price, cws-btn)",
+        "js": "sklep-wspolne.js (build, open, renderForm, renderAdded, close; API window.CWSklep)"
+      },
+      "czesci": [
+        "nakładka z przyciemnieniem",
+        "panel z przyciskiem zamknięcia",
+        "kadr z makietą wybranego opakowania",
+        "meta, nazwa i cena z obniżką",
+        "opis i link do pełnej karty",
+        "przełącznik odmiany (pH)",
+        "opakowania z cenami",
+        "frakcja z podpowiedzią",
+        "liczba opakowań i suma",
+        "„Dodaj do koszyka”, „Anuluj” i zdanie o wysyłce",
+        "stan „Dodano do koszyka”"
+      ],
+      "warianty": {},
+      "uwagi": "Element wspólny sklepu budowany skryptem: znacznik data-ce stoi w sklep-wspolne.js (funkcja build), jak nagłówek w chrome.js, więc CE występuje na każdej stronie, która ładuje ten skrypt – dziś lista produktów, obie karty CARBOMAT ECO i koszyk. Wyzwalacze: „dodaj do koszyka” na kartach listy i w kaflu promocyjnym, „+” w podpowiedziach wyszukiwarki, „Dodaj” w „Połącz z”, karty „Zobacz też” i „Dorzuć do zamówienia”. Zastąpił w rundzie 3 (28.09.2026) okno „Dodaj do koszyka” z rundy 2 (spec sklep-v7-spec §12.2, wątek L19); ten sam komponent ma później uprościć zakup na stronach produktowych (spec §2).",
+      "zrzut": {
+        "strona": "v7/sklep.html",
+        "klik": ".c5sk-card[data-sort-nazwa=\"CARBOMAT ECO pH 6,0–6,5\"] [data-cw-open]",
+        "maxh": 800
+      }
+    },
+    "CE-77": {
+      "nazwa": "Pasek tytułowy",
+      "grupa": "otwarcie",
+      "opis": "Niski pasek otwierający stronę sklepu zamiast hero, w szerokim kontenerze (EL-29) z linią pod spodem: po lewej okruszki i pod nimi H1 w osobnym wierszu (1,35–1,75 rem), po prawej narzędzie strony – w wersji bazowej wyszukiwarka produktów: pole 48 px (do 520 px od 900 px) z ikoną lupy i animowanym placeholderem oraz panel podpowiedzi pod polem. Wysokość wg treści (ok. 90 px), żeby pierwsza karta listy stała jak najwyżej.",
+      "mechanika": "Wyszukiwarka szuka tylko produktów sklepu. Placeholder „Szukaj: ” dopisuje i kasuje frazy po literze z migającym kursorem, staje przy fokusie i przy wpisanym tekście, przy reduced-motion zostaje stały tekst; nazwa dostępna pola jest stała. Od dwóch znaków panel podpowiedzi (niemodalny popup comboboxa): do sześciu produktów z miniaturą 56 px, nazwą z wyróżnioną frazą, meta i ceną „od …”; klik prowadzi do karty produktu, „+” otwiera szybki podgląd (CE-76). W zawężonym widoku wiersz o dopasowaniach poza bieżącym widokiem z przyciskiem „Szukaj w całym sklepie”; bez wyników zdanie i „Zapytaj wirtualnego asystenta”. Wpisywanie nie przestawia siatki – dopiero Enter albo stopka „Pokaż wszystkie wyniki (N)” nakłada frazę na listę (chip filtra w CE-78) i przewija do listy. Strzałka w dół przenosi do panelu, strzałki poruszają po pozycjach, Escape zamyka i wraca do pola (aria-expanded, aria-controls). Poniżej 700 px okruszki znikają, a pole zajmuje całą szerokość.",
+      "baza": {
+        "plik": "v7/sklep.html",
+        "kotwica": "hero"
+      },
+      "kod": {
+        "css": "sklep.html <style> bloki „2. PASEK TYTUŁOWY” i wyszukiwarka (c5sk-topbar, c5sk-search, c5sk-suggest); wariant z-licznikiem: koszyk.css (c5ks-top)",
+        "js": "sklep.html <script> (wyszukiwarka, placeholder, podpowiedzi); wariant z-licznikiem: koszyk.js (licznik opakowań)"
+      },
+      "czesci": [
+        "okruszki",
+        "H1",
+        "wyszukiwarka z animowanym placeholderem",
+        "panel podpowiedzi: produkty z miniaturą i „+”, stopka „Pokaż wszystkie wyniki”",
+        "liczba opakowań obok H1 (wariant z-licznikiem)"
+      ],
+      "warianty": {
+        "z-licznikiem": "koszyk (koszyk.html#naglowek, od 28.09.2026): okruszki, pod nimi H1 „Koszyk” większym krojem (1,75–2,5 rem), a obok, na linii bazowej, liczba opakowań w koszyku („6 opakowań”; ukryta przy pustym koszyku, liczona przez koszyk.js); bez wyszukiwarki, linia pod spodem jak w bazie"
+      },
+      "uwagi": "Zbudowany dla sklepu (spec sklep-v7-spec §12.8 – wyszukiwarka, §12.16 – H1 w osobnym wierszu pod okruszkami). Sklep jest listą produktów, nie stroną o sklepie, więc otwarciem jest niski pasek, nie hero CE-08. Identyfikator hero wymagany przez c5.js (od niego zależy moment pojawienia się doku doradcy).",
+      "zrzut": {
+        "maxh": 200
+      },
+      "zrzuty_wariantow": {
+        "z-licznikiem": {
+          "plik": "v7/koszyk.html",
+          "kotwica": "naglowek",
+          "klik": "[data-ks-sample]",
+          "maxh": 200
+        }
+      }
+    },
+    "CE-78": {
+      "nazwa": "Lista produktów z filtrami",
+      "grupa": "dane",
+      "opis": "Cała powierzchnia wyboru produktów sklepu w szerokim kontenerze. U góry pas grup: nagłówek „Wybierz uprawę lub potrzebę”, pastylki z okrągłym zdjęciem, etykietą i licznikiem oraz link do konfiguratora po prawej; pod nim przyklejony pasek roboczy – przełącznik kolumny filtrów z liczbą aktywnych, licznik „Pokazujemy N z N produktów”, przycisk szuflady filtrów i sortowanie. Niżej od 1000 px kolumna filtrów 280 px (11 grup: pięć rozwiniętych na wierzchu, sześć pod „Pokaż wszystkie filtry”; przy każdej opcji licznik) obok siatki trzech kolumn kart produktu; nad siatką wiersz aktywnych filtrów z chipami i „Resetuj wszystkie filtry”, podpowiedź „Zawęź dalej”, pas przywracania filtrów i zdanie wykluczające, pod siatką pusty stan i rozwijany pas „Poza wynikami”. Karta: kadr 1 : 1 z makietą opakowania na jasnoszarym tle, znacznik „promocja”, pastylki opakowań, linia meta, nazwa, cena „od …” (przy obniżce cena, przekreślona regularna, „−9%” i najniższa cena z 30 dni) i „dodaj do koszyka” na całą szerokość karty.",
+      "mechanika": "Stan listy = grupa (wybór jednokrotny; pastylka to przycisk przełączający z aria-pressed, ponowny klik zdejmuje wybór) + fasety (wybór wielokrotny) + zakres ceny + fraza z wyszukiwarki (CE-77) + sortowanie. Każdy aktywny filtr ma chip z „×”, grupa jest pierwszym chipem. Liczniki przy pastylkach i opcjach liczone na żywo; opcja o wyniku 0 jest wygaszona, nigdy ukryta; produkt zdjęty z listy dostaje zdanie w „Poza wynikami”, reguła twarda – zdanie nad siatką. Sortowanie „Polecane”, „Nazwa A–Z”, „Cena rosnąco” i filtr ceny liczą cenę po obniżce. Stan w adresie (polka, f, q, cena_od, cena_do, sort) – świadome akcje przez pushState, Wstecz i Dalej odtwarzają widok. Od 1000 px przycisk „Ukryj filtry / Pokaż filtry” zwija kolumnę (siatka zostaje trzykolumnowa na całej szerokości), stan pamiętany w sesji, domyślny z data-filters-default; kolumna filtrów przyklejona pod paskiem roboczym. Poniżej 1000 px filtry to szuflada na pełny ekran z przyciskiem „Pokaż produkty”, siatka ma dwie kolumny, a poniżej 900 px pas grup przewija się w poziomie (kółka 56 px, scroll-snap). Karta: pastylki opakowań na kadrze po najechaniu albo przy fokusie (wskaźnik z kursorem, od 600 px), w pozostałych przypadkach stale pod kadrem; pastylka prowadzi do karty produktu z kotwicą opakowania; na kartach rodziny CARBOMAT ECO druga klatka z fakturą przenika się ze zdjęciem opakowania po najechaniu; „dodaj do koszyka” otwiera szybki podgląd (CE-76). W widoku bez zawężenia w siatkę wplecione są kafle promocyjne (CE-79).",
+      "baza": {
+        "plik": "v7/sklep.html",
+        "kotwica": "lista"
+      },
+      "kod": {
+        "css": "sklep.html <style> bloki 3–10 (c5sk-needsbar, c5sk-bar, c5sk-facets, c5sk-chips, c5sk-grid, c5sk-card, c5sk-empty, c5sk-outside) + sklep-wspolne.css (ceny cws-price)",
+        "js": "sklep.html <script> (stan, fasety, liczniki, sortowanie, adres, zwijanie kolumny, szuflada, pastylki opakowań) + sklep-wspolne.js (ceny, szybki podgląd)"
+      },
+      "czesci": [
+        "pas grup: nagłówek, pastylki ze zdjęciem i licznikiem, link do konfiguratora",
+        "przyklejony pasek roboczy: przełącznik kolumny filtrów, licznik, szuflada, sortowanie",
+        "kolumna filtrów: 11 grup z licznikami opcji, filtr ceny z presetami",
+        "wiersz aktywnych filtrów, „Zawęź dalej”, pas przywracania, zdanie wykluczające",
+        "siatka kart produktu (22 karty)",
+        "karta: kadr z makietą, znacznik, pastylki opakowań, meta, nazwa, cena, przycisk",
+        "kafle promocyjne (CE-79, zagnieżdżone)",
+        "pusty stan",
+        "pas „Poza wynikami”"
+      ],
+      "warianty": {},
+      "uwagi": "Jeden klocek, bo pas grup, pasek roboczy, kolumna filtrów i siatka są sprzężone mechanicznie (zasada jak przy CE-40 i CE-57): grupa jest filtrem jak każdy inny, a licznik, sortowanie i zwijanie kolumny działają tylko z tą listą. Korzeń to sekcja #lista, a data-ce-od=„#grupy” przesuwa początek na pas grup – nie na przyklejony pasek roboczy, którego położenie zmienia się przy przewijaniu. Spec sklep-v7-spec §5, §12.3–§12.6, §12.14 pkt 5 i §12.16; model danych listy i zasada „żaden atrybut nie jest pusty” – spec sklep-lista-produktow-spec. Ceny poglądowe.",
+      "zrzut": {
+        "maxh": 1400
+      }
+    },
+    "CE-79": {
+      "nazwa": "Kafel promocyjny w siatce",
+      "grupa": "karty",
+      "opis": "Kafel redakcyjny wpleciony w siatkę listy produktów między karty. Dwie rodziny wyglądu: kafle na zdjęciu albo filmie (ciemne tło, obraz cover pod gradientem przyciemniającym, biały tekst: opcjonalny kicker wersalikami, nagłówek, zdanie i jasny przycisk) oraz kafel w miejscu produktu (obrys i rozmiar karty: kadr 1 : 1, pod nim wyśrodkowany nagłówek większy niż nazwa produktu, jedno zdanie i przycisk-link wersalikami z kreską pod spodem). Żaden kafel nie prowadzi poza sklep.",
+      "mechanika": "Skrypt listy wstawia każdy kafel za N-tym produktem bieżącej kolejności (data-tile-after), więc sortowanie zostawia kafle na miejscach, a grid-auto-flow: dense zamyka komórkę, którą zostawia kafel wielokolumnowy. Kafle widać tylko w widoku bez zawężenia (bez grupy, faset, zakresu ceny i frazy); licznik „Pokazujemy N z N” liczy wyłącznie produkty. Przycisk kafla na zdjęciu włącza grupę (data-tile-shelf) i przewija do początku listy, przycisk kafla promocyjnego otwiera szybki podgląd (CE-76) z wybranym opakowaniem (data-cw-pack). Film gra bez dźwięku w pętli tylko w widoku (IntersectionObserver, 35 % kafla) i nigdy sam przy reduced-motion – wtedy plakat; przycisk odtwarzania i pauzy działa zawsze. Na siatce dwukolumnowej (poniżej 1000 px) baner, film i baner dwukolumnowy zajmują całą szerokość.",
+      "baza": {
+        "plik": "v7/sklep.html",
+        "kotwica": "kafel-borowka"
+      },
+      "kod": {
+        "css": "sklep.html <style> blok „Promo tiles” (c5sk-tile, c5sk-tile--wide / --video / --slot / --half)",
+        "js": "sklep.html <script> (placeTiles, akcje kafli, film)"
+      },
+      "czesci": [
+        "obraz albo film pod gradientem",
+        "kicker (opcjonalnie)",
+        "nagłówek",
+        "zdanie",
+        "przycisk",
+        "przycisk odtwarzania i pauzy (film)",
+        "kadr 1 : 1 z makietą albo zdjęciem (kafel w miejscu produktu)",
+        "znacznik „promocja”, „−9%” i najniższa cena z 30 dni (kafel promocyjny)"
+      ],
+      "warianty": {
+        "baner": "zdjęcie na całą szerokość siatki (po 6. produkcie), gradient od lewej, kicker, nagłówek i jasny przycisk po lewej; wysokość 240–360 px",
+        "wideo": "film na 2 × 2 komórki od 1000 px (po 8. produkcie; przez dense wizualnie po 9.), niżej 16 : 9 na całą szerokość, poniżej 600 px 1 : 1; nagłówek, zdanie i przycisk na filmie, kwadratowy przycisk odtwarzania i pauzy w prawym górnym rogu",
+        "dwie-kolumny": "zdjęcie na dwie prawe kolumny siatki (po 15. produkcie; wizualnie po 16.), nagłówek, zdanie i jasny przycisk u dołu",
+        "w-miejscu-produktu": "kafel o obrysie i rozmiarze karty produktu: kadr 1 : 1 z makietą opakowania na jasnoszarym tle, znacznikiem „promocja” i dużym „−9%” (kafel promocyjny po 12. produkcie, z najniższą ceną z 30 dni pod nagłówkiem) albo ze zdjęciem cover („Ściółka zamiast kory” po 18. produkcie); pod kadrem wyśrodkowany nagłówek, zdanie i przycisk-link wersalikami"
+      },
+      "uwagi": "Zbudowany dla listy produktów (spec sklep-v7-spec §12.4 i §12.14 pkt 6, wzór on.com); pięć wystąpień w czterech wariantach, wszystkie zagnieżdżone w CE-78. Film img/wideo/narodziny-lignitu.mp4 z plakatem.",
+      "zrzut": {
+        "ukryj": ".c5sk-bar",
+        "maxh": 800
+      },
+      "zrzuty_wariantow": {
+        "wideo": {
+          "plik": "v7/sklep.html",
+          "kotwica": "kafel-film"
+        },
+        "dwie-kolumny": {
+          "plik": "v7/sklep.html",
+          "kotwica": "kafel-oprysk",
+          "maxh": 600
+        },
+        "w-miejscu-produktu": {
+          "plik": "v7/sklep.html",
+          "kotwica": "kafel-promocja",
+          "maxh": 600
+        }
+      }
+    },
+    "CE-80": {
+      "nazwa": "Wstęp z linią zaufania",
+      "grupa": "otwarcie",
+      "opis": "Krótki blok tekstowy w szerokim kontenerze: nagłówek H2, lead na mierze ok. 70 znaków i pod nim linia zaufania – trzy krótkie sygnały drobnym drukiem w jednym rzędzie, rozdzielone cienkimi pionowymi kreskami.",
+      "mechanika": "Statyczny; na wąskim ekranie sygnały zawijają się do kolejnych wierszy.",
+      "baza": {
+        "plik": "v7/sklep.html",
+        "kotwica": "o-sklepie"
+      },
+      "kod": {
+        "css": "c5.css (c5-head, c5-h2, c5-lead, c5-trust) + sklep.html <style> (miara leadu c5sk-about)",
+        "js": "brak"
+      },
+      "czesci": [
+        "nagłówek H2",
+        "lead",
+        "linia zaufania: trzy sygnały z kreskami"
+      ],
+      "warianty": {},
+      "uwagi": "Na liście produktów „O sklepie” – lead i sygnały zaufania zdjęte z góry strony pod listę (zasada: nad listą tylko to, co listę zmienia); kolejność pod listą: ten blok, pas PRO, baner „Nie wiesz, jaki produkt wybrać?” (spec sklep-v7-spec §12.7). Linia zaufania to klasa kitu c5-trust z dawnego hero V5. Na razie jedno wystąpienie.",
+      "zrzut": {
+        "ukryj": ".c5sk-bar",
+        "maxh": 500
+      }
+    },
+    "CE-81": {
+      "nazwa": "Baner CTA ze zdjęciem",
+      "grupa": "noty-i-cta",
+      "opis": "Jasnoszary panel w szerokim kontenerze, od 900 px w dwóch równych kolumnach: po lewej, wyśrodkowane w pionie, nagłówek H2, lead (do 60 znaków w wierszu) i rząd dwóch przycisków – ciemny „Zapytaj wirtualnego asystenta” i jasny „Dobierz produkt do swojej uprawy”; po prawej zdjęcie cover na całą wysokość panelu (min. 420 px). Poniżej 900 px jedna kolumna ze zdjęciem 16 : 10 pod tekstem.",
+      "mechanika": "Statyczny. Przycisk asystenta otwiera dok doradcy (data-jurek-open – cw.js wiąże go przy starcie strony, więc przycisk musi stać w HTML), drugi prowadzi do konfiguratora.",
+      "baza": {
+        "plik": "v7/sklep.html",
+        "kotwica": "pomoc"
+      },
+      "kod": {
+        "css": "sklep.html <style> blok „SEKCJE POD LISTĄ” (c5sk-help)",
+        "js": "cw.js (data-jurek-open)"
+      },
+      "czesci": [
+        "nagłówek H2",
+        "lead",
+        "rząd dwóch przycisków",
+        "zdjęcie"
+      ],
+      "warianty": {},
+      "uwagi": "Zastąpił na liście produktów wyśrodkowane CTA końcowe i sekcję z polem pytania do wirtualnego doradcy (spec sklep-v7-spec §12.7, wątki L14 i L15; bez przycisku kontaktu – kontakt zostaje na stronie Kontakt). Układ jak CE-36 w wariancie odwróconym, ale na panelu i z CTA zamiast opisu produktu. Na razie jedno wystąpienie.",
+      "zrzut": {
+        "ukryj": ".c5sk-bar",
+        "maxh": 700
+      }
+    },
+    "CE-82": {
+      "nazwa": "Galeria z kolumną zakupu",
+      "grupa": "otwarcie",
+      "opis": "Górna część karty produktu sklepu w szerokim kontenerze. Od 900 px dwie kolumny 64 : 36: po lewej galeria jako poziomy slider – jeden duży kadr 1 : 1 (makiety opakowań na jasnoszarym tle w całości, zdjęcia cover), obok wystaje brzeg następnego, pod kadrem strzałki ← → i licznik „1 / 6”; po prawej okruszki i kolumna zakupu: kicker, H1, cena z obniżką i najniższą ceną z 30 dni, dwa zdania opisu z linkiem „Więcej o produkcie”, przełącznik odmiany (pH), opakowania z cenami, frakcja z podpowiedzią, liczba opakowań obok przycisku „Dodaj do koszyka”, komunikat po dodaniu, jedno zdanie o wysyłce, a pod nimi „Połącz z” (CE-20). Poniżej 900 px okruszki, slider na całą szerokość ekranu i kolumna zakupu pod nim.",
+      "mechanika": "Slider przewija się w bok ze scroll-snap (palec, gładzik, strzałki na zogniskowanym torze); przyciski przesuwają o jeden kadr, licznik i stan przycisków (aria-disabled na końcach) idą za przewijaniem. Od 900 px obie kolumny są przyklejone z logiką dwukierunkową: krótsza kolumna jedzie ze stroną, aż jej koniec dojdzie do dołu okna, i tam staje, dłuższa jedzie dalej; po zmianie kierunku odwrotnie (top liczony na bieżąco, przeliczenie przy zmianie rozmiaru i wysokości kolumny). Opcje i ceny rysowane z JSON-u data-cw-product kolumny – tego samego co na liście, w szybkim podglądzie i w koszyku. Druga odmiana pH jest linkiem do jej karty z kotwicą wybranego opakowania; kotwica #w20 / #bb1000 / #bb1500 wybiera opakowanie przy wejściu i przy hashchange, a zmiana opakowania zapisuje ją przez replaceState. „Dodaj do koszyka” zapisuje pozycję w koszyku (CWSklep.add) i ogłasza w regionie aria-live „Dodano: … W koszyku: N opakowań.” z linkiem do koszyka; od dwóch opakowań pod przyciskiem pojawia się suma. „Więcej o produkcie” przewija do CE-83 i ustawia fokus na jego nagłówku (bez płynności przy reduced-motion).",
+      "baza": {
+        "plik": "v7/pdp.html",
+        "kotwica": "hero"
+      },
+      "kod": {
+        "css": "pdp.css (c5pd-top, c5pd-gallery, c5pd-shots, c5pd-buycol, c5pd-buy, c5pd-opts) + sklep-wspolne.css (cws-qty, cws-price, cws-btn)",
+        "js": "pdp.js ===== 1 (kolumna zakupu), 3 (przyklejone kolumny), 4 („Więcej o produkcie”), 6 (slider) + sklep-wspolne.js (koszyk, ceny)"
+      },
+      "czesci": [
+        "okruszki",
+        "slider zdjęć: kadr 1 : 1, strzałki, licznik",
+        "kolumna zakupu: kicker, H1, cena z obniżką i najniższą ceną z 30 dni",
+        "dwa zdania opisu i „Więcej o produkcie”",
+        "przełącznik odmiany (pH), opakowania z cenami, frakcja",
+        "liczba opakowań i „Dodaj do koszyka”, komunikat po dodaniu, zdanie o wysyłce",
+        "„Połącz z” (CE-20, zagnieżdżony)"
+      ],
+      "warianty": {},
+      "uwagi": "Wzór on.com (spec sklep-v7-spec §12.14 pkt 1, nadrzędny wobec §12.9); dwa wystąpienia o tej samej strukturze – pdp.html (pH 6,0–6,5, karta wzorcowa, do której linkują pozostałe produkty listy) i pdp-kwasny.html (pH 4,5–5,0, jeden kadr to pole zastępcze zdjęcia do wygenerowania). Identyfikatory hero (c5.js) i kup zostają w HTML.",
+      "zrzut": {
+        "maxh": 900
+      }
+    },
+    "CE-83": {
+      "nazwa": "Opis w sekcjach z faktami",
+      "grupa": "przelaczniki",
+      "opis": "Pełny opis produktu na karcie sklepu, w szerokim kontenerze: nagłówek H2 i akapit wstępu, rząd czterech kluczowych faktów (ikona, etykieta wersalikami, duża wartość, linia pod spodem; od 900 px cztery w rzędzie, niżej 2 × 2), chipy „Sprawdzi się, gdy”, a dalej trzy sekcje rozdzielone liniami: „Co zyskujesz” (cztery kafle – kadr 4 : 3, tytuł, zdanie), „Jak stosować” (lista przepisów z linkiem do konfiguratora obok kadru) i „Najczęstsze pytania” (odpowiedź pod pytaniem). Od 900 px sekcja to dwie kolumny 1 : 3 – nagłówek H3 po lewej, przyklejony na czas sekcji, treść po prawej; na końcu zdanie z linkiem do pełnej strony produktu.",
+      "mechanika": "Od 900 px (i bez skryptu) wszystkie sekcje otwarte, nie ma nic do klikania ani do fokusu. Poniżej 900 px skrypt zamienia sekcje w akordeony: przycisk w H3 (aria-expanded) przełącza klasę is-open, pierwsza sekcja otwarta; wysokość animowana przez grid-template-rows 0fr ↔ 1fr, zamknięta treść poza kolejnością fokusu (visibility), bez atrybutu hidden. Stan przetrwa zmianę szerokości przez 900 px. Kafle i kadr „Jak stosować” układają się wg szerokości sekcji (container queries).",
+      "baza": {
+        "plik": "v7/pdp.html",
+        "kotwica": "o-produkcie"
+      },
+      "kod": {
+        "css": "pdp.css blok „O produkcie” (c5pd-about, c5pd-facts, c5pd-chips, c5pd-secs, c5pd-gains, c5pd-howto, c5pd-qas)",
+        "js": "pdp.js ===== 5 (akordeony poniżej 900 px)"
+      },
+      "czesci": [
+        "nagłówek H2 i akapit wstępu",
+        "rząd czterech faktów z ikonami",
+        "chipy „Sprawdzi się, gdy”",
+        "sekcja: nagłówek H3 (przycisk akordeonu na telefonie) i treść",
+        "kafle korzyści: kadr 4 : 3, tytuł, zdanie",
+        "lista przepisów z kadrem",
+        "pytania z odpowiedziami",
+        "zdanie z linkiem do strony produktu"
+      ],
+      "warianty": {},
+      "uwagi": "Wzór on.com (spec sklep-v7-spec §12.14 pkt 3 i §12.9 K13): na desktopie bez akordeonów, na telefonie akordeony. Cel linku „Więcej o produkcie” z kolumny zakupu (CE-82). Teksty wg spec §6.9. Dwa wystąpienia (pdp.html, pdp-kwasny.html).",
+      "zrzut": {
+        "maxh": 900
+      }
+    },
+    "CE-84": {
+      "nazwa": "Koszyk z podsumowaniem",
+      "grupa": "dane",
+      "opis": "Strona koszyka w szerokim kontenerze, od 900 px w dwóch kolumnach 7 : 5 (podsumowanie min. 340 px). Po lewej etykieta „Pozycje w koszyku” nad czarną linią i pozycje jako wiersze-karty rozdzielone liniami: kwadratowa miniatura 160 px (96 px na telefonie) z makietą opakowania na jasnoszarym tle, nazwa z linkiem do karty z kotwicą opakowania i „×” w prawym górnym rogu, pod nazwą opakowanie z frakcją i cena jednostkowa (przy obniżce przekreślona regularna, „−9%” i najniższa cena z 30 dni) ze stawką VAT, na dole krokomierz po lewej i wartość pozycji po prawej. Po prawej przyklejone podsumowanie: produkty, wysyłka kurierem z rozwijanym „Jak liczymy”, dostawa paletowa, „Razem do zapłaty (brutto)”, VAT osobno dla każdej stawki i wartość netto, noty i przyciski „Kontynuuj zakupy” oraz „Przejdź do kasy – suma”. Pusty koszyk: ikona, zdanie, „Przejdź do sklepu” i przycisk makiety „Wczytaj przykładowy koszyk”.",
+      "mechanika": "Wszystko rysuje koszyk.js ze wspólnego koszyka (CWSklep) i przelicza po każdej zmianie: krokomierz 1–99 (aria-disabled na końcach), „×” usuwa pozycję i na 6 s zostawia na jej miejscu pasek „Usunięto … – Cofnij” (pauza przy fokusie; przywrócenie przez CWSklep.restore), fokus przechodzi na następną pozycję albo na nagłówek pustego stanu. Kalkulator wysyłki układa opakowania w paczki od najcięższych do 30 kg (10 zł za paczkę), opakowania paletowe liczy sztukami (od 300 zł); wiersz palet tylko przy opakowaniach paletowych. VAT liczony osobno dla każdej stawki w koszyku, wysyłka rozkładana proporcjonalnie. Suma w przycisku kasy aktualizuje się na bieżąco, zmiany ogłasza jedyny region aria-live strony. Od 900 px podsumowanie przyklejone do góry (offset obniżany, gdy podsumowanie jest wyższe niż okno); przyciski obok siebie od 1200 px. Bez JS komunikat w noscript.",
+      "baza": {
+        "plik": "v7/koszyk.html",
+        "kotwica": "pozycje"
+      },
+      "kod": {
+        "css": "koszyk.css (c5ks-grid, c5ks-item, c5ks-undo, c5ks-empty, c5ks-sum) + sklep-wspolne.css (cws-qty, cws-price, cws-btn)",
+        "js": "koszyk.js (pozycje, cofanie, kalkulator wysyłki, VAT, przykładowy koszyk) + sklep-wspolne.js (koszyk, wysyłka, VAT)"
+      },
+      "czesci": [
+        "etykiety kolumn nad czarną linią",
+        "pozycja: miniatura, nazwa, „×”, opakowanie, cena jednostkowa, krokomierz, wartość",
+        "pasek „Usunięto – Cofnij”",
+        "podsumowanie: produkty, wysyłka z „Jak liczymy”, palety, razem brutto, VAT i netto",
+        "przyciski „Kontynuuj zakupy” i „Przejdź do kasy”",
+        "noty o wysyłce i VAT",
+        "pusty stan z przykładowym koszykiem"
+      ],
+      "warianty": {},
+      "uwagi": "Wzór stinegoya (spec sklep-v7-spec §7 i §12.10, wątki C1 i C2; stawki VAT §12.16). Parametry wysyłki i stawki VAT poglądowe (⚠️ w makiecie). Przycisk „Wczytaj przykładowy koszyk” istnieje tylko dla podglądu makiety. Pod blokiem „Dorzuć do zamówienia” – CE-20 w wariancie dorzuc.",
+      "zrzut": {
+        "klik": "[data-ks-sample]",
+        "maxh": 900
       }
     }
   },

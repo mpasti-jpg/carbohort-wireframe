@@ -77,6 +77,9 @@
 /* --- Dok dr Jurka: pojawia się po zejściu z hero ----------------------------- */
 .cw-jurek{transition:opacity .3s ease,visibility .3s ease;}
 .cw-jurek.cx-dockhide{opacity:0;visibility:hidden;pointer-events:none;}
+/* An opened dock stays visible above #hero too: buttons with data-jurek-open
+   (e.g. in the shop banner) must not open an invisible dock (28.09.2026). */
+.cw-jurek[data-open="true"].cx-dockhide{opacity:1;visibility:visible;pointer-events:auto;}
 
 /* Cel kotwicy po aktywacji linku „#" z klawiatury (00-base.js): bez obrysu na
    dużych kontenerach – fokus tylko przenosi czytanie, nie podświetla sekcji. */

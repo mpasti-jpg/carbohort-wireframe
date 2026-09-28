@@ -33,10 +33,10 @@
 
 <cw-navbar data-current="produkty"></cw-navbar>
 
-<!-- ===== Nawigacja po podstronie: kropki przy prawej krawędzi (scrollspy) =====
-     Zastępuje przyklejoną subnawigację z pigułkami i „kup teraz" (uwaga Mateusza
-     13.09). Etykiety pokazują się po najechaniu na cały nav; poniżej 900 px nav
-     jest ukryty. -->
+
+
+
+
 <nav id="nawigacja-kropki" class="c5-dots" aria-label="Rozdziały strony CARBOMAT ECO" data-dots data-ce="CE-07">
   <ol>
     <li><a class="c5-dots__link" href="#hero" data-dot="hero"><span class="c5-dots__label">Start</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
@@ -52,18 +52,18 @@
 
 <main id="main">
 
-  <!-- ===== 1. HERO (makieta: „carbomat eco – hero") =====
-       Copy 1:1 z „Produkty na stronę" 24.07 (poprawiona literówka „beż"→„bez").
-       Iteracja 3 (spec §13.2): hero zajmuje cały pierwszy ekran pod menu serwisu,
-       prawa kolumna to panel z marginesem 30 px, packshot stoi na nim
-       wyśrodkowany, breadcrumb zszedł z góry sekcji na dół lewej kolumny.
-       Iteracja 4 (spec §14.2): panel bez zdjęcia w tle – jednolita jasna szarość;
-       lista zaufania przeniesiona do sekcji „Zalety" (marquee, §14.3);
-       breadcrumb jaśniejszy. Na panelu stoją dwa opakowania nałożone na siebie.
-       Iteracja „Figma" (spec §16.3): drugim opakowaniem jest big bag 1000 l
-       zamiast torebki 1 l / 2 l, więc role wielkości się odwracają – big bag
-       jest największy w gamie i stoi z tyłu jako element dominujący, worek 20 l
-       stoi przed nim jako mniejszy. -->
+  
+
+
+
+
+
+
+
+
+
+
+
   <section id="hero" data-chapter="hero" data-ce="CE-08">
     <div class="c5-wrap">
       <div class="c5-hero">
@@ -77,7 +77,7 @@
             </div>
             <div class="c5-btnrow">
               <a class="c5-btn c5-btn--dark" href="sklep.html?grupa=carbomat">kup teraz</a>
-              <!-- ⚠ cel linku do potwierdzenia: docelowo moduł dawek w konfiguratorze (patrz sekcja Dawkowanie) -->
+              
               <a class="c5-btn c5-btn--light" href="#dawka">dobierz właściwe dawki</a>
             </div>
           </div>
@@ -92,10 +92,10 @@
           </nav>
         </div>
         <div class="c5-hero__stage">
-          <!-- dwa opakowania jak na półce: big bag 1000 l z tyłu, worek 20 l przed
-               nim (kolejność w DOM decyduje o nakładaniu – bez z-index i bez cieni),
-               oba na wspólnej linii podłoża. Wspólne pudełko grupy pilnuje, żeby
-               kompozycja mieściła się w panelu i szerokością, i wysokością. -->
+          
+
+
+
           <div class="c5-hero__packs">
             <img class="c5-hero__pack" src="img/opakowania/worek_1000l_1500l.png" alt="CARBOMAT ECO – big bag 1000 l">
             <img class="c5-hero__pack c5-hero__pack--sm" src="img/opakowania/worek_20l.png" alt="CARBOMAT ECO – worek 20 l">
@@ -105,16 +105,16 @@
     </div>
   </section>
 
-  <!-- ===== 1b. ZALETY – marquee (spec §14.3) =====
-       Copy 1:1 z dawnej listy zaufania w hero. Jeden ciągły tor w duchu
-       serverobotics.com/delivery: duży tekst zalety → kwadratowa miniatura →
-       następna zaleta. Tor niesie ten sam zestaw dwa razy (druga połowa
-       `aria-hidden`), więc przesunięcie o -50 % wraca dokładnie na początek –
-       pętla bez szwu. Zestaw = trzy zalety powtórzone dwa razy: jedno przejście
-       trzech zalet ma ok. 2470 px, czyli mniej niż okno na monitorze 2560 px,
-       i na końcu cyklu zostawiałoby przy prawej krawędzi pustkę.
-       Bez `data-chapter`: kropki nawigacji bez zmian.
-       ⚠ miniatury tymczasowe (istniejące kadry) – do podmiany na dedykowane. -->
+  
+
+
+
+
+
+
+
+
+
   <section class="c5-marq" id="zalety" aria-label="Zalety CARBOMAT ECO" data-ce="CE-09">
     <ul class="c5-marq__track">
       <li class="c5-marq__item">
@@ -168,33 +168,33 @@
     </ul>
   </section>
 
-  <!-- ===== 2. PARAMETRY PRODUKTU (film wyznacza granice sekcji) =====
-       Wartości jak w V4 (badanie akredytowane PCBC S.A. 2022 + karta produktu);
-       substancje humusowe „do ~70%" wg materiału producenta – zależne od pokładu.
-       Iteracja 3 (spec §13.3): sekcja na całą wysokość ekranu, w tle przyklejona
-       warstwa mediów. Treść leży nad mediami i to ona się przewija, nie wideo.
-       Iteracja 4 (spec §14.4): bez osobnego ciemnego tła i bez ramki – kadrem
-       jest cała sekcja (30 px marginesu z boków), film stoi w niej od pierwszego
-       piksela i jest widoczny przez całą jej wysokość.
-       Iteration „Figma" (spec §16.4): a kicker above the heading (frame 140-8364),
-       the heading on P22 Mackinac Pro, the table rebuilt as eight separate tiles
-       (frame 140-8369) and a scroll-driven intro – the crop widens, then the
-       scrim, then the heading, then the rows one by one. Look and motion live in
-       the page-only pair ce/CE-10-parametry-proba.css / .js; the @font-face sits
-       in carbomat.css. Table copy is unchanged, character for character. -->
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
   <section class="c5-params" id="parametry" data-chapter="parametry" data-params data-ce="CE-10">
-    <!-- warstwa mediów musi stać w DOM PRZED treścią (leży pod nią) -->
+    
     <div class="c5-params__bg" aria-hidden="true">
       <div class="c5-params__frame">
-        <!-- The new loop delivered by Mateusz on 20.09.2026, replacing the still
-             photo that stood here while it was being generated, and the earlier
-             film he called too dark and too grim (spec §16.1 note 1, §16.8).
-             Hands at ground level sifting dark soil in warm back light.
-             1280x720, no audio, 20 s: the source is 10 s whose first and last
-             frame differ by 44/255, so it is mounted forward-then-reversed and
-             the loop closes without a jump. This file is ECO's own – the shared
-             img/wideo/parametry.mp4 still serves CARBOMAT MATA and CARBOHUMIC
-             and must not be overwritten. -->
+        
+
+
+
+
+
+
+
+
         <video class="c5-params__media" autoplay muted loop playsinline preload="metadata"
                poster="img/wideo/parametry-eco-poster.jpg" aria-hidden="true">
           <source src="img/wideo/parametry-eco.mp4" type="video/mp4">
@@ -202,7 +202,7 @@
       </div>
     </div>
     <div class="c5-wrap c5-params__body">
-      <!-- kicker + nagłówek wchodzą razem, jako jeden krok animacji (spec §16.4) -->
+      
       <div class="c5-params__head">
         <span class="c5-kicker c5-kicker--outline c5-params__kicker">Parametry</span>
         <h2 class="c5-params__title">Parametry produktu w suchej masie</h2>
@@ -217,9 +217,9 @@
         <div class="c5-params__row"><dt>Potas (K₂O)</dt><dd>~0,6%</dd></div>
         <div class="c5-params__row"><dt>Fosfor (P₂O₅)</dt><dd>~0,5%</dd></div>
       </dl>
-      <!-- ⚠ realne PDF-y (raport PCBC + karta produktu + certyfikaty) do podpięcia – stuby jak w V4 -->
-      <!-- 7 px pod tabelą, do lewej, bez podkreślenia i bez ikony – adnotacja
-           projektanta w ramce 140-8369 brzmi „Dodaję pod tabelą" -->
+      
+      
+
       <a class="c5-params__dl" href="centrum-wiedzy.html#magazyn">Pobierz aktualną analizę</a>
       <div class="c5-params__actions">
         <a class="c5-btn c5-btn--sm c5-btn--ondark" href="centrum-wiedzy.html#magazyn"><svg class="wf-icon" aria-hidden="true"><use href="#ti-file-text"></use></svg> Karta produktu</a>
@@ -229,21 +229,21 @@
     </div>
   </section>
 
-  <!-- ===== 3. KTÓRY DLA MNIE (CE-11 – cards riding in, morphing into tabs) =====
-       Copy 1:1 z dokumentu 24.07; ceny wg AC #30867 (21.07).
-       Rebuilt 20.09.2026 after the Figma frames 310:461 (cards) and 310:418
-       (tabs + expanded variant), spec §17. Two states of ONE box, driven by
-       scrolling only: the boxes ride in aligned to the bottom edge of the
-       window with the outline drawing itself from the bottom, then they shrink
-       to 70 px and stick to the top as tabs; the active tab carries a green
-       outline showing the scroll progress of its variant block.
-       The machinery is in ce/CE-11-warianty-taby-proba.css/.js – a copy of the
-       shared module, linked by THIS page only, because the base files also run
-       carbohumic.html (three tabs).
-       The tabs still only NAVIGATE: both variant blocks lie one under another
-       and stay readable, which is also what the no-JS fallback shows.
-       Prices stay (decision of 20.09) but move onto the package buttons –
-       character for character the numbers of the previous pricing table. -->
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <section class="c5-sec" id="ktory-dla-mnie" data-chapter="ktory-dla-mnie" data-ce="CE-11">
     <div class="c5-wrap">
       <span class="c5-kicker c5-kicker--outline c5-kicker--center">Który dla mnie</span>
@@ -253,14 +253,14 @@
       </div>
 
       <div class="c5-variants" data-variants>
-        <!-- Runway: the scroll budget of the intro. Zero height without motion. -->
+        
         <div class="c5-ways__rail" data-ways-rail aria-hidden="true"></div>
 
         <div class="c5-ways" role="tablist" aria-label="Warianty CARBOMAT ECO" data-tabs>
-          <!-- Every tab is the box itself: ring (drawn outline + green progress),
-               head (icon + mode label, the only content of the tab state) and
-               card (packshot + product name, the card state only).
-               pathLength="1" lets the dash fraction ignore the box size. -->
+          
+
+
+
           <button type="button" class="c5-way" role="tab" data-tab="eco" aria-selected="true" aria-controls="wariant-eco">
             <span class="c5-way__ring" aria-hidden="true">
               <svg class="c5-way__svg" viewBox="0 0 452 70" preserveAspectRatio="none" focusable="false">
@@ -299,12 +299,12 @@
           </button>
         </div>
 
-        <!-- Blok: CARBOMAT ECO -->
+        
         <div class="c5-variant" id="wariant-eco" data-variant-block="eco">
           <div class="c5-var__grid">
             <div class="c5-var__pack">
               <img class="c5-var__packimg" src="img/opakowania/worek_20l.png" alt="CARBOMAT ECO – worek 20 l">
-              <!-- Ceny brutto wg Darka (AC #30867): big bagi – niższa cena = pH 4,5–5,0, wyższa = 6,0–6,5 -->
+              
               <div class="c5-var__pkgs">
                 <a class="c5-pkg" href="sklep.html?grupa=carbomat"><span class="c5-pkg__name">worek 20 l</span><span class="c5-pkg__val">43 zł</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-shopping-cart"></use></svg><span class="wf-sr-only">– dodaj do koszyka</span></a>
                 <a class="c5-pkg" href="sklep.html?grupa=carbomat"><span class="c5-pkg__name">big bag 1000 l</span><span class="c5-pkg__val">600–650 zł</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-shopping-cart"></use></svg><span class="wf-sr-only">– dodaj do koszyka</span></a>
@@ -313,8 +313,8 @@
             </div>
             <div class="c5-var__info">
               <h3 class="c5-variant__name">CARBOMAT ECO</h3>
-              <!-- The bullet of the frame (four squares over a rule) is not in the
-                   sprite and icons are not drawn here, so the 16 px slot stays empty. -->
+              
+
               <ul class="c5-var__tiles">
                 <li class="c5-var__tile"><span class="c5-var__tileico" aria-hidden="true"></span><span>Optymalizacja właściwości fizycznych i chemicznych gleby</span></li>
                 <li class="c5-var__tile"><span class="c5-var__tileico" aria-hidden="true"></span><span>Trwałe użyźnienie i stabilizacja odczynu gleby</span></li>
@@ -341,19 +341,19 @@
                 <div class="c5-variant__block">
                   <span class="c5-label">Frakcja:</span>
                   <p class="c5-muted">0,1–2 mm&ensp;|&ensp;2–4 mm&ensp;|&ensp;4–8 mm</p>
-                  <!-- Frakcje wg AC #30867; kierunek „pył 0,1–2 tylko w odmianie o niskim pH" – nie publikujemy do potwierdzenia oferty -->
+                  
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Blok: CARBOMAT ECO Ściółka (leży pod poprzednim, oba widoczne) -->
+        
         <div class="c5-variant" id="wariant-sciolka" data-variant-block="sciolka">
           <div class="c5-var__grid">
             <div class="c5-var__pack">
               <img class="c5-var__packimg" src="img/opakowania/worek_1000l_1500l.png" alt="CARBOMAT ECO Ściółka – big bag 1000/1500 l">
-              <!-- Ceny brutto wg Darka (AC #30867): Ściółka „odpowiednio jak dla pH 4" -->
+              
               <div class="c5-var__pkgs">
                 <a class="c5-pkg" href="sklep.html?grupa=carbomat"><span class="c5-pkg__name">worek 20 l</span><span class="c5-chip">nowość</span><span class="c5-pkg__val">43 zł</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-shopping-cart"></use></svg><span class="wf-sr-only">– dodaj do koszyka</span></a>
                 <a class="c5-pkg" href="sklep.html?grupa=carbomat"><span class="c5-pkg__name">big bag 1000 l</span><span class="c5-pkg__val">600 zł</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-shopping-cart"></use></svg><span class="wf-sr-only">– dodaj do koszyka</span></a>
@@ -384,42 +384,42 @@
                 </div>
                 <div class="c5-variant__block">
                   <span class="c5-label">Frakcja:</span>
-                  <!-- 8–20 mm wg dotychczasowego kanonu (karta/V4); dokument 24.07 nie podaje frakcji Ściółki -->
+                  
                   <p class="c5-muted">8–20 mm</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div><!-- /.c5-variants – tu kończy się przyklejenie tabów -->
+      </div>
     </div>
   </section>
 
-  <!-- ===== 4. CZYM JEST – scena sterowana przewijaniem (spec §6, §15) =====
-       Od 19.09.2026 na układzie CE-12 wg ramki Figma „Frame 206" (spec §15):
-       scena zajmuje okno do 1800 px, panel zdjęcia bierze jego prawą połowę
-       z marginesem 20 px i NIE jest przyciemniany – ciemność daje sam boks
-       ilustracji (`backdrop-filter`). Kicker i H2 stoją w scenie (wariant
-       `z-naglowkiem`), a bieżący fakt przy dolnej krawędzi lewej kolumny:
-       tytuł, linia 1 px z wypełnieniem postępu bieżącego kroku i pod nią opis
-       z licznikiem po prawej. Każdy fakt niesie własną linię i licznik, więc
-       blok stoi przy dole niezależnie od długości opisu; wspólnego paska
-       progresu nie ma.
-       Treść 1:1 z dokumentu 24.07. Punkt „Pełny mechanizm: jak lignit buduje
-       próchnicę" – Darek sam poddaje w wątpliwość („AI mocno popłynęło") →
-       NIE wdrożony, decyzja u Mateusza.
-       DOM order = układ statyczny (mobile / reduced motion / bez JS): nagłówek,
-       a potem trójki zdjęcie / tytuł+opis / ilustracja – każdy punkt ma własne
-       zdjęcie (§13.5). Panel zdjęcia to `display:contents` poza sceną, więc te
-       same warstwy stoją raz jako tło panelu, a raz w biegu przy swoim opisie.
-       Układ dwukolumnowy składa z tych samych elementów siatka w @media niżej. -->
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <section class="c5-sec c5-fx" id="czym-jest" data-chapter="czym-jest" data-fx data-ce="CE-12" data-ce-wariant="z-naglowkiem">
     <div class="c5-fx__track" data-fx-track>
       <div class="c5-fx__stage">
 
-        <!-- Jedyny blok nagłówka sekcji: w scenie przyklejony u góry lewej
-             kolumny, poza nią zwykły blok nad faktami. Bez `hidden` w źródle –
-             modułowy strażnik nigdy nie chowa bloku, który stoi sam. -->
+        
+
+
         <div class="c5-fx__head" data-fx-head="z-naglowkiem">
           <span class="c5-kicker c5-kicker--outline">Czym jest carbomat</span>
           <h2 class="c5-h2">Skondensowana próchnica, najbardziej wartościowa materia organiczna.</h2>
@@ -427,11 +427,11 @@
 
         <div class="c5-fx__flow">
 
-          <!-- Warstwy zdjęć: jedna na punkt, przełączane razem z opisem (§13.5).
-               Zdjęcia P2–P5 z §13.9 (01 pokład lignitu, 02 gleba z korzeniami,
-               03 ściółka obok bryłek, 04 kadr laboratoryjny, 05 makro gruzełek).
-               Są dekoracją pod boksem ilustracji, dlatego alt="" i aria-hidden
-               na panelu; kadrowanie każdej warstwy ustawia CSS. -->
+          
+
+
+
+
           <div class="c5-fx__panel" aria-hidden="true">
             <img class="c5-fx__img" data-fx-bg="1" data-on="true" src="img/foto/czym-jest-1.jpg" alt="" loading="lazy" decoding="async">
             <img class="c5-fx__img" data-fx-bg="2" src="img/foto/czym-jest-2.jpg" alt="" loading="lazy" decoding="async">
@@ -510,7 +510,7 @@
             <span class="c5-fx__count" aria-hidden="true">03/05</span>
           </div>
 
-          <!-- 03 · Stabilność – wykres przeniesiony z treści akordeonu -->
+          
           <figure class="c5-viz" data-fx-viz="3">
             <span class="c5-viz__tag">03 · Stabilność</span>
             <div class="c5-viz__body">
@@ -535,7 +535,7 @@
             <span class="c5-fx__count" aria-hidden="true">04/05</span>
           </div>
 
-          <!-- 04 · Czystość – tabela przeniesiona z treści akordeonu -->
+          
           <figure class="c5-viz" data-fx-viz="4">
             <span class="c5-viz__tag">04 · Czystość</span>
             <div class="c5-viz__body">
@@ -604,22 +604,22 @@
     </div>
   </section>
 
-  <!-- ===== 5. JAK STOSOWAĆ (dwie przypięte sceny produktowe) =====
-       Copy 1:1 z dokumentu 24.07. Wartości punktowe „krzewy i byliny 1–3 l,
-       drzewa 3–8 l" wg późniejszego rozstrzygnięcia Darka (AC #30867, 21.07)
-       – dokument 24.07 ma tu jeszcze starą wersję „3–5 litrów" bez środka
-       skali. ⚠ do potwierdzenia z Darkiem.
+  
 
-       Layout: the section head runs in normal flow; each product is one
-       <article class="c5-use"> = a tall track with a single sticky 100svh
-       stage. Scroll position drives custom properties on the article (see
-       60-jak-stosowac.js) and CSS interpolates EVERY move from them – the
-       photo, the shade, the tabs and the description card all follow the
-       wheel and stop when it stops. The sticky bar with „kup teraz" is the
-       only thing pinned to the top edge here.
-       Without JS, below 900 px or with reduced motion the very same markup
-       reads as a plain stack: bar, then photo + title + description twice.
-       Nothing is hidden, nothing needs a script. -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <section class="c5-sec" id="jak-stosowac" data-chapter="jak-stosowac">
     <div class="c5-wrap">
       <span class="c5-kicker c5-kicker--center">Jak stosować</span>
@@ -632,7 +632,7 @@
     <article id="jak-stosowac-eco" class="c5-use" data-use-product="eco" data-ce="CE-13" data-ce-od="#jak-stosowac">
       <div class="c5-use__track" data-use-track>
         <div class="c5-use__stage">
-          <!-- hero at p=0, sticky 110 px bar from p≈.18 on: same three elements -->
+          
           <div class="c5-use__bar">
             <span class="c5-use__kind">Dodatek do gleby</span>
             <img class="c5-use__pack" src="img/opakowania/worek_20l.png" width="578" height="875" alt="">
@@ -642,7 +642,7 @@
             </div>
           </div>
           <div class="c5-use__photo">
-            <!-- .c5-use__fill = the photograph itself; it overscans the layer so the parallax never uncovers an edge -->
+            
             <div class="c5-use__layer c5-use__layer--a" data-use-layer="gruntowe">
               <img class="c5-use__fill" src="img/foto/eco-gruntowe.jpg" alt="Dłonie w rękawicach mieszają ciemne granulki lignitu z glebą rabaty, obok krzew z odkrytą bryłą korzeniową" loading="lazy" decoding="async">
             </div>
@@ -721,16 +721,16 @@
     </article>
   </section>
 
-  <!-- ===== 6. DAWKOWANIE (kierunek: konfigurator) – sekcja na 100 % ekranu =====
-       Makieta zdejmuje kalkulator D59 ze strony i kieruje do konfiguratora.
-       Nagłówek w makiecie = placeholder → poniżej propozycja robocza (⚠ do
-       akceptacji); kalkulator D59 żyje dalej w V4. Darek (dokument 24.07)
-       popiera kierunek „Dobierz swoją dawkę".
-       Układ (spec §7): lewa kolumna – nagłówek u góry, lista i przycisk u dołu;
-       prawa – zdjęcie na całą wysokość sekcji, 30 px od krawędzi ekranu.
-       Zdjęcie jedzie lekkim parallaksem (§13.6): kadr przycina ramka, a obraz
-       jest od niej wyższy i przesuwa się w niej razem z przewijaniem.
-       DOM order = kolejność mobilna: nagłówek → zdjęcie → lista → przycisk. -->
+  
+
+
+
+
+
+
+
+
+
   <section class="c5-sec c5-dose-sec" id="dawka" data-chapter="dawka" data-ce="CE-14">
     <div class="c5-wrap c5-dose">
       <div class="c5-dose__top">
@@ -741,44 +741,44 @@
         <img class="c5-dose__media" src="img/foto/dawka.jpg" alt="Miarka z ciemnymi granulkami nad czarną doniczką z podłożem, obok biały worek na drewnianej ławie" loading="lazy" decoding="async">
       </div>
       <div class="c5-dose__bottom">
-        <!-- numery w kółkach (1) (2) (3) – licznik CSS, treść zdań bez zmian (§13.6) -->
+        
         <ol class="c5-dose__list" role="list">
           <li>Wybierz produkt i sposób aplikacji – przemieszanie z glebą, mieszanka doniczkowa albo ściółkowanie.</li>
           <li>Podaj powierzchnię, objętość podłoża lub liczbę roślin.</li>
           <li>Otrzymasz orientacyjną dawkę w litrach i podpowiedź, które opakowania wybrać.</li>
         </ol>
-        <!-- ⚠ cel linku do potwierdzenia: moduł dawek w konfiguratorze (dziś konfigurator dobiera produkt) -->
+        
         <a class="c5-btn c5-btn--dark" href="konfigurator.html">dobierz właściwe dawki</a>
       </div>
     </div>
   </section>
 
-  <!-- ===== 7. SEZON: oś czasu z packshotami + pas PRO (spec §8) =====
-       Wiersz = tytuł | kwadratowa scena packshotu | opis. Otwarcie kroku:
-       jasnoszary kwadrat rozwija się od dołu do góry, dopiero potem wchodzi
-       packshot – sterowane wyłącznie atrybutem data-open wiersza, więc działa
-       i w trybie pinu (scroll), i w akordeonie na klik.
-       Pas „Wskazania terminów stosowania popularnych upraw" usunięty.
-       Step 1 is open from the first frame (data-open / aria-expanded here, and
-       JS keeps it open before the pin) – the header and the block enter in the
-       normal flow of the page and only pin later (§14.7). -->
+  
+
+
+
+
+
+
+
+
   <section class="c5-sec" id="sezon" data-chapter="sezon" style="padding-bottom:0;">
-    <!-- CE-15, wariant „kaskada-z-pinem" wg ramki Figma 308-179 (spec §16.6).
-         Sekcja przypina się na czas cyklu: nagłówek z kickerem stoi widoczny,
-         a każdy krótki scroll przesuwa kaskadę o jedną pozycję – pierwsza karta
-         startuje otwarta, potem druga, potem trzecia, a ostatni takt zamyka
-         wszystkie i pin puszcza stronę dalej. Żadnego odliczania ani
-         zapętlenia. Nad kaskadą oś czasu: trzy etykiety i trzy klamry, które
-         wchodzą PRZED kartami (adnotacja projektanta).
-         Pliki modułu: ce/CE-15-wiersze-packshot-pin.css/.js – linkuje je
-         wyłącznie ta strona; wspólny CE-15 i próba CE-15 (Produkty) zostają
-         nietknięte. -->
+    
+
+
+
+
+
+
+
+
+
     <div id="sezon-wiersze" class="c5-casc c5-casc-pin" data-casc data-ce="CE-15" data-ce-wariant="kaskada-z-pinem">
-      <!-- Nagłówek żyje w kontenerze pinu (absolutnie, więc nie zajmuje miejsca
-           w biegu) – dzięki temu po zakończeniu cyklu odjeżdża w górę razem
-           z kartami, zamiast znikać. Kicker jedzie i przykleja się razem z H2
-           i leadem (uwaga Mateusza z 13.09); nagłówek bez własnego tła, żeby
-           nic nie zasłaniało kaskady. -->
+      
+
+
+
+
       <div class="c5-casc-headwrap" data-casc-headwrap>
         <div class="c5-casc-head" data-casc-head>
           <div class="c5-wrap">
@@ -791,12 +791,12 @@
         </div>
       </div>
       <div class="c5-casc-pin__spacer" data-casc-spacer aria-hidden="true"></div>
-      <!-- Kaskada dostaje całe okno (szeroki kontener EL-29): scena w środku to
-           jego content box, więc cztery linie włosowe siadają dokładnie na
-           granicach kolumn, a klamry osi mają szerokość kolumny. -->
+      
+
+
       <div class="c5-wrap c5-wrap--wide" data-casc-pin>
-        <!-- Oś czasu. Zakresy powtarza tytuł każdej karty, więc dla czytnika
-             ekranu jest to dekoracja. -->
+        
+
         <div class="c5-casc__axis" aria-hidden="true">
           <div class="c5-casc__ax"><span class="c5-casc__axl">początek uprawy</span><span class="c5-casc__axb"></span></div>
           <div class="c5-casc__ax"><span class="c5-casc__axl">w roku</span><span class="c5-casc__axb"></span></div>
@@ -805,7 +805,7 @@
         <div class="c5-casc__stage">
           <span class="c5-casc__lines" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
           <ol class="c5-casc__list">
-            <!-- każdy nagłówek wyjeżdża z aria-expanded="true": bez JS wszystkie panele są otwarte -->
+            
             <li class="c5-casc__item">
               <h3 class="c5-casc__h">
                 <button type="button" class="c5-casc__btn" aria-expanded="true" aria-controls="season-1">
@@ -853,17 +853,17 @@
       </div>
     </div>
 
-    <!-- Pas PRO – copy 1:1 z V4; Darek 24.07: „Fajne, podoba mi się taka narracja."
-         Układ wg sensiq.co: szare tło, zdjęcie skaluje się przy przewijaniu od
-         wąskiego kadru do pełnej szerokości, nagłówek po lewej, akapit i dwa
-         przyciski po prawej.
-         Od 19.09.2026 wariant „pozny-wzrost" (spec §15.1): kadr stoi na połowie
-         szerokości pasa, dopóki jego górna krawędź jest niżej niż 35 % okna,
-         potem rośnie do pełnej przy 2 % od góry; razem ze wzrostem wchodzi
-         scrim (`--pro-o` 0 -> 1 mnoży stałe .25 z warstwy wspólnej).
-         Iteracja „Figma" (spec §16.7, Frame 186-253): kadr sadu zamiast kadru
-         z big bagiem, tło pasa #777771, typografia i przyciski z ramki. Copy
-         zostaje dzisiejsze – ramka skraca akapit, a uwaga dotyczy formy. -->
+    
+
+
+
+
+
+
+
+
+
+
     <div class="c5-pro" id="uprawy-profesjonalne" data-pro data-ce="CE-16" data-ce-wariant="pozny-wzrost">
       <div class="c5-pro__media" data-pro-media aria-hidden="true">
         <img class="c5-pro__img" src="img/foto/eco-pro-sad.jpg" alt="Dłoń zrywa dojrzałe jabłko z gałęzi w sadzie, zdjęcie pod słońce w ciepłym popołudniowym świetle" loading="lazy" decoding="async">
@@ -881,7 +881,7 @@
     </div>
   </section>
 
-  <!-- ===== 8. FAQ (pytanie z lewej, odpowiedź z prawej) ===== -->
+  
   <section class="c5-sec" id="faq" data-chapter="faq" data-ce="CE-17">
     <div class="c5-wrap">
       <span class="c5-kicker">FAQ</span>
@@ -941,7 +941,7 @@
 
   </section>
 
-  <!-- ===== 9. CTA KOŃCOWE (jasne, wyśrodkowane) ===== -->
+  
   <section id="cta-koncowe" class="c5-sec" data-ce="CE-18">
     <div class="c5-wrap">
       <div class="c5-cta">
@@ -961,7 +961,7 @@
 <cw-dock></cw-dock>
 
 <script src="cw.js"></script>
-<!-- Lenis: slight scroll inertia (like serverobotics.com); the page scrolls natively without it -->
+
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
 <script src="ce/00-base.js"></script>
 <script src="ce/CE-07-nawigacja-kropkowa.js"></script>

@@ -29,12 +29,12 @@
 
 <cw-navbar data-current="produkty"></cw-navbar>
 
-<!-- ===== Nawigacja po podstronie: kropki przy prawej krawędzi (scrollspy) =====
-     Zastępuje przyklejoną belkę subnawigacji z pigułkami i „zapytaj o ofertę”
-     (spec §3). Etykiety pokazują się po najechaniu na cały nav; poniżej 900 px
-     nav jest ukryty. Rozdziały maty odbiegają od wzorca: nie ma „który dla mnie”
-     (jeden wariant) ani „dawkowania” (zamiast recept – protokół przygotowania).
-     Doszły trzy rozdziały dowodowe: Dowód, Analiza podłoża, Sezon po sezonie. -->
+
+
+
+
+
+
 <nav id="nawigacja-kropki" class="c5-dots" aria-label="Rozdziały strony CARBOMAT MATA UPRAWOWA" data-dots data-ce="CE-07">
   <ol>
     <li><a class="c5-dots__link" href="#hero" data-dot="hero"><span class="c5-dots__label">Start</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
@@ -53,30 +53,30 @@
 
 <main id="main">
 
-  <!-- =====================================================================
-       CARBOMAT MATA UPRAWOWA – V5, przebudowa 13.09.2026 wg
-       40-strona-www/koncepcja/carbomat-mata-spec.md. Layout wg wzorca
-       v5/carbomat.html (CARBOMAT ECO), ale z czterema świadomymi odstępstwami
-       (mata to produkt profesjonalny, kupowany dowodem i rachunkiem):
-         1. zamiast #ktory-dla-mnie → #co-zastepujesz (mata vs wełna vs kokos),
-         2. zamiast #dawka → #przygotowanie (protokół 5 kroków),
-         3. sekcje spoza wzorca: #dowod, #analiza-podloza, #ekonomia,
-         4. #sezon w skali wieloletniej, nie rocznej; CTA leadowe, nie zakupowe.
-       Copy 1:1 wg „Produkty na stronę” 29.07 (linie 123–282); liczby wg noty
-       30-produkty/carbomat-mata.md i decyzji z 10-decyzje/decyzje-projekt.md.
-       ⚠️ ŻYWOTNOŚĆ: dokument klienta podaje sześć różnych sformułowań („nawet
-       6 lat”, „6-8 kolejnych cykli”, „5+ sezonów”, „minimum 5 sezonów”,
-       „co najmniej 5 lat”). Obowiązuje decyzja Darka z 21.07 (AC #30867):
-       komunikujemy MINIMUM 5 SEZONÓW, bez tonu gwarancji, dłuższe użytkowanie
-       tylko miękko. Tak jest w całym pliku – nie cofać do brzmienia dokumentu.
-       ===================================================================== -->
+  
 
-  <!-- ===== 1. HERO (spec §4) =====
-       Port ECO §13.2/§14.2: sekcja zajmuje cały pierwszy ekran pod menu
-       serwisu, lewa kolumna wyśrodkowana w pionie, breadcrumb zszedł na dół
-       lewej kolumny, prawa to panel z marginesem 30 px z packshotem rękawa na
-       środku. Lista upraw („Pomidor · Ogórek · Truskawka”) wyszła z hero do
-       marquee pod spodem (spec §5). -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
   <section id="hero" data-chapter="hero" data-ce="CE-08">
     <div class="c5-wrap">
       <div class="c5-hero">
@@ -85,14 +85,14 @@
             <span class="c5-kicker">CARBOMAT MATA UPRAWOWA</span>
             <h1 class="c5-h1">Nowa generacja mat uprawowych dla profesjonalistów</h1>
             <div class="c5-hero__lead">
-              <!-- Lead 1:1 z dokumentu (l. 125). W makiecie V4 był skrócony o zdanie
-                   „Zapewnia stabilne warunki wodno-powietrzne…” – przywrócone. -->
+              
+
               <p>Naturalne podłoże nowej generacji, oparte na młodym węglu brunatnym i włóknie kokosowym. Dzięki wysokiej zawartości substancji organicznych i humusowych nie jest jedynie podporą dla korzeni, lecz aktywnie współtworzy środowisko ich wzrostu. Zapewnia stabilne warunki wodno-powietrzne, wspiera efektywne wykorzystanie składników pokarmowych i zachowuje swoje właściwości przez wiele sezonów uprawowych.</p>
-              <!-- Kwalifikator technologii dodany w hero: sekcja „Dla kogo” stoi nisko,
-                   a kupujący PRO musi od razu wiedzieć, do jakiej technologii mata jest. -->
+              
+
               <p class="wf-small">Produkt dla upraw profesjonalnych – <a class="wf-link" href="#dla-kogo">uprawa hydroponiczna i kontenerowa pod osłonami</a> · sprzedaż od palety w górę.</p>
             </div>
-            <!-- CTA leadowe: mata nie ma ceny ani sprzedaży detalicznej -->
+            
             <div class="c5-btnrow">
               <a class="c5-btn c5-btn--dark" href="kontakt.html">zapytaj o ofertę</a>
               <a class="c5-btn c5-btn--light" href="#dowod">zobacz, co potwierdzają badania</a>
@@ -108,8 +108,8 @@
             </ol>
           </nav>
         </div>
-        <!-- Packshot rękawa: obiekt jest szeroki i niski (1000 × 313), więc stoi
-             na ~72 % szerokości panelu i NIGDY nie jest rozciągany (spec §4). -->
+        
+
         <div class="c5-hero__stage">
           <img class="c5-hero__pack" src="img/opakowania/mata_uprawowa.png" alt="CARBOMAT MATA UPRAWOWA – rękaw 100 × 20 × 8 cm">
         </div>
@@ -117,17 +117,17 @@
     </div>
   </section>
 
-  <!-- ===== 1b. UPRAWY – marquee (spec §5, zmiana §21.2) =====
-       Port `.c5-marq` z ECO. Tor niesie ten sam zestaw dwa razy (druga połowa
-       `aria-hidden`), więc przesunięcie o -50 % wraca dokładnie na początek –
-       pętla bez szwu. Zestaw = trzy uprawy powtórzone trzy razy, żeby połowa
-       toru była szersza niż okno także na monitorze 2560 px.
-       Iteracja 2 (uwaga Mateusza nr 1): kicker znika – nazwę zbioru niesie
-       teraz `aria-label` toru, a same pozycje mówią wprost, o co chodzi
-       („Uprawa pomidora”). Bez `data-chapter` – kropki bez zmian. -->
+  
+
+
+
+
+
+
+
   <section class="c5-marq" id="uprawy" data-ce="CE-09">
-    <!-- ⚠ miniatury: placeholdery do czasu zdjęć (pliki docelowe
-         img/foto/mata-uprawa-pomidor.jpg, -ogorek.jpg, -truskawka.jpg) -->
+    
+
     <ul class="c5-marq__track" aria-label="Uprawy, dla których mamy technologię">
       <li class="c5-marq__item">
         <span class="c5-marq__txt">Uprawa pomidora</span>
@@ -204,23 +204,23 @@
     </ul>
   </section>
 
-  <!-- ===== 2. PARAMETRY – wideo w tle + dwie tabele na tabach (spec §6) =====
-       Port ECO §13.3/§14.4: sekcja na całą wysokość ekranu, w tle przyklejona
-       warstwa mediów pod maską, treść leży nad nią i to ona się przewija.
-       Uwaga Darka (l. 126): parametry schodzą z hero niżej – tuż pod nie.
-       Polecenie Mateusza 13.09 (spec §1 poz. 2): jeden zestaw parametrów naraz,
-       przełączany tabami nad tabelą, nazwa zestawu także na główce tabeli.
-       Model rękawa wyszedł z tej sekcji do „W skrócie” (spec §7).
-       Druga lista = decyzja z 21.07 (pełny zestaw parametrów w suchej masie
-       na produktach suchych). ⚠️ sucha masa i węgiel organiczny maty: brak
-       danych u producenta – zostają jako widoczny brak. -->
+  
+
+
+
+
+
+
+
+
+
   <section class="c5-params" id="parametry" data-chapter="parametry" data-params data-ce="CE-10" data-ce-wariant="z-tabami">
-    <!-- warstwa mediów musi stać w DOM PRZED treścią (leży pod nią) -->
+    
     <div class="c5-params__bg" aria-hidden="true">
       <div class="c5-params__frame">
-        <!-- ⚠ temporary: CARBOMAT ECO loop – replace with mata-parametry.mp4
-             (makro gruzełek lignitu, ten sam surowiec; prompt w
-             zasoby/brand/zdjecia-carbomat-mata/README.md, spec §17) -->
+        
+
+
         <video class="c5-params__media" autoplay muted loop playsinline preload="metadata"
                poster="img/wideo/parametry-poster.jpg" aria-hidden="true">
           <source src="img/wideo/parametry.mp4" type="video/mp4">
@@ -235,8 +235,8 @@
         <button type="button" class="c5-params__tab" role="tab" id="ptab-podloze-btn" aria-selected="false" aria-controls="ptab-podloze" data-ptab="podloze">Podłoże</button>
       </div>
 
-      <!-- Oba panele leżą w jednej komórce siatki; bez JS widoczne są oba,
-           jeden pod drugim (spec §6.3). -->
+      
+
       <div class="c5-params__panels" data-params-panels>
         <div class="c5-params__panel is-on" role="tabpanel" id="ptab-rekaw" aria-labelledby="ptab-rekaw-btn" data-ptab-panel="rekaw">
           <p class="c5-params__tabh">Rękaw uprawowy</p>
@@ -245,12 +245,12 @@
             <div class="c5-params__row"><dt>Skład</dt><dd>80% frakcje lignitu + 20% krótkie włókno kokosowe</dd></div>
             <div class="c5-params__row"><dt>Wymiary rękawa</dt><dd>100 × 20 × 8 cm</dd></div>
             <div class="c5-params__row"><dt>Pojemność</dt><dd>19 litrów</dd></div>
-            <!-- ⚠️ NIESPÓJNOŚĆ ŹRÓDŁA (backlog): pojemność 19 l i przyrost masy 6,5 kg
-                 (11,5 → 18,0 kg) nie zgadzają się z „mata przyjmuje ok. 8 dm³ wody”.
-                 Obie liczby podajemy tak, jak są w dokumencie – nie uzgadniamy ich sami. -->
+            
+
+
             <div class="c5-params__row"><dt>Masa (sucha / uwodniona)</dt><dd>11,5 kg / 18,0 kg</dd></div>
             <div class="c5-params__row"><dt>Pojemność wodna przy zalaniu</dt><dd>ok. 8 dm³</dd></div>
-            <!-- Uwaga Darka (l. 136): „A logistyczne ile na palecie już później.” -->
+            
             <div class="c5-params__row"><dt>Logistyka (paleta)</dt><dd><span class="c5-mt-gap">dane w uzupełnieniu</span></dd></div>
           </dl>
         </div>
@@ -259,33 +259,33 @@
           <dl class="c5-params__rows">
             <div class="c5-params__row"><dt>Odczyn (pH)</dt><dd>6,0–6,5</dd></div>
             <div class="c5-params__row"><dt>Sucha masa</dt><dd><span class="c5-mt-gap">dane w uzupełnieniu</span></dd></div>
-            <!-- ⚠️ 30–40% frakcji humusowych i 80–90% substancji organicznej to parametry
-                 LIGNITU jako skały (rozprawa SGGW; research/analiza-carbomat-mata-2026-07-10 §1),
-                 a nie gotowej maty (80% lignitu + 20% włókna kokosowego). Podajemy je
-                 wyłącznie z jawnym wskazaniem surowca – oznaczenia dla gotowej maty
-                 nie mamy, to pozycja do uzupełnienia.
-                 ⚠️ DO BACKLOGU (dwie prośby do CarboHort, poza zakresem tej strony):
-                 1. N, P i K maty w suchej masie – bez tego wiersze nie są porównywalne
-                    z tabelami CARBOMAT ECO i CARBOMAT HUMIC (decyzja z 27.07);
-                 2. jedna liczba frakcji humusowych lignitu dla całej rodziny – strona
-                    CARBOMAT ECO podaje „do ~70%”, tutaj stoi 30–40%, a to ten sam surowiec. -->
+            
+
+
+
+
+
+
+
+
+
             <div class="c5-params__row"><dt>Substancje humusowe <span class="c5-dim">w lignicie (80% składu)</span></dt><dd>30–40% frakcji humusowych <span class="c5-dim">w s.m. surowca</span></dd></div>
             <div class="c5-params__row"><dt>Materia organiczna <span class="c5-dim">w lignicie (80% składu)</span></dt><dd>80–90% <span class="c5-dim">w s.m. surowca</span></dd></div>
             <div class="c5-params__row"><dt>Węgiel organiczny</dt><dd><span class="c5-mt-gap">dane w uzupełnieniu</span></dd></div>
             <div class="c5-params__row"><dt>Azot (N-NO₃ / N-NH₄)</dt><dd>3 / 3,2 mg/dm³ <span class="c5-dim">(świeże podłoże)</span></dd></div>
             <div class="c5-params__row"><dt>Potas (K)</dt><dd>156 mg/dm³ <span class="c5-dim">(świeże podłoże)</span></dd></div>
             <div class="c5-params__row"><dt>Fosfor (P)</dt><dd>107 mg/dm³ <span class="c5-dim">(świeże podłoże)</span></dd></div>
-            <!-- Reżim pracy przywrócony z makiety V4 – rekomendacja techniczna
-                 (research/analiza-carbomat-mata-2026-07-10 §1). To zalecenia prowadzenia
-                 uprawy, nie wynik analizy laboratoryjnej – stąd osobny kwalifikator. -->
+            
+
+
             <div class="c5-params__row"><dt>Temperatura podłoża <span class="c5-dim">zalecana</span></dt><dd>do 28°C, stabilna</dd></div>
             <div class="c5-params__row"><dt>EC w strefie korzeniowej <span class="c5-dim">zalecane</span></dt><dd>max 3–3,5, stabilne</dd></div>
           </dl>
         </div>
       </div>
 
-      <!-- ⚠️ realne PDF-y do podpięcia: analizy WZO Pleszew (są w vaulcie),
-           karta produktu maty jeszcze nie istnieje – w przygotowaniu u producenta -->
+      
+
       <a class="c5-params__dl" href="centrum-wiedzy.html#magazyn"><svg class="wf-icon" aria-hidden="true"><use href="#ti-flask"></use></svg> Aktualna analiza</a>
       <div class="c5-params__actions">
         <a class="c5-btn c5-btn--sm c5-btn--ondark" href="centrum-wiedzy.html#magazyn"><svg class="wf-icon" aria-hidden="true"><use href="#ti-external-link"></use></svg> Karta produktu</a>
@@ -295,14 +295,14 @@
     </div>
   </section>
 
-  <!-- ===== 3. W SKRÓCIE – model rękawa + pięć kart (spec §7) =====
-       Polecenie Mateusza 13.09 (spec §1 poz. 3): model rękawa wychodzi
-       z ciemnej sekcji Parametrów i staje na początku „W skrócie”, tuż pod
-       nagłówkiem, przed pięcioma boksami. Kolory odwrócone (jasne tło),
-       mechanika bez zmian.
-       Uwaga Darka (l. 129): „może da się jakoś interaktywnie przedstawić
-       parametry maty na modelu?” → model działa na samym CSS (grupa radio
-       + :checked), bez JS. Pięć kart: 6 punktów z dokumentu, l. 137–147. -->
+  
+
+
+
+
+
+
+
   <section class="c5-sec" id="inwestycja" data-chapter="inwestycja">
     <div class="c5-wrap">
       <span class="c5-kicker c5-kicker--center">W skrócie</span>
@@ -320,7 +320,7 @@
 
         <div class="c5-mt-model__stage">
           <svg viewBox="0 0 660 300" role="img" aria-label="Model rękawa maty uprawowej: worek z folii UV, wypełnienie frakcjami lignitu z krótkim włóknem kokosowym, wymiary 100 × 20 × 8 cm, nasycenie wodą i dwa skośne otwory drenażowe" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <!-- warstwa bazowa: bryła rękawa i rośliny (zawsze widoczne) -->
+            
             <g class="c5-mt-model__base">
               <path d="M70 160h460v78H70z"/>
               <path d="M70 160l55-38h460l-55 38"/>
@@ -331,13 +331,13 @@
                 <path d="M460 122v-34"/><path d="M460 100c-14 0-22-8-24-18 12-2 22 4 24 14"/><path d="M460 104c12-2 20-10 21-20-12-1-19 6-21 16"/>
               </g>
             </g>
-            <!-- 01 · worek z folii UV -->
+            
             <g class="c5-mt-model__part" data-part="1" stroke-width="3">
               <path d="M70 160h460v78H70z"/>
               <path d="M70 160l55-38h460l-55 38"/>
               <path d="M530 160l55-38v78l-55 38"/>
             </g>
-            <!-- 02 · wypełnienie: frakcje lignitu + krótkie włókno kokosowe -->
+            
             <g class="c5-mt-model__part" data-part="2">
               <g fill="currentColor" stroke="none">
                 <circle cx="108" cy="186" r="7"/><circle cx="146" cy="214" r="5"/><circle cx="182" cy="180" r="9"/>
@@ -350,7 +350,7 @@
                 <path d="M120 200h26"/><path d="M198 226h24"/><path d="M282 198h26"/><path d="M368 224h24"/><path d="M452 200h26"/>
               </g>
             </g>
-            <!-- 03 · wymiary i pojemność -->
+            
             <g class="c5-mt-model__part" data-part="3">
               <path d="M70 264h460"/><path d="M70 258v12"/><path d="M530 258v12"/>
               <text x="300" y="252" fill="currentColor" stroke="none" font-size="14" text-anchor="middle">100 cm</text>
@@ -359,7 +359,7 @@
               <path d="M540 248l45-31"/><path d="M536 244l8 8"/><path d="M581 213l8 8"/>
               <text x="596" y="230" fill="currentColor" stroke="none" font-size="14">20 cm</text>
             </g>
-            <!-- 04 · nasycenie wodą -->
+            
             <g class="c5-mt-model__part" data-part="4">
               <path d="M100 200c20-10 40 10 60 0s40 10 60 0 40 10 60 0 40 10 60 0 40 10 60 0 40 10 60 0"/>
               <path d="M100 220c20-10 40 10 60 0s40 10 60 0 40 10 60 0 40 10 60 0 40 10 60 0 40 10 60 0"/>
@@ -367,7 +367,7 @@
               <path d="M300 104v30"/><path d="M292 126l8 10 8-10"/>
               <text x="330" y="96" fill="currentColor" stroke="none" font-size="14">ok. 8 dm³</text>
             </g>
-            <!-- 05 · drenaż: 2 skośne nacięcia po 72 h -->
+            
             <g class="c5-mt-model__part" data-part="5" stroke-width="2.5">
               <path d="M168 238l22-20"/><path d="M408 238l22-20"/>
               <g stroke-width="1.5">
@@ -413,9 +413,9 @@
       <div id="inwestycja-karty" class="c5-mt-grid" data-ce="CE-20" data-ce-wariant="numerowane">
         <div class="c5-mt-card">
           <span class="c5-mt-card__no">01</span>
-          <!-- ⚠️ Dokument (l. 138–139): „nawet 6 lat użytkowania”, „6-8 kolejnych cykli
-               uprawowych”. Publikujemy wg decyzji Darka z 21.07: minimum 5 sezonów,
-               bez tonu gwarancji, dłuższe użytkowanie miękko. -->
+          
+
+
           <h3 class="c5-mt-card__title">Minimum 5 sezonów użytkowania</h3>
           <p class="c5-mt-card__txt">Matę projektujemy na co najmniej 5 sezonów uprawy – bez straty w plonie i bez oznak chorób odglebowych. Część producentów prowadzi uprawę dłużej.</p>
           <p><a class="wf-link wf-small" href="#dowod">Zobacz, co o ponownym użyciu mat mówią badania SGGW</a></p>
@@ -445,13 +445,13 @@
     </div>
   </section>
 
-  <!-- ===== 4. CO ZASTĘPUJESZ – two advantage columns and one table (spec §21.4) =====
-       Iteration 2, Mateusz's comment: the section showed too much at once.
-       The segmented switch, the `data-swap` states and the "show all three"
-       button are gone - nothing is hidden any more. One overline "Główne
-       przewagi" sits above two equal columns (mineral wool on the left, coco
-       on the right), and the full three-substrate table follows below them.
-       Copy 1:1, l. 161-195. No JS: the section is pure layout. -->
+  
+
+
+
+
+
+
   <section class="c5-sec" id="co-zastepujesz" data-chapter="co-zastepujesz">
     <div class="c5-wrap">
       <span class="c5-kicker c5-kicker--center">Co zastępujesz?</span>
@@ -460,15 +460,15 @@
         <p class="c5-lead c5-lead--center">Uprawiasz na wełnie mineralnej czy kokosie? Zobacz, czego możesz się spodziewać po uprawie na macie Carbomat względem pozostałych podłoży.</p>
       </div>
 
-      <!-- One overline for both columns: the label used to sit inside each pane -->
+      
       <p class="c5-label c5-cmp2__label">Główne przewagi</p>
 
       <div id="co-zastepujesz-kolumny" class="c5-cmp2" data-ce="CE-21" data-ce-od="#co-zastepujesz">
         <div class="c5-cmp2__col">
           <div class="c5-ph c5-cmp2__ph" data-ph="foto · wełna mineralna"></div>
-          <!-- foto: img/foto/mata-zastepujesz-welna.jpg -->
-          <!-- Overline 1:1 with the base page (there it labelled the variant tab,
-               together with its icon) - it says which substrate you are leaving -->
+          
+          
+
           <p class="c5-cmp2__from"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-flask"></use></svg>Zastępuję wełnę mineralną</p>
           <h3 class="c5-variant__name">Mata zamiast wełny mineralnej</h3>
           <ol class="c5-cmp2__points">
@@ -506,7 +506,7 @@
 
         <div class="c5-cmp2__col">
           <div class="c5-ph c5-cmp2__ph" data-ph="foto · mata kokosowa"></div>
-          <!-- foto: img/foto/mata-zastepujesz-kokos.jpg -->
+          
           <p class="c5-cmp2__from"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-leaf"></use></svg>Zastępuję matę kokosową</p>
           <h3 class="c5-variant__name">Mata zamiast maty kokosowej</h3>
           <ol class="c5-cmp2__points">
@@ -514,7 +514,7 @@
               <span class="c5-cmp2__no" aria-hidden="true">01</span>
               <div class="c5-cmp2__block">
                 <span class="c5-label">Żywotność</span>
-                <!-- Dokument: „5+ sezonów wobec 1-2 cykli kokosu” – publikujemy „minimum 5 sezonów” (decyzja 21.07) -->
+                
                 <p class="c5-muted">Minimum 5 sezonów wobec 1–2 cykli kokosu; wg naszych opracowań kolejne cykle bywają wydajniejsze.</p>
               </div>
             </li>
@@ -544,8 +544,8 @@
         </div>
       </div>
 
-      <!-- Full table of all three substrates, nothing narrowed down any more.
-           Wider than a phone, so it scrolls inside `.cw-scrollx`, never the page. -->
+      
+
       <div id="co-zastepujesz-tabela" class="cw-scrollx c5-cmp2__table" tabindex="0" data-ce="CE-22" data-ce-wariant="porownawcza">
         <table class="c5-mt-cmp">
           <caption>Zestawienie trzech podłoży do upraw bezglebowych – wg naszych materiałów oraz publikacji SGGW (wełna mineralna).</caption>
@@ -612,7 +612,7 @@
               <td>Odpad mineralny wymagający kosztownej utylizacji</td>
               <td>Odpad organiczny wymagający zagospodarowania lub utylizacji</td>
             </tr>
-            <!-- Wiersz spoza tabeli w dokumencie – liczby z analizy LCA producenta (sekcja Dowód). Zostaje z makiety V4. -->
+            
             <tr>
               <th scope="row">Ślad węglowy gotowego produktu</th>
               <td class="c5-mt-cmp__own">109 kg CO₂/t</td>
@@ -640,33 +640,33 @@
     </div>
   </section>
 
-  <!-- ===== 5. CZYM JEST – scena sterowana przewijaniem (spec §9, §21.3) =====
-       Port ECO §6/§13.5: panel zdjęcia stoi w miejscu przez całą sekcję,
-       a pięć opisów wymienia się w lewej kolumnie sceny.
-       Ilustracja każdego punktu żyje w boksie o stałym rozmiarze na panelu.
-       Copy 1:1, l. 148–159 (tytuł punktu = tekst dotychczasowego przycisku
-       akordeonu, treść = jego akapit). Z punktu 4 usunięty urwany dopisek
-       redakcyjny „dlaczego nie jest podłożem inertnym,” – to notatka Darka.
-       Iteration 2 (Mateusz's comment): the kicker, the H2 and the full lead
-       moved OUT of the scene into a normal centred section head above the
-       track - inside the stage only the active fact is left. The stage no
-       longer holds a head, so nothing in the scene has to be measured for it.
-       DOM order = układ statyczny (mobile / reduced motion / bez JS): nagłówek,
-       a potem trójki tło / tytuł+opis / ilustracja.
-       19.09.2026 (spec §22): the scene moves to the Frame 206 layout of the CE
-       index (ce/CE-12-scena-faktow-proba.*), variant `bez-naglowka` - the head
-       with the lead keeps standing above the track, the fact now stands at the
-       BOTTOM of the left column and carries its own progress line and counter.
-       ⚠️ The root of CE-12 is the inner container below, NOT the section: this
-       section holds a second block (CE-23 cross-sell), which must stay outside
-       the CE root, and the module reads the variant from the [data-fx] element
-       (CE-12-scena-faktow-proba.js 72). The occurrence keeps its anchor
-       #czym-jest-scena, the section stays the chapter of the dot rail. -->
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <section class="c5-sec" id="czym-jest" data-chapter="czym-jest">
 
-    <!-- CE-12 root: the head above the track + the track itself. Its two children keep
-         the indentation of the section on purpose - the container is a wrapper, not a
-         level of the layout, and re-indenting 180 lines would only hide the change. -->
+    
+
+
     <div id="czym-jest-scena" class="c5-fx" data-fx data-ce="CE-12" data-ce-wariant="bez-naglowka" data-ce-od="#czym-jest">
 
     <div class="c5-fx__above c5-wrap" data-fx-head="bez-naglowka">
@@ -682,9 +682,9 @@
 
         <div class="c5-fx__flow">
 
-          <!-- Warstwy tła panelu: jedna na punkt, przełączane razem z opisem.
-               Do czasu zdjęć placeholdery (pliki docelowe img/foto/mata-czym-jest-1…5.jpg,
-               4:5, spec §17). Są dekoracją pod boksem ilustracji – aria-hidden na panelu. -->
+          
+
+
           <div class="c5-fx__panel" aria-hidden="true">
             <div class="c5-ph c5-fx__ph" data-fx-bg="1" data-on="true" data-ph="foto · woda i powietrze"></div>
             <div class="c5-ph c5-fx__ph" data-fx-bg="2" data-ph="foto · substancje aktywne"></div>
@@ -752,8 +752,8 @@
                 <li><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-leaf"></use></svg> środowisko dla zbilansowanej mikroflory wokół korzeni</li>
               </ul>
             </div>
-            <!-- ⚠️ Liczba opisuje LIGNIT jako surowiec (rozprawa SGGW), nie gotową matę –
-                 kwalifikator musi zostać, dopóki producent nie poda oznaczenia dla maty. -->
+            
+
             <figcaption class="c5-src c5-src--ondark">Udział frakcji humusowych w lignicie – wg naszych opracowań i badań SGGW, zależny od partii surowca. Oznaczenia dla gotowej maty <span class="c5-mt-gap">w uzupełnieniu</span>.</figcaption>
           </figure>
 
@@ -811,8 +811,8 @@
                 <text x="16" y="128" font-size="12" fill="currentColor" opacity=".6">bez patogenów i niepożądanych zanieczyszczeń</text>
               </svg>
             </div>
-            <!-- Brzmienie komunikatu (minimum 5 sezonów, bez tonu gwarancji) wg decyzji
-                 Darka z 21.07, AC #30867 – uzasadnienie zostaje w kodzie, nie w podpisie. -->
+            
+
             <figcaption class="c5-src c5-src--ondark">Pięć sezonów uprawy na tym samym rękawie – na tyle projektujemy matę.</figcaption>
           </figure>
 
@@ -845,10 +845,10 @@
       </div>
     </div>
 
-    </div><!-- /#czym-jest-scena – koniec korzenia CE-12 -->
+    </div>
 
-    <!-- Pas „Ta sama organika…” – dawny `.c5-alert`, bez placeholdera (spec §9).
-         ⚠️ Stoi POZA korzeniem CE-12: to osobny klocek (CE-23) tej samej sekcji. -->
+    
+
     <div class="c5-wrap">
       <div id="czym-jest-cross" class="c5-mt-cross" data-ce="CE-23" data-ce-wariant="kreski-gora-dol">
         <p><span class="wf-w-semibold">Ta sama organika, co w CARBOMAT ECO.</span><br>
@@ -858,22 +858,22 @@
     </div>
   </section>
 
-  <!-- ===== 6. DOWÓD – liczby, karty-zajawki i lightbox (spec §10, zmiany §21.5) =====
-       Sekcja spoza wzorca, copy 1:1, l. 196–237. Polecenie Mateusza 13.09
-       (spec §1 poz. 5): większość tekstu schodzi do dedykowanych pop-upów –
-       w biegu strony zostają nagłówek, cztery liczby i karty-zajawki,
-       a pełne bloki żyją na stronach jednego lightboxa.
-       Uwaga Darka (l. 199): „czy podpinamy tu publikacje naukowe i doświadczenia”
-       → lista publikacji stoi w stopce strony SGGW (to jej źródła). Uwaga Darka
-       (l. 223): osobny punkt pod uprawę w trudnych warunkach klimatycznych
-       + raport, zdjęcia i film z wizyty + patent.
-       Iteracja 2 (uwagi Mateusza nr 4 i 5): liczby jako ciemny pas wierszy
-       (wzór serverobotics.com), czwarta karta usunięta – publikacje wchodzą do
-       strony SGGW, a doświadczenia zostają rzędem CTA pod kartami.
-       Mechanika (otwieranie z karty i z hasha, X, Escape, klik w nakładkę,
-       poprzednie/następne z licznikiem, pułapka fokusa, blokada scrolla tła
-       przez CX5.lenis) siedzi w 55-dowod.js; bez JS zostaje pełna treść
-       w biegu strony. -->
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <section class="c5-sec c5-band" id="dowod" data-chapter="dowod">
     <div class="c5-wrap">
       <span class="c5-kicker c5-kicker--center">Dowód</span>
@@ -883,16 +883,16 @@
       </div>
     </div>
 
-    <!-- Cztery liczby: pełnoekranowy ciemny pas, wiersz = etykieta i źródło po
-         lewej, wielka wartość po prawej (wzór serverobotics.com, screen
-         Mateusza 16.07.28 – bez zdjęcia pod spodem). Wejście wierszy dokłada
-         55-dowod.js wyłącznie przy CX5.motionOn(). -->
+    
+
+
+
     <div id="dowod-liczby" class="c5-stats" data-stats data-ce="CE-24" data-ce-od="#dowod">
       <div class="c5-wrap">
-        <!-- Warunek doświadczenia (wariant o podwyższonym EC) przywrócony z makiety V4:
-             liczby SGGW pochodzą z porównania L/high EC wobec WM/high EC
-             (research/analiza-carbomat-mata-2026-07-10 §3A pkt 5), a nie z ogólnej
-             przewagi produktu. Bez tego kwalifikatora claim jest mocniejszy niż źródło. -->
+        
+
+
+
         <div class="c5-stats__row">
           <div class="c5-stats__txt">
             <span class="c5-mt-stat__lab">luteiny w owocach względem wełny mineralnej – wariant o podwyższonym EC</span>
@@ -914,9 +914,9 @@
           </div>
           <span class="c5-mt-stat__val"><span class="c5-aff">do </span>18,4<span class="c5-aff">×</span></span>
         </div>
-        <!-- ⚠️ Nazwa partnera (Azura) pada w dokumencie klienta WYŁĄCZNIE w uwadze
-             kolorem (l. 223), czyli w poleceniu do nas – nie w copy. Do publikacji
-             potrzebna zgoda tego podmiotu; pytanie do Darka. -->
+        
+
+
         <div class="c5-stats__row">
           <div class="c5-stats__txt">
             <span class="c5-mt-stat__lab">mniej wody niż na włóknie kokosowym w jednym cyklu</span>
@@ -928,12 +928,12 @@
     </div>
 
     <div class="c5-wrap">
-      <!-- Trzy karty-zajawki: zdjęcie, tag, tytuł, zajawka, przycisk do lightboxa -->
+      
       <div id="dowod-karty" class="c5-proofs" data-ce="CE-20" data-ce-wariant="z-przyciskami">
 
         <article class="c5-proof">
           <div class="c5-ph c5-proof__ph" data-ph="foto · badania SGGW"></div>
-          <!-- foto: img/foto/mata-dowod-sggw.jpg -->
+          
           <span class="c5-mt-proof__tag">Badania niezależne · SGGW · ogórek szklarniowy</span>
           <h3 class="c5-mt-proof__title">Mata węglowa wobec wełny mineralnej</h3>
           <ul class="c5-proof__list">
@@ -949,7 +949,7 @@
 
         <article class="c5-proof">
           <div class="c5-ph c5-proof__ph" data-ph="foto · ślad węglowy"></div>
-          <!-- foto: img/foto/mata-dowod-lca.jpg -->
+          
           <span class="c5-mt-proof__tag">Analiza śladu węglowego · nasze obliczenia metodą LCA</span>
           <h3 class="c5-mt-proof__title">Wielokrotnie niższy ślad węglowy niż wełna mineralna</h3>
           <div class="c5-barchart" role="img" aria-label="Ślad węglowy gotowego produktu w kilogramach dwutlenku węgla na tonę: mata węglowa 109, wełna mineralna 3934">
@@ -964,7 +964,7 @@
 
         <article class="c5-proof">
           <div class="c5-ph c5-proof__ph" data-ph="foto · pomidor, trudny klimat"></div>
-          <!-- foto: img/foto/mata-dowod-pomidor.jpg -->
+          
           <span class="c5-mt-proof__tag">Uprawa w trudnych warunkach klimatycznych · pomidor · wobec włókna kokosowego</span>
           <h3 class="c5-mt-proof__title">Mniej wody przy porównywalnym plonie</h3>
           <ul class="c5-proof__list">
@@ -979,9 +979,9 @@
 
       </div>
 
-      <!-- Doświadczenia w gospodarstwach: dawna czwarta karta jako rząd CTA
-           pod kartami (spec §21.5 pkt 4) – nie jest zajawką badania, tylko
-           zaproszeniem do rozmowy. -->
+      
+
+
       <div id="dowod-cta" class="c5-proofs__cta" data-ce="CE-23" data-ce-wariant="z-naglowkiem">
         <h4 class="c5-proofs__ctah">Doświadczenia i próby w gospodarstwach</h4>
         <div class="c5-proofs__ctabody">
@@ -992,19 +992,19 @@
       </div>
     </div>
 
-    <!-- ===== Lightbox: trzy strony z pełnymi blokami 1:1 =====
-         Bez JS renderuje się jako zwykły blok pod kartami (trzy strony jedna
-         pod drugą, pełna treść) – i wtedy NIE jest dialogiem, więc `role`,
-         `aria-modal` i `aria-label` dokłada dopiero 55-dowod.js razem z klasą
-         `is-js`. Wartość `data-lightbox` niesie nazwę dostępną dialogu.
-         Liczba stron nie jest nigdzie zapisana na sztywno – moduł czyta ją
-         z DOM-u, więc licznik sam mówi „n / 3”. -->
+    
+
+
+
+
+
+
     <div class="c5-lb" id="dowod-lb" data-lightbox="Dowód – pełne wyniki badań" data-ce="CE-25">
       <div class="c5-lb__panel">
         <button class="c5-iconbtn c5-iconbtn--sm" type="button" data-lightbox-close aria-label="Zamknij"><svg class="wf-icon" aria-hidden="true"><use href="#ti-x"></use></svg></button>
         <div class="c5-lb__scroll" data-lightbox-scroll>
 
-          <!-- 6a. SGGW wobec wełny mineralnej -->
+          
           <section class="c5-lb__page" id="dowod-sggw" data-lightbox-page="dowod-sggw" aria-labelledby="dowod-sggw-t">
             <div class="c5-mt-proof__head">
               <span class="c5-mt-proof__tag">Badania niezależne · SGGW · ogórek szklarniowy</span>
@@ -1049,9 +1049,9 @@
                 <p class="c5-mt-card__txt">W porównaniu z wieloma podłożami organicznymi lignit charakteryzuje się niewielkim skurczem i rozkurczem objętościowym, dzięki czemu mata zachowuje swoją strukturę i funkcjonalność przez kolejne sezony uprawowe.</p>
                 <p class="c5-mt-card__txt">Co istotne, wraz z użytkowaniem poprawiają się również wybrane właściwości wodne podłoża. W ciągu pierwszych 51 dni uprawy ilość wody łatwo dostępnej dla roślin wzrosła nawet o 55%, a gęstość nasypowa o ponad 23%, co sprzyja rozwojowi systemu korzeniowego i zwiększa stabilność warunków w strefie korzeniowej.</p>
               </div>
-              <!-- Karta spoza copy klienta: jedyny NIEZALEŻNY dowód pod claim „minimum
-                   5 sezonów”, przywrócony z makiety V4. Źródło: wniosek 2 z obrony
-                   rozprawy SGGW (research/analiza-carbomat-mata-2026-07-10 §3A). -->
+              
+
+
               <div class="c5-mt-card">
                 <span class="c5-mt-card__no">06</span>
                 <h4 class="c5-mt-card__title">Ponowne użycie mat bez straty plonu i jakości</h4>
@@ -1061,8 +1061,8 @@
               </div>
             </div>
 
-            <!-- Publikacje: stopka tej strony, bo to jej źródła (spec §21.5 pkt 3 –
-                 dawna czwarta strona lightboxa). -->
+            
+
             <div class="c5-lb__pubs">
               <span class="c5-mt-proof__tag">Publikacje i doświadczenia</span>
               <h4 class="c5-mt-card__title">Na czym opieramy powyższe liczby</h4>
@@ -1075,12 +1075,12 @@
                 <li>Scientia Horticulturae 2023, 321, 112350 – jakość przechowalnicza owoców</li>
                 <li>Scientia Horticulturae 2024, 327, 112839 – doświetlanie HPS wobec LED</li>
               </ul>
-              <!-- ⚠️ decyzja Darka (l. 199) o podpięciu pełnych tekstów/DOI – do potwierdzenia; na razie odesłanie do Centrum wiedzy -->
+              
               <a class="c5-btn c5-btn--light c5-btn--sm" href="centrum-wiedzy.html#magazyn">zobacz w Centrum wiedzy</a>
             </div>
           </section>
 
-          <!-- 6b. Ślad węglowy (LCA producenta) -->
+          
           <section class="c5-lb__page" id="dowod-lca" data-lightbox-page="dowod-lca" aria-labelledby="dowod-lca-t">
             <div class="c5-mt-proof__head">
               <span class="c5-mt-proof__tag">Analiza śladu węglowego · nasze obliczenia metodą LCA</span>
@@ -1103,7 +1103,7 @@
             </div>
           </section>
 
-          <!-- 6c. Uprawa w trudnych warunkach klimatycznych (uwaga Darka, l. 223) -->
+          
           <section class="c5-lb__page" id="dowod-pomidor" data-lightbox-page="dowod-pomidor" aria-labelledby="dowod-pomidor-t">
             <div class="c5-mt-proof__head">
               <span class="c5-mt-proof__tag">Uprawa w trudnych warunkach klimatycznych · pomidor · wobec włókna kokosowego</span>
@@ -1141,13 +1141,13 @@
               </div>
             </div>
 
-            <!-- Miejsce na materiały z wizyty (Darek, l. 223) – bez placeholdera (spec §10) -->
+            
             <div id="dowod-pomidor-material" class="c5-mt-media" data-ce="CE-27" data-ce-wariant="dokument">
               <span class="c5-mt-media__ico" aria-hidden="true"><svg class="wf-icon" aria-hidden="true"><use href="#ti-file-text"></use></svg></span>
               <div class="c5-mt-media__body">
                 <span class="wf-w-semibold">Raport, zdjęcia i film z wizyty w gospodarstwie</span>
                 <span class="c5-mt-card__txt">Materiały z próby prowadzonej w trudnych warunkach klimatycznych – do wglądu na życzenie.</span>
-                <!-- ⚠️ raport z Azury + zdjęcia i film z wizyty są po stronie CarboHort – do podpięcia -->
+                
                 <a class="c5-btn c5-btn--light c5-btn--sm" href="kontakt.html">poproś o materiały</a>
               </div>
             </div>
@@ -1166,20 +1166,20 @@
     </div>
   </section>
 
-  <!-- ===== 7. PRZYGOTOWANIE – protokół jako stos nakładających się kart (spec §11) =====
-       Copy 1:1, l. 238–254. Polecenie Mateusza 13.09 (spec §1 poz. 6): jeden
-       layout zamiast trzech fragmentów scen – zmieniające się zdjęcie, tytuł
-       kroku, numer i krótki opis; mechanika nakładających się kart jak na
-       portfolio.widehue.co/rezonbio. Iteracja 2 (uwagi Mateusza nr 6 i 7):
-       nagłówek protokołu i pasek trzech faz znikają, a nazwy faz siedzą jako
-       krótkie dopiski nad numerem na samych kartach.
-       Stos jest czystym CSS-em (sticky, każda karta 16 px niżej); wykończenie
-       (cofanie i gaśnięcie przykrytej karty) liczy 60-przygotowanie.js
-       wyłącznie przy CX5.motionOn().
-       ⚠️ Tytuł kroku: numer i tytuł muszą być osobnymi elementami (numer jest
-       duży i cienki, separator niewidoczny), a tekst źródłowy nadal brzmi
-       „01 · Zalanie” – dlatego pełny ciąg stoi raz dla czytników ekranu, a
-       części wizualne są aria-hidden. -->
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
   <section class="c5-sec" id="przygotowanie" data-chapter="przygotowanie">
     <div class="c5-wrap">
       <span class="c5-kicker c5-kicker--center">Przygotowanie maty</span>
@@ -1192,7 +1192,7 @@
 
         <article class="c5-step" style="--i:1;">
           <div class="c5-ph c5-step__ph" data-ph="foto · krok 01 · zalanie"></div>
-          <!-- foto: img/foto/mata-krok-1.jpg -->
+          
           <div class="c5-step__body">
             <p class="c5-step__phase">nasycenie wodą</p>
             <h4 class="c5-step__title">
@@ -1208,7 +1208,7 @@
 
         <article class="c5-step" style="--i:2;">
           <div class="c5-ph c5-step__ph" data-ph="foto · krok 02 · moczenie"></div>
-          <!-- foto: img/foto/mata-krok-2.jpg -->
+          
           <div class="c5-step__body">
             <p class="c5-step__phase">nasycenie wodą</p>
             <h4 class="c5-step__title">
@@ -1223,7 +1223,7 @@
 
         <article class="c5-step" style="--i:3;">
           <div class="c5-ph c5-step__ph" data-ph="foto · krok 03 · drenaż"></div>
-          <!-- foto: img/foto/mata-krok-3.jpg -->
+          
           <div class="c5-step__body">
             <p class="c5-step__phase">drenaż i sadzenie</p>
             <h4 class="c5-step__title">
@@ -1238,7 +1238,7 @@
 
         <article class="c5-step" style="--i:4;">
           <div class="c5-ph c5-step__ph" data-ph="foto · krok 04 · sadzenie"></div>
-          <!-- foto: img/foto/mata-krok-4.jpg -->
+          
           <div class="c5-step__body">
             <p class="c5-step__phase">drenaż i sadzenie</p>
             <h4 class="c5-step__title">
@@ -1253,7 +1253,7 @@
 
         <article class="c5-step" style="--i:5;">
           <div class="c5-ph c5-step__ph" data-ph="foto · krok 05 · wilgotność"></div>
-          <!-- foto: img/foto/mata-krok-5.jpg -->
+          
           <div class="c5-step__body">
             <p class="c5-step__phase">reżim wilgotności</p>
             <h4 class="c5-step__title">
@@ -1261,7 +1261,7 @@
               <span class="c5-step__no" aria-hidden="true">05</span><span class="c5-step__sep" aria-hidden="true"> · </span><span class="c5-step__name" aria-hidden="true">Wilgotność podłoża</span>
             </h4>
             <div class="c5-step__txt">
-              <!-- Maksimum 60% POTWIERDZONE (Darek, AC #30867, 21.07) -->
+              
               <p>Utrzymuj przelew 15% w fazie budowy korzeni, 25–30% później. Wilgotność 30% do 3 tygodni po sadzeniu, potem min. 50% (nie przekraczaj 60%).</p>
             </div>
           </div>
@@ -1269,20 +1269,20 @@
 
       </div>
 
-      <!-- Miejsce na film z YouTube (Darek, l. 252) – bez placeholdera (spec §11.6) -->
+      
       <div id="przygotowanie-film" class="c5-mt-media" data-ce="CE-27">
         <span class="c5-mt-media__ico" aria-hidden="true"><svg class="wf-icon" aria-hidden="true"><use href="#ti-player-play"></use></svg></span>
         <div class="c5-mt-media__body">
           <span class="wf-w-semibold">Film: przygotowanie maty krok po kroku</span>
           <span class="c5-mt-card__txt">Instruktaż z kanału Carbohort na YouTube.</span>
-          <!-- ⚠️ konkretny film do podpięcia (materiał po stronie CarboHort) -->
+          
           <a class="c5-btn c5-btn--light c5-btn--sm" href="centrum-wiedzy.html#magazyn">obejrzyj instruktaż</a>
         </div>
       </div>
 
-      <!-- Rozdziału o nawożeniu świadomie NIE ma – polecenie Darka (l. 253):
-           „Całkowicie pominąłbym rozdział o nawożeniu. Tu musi być kontakt
-           z naszym doradcą.” Zamiast tabeli nawozowej: CTA do agronoma. -->
+      
+
+
       <div id="przygotowanie-cross" class="c5-mt-cross" data-ce="CE-23" data-ce-wariant="kreski-gora-dol">
         <p><span class="wf-w-semibold">Pożywka? To praca dla naszego agronoma.</span><br>
         <span class="c5-muted">W celu sporządzenia optymalnej pożywki dla Twojej uprawy skontaktuj się z naszym agronomem.</span></p>
@@ -1291,17 +1291,17 @@
     </div>
   </section>
 
-  <!-- ===== 8. ANALIZA PODŁOŻA (sekcja spoza wzorca, spec §12) =====
-       Treść i układ 1:1 z bazy. Uwaga Darka (l. 271): pokazujemy OBIE wersje
-       i wizualizujemy zmianę. Liczby wg dwóch analiz Laboratorium WZO Pleszew
-       (nota produktowa). CSS przeniesiony z inline <style> bazy. -->
+  
+
+
+
   <section class="c5-sec" id="analiza-podloza" data-chapter="analiza-podloza">
     <div class="c5-wrap">
       <span class="c5-kicker c5-kicker--center">Analiza podłoża</span>
       <div class="c5-head">
         <h2 class="c5-h2 c5-h2--center">Analiza podłoża Carbomat w&nbsp;wersji bazowej i&nbsp;po 5 latach uprawy pomidora.</h2>
-        <!-- Lead opisuje wyłącznie kierunek zmian stężeń, bez interpretacji mechanizmu:
-             spadek Ca i Fe w podłożu nie dowodzi, że pierwiastki trafiły do rośliny. -->
+        
+
         <p class="c5-lead c5-lead--center">Mata pracuje w czasie: akumuluje potas i azot azotanowy, a zawartość wapnia i żelaza spada. Odczyn obniża się do około 5, przewodność (EC) pozostaje stabilna.</p>
       </div>
 
@@ -1370,7 +1370,7 @@
         </table>
       </div>
 
-      <!-- Uwaga Darka (l. 272): „gdzieś by takie info się przydało pod jakie rośliny zalecamy” -->
+      
       <div id="analiza-nota" class="c5-mt-note" data-ce="CE-28" data-ce-wariant="z-przyciskiem">
         <span class="c5-mt-note__title">Pod jakie rośliny zalecamy podłoże po kilku latach uprawy</span>
         <p><span class="c5-mt-gap">Dane w uzupełnieniu.</span> Zestaw upraw, do których kierujemy podłoże na podstawie profilu składników, dopiero przygotowujemy. Do tego czasu dobór potwierdza nasz agronom – na podstawie analizy Twojej wody i drenażu.</p>
@@ -1379,18 +1379,18 @@
     </div>
   </section>
 
-  <!-- ===== 9. SEZON PO SEZONIE – licznik sezonów (spec §21.7) + EKONOMIA (§21.8) =====
-       Iteration 2, comment 8: Mateusz asked for a completely different layout
-       and a mechanic nobody has seen on this page - content and logic kept 1:1.
-       The pinned rows with packshots are gone; in their place a season counter:
-       a sticky stage inside a tall track, a giant season number, a row of five
-       sleeves that fill up one by one and, at the last stop, the CARBOMAT ECO
-       bag - the same raw material in its soil version.
-       Copy 1:1, base l. 255-269: three stop titles, three h3, the paragraphs,
-       the small paragraph linking to #dowod and the three buttons.
-       DOM order = static reading order: head, block 1, block 2, block 3. The
-       counter and the stop bar belong to the scene only (hidden below 900 px,
-       with reduced motion and without JS). -->
+  
+
+
+
+
+
+
+
+
+
+
+
   <section class="c5-sec" id="sezon" data-chapter="sezon" style="padding-bottom:0;">
     <div class="c5-wrap">
       <div class="c5-head">
@@ -1405,9 +1405,9 @@
         <div class="c5-wrap c5-yrs__inner">
           <div class="c5-yrs__grid">
 
-            <!-- Counter (scene only). Placed by the grid into the left column,
-                 so its position in the DOM is free - it sits first, where it
-                 costs the static reading order nothing (display:none there). -->
+            
+
+
             <div class="c5-yrs__counter">
               <p class="c5-yrs__count">
                 <span class="c5-yrs__num" data-yrs-count>1</span><span class="c5-yrs__unit" data-yrs-unit>sezon</span>
@@ -1419,11 +1419,11 @@
                 <span class="c5-yrs__sleeve" data-yrs-sleeve="4"><svg class="c5-yrs__sv" viewBox="0 0 120 26" focusable="false"><rect class="c5-yrs__sbody" x="1" y="1" width="118" height="24" rx="12"/><g class="c5-yrs__sdots"><circle cx="26" cy="10" r="2"/><circle cx="44" cy="17" r="2"/><circle cx="60" cy="9" r="2"/><circle cx="76" cy="16" r="2"/><circle cx="94" cy="11" r="2"/></g></svg></span>
                 <span class="c5-yrs__sleeve" data-yrs-sleeve="5"><svg class="c5-yrs__sv" viewBox="0 0 120 26" focusable="false"><rect class="c5-yrs__sbody" x="1" y="1" width="118" height="24" rx="12"/><g class="c5-yrs__sdots"><circle cx="26" cy="10" r="2"/><circle cx="44" cy="17" r="2"/><circle cx="60" cy="9" r="2"/><circle cx="76" cy="16" r="2"/><circle cx="94" cy="11" r="2"/></g></svg></span>
               </div>
-              <!-- drugie życie: ten sam surowiec w wersji doglebowej -->
+              
               <img class="c5-yrs__pack" data-yrs-pack src="img/opakowania/worek_20l.png" alt="CARBOMAT ECO – worek 20 l" loading="lazy" decoding="async">
             </div>
 
-            <!-- Stop 1 -->
+            
             <div class="c5-yrs__group" data-yrs-group="1">
               <span class="c5-yrs__glyph" aria-hidden="true">
                 <span class="c5-yrs__glyphrow"><span class="c5-yrs__sleeve is-on"><svg class="c5-yrs__sv" viewBox="0 0 120 26" focusable="false"><rect class="c5-yrs__sbody" x="1" y="1" width="118" height="24" rx="12"/><g class="c5-yrs__sdots"><circle cx="26" cy="10" r="2"/><circle cx="44" cy="17" r="2"/><circle cx="60" cy="9" r="2"/><circle cx="76" cy="16" r="2"/><circle cx="94" cy="11" r="2"/></g></svg></span></span>
@@ -1436,7 +1436,7 @@
               </div>
             </div>
 
-            <!-- Stop 2 -->
+            
             <div class="c5-yrs__group" data-yrs-group="2">
               <span class="c5-yrs__glyph" aria-hidden="true">
                 <span class="c5-yrs__glyphrow"><span class="c5-yrs__sleeve is-on"><svg class="c5-yrs__sv" viewBox="0 0 120 26" focusable="false"><rect class="c5-yrs__sbody" x="1" y="1" width="118" height="24" rx="12"/><g class="c5-yrs__sdots"><circle cx="26" cy="10" r="2"/><circle cx="44" cy="17" r="2"/><circle cx="60" cy="9" r="2"/><circle cx="76" cy="16" r="2"/><circle cx="94" cy="11" r="2"/></g></svg></span><span class="c5-yrs__sleeve is-on"><svg class="c5-yrs__sv" viewBox="0 0 120 26" focusable="false"><rect class="c5-yrs__sbody" x="1" y="1" width="118" height="24" rx="12"/><g class="c5-yrs__sdots"><circle cx="26" cy="10" r="2"/><circle cx="44" cy="17" r="2"/><circle cx="60" cy="9" r="2"/><circle cx="76" cy="16" r="2"/><circle cx="94" cy="11" r="2"/></g></svg></span><span class="c5-yrs__sleeve is-on"><svg class="c5-yrs__sv" viewBox="0 0 120 26" focusable="false"><rect class="c5-yrs__sbody" x="1" y="1" width="118" height="24" rx="12"/><g class="c5-yrs__sdots"><circle cx="26" cy="10" r="2"/><circle cx="44" cy="17" r="2"/><circle cx="60" cy="9" r="2"/><circle cx="76" cy="16" r="2"/><circle cx="94" cy="11" r="2"/></g></svg></span><span class="c5-yrs__sleeve is-on"><svg class="c5-yrs__sv" viewBox="0 0 120 26" focusable="false"><rect class="c5-yrs__sbody" x="1" y="1" width="118" height="24" rx="12"/><g class="c5-yrs__sdots"><circle cx="26" cy="10" r="2"/><circle cx="44" cy="17" r="2"/><circle cx="60" cy="9" r="2"/><circle cx="76" cy="16" r="2"/><circle cx="94" cy="11" r="2"/></g></svg></span><span class="c5-yrs__sleeve is-on"><svg class="c5-yrs__sv" viewBox="0 0 120 26" focusable="false"><rect class="c5-yrs__sbody" x="1" y="1" width="118" height="24" rx="12"/><g class="c5-yrs__sdots"><circle cx="26" cy="10" r="2"/><circle cx="44" cy="17" r="2"/><circle cx="60" cy="9" r="2"/><circle cx="76" cy="16" r="2"/><circle cx="94" cy="11" r="2"/></g></svg></span></span>
@@ -1450,7 +1450,7 @@
               </div>
             </div>
 
-            <!-- Stop 3 -->
+            
             <div class="c5-yrs__group" data-yrs-group="3">
               <span class="c5-yrs__glyph" aria-hidden="true">
                 <img class="c5-yrs__glyphimg" src="img/opakowania/worek_20l.png" alt="" loading="lazy" decoding="async">
@@ -1465,8 +1465,8 @@
 
           </div>
 
-          <!-- Stop bar: three segments filled by the global progress; the label
-               of each segment jumps to the beginning of its part of the track. -->
+          
+
           <div class="c5-yrs__bar" data-yrs-bar>
             <button type="button" class="c5-yrs__seg" data-yrs-seg="1">
               <span class="c5-yrs__segtrack" aria-hidden="true"><span class="c5-yrs__segfill" data-yrs-fill="1"></span></span>
@@ -1486,11 +1486,11 @@
       </div>
     </div>
 
-    <!-- Ekonomia cyklu życia (TCO) – jasny pas wewnątrz rozdziału o sezonach.
-         Iteration 2, comment 9: five boxes become two columns – large headings
-         on the left, the description of the hovered heading on the right.
-         Below 900 px the same DOM is an accordion; without JS every description
-         stands open under its heading. -->
+    
+
+
+
+
     <div class="c5-band c5-sec" id="ekonomia" style="margin-top:clamp(3rem,6vw,5rem);">
       <div class="c5-wrap">
         <h3 class="c5-band__title">Dlaczego Carbomat kosztuje mniej, niż myślisz?</h3>
@@ -1523,7 +1523,7 @@
           <div class="c5-tco__item">
             <button type="button" class="c5-tco__h" id="tco-h-5" data-tco-h="5"><span class="c5-tco__no" aria-hidden="true">05</span><span class="c5-tco__t">Podłoże, które zachowuje wartość</span></button>
             <div class="c5-tco__p" id="tco-p-5" data-tco-p="5">
-              <!-- „odsprzedana” w źródle → „odsprzedane” (uzgodnienie rodzaju, poprawka literówki) -->
+              
               <div class="c5-tco__pin"><p>Po zakończeniu użytkowania mata nie staje się odpadem. Skoro palić węglem już nie można, podłoże może zostać wykorzystane jako wartościowy polepszacz gleby lub odsprzedane producentom rolnym, szkółkom roślin ozdobnych, firmom zakładającym tereny zieleni, sadownikom czy bezpośrednio nam.</p></div>
             </div>
           </div>
@@ -1537,21 +1537,21 @@
     </div>
   </section>
 
-  <!-- ===== 10. DLA KOGO – pas PRO (spec §14) =====
-       Copy 1:1, l. 273–277. Port pasa PRO z ECO §8/§13.8/§14.6 (wzór sensiq.co):
-       szare tło, zdjęcie skaluje się przy przewijaniu od wąskiego kadru do
-       pełnej szerokości, narożniki 30 px, nagłówek po lewej, akapity i dwa
-       przyciski po prawej. Uwaga Darka (l. 276): wzmianka, że to samo podłoże
-       jest wykorzystywane w uprawie doniczkowej.
-       19.09.2026 (spec §22): the band moves to the `pozny-wzrost` variant of the
-       CE index - the crop HOLDS at half width until the top edge of the band
-       reaches 35 % of the window, then grows to full width at 2 %; the scrim
-       grows with it (ce/CE-16-pas-pro-proba.js). The markup is the same as the
-       base variant, the module is what changes. -->
+  
+
+
+
+
+
+
+
+
+
+
   <section class="c5-pro" id="dla-kogo" data-chapter="dla-kogo" data-pro data-ce="CE-16" data-ce-wariant="pozny-wzrost">
     <div class="c5-pro__media" data-pro-media aria-hidden="true">
       <div class="c5-ph c5-pro__ph" data-ph="foto · uprawa bezglebowa pod osłonami"></div>
-      <!-- foto: img/foto/mata-dla-kogo.jpg -->
+      
     </div>
     <div class="c5-wrap c5-pro__grid">
       <h2>Uprawy bezglebowe pod osłonami.</h2>
@@ -1566,18 +1566,18 @@
     </div>
   </section>
 
-  <!-- ===== 11. FAQ (spec §15) =====
-       ⚠️ Darek (l. 279): „Nad faqiem jeszcze pomyślę później, ale wrzucam na ten
-       czas” – FAQ maty jest TYMCZASOWE i składa się z trzech pytań BEZ odpowiedzi.
-       Odpowiedzi nie wymyślamy: dwie składamy wyłącznie z treści dokumentu
-       (l. 254 i 275–277), trzecia zostaje jawnie otwarta. Makieta V4 miała tu
-       osiem pytań z odpowiedziami budowanymi poza dokumentem klienta – ich
-       merytoryka żyje dalej w sekcjach „Co zastępujesz”, „Przygotowanie”
-       i „Czym jest”, więc nic nie ginie.
-       Port ECO §14.5: wszystkie pytania zwinięte, odstęp nagłówek → pierwszy
-       akordeon ok. 164 px. Moduł „zadaj pytanie” (dr Jurek) usunięty w całości
-       na polecenie Mateusza 13.09 (spec §1 poz. 7) – dok doradcy stoi przy
-       dolnej krawędzi, więc odesłanie w odpowiedzi 3 zostaje bez zmian. -->
+  
+
+
+
+
+
+
+
+
+
+
+
   <section class="c5-sec" id="faq" data-chapter="faq" data-ce="CE-17">
     <div class="c5-wrap">
       <span class="c5-kicker">FAQ</span>
@@ -1593,9 +1593,9 @@
         <div class="c5-faq__item">
           <button type="button" class="c5-faq__q" aria-expanded="false" aria-controls="faq-2">Ile maksymalnie cykli uprawowych udało się do tej pory poprowadzić na macie Carbomat i&nbsp;na jakich roślinach?<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button>
           <div class="c5-faq__a" id="faq-2">
-            <!-- ⚠️ NIE wymyślamy rekordu. Dokument podaje rozbieżne wartości („nawet 6 lat”,
-                 „6-8 kolejnych cykli”), a obowiązujący komunikat to minimum 5 sezonów.
-                 Konkretną liczbę cykli i listę roślin ma podać producent. -->
+            
+
+
             <div class="c5-faq__ain"><span class="c5-mt-gap">Odpowiedź uzupełnimy – zbieramy dane z gospodarstw.</span> To, co komunikujemy dziś: matę projektujemy na minimum 5 sezonów uprawy, a część producentów prowadzi ją dłużej. Technologię mamy potwierdzoną dla pomidora, ogórka i truskawki. Po szczegóły dla konkretnej uprawy napisz do nas – odpowie agronom.</div>
           </div>
         </div>
@@ -1609,7 +1609,7 @@
     </div>
   </section>
 
-  <!-- ===== 12. CTA KOŃCOWE (leadowe – mata nie ma ceny ani koszyka, spec §16) ===== -->
+  
   <section id="cta-koncowe" class="c5-sec" data-ce="CE-18" data-ce-wariant="z-leadem">
     <div class="c5-wrap">
       <div class="c5-cta">
@@ -1630,7 +1630,7 @@
 <cw-dock></cw-dock>
 
 <script src="cw.js"></script>
-<!-- Lenis: slight scroll inertia (like serverobotics.com); the page scrolls natively without it -->
+
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
 <script src="ce/00-base.js"></script>
 <script src="ce/CE-07-nawigacja-kropkowa.js"></script>

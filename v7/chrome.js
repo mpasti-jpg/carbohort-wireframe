@@ -14,7 +14,7 @@
 
    data-current przyjmuje wartość z data-nav w szablonie nawigacji:
    produkty · uprawy · ziemniak · kukurydza · borowka · prochnica-plus · centrum-wiedzy
-   · o-firmie · kontakt · sklep · platforma-b2b. Puste = brak podświetlenia
+   · o-firmie · kontakt · sklep. Puste = brak podświetlenia
    (strona główna).
 
    ZASADY:
@@ -115,6 +115,7 @@
   <symbol id="ti-photo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15 8h.01" /><path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" /><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" /><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" /></symbol>
   <symbol id="ti-player-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16l13 -8z" /></symbol>
   <symbol id="ti-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5l0 14" /><path d="M5 12l14 0" /></symbol>
+  <symbol id="ti-layout-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /><path d="M14 5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /><path d="M4 15a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /><path d="M14 15a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /></symbol>
   <symbol id="ti-rotate" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M19.95 11a8 8 0 1 0 -.5 4m.5 5v-5h-5" /></symbol>
   <symbol id="ti-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
   <path d="M21 21l-6 -6" /></symbol>
@@ -152,7 +153,12 @@
         <div class="cw-mega cw-mega--wide" id="mega-produkty" data-ce="CE-02" data-ce-wariant="szerokie" data-open="false" role="region" aria-label="Produkty Carbohort">
           <div class="cw-mega__head">
             <span class="wf-overline wf-t-tertiary">Produkty Carbohort</span>
-            <a class="wf-btn wf-btn--secondary wf-btn--sm" href="produkty.html">Poznaj całą gamę produktów</a>
+            <!-- The shop button (28.09.2026, Mateusz): whoever opens "Produkty
+                 Carbohort" expecting to buy gets to the shop in one click. -->
+            <div class="cw-mega__actions">
+              <a class="wf-btn wf-btn--secondary wf-btn--sm" href="produkty.html">Poznaj całą gamę produktów</a>
+              <a class="wf-btn wf-btn--primary wf-btn--sm" href="sklep.html"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-shopping-cart"></use></svg>Przejdź do sklepu</a>
+            </div>
           </div>
           <div class="cw-mega__layout">
             <!-- Cały box = link (bez osobnych przycisków); miniatura produktu dojdzie -->
@@ -286,12 +292,17 @@
       <a class="wf-navbar__link" data-nav="kontakt" href="kontakt.html">Kontakt</a>
     </nav>
     <div class="wf-cluster wf-gap-2">
+      <!-- No "Zaloguj" to the B2B platform here since 28.09.2026: the top bar serves
+           visitors who do not know the site yet; the platform keeps its link in the footer. -->
       <a class="wf-btn wf-btn--primary wf-btn--sm" data-nav="konfigurator" href="konfigurator.html">Konfigurator</a>
       <a class="wf-btn wf-btn--ghost wf-btn--sm" data-nav="sklep" href="sklep.html">Sklep</a>
-      <a class="wf-btn wf-btn--ghost wf-btn--sm wf-inline" data-nav="platforma-b2b" href="platforma-b2b.html"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-user"></use></svg> Zaloguj</a>
       <a class="wf-btn wf-btn--ghost wf-btn--icon wf-badge--count cw-cart" href="koszyk.html" aria-label="Koszyk, 0 produktów"><svg class="wf-icon" aria-hidden="true"><use href="#ti-shopping-cart"></use></svg><span class="wf-count" data-cart-count>0</span></a>
       <button class="wf-btn wf-btn--ghost wf-btn--icon cw-navtoggle" data-navtoggle aria-controls="mobilenav" aria-expanded="false" aria-label="Otwórz menu"><svg class="wf-icon" aria-hidden="true"><use href="#ti-menu-2"></use></svg></button>
     </div>
+    <!-- Cart preview (28.09.2026, round 3): cw.js fills it from the shop's cart
+         store and shows it while the pointer rests on the cart icon; the icon
+         itself still leads to the cart page, touch screens get no preview. -->
+    <div class="cw-minicart" id="cw-minicart" data-cw-minicart data-open="false" role="region" aria-label="Podgląd koszyka"></div>
   </div>
   <nav class="cw-mobilenav wf-container" id="mobilenav" data-ce="CE-03" data-open="false" aria-label="Menu mobilne">
     <a class="wf-navitem" data-nav="produkty" href="produkty.html">Produkty Carbohort</a>
@@ -375,7 +386,6 @@
     <a class="wf-navitem" data-nav="o-firmie" href="o-firmie.html">O nas</a>
     <a class="wf-navitem" data-nav="kontakt" href="kontakt.html">Kontakt</a>
     <a class="wf-navitem" data-nav="sklep" href="sklep.html">Sklep</a>
-    <a class="wf-navitem" data-nav="platforma-b2b" href="platforma-b2b.html">Zaloguj</a>
   </nav>
 </header>`;
 

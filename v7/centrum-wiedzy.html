@@ -24,8 +24,8 @@
 
 <cw-navbar data-current="centrum-wiedzy"></cw-navbar>
 
-<!-- ===== Nawigacja po podstronie: kropki przy prawej krawędzi (scrollspy) =====
-     Pięć rozdziałów działu (spec §3). Poniżej 900 px nav jest ukryty. -->
+
+
 <nav id="nawigacja-kropki" class="c5-dots" aria-label="Rozdziały strony Centrum wiedzy" data-dots data-ce="CE-07">
   <ol>
     <li><a class="c5-dots__link" href="#hero" data-dot="hero"><span class="c5-dots__label">Start</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
@@ -38,12 +38,12 @@
 
 <main id="main">
 
-  <!-- ===== 1. HERO – CE-08 wariant „dzial" (spec §3.1) =====================
-       Bez panelu z prawej: jedna kolumna na dwie trzecie szerokości, wysokość
-       wyznacza treść. Kicker mówi „Centrum wiedzy" (nazwa z menu serwisu), h1
-       to nazwa klienta; wstępniak i drugi akapit 1:1 ze strefy wiedzy na
-       carbohort.com. Pole wyszukiwania filtruje indeks na żywo, a Enter albo
-       lupa przewijają do listy; bez JS zostaje link do indeksu. -->
+  
+
+
+
+
+
   <section id="hero" data-chapter="hero" data-ce="CE-08" data-ce-wariant="dzial">
     <div class="c5-wrap">
       <div class="c5-hero c5-hero--dzial">
@@ -77,10 +77,10 @@
     </div>
   </section>
 
-  <!-- ===== 2. NAJNOWSZE – CE-58 (wersja bazowa, spec §3.2) ================
-       Trzy ostatnie artykuły: karta wiodąca z polem pod infografikę 16:9 (jedyny
-       obraz działu) i dwie mniejsze jedna nad drugą. Wszystkie linkują do
-       makiety artykułu. Pod rzędem nota o najbliższym tekście. -->
+  
+
+
+
   <section class="c5-sec" id="najnowsze" data-chapter="najnowsze" data-ce="CE-58">
     <div class="c5-wrap">
       <span class="c5-kicker">Najnowsze</span>
@@ -112,10 +112,10 @@
     </div>
   </section>
 
-  <!-- ===== 3. KATEGORIE – CE-59 (wersja bazowa, spec §3.3) ================
-       Dwie grupy główne w brzmieniu klienta, każda jako obramowany boks z
-       listą podgrup i licznikami. Nazwa grupy prowadzi na stronę kategorii,
-       podgrupa – na indeks z ustawionym filtrem (`?kat=`). -->
+  
+
+
+
   <section class="c5-sec c5-band" id="kategorie" data-chapter="kategorie" data-ce="CE-59">
     <div class="c5-wrap">
       <span class="c5-kicker">Kategorie</span>
@@ -156,12 +156,12 @@
     </div>
   </section>
 
-  <!-- ===== 4. WSZYSTKIE ARTYKUŁY – CE-57 (wersja bazowa, spec §3.4) =======
-       Indeks: wiersze bez miniatur, dziesięć na stronę, stronicowanie zamiast
-       doładowywania (Mateusz 10.08). Chipy podgrup, sortowanie i wyszukiwanie
-       działają w JS na atrybutach `data-kat` / `data-date` / `data-title` /
-       `data-search`; bez JS widać wszystkie trzynaście wierszy, a same
-       kontrolki są ukryte. -->
+  
+
+
+
+
+
   <section class="c5-sec" id="artykuly" data-chapter="artykuly" data-ce="CE-57" data-cw-index>
     <div class="c5-wrap">
       <span class="c5-kicker">Wszystkie artykuły</span>
@@ -300,9 +300,9 @@
     </div>
   </section>
 
-  <!-- ===== 5. DO POBRANIA – CE-53 wariant „dokumenty" (spec §3.5) =========
-       Anatomia wiersza z wersji bazowej (prochnica-plus.html#wyniki-raporty):
-       tytuł, metryka i przycisk pobrania. Adresy plików to na razie stuby. -->
+  
+
+
   <section class="c5-sec c5-band" id="poradniki" data-chapter="poradniki" data-ce="CE-53" data-ce-wariant="dokumenty">
     <div class="c5-wrap">
       <span class="c5-kicker">Poradniki i dokumenty</span>
@@ -389,11 +389,11 @@
     </div>
   </section>
 
-  <!-- ===== 6. AUTORZY – CE-48 wariant „kompakt" (spec §3.6) ===============
-       Wersja bazowa CE-48 to karty koordynatorów Próchnicy+ z rozwijanym
-       biogramem; tutaj wariant bez rozwijania. Biogramy dr. Łaźnego i dr.
-       Próchnickiego 1:1 z prochnica-plus.html#koordynatorzy (pierwszy akapit),
-       razem z notą niezależności przy dr. Próchnickim. -->
+  
+
+
+
+
   <section class="c5-sec" id="autorzy" data-ce="CE-48" data-ce-wariant="kompakt">
     <div class="c5-wrap">
       <span class="c5-kicker">Kto pisze</span>
@@ -424,10 +424,10 @@
     </div>
   </section>
 
-  <!-- ===== 7. ZAPROPONUJ TEMAT – CE-50 wariant „temat" (spec §3.7) ========
-       Formularz zastępuje komentarze pod artykułami (decyzja 01.06). Po prawej
-       pas przewodnika – komponent `cw-ask` z cw.css, przycisk otwiera dok
-       doradcy. Zdanie o przewodniku 1:1 z konspektu Darka. -->
+  
+
+
+
   <section class="c5-sec c5-band" id="zaproponuj" data-ce="CE-50" data-ce-wariant="temat">
     <div class="c5-wrap">
       <span class="c5-kicker">Zaproponuj temat</span>
@@ -475,7 +475,7 @@
 <cw-dock></cw-dock>
 
 <script src="cw.js"></script>
-<!-- Lenis: slight scroll inertia (like serverobotics.com); the page scrolls natively without it -->
+
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
 <script src="ce/00-base.js"></script>
 <script src="ce/CE-07-nawigacja-kropkowa.js"></script>

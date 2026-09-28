@@ -80,20 +80,20 @@
 
 <cw-navbar data-current="centrum-wiedzy"></cw-navbar>
 
-<!-- ===== CE-60 · pasek postępu czytania (część klocka „Spis treści") =======
-     Jedyny ruch na tej stronie: 2 px paska nad menu, szerokość = procent
-     przewiniętego artykułu. Bez JS pasek zostaje na zerze i niczego nie
-     zasłania. -->
+
+
+
+
 <div class="cw-a-progress" role="progressbar" aria-label="Postęp czytania artykułu" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-progress>
   <span class="cw-a-progress__bar" data-progress-bar></span>
 </div>
 
 <main id="main">
 
-  <!-- ===== CE-08 wariant „artykul" · Nagłówek artykułu =====================
-       Okruszki, chipy podgrupy, tytuł, metryka autora (pole pod zdjęcie,
-       konsultacja, daty i czas czytania) oraz dwa przyciski ikonowe:
-       „Udostępnij" kopiuje adres do schowka, „Drukuj" woła window.print(). -->
+  
+
+
+
   <section class="cw-a-head" id="naglowek" data-dock-hero data-ce="CE-08" data-ce-wariant="artykul">
     <div class="c5-wrap">
       <nav class="wf-breadcrumb cw-a-crumbs" aria-label="Okruszki">
@@ -132,12 +132,12 @@
     </div>
   </section>
 
-  <!-- ===== Okładka artykułu =================================================
-       Pierwsza ilustracja artykułu (w Google Docu „Foto 1” stoi tuż pod tytułem,
-       przed wstępem) wyszła z biegu tekstu i stoi tutaj jako okładka: na całą
-       szerokość układu czytania, czyli obu kolumn razem – przyklejona kolumna
-       spisu zaczyna się pod nią. Bez parallaxu i bez odkrywania: strona do
-       czytania (ustalenie 15.09, spec §5.3). -->
+  
+
+
+
+
+
   <div class="c5-wrap">
     <figure class="cw-a-cover" id="okladka" role="group">
       <span class="wf-ph cw-a-cover__ph" aria-hidden="true"><svg class="wf-icon wf-icon--lg"><use href="#ti-photo"></use></svg></span>
@@ -145,20 +145,20 @@
     </figure>
   </div>
 
-  <!-- ===== Kolumny artykułu ================================================
-       Od 1100 px: lewa kolumna 260 px przyklejona (spis treści + skrócona
-       metryka), prawa kolumna tekstu max 720 px – pas produktów, kluczowe
-       wnioski, treść. Poniżej 1100 px jedna kolumna w kolejności DOM: spis
-       treści (akordeon) → pas produktów → kluczowe wnioski → treść. -->
+  
+
+
+
+
   <div class="c5-wrap">
     <div class="cw-a-layout">
 
       <aside class="cw-a-side" aria-label="Nawigacja po artykule">
-        <!-- ===== CE-60 · Spis treści (wersja bazowa) =========================
-             Jeden element `details`: od 1100 px stoi otwarty w przyklejonej
-             kolumnie, niżej zwija się w akordeon nad treścią. Aktywną pozycję
-             ustawia scrollspy (`aria-current="true"`); bez JS to zwykłe
-             kotwice, a lista jest otwarta. -->
+        
+
+
+
+
         <details class="cw-a-toc" id="spis" data-ce="CE-60" open>
           <summary class="cw-a-toc__sum">
             <h2 class="cw-a-toc__h">Spis treści</h2>
@@ -222,14 +222,14 @@
         </div>
       </aside>
 
-      <!-- ===== CE-64 · Produkty wspomniane w artykule (wersja bazowa) ========
-           Pas nad „Kluczowymi wnioskami”: wyłącznie produkty, które artykuł
-           wymienia z nazwy, i wyłącznie ich nazwy – żadnych zdań o produktach,
-           żadnych claimów (spec §5.3 pkt 2). Nagłówek pasa nie wchodzi do spisu
-           treści: CE-60 zbiera wyłącznie własne linki `.cw-a-toc__link`, a ten
-           nagłówek nosi dodatkowo `data-toc-skip` dla generatora spisu, gdy taki
-           powstanie. Od 900 px trzy pozycje stoją w rzędzie w kolumnie 720 px,
-           poniżej rząd przewija się poziomo ze `scroll-snap`. -->
+      
+
+
+
+
+
+
+
       <aside class="cw-a-mprod" id="produkty-wspomniane" data-ce="CE-64" aria-labelledby="produkty-wspomniane-h">
         <h2 class="c5-h3 c5-h3--sm cw-a-mprod__h" id="produkty-wspomniane-h" data-toc-skip>Produkty wspomniane w artykule</h2>
         <ul class="cw-a-mprod__list">
@@ -260,10 +260,10 @@
         </ul>
       </aside>
 
-      <!-- ===== CE-61 · Kluczowe wnioski (wersja bazowa) ======================
-           Pięć zdań przepisanych dosłownie z artykułu, po jednym z różnych
-           mitów (1, 2, 3, 5 i 10). Nagłówek boksu wchodzi do spisu treści
-           jako pierwsza pozycja. -->
+      
+
+
+
       <section class="cw-a-key" id="wnioski" data-ce="CE-61" aria-labelledby="wnioski-h">
         <h2 class="c5-h2 cw-a-h2 cw-a-key__h" id="wnioski-h">Kluczowe wnioski</h2>
         <ul class="cw-a-key__list">
@@ -275,10 +275,10 @@
         </ul>
       </section>
 
-      <!-- ===== Treść artykułu (copy klienta 1:1) =============================
-           Generowana skryptem `build.py` ze scratchpada z pliku
-           `artykul-10-mitow.md`; w środku stoją dwa klocki: CE-62 (boks
-           produktowy po micie trzecim) i CE-33 (cytat wyróżniony). -->
+      
+
+
+
       <article class="cw-a-body" id="tresc" data-artykul>
       <p>Pomimo tego, że preparaty zawierające substancje humusowe, zwłaszcza kwasy, są obecne na rynku od kilku dekad, wokół ich działania wciąż gromadzi się wiele krzywdzących mitów, nieporozumień i niedopowiedzeń. Część z nich wynika z uproszczeń marketingowych, część z niezrozumienia i błędnej interpretacji badań naukowych, a część z przenoszenia doświadczeń z jednego produktu na wszystkie inne dostępne na rynku, bez porównywania ich składu. W efekcie kwasy humusowe bywają postrzegane albo jako cudowny środek rozwiązujący wszystkie problemy gleby i roślin, albo przeciwnie – jako „chrzczona woda” o niewielkiej wartości praktycznej. Tymczasem prawda, jak zwykle, leży pośrodku. W niniejszym artykule rozprawiamy się z najczęściej powtarzanymi mitami, opierając się na aktualnej wiedzy oraz naszej wieloletniej praktyce stosowania różnych preparatów humusowych.</p>
       <h2 class="c5-h2 cw-a-h2" id="mit-1">Mit pierwszy: „Kwasy humusowe to nawóz i mogą być stosowane zamiast nawożenia mineralnego”</h2>
@@ -306,10 +306,10 @@
         <span class="wf-ph cw-a-fig__ph" aria-hidden="true"><svg class="wf-icon wf-icon--lg"><use href="#ti-photo"></use></svg></span>
         <figcaption class="cw-a-fig__cap">Ilustracja 4</figcaption>
       </figure>
-      <!-- ===== CE-62 · Boks produktowy w treści (wersja bazowa) ===============
-           Jeden boks na artykuł, postawiony tam, gdzie w tekście pada nazwa
-           wariantu (mit trzeci). Zdanie opisu 1:1 z karty wariantu na
-           carbohumic.html#wariant-filtrowany; packshot z katalogu opakowań. -->
+      
+
+
+
       <aside class="cw-a-prod" id="produkt" data-ce="CE-62" aria-labelledby="produkt-nazwa">
         <span class="c5-kicker cw-a-prod__kicker">Z tego artykułu</span>
         <div class="cw-a-prod__in">
@@ -359,9 +359,9 @@
         <li>większość związków organicznych o charakterze toksycznym.</li>
       </ul>
       <p>Dzięki temu ograniczają ich rozpuszczalność w glebie i wymywanie do wód gruntowych zmniejszając ryzyko pobierania przez rośliny. W praktyce pełnią funkcję naturalnego filtra chemicznego, który stabilizuje środowisko glebowe i poprawia jego odporność na zanieczyszczenia. Zatem im więcej stabilnej materii humusowej znajduje się w glebie, tym większa jest jej zdolność do samooczyszczania. To właśnie substancje humusowe odpowiadają za wiązanie większości zanieczyszczeń wynikających z działalności człowieka.</p>
-      <!-- ===== CE-33 · Cytat wyróżniony (wariant „cytat") ===================
-           Jedno zdanie z tekstu artykułu, bez zmiany słów – to samo, które
-           stoi w akapicie wyżej. -->
+      
+
+
       <blockquote class="cw-a-quote" id="cytat" data-ce="CE-33" data-ce-wariant="cytat">
         <p>Zatem im więcej stabilnej materii humusowej znajduje się w glebie, tym większa jest jej zdolność do samooczyszczania.</p>
       </blockquote>
@@ -384,9 +384,9 @@
     </div>
   </div>
 
-  <!-- ===== CE-17 wariant „plain" · Częste pytania ==========================
-       Trzy pytania redakcyjne; każda odpowiedź złożona wyłącznie ze zdań
-       artykułu, cytowanych dosłownie. Bez JS odpowiedzi zostają otwarte. -->
+  
+
+
   <section class="c5-sec cw-a-sec" id="faq" data-ce="CE-17" data-ce-wariant="plain">
     <div class="c5-wrap cw-a-col">
       <h2 class="c5-h2 cw-a-h2">Częste pytania</h2>
@@ -413,10 +413,10 @@
     </div>
   </section>
 
-  <!-- ===== CE-63 · Karta autora (wersja bazowa) ============================
-       Sygnatura E-E-A-T: autor z polem pod zdjęcie i linkiem do wszystkich
-       swoich tekstów, pod nim wiersz konsultanta merytorycznego z pierwszym
-       zdaniem biogramu 1:1 z prochnica-plus.html#koordynatorzy. -->
+  
+
+
+
   <section class="c5-sec cw-a-sec" id="autor" data-ce="CE-63">
     <div class="c5-wrap cw-a-col">
       <h2 class="c5-h2 cw-a-h2">O autorze</h2>
@@ -439,10 +439,10 @@
     </div>
   </section>
 
-  <!-- ===== CE-20 wariant „czytaj-dalej" · Siatka kart ======================
-       Dwa artykuły z tej samej podgrupy i jedna karta komercyjna – każdy
-       artykuł prowadzi dalej do co najmniej dwóch tekstów i jednej strony
-       produktu. Zajawki 1:1 z listy Strefy wiedzy (stara strona). -->
+  
+
+
+
   <section class="c5-sec c5-band cw-a-sec" id="dalej">
     <div class="c5-wrap">
       <h2 class="c5-h2 cw-a-h2">Czytaj dalej</h2>
@@ -471,9 +471,9 @@
     </div>
   </section>
 
-  <!-- ===== CE-50 wariant „temat" · Formularz „Zaproponuj temat" ============
-       Formularz demonstracyjny (nic nie wychodzi na serwer) zamiast
-       komentarzy pod artykułem; obok pas przewodnika z doku doradcy. -->
+  
+
+
   <section class="c5-sec cw-a-sec" id="zaproponuj">
     <div class="c5-wrap cw-a-col">
       <h2 class="c5-h2 cw-a-h2">Zaproponuj temat</h2>
@@ -508,7 +508,7 @@
     </div>
   </section>
 
-  <!-- ===== Poprzedni / następny artykuł (element, nie CE) ================== -->
+  
   <nav class="cw-a-nav" id="nawigacja" aria-label="Poprzedni i następny artykuł">
     <div class="c5-wrap cw-a-nav__in">
       <a class="cw-a-nav__item cw-a-nav__item--prev" href="artykul.html">

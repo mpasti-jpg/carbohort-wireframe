@@ -1,0 +1,194 @@
+/* =====================================================================
+   koszyk.css – cart page of the V7 shop (28.09.2026, round 3).
+   Spec: 40-strona-www/koncepcja/sklep-v7-spec.md §7 and §12.10 (layout of
+   stinegoya.com/cart in the shop's own language). Prefix c5ks-*, tokens
+   --w-* only, greyscale, sharp corners. Shared pieces (.cws-btn, .cws-qty,
+   .cws-price*, .c5-wrap--wide) come from sklep-wspolne.css.
+   ===================================================================== */
+
+/* Elements with display:flex/grid outrank the browser's [hidden] rule. */
+.c5ks [hidden] { display: none !important; }
+/* Black on white: the kit's body text is grey-600; supporting text below
+   sets its own secondary or tertiary tone. */
+.c5ks { color: var(--w-text-primary); }
+.c5ks:focus { outline: none; }   /* programmatic target of the skip link */
+.c5ks-nw { white-space: nowrap; }
+
+/* Skip link: off-screen until focused. */
+.c5ks-skip { position: absolute; left: -9999px; top: 0; z-index: var(--w-z-toast); }
+.c5ks-skip:focus { left: var(--w-space-4); top: var(--w-space-2); padding: 10px 16px; background: var(--w-gray-900); color: var(--w-text-inverse); }
+
+/* --- Header ----------------------------------------------------------- */
+.c5ks-top { border-bottom: 1px solid var(--w-border-subtle); }
+.c5ks-top .c5-wrap { display: flex; flex-direction: column; gap: var(--w-space-2); padding-block: var(--w-space-4) var(--w-space-5); }
+.c5ks-crumbs { padding-block: 0; }
+.c5ks-top__row { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--w-space-1) var(--w-space-4); }
+.c5ks-h1 { font-size: clamp(1.75rem, 3.2vw, 2.5rem); line-height: 1.1; font-weight: var(--w-weight-medium); letter-spacing: -0.01em; }
+.c5ks-top__n { font-size: 0.9375rem; color: var(--w-text-secondary); font-variant-numeric: tabular-nums; }
+
+/* --- Layout -------------------------------------------------------------
+   One column on phones and tablets (summary under the items); from 900 px
+   items 7fr + summary 5fr (at least 340 px), the summary stuck to the top.
+   koszyk.js lowers --ks-sum-top below the 24 px default when the summary is
+   taller than the window, so its buttons stay in view while it sticks. */
+.c5ks-sec { padding-block: clamp(1.5rem, 3vw, 2.5rem) clamp(3rem, 6vw, 5rem); }
+.c5ks-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--w-space-10); align-items: start; }
+.c5ks-items, .c5ks-sum { min-width: 0; }
+@media (min-width: 900px) {
+  .c5ks-grid { grid-template-columns: minmax(0, 7fr) minmax(340px, 5fr); column-gap: clamp(40px, 5vw, 80px); }
+  .c5ks-grid.is-empty { grid-template-columns: minmax(0, 1fr); }
+  /* The site navbar scrolls away (c5.css), so the offset counts from the viewport edge. */
+  .c5ks-sum { position: sticky; top: var(--ks-sum-top, 24px); }
+}
+
+/* Column label over a black rule – both columns, like "Items" in the pattern. */
+.c5ks-label { padding-bottom: var(--w-space-3); border-bottom: 1px solid var(--w-gray-900); font-size: 0.8125rem; font-weight: var(--w-weight-semibold); line-height: 1.3; letter-spacing: .04em; text-transform: uppercase; }
+
+/* --- Line items ----------------------------------------------------------
+   A card-row per line, rules between: square thumbnail (96 px on phones,
+   160 px from 600 px) · name and "×" on top, pack and unit price under it,
+   stepper bottom-left and line value bottom-right. */
+.c5ks-item {
+  display: grid; grid-template-columns: 96px minmax(0, 1fr); column-gap: var(--w-space-4);
+  padding-block: var(--w-space-5); border-bottom: 1px solid var(--w-border-default);
+}
+.c5ks-item__img { display: block; align-self: start; aspect-ratio: 1; background: var(--w-gray-100); }
+.c5ks-item__img img { display: block; width: 100%; height: 100%; object-fit: contain; padding: 12%; }
+.c5ks-item__img.wf-ph { min-height: 0; border-radius: 0; }
+.c5ks-item__body { display: flex; flex-direction: column; min-width: 0; min-height: 96px; }
+.c5ks-item__head { display: flex; align-items: flex-start; gap: var(--w-space-2); }
+.c5ks-item__name { flex: 1 1 auto; min-width: 0; padding-top: 1px; font-size: 1rem; font-weight: var(--w-weight-medium); letter-spacing: -0.01em; line-height: 1.3; }
+.c5ks-item__name a { color: inherit; text-decoration: none; }
+.c5ks-item__name a:hover { text-decoration: underline; text-underline-offset: 3px; }
+/* "×": a 40 px target whose icon lines up with the column edge. */
+.c5ks-item__rm { flex: none; display: grid; place-items: center; width: 40px; height: 40px; margin: -9px -10px -9px 0; padding: 0; background: none; border: 0; color: var(--w-text-primary); cursor: pointer; transition: background var(--w-duration-base) var(--w-ease); }
+.c5ks-item__rm:hover { background: var(--w-gray-100); }
+.c5ks-item__rm .wf-icon { width: 20px; height: 20px; }
+.c5ks-item__pack { margin-top: var(--w-space-1); font-size: 0.875rem; line-height: 1.4; color: var(--w-text-secondary); }
+.c5ks-item__price { margin-top: var(--w-space-2); font-size: 0.9375rem; }
+.c5ks-item__vat { font-size: 0.75rem; color: var(--w-text-tertiary); white-space: nowrap; }
+.c5ks-item__low { margin-top: 2px; font-size: 0.75rem; line-height: 1.4; color: var(--w-text-tertiary); }
+.c5ks-item__foot { display: flex; flex-wrap: wrap; align-items: center; gap: var(--w-space-3) var(--w-space-4); margin-top: auto; padding-top: var(--w-space-4); }
+.c5ks-item__sum { margin-left: auto; white-space: nowrap; font-size: 1.0625rem; font-variant-numeric: tabular-nums; }
+.c5ks-item__sum b { font-weight: var(--w-weight-semibold); }
+.c5ks-item__name a:focus-visible, .c5ks-item__rm:focus-visible, .c5ks-undo__btn:focus-visible, .c5ks-how summary:focus-visible { outline: 2px solid var(--w-focus-ring); outline-offset: 2px; }
+.c5ks-item__rm:focus-visible { outline-offset: -2px; }
+/* Stepper ends: aria-disabled keeps the focus on the button at 1 and 99. */
+.c5ks-item .cws-qty__b[aria-disabled="true"] { color: var(--w-text-disabled); cursor: default; }
+.c5ks-item .cws-qty__b[aria-disabled="true"]:hover { background: none; }
+
+@media (min-width: 600px) {
+  .c5ks-item { grid-template-columns: 160px minmax(0, 1fr); column-gap: clamp(1rem, 2vw, 1.75rem); padding-block: var(--w-space-6); }
+  .c5ks-item__body { min-height: 160px; }
+  .c5ks-item__name { font-size: 1.0625rem; }
+  .c5ks-item__sum { font-size: 1.125rem; }
+}
+
+/* Undo bar in place of a removed line, for 6 s (paused while focused). */
+.c5ks-undo {
+  position: relative; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: var(--w-space-3) var(--w-space-4); padding: 14px 16px; background: var(--w-gray-100);
+  border-bottom: 1px solid var(--w-border-default); font-size: 0.9375rem; overflow: hidden;
+}
+.c5ks-undo__txt { min-width: 0; flex: 1 1 14rem; }
+.c5ks-undo__txt b { font-weight: var(--w-weight-semibold); }
+.c5ks-undo__btn { flex: none; font: inherit; font-size: 0.875rem; font-weight: var(--w-weight-medium); padding: 8px 18px; background: var(--w-surface-page); color: var(--w-text-primary); border: 1px solid var(--w-gray-900); cursor: pointer; transition: background var(--w-duration-base) var(--w-ease), color var(--w-duration-base) var(--w-ease); }
+.c5ks-undo__btn:hover { background: var(--w-gray-900); color: var(--w-text-inverse); }
+.c5ks-undo__bar { position: absolute; left: 0; bottom: 0; width: 100%; height: 2px; background: var(--w-gray-900); transform-origin: left; animation: c5ks-undo 6s linear forwards; }
+.c5ks-undo.is-paused .c5ks-undo__bar { animation-play-state: paused; }
+@keyframes c5ks-undo { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+
+/* --- Empty state ------------------------------------------------------ */
+.c5ks-empty { display: flex; flex-direction: column; align-items: center; gap: var(--w-space-4); text-align: center; border: 1px dashed var(--w-border-default); padding: clamp(2rem, 5vw, 3.5rem) var(--w-space-5); }
+.c5ks-list:not([hidden]) + .c5ks-empty { margin-top: var(--w-space-5); }   /* undo bar above the empty state */
+.c5ks-empty__ico { display: grid; place-items: center; width: 56px; height: 56px; border: 1px solid var(--w-gray-900); }
+.c5ks-empty__ico .wf-icon { width: 24px; height: 24px; }
+.c5ks-empty__h { font-size: clamp(1.25rem, 2vw, 1.5rem); font-weight: var(--w-weight-medium); letter-spacing: -0.01em; }
+.c5ks-empty__h:focus { outline: none; }
+.c5ks-empty__h:focus-visible { outline: 2px solid var(--w-focus-ring); outline-offset: 4px; }
+.c5ks-empty__act { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: var(--w-space-2); }
+@media (max-width: 599px) {
+  .c5ks-empty__act { flex-direction: column; align-self: stretch; }   /* equal, full-width buttons */
+}
+.c5ks-empty__note { max-width: 36rem; font-size: 0.8125rem; color: var(--w-text-tertiary); }
+.c5ks-noscript { padding: var(--w-space-5); border: 1px solid var(--w-gray-900); }
+
+/* --- Summary: shipping calculator, total with VAT, buttons ------------------ */
+.c5ks-sum__list { margin: 0; }
+.c5ks-sum__row { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--w-space-4); align-items: baseline; padding-block: 14px; border-top: 1px solid var(--w-border-subtle); }
+.c5ks-sum__row:first-child { border-top: 0; }   /* the label's black rule is above */
+.c5ks-sum__row dt { font-size: 0.9375rem; }
+.c5ks-sum__row dd { margin: 0; font-size: 0.9375rem; font-weight: var(--w-weight-semibold); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.c5ks-sum__calc { display: block; margin-top: 2px; font-size: 0.8125rem; color: var(--w-text-secondary); font-variant-numeric: tabular-nums; }
+.c5ks-sum__row dd.c5ks-sum__how { grid-column: 1 / -1; margin-top: var(--w-space-2); text-align: left; white-space: normal; font-weight: var(--w-weight-regular); }
+.c5ks-sum__row--total { margin-top: var(--w-space-1); padding-block: var(--w-space-4) var(--w-space-2); border-top-color: var(--w-gray-900); align-items: center; }
+.c5ks-sum__row--total dt { font-size: 1rem; font-weight: var(--w-weight-semibold); }
+.c5ks-sum__row--total dd { font-size: 1.5rem; letter-spacing: -0.01em; }
+/* VAT (C2): smaller lines right under the gross total. */
+.c5ks-sum__row--tax { padding-block: 1px; border-top: 0; }
+.c5ks-sum__row--tax dt, .c5ks-sum__row--tax dd { font-size: 0.8125rem; font-weight: var(--w-weight-regular); color: var(--w-text-secondary); }
+.c5ks-sum__vatnote { margin-top: var(--w-space-3); font-size: 0.75rem; line-height: 1.45; color: var(--w-text-secondary); }
+
+/* Buttons: one under the other; side by side from 1200 px when both labels
+   fit on one line (a long sum drops the second button to its own row). */
+.c5ks-sum__act { display: flex; flex-direction: column; gap: var(--w-space-2); margin-top: var(--w-space-5); }
+.c5ks-sum__act .cws-btn { width: 100%; min-height: 52px; padding-inline: 20px; text-align: center; }
+.c5ks-sum__back { border-color: var(--w-gray-900); }
+.c5ks-sum__back:hover { background: var(--w-gray-100); border-color: var(--w-gray-900); }
+@media (min-width: 1200px) {
+  .c5ks-sum__act { flex-direction: row; flex-wrap: wrap; }
+  .c5ks-sum__act .cws-btn { flex: 1 1 0; width: auto; min-width: max-content; }
+}
+.c5ks-sum__notes { display: flex; flex-direction: column; gap: 6px; margin-top: var(--w-space-5); padding-top: var(--w-space-4); border-top: 1px solid var(--w-border-subtle); font-size: 0.75rem; line-height: 1.5; color: var(--w-text-secondary); }
+
+.c5ks-how summary { display: inline-flex; align-items: center; gap: 4px; font-size: 0.8125rem; color: var(--w-text-secondary); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; list-style: none; }
+.c5ks-how summary::-webkit-details-marker { display: none; }
+.c5ks-how summary:hover { color: var(--w-text-primary); }
+.c5ks-how summary .wf-icon { width: 14px; height: 14px; transition: transform var(--w-duration-base) var(--w-ease); }
+.c5ks-how[open] summary .wf-icon { transform: rotate(180deg); }
+.c5ks-how__body { display: flex; flex-direction: column; gap: 4px; margin-top: var(--w-space-2); padding: 10px 12px; background: var(--w-gray-100); font-size: 0.8125rem; line-height: 1.45; color: var(--w-text-secondary); }
+.c5ks-how__kg { color: var(--w-text-primary); font-variant-numeric: tabular-nums; }
+
+/* --- "Dorzuć do zamówienia" (C3) ----------------------------------------
+   Up to four cards: 2 columns on phones and tablets, 4 from 900 px. The
+   card mirrors the list card (sklep.html): square mock-up on grey, name,
+   "od … zł", button – a light one here, so checkout stays the page's only
+   dark call to action. */
+.c5ks-more { padding-block: clamp(2.5rem, 5vw, 4.5rem) clamp(3rem, 6vw, 5.5rem); border-top: 1px solid var(--w-border-subtle); }
+.c5ks-more__head { display: flex; flex-direction: column; gap: var(--w-space-2); margin-bottom: clamp(1.25rem, 2.5vw, 2rem); }
+.c5ks-more__h { font-size: clamp(1.375rem, 2.2vw, 1.875rem); line-height: 1.15; font-weight: var(--w-weight-medium); letter-spacing: -0.01em; }
+.c5ks-more__h:focus { outline: none; }
+.c5ks-more__h:focus-visible { outline: 2px solid var(--w-focus-ring); outline-offset: 4px; }
+.c5ks-more__lead { max-width: 60ch; font-size: 1rem; line-height: 1.5; color: var(--w-text-secondary); }
+.c5ks-more__list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--w-space-3); }
+@media (min-width: 900px) {
+  .c5ks-more__list { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--w-space-6); }
+}
+.c5ks-more__note { margin-top: var(--w-space-4); font-size: 0.75rem; line-height: 1.45; color: var(--w-text-secondary); }
+
+.c5ks-rec { display: flex; flex-direction: column; min-width: 0; border: 1px solid var(--w-border-default); background: var(--w-surface-page); }
+.c5ks-rec__shot { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); place-items: center; aspect-ratio: 1; padding: 12%; background: var(--w-gray-100); overflow: hidden; }
+.c5ks-rec__shot img { display: block; width: 100%; height: 100%; min-height: 0; object-fit: contain; }
+.c5ks-rec__shot.wf-ph { padding: 0; min-height: 0; border: 0; border-radius: 0; }
+.c5ks-rec__body { display: flex; flex-direction: column; gap: 4px; flex: 1; padding: var(--w-space-3) var(--w-space-4) var(--w-space-4); }
+.c5ks-rec__name { font-size: 1rem; font-weight: var(--w-weight-medium); letter-spacing: -0.01em; line-height: 1.25; }
+.c5ks-rec__name a { color: inherit; text-decoration: none; }
+.c5ks-rec__name a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.c5ks-rec__name a:focus-visible { outline: 2px solid var(--w-focus-ring); outline-offset: 2px; }
+.c5ks-rec__price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 6px; margin-top: auto; padding-top: var(--w-space-2); font-size: 1.0625rem; font-variant-numeric: tabular-nums; }
+.c5ks-rec__price .cws-price { display: contents; }
+.c5ks-rec__from { font-weight: var(--w-weight-medium); color: var(--w-text-secondary); }
+.c5ks-rec__low { font-size: 0.6875rem; line-height: 1.35; color: var(--w-text-tertiary); }
+.c5ks-rec__add { width: 100%; margin-top: var(--w-space-3); padding: 10px 12px; font-size: 0.9375rem; border-color: var(--w-gray-900); transition: background var(--w-duration-base) var(--w-ease), color var(--w-duration-base) var(--w-ease); }
+.c5ks-rec__add:hover { background: var(--w-gray-900); color: var(--w-text-inverse); border-color: var(--w-gray-900); }
+@media (max-width: 599px) {
+  .c5ks-rec__body { padding: var(--w-space-3); gap: 5px; }
+  .c5ks-rec__name { font-size: 0.9375rem; }
+  .c5ks-rec__price { font-size: 1rem; }
+  .c5ks-rec__add { margin-top: var(--w-space-2); padding: 9px 8px; font-size: 0.875rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .c5ks-undo__bar { display: none; }
+  .c5ks-undo__btn, .c5ks-item__rm, .c5ks-rec__add, .c5ks-how summary .wf-icon { transition: none; }
+}

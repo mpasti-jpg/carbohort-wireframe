@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laboratorium · CE-01 „Nagłówek serwisu” – podgląd koszyka · CarboHort</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Strona demonstracyjna stanu klocka CE-01 „Nagłówek serwisu”: podgląd koszyka otwarty pod nagłówkiem, z trzema przykładowymi pozycjami. Źródło zrzutu w indeksie CE.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231E1C1A'/%3E%3Ccircle cx='16' cy='16' r='8.5' fill='none' stroke='%2387C063' stroke-width='3'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../wireframe.css">
+<link rel="stylesheet" href="../cw.css">
+<script src="../chrome.js"></script>
+<link rel="stylesheet" href="../c5.css">
+<link rel="stylesheet" href="../sklep-wspolne.css">
+<style>
+/* Page layer of the demo: an empty field under the header, where the cart
+   preview hangs (it is absolutely positioned under the header), and the
+   one-line note below it. Nothing here restyles the header or the preview. */
+body{background:var(--w-surface-page);}
+.lab-space{min-height:340px;}
+.lab-note{margin:0;padding:14px 30px;border-top:1px solid var(--w-border-subtle);
+  font-family:var(--w-font-sans);font-size:0.8125rem;line-height:1.45;color:var(--w-text-secondary);}
+</style>
+</head>
+<body>
+
+<cw-icons></cw-icons>
+
+<cw-navbar data-current="sklep"></cw-navbar>
+
+<div class="cw-scrim" data-cw-scrim data-open="false" aria-hidden="true"></div>
+
+<main id="main">
+  <div class="lab-space" aria-hidden="true"></div>
+  <p class="lab-note">Strona demonstracyjna stanu klocka CE-01 – nagłówek serwisu z otwartym podglądem koszyka (od 28.09.2026). Koszyk wypełniają trzy przykładowe pozycje z makiety koszyka; własny koszyk odwiedzającego wraca po wyjściu ze strony. Podgląd otwiera się tylko przy wskaźniku z kursorem i od 980 px.</p>
+</main>
+
+<script src="../cw.js"></script>
+<script src="../sklep-wspolne.js"></script>
+<script>
+/* Fixture of the CE index shot of CE-01, state „podglad-koszyka”
+   (ce-rejestr.js, zrzuty_wariantow): the sample cart of koszyk.html (three
+   lines, six packs, 877 zł) and the pointer "resting" on the cart icon, which
+   opens the preview through cw.js itself. The visitor's own cart is put back
+   when the page is left. Paths in the sample are relative to v7/lab/. */
+(function () {
+  "use strict";
+  var S = window.CWSklep;
+  if (!S) return;
+
+  /* Header and preview links are written for pages in v7/; from lab/ they
+     get the "../" prefix (the preview is redrawn on every opening). */
+  function fix(root) {
+    Array.prototype.forEach.call(root.querySelectorAll("a[href]"), function (a) {
+      var h = a.getAttribute("href");
+      if (!h || /^(?:[a-z][a-z0-9+.-]*:|#|\/|\.\.\/)/i.test(h)) return;
+      a.setAttribute("href", "../" + h);
+    });
+  }
+  var head = document.getElementById("serwis-naglowek");
+  if (head) {
+    fix(head);
+    if (window.MutationObserver) new MutationObserver(function () { fix(head); }).observe(head, { childList: true, subtree: true });
+  }
+
+  var KEYS = ["cw_cart_items", "cw_cart"], prev = {};
+  try { KEYS.forEach(function (k) { prev[k] = sessionStorage.getItem(k); }); } catch (e) { prev = null; }
+  window.addEventListener("pagehide", function () {
+    if (!prev) return;
+    try {
+      KEYS.forEach(function (k) {
+        if (prev[k] === null) sessionStorage.removeItem(k); else sessionStorage.setItem(k, prev[k]);
+      });
+    } catch (e) { /* storage blocked – nothing was kept either */ }
+  });
+
+  var FRAKCJA = { id: "frakcja", label: "Frakcja", "default": "f4",
+                  values: [{ id: "f2", label: "0,1–2 mm" }, { id: "f4", label: "2–4 mm" }, { id: "f8", label: "4–8 mm" }] };
+  var ECO6 = { id: "carbomat-eco-6", name: "CARBOMAT ECO pH 6,0–6,5", url: "../pdp.html", opts: [FRAKCJA],
+               packs: [{ id: "w20", label: "worek 20 l", img: "../img/opakowania/worek_20l.png", price: 43, promo: 39, lowest30: 43, ship: "parcel", kg: 12 }] };
+  var C187 = { id: "carbohumic-187mesh", name: "CARBOHUMIC filtrowany (187 mesh)", url: "../pdp.html",
+               packs: [{ id: "k5", label: "kanister 5 l", img: "../img/opakowania/kanister_5l.png", price: 80, ship: "parcel", kg: 5.8 }] };
+  var ECO4 = { id: "carbomat-eco-4", name: "CARBOMAT ECO pH 4,5–5,0", url: "../pdp-kwasny.html", opts: [FRAKCJA],
+               packs: [{ id: "bb1000", label: "big bag 1000 l", img: "../img/opakowania/worek_1000l_1500l.png", price: 600, ship: "pallet" }] };
+  S.clear();
+  S.add(ECO6, "w20", 3, { frakcja: "f4" });
+  S.add(C187, "k5", 2);
+  S.add(ECO4, "bb1000", 1, { frakcja: "f4" });
+
+  var cart = document.querySelector("a.cw-cart");
+  if (cart) cart.dispatchEvent(new MouseEvent("mouseenter"));
+})();
+</script>
+</body>
+</html>
