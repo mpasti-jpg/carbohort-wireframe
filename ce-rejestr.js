@@ -12,7 +12,7 @@
    =========================================================================== */
 window.CW_CE = {
   "meta": {
-    "zaktualizowano": "2026-09-28",
+    "zaktualizowano": "2026-10-01",
     "katalogWersji": "v7/",
     "indeks": "ce-indeks.html",
     "opis": "Rejestr content elementów (CE) makiet CarboHort V5: metadane klocków. Wystąpienia wynikają ze znaczników data-ce w HTML stron – skanuje je _narzedzia/ce-indeks.py. Spec: 40-strona-www/koncepcja/content-elementy-spec.md."
@@ -92,7 +92,7 @@ window.CW_CE = {
         "szerokie": "cztery boksy produktowe (Produkty Carbohort); w nagłówku panelu dwa przyciski – „Poznaj całą gamę produktów” (jasny) i „Przejdź do sklepu” (ciemny, z ikoną koszyka, od 28.09.2026)",
         "domyslne": "trzy kolumny list – bez wystąpień od 20.09.2026, zastąpiony wariantem „grupy”",
         "waskie": "jedna lista (Programy i badania)",
-        "grupy": "pięć grup upraw na pełną szerokość kontenera (Rodzaje upraw, 20.09.2026): tytuł grupy z kreską 2 px, lista pozycji na szynie wyróżnień, a grupa Rolnicze rozbita na dwie karty sezonów – Ozime z ikoną „ti-snowflake” i Jare z ikoną „ti-sun”. Pozycja ze swoją stroną jest linkiem ze strzałką, pozostałe 28 to spany „cw-crop--soon”. Spec: 40-strona-www/koncepcja/menu-rodzaje-upraw-spec.md"
+        "grupy": "pięć grup upraw na pełną szerokość kontenera (Rodzaje upraw, 20.09.2026; wygląd pozycji ujednolicony 01.10.2026): tytuł grupy z kreską 2 px i lista pozycji o jednym wyglądzie, a w grupie Rolnicze dwie listy pod śródtytułami Ozime i Jare, bez kart i ikon. Pozycja ze swoją stroną jest linkiem w ciemnym tonie, pozostałe 28 to jaśniejsze spany „cw-crop--soon”; bez strzałek, pogrubień i szyny wyróżnień. Spec: 40-strona-www/koncepcja/menu-rodzaje-upraw-spec.md"
       },
       "uwagi": "CE zagnieżdżony w CE-01; ukryty do otwarcia. Przycisk „Przejdź do sklepu” w panelu Produkty Carbohort (28.09.2026, spec sklep-v7-spec §12.15): kto otwiera ten dział, szukając sklepu, ma do niego jedno kliknięcie; w menu mobilnym „Sklep” jest ostatnią pozycją.",
       "zrzut": {
@@ -125,7 +125,7 @@ window.CW_CE = {
         "lista działów",
         "etykieta działu upraw",
         "pięć rozwijanych grup upraw",
-        "karty sezonów Ozime i Jare w grupie Rolnicze",
+        "listy Ozime i Jare pod śródtytułami w grupie Rolnicze",
         "CTA"
       ],
       "warianty": {},
@@ -341,29 +341,30 @@ window.CW_CE = {
         "kotwica": "ktory-dla-mnie"
       },
       "kod": {
-        "css": "ce/CE-11-warianty-taby.css (Próchnica+: kit c5.css); wariant karty-w-taby: ce/CE-11-warianty-taby-proba.css (tylko CARBOMAT ECO)",
-        "js": "ce/CE-11-warianty-taby.js (Próchnica+: c5.js); wariant karty-w-taby: ce/CE-11-warianty-taby-proba.js (tylko CARBOMAT ECO)"
+        "css": "ce/CE-11-warianty-taby.css (Próchnica+: kit c5.css); wariant pasma-z-przelacznikiem: ce/CE-11-warianty-pasma.css (tylko CARBOMAT ECO); wariant historyczny karty-w-taby: ce/CE-11-warianty-taby-proba.css (od 02.10.2026 bez wystąpień)",
+        "js": "ce/CE-11-warianty-taby.js (Próchnica+: c5.js); wariant pasma-z-przelacznikiem: ce/CE-11-warianty-pasma.js (tylko CARBOMAT ECO); wariant historyczny karty-w-taby: ce/CE-11-warianty-taby-proba.js (od 02.10.2026 bez wystąpień)"
       },
       "czesci": [
-        "tablist",
-        "bloki wariantu: nazwa, kafle, packshot, kolumny",
-        "cennik opakowań (c5-price)"
+        "pasmo produktu: packshot, przełącznik produktów",
+        "karta opisu: nazwa, pigułki funkcji, aplikacja, gdzie najlepiej, pH z przyciskami zakupu, frakcja, opakowania",
+        "wariant bazowy: tablist i bloki wariantu (CARBOHUMIC, Próchnica+)"
       ],
       "warianty": {
         "trzy-warianty": "trzy taby i trzy bloki (CARBOHUMIC)",
         "taby-lat": "taby lat i bloki lat w Wynikach (Próchnica+, kit c5)",
-        "karty-w-taby": "karta i tab to jeden element w ruchu (button.c5-way), wg ramek Figma „Frame 310-461” (stan kart) i „Frame 310-418” (stan tabów) oraz trzech adnotacji projektanta (20.09.2026, CARBOMAT ECO „Który dla mnie”): pudełka wjeżdżają wyrównane do dolnej krawędzi okna (20 px nad nią), najpierw rysuje się sam obrys rosnący dwoma końcami ze środka dolnej krawędzi, potem wchodzą etykieta sposobu aplikacji, packshot i nazwa produktu, na końcu karta traci zdjęcie i nazwę, kurczy się 426 → 70 px i przykleja u góry jako tab. Szerokość, pozycje w poziomie i promień 10 px nie są animowane w ogóle – pasek to flex o równych kolumnach, więc oba stany są identyczne z definicji. Napęd to jedna wielkość p liczona z pustego pasa rozbiegu [data-ways-rail] stojącego przed paskiem; cała oś czasu jest odwracalna przy przewijaniu w górę, a przejście w zwykły sticky top:0 następuje dokładnie przy p = 1, bez skoku. Aktywny tab niesie zielony obrys #71C35F pokazujący postęp przewinięcia bloku wariantu pod linią przyklejonego paska – rośnie dwoma końcami ze środka lewej krawędzi i zapala się dopiero od p = 0,62 (przełącznik data-progress=„sekcja” na [data-variants] przestawia licznik na cały pojemnik sekcji); nieaktywne taby noszą tylko szary obrys, ciemne wypełnienie aktywnego tabu znika. Oba obrysy to ścieżki SVG z pathLength=„1”, więc dasharray operuje udziałem, nie pikselami, i jest poprawny przy każdej wysokości pudełka. Kicker to pigułka c5-kicker--outline (EL-06), H2 na P22 Mackinac Pro Book wagi 400 w 54/63 px, a panel wariantu stoi w dwóch kolumnach: kafel #F9F7F5 o proporcji 700/690 z packshotem i przyciskami wielkości opakowania nałożonymi na dole, obok kolumna z nazwą 40 px, siatką korzyści i parametrami (Aplikacja, Gdzie najlepiej, pH z chipami, Frakcja). Ceny przeniosły się z tabelki cennika na te przyciski (decyzja Mateusza z 20.09.2026, liczby co do znaku z AC #30867) – szkło rgb(0 0 0 / --c5-pkg-veil) z backdrop-filter: blur(10px), ikona koszyka i ukryty dopisek „– dodaj do koszyka”. Taby nawigują (przewijają do bloku), nie przełączają paneli, a roving tabindex jest zsynchronizowany ze scrollspy; strzałki, Home i End przenoszą fokus. Poniżej 900 px, przy reduced-motion i bez JS układ statyczny: pasek nieprzyklejony, taby jeden pod drugim, oba panele rozwinięte, przyciski opakowań pod packshotem"
+        "karty-w-taby": "HISTORYCZNY – bez wystąpień od 02.10.2026 (zastąpiony na CARBOMAT ECO wariantem pasma-z-przelacznikiem; wersja do powrotu: archiwum-wersji/carbomat-v7-przed-ce11-pasma-2026-10-02.html). karta i tab to jeden element w ruchu (button.c5-way), wg ramek Figma „Frame 310-461” (stan kart) i „Frame 310-418” (stan tabów) oraz trzech adnotacji projektanta (20.09.2026, CARBOMAT ECO „Który dla mnie”): pudełka wjeżdżają wyrównane do dolnej krawędzi okna (20 px nad nią), najpierw rysuje się sam obrys rosnący dwoma końcami ze środka dolnej krawędzi, potem wchodzą etykieta sposobu aplikacji, packshot i nazwa produktu, na końcu karta traci zdjęcie i nazwę, kurczy się 426 → 70 px i przykleja u góry jako tab. Szerokość, pozycje w poziomie i promień 10 px nie są animowane w ogóle – pasek to flex o równych kolumnach, więc oba stany są identyczne z definicji. Napęd to jedna wielkość p liczona z pustego pasa rozbiegu [data-ways-rail] stojącego przed paskiem; cała oś czasu jest odwracalna przy przewijaniu w górę, a przejście w zwykły sticky top:0 następuje dokładnie przy p = 1, bez skoku. Aktywny tab niesie zielony obrys #71C35F pokazujący postęp przewinięcia bloku wariantu pod linią przyklejonego paska – rośnie dwoma końcami ze środka lewej krawędzi i zapala się dopiero od p = 0,62 (przełącznik data-progress=„sekcja” na [data-variants] przestawia licznik na cały pojemnik sekcji); nieaktywne taby noszą tylko szary obrys, ciemne wypełnienie aktywnego tabu znika. Oba obrysy to ścieżki SVG z pathLength=„1”, więc dasharray operuje udziałem, nie pikselami, i jest poprawny przy każdej wysokości pudełka. Kicker to pigułka c5-kicker--outline (EL-06), H2 na P22 Mackinac Pro Book wagi 400 w 54/63 px, a panel wariantu stoi w dwóch kolumnach: kafel #F9F7F5 o proporcji 700/690 z packshotem i przyciskami wielkości opakowania nałożonymi na dole, obok kolumna z nazwą 40 px, siatką korzyści i parametrami (Aplikacja, Gdzie najlepiej, pH z chipami, Frakcja). Ceny przeniosły się z tabelki cennika na te przyciski (decyzja Mateusza z 20.09.2026, liczby co do znaku z AC #30867) – szkło rgb(0 0 0 / --c5-pkg-veil) z backdrop-filter: blur(10px), ikona koszyka i ukryty dopisek „– dodaj do koszyka”. Taby nawigują (przewijają do bloku), nie przełączają paneli, a roving tabindex jest zsynchronizowany ze scrollspy; strzałki, Home i End przenoszą fokus. Poniżej 900 px, przy reduced-motion i bez JS układ statyczny: pasek nieprzyklejony, taby jeden pod drugim, oba panele rozwinięte, przyciski opakowań pod packshotem",
+        "pasma-z-przelacznikiem": "pasmo na produkt na całą szerokość okna, wg ramki Figma „382:1189” (02.10.2026, CARBOMAT ECO „Który dla mnie”): po lewej packshot produktu, pod nim przełącznik produktów (biała pigułka z odnośnikami do pasm, bieżący z aria-current), po prawej biała karta 609 px z nazwą produktu i grupami „Najważniejsze funkcje” (pigułki z ikoną), Aplikacja, Gdzie najlepiej, pH, Frakcja i Opakowania. Wjazd pudełek od dołu i przyklejane taby wariantu karty-w-taby zniknęły. Zakup stoi przy wierszach pH – każde pH to osobny produkt w sklepie: wiersz jest hostem konfiguracji data-cw-product (1:1 jak na kartach sklepu), a przycisk „Dodaj do koszyka” otwiera szybki podgląd CE-76 z sklep-wspolne.js, czyli dodanie do koszyka bez wychodzenia z podstrony; pojemności i ceny zostają jako lista informacyjna „Opakowania” bez przycisków. Mechanika od 900 px bez reduced-motion ([data-kdm=„ruch”]): pasmo przypięte na wysokość okna, karta jest oknem z wygaszeniem u dołu, a jej treść jedzie 1 px na 1 px przewinięcia strony aż do końca, potem pasmo puszcza i wchodzi następny produkt; budżet przewijania pasma (--kdm-extra) to nadmiar treści karty plus krótki postój, liczony przy każdej zmianie rozmiaru; fokus na kontrolce spod okna wciąga ją w kadr; na czas otwartego okna koszyka warstwa inercji stoi. Przełącznik to zwykłe odnośniki do kotwic pasm – działa bez skryptu przez szynę kotwic z ce/00-base.js. Bez JS i przy reduced-motion: dwie kolumny, lewa przyklejona, karta w pełnej wysokości; poniżej 900 px jedna kolumna. Kolorystyka ramki nie jest przeniesiona – pasma, pigułki i karta stoją w szarościach kitu za zmiennymi --c5-kdm-*; dolny odstęp przypiętego pasma to 104 px zamiast 40 px z ramki, żeby przełącznik i karta nie wchodziły pod dok doradcy (pokrętło --c5-kdm-pad-b). Liczba produktów dowolna: pasma to elementy [data-kdm-track], na CARBOHUMIC wejdą trzy"
       },
       "zrzuty_wariantow": {
-        "karty-w-taby": {
+        "pasma-z-przelacznikiem": {
           "plik": "v7/carbomat.html",
           "kotwica": "ktory-dla-mnie",
           "ruch": true,
-          "przewin": "#wariant-eco .c5-var__tiles",
+          "przewin": "#wariant-eco",
           "czekaj": 900
         }
       },
-      "uwagi": "Cennik opakowań w bloku wariantu to element interfejsu wspólny z CE-28 (lista opakowań). Wariant karty-w-taby (20.09.2026) linkuje wyłącznie carbomat.html – własne moduły ce/CE-11-warianty-taby-proba.css i .js, bo ce/CE-11-warianty-taby.* obsługują także carbohumic.html, a tamtejsza reguła .c5-ways--3 zakłada tab 56 px i ciemne tło; pliki wspólne, ce/00-base.*, chrome.js, kit i carbohumic.html zostają nietknięte; spec carbomat-eco-spec §17 (osobno §17.5). Sekcja nie ma znacznika data-ce-wariant, więc indeks pokaże wariant tylko z rejestru. Mechanika jest napisana na dowolną liczbę kart – nigdzie nie ma dwójki ani w CSS (.c5-way{flex:1 1 0}), ani w JS (pętle chodzą po tym, co znajdą) – i sprawdzona realnie na trzech tabach wstrzykniętych do podglądu; czeka na przeniesienie na CARBOHUMIC w wersji trzech tabów, która w tej rundzie nie była ruszana (decyzja Mateusza z 20.09.2026: tu dwie karty, bo są dwa produkty). Kontrast przycisków opakowań podniesiony z wartości ramki rgb(0 0 0 / .2), czyli 1,71 : 1, do 4,53 : 1 pokrętłem --c5-pkg-veil: .52 (nadpisanie #ktory-dla-mnie .c5-pkg w carbomat.css) – to kontrolka niosąca cenę, więc ubytek czytelności byłby dotkliwszy niż przy przypisie; wycofanie to jedna linia. Do decyzji Mateusza: czy taby mają nawigować (tak jest teraz) czy przełączać panele, co liczy postęp (blok wariantu czy cała sekcja), czy sekcja zostaje w c5-wrap 1180 px zamiast pełnoekranowej ramki, czy H2 i lead zostają w pełnym brzmieniu, czy dok doradcy ma ustąpić kartom wjeżdżającym przy dolnej krawędzi (pokrętło --c5-bottom-gap, dziś 20 px), oraz znacznik korzyści 16 × 16 i ikona „seeding” z ramki – obu nie ma w sprite, więc zostały puste miejsca. Po przeniesieniu cen na przyciski reguły .c5-price* w carbomat.css (linie 44–54 i blok @media max-width:599px) to martwy kod.",
+      "uwagi": "Od 02.10.2026 sekcja na CARBOMAT ECO stoi na wariancie pasma-z-przelacznikiem (znacznik data-ce-wariant na korzeniu sekcji; moduły ce/CE-11-warianty-pasma.css i .js linkuje wyłącznie carbomat.html; strona ładuje też sklep-wspolne.css i .js dla okna koszyka; spec carbomat-eco-spec §18). Pliki wspólne ce/CE-11-warianty-taby.*, ce/00-base.*, chrome.js, kit i carbohumic.html nietknięte; moduły próbne ce/CE-11-warianty-taby-proba.* zostają w katalogu bez wystąpień – decyzja Mateusza, czy dostają stronę demonstracyjną w v7/lab/ czy znikają z indeksu. Ikony pigułek i przełącznika to zastępniki ze sprite'u (ikon z ramki w nim nie ma). Do decyzji Mateusza: treść nagłówka (ramka: „Wymieszaj z glebą lub rozsyp na powierzchni.”, na stronie zostało dotychczasowe H2 i lead), czy lista „Opakowania” zostaje, dolny odstęp pasma wobec doka doradcy, przeniesienie wariantu na CARBOHUMIC (trzy produkty). Cennik opakowań w bloku wariantu bazowego to element interfejsu wspólny z CE-28 (lista opakowań).",
       "zrzut": {
         "maxh": 1400
       }
@@ -1362,10 +1363,11 @@ window.CW_CE = {
         "bloki interpretacji"
       ],
       "warianty": {},
-      "uwagi": "Krewny CE-45 (pudełka-przełączniki).",
+      "uwagi": "WYCOFANY 01.10.2026 – jedyne wystąpienie (Kukurydza, blok „Ile potasu realnie wnosi CARBOMAT HUMIC”) zdjęte ze strony komentarzem Mateusza z artefaktu „Makieta Kukurydza Hi-Fi 5” („Usuń ten fragment”; Darek 29.09: na stronie uprawy tylko praktyczne minimum). Komponent u-kbar zostaje w uprawa.css i uprawa.js; ostatnia wersja strony z blokiem: archiwum-wersji/kukurydza-v7-przed-uproszczeniem-2026-10-01.html. Kod CE-43 zostaje w rejestrze na stałe, nie jest używany ponownie. Krewny CE-45 (pudełka-przełączniki).",
       "zrzut": {
         "maxh": 600
-      }
+      },
+      "status": "wycofany"
     },
     "CE-44": {
       "nazwa": "Napis przyklejony z płynącymi kaflami",
@@ -1377,23 +1379,23 @@ window.CW_CE = {
         "kotwica": "korzysci"
       },
       "kod": {
-        "css": "wersja bazowa: lab/ce-44-napis-z-kaflami.html (kod obok strony demonstracyjnej); wariant tlo-foto: prochnica-plus.css ===== 45 (pp-kor) i kukurydza.css ===== 55 (u-fk)",
-        "js": "wersja bazowa: lab/ce-44-napis-z-kaflami.html; wariant tlo-foto: prochnica-plus.js ===== 45 i kukurydza.js ===== 55"
+        "css": "wersja bazowa: lab/ce-44-napis-z-kaflami.html (kod obok strony demonstracyjnej); wariant tlo-foto: prochnica-plus.css ===== 45 (pp-kor)",
+        "js": "wersja bazowa: lab/ce-44-napis-z-kaflami.html; wariant tlo-foto: prochnica-plus.js ===== 45"
       },
       "czesci": [
         "napis",
         "kafelki lub karty"
       ],
       "warianty": {
-        "tlo-foto": "jedno zdjęcie w tle sceny na pełny ekran (scena przyklejona 100svh, jednolity scrim), biały napis wchodzi wyraz po wyrazie zza maski, gdy kadr zajmuje ok. 2/3 okna; kafle proste, w trzech rozłącznych pasach, po 2–3 naraz, z profilem prędkości: szybki wjazd, zwolnienie w środku okna, szybki wyjazd; na końcu napis zostaje sam (Kukurydza, #u-fakty-scena); od 19.09.2026 także Próchnica+ #korzysci"
+        "tlo-foto": "jedno zdjęcie w tle sceny na pełny ekran (scena przyklejona 100svh, jednolity scrim), biały napis wchodzi wyraz po wyrazie zza maski, gdy kadr zajmuje ok. 2/3 okna; kafle proste, w trzech rozłącznych pasach, po 2–3 naraz, z profilem prędkości: szybki wjazd, zwolnienie w środku okna, szybki wyjazd; na końcu napis zostaje sam (Próchnica+ #korzysci; do 01.10.2026 także Kukurydza, sekcja „Krytyczne fakty”, zdjęta ze strony)"
       },
       "zrzuty_wariantow": {
         "tlo-foto": {
-          "plik": "v7/kukurydza.html",
-          "kotwica": "u-fakty-scena"
+          "plik": "v7/prochnica-plus.html",
+          "kotwica": "korzysci"
         }
       },
-      "uwagi": "Wariant tlo-foto: uwagi Mateusza z 18.09.2026 (iteracja 9 Kukurydzy, spec kukurydza-hifi-spec §13.4). 19.09.2026: Próchnica+ – dotychczasowa baza klocka – przeszła na wariant tlo-foto (uwaga Mateusza z artefaktu, spec prochnica-plus-wzorzec-eco-spec §18); wersja bazowa bez zdjęcia została w indeksie na stronie demonstracyjnej v7/lab/ce-44-napis-z-kaflami.html i nie ma wystąpień na podstronach.",
+      "uwagi": "Wariant tlo-foto: uwagi Mateusza z 18.09.2026 (iteracja 9 Kukurydzy, spec kukurydza-hifi-spec §13.4). 19.09.2026: Próchnica+ – dotychczasowa baza klocka – przeszła na wariant tlo-foto (uwaga Mateusza z artefaktu, spec prochnica-plus-wzorzec-eco-spec §18); wersja bazowa bez zdjęcia została w indeksie na stronie demonstracyjnej v7/lab/ce-44-napis-z-kaflami.html i nie ma wystąpień na podstronach. 01.10.2026: wystąpienie na Kukurydzie zdjęte (komentarz Mateusza, uproszczenie stron upraw po spotkaniu 29.09) – wariant tlo-foto zostaje na Próchnicy+.",
       "zrzut": {
         "maxh": 900
       }
@@ -1401,11 +1403,11 @@ window.CW_CE = {
     "CE-45": {
       "nazwa": "Pudełka-przełączniki",
       "grupa": "przelaczniki",
-      "opis": "Rząd pudełek (tablist) z nazwą i podpisem wariantu, pod nimi panel treści aktywnego wariantu (tabela). Od 1280 px pudełka stoją jako szyna po lewej, a panel obok; od 1600 px wiersze programu idą parami. Na Kukurydzy sekcja wróciła 20.09.2026 na kontener 1180 px, więc układ parami zostaje poza jej zasięgiem.",
+      "opis": "Rząd pudełek (tablist) z numerem, nazwą i podpisem pozycji, pod nimi panel treści aktywnej pozycji (tabela wierszy). Od 01.10.2026 jedyne wystąpienie to wariant „dwa-pakiety” na Kukurydzy; układ trzech pudełek z szyną po lewej od 1280 px (sekcja „Trzy warianty technologii”) zszedł ze strony razem z nią.",
       "mechanika": "Tablist ARIA z klawiaturą; klik pokazuje panel; bez JS wszystkie panele widoczne. uprawa.js (pudełka wariantów).",
       "baza": {
         "plik": "v7/kukurydza.html",
-        "kotwica": "u-warianty"
+        "kotwica": "u-pakiety-wybor"
       },
       "kod": {
         "css": "uprawa.css 11",
@@ -1415,8 +1417,10 @@ window.CW_CE = {
         "pudełka",
         "panel treści"
       ],
-      "warianty": {},
-      "uwagi": "",
+      "warianty": {
+        "dwa-pakiety": "dwa pudełka obok siebie (pakiet minimum, pakiet optimum) z trzecim wierszem – liczbą zabiegów i produktów; stoją w górnym rzędzie sekcji CE-47 „z-pakietami” obok suwaka powierzchni i przełączają panel z wierszami „Etap · Zabieg” oraz boksami przelicznika (Kukurydza, 01.10.2026)"
+      },
+      "uwagi": "01.10.2026 (iteracja 17 Kukurydzy, spec kukurydza-hifi-spec §20): trzy warianty technologii przebudowane na dwa pakiety i spięte z przelicznikiem – Darek 29.09 (pakiet minimalny i maksymalny), komentarze Mateusza z artefaktu „Makieta Kukurydza Hi-Fi 5”. Poprzedni układ: archiwum-wersji/kukurydza-v7-przed-uproszczeniem-2026-10-01.html.",
       "zrzut": {
         "maxh": 700
       }
@@ -1453,7 +1457,7 @@ window.CW_CE = {
       "mechanika": "Suwak przelicza dawki na bieżąco (data-calc w c5.js, grupowanie tysięcy), bez JS wartości domyślne.",
       "baza": {
         "plik": "v7/kukurydza.html",
-        "kotwica": "u-skala"
+        "kotwica": "u-pakiety"
       },
       "kod": {
         "css": "uprawa.css 16 (u-calc, u-out)",
@@ -1463,8 +1467,10 @@ window.CW_CE = {
         "suwak",
         "boksy wyników"
       ],
-      "warianty": {},
-      "uwagi": "Ten sam mechanizm na ziemniak.html i borowka.html (poza zakresem 14.09).",
+      "warianty": {
+        "z-pakietami": "przelicznik spięty z wyborem pakietu (Kukurydza, 01.10.2026): w górnym rzędzie pudełka-przełączniki CE-45 „dwa-pakiety” i suwak powierzchni, niżej panel wybranego pakietu – wiersze „Etap · Zabieg”, a pod nimi boksy wyników po jednym na produkt (ilość, woda do zabiegu, koszt brutto, przycisk sklepu) i ciemny boks sumy kosztu pakietu; trzy boksy w pakiecie minimum, cztery w optimum; `data-calc` i `data-tabs-group` siedzą na tym samym kontenerze, więc przelicznik wypełnia boksy obu paneli"
+      },
+      "uwagi": "Ten sam mechanizm na ziemniak.html i borowka.html (poza zakresem 14.09). 01.10.2026: osobna sekcja „Ile produktu na Twoje pole” (cztery boksy niezależnych zabiegów, nota „kosztów nie sumuj”) zeszła z Kukurydzy – przelicznik żyje w sekcji „Pakiety” jako wariant „z-pakietami” (spec kukurydza-hifi-spec §20). ⚠️ Skład pakietów to propozycja crear z dawek programu klienta, do potwierdzenia przez Darka.",
       "zrzut": {
         "maxh": 700
       }

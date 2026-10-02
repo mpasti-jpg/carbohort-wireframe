@@ -32,9 +32,15 @@
    - Mega-menu „Rodzaje upraw" (#mega-uprawy, wariant CE-02 „grupy", 20.09.2026)
      to pięć grup i 31 pozycji z listy klienta: tytuły grup są tekstem, nie
      linkiem, a stronę mają tylko Borówka amerykańska, Kukurydza i Ziemniak –
-     reszta to <span class="cw-crop--soon">. Poniżej 980 px ta sama treść wraca
-     w #mobilenav jako pięć <details>. Obie listy muszą zostać identyczne;
-     pilnuje tego regresja _narzedzia/qa-menu.py. Spec:
+     reszta to <span class="cw-crop--soon">. Od 01.10.2026 wszystkie pozycje
+     wyglądają tak samo (link ciemny, pozycja bez strony jaśniejsza; bez
+     strzałek, pogrubień i szyny), a Ozime / Jare to tylko śródtytuły.
+     li.is-featured zostaje jako dane z listy klienta, bez własnego wyglądu.
+     Grupa drzew owocowych nazywa się „Drzewa sadownicze” (Darek 21.09.2026,
+     komentarz Mateusza z 01.10.2026) – w dokumencie klienta „Sadownicze”.
+     Poniżej 980 px ta sama treść wraca w #mobilenav jako pięć <details>.
+     Obie listy muszą zostać identyczne; pilnuje tego regresja
+     _narzedzia/qa-menu.py. Spec:
      40-strona-www/koncepcja/menu-rodzaje-upraw-spec.md.
 
    data-ce attributes mark content elements (CE) of the site: the registry
@@ -203,7 +209,7 @@
             <div class="cw-crops__group">
               <span class="cw-crops__title">Jagodowe</span>
               <ul class="cw-crops__list">
-                <li class="is-featured"><a class="cw-crop" data-nav="borowka" data-nav-parent="uprawy" href="borowka.html">Borówka amerykańska<svg class="wf-icon wf-icon--sm cw-crop__go" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></li>
+                <li class="is-featured"><a class="cw-crop" data-nav="borowka" data-nav-parent="uprawy" href="borowka.html">Borówka amerykańska</a></li>
                 <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Malina</span></li>
                 <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Truskawka</span></li>
                 <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Porzeczka</span></li>
@@ -212,7 +218,7 @@
               </ul>
             </div>
             <div class="cw-crops__group">
-              <span class="cw-crops__title">Sadownicze</span>
+              <span class="cw-crops__title">Drzewa sadownicze</span>
               <ul class="cw-crops__list">
                 <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Jabłoń</span></li>
                 <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Grusza</span></li>
@@ -234,10 +240,7 @@
               <span class="cw-crops__title">Rolnicze</span>
               <div class="cw-crops__split">
                 <div class="cw-crops__season">
-                  <div class="cw-crops__season-head">
-                    <span class="cw-crops__season-icon"><svg class="wf-icon" aria-hidden="true"><use href="#ti-snowflake"></use></svg></span>
-                    <span class="cw-crops__season-name">Ozime</span>
-                  </div>
+                  <span class="cw-crops__season-name">Ozime</span>
                   <ul class="cw-crops__list">
                     <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Rzepak ozimy</span></li>
                     <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Pszenica ozima</span></li>
@@ -247,16 +250,13 @@
                   </ul>
                 </div>
                 <div class="cw-crops__season">
-                  <div class="cw-crops__season-head">
-                    <span class="cw-crops__season-icon"><svg class="wf-icon" aria-hidden="true"><use href="#ti-sun"></use></svg></span>
-                    <span class="cw-crops__season-name">Jare</span>
-                  </div>
+                  <span class="cw-crops__season-name">Jare</span>
                   <ul class="cw-crops__list">
-                    <li class="is-featured"><a class="cw-crop" data-nav="kukurydza" data-nav-parent="uprawy" href="kukurydza.html">Kukurydza<svg class="wf-icon wf-icon--sm cw-crop__go" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></li>
+                    <li class="is-featured"><a class="cw-crop" data-nav="kukurydza" data-nav-parent="uprawy" href="kukurydza.html">Kukurydza</a></li>
                     <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Słonecznik</span></li>
                     <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Soja</span></li>
                     <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Burak cukrowy</span></li>
-                    <li class="is-featured"><a class="cw-crop" data-nav="ziemniak" data-nav-parent="uprawy" href="ziemniak.html">Ziemniak<svg class="wf-icon wf-icon--sm cw-crop__go" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></li>
+                    <li class="is-featured"><a class="cw-crop" data-nav="ziemniak" data-nav-parent="uprawy" href="ziemniak.html">Ziemniak</a></li>
                     <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Jęczmień jary</span></li>
                     <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Owies</span></li>
                   </ul>
@@ -312,7 +312,7 @@
     <details class="cw-mobilenav__group" name="cw-uprawy">
       <summary class="wf-navitem cw-mobilenav__sub">Jagodowe<svg class="wf-icon wf-icon--sm cw-mobilenav__chev" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
       <ul class="cw-crops__list">
-        <li class="is-featured"><a class="cw-crop" data-nav="borowka" data-nav-parent="uprawy" href="borowka.html">Borówka amerykańska<svg class="wf-icon wf-icon--sm cw-crop__go" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></li>
+        <li class="is-featured"><a class="cw-crop" data-nav="borowka" data-nav-parent="uprawy" href="borowka.html">Borówka amerykańska</a></li>
         <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Malina</span></li>
         <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Truskawka</span></li>
         <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Porzeczka</span></li>
@@ -321,7 +321,7 @@
       </ul>
     </details>
     <details class="cw-mobilenav__group" name="cw-uprawy">
-      <summary class="wf-navitem cw-mobilenav__sub">Sadownicze<svg class="wf-icon wf-icon--sm cw-mobilenav__chev" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
+      <summary class="wf-navitem cw-mobilenav__sub">Drzewa sadownicze<svg class="wf-icon wf-icon--sm cw-mobilenav__chev" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
       <ul class="cw-crops__list">
         <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Jabłoń</span></li>
         <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Grusza</span></li>
@@ -343,10 +343,7 @@
       <summary class="wf-navitem cw-mobilenav__sub">Rolnicze<svg class="wf-icon wf-icon--sm cw-mobilenav__chev" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
       <div class="cw-crops__split">
         <div class="cw-crops__season">
-          <div class="cw-crops__season-head">
-            <span class="cw-crops__season-icon"><svg class="wf-icon" aria-hidden="true"><use href="#ti-snowflake"></use></svg></span>
-            <span class="cw-crops__season-name">Ozime</span>
-          </div>
+          <span class="cw-crops__season-name">Ozime</span>
           <ul class="cw-crops__list">
             <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Rzepak ozimy</span></li>
             <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Pszenica ozima</span></li>
@@ -356,16 +353,13 @@
           </ul>
         </div>
         <div class="cw-crops__season">
-          <div class="cw-crops__season-head">
-            <span class="cw-crops__season-icon"><svg class="wf-icon" aria-hidden="true"><use href="#ti-sun"></use></svg></span>
-            <span class="cw-crops__season-name">Jare</span>
-          </div>
+          <span class="cw-crops__season-name">Jare</span>
           <ul class="cw-crops__list">
-            <li class="is-featured"><a class="cw-crop" data-nav="kukurydza" data-nav-parent="uprawy" href="kukurydza.html">Kukurydza<svg class="wf-icon wf-icon--sm cw-crop__go" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></li>
+            <li class="is-featured"><a class="cw-crop" data-nav="kukurydza" data-nav-parent="uprawy" href="kukurydza.html">Kukurydza</a></li>
             <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Słonecznik</span></li>
             <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Soja</span></li>
             <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Burak cukrowy</span></li>
-            <li class="is-featured"><a class="cw-crop" data-nav="ziemniak" data-nav-parent="uprawy" href="ziemniak.html">Ziemniak<svg class="wf-icon wf-icon--sm cw-crop__go" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></li>
+            <li class="is-featured"><a class="cw-crop" data-nav="ziemniak" data-nav-parent="uprawy" href="ziemniak.html">Ziemniak</a></li>
             <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Jęczmień jary</span></li>
             <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Owies</span></li>
           </ul>

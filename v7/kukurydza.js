@@ -22,64 +22,10 @@
     a.addEventListener("click", function (e) { if (jumpTo(a)) e.preventDefault(); });
   });
 })();
-/* ===== 55 · Krytyczne fakty: napis z masek i kafle nad sceną ===============
-   Scenę (kadr tła na cały ekran, `position: sticky`) trzyma CSS. JS robi dwie
-   rzeczy i czyta na to jeden prostokąt – toru:
-   (1) Napis. Scena stoi na górze toru, więc jej górna krawędź to krawędź toru,
-   dopóki nie przyklei się na 0 (a wtedy warunek i tak jest spełniony).
-   Przy `top` ≤ 35 % wysokości okna nadajemy `.is-in` – raz, bez animacji
-   wyjścia; wchodzi na każdej szerokości, także przy wejściu z dołu strony.
-   (2) Kafle. Dla postępu `q` kafla przez okno (0 = górna krawędź na dolnej
-   krawędzi okna, 1 = dolna krawędź na górnej) przesunięcie wynosi
-   `--par = (h + th) · (q − g(q))`, gdzie `g(q) = a·q + (1 − a)(0.5 + 4(q − 0.5)³)`
-   i `a` (0,30–0,45) siedzi w znaczniku. Kafel wjeżdża i wyjeżdża szybciej niż
-   strona, a w środku okna zwalnia do czytania; poza 0–1 przesunięcia nie ma,
-   więc ruch łączy się płynnie z biegiem strony. Pozycje naturalne mierzymy raz
-   i przy `resize`; poniżej 900 px i przy ograniczonym ruchu kafle stoją
-   w siatce – kasujemy `--par`. */
-(function () {
-  "use strict";
-  var sec = CX5.$("[data-fk]");
-  if (!sec) return;
-  var track = CX5.$("[data-fk-track]", sec);
-  var title = CX5.$("[data-fk-title]", sec);
-  var tiles = CX5.$$("[data-fk-tile]", sec);
-  if (!track || !tiles.length) return;
-  /* profil prędkości siedzi w atrybucie `style` znacznika – czytamy go raz */
-  var eases = tiles.map(function (t) {
-    return parseFloat(t.style.getPropertyValue("--a")) || 0.35;
-  });
-  var tops = [], hts = [], off = false, shown = false;
-
-  function measure() {
-    for (var i = 0; i < tiles.length; i++) {
-      tops[i] = tiles[i].offsetTop;
-      hts[i] = tiles[i].offsetHeight;
-    }
-  }
-
-  function update() {
-    var h = window.innerHeight;
-    var r = track.getBoundingClientRect();
-    if (!shown && title && r.top <= 0.35 * h) { title.classList.add("is-in"); shown = true; }
-    if (!CX5.motionOn()) {
-      if (!off) { tiles.forEach(function (t) { t.style.removeProperty("--par"); }); off = true; }
-      return;
-    }
-    off = false;
-    for (var i = 0; i < tiles.length; i++) {
-      var span = h + hts[i];
-      var q = span > 0 ? (h - (r.top + tops[i])) / span : 0;
-      var par = 0;
-      if (q > 0 && q < 1) {
-        var a = eases[i], u = q - 0.5;
-        par = span * (q - (a * q + (1 - a) * (0.5 + 4 * u * u * u)));
-      }
-      tiles[i].style.setProperty("--par", par.toFixed(1) + "px");
-    }
-  }
-  CX5.register({ scroll: update, resize: function () { measure(); update(); } });
-})();
+/* ===== 55 · Krytyczne fakty – bez modułu ===================================
+   The facts scene (CE-44 `tlo-foto`) left the page in iteration 17 (01.10.2026)
+   and its module went with it. The base version of the block lives on
+   lab/ce-44-napis-z-kaflami.html, the photo variant on Próchnica+. */
 
 /* ===== 80 · Tank-mix table: clickable rows (spec §10.6) ====================
    The row is a shortcut, not a control: the accessible target stays the single

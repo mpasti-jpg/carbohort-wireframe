@@ -1,0 +1,175 @@
+/* ===== CE-11 · Warianty – pasma z przełącznikiem (wariant „pasma-z-przelacznikiem") =====
+   LINKED BY carbomat.html ONLY. The base module ce/CE-11-warianty-taby.css still
+   runs carbohumic.html; the previous trial (ce/CE-11-warianty-taby-proba.*) is
+   no longer linked by any page.
+
+   Layout after the Figma frame 382:1189: one full-width band per product.
+     left   the packshot and, under it, the switch between the products
+     right  a white card with everything about the product: name, key functions,
+            application, where it works best, pH (with the buy buttons – every
+            pH is a product of its own), fraction, pack sizes
+
+   Colours of the frame are NOT taken over yet: bands and pills stay in the grey
+   scale of the kit, each of them behind a knob on .c5-kdm.
+
+   The number of products is free – the switch is a row of links, the bands are
+   whatever [data-kdm-track] elements the page carries (two here, three on
+   CARBOHUMIC when the block moves there).
+
+   Three layers:
+     1. base (no JS, reduced motion): two columns, the left one sticky, the card
+        at its natural height – everything readable, nothing clipped;
+     2. below 900 px: one column, nothing sticky;
+     3. motion ([data-kdm="ruch"], set by the JS half when CX5.motionOn()): the
+        band is pinned for the height of the window and the card becomes a
+        window onto its content, which travels with the page scroll.
+   ========================================================================== */
+
+.c5-kdm{
+  --c5-kdm-ink:#0C2B1C;                      /* headings, labels, switch */
+  --c5-kdm-body:#777771;                     /* running copy of the card */
+  --c5-kdm-band:var(--w-gray-150);           /* band behind the first product */
+  --c5-kdm-band-alt:var(--w-gray-200);       /* band behind every other product */
+  --c5-kdm-card:var(--w-surface-page);       /* the card */
+  --c5-kdm-pill:var(--w-gray-100);           /* function pills, pack rows, active option */
+  --c5-kdm-stroke:var(--w-gray-300);         /* pH chip, buy button */
+  --c5-kdm-pad:40px;                         /* band edge to card / packshot, top */
+  /* Bottom inset of the pinned band. The frame says 40 px; the advisor dock
+     floats over the bottom 80 px of the window, so the band keeps clear of it.
+     Back to the frame: one line. */
+  --c5-kdm-pad-b:104px;
+  --c5-kdm-gutter:24px;                      /* band edge to card, sides */
+  --c5-kdm-card-w:609px;                     /* card width in the frame */
+  --c5-kdm-fade-h:213px;                     /* fade at the bottom of the card window */
+  margin-top:clamp(2rem,3vw,43px);
+}
+
+/* --- Band -------------------------------------------------------------------- */
+.c5-kdm__track{scroll-margin-top:0;}
+.c5-kdm__band{background:var(--c5-kdm-band);}
+.c5-kdm__track:nth-of-type(even) .c5-kdm__band{background:var(--c5-kdm-band-alt);}
+.c5-kdm__in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,var(--c5-kdm-card-w));
+  column-gap:clamp(24px,6vw,87px);align-items:start;
+  max-width:1800px;margin-inline:auto;
+  padding:var(--c5-kdm-pad) var(--c5-kdm-gutter);}
+
+/* --- Left column: packshot + switch ------------------------------------------ */
+.c5-kdm__left{position:sticky;top:var(--c5-kdm-pad);
+  display:flex;flex-direction:column;align-items:center;gap:clamp(20px,4vh,48px);
+  height:calc(100svh - 2 * var(--c5-kdm-pad));max-height:800px;min-height:420px;}
+.c5-kdm__photo{flex:1 1 auto;min-height:0;width:100%;
+  display:flex;align-items:center;justify-content:center;}
+.c5-kdm__img{display:block;width:auto;height:auto;max-width:min(382px,72%);max-height:100%;
+  object-fit:contain;}
+
+/* The switch: links to the bands, the one of this band marked aria-current. */
+.c5-kdm__switch{flex:none;display:flex;align-items:center;gap:4px;max-width:100%;
+  padding:6px;border-radius:12px;background:var(--c5-kdm-card);}
+.c5-kdm__opt{display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:48px;padding:10px 20px;border-radius:10px;
+  font-size:18px;line-height:28px;letter-spacing:-0.02em;white-space:nowrap;
+  color:var(--c5-kdm-ink);text-decoration:none;
+  transition:background var(--w-duration-base) var(--w-ease);}
+.c5-kdm__opt .wf-icon{flex:none;width:20px;height:20px;opacity:1;color:var(--c5-kdm-ink);}
+.c5-kdm__opt:hover{background:var(--w-gray-50);}
+.c5-kdm__opt[aria-current="true"]{background:var(--c5-kdm-pill);}
+.c5-kdm__opt:focus-visible{outline:2px solid var(--c5-kdm-ink);outline-offset:2px;}
+
+/* --- Card -------------------------------------------------------------------- */
+.c5-kdm__card{position:relative;background:var(--c5-kdm-card);border-radius:12px;}
+.c5-kdm__scroll{display:flex;flex-direction:column;gap:46px;padding:56px 40px 48px;}
+.c5-kdm__name{margin:0;font-size:clamp(1.75rem,2.8vw,2.5rem);line-height:1.2;
+  letter-spacing:-0.02em;font-weight:var(--w-weight-regular);color:var(--c5-kdm-ink);}
+.c5-kdm__groups{display:flex;flex-direction:column;gap:40px;}
+.c5-kdm__group{display:flex;flex-direction:column;gap:16px;min-width:0;}
+.c5-kdm__label{font-size:22px;line-height:28px;letter-spacing:-0.02em;
+  font-weight:var(--w-weight-regular);color:var(--c5-kdm-ink);}
+.c5-kdm__txt{margin:0;font-size:16px;line-height:24px;color:var(--c5-kdm-body);}
+/* the fade exists only where the card is a window (motion layer) */
+.c5-kdm__fade{display:none;}
+
+/* Key functions: one pill per line, as wide as its text */
+.c5-kdm__pills{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;
+  align-items:flex-start;gap:8px;}
+.c5-kdm__pill{display:flex;align-items:center;gap:12px;margin:0;padding:12px 15px;
+  border-radius:11px;background:var(--c5-kdm-pill);
+  font-size:16px;line-height:1.25;color:var(--c5-kdm-ink);}
+.c5-kdm__pill .wf-icon{flex:none;width:16px;height:16px;opacity:1;color:var(--c5-kdm-ink);}
+
+/* pH: chip + description + buy button. Every row is a product (one pH = one
+   product in the shop), so the row is the host of its shop config. */
+.c5-kdm__ph{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:16px;}
+.c5-kdm__phrow{display:grid;grid-template-columns:auto minmax(0,1fr) auto;
+  column-gap:18px;row-gap:10px;align-items:center;margin:0;}
+.c5-kdm__chip{display:inline-flex;align-items:center;min-height:44px;padding:12px 15px;
+  border:1px solid var(--c5-kdm-stroke);border-radius:11px;background:var(--c5-kdm-card);
+  font-size:16px;line-height:20px;white-space:nowrap;color:var(--c5-kdm-body);}
+.c5-kdm__buy{display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:44px;padding:12px 16px;border:1px solid var(--c5-kdm-stroke);border-radius:14px;
+  background:var(--c5-kdm-card);color:var(--c5-kdm-ink);
+  font:inherit;font-size:14px;line-height:1.2;white-space:nowrap;cursor:pointer;
+  transition:border-color var(--w-duration-base) var(--w-ease),background var(--w-duration-base) var(--w-ease);}
+.c5-kdm__buy .wf-icon{flex:none;width:12px;height:12px;opacity:1;}
+.c5-kdm__buy:hover{border-color:var(--c5-kdm-ink);background:var(--w-gray-50);}
+.c5-kdm__buy:focus-visible{outline:2px solid var(--c5-kdm-ink);outline-offset:2px;}
+
+/* Pack sizes: thumbnail, name (+ badge), price – information only, the buying
+   happens at the pH rows */
+.c5-kdm__packs{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px;}
+.c5-kdm__pack{display:grid;grid-template-columns:72px minmax(0,1fr) auto;column-gap:20px;
+  align-items:center;margin:0;padding:12px 16px 12px 12px;border-radius:8px;
+  background:var(--c5-kdm-pill);}
+.c5-kdm__thumb{display:block;width:72px;height:72px;padding:8px;
+  border-radius:8px;background:var(--c5-kdm-card);}
+.c5-kdm__thumb img{display:block;width:100%;height:100%;object-fit:contain;}
+.c5-kdm__packname{display:flex;flex-wrap:wrap;align-items:center;gap:8px;
+  font-size:20px;line-height:28px;letter-spacing:-0.02em;color:var(--c5-kdm-ink);}
+.c5-kdm__badge{display:inline-flex;align-items:center;padding:6px 10px;border-radius:12px;
+  border:1px solid var(--c5-kdm-stroke);background:var(--c5-kdm-card);
+  font-size:11px;line-height:14px;letter-spacing:.02em;text-transform:uppercase;
+  font-weight:var(--w-weight-medium);color:var(--c5-kdm-ink);}
+.c5-kdm__price{font-size:20px;line-height:28px;letter-spacing:-0.02em;white-space:nowrap;
+  font-variant-numeric:tabular-nums;color:var(--c5-kdm-ink);}
+
+/* --- Motion layer: pinned band, the card as a window --------------------------
+   Knobs written by the JS half on every track:
+     --kdm-extra  scroll budget of the band = overflow of the card + a short hold
+     --kdm-y      how far the content of the card has travelled (px, unitless)
+     --kdm-fade   opacity of the fade at the bottom of the window */
+[data-kdm="ruch"] .c5-kdm__track{height:calc(100svh + var(--kdm-extra,0px));}
+[data-kdm="ruch"] .c5-kdm__band{position:sticky;top:0;height:100svh;overflow:hidden;}
+[data-kdm="ruch"] .c5-kdm__in{height:100%;align-items:stretch;
+  padding-bottom:var(--c5-kdm-pad-b);}
+[data-kdm="ruch"] .c5-kdm__left{position:static;height:auto;max-height:none;min-height:0;}
+[data-kdm="ruch"] .c5-kdm__card{height:100%;min-height:0;overflow:hidden;overflow:clip;}
+[data-kdm="ruch"] .c5-kdm__scroll{transform:translate3d(0,calc(var(--kdm-y,0) * -1px),0);
+  will-change:transform;}
+[data-kdm="ruch"] .c5-kdm__fade{display:block;position:absolute;left:0;right:0;bottom:0;
+  height:var(--c5-kdm-fade-h);border-radius:0 0 12px 12px;pointer-events:none;
+  background:linear-gradient(to bottom,rgb(255 255 255 / 0) 18.5%,var(--c5-kdm-card));
+  opacity:var(--kdm-fade,0);}
+
+/* --- Below 900 px: one column, nothing sticky ----------------------------------- */
+@media (max-width:899px){
+  .c5-kdm{--c5-kdm-pad:24px;--c5-kdm-gutter:16px;}
+  .c5-kdm__in{grid-template-columns:minmax(0,1fr);row-gap:20px;}
+  .c5-kdm__left{position:static;height:auto;max-height:none;min-height:0;gap:20px;}
+  .c5-kdm__photo{height:clamp(220px,62vw,360px);flex:none;}
+  .c5-kdm__img{max-width:min(382px,64%);}
+  .c5-kdm__switch{flex-wrap:wrap;justify-content:center;}
+  .c5-kdm__opt{flex:1 1 auto;font-size:16px;padding-inline:14px;}
+  .c5-kdm__scroll{gap:32px;padding:32px 20px 28px;}
+  .c5-kdm__groups{gap:32px;}
+  .c5-kdm__pill{align-items:flex-start;}
+  .c5-kdm__pill .wf-icon{margin-top:2px;}
+  /* chip and description share the first line, the button takes the second */
+  .c5-kdm__phrow{grid-template-columns:auto minmax(0,1fr);}
+  .c5-kdm__buy{grid-column:1 / -1;justify-self:start;}
+  .c5-kdm__pack{grid-template-columns:56px minmax(0,1fr) auto;column-gap:14px;}
+  .c5-kdm__thumb{width:56px;height:56px;padding:6px;}
+  .c5-kdm__packname,.c5-kdm__price{font-size:17px;line-height:24px;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .c5-kdm__opt,.c5-kdm__buy{transition:none;}
+}

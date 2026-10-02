@@ -284,20 +284,11 @@ html.cx-js .u-rl__card{--u-rl-delay:0ms;
    measure, which is now narrower than the container anyway. */
 @media (min-width:900px){
   #u-wybor-nota{max-width:36rem;}
-  /* 68 ch of the shared `u-measure` is ~89 characters a line at this size –
-     below 1280 px the reading is not in a column of its own yet. */
-  #u-wybor-potas .u-txt.u-measure{max-width:56ch;}
 }
 
-/* Iteration 16 – two comments of Mateusz (20.09.2026) on this block: „Nagłówek
-   i ten tekst daj nad wykresem z tabami dawka produktu" and, on the reading
-   beside the bar, „To możesz przenieść pod wykres". Both say the same thing:
-   the block reads TOP DOWN – head, doses, bar, reading – and not across three
-   columns. The three-column layout of iteration 11 only made sense on the
-   1700 px container, which this section no longer stands on; at 1180 px the
-   bar is no longer a rule running across the screen, so nothing is lost.
-   The DOM order was already this one, so it is enough that no rule reshuffles
-   it: everything the `@media (min-width:1280px)` block used to set is gone. */
+/* Iteration 17 (01.10.2026): the potassium block (CE-43, `#u-wybor-potas`)
+   left the page with Mateusz's comment „Usuń ten fragment”, and its page
+   rules went with it. The component itself (`u-kbar`) stays in uprawa.css. */
 
 @media (prefers-reduced-motion: reduce){
   html.cx-js .u-rl__card{--u-rl-delay:0ms;transition:none;}
@@ -306,122 +297,51 @@ html.cx-js .u-rl__card{--u-rl-delay:0ms;
   .u-rl__card:hover .u-rl__img,.u-rl__card:focus-visible .u-rl__img{transform:none;}
 }
 
-/* ===== 55 · Krytyczne fakty dla kukurydzy (spec §9.9, §13.4) ===============
-   Wariant CE-44 `tlo-foto`. Domyślnie (mobile / ograniczony ruch / bez JS):
-   scena jako blok (kadr tła + napis, min. 70 svh), pod nią kafle w jednej
-   kolumnie (dwie od 640 px), bez przesunięć.
-   Scena (≥900 px, no-preference, .cx-js): kadr przyklejony na `top:0` na cały
-   ekran przez cały tor, a nad nim sześć nieprzezroczystych kafli w trzech
-   rozłącznych pasach – `--i` to miejsce w torze, `--lane` środek pasa,
-   `--a` profil prędkości, `--par` (liczy JS) przesunięcie. ================= */
-/* tor idzie od krawędzi do krawędzi (zdjęcie sceny nie ma marginesów);
-   marginesy kolumny treści bierze na siebie siatka kafli. Sekcja bez górnego
-   paddingu – dolny zostaje, bo pod torem stoi boks „Najważniejsza zasada". */
-.u-fk{padding-block:0 clamp(3.5rem,7vw,6.25rem);}
-.u-fk__track{position:relative;}
-.u-fk__stage{position:relative;z-index:0;display:grid;place-items:center;overflow:hidden;
-  min-height:70svh;padding:clamp(2.5rem,7vw,5rem) var(--w-space-5);}
-.u-fk__bg{position:absolute;inset:0;}
-/* kadr tła: jedno zdjęcie z drona na pełny ekran, kadrowane ze środka. Bez
-   `loading="lazy"` – zdjęcie jest tłem sceny, która przykleja się na `top:0`,
-   więc musi stać w kadrze w chwili przyklejenia, a nie dojeżdżać po nim. */
-.u-fk__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;}
-/* jednolity scrim (bez gradientów) – biały napis ma na czym stać. .25 zamiast
-   .35: kadr jest sam z siebie ciemny (średnia luminancja .04, p95 .14), więc
-   po wybraniu zdjęcia (18.09) scrim można było zdjąć o 10 punktów – biały
-   napis trzyma ponad 6:1 na najjaśniejszych liściach. */
-.u-fk__bg::after{content:"";position:absolute;inset:0;background:rgb(0 0 0 / .25);}
-.u-fk__title{position:relative;z-index:1;color:var(--w-text-inverse);
-  font-size:clamp(2.5rem,6vw,5.5rem);line-height:1.04;font-weight:var(--w-weight-medium);
-  letter-spacing:-0.02em;text-align:center;margin-inline:auto;max-width:min(100%,20ch);}
-/* maska wyrazu: `overflow:hidden` z zapasem na dolne wydłużenia (y, j),
-   skasowanym ujemnym marginesem, żeby wiersze stały tam gdzie stały */
-.u-fk__w{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.14em;margin-bottom:-.14em;}
-.u-fk__w > span{display:inline-block;}
-.u-fk__tiles{display:grid;gap:clamp(1rem,2.5vw,1.5rem);
-  max-width:1180px;margin:clamp(2rem,5vw,3rem) auto 0;padding-inline:var(--w-space-5);}
-.u-fk__tile{display:flex;flex-direction:column;gap:var(--w-space-3);
-  background:var(--w-surface-page);border:1px solid var(--w-border-default);border-radius:0;
-  padding:clamp(1.25rem,2.4vw,1.75rem);}
-/* rozjazd 4: ECO scale (1.0625 rem) instead of the kit --w-font-h5-size */
-.u-fk__area{font-size:1.0625rem;line-height:1.3;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;color:var(--w-text-primary);}
-.u-fk__after{margin-top:clamp(2.5rem,5vw,4rem);}
-/* Iteration 11 (§15.4): the box under the scene rides the wide container, so
-   from 1100 px the overline moves into a column of its own and the sentence
-   keeps its measure – across 1720 px it would run over 200 characters a line.
-   The quote also grows to 2 rem there: at the 1.5 rem cap of the shared rule
-   the dark box would be half empty at 1920 px. Both values meet the shared
-   ones at 1100 px (24 px), so nothing jumps at the breakpoint. */
+/* ===== 55 · Najważniejsza zasada (spec §20.3) ==============================
+   Iteration 17 (01.10.2026): the facts scene (CE-44 `tlo-foto` – background
+   photo, masked title, six tiles on a parallax track) left the page; what is
+   left is the dark box that used to stand under it (CE-33 `ciemny-boks`).
+   The block has no padding of its own: the section above ends with its
+   `c5-sec` padding and the packages below start with theirs. ============== */
+.u-zs{padding-block:0;}
+/* The box rides the wide container, so from 1100 px the overline moves into a
+   column of its own and the sentence keeps its measure – across 1720 px it
+   would run over 200 characters a line. The quote also grows to 2 rem there:
+   at the 1.5 rem cap of the shared rule the dark box would be half empty at
+   1920 px. Both values meet the shared ones at 1100 px (24 px). */
 @media (min-width:1100px){
-  .u-fk__after .u-quote{display:grid;grid-template-columns:minmax(0,12rem) minmax(0,1fr);
+  .u-zs .u-quote{display:grid;grid-template-columns:minmax(0,12rem) minmax(0,1fr);
     column-gap:clamp(2rem,4vw,4rem);align-items:start;}
-  .u-fk__after .u-quote p{font-size:clamp(1.5rem,2vw,2rem);max-width:52ch;}
+  .u-zs .u-quote p{font-size:clamp(1.5rem,2vw,2rem);max-width:52ch;}
 }
 
+/* ===== 60 · Pakiety i przelicznik (spec §20.4) =============================
+   Iteration 17 (01.10.2026): „Trzy warianty technologii” and „Ile produktu na
+   Twoje pole” are one section. Two switch boxes (the `u-vtabs` tablist from
+   uprawa.css) choose the package, the slider sets the area, and the open panel
+   reads top down: what the package consists of (`u-rows`), then what it means
+   for this field (`u-calc` boxes – one per product, the last one the sum).
+   No new script: `data-tabs-group` (uprawa.js) and `data-calc` (c5.js) sit on
+   the same container, and the calculator fills the boxes of both panels. === */
+/* the two controls of the section side by side from 1000 px: package on the
+   left, area on the right, both on the bottom line of the row */
+.u-pk__top{display:grid;gap:var(--w-space-6);}
+@media (min-width:1000px){
+  .u-pk__top{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);
+    column-gap:clamp(2rem,4vw,4rem);align-items:end;}
+}
+/* two packages, not three variants: the shared tablist is a three-column grid */
 @media (min-width:640px){
-  .u-fk__tiles{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;}
+  #u-pakiety .u-vtabs{grid-template-columns:repeat(2,minmax(0,1fr));}
 }
-
-/* wejście napisu: każdy wyraz wyjeżdża spod dolnej krawędzi swojego wiersza,
-   kaskadą co 70 ms (`--wi` w znaczniku). Stan wyjściowy tylko z JS i bez
-   ograniczenia ruchu – inaczej napis jest po prostu widoczny. Bez animacji
-   wyjścia: klasę `.is-in` JS nadaje raz i już jej nie zdejmuje. */
-@media (prefers-reduced-motion: no-preference){
-  html.cx-js .u-fk__w > span{transform:translateY(110%);
-    transition:transform 520ms cubic-bezier(.2,.8,.2,1) calc(var(--wi,0) * 70ms);}
-  html.cx-js .u-fk__title.is-in .u-fk__w > span{transform:none;}
-}
-
-/* --- Scena: kadr przyklejony na cały ekran, kafle nad nim ------------------ */
-@media (min-width:900px) and (prefers-reduced-motion: no-preference){
-  /* tor = scena (100 svh) + wjazd pierwszego kafla + pięć kroków między
-     kaflami + ogon: ostatni (najwyższy) kafel schodzi z ekranu przez ≈ 52 vh,
-     a potem napis stoi sam jeszcze ok. 28 vh, zanim scena odjedzie ze stroną.
-     Razem 465 vh przy kroku 32 vh, czyli 2–3 kafle naraz w oknie. */
-  .cx-js .u-fk{--u-fk-lead:125vh;--u-fk-step:32vh;--u-fk-tail:80vh;}
-  .cx-js .u-fk__track{height:calc(100svh + var(--u-fk-lead) + 5 * var(--u-fk-step) + var(--u-fk-tail));}
-  .cx-js .u-fk__stage{position:sticky;top:0;height:100svh;min-height:0;}
-  .cx-js .u-fk__tiles{display:block;max-width:none;margin:0;padding:0;}
-  /* trzy rozłączne pasy (18 %, 50 %, 82 % szerokości toru = okna) w kolejności
-     L, P, Ś, L, P, Ś – sąsiednie kafle nigdy nie są w tym samym pasie */
-  .cx-js .u-fk__tile{position:absolute;z-index:1;width:clamp(16rem,24vw,22rem);
-    top:calc(var(--u-fk-lead) + var(--i,0) * var(--u-fk-step));
-    left:var(--lane,50%);
-    transform:translate(-50%,var(--par,0px));will-change:transform;}
-}
-
-/* ===== 60 · Trzy warianty technologii (spec §9.10, §15.4) =================
-   Mechanika pudełek-przełączników siedzi w `uprawa.css`; ten blok dokłada
-   wyłącznie układ przy szerokim kontenerze (iteracja 11).
-   From 1280 px the three switches stand in a rail on the left and the open
-   panel takes the rest of the container: side by side across 1720 px they
-   would be three 570 px wide buttons over a list whose `dt` column swims in
-   space. The panels are placed in the second column WITHOUT a row, so with JS
-   the one visible panel sits next to the rail, and without JS all three stack
-   under each other in that same column instead of overlapping. ============ */
+/* second line of a switch box: how many treatments and products the package has */
+.u-vtab__d{font-size:var(--w-font-sm-size);line-height:var(--w-font-sm-lh);color:var(--w-text-secondary);}
+.u-vtab[aria-selected="true"] .u-vtab__d{color:var(--w-gray-400);}
+/* 68 ch of the shared lead is ~88 characters a line at this size */
 @media (min-width:900px){
-  /* as in §30: the 710 px lead is ~89 characters a line here */
-  #u-warianty .c5-lead{max-width:60ch;}
-}
-@media (min-width:1280px){
-  #u-warianty [data-tabs-group]{display:grid;grid-template-columns:minmax(0,20rem) minmax(0,1fr);
-    column-gap:clamp(2rem,4vw,4rem);align-items:start;}
-  #u-warianty .u-vtabs{grid-column:1;grid-template-columns:minmax(0,1fr);}
-  #u-warianty .u-vpanel{grid-column:2;}
-  /* In the widened panel the answer column would otherwise run 90–130
-     characters a line. */
-  #u-warianty .u-row dd{max-width:60ch;}
-}
-/* From 1600 px the panel holds two rows of the programme side by side (six
-   rows = three pairs), which closes the empty field the capped `dd` leaves in
-   a single column. The hairlines have to follow: a vertical one inside the
-   pair, none under the last pair. */
-@media (min-width:1600px){
-  #u-warianty .u-rows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));}
-  #u-warianty .u-row{grid-template-columns:minmax(0,11rem) minmax(0,1fr);}
-  #u-warianty .u-row:nth-child(odd){border-right:1px solid var(--w-border-subtle);}
-  #u-warianty .u-row:nth-last-child(-n+2){border-bottom:0;}
-  #u-warianty .u-row dd{max-width:none;}
+  #u-pakiety .c5-lead{max-width:60ch;}
+  #u-pakiety .wf-small.u-measure{max-width:60ch;}
+  #u-pakiety .u-row dd{max-width:64ch;}
 }
 
 /* ===== 80 · Mieszaniny zbiornikowe – tabela zgodności (spec §10.6) =========
@@ -494,58 +414,49 @@ html.cx-js .u-mt__row{cursor:pointer;}
   .u-mt__row,.u-mt__ar{transition:none;}
 }
 
-/* ===== 85 · Ile produktu na Twoje pole (spec §9.10, §10.3) =================
-   Przelicznik bez zmian – placeholder w boksie wyniku ustępuje packshotowi
-   (szerokość i proporcja zostają z `uprawa.css`, tu dochodzi tło i zapas).
-   Iteracja 6: woda do zabiegu wchodzi do boksów CARBOHUMIC filtrowanego
-   187 mesh jako wiersz pomocniczy pod cienką linią, a siatka schodzi z pięciu
-   boksów na cztery (4 / 2 / 1 kolumny). Nadpisania `.u-calc` i `.u-out b`
-   z `uprawa.css` działają kaskadą – `kukurydza.css` wchodzi po `uprawa.css`. */
+/* ===== 85 · Boksy przelicznika (spec §9.10, §10.3, §20.4) ==================
+   The calculator lives in the packages section since iteration 17; this block
+   keeps what its result boxes need. The placeholder gave way to the packshot
+   (width and ratio stay in `uprawa.css`, here the background and the air).
+   Water is a helper row under a hairline in the CARBOHUMIC filtrowany
+   187 mesh box – it is not a product, so it gets neither a packshot nor a
+   shop link. `.u-calc` and `.u-out b` from `uprawa.css` are overridden by the
+   cascade – `kukurydza.css` loads after it. */
 .u-out__ph{display:block;background:var(--w-gray-100);padding:8%;}
 .u-out__img{display:block;width:100%;height:100%;object-fit:contain;}
 
-/* cztery boksy: pełny rząd od 1200 px, dwa od 640 px, jeden niżej */
-.u-calc{grid-template-columns:repeat(4,minmax(0,1fr));}
-@media (max-width:1199px){.u-calc{grid-template-columns:repeat(2,minmax(0,1fr));}}
-@media (max-width:639px){.u-calc{grid-template-columns:1fr;}}
+/* One box per product plus the sum: three boxes in the minimum package, four
+   in the optimum one. A full row from 1000 px, two boxes from 640 px, one
+   below. The column count follows the package, so no row ends with a hole. */
+.u-calc{grid-template-columns:minmax(0,1fr);}
+@media (min-width:640px){.u-calc{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (min-width:1000px){
+  .u-calc--3{grid-template-columns:repeat(3,minmax(0,1fr));}
+  .u-calc--4{grid-template-columns:repeat(4,minmax(0,1fr));}
+}
 
-/* Wiersz pomocniczy: własny `data-calc-out` w środku boksu produktu – woda nie
-   jest osobnym produktem, więc nie dostaje ani packshotu, ani sklepu.
-   Wartość mniejsza od głównej (h5 wobec h4), żeby hierarchia boksu została. */
+/* Helper row: its own `data-calc-out` inside the product box. The value is
+   smaller than the main one (h5 against h4), so the hierarchy of the box holds. */
 .u-out__sub{display:flex;flex-direction:column;gap:var(--w-space-1);
   padding-top:var(--w-space-3);border-top:1px solid var(--w-border-subtle);}
 .u-out__sub b{font-size:var(--w-font-h5-size);line-height:var(--w-font-h5-lh);}
 
-/* Iteration 11 (§15.4): on the wide container the section reads across –
-   the head (which stays at the left edge of the container) in a column of its
-   own, the converter next to it. Stacked, the slider would be a 1700 px long
-   track and the four boxes 415 px wide fields with a 64 px packshot in them.
-   The head column also gives the long lead its measure: 24 rem is ~50
-   characters a line, the shared 710 px cap would be ~88 at this font. */
-@media (min-width:900px){
-  /* Between 900 and 1280 px the head still stands above the converter, so the
-     lead and the note under the boxes need the same caps as the rest of the
-     page: the shared 710 px / 68 ch run 85 and 81 characters a line here. */
-  #u-skala .c5-lead{max-width:60ch;}
-  #u-skala .wf-small.u-measure{max-width:60ch;}
-}
-/* Iteration 16 (Mateusz, 20.09.2026): „Nagłówek, lead i kicker umieść nad
-   paskiem z powierzchnią uprawy" – the head column of iteration 11 is gone.
-   It only appeared from 1560 px and only on the wide container; the section
-   now stands on 1180 px, where the head belongs above the converter anyway.
-   The kicker and the heading keep the left edge, like the lead – the second
-   half of the same comment. */
-
-/* Koszt produktu w boksie wyniku (iteracja 16, uwaga Mateusza z 20.09.2026 –
-   ceny podał wprost ze sklepu). Ten sam wzorzec co wiersz wody: własny
-   `data-calc-out` w środku boksu, wartość mniejsza od głównej, żeby hierarchia
-   boksu została. `data-lo`/`data-hi` to już złotówki na hektar (dawka × cena
-   jednostkowa), więc przelicznik `c5.js` zostaje nietknięty. */
+/* Cost of the product in its box (iteration 16, Mateusz 20.09.2026 – prices
+   straight from the shop). `data-lo`/`data-hi` are already zloty per hectare
+   (dose × unit price), so the calculator in `c5.js` stays untouched. */
 .u-out__cost{display:flex;flex-direction:column;gap:var(--w-space-1);
   padding-top:var(--w-space-3);border-top:1px solid var(--w-border-subtle);}
 .u-out__cost b{font-size:var(--w-font-h5-size);line-height:var(--w-font-h5-lh);}
-/* Nota cenowa ma teraz dwa akapity – podstawa cen i zastrzeżenie, że warianty
-   są alternatywami. Bez odstępu zlałyby się w jeden blok drobnego druku. */
+
+/* The sum of the package: the one dark box of the row. Its value is the main
+   number of the section, so it keeps the h4 size of a product box and takes
+   the inverse ink; the two captions around it go one step lighter. */
+.u-out--sum{justify-content:center;background:var(--w-surface-inverse);border-color:var(--w-gray-900);}
+.u-out--sum b{color:var(--w-text-inverse);font-size:clamp(1.25rem,2vw,1.5rem);line-height:1.2;}
+.u-out--sum .wf-caption{color:var(--w-gray-400);}
+
+/* The price note has two paragraphs – the basis of the prices and what the
+   calculator leaves out. */
 .u-cost p + p{margin-top:var(--w-space-3);}
 
 /* ===== 90 · Pas zamykający (spec §9.11, §13.5) – ustawienia CE-16 ==========

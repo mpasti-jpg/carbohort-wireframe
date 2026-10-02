@@ -63,7 +63,7 @@ window.CW_STATUS = {
       "etap": "hifi",
       "etykieta": "poprawki",
       "ac": 31223,
-      "data": "19.09"
+      "data": "02.10"
     },
     "carbomat-mata.html": {
       "sekcja": "2. Produkty Carbohort",
@@ -103,7 +103,7 @@ window.CW_STATUS = {
       "etap": "lofi",
       "etykieta": "akceptacja",
       "ac": 31566,
-      "data": "20.09"
+      "data": "01.10"
     },
     "ziemniak.html": {
       "sekcja": "3. Rodzaje upraw",
