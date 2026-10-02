@@ -422,7 +422,9 @@ html.cx-js .u-mt__row{cursor:pointer;}
    187 mesh box – it is not a product, so it gets neither a packshot nor a
    shop link. `.u-calc` and `.u-out b` from `uprawa.css` are overridden by the
    cascade – `kukurydza.css` loads after it. */
-.u-out__ph{display:block;background:var(--w-gray-100);padding:8%;}
+/* fixed padding: a percentage is taken from the width of the whole box, not of
+   this 64 px field, and squeezed the packshot to nothing in wide boxes (02.10.2026) */
+.u-out__ph{display:block;background:var(--w-gray-100);padding:5px;}
 .u-out__img{display:block;width:100%;height:100%;object-fit:contain;}
 
 /* One box per product plus the sum: three boxes in the minimum package, four

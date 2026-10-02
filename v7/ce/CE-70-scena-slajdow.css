@@ -1,26 +1,41 @@
 /* ===== CE-70 · Scena slajdów na tle wideo – Figma frame 280:2120
-   (spec prochnica-plus-wzorzec-eco-spec §18.3). Class prefix: c5-vs. =========
+   (spec prochnica-plus-wzorzec-eco-spec §18.3 + §19.4). Class prefix: c5-vs.
+
+   The section heading (kicker + h2) lives INSIDE the block and stands on the
+   picture – there is nothing above the scene.
 
    One DOM, two layouts:
-   · static (below 900 px, reduced motion, no JS) – the poster as an ordinary
-     16 : 9 frame on a dark field, then the cards one under another in reading
+   · static (below 900 px, reduced motion, no JS) – the poster as a frame at
+     least 60 svh tall, under the same flat scrim, with the heading centred on
+     it; below it, on a dark field, the cards one under another in reading
      order; the slide index is hidden, nothing moves;
    · scene (>= 900 px, no-preference, .cx-js) – a tall track whose stage is
      sticky, 100 svh, the full width of the window and clipped: a looping video
-     fills it, a flat scrim sits over it, the slide index stands at the left
-     edge and ONE card at a time floats in the middle. Scroll position drives
-     the cards: card i rides in from below, parks, then leaves upward while
-     card i + 1 rides in behind it. The module writes only two custom
-     properties per card – `--vs-t` (-1 above … 0 centre … 1 below) and
-     `--vs-travel` (how far that is in pixels) – so a scroll pass never touches
-     layout.
+     fills it, a flat scrim sits over it and ONE piece at a time floats in the
+     middle. The first piece is the heading: it stands centred when the stage
+     pins, then leaves upward while card 1 rides in from below; after that
+     card i parks and leaves upward while card i + 1 rides in behind it. The
+     slide index at the left edge is hidden while the heading stands. The
+     module writes only custom properties – per piece `--vs-t` (-1 above …
+     0 centre … 1 below) and `--vs-travel` (how far that is in pixels), on the
+     index `--vs-idx` (its opacity) – so a scroll pass never touches layout.
 
    The card itself is the pattern's light box (--w-gray-50, 10 px padding,
    sharp corners): a square dark illustration on the left, the title and the
    description of the step on the right. Every illustration part carries its
-   own c5-vs class, so the block does not depend on the page sheet – the
-   Próchnica+ block 40 (pp-scene) can be dropped without touching this file.
+   own c5-vs class, so the block does not depend on the page sheet.
    ========================================================================= */
+
+.c5-vs{
+  /* One flat scrim over the picture, in both layouts. At .55 white text keeps
+     at least 4.76 : 1 on ANY frame (pure white under it becomes #737373), so
+     the heading needs no gradient of its own. */
+  --c5-vs-scrim:rgb(0 0 0 / .55);
+  --c5-vs-pad:clamp(1.25rem,4vw,2.5rem);
+}
+/* The scene opens the section edge to edge: the heading that used to fill the
+   top padding now stands on the picture. */
+.c5-sec.c5-vs-sec{padding-top:0;}
 
 /* --- Static layout --------------------------------------------------------- */
 .c5-vs__track{position:relative;height:auto;}
@@ -28,19 +43,29 @@
 /* Hook for the CE index screenshot (ce-rejestr.js -> zrzut.przewin), not used
    by the scene. Scrolling ITS top edge to the top of the window leaves card 1
    standing in the middle of the stage – the same place the index button "01"
-   jumps to (u = 0.65 of one segment, and one segment is --vs-step-*, the very
-   numbers the module measures the track with, so it holds at any window
-   height). Zero size, out of flow, out of the reading and tab order. */
+   jumps to (the heading's stop plus u = 0.65 of one segment; one segment is
+   --vs-step-*, the very numbers the module measures the track with, so it
+   holds at any window height). Zero size, out of flow, out of the reading and
+   tab order. */
 .c5-vs__shot{position:absolute;left:0;width:0;height:0;overflow:hidden;pointer-events:none;
-  top:calc(.65 * max(var(--vs-step-min,620px), var(--vs-step-vh,1.1) * 100svh));}
+  top:calc((var(--vs-head-seg,1) + .65) * max(var(--vs-step-min,620px), var(--vs-step-vh,1.1) * 100svh));}
+/* two rows: the frame (picture and heading share one cell), then the cards */
 .c5-vs__stage{position:relative;background:var(--w-gray-900);color:#fff;
-  padding:clamp(1.25rem,4vw,2.5rem);display:flex;flex-direction:column;gap:clamp(1.5rem,4vw,2.5rem);}
-.c5-vs__bg{position:relative;display:block;}
+  display:grid;grid-template-columns:minmax(0,1fr);}
+.c5-vs__bg{grid-area:1 / 1;position:relative;display:block;min-height:60svh;overflow:hidden;}
 /* outside the scene the video never runs – the poster stands in for it */
-.c5-vs__video,.c5-vs__scrim{display:none;}
-.c5-vs__still{display:block;width:100%;aspect-ratio:16/9;max-height:52svh;object-fit:cover;background:var(--w-gray-800);}
+.c5-vs__video{display:none;}
+.c5-vs__still{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:var(--w-gray-800);}
+.c5-vs__scrim{display:block;position:absolute;inset:0;background:var(--c5-vs-scrim);}
 .c5-vs__index{display:none;}
-.c5-vs__cards{display:flex;flex-direction:column;gap:clamp(1.25rem,3vw,2rem);margin:0;padding:0;}
+.c5-vs__cards{grid-area:2 / 1;display:flex;flex-direction:column;gap:clamp(1.25rem,3vw,2rem);margin:0;padding:var(--c5-vs-pad);}
+
+/* --- Heading on the picture ------------------------------------------------- */
+.c5-vs__head{grid-area:1 / 1;position:relative;z-index:1;align-self:center;justify-self:center;
+  width:min(1100px,84vw);padding-block:var(--c5-vs-pad);text-align:center;color:#fff;}
+.c5-vs__head .c5-kicker{margin-bottom:clamp(1rem,2vw,1.5rem);}
+.c5-vs__head .c5-h2{max-width:none;margin:0;text-wrap:balance;
+  font-size:clamp(1.7rem,3.3vw,3.5rem);line-height:1.12;}
 
 /* --- Card ------------------------------------------------------------------ */
 .c5-vs__card{background:var(--w-gray-50);color:var(--w-text-primary);padding:10px;border-radius:0;
@@ -62,8 +87,7 @@
 /* A wide window without the scene (reduced motion, no JS): the stack keeps the
    measure of the card in the scene instead of spreading over the whole page. */
 @media (min-width:900px){
-  .c5-vs__stage{align-items:center;}
-  .c5-vs__bg,.c5-vs__cards{width:min(800px,100%);}
+  .c5-vs__cards{justify-self:center;width:min(calc(800px + 2 * var(--c5-vs-pad)),100%);}
 }
 
 /* --- Square illustration box: dark field, inverted colours ------------------
@@ -125,28 +149,38 @@
     --c5-vs-card-w:min(800px,60vw);
     /* the index keeps the left edge of the window (28–40 px, spec §18.3) */
     --c5-vs-side:clamp(28px,2.6vw,40px);
-    /* one flat scrim over the video, enough for white text on a bright frame */
-    --c5-vs-scrim:rgb(0 0 0 / .45);
     /* length of ONE slide on the track – the module reads both (spec §18.3:
-       N x ~110 svh of scrolling above the pinned stage) */
+       ~110 svh of scrolling per segment above the pinned stage) */
     --vs-step-vh:1.1;
     --vs-step-min:620px;
+    /* how long the heading keeps the middle before it leaves, in segments –
+       the track is (this + number of slides) segments long (spec §19.4: N + 1);
+       the module and the screenshot hook both read it */
+    --vs-head-seg:1;
   }
   .cx-js .c5-vs__stage{position:sticky;top:0;height:100svh;overflow:hidden;
-    display:block;padding:0;gap:0;background:var(--w-gray-900);}
+    display:block;background:var(--w-gray-900);}
 
-  /* `width:auto` undoes the measure the static stack keeps on a wide window */
-  .cx-js .c5-vs__bg{position:absolute;inset:0;width:auto;}
+  .cx-js .c5-vs__bg{position:absolute;inset:0;min-height:0;}
   .cx-js .c5-vs__video{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
   .cx-js .c5-vs__still{display:none;}
-  .cx-js .c5-vs__scrim{display:block;position:absolute;inset:0;background:var(--c5-vs-scrim);}
 
-  .cx-js .c5-vs__index{display:block;position:absolute;left:var(--c5-vs-side);top:50%;transform:translateY(-50%);z-index:3;}
+  /* The index waits out the heading: the module fades it in (--vs-idx) while
+     card 1 rides in and marks it data-off while the heading stands, which
+     takes its buttons out of sight, of the tab order and of the reading order. */
+  .cx-js .c5-vs__index{display:block;position:absolute;left:var(--c5-vs-side);top:50%;transform:translateY(-50%);z-index:3;
+    opacity:var(--vs-idx,0);}
+  .cx-js .c5-vs__index[data-off="true"]{visibility:hidden;}
 
-  /* every card sits in the same place; only the transform tells them apart */
-  .cx-js .c5-vs__cards{position:absolute;inset:0;width:auto;display:block;gap:0;}
+  /* the heading and every card sit in the same place – the middle of the
+     stage; only the transform tells them apart. Before the module's first pass
+     the heading stands (t = 0) and the cards wait below the stage (t = 1). */
+  .cx-js .c5-vs__head{position:absolute;left:50%;top:50%;padding:0;z-index:2;
+    transform:translate3d(-50%,-50%,0) translate3d(0,calc(var(--vs-t,0) * var(--vs-travel,100svh)),0);
+    will-change:transform;}
+  .cx-js .c5-vs__cards{position:absolute;inset:0;width:auto;display:block;gap:0;padding:0;}
   .cx-js .c5-vs__card{position:absolute;left:50%;top:50%;width:var(--c5-vs-card-w);z-index:2;
-    transform:translate3d(-50%,-50%,0) translate3d(0,calc(var(--vs-t,0) * var(--vs-travel,60svh)),0);
+    transform:translate3d(-50%,-50%,0) translate3d(0,calc(var(--vs-t,1) * var(--vs-travel,100svh)),0);
     will-change:transform;}
   .cx-js .c5-vs__card[data-off="true"]{visibility:hidden;}
 }

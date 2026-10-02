@@ -1,20 +1,23 @@
 /* ===== CE-11 · Warianty – pasma z przełącznikiem (wariant „pasma-z-przelacznikiem") =====
-   LINKED BY carbomat.html ONLY. The base module ce/CE-11-warianty-taby.css still
-   runs carbohumic.html; the previous trial (ce/CE-11-warianty-taby-proba.*) is
-   no longer linked by any page.
+   A shared module since 02.10.2026: every page that carries a `[data-kdm]` root
+   links this pair. The base module ce/CE-11-warianty-taby.css is another variant;
+   the earlier trial (ce/CE-11-warianty-taby-proba.*) is no longer linked by any page.
 
    Layout after the Figma frame 382:1189: one full-width band per product.
-     left   the packshot and, under it, the switch between the products
+     left   the packshot (or a photo frame / its placeholder) and, under it, the
+            switch between the products
      right  a white card with everything about the product: name, key functions,
-            application, where it works best, pH (with the buy buttons – every
-            pH is a product of its own), fraction, pack sizes
+            application, where it works best, pH, fraction – whatever groups the
+            page needs. Buying is a button: in a pH row when every pH is a
+            product of its own, or in a row of its own at the end of the card
+            when the band is one product.
 
    Colours of the frame are NOT taken over yet: bands and pills stay in the grey
    scale of the kit, each of them behind a knob on .c5-kdm.
 
    The number of products is free – the switch is a row of links, the bands are
-   whatever [data-kdm-track] elements the page carries (two here, three on
-   CARBOHUMIC when the block moves there).
+   whatever [data-kdm-track] elements the page carries. A switch of three or
+   more options steps down by itself (see „Three or more products").
 
    Three layers:
      1. base (no JS, reduced motion): two columns, the left one sticky, the card
@@ -31,7 +34,7 @@
   --c5-kdm-band:var(--w-gray-150);           /* band behind the first product */
   --c5-kdm-band-alt:var(--w-gray-200);       /* band behind every other product */
   --c5-kdm-card:var(--w-surface-page);       /* the card */
-  --c5-kdm-pill:var(--w-gray-100);           /* function pills, pack rows, active option */
+  --c5-kdm-pill:var(--w-gray-100);           /* function pills, notes, active option */
   --c5-kdm-stroke:var(--w-gray-300);         /* pH chip, buy button */
   --c5-kdm-pad:40px;                         /* band edge to card / packshot, top */
   /* Bottom inset of the pinned band. The frame says 40 px; the advisor dock
@@ -113,23 +116,98 @@
 .c5-kdm__buy:hover{border-color:var(--c5-kdm-ink);background:var(--w-gray-50);}
 .c5-kdm__buy:focus-visible{outline:2px solid var(--c5-kdm-ink);outline-offset:2px;}
 
-/* Pack sizes: thumbnail, name (+ badge), price – information only, the buying
-   happens at the pH rows */
-.c5-kdm__packs{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px;}
-.c5-kdm__pack{display:grid;grid-template-columns:72px minmax(0,1fr) auto;column-gap:20px;
-  align-items:center;margin:0;padding:12px 16px 12px 12px;border-radius:8px;
-  background:var(--c5-kdm-pill);}
-.c5-kdm__thumb{display:block;width:72px;height:72px;padding:8px;
-  border-radius:8px;background:var(--c5-kdm-card);}
-.c5-kdm__thumb img{display:block;width:100%;height:100%;object-fit:contain;}
-.c5-kdm__packname{display:flex;flex-wrap:wrap;align-items:center;gap:8px;
-  font-size:20px;line-height:28px;letter-spacing:-0.02em;color:var(--c5-kdm-ink);}
-.c5-kdm__badge{display:inline-flex;align-items:center;padding:6px 10px;border-radius:12px;
-  border:1px solid var(--c5-kdm-stroke);background:var(--c5-kdm-card);
-  font-size:11px;line-height:14px;letter-spacing:.02em;text-transform:uppercase;
-  font-weight:var(--w-weight-medium);color:var(--c5-kdm-ink);}
-.c5-kdm__price{font-size:20px;line-height:28px;letter-spacing:-0.02em;white-space:nowrap;
-  font-variant-numeric:tabular-nums;color:var(--c5-kdm-ink);}
+/* ===== shared module: optional parts ==========================================
+   None of the classes below stands on the page the variant was built for. */
+
+/* --- The head of a card: the name alone (the frame) or the name with one line
+   under it (a promise, the audience) ------------------------------------------- */
+.c5-kdm__head{display:flex;flex-direction:column;gap:12px;min-width:0;}
+.c5-kdm__lead{margin:0;font-size:18px;line-height:28px;letter-spacing:-0.02em;color:var(--c5-kdm-body);}
+
+/* --- Buying outside a pH row -------------------------------------------------
+   A band that is ONE product carries its button in a row of its own, the last
+   child of .c5-kdm__groups, so it stands one group gap under the last group.
+   The row is the host of the shop config (data-cw-product); it may hold other
+   buttons and links next to the buy button. */
+.c5-kdm__buyrow{display:flex;flex-wrap:wrap;align-items:center;gap:10px;min-width:0;}
+
+/* Ordinary buttons and links of the page (c5-btn) inside a card: they take the
+   corner of the buy button, the card has no sharp corner anywhere. In a group
+   they stand in a row that wraps. */
+.c5-kdm__card .c5-btn{border-radius:14px;}
+.c5-kdm__card .c5-btnrow{gap:10px;}
+
+/* --- Text in a group: links, lists, a note ------------------------------------ */
+.c5-kdm__txt a,.c5-kdm__list a,.c5-kdm__note a{color:var(--c5-kdm-ink);text-decoration:underline;
+  text-underline-offset:3px;}
+/* a plain list (doses, steps): the type of the running copy, a square marker in
+   the ink of the card */
+.c5-kdm__list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;}
+.c5-kdm__list > li{position:relative;margin:0;padding-left:18px;
+  font-size:16px;line-height:24px;color:var(--c5-kdm-body);}
+.c5-kdm__list > li::before{content:"";position:absolute;left:0;top:10px;width:4px;height:4px;
+  background:var(--c5-kdm-ink);}
+/* a note that must not be missed (a warning, a restriction): icon + text on the
+   pill ground */
+.c5-kdm__note{display:flex;align-items:flex-start;gap:12px;margin:0;padding:14px 16px;
+  border-radius:11px;background:var(--c5-kdm-pill);
+  font-size:16px;line-height:24px;color:var(--c5-kdm-body);}
+.c5-kdm__note > .wf-icon{flex:none;width:20px;height:20px;margin-top:2px;opacity:1;color:var(--c5-kdm-ink);}
+.c5-kdm__note strong{font-weight:var(--w-weight-medium);color:var(--c5-kdm-ink);}
+
+/* --- A photo frame instead of a packshot --------------------------------------
+   `.c5-kdm__photo--frame` holds a photograph, or its placeholder, at a fixed
+   ratio (--c5-kdm-frame, width / height). The packshot rules above size a
+   cut-out; a frame is as large as the column allows.
+   The element in the frame carries `.c5-kdm__fill` whatever it is – an <img>
+   or the placeholder block of the page – so swapping one for the other is one
+   tag. It is sized from the photo box, which is its query container: as wide
+   as the box, or as wide as the box height allows, whichever is smaller. */
+.c5-kdm{--c5-kdm-frame:0.8;}                  /* 4 : 5 */
+.c5-kdm__photo--frame{container-type:size;}
+.c5-kdm__fill{display:block;position:relative;flex:none;height:auto;max-width:100%;max-height:100%;
+  aspect-ratio:var(--c5-kdm-frame);object-fit:cover;
+  width:100%;                                 /* without container units: the column width */
+  width:min(100cqw,calc(100cqh * var(--c5-kdm-frame)));}
+
+/* --- The sticky column of the static layout and the advisor dock ---------------
+   Without the motion layer (reduced motion) the left column sticks for the height
+   of the window less the top pad twice, so the switch at its foot ends 40 px
+   above the bottom edge – behind the dock, which starts 80 px above it.
+   `.c5-kdm--dock` on the root ends the column where the pinned band ends
+   (--c5-kdm-pad-b). The motion layer and the one-column layout below 900 px
+   size the column themselves and are not touched. */
+@media (min-width:900px){
+  .c5-kdm--dock .c5-kdm__left{height:calc(100svh - var(--c5-kdm-pad) - var(--c5-kdm-pad-b));}
+}
+
+/* --- A switch that follows its column -----------------------------------------
+   The switch of two options is the frame and stays as it is. From three options
+   on the labels take the smaller step and the row may wrap; where the left
+   column is too narrow for one row the options stand one under another.
+   `.c5-kdm__switch--auto` asks for the same stepping-down on a switch of two
+   options (their row needs about 360 px, and at 1024 px the column has 306);
+   below 900 px the row of two is smaller, fits and wraps by itself, so the
+   class changes nothing there.
+   The left column is the query container – only in these two cases. */
+.c5-kdm__switch:has(> .c5-kdm__opt:nth-child(3)){flex-wrap:wrap;justify-content:center;}
+.c5-kdm__switch:has(> .c5-kdm__opt:nth-child(3)) > .c5-kdm__opt{
+  font-size:16px;line-height:24px;padding:10px 14px;gap:8px;}
+.c5-kdm__left:has(.c5-kdm__opt:nth-child(3)),
+.c5-kdm__left:has(.c5-kdm__switch--auto){container-type:inline-size;}
+@container (max-width:540px){
+  .c5-kdm__switch:has(> .c5-kdm__opt:nth-child(3)){flex-direction:column;align-items:stretch;
+    width:100%;max-width:340px;}
+  .c5-kdm__switch:has(> .c5-kdm__opt:nth-child(3)) > .c5-kdm__opt{justify-content:flex-start;
+    white-space:normal;}
+}
+@media (min-width:900px){
+  @container (max-width:380px){
+    .c5-kdm__switch--auto{flex-direction:column;align-items:stretch;width:100%;max-width:340px;}
+    .c5-kdm__switch--auto > .c5-kdm__opt{justify-content:flex-start;white-space:normal;
+      font-size:16px;line-height:24px;padding:10px 14px;gap:8px;}
+  }
+}
 
 /* --- Motion layer: pinned band, the card as a window --------------------------
    Knobs written by the JS half on every track:
@@ -165,9 +243,14 @@
   /* chip and description share the first line, the button takes the second */
   .c5-kdm__phrow{grid-template-columns:auto minmax(0,1fr);}
   .c5-kdm__buy{grid-column:1 / -1;justify-self:start;}
-  .c5-kdm__pack{grid-template-columns:56px minmax(0,1fr) auto;column-gap:14px;}
-  .c5-kdm__thumb{width:56px;height:56px;padding:6px;}
-  .c5-kdm__packname,.c5-kdm__price{font-size:17px;line-height:24px;}
+}
+
+/* shared module, below 900 px: a photo frame runs the width of the column in a
+   landscape crop; a placeholder follows it. The box is no query container here –
+   its height comes from the frame, not the other way round. */
+@media (max-width:899px){
+  .c5-kdm__photo--frame{container-type:normal;height:auto;}
+  .c5-kdm__fill{width:100%;max-height:none;aspect-ratio:16 / 10;}
 }
 
 @media (prefers-reduced-motion:reduce){

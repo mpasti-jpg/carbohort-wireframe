@@ -496,9 +496,9 @@ html:not(.cx-js) #koordynatorzy .pp-more{display:none;}
 }
 
 /* ===== 65 · HARMONOGRAM PROGRAMU ==========================================
-   Przebudowany 19.09.2026 (spec §18.7): cały klocek CE-49 wraz ze stylami
-   mieszka teraz w `ce/CE-49-harmonogram.css` (prefiks c5-hz). Stary słownik
-   `pp-os-*` (oś S1 z 12.09) usunięty – nic go już nie używa.
+   Od 02.10.2026 (spec §19.5, §20.2) harmonogram nie jest osobną sekcją:
+   zostaje oś gospodarstw CE-90 w „Etapach prac”
+   (`ce/CE-90-os-programu.css`). Blok zostaje jako ślad po numeracji.
    ===================================================================== */
 
 /* ===== 70 · RZETELNOŚĆ: zdjęcie w tle + trzy karty ze szkła (spec §18.9) ====
@@ -570,23 +570,9 @@ html:not(.cx-js) #koordynatorzy .pp-more{display:none;}
   .pp-rz__bg img{transform:none;}
 }
 
-/* ===== 75 · ZADAJ PYTANIE: formularz demonstracyjny + zdjęcie zespołu ======
-   Przeniesione z warstwy 99 bez zmian (spec §2, wiersz 75). ============= */
-.pp-ask{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
-  gap:clamp(1.5rem,4vw,3.5rem);align-items:start;margin-top:clamp(1.5rem,3vw,2.25rem);}
-@media (max-width:899px){ .pp-ask{grid-template-columns:minmax(0,1fr);} }
-.pp-form{display:flex;flex-direction:column;gap:var(--w-space-4);border:1px solid var(--w-border-default);
-  background:var(--w-surface-page);padding:clamp(1.25rem,2.4vw,1.75rem);}
-.pp-form form{display:flex;flex-direction:column;gap:var(--w-space-4);}
-.pp-check{display:flex;gap:var(--w-space-3);align-items:flex-start;font-size:0.875rem;
-  color:var(--w-text-secondary);padding-block:var(--w-space-2);cursor:pointer;min-height:44px;}
-.pp-check .wf-checkbox{flex:none;margin-top:2px;}
-.pp-form .c5-btn{align-self:flex-start;}
-/* Komunikat formularza: element c5-note --strong --sm (EL-17), ciasny padding
-   i kolor podstawowy zostają przy stronie. */
-.pp-msg{margin:0;padding:var(--w-space-3) var(--w-space-4);color:var(--w-text-primary);}
-.pp-askviz{display:flex;flex-direction:column;gap:var(--w-space-3);margin:0;}
-.pp-askviz .wf-ph{width:100%;aspect-ratio:4/3;border-radius:0;}
+/* ===== 75 · ZADAJ PYTANIE – empty block since iteration 3 (spec §19.2) =====
+   The section is CE-18 „CTA wyśrodkowane" (variant `z-leadem`); its only rule
+   lives in ce/CE-18-cta.css. The demo form and the photo left the page. === */
 
 /* ===== 80 · Metodologia – CE-12 wariant `bez-naglowka` (spec §18.4b) =======
    Układ i mechanikę niesie próba z Produktów (`ce/CE-12-scena-faktow-proba.css`,
@@ -663,22 +649,23 @@ html:not(.cx-js) #koordynatorzy .pp-more{display:none;}
 #metodologia .c5-fx__img[data-fx-bg="5"]{object-position:50% 52%;}  /* rzędy upraw o zachodzie */
 #metodologia .c5-fx__img[data-fx-bg="6"]{object-position:50% 48%;}  /* winnica na wzgórzach */
 
-/* ===== 85 · Etapy prac – styl klocka mieszka w ce/CE-51-os-gantta.css ======
-   Przebudowa 19.09 (spec §18.10) przeniosła oś Gantta do warstwy wspólnej
-   `ce/` razem z kartą okresu; tutaj zostaje tylko ślad po numeracji. Blok 85b
-   niżej trzyma typografię źródła treści (`pp-tl*`, `pp-ms*`) i sloty relacji
-   (`pp-rel*`), z których korzysta wersja bez JS i klon w karcie. ========= */
+/* ===== 85 · Etapy prac – styl klocka mieszka w ce/CE-90-os-programu.css ====
+   Od 02.10.2026 (spec §19.5) jedna oś programu z punktami zdarzeń (CE-90)
+   zastępuje harmonogram (CE-49) i oś Gantta (CE-51); tutaj zostaje tylko ślad
+   po numeracji. Blok 85b niżej trzyma typografię źródła treści (`pp-tl*`,
+   `pp-ms*`) i sloty relacji (`pp-rel*`), z których korzysta wersja bez JS
+   i klon zdarzenia w pop-upie. ========================================== */
+/* Kotwica #harmonogram (woła ją home.html) stoi na nagłówku nad osią; blok 00
+   zeruje zapas wszystkim kotwicom strony, więc tu wraca on jawnie. */
+#main #harmonogram{scroll-margin-top:clamp(1.5rem,8vh,5rem);}
 
-/* ===== 85b · Oś kamieni milowych i sloty relacji (przeniesione z warstwy
-   legacy 11–12.09). Sześć osi stoi pod wykresem jako wersja bez JS i jako
-   źródło treści kafli; z JS kontener jest `hidden`. Klony kamieni w karcie
-   opisu korzystają z tej samej typografii. ============================ */
+/* ===== 85b · Listy kamieni milowych i sloty relacji (przeniesione z warstwy
+   legacy 11–12.09). Sześć list gospodarstw stoi pod osią
+   jako wersja bez JS i jako źródło treści punktów; z JS kontener jest
+   `hidden`. Klony kamieni w pop-upie korzystają z tej samej typografii. === */
 
-/* --- 8. OŚ KAMIENI MILOWYCH („Etapy prac”, sześć gospodarstw) -------------- */
-/* Obsługuje WYŁĄCZNIE sześć osi w „Etapach prac”; harmonogram programu stoi od
-   19.09.2026 na klocku CE-49 w `ce/CE-49-harmonogram.css` i nie ma tu nic.
-   Mobile: lista pionowa z torem po lewej. Od 900 px: przewijany w poziomie rząd
-   grup rocznych z ciągłym torem, wypełnionym do pinezki „jesteśmy tutaj”.
+/* --- 8. LISTY KAMIENI MILOWYCH („Etapy prac”: sześć gospodarstw) ----------- */
+/* Bez JS każda lista jest pionowa, z torem po lewej, na każdej szerokości.
    Stan kamienia niesie ikona + etykieta + ton, nigdy sam kolor. */
 .pp-tl{margin-top:clamp(1.25rem,2.5vw,2rem);}
 .pp-tl__scroll{min-width:0;}
@@ -711,12 +698,6 @@ html:not(.cx-js) #koordynatorzy .pp-more{display:none;}
   border-top:2px solid var(--w-gray-900);border-bottom:2px solid var(--w-gray-900);
   padding-block:var(--w-space-3);font-size:0.875rem;font-weight:var(--w-weight-semibold);
   letter-spacing:.02em;text-transform:uppercase;background:var(--w-surface-page);}
-/* Bez JS oś jest pionową listą na każdej szerokości: poziomy rząd grup
-   rocznych wymagał pomiarów ze skryptu, którego już nie ma – interakcję
-   przejął wykres wyżej. Strzałki lat zostają w DOM-ie (copy), ale nie
-   pokazujemy ich, bo nic by nie robiły. */
-.pp-tl__ctrl{display:none;}
-
 /* --- 13. SLOTY RELACJI WIDEO ---------------------------------------------- */
 .pp-rel{display:flex;gap:var(--w-space-3);align-items:flex-start;width:100%;
   border:1px dashed var(--w-border-strong);padding:var(--w-space-3);margin-top:var(--w-space-2);
@@ -737,21 +718,27 @@ html:not(.cx-js) #koordynatorzy .pp-more{display:none;}
   .pp-ms,.pp-rels .pp-rel{transition:none;}
 }
 
-/* ===== 90 · WYNIKI: taby lat, filtry, wykresy, wiersze raportów ============
-   Przeniesione z warstwy 99 bez zmian treści i mechaniki (spec §14). Taby lat
-   `c5-ways` zostają jedynym elementem przyklejonym do górnej krawędzi na całej
-   stronie; po zdjęciu subnawigacji `--cx-subnav-h` wynosi 0, więc pasek klei
-   się do samej góry, a bloki lat mają zapas na jego wysokość.
+/* ===== 90 · WYNIKI: taby lat, tabele, wiersze raportów =====================
+   Iteration 3 (spec §19.2): the rules of the filter frame, the chart
+   placeholders and the empty state left together with those parts.
+   Iteration 4 (spec §20.3): the year tabs switch panels (module 90 of
+   prochnica-plus.js, hook `data-pp-tabs`) instead of scrolling to blocks that
+   are all visible, so the bar no longer sticks to the top edge and the scroll
+   margin of the blocks and the select bar rules are gone.
    ⚠️ `.pp-ways` i `.pp-varname` przyjechały z bloku 12/11 warstwy 99 – używa
    ich także sekcja „Etapy prac" (C), dlatego stoją tu, a nie w 99. ======= */
 
-/* Bloki pod lepkim paskiem tabów potrzebują zapasu na jego wysokość. */
-[data-variant-block]{scroll-margin-top:calc(var(--cx-subnav-h) + var(--c5-tabs-h, 92px) + var(--w-space-4));}
-
-/* --- pasek tabów: cztery lata (i sześć gospodarstw w „Etapach prac") ------
-   c5-ways jest siatką 1fr 1fr – przy sześciu pozycjach pasek urósłby do trzech
-   rzędów i zjadł pół ekranu. Tutaj jeden przewijany rząd kompaktowych pigułek;
-   przyklejanie i tony zostają z c5.css (ciemna = wybrana). */
+/* --- pasek tabów lat --------------------------------------------------------
+   c5-ways jest siatką 1fr 1fr; tutaj jeden rząd kompaktowych pigułek. Tony
+   zostają z c5.css (ciemna = wybrana). */
+/* Tabs that switch panels stay in the flow – the sticky bar of c5.css belongs
+   to the scroll-spy pattern. */
+.pp-ways[data-pp-tabs]{position:static;}
+/* An unselected panel is hidden by the module; a panel that follows a hidden
+   one must not keep the gap meant for two blocks standing one under another
+   (that gap stays for the version without JS). */
+#wyniki [role="tabpanel"][hidden]{display:none;}
+#wyniki .c5-variant[hidden] + .c5-variant{margin-top:0;}
 .pp-ways{display:flex;flex-wrap:nowrap;gap:8px;overflow-x:auto;scrollbar-width:none;}
 .pp-ways::-webkit-scrollbar{display:none;}
 .pp-ways .c5-way{flex:0 0 auto;min-height:44px;gap:var(--w-space-3);padding:10px 16px;font-size:0.9375rem;}
@@ -765,31 +752,17 @@ html:not(.cx-js) #koordynatorzy .pp-more{display:none;}
    dla nich za duża, więc bloki poza profilami dostają mniejszy stopień. */
 .pp-varname{font-size:clamp(1.5rem,2.6vw,2rem);}
 
-/* --- filtry, tabele, wykresy, raporty ------------------------------------- */
-.pp-filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:var(--w-space-4);
-  margin-top:clamp(1.25rem,2.5vw,2rem);border:1px solid var(--w-border-default);
-  background:var(--w-surface-page);padding:clamp(1rem,2.2vw,1.5rem);}
-.pp-selects{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:var(--w-space-4);
-  margin-top:clamp(1.25rem,2.5vw,2rem);max-width:900px;}
+/* --- tabele, raporty ------------------------------------------------------ */
 /* position:relative – kontener przewijany musi być blokiem odniesienia dla
    pozycjonowanych absolutnie .wf-sr-only w komórkach tabeli; bez tego
    uciekały one do .c5-variants{position:relative} i na 375 px rozpychały
    stronę do 682 px, choć sama tabela przewijała się poprawnie. */
 .pp-scroll{position:relative;overflow-x:auto;}
 .pp-scroll .wf-table{min-width:680px;}
+/* Value placeholders in measurement cells: the kit's .wf-textline is an inline
+   span here, so without a box it collapsed to 0 × 0 and the tables looked empty. */
+.pp-scroll .wf-textline{display:block;width:2.25rem;}
 .pp-scroll:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:2px;}
-.pp-empty{display:flex;gap:var(--w-space-3);align-items:flex-start;border:1px dashed var(--w-border-strong);
-  padding:clamp(1.25rem,2.4vw,1.75rem);color:var(--w-text-secondary);font-size:0.9375rem;
-  background:var(--w-surface-page);}
-.pp-empty .wf-icon{flex:none;margin-top:2px;}
-.pp-charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--w-space-5);
-  margin-top:clamp(1.25rem,2.5vw,2rem);}
-.pp-chart{margin:0;display:flex;flex-direction:column;gap:var(--w-space-3);
-  border:1px solid var(--w-border-default);background:var(--w-surface-page);padding:var(--w-space-4);
-  transition:border-color var(--w-duration-base) var(--w-ease);}
-.pp-chart:hover{border-color:var(--w-gray-900);}
-.pp-chart .wf-ph{width:100%;aspect-ratio:16/9;border-radius:0;display:grid;place-items:center;}
-.pp-chart figcaption{font-size:0.8125rem;color:var(--w-text-secondary);}
 .pp-reports{display:flex;flex-direction:column;margin:clamp(1.25rem,2.5vw,2rem) 0 0;padding:0;list-style:none;}
 .pp-report{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:var(--w-space-4);
   align-items:center;padding-block:var(--w-space-4);border-top:1px solid var(--w-border-default);}
@@ -803,7 +776,3 @@ html:not(.cx-js) #koordynatorzy .pp-more{display:none;}
    + obrys + atrybut disabled (nigdy sam ton). */
 .c5-btn[disabled]{background:var(--w-surface-subtle);color:var(--w-text-disabled);
   border-color:var(--w-border-subtle);cursor:not-allowed;}
-
-@media (prefers-reduced-motion: reduce){
-  .pp-chart{transition:none;}
-}

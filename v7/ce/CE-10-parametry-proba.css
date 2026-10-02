@@ -1,20 +1,29 @@
-/* ===== CE-10 · Parametry na wideo – trial build „figma" (spec §16.4) ========
-   ONLY carbomat.html links this file. The shared ce/CE-10-parametry.css keeps
-   serving carbomat-mata.html, carbohumic.html and carbomat-humic.html together
-   with their page-level overrides, so nothing written here can reach them.
-   Copied from the shared file on 20.09.2026 and rebuilt against Figma frames
+/* ===== CE-10 · Parametry na wideo – variant „kafelki-z-wejsciem" (spec §16.4) ====
+   A shared module since 02.10.2026: a page that carries the tile table links
+   this pair INSTEAD of ce/CE-10-parametry.css / .js (the ruled table and the
+   variant „z-tabami" stay there). Built on 20.09.2026 against Figma frames
    140-8369 (table) and 140-8364 (kicker + heading):
-     · the table is eight separate tiles instead of ruled rows – tinted glass
+     · the table is separate tiles instead of ruled rows – tinted glass
        background, 15 px corners, 20 px padding, 68 px tall, 7 px apart, and no
        borders, no rules, no alternating rows;
-     · a kicker sits above the heading and the heading runs 46/54 px, weight
-       regular (the P22 Mackinac @font-face itself lives in carbomat.css – this
-       file only sets the metrics);
-     · „Pobierz aktualną analizę" loses its underline and its icon and moves to
+     · a kicker may sit above the heading and the heading runs 46/54 px, weight
+       regular. The FAMILY of the heading is the page's own business: this file
+       only sets the metrics;
+     · „Pobierz aktualną analizę" has no underline and no icon and stands at
        the left edge of the table, 7 px below it;
-     · the section gains a scroll-driven intro (bottom of this file).
-   The variant „z-tabami" of the shared file is NOT copied – this page has no
-   parameter tabs, and the Mata keeps its own copy. ======================= */
+     · the section has a scroll-driven intro (bottom of this file).
+
+   What a page chooses (blocks marked „shared module" below):
+     · `c5-params--col` on the section: the content stands in a centred column
+       of --c5-params-w (732 px – the width the first page happens to get from
+       its heading). Without it the body shrinks to its widest child.
+     · `c5-params--long` on the section: a long table. Values wrap and start
+       on one line down the table; from 1240 px the tiles run in two columns
+       (`c5-params__row--wide` spans both); on a phone a short row keeps label
+       and value on one line.
+     · any number of rows: the script numbers them and paces the intro.
+     · the media layer is whatever carries `.c5-params__media` – a <video>, an
+       <img> or a placeholder block of the page. ============================== */
 
 /* --- PARAMETRY: film wyznacza granice sekcji (spec §13.3, §14.4) ----------
    Sekcja na pełny ekran; warstwa mediów i treść leżą w tej samej komórce
@@ -107,6 +116,63 @@
   .c5-params__dl{transition:none;}
 }
 
+/* ===== shared module: the content column (`c5-params--col`, `c5-params--long`) ==
+   The body is a centred wrap, and auto margins turn the stretch of a grid item
+   into fit-content sizing: the table is then as wide as the widest child (a
+   heading on one line, a long source line). A page with other copy would get a
+   table of another width, so here the body takes its column and the content
+   stands in ONE track of a known width. */
+.c5-params--col,.c5-params--long{--c5-params-w:732px;--c5-params-dt:259px;}
+.c5-params--col .c5-params__body,
+.c5-params--long .c5-params__body{width:100%;grid-template-columns:minmax(0,var(--c5-params-w));
+  justify-content:center;}
+/* a link inside a row, and the focus ring on a dark section (the ring of the
+   kit is dark and would vanish on the film) */
+.c5-params--col .c5-params__row a,
+.c5-params--long .c5-params__row a{color:inherit;text-decoration:underline;text-underline-offset:3px;}
+.c5-params--col a:focus-visible,
+.c5-params--long a:focus-visible{outline-color:var(--w-focus-ring-inverse);}
+/* a row that has to stand out (a counterpoint, a restriction): a hairline frame */
+.c5-params__row--mark{box-shadow:inset 0 0 0 1px rgb(255 255 255 / .35);}
+
+/* ===== shared module: a long table (`c5-params--long`) =======================
+   The frame draws eight short values. A table that also carries sentences
+   needs three things: values that wrap, one left edge for all of them, and a
+   way not to be three screens tall.
+   · the label box keeps a fixed width (--c5-params-dt), the value takes the
+     rest and reads as running text – so a link, a bold phrase or a note in
+     `.c5-dim` flows inside the sentence instead of becoming a flex item;
+   · from 1240 px the tiles stand in two columns in the wide column of the page
+     container; a row marked `c5-params__row--wide` (prose, or a value that
+     would break in half a column) spans both. Reading order stays the DOM
+     order: left to right, then down. */
+.c5-params--long{--c5-params-dt:200px;}
+.c5-params--long .c5-params__row{align-items:flex-start;}
+.c5-params--long .c5-params__row dt{flex:0 0 var(--c5-params-dt);}
+.c5-params--long .c5-params__row dd{flex:1 1 0;min-width:0;display:block;white-space:normal;}
+@media (min-width:1240px){
+  .c5-params--long{--c5-params-w:1140px;}
+  .c5-params--long .c5-params__rows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));}
+  .c5-params--long .c5-params__row--wide{grid-column:1 / -1;}
+}
+@media (max-width:899px){
+  /* the frame boxes give their width back, as in the base rule */
+  .c5-params--long .c5-params__row dt{flex:0 1 auto;}
+  .c5-params--long .c5-params__row dd{flex:0 1 auto;}
+}
+@media (max-width:599px){
+  /* a short row keeps label and value on one line (the value at the right
+     edge); a value that does not fit goes under its label, from the left edge.
+     The base rule stacks every row – with eight rows that is fine, with
+     eighteen it is a screen of height for nothing. */
+  .c5-params--long .c5-params__row{flex-direction:row;flex-wrap:wrap;align-items:baseline;
+    justify-content:space-between;gap:2px var(--w-space-4);}
+  .c5-params--long .c5-params__row dt,
+  .c5-params--long .c5-params__row dd{flex:0 1 auto;width:auto;max-width:100%;}
+  /* values one step down: a sentence in a 263 px column is a third shorter */
+  .c5-params--long .c5-params__row dd{font-size:var(--w-font-body-size);line-height:1.5;}
+}
+
 /* --- wejście sterowane przewijaniem (spec §16.4, uwaga Mateusza 11:20) -----
    Four steps off ONE progress value written by the module, so the reader gets a
    moment of nothing but the video before the content covers it:
@@ -144,4 +210,20 @@
   .c5-params.is-anim .c5-params__dl,
   .c5-params.is-anim .c5-params__actions,
   .c5-params.is-anim .c5-src{--i:8;}
+}
+
+/* ===== shared module: the intro with any number of rows =====================
+   The eight nth-child rules above are the frame. For a longer table the script
+   numbers every row itself (`--i` inline), writes the number of rows on the
+   section (`data-params-n`, --pv-n) and the step between two rows (--pv-d), so
+   the last row and the closing group still arrive before the phase ends:
+   8 rows keep the .08 of the frame, 18 rows take about .036 each. */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  .c5-params.is-anim[data-params-n] .c5-params__row,
+  .c5-params.is-anim[data-params-n] .c5-params__dl,
+  .c5-params.is-anim[data-params-n] .c5-params__actions,
+  .c5-params.is-anim[data-params-n] .c5-src{--t:clamp(0,calc((var(--pv-rows,0) - var(--i,0) * var(--pv-d,.08)) / .34),1);}
+  .c5-params.is-anim[data-params-n] .c5-params__dl,
+  .c5-params.is-anim[data-params-n] .c5-params__actions,
+  .c5-params.is-anim[data-params-n] .c5-src{--i:var(--pv-n,8);}
 }

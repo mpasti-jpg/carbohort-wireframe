@@ -1,18 +1,14 @@
-/* ===== CE-10 · Parametry na wideo – trial build „figma" (spec §16.4) ========
-   ONLY carbomat.html links this file. The shared ce/CE-10-parametry.js keeps
-   serving carbomat-mata.html, carbohumic.html and carbomat-humic.html, tabs and
-   all, so nothing written here can reach them. Copied from the shared module on
-   20.09.2026; the tab half is not copied (this page has no parameter tabs) and
-   the entry animation of §16.4 is new.
+/* ===== CE-10 · Parametry na wideo – variant „kafelki-z-wejsciem" (spec §16.4) ====
+   A shared module since 02.10.2026 (see the CSS half for what a page chooses).
+   The shared ce/CE-10-parametry.js keeps the ruled table and the tabs of the
+   variant „z-tabami"; a page links one pair or the other, never both.
 
    Two jobs.
 
-   1. The media layer. It holds a still photo since 20.09.2026 (the loop reads
-      too dark – spec §16.1 note 1) and will hold a <video> again as soon as
-      Mateusz delivers the new film. Everything below therefore works off
-      `.c5-params__media` whatever element carries it, and the video-only part –
-      no loop under reduced motion – runs only when the element really is a
-      <video>.
+   1. The media layer. Everything below works off `.c5-params__media` whatever
+      element carries it – a <video>, an <img> or a placeholder block – and the
+      video-only part (no loop under reduced motion) runs only when the element
+      really is a <video>.
 
    2. The entry animation. It reads ONE number: how far the top edge of the
       section has climbed through the window (q = 0 when that edge sits on the
@@ -24,14 +20,19 @@
         --pv-h     then the kicker with the heading            (q 0.86 -> 1.00)
         --pv-rows  then the rows, one after another            (q 0.98 -> 1.16)
       so the reader watches the picture alone for a moment before the content
-      covers it (Mateusz, 20.09: „żeby ono też coś przekazywało, poza byciem po
-      prostu tłem").
+      covers it.
 
    The progress never goes back down. A scroll-driven value that did would take
    the table away from under a reader who scrolls up one notch to re-read it –
    the reveal ranges sit exactly where the content is centred on screen. So the
    intro plays forward once, driven by scroll position and by nothing else, and
    the section then stands in its end state.
+
+   A table of more than eight rows: the sheet numbers eight rows by itself, so
+   here every row gets its number inline (`--i`), the section gets
+   `data-params-n` with --pv-n (the number of rows) and --pv-d (the step between
+   two rows), and the closing group – link, buttons, source line – still arrives
+   as the last step. Eight rows or fewer: nothing is written, the sheet rules.
 
    Without CX5.motionOn() the four properties are dropped and `is-anim` comes
    off the section, which switches every animation rule in the CSS off at once:
@@ -61,6 +62,17 @@
     syncVideo();
     if (CX5.reducedMQ.addEventListener) CX5.reducedMQ.addEventListener("change", syncVideo);
     media.addEventListener("loadedmetadata", syncVideo);
+  }
+
+  /* --- more rows than the sheet numbers ------------------------------------ */
+  var rows = CX5.$$(".c5-params__row", sec);
+  if (rows.length > 8) {
+    rows.forEach(function (r, i) { r.style.setProperty("--i", String(i)); });
+    sec.setAttribute("data-params-n", String(rows.length));
+    sec.style.setProperty("--pv-n", String(rows.length));
+    /* row i starts i * d into the phase and takes .34 of it; the closing group
+       starts at n * d, so n * d + .34 has to stay within the phase */
+    sec.style.setProperty("--pv-d", (0.64 / rows.length).toFixed(4));
   }
 
   /* --- wejście sterowane przewijaniem -------------------------------------- */

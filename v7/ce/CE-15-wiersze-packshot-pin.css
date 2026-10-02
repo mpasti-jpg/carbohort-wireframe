@@ -1,40 +1,57 @@
-/* ===== CE-15 (pin) · Cascade of three accordions driven by the scroll =======
+/* ===== CE-15 (pin) · Cascade of accordions driven by the scroll =============
    Variant „kaskada-z-pinem" of CE-15 „Wiersze z packshotem", built to the Figma
    frame 308-179 and to the designer's annotations of 20.09.2026 (spec §16.6).
 
-   ⚠ Linked by v7/carbomat.html ONLY – this file is the private copy of that one
-   page. The shared block ce/CE-15-wiersze-packshot.css and the trial
-   ce/CE-15-wiersze-packshot-proba.css (linked by produkty.html, worked on by a
-   parallel session) stay untouched: the frame drops the countdown ring and the
-   loop and changes the radii, the open-card background, the marker and the
-   product row – every one of those would show on the other page.
+   A shared module since 02.10.2026: every page that carries a cascade root
+   (`.c5-casc.c5-casc-pin[data-casc]` with a `[data-casc-pin]` box inside) links
+   this pair. The shared block ce/CE-15-wiersze-packshot.css and the trial
+   ce/CE-15-wiersze-packshot-proba.css (countdown ring, loop) are other variants
+   and stay untouched.
 
    What the frame asks for, and what this file does with it:
    · the section PINS. The header (kicker, H2, lead) travels with the block,
      sticks at the top and stays readable through the whole cycle; the cascade
      box sticks by its bottom edge. Scrolling does not move the page, it moves
-     the cascade one position: card 1 open -> card 2 -> card 3 -> all closed.
+     the cascade one position: card 1 open -> card 2 -> ... -> all closed.
      There are N+1 phases, the last one being the closing beat, and then the pin
      lets go – the track has a finite height, the reader is never trapped.
-   · an AXIS above the cascade: three labels and three brackets 457 x 30 px with
-     20 px radius on the top corners only (a 1 px box without its bottom edge –
-     with a 30 px height the straight ends come out exactly 10 px long, as in
-     the frame). The axis enters BEFORE the cards (annotation 2).
-   · geometry that the trial already had right and that stays: three columns of
-     the wide container (EL-29), item i in column i and row i, so the top of
-     card n+1 is the bottom of card n with no measuring in JS; four hairlines on
-     the column boundaries; 6 px of air between a card and a line; a closed card
-     70 px tall; one shared open height (--c5-casc-h) so the sum of the three is
-     constant whichever card is open.
+   · an AXIS above the cascade: one label and one bracket per column, 30 px high
+     with 20 px radius on the top corners only (a 1 px box without its bottom
+     edge – with a 30 px height the straight ends come out exactly 10 px long,
+     as in the frame). The axis enters BEFORE the cards (annotation 2).
+   · geometry: N columns of the wide container (EL-29), item i in column i and
+     row i, so the top of card n+1 is the bottom of card n with no measuring in
+     JS; N+1 hairlines on the column boundaries; 6 px of air between a card and
+     a line; a closed card 70 px tall; one shared open height (--c5-casc-h) so
+     the sum of the cards is constant whichever card is open.
    · the visual layer of the frame: radii 7 / 12 px, open card on #FBFBF9, a
      4 x 4 px marker in the brand green (--c5-casc-green, declared on the
      section root – one line to withdraw), description 15 px / 1.3 in black, a
      406 x 69 px product row with no grey plate and no arrow, packshot 45 x 50.
 
+   What a page chooses (see the blocks marked „shared module" below):
+   · THREE or FOUR stops. The script counts the cards and writes
+     `data-casc-n` on the root; the three-column rules are the default and
+     the four-column ones hang on `[data-casc-n="4"]`. Nothing to add in the
+     sheet of the page.
+   · the parts of a card. Only the header button and one panel are required.
+     Optional: the product row (.c5-casc__prod), a title inside the panel
+     (.c5-casc__title), further paragraphs (.c5-casc__txt--sub), a button
+     (.c5-btn) and the axis label repeated inside the header (.c5-casc__when)
+     for layouts in which the axis is not drawn.
+   · `data-casc-fit` on the root: the script then checks that the header and
+     the pinned box really fit above the advisor dock and steps down when they
+     do not – a compact header first (`data-casc-level="1"`), then the box
+     alone with the header left in the flow ("2"), then the static layout.
+     Header and box stand as a pair, centred above the dock; the value
+     `data-casc-fit="frame"` keeps the composition of the frame instead
+     (header at the top, box on the gap line).
+     A root WITHOUT the attribute keeps the behaviour of 20.09.2026 unchanged.
+
    Fallbacks – the pin never runs below 900 px, never with reduced motion and
-   never without JS. In all three cases the three positions simply stand open,
-   one under another, in the reading column; the buttons still fold a single
-   card on click or Enter. ===================================================== */
+   never without JS. In all three cases the positions simply stand open, one
+   under another, in the reading column; the buttons still fold a single card
+   on click or Enter. ========================================================= */
 
 .c5-casc{
   /* closed card: 68 px of button + 2 px of hairline = the 70 px of the frame */
@@ -59,6 +76,15 @@
      anchoring would answer that with a few px of scroll, which reads as a jerk
      under Lenis – the reader stays put instead */
   overflow-anchor:none;}
+
+/* --- shared module: knobs of the optional parts -----------------------------
+   A second block on purpose: the declarations above are the frame, these are
+   ours. A page retunes any of them with one declaration on the root. */
+.c5-casc{
+  --c5-casc-title-size:clamp(1.125rem,1.5vw,1.375rem); /* title inside a panel   */
+  --c5-casc-body-gap:var(--w-space-3);                 /* title -> text -> text  */
+  --c5-casc-measure:44rem;                             /* text width, static     */
+}
 
 /* ===== the axis: labels + brackets ========================================
    Decoration for a screen reader: every range is already spelled out in the
@@ -144,6 +170,41 @@
 .c5-casc__txt::before{content:"";position:absolute;left:0;top:calc((1.3em - 4px) / 2);
   width:4px;height:4px;background:var(--c5-casc-green,var(--w-gray-400));}
 
+/* ===== shared module: optional parts of a card ============================
+   None of these classes stands on the page the variant was built for, so they
+   change nothing there. */
+
+/* The label of the axis, repeated inside the header button. The axis is drawn
+   only where the cascade stands in columns, and it is aria-hidden; a card whose
+   title does NOT repeat its label would lose it on a phone, with reduced
+   motion, without JS and for a screen reader. In the cascade it is clipped,
+   not removed, so the button keeps it in its accessible name. */
+.c5-casc__when{display:block;margin-bottom:2px;font-size:0.75rem;line-height:1.45;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--w-text-tertiary);}
+.c5-casc[data-casc="on"] .c5-casc__when{position:absolute;width:1px;height:1px;margin:-1px;
+  padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;}
+
+/* The text group of a panel: title, paragraphs, button. With a product row it
+   stands 59 px under it (the gap of the panel); alone it starts right under
+   the header, where the product row starts in the frame. */
+.c5-casc__body{display:flex;flex-direction:column;gap:var(--c5-casc-body-gap);min-width:0;}
+.c5-casc__title{margin:0;font-size:var(--c5-casc-title-size);line-height:1.2;
+  letter-spacing:-0.01em;font-weight:var(--w-weight-regular);color:var(--w-text-primary);}
+/* a supporting paragraph: one step smaller and quieter, no marker of its own,
+   the indent of the paragraph above it */
+.c5-casc__txt--sub{font-size:0.8125rem;line-height:1.45;color:var(--w-text-secondary);}
+.c5-casc__txt--sub::before{content:none;}
+.c5-casc__txt a{color:inherit;text-decoration:underline;text-underline-offset:3px;}
+/* a button in a panel keeps its own width and takes the small radius of the
+   card language (the product row carries the same one) */
+.c5-casc__panelin > .c5-btn,.c5-casc__body > .c5-btn{align-self:flex-start;
+  margin-top:var(--w-space-2);border-radius:var(--c5-casc-r-closed);}
+/* the static layout runs the full reading column – long copy keeps a measure
+   (a description that follows a product row is left as the frame has it) */
+.c5-casc:not([data-casc="on"]) .c5-casc__body,
+.c5-casc:not([data-casc="on"]) .c5-casc__panelin > .c5-casc__txt:first-child{
+  max-width:var(--c5-casc-measure);}
+
 /* --- hairlines: hidden until the cascade actually stands in columns --------- */
 .c5-casc__lines{display:none;}
 
@@ -197,6 +258,37 @@
   /* the static fallback keeps the reading width of the page, not a third of
      the window */
   .c5-casc:not([data-casc="on"]) .c5-casc__list{max-width:1180px;margin-inline:auto;}
+}
+
+/* ===== shared module: four stops ==========================================
+   The script writes `data-casc-n` (the number of cards) on the root. Three is
+   the default above; four takes the same staircase one column further. The
+   hairlines are N+1 <i> elements (the script tops the markup up when a page
+   ships fewer). `--c5-casc-heads` is the measured sum of the card headers: in
+   a narrow column a title wraps to two lines and the header outgrows the 70 px
+   of the frame, so the frozen height of the box counts what is really there. */
+@media (min-width:900px){
+  .c5-casc[data-casc="on"][data-casc-n="4"] .c5-casc__axis,
+  .c5-casc[data-casc="on"][data-casc-n="4"] .c5-casc__list{
+    grid-template-columns:repeat(4,minmax(0,1fr));}
+  .c5-casc[data-casc="on"][data-casc-n="4"] .c5-casc__list{
+    min-height:calc(var(--c5-casc-h,0px)
+      + var(--c5-casc-heads,4 * (var(--c5-casc-closed) + 2px)));}
+  .c5-casc[data-casc="on"] .c5-casc__item:nth-child(4){grid-column:4;grid-row:4;}
+  .c5-casc[data-casc-n="4"] .c5-casc__lines i:nth-child(2){left:25%;}
+  .c5-casc[data-casc-n="4"] .c5-casc__lines i:nth-child(3){left:50%;}
+  .c5-casc[data-casc-n="4"] .c5-casc__lines i:nth-child(4){left:75%;right:auto;}
+  .c5-casc[data-casc-n="4"] .c5-casc__lines i:nth-child(5){right:0;}
+  /* a root that asked for the fit check gets the measured headers at three
+     stops as well */
+  .c5-casc[data-casc="on"][data-casc-fit]:not([data-casc-n="4"]) .c5-casc__list{
+    min-height:calc(var(--c5-casc-h,0px)
+      + var(--c5-casc-heads,3 * (var(--c5-casc-closed) + 2px)));}
+}
+/* four columns on a narrow desktop: the column is about 236 px at 1024 px, so
+   the card gives its text 12 px more by tightening its own padding */
+@media (min-width:900px) and (max-width:1199px){
+  .c5-casc[data-casc="on"][data-casc-n="4"]{--c5-casc-pad:14px;}
 }
 
 /* ===== the pin ============================================================
@@ -256,6 +348,43 @@
     transition-delay:.28s,.28s,0s,0s,0s;}
   .cx-js .c5-casc[data-casc="on"].is-in .c5-casc__item:nth-child(2){transition-delay:.40s,.40s,0s,0s,0s;}
   .cx-js .c5-casc[data-casc="on"].is-in .c5-casc__item:nth-child(3){transition-delay:.52s,.52s,0s,0s,0s;}
+}
+
+/* ===== shared module: the fit check (`data-casc-fit`) =====================
+   The script tries the levels in turn and keeps the first one in which the
+   pinned parts end above the gap line (the advisor dock included):
+     0  header and box pinned, at the scale of the frame;
+     1  the compact header – the scale a heading takes inside a pinned scene,
+        tighter rhythm; the cards do not change;
+     2  the header is not pinned at all: it leaves with the page and the box
+        stands alone, centred in the room above the dock;
+     -  none fits: the static layout, every card open in the reading column.
+   The level belongs to the window size, not to the scroll position, so nothing
+   changes scale while the reader scrolls.
+   On a root with the check running (`data-casc-fit-on`, set by the script) the
+   two sticky offsets are numbers written by the script, not the bottom-edge
+   formula of the frame: header and box keep the distance they have in the page
+   flow, lock at the same scroll position and stand centred above the dock.
+   (`data-casc-fit="frame"` leaves the header offset to the rule above and
+   writes the bottom-edge position of the box as a number.) */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  .cx-js .c5-casc[data-casc="on"][data-casc-fit-on] .c5-casc-head{
+    top:var(--c5-casc-headtop,clamp(0.75rem,2.5vh,1.75rem));}
+  .cx-js .c5-casc[data-casc="on"][data-casc-fit-on] [data-casc-pin]{
+    top:var(--c5-casc-top,0px);}
+  .cx-js .c5-casc[data-casc="on"][data-casc-level="1"] .c5-casc-head{
+    padding-block:clamp(0.5rem,1.2vh,1rem);}
+  .cx-js .c5-casc[data-casc="on"][data-casc-level="1"] .c5-casc-head .c5-head{
+    gap:clamp(0.5rem,1.6vh,1.4rem);}
+  .cx-js .c5-casc[data-casc="on"][data-casc-level="1"] .c5-casc-head .c5-h2{
+    font-size:clamp(1.5rem,2.6vw,2.125rem);}
+  .cx-js .c5-casc[data-casc="on"][data-casc-level="2"] .c5-casc-head{position:static;}
+}
+
+/* ===== shared module: entrance of the fourth column ======================== */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  .cx-js .c5-casc[data-casc="on"].is-in .c5-casc__ax:nth-child(4){transition-delay:.24s;}
+  .cx-js .c5-casc[data-casc="on"].is-in .c5-casc__item:nth-child(4){transition-delay:.64s,.64s,0s,0s,0s;}
 }
 
 /* ===== reduced motion: no entrance, no transitions ========================

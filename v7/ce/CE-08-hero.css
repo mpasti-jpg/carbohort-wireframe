@@ -157,6 +157,12 @@
   .c5-hero--bg .c5-hero__crumbs,
   .c5-hero--bg .c5-hero__title,
   .c5-hero--bg .c5-hero__side{padding-inline:var(--w-space-5);}
+  /* The breadcrumbs and the title share a grid cell with the frame, which is
+     positioned; with `display:contents` on their parent its z-index is gone.
+     The entrance animation used to lift them by accident – with reduced motion
+     there is none and the frame covered both (02.10.2026). */
+  .c5-hero--bg .c5-hero__crumbs,
+  .c5-hero--bg .c5-hero__title{position:relative;z-index:1;}
   .c5-hero--bg .c5-hero__crumbs{grid-area:1 / 1;align-self:start;
     padding-top:clamp(1rem,4vw,1.5rem);}
   .c5-hero--bg .c5-hero__title{grid-area:1 / 1;align-self:end;max-width:none;

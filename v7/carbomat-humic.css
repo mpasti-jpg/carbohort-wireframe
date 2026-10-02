@@ -2,11 +2,15 @@
    Klocki wzorca i warstwa wspólna leżą w katalogu ce/ (ładowane wyżej).
    Tutaj zostają wyłącznie klocki unikalne tej podstrony i nadpisania
    treściowe klocków wspólnych. ===== */
-/* --- Pomocniki wspólne strony HUMIC (używają ich sekcje B i C) -------------
-   .c5-label / .c5-variant__block – bloki karty odbiorcy (pop-up, §7);
-   .c5-gap--inline – ciaśniejszy wariant noty „brak danych” (c5-note--dashed);
-   .c5-ph – placeholder zdjęcia/wideo: płaska szarość + mała etykieta, co tu
-   trafi (prompty w spec §11). ------------------------------------------- */
+/* --- Page helpers -----------------------------------------------------------
+   .c5-label / .c5-variant__block – the blocks of an audience card (the pop-up
+   of the section „Który dla mnie");
+   .c5-gap--inline – the tighter variant of the „data to be supplied" note
+   (c5-note--dashed) inside such a block;
+   .c5-ph – the placeholder of a photo or a film: a flat grey block with a small
+   label saying what will stand there (`--dark` on a dark ground). It fills the
+   photo frames of the two audience rows, the media layer of the parameters, the
+   frames of the facts scene, the two season panels and the PRO band. -------- */
 .c5-label{display:block;font-weight:var(--w-weight-semibold);color:var(--w-text-primary);}
 .c5-variant__block{display:flex;flex-direction:column;gap:var(--w-space-1);}
 .c5-variant__block ul{margin:var(--w-space-1) 0 0;padding-left:1.35rem;display:flex;flex-direction:column;gap:var(--w-space-1);}
@@ -16,36 +20,26 @@
 .c5-ph__label{position:absolute;left:12px;bottom:10px;font-size:0.6875rem;line-height:1.2;letter-spacing:.04em;text-transform:uppercase;color:rgb(0 0 0 / .45);pointer-events:none;}
 .c5-ph--dark .c5-ph__label{color:rgb(255 255 255 / .55);}
 
-.c5-hero__copyin{display:flex;flex-direction:column;gap:clamp(1.25rem,2.4vw,2rem);margin-block:auto;padding-block:clamp(2rem,4vw,3rem);}
-.c5-hero__lead{display:flex;flex-direction:column;gap:var(--w-space-3);font-size:1.125rem;color:var(--w-text-secondary);max-width:486px;}
-/* breadcrumb: dyskretny, przy dolnej krawędzi ekranu; §14.2 – jeszcze jaśniejszy */
-/* HUMIC: the copy is longer than on ECO (h1 wraps to four lines, the lead to
-   five, plus two bridge notes) – at the pattern's type scale the hero overflowed
-   a 1280×800 window by ~240 px. The copy stays 1:1; this page takes the type
-   one step down and lets the lead use the whole copy column (orchestrator,
-   13.09 – decision for Mateusz, spec §14). */
-.c5-hero__copyin .c5-h1{font-size:clamp(1.9rem,3.4vw,2.75rem);}
-.c5-hero__copyin{gap:clamp(0.875rem,1.6vw,1.25rem);padding-block:clamp(1rem,2vw,1.5rem);}
-.c5-hero__lead{max-width:585px;font-size:1rem;}
-.c5-hero__copyin > .wf-small{font-size:0.8125rem;line-height:1.45;}
-/* short windows (13" laptops, 1366×768): one more step down so the first
-   screen still ends with the breadcrumb */
-@media (min-width:900px) and (max-height:780px){
-  .c5-hero__copyin .c5-h1{font-size:clamp(1.75rem,3vw,2.4rem);}
-  .c5-hero__lead{font-size:0.9375rem;}
-}
+/* --- CE-08 Hero ------------------------------------------------------------
+   The copy column is the pattern block as it stands (ce/CE-08-hero.css): the
+   kicker, the h1, one lead and two buttons centred between the menu and the
+   breadcrumb, at the pattern's type scale. The page used to take the type one
+   step down, because the lead ran to five lines and two notes stood under the
+   buttons; with the short lead those overrides are gone. What stays here is
+   what stands ON the panel. */
 
-/* Panel: 30 px od góry, dołu i prawej krawędzi ekranu; §14.2 – bez zdjęcia
-   w tle i bez pasa gradientu, jednolita jasna szarość pod packshotem.
-   HUMIC (spec §3): jeden packshot wyśrodkowany w panelu – nie znamy linii
-   opakowań tego produktu, więc nie stawiamy obok siebie worka i torebki jak na
-   stronie CARBOMAT ECO. Stąd prosty `translate(-50%,-50%)` i brak zmiennej
-   `--c5-pouch-scale`. */
+/* page-specific: CE-08 – the hero stage and the packshot geometry; the pattern
+   block only sets the frame. The panel stands 30 px from the top, the bottom
+   and the right edge of the screen: flat light grey, no photo and no gradient
+   band behind the packshot. One packshot centred in the panel – the page does
+   not set a bag and a pouch side by side as the CARBOMAT ECO page does, hence
+   the plain `translate(-50%,-50%)` and no `--c5-pouch-scale`. */
 .c5-hero__stage{--c5-pack-h:clamp(260px,46%,520px);position:relative;overflow:hidden;margin-block:var(--c5-gutter);min-height:calc(100svh - var(--cx-navbar-h, 0px) - 2 * var(--c5-gutter));background:var(--w-gray-100);}
 .c5-hero__pack{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);height:var(--c5-pack-h);width:auto;max-width:calc(100% - 2 * var(--c5-gutter));object-fit:contain;}
 
+/* page-specific: the stage rule above is declared after the pattern block, so
+   the phone layout of the stage has to be repeated after it */
 @media (max-width:899px){
-  .c5-hero__copyin{order:1;margin-block:0;padding-block:0;max-width:585px;}
   .c5-hero__stage{order:2;margin-block:0;min-height:0;aspect-ratio:4/5;max-height:70vh;}
 }
 
@@ -81,27 +75,39 @@
 /* etykieta placeholdera leży pod maską kadru – podnosimy jej kontrast, żeby dało
    się ją przeczytać w makiecie */
 .c5-params__media .c5-ph__label{left:auto;right:16px;bottom:14px;color:rgb(255 255 255 / .75);}
+/* page-specific: CE-10 – at its full size the heading of this page is wider than
+   the column of the variant (732 px) and the last word dropped alone to a second
+   line. Balanced, it breaks after the separator dot (kept on the first line by a
+   no-break space in the markup). Type and metrics stay those of the module. */
+#parametry .c5-params__title{text-wrap:balance;}
 
-/* --- ECO CZY HUMIC: cztery karty przemiany „od → do" (spec §6) --------------
-   Różnica ECO -> HUMIC to skutek jednego procesu (ekstrakcja i aktywacja),
-   więc zamiast tabeli „dwie kolumny" każda z czterech różnic jest kartą:
-   u góry stan ECO (wyciszony), pionowy łącznik ze strzałką, u dołu stan HUMIC
-   (mocny). `margin-top:auto` na łączniku dosuwa grupę HUMIC do dolnej krawędzi
-   w każdej karcie, więc zestaw czyta się jako proces, nie jako punktacja. */
+/* --- ECO CZY HUMIC: four rule cards „ECO -> HUMIC" (CE-34, variant „przemiana") ---
+   The difference between the two products is the outcome of one process
+   (extraction and activation), so each of the four differences is a card read
+   top-down on three levels: the ECO statement as the small condition text, an
+   arrow, the HUMIC statement as the large result sentence.
+   Geometry and type follow the rule cards – the newer occurrence of this
+   block: a 2 x 2 grid with a 20 px gap, a hairline card with 24 px of padding,
+   the condition at the kit's small size, a 24 px arrow, the result at the kit's
+   h4 size. Cards of one row are equally tall and `margin-top:auto` on the arrow
+   keeps the result at the bottom edge, so the results of a row end on one line.
+   No packshot here and the cards are not links, so the link affordances of
+   that occurrence (the arrow nudge, the packshot zoom) are not carried over. */
 .c5-diff-sec{background:var(--w-surface-page);}
-.c5-diff{list-style:none;margin:clamp(2.5rem,5vw,4rem) 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;}
-.c5-diff__card{display:flex;flex-direction:column;gap:18px;padding:26px 24px 28px;border:1px solid var(--w-border-default);background:var(--w-surface-page);transition:border-color .2s var(--w-ease);}
+.c5-diff{list-style:none;margin:clamp(2.5rem,5vw,4rem) 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--w-space-5);}
+.c5-diff__card{position:relative;display:flex;flex-direction:column;gap:var(--w-space-3);padding:var(--w-space-6);border:1px solid var(--w-border-default);background:var(--w-surface-page);transition:border-color var(--w-duration-base) var(--w-ease);}
 .c5-diff__card:hover{border-color:var(--w-gray-900);}
-.c5-diff__num{font-size:0.75rem;letter-spacing:.06em;color:var(--w-text-tertiary);}
+/* the card number: a quiet index in the top right corner, on the line of the
+   first product tag (same size and line box, so the two share a baseline) */
+.c5-diff__num{position:absolute;top:var(--w-space-6);right:var(--w-space-6);font-size:0.6875rem;letter-spacing:.06em;color:var(--w-text-tertiary);}
 .c5-diff__tag{display:block;font-size:0.6875rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;}
-.c5-diff__from .c5-diff__tag{color:var(--w-gray-500);}
-.c5-diff__to .c5-diff__tag{color:var(--w-gray-900);}
-.c5-diff__from p{font-size:0.9375rem;line-height:1.45;color:var(--w-gray-500);margin:0;}
-.c5-diff__to p{font-size:1.0625rem;line-height:1.4;font-weight:var(--w-weight-medium);color:var(--w-gray-900);margin:0;}
-/* łącznik: 1 px kreska rysowana od góry (`--dr`), ikona 16 px pod nią */
-.c5-diff__arrow{margin-top:auto;display:flex;flex-direction:column;align-items:flex-start;gap:6px;color:var(--w-gray-400);}
-.c5-diff__arrow::before{content:"";display:block;width:1px;height:24px;background:currentColor;transform-origin:top;transform:scaleY(var(--dr,1));}
-.c5-diff__arrow .wf-icon{width:16px;height:16px;}
+/* the tag takes the tone of its own sentence: quiet for ECO, strong for HUMIC */
+.c5-diff__from .c5-diff__tag{color:var(--w-text-secondary);}
+.c5-diff__to .c5-diff__tag{color:var(--w-text-primary);}
+.c5-diff__from p{margin:0;font-size:var(--w-font-sm-size);line-height:var(--w-font-sm-lh);color:var(--w-text-secondary);}
+.c5-diff__arrow{width:24px;height:24px;margin-top:auto;color:var(--w-icon-default);}
+/* `balance`: a result of two lines breaks into even lines instead of leaving one word alone */
+.c5-diff__to p{margin:0;font-size:var(--w-font-h4-size);line-height:var(--w-font-h4-lh);font-weight:var(--w-weight-medium);color:var(--w-text-primary);text-wrap:balance;}
 
 /* --- „Dla Ciebie, jeśli": szeroki jasnoszary panel --------------------------
    Tytuł i przyciski po lewej, sześć punktów w dwóch kolumnach po prawej. */
@@ -122,42 +128,51 @@
     transition:opacity .5s cubic-bezier(.2,.7,.2,1),transform .5s cubic-bezier(.2,.7,.2,1);
     transition-delay:calc(var(--i,0) * 80ms);}
   .cx-js [data-reveal].is-in{opacity:1;transform:none;}
-  /* kreska łącznika dociąga się dopiero po wejściu karty */
-  .cx-js .c5-diff__card{--dr:0;}
-  .cx-js .c5-diff__card .c5-diff__arrow::before{transition:transform .45s var(--w-ease);transition-delay:calc(var(--i,0) * 80ms + .25s);}
-  .cx-js .c5-diff__card.is-in{--dr:1;}
+  /* The reveal rule above owns the transition list of the card, so the hover
+     border joins that list here; the stagger stays on the entry only. */
+  .cx-js .c5-diff__card{transition:opacity .5s cubic-bezier(.2,.7,.2,1) calc(var(--i,0) * 80ms),transform .5s cubic-bezier(.2,.7,.2,1) calc(var(--i,0) * 80ms),border-color var(--w-duration-base) var(--w-ease);}
 }
 
-@media (max-width:1099px){
-  .c5-diff{grid-template-columns:repeat(2,minmax(0,1fr));}
-}
 @media (max-width:899px){
   .c5-pick{grid-template-columns:1fr;}
 }
 @media (max-width:699px){
-  .c5-diff{grid-template-columns:1fr;}
   .c5-pick__list{grid-template-columns:1fr;}
+}
+/* below 640 px: one column of cards and a tighter card */
+@media (max-width:639px){
+  .c5-diff{grid-template-columns:minmax(0,1fr);}
+  .c5-diff__card{padding:var(--w-space-4);}
+  .c5-diff__num{top:var(--w-space-4);right:var(--w-space-4);}
 }
 @media (prefers-reduced-motion: reduce){
   .c5-diff__card{transition:none;}
 }
 
-/* --- KTÓRY DLA MNIE: dwa światy (spec §7) ----------------------------------
-   Taby zniknęły – nie ma czego przełączać. Dwa naprzemienne wiersze
-   (zdjęcie | opis, potem opis | zdjęcie), w każdym nazwa odbiorcy, zajawka,
-   krótka lista dawek i jeden przycisk otwierający pop-up z pełną kartą. */
+/* --- KTÓRY DLA MNIE: two worlds (rows CE-36, pop-ups CE-37) ------------------
+   Nothing to switch between, so no tabs and no bands: two alternating rows
+   (photo | copy, then copy | photo). A row carries the name of the audience,
+   a one-sentence teaser, a brief of the three things that matter most (doses,
+   frequency, purchase) and one button; the button opens a pop-up with the
+   full card. */
 .c5-who{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,6vw,6rem);align-items:center;margin-top:clamp(3rem,6vw,5rem);}
 .c5-who--flip .c5-who__media{order:2;}
-/* Ramka zdjęcia przycina warstwę wyższą od siebie, żeby zmieścić parallax.
-   `--who-par` (-6 -> 0, procent wysokości warstwy) ustawia JS tylko przy
-   `CX5.motionOn()`; bez niego kadr stoi na wartości domyślnej. */
+/* The photo frame clips a layer taller than itself, which makes room for the
+   parallax. `--who-par` (-6 -> 0, per cent of the layer height) is set by JS
+   only at `CX5.motionOn()`; without it the crop rests on the default value. */
 .c5-who__media{position:relative;aspect-ratio:4/5;max-height:calc(100svh - 2 * var(--c5-gutter));overflow:hidden;background:var(--w-gray-300);}
 .c5-who__ph{position:absolute;inset:-6% 0 auto;height:118%;transform:translateY(calc(var(--who-par,-6) * 1%));will-change:transform;}
 .c5-who__body{display:flex;flex-direction:column;gap:clamp(1rem,2vw,1.5rem);max-width:520px;}
 .c5-who__name{font-size:clamp(2rem,3.6vw,3rem);font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
 .c5-who__teaser{font-size:1.0625rem;color:var(--w-text-secondary);}
-.c5-who__brief{display:flex;flex-direction:column;}
-.c5-who__list{margin:var(--w-space-1) 0 0;padding-left:1.35rem;display:flex;flex-direction:column;gap:6px;font-size:0.9375rem;color:var(--w-text-secondary);}
+/* The brief: label | value rows divided by hairlines. `flex-wrap` does the work
+   of a container query – when the column cannot hold the label and 19rem of
+   value side by side, the value drops under its label. */
+.c5-who__brief{margin:0;display:flex;flex-direction:column;border-bottom:1px solid var(--w-border-default);font-size:0.9375rem;}
+.c5-who__fact{display:flex;flex-wrap:wrap;gap:var(--w-space-1) var(--w-space-4);padding:var(--w-space-3) 0;border-top:1px solid var(--w-border-default);}
+.c5-who__fact > dt{flex:0 0 7.5rem;margin:0;font-weight:var(--w-weight-semibold);color:var(--w-text-primary);}
+.c5-who__fact > dd{flex:1 1 19rem;min-width:0;margin:0;color:var(--w-text-secondary);}
+.c5-who__list{margin:0;padding:0;display:flex;flex-direction:column;gap:var(--w-space-2);}
 .c5-who__body .c5-btn{align-self:flex-start;}
 
 /* Nota o odczynie: treść bezpieczeństwa, więc wąski pas widoczny bez klikania */
@@ -166,12 +181,13 @@
 .c5-who__note p{margin:0;}
 .c5-who__note .c5-btn{white-space:nowrap;}
 
-/* --- Pop-up z pełną kartą --------------------------------------------------
-   Wzór: jedyny modal V5 (lightbox strony kukurydzy, uprawa.css l. 125–164).
-   Bez JS pop-up jest zwykłym blokiem w biegu strony pod swoim wierszem – cała
-   treść widoczna, przycisk otwierający i X schowane. Z JS: nakładka, panel na
-   środku, X, Escape, pułapka fokusu, `inert` na tle, zablokowany scroll.
-   Warstwy nad dokiem dr. Jurka (--w-z-modal), jak w lightboxie kukurydzy. */
+/* --- Pop-up with the full card ----------------------------------------------
+   Pattern: the lightbox of the maize page. Without JS the pop-up is a plain
+   block in the flow of the page under its row – the whole content visible, the
+   opening button and the X hidden. With JS: an overlay, the panel in the
+   centre, the X, Escape, a focus trap, `inert` on the background, the page
+   scroll locked. Both layers stand above the advisor dock (the overlay on
+   --w-z-popover, the dialog on --w-z-toast). */
 html:not(.cx-js) [data-pop-open],
 html:not(.cx-js) .c5-pop .c5-iconbtn{display:none;}
 html:not(.cx-js) .c5-pop{margin-top:1.5rem;border:1px solid var(--w-border-default);padding:clamp(1.25rem,3vw,2rem);}
@@ -192,11 +208,18 @@ html.cx-js .c5-pop__head{padding-right:56px;}
 
 .c5-pop-overlay{position:fixed;inset:0;background:var(--w-gray-900);opacity:0;z-index:var(--w-z-popover);transition:opacity .22s var(--w-ease);}
 .c5-pop-overlay[data-open="true"]{opacity:.55;}
-/* Otwarty pop-up zatrzymuje stronę pod sobą (Lenis dostaje `stop()` w JS) */
+/* an open pop-up stops the page under it (Lenis gets `stop()` in JS) */
 html.c5-pop-lock{overflow:hidden;}
 
+@media (min-width:900px) and (max-width:1099px){
+  /* two narrow columns: the copy may outgrow a 4:5 frame, so the frame follows
+     the height of its row instead of standing short beside the text; the
+     spacer keeps 4:5 as the floor */
+  .c5-who__media{align-self:stretch;aspect-ratio:auto;}
+  .c5-who__media::before{content:"";display:block;padding-top:125%;}
+}
 @media (max-width:899px){
-  /* jedna kolumna: zdjęcie nad tekstem, w obu wierszach tak samo */
+  /* one column: the photo above the copy, the same in both rows */
   .c5-who{grid-template-columns:1fr;}
   .c5-who--flip .c5-who__media{order:0;}
   .c5-who__media{aspect-ratio:16/10;max-height:none;}
@@ -207,12 +230,12 @@ html.c5-pop-lock{overflow:hidden;}
   .c5-who__note .c5-btn{justify-self:start;}
 }
 @media (max-width:599px){
-  /* panel na cały ekran – tak samo jak lightbox kukurydzy */
+  /* the panel takes the whole screen – as the lightbox of the maize page does */
   html.cx-js .c5-pop{padding:0;}
   html.cx-js .c5-pop__panel{max-width:none;max-height:none;height:100%;border:0;}
 }
 @media (prefers-reduced-motion: reduce){
-  /* bez przejść: pop-up pojawia się i znika od razu, kadr zdjęcia stoi */
+  /* no transitions: the pop-up shows and hides at once, the photo crop stands still */
   html.cx-js .c5-pop,html.cx-js .c5-pop[data-open="true"],
   .c5-pop__panel,.c5-pop-overlay{transition:none;}
 }
@@ -276,6 +299,27 @@ html.c5-pop-lock{overflow:hidden;}
   #czym-jest{--c5-fx-viz-h:clamp(360px,74svh,760px);}
 }
 
+/* page-specific: CE-12, static layout (below 900 px, reduced motion, no JS).
+   There the illustration box is a 4 : 5 frame capped at 520 px, and it clips.
+   Two illustrations of this page are taller than that frame:
+   · the purity table of step 8 (nine rows): its last rows could only be reached
+     by scrolling inside the box – on a phone, and with the taller number badge of
+     the „glass" layer on a wide window too. The box takes the height of its
+     content instead, never less than the 520 px of its neighbours;
+   · the bar chart of step 7 on a phone, where the labels wrap to two lines. The
+     frame becomes its minimum: with a visible overflow the automatic minimum of
+     a ratio box applies, so the box grows by the few pixels the chart needs
+     (up to 456 px of window the 4 : 5 height stays under the 520 px cap).
+   The scene itself (from 900 px, with motion and JS) sizes the box through
+   --c5-fx-viz-h and is not reached by these rules. */
+@media (max-width:899px), (prefers-reduced-motion: reduce){
+  #czym-jest .c5-viz[data-fx-viz="8"]{aspect-ratio:auto;min-height:520px;max-height:none;}
+}
+html:not(.cx-js) #czym-jest .c5-viz[data-fx-viz="8"]{aspect-ratio:auto;min-height:520px;max-height:none;}
+@media (max-width:456px){
+  #czym-jest .c5-viz[data-fx-viz="7"]{max-height:none;overflow:visible;}
+}
+
 /* --- KIEDY STOSOWAĆ: dwa panele fotograficzne + pas PRO (spec §16.1) --------
    Two application worlds side by side, not a sequence: the pin, the packshot
    scenes, the rows and the spacer of iteration 1 are gone (Mateusz, 14.09 – the
@@ -307,8 +351,6 @@ html.c5-pop-lock{overflow:hidden;}
 .c5-when__body .c5-btn{align-self:flex-start;margin-top:var(--w-space-2);}
 /* na ciemnym kadrze pierścień fokusu musi być jasny (i ostry jak reszta V5) */
 .c5-when a:focus-visible{outline-color:var(--w-focus-ring-inverse);border-radius:0;}
-/* nota o braku kalendarza – pod panelami, w szerokości kolumny treści */
-.c5-when__gap{margin-top:clamp(2rem,4vw,3rem);max-width:710px;margin-inline:auto;}
 
 /* Przybliżenie tylko tam, gdzie jest kursor i gdzie ruch jest dozwolony. */
 @media (hover:hover) and (prefers-reduced-motion: no-preference){

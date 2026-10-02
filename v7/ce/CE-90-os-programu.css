@@ -1,0 +1,269 @@
+/* ===== CE-90 · Oś programu z punktami zdarzeń – 02.10.2026, vertical-line look
+   (spec prochnica-plus-wzorzec-eco-spec §19.5, §20.2 and §21). Class prefix: c5-ax.
+   ---------------------------------------------------------------------------
+   One time axis for all farms: a row of years, a row of months, one row per
+   farm. Every month that holds an event is marked by a thin vertical line
+   running through all rows; the events stand just right of that line as small
+   squares. The state is carried by the SHAPE of the square (dark with a white
+   check / ring with a full centre / ring / dashed ring), never by colour alone;
+   an event with a film report carries a small player mark.
+   Column widths are unequal: a month with events is full, an empty month is
+   about a third of it, a year without any event collapses to a narrow strip.
+   The script hands the widths over as one px track list (--c5-ax-cols) used by
+   every grid of the block, so one transition moves the whole axis at once.
+   Hovering a month (or focusing a point, or tapping the column) widens that
+   column and every square in it grows into a label on a ground: the icon in
+   front, the name of the event behind it. A click opens a dialog.
+   A hovered, focused or targeted row gets a white band across the whole window.
+   Below 900 px the axis scrolls sideways inside the block (`data-lenis-prevent`,
+   no `wheel` listener); the name column stays glued to the left edge.
+   Look: V7 pattern – grayscale, --w-* tokens, page typeface.
+   ========================================================================= */
+
+.c5-ax{
+  --c5-ax-name:260px;                         /* sticky name column                    */
+  --c5-ax-lane:42px;                          /* stride of stacked events in one row   */
+  --c5-ax-pad:10px;                           /* air above and below the lanes         */
+  --c5-ax-sq:16px;                            /* event square                          */
+  --c5-ax-lx:18px;                            /* x of the month line inside its column */
+  --c5-ax-e:320px;                            /* width of the widened column (script)  */
+  --c5-ax-ground:var(--w-surface-subtle);     /* the band the block stands on          */
+  position:relative;
+  width:100%;
+  max-width:1800px;
+  margin:clamp(1.25rem,2.5vw,2rem) auto 0;
+  padding-inline:var(--w-space-5);
+}
+@media (min-width:900px){
+  .c5-ax{padding-inline:40px;}                /* same gutter as .c5-wrap--wide */
+}
+
+/* the title of the axis; `#harmonogram` lands here from other pages */
+.c5-ax__title{margin:0 0 clamp(1rem,2vw,1.5rem);scroll-margin-top:clamp(1.5rem,8vh,5rem);}
+
+/* white band under the lit row, from one edge of the window to the other –
+   the script gives it the row's top and height and the window's width */
+.c5-ax__band{position:absolute;z-index:0;left:0;width:100%;top:0;height:0;pointer-events:none;
+  background:var(--w-surface-page);opacity:0;transition:opacity var(--w-duration-base) var(--w-ease);}
+.c5-ax__band.is-on{opacity:1;}
+
+/* --- scroll port: the only place this block scrolls sideways --------------- */
+.c5-ax__frame{position:relative;z-index:1;overflow-x:auto;overflow-y:hidden;overscroll-behavior:auto;
+  scroll-padding-left:var(--c5-ax-name);}
+.c5-ax__table{position:relative;z-index:0;display:flex;flex-direction:column;width:max-content;min-width:100%;}
+
+/* every grid of the block shares one track list, so they all move together */
+.c5-ax__years,.c5-ax__months,.c5-ax__track{display:grid;grid-template-columns:var(--c5-ax-cols);
+  flex:0 0 auto;width:var(--c5-ax-w);}
+.c5-ax__table.is-anim .c5-ax__years,
+.c5-ax__table.is-anim .c5-ax__months,
+.c5-ax__table.is-anim .c5-ax__track{transition:grid-template-columns .45s var(--w-ease);}
+
+/* --- calendar: a row of years over a row of months -------------------------- */
+.c5-ax__head{display:flex;align-items:stretch;border-bottom:1px solid var(--w-border-strong);}
+.c5-ax__corner{position:sticky;left:0;z-index:4;flex:0 0 var(--c5-ax-name);background:var(--c5-ax-ground);}
+.c5-ax__cal{flex:0 0 auto;}
+.c5-ax__year{grid-row:1;min-width:0;padding:6px 0 8px;white-space:nowrap;
+  font-size:1.125rem;line-height:1;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+.c5-ax__year[data-ys]{border-left:1px solid var(--w-border-strong);}
+/* the year stays readable while any part of it is on screen (frame scrolled sideways) */
+.c5-ax__year > span{position:sticky;left:var(--c5-ax-name);z-index:3;display:inline-block;padding-inline:6px;
+  background:var(--c5-ax-ground);}
+.c5-ax__year--strip{font-size:0.8125rem;padding-top:10px;color:var(--w-text-secondary);overflow:hidden;}
+.c5-ax__year--strip > span{padding-inline:5px;}
+
+/* „we are here”: the label stands at the height of the years, over its month;
+   the dashed line runs down from it through the months and all rows */
+.c5-ax__nowcol{position:relative;z-index:2;grid-row:1;min-width:0;pointer-events:none;}
+.c5-ax__nowcol::before{content:"";position:absolute;top:8px;bottom:0;left:var(--c5-ax-lx);
+  border-left:1px dashed var(--w-gray-900);}
+.c5-ax__nowcol--mid::before{left:50%;}
+.c5-ax__nowlab{position:absolute;top:5px;left:var(--c5-ax-lx);white-space:nowrap;
+  padding:0 8px;background:var(--w-gray-900);color:var(--w-text-inverse);
+  font-size:0.625rem;line-height:20px;font-weight:var(--w-weight-regular);letter-spacing:.06em;text-transform:uppercase;}
+.c5-ax__nowcol--mid > .c5-ax__nowlab{left:50%;}
+.c5-ax__nowlab.is-flip{left:auto;right:calc(100% - var(--c5-ax-lx) - 1px);}
+.c5-ax__nowcol--mid > .c5-ax__nowlab.is-flip{right:calc(50% - 1px);}
+
+.c5-ax__month{position:relative;min-width:0;height:22px;overflow:hidden;cursor:default;
+  font-size:0.625rem;line-height:22px;letter-spacing:.02em;text-align:center;color:var(--w-text-tertiary);}
+.c5-ax__month[data-ys]{border-left:1px solid var(--w-border-strong);}
+/* a month with events: its label sits over its line */
+.c5-ax__month--ev{text-align:left;color:var(--w-text-primary);}
+.c5-ax__month--ev > span{position:absolute;z-index:1;left:var(--c5-ax-lx);top:4px;transform:translateX(-50%);
+  padding:0 3px;line-height:12px;background:var(--c5-ax-ground);font-weight:var(--w-weight-medium);}
+.c5-ax__month--ev::after{content:"";position:absolute;left:var(--c5-ax-lx);bottom:0;height:5px;
+  border-left:1px solid var(--w-gray-900);}
+/* an empty month keeps a small tick; its label goes when the column gets too narrow */
+.c5-ax__month--empty::after{content:"";position:absolute;left:50%;bottom:0;height:3px;
+  border-left:1px solid var(--w-border-strong);}
+.c5-ax.is-tight .c5-ax__month--empty{color:transparent;}
+/* a collapsed year: twelve tiny ticks instead of month labels */
+.c5-ax__month--strip{background:linear-gradient(90deg,var(--w-border-strong) 1px,transparent 1px) 0 100% / calc(100% / 12) 3px repeat-x;}
+.c5-ax__month--now::before{content:"";position:absolute;top:0;bottom:0;left:var(--c5-ax-lx);
+  border-left:1px dashed var(--w-gray-900);}
+.c5-ax__month--now.c5-ax__month--empty::before{left:50%;}
+.c5-ax__month--now::after{display:none;}
+
+/* --- rows -------------------------------------------------------------------- */
+.c5-ax__body{position:relative;}
+.c5-ax__row{display:flex;align-items:stretch;}
+.c5-ax__name{position:sticky;left:0;z-index:3;flex:0 0 var(--c5-ax-name);min-width:0;max-width:var(--c5-ax-name);
+  display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:6px;
+  padding:10px 16px 10px 0;background:var(--c5-ax-ground);
+  transition:background var(--w-duration-base) var(--w-ease);}
+.c5-ax__crop{display:inline-flex;align-items:center;min-height:20px;padding:2px 7px;
+  border:1px solid var(--w-border-default);
+  font-size:0.625rem;line-height:1.2;letter-spacing:.04em;text-transform:uppercase;}
+.c5-ax__who{max-width:100%;font-size:1.0625rem;line-height:1.2;letter-spacing:-0.01em;overflow-wrap:anywhere;}
+.c5-ax__track{position:relative;
+  min-height:calc(2 * var(--c5-ax-pad) + var(--lanes,1) * var(--c5-ax-lane));}
+/* rows are parted by a barely visible line; the month lines run across it */
+.c5-ax__row + .c5-ax__row .c5-ax__track,
+.c5-ax__row + .c5-ax__row .c5-ax__name{box-shadow:inset 0 1px 0 var(--w-border-subtle);}
+/* the lit row (hover, focus, jump from a participant card): its ground turns
+   white – the band behind the frame carries that white to the window edges */
+.c5-ax__row.is-lit{--c5-ax-ground:var(--w-surface-page);}
+
+/* --- one month of one row ----------------------------------------------------- */
+.c5-ax__cell{position:relative;grid-row:1;min-width:0;overflow:hidden;}
+.c5-ax__cell[data-ys]{border-left:1px solid var(--w-border-strong);}
+/* the month line: thin, unbroken, through all rows; darker while its column is widened */
+.c5-ax__cell--ev::before{content:"";position:absolute;top:0;bottom:0;left:var(--c5-ax-lx);
+  border-left:1px solid var(--w-border-strong);transition:border-color var(--w-duration-base) var(--w-ease);}
+.c5-ax__cell--ev.is-open::before{border-left-color:var(--w-gray-900);}
+/* „we are here”: a dashed dark line on the current month */
+.c5-ax__cell--now::after{content:"";position:absolute;top:0;bottom:0;left:var(--c5-ax-lx);
+  border-left:1px dashed var(--w-gray-900);}
+.c5-ax__cell--now:not(.c5-ax__cell--ev)::after{left:50%;}
+
+/* --- event point: stands 6 px right of the month line -------------------------
+   At rest it is a 24 x 24 target holding a 16 px square (the state). While its
+   column is widened the same button grows into a label on a ground: the square
+   stays in front as the icon, the name of the event follows it. */
+.c5-ax__pt{position:absolute;z-index:2;
+  left:calc(var(--c5-ax-lx) + 2px);
+  top:calc(var(--c5-ax-pad) + var(--lane) * var(--c5-ax-lane));
+  display:flex;align-items:flex-start;min-width:24px;max-width:calc(var(--c5-ax-e) - var(--c5-ax-lx) - 12px);
+  max-height:24px;margin:0;padding:0;overflow:hidden;
+  border:0;outline:1px solid transparent;outline-offset:-1px;border-radius:0;
+  background:transparent;color:var(--w-gray-900);font:inherit;text-align:left;cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  transition:max-height .45s var(--w-ease),background-color .3s var(--w-ease),color .3s var(--w-ease),outline-color .3s var(--w-ease);}
+.c5-ax__pt:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:1px;}
+
+/* the square: done = dark with a white check · doing = ring with a full centre ·
+   todo = ring · na = dashed, dimmed */
+.c5-ax__sq{position:relative;flex:none;display:block;width:var(--c5-ax-sq);height:var(--c5-ax-sq);margin:4px;
+  border:2px solid currentColor;background:var(--w-surface-page);}
+[data-state="done"] > .c5-ax__sq{border-color:var(--w-gray-900);background:var(--w-gray-900);}
+[data-state="done"] > .c5-ax__sq::after{content:"";position:absolute;left:3.5px;top:0;width:5px;height:9px;
+  border:solid var(--w-white,#fff);border-width:0 2px 2px 0;transform:rotate(45deg);}
+[data-state="doing"] > .c5-ax__sq{padding:3px;
+  background:linear-gradient(currentColor,currentColor) content-box,var(--w-surface-page);}
+[data-state="na"] > .c5-ax__sq{border:1px dashed var(--w-gray-500);background:transparent;}
+
+/* the name: folded to nothing at rest, unfolded in the widened column */
+.c5-ax__lab{flex:0 1 auto;min-width:0;max-width:0;overflow:hidden;opacity:0;
+  transition:max-width .45s var(--w-ease),opacity .2s var(--w-ease);}
+.c5-ax__labname{display:block;width:max-content;max-width:var(--c5-ax-labw);padding:4px 8px 5px 2px;
+  font-size:0.8125rem;line-height:15px;font-weight:var(--w-weight-medium);}
+.c5-ax__pt{--c5-ax-labw:calc(var(--c5-ax-e) - var(--c5-ax-lx) - 40px);}
+.c5-ax__pt--film{--c5-ax-labw:calc(var(--c5-ax-e) - var(--c5-ax-lx) - 65px);}
+
+/* film mark: a small player sign – a rounded rectangle with a triangle */
+.c5-ax__film{position:relative;flex:none;width:17px;height:12px;margin:6px 6px 0 2px;
+  border-radius:3.5px;background:var(--w-gray-900);transition:background-color .3s var(--w-ease);}
+.c5-ax__film::after{content:"";position:absolute;left:6.5px;top:3px;width:0;height:0;
+  border-style:solid;border-width:3px 0 3px 5px;border-color:transparent transparent transparent var(--w-white,#fff);
+  transition:border-color .3s var(--w-ease);}
+[data-state="na"] > .c5-ax__film{background:var(--w-gray-500);}
+
+/* widened column: the square becomes a label on a ground */
+.c5-ax__cell.is-open .c5-ax__pt{max-height:44px;background:var(--w-surface-page);outline-color:var(--w-gray-900);}
+.c5-ax__cell.is-open .c5-ax__lab{max-width:var(--c5-ax-labw);opacity:1;
+  transition:max-width .45s var(--w-ease),opacity .3s var(--w-ease) .12s;}
+.c5-ax__cell.is-open .c5-ax__pt[data-state="done"]{background:var(--w-gray-900);color:var(--w-text-inverse);}
+.c5-ax__cell.is-open .c5-ax__pt[data-state="done"] > .c5-ax__film{background:var(--w-white,#fff);}
+.c5-ax__cell.is-open .c5-ax__pt[data-state="done"] > .c5-ax__film::after{border-left-color:var(--w-gray-900);}
+.c5-ax__cell.is-open .c5-ax__pt[data-state="na"]{background:transparent;color:var(--w-text-secondary);
+  outline:1px dashed var(--w-gray-500);outline-offset:-1px;}
+.c5-ax__cell.is-open .c5-ax__pt:hover .c5-ax__labname{text-decoration:underline;text-underline-offset:2px;}
+.c5-ax__cell.is-open .c5-ax__pt[data-state]:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:1px;}
+
+/* first entry into view: points drop in one after another (motionOn only) */
+.c5-ax--arm .c5-ax__pt{opacity:0;transform:scale(.3);transform-origin:12px 12px;}
+.c5-ax--arm.is-in .c5-ax__pt{opacity:1;transform:none;
+  transition:opacity .35s var(--w-ease) calc(var(--i) * 40ms),transform .35s var(--w-ease) calc(var(--i) * 40ms);}
+
+/* --- legend under the axis ---------------------------------------------------- */
+.c5-ax__legend{position:relative;z-index:1;display:flex;flex-wrap:wrap;align-items:center;gap:8px 22px;margin:14px 0 0;padding:0;list-style:none;
+  font-size:0.6875rem;line-height:1.3;letter-spacing:.06em;text-transform:uppercase;color:var(--w-text-secondary);}
+.c5-ax__legend li{position:relative;display:inline-flex;align-items:center;gap:9px;color:var(--w-gray-900);}
+.c5-ax__legend li > span:last-child{color:var(--w-text-secondary);}
+.c5-ax__legend .c5-ax__sq{margin:0;}
+.c5-ax__legend .c5-ax__film{margin:0;}
+
+/* --- pop-up: centred dialog (accessibility pattern of the profile pop-up) ----- */
+html.c5-ax-lock{overflow:hidden;}
+.c5-ax__dlg{position:fixed;inset:0;margin:auto;
+  width:min(720px, 100% - 2 * var(--c5-gutter));max-width:none;
+  max-height:85svh;padding:0;overflow:hidden;
+  border:1px solid var(--w-border-default);border-radius:0;
+  background:var(--w-surface-page);color:var(--w-text-primary);}
+/* display only with [open] – otherwise a closed dialog would stop hiding */
+.c5-ax__dlg[open]{display:flex;flex-direction:column;}
+.c5-ax__dlg::backdrop{background:rgb(0 0 0 / .55);}
+.c5-ax__dlghead{position:relative;flex:none;display:flex;flex-wrap:wrap;align-items:center;gap:10px;
+  padding:var(--w-space-5);padding-right:72px;border-bottom:1px solid var(--w-border-default);}
+.c5-ax__dlgtitle{margin:0;font-size:1.25rem;line-height:1.2;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+.c5-ax__dlgperiod{font-size:0.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--w-text-secondary);}
+.c5-ax__dlgclose{position:absolute;top:12px;right:12px;display:grid;place-items:center;
+  width:44px;height:44px;padding:0;border:1px solid var(--w-border-default);border-radius:0;
+  background:var(--w-surface-page);color:var(--w-text-primary);cursor:pointer;
+  transition:background var(--w-duration-base) var(--w-ease);}
+.c5-ax__dlgclose:hover{background:var(--w-gray-100);}
+.c5-ax__dlgclose:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:2px;}
+.c5-ax__dlgscroll{position:relative;flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;
+  display:flex;flex-direction:column;gap:var(--w-space-4);padding:var(--w-space-5);}
+.c5-ax__dlgscroll:focus{outline:none;}
+/* the milestone clone loses the timeline chrome – the dialog frames it itself */
+.c5-ax__dlg .pp-ms{flex:0 0 auto;width:auto;border:1px solid var(--w-border-default);}
+.c5-ax__dlg .pp-ms::before{display:none;}
+.c5-ax__dlg .pp-ms.is-hit{border-width:2px;border-color:var(--w-gray-900);}
+.c5-ax__dlg .pp-ms:only-child{border:0;padding:0;}
+.c5-ax__dlg .pp-ms__name{margin:0;}
+.c5-ax__dlg .pp-ms__name:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:2px;}
+/* film report: a 16 : 9 player placeholder over its caption */
+.c5-ax__dlg .pp-rel{flex-direction:column;width:100%;}
+.c5-ax__dlg .pp-rel .wf-ph{width:min(100%,440px);aspect-ratio:16/9;min-height:0;}
+
+/* --- source content: the no-JS version, hidden once the axis is built -------- */
+.c5-ax > [data-etapy-src]{margin-top:0;}
+
+@media (max-width:899px){
+  .c5-ax{--c5-ax-name:10rem;--c5-ax-lx:12px;}
+  .c5-ax__name{padding:10px 10px 10px 0;}
+  .c5-ax__who{font-size:0.9375rem;}
+  .c5-ax__labname{font-size:0.75rem;}
+}
+@media (max-width:599px){
+  /* a phone: the widened column fills the visible part of the axis; a name may
+     take a third line there, so the lanes get more room */
+  .c5-ax{--c5-ax-name:6rem;--c5-ax-lane:50px;}
+  .c5-ax__who{font-size:0.8125rem;}
+  .c5-ax__crop{padding:2px 5px;font-size:0.5625rem;letter-spacing:.02em;}
+  .c5-ax__labname{font-size:0.6875rem;line-height:13px;}
+  .c5-ax__pt--film .c5-ax__labname{padding-right:2px;}
+  .c5-ax__cell.is-open .c5-ax__pt{max-height:50px;}
+  /* full-screen panel, like the profile pop-up */
+  .c5-ax__dlg{width:100%;height:100%;max-height:100svh;border:0;}
+}
+@media (prefers-reduced-motion:reduce){
+  .c5-ax__table.is-anim .c5-ax__years,
+  .c5-ax__table.is-anim .c5-ax__months,
+  .c5-ax__table.is-anim .c5-ax__track{transition:none;}
+  .c5-ax__band,.c5-ax__name,.c5-ax__dlgclose,.c5-ax__cell--ev::before{transition:none;}
+  .c5-ax__pt,.c5-ax__lab,.c5-ax__cell.is-open .c5-ax__lab,.c5-ax__film,.c5-ax__film::after{transition:none;}
+  .c5-ax--arm .c5-ax__pt{opacity:1;transform:none;transition:none;}
+}

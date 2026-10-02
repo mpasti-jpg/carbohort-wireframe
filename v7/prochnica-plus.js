@@ -305,8 +305,8 @@
 })();
 
 /* ===== 65 · Harmonogram programu ==========================================
-   Przebudowany 19.09.2026 (spec §18.7): mechanika klocka CE-49 mieszka teraz
-   w `ce/CE-49-harmonogram.js`. Stary moduł osi S1 (`pp-os`) usunięty.
+   Od 02.10.2026 (spec §19.5, §20.2) osobnego harmonogramu nie ma – zostaje oś
+   gospodarstw CE-90 (`ce/CE-90-os-programu.js`); blok to ślad po numeracji.
    ====================================================================== */
 
 /* ===== 70 · Rzetelność: delikatny parallaks kadru w tle (spec §18.9) =======
@@ -342,20 +342,10 @@
   CX5.register({ scroll: frame, resize: frame });
 })();
 
-/* ===== 75 · Formularz demonstracyjny ======================================
-   Przeniesione z warstwy 99 bez zmian: nic nie wychodzi na serwer, wysłanie
-   pokazuje komunikat `[data-demo-msg]` (role="status"). =================== */
-(function () {
-  "use strict";
-  var $ = CX5.$, $$ = CX5.$$;
-  $$("form[data-demo-form]").forEach(function (form) {
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var msg = $("[data-demo-msg]", form);
-      if (msg) msg.hidden = false;
-    });
-  });
-})();
+/* ===== 75 · Zadaj pytanie – no code of its own ==============================
+   Since iteration 3 (spec §19.2) the section is a static CE-18 call to action;
+   the „Zapytaj eksperta" button opens the advisor dock through
+   `data-jurek-open`, handled in cw.js. The demo form module is gone. ====== */
 
 /* ===== 80 · Metodologia – bez własnego kodu ================================
    Od iteracji 2 (spec §18.4b) sceną sześciu kroków steruje moduł próby CE-12
@@ -364,10 +354,55 @@
    u nas `bez-naglowka` na stałe, bez przełącznika podglądu. Ten blok zostaje
    jako miejsce na ewentualne różnice Metodologii – celowo pusty. */
 
-/* ===== 85 · Etapy prac – kod klocka mieszka w ce/CE-51-os-gantta.js ========
-   Przebudowa 19.09 (spec §18.10) przeniosła oś Gantta do warstwy wspólnej
-   `ce/`, razem ze źródłem treści i kartą okresu. Blok zostaje jako ślad po
-   numeracji – moduł 50 (przyciski „etapy prac") rozmawia z klockiem przez
-   `CX5.ppEtapy.focusFarm`, które publikuje CE-51. ======================== */
+/* ===== 85 · Etapy prac – kod klocka mieszka w ce/CE-90-os-programu.js ======
+   Od 02.10.2026 (spec §19.5) oś programu z punktami zdarzeń (CE-90) zastępuje
+   harmonogram i oś Gantta. Blok zostaje jako ślad po numeracji – moduł 50
+   (przyciski „etapy prac") rozmawia z klockiem przez
+   `CX5.ppEtapy.focusFarm`, które publikuje CE-90. ======================== */
+
+/* ===== 90 · Wyniki: year tabs that switch panels (spec §20.3) ===============
+   Every `[data-pp-tabs]` bar is a real tablist: one panel visible at a time,
+   the others get `hidden`; click, arrows left / right, Home and End move the
+   selection (roving tabindex). The hook is deliberately not `data-tabs` /
+   `data-tab` – those belong to the scroll-spy tabs of c5.js and the kit tabs
+   of cw.js. Without JS nothing is hidden, so all panels stand one under
+   another. ================================================================ */
+(function () {
+  "use strict";
+  var $$ = CX5.$$;
+  $$("[data-pp-tabs]").forEach(function (list) {
+    var tabs = $$('[role="tab"]', list);
+    if (!tabs.length) return;
+
+    function panelOf(tab) { return document.getElementById(tab.getAttribute("aria-controls")); }
+
+    function select(tab, focus) {
+      tabs.forEach(function (t) {
+        var on = t === tab, panel = panelOf(t);
+        t.setAttribute("aria-selected", on ? "true" : "false");
+        t.tabIndex = on ? 0 : -1;
+        if (panel) panel.hidden = !on;
+      });
+      if (focus) tab.focus();
+    }
+
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener("click", function () { select(tab, false); });
+      tab.addEventListener("keydown", function (e) {
+        var n = -1;
+        if (e.key === "ArrowRight") n = (i + 1) % tabs.length;
+        else if (e.key === "ArrowLeft") n = (i - 1 + tabs.length) % tabs.length;
+        else if (e.key === "Home") n = 0;
+        else if (e.key === "End") n = tabs.length - 1;
+        if (n < 0) return;
+        e.preventDefault();
+        select(tabs[n], true);
+      });
+    });
+
+    /* start from the tab the markup marks as selected, else from the first */
+    select(tabs.filter(function (t) { return t.getAttribute("aria-selected") === "true"; })[0] || tabs[0], false);
+  });
+})();
 
 

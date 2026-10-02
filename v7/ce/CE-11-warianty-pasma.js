@@ -1,5 +1,6 @@
 /* ===== CE-11 · Warianty – pasma z przełącznikiem (wariant „pasma-z-przelacznikiem") =====
-   LINKED BY carbomat.html ONLY (see the CSS half for the layout).
+   A shared module since 02.10.2026 (see the CSS half for the layout and for
+   what a page chooses). Any number of bands; the script itself did not change.
 
    What the script adds over the static layout:
 

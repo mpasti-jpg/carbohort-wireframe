@@ -32,6 +32,12 @@
 .c5-pro__grid .c5-btn{--c5-btn-px:clamp(18px,2.2vw,32px);}
 .c5-pro__login{background:transparent;color:var(--w-text-inverse);border-color:rgb(255 255 255 / .6);}
 .c5-pro__login:hover{background:rgb(255 255 255 / .12);border-color:var(--w-text-inverse);}
+/* Third action of the band (decision of 28.09.2026: ask for an offer, log in, create an
+   account): a quiet link under the two buttons, so the row keeps its two-button width.
+   The negative margin takes back most of the column gap; the dark backing keeps the
+   line readable wherever the photo under it is light. */
+.c5-pro__signup{align-self:flex-start;margin-top:calc(var(--w-space-3) - clamp(1.5rem,3vw,2rem));padding:6px 12px;border-radius:999px;background:rgb(0 0 0 / .38);font-size:0.875rem;line-height:1.4;color:var(--w-text-inverse);text-decoration:underline;text-underline-offset:3px;}
+.c5-pro__signup:hover{background:rgb(0 0 0 / .55);}
 /* na ciemnym pasie pierścień fokusu musi być jasny (i ostry jak reszta V5) */
 .c5-pro a:focus-visible{outline-color:var(--w-focus-ring-inverse);border-radius:0;}
 

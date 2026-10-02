@@ -52,16 +52,16 @@ window.CW_STATUS = {
     "produkty.html": {
       "sekcja": "2. Produkty Carbohort",
       "nazwa": "Produkty Carbohort",
-      "etap": null,
-      "etykieta": null,
-      "ac": null,
-      "data": "20.09"
+      "etap": "hifi",
+      "etykieta": "akceptacja",
+      "ac": 31789,
+      "data": "02.10"
     },
     "carbomat.html": {
       "sekcja": "2. Produkty Carbohort",
       "nazwa": "CARBOMAT ECO",
       "etap": "hifi",
-      "etykieta": "poprawki",
+      "etykieta": "akceptacja",
       "ac": 31223,
       "data": "02.10"
     },
@@ -69,25 +69,25 @@ window.CW_STATUS = {
       "sekcja": "2. Produkty Carbohort",
       "nazwa": "CARBOMAT Mata Uprawowa",
       "etap": "hifi",
-      "etykieta": "poprawki",
+      "etykieta": "akceptacja",
       "ac": 31563,
-      "data": "19.09"
+      "data": "02.10"
     },
     "carbohumic.html": {
       "sekcja": "2. Produkty Carbohort",
       "nazwa": "CARBOHUMIC",
       "etap": "hifi",
-      "etykieta": "poprawki",
+      "etykieta": "akceptacja",
       "ac": 31564,
-      "data": "19.09"
+      "data": "02.10"
     },
     "carbomat-humic.html": {
       "sekcja": "2. Produkty Carbohort",
       "nazwa": "CARBOMAT HUMIC",
       "etap": "hifi",
-      "etykieta": "poprawki",
+      "etykieta": "akceptacja",
       "ac": 31565,
-      "data": "19.09"
+      "data": "02.10"
     },
     "uprawy.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -100,10 +100,10 @@ window.CW_STATUS = {
     "kukurydza.html": {
       "sekcja": "3. Rodzaje upraw",
       "nazwa": "Kukurydza",
-      "etap": "lofi",
+      "etap": "hifi",
       "etykieta": "akceptacja",
       "ac": 31566,
-      "data": "01.10"
+      "data": "02.10"
     },
     "ziemniak.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -116,10 +116,10 @@ window.CW_STATUS = {
     "borowka.html": {
       "sekcja": "3. Rodzaje upraw",
       "nazwa": "Borówka",
-      "etap": "lofi",
+      "etap": "hifi",
       "etykieta": "akceptacja",
       "ac": 31568,
-      "data": "07.09"
+      "data": "02.10"
     },
     "sadownicze.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -196,10 +196,10 @@ window.CW_STATUS = {
     "prochnica-plus.html": {
       "sekcja": "4. Programy i badania",
       "nazwa": "Próchnica+",
-      "etap": "lofi",
+      "etap": "hifi",
       "etykieta": "akceptacja",
       "ac": 31569,
-      "data": "19.09"
+      "data": "02.10"
     },
     "centrum-wiedzy.html": {
       "sekcja": "5. Centrum wiedzy",

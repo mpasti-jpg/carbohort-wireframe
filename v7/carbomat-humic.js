@@ -3,15 +3,16 @@
    wcześniej). Tutaj zostają wyłącznie moduły klocków unikalnych tej podstrony.
    Bez własnej definicji `window.CX5` i bez `CX5.start()` – szyna startuje sama
    na DOMContentLoaded. ==================================================== */
-/* ===== 40 · Który dla mnie: pop-up z pełną kartą, parallax, reveal (spec §7) ==
-   1. Pop-up – wzór: jedyny modal V5 (lightbox strony kukurydzy, uprawa.js
-      l. 60–131). Bez JS pop-upy leżą w biegu strony pod swoimi wierszami i cała
-      treść jest widoczna; tutaj jadą na koniec <body> i zachowują się jak okno
-      modalne: nakładka, X, klik obok panelu, Escape, pułapka Tab, `inert` na
-      tle, zablokowane przewijanie strony, powrót fokusu na przycisk. Hash się
-      nie zmienia.
-   2. Parallax zdjęć – tylko przy `CX5.motionOn()`.
-   3. Reveal opisów i noty – przez `CX5.reveal` (ce/00-base.js, moduł 02). == */
+/* ===== 40 · Który dla mnie: pop-up with the full card, parallax, reveal ======
+   1. Pop-up – pattern: the lightbox of the maize page. Without JS the pop-ups
+      lie in the flow of the page under their rows and the whole content is
+      visible; here they move to the end of <body> and behave like a modal
+      window: an overlay, the X, a click beside the panel, Escape, a Tab trap,
+      `inert` on the background, the page scroll locked, focus back on the
+      button. The hash does not change.
+   2. Parallax of the photos – only at `CX5.motionOn()`.
+   3. Reveal of the copy columns and of the note – through `CX5.reveal`
+      (ce/00-base.js, module 02). ========================================== */
 (function () {
   "use strict";
   var doc = document, $ = CX5.$, $$ = CX5.$$;
@@ -102,10 +103,10 @@
     });
   }
 
-  /* --- 2. Parallax zdjęć ---------------------------------------------------
-     Warstwa zdjęcia jest wyższa od ramki, więc mieści przesunięcie bez
-     odsłaniania krawędzi. `--who-par` idzie od -6 do 0 (procent wysokości
-     warstwy), gdy wiersz przejeżdża przez ekran. */
+  /* --- 2. Parallax of the photos --------------------------------------------
+     The photo layer is taller than its frame, so it has room for the shift
+     without uncovering an edge. `--who-par` goes from -6 to 0 (per cent of the
+     layer height) while the row travels through the window. */
   function parallax() {
     if (!medias.length) return;
     var on = CX5.motionOn(), h = window.innerHeight;

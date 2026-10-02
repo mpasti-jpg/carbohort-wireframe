@@ -1,21 +1,30 @@
-/* ===== CE-70 · Scena slajdów na tle wideo (spec prochnica-plus-wzorzec-eco-spec §18.3). =====
-   The track is tall (a sticky 100 svh stage plus one segment per slide) and the
-   position on it IS the animation: the scroll pass reads only the track
-   rectangle and writes two custom properties per card.
-     · --vs-t      = where the card stands: 1 below the stage, 0 in the middle,
+/* ===== CE-70 · Scena slajdów na tle wideo (spec prochnica-plus-wzorzec-eco-spec §18.3 + §19.4). =====
+   The track is tall (a sticky 100 svh stage, one segment for the heading and
+   one segment per slide) and the position on it IS the animation: the scroll
+   pass reads only the track rectangle and writes custom properties.
+     · --vs-t      = where a piece stands: 1 below the stage, 0 in the middle,
                      -1 above it; CSS multiplies it by --vs-travel.
-     · --vs-travel = half the stage plus half the card, i.e. the distance that
-                     takes the card fully out of the clipped stage (px, resize).
-   One segment of the track = one slide. Card i rides in over the first 30 % of
-   its segment, then stands still; its exit falls into the first 30 % of the
-   NEXT segment, which is exactly when card i + 1 rides in – so the two move
-   together and the stage is never empty ("wyjeżdża do góry a kolejny od razu
-   wjeżdża od dołu"). The last card keeps the middle until the stage unpins.
+     · --vs-travel = half the stage plus half the piece, i.e. the distance that
+                     takes it fully out of the clipped stage (px, resize).
+     · --vs-idx    = opacity of the slide index (0 while the heading stands).
+   The pieces are the section heading and then the cards. The heading is the
+   first screen: it stands in the middle when the stage pins and keeps it for
+   the heading segment (--vs-head-seg, in segments, 1 by default). Then it
+   leaves upward over the first 30 % of the next segment – exactly when card 1
+   rides in from below, so the two move together. From there one segment = one
+   slide: card i rides in over the first 30 % of its segment, then stands
+   still; its exit falls into the first 30 % of the NEXT segment, which is when
+   card i + 1 rides in – the stage is never empty. The last card keeps the
+   middle until the stage unpins.
+
+   The slide index is hidden and out of the tab order while the heading stands
+   and fades in over the second half of the heading's exit, once the heading
+   has cleared the band the index sits in.
 
    Nothing here listens to `wheel` and nothing intercepts scrolling: the module
    only registers on the CX5 bus. Below 900 px, with reduced motion and without
-   JS the section is static (CSS) – the poster as a plain frame, the cards one
-   under another – and this module only clears what it wrote.
+   JS the section is static (CSS) – the poster as a frame with the heading on
+   it, the cards one under another – and this module only clears what it wrote.
 
    The looping video pauses whenever the stage is off screen (IntersectionObserver)
    or the scene is static, so reduced motion leaves the poster alone.
@@ -35,11 +44,14 @@
   scenes.forEach(function (root) {
     var track = $("[data-vs-track]", root);
     var stage = $(".c5-vs__stage", root);
+    var head = $("[data-vs-head]", root);
+    var index = $(".c5-vs__index", root);
     var cards = $$("[data-vs-card]", root);
     var btns = $$("[data-vs-go]", root);
     var video = $("[data-vs-video]", root);
     if (!track || !stage || !cards.length) return;
-    var STEPS = cards.length, stageH = 0, active = -1, inView = true;
+    /* HEAD = length of the heading's stop in segments (0 when there is no heading) */
+    var STEPS = cards.length, HEAD = 0, stageH = 0, step = 0, active = -1, inView = true;
 
     function cssNum(name, dflt) {
       var v = parseFloat(window.getComputedStyle(root).getPropertyValue(name));
@@ -67,14 +79,23 @@
       }
     }
 
+    function travel(el) {
+      /* 24 px of slack so the piece is fully clear of the clipped stage */
+      el.style.setProperty("--vs-travel", Math.ceil((stageH + el.offsetHeight) / 2 + 24) + "px");
+    }
+
     function measure() {
       if (!CX5.motionOn()) {
         track.style.height = "";
-        cards.forEach(function (c) {
+        cards.concat(head ? [head] : []).forEach(function (c) {
           c.style.removeProperty("--vs-t");
           c.style.removeProperty("--vs-travel");
-          c.removeAttribute("data-off");
         });
+        cards.forEach(function (c) { c.removeAttribute("data-off"); });
+        if (index) {
+          index.style.removeProperty("--vs-idx");
+          index.removeAttribute("data-off");
+        }
         stageH = 0;
         active = -1;
         setActive(0);
@@ -82,15 +103,14 @@
         return;
       }
       /* the stage is the sticky 100 svh box – the part of the track that stands
-         still while the cards swap inside it */
+         still while the heading and the cards swap inside it */
       stageH = stage.offsetHeight;
-      var step = Math.max(cssNum("--vs-step-min", 620),
-                          Math.round(window.innerHeight * cssNum("--vs-step-vh", 1.1)));
-      track.style.height = (stageH + step * STEPS) + "px";
-      /* 24 px of slack so a card is fully clear of the clipped stage */
-      cards.forEach(function (c) {
-        c.style.setProperty("--vs-travel", Math.ceil((stageH + c.offsetHeight) / 2 + 24) + "px");
-      });
+      step = Math.max(cssNum("--vs-step-min", 620),
+                      Math.round(window.innerHeight * cssNum("--vs-step-vh", 1.1)));
+      HEAD = head ? Math.max(0, cssNum("--vs-head-seg", 1)) : 0;
+      track.style.height = Math.round(stageH + step * (HEAD + STEPS)) + "px";
+      if (head) travel(head);
+      cards.forEach(travel);
       syncVideo();
     }
 
@@ -98,7 +118,21 @@
       if (!stageH) return;
       var r = track.getBoundingClientRect();
       var span = r.height - stageH;
-      var u = (span > 0 ? clamp(-r.top / span, 0, 1) : 0) * STEPS;
+      /* u counts slide segments from the end of the heading's stop:
+         -HEAD when the stage pins, 0 when the heading starts to leave */
+      var u = (span > 0 ? clamp(-r.top / span, 0, 1) : 0) * (HEAD + STEPS) - HEAD;
+      if (head) {
+        /* no visibility switch for the heading: it stays in the accessibility
+           tree, the clipped stage alone takes it out of sight */
+        var th = u <= 0 ? 0 : u < EXIT ? -ease(u / EXIT) : -1;
+        head.style.setProperty("--vs-t", th.toFixed(4));
+      }
+      if (index) {
+        /* second half of the swap: the heading is already above the index band */
+        var show = head ? ease(clamp((u / EXIT - 0.5) * 2, 0, 1)) : 1;
+        index.style.setProperty("--vs-idx", show.toFixed(3));
+        index.setAttribute("data-off", show < 0.001 ? "true" : "false");
+      }
       for (var i = 0; i < STEPS; i++) {
         var t;
         if (u <= i) t = 1;                                        /* still below the stage */
@@ -119,10 +153,8 @@
         CX5.scrollTo(cards[i].getBoundingClientRect().top + window.scrollY - 24, "smooth");
         return;
       }
-      var r = track.getBoundingClientRect();
-      var span = r.height - stageH;
-      var u = i + ENTER + (1 - ENTER) / 2;
-      CX5.scrollTo(r.top + window.scrollY + span * (u / STEPS), "smooth");
+      var u = HEAD + i + ENTER + (1 - ENTER) / 2;
+      CX5.scrollTo(track.getBoundingClientRect().top + window.scrollY + step * u, "smooth");
     }
 
     btns.forEach(function (b, n) {
