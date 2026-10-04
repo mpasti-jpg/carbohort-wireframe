@@ -474,37 +474,46 @@
     }
   }
 
-  /* ===== Plakietka stanu prac (lewy dolny róg każdej podstrony) ============
-     Dane bierze z status.js (window.CW_STATUS). Wstrzykuje się sama, bez
-     znacznika w HTML, więc nowa podstrona dostaje ją, gdy tylko trafi do
-     manifestu. Siedzi w pasie 0–20 px od dołu, czyli pod dokiem doradcy
-     (dok stoi na bottom: var(--w-space-5) = 20 px) – nie zachodzą na siebie.
-     ⚠️ Etap i etykietę ustawia wyłącznie Mateusz; bez nich plakietka mówi
-     „do ustalenia”, a nie zgaduje stanu.                                     */
+  /* ===== Page-state badge (bottom-left corner of every page) ===============
+     Reads status.js (window.CW_STATUS) and injects itself – no tag in the HTML,
+     so a new page gets it as soon as it lands in the manifest. It sits in the
+     0–20 px strip above the bottom edge, i.e. below the advisor dock (the dock
+     stands at bottom: var(--w-space-5) = 20 px) – the two never overlap.
+     Model: one gate (track "makieta" = layout approval) and independent tracks
+     after it. The badge shows the gate state, e.g. "Makieta: do akceptacji";
+     once the layout is approved it appends the tracks that have a value.
+     States are set by the project owner only: no value = "do ustalenia",
+     the badge never guesses.                                                  */
   var STATUS_CSS = `
-/* Wysokosc jest sprzezona z odstepem doka doradcy: dok stoi na
-   bottom: var(--w-space-5) = 20 px, wiec plakietka musi zmiescic sie ponizej.
-   17 px daje 3 px zapasu; przy zmianie font-size albo paddingu sprawdz to ponownie. */
+/* Height is coupled with the advisor dock offset: the dock stands at
+   bottom: var(--w-space-5) = 20 px, so the badge has to fit below it.
+   17 px leaves 3 px of slack; re-check after changing font-size or padding. */
 .cw-status{position:fixed;left:0;bottom:0;z-index:var(--w-z-sticky);
-  display:flex;align-items:center;max-width:min(92vw,44em);
+  display:flex;align-items:center;max-width:min(92vw,56em);
   height:17px;padding:0 9px 0 7px;border-radius:0 6px 0 0;box-sizing:border-box;
   background:var(--w-surface-raised);border-top:1px solid var(--w-border-subtle);
   border-right:1px solid var(--w-border-subtle);
   font-family:var(--w-font-sans);font-size:11px;line-height:1.3;
   color:var(--w-text-tertiary);opacity:.72;transition:opacity .15s ease;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cw-status:hover{opacity:1}
-.cw-status__etap{color:var(--w-text-secondary);font-weight:600}
+  white-space:nowrap;overflow:hidden}
+.cw-status:hover,.cw-status:focus-within{opacity:1}
+.cw-status>*{flex:none}
+.cw-status__tor{color:inherit;text-decoration:none;margin-right:.3em}
+.cw-status__tor:hover,.cw-status__tor:focus-visible{color:var(--w-text-primary);
+  text-decoration:underline;text-underline-offset:2px}
+.cw-status__stan{font-weight:600}
 .cw-status__sep{opacity:.5;margin:0 .4em}
-.cw-status__grupa{display:contents}
-/* Kolory na sztywno: kit nie ma tokenow feedbacku, wiec nie udajemy powiazania,
-   ktorego nie ma. Jeden ton na kazda etykiete z manifestu, lacznie z neutralnym. */
-.cw-status__etykieta--neutral{color:var(--w-text-secondary)}
-.cw-status__etykieta--uwaga{color:#8a6100}
-.cw-status__etykieta--praca{color:#6d28d9}
-.cw-status__etykieta--czeka{color:#1d4ed8}
-.cw-status__etykieta--poprawki{color:#b91c1c}
-.cw-status__etykieta--ok{color:#166534}
+/* The follow-up tracks are the only part allowed to shrink: a long list is cut
+   with an ellipsis, the gate state and the task link always stay whole. */
+.cw-status__grupa{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.cw-status__grupa .cw-status__stan{font-weight:400}
+/* Hard-coded colours: the kit has no feedback tokens, so we do not pretend a
+   link that is not there. One tone per state tone in the manifest. */
+.cw-status__stan--brak,.cw-status__stan--neutral{color:var(--w-text-secondary)}
+.cw-status__stan--praca{color:#6d28d9}
+.cw-status__stan--czeka{color:#1d4ed8}
+.cw-status__stan--poprawki{color:#b91c1c}
+.cw-status__stan--ok{color:#166534}
 .cw-status__ac{color:inherit;text-decoration:underline;text-underline-offset:2px}
 .cw-status__ac:hover{color:var(--w-text-primary)}
 @media (max-width:640px){.cw-status__grupa{display:none}}
@@ -522,17 +531,42 @@
     st.textContent = STATUS_CSS;
     document.head.appendChild(st);
 
-    /* Separator jedzie RAZEM ze swoim elementem, nie jest doklejany miedzy czesci.
-       Dzieki temu schowanie etykiety na waskim ekranie nie zostawia wiszacej kropki. */
+    var esc = function (t) {
+      return String(t).replace(/[&<>"]/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+      });
+    };
+    /* state of one track: the manifest keeps the state KEY, the track lists its states */
+    var stany = d.stan || {};
+    var stanToru = function (tor) {
+      var k = stany[tor.klucz], i;
+      for (i = 0; k && i < tor.stany.length; i++) if (tor.stany[i].klucz === k) return tor.stany[i];
+      return null;
+    };
+    var tory = cfg.tory || [], brama = null, i;
+    for (i = 0; i < tory.length; i++) if (tory[i].klucz === "makieta") brama = tory[i];
+    var s = brama && stanToru(brama);
+
+    /* the state table stands next to status.js, above the version folders */
+    var tag = document.querySelector('script[src$="status.js"]');
+    var tabela = tag ? tag.getAttribute("src").replace(/status\.js$/, "stan-podstron.html") : "../stan-podstron.html";
+
+    /* A separator travels WITH its element instead of being glued between parts,
+       so hiding the group on a narrow screen leaves no dangling dot. */
     var SEP = '<span class="cw-status__sep">·</span>';
-    var html = "<span>Status:</span>";
-    if (d.etap && cfg.etapy[d.etap]) {
-      html += '<span class="cw-status__etap">' + cfg.etapy[d.etap] + "</span>";
-      var e = d.etykieta && cfg.etykiety[d.etykieta];
-      if (e) html += '<span class="cw-status__grupa">' + SEP +
-        '<span class="cw-status__etykieta cw-status__etykieta--' + e.ton + '">' + e.tekst + "</span></span>";
-    } else {
-      html += '<span class="cw-status__etap">do ustalenia</span>';
+    var html = '<a class="cw-status__tor" href="' + esc(tabela) + '" title="Stan wszystkich podstron">' +
+      esc(brama ? brama.nazwa : "Makieta") + ":</a>" +
+      '<span class="cw-status__stan cw-status__stan--' + (s ? esc(s.ton) : "brak") + '">' +
+      (s ? esc(s.nazwa) : "do ustalenia") + "</span>";
+
+    if (s && s.klucz === "zaakceptowany") {
+      var dalej = [];
+      for (i = 0; i < tory.length; i++) {
+        var t = tory[i], ts = t !== brama && stanToru(t);
+        if (ts) dalej.push(esc(t.nazwa.split(" ")[0]) + ': <span class="cw-status__stan cw-status__stan--' +
+          esc(ts.ton) + '">' + esc(ts.nazwa) + "</span>");
+      }
+      if (dalej.length) html += '<span class="cw-status__grupa">' + SEP + dalej.join(SEP) + "</span>";
     }
     if (d.ac) html += SEP + '<a class="cw-status__ac" href="' + cfg.meta.bazaAC + d.ac +
       '" target="_blank" rel="noopener">AC #' + d.ac + "</a>";
@@ -542,7 +576,13 @@
     box.id = "serwis-status";
     box.setAttribute("data-ce", "CE-06");
     box.setAttribute("role", "note");
-    box.setAttribute("aria-label", "Stan prac nad tą podstroną");
+    var label = "Stan prac nad tą podstroną";
+    if (s && s.klucz === "do-akceptacji" && cfg.akceptacja_ukladu) {
+      /* what exactly the client is asked to approve */
+      box.title = cfg.akceptacja_ukladu;
+      label += ": makieta do akceptacji. " + cfg.akceptacja_ukladu;
+    }
+    box.setAttribute("aria-label", label);
     box.innerHTML = html;
     document.body.appendChild(box);
   }

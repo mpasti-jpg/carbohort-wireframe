@@ -2,10 +2,10 @@
    vault keeps the full file with the decision history of every block). */
 window.CW_CE = {
   "meta": {
-    "zaktualizowano": "2026-10-02",
+    "zaktualizowano": "2026-10-04",
     "katalogWersji": "v7/",
     "indeks": "ce-indeks.html",
-    "opis": "Rejestr content elementów (CE) makiet CarboHort V5: metadane klocków. Wystąpienia wynikają ze znaczników data-ce w HTML stron – skanuje je _narzedzia/ce-indeks.py. Spec: 40-strona-www/koncepcja/content-elementy-spec.md."
+    "opis": "Rejestr content elementów (CE) makiet CarboHort V7: metadane CE. Wystąpienia wynikają ze znaczników data-ce w HTML stron – skanuje je _narzedzia/ce-indeks.py. Spec: 40-strona-www/koncepcja/content-elementy-spec.md."
   },
   "grupy": {
     "wspolne": "Elementy wspólne serwisu (chrome.js)",
@@ -18,10 +18,365 @@ window.CW_CE = {
     "noty-i-cta": "Noty, boksy, pasy CTA, cytaty",
     "nakladki": "Nakładki: lightbox i pop-up"
   },
+  "fasety": [
+    {
+      "klucz": "rodzina",
+      "nazwa": "Rodzina",
+      "grupuje": true,
+      "glowny": true,
+      "naKarcie": false,
+      "wartosci": [
+        {
+          "klucz": "otwarcie",
+          "nazwa": "Otwarcia i wstępy",
+          "opis": "Pierwszy ekran podstrony albo sekcji: tytuł, lead, kadr, packshot."
+        },
+        {
+          "klucz": "obraz-tekst",
+          "nazwa": "Obraz i tekst",
+          "opis": "Zdjęcie albo wideo równorzędne z tekstem – jedna, dwie pozycje."
+        },
+        {
+          "klucz": "karty",
+          "nazwa": "Karty i kafle",
+          "opis": "Kilka krótkich pozycji obok siebie: ikona albo zdjęcie, tytuł, zdanie–dwa."
+        },
+        {
+          "klucz": "zwijane",
+          "nazwa": "Taby, akordeony, listy z panelem",
+          "opis": "Dużo treści na małej powierzchni – opis odsłania klik."
+        },
+        {
+          "klucz": "sceny",
+          "nazwa": "Sceny przypięte",
+          "opis": "Ekran stoi, treść wymienia się przy przewijaniu – jedna myśl naraz."
+        },
+        {
+          "klucz": "dane",
+          "nazwa": "Tabele, listy, liczby, osie",
+          "opis": "Parametry, porównania, wyniki, przeliczniki, harmonogramy, wiersze z akcją."
+        },
+        {
+          "klucz": "pasy",
+          "nazwa": "Pasy, noty, wezwania",
+          "opis": "Jedno zdanie, cytat, nota albo nagłówek z przyciskiem."
+        },
+        {
+          "klucz": "sklep-formularze",
+          "nazwa": "Sklep i formularze",
+          "opis": "Pola, kontakt, lista produktów, koszyk."
+        },
+        {
+          "klucz": "okna",
+          "nazwa": "Okna",
+          "opis": "Treść otwierana na żądanie nad stroną."
+        },
+        {
+          "klucz": "wspolne",
+          "nazwa": "Elementy wspólne",
+          "opis": "Nagłówek, stopka, menu, nawigacja po stronie."
+        }
+      ]
+    },
+    {
+      "klucz": "media",
+      "nazwa": "Media",
+      "glowny": true,
+      "naKarcie": true,
+      "wartosci": [
+        {
+          "klucz": "zdjecie",
+          "nazwa": "zdjęcie"
+        },
+        {
+          "klucz": "wideo",
+          "nazwa": "wideo"
+        },
+        {
+          "klucz": "packshot",
+          "nazwa": "packshot"
+        },
+        {
+          "klucz": "ikona",
+          "nazwa": "ikona"
+        },
+        {
+          "klucz": "schemat-wykres",
+          "nazwa": "schemat, wykres"
+        },
+        {
+          "klucz": "bez-mediow",
+          "nazwa": "bez mediów"
+        }
+      ]
+    },
+    {
+      "klucz": "tekst",
+      "nazwa": "Ilość tekstu",
+      "glowny": true,
+      "naKarcie": true,
+      "wartosci": [
+        {
+          "klucz": "tylko-naglowek",
+          "nazwa": "sam nagłówek"
+        },
+        {
+          "klucz": "krotki",
+          "nazwa": "krótki opis"
+        },
+        {
+          "klucz": "sredni",
+          "nazwa": "średni opis"
+        },
+        {
+          "klucz": "dlugi",
+          "nazwa": "długi opis"
+        }
+      ]
+    },
+    {
+      "klucz": "ukryte",
+      "nazwa": "Opis ukryty",
+      "glowny": true,
+      "naKarcie": true,
+      "wartosci": [
+        {
+          "klucz": "wszystko-widoczne",
+          "nazwa": "wszystko widoczne"
+        },
+        {
+          "klucz": "akordeon",
+          "nazwa": "akordeon"
+        },
+        {
+          "klucz": "taby-przelacznik",
+          "nazwa": "taby, przełącznik"
+        },
+        {
+          "klucz": "okno",
+          "nazwa": "pop-up, lightbox"
+        },
+        {
+          "klucz": "przewijanie",
+          "nazwa": "odsłania przewijanie"
+        },
+        {
+          "klucz": "hover",
+          "nazwa": "po najechaniu"
+        },
+        {
+          "klucz": "karuzela",
+          "nazwa": "karuzela"
+        }
+      ]
+    },
+    {
+      "klucz": "pozycje",
+      "nazwa": "Liczba pozycji",
+      "glowny": false,
+      "naKarcie": false,
+      "wartosci": [
+        {
+          "klucz": "1",
+          "nazwa": "jedna"
+        },
+        {
+          "klucz": "2-4",
+          "nazwa": "2–4"
+        },
+        {
+          "klucz": "5-8",
+          "nazwa": "5–8"
+        },
+        {
+          "klucz": "9+",
+          "nazwa": "9 i więcej"
+        }
+      ]
+    },
+    {
+      "klucz": "nadaje",
+      "nazwa": "Nadaje się do",
+      "glowny": false,
+      "naKarcie": false,
+      "wartosci": [
+        {
+          "klucz": "otwarcie-strony",
+          "nazwa": "otwarcie strony"
+        },
+        {
+          "klucz": "korzysci-argumenty",
+          "nazwa": "korzyści i argumenty"
+        },
+        {
+          "klucz": "opis-produktu",
+          "nazwa": "opis produktu"
+        },
+        {
+          "klucz": "lista-produktow",
+          "nazwa": "lista produktów"
+        },
+        {
+          "klucz": "porownanie-wybor",
+          "nazwa": "porównanie i wybór"
+        },
+        {
+          "klucz": "kroki-proces",
+          "nazwa": "kroki i proces"
+        },
+        {
+          "klucz": "harmonogram-czas",
+          "nazwa": "harmonogram i czas"
+        },
+        {
+          "klucz": "liczby-dane",
+          "nazwa": "liczby i dane"
+        },
+        {
+          "klucz": "dowod-zrodla",
+          "nazwa": "dowód i źródła"
+        },
+        {
+          "klucz": "faq",
+          "nazwa": "pytania i odpowiedzi"
+        },
+        {
+          "klucz": "tekst-ciagly",
+          "nazwa": "tekst ciągły"
+        },
+        {
+          "klucz": "ludzie",
+          "nazwa": "ludzie"
+        },
+        {
+          "klucz": "ostrzezenie-nota",
+          "nazwa": "nota i ostrzeżenie"
+        },
+        {
+          "klucz": "cta",
+          "nazwa": "wezwanie do działania"
+        },
+        {
+          "klucz": "kontakt-formularz",
+          "nazwa": "kontakt i formularz"
+        },
+        {
+          "klucz": "sklep-transakcja",
+          "nazwa": "sklep i zakup"
+        },
+        {
+          "klucz": "galeria-media",
+          "nazwa": "galeria"
+        },
+        {
+          "klucz": "nawigacja",
+          "nazwa": "nawigacja"
+        }
+      ]
+    },
+    {
+      "klucz": "mechanika",
+      "nazwa": "Mechanika",
+      "glowny": false,
+      "naKarcie": false,
+      "wartosci": [
+        {
+          "klucz": "statyczny",
+          "nazwa": "statyczny"
+        },
+        {
+          "klucz": "przewijanie",
+          "nazwa": "sterowany przewijaniem"
+        },
+        {
+          "klucz": "klik",
+          "nazwa": "klik"
+        },
+        {
+          "klucz": "okno",
+          "nazwa": "otwiera okno"
+        },
+        {
+          "klucz": "formularz",
+          "nazwa": "pola, przelicznik"
+        },
+        {
+          "klucz": "ruch-wlasny",
+          "nazwa": "ruch własny"
+        }
+      ]
+    },
+    {
+      "klucz": "zakres",
+      "nazwa": "Zakres",
+      "glowny": false,
+      "naKarcie": false,
+      "wartosci": [
+        {
+          "klucz": "uniwersalny",
+          "nazwa": "uniwersalny"
+        },
+        {
+          "klucz": "typ-strony",
+          "nazwa": "jeden typ strony"
+        },
+        {
+          "klucz": "jednorazowy",
+          "nazwa": "jednorazowy"
+        }
+      ]
+    }
+  ],
+  "projekt_stany": [
+    {
+      "klucz": "natywny",
+      "nazwa": "Natywny projekt graficzny"
+    },
+    {
+      "klucz": "do-przygotowania",
+      "nazwa": "Projekt do przygotowania"
+    },
+    {
+      "klucz": "brak",
+      "nazwa": "Brak"
+    }
+  ],
   "ce": {
     "CE-01": {
       "nazwa": "Nagłówek serwisu",
       "grupa": "wspolne",
+      "rodzina": "wspolne",
+      "skrot": "Pasek nagłówka: wordmark, nawigacja z mega-menu, przyciski Konfigurator i Sklep, koszyk z licznikiem.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "ikona"
+        ],
+        "tekst": [
+          "tylko-naglowek"
+        ],
+        "ukryte": [
+          "okno",
+          "hover"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "nawigacja",
+          "sklep-transakcja"
+        ],
+        "mechanika": [
+          "klik",
+          "okno"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "skroty_wariantow": {
+        "podglad-koszyka": "Nagłówek z wysuniętym panelem podglądu koszyka: pozycje z miniaturą, suma, przyciski."
+      },
       "opis": "Pasek nagłówka na całą szerokość: wordmark po lewej, główna nawigacja na środku (trzy wyzwalacze mega-menu i trzy linki działów), po prawej przycisk Konfiguratora, przycisk „Sklep”, ikona koszyka z licznikiem opakowań i przycisk menu mobilnego. Pod paskiem, na szerokość kontenera, wysuwa się podgląd koszyka (od 28.09.2026). Renderowany przez chrome.js ze znacznika cw-navbar.",
       "mechanika": "Wyzwalacze otwierają mega-menu (aria-expanded, przyciemnienie tła), pozycja bieżąca podświetlona z data-current; poniżej progu mobilnego pasek pokazuje przycisk otwierający nawigację mobilną. Licznik przy ikonie koszyka i jej etykietę dostępną odświeża sklep-wspolne.js, na stronach bez tego skryptu cw.js czyta liczbę z sessionStorage. Podgląd koszyka: po najechaniu na ikonę koszyka (tylko wskaźnik z kursorem, od 980 px, nigdy na stronie koszyka) po 150 ms wysuwa się pod nagłówkiem panel – pozycje w rzędzie (miniatura opakowania, nazwa, opakowanie, „3 × 39 zł”, wartość; strzałki przewijania, gdy pozycje się nie mieszczą) i pasek z liczbą opakowań, wartością produktów oraz przyciskami „Koszyk” i „Przejdź do kasy”; przy pustym koszyku zdanie i „Przejdź do sklepu”. Zamyka się 250 ms po zjechaniu kursorem z ikony i panelu, Escape albo przy otwarciu mega-menu; klik w ikonę dalej prowadzi do koszyka, na dotyku panelu nie ma. Dane z sessionStorage cw_cart_items, przerysowanie przy zdarzeniu cw:cart. Obsługa w cw.js.",
       "baza": {
@@ -62,6 +417,40 @@ window.CW_CE = {
     "CE-02": {
       "nazwa": "Mega-menu",
       "grupa": "wspolne",
+      "rodzina": "wspolne",
+      "skrot": "Rozwijany panel pod nagłówkiem: nagłówek, kolumny odnośników lub boksy produktów, stopka z akcją.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "bez-mediow"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "hover"
+        ],
+        "pozycje": [
+          "9+"
+        ],
+        "nadaje": [
+          "nawigacja",
+          "lista-produktow"
+        ],
+        "mechanika": [
+          "klik",
+          "okno"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "skroty_wariantow": {
+        "szerokie": "Cztery boksy produktów, dwa przyciski w nagłówku panelu, rząd potrzeb.",
+        "domyslne": "Trzy kolumny list odnośników.",
+        "waskie": "Jedna wąska lista odnośników.",
+        "grupy": "Pięć grup upraw z listami nazw (Ozime i Jare), stopka z Konfiguratorem."
+      },
       "opis": "Panel rozwijany pod nagłówkiem: nagłówek panelu, kolumny odnośników, boksy produktowe albo grupy upraw, stopka panelu. Cztery warianty układu zależnie od treści działu.",
       "mechanika": "Otwierany wyzwalaczem z nagłówka (data-open, aria-controls), zamykany klikiem poza panelem albo Escape; tło przyciemnione przez cw-scrim. Obsługa w cw.js.",
       "baza": {
@@ -99,6 +488,33 @@ window.CW_CE = {
     "CE-03": {
       "nazwa": "Nawigacja mobilna",
       "grupa": "wspolne",
+      "rodzina": "wspolne",
+      "skrot": "Pionowy panel nawigacji mobilnej: lista działów, rozwijane grupy upraw i przycisk.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "bez-mediow"
+        ],
+        "tekst": [
+          "tylko-naglowek"
+        ],
+        "ukryte": [
+          "akordeon"
+        ],
+        "pozycje": [
+          "9+"
+        ],
+        "nadaje": [
+          "nawigacja"
+        ],
+        "mechanika": [
+          "klik",
+          "okno"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
       "opis": "Panel nawigacji rozwijany pod paskiem nagłówka na wąskich ekranach: lista działów z CTA, a pod etykietą „Rodzaje upraw” pięć rozwijanych grup upraw z tą samą treścią i tymi samymi stanami pozycji co mega-menu (od 20.09.2026).",
       "mechanika": "Otwierany przyciskiem menu z nagłówka, z przyciemnieniem tła; pozycja bieżąca podświetlona (data-nav na obu poziomach). Grupy upraw to natywne znaczniki „details” ze wspólnym atrybutem „name”, więc otwarta zostaje jedna i działają bez JS; grupę bieżącej uprawy otwiera funkcja „markCurrent” z chrome.js. Reszta obsługi w cw.js.",
       "baza": {
@@ -127,6 +543,33 @@ window.CW_CE = {
     "CE-04": {
       "nazwa": "Stopka serwisu",
       "grupa": "wspolne",
+      "rodzina": "wspolne",
+      "skrot": "Stopka: kolumna marki z opisem, trzy kolumny odnośników i pas dolny z notą praw.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "bez-mediow"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "9+"
+        ],
+        "nadaje": [
+          "nawigacja",
+          "kontakt-formularz"
+        ],
+        "mechanika": [
+          "statyczny"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
       "opis": "Stopka na całą szerokość: cztery kolumny (marka i opis, odnośniki działów, produkty, kontakt) i pas dolny z prawami i odnośnikami prawnymi.",
       "mechanika": "Statyczna.",
       "baza": {
@@ -150,6 +593,34 @@ window.CW_CE = {
     "CE-05": {
       "nazwa": "Dok doradcy",
       "grupa": "wspolne",
+      "rodzina": "wspolne",
+      "skrot": "Pływający pasek z polem pytania do doradcy i przyciskiem wysyłki; po otwarciu panel rozmowy.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "ikona"
+        ],
+        "tekst": [
+          "tylko-naglowek"
+        ],
+        "ukryte": [
+          "okno"
+        ],
+        "pozycje": [
+          "1"
+        ],
+        "nadaje": [
+          "kontakt-formularz",
+          "cta"
+        ],
+        "mechanika": [
+          "formularz",
+          "okno"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
       "opis": "Pływający dok w prawym dolnym rogu: pasek z polem pytania i przyciskiem, po otwarciu panel rozmowy (nagłówek, wiadomości, formularz).",
       "mechanika": "Ukryty na stronach z sekcją hero do czasu zejścia z hero (sterowanie w warstwie strony), otwierany przyciskiem albo z linków data-jurek-open; panel z tłem przyciemnionym. Obsługa w cw.js.",
       "baza": {
@@ -175,7 +646,33 @@ window.CW_CE = {
     "CE-06": {
       "nazwa": "Plakietka stanu prac",
       "grupa": "wspolne",
-      "opis": "Niska plakietka w lewym dolnym rogu: etap, etykieta i odnośnik do zadania AC dla bieżącej podstrony.",
+      "rodzina": "wspolne",
+      "skrot": "Mała plakietka w rogu ekranu ze stanem makiety i linkiem do zadania; narzędzie robocze projektu.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "bez-mediow"
+        ],
+        "tekst": [
+          "tylko-naglowek"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "1"
+        ],
+        "nadaje": [
+          "ostrzezenie-nota"
+        ],
+        "mechanika": [
+          "statyczny"
+        ],
+        "zakres": [
+          "jednorazowy"
+        ]
+      },
+      "opis": "Niska plakietka w lewym dolnym rogu: stan makiety (akceptacja układu), po akceptacji także stany kolejnych torów, oraz odnośnik do zadania AC dla bieżącej podstrony. Słowo „Makieta” prowadzi do strony stanu podstron.",
       "mechanika": "Renderowana z manifestu status.js po nazwie pliku; bez wpisu nie pojawia się. Narzędzie wewnętrzne projektu.",
       "baza": {
         "plik": "v7/chrome.js",
@@ -186,8 +683,8 @@ window.CW_CE = {
         "js": "chrome.js (renderStatus)"
       },
       "czesci": [
-        "etap",
-        "etykieta",
+        "stan makiety",
+        "stany kolejnych torów",
         "odnośnik AC"
       ],
       "warianty": {},
@@ -199,6 +696,33 @@ window.CW_CE = {
     "CE-07": {
       "nazwa": "Nawigacja kropkowa",
       "grupa": "nawigacja",
+      "rodzina": "wspolne",
+      "skrot": "Pionowa lista kropek przy prawej krawędzi, jedna na rozdział strony; klik przewija do rozdziału.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "bez-mediow"
+        ],
+        "tekst": [
+          "tylko-naglowek"
+        ],
+        "ukryte": [
+          "hover"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "nawigacja"
+        ],
+        "mechanika": [
+          "przewijanie",
+          "klik"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
       "opis": "Pionowa lista kropek przyklejona przy prawej krawędzi ekranu, jedna kropka na rozdział strony; etykiety rozdziałów wysuwają się po najechaniu na całą nawigację.",
       "mechanika": "Scrollspy po sekcjach z data-chapter (kropka aktywna większa), klik przewija płynnie do rozdziału (przez Lenis, gdy aktywny); mix-blend-mode difference na ciemnym tle; ukryta poniżej 900 px.",
       "baza": {
@@ -221,6 +745,44 @@ window.CW_CE = {
     "CE-08": {
       "nazwa": "Hero",
       "grupa": "otwarcie",
+      "rodzina": "otwarcie",
+      "skrot": "Pierwszy ekran: kicker, duży H1, lead, dwa przyciski i okruszki, obok panel z packshotem lub kadrem.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "packshot",
+          "zdjecie"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "1"
+        ],
+        "nadaje": [
+          "otwarcie-strony",
+          "opis-produktu"
+        ],
+        "mechanika": [
+          "statyczny"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "skroty_wariantow": {
+        "polka": "Półka czterech opakowań na jasnym panelu po prawej.",
+        "linia-produktow": "Nagłówek i lead w górnym rzędzie, pod nim gama opakowań w jednej linii.",
+        "kadr": "Kadr zdjęcia uprawy na panelu zamiast packshotu.",
+        "kadr-w-tle": "Zdjęcie uprawy w tle sekcji, H1 u dołu po lewej, lead i przyciski po prawej.",
+        "player": "Panel z odtwarzaczem filmu.",
+        "foto": "Panel ze zdjęciem zamiast packshotu.",
+        "dzial": "Wąska kolumna z nagłówkiem działu, wyszukiwarką i przyciskiem przewodnika.",
+        "artykul": "Nagłówek artykułu: okruszki, chipy, H1, metryka autora, przyciski udostępnij i drukuj."
+      },
       "opis": "Pierwszy ekran pod menu serwisu (min-height 100svh minus menu). Lewa kolumna: kicker, H1, lead, rząd dwóch przycisków wyśrodkowane w pionie, dyskretny breadcrumb przy dolnej krawędzi. Prawa: jasnoszary panel z marginesem 30 px, a na jego środku packshoty, półka opakowań, kadr zdjęcia albo player.",
       "mechanika": "Statyczne; po zejściu z hero pojawia się dok doradcy (moduł 00 strony).",
       "baza": {
@@ -265,6 +827,36 @@ window.CW_CE = {
     "CE-09": {
       "nazwa": "Marquee",
       "grupa": "otwarcie",
+      "rodzina": "pasy",
+      "skrot": "Poziomy pas zapętlonego dużego tekstu przeplatanego kwadratowymi miniaturami zdjęć.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "zdjecie"
+        ],
+        "tekst": [
+          "tylko-naglowek"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "korzysci-argumenty",
+          "galeria-media"
+        ],
+        "mechanika": [
+          "ruch-wlasny"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "skroty_wariantow": {
+        "z-ikona": "Hasła przeplatane ikonami zamiast miniatur zdjęć."
+      },
       "opis": "Poziomy pas między hero a następną sekcją: duży tekst pozycji przeplatany kwadratowymi miniaturami (narożniki 12 px), tor zdublowany, 130 px odstępu góra i dół (80 px na telefonie).",
       "mechanika": "Pętla bez szwu (translateX -50 %, ok. 42 s), pauza po najechaniu; przy reduced-motion statyczny pas przewijany w poziomie.",
       "baza": {
@@ -293,6 +885,39 @@ window.CW_CE = {
     "CE-10": {
       "nazwa": "Parametry na wideo",
       "grupa": "otwarcie",
+      "rodzina": "sceny",
+      "skrot": "Zdjęcie lub wideo w tle, na nim kicker, nagłówek i tabela parametrów w szklanych kafelkach.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "wideo",
+          "zdjecie"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "taby-przelacznik"
+        ],
+        "pozycje": [
+          "9+"
+        ],
+        "nadaje": [
+          "liczby-dane",
+          "opis-produktu"
+        ],
+        "mechanika": [
+          "przewijanie",
+          "statyczny"
+        ],
+        "zakres": [
+          "typ-strony"
+        ]
+      },
+      "skroty_wariantow": {
+        "z-tabami": "Dwa zestawy parametrów przełączane tabami nad tabelą.",
+        "kafelki-z-wejsciem": "Osiem półprzezroczystych kafelków parametrów na zdjęciu, wejście z przewijania."
+      },
       "opis": "Sekcja bez własnego tła, 30 px marginesu z boków, min-height 100svh: wideo w pętli przyklejone na całą wysokość sekcji pod maską, nad nim wyśrodkowana treść (tytuł, tabela dl, dyskretny link do analizy, przyciski karty i certyfikatów, przypis).",
       "mechanika": "Wideo sticky na czas sekcji, pauza przy reduced-motion (poster); treść przewija się po wideo, gdy dłuższa niż ekran. Moduł 30.",
       "baza": {
@@ -322,7 +947,43 @@ window.CW_CE = {
     "CE-11": {
       "nazwa": "Warianty na tabach",
       "grupa": "przelaczniki",
-      "opis": "Od 02.10.2026 klocek stoi na dwóch stronach produktowych (CARBOMAT ECO, CARBOHUMIC) w wariancie pasma-z-przelacznikiem: pasmo na produkt na całą szerokość okna, po lewej packshot albo kadr zdjęcia z przełącznikiem produktów, po prawej karta opisu. Układ wcześniejszy (dziś tylko Próchnica+, wariant taby-lat): pasek tabów wariantów przyklejony do górnej krawędzi na czas bloku, pod nim bloki wariantów jeden pod drugim: nazwa wyśrodkowana, scena kafle | packshot | kafle, dwie kolumny (aplikacja | opakowania z cennikiem).",
+      "rodzina": "zwijane",
+      "skrot": "Pasma produktów: packshot z przełącznikiem po lewej, biała karta opisu z funkcjami, pH i zakupem po prawej.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "packshot",
+          "ikona"
+        ],
+        "tekst": [
+          "dlugi"
+        ],
+        "ukryte": [
+          "taby-przelacznik"
+        ],
+        "pozycje": [
+          "2-4"
+        ],
+        "nadaje": [
+          "opis-produktu",
+          "porownanie-wybor",
+          "sklep-transakcja"
+        ],
+        "mechanika": [
+          "przewijanie",
+          "klik"
+        ],
+        "zakres": [
+          "typ-strony"
+        ]
+      },
+      "skroty_wariantow": {
+        "trzy-warianty": "Trzy taby i trzy bloki wariantów produktu.",
+        "taby-lat": "Kompaktowe taby lat przełączające panele z tabelami wyników.",
+        "karty-w-taby": "Karty wyboru sposobu aplikacji z packshotem, które w ruchu stają się tabami.",
+        "pasma-z-przelacznikiem": "Pasmo z packshotem, pigułką przełącznika produktów i białą kartą opisu z cenami wariantów."
+      },
+      "opis": "Od 02.10.2026 CE stoi na dwóch stronach produktowych (CARBOMAT ECO, CARBOHUMIC) w wariancie pasma-z-przelacznikiem: pasmo na produkt na całą szerokość okna, po lewej packshot albo kadr zdjęcia z przełącznikiem produktów, po prawej karta opisu. Układ wcześniejszy (dziś tylko Próchnica+, wariant taby-lat): pasek tabów wariantów przyklejony do górnej krawędzi na czas bloku, pod nim bloki wariantów jeden pod drugim: nazwa wyśrodkowana, scena kafle | packshot | kafle, dwie kolumny (aplikacja | opakowania z cennikiem).",
       "mechanika": "Pasma: pasmo przypięte na wysokość okna, treść karty jedzie z przewijaniem, przełącznik to odnośniki do kotwic pasm (szczegóły w wariancie pasma-z-przelacznikiem). Taby (Próchnica+, mechanika z c5.js): taby nie ukrywają treści – klik przewija do bloku, scrollspy zaznacza tab bloku pod paskiem, pasek chowa się, gdy od dołu wchodzi następna sekcja.",
       "baza": {
         "plik": "v7/carbomat.html",
@@ -361,6 +1022,43 @@ window.CW_CE = {
     "CE-12": {
       "nazwa": "Scena faktów",
       "grupa": "sceny",
+      "rodzina": "sceny",
+      "skrot": "Przypięta scena: po lewej tytuł, opis i licznik jednego faktu naraz, po prawej zdjęcie z boksem ilustracji.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "zdjecie",
+          "schemat-wykres"
+        ],
+        "tekst": [
+          "sredni"
+        ],
+        "ukryte": [
+          "przewijanie"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "korzysci-argumenty",
+          "kroki-proces",
+          "opis-produktu"
+        ],
+        "mechanika": [
+          "przewijanie"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "skroty_wariantow": {
+        "naglowek-nad-scena": "Nagłówek i lead nad torem, w scenie tylko opis punktu.",
+        "osiem-krokow": "Scena z ośmioma krokami, kroki 2–6 na wspólnym zdjęciu.",
+        "z-leadem": "Scena z dwoma akapitami leadu przyklejonymi z nagłówkiem.",
+        "z-naglowkiem": "Kicker i H2 przyklejone w lewej kolumnie, pod nimi fakt z linią postępu i licznikiem.",
+        "bez-naglowka": "Scena bez kickera i H2; nagłówek stoi nad torem jako zwykły nagłówek sekcji.",
+        "glass-i-zielen": "Warstwa wyglądu: szklane karty faktu i wizualizacji na zielonym tonie."
+      },
       "opis": "Scena sticky 100svh w wysokim torze, układ wg ramki Figma „Frame 206”: kontener na całą szerokość okna (do 1800 px), po lewej przyklejony kicker i H2 (wariant z-naglowkiem) albo sama kolumna tekstu, przy dolnej krawędzi jeden fakt naraz – tytuł, cienka linia z postępem slajdu, opis i licznik „02/05”; po prawej panel zdjęcia na wysokość ekranu z marginesem 20 px, bez przyciemnienia, z boksem ilustracji na rozmytym tle (kolory odwrócone).",
       "mechanika": "Pozycja przewijania wybiera krok (długość kroku ze zmiennych --fx-step-min 480 i --fx-step-vh 0,8), zdjęcie panelu crossfade, ilustracja podmieniana, linia postępu bieżącego slajdu z --fx-f; jedyny blok [data-fx-head] w sekcji nigdy nie dostaje hidden (strażnik modułu). Poniżej 900 px, przy reduced-motion i bez JS bloki stoją jeden pod drugim. Moduł 50.",
       "baza": {
@@ -382,8 +1080,8 @@ window.CW_CE = {
         "naglowek-nad-scena": "nagłówek i lead nad torem, w scenie tylko opis punktu (Mata) – bez wystąpień od 19.09.2026, CARBOMAT MATA przeszła na wariant bez-naglowka",
         "osiem-krokow": "8 kroków, kroki 2–6 na wspólnym zdjęciu (CARBOMAT HUMIC) – bez wystąpień od 19.09.2026: liczba kroków jest treścią, a długość kroku toru ustawiają zmienne --fx-step-min i --fx-step-vh, więc CARBOMAT HUMIC stoi dziś na wariancie z-naglowkiem",
         "z-leadem": "dwa akapity leadu przyklejone razem z nagłówkiem (Próchnica+ Metodologia) – bez wystąpień od 19.09.2026, Metodologia przeszła na wariant bez-naglowka",
-        "z-naglowkiem": "układ wg ramki Figma „Frame 206” z kickerem i H2 w scenie, bez leadu: jeden blok nagłówka przyklejony u góry lewej kolumny, przy dole jeden fakt naraz – tytuł, cienka linia z postępem bieżącego slajdu, opis i licznik „02/05” (Mateusz, 18.09.2026; od 19.09.2026 Produkty #jak-dzialaja, CARBOMAT ECO #czym-jest jako baza klocka i CARBOMAT HUMIC #czym-jest – osiem kroków, --fx-step-min 420, --fx-step-vh 0,7)",
-        "bez-naglowka": "ten sam układ bez kickera i H2 w scenie – kicker, H2 i lead stoją nad torem jako zwykły nagłówek sekcji (reguła Mateusza: lead nigdy w scenie); od 19.09.2026 Próchnica+ #metodologia, CARBOMAT MATA #czym-jest-scena (korzeń klocka to wewnętrzny kontener w sekcji #czym-jest) i CARBOHUMIC #czym-jest, a na Produktach do obejrzenia przełącznikiem podglądu",
+        "z-naglowkiem": "układ wg ramki Figma „Frame 206” z kickerem i H2 w scenie, bez leadu: jeden blok nagłówka przyklejony u góry lewej kolumny, przy dole jeden fakt naraz – tytuł, cienka linia z postępem bieżącego slajdu, opis i licznik „02/05” (Mateusz, 18.09.2026; od 19.09.2026 Produkty #jak-dzialaja, CARBOMAT ECO #czym-jest jako baza CE i CARBOMAT HUMIC #czym-jest – osiem kroków, --fx-step-min 420, --fx-step-vh 0,7)",
+        "bez-naglowka": "ten sam układ bez kickera i H2 w scenie – kicker, H2 i lead stoją nad torem jako zwykły nagłówek sekcji (reguła Mateusza: lead nigdy w scenie); od 19.09.2026 Próchnica+ #metodologia, CARBOMAT MATA #czym-jest-scena (korzeń CE to wewnętrzny kontener w sekcji #czym-jest) i CARBOHUMIC #czym-jest, a na Produktach do obejrzenia przełącznikiem podglądu",
         "glass-i-zielen": "warstwa wyglądu nałożona na dowolny układ sceny, klasa c5-fx--glass na korzeniu: tytuł faktu wagi 400, opis 14 px w #777771, licznik 11 px, kreska postępu czerń .1 z wypełnieniem w zieleni #71C35F (--c5-fx-green), boks ilustracji z promieniem i paddingiem 24 px, tłem rgb(53 46 40 / .43) i szkłem (blur 18 px, krawędź inset), plakietka numeru 16 px, słupki 6 px z etykietami 13–16 px, odstępy przy kresce 11/13 px (CARBOMAT ECO, CARBOHUMIC, CARBOMAT HUMIC).",
         "glass-v1": "pierwsza wersja warstwy glass, klasa c5-fx--glass-v1: wszystko jak w glass-i-zielen poza typografią słupków w boksie (zostaje 13 px) i odstępami przy kresce (zostają 14/16 px) (Produkty).",
         "naglowek-ramka": "nagłówek sceny wg ramki Figma „Frame 140-8475”, klasa c5-fx--naglowek-ramka: kicker jako plakietka z obrysem #0c2b1c, 24 px pod nią H2 w P22 Mackinac Pro Book 46/51 px na mierze 661 px, ze stopniami dla wąskiego i niskiego okna (CARBOMAT ECO).",
@@ -420,6 +1118,39 @@ window.CW_CE = {
     "CE-13": {
       "nazwa": "Przypięta scena produktu",
       "grupa": "sceny",
+      "rodzina": "sceny",
+      "skrot": "Przypięta scena produktu: packshot kurczy się do paska z przyciskiem, pod nim zdjęcie i taby kadrów.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "packshot",
+          "zdjecie"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "przewijanie",
+          "taby-przelacznik"
+        ],
+        "pozycje": [
+          "2-4"
+        ],
+        "nadaje": [
+          "opis-produktu",
+          "kroki-proces"
+        ],
+        "mechanika": [
+          "przewijanie",
+          "klik"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "skroty_wariantow": {
+        "n-kadrow": "Scena z dowolną liczbą kadrów, tor liczony z liczby kadrów."
+      },
       "opis": "Jeden article na produkt lub wariant: tor 100svh plus kilka ekranów, scena sticky; packshot z nazwą maleje do przyklejonego pasa z przyciskiem, zdjęcie rośnie od dołu, kartka opisu wjeżdża, taby kadrów przełączają zdjęcie i kartkę; napisy gasną na końcu.",
       "mechanika": "Wszystko interpolowane z pozycji przewijania (bez przejść w czasie), taby klikalne; poniżej 900 px pas jako blok i kadry jeden pod drugim. Moduł 60; wersja N kadrów liczy tor z liczby kadrów.",
       "baza": {
@@ -448,6 +1179,33 @@ window.CW_CE = {
     "CE-14": {
       "nazwa": "Sekcja 100svh z listą i zdjęciem",
       "grupa": "sceny",
+      "rodzina": "obraz-tekst",
+      "skrot": "Sekcja na ekran: kicker, H2, numerowana lista kroków z przyciskiem i zdjęcie na całą wysokość.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "zdjecie"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "2-4"
+        ],
+        "nadaje": [
+          "kroki-proces",
+          "cta"
+        ],
+        "mechanika": [
+          "przewijanie"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
       "opis": "Sekcja na wysokość ekranu, 30 px góra i dół: lewa kolumna z kickerem i H2 u góry oraz listą ol z numerami w kółkach i przyciskiem u dołu; prawa kolumna to zdjęcie na całą wysokość.",
       "mechanika": "Lekki parallax zdjęcia z pozycji przewijania (tylko motionOn); poniżej 900 px zdjęcie nad listą. Moduł 70.",
       "baza": {
@@ -474,6 +1232,41 @@ window.CW_CE = {
     "CE-15": {
       "nazwa": "Przypięte wiersze z packshotem",
       "grupa": "sceny",
+      "rodzina": "zwijane",
+      "skrot": "Akordeon wierszy z nagłówkiem i wierszami produktu z packshotem, otwieranymi kolejno przy przewijaniu.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "packshot"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "akordeon",
+          "przewijanie"
+        ],
+        "pozycje": [
+          "2-4"
+        ],
+        "nadaje": [
+          "harmonogram-czas",
+          "lista-produktow",
+          "kroki-proces"
+        ],
+        "mechanika": [
+          "przewijanie",
+          "klik",
+          "ruch-wlasny"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "skroty_wariantow": {
+        "kaskada-z-odliczaniem": "Trzy kolumny kart-akordeonów kaskadą, pierścień odliczania otwiera kolejną.",
+        "kaskada-z-pinem": "Trzy kolumny akordeonów z nagłówkami faz, otwierane przewijaniem przypiętej sekcji."
+      },
       "opis": "Nagłówek (kicker, H2, lead) przyklejony na czas cyklu; blok wierszy wchodzi w biegu z pierwszym wierszem otwartym i przykleja się dolną krawędzią; wiersz = tytuł | kwadratowa scena z packshotem | nazwa, opis, przycisk.",
       "mechanika": "Dalsze przewijanie otwiera kolejne wiersze (kwadrat rozwija się od dołu, potem wjeżdża packshot), po ostatnim całość odjeżdża; bez ruchu akordeon na klik z pierwszym otwartym; bez JS wszystkie otwarte. Moduł 80.",
       "baza": {
@@ -508,6 +1301,40 @@ window.CW_CE = {
     "CE-16": {
       "nazwa": "Pas PRO",
       "grupa": "sceny",
+      "rodzina": "pasy",
+      "skrot": "Pas ze zdjęciem w zaokrąglonej ramce, pod nim nagłówek po lewej i akapit z przyciskami po prawej.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "zdjecie"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "1"
+        ],
+        "nadaje": [
+          "cta",
+          "kontakt-formularz"
+        ],
+        "mechanika": [
+          "przewijanie"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "skroty_wariantow": {
+        "zamykajacy": "Kadr z nagłówkiem i dwoma przyciskami bez akapitu.",
+        "kontakt": "Pas zamykający rozmową: nagłówek, akapit i akcje kontaktowe (telefon, przyciski).",
+        "pozny-wzrost": "Kadr startuje na połowie szerokości i rośnie do pełnej z narastającym przyciemnieniem.",
+        "zielen-i-scrim": "Warstwa wyglądu: szare tło, zielony przycisk, scrim na zdjęciu.",
+        "kadr-z-prawej": "Statyczne zdjęcie na prawej połowie pasa, po lewej tekst i przycisk."
+      },
       "opis": "Pas na szarym tle: kadr zdjęcia z narożnikami 30 px, pod nim nagłówek po lewej oraz akapit i dwa przyciski po prawej; pod przyciskami opcjonalny cichy link trzeciej akcji.",
       "mechanika": "Kadr skaluje się od .5 do 1, gdy górna krawędź sekcji schodzi poniżej 75 % okna (koniec przy 10 %); statyczny kadr 3:2 na telefonie. Moduł 80/85.",
       "baza": {
@@ -526,7 +1353,7 @@ window.CW_CE = {
         "link „Nie masz konta? Załóż konto” (c5-pro__signup, opcjonalny)"
       ],
       "warianty": {
-        "zamykajacy": "bez akapitu: nagłówek po lewej, dwa przyciski po prawej, oba na kadrze (Kukurydza; od 18.09.2026 na bazowym kodzie klocka zamiast własnego portu u-end). Od 20.09.2026 (uwaga Mateusza: „Zdjęcie w tle zostaw na pełną szerokość ekranu, natomiast teksty po lewej i przyciski po prawej są w ramach kontenera z treścią o maksymalnej szerokości 1180 px. Typografia i przyciski odwzoruj z Frame 186-253”) kadr zostaje pełnoekranowy, a treść wraca z c5-wrap--wide na c5-wrap; typografia i przyciski jak w wariancie zielen-i-scrim – nagłówek 52/53 px na P22 Mackinac Pro, zielony przycisk podstawowy #86D574 z tuszem #0C2B1C, promienie 20 px, wysokość 56 px, odstęp 11 px, obwódka drugorzędnego rgb(255 255 255 / .5). Reguły w module pod klasami c5-pro--zamykajacy, c5-pro--zielen i c5-pro--h-mackinac; zostaje podłożenie rgb(0 0 0 / .3) pod przyciskiem drugorzędnym (poprawka czytelności na rozświetlonym pyle) i tło pasa --w-gray-600, bo kadr zakrywa je w całości",
+        "zamykajacy": "bez akapitu: nagłówek po lewej, dwa przyciski po prawej, oba na kadrze (Kukurydza; od 18.09.2026 na bazowym kodzie CE zamiast własnego portu u-end). Od 20.09.2026 (uwaga Mateusza: „Zdjęcie w tle zostaw na pełną szerokość ekranu, natomiast teksty po lewej i przyciski po prawej są w ramach kontenera z treścią o maksymalnej szerokości 1180 px. Typografia i przyciski odwzoruj z Frame 186-253”) kadr zostaje pełnoekranowy, a treść wraca z c5-wrap--wide na c5-wrap; typografia i przyciski jak w wariancie zielen-i-scrim – nagłówek 52/53 px na P22 Mackinac Pro, zielony przycisk podstawowy #86D574 z tuszem #0C2B1C, promienie 20 px, wysokość 56 px, odstęp 11 px, obwódka drugorzędnego rgb(255 255 255 / .5). Reguły w module pod klasami c5-pro--zamykajacy, c5-pro--zielen i c5-pro--h-mackinac; zostaje podłożenie rgb(0 0 0 / .3) pod przyciskiem drugorzędnym (poprawka czytelności na rozświetlonym pyle) i tło pasa --w-gray-600, bo kadr zakrywa je w całości",
         "kontakt": "pas zamykający rozmową: nagłówek po lewej, po prawej akapit i akcje kontaktowe. Na O nas (#porozmawiajmy) dwa przyciski, Kontakt i Zostań partnerem; na stronie głównej (#kontakt, 20.09.2026) numer telefonu jako duży link tel: z cyframi tabelarycznymi, wiersz godzin drobnym drukiem, dwa przyciski i cichy link do wszystkich działów",
         "pozny-wzrost": "kadr stoi na 50 % szerokości ekranu, dopóki górna krawędź pasa jest niżej niż 35 % wysokości okna, potem rośnie i pełny rozmiar osiąga 2 % od góry okna; nakładka przyciemniająca narasta razem ze wzrostem, więc w postoju zdjęcie jest bez przyciemnienia (uwagi Mateusza z 18.09.2026; od 19.09.2026 na pięciu stronach: Produkty, CARBOMAT ECO, CARBOMAT MATA, CARBOHUMIC, CARBOMAT HUMIC)",
         "zielen-i-scrim": "sama warstwa wyglądu nałożona na mechanikę pozny-wzrost, wg ramki Figma „Frame 186-253”, w module pod klasami c5-pro--zielen i c5-pro--scrim-ukosny (20.09.2026, CARBOMAT ECO): tło pasa #777771 zamiast --w-gray-600, nagłówek 52/53 px, akapit 21/26 px w pełnej bieli zamiast krycia .75, przycisk podstawowy w zieleni #86D574 z tekstem #0C2B1C, promieniem 20 px i paddingiem 18/24 px, przycisk drugorzędny z obwódką rgb(255 255 255 / .5), odstęp między przyciskami 11 px; kadr to zdjęcie sadu zakotwiczone dołem pod ukośnym gradientem #1A2405 o kryciu 30/10/10/30 %, rozciągniętym na cały pas z podłogą .55 + .45 × --pro-o. Copy zostaje dzisiejsze – uwaga dotyczyła typografii i przycisków, nie treści; ikony znaku marki z przycisku podstawowego nie odwzorowano, bo nie ma jej w sprite, a ikon się nie dorysowuje. Od 20.09.2026 także na Produktach (#dla-profesjonalistow): typografia, przyciski, pas i nakładka 1:1 z wartościami ramki. Przez pierwsze trzy godziny stały tam podkręcone pokrętła --pro-wash-a .50 i --pro-wash-b .35, bo strona pożyczała kadr z CARBOMAT ECO z białym big bagiem w środku i wartości ramki dawały kontrast GORSZY niż zastąpiony scrim (5. percentyl: nagłówek 2,17 wobec 3,15, akapit 4,00 wobec 5,16). Wieczorem strona dostała własny kadr (paczki w prawej jednej trzeciej, po lewej ciemne pole o zmierzchu) i wartości ramki wróciły: 12,69 : 1 dla nagłówka, 11,42 : 1 dla akapitu. Wniosek do przeniesienia wariantu dalej: liczby nakładki są dopasowane do ZDJĘCIA z ramki, nie do dowolnego kadru – pokrętła są właśnie po to",
@@ -551,6 +1378,38 @@ window.CW_CE = {
     "CE-17": {
       "nazwa": "FAQ",
       "grupa": "przelaczniki",
+      "rodzina": "zwijane",
+      "skrot": "Kicker i H2, pod nimi lista pytań z rozwijanymi odpowiedziami, wszystkie zwinięte na starcie.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "bez-mediow"
+        ],
+        "tekst": [
+          "sredni"
+        ],
+        "ukryte": [
+          "akordeon"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "faq"
+        ],
+        "mechanika": [
+          "klik"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "skroty_wariantow": {
+        "z-nota": "Nota o statusie odpowiedzi nad akordeonem.",
+        "dla-dociekliwych": "Pytanie nad odpowiedzią na pełną szerokość, przycisk do Centrum wiedzy.",
+        "plain": "Trzy pytania pod artykułem z odpowiedziami ze zdań tekstu.",
+        "informacje": "Trzy akordeony informacji o produkcie z czarnymi liniami i plusem."
+      },
       "opis": "Kicker i H2, pod nimi akordeon pytań: pytanie po lewej, odpowiedź po prawej, wszystkie zwinięte na starcie.",
       "mechanika": "Jedno pytanie otwarte naraz (panelSet animuje wysokość), otwarcie z kotwicy; bez JS wszystkie odpowiedzi widoczne. Moduł 90.",
       "baza": {
@@ -587,6 +1446,36 @@ window.CW_CE = {
     "CE-18": {
       "nazwa": "CTA wyśrodkowane",
       "grupa": "noty-i-cta",
+      "rodzina": "pasy",
+      "skrot": "Wyśrodkowany nagłówek (opcjonalnie lead) i rząd przycisków.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "bez-mediow"
+        ],
+        "tekst": [
+          "tylko-naglowek"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "1"
+        ],
+        "nadaje": [
+          "cta"
+        ],
+        "mechanika": [
+          "statyczny"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "skroty_wariantow": {
+        "na-pasie": "Ten sam nagłówek i przyciski na jasnym pasie c5-band w środku strony.",
+        "z-leadem": "Nagłówek z akapitem pod nim i dwoma przyciskami."
+      },
       "opis": "Wyśrodkowany H2 (opcjonalnie lead) i rząd przycisków.",
       "mechanika": "Statyczne.",
       "baza": {
@@ -613,6 +1502,33 @@ window.CW_CE = {
     "CE-19": {
       "nazwa": "Model interaktywny",
       "grupa": "przelaczniki",
+      "rodzina": "dane",
+      "skrot": "Rysunek SVG w ramce po lewej, panel opisu po prawej i rząd przycisków przełączających części modelu.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "schemat-wykres"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "taby-przelacznik"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "opis-produktu",
+          "liczby-dane"
+        ],
+        "mechanika": [
+          "klik"
+        ],
+        "zakres": [
+          "jednorazowy"
+        ]
+      },
       "opis": "Scena z rysunkiem SVG w cienkiej ramce po lewej, panel opisu po prawej, pod nimi rząd etykiet-przełączników części modelu.",
       "mechanika": "Czysty CSS: grupa radio + :checked podświetla warstwę SVG, pokazuje panel opisu i wypełnia etykietę; poniżej 900 px jedna kolumna.",
       "baza": {
@@ -636,6 +1552,54 @@ window.CW_CE = {
     "CE-20": {
       "nazwa": "Siatka kart",
       "grupa": "karty",
+      "rodzina": "karty",
+      "skrot": "Siatka kart w ramce: numer, ikona lub zdjęcie, tytuł, krótki opis, opcjonalnie lista i przyciski.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "zdjecie",
+          "packshot",
+          "ikona"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "okno"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "korzysci-argumenty",
+          "lista-produktow",
+          "opis-produktu"
+        ],
+        "mechanika": [
+          "statyczny",
+          "klik"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "skroty_wariantow": {
+        "z-ikona": "Karty z ikoną w kółku, tytułem i akapitem.",
+        "numerowane": "Karty z numerem porządkowym zamiast ikony.",
+        "ze-zdjeciem": "Karty ze zdjęciem 4:3 u góry.",
+        "z-przyciskami": "Karty ze zdjęciem lub packshotem, opisem i rzędem przycisków u dołu.",
+        "produktowe": "Packshot na szarym polu, dwa wiersze etykieta-wartość, cała karta jest linkiem do pop-upu.",
+        "kafle-danych": "Kafle z wartością, mini-wykresem słupków i chipem stanu.",
+        "ostrzegawcze": "Karty z ikoną x na przygaszonym tle.",
+        "sloty-poziome": "Miniatura 16:9 obok tekstu w karcie poziomej.",
+        "miejsca-na-wykresy": "Numer, placeholder 16:9 i podpis.",
+        "szerokie": "Dwie szerokie karty z ramką ikony, tytułem, zdaniem i strzałką, cały kafel linkiem.",
+        "czytaj-dalej": "Trzy karty: dwa artykuły i jedna strona komercyjna.",
+        "szklane": "Karty ze szkła na zdjęciu w tle sekcji, biały tekst.",
+        "sklepowe": "Cztery karty sklepu: makieta opakowania, nazwa, cena od, przycisk Dodaj do koszyka.",
+        "dorzuc": "Do czterech kart sklepowych z jasnym przyciskiem pod koszykiem.",
+        "polacz-z": "Dwie małe karty z miniaturą, nazwą, zdaniem, ceną i przyciskiem Dodaj w kolumnie zakupu."
+      },
       "opis": "Siatka kart auto-fit (2–5 kolumn zależnie od szerokości), karta w ramce: ikona, numer, zdjęcie albo packshot, tytuł, akapit, opcjonalnie lista dl i rząd przycisków.",
       "mechanika": "Statyczna albo z jednorazowym wejściem od dołu po wejściu w widok (data-reveal, IntersectionObserver, stagger 80–90 ms); poniżej 900 px, przy reduced-motion i bez JS karty po prostu widoczne; w wariancie produktowym na telefonie karuzela scroll-snap.",
       "baza": {
@@ -695,6 +1659,33 @@ window.CW_CE = {
     "CE-21": {
       "nazwa": "Dwie kolumny przewag",
       "grupa": "karty",
+      "rodzina": "obraz-tekst",
+      "skrot": "Nagłówek nad dwiema równymi kolumnami: zdjęcie, tytuł, cztery punkty i link.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "zdjecie"
+        ],
+        "tekst": [
+          "sredni"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "2-4"
+        ],
+        "nadaje": [
+          "porownanie-wybor",
+          "korzysci-argumenty"
+        ],
+        "mechanika": [
+          "statyczny"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
       "opis": "Nadpis nad parą równych kolumn: w każdej zdjęcie, tytuł, cztery punkty i link.",
       "mechanika": "Statyczne (czysty CSS).",
       "baza": {
@@ -717,6 +1708,41 @@ window.CW_CE = {
     "CE-22": {
       "nazwa": "Tabela",
       "grupa": "dane",
+      "rodzina": "dane",
+      "skrot": "Tabela w kontenerze przewijanym w poziomie, z nagłówkami kolumn, opcjonalnie packshotami i przypisem.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "packshot",
+          "zdjecie"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "okno"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "porownanie-wybor",
+          "liczby-dane"
+        ],
+        "mechanika": [
+          "statyczny",
+          "okno"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "skroty_wariantow": {
+        "porownawcza": "Kolumny jako porównywane pozycje.",
+        "danych": "Kolumny liczbowe wyrównane do prawej.",
+        "z-packshotami": "Kwadratowe pole zdjęcia nad każdą kolumną.",
+        "klikalne-wiersze": "Wiersze otwierają stronę lightboxa."
+      },
       "opis": "Samodzielna tabela w kontenerze przewijanym w poziomie na wąskich ekranach (cw-scrollx, tabindex), nagłówki kolumn, opcjonalnie packshoty w nagłówkach i przypis pod tabelą.",
       "mechanika": "Statyczna; wariant z klikalnymi wierszami otwiera lightbox; wiersze mogą wchodzić z reveal.",
       "baza": {
@@ -745,6 +1771,40 @@ window.CW_CE = {
     "CE-23": {
       "nazwa": "Pas CTA",
       "grupa": "noty-i-cta",
+      "rodzina": "pasy",
+      "skrot": "Pas na szerokość kolumny między kreskami: tekst po lewej, jeden lub dwa przyciski po prawej.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "ikona"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "1"
+        ],
+        "nadaje": [
+          "cta"
+        ],
+        "mechanika": [
+          "statyczny"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "skroty_wariantow": {
+        "z-ikona": "Ikona przed tekstem, kreski góra i dół.",
+        "kreski-gora-dol": "Bez ikony, kreski nad i pod.",
+        "dwa-przyciski": "Tekst i dwa przyciski, tylko kreska górna.",
+        "z-naglowkiem": "H4 w lewej kolumnie, tekst i przycisk w prawej.",
+        "ciemny": "Czarny pas: kicker, h3, akapit, jasny przycisk i motyw czterech połączonych pól.",
+        "cichy": "Jedno zdanie drobnym drukiem z linkiem w tekście na jasnoszarym pasie."
+      },
       "opis": "Pas na szerokość kolumny między kreską górną (i dolną): po lewej tekst (zdanie wytłuszczone + zdanie drugorzędne, opcjonalnie ikona albo h4 w osobnej kolumnie), po prawej jeden lub dwa przyciski.",
       "mechanika": "Statyczne; poniżej 900 px przyciski schodzą pod tekst.",
       "baza": {
@@ -790,6 +1850,42 @@ window.CW_CE = {
     "CE-24": {
       "nazwa": "Pas liczb",
       "grupa": "dane",
+      "rodzina": "dane",
+      "skrot": "Panel z kilkoma wielkimi liczbami z jednostką i podpisem, rozdzielonymi liniami lub kaflami.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "bez-mediow"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "2-4"
+        ],
+        "nadaje": [
+          "liczby-dane",
+          "dowod-zrodla"
+        ],
+        "mechanika": [
+          "przewijanie",
+          "ruch-wlasny",
+          "statyczny"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "skroty_wariantow": {
+        "odliczanie": "Liczby odliczają od zera.",
+        "kolowrotek": "Cyfry wjeżdżają kołowrotkiem.",
+        "kolumny": "Jasny panel, trzy kolumny z pionowymi liniami, chip nad liczbą i podpis pod nią.",
+        "kafle-2x2": "Ciemny panel, tytuł i siatka 2 × 2 kafli z wielką liczbą, etykietą i źródłem.",
+        "rzad": "Ciemny pas z tytułem i pięcioma kolumnami liczb z etykietą i źródłem."
+      },
       "opis": "Kadr z marginesem 30 px na wysokość ekranu. Wersja podstawowa: ciemne tło, tytuł u góry po lewej, wiersze „etykieta i podpis | wielka liczba z sufiksem” rozdzielone cienkimi liniami (bez wystąpień od 02.10.2026 – CARBOMAT Mata przeszła na wariant kafle-2x2). Wersja alternatywna (wariant kolumny): jasne tło, trzy kolumny z pionowymi liniami, chip nad liczbą, podpis pod nią. Sufiksy liczb to element EL-31.",
       "mechanika": "Cyfry odliczają od zera (Kukurydza) albo wjeżdżają kołowrotkiem (Próchnica+, od 02.10.2026 także CARBOMAT Mata); wejście wierszy ze staggerem należało do układu podstawowego Maty (do 02.10.2026); bez JS i przy reduced-motion od razu wartości końcowe.",
       "baza": {
@@ -810,7 +1906,7 @@ window.CW_CE = {
         "kolowrotek": "cyfry wjeżdżają kołowrotkiem (mechanika z Próchnicy+; od 19.09.2026 pracuje w układzie kafle-2x2, sam wariant bez własnych wystąpień)",
         "kolumny": "jasny panel, trzy kolumny rozdzielone pionowymi liniami: chip nad liczbą, wielka liczba z małą jednostką u górnej krawędzi cyfr, podpis pod liczbą (wersja alternatywna sekcji liczb; Kukurydza od 18.09 – decyzja Mateusza)",
         "kafle-2x2": "ciemny kadr, tytuł z dużym odstępem od górnej krawędzi, pod nim siatka 2 × 2 kafli o ton jaśniejszych od tła: wielka liczba przy górnej krawędzi kafla po prawej, etykieta i nota przy dolnej po lewej; cyfry wjeżdżają kołowrotkiem (Próchnica+ od 19.09.2026 – uwaga Mateusza, inspiracja: ramka Figma 306:2941); od 02.10.2026 także CARBOMAT Mata „Dowód” (uwaga Mateusza z 02.10: sekcja jak na Próchnicy+) na module wspólnym ce/CE-24-pas-liczb.* – panel bez nagłówka, cztery kafle, liczba ze znakiem i przecinkiem w kołowrotku, sufiksy EL-31 obok liczby, pod nią opis i wiersz źródła; rozmiar liczby liczony z szerokości kafla",
-        "rzad": "ciemny kadr na szerokość kontenera (nie na wysokość ekranu): mały tytuł u góry po lewej, pod nim pięć kolumn rozdzielonych pionowymi liniami włosowymi, w kolumnie wielka liczba, etykieta i drobne źródło przy dolnej krawędzi kadru. Wersja pasowa klocka – sekcja pod nią zaczyna się wysoko na stronie, więc liczby są wstępem do dowodu, a nie osobnym ekranem (strona główna od 20.09.2026). Od 1280 px pięć kolumn, między 900 a 1279 px podział 3 + 2, poniżej 900 px wiersze: liczba po lewej, etykieta po prawej, źródło pod nimi na całej szerokości"
+        "rzad": "ciemny kadr na szerokość kontenera (nie na wysokość ekranu): mały tytuł u góry po lewej, pod nim pięć kolumn rozdzielonych pionowymi liniami włosowymi, w kolumnie wielka liczba, etykieta i drobne źródło przy dolnej krawędzi kadru. Wersja pasowa CE – sekcja pod nią zaczyna się wysoko na stronie, więc liczby są wstępem do dowodu, a nie osobnym ekranem (strona główna od 20.09.2026). Od 1280 px pięć kolumn, między 900 a 1279 px podział 3 + 2, poniżej 900 px wiersze: liczba po lewej, etykieta po prawej, źródło pod nimi na całej szerokości"
       },
       "zrzuty_wariantow": {
         "kolumny": {
@@ -833,6 +1929,39 @@ window.CW_CE = {
     "CE-25": {
       "nazwa": "Lightbox wielostronicowy",
       "grupa": "nakladki",
+      "rodzina": "okna",
+      "skrot": "Okno modalne: nagłówek, strony z kartami lub tabelą, przyciski Poprzednie i Następne, licznik.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "bez-mediow"
+        ],
+        "tekst": [
+          "dlugi"
+        ],
+        "ukryte": [
+          "okno"
+        ],
+        "pozycje": [
+          "2-4"
+        ],
+        "nadaje": [
+          "dowod-zrodla",
+          "liczby-dane",
+          "opis-produktu"
+        ],
+        "mechanika": [
+          "okno",
+          "klik"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "skroty_wariantow": {
+        "popup-produktu": "Strona z mapą zastosowań produktu, packshot w nagłówku i własna stopka.",
+        "jednostronicowy": "Jedna strona treści bez licznika i przycisków nawigacji, szerszy panel."
+      },
       "opis": "Nakładka na całą stronę z panelem przewijanym: przycisk zamknięcia, N stron treści (każda z nagłówkiem i stopką), licznik „n / N”.",
       "mechanika": "Otwierany linkiem data-lightbox-open albo hashem, fokus-trap, Escape, tło inert i zablokowane przewijanie; bez JS strony renderują się jako zwykłe bloki pod sekcją. Moduł 55 (Mata) / uprawa.js (Kukurydza).",
       "baza": {
@@ -862,6 +1991,32 @@ window.CW_CE = {
     "CE-26": {
       "nazwa": "Stos kart",
       "grupa": "sceny",
+      "rodzina": "sceny",
+      "skrot": "Stos kart kroków: każda z kadrem zdjęcia po lewej oraz dopiskiem, numerem, tytułem i opisem po prawej.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "zdjecie"
+        ],
+        "tekst": [
+          "sredni"
+        ],
+        "ukryte": [
+          "przewijanie"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "kroki-proces"
+        ],
+        "mechanika": [
+          "przewijanie"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
       "opis": "Karty kroków jedna pod drugą; każda karta: kadr po lewej, obok dopisek (faza albo „Krok 02”), numer, tytuł i opcjonalny opis. Jeden jasny ton kart, bez przemiennych ciemnych.",
       "mechanika": "Karty przyklejają się kolejno i nakładają na siebie przy przewijaniu; skrypt daje wszystkim wysokość najwyższej, przykryta karta cofa się i ciemnieje, ostatnia stoi chwilę, potem stos odjeżdża z sekcją. Stan przyklejony tylko przy włączonym ruchu (od 900 px) i tylko gdy karta mieści się między swoim przystankiem a dokiem doradcy; w za niskim oknie, bez JS, przy reduced-motion i poniżej 900 px zwykła lista kart. Fokus w przykrytej karcie wyciąga ją na wierzch.",
       "baza": {
@@ -883,6 +2038,36 @@ window.CW_CE = {
     "CE-27": {
       "nazwa": "Blok materiału",
       "grupa": "noty-i-cta",
+      "rodzina": "pasy",
+      "skrot": "Wąski blok z kwadratową ikoną, tytułem, zdaniem opisu i małym przyciskiem do materiału (film, plik).",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "ikona"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "1"
+        ],
+        "nadaje": [
+          "cta",
+          "dowod-zrodla"
+        ],
+        "mechanika": [
+          "statyczny"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "skroty_wariantow": {
+        "dokument": "Ikona dokumentu zamiast odtwarzania, materiał do pobrania"
+      },
       "opis": "Wąski poziomy blok: kwadratowa ikona po lewej, po prawej tytuł, zdanie opisu i mały przycisk.",
       "mechanika": "Statyczne.",
       "baza": {
@@ -909,6 +2094,40 @@ window.CW_CE = {
     "CE-28": {
       "nazwa": "Boks w ramce",
       "grupa": "noty-i-cta",
+      "rodzina": "pasy",
+      "skrot": "Obramowany boks z tytułem i akapitem, opcjonalnie rozpiska, przypis i przyciski.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "bez-mediow"
+        ],
+        "tekst": [
+          "sredni"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "1"
+        ],
+        "nadaje": [
+          "ostrzezenie-nota",
+          "opis-produktu",
+          "cta"
+        ],
+        "mechanika": [
+          "statyczny"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "skroty_wariantow": {
+        "z-przyciskiem": "Tytuł, akapit z oznaczeniem braku danych i jeden przycisk",
+        "z-rozpiska": "Nazwa i akapit po lewej, rozpiska parametrów po prawej",
+        "lista-opakowan": "Etykieta i zdanie oraz wiersze opakowań z miniaturami",
+        "cross-sell": "Karta z polem packshotu po lewej, h3, akapit, przypis i rząd przycisków"
+      },
       "opis": "Obramowany boks (1 px) z tytułem i akapitem; wnętrze w jednej lub dwóch kolumnach, opcjonalnie rozpiska dl, lista opakowań, przypis i przyciski.",
       "mechanika": "Statyczne; poniżej 900 px jedna kolumna.",
       "baza": {
@@ -964,6 +2183,41 @@ window.CW_CE = {
     "CE-30": {
       "nazwa": "Lista z panelem opisu",
       "grupa": "przelaczniki",
+      "rodzina": "zwijane",
+      "skrot": "Lista dużych tytułów po lewej i panel z opisem wybranej pozycji po prawej; na telefonie akordeon.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "bez-mediow"
+        ],
+        "tekst": [
+          "sredni"
+        ],
+        "ukryte": [
+          "taby-przelacznik",
+          "hover",
+          "akordeon"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "porownanie-wybor",
+          "korzysci-argumenty",
+          "opis-produktu"
+        ],
+        "mechanika": [
+          "klik"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "skroty_wariantow": {
+        "z-lightboxem": "Panel opisu z przyciskiem otwierającym pełny opis w lightboxie",
+        "akordeon-z-odliczaniem": "Akordeon: otwarta pozycja z opisem i kartami produktów z packshotem",
+        "z-kadrem": "Lista grup z chipami i przyciskami oraz przyklejone zdjęcie wybranej grupy"
+      },
       "opis": "Dwie kolumny: po lewej lista dużych tytułów (z numerami), po prawej przyklejony panel z opisem aktywnej pozycji (opcjonalnie przycisk); na telefonie akordeon.",
       "mechanika": "Najechanie podgląda, klik wybiera, strzałki nawigują, kotwice trafiają w pozycje; bez JS wszystkie opisy otwarte. Moduły 72 (Carbohumic) i 40 (O nas); moduł 80 Maty zszedł 02.10.2026 razem z przejściem „Ekonomii” na wariant akordeon-z-odliczaniem.",
       "baza": {
@@ -981,7 +2235,7 @@ window.CW_CE = {
       ],
       "warianty": {
         "z-lightboxem": "panel ma przycisk otwierający pełny opis w lightboxie (Kukurydza fazy do 18.09; sekcję przejął CE-65, wariant bez wystąpień)",
-        "akordeon-z-odliczaniem": "akordeon na szerokość kontenera wg ramki Figma „Frame 207” (Mateusz, 18.09.2026; Produkty, ścieżki wg sytuacji): otwarta pozycja ma duży tytuł, po lewej opis z notami, ostrzeżeniem i linkami, po prawej karty produktów z packshotem (po dwie w rzędzie, kolejne zawijają się do następnego wiersza; cała karta prowadzi na stronę produktu, „Kup produkt” odsłania się pod opisem na karcie, a packshot maleje); pierwsza pozycja otwarta od początku, odliczanie 5 s z paskiem na górnej linii następnej pozycji otwiera kolejną i zamyka poprzednią, klik otwiera dowolną albo zamyka otwartą i wyłącza automat, kotwica pozycji otwiera ją i zatrzymuje automat; automat tylko na szerokim ekranie i przy włączonym ruchu, pod kursorem i przy fokusie odliczanie stoi Runda wierności 20.09.2026 („odwzoruj bardziej szczegółowo wygląd CE”): karta 10 px promienia i tło #f6f6f6 z ramki (bez 60 % krycia warstwy Figmy – nad pasem #fafafa kafel byłby niewidoczny), zielony znacznik 32 px #86d574 w prawym górnym rogu, packshot w polu 139 px, nazwa 14 px semibold 38 px pod nim, opis 14 px na mierze 275 px, wiersze zamknięte 15 px w czerni i podziałce 62 px, tytuł otwarty 35 px, opis pozycji 16 px/1,3 w #777771 na mierze 358 px. Od 02.10.2026 także CARBOMAT Mata „Ekonomia” (uwaga Mateusza z 02.10: użyć klocka, którego używamy gdzie indziej) – pięć pozycji „tytuł + opis” bez kart produktów, na module wspólnym ce/CE-30-lista-z-panelem.* w skali szarości kitu",
+        "akordeon-z-odliczaniem": "akordeon na szerokość kontenera wg ramki Figma „Frame 207” (Mateusz, 18.09.2026; Produkty, ścieżki wg sytuacji): otwarta pozycja ma duży tytuł, po lewej opis z notami, ostrzeżeniem i linkami, po prawej karty produktów z packshotem (po dwie w rzędzie, kolejne zawijają się do następnego wiersza; cała karta prowadzi na stronę produktu, „Kup produkt” odsłania się pod opisem na karcie, a packshot maleje); pierwsza pozycja otwarta od początku, odliczanie 5 s z paskiem na górnej linii następnej pozycji otwiera kolejną i zamyka poprzednią, klik otwiera dowolną albo zamyka otwartą i wyłącza automat, kotwica pozycji otwiera ją i zatrzymuje automat; automat tylko na szerokim ekranie i przy włączonym ruchu, pod kursorem i przy fokusie odliczanie stoi Runda wierności 20.09.2026 („odwzoruj bardziej szczegółowo wygląd CE”): karta 10 px promienia i tło #f6f6f6 z ramki (bez 60 % krycia warstwy Figmy – nad pasem #fafafa kafel byłby niewidoczny), zielony znacznik 32 px #86d574 w prawym górnym rogu, packshot w polu 139 px, nazwa 14 px semibold 38 px pod nim, opis 14 px na mierze 275 px, wiersze zamknięte 15 px w czerni i podziałce 62 px, tytuł otwarty 35 px, opis pozycji 16 px/1,3 w #777771 na mierze 358 px. Od 02.10.2026 także CARBOMAT Mata „Ekonomia” (uwaga Mateusza z 02.10: użyć CE, którego używamy gdzie indziej) – pięć pozycji „tytuł + opis” bez kart produktów, na module wspólnym ce/CE-30-lista-z-panelem.* w skali szarości kitu",
         "z-kadrem": "wariant strony głównej (uprawy): po lewej lista sześciu grup upraw rozdzielona liniami włosowymi – numer w węźle, duży tytuł 28–44 px, przygaszony podpis pod tytułem i chevron; otwarta pozycja rozwija się w miejscu (grid 0fr → 1fr) i pokazuje chipy-linki stron upraw, dwa przyciski („Zobacz uprawę”, „Dobierz produkty i dawki”), a w razie potrzeby drugi, cichy link doboru. Po prawej nie ma panelu opisu, tylko przyklejony kadr: sześć warstw zdjęć jedna na drugiej, widoczna ta z wybranej pozycji, w lewym dolnym rogu jasna plakietka z numerem i nazwą grupy. Kadr stoi pod nagłówkiem serwisu (20 px zapasu) i kończy się 96 px nad dołem okna, ponad dokiem doradcy; zmiana kadru to wycieranie clip-path od dolnej krawędzi w górę w 0,7 s z osiadaniem skali 1,04 → 1, a poprzednie zdjęcie zostaje nieruchomo pod spodem, żeby wycieranie nie odsłaniało pustej sceny. Klik wybiera (nigdy nie zamyka – jedna pozycja jest zawsze otwarta), fokus i najechanie tylko podglądają kadr, strzałki oraz Home i End przenoszą fokus między nagłówkami wierszy; kotwice #uprawy-sad, #uprawy-jagodowe, #uprawy-warzywa, #uprawy-pole, #uprawy-szkolka i #uprawy-ogrod otwierają swoją pozycję. Poniżej 900 px akordeon z kadrem 4 : 3 wewnątrz otwartej pozycji, nad przyciskami. Bez JS-u wszystkie pozycje rozwinięte, lista na całą szerokość kontenera, kadry ukryte."
       },
       "zrzuty_wariantow": {
@@ -1003,6 +2257,38 @@ window.CW_CE = {
     "CE-31": {
       "nazwa": "Nota",
       "grupa": "noty-i-cta",
+      "rodzina": "pasy",
+      "skrot": "Obramowany pas z małą ikoną i jednym–dwoma zdaniami noty, opcjonalnie z przyciskiem po prawej.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "ikona"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "1"
+        ],
+        "nadaje": [
+          "ostrzezenie-nota",
+          "cta"
+        ],
+        "mechanika": [
+          "statyczny"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "skroty_wariantow": {
+        "miekka": "Nota z mniejszą ikoną na tle strony",
+        "z-przyciskiem": "Nota z ciemnym przyciskiem po prawej",
+        "brak-danych": "Akapit w ramce z kreski przerywanej, bez ikony"
+      },
       "opis": "Obramowany pas z małą ikoną i jednym–dwoma zdaniami (wstęp wytłuszczony), opcjonalnie przycisk po prawej; wariant „brak danych” to akapit w ramce z kreski przerywanej.",
       "mechanika": "Statyczne (role note).",
       "baza": {
@@ -1055,6 +2341,38 @@ window.CW_CE = {
     "CE-33": {
       "nazwa": "Cytat lub zasada",
       "grupa": "noty-i-cta",
+      "rodzina": "pasy",
+      "skrot": "Wyróżnione jedno zdanie lub akapit: duży cytat z kreską, ciemny boks albo pasek zasady.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "bez-mediow"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "1"
+        ],
+        "nadaje": [
+          "tekst-ciagly",
+          "dowod-zrodla"
+        ],
+        "mechanika": [
+          "statyczny"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "skroty_wariantow": {
+        "ciemny-boks": "Ciemny boks z etykietą wersalikami i dużym akapitem",
+        "pasek-zasady": "Gruba kreska górna, etykieta i wytłuszczone zdanie w jednym wierszu",
+        "cytat": "Blockquote z kreską i cudzysłowami, biały na zdjęciu lub bardzo duży na jasnym"
+      },
       "opis": "Wyróżnione jedno zdanie lub akapit: duży cytat z pionową kreską i cudzysłowami z CSS, ciemny boks z etykietą wersalikami, albo pasek pod grubą kreską z etykietą i zdaniem.",
       "mechanika": "Statyczne (opcjonalnie reveal). W wersji ze strony głównej JS dzieli cytat na wyrazy i podnosi ich krycie z .25 do 1 kolejno, w miarę jak dolna krawędź cytatu przejeżdża od 85 % do 40 % wysokości okna (jedna zmienna na akapicie, rampa liczona w CSS); tylko przy CX5.motionOn(), bez JS i przy ograniczonym ruchu pełne krycie.",
       "baza": {
@@ -1081,6 +2399,37 @@ window.CW_CE = {
     "CE-34": {
       "nazwa": "Karty od → do",
       "grupa": "karty",
+      "rodzina": "karty",
+      "skrot": "Siatka kart równej wysokości czytanych jak zdanie: stan wyjściowy, strzałka, stan docelowy.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "bez-mediow"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "2-4"
+        ],
+        "nadaje": [
+          "porownanie-wybor",
+          "korzysci-argumenty"
+        ],
+        "mechanika": [
+          "statyczny"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "skroty_wariantow": {
+        "przemiana": "Siatka 2 × 2 kart: warunek małym tekstem, strzałka, wynik dużym zdaniem, numer w rogu",
+        "regula-z-packshotem": "Karta warunek → odpowiedź z packshotem produktu, cała karta jest linkiem"
+      },
       "opis": "Siatka kart równej wysokości; karta czyta się jak zdanie na trzech poziomach: stan wyjściowy lub warunek u góry, łącznik ze strzałką, stan docelowy lub odpowiedź u dołu; opcjonalnie tag produktu i packshot obok.",
       "mechanika": "Jednorazowe wejście ze staggerem (reveal); łącznikiem jest sama strzałka (dociągana kreska zeszła 02.10.2026 razem ze starym układem kart przemiany); w wariancie reguł cała karta jest linkiem do lightboxa i ma dwa układy (produkt pod zdaniem albo w prawej kolumnie od 1100 px).",
       "baza": {
@@ -1109,6 +2458,33 @@ window.CW_CE = {
     "CE-35": {
       "nazwa": "Panel kryteriów z CTA",
       "grupa": "noty-i-cta",
+      "rodzina": "pasy",
+      "skrot": "Jasnoszary panel: nagłówek i dwa przyciski po lewej, lista punktów z ptaszkiem w dwóch kolumnach po prawej.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "ikona"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "porownanie-wybor",
+          "cta"
+        ],
+        "mechanika": [
+          "statyczny"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
       "opis": "Szeroki jasnoszary panel w dwóch kolumnach: h3 i rząd dwóch przycisków po lewej, lista punktów z ikoną check w dwóch kolumnach po prawej.",
       "mechanika": "Jednorazowe wejście w widok (reveal); statyczny.",
       "baza": {
@@ -1132,6 +2508,39 @@ window.CW_CE = {
     "CE-36": {
       "nazwa": "Wiersz zdjęcie | opis",
       "grupa": "karty",
+      "rodzina": "obraz-tekst",
+      "skrot": "Dwie kolumny: kadr zdjęcia 4:5 obok nazwy, zajawki, skrótu najważniejszych rzeczy i przycisku.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "zdjecie"
+        ],
+        "tekst": [
+          "sredni"
+        ],
+        "ukryte": [
+          "okno"
+        ],
+        "pozycje": [
+          "2-4"
+        ],
+        "nadaje": [
+          "opis-produktu",
+          "porownanie-wybor"
+        ],
+        "mechanika": [
+          "przewijanie",
+          "statyczny",
+          "okno"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "skroty_wariantow": {
+        "odwrocony": "Opis po lewej, zdjęcie po prawej",
+        "z-wartosciami": "Przyklejone zdjęcie obok nagłówka, akapitów, trzech wartości z ikonami i karty filmu"
+      },
       "opis": "Dwie równe kolumny wyrównane do środka: kadr zdjęcia 4:5 z jednej strony, z drugiej nazwa, zajawka, skrót najważniejszych rzeczy i przycisk (na CARBOMAT HUMIC skrót to trzy wiersze etykieta | wartość – dawki, częstotliwość, zakup – słowo w słowo z pop-upu; pełna karta stoi w pop-upie CE-37); kolejne wiersze naprzemiennie.",
       "mechanika": "Parallax kadru z pozycji przewijania, wejście kolumny opisu (reveal), przycisk pod skrótem otwiera pop-up z pełną kartą (CE-37); poniżej 900 px zdjęcie nad tekstem. Moduł 40. W wariancie „z-wartosciami” zamiast parallaksu kadr jest przyklejony (sticky, 40 px od góry, wysokość ograniczona do okna pomniejszonego o odstęp od doka doradcy), a przycisk odtwarzania otwiera natywny dialog z wideo ładowanym dopiero na żądanie (preload „none”): film rusza po otwarciu, zamknięcie (×, Escape, klik w tło) zatrzymuje go i przewija na początek, fokus wraca na kartę; bez JS karta jest zwykłym linkiem do pliku mp4.",
       "baza": {
@@ -1170,6 +2579,36 @@ window.CW_CE = {
     "CE-37": {
       "nazwa": "Pop-up karty",
       "grupa": "nakladki",
+      "rodzina": "okna",
+      "skrot": "Okno dialogowe na środku ekranu z nagłówkiem, jednokolumnową treścią karty, stopką i przyciskiem zamknięcia.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "bez-mediow"
+        ],
+        "tekst": [
+          "dlugi"
+        ],
+        "ukryte": [
+          "okno"
+        ],
+        "pozycje": [
+          "1"
+        ],
+        "nadaje": [
+          "opis-produktu",
+          "tekst-ciagly"
+        ],
+        "mechanika": [
+          "okno"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "skroty_wariantow": {
+        "jeden-dialog": "Jeden dialog na stronę z treścią podmienianą z ukrytych bloków źródłowych"
+      },
       "opis": "Dialog na środku ekranu z tłem przyciemnionym: nagłówek (nazwa, packshot lub zdjęcie), treść karty w jednej kolumnie, stopka z przyciskami, przycisk zamknięcia.",
       "mechanika": "Otwierany przyciskiem, fokus-trap, Escape, tło inert; wariant z jednym dialogiem klonuje treść z ukrytego źródła na stronie; bez JS treść stoi w biegu strony. Moduły 40 (HUMIC) / 52 (Próchnica+).",
       "baza": {
@@ -1198,6 +2637,34 @@ window.CW_CE = {
     "CE-38": {
       "nazwa": "Dwa panele fotograficzne",
       "grupa": "karty",
+      "rodzina": "obraz-tekst",
+      "skrot": "Dwa równe panele fotograficzne obok siebie: zdjęcie w tle, tytuł, dwa akapity, przycisk przy dole.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "zdjecie"
+        ],
+        "tekst": [
+          "sredni"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "2-4"
+        ],
+        "nadaje": [
+          "porownanie-wybor",
+          "opis-produktu"
+        ],
+        "mechanika": [
+          "przewijanie",
+          "statyczny"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
       "opis": "Dwa równe panele fotograficzne obok siebie, każdy z tytułem, dwoma akapitami i przyciskiem przy dolnej krawędzi.",
       "mechanika": "Parallax zdjęć i wejście paneli ze staggerem (reveal); poniżej 900 px jeden pod drugim. Moduł 80.",
       "baza": {
@@ -1219,6 +2686,34 @@ window.CW_CE = {
     "CE-39": {
       "nazwa": "Pokaz rodzin na tabach",
       "grupa": "przelaczniki",
+      "rodzina": "zwijane",
+      "skrot": "Belka z przełącznikiem tabów, pod nią panel produktu: packshot, nazwa, obietnica, przyciski i parametry.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "packshot"
+        ],
+        "tekst": [
+          "sredni"
+        ],
+        "ukryte": [
+          "taby-przelacznik"
+        ],
+        "pozycje": [
+          "2-4"
+        ],
+        "nadaje": [
+          "lista-produktow",
+          "porownanie-wybor",
+          "opis-produktu"
+        ],
+        "mechanika": [
+          "klik"
+        ],
+        "zakres": [
+          "typ-strony"
+        ]
+      },
       "opis": "Belka z przełącznikiem segmentowym tabów i linkiem „Porównaj”, pod nią panel rodziny: packshot na linii podłogi, nazwa i obietnica po lewej, rząd przycisków po prawej, cztery kolumny parametrów dl.",
       "mechanika": "Taby ARIA (klik, strzałki, Home/End), znacznik aktywnego tabu przesuwa się; stary panel wyjeżdża, nowy packshot wjeżdża z kierunku wyboru, kaskada podpisów, płynna wysokość; przeciąganie packshotu; deep link. Moduł 30.",
       "baza": {
@@ -1243,6 +2738,37 @@ window.CW_CE = {
     "CE-40": {
       "nazwa": "Tabela technikaliów z podświetlaniem kolumn",
       "grupa": "dane",
+      "rodzina": "dane",
+      "skrot": "Tabela parametrów w kolumnach z przyklejonym nagłówkiem, przypisem i kartami uwag sterującymi tabelą.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "bez-mediow"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "porownanie-wybor",
+          "liczby-dane"
+        ],
+        "mechanika": [
+          "przewijanie",
+          "klik"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "skroty_wariantow": {
+        "w-lightboxie": "Ta sama tabela otwierana w oknie nakładki zamiast w biegu strony"
+      },
       "opis": "Wyśrodkowany nagłówek, tabela pięciu kolumn (parametr | cztery rodziny) ze stopką przycisków dokumentów i przypisem, pod nią zasada ogólna i trzy karty uwag z przyciskami „pokaż w tabeli”, na końcu rząd przycisków nawigacyjnych.",
       "mechanika": "Od 900 px wiersz nagłówka przykleja się do górnej krawędzi; poniżej tabela przewija się w bok z przypiętą pierwszą kolumną; przycisk karty podświetla kolumnę (is-pick) z błyskiem nagłówka. Moduł 40.",
       "baza": {
@@ -1271,6 +2797,36 @@ window.CW_CE = {
     "CE-41": {
       "nazwa": "Bloki wiedzy (para)",
       "grupa": "karty",
+      "rodzina": "dane",
+      "skrot": "Dwa bloki w ramkach, każdy z nagłówkiem, wizualem (wykres, tabela, skala) i przypisem.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "schemat-wykres"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "2-4"
+        ],
+        "nadaje": [
+          "liczby-dane",
+          "dowod-zrodla"
+        ],
+        "mechanika": [
+          "statyczny"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "skroty_wariantow": {
+        "jeden-pod-drugim": "Oba bloki na całą szerokość, jeden pod drugim"
+      },
       "opis": "Dwa bloki w ramkach: każdy z h3, wizualem (tabela, skala, wykres słupkowy, lista źródeł z kaflami liczb) i przypisem; obok siebie albo jeden pod drugim na całą szerokość.",
       "mechanika": "Jednorazowe wejście (reveal); paski wykresu rosną po wejściu w widok. Moduł 02 (ce/00-base.js).",
       "baza": {
@@ -1343,6 +2899,35 @@ window.CW_CE = {
     "CE-44": {
       "nazwa": "Napis przyklejony z płynącymi kaflami",
       "grupa": "sceny",
+      "rodzina": "sceny",
+      "skrot": "Duży napis przyklejony na środku sceny, obok którego przepływają karty z ikoną, tytułem i krótkim opisem.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "ikona"
+        ],
+        "tekst": [
+          "sredni"
+        ],
+        "ukryte": [
+          "przewijanie"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "korzysci-argumenty"
+        ],
+        "mechanika": [
+          "przewijanie"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "skroty_wariantow": {
+        "tlo-foto": "Biały napis na pełnoekranowym zdjęciu, kafle wjeżdżają po 2–3 w trzech pasach"
+      },
       "opis": "Duży napis przyklejony na środku ekranu przez cały tor sekcji; kafelki lub karty rozłożone w torze nieregularnie (odsunięcie, obrót, własna prędkość) przepływają obok i po napisie.",
       "mechanika": "Parallax kafelków liczony z pozycji przewijania (tylko motionOn); statycznie napis i kafelki jeden pod drugim. Moduł 55 (Kukurydza) / 45 (Próchnica+).",
       "baza": {
@@ -1373,6 +2958,35 @@ window.CW_CE = {
     "CE-45": {
       "nazwa": "Pudełka-przełączniki",
       "grupa": "przelaczniki",
+      "rodzina": "zwijane",
+      "skrot": "Rząd pudełek-przełączników z numerem, nazwą i podpisem, pod nimi panel treści wybranej pozycji.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "bez-mediow"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "taby-przelacznik"
+        ],
+        "pozycje": [
+          "2-4"
+        ],
+        "nadaje": [
+          "porownanie-wybor"
+        ],
+        "mechanika": [
+          "klik"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "skroty_wariantow": {
+        "dwa-pakiety": "Dwa pudełka obok siebie z liczbą zabiegów i produktów, w parze z suwakiem powierzchni"
+      },
       "opis": "Rząd pudełek (tablist) z numerem, nazwą i podpisem pozycji, pod nimi panel treści aktywnej pozycji (tabela wierszy). Od 01.10.2026 jedyne wystąpienie to wariant „dwa-pakiety” na Kukurydzy; układ trzech pudełek z szyną po lewej od 1280 px (sekcja „Trzy warianty technologii”) zszedł ze strony razem z nią.",
       "mechanika": "Tablist ARIA z klawiaturą; klik pokazuje panel; bez JS wszystkie panele widoczne. uprawa.js (pudełka wariantów).",
       "baza": {
@@ -1421,6 +3035,37 @@ window.CW_CE = {
     "CE-47": {
       "nazwa": "Przelicznik",
       "grupa": "dane",
+      "rodzina": "dane",
+      "skrot": "Suwak powierzchni z polem liczby i siatka boksów wyników przeliczanych na bieżąco.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "bez-mediow"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "taby-przelacznik"
+        ],
+        "pozycje": [
+          "2-4"
+        ],
+        "nadaje": [
+          "liczby-dane",
+          "sklep-transakcja",
+          "porownanie-wybor"
+        ],
+        "mechanika": [
+          "formularz"
+        ],
+        "zakres": [
+          "typ-strony"
+        ]
+      },
+      "skroty_wariantow": {
+        "z-pakietami": "Pudełka wyboru pakietu, suwak, wiersze zabiegów i boksy wyników z sumą kosztu"
+      },
       "opis": "Nagłówek, suwak powierzchni z wartością, siatka boksów wyników (wartość, jednostka, wiersze pomocnicze). Głowa sekcji – kicker, h2 i lead – stoi NAD paskiem powierzchni, wyrównana do lewej (uwaga Mateusza z 20.09.2026; kolumna głowy obok przelicznika, którą wprowadzał szeroki kontener od 1560 px, zniknęła razem z nim). Boks wyniku może nieść wiersze pomocnicze z własnym `data-calc-out`: woda do zabiegu i koszt produktu brutto (etykieta mówi „brutto” przy każdej liczbie, nie tylko w nocie pod tabelą – decyzja Mateusza z 20.09.2026) – `data-lo`/`data-hi` są tam już w złotówkach na hektar (dawka × cena jednostkowa), więc przelicznik `c5.js` zostaje nietknięty.",
       "mechanika": "Suwak przelicza dawki na bieżąco (data-calc w c5.js, grupowanie tysięcy), bez JS wartości domyślne.",
       "baza": {
@@ -1445,6 +3090,36 @@ window.CW_CE = {
     "CE-48": {
       "nazwa": "Karty biogramów",
       "grupa": "karty",
+      "rodzina": "zwijane",
+      "skrot": "Karty biogramów jedna pod drugą: portret, nazwisko, pierwszy akapit i „czytaj dalej” z resztą tekstu.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "zdjecie"
+        ],
+        "tekst": [
+          "sredni"
+        ],
+        "ukryte": [
+          "akordeon"
+        ],
+        "pozycje": [
+          "2-4"
+        ],
+        "nadaje": [
+          "ludzie"
+        ],
+        "mechanika": [
+          "klik"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "skroty_wariantow": {
+        "siatka": "Osiem biogramów w siatce czterech kolumn z „czytaj dalej”",
+        "kompakt": "Trzy karty autorów bez rozwijania"
+      },
       "opis": "Karty biogramów jedna pod drugą w kontenerze 1180 px: mniejsze zdjęcie 4 : 5 po lewej (200 px), po prawej nazwisko, pierwszy akapit widoczny, reszta pod przyciskiem „czytaj dalej”, opcjonalna nota przy karcie; poniżej 700 px zdjęcie nad treścią.",
       "mechanika": "Szuflada rozwijana na klik (panelSet); bez JS cała treść widoczna, a przycisk ukryty. Moduł 55.",
       "baza": {
@@ -1496,6 +3171,37 @@ window.CW_CE = {
     "CE-50": {
       "nazwa": "Formularz",
       "grupa": "dane",
+      "rodzina": "sklep-formularze",
+      "skrot": "Formularz z polami, zgodą i przyciskiem obok zdjęcia lub panelu z danymi firmy i mapą.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "zdjecie",
+          "schemat-wykres"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "kontakt-formularz"
+        ],
+        "mechanika": [
+          "formularz"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "skroty_wariantow": {
+        "kontakt": "Formularz z wyborem tematu obok panelu danych firmy i pola mapy",
+        "temat": "Formularz „Zaproponuj temat” obok pasa przewodnika"
+      },
       "opis": "Dwie kolumny: formularz (pola, zgoda, przycisk) i zdjęcie zespołu.",
       "mechanika": "Demonstracyjny: nic nie wychodzi na serwer, walidacja i komunikat po wysłaniu w JS. Moduł 75.",
       "baza": {
@@ -1576,6 +3282,36 @@ window.CW_CE = {
     "CE-53": {
       "nazwa": "Lista wierszy z akcją",
       "grupa": "dane",
+      "rodzina": "dane",
+      "skrot": "Lista wierszy rozdzielonych liniami: tytuł, metryka lub opis i przycisk akcji po prawej.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "ikona"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "9+"
+        ],
+        "nadaje": [
+          "dowod-zrodla",
+          "cta"
+        ],
+        "mechanika": [
+          "statyczny"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "skroty_wariantow": {
+        "dokumenty": "Certyfikaty, poradniki i karty do pobrania z numerem lub metryką"
+      },
       "opis": "Lista wierszy rozdzielonych cienkimi liniami: tytuł | metryka | przycisk po prawej.",
       "mechanika": "Fade-in wierszy; przyciski aktywne (w makiecie niczego nie pobierają).",
       "baza": {
@@ -1599,6 +3335,34 @@ window.CW_CE = {
     "CE-54": {
       "nazwa": "Kafle szybkiego kontaktu",
       "grupa": "karty",
+      "rodzina": "otwarcie",
+      "skrot": "Nagłówek strony i trzy duże kafle osób kontaktowych: portret, rola, telefon dużą czcionką, e-mail.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "zdjecie"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "2-4"
+        ],
+        "nadaje": [
+          "kontakt-formularz",
+          "ludzie",
+          "otwarcie-strony"
+        ],
+        "mechanika": [
+          "statyczny"
+        ],
+        "zakres": [
+          "typ-strony"
+        ]
+      },
       "opis": "Nagłówek strony (kicker, h1, lead) i trzy duże kafle w ramce: pole pod zdjęcie, imię i nazwisko, rola, numer telefonu dużą czcionką jako link tel:, pod nim adres e-mail jako link mailto:.",
       "mechanika": "Statyczne; na telefonie (poniżej 600 px) numer staje się ciemnym przyciskiem „Zadzwoń” na całą szerokość kafla, od 600 px wraca do dużej liczby w jednym wierszu. Wejście kafli przez reveal.",
       "baza": {
@@ -1621,6 +3385,33 @@ window.CW_CE = {
     "CE-55": {
       "nazwa": "Wiersze działów z akcjami",
       "grupa": "dane",
+      "rodzina": "sklep-formularze",
+      "skrot": "Wiersze działów w trzech kolumnach: nazwa i osoba, opis, przyciski z telefonem i e-mailem.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "ikona"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "kontakt-formularz",
+          "ludzie"
+        ],
+        "mechanika": [
+          "statyczny"
+        ],
+        "zakres": [
+          "typ-strony"
+        ]
+      },
       "opis": "Lista wierszy rozdzielonych cienkimi liniami, każdy w trzech kolumnach: nazwa działu z osobą | opis (1–3 zdania) | kolumna akcji z pełnym numerem telefonu i pełnym adresem e-mail jako przyciskami.",
       "mechanika": "Fade-in wierszy (reveal); wiersz wskazany chipem „Wybierz sprawę” albo hashem #dzial-… dostaje na 1,5 s klasę is-hot (obramowanie, jasne tło). Poniżej 900 px kolumny jedna pod drugą, przyciski na całą szerokość.",
       "baza": {
@@ -1642,6 +3433,36 @@ window.CW_CE = {
     "CE-56": {
       "nazwa": "Mapa z listą lokalizacji",
       "grupa": "karty",
+      "rodzina": "sklep-formularze",
+      "skrot": "Pole mapy z numerowanymi pinezkami obok siatki kart lokalizacji z kontaktem.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "schemat-wykres"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "kontakt-formularz",
+          "ludzie"
+        ],
+        "mechanika": [
+          "klik"
+        ],
+        "zakres": [
+          "typ-strony"
+        ]
+      },
+      "skroty_wariantow": {
+        "o-nas": "Kolumna adresu firmy z mapą i lista krajów bez osób"
+      },
       "opis": "Pole mapy z numerowanymi pinezkami (pozycje w procentach w CSS) obok siatki kart lokalizacji: kraj wersalikami, firma, osoba, telefon i e-mail jako przyciski.",
       "mechanika": "Najechanie lub fokus na karcie podświetla pinezkę o tym samym numerze i odwrotnie; klik w pinezkę przewija do karty (kotwica). Poniżej 900 px mapa nad siatką, siatka w jednej kolumnie. Bez JS: mapa statyczna, karty widoczne.",
       "baza": {
@@ -1666,6 +3487,37 @@ window.CW_CE = {
     "CE-57": {
       "nazwa": "Indeks artykułów",
       "grupa": "dane",
+      "rodzina": "dane",
+      "skrot": "Chipy podgrup, sortowanie i wyszukiwarka nad listą artykułów (tytuł, zajawka, meta) ze stronicowaniem.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "bez-mediow"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "taby-przelacznik"
+        ],
+        "pozycje": [
+          "9+"
+        ],
+        "nadaje": [
+          "nawigacja",
+          "tekst-ciagly"
+        ],
+        "mechanika": [
+          "klik",
+          "formularz"
+        ],
+        "zakres": [
+          "typ-strony"
+        ]
+      },
+      "skroty_wariantow": {
+        "kategoria": "Lista jednej kategorii z chipami jej podgrup i wierszem „wkrótce”"
+      },
       "opis": "Pasek sterowania (chipy podgrup, sortowanie, wyszukiwanie, licznik) i lista wierszy bez miniatur: tytuł, zajawka w dwóch liniach, meta (podgrupa, autor, miesiąc, czas czytania); pod listą stronicowanie numerowane.",
       "mechanika": "Filtrowanie chipami, sortowanie i wyszukiwanie po tytule i zajawce w JS (data-kat, data-date, data-title), stronicowanie 10 na stronę z zapisem ?kat= i ?strona= w adresie; pusty stan z przyciskiem czyszczącym. Bez JS wszystkie wiersze widoczne, kontrolki ukryte.",
       "baza": {
@@ -1692,6 +3544,33 @@ window.CW_CE = {
     "CE-58": {
       "nazwa": "Karty najnowszych",
       "grupa": "karty",
+      "rodzina": "karty",
+      "skrot": "Trzy karty ostatnich artykułów: wiodąca z polem na infografikę i dwie mniejsze bez obrazu.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "zdjecie"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "2-4"
+        ],
+        "nadaje": [
+          "nawigacja",
+          "tekst-ciagly"
+        ],
+        "mechanika": [
+          "statyczny"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
       "opis": "Trzy ostatnie artykuły: karta wiodąca z polem pod infografikę 16:9, chipem podgrupy, tytułem, zajawką i meta oraz dwie mniejsze karty bez obrazu jedna nad drugą; pod rzędem nota o następnym tekście.",
       "mechanika": "Jednorazowe wejście kart (reveal); poniżej 900 px jedna kolumna.",
       "baza": {
@@ -1715,6 +3594,35 @@ window.CW_CE = {
     "CE-59": {
       "nazwa": "Nawigacja kategorii",
       "grupa": "karty",
+      "rodzina": "karty",
+      "skrot": "Dwa obramowane boksy kategorii: nazwa grupy jako link, zdanie opisu i lista podgrup z licznikami.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "bez-mediow"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "2-4"
+        ],
+        "nadaje": [
+          "nawigacja"
+        ],
+        "mechanika": [
+          "statyczny"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "skroty_wariantow": {
+        "kompakt": "Boksy z samą nazwą grupy i strzałką oraz dwa wiersze wyjścia z ikoną"
+      },
       "opis": "Dwa obramowane boksy obok siebie: nazwa grupy głównej jako link, zdanie opisu i lista podgrup z licznikami artykułów.",
       "mechanika": "Statyczne; linki podgrup prowadzą do indeksu z parametrem ?kat=, który ustawia filtr. Poniżej 900 px boksy jeden pod drugim.",
       "baza": {
@@ -1746,6 +3654,32 @@ window.CW_CE = {
     "CE-60": {
       "nazwa": "Spis treści z paskiem postępu",
       "grupa": "nawigacja",
+      "rodzina": "wspolne",
+      "skrot": "Przyklejony spis treści artykułu z zaznaczaniem aktywnej sekcji i paskiem postępu czytania.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "bez-mediow"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "akordeon"
+        ],
+        "pozycje": [
+          "9+"
+        ],
+        "nadaje": [
+          "nawigacja"
+        ],
+        "mechanika": [
+          "przewijanie"
+        ],
+        "zakres": [
+          "typ-strony"
+        ]
+      },
       "opis": "Spis treści artykułu (lista linków do wszystkich h2, pozycja = etykieta i teza) w przyklejonej lewej kolumnie plus pasek postępu czytania 2 px u góry okna.",
       "mechanika": "Scrollspy: aktywna pozycja dostaje aria-current; pasek postępu = procent przewinięcia treści (role=progressbar); przy wąskich ekranach spis jest akordeonem details nad treścią, na desktopie sam wykaz przewija się wewnątrz kolumny. Bez JS zwykłe kotwice.",
       "baza": {
@@ -1770,6 +3704,33 @@ window.CW_CE = {
     "CE-61": {
       "nazwa": "Kluczowe wnioski",
       "grupa": "noty-i-cta",
+      "rodzina": "pasy",
+      "skrot": "Obramowany boks z nagłówkiem i listą 3–5 zdań-wniosków, na początku tekstu.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "bez-mediow"
+        ],
+        "tekst": [
+          "sredni"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "korzysci-argumenty",
+          "tekst-ciagly"
+        ],
+        "mechanika": [
+          "statyczny"
+        ],
+        "zakres": [
+          "typ-strony"
+        ]
+      },
       "opis": "Obramowany boks na początku artykułu: nagłówek „Kluczowe wnioski” i lista pięciu zdań zaczerpniętych dosłownie z treści.",
       "mechanika": "Statyczne.",
       "baza": {
@@ -1792,6 +3753,36 @@ window.CW_CE = {
     "CE-62": {
       "nazwa": "Boks produktowy w treści",
       "grupa": "noty-i-cta",
+      "rodzina": "karty",
+      "skrot": "Boks z packshotem, nazwą produktu, zdaniem opisu i dwoma przyciskami, wstawiony w tekst.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "packshot"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "1"
+        ],
+        "nadaje": [
+          "opis-produktu",
+          "cta"
+        ],
+        "mechanika": [
+          "statyczny"
+        ],
+        "zakres": [
+          "typ-strony"
+        ]
+      },
+      "skroty_wariantow": {
+        "boczny": "Ten sam boks w wąskiej kolumnie bocznej, bez etykiety."
+      },
       "opis": "Boks „Z tego artykułu” wstawiony raz w bieg tekstu: packshot, nazwa produktu, jedno zdanie z karty produktu i dwa przyciski (strona produktu, sklep).",
       "mechanika": "Statyczne; poniżej 700 px packshot nad tekstem.",
       "baza": {
@@ -1818,6 +3809,34 @@ window.CW_CE = {
     "CE-63": {
       "nazwa": "Karta autora",
       "grupa": "karty",
+      "rodzina": "karty",
+      "skrot": "Karta autora z polem na zdjęcie, rolą, bio i linkiem, pod nią wiersz eksperta.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "zdjecie",
+          "ikona"
+        ],
+        "tekst": [
+          "sredni"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "2-4"
+        ],
+        "nadaje": [
+          "ludzie",
+          "dowod-zrodla"
+        ],
+        "mechanika": [
+          "statyczny"
+        ],
+        "zakres": [
+          "typ-strony"
+        ]
+      },
       "opis": "Karta pod artykułem: pole pod zdjęcie, imię i nazwisko, rola, bio, link do wszystkich artykułów autora; pod nią wiersz konsultanta merytorycznego (z notą niezależności, gdy dotyczy).",
       "mechanika": "Statyczne.",
       "baza": {
@@ -1840,6 +3859,33 @@ window.CW_CE = {
     "CE-64": {
       "nazwa": "Produkty wspomniane w artykule",
       "grupa": "noty-i-cta",
+      "rodzina": "karty",
+      "skrot": "Pas 3 produktów w rzędzie: pole packshotu, nazwa, przycisk kupna i cichy link.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "packshot"
+        ],
+        "tekst": [
+          "tylko-naglowek"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "2-4"
+        ],
+        "nadaje": [
+          "lista-produktow",
+          "sklep-transakcja"
+        ],
+        "mechanika": [
+          "statyczny"
+        ],
+        "zakres": [
+          "typ-strony"
+        ]
+      },
       "opis": "Poziomy pas nad kluczowymi wnioskami artykułu: nagłówek i rząd pozycji rozdzielonych cienkimi liniami – pole packshotu 112 × 112 px, nazwa produktu (maks. dwa wiersze), przycisk „Kup produkt” i cichy link do strony produktu. Bez zdań o produktach – tylko nazwy.",
       "mechanika": "Od 900 px trzy pozycje dzielą kolumnę tekstu (ok. 240 px każda); poniżej rząd przewija się poziomo ze scroll-snap, na telefonie trzecia pozycja wystaje zza krawędzi z zanikiem po prawej. Bez JS i bez animacji.",
       "baza": {
@@ -1862,6 +3908,38 @@ window.CW_CE = {
     "CE-65": {
       "nazwa": "Oś faz z akordeonem",
       "grupa": "przelaczniki",
+      "rodzina": "dane",
+      "skrot": "Pionowa oś numerowanych faz; otwarta faza pokazuje zdjęcie, opis i boksy produktów.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "zdjecie",
+          "packshot"
+        ],
+        "tekst": [
+          "sredni"
+        ],
+        "ukryte": [
+          "akordeon",
+          "okno"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "kroki-proces",
+          "harmonogram-czas",
+          "opis-produktu"
+        ],
+        "mechanika": [
+          "klik",
+          "okno",
+          "statyczny"
+        ],
+        "zakres": [
+          "typ-strony"
+        ]
+      },
       "opis": "Dwie kolumny we własnym, szerszym kontenerze (do 1800 px, marginesy 40 px, odstęp kolumn clamp(3rem, 8vw, 10rem)): po lewej przyklejona głowa sekcji – kicker w ramce i nagłówek – po prawej pionowa oś z numerowanymi węzłami (numery krojem treści) i dużymi tytułami; otwarta pozycja rozwija pod tytułem panel: od 1200 px kadr pozycji (6 : 7) po lewej i kolumna treści po prawej – etykieta, skrót, boksy produktów z packshotem, przypis i przycisk pełnego opisu; poniżej 1200 px kadr 4 : 3 stoi nad treścią.",
       "mechanika": "Akordeon: jedna pozycja otwarta naraz (klik, Enter, spacja), strzałki oraz Home i End przenoszą fokus między tytułami; kadr wchodzi razem z panelem; gdy po zwinięciu pozycji powyżej otwierany tytuł wypada ponad okno, moduł dociąga go do górnej krawędzi; boksy produktów i przycisk otwierają lightboxy. Bez JS wszystkie panele otwarte z kadrami; reduced-motion bez animacji.",
       "baza": {
@@ -1887,7 +3965,39 @@ window.CW_CE = {
     "CE-66": {
       "nazwa": "Tablica warunków",
       "grupa": "przelaczniki",
-      "opis": "Tablica warunków w układzie z ramki Figma: po lewej pionowa lista ośmiu warunków stanowiska z numerowanymi węzłami, po prawej tytuł aktywnego warunku i jeden złożony pas – zielone pole „Priorytet” zrośnięte z jasnym polem, w którym „Nasze produkty” (zdanie z programu i boksy produktów z packshotem) i „Uzupełnienie” stoją obok siebie, rozdzielone włosową linią. Osiem paneli leży w tych samych komórkach siatki co pola i dziedziczy jej tory przez subgrid, więc pas ma stałą wysokość dla każdego warunku, oba pola są równe co do piksela, a etykiety wszystkich warunków leżą w tym samym miejscu. Szeroki kontener (c5-wrap--wide), kicker w ramce, bez leadu. Warstwa wyglądu z 20.09.2026 (ramki Figma „Frame 285-2289” – lista, i „Frame 285-2334” – pas; trzy uwagi Mateusza „Zrób to, aby bardziej wyglądało jak w projekcie”): pole „Priorytet” w zieleni #4CA039 zamiast czerni, oba pola z promieniem 20 px, aktywny węzeł listy to zielony obrys z zielonymi cyframi zamiast czarnego kwadratu z białymi (promień 6 px), kwadracik przed każdą etykietą w zieleni marki #71C35F, etykieta na zieleni pełną bielą zamiast krycia .62, boks produktu z promieniem 10 px. Wszystko na pokrętłach --c5-cb-prio-bg / --c5-cb-lite-bg / --c5-cb-accent / --c5-cb-mark / --c5-cb-r / --c5-cb-node-r / --c5-cb-prod-r w module wspólnym – klocek ma jedno wystąpienie, więc nie potrzebuje nadpisań strony. ⚠️ Kontrast: biel na #4CA039 to 3,3 : 1, a zdanie „Priorytet” ma 21 px wagi zwykłej (próg AA 4,5 : 1); wartość jest prosto z ramki, świadomie, wycofanie to jedna linia (#3F862F daje 4,5 : 1). Pasek chipów poniżej 900 px zostaje przy ciemnym chipie – ramki opisują wyłącznie listę desktopową. Wielkości, miary, tory siatki, ruch i krój bez zmian.",
+      "rodzina": "zwijane",
+      "skrot": "Lista warunków po lewej, po prawej zielone pole priorytetu i jasne pole z produktami.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "packshot",
+          "ikona"
+        ],
+        "tekst": [
+          "sredni"
+        ],
+        "ukryte": [
+          "taby-przelacznik",
+          "okno"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "porownanie-wybor",
+          "lista-produktow",
+          "korzysci-argumenty"
+        ],
+        "mechanika": [
+          "klik",
+          "statyczny",
+          "okno"
+        ],
+        "zakres": [
+          "typ-strony"
+        ]
+      },
+      "opis": "Tablica warunków w układzie z ramki Figma: po lewej pionowa lista ośmiu warunków stanowiska z numerowanymi węzłami, po prawej tytuł aktywnego warunku i jeden złożony pas – zielone pole „Priorytet” zrośnięte z jasnym polem, w którym „Nasze produkty” (zdanie z programu i boksy produktów z packshotem) i „Uzupełnienie” stoją obok siebie, rozdzielone włosową linią. Osiem paneli leży w tych samych komórkach siatki co pola i dziedziczy jej tory przez subgrid, więc pas ma stałą wysokość dla każdego warunku, oba pola są równe co do piksela, a etykiety wszystkich warunków leżą w tym samym miejscu. Szeroki kontener (c5-wrap--wide), kicker w ramce, bez leadu. Warstwa wyglądu z 20.09.2026 (ramki Figma „Frame 285-2289” – lista, i „Frame 285-2334” – pas; trzy uwagi Mateusza „Zrób to, aby bardziej wyglądało jak w projekcie”): pole „Priorytet” w zieleni #4CA039 zamiast czerni, oba pola z promieniem 20 px, aktywny węzeł listy to zielony obrys z zielonymi cyframi zamiast czarnego kwadratu z białymi (promień 6 px), kwadracik przed każdą etykietą w zieleni marki #71C35F, etykieta na zieleni pełną bielą zamiast krycia .62, boks produktu z promieniem 10 px. Wszystko na pokrętłach --c5-cb-prio-bg / --c5-cb-lite-bg / --c5-cb-accent / --c5-cb-mark / --c5-cb-r / --c5-cb-node-r / --c5-cb-prod-r w module wspólnym – CE ma jedno wystąpienie, więc nie potrzebuje nadpisań strony. ⚠️ Kontrast: biel na #4CA039 to 3,3 : 1, a zdanie „Priorytet” ma 21 px wagi zwykłej (próg AA 4,5 : 1); wartość jest prosto z ramki, świadomie, wycofanie to jedna linia (#3F862F daje 4,5 : 1). Pasek chipów poniżej 900 px zostaje przy ciemnym chipie – ramki opisują wyłącznie listę desktopową. Wielkości, miary, tory siatki, ruch i krój bez zmian.",
       "mechanika": "Zakładki z aktywacją automatyczną: klik w pozycję listy, ↑ ↓ Home End z zawinięciem i roving tabindex, na telefonie przesunięcie palcem po pasie (próg 40 px, blokada kliknięcia, żeby przesunięcie nie otwierało popupu produktu). Przy zmianie tytuł wjeżdża zza maski, a treści pól wchodzą kaskadą co 70 ms – etykiety nigdy. Od 900 do 1199 px pas dzieli się 45 : 55, a jasne pole układa swoje dwie kolumny jedna pod drugą; poniżej 900 px lista jest poziomym przewijanym rzędem dosuwanym przez scrollLeft; bez JS zostaje osiem jasnych kart z numerem, przy reduced motion przełączanie jest natychmiastowe. Bez licznika, strzałek i autoprzełączania.",
       "baza": {
         "plik": "v7/kukurydza.html",
@@ -1912,6 +4022,35 @@ window.CW_CE = {
     "CE-67": {
       "nazwa": "Karty z przyklejonym kadrem",
       "grupa": "karty",
+      "rodzina": "obraz-tekst",
+      "skrot": "Siatka 4–6 kart z numerem lub ikoną obok wysokiego, przyklejonego kadru z przyciskiem.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "zdjecie",
+          "ikona"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "korzysci-argumenty",
+          "cta"
+        ],
+        "mechanika": [
+          "przewijanie",
+          "statyczny"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
       "opis": "Szeroka sekcja o dwóch kolumnach: po lewej głowa (kicker w ramce, h2, krótki lead), nagłówek h3 i siatka sześciu kart 2 × 3, każda z numerem w węźle i jednym zdaniem; po prawej kadr z przyciskiem leżącym u jego dołu. Karty czyta się po kolei, a kadr trzyma temat na oku przez cały czas czytania. Na CARBOHUMIC („Jaka gleba”, od 02.10.2026) cztery karty 2 × 2 z ikoną w ramce i tytułem zamiast numeru w węźle, bez nagłówka h3 nad siatką; w kadrze placeholder i przycisk doradcy. Ten sam układ czterech kart z ikoną na Borówce („Masz już plantację”, od 02.10.2026): w kadrze zdjęcie młodej plantacji ze ściółką, przycisk otwiera kartę zastosowania CARBOMAT ECO Ściółka.",
       "mechanika": "Kadr jest przyklejony 20 px od górnej, dolnej i prawej krawędzi okna (uwaga Mateusza z 19.09.2026; prawa krawędź wychodzi 20 px w margines kontenera, lewa kolumna trzyma 40 px), więc stoi nieruchomo, gdy karty przewijają się obok, a odjeżdża z końcem sekcji; przycisk na kadrze leży w stanie przyklejonym 96 px nad jego dołem, ponad dokiem doradcy; karty wchodzą kaskadą co 60 ms revealem strony. Poniżej 900 px kolumny znikają i porządek jest jeden: głowa, kadr 4 : 3 z przyciskiem, h3, karty (jedna kolumna, dwie od 640 px), bez przyklejania. Bez JS-u.",
       "baza": {
@@ -1945,6 +4084,35 @@ window.CW_CE = {
     "CE-68": {
       "nazwa": "Akordeon faz z panelem",
       "grupa": "przelaczniki",
+      "rodzina": "zwijane",
+      "skrot": "Lista numerowanych wierszy; otwarty wiersz to jasny panel ze zdjęciem, opisem i produktami.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "zdjecie",
+          "packshot"
+        ],
+        "tekst": [
+          "sredni"
+        ],
+        "ukryte": [
+          "akordeon"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "kroki-proces",
+          "harmonogram-czas",
+          "opis-produktu"
+        ],
+        "mechanika": [
+          "klik"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
       "opis": "Szeroka sekcja (kontener do 1800 px, marginesy 40 px) z jedną linią kolumny w połowie kontenera: w głowie kicker w ramce po lewej i nagłówek od połowy; niżej lista wierszy na całą szerokość – numer w węźle 20 px od lewej krawędzi, tekst wiersza 15 px od połowy kontenera, linia 1 px nad każdym zamkniętym wierszem (72 px). Otwarta pozycja jest jasnym panelem na całą szerokość kontenera: jej wiersz to pierwsza linia panelu, w prawej kolumnie tytuł 24 px, opis, boksy produktów jeden pod drugim (każdy na szerokość swojej treści), szara nota i przycisk na szerokość kolumny; w lewym dolnym rogu panelu kadr pozycji 7 : 5, 20 px od lewej i dolnej krawędzi. Poniżej 900 px jedna kolumna: kadr, tytuł, opis, boksy, nota, przycisk.",
       "mechanika": "Akordeon: jedna pozycja otwarta naraz, domyślnie pierwsza (klik, Enter, spacja; ponowny klik zwija), strzałki oraz Home i End przenoszą fokus między wierszami. Zamknięty wiersz pokazuje tytuł pozycji, otwarty – jej etykietę, a tytuł schodzi do panelu; przełącza to CSS po aria-expanded, nazwa dostępna przycisku jest stała („NN tytuł”). Wysokość panelu .35 s, kadr wchodzi krótkim zanikiem; gdy po zwinięciu pozycji powyżej otwierany wiersz wypada ponad okno, moduł dociąga go pod nagłówek serwisu. Od 900 px przycisk zawsze stoi w dolnej strefie panelu obok kadru (52 px i 20 px nad krawędzią) – także w pozycji bez produktów, gdzie kadr jest wyższy niż tekst. Boksy produktów i przycisk otwierają lightboxy. Bez JS wszystkie panele otwarte z kadrami; reduced-motion bez animacji.",
       "baza": {
@@ -1971,6 +4139,36 @@ window.CW_CE = {
     "CE-69": {
       "nazwa": "Wstęp sekcji z kadrem i kaflami",
       "grupa": "otwarcie",
+      "rodzina": "otwarcie",
+      "skrot": "Wstęp z dużym nagłówkiem i opisem, kadrem zdjęcia, dwoma kaflami i szerokim boksem produktu.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "zdjecie",
+          "ikona",
+          "packshot"
+        ],
+        "tekst": [
+          "sredni"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "2-4"
+        ],
+        "nadaje": [
+          "otwarcie-strony",
+          "korzysci-argumenty",
+          "opis-produktu"
+        ],
+        "mechanika": [
+          "statyczny"
+        ],
+        "zakres": [
+          "jednorazowy"
+        ]
+      },
       "opis": "Szeroka sekcja (kontener do 1800 px, marginesy 40 px): u góry dwie równe kolumny – po lewej kicker, duży nagłówek i przygaszony akapit opisu wyrównane do góry, po prawej wysoki kadr zdjęcia 12 : 13 z podpisem; pod spodem rząd 1fr 1fr 2fr: dwa wysokie kafle na jasnoszarym tle (ikona u góry, tytuł i zdanie przy dolnej krawędzi) i szeroki boks produktu w ramce (packshot, nazwa, lista cech, dwa przyciski na całą szerokość boksu w proporcji 3 : 2).",
       "mechanika": "Jednorazowe wejście z szyny (data-reveal, stagger 80 ms); od 1100 px w dół kafle w dwóch kolumnach i boks produktu przez całą szerokość, poniżej 900 px jedna kolumna z kadrem 4 : 3, poniżej 600 px packshot nad tekstem. Bez JS i przy reduced-motion wszystko widoczne od razu.",
       "baza": {
@@ -1995,6 +4193,36 @@ window.CW_CE = {
     "CE-70": {
       "nazwa": "Scena slajdów na tle wideo",
       "grupa": "sceny",
+      "rodzina": "sceny",
+      "skrot": "Przypięta scena z wideo w tle; przy przewijaniu wymieniają się jasne karty slajdów.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "wideo",
+          "schemat-wykres"
+        ],
+        "tekst": [
+          "sredni"
+        ],
+        "ukryte": [
+          "przewijanie"
+        ],
+        "pozycje": [
+          "2-4"
+        ],
+        "nadaje": [
+          "kroki-proces",
+          "korzysci-argumenty",
+          "otwarcie-strony"
+        ],
+        "mechanika": [
+          "przewijanie",
+          "ruch-wlasny"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
       "opis": "Scena przyklejona 100svh w wysokim torze: w tle zapętlone wideo na całą szerokość okna z jednolitym scrimem; pierwszy ekran to kicker i nagłówek sekcji wyśrodkowane na wideo; potem przy lewej krawędzi, w połowie wysokości, spis slajdów (numer w węźle i tytuł, bieżący podświetlony), a na środku jasna karta slajdu: kwadratowy ciemny boks ilustracji po lewej, tytuł i opis po prawej.",
       "mechanika": "Pozycja przewijania steruje sceną: tor = scena + (N + 1) × 110 svh. Nagłówek stoi na środku, przy przewijaniu wyjeżdża do góry równocześnie z wjazdem karty 01 od dołu; dalej karty wymieniają się tym samym ruchem, ostatnia stoi do odpięcia sceny. Spis slajdów jest ukryty i poza fokusem, dopóki stoi nagłówek; klik w pozycję przewija do slajdu, poniżej 1300 px spis pokazuje same numery. Tylko motionOn; poniżej 900 px, przy reduced-motion i bez JS plakat jest kadrem z nagłówkiem, karty stoją pod nim. Wideo: autoplay, muted, loop, playsinline, poster, pauza poza widokiem.",
       "baza": {
@@ -2022,6 +4250,34 @@ window.CW_CE = {
     "CE-71": {
       "nazwa": "Pas wejść sytuacyjnych",
       "grupa": "karty",
+      "rodzina": "wspolne",
+      "skrot": "Pas 7 komórek-wejść z numerem, strzałką i etykietą, ostatnia ciemna z telefonem.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "ikona"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "okno"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "nawigacja",
+          "cta"
+        ],
+        "mechanika": [
+          "klik",
+          "statyczny"
+        ],
+        "zakres": [
+          "typ-strony"
+        ]
+      },
       "opis": "Pas komórek tuż pod hero, na całą szerokość szerokiego kontenera, rozdzielonych liniami włosowymi, wysokość ok. 112 px. Pierwsza, wąska komórka to nadpis sekcji wersalikami („Co uprawiasz?”), dalej idzie siedem wejść. Komórka: numer w kwadratowym węźle 24 px i strzałka w jednym wierszu u góry, przy dolnej krawędzi etykieta 18 px semibold i przygaszony podpis 13 px, dla którego komórka zawsze rezerwuje dwa wiersze – dzięki temu etykiety wszystkich komórek stoją na jednej linii. Pięć komórek to zwykłe linki, szósta otwiera panel z listą linków, siódma jest ciemna i w całości jest numerem telefonu. Sprite nie ma symboli upraw, więc zamiast siedmiu przybliżonych ikon każda komórka niesie numer – jedna konwencja dla całego pasa.",
       "mechanika": "Czysty CSS, zero JS-u w części krytycznej. Linie włosowe to 1 px odstępu siatki: tło rysuje je w przerwach, komórki zasłaniają resztę, a ta sama reguła obsługuje oba układy. Hover i :focus-visible dają tło o ton ciemniejsze i przesuwają strzałkę o 4 px. Komórka „Mam już produkt” to przycisk z popovertarget i natywny [popover] z wejściem przez @starting-style; js/10-hero.js ustawia panel pod kaflem (position:fixed, korekta przy przewijaniu i zmianie rozmiaru), a gdy przeglądarka nie zna popovera, @supports not selector(:popover-open) zamienia listę w zwykły blok pod pasem i pięć linków zostaje dostępnych bez skryptu. Wejście: komórki kaskadą revealem strony (data-reveal). Poniżej 900 px siatka 2 × 3 z nadpisem nad nią i komórką telefonu na całą szerokość; trzy rzędy kafli mają równą wysokość (tory fr), zero przewijania w bok.",
       "baza": {
@@ -2049,6 +4305,34 @@ window.CW_CE = {
     "CE-72": {
       "nazwa": "Scena profilu gleby",
       "grupa": "sceny",
+      "rodzina": "sceny",
+      "skrot": "Przypięta scena: po lewej indeks problemów i szczegół kroku, po prawej schemat przekroju gleby.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "schemat-wykres"
+        ],
+        "tekst": [
+          "sredni"
+        ],
+        "ukryte": [
+          "przewijanie"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "kroki-proces",
+          "korzysci-argumenty",
+          "opis-produktu"
+        ],
+        "mechanika": [
+          "przewijanie"
+        ],
+        "zakres": [
+          "jednorazowy"
+        ]
+      },
       "opis": "Przypięta scena o dwóch kolumnach w szerokim kontenerze (5 / 7). Lewa kolumna: u góry głowa sekcji (kicker w ramce, h2, lead), pod nią indeks pięciu tytułów problemów – wszystkie widoczne, aktywny wyróżniony wypełnionym węzłem z numerem, pozostałe przygaszone – a przy dolnej krawędzi okna szczegół bieżącego kroku: tytuł, linia postępu kroku, zdanie problemu, etykieta „Co z tym robimy” ze zdaniem odpowiedzi, link i licznik „02/05”. Po kroku piątym wchodzi krok szósty, bez numeru w indeksie, z przyciskiem zamiast linku. Prawa kolumna: jasnoszary panel na wysokość okna z marginesem 20 px, a w nim ręcznie napisany inline SVG – rysunek techniczny przekroju gleby w skali szarości (miarka głębokości 0–40 cm ze znacznikiem postępu sceny, poziom próchniczny, podglebie z kreskowaniem, kamienie, spękania, gruzełki lignitu, krople wody, korzenie, punkty życia mikrobiologicznego, kwadraciki składników, skala odczynu z trzema strefami) oraz drobny podpis „Schemat poglądowy”. Cały SVG jest aria-hidden – każde jego słowo stoi w treści po lewej.",
       "mechanika": "Tor sekcji = scena 100svh plus sześć kroków po 0,7 × 100svh (pokrętła --sp-step-vh i --sp-step-min), scena position:sticky;top:0; krok wybiera pozycja przewijania liczona z szyny CX5. Stan rysunku jest kumulatywny: klasy is-s1…is-s6 dokładają się na korzeniu sekcji, więc każda naprawa zostaje na kolejnych krokach, a naprawa bieżącego kroku wchodzi dopiero kawałek w krok (próg z histerezą), żeby czytelnik zobaczył najpierw problem, a potem jego naprawę. Przejścia 600–900 ms cubic-bezier(.16,1,.3,1), kaskady po --d; pętle (spadające krople, dryf punktów życia, wędrówka składników) stoją, gdy scena jest poza oknem (IntersectionObserver) i przy reduced-motion. --sp-p to postęp całej sceny (znacznik na miarce), --sp-f postęp kroku (wypełnienie linii). Klik w pozycję indeksu przewija do swojego kroku przez CX5.scrollTo (Lenis, gdy działa); Tab przechodzi przez indeks i link kroku i wyprowadza dalej, bo nieaktywne kroki są visibility:hidden. O układzie decyduje jedna klasa, którą moduł stawia na korzeniu: is-scene (przypięta scena), is-tabs (poniżej 900 px albo w oknie za niskim, żeby treść utrzymała 96 px odstępu od doka doradcy: indeks staje się zawijanym tablistem chipów ze strzałkami i roving tabindex, pod nim SVG, pod nim panel wybranego kroku, a krok końcowy zostaje na dole), is-flat (reduced-motion: bez pinu, wszystkie kroki jeden pod drugim, rysunek w stanie końcowym). Bez JS-u nie ma żadnej z tych klas, a stanem domyślnym każdej reguły rysunku jest stan końcowy, więc strona bez skryptu jest kompletna. Pomocniczy parametr adresu ?sp=1…6 otwiera stronę na wskazanym kroku.",
       "baza": {
@@ -2079,6 +4363,34 @@ window.CW_CE = {
     "CE-73": {
       "nazwa": "Oś kroków z horyzontem efektu",
       "grupa": "dane",
+      "rodzina": "dane",
+      "skrot": "Pozioma oś 4 kroków z węzłami, a pod nią oś czasu z dwoma odcinkami efektu.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "schemat-wykres"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "kroki-proces",
+          "harmonogram-czas"
+        ],
+        "mechanika": [
+          "przewijanie",
+          "statyczny"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
       "opis": "Szeroka sekcja (kontener do 1800 px, marginesy 40 px) złożona z dwóch części pod wspólną głową. U góry oś procesu: cztery kolumny pod jedną poziomą linią 1 px, na linii kwadratowe węzły 30 px z numerami 01–04, pod każdym węzłem tytuł kroku i jedno zdanie. Niżej, oddzielony dużym odstępem, horyzont efektu: nadpis, wspólna oś czasu z dwoma odcinkami w proporcji 1 : 4 (nad paskiem etykieta okresu, pod paskiem znacznik czasu i treść), pierwszy pasek ciemny, drugi w średniej szarości; pod osią dopisek i link. Pasek ma 12 px wysokości i obrys 1 px.",
       "mechanika": "Linia osi wypełnia się od lewej (scaleX) wraz z przejściem sekcji przez okno: postęp 0 przy 80 % wysokości okna, 1 przy 35 %; węzeł zapala się (ciemne wypełnienie, jasna cyfra), gdy wypełnienie do niego dochodzi – moduł mierzy położenie każdego węzła na linii. Kolumny wchodzą kaskadą revealem strony. Odcinki horyzontu wypełniają się od lewej po wejściu w widok (600 ms i 900 ms). Mechanika scrollowa tylko za CX5.motionOn(); bez JS, poniżej 900 px i przy reduced-motion linia jest pełna, wszystkie węzły zapalone, a paski w stanie końcowym. Poniżej 900 px oś staje pionowo: węzły po lewej, linia wypełnia się w pionie, horyzont rozpada się na dwa wiersze z własnymi paskami, których szerokość trzyma proporcję 1 : 4.",
       "baza": {
@@ -2106,6 +4418,34 @@ window.CW_CE = {
     "CE-74": {
       "nazwa": "Taby potrzeb z kartami produktów",
       "grupa": "przelaczniki",
+      "rodzina": "zwijane",
+      "skrot": "Przełącznik 3 potrzeb; panel z opisem, zdjęciem i trzema kartami produktów.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "packshot",
+          "zdjecie"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "taby-przelacznik"
+        ],
+        "pozycje": [
+          "2-4"
+        ],
+        "nadaje": [
+          "porownanie-wybor",
+          "lista-produktow"
+        ],
+        "mechanika": [
+          "klik"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
       "opis": "Szeroka sekcja (kontener do 1800 px, marginesy 40 px): głowa po lewej, pod leadem przełącznik segmentowy z trzema pozycjami – w każdej etykieta potrzeby, a pod nią mniejszym drukiem rodzaj produktu. Panel pozycji to siatka 4 / 8: po lewej nagłówek h3 powtarzający etykietę, opis potrzeby i kadr zdjęcia 4 : 3 „z terenu” przy dolnej krawędzi kolumny, po prawej trzy karty produktu w rzędzie. Karta: pole packshotu 4 : 5 na jasnoszarym tle z linią podłogi na 82 % wysokości (packshot stoi na linii), nazwa, rząd chipów postaci i sposobu aplikacji, jedno zdanie, a przy dolnej krawędzi – nad cienką linią – link „Poznaj produkt” ze strzałką i cichy link do sklepu. Wariant szerokiej karty: jeden produkt zajmuje cały rząd, packshot po lewej, po prawej nazwa, chipy, zdanie, trzy fakty jako lista z liniami i dwa przyciski. Pod tabami rząd linków: przycisk drugorzędny i dwa linki ze strzałką.",
       "mechanika": "Taby wg wzorca ARIA z automatyczną aktywacją: klik, strzałki w obie osie, Home i End, roving tabindex; znacznik aktywnej pozycji przesuwa się i zmienia rozmiar (transform), a etykiety leżą nad nim w trybie „difference”, więc odwracają kolor dokładnie pod znacznikiem. Przejście: stary panel gaśnie (160 ms) i odjeżdża w stronę przeciwną do wyboru, nowy wchodzi – kolumna opisu, potem karty kaskadą co 70 ms, packshoty podnoszą się o 24 px znad linii podłogi; wysokość kontenera paneli przechodzi płynnie, więc treść pod sekcją nie skacze. Deep linki na id paneli przez CX5.onHash (start, load, Back i Forward). Wszystkie panele zostają w DOM: bez JS przełącznik się nie pokazuje, a panele stoją jeden pod drugim, każdy ze swoim nagłówkiem. Między 900 a 1199 px opis i kadr stają obok siebie w pasie nad kartami; poniżej 900 px przełącznik ma trzy równe kolumny z etykietą łamaną na dwa wiersze, panel jest jedną kolumną (opis, karty jedna pod drugą z niższym polem packshotu 16 : 10, kadr z terenu na końcu).",
       "baza": {
@@ -2134,6 +4474,37 @@ window.CW_CE = {
     "CE-75": {
       "nazwa": "Zajawka programu z osią kamieni",
       "grupa": "karty",
+      "rodzina": "obraz-tekst",
+      "skrot": "Zajawka programu: tekst, liczby i przyciski obok zdjęcia z kartą osi pięciu kamieni.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "zdjecie",
+          "schemat-wykres"
+        ],
+        "tekst": [
+          "sredni"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "otwarcie-strony",
+          "harmonogram-czas",
+          "liczby-dane"
+        ],
+        "mechanika": [
+          "statyczny",
+          "przewijanie",
+          "ruch-wlasny"
+        ],
+        "zakres": [
+          "jednorazowy"
+        ]
+      },
       "opis": "Szeroka sekcja o dwóch kolumnach 5 / 7 (kontener do 1800 px, marginesy 40 px). Po lewej cały program: chip przerywany z opisem logo, pasek stanu między dwiema kreskami z kwadratowym znacznikiem „na żywo”, nagłówek h2, lead, zdanie-zasada wyróżnione grubą kreską po lewej, dwie liczby z jednostką i podpisem, linia koordynacji naukowej z notą o niezależności eksperta drobnym drukiem i dwa przyciski. Po prawej wysoki kadr 4 : 5, a na jego dolnej krawędzi jasna karta z poziomą osią pięciu kamieni: daty nad linią, opisy pod linią, punkt bieżący z większym węzłem i ciemną plakietką. Karta jest wsunięta 20 px od prawej i dolnej krawędzi kadru, a w lewo sięga poza jego krawędź, więc widać pasek zdjęcia, który mówi, co leży na czym.",
       "mechanika": "Kadr ma lekki parallaks z szyny: warstwa zdjęcia jest wyższa od ramki, przesuw biegnie od −6 do 0 procent jej wysokości i istnieje tylko przy CX5.motionOn(). Odcinek osi do punktu bieżącego jest ciemny i dorysowuje się od lewej w 0,9 s, gdy oś pierwszy raz wchodzi w okno; węzły wchodzą kaskadą wspólnym revealem, dalsza część osi zostaje jasna i przerywana. Znacznik „na żywo” w pasku stanu i węzeł punktu bieżącego pulsują kwadratowym pierścieniem. Wysokość kadru prowadzi pierwszy wiersz siatki, dzięki czemu karta trzyma się dolnej krawędzi kadru także wtedy, gdy kolumna treści jest wyższa. Poniżej 900 px kolejność zmienia wyłącznie kadr (4 : 3, na górze) – karta zostaje za treścią, żeby oś nie wyprzedzała programu w czytaniu; oś staje pionowo: linia po lewej, węzły jeden pod drugim, odcinek przebyty ciągły i ciemny, dalszy przerywany. Bez JS-u i przy reduced-motion wszystko stoi narysowane: kadr bez parallaksu, oś z ciemnym odcinkiem, bez pulsu.",
       "baza": {
@@ -2163,6 +4534,35 @@ window.CW_CE = {
     "CE-76": {
       "nazwa": "Szybki podgląd produktu",
       "grupa": "nakladki",
+      "rodzina": "okna",
+      "skrot": "Okno szybkiego podglądu produktu: makieta opakowania, cena i wybór odmiany, opakowania, ilości.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "packshot"
+        ],
+        "tekst": [
+          "sredni"
+        ],
+        "ukryte": [
+          "okno"
+        ],
+        "pozycje": [
+          "2-4"
+        ],
+        "nadaje": [
+          "sklep-transakcja",
+          "opis-produktu"
+        ],
+        "mechanika": [
+          "okno",
+          "klik",
+          "formularz"
+        ],
+        "zakres": [
+          "typ-strony"
+        ]
+      },
       "opis": "Okno ze skrótem karty produktu, otwierane przyciskami „dodaj do koszyka” w całym sklepie. Od 900 px panel do 1040 px w dwóch kolumnach 11 : 10: po lewej kwadratowy kadr z makietą wybranego opakowania na jasnoszarym tle (dwie makiety przy zestawie, pole zastępcze przy produktach partnerów), przyklejony, gdy formularz przewija się w panelu; po prawej meta, nazwa (H2), cena z obniżką i najniższą ceną z 30 dni, jedno–dwa zdania opisu, link „Zobacz pełną kartę produktu”, przełącznik odmiany (pH), opakowania z cenami, frakcja z podpowiedzią, liczba opakowań, suma, „Dodaj do koszyka” z „Anuluj” i zdanie o wysyłce. Poniżej 900 px jedna kolumna z niskim paskiem makiety nad treścią, poniżej 600 px arkusz przy dolnej krawędzi ekranu. Po dodaniu okno przechodzi w stan „Dodano do koszyka”: miniatura, nazwa, opakowanie × liczba i wartość, stan koszyka, „Przejdź do koszyka” i „Kontynuuj zakupy”.",
       "mechanika": "Otwiera je każdy element data-cw-open wewnątrz hosta data-cw-product (delegacja kliknięć; data-cw-pack wybiera opakowanie na start) albo CWSklep.open(). Okno powstaje w skrypcie przy pierwszym otwarciu i jest dopinane na końcu body. Fokus na wybranym opakowaniu, pułapka fokusu, Escape, klik w tło i „Anuluj” zamykają, fokus wraca na przycisk, który je otworzył; przewijanie strony zablokowane (cws-lock). Przełącznik odmiany przerysowuje okno w miejscu, gdy druga odmiana ma hosta na stronie (zachowuje opakowanie, liczbę i frakcję), inaczej jest linkiem do jej karty z kotwicą opakowania. Zmiana opakowania podmienia makietę, cenę i kotwicę linku do pełnej karty, suma liczy się na bieżąco; link do pełnej karty znika, gdy karta jest bieżącą stroną. „Dodaj do koszyka” zapisuje pozycję (sessionStorage cw_cart_items), odświeża licznik w nagłówku i wysyła zdarzenie cw:cart.",
       "baza": {
@@ -2196,6 +4596,37 @@ window.CW_CE = {
     "CE-77": {
       "nazwa": "Pasek tytułowy",
       "grupa": "otwarcie",
+      "rodzina": "otwarcie",
+      "skrot": "Niski pasek otwarcia: okruszki i H1 po lewej, wyszukiwarka z podpowiedziami po prawej.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "ikona"
+        ],
+        "tekst": [
+          "tylko-naglowek"
+        ],
+        "ukryte": [
+          "okno"
+        ],
+        "pozycje": [
+          "1"
+        ],
+        "nadaje": [
+          "otwarcie-strony",
+          "nawigacja"
+        ],
+        "mechanika": [
+          "formularz",
+          "ruch-wlasny"
+        ],
+        "zakres": [
+          "typ-strony"
+        ]
+      },
+      "skroty_wariantow": {
+        "z-licznikiem": "Okruszki, duży H1 „Koszyk” i obok liczba opakowań, bez wyszukiwarki."
+      },
       "opis": "Niski pasek otwierający stronę sklepu zamiast hero, w szerokim kontenerze (EL-29) z linią pod spodem: po lewej okruszki i pod nimi H1 w osobnym wierszu (1,35–1,75 rem), po prawej narzędzie strony – w wersji bazowej wyszukiwarka produktów: pole 48 px (do 520 px od 900 px) z ikoną lupy i animowanym placeholderem oraz panel podpowiedzi pod polem. Wysokość wg treści (ok. 90 px), żeby pierwsza karta listy stała jak najwyżej.",
       "mechanika": "Wyszukiwarka szuka tylko produktów sklepu. Placeholder „Szukaj: ” dopisuje i kasuje frazy po literze z migającym kursorem, staje przy fokusie i przy wpisanym tekście, przy reduced-motion zostaje stały tekst; nazwa dostępna pola jest stała. Od dwóch znaków panel podpowiedzi (niemodalny popup comboboxa): do sześciu produktów z miniaturą 56 px, nazwą z wyróżnioną frazą, meta i ceną „od …”; klik prowadzi do karty produktu, „+” otwiera szybki podgląd (CE-76). W zawężonym widoku wiersz o dopasowaniach poza bieżącym widokiem z przyciskiem „Szukaj w całym sklepie”; bez wyników zdanie i „Zapytaj wirtualnego asystenta”. Wpisywanie nie przestawia siatki – dopiero Enter albo stopka „Pokaż wszystkie wyniki (N)” nakłada frazę na listę (chip filtra w CE-78) i przewija do listy. Strzałka w dół przenosi do panelu, strzałki poruszają po pozycjach, Escape zamyka i wraca do pola (aria-expanded, aria-controls). Poniżej 700 px okruszki znikają, a pole zajmuje całą szerokość.",
       "baza": {
@@ -2231,6 +4662,36 @@ window.CW_CE = {
     "CE-78": {
       "nazwa": "Lista produktów z filtrami",
       "grupa": "dane",
+      "rodzina": "sklep-formularze",
+      "skrot": "Lista produktów z pastylkami grup, filtrami, sortowaniem i siatką kart z ceną i przyciskiem.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "packshot",
+          "zdjecie"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "taby-przelacznik"
+        ],
+        "pozycje": [
+          "9+"
+        ],
+        "nadaje": [
+          "lista-produktow",
+          "porownanie-wybor",
+          "sklep-transakcja"
+        ],
+        "mechanika": [
+          "klik",
+          "formularz"
+        ],
+        "zakres": [
+          "typ-strony"
+        ]
+      },
       "opis": "Cała powierzchnia wyboru produktów sklepu w szerokim kontenerze. U góry pas grup: nagłówek „Wybierz uprawę lub potrzebę”, pastylki z okrągłym zdjęciem, etykietą i licznikiem oraz link do konfiguratora po prawej; pod nim przyklejony pasek roboczy – przełącznik kolumny filtrów z liczbą aktywnych, licznik „Pokazujemy N z N produktów”, przycisk szuflady filtrów i sortowanie. Niżej od 1000 px kolumna filtrów 280 px (11 grup: pięć rozwiniętych na wierzchu, sześć pod „Pokaż wszystkie filtry”; przy każdej opcji licznik) obok siatki trzech kolumn kart produktu; nad siatką wiersz aktywnych filtrów z chipami i „Resetuj wszystkie filtry”, podpowiedź „Zawęź dalej”, pas przywracania filtrów i zdanie wykluczające, pod siatką pusty stan i rozwijany pas „Poza wynikami”. Karta: kadr 1 : 1 z makietą opakowania na jasnoszarym tle, znacznik „promocja”, pastylki opakowań, linia meta, nazwa, cena „od …” (przy obniżce cena, przekreślona regularna, „−9%” i najniższa cena z 30 dni) i „dodaj do koszyka” na całą szerokość karty.",
       "mechanika": "Stan listy = grupa (wybór jednokrotny; pastylka to przycisk przełączający z aria-pressed, ponowny klik zdejmuje wybór) + fasety (wybór wielokrotny) + zakres ceny + fraza z wyszukiwarki (CE-77) + sortowanie. Każdy aktywny filtr ma chip z „×”, grupa jest pierwszym chipem. Liczniki przy pastylkach i opcjach liczone na żywo; opcja o wyniku 0 jest wygaszona, nigdy ukryta; produkt zdjęty z listy dostaje zdanie w „Poza wynikami”, reguła twarda – zdanie nad siatką. Sortowanie „Polecane”, „Nazwa A–Z”, „Cena rosnąco” i filtr ceny liczą cenę po obniżce. Stan w adresie (polka, f, q, cena_od, cena_do, sort) – świadome akcje przez pushState, Wstecz i Dalej odtwarzają widok. Od 1000 px przycisk „Ukryj filtry / Pokaż filtry” zwija kolumnę (siatka zostaje trzykolumnowa na całej szerokości), stan pamiętany w sesji, domyślny z data-filters-default; kolumna filtrów przyklejona pod paskiem roboczym. Poniżej 1000 px filtry to szuflada na pełny ekran z przyciskiem „Pokaż produkty”, siatka ma dwie kolumny, a poniżej 900 px pas grup przewija się w poziomie (kółka 56 px, scroll-snap). Karta: pastylki opakowań na kadrze po najechaniu albo przy fokusie (wskaźnik z kursorem, od 600 px), w pozostałych przypadkach stale pod kadrem; pastylka prowadzi do karty produktu z kotwicą opakowania; na kartach rodziny CARBOMAT ECO druga klatka z fakturą przenika się ze zdjęciem opakowania po najechaniu; „dodaj do koszyka” otwiera szybki podgląd (CE-76). W widoku bez zawężenia w siatkę wplecione są kafle promocyjne (CE-79).",
       "baza": {
@@ -2260,6 +4721,44 @@ window.CW_CE = {
     "CE-79": {
       "nazwa": "Kafel promocyjny w siatce",
       "grupa": "karty",
+      "rodzina": "karty",
+      "skrot": "Kafel promocyjny w siatce produktów: zdjęcie pod gradientem, kicker, nagłówek i przycisk.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "zdjecie",
+          "wideo",
+          "packshot"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "1"
+        ],
+        "nadaje": [
+          "cta",
+          "lista-produktow",
+          "korzysci-argumenty"
+        ],
+        "mechanika": [
+          "statyczny",
+          "klik",
+          "ruch-wlasny"
+        ],
+        "zakres": [
+          "typ-strony"
+        ]
+      },
+      "skroty_wariantow": {
+        "baner": "Zdjęcie na całą szerokość siatki z tekstem i jasnym przyciskiem po lewej.",
+        "wideo": "Film na 2 × 2 komórki z tekstem i przyciskiem odtwarzania i pauzy.",
+        "dwie-kolumny": "Zdjęcie na dwie kolumny siatki, tekst i przycisk u dołu.",
+        "w-miejscu-produktu": "Kafel o rozmiarze karty: kadr 1:1, wyśrodkowany nagłówek, zdanie i przycisk-link."
+      },
       "opis": "Kafel redakcyjny wpleciony w siatkę listy produktów między karty. Dwie rodziny wyglądu: kafle na zdjęciu albo filmie (ciemne tło, obraz cover pod gradientem przyciemniającym, biały tekst: opcjonalny kicker wersalikami, nagłówek, zdanie i jasny przycisk) oraz kafel w miejscu produktu (obrys i rozmiar karty: kadr 1 : 1, pod nim wyśrodkowany nagłówek większy niż nazwa produktu, jedno zdanie i przycisk-link wersalikami z kreską pod spodem). Żaden kafel nie prowadzi poza sklep.",
       "mechanika": "Skrypt listy wstawia każdy kafel za N-tym produktem bieżącej kolejności (data-tile-after), więc sortowanie zostawia kafle na miejscach, a grid-auto-flow: dense zamyka komórkę, którą zostawia kafel wielokolumnowy. Kafle widać tylko w widoku bez zawężenia (bez grupy, faset, zakresu ceny i frazy); licznik „Pokazujemy N z N” liczy wyłącznie produkty. Przycisk kafla na zdjęciu włącza grupę (data-tile-shelf) i przewija do początku listy, przycisk kafla promocyjnego otwiera szybki podgląd (CE-76) z wybranym opakowaniem (data-cw-pack). Film gra bez dźwięku w pętli tylko w widoku (IntersectionObserver, 35 % kafla) i nigdy sam przy reduced-motion – wtedy plakat; przycisk odtwarzania i pauzy działa zawsze. Na siatce dwukolumnowej (poniżej 1000 px) baner, film i baner dwukolumnowy zajmują całą szerokość.",
       "baza": {
@@ -2310,6 +4809,33 @@ window.CW_CE = {
     "CE-80": {
       "nazwa": "Wstęp z linią zaufania",
       "grupa": "otwarcie",
+      "rodzina": "otwarcie",
+      "skrot": "Nagłówek H2, lead i linia trzech krótkich sygnałów zaufania w jednym rzędzie.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "bez-mediow"
+        ],
+        "tekst": [
+          "sredni"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "1"
+        ],
+        "nadaje": [
+          "otwarcie-strony",
+          "dowod-zrodla"
+        ],
+        "mechanika": [
+          "statyczny"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
       "opis": "Krótki blok tekstowy w szerokim kontenerze: nagłówek H2, lead na mierze ok. 70 znaków i pod nim linia zaufania – trzy krótkie sygnały drobnym drukiem w jednym rzędzie, rozdzielone cienkimi pionowymi kreskami.",
       "mechanika": "Statyczny; na wąskim ekranie sygnały zawijają się do kolejnych wierszy.",
       "baza": {
@@ -2334,6 +4860,33 @@ window.CW_CE = {
     "CE-81": {
       "nazwa": "Baner CTA ze zdjęciem",
       "grupa": "noty-i-cta",
+      "rodzina": "pasy",
+      "skrot": "Jasnoszary panel: nagłówek, lead i dwa przyciski obok zdjęcia na pełną wysokość.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "zdjecie"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "1"
+        ],
+        "nadaje": [
+          "cta"
+        ],
+        "mechanika": [
+          "statyczny",
+          "okno"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
       "opis": "Jasnoszary panel w szerokim kontenerze, od 900 px w dwóch równych kolumnach: po lewej, wyśrodkowane w pionie, nagłówek H2, lead (do 60 znaków w wierszu) i rząd dwóch przycisków – ciemny „Zapytaj wirtualnego asystenta” i jasny „Dobierz produkt do swojej uprawy”; po prawej zdjęcie cover na całą wysokość panelu (min. 420 px). Poniżej 900 px jedna kolumna ze zdjęciem 16 : 10 pod tekstem.",
       "mechanika": "Statyczny. Przycisk asystenta otwiera dok doradcy (data-jurek-open – cw.js wiąże go przy starcie strony, więc przycisk musi stać w HTML), drugi prowadzi do konfiguratora.",
       "baza": {
@@ -2359,6 +4912,38 @@ window.CW_CE = {
     "CE-82": {
       "nazwa": "Galeria z kolumną zakupu",
       "grupa": "otwarcie",
+      "rodzina": "otwarcie",
+      "skrot": "Slider zdjęć z licznikiem obok kolumny zakupu: cena, odmiana, opakowanie i dodanie do koszyka.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "zdjecie",
+          "packshot"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "karuzela",
+          "taby-przelacznik"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "sklep-transakcja",
+          "opis-produktu",
+          "galeria-media"
+        ],
+        "mechanika": [
+          "klik",
+          "formularz",
+          "przewijanie"
+        ],
+        "zakres": [
+          "typ-strony"
+        ]
+      },
       "opis": "Górna część karty produktu sklepu w szerokim kontenerze. Od 900 px dwie kolumny 64 : 36: po lewej galeria jako poziomy slider – jeden duży kadr 1 : 1 (makiety opakowań na jasnoszarym tle w całości, zdjęcia cover), obok wystaje brzeg następnego, pod kadrem strzałki ← → i licznik „1 / 6”; po prawej okruszki i kolumna zakupu: kicker, H1, cena z obniżką i najniższą ceną z 30 dni, dwa zdania opisu z linkiem „Więcej o produkcie”, przełącznik odmiany (pH), opakowania z cenami, frakcja z podpowiedzią, liczba opakowań obok przycisku „Dodaj do koszyka”, komunikat po dodaniu, jedno zdanie o wysyłce, a pod nimi „Połącz z” (CE-20). Poniżej 900 px okruszki, slider na całą szerokość ekranu i kolumna zakupu pod nim.",
       "mechanika": "Slider przewija się w bok ze scroll-snap (palec, gładzik, strzałki na zogniskowanym torze); przyciski przesuwają o jeden kadr, licznik i stan przycisków (aria-disabled na końcach) idą za przewijaniem. Od 900 px obie kolumny są przyklejone z logiką dwukierunkową: krótsza kolumna jedzie ze stroną, aż jej koniec dojdzie do dołu okna, i tam staje, dłuższa jedzie dalej; po zmianie kierunku odwrotnie (top liczony na bieżąco, przeliczenie przy zmianie rozmiaru i wysokości kolumny). Opcje i ceny rysowane z JSON-u data-cw-product kolumny – tego samego co na liście, w szybkim podglądzie i w koszyku. Druga odmiana pH jest linkiem do jej karty z kotwicą wybranego opakowania; kotwica #w20 / #bb1000 / #bb1500 wybiera opakowanie przy wejściu i przy hashchange, a zmiana opakowania zapisuje ją przez replaceState. „Dodaj do koszyka” zapisuje pozycję w koszyku (CWSklep.add) i ogłasza w regionie aria-live „Dodano: … W koszyku: N opakowań.” z linkiem do koszyka; od dwóch opakowań pod przyciskiem pojawia się suma. „Więcej o produkcie” przewija do CE-83 i ustawia fokus na jego nagłówku (bez płynności przy reduced-motion).",
       "baza": {
@@ -2386,6 +4971,36 @@ window.CW_CE = {
     "CE-83": {
       "nazwa": "Opis w sekcjach z faktami",
       "grupa": "przelaczniki",
+      "rodzina": "zwijane",
+      "skrot": "Pełny opis produktu: wstęp, 4 fakty z ikonami, chipy i sekcje korzyści, przepisów i pytań.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "ikona",
+          "zdjecie"
+        ],
+        "tekst": [
+          "dlugi"
+        ],
+        "ukryte": [
+          "akordeon"
+        ],
+        "pozycje": [
+          "9+"
+        ],
+        "nadaje": [
+          "opis-produktu",
+          "faq",
+          "liczby-dane"
+        ],
+        "mechanika": [
+          "statyczny",
+          "klik"
+        ],
+        "zakres": [
+          "typ-strony"
+        ]
+      },
       "opis": "Pełny opis produktu na karcie sklepu, w szerokim kontenerze: nagłówek H2 i akapit wstępu, rząd czterech kluczowych faktów (ikona, etykieta wersalikami, duża wartość, linia pod spodem; od 900 px cztery w rzędzie, niżej 2 × 2), chipy „Sprawdzi się, gdy”, a dalej trzy sekcje rozdzielone liniami: „Co zyskujesz” (cztery kafle – kadr 4 : 3, tytuł, zdanie), „Jak stosować” (lista przepisów z linkiem do konfiguratora obok kadru) i „Najczęstsze pytania” (odpowiedź pod pytaniem). Od 900 px sekcja to dwie kolumny 1 : 3 – nagłówek H3 po lewej, przyklejony na czas sekcji, treść po prawej; na końcu zdanie z linkiem do pełnej strony produktu.",
       "mechanika": "Od 900 px (i bez skryptu) wszystkie sekcje otwarte, nie ma nic do klikania ani do fokusu. Poniżej 900 px skrypt zamienia sekcje w akordeony: przycisk w H3 (aria-expanded) przełącza klasę is-open, pierwsza sekcja otwarta; wysokość animowana przez grid-template-rows 0fr ↔ 1fr, zamknięta treść poza kolejnością fokusu (visibility), bez atrybutu hidden. Stan przetrwa zmianę szerokości przez 900 px. Kafle i kadr „Jak stosować” układają się wg szerokości sekcji (container queries).",
       "baza": {
@@ -2414,6 +5029,33 @@ window.CW_CE = {
     "CE-84": {
       "nazwa": "Koszyk z podsumowaniem",
       "grupa": "dane",
+      "rodzina": "sklep-formularze",
+      "skrot": "Lista pozycji koszyka z miniaturą, krokomierzem i ceną oraz kolumna podsumowania z przyciskami.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "packshot"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "2-4"
+        ],
+        "nadaje": [
+          "sklep-transakcja"
+        ],
+        "mechanika": [
+          "klik",
+          "formularz"
+        ],
+        "zakres": [
+          "typ-strony"
+        ]
+      },
       "opis": "Strona koszyka w szerokim kontenerze, od 900 px w dwóch kolumnach 7 : 5 (podsumowanie min. 340 px). Po lewej etykieta „Pozycje w koszyku” nad czarną linią i pozycje jako wiersze-karty rozdzielone liniami: kwadratowa miniatura 160 px (96 px na telefonie) z makietą opakowania na jasnoszarym tle, nazwa z linkiem do karty z kotwicą opakowania i „×” w prawym górnym rogu, pod nazwą opakowanie z frakcją i cena jednostkowa (przy obniżce przekreślona regularna, „−9%” i najniższa cena z 30 dni) ze stawką VAT, na dole krokomierz po lewej i wartość pozycji po prawej. Po prawej przyklejone podsumowanie: produkty, wysyłka kurierem z rozwijanym „Jak liczymy”, dostawa paletowa, „Razem do zapłaty (brutto)”, VAT osobno dla każdej stawki i wartość netto, noty i przyciski „Kontynuuj zakupy” oraz „Przejdź do kasy – suma”. Pusty koszyk: ikona, zdanie, „Przejdź do sklepu” i przycisk makiety „Wczytaj przykładowy koszyk”.",
       "mechanika": "Wszystko rysuje koszyk.js ze wspólnego koszyka (CWSklep) i przelicza po każdej zmianie: krokomierz 1–99 (aria-disabled na końcach), „×” usuwa pozycję i na 6 s zostawia na jej miejscu pasek „Usunięto … – Cofnij” (pauza przy fokusie; przywrócenie przez CWSklep.restore), fokus przechodzi na następną pozycję albo na nagłówek pustego stanu. Kalkulator wysyłki układa opakowania w paczki od najcięższych do 30 kg (10 zł za paczkę), opakowania paletowe liczy sztukami (od 300 zł); wiersz palet tylko przy opakowaniach paletowych. VAT liczony osobno dla każdej stawki w koszyku, wysyłka rozkładana proporcjonalnie. Suma w przycisku kasy aktualizuje się na bieżąco, zmiany ogłasza jedyny region aria-live strony. Od 900 px podsumowanie przyklejone do góry (offset obniżany, gdy podsumowanie jest wyższe niż okno); przyciski obok siebie od 1200 px. Bez JS komunikat w noscript.",
       "baza": {
@@ -2495,6 +5137,34 @@ window.CW_CE = {
     "CE-87": {
       "nazwa": "Porównanie trwałości z kaflami zalet",
       "grupa": "dane",
+      "rodzina": "dane",
+      "skrot": "Dwa porównywane wiersze z wielką liczbą i paskiem, obok siatki 2 × 2 kafli z akapitami.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "schemat-wykres"
+        ],
+        "tekst": [
+          "sredni"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "porownanie-wybor",
+          "liczby-dane",
+          "korzysci-argumenty"
+        ],
+        "mechanika": [
+          "statyczny"
+        ],
+        "zakres": [
+          "jednorazowy"
+        ]
+      },
       "opis": "Jasny pas: głowa sekcji, pod nią dwie kolumny 5 / 7. Po lewej etykieta i dwa wiersze „nazwa | wielka liczba” z paskiem w skali (drugi pasek wygasa, gdy wartość jest otwarta – „ponad 20 lat”) oraz zdanie źródłowe drobnym drukiem; po prawej siatka 2 × 2 kafli: tytuł i akapit. Poniżej 1000 px jedna kolumna, poniżej 640 px kafle jeden pod drugim.",
       "mechanika": "Statyczny; bloki wchodzą przy przewijaniu (reveal). Paski są ozdobą (aria-hidden), liczby stoją w tekście.",
       "baza": {
@@ -2571,6 +5241,36 @@ window.CW_CE = {
     "CE-90": {
       "nazwa": "Oś programu z punktami zdarzeń",
       "grupa": "dane",
+      "rodzina": "dane",
+      "skrot": "Oś czasu gospodarstw z pionowymi liniami miesięcy i kwadratami zdarzeń wg stanu.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "schemat-wykres",
+          "ikona"
+        ],
+        "tekst": [
+          "tylko-naglowek"
+        ],
+        "ukryte": [
+          "okno"
+        ],
+        "pozycje": [
+          "9+"
+        ],
+        "nadaje": [
+          "harmonogram-czas",
+          "ludzie"
+        ],
+        "mechanika": [
+          "klik",
+          "okno",
+          "przewijanie"
+        ],
+        "zakres": [
+          "jednorazowy"
+        ]
+      },
       "opis": "Oś czasu gospodarstw w stylu pionowych linii: u góry rząd lat i miesięcy z podpisem „jesteśmy tutaj” nad bieżącym miesiącem, po lewej przyklejona kolumna wierszy (chip uprawy i gospodarz); miesiąc ze zdarzeniami to cienka pionowa linia przez wszystkie wiersze, zdarzenia stoją tuż po jej prawej stronie jako kwadraty 16 px, których kształt niesie stan (ciemny z białym ptaszkiem = zrobione, obrys z pełnym środkiem = w toku, obrys = zaplanowane, obrys kreskowany = nie dotyczy); zdarzenie z filmem ma znak odtwarzacza. Miesiące puste są wąskie, lata bez zdarzeń zwinięte do wąskiego pasa. Pod osią legenda. Nad osią tytuł harmonogramu (kotwica #harmonogram).",
       "mechanika": "Oś buduje się z list w HTML-u (po jednej na gospodarstwo), które są zarazem wersją bez JS; miesiąc zdarzenia stoi w data-od, znacznik „jesteśmy tutaj” w jednym elemencie z data-m. Szerokości kolumn liczy skrypt ze źródła (miesiąc ze zdarzeniami = 1, pusty = 1/3, pusty rok = pas 56 px). Najechanie na kolumnę miesiąca, fokus na punkcie albo dotknięcie rozszerza kolumnę do ok. 320 px jednym przejściem (.45 s), a kwadraty tej kolumny rozwijają się w etykiety na tle: ikona stanu z przodu, sama nazwa zdarzenia (bez terminu), materiał wg stanu (zrobione – ciemne tło, biały ptaszek i tekst; pozostałe – jasne tło z obrysem); wyjście z osi albo Esc zwija. Klik / Enter / spacja otwiera wyśrodkowany pop-up ze wszystkimi zdarzeniami gospodarstwa z tego miesiąca. Wiersz pod kursorem, z fokusem albo po skoku z karty uczestnika (CX5.ppEtapy.focusFarm, kotwice #etapy-<klucz>) dostaje białe tło na pełną szerokość okna. Przy 1440 i 1920 px oś mieści się bez przewijania, poniżej 900 px przewija się w poziomie wewnątrz komponentu.",
       "baza": {
@@ -2788,7 +5488,7 @@ window.CW_CE = {
       "opis": "Nadtytuł sekcji: 0.875 rem, wersaliki, tracking .03em i duży odstęp do treści pod spodem. Dwanaście lokalnych nadpisań margin-bottom:0 czeka na wariant --flush.",
       "przyklad": "<span class=\"c5-kicker\">Czym jest CARBOMAT ECO</span><span class=\"c5-kicker c5-kicker--center\">Dla dociekliwych</span>",
       "przyklad_tlo": "jasne",
-      "kod": "ce/00-base.css – Wspólne klocki nowego layoutu",
+      "kod": "ce/00-base.css – Wspólne CE nowego layoutu",
       "uzywany_w": [
         "CE-08",
         "CE-11",
@@ -2856,7 +5556,7 @@ window.CW_CE = {
       "opis": "Jedyny h1 na podstronie, w hero: clamp od 2,1 do 3,125 rem, waga 500, tracking −0.01em. Element bez wariantów – siedem stron, siedem wystąpień, jedna definicja.",
       "przyklad": "<h1 class=\"c5-h1\">CARBOMAT ECO – surowy polski lignit</h1>",
       "przyklad_tlo": "jasne",
-      "kod": "ce/00-base.css – Wspólne klocki nowego layoutu",
+      "kod": "ce/00-base.css – Wspólne CE nowego layoutu",
       "uzywany_w": [
         "CE-08"
       ],
@@ -2876,7 +5576,7 @@ window.CW_CE = {
       "opis": "Nagłówek sekcji: clamp od 1,7 do 2,5 rem, waga 500, szerokość łamania 784 px. Wchłania c5-params__title i nagłówki kitu z Kukurydzy, które dziś mają wagę 700.",
       "przyklad": "<h2 class=\"c5-h2\">Pięć rzeczy, które warto wiedzieć o lignicie</h2><h2 class=\"c5-h2 c5-h2--center\">Który wariant dla mnie</h2>",
       "przyklad_tlo": "jasne",
-      "kod": "ce/00-base.css – Wspólne klocki nowego layoutu",
+      "kod": "ce/00-base.css – Wspólne CE nowego layoutu",
       "uzywany_w": [
         "CE-10",
         "CE-11",
@@ -2915,7 +5615,7 @@ window.CW_CE = {
       ]
     },
     "EL-10": {
-      "nazwa": "Nagłówek klocka",
+      "nazwa": "Nagłówek CE",
       "grupa": "typografia",
       "klasa": "c5-h3",
       "warianty": {
@@ -2925,7 +5625,7 @@ window.CW_CE = {
         "c5-h3--lg": "clamp 1,125 – 1,5 rem",
         "c5-h3--xl": "clamp 2 – 3 rem"
       },
-      "opis": "Nagłówek wewnątrz klocka – karty, kroku, kafla, pozycji listy – w pięciu rozmiarach jednej skali. To największy bałagan inwentarza: 36 klas o tym samym kroju czeka na scalenie w fali 2c.",
+      "opis": "Nagłówek wewnątrz CE – karty, kroku, kafla, pozycji listy – w pięciu rozmiarach jednej skali. To największy bałagan inwentarza: 36 klas o tym samym kroju czeka na scalenie w fali 2c.",
       "przyklad": "<div class=\"sg-stos\"><h3 class=\"c5-h3 c5-h3--xl\">Dodatek do gleby</h3><h3 class=\"c5-h3 c5-h3--lg\">Trwała próchnica, nie nawóz</h3><h3 class=\"c5-h3 c5-h3--md\">Nasiąkliwość</h3><h3 class=\"c5-h3\">Dawka na hektar</h3><h3 class=\"c5-h3 c5-h3--xs\">Opakowanie</h3></div>",
       "przyklad_tlo": "jasne",
       "kod": "ce/00-base.css – EL · Interface elements → EL-10",
@@ -2969,7 +5669,7 @@ window.CW_CE = {
       "opis": "Kontener kickera, nagłówka i leadu: kolumna z odstępem clamp od 1,25 do 2,25 rem. Element czysto strukturalny – dziewięć klas __head i __hd robi dziś dokładnie to samo.",
       "przyklad": "<div class=\"c5-head\"><span class=\"c5-kicker c5-kicker--flush\">Parametry</span><h2 class=\"c5-h2\">Co dokładnie jest w worku</h2><p class=\"c5-lead\">Wartości z karty produktu – zakres, nie jedna liczba, bo pokład różni się partiami.</p></div>",
       "przyklad_tlo": "jasne",
-      "kod": "ce/00-base.css – Wspólne klocki nowego layoutu",
+      "kod": "ce/00-base.css – Wspólne CE nowego layoutu",
       "uzywany_w": [
         "CE-11",
         "CE-12",
@@ -3014,7 +5714,7 @@ window.CW_CE = {
       "opis": "Akapit wprowadzający pod nagłówkiem: 1 rem, kolor secondary, łamanie do 710 px. W hero rośnie do 1,125 rem i łamie się węziej.",
       "przyklad": "<p class=\"c5-lead\">Jeden składnik, który pracuje w glebie latami – nie nawóz na sezon, tylko trwała próchnica.</p><p class=\"c5-lead c5-lead--center\">Dwa warianty, jedno źródło – ten sam pokład lignitu.</p>",
       "przyklad_tlo": "jasne",
-      "kod": "ce/00-base.css – Wspólne klocki nowego layoutu",
+      "kod": "ce/00-base.css – Wspólne CE nowego layoutu",
       "uzywany_w": [
         "CE-08",
         "CE-11",
@@ -3053,7 +5753,7 @@ window.CW_CE = {
         "c5-p--xs": "0,875 rem",
         "c5-p--ondark": "na ciemnym tle"
       },
-      "opis": "Zwykły akapit treści w klocku, w dwóch rozmiarach zamiast szesnastu klas o nazwach __txt, __body i __desc. Decyzja z inwentarza §4: bazą jest 0,9375 rem ze wzorca ECO.",
+      "opis": "Zwykły akapit treści w CE, w dwóch rozmiarach zamiast szesnastu klas o nazwach __txt, __body i __desc. Decyzja z inwentarza §4: bazą jest 0,9375 rem ze wzorca ECO.",
       "przyklad": "<div class=\"sg-stos\"><p class=\"c5-p\">Lignit nie mineralizuje się jak obornik – zostaje w glebie kilkanaście lat.</p><p class=\"c5-p c5-p--sm\">Dawka zależy od zasobności gleby i uprawy; konfigurator liczy ją na hektar.</p></div>",
       "przyklad_tlo": "jasne",
       "kod": "do dopisania w ce/00-base.css (fala 2b)",
@@ -3344,7 +6044,7 @@ window.CW_CE = {
         "c5-table--sticky": "przyklejony nagłówek",
         "c5-table--ondark": "na ciemnym tle"
       },
-      "opis": "Tabela danych: 0,875 rem, padding 12/16, nagłówek na tle subtle, podświetlany wiersz. Scala tabelę kitu z dwiema tabelami Maty; porównywarka z Produktów zostaje osobnym klockiem, bo ma własną mechanikę podświetlania kolumn.",
+      "opis": "Tabela danych: 0,875 rem, padding 12/16, nagłówek na tle subtle, podświetlany wiersz. Scala tabelę kitu z dwiema tabelami Maty; porównywarka z Produktów zostaje osobnym CE, bo ma własną mechanikę podświetlania kolumn.",
       "przyklad": "<table class=\"wf-table\"><thead><tr><th>Materiał</th><th>Sucha masa</th><th>Trwałość w glebie</th></tr></thead><tbody><tr><td>CARBOMAT ECO</td><td>~87%</td><td>kilkanaście lat</td></tr><tr><td>Obornik</td><td>~25%</td><td>około 3 lata</td></tr><tr><td>Kompost dojrzały</td><td>~40%</td><td>3 – 5 lat</td></tr></tbody></table>",
       "przyklad_tlo": "jasne",
       "szeroki": true,
@@ -3599,13 +6299,13 @@ window.CW_CE = {
       "klasa": "c5-wrap",
       "warianty": {
         "c5-wrap--narrow": "węższa kolumna do czytania",
-        "c5-wrap--wide": "szeroki kontener: od 900 px maks. 1800 px i 40 px bocznego marginesu (ramki Figma Mateusza z 18–19.09.2026); decyzją Mateusza z 19.09.2026 stała na nim cała Kukurydza, a 20.09.2026 sześć jej sekcji wróciło na 1180 px (Produkty, Zasada wyboru, Warianty, Mieszaniny, Skala, pas zamykający – w tym ostatnim kadr zostaje pełnoekranowy, wąska jest tylko treść); szeroki kontener został tam, gdzie stoją klocki budowane wprost z ramek Figma: hero, liczby, program fazowy, decyzje, fakty i tablica warunków (CE-65 ma te same liczby we własnym kontenerze, panel liczb wyrównany ręcznie); pozostałe strony przejdą przy swoich przebudowach; od 19.09.2026 także Próchnica+ (poza Uczestnikami i Koordynatorami, które zostają na 1180 px)"
+        "c5-wrap--wide": "szeroki kontener: od 900 px maks. 1800 px i 40 px bocznego marginesu (ramki Figma Mateusza z 18–19.09.2026); decyzją Mateusza z 19.09.2026 stała na nim cała Kukurydza, a 20.09.2026 sześć jej sekcji wróciło na 1180 px (Produkty, Zasada wyboru, Warianty, Mieszaniny, Skala, pas zamykający – w tym ostatnim kadr zostaje pełnoekranowy, wąska jest tylko treść); szeroki kontener został tam, gdzie stoją CE budowane wprost z ramek Figma: hero, liczby, program fazowy, decyzje, fakty i tablica warunków (CE-65 ma te same liczby we własnym kontenerze, panel liczb wyrównany ręcznie); pozostałe strony przejdą przy swoich przebudowach; od 19.09.2026 także Próchnica+ (poza Uczestnikami i Koordynatorami, które zostają na 1180 px)"
       },
       "opis": "Środkowa kolumna strony: maksymalnie 1180 px, boczny padding 20 px, wyśrodkowana. Osiem identycznych kopii w arkuszach stron zeszło do jednej definicji – zmierzone wartości są na siedmiu stronach takie same.",
       "przyklad": "<div class=\"c5-wrap sg-ramka\"><p class=\"c5-p\">Wszystko, co czyta się w tekście, mieści się w tej kolumnie – pasy tła idą pełną szerokością, treść nigdy.</p></div>",
       "przyklad_tlo": "jasne",
       "szeroki": true,
-      "kod": "ce/00-base.css – Wspólne klocki nowego layoutu",
+      "kod": "ce/00-base.css – Wspólne CE nowego layoutu",
       "uzywany_w": [
         "CE-08",
         "CE-10",
@@ -3649,7 +6349,7 @@ window.CW_CE = {
       "przyklad": "<section class=\"c5-sec c5-band sg-ramka\"><div class=\"c5-wrap\"><h2 class=\"c5-h2\">Jasny pas</h2><p class=\"c5-lead\">Sekcja na tle --w-surface-subtle – rytm pionowy taki sam jak w sekcji zwykłej.</p></div></section>",
       "przyklad_tlo": "jasne",
       "szeroki": true,
-      "kod": "ce/00-base.css – Wspólne klocki nowego layoutu",
+      "kod": "ce/00-base.css – Wspólne CE nowego layoutu",
       "uzywany_w": [
         "CE-11",
         "CE-12",
@@ -3703,7 +6403,7 @@ window.CW_CE = {
       "warianty": {
         "c5-node--on": "pozycja aktywna: wypełnienie --w-gray-900, jasna cyfra"
       },
-      "opis": "Mały kwadratowy znacznik z numerem: 24–25 px, obrys 1 px, cyfry 11 px krojem treści, tabelaryczne; stan aktywny wypełniony. Numeruje pozycje osi, listy albo karty. Dziś trzy lokalne kopie w klockach zbudowanych z ramek Figma Mateusza (18–19.09.2026).",
+      "opis": "Mały kwadratowy znacznik z numerem: 24–25 px, obrys 1 px, cyfry 11 px krojem treści, tabelaryczne; stan aktywny wypełniony. Numeruje pozycje osi, listy albo karty. Dziś trzy lokalne kopie w CE zbudowanych z ramek Figma Mateusza (18–19.09.2026).",
       "przyklad": "<div class=\"sg-rzad\"><span class=\"c5-node\">01</span><span class=\"c5-node c5-node--on\">02</span><span class=\"c5-node\">03</span></div>",
       "przyklad_tlo": "jasne",
       "kod": "do dopisania w ce/00-base.css (fala 2b)",

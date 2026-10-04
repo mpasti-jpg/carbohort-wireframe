@@ -3,38 +3,62 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nie znaleziono strony – prototyp Carbohort</title>
+<title>Nie znaleziono strony – CarboHort, prototyp serwisu</title>
 <meta name="robots" content="noindex">
-<style>
-  :root { color-scheme: light dark; --bg:#fff; --fg:#1a1a1a; --muted:#6b6b6b; --line:#d8d8d8; }
-  @media (prefers-color-scheme: dark) { :root { --bg:#141414; --fg:#ececec; --muted:#9a9a9a; --line:#333; } }
-  body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
-  .wrap { max-width:36rem; margin:0 auto; padding:4rem 1.25rem; }
-  h1 { font-size:1.4rem; margin:0 0 .6rem; }
-  p { color:var(--muted); }
-  a { color:inherit; }
-  .btn { display:inline-block; margin-top:1rem; border:1px solid var(--line); border-radius:.35rem; padding:.4rem .8rem; text-decoration:none; }
-  .btn:hover { border-color:var(--fg); }
-</style>
 <script>
-// Stare adresy sprzed reorganizacji repo (bez numeru wersji w ścieżce)
-// kierujemy na aktualną linię rozwojową, zachowując nazwę pliku.
-(function () {
-  var LATEST = 'v7';
+// Addresses that used to work keep working: a page name without the mock-up
+// folder, or under a folder that is no longer published, goes to the same page
+// in the current folder. Anything else stays on this error page.
+function cwRedirectTarget(pathname, search, hash) {
   var base = '/carbohort-wireframe/';
-  var path = location.pathname;
-  if (path.indexOf(base) !== 0) return;
-  var rest = path.slice(base.length);
-  if (rest === '' || /^v\d+(\/|$)/.test(rest)) return; // już wersjonowane – zostaw 404
-  location.replace(base + LATEST + '/' + rest + location.search + location.hash);
+  var current = 'v7';
+  if (pathname.indexOf(base) !== 0) return null;
+  var rest = pathname.slice(base.length);
+  if (rest === '' || rest === 'index.html') return base + 'stan-podstron.html' + hash;
+  var old = /^v[456](?:\/(.*))?$/i.exec(rest);
+  if (old) {
+    var tail = old[1] || '';
+    if (tail === '' || tail === 'index.html') tail = 'home.html';
+    return base + current + '/' + tail + search + hash;
+  }
+  if (/^v\d+(\/|$)/i.test(rest)) return null;      // current folder: a real 404
+  if (/^ce-indeks(\/|$)/.test(rest)) return null;   // root-level tool files
+  return base + current + '/' + rest + search + hash;
+}
+(function () {
+  var to = cwRedirectTarget(location.pathname, location.search, location.hash);
+  if (to) location.replace(to);
 })();
 </script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
+<style>
+  :root { color-scheme: light dark; --bg:#ffffff; --fg:#1d1d1e; --muted:#778181; --line:#dfdfdf; --line-strong:#adb0b1; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#1d1d1e; --fg:#ebebeb; --muted:#adb0b1; --line:#38393a; --line-strong:#778181; } }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:400 15px/1.5 "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-text-size-adjust:100%; }
+  .brand { display:flex; align-items:center; justify-content:space-between; gap:16px; min-height:28px; padding:0 20px; border-bottom:1px solid var(--line); }
+  .brand-logo { display:flex; color:var(--fg); }
+  .brand-logo svg { display:block; height:9.75px; width:auto; }
+  .brand-note { font-size:12px; color:var(--muted); white-space:nowrap; }
+  .wrap { max-width:34rem; padding:56px 20px; }
+  h1 { margin:0 0 8px; font-size:22px; font-weight:650; line-height:1.2; letter-spacing:-.015em; }
+  p { margin:0; color:var(--muted); }
+  .btn { display:inline-block; margin-top:20px; padding:7px 12px; border:1px solid var(--line-strong); border-radius:2px; color:var(--fg); text-decoration:none; font-weight:500; }
+  .btn:hover { border-color:var(--fg); }
+  :focus-visible { outline:2px solid var(--fg); outline-offset:2px; }
+</style>
 </head>
 <body>
+<div class="brand">
+  <span class="brand-logo" role="img" aria-label="crear"><svg viewBox="0 0 170 19" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M165.343 15.3192H164.162V17.9867C164.162 18.0351 164.121 18.0761 164.072 18.0761H163.666C163.617 18.0761 163.575 18.0351 163.575 17.9867V15.3192H162.394C162.345 15.3192 162.304 15.2782 162.304 15.2298V14.9094C162.304 14.861 162.345 14.82 162.394 14.82H165.339C165.388 14.82 165.43 14.861 165.43 14.9094V15.2298C165.43 15.2782 165.388 15.3192 165.339 15.3192H165.343Z" fill="currentColor"/><path d="M169.5 18.0724C169.451 18.0724 169.413 18.0351 169.413 17.9867V15.7141C169.413 15.662 169.342 15.6471 169.323 15.6955L168.273 17.9941C168.251 18.0426 168.202 18.0761 168.149 18.0761H167.897C167.845 18.0761 167.796 18.0463 167.773 17.9941L166.724 15.6955C166.701 15.6508 166.633 15.6657 166.633 15.7141V17.9867C166.633 18.0351 166.592 18.0761 166.543 18.0761H166.159C166.111 18.0761 166.069 18.0351 166.069 17.9867V14.9094C166.069 14.861 166.111 14.82 166.159 14.82H166.814C166.867 14.82 166.916 14.8498 166.934 14.8982L167.954 17.1261C167.984 17.1931 168.082 17.1931 168.115 17.1261L169.135 14.8982C169.157 14.8498 169.203 14.82 169.255 14.82H169.91C169.959 14.82 170 14.861 170 14.9094V17.9867C170 18.0351 169.962 18.0724 169.913 18.0724H169.5Z" fill="currentColor"/><path d="M62.7917 3.79256C62.7917 3.93785 62.6714 4.05707 62.5247 4.05707H45.2967C44.646 4.05707 44.1269 4.57118 44.1269 5.18216V13.6688C44.1269 14.3096 44.6497 14.8275 45.2967 14.8275H62.5247C62.6714 14.8275 62.7917 14.9467 62.7917 15.092V17.778C62.7917 17.9233 62.6714 18.0426 62.5247 18.0426H48.0238C43.935 18.0761 40.6249 14.861 40.6249 10.8747V8.04707C40.6249 4.06079 43.935 0.845694 48.0238 0.845694H62.5247C62.6714 0.845694 62.7917 0.964909 62.7917 1.1102V3.79628V3.79256Z" fill="currentColor"/><path d="M71.3606 3.22256C71.5562 3.22256 71.7518 3.15922 71.9135 2.99903L73.6326 1.32628C73.926 1.03569 74.3134 0.875497 74.7347 0.875497H86.8018C86.9485 0.875497 87.0689 0.994714 87.0689 1.14001V3.79256C87.0689 3.93785 86.9485 4.05707 86.8018 4.05707H71.0333V17.8078C71.0333 17.9531 70.913 18.0724 70.7663 18.0724H67.7946C67.6479 18.0724 67.5275 17.9531 67.5275 17.8078V1.1102C67.5275 0.964909 67.6479 0.845694 67.7946 0.845694H70.7663C70.913 0.845694 71.0333 0.964909 71.0333 1.1102V3.22256H71.3606Z" fill="currentColor"/><path d="M146.599 3.22256C146.795 3.22256 146.991 3.15922 147.152 2.99903L148.871 1.32628C149.165 1.03569 149.552 0.875497 149.973 0.875497H162.037C162.187 0.875497 162.308 0.994713 162.308 1.14373V3.79256C162.308 3.94158 162.187 4.06079 162.037 4.06079H146.272V17.8116C146.272 17.9569 146.152 18.0761 146.005 18.0761H143.033C142.887 18.0761 142.766 17.9569 142.766 17.8116V1.10275C142.766 0.961184 142.883 0.845694 143.026 0.845694H146.009C146.152 0.845694 146.268 0.961184 146.268 1.10275V3.22256H146.599Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M124.587 0.745098C124.007 0.745098 123.477 1.05431 123.195 1.5498L113.964 17.7631C113.885 17.901 113.987 18.0724 114.148 18.0724H117.778C117.914 18.0724 118.034 18.0016 118.102 17.8861L119.855 14.8275C120.043 14.4959 120.396 14.2947 120.78 14.2947H133.569C133.953 14.2947 134.307 14.4996 134.495 14.8275L136.248 17.8861C136.315 18.0016 136.436 18.0724 136.571 18.0724H140.201C140.363 18.0724 140.464 17.901 140.385 17.7631L131.154 1.5498C130.872 1.05431 130.342 0.745098 129.763 0.745098H124.587ZM123.752 11.128C123.522 11.128 123.33 11.1951 123.199 11.3218L122.322 12.1563C122.258 12.2233 122.16 12.2531 122.029 12.2531H121.382L127.081 2.22412C127.099 2.18686 127.137 2.16824 127.175 2.16824C127.212 2.16824 127.25 2.18686 127.269 2.22412L132.967 12.2531H132.32C132.189 12.2531 132.091 12.2233 132.027 12.1563L131.151 11.3218C131.019 11.1951 130.827 11.128 130.598 11.128H123.752Z" fill="currentColor"/><path d="M91.09 9.79059C91.184 9.70863 91.2442 9.58942 91.2442 9.4553C91.2442 9.32118 91.184 9.19824 91.0862 9.11628L89.9615 8.22961C89.7659 8.06942 89.638 7.84216 89.638 7.61863V6.27001C89.8976 3.24863 92.493 0.868046 95.6415 0.868046H111.504C111.651 0.868046 111.771 0.987262 111.771 1.13256V3.78883C111.771 3.93412 111.654 4.04961 111.508 4.04961H94.276C93.6253 4.04961 93.1062 4.56373 93.1062 5.17471V7.86079H111.15C111.297 7.86079 111.417 7.98001 111.417 8.1253V10.7779C111.417 10.9231 111.297 11.0424 111.15 11.0424H93.1062V13.7582C93.1062 14.3804 93.614 14.8833 94.2422 14.8833H111.5C111.647 14.8833 111.767 15.0026 111.767 15.1479V17.8041C111.767 17.9494 111.647 18.0686 111.5 18.0686H95.6377C92.4893 18.0686 89.8938 15.688 89.6342 12.6667V11.251C89.6342 11.0275 89.7659 10.8002 89.9577 10.64L91.0862 9.78687L91.09 9.79059Z" fill="currentColor"/><path d="M6.91366 13.6216C7.35383 13.6216 7.79111 13.7702 8.15888 14.1373L12.0393 17.9686C12.6996 18.6329 13.577 19 14.5298 19H23.0495C23.2001 19 23.3217 18.8776 23.3217 18.7261V12.5116C23.3217 12.3601 23.2001 12.2377 23.0495 12.2377H6.89505C6.74447 12.2377 6.62284 12.1153 6.62284 11.9638V6.93712C6.62284 6.78561 6.74447 6.66325 6.89505 6.66325H23.0495C23.2001 6.66325 23.3217 6.54088 23.3217 6.38937V0.273872C23.3217 0.122368 23.2001 0 23.0495 0L14.5298 0C13.577 0 12.6996 0.367105 12.0393 1.03139L8.15888 4.86268C7.794 5.22979 7.35383 5.37838 6.91366 5.37838H0.272211C0.121626 5.37838 0 5.50366 0 5.65516V13.3448C0 13.4963 0.121626 13.6187 0.272211 13.6187H6.91366V13.6216Z" fill="currentColor"/></svg></span>
+  <span class="brand-note">CarboHort – prototyp serwisu</span>
+</div>
 <div class="wrap">
   <h1>Nie znaleziono strony</h1>
-  <p>Ten adres nie istnieje w prototypie. Makiety są podzielone na wersje – wybierz wersję na stronie startowej.</p>
-  <a class="btn" href="/carbohort-wireframe/">Lista wersji prototypu</a>
+  <p>Ten adres nie istnieje w prototypie. Listę wszystkich podstron z odnośnikami znajdziesz na stronie stanu.</p>
+  <a class="btn" href="/carbohort-wireframe/stan-podstron.html">Stan podstron</a>
 </div>
 </body>
 </html>
