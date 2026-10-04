@@ -26,7 +26,7 @@
    the dialog, without JS they lead to the table in the flow.
    The hash is written with `replaceState`, so stepping through the pages does
    not pile up history entries.
-   (The four numbers of "Dowód" are CE-24 now – ce/CE-24-pas-liczb-kafle.js.) */
+   (The four numbers of "Dowód" are CE-24 now – ce/CE-24-pas-liczb.js.) */
 (function () {
   "use strict";
   var doc = document, $ = CX5.$, $$ = CX5.$$;

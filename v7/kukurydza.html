@@ -17,9 +17,18 @@
 <link rel="stylesheet" href="ce/CE-07-nawigacja-kropkowa.css">
 <link rel="stylesheet" href="ce/CE-08-hero.css">
 <link rel="stylesheet" href="ce/CE-16-pas-pro.css">
+<link rel="stylesheet" href="ce/CE-24-pas-liczb.css">
 <link rel="stylesheet" href="ce/CE-68-akordeon-faz.css">
 <link rel="stylesheet" href="ce/CE-66-tablica-warunkow.css">
 <link rel="stylesheet" href="ce/CE-67-karty-z-kadrem.css">
+<link rel="stylesheet" href="ce/CE-20-siatka-kart.css">
+<link rel="stylesheet" href="ce/CE-22-tabela.css">
+<link rel="stylesheet" href="ce/CE-25-lightbox.css">
+<link rel="stylesheet" href="ce/CE-33-cytat-zasada.css">
+<link rel="stylesheet" href="ce/CE-34-karty-od-do.css">
+<link rel="stylesheet" href="ce/CE-45-pudelka-przelaczniki.css">
+<link rel="stylesheet" href="ce/CE-47-przelicznik.css">
+<link rel="stylesheet" href="uprawa-skorka.css">
 <link rel="stylesheet" href="kukurydza.css">
 </head>
 <body>
@@ -35,7 +44,7 @@
 
 
 
-<nav id="nawigacja-kropki" class="c5-dots" aria-label="Rozdziały strony: program uprawy kukurydzy" data-dots data-ce="CE-07">
+<nav id="nawigacja-kropki" class="c5-dots" style="--c5-dots-right:10px" aria-label="Rozdziały strony: program uprawy kukurydzy" data-dots data-ce="CE-07">
   <ol>
     <li><a class="c5-dots__link" href="#hero" data-dot="hero"><span class="c5-dots__label">Start</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
     <li><a class="c5-dots__link" href="#u-produkty" data-dot="u-produkty"><span class="c5-dots__label">Produkty</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
@@ -60,7 +69,7 @@
 
 
 
-  <section id="hero" data-chapter="hero" data-ce="CE-08" data-ce-wariant="kadr-w-tle">
+  <section id="hero" data-chapter="hero" data-ce="CE-08" data-ce-wariant="kadr-w-tle" style="--c5-hero-scrim:rgb(0 0 0 / .15);--c5-hero-scrim-narrow:rgb(0 0 0 / .25)">
     <div class="c5-hero c5-hero--bg">
       <div class="c5-hero__bg" aria-hidden="true">
         <img class="c5-hero__bgimg" src="img/foto/kukurydza-hero.jpg" alt="" width="2000" height="1333" decoding="async" fetchpriority="high" style="object-position:50% 0%">
@@ -133,7 +142,7 @@
     <span class="c5-kicker c5-kicker--outline c5-kicker--center u-reveal">Produkty</span>
     <div class="c5-head u-reveal">
       <h2 class="c5-h2 c5-h2--center">Produkty Carbohort w technologii kukurydzy</h2>
-      <p class="c5-lead c5-lead--center">Pięć produktów, każdy w innej roli. Kliknij kartę, żeby zobaczyć mapę zastosowań i konsekwencje dla kukurydzy.</p>
+      <p class="c5-lead c5-lead--center c5-lead--60">Pięć produktów, każdy w innej roli. Kliknij kartę, żeby zobaczyć mapę zastosowań i konsekwencje dla kukurydzy.</p>
     </div>
     <div class="u-prodwrap wf-stack wf-stack--3">
       <div class="u-prod" id="prod-rail">
@@ -257,7 +266,7 @@
       </a>
     </div>
 
-    <div id="u-wybor-nota" class="u-callout u-reveal" data-ce="CE-31">
+    <div id="u-wybor-nota" class="u-callout u-callout--waska u-reveal" data-ce="CE-31">
       <svg class="wf-icon" aria-hidden="true"><use href="#ti-info-circle"></use></svg>
       <div class="u-callout__in">
         <p class="u-txt">Nie kumuluj wszystkich form produktów w jednym miejscu i sezonie. Lepiej założyć pasy porównawcze i ocenić efekt w glebie, korzeniach i plonie owoców i ziarna.</p>
@@ -501,7 +510,7 @@
 
 <section class="u-zs" id="u-zasada">
   <div class="c5-wrap c5-wrap--wide">
-    <div id="u-fakty-zasada" class="u-quote u-reveal" data-ce="CE-33" data-ce-wariant="ciemny-boks">
+    <div id="u-fakty-zasada" class="u-quote u-quote--obok u-reveal" data-ce="CE-33" data-ce-wariant="ciemny-boks">
       <span class="u-quote__t">Najważniejsza zasada</span>
       <p>Produkty humusowe poprawiają warunki wykorzystania wody i składników, ale nie zastępują bilansu N, P, K, Mg, Ca, S, mikroelementów, prawidłowego pH ani prawidłowej uprawy roli.</p>
     </div>
@@ -526,12 +535,12 @@
       <span class="c5-kicker c5-kicker--outline">Pakiety</span>
       <div class="c5-head">
         <h2 class="c5-h2">Dwa pakiety i ilość produktu na Twoje pole</h2>
-        <p class="c5-lead">Pakiet minimum to dwa zabiegi: przed siewem i w terminie, który program nazywa najważniejszym. Pakiet optimum to pięć zabiegów od jesieni do zbioru. Wybierz pakiet i powierzchnię, a przelicznik pokaże ilość produktów i ich koszt.</p>
+        <p class="c5-lead c5-lead--60">Pakiet minimum to dwa zabiegi: przed siewem i w terminie, który program nazywa najważniejszym. Pakiet optimum to pięć zabiegów od jesieni do zbioru. Wybierz pakiet i powierzchnię, a przelicznik pokaże ilość produktów i ich koszt.</p>
       </div>
     </div>
     <div class="wf-stack wf-stack--6 u-reveal u-pk" data-calc data-tabs-group>
       <div class="u-pk__top">
-        <div id="u-pakiety-wybor" class="u-vtabs" role="tablist" aria-label="Pakiet" data-ce="CE-45" data-ce-wariant="dwa-pakiety">
+        <div id="u-pakiety-wybor" class="u-vtabs u-vtabs--2" role="tablist" aria-label="Pakiet" data-ce="CE-45" data-ce-wariant="dwa-pakiety">
           <button class="u-vtab" type="button" role="tab" id="tab-p1" aria-controls="panel-p1" aria-selected="false"><span class="u-vtab__no">01</span><span class="u-vtab__t">Pakiet minimum</span><span class="u-vtab__d">2 zabiegi · 2 produkty</span></button>
           <button class="u-vtab" type="button" role="tab" id="tab-p2" aria-controls="panel-p2" aria-selected="false"><span class="u-vtab__no">02</span><span class="u-vtab__t">Pakiet optimum</span><span class="u-vtab__d">5 zabiegów · 3 produkty</span></button>
         </div>
@@ -793,7 +802,7 @@
         <li class="u-rules__i"><span class="u-rules__no">05</span><p class="u-txt">Każdy środek ochrony roślin stosuj zgodnie z jego etykietą.</p></li>
       </ol>
     </div>
-    <div id="u-mieszaniny-tabela" class="wf-stack wf-stack--5 u-reveal" data-ce="CE-22" data-ce-wariant="klikalne-wiersze">
+    <div id="u-mieszaniny-tabela" class="wf-stack wf-stack--5 u-reveal u-mtce" data-ce="CE-22" data-ce-wariant="klikalne-wiersze">
       <div class="u-mt__box">
         <table class="u-mt" data-mt>
           <caption class="wf-sr-only">Zgodność produktów w mieszaninach zbiornikowych</caption>
@@ -883,7 +892,7 @@
 
 
 
-  <section class="c5-pro" id="u-cta" data-pro data-ce="CE-16" data-ce-wariant="zamykajacy">
+  <section class="c5-pro c5-pro--zamykajacy c5-pro--zielen c5-pro--h-mackinac" style="--pro-img-pos:50% 50%;--pro-scrim:.4" id="u-cta" data-pro data-ce="CE-16" data-ce-wariant="zamykajacy">
     <div class="c5-pro__media" data-pro-media aria-hidden="true">
       <img class="c5-pro__img" src="img/foto/kukurydza-zbior.jpg" alt="" width="2000" height="1116" loading="lazy" decoding="async">
     </div>

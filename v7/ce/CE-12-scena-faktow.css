@@ -1,134 +1,562 @@
-/* ===== CE-12 · Scena faktów (rejestr: ce-rejestr.js) =====
-   Scroll-driven scene: one description at a time in the left column, a shared
-   photo panel and a fixed-size illustration box on the right; below 900 px, with
-   reduced motion or without JS the same DOM reads as one plain column.
-   Merged from carbomat.css CZYM JEST – the copies in carbomat-mata.css,
-   carbohumic.css, carbomat-humic.css and produkty.css carry the same machinery.
-   What follows the CONTENT stays in <strona>.css: how many steps there are
-   (the `order` grid, the progress marks), which photo each step gets
-   (object-position, the __ph placeholders) and the per-page type scale of the
-   scene head. Variant „naglowek-nad-scena" (Mata) sits at the bottom.
-   Próchnica+ builds the same idea on its own pp-scene layer and does not link
-   this file. ===== */
+/* ===== CE-12 · Scena faktów (Figma Frame 206) ================================
+   Self-contained: the illustration box (.c5-viz*) and the bar chart (.c5-bar*,
+   .c5-barchart – used outside the scene as well, e.g. by the "Dowód" section of
+   produkty.html) live in this sheet.
 
-/* --- CZYM JEST – scena sterowana przewijaniem (spec §6) --------------------
-   Dwa układy z jednego DOM-u:
-   · domyślny (mobile / reduced motion / bez JS) – jedna kolumna, wszystko
-     widoczne: nagłówek, panel zdjęcia, a potem pary „opis + ilustracja";
-   · scena (≥900 px, no-preference, .cx-js) – sticky na 100svh: nagłówek u góry
-     lewej kolumny, jeden opis naraz przy dolnej krawędzi, pasek progresu pod
-     nim, a po prawej panel zdjęcia z boksem ilustracji o stałym rozmiarze.
-   Kolejność DOM = kolejność statyczna; siatka sceny tylko przestawia elementy. */
-.c5-facts-track{height:auto;}
-.c5-facts-stage{display:flex;flex-direction:column;gap:clamp(2rem,4vw,3rem);}
-.c5-facts-head{display:flex;flex-direction:column;gap:clamp(1rem,2vw,1.5rem);}
-.c5-facts-head .c5-kicker{margin-bottom:0;}
-.c5-facts-head .c5-h2{max-width:486px;}
+   Two layouts out of one DOM:
+   · static (below 900 px, reduced motion, no JS) – one column, everything
+     visible: header, then triples photo / title + description / illustration;
+   · scene (>= 900 px, no-preference, .cx-js) – sticky 100svh in a container that
+     is the full width of the window up to 1800 px: the photo panel fills the
+     right half OF THAT CONTAINER (20 px from its right, top and bottom edges),
+     the illustration box floats in its middle on a blurred dark wash, the left
+     column starts 40 px from the container's left edge – kicker and heading at
+     the top, the current fact at the BOTTOM of the column: title, a 1 px line
+     whose fill is the progress of the current slide, and under it the
+     description on the left with the counter on the right. Every fact carries
+     its own line and counter, so the whole block stands at the bottom edge
+     whatever the length of the description.
 
-/* Panel zdjęcia (§10.6, §13.5) – pięć warstw, po jednej na punkt.
-   Poza sceną panel nie tworzy boksu (`display:contents`), więc warstwy wchodzą
-   wprost w bieg i każdy punkt dostaje swoje zdjęcie; kolejność ustawia `order`
-   niżej. W scenie panel wraca jako boks: tło, wspólna ramka i wash. */
-.c5-facts-panel{display:contents;}
-.c5-facts-panel__img{display:block;width:100%;aspect-ratio:4/5;max-height:min(62vh,520px);
-  object-fit:cover;object-position:50% 58%;background:var(--w-gray-700);}
+   Layout classes carry the c5-fx prefix, hooks are data-fx*. A page sheet holds
+   NO rule with these classes and no rule under the id of its scene: what a page
+   needs goes through a variant class or a custom property set with
+   style="--name: value" on the root of the scene.
 
-.c5-facts-flow{display:flex;flex-direction:column;gap:clamp(1.75rem,3.5vw,2.75rem);margin:0;padding:0;}
-.c5-fact{display:flex;flex-direction:column;gap:var(--w-space-3);max-width:560px;}
-.c5-fact__title{font-size:clamp(1.125rem,1.8vw,1.5rem);line-height:1.22;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
-.c5-fact__body{display:flex;flex-direction:column;gap:var(--w-space-3);font-size:0.9375rem;line-height:1.55;color:var(--w-text-secondary);}
-.c5-fact__body ul{margin:0;padding-left:1.35rem;display:flex;flex-direction:column;gap:var(--w-space-2);}
+   Variants (modifier classes, sections at the end of this sheet):
+     on the root   c5-fx--glass, c5-fx--glass-v1, c5-fx--naglowek-ramka,
+                   c5-fx--szeroki, c5-fx--viz-auto, c5-fx--viz-min-kafel,
+                   c5-fx--skala-opis-dlugi, c5-fx--skala-osiem-krokow,
+                   c5-fx--skala-waskie-okno
+     on a figure   c5-viz--rosnie, c5-viz--luz-mobile
+     on a chart    c5-barchart--siatka
 
-/* Pasek progresu – tylko w scenie sterowanej przewijaniem */
-.c5-facts-prog{display:none;}
-.c5-facts-progress{position:relative;height:2px;background:var(--w-gray-200);}
-.c5-facts-progress__fill{position:absolute;inset:0;background:var(--w-gray-900);transform:scaleX(var(--facts-p,0));transform-origin:left center;will-change:transform;}
-/* cztery znaczniki dzielą tor na pięć odcinków – widać, ile brakuje do kolejnego opisu */
-.c5-facts-progress__mark{position:absolute;top:50%;width:1px;height:8px;margin-top:-4px;background:var(--w-gray-400);}
+   Custom properties a page may set on the root (default in brackets):
+     --c5-fx-viz-h, --c5-fx-viz-w, --c5-fx-viz-bg, --c5-fx-static-max,
+     --c5-fx-static-pad                    see "What a page may retune" below
+     --fx-step-min (480), --fx-step-vh (0.8)   step of the track, read by the JS
+     --c5-fx-pos-1 … --c5-fx-pos-8 (50% 58%)   crop of the photo of a step
+     --c5-fx-head-gap        kicker to heading (static clamp(1rem,2vw,1.5rem),
+                             scene clamp(0.75rem,1.4vw,1rem))
+     --c5-fx-h2-max (486px)  measure of the heading in the scene head
+     --c5-fx-h2-max-scene    the same, scene only (default: --c5-fx-h2-max)
+     --c5-fx-h2-size         heading of the scene (clamp(1.5rem,2.6vw,2.125rem))
+     --c5-fx-h2-size-narrow  the same at 900–1279 px (default: --c5-fx-h2-size)
+     --c5-fx-h2-size-low     the same in a window up to 780 px tall
+                             (clamp(1.375rem,2.2vw,1.75rem))
+     --c5-fx-above-h2-max (784px)  measure of the heading above the track
+     --c5-fx-body-gap, --c5-fx-list-gap   gaps of the description in the scene
+     --c5-fx-svg-max (none)  max-height of a drawing in the illustration box
+     --c5-fx-green           accent of the progress fill (glass variants)
+   Only values WITHOUT a media step belong in style="…": an inline value beats
+   every rule of a sheet, the steps of the variants included. ================= */
 
-/* --- Boks ilustracji: ciemne pole, kolory odwrócone ------------------------ */
+/* --- What a page may retune -------------------------------------------------
+   Five knobs with their defaults, so a page that sets nothing gets the layout
+   as drawn. A page retunes them on the root of its scene, e.g.
+     style="--c5-fx-viz-h:clamp(360px,68svh,760px);"
+   --c5-fx-viz-w: an illustration that is a table or a chart needs more width on
+   a narrow window than the 26 % of the default gives.
+   --c5-fx-viz-bg: this layout has no wash over the photo panel, so on a BRIGHT
+   photo the box does not carry enough darkness of its own and its tag, caption
+   and body fall under 4.5 : 1. It is the one knob with NO declaration below, because
+   the scene draws the box in two different colours today: rgb(20 20 20 / .55)
+   plus a blur where backdrop-filter works and rgb(20 20 20 / .78) where it does
+   not. A single declared default could only hold one of the two, so each branch
+   keeps its own value as the fallback of its var() and a page that sets the knob
+   gives both branches the same colour. Greyscale only, as the pattern says.
+   The two static knobs sit OUTSIDE the scene media query on purpose: they also
+   rule the layout below 900 px, with reduced motion and without JS. --------- */
+.c5-fx{--c5-fx-viz-h:clamp(340px,62svh,760px);
+  /* Safe range of the width: the box is centred in the photo panel (from 50 % of
+     the container to --c5-fx-edge from its right edge), so every px of width takes
+     half a px of clearance from EACH side. Up to calc(50% - 56px) the text column
+     keeps its full --c5-fx-gap and a dot rail standing 10 px from the right edge of
+     the window (28 px wide, EL-29) stays clear; the default below keeps 16 px more
+     than that. Above calc(50% - --c5-fx-edge) the box stops fitting the panel. */
+  --c5-fx-viz-w:min(clamp(330px,26%,520px),calc(50% - 88px));
+  --c5-fx-static-max:1180px;--c5-fx-static-pad:var(--w-space-5);}
+
+/* --- Static layout --------------------------------------------------------- */
+.c5-fx__track{height:auto;}
+/* outside the scene the stage is an ordinary page container */
+.c5-fx__stage{max-width:var(--c5-fx-static-max,1180px);margin-inline:auto;
+  padding-inline:var(--c5-fx-static-pad,var(--w-space-5));
+  display:flex;flex-direction:column;gap:clamp(2rem,4vw,3rem);}
+.c5-fx__above{margin-bottom:clamp(2rem,4vw,3rem);}
+.c5-fx__head{display:flex;flex-direction:column;gap:var(--c5-fx-head-gap,clamp(1rem,2vw,1.5rem));}
+.c5-fx__head .c5-kicker{margin-bottom:0;}
+.c5-fx__head .c5-h2{max-width:var(--c5-fx-h2-max,486px);}
+/* the heading above the track stands in an ordinary page container; 784px is the
+   measure of .c5-h2 (ce/00-base.css) – keep the two in step */
+.c5-fx__above .c5-h2{max-width:var(--c5-fx-above-h2-max,784px);}
+
+/* Photo panel – five layers, one per topic. Outside the scene the panel is not a
+   box (`display:contents`), so the layers enter the flow and every topic gets its
+   own photo; the order is set by the grid below. In the scene the panel comes
+   back as a box on the right half of the window. */
+.c5-fx__panel{display:contents;}
+.c5-fx__img,.c5-fx__ph{display:block;width:100%;aspect-ratio:4/5;max-height:min(62vh,520px);}
+.c5-fx__img{object-fit:cover;object-position:50% 58%;background:var(--w-gray-700);}
+/* Crop per step. In the scene the panel is taller than it is wide, so the whole
+   height of the photo shows and the crop takes the width away; in the static
+   layout it is the other way round – pick a value that suits both. */
+.c5-fx__img[data-fx-bg="1"]{object-position:var(--c5-fx-pos-1,50% 58%);}
+.c5-fx__img[data-fx-bg="2"]{object-position:var(--c5-fx-pos-2,50% 58%);}
+.c5-fx__img[data-fx-bg="3"]{object-position:var(--c5-fx-pos-3,50% 58%);}
+.c5-fx__img[data-fx-bg="4"]{object-position:var(--c5-fx-pos-4,50% 58%);}
+.c5-fx__img[data-fx-bg="5"]{object-position:var(--c5-fx-pos-5,50% 58%);}
+.c5-fx__img[data-fx-bg="6"]{object-position:var(--c5-fx-pos-6,50% 58%);}
+.c5-fx__img[data-fx-bg="7"]{object-position:var(--c5-fx-pos-7,50% 58%);}
+.c5-fx__img[data-fx-bg="8"]{object-position:var(--c5-fx-pos-8,50% 58%);}
+/* A placeholder labelled through data-ph: dark field, light label. The attribute
+   lifts the rule over the page-level .c5-ph, whose sheet loads later. */
+.c5-fx__ph[data-ph]{background:var(--w-gray-700);}
+.c5-fx__ph[data-ph]::after{color:rgb(255 255 255 / .6);}
+
+.c5-fx__flow{display:flex;flex-direction:column;gap:clamp(1.75rem,3.5vw,2.75rem);margin:0;padding:0;}
+.c5-fx__fact{display:flex;flex-direction:column;gap:var(--w-space-3);max-width:560px;}
+.c5-fx__title{font-size:clamp(1.125rem,1.8vw,1.5rem);line-height:1.22;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+.c5-fx__body{display:flex;flex-direction:column;gap:var(--w-space-3);font-size:0.9375rem;line-height:1.55;color:var(--w-text-secondary);}
+.c5-fx__body p{margin:0;}
+.c5-fx__body ul{margin:0;padding-left:1.35rem;display:flex;flex-direction:column;gap:var(--w-space-2);}
+/* Kit lists (.wf-list) carry their own indent in the <li>, so the rule above would
+   add a second one. */
+.c5-fx__body .wf-list{padding-left:0;}
+
+/* The photo layers sit together in the DOM (inside the panel), so in the static
+   flow `order` interleaves them: the photo of a step, its description, its
+   illustration. A layer shared by several steps (data-fx-bg="2-6") stands before
+   the first of them. In the scene every element is positioned against the stage,
+   so `order` changes nothing there. */
+.c5-fx__panel > [data-fx-bg="1"],.c5-fx__panel > [data-fx-bg^="1-"]{order:1;} .c5-fx__fact[data-fx-fact="1"]{order:2;} .c5-viz[data-fx-viz="1"]{order:3;}
+.c5-fx__panel > [data-fx-bg="2"],.c5-fx__panel > [data-fx-bg^="2-"]{order:4;} .c5-fx__fact[data-fx-fact="2"]{order:5;} .c5-viz[data-fx-viz="2"]{order:6;}
+.c5-fx__panel > [data-fx-bg="3"],.c5-fx__panel > [data-fx-bg^="3-"]{order:7;} .c5-fx__fact[data-fx-fact="3"]{order:8;} .c5-viz[data-fx-viz="3"]{order:9;}
+.c5-fx__panel > [data-fx-bg="4"],.c5-fx__panel > [data-fx-bg^="4-"]{order:10;} .c5-fx__fact[data-fx-fact="4"]{order:11;} .c5-viz[data-fx-viz="4"]{order:12;}
+.c5-fx__panel > [data-fx-bg="5"],.c5-fx__panel > [data-fx-bg^="5-"]{order:13;} .c5-fx__fact[data-fx-fact="5"]{order:14;} .c5-viz[data-fx-viz="5"]{order:15;}
+.c5-fx__panel > [data-fx-bg="6"],.c5-fx__panel > [data-fx-bg^="6-"]{order:16;} .c5-fx__fact[data-fx-fact="6"]{order:17;} .c5-viz[data-fx-viz="6"]{order:18;}
+.c5-fx__panel > [data-fx-bg="7"],.c5-fx__panel > [data-fx-bg^="7-"]{order:19;} .c5-fx__fact[data-fx-fact="7"]{order:20;} .c5-viz[data-fx-viz="7"]{order:21;}
+.c5-fx__panel > [data-fx-bg="8"],.c5-fx__panel > [data-fx-bg^="8-"]{order:22;} .c5-fx__fact[data-fx-fact="8"]{order:23;} .c5-viz[data-fx-viz="8"]{order:24;}
+
+/* line + counter belong to the scene only */
+.c5-fx__line,.c5-fx__count{display:none;}
+
+/* Static layout on a wide screen (reduced motion or no JS): the boxes must not
+   spread over the whole column. */
+@media (min-width:900px){
+  .c5-fx__flow{align-items:flex-start;}
+  .c5-viz{max-width:480px;}
+  .c5-fx__img,.c5-fx__ph{max-width:480px;max-height:min(46vh,420px);}
+  .c5-fx__fact{max-width:640px;}
+}
+
+/* --- Scene: sticky 100svh in a tall track (JS sets the track height) --------- */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  .cx-js .c5-fx{
+    /* the scene container: the whole window, never wider than 1800 px */
+    --c5-fx-max:1800px;
+    /* margin of the photo panel – 20 px on three sides (Frame 206) */
+    --c5-fx-edge:20px;
+    /* distance between the left column and the photo – clearly bigger than the
+       40 px left margin (spec §21.8.5) */
+    --c5-fx-gap:clamp(3rem,6vw,7.5rem);
+    /* Clearance for the advisor dock floating over the bottom edge of the window.
+       The dock is 60 px tall and sits 20 px above the bottom edge, so its top is
+       80 px up – measured in Chrome at 1024, 1280, 1440 and 1920 px; 88 px keeps
+       a line of the description from touching it. */
+    --c5-fx-dock:88px;
+    /* title -> line and line -> description */
+    --c5-fx-line-top:14px;
+    --c5-fx-line-bottom:16px;
+    /* left margin of the text column inside the container (spec §21.8.5) */
+    --c5-fx-side:40px;
+    padding-block:0;
+  }
+  /* the container of the scene: everything below is placed against it */
+  .cx-js .c5-fx__stage{position:sticky;top:0;height:100svh;display:block;
+    width:100%;max-width:var(--c5-fx-max);margin-inline:auto;padding:0;}
+
+  /* variant A: the header is pinned with the scene; its own background keeps a
+     long title from running into it */
+  .cx-js .c5-fx__head{position:absolute;left:var(--c5-fx-side);right:calc(50% + var(--c5-fx-gap));top:var(--c5-gutter);
+    z-index:2;background:var(--w-surface-page);padding-bottom:var(--w-space-4);gap:var(--c5-fx-head-gap,clamp(0.75rem,1.4vw,1rem));}
+  /* in the scene the heading stands a step smaller than a section heading – the
+     longest description has to fit under it on an 800 px window */
+  .cx-js .c5-fx__head .c5-h2{font-size:var(--c5-fx-h2-size,clamp(1.5rem,2.6vw,2.125rem));
+    max-width:var(--c5-fx-h2-max-scene,var(--c5-fx-h2-max,486px));}
+
+  /* the flow covers the whole stage – every layer is placed against it */
+  .cx-js .c5-fx__flow{position:absolute;inset:0;display:block;gap:0;}
+
+  /* the photo panel: right half of the window, 20 px margins, NO dimming –
+     what darkens the illustration is the box itself (spec §21.3) */
+  .cx-js .c5-fx__panel{display:block;position:absolute;left:50%;right:var(--c5-fx-edge);top:var(--c5-fx-edge);bottom:var(--c5-fx-edge);
+    background:var(--w-gray-700);overflow:hidden;}
+  .cx-js .c5-fx__img,.cx-js .c5-fx__ph{position:absolute;inset:0;width:100%;height:100%;max-width:none;max-height:none;aspect-ratio:auto;
+    opacity:0;transition:opacity .45s var(--w-ease);will-change:opacity;}
+  .cx-js .c5-fx__img[data-on="true"],.cx-js .c5-fx__ph[data-on="true"]{opacity:1;}
+  /* the dock floats over the bottom edge of the window, right where the placeholder
+     label sits – in the scene the label goes to the top-left corner of the panel.
+     Two conventions live in the pattern: `content:attr(data-ph)` on ::after
+     (produkty.css, carbomat-mata.css) and a child <span class="c5-ph__label">
+     (carbomat-humic.css). Both are moved, so no page has to repeat the rule. */
+  .cx-js .c5-fx__ph::after,
+  .cx-js .c5-fx__ph > .c5-ph__label{top:12px;bottom:auto;left:14px;}
+
+  /* One fact at a time, standing at the BOTTOM of the left column: all five sit in
+     the same place (same insets), so the swap is a cross-fade. Three rows – title,
+     line, description – and the counter beside the description, at the right end of
+     the line. The block ends where the dock clearance begins, so the bottom edge of
+     the description is the same on every step whatever its length. */
+  .cx-js .c5-fx__fact{position:absolute;left:var(--c5-fx-side);right:calc(50% + var(--c5-fx-gap));bottom:var(--c5-fx-dock);
+    display:grid;grid-template-columns:85% minmax(0,1fr);grid-template-rows:auto auto auto;gap:0 var(--w-space-3);
+    max-width:none;opacity:0;visibility:hidden;transform:translateY(12px);
+    transition:opacity .18s var(--w-ease),transform .18s var(--w-ease),visibility 0s linear .18s;}
+  .cx-js .c5-fx__fact.is-on{opacity:1;visibility:visible;transform:none;
+    transition:opacity .26s var(--w-ease),transform .26s var(--w-ease);}
+  .cx-js .c5-fx__title{grid-row:1;grid-column:1 / -1;}
+  .cx-js .c5-fx__line{display:block;grid-row:2;grid-column:1 / -1;margin-block:var(--c5-fx-line-top) var(--c5-fx-line-bottom);}
+  /* the line and the counter span the whole column (Frame 206), the description keeps
+     a readable measure – on 1920+ the column is much wider than the frame's */
+  .cx-js .c5-fx__body{grid-row:3;grid-column:1;max-width:34rem;gap:var(--c5-fx-body-gap,var(--w-space-3));}
+  .cx-js .c5-fx__body ul{gap:var(--c5-fx-list-gap,var(--w-space-2));}
+  .cx-js .c5-fx__count{display:block;grid-row:3;grid-column:2;justify-self:end;align-self:start;
+    font-size:0.75rem;line-height:1.45;letter-spacing:.06em;color:var(--w-text-tertiary);font-variant-numeric:tabular-nums;}
+
+  /* the illustration box floats in the middle of the photo panel: the same rect,
+     a fixed size and auto margins centre it on both axes */
+  .cx-js .c5-fx__flow > .c5-viz{position:absolute;left:50%;right:var(--c5-fx-edge);top:var(--c5-fx-edge);bottom:var(--c5-fx-edge);
+    width:var(--c5-fx-viz-w,min(clamp(330px,26%,520px),calc(50% - 88px)));height:var(--c5-fx-viz-h,clamp(340px,62svh,760px));margin:auto;
+    max-width:none;max-height:none;aspect-ratio:auto;
+    background:var(--c5-fx-viz-bg,rgb(20 20 20 / .78));
+    opacity:0;visibility:hidden;transition:opacity .22s var(--w-ease),visibility 0s linear .22s;}
+  .cx-js .c5-fx__flow > .c5-viz[data-on="true"]{opacity:1;visibility:visible;transition:opacity .22s var(--w-ease);}
+  /* Frame 206: the illustration keeps its content, only its background changes –
+     a lighter dark wash plus a blur of the photo behind it. Without support for
+     backdrop-filter the box stays at the old .78 black – that is the fallback of
+     the line above, which repeats what .c5-viz carries anyway and only adds the
+     --c5-fx-viz-bg knob to it. The knob rules BOTH branches; the static layout
+     below 900 px, with reduced motion and without JS, keeps the .78 of .c5-viz. */
+  @supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+    .cx-js .c5-fx__flow > .c5-viz{background:var(--c5-fx-viz-bg,rgb(20 20 20 / .55));
+      -webkit-backdrop-filter:blur(18px) saturate(.9);backdrop-filter:blur(18px) saturate(.9);}
+  }
+}
+/* Narrow desktop (900–1279 px): the left column is at its narrowest, a page may
+   give the scene heading a step of its own. Keep this block BEFORE the low-window
+   one: the low step is the tighter of the two and has to win. */
+@media (min-width:900px) and (max-width:1279px) and (prefers-reduced-motion: no-preference){
+  .cx-js .c5-fx__head .c5-h2{font-size:var(--c5-fx-h2-size-narrow,var(--c5-fx-h2-size,clamp(1.5rem,2.6vw,2.125rem)));}
+}
+/* Low windows (e.g. 1280x720): the description zone eats the room, so the title,
+   the scene heading and the description take a tighter step. */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference) and (max-height:780px){
+  .cx-js .c5-fx{--c5-fx-line-top:10px;--c5-fx-line-bottom:12px;}
+  .cx-js .c5-fx__title{font-size:clamp(1.0625rem,1.5vw,1.25rem);}
+  .cx-js .c5-fx__head .c5-h2{font-size:var(--c5-fx-h2-size-low,clamp(1.375rem,2.2vw,1.75rem));}
+  .cx-js .c5-fx__body{font-size:0.875rem;}
+}
+
+/* --- Illustration box: dark field, inverted colours ------------------------- */
 .c5-viz{position:relative;margin:0;display:flex;flex-direction:column;gap:var(--w-space-5);width:100%;aspect-ratio:4/5;max-height:520px;padding:clamp(1.25rem,2.4vw,2rem);background:rgb(20 20 20 / .78);color:#fff;overflow:hidden;}
 .c5-viz__tag{font-size:0.75rem;letter-spacing:.06em;text-transform:uppercase;color:rgb(255 255 255 / .6);}
 .c5-viz__body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:var(--w-space-4);}
-.c5-viz__body svg:not(.wf-icon){width:100%;height:auto;color:inherit;}
+/* --c5-fx-svg-max:100% keeps a tall viewBox inside the box (the default
+   preserveAspectRatio letterboxes it instead of overflowing) */
+.c5-viz__body svg:not(.wf-icon){width:100%;height:auto;max-height:var(--c5-fx-svg-max,none);color:inherit;}
 .c5-viz__num{font-size:clamp(1.75rem,3.4vw,2.5rem);font-weight:var(--w-weight-bold);line-height:1;letter-spacing:-0.02em;}
 .c5-viz__ring{display:flex;align-items:center;gap:clamp(1rem,3vw,2rem);}
 .c5-viz__ring svg:not(.wf-icon){width:min(150px,42%);flex:none;}
 .c5-viz__list{display:flex;flex-direction:column;gap:var(--w-space-3);margin:0;padding:0;list-style:none;font-size:var(--w-font-sm-size);}
 .c5-viz__list li{display:flex;gap:var(--w-space-3);align-items:flex-start;}
 .c5-viz__list .wf-icon{flex:none;margin-top:2px;color:rgb(255 255 255 / .75);}
-/* odwrócenie kolorów kitu wewnątrz ciemnego boksu */
+/* inverting the kit colours inside the dark box */
 .c5-viz .c5-muted,.c5-viz .wf-small,.c5-viz .wf-t-secondary{color:rgb(255 255 255 / .65);}
 .c5-viz .wf-table{font-size:var(--w-font-sm-size);color:inherit;}
 .c5-viz .wf-table th{background:transparent;color:#fff;}
 .c5-viz .wf-table th,.c5-viz .wf-table td{padding:var(--w-space-2) var(--w-space-3);border-bottom-color:rgb(255 255 255 / .3);}
 .c5-viz .wf-table tbody tr:hover{background:rgb(255 255 255 / .08);}
-/* w ciemnym boksie pierścień fokusu przewijanej tabeli musi być jasny */
+/* in the dark box the focus ring of a side-scrolled table must be light */
 .c5-viz .cw-scrollx:focus-visible{outline-color:var(--w-focus-ring-inverse);border-radius:0;}
 .c5-viz .c5-bar{grid-template-columns:minmax(6.25rem,31%) 1fr minmax(4.5rem,auto);font-size:0.8125rem;gap:var(--w-space-2);}
 .c5-viz .c5-bar__track{background:rgb(255 255 255 / .25);border-color:transparent;}
 .c5-viz .c5-bar__fill{background:#fff;}
-/* wykres humifikacji – wspólny wzorzec słupków */
+/* a link in the caption has to be light; the kit greys it */
+.c5-viz .wf-link--muted{color:rgb(255 255 255 / .85);}
+.c5-viz .wf-link--muted:hover{color:#fff;}
+/* drawings taken from a light section carry their neutral fills as the
+   --w-gray-200 token; on the dark box they go to white with alpha */
+.c5-viz svg [fill="var(--w-gray-200)"]{fill:rgb(255 255 255 / .3);}
+.c5-viz svg [stroke="var(--w-gray-200)"]{stroke:rgb(255 255 255 / .25);}
+/* humification chart – the shared bar pattern (the "Dowód" section uses it too) */
 .c5-barchart{display:flex;flex-direction:column;gap:var(--w-space-3);}
 .c5-bar{display:grid;grid-template-columns:minmax(7.5rem,34%) 1fr minmax(5.2rem,auto);gap:var(--w-space-3);align-items:center;font-size:var(--w-font-sm-size);}
 .c5-bar__track{height:12px;background:var(--w-gray-100);border:1px solid var(--w-border-subtle);overflow:hidden;}
 .c5-bar__fill{height:100%;width:var(--bw);background:var(--w-gray-900);}
 
-/* Układ statyczny na szerokim ekranie (reduced motion albo brak JS): pola
-   zdjęć nie mogą rozlewać się na całą szerokość kolumny. */
+/* the 1 px line under the title and its progress fill (scene only, see above) */
+.c5-fx__line{position:relative;height:1px;background:var(--w-gray-300);}
+.c5-fx__fill{position:absolute;inset:0;background:var(--w-gray-900);transform:scaleX(var(--fx-f,0));transform-origin:left center;will-change:transform;}
+
+/* ===== wariant: glass ===== */
+/* ===== wariant: glass-v1 ===== */
+/* One section for both – they share every rule but three. The visual layer
+   after the Figma frames 256-1419 (fact card) and 140-8542 / 140-8543
+   (illustration box); the registry lists it as „glass-i-zielen”. A page
+   switches it on with one class on the root of the scene:
+
+     <section class="c5-sec c5-fx c5-fx--glass" data-fx …>
+
+   It works on top of the layout rules above and changes type, colour and the
+   material of the box, nothing else. Every selector starts at
+   `.c5-fx[data-fx].c5-fx--glass…` – one class more than the rules of the layout,
+   so a scene without the class is not touched, and the scene rules
+   `.cx-js .c5-fx__flow > .c5-viz` still lose to it. Do not shorten the prefix.
+
+   c5-fx--glass-v1 is the first cut of the same layer: everything below except
+   the type of the bars inside the box and the 11/13 px around the hairline.
+
+   What is in the layer:
+     · the fact card – title in the regular weight, description 14 px / 1.3 in
+       the grey of the frame, counter 11 px, the hairline at black 10 % and its
+       progress fill in the accent green (--c5-fx-green, one line to withdraw);
+     · the illustration box – 24 px corners and padding, the Glass material of
+       the frame (see below), the wash through the knob --c5-fx-viz-bg;
+     · the number badge of the box, the bars and the caption inside the box.
+   What is NOT in the layer, on purpose:
+     · the display face and the metrics of the scene heading and the outlined
+       kicker badge – that is the variant naglowek-ramka, fitted to a short
+       heading; a longer one runs into the fact block with it.
+
+   A page may still retune the knobs on the root of its scene: --c5-fx-viz-bg,
+   --c5-fx-green, --c5-fx-viz-h, --c5-fx-viz-w. */
+
+.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1){
+  /* Frame 256-1419 – the accent green of the progress fill. One variable, so a
+     single line takes the colour back out of a greyscale kit. */
+  --c5-fx-green:#71C35F;
+  /* Frame 140-8542 – warm brown wash of the illustration box at 43 %. The knob
+     rules BOTH branches of the scene, the one with backdrop-filter and the one
+     without. It does NOT reach the static layout, which is deliberate – see the
+     note over .c5-viz below.
+     Contrast: the frame's value is lighter than the rgb(20 20 20 / .78) the box
+     carries elsewhere; over a bright photo the caption and the tag of the box
+     fall under 4.5 : 1. A page with bright photos either accepts that with the
+     frame or puts the darker wash back with this one knob. */
+  --c5-fx-viz-bg:rgb(53 46 40 / .43);
+}
+.c5-fx[data-fx].c5-fx--glass{
+  /* Frame 256-1419 – title to hairline and hairline to description. Declared
+     on the root, so it also replaces the 10/12 px of the low-window step of the
+     layout; the 2 px difference is smaller than the step it would keep. */
+  --c5-fx-line-top:11px;
+  --c5-fx-line-bottom:13px;
+}
+
+/* --- Fact card (Frame 256-1419) ----------------------------------------------
+   Type and colour only – the mechanics are untouched. The size of the title is
+   left to the clamp of the layout: its top is 1.5rem, i.e. the 24 px of the
+   frame at 1440 px, and the clamp is what keeps the title readable on a low
+   window. */
+.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-fx__title{font-weight:var(--w-weight-regular);line-height:1.2;
+  letter-spacing:normal;color:#000;}
+.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-fx__body{font-size:14px;line-height:1.3;color:#777771;}
+.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-fx__count{font-size:11px;line-height:1.2;letter-spacing:normal;color:#000;}
+/* the hairline: black at 10 % (about #e6e6e6 on white), the fill: the green above */
+.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-fx__line{background:rgb(0 0 0 / .1);}
+.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-fx__fill{background:var(--c5-fx-green);}
+
+/* --- Illustration box (Frames 140-8542 root / 140-8543 content) ---------------
+   The wash arrives through the knob at the top. Below 900 px, with reduced
+   motion and without JS the box keeps the rgb(20 20 20 / .78) of .c5-viz
+   itself: there it does not float over a photo but stands on the white page,
+   where the 43 % of the frame would leave white text at 2.45 : 1.
+   GLASS. The Figma panel reads: Light -45 deg at 0 %, Refraction 47, Depth 80,
+   Dispersion 25, Frost 60, Splay 34. What CSS can carry, and what it cannot:
+     * Frost 60      -> backdrop blur, 18px on this scale.
+     * Refraction 47
+       + Depth 80    -> a real material bends the backdrop at the edge. CSS has
+                        no refraction, so the thickness is suggested by an inset
+                        hairline: light on the top edge, dark on the bottom.
+     * Light 0 %     -> intensity is zero, so NO specular sheen is added.
+     * Dispersion 25
+       + Splay 34    -> chromatic fringing along the edge. No CSS equivalent
+                        without an SVG filter chain; left out rather than faked.
+   The layout also carries saturate(.9) in its backdrop-filter; the frame gives
+   no basis for it, so this layer sets the blur alone. */
+.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-viz{border-radius:24px;padding:24px;
+  -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+  box-shadow:inset 0 1px 0 rgb(255 255 255 / .10),
+             inset 0 -1px 0 rgb(0 0 0 / .12);}
+/* Where backdrop-filter does not work the box has no photo to frost, so it keeps
+   the flat fill alone – the inset edge would read as a border with nothing
+   behind it. */
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-viz{box-shadow:none;}
+}
+
+/* the number badge: 16 px, no case change, full white on a black wash at 20 % */
+.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-viz__tag{align-self:flex-start;padding:12px 15px;border-radius:11px;
+  background:rgb(0 0 0 / .2);font-size:16px;line-height:normal;letter-spacing:normal;
+  text-transform:none;color:#fff;}
+
+/* Bars – closed in .c5-viz, never on the bare .c5-bar*: the same classes carry
+   charts outside the scene, on a light background.
+   16/28 px = a ratio of 1.75, written as a clamp: the card of the frame is
+   462 px wide, the box of the scene is about 374 px at 1440 px and narrower on
+   a low window, where a flat 16 px pushes a chart past the bottom of the box
+   (and .c5-viz clips). The clamp reaches the 16 px of the frame at 1440 px and
+   steps down to 13 px on a narrow window. Full glass only – glass-v1 keeps the
+   13 px of the layout. */
+.c5-fx[data-fx].c5-fx--glass .c5-viz .c5-bar{font-size:clamp(0.8125rem,1.12vw,1rem);line-height:1.75;
+  letter-spacing:-0.02em;}
+.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-viz .c5-bar__track{height:6px;border:0;border-radius:2px;
+  background:rgb(255 255 255 / .12);}
+.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-viz .c5-bar__fill{border-radius:2px;background:rgb(255 255 255 / .7);}
+/* The value label keeps its place BESIDE the bar; only its type comes from the
+   frame. */
+.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-viz .c5-muted{font-size:9px;line-height:14px;letter-spacing:.03em;
+  text-transform:uppercase;color:#fff;}
+/* The caption under the illustration: 14/22 px = a ratio of 1.571, again as a
+   clamp reaching the value of the frame at 1440 px. */
+.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-viz .c5-src--ondark{font-size:clamp(0.75rem,0.98vw,0.875rem);
+  line-height:1.571;color:rgb(255 255 255 / .5);}
+
+/* ===== wariant: naglowek-ramka ===== */
+/* Head of the scene after the Figma frame 140-8475: the outlined kicker badge
+   (EL-06, the markup carries c5-kicker--outline), 24 px under it the heading in
+   P22 Mackinac Pro Book, 46/51 px on a 661 px measure, the dark green ink of
+   the frame. The page has to load the face itself (@font-face in its sheet);
+   `font-weight:400` is not decoration – only the Book cut is loaded, so any
+   heavier weight would have the browser synthesise a fake bold.
+   The size is a clamp whose TOP is the 46 px of the frame, reached from 1440 px
+   up. A flat 46 px had to go: at 375 px a long word ran out of its box, and in
+   the scene at 1280x720 and 1024x768 the heading ran INTO the fact block. For
+   the same reason the static rule below stays at two classes – lower than the
+   scene rules `.cx-js .c5-fx__head .c5-h2`, which read the three size knobs set
+   here and keep the steps for a narrow and for a low window working. Do not add
+   .c5-fx__head to its selector. */
+.c5-fx.c5-fx--naglowek-ramka{--c5-fx-head-gap:24px;--c5-fx-h2-max:661px;
+  --c5-fx-h2-size:clamp(1.7rem,3.2vw,2.875rem);--c5-fx-h2-size-narrow:clamp(1.5rem,2.6vw,2.125rem);}
+.c5-fx--naglowek-ramka .c5-h2{font-family:"P22 Mackinac Pro",var(--w-font-sans);font-weight:400;
+  font-size:var(--c5-fx-h2-size);line-height:1.109;letter-spacing:-0.01em;color:#0c2b1c;}
+/* the badge keeps the geometry of EL-06; padding, size and ink come from the frame */
+.c5-fx--naglowek-ramka .c5-kicker--outline{padding:9px;border-color:#0c2b1c;border-radius:8px;
+  font-size:13px;line-height:14px;letter-spacing:.03em;color:#0c2b1c;}
+
+/* ===== wariant: szeroki ===== */
+/* Static layout on a wide window (reduced motion or no JS): the column of the
+   scene runs in the same wide container (EL-29, 1800 px / 40 px) as the head
+   above the track. Set through the two static knobs, never as max-width on
+   .c5-fx__stage – such a rule would tie with the scene and push its layers
+   40 px inwards. */
 @media (min-width:900px){
-  .c5-facts-flow{align-items:flex-start;}
-  .c5-viz{max-width:480px;}
-  /* static wide layout: a band, not a full column */
-  .c5-facts-panel__img{max-width:480px;max-height:min(46vh,420px);}
-  .c5-fact{max-width:640px;}
+  .c5-fx.c5-fx--szeroki{--c5-fx-static-max:1800px;--c5-fx-static-pad:40px;}
 }
 
-/* --- Scena: sticky 100svh w wysokim torze (JS ustawia wysokość toru) -------- */
-@media (min-width:900px) and (prefers-reduced-motion: no-preference){
-  .cx-js .c5-facts-sec{padding-block:0;}
-  .cx-js .c5-facts-stage{
-    --c5-facts-gap:clamp(2rem,6vw,8rem);
-    --c5-facts-prog:40px;
-    /* prześwit na dok doradcy, który pływa nad dolną krawędzią okna */
-    --c5-facts-dock:58px;
-    position:sticky;top:0;height:100svh;
-    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr);
-    gap:0 var(--c5-facts-gap);padding-block:var(--c5-gutter);
-  }
-  /* panel wraca jako boks w kolumnie 2 – warstwy zdjęć leżą w nim jedna na
-     drugiej, widoczna jest tylko ta z data-on="true" (§13.5) */
-  .cx-js .c5-facts-flow > .c5-facts-panel{display:block;position:relative;grid-row:1;grid-column:2;align-self:stretch;
-    height:100%;background:var(--w-gray-700);overflow:hidden;}
-  .cx-js .c5-facts-panel__img{position:absolute;inset:0;height:100%;max-width:none;max-height:none;aspect-ratio:auto;
-    opacity:0;transition:opacity .45s var(--w-ease);will-change:opacity;}
-  .cx-js .c5-facts-panel__img[data-on="true"]{opacity:1;}
-  /* Warstwa opis+ilustracja leży na całej scenie: opisy w lewej kolumnie przy
-     dolnej krawędzi, ilustracje wyśrodkowane w prawej – wszystkie w jednej
-     komórce siatki, więc wymieniają się w miejscu. */
-  .cx-js .c5-facts-flow{grid-row:1;grid-column:1 / -1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr);gap:0 var(--c5-facts-gap);}
-  .cx-js .c5-facts-flow > .c5-fact{grid-row:1;grid-column:1;align-self:end;max-width:none;padding-bottom:calc(var(--c5-facts-prog) + var(--c5-facts-dock));opacity:0;transform:translateY(12px);transition:opacity .18s var(--w-ease),transform .18s var(--w-ease);}
-  .cx-js .c5-facts-flow > .c5-fact.is-on{opacity:1;transform:none;transition-duration:.26s;}
-  .cx-js .c5-facts-flow > .c5-viz{grid-row:1;grid-column:2;align-self:center;justify-self:center;width:clamp(300px,78%,560px);height:clamp(360px,64svh,600px);aspect-ratio:auto;max-width:none;max-height:none;opacity:0;visibility:hidden;transition:opacity .22s var(--w-ease),visibility 0s linear .22s;}
-  .cx-js .c5-facts-flow > .c5-viz[data-on="true"]{opacity:1;visibility:visible;transition:opacity .22s var(--w-ease);}
-  .cx-js .c5-facts-prog{grid-row:1;grid-column:1;align-self:end;display:flex;flex-direction:column;gap:var(--w-space-2);margin-bottom:var(--c5-facts-dock);}
+/* ===== wariant: viz-auto ===== */
+/* The illustration box takes the height of its content instead of the 4 : 5
+   tile – for figures taller than the tile, which would be clipped in the static
+   layout. The scene sizes the box through --c5-fx-viz-h and is not affected. */
+.c5-fx--viz-auto .c5-viz{aspect-ratio:auto;max-height:none;}
+
+/* ===== wariant: viz-min-kafel ===== */
+/* Below 900 px the box keeps the 4 : 5 tile (520 px at most) as its MINIMUM and
+   grows with its content – for a table that needs more than the tile holds on a
+   phone. The two gutters of the page container go off the window width to get
+   the width of the tile. The scene and the static layout of a wide window are
+   not touched. */
+@media (max-width:899px){
+  .c5-fx--viz-min-kafel .c5-viz{aspect-ratio:auto;max-height:none;min-height:min(520px,calc((100vw - 2 * var(--w-space-5)) * 1.25));}
 }
-/* Niskie okna (np. 1280×720): opis dostaje ciaśniejszą skalę, żeby najdłuższy
-   punkt nadal mieścił się nad paskiem progresu. Skalę nagłówka sceny ustawia
-   strona – zależy od długości jej copy. */
+
+/* ===== wariant: rosnie ===== */
+/* ===== wariant: luz-mobile ===== */
+/* Modifiers of a single figure (c5-viz--…), not of the root. Static layout only (below 900 px, reduced motion, no JS), where the box is a
+   4 : 5 frame capped at 520 px and clips:
+   · c5-viz--rosnie – a figure taller than the frame (a long table) takes the
+     height of its content, never less than the 520 px of its neighbours;
+   · c5-viz--luz-mobile – up to 456 px of window the frame becomes a minimum:
+     with a visible overflow the automatic minimum of a ratio box applies, so
+     the box grows by the few pixels a chart with wrapped labels needs. */
+@media (max-width:899px), (prefers-reduced-motion: reduce){
+  .c5-fx .c5-viz--rosnie{aspect-ratio:auto;min-height:520px;max-height:none;}
+}
+html:not(.cx-js) .c5-fx .c5-viz--rosnie{aspect-ratio:auto;min-height:520px;max-height:none;}
+@media (max-width:456px){
+  .c5-fx .c5-viz--luz-mobile{max-height:none;overflow:visible;}
+}
+
+/* ===== wariant: siatka ===== */
+/* Modifier of a chart in the box (c5-barchart--siatka). The rows of the chart share ONE grid: the label column is as wide as the
+   longest label, the value column as wide as the longest value, the bars take
+   the rest and start on one line – for labels that would wrap in the 31 % label
+   column of the box. */
+.c5-viz .c5-barchart--siatka{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:var(--w-space-3) var(--w-space-2);}
+.c5-viz .c5-barchart--siatka .c5-bar{grid-column:1 / -1;grid-template-columns:subgrid;}
+
+/* ----- Scale ladders of the scene -------------------------------------------
+   Three variants that step the description down by window size. They depend on
+   media queries, so they cannot be custom properties. Every rule keeps the
+   prefix `.cx-js .c5-fx[data-fx].c5-fx--skala-…` (five classes): one more than
+   the glass layer, whose 14 px / 1.3 would otherwise take the description back. */
+
+/* ===== wariant: skala-opis-dlugi ===== */
+/* Long descriptions (a paragraph, a list and another paragraph): the zone of
+   the description is as tall as the longest of them and has to fit above the
+   clearance of the dock, so the copy steps down in a window up to 1000 px tall,
+   on a narrow desktop (900–1279 px, whatever the height) and again up to 780 px.
+   The order of the four blocks matters. */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  .cx-js .c5-fx[data-fx].c5-fx--skala-opis-dlugi .c5-fx__body{line-height:1.5;gap:10px;}
+  .cx-js .c5-fx[data-fx].c5-fx--skala-opis-dlugi .c5-fx__body .wf-list{gap:var(--w-space-2);}
+}
+@media (min-width:900px) and (prefers-reduced-motion: no-preference) and (max-height:1000px){
+  .cx-js .c5-fx[data-fx].c5-fx--skala-opis-dlugi .c5-fx__body{font-size:0.875rem;}
+  .cx-js .c5-fx[data-fx].c5-fx--skala-opis-dlugi .c5-fx__body .wf-list{gap:var(--w-space-1);}
+}
+@media (min-width:900px) and (max-width:1279px) and (prefers-reduced-motion: no-preference){
+  .cx-js .c5-fx[data-fx].c5-fx--skala-opis-dlugi .c5-fx__body{font-size:0.8125rem;}
+}
 @media (min-width:900px) and (prefers-reduced-motion: no-preference) and (max-height:780px){
-  .cx-js .c5-facts-stage{--c5-facts-prog:32px;}
-  .cx-js .c5-facts-flow > .c5-fact .c5-fact__title{font-size:clamp(1.0625rem,1.5vw,1.25rem);}
+  .cx-js .c5-fx[data-fx].c5-fx--skala-opis-dlugi .c5-fx__body{font-size:0.8125rem;line-height:1.45;}
 }
 
-/* --- wariant: naglowek-nad-scena (CARBOMAT MATA UPRAWOWA, spec §21.3) ------
-   Nagłówek stoi NAD torem, jako bezpośrednie dziecko sekcji – poza sceną. Nie
-   jest wtedy kolumną sceny, tylko zwykłym blokiem w rytmie sekcji, a sekcja
-   zachowuje własne odstępy pionowe. Hakiem jest samo miejsce nagłówka w DOM-ie,
-   więc strona nie potrzebuje dodatkowej klasy. */
-.c5-facts-sec > .c5-facts-head{display:block;gap:normal;}
-.c5-facts-sec > .c5-facts-head .c5-kicker{margin-bottom:clamp(2rem,4vw,3.5rem);}
-.c5-facts-sec > .c5-facts-head .c5-h2{max-width:784px;}
+/* ===== wariant: skala-osiem-krokow ===== */
+/* Many steps and tall figures (a nine-row table, bar charts): the box is 68 svh
+   tall instead of 62, the description is tighter than in the static layout, and
+   in a low window (e.g. 1280x720) both take one more step – the box 74 svh. */
+.c5-fx.c5-fx--skala-osiem-krokow{--c5-fx-viz-h:clamp(360px,68svh,760px);}
 @media (min-width:900px) and (prefers-reduced-motion: no-preference){
-  .cx-js .c5-facts-sec:has(> .c5-facts-head){padding-block:clamp(3.5rem,7vw,6.25rem);}
+  .cx-js .c5-fx[data-fx].c5-fx--skala-osiem-krokow .c5-fx__body{font-size:0.875rem;line-height:1.5;}
+}
+@media (min-width:900px) and (prefers-reduced-motion: no-preference) and (max-height:780px){
+  .cx-js .c5-fx[data-fx].c5-fx--skala-osiem-krokow .c5-fx__body{font-size:0.8125rem;line-height:1.45;}
+  .cx-js .c5-fx[data-fx].c5-fx--skala-osiem-krokow .c5-fx__body ul{gap:var(--w-space-1);}
+  .c5-fx.c5-fx--skala-osiem-krokow{--c5-fx-viz-h:clamp(360px,74svh,760px);}
+}
+
+/* ===== wariant: skala-waskie-okno ===== */
+/* A scene whose head stands above the track: the default scale fits from
+   1280 px up, it gets tight only where the text column is half as wide.
+   · box: 68 svh; below 1440 px whatever is left ABOVE the advisor dock (the box
+     is centred in the panel, 20 px from top and bottom, so for its lower edge to
+     stand 88 px above the edge of the window its height is 100svh - 176px);
+   · 900–1199 px: title, description and list one step down;
+   · 900–1199 px and up to 740 px tall: the tightest step, and a table in the
+     box comes down in type and cell padding. */
+.c5-fx.c5-fx--skala-waskie-okno{--c5-fx-viz-h:clamp(360px,68svh,760px);}
+@media (min-width:900px) and (max-width:1439px) and (prefers-reduced-motion: no-preference){
+  .c5-fx.c5-fx--skala-waskie-okno{--c5-fx-viz-h:min(760px,calc(100svh - 176px));}
+}
+@media (min-width:900px) and (max-width:1199px) and (prefers-reduced-motion: no-preference){
+  .cx-js .c5-fx[data-fx].c5-fx--skala-waskie-okno .c5-fx__title{font-size:clamp(1rem,1.4vw,1.1875rem);}
+  .cx-js .c5-fx[data-fx].c5-fx--skala-waskie-okno .c5-fx__body{font-size:0.8125rem;line-height:1.5;gap:8px;}
+  .cx-js .c5-fx[data-fx].c5-fx--skala-waskie-okno .c5-fx__body ul{gap:5px;}
+}
+@media (min-width:900px) and (max-width:1199px) and (prefers-reduced-motion: no-preference) and (max-height:740px){
+  .cx-js .c5-fx[data-fx].c5-fx--skala-waskie-okno .c5-fx__body{font-size:0.75rem;gap:6px;}
+  .cx-js .c5-fx[data-fx].c5-fx--skala-waskie-okno .c5-fx__body ul{gap:4px;}
+  .cx-js .c5-fx[data-fx].c5-fx--skala-waskie-okno .c5-viz .wf-table{font-size:0.8125rem;}
+  .cx-js .c5-fx[data-fx].c5-fx--skala-waskie-okno .c5-viz .wf-table th,
+  .cx-js .c5-fx[data-fx].c5-fx--skala-waskie-okno .c5-viz .wf-table td{padding:6px 8px;}
 }

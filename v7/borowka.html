@@ -18,8 +18,15 @@
 <link rel="stylesheet" href="ce/CE-08-hero.css">
 <link rel="stylesheet" href="ce/CE-16-pas-pro.css">
 <link rel="stylesheet" href="ce/CE-17-faq.css">
+<link rel="stylesheet" href="ce/CE-24-pas-liczb.css">
 <link rel="stylesheet" href="ce/CE-67-karty-z-kadrem.css">
 <link rel="stylesheet" href="ce/CE-68-akordeon-faz.css">
+<link rel="stylesheet" href="ce/CE-20-siatka-kart.css">
+<link rel="stylesheet" href="ce/CE-25-lightbox.css">
+<link rel="stylesheet" href="ce/CE-36-wiersz-zdjecie-opis.css">
+<link rel="stylesheet" href="ce/CE-45-pudelka-przelaczniki.css">
+<link rel="stylesheet" href="ce/CE-47-przelicznik.css">
+<link rel="stylesheet" href="uprawa-skorka.css">
 <link rel="stylesheet" href="borowka.css">
 </head>
 <body>
@@ -34,7 +41,7 @@
 
 
 
-<nav id="nawigacja-kropki" class="c5-dots" aria-label="Rozdziały strony: borówka amerykańska" data-dots data-ce="CE-07">
+<nav id="nawigacja-kropki" class="c5-dots" style="--c5-dots-right:10px" aria-label="Rozdziały strony: borówka amerykańska" data-dots data-ce="CE-07">
   <ol>
     <li><a class="c5-dots__link" href="#hero" data-dot="hero"><span class="c5-dots__label">Start</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
     <li><a class="c5-dots__link" href="#b-produkty" data-dot="b-produkty"><span class="c5-dots__label">Produkty</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
@@ -57,7 +64,7 @@
 
 
 
-  <section id="hero" data-chapter="hero" data-ce="CE-08" data-ce-wariant="kadr-w-tle">
+  <section id="hero" data-chapter="hero" data-ce="CE-08" data-ce-wariant="kadr-w-tle" style="--c5-hero-scrim:rgb(0 0 0 / .36)">
     <div class="c5-hero c5-hero--bg">
       <div class="c5-hero__bg" aria-hidden="true">
         <img class="c5-hero__bgimg" src="img/foto/borowka-plantacja-hero.jpg" alt="" width="2000" height="1116" decoding="async" fetchpriority="high" style="object-position:50% 50%">
@@ -128,7 +135,7 @@
       <span class="c5-kicker c5-kicker--outline c5-kicker--center u-reveal">Produkty</span>
       <div class="c5-head u-reveal">
         <h2 class="c5-h2 c5-h2--center">Produkty CarboHort w uprawie borówki</h2>
-        <p class="c5-lead c5-lead--center">Sześć produktów, każdy w innym miejscu i terminie. Kliknij kartę, żeby zobaczyć dawki i sposób aplikacji.</p>
+        <p class="c5-lead c5-lead--center c5-lead--60">Sześć produktów, każdy w innym miejscu i terminie. Kliknij kartę, żeby zobaczyć dawki i sposób aplikacji.</p>
       </div>
       <div class="u-prodwrap wf-stack wf-stack--3">
         <div class="u-prod" id="prod-rail">
@@ -319,7 +326,7 @@
 
 
 
-  <section class="c5-sec c5-kk" id="b-sciolka" data-chapter="b-sciolka" data-ce="CE-67">
+  <section class="c5-sec c5-kk c5-kk--ikony" id="b-sciolka" data-chapter="b-sciolka" data-ce="CE-67" data-ce-wariant="ikony">
     <div class="c5-wrap c5-wrap--wide c5-kk__wrap">
 
       <div class="c5-kk__main">
@@ -504,12 +511,12 @@
         <span class="c5-kicker c5-kicker--outline">Pakiety</span>
         <div class="c5-head">
           <h2 class="c5-h2">Dwa pakiety i ilość produktu na Twoją plantację</h2>
-          <p class="c5-lead">Pakiet minimum to dwa zabiegi doglebowe w roku i trzy opryski nalistne. Pakiet optimum to pełny program: gleba, fertygacja, liść i owoc. Wybierz pakiet i powierzchnię, a przelicznik pokaże ilość produktów i ich koszt.</p>
+          <p class="c5-lead c5-lead--60">Pakiet minimum to dwa zabiegi doglebowe w roku i trzy opryski nalistne. Pakiet optimum to pełny program: gleba, fertygacja, liść i owoc. Wybierz pakiet i powierzchnię, a przelicznik pokaże ilość produktów i ich koszt.</p>
         </div>
       </div>
       <div class="wf-stack wf-stack--6 u-reveal u-pk" data-calc data-tabs-group>
         <div class="u-pk__top">
-          <div id="b-pakiety-wybor" class="u-vtabs" role="tablist" aria-label="Pakiet" data-ce="CE-45" data-ce-wariant="dwa-pakiety">
+          <div id="b-pakiety-wybor" class="u-vtabs u-vtabs--2" role="tablist" aria-label="Pakiet" data-ce="CE-45" data-ce-wariant="dwa-pakiety">
             <button class="u-vtab" type="button" role="tab" id="tab-p1" aria-controls="panel-p1" aria-selected="false"><span class="u-vtab__no">01</span><span class="u-vtab__t">Pakiet minimum</span><span class="u-vtab__d">5 zabiegów w roku · 2 produkty</span></button>
             <button class="u-vtab" type="button" role="tab" id="tab-p2" aria-controls="panel-p2" aria-selected="false"><span class="u-vtab__no">02</span><span class="u-vtab__t">Pakiet optimum</span><span class="u-vtab__d">pełny program · 4 produkty w roku</span></button>
           </div>
@@ -804,7 +811,7 @@
 
 
 
-  <section class="c5-pro" id="b-kontakt" data-pro data-ce="CE-16" data-ce-wariant="zamykajacy">
+  <section class="c5-pro c5-pro--zamykajacy c5-pro--zielen c5-pro--h-mackinac" style="--pro-img-pos:50% 45%;--pro-scrim:.45;--pro-side-max:21rem" id="b-kontakt" data-pro data-ce="CE-16" data-ce-wariant="zamykajacy">
     <div class="c5-pro__media" data-pro-media aria-hidden="true">
       <img class="c5-pro__img" src="img/foto/borowka-zbior.jpg" alt="" width="2000" height="1116" loading="lazy" decoding="async">
     </div>
@@ -1145,7 +1152,7 @@
 
 
 
-  <div class="u-lightbox" id="b-lightbox-pakiety" data-lightbox role="dialog" aria-modal="true" aria-label="Jak liczymy pakiety" data-ce="CE-25" data-ce-wariant="jednostronicowy">
+  <div class="u-lightbox u-lightbox--waski" id="b-lightbox-pakiety" data-lightbox role="dialog" aria-modal="true" aria-label="Jak liczymy pakiety" data-ce="CE-25" data-ce-wariant="jednostronicowy">
     <div class="u-lightbox__panel">
       <button class="u-lightbox__close" type="button" data-lightbox-close aria-label="Zamknij okno z założeniami"><svg class="wf-icon" aria-hidden="true"><use href="#ti-x"></use></svg></button>
       <div class="u-lightbox__scroll" data-lightbox-scroll>

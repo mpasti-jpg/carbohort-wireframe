@@ -1,14 +1,25 @@
 /* ===== CE-08 · Hero (rejestr: ce-rejestr.js) =====
    First screen under the service menu: copy column with the breadcrumb at its
-   bottom edge, light-grey panel on the right. Merged from carbomat.css HERO –
-   the skeleton (#hero, .c5-hero, __copy, __copyin, __lead, __crumbs, the empty
-   __stage and the one-column layout below 900 px) is byte-identical in all
-   seven pages. What stands ON the panel is content, not pattern: the packshot
-   geometry (.c5-hero__pack*, the --c5-pack-h / --c5-pouch-scale numbers) and
-   the variants „polka" (Produkty), „kadr" (Kukurydza) and „player" (Próchnica+)
-   stay in <strona>.css, which is loaded after this file.
-   The one exception is at the bottom: the player panel does not take the 4:5
-   crop on a phone, and that rule cannot live in a file loaded earlier. ===== */
+   bottom edge, light-grey panel on the right. The whole element lives in this
+   file – the skeleton, the packshot geometry and every variant – and a page
+   stylesheet does not override CE-08. A variant is chosen by a modifier class
+   on `.c5-hero` (or by the variant's own elements); `#hero` stays as the root
+   hook of the section, and section-level variant rules are written as
+   `#hero:has(.c5-hero--<variant>)`.
+   Content-dependent numbers go through custom properties set with
+   style="--…" on `section#hero`. None of them is declared in this file (each
+   use carries its default in `var(--name, default)`), so the value from the
+   root inherits freely:
+     --c5-hero-pack-h        packshot height            clamp(260px,46%,520px)
+     --c5-hero-pack-dx       left shift centring a PAIR 0%
+     --c5-hero-sm-scale      scale of the smaller pack  .55
+     --c5-hero-sm-x / -sm-y  offset of the smaller pack 0% / 0%
+     --c5-hero-btn-px        button side padding        45px
+     --c5-hero-scrim         scrim of the photo         rgb(0 0 0 / .4)
+     --c5-hero-scrim-narrow  scrim up to 1099 px        = --c5-hero-scrim
+   ORDER MATTERS: variants with a single-class selector win over the base only
+   because they stand after it and after its phone block; that is also why
+   each of them repeats its own phone block. ===== */
 
 /* --- HERO: cały pierwszy ekran pod menu serwisu (spec §13.2, §14.2) -------
    Wysokość ekranu minus zmierzony pasek menu (`--cx-navbar-h` ustawia JS w
@@ -31,6 +42,17 @@
    w tle i bez pasa gradientu, jednolita jasna szarość. */
 .c5-hero__stage{position:relative;overflow:hidden;margin-block:var(--c5-gutter);min-height:calc(100svh - var(--cx-navbar-h, 0px) - 2 * var(--c5-gutter));background:var(--w-gray-100);}
 
+/* Packshot on the panel (default layout of the product pages): one or two
+   images pinned to the panel centre and moved by a percentage of their OWN
+   box, so the group keeps its proportions at every panel size. Numbers that
+   depend on the actual PNG files are set by the page with style="--…" on
+   section#hero. */
+.c5-hero__pack{position:absolute;left:50%;top:50%;transform:translate(calc(-50% - var(--c5-hero-pack-dx,0%)),-50%);height:var(--c5-hero-pack-h,clamp(260px,46%,520px));width:auto;max-width:calc(100% - 2 * var(--c5-gutter));object-fit:contain;}
+.c5-hero__pack--sm{height:calc(var(--c5-hero-pack-h,clamp(260px,46%,520px)) * var(--c5-hero-sm-scale,.55));transform:translate(var(--c5-hero-sm-x,0%),var(--c5-hero-sm-y,0%));}
+/* side padding of the buttons in the copy column – 45 px repeats the token
+   default of `.c5-btn` in 00-base.css; change both together */
+.c5-hero__copyin .c5-btn{--c5-btn-px:var(--c5-hero-btn-px,45px);}
+
 @media (max-width:899px){
   /* jedna kolumna: copy → panel → breadcrumb pod spodem */
   #hero{display:block;min-height:0;}
@@ -42,18 +64,205 @@
   .c5-hero__crumbs{order:3;padding-bottom:0;}
 }
 
-/* --- wariant: player (Próchnica+) -----------------------------------------
-   Na panelu stoi player filmu, a nie packshot, więc na telefonie wysokość
-   panelu wyznacza film – bez kadru 4:5 i bez ograniczenia do 70 vh. Włącza się
-   samą obecnością playera w panelu, bez dodatkowego haka w HTML-u. */
+/* ===== wariant: para-w-pudle =====
+   Two packages of different kinds standing on one shelf line inside a budget
+   box (a big bag at the back, a 20 l bag in front; DOM order does the
+   overlapping – no z-index, no shadows). Chosen by the presence of
+   `.c5-hero__packs` in the panel.
+
+   GEOMETRY. Both PNGs are full-bleed – the alpha box fills the canvas to within
+   1 px – so the canvas ratios ARE the object ratios, but the two files carry
+   different content:
+     worek_1000l_1500l.png  854 x 1000, ratio .8546; the lifting loops take the
+                            TOP 16.1 % of the frame, the bag body is the lower
+                            83.9 % and its bottom edge is the bottom of the file;
+     worek_20l.png          578 x  875, ratio .6606, body edge to edge.
+   Percentages of the file height are therefore NOT comparable between the two,
+   and the scale had to be set on the bodies: the 20 l bag is 40 % of the big
+   bag's FILE height, i.e. .40 / .839 = 48 % of its BODY – a 20 l bag (~50 cm)
+   against the body of a 1000 l big bag (~110 cm). Reads like two packages
+   standing on one shelf.
+
+   Let H be the rendered height of the big bag. Then
+     big bag   .8546 H wide, standing on the shelf line;
+     20 l bag  .40 H tall -> .6606 * .40 H = .26424 H wide, same shelf line;
+   sideways 55 % of the 20 l bag's width covers the big bag and 45 % stands out
+   past its right edge onto the grey panel, so the smaller bag keeps a whole
+   silhouette (white on white would otherwise merge) AND occludes the bigger one.
+   The pair therefore measures .9735 H by H, and every offset below is a share of
+   the image's OWN box, so the composition holds its proportions at every panel
+   size, phone included:
+     big bag   centred, then pushed left by .0595 H = 6.96 % of its own width, so
+               what ends up centred is the PAIR, not the big bag alone;
+     20 l bag  left edge .2225 H right of the centre = 84.2 % of its own width,
+               top edge .10 H below the centre = 25 % of its own height, which
+               puts its bottom exactly on the big bag's bottom – one shelf line.
+
+   SIZE. „Kadr nie może urosnąć poza panel sceny; jeżeli big bag się nie mieści,
+   maleje cała kompozycja, a nie panel.” Height alone cannot be the input,
+   because the pair is .9735 H WIDE: a tall, narrow panel (a big monitor, where
+   the 520 px cap is already in force) would run the 20 l bag off the edge.
+   So `.c5-hero__packs` is only the BUDGET box – panel minus 30 px on both sides,
+   62 % of the panel height, never over 520 px – and each image finds its own
+   size inside it with `width/height:auto` plus a max on both axes, which is the
+   one thing in CSS that takes the smaller of a width and a height budget:
+     big bag   max-height 100 %, max-width .8546 / .9735 = 87.79 % of the box;
+     20 l bag  max-height  40 %, max-width .26424 / .9735 = 27.14 % of the box;
+   both land on H = min(box height, box width / .9735). No aspect-ratio and no
+   container query units: `container-type:size` on the stage reports cqh = 0,
+   because the panel's height comes from the grid row stretching it, and an
+   `aspect-ratio` box with `max-width` gets its width clamped while its height
+   stays – the pair would silently change proportions on a tall window. */
+.c5-hero__packs{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:calc(100% - 2 * var(--c5-gutter));height:62%;max-height:520px;}
+/* big bag – the back object; -6.96 % of its own width centres the PAIR */
+.c5-hero__packs .c5-hero__pack{height:auto;width:auto;max-height:100%;max-width:87.79%;transform:translate(calc(-50% - 6.96%),-50%);}
+/* 20 l bag – the front object, on the same shelf line */
+.c5-hero__packs .c5-hero__pack--sm{height:auto;max-height:40%;max-width:27.14%;transform:translate(84.2%,25%);}
+
+/* ===== wariant: packshot-szeroki =====
+   A wide, low object (a 1000 × 313 sleeve): it stands in the flow in the
+   middle of the panel and is sized by its width, keeping its own proportions.
+   The four resets take the image off the absolute positioning of the base. */
+.c5-hero--packshot-szeroki .c5-hero__stage{display:grid;place-items:center;}
+.c5-hero--packshot-szeroki .c5-hero__pack{position:static;left:auto;top:auto;transform:none;display:block;width:72%;height:auto;}
 @media (max-width:899px){
-  .c5-hero__stage:has(> .pp-film){aspect-ratio:auto;max-height:none;}
+  .c5-hero--packshot-szeroki .c5-hero__stage{aspect-ratio:4/3;}
+  .c5-hero--packshot-szeroki .c5-hero__pack{width:86%;}
 }
 
-/* --- wariant: kadr-w-tle (podstrony upraw; spec §14.2) ---------------------
+/* ===== wariant: niskie-okno =====
+   Hero on a low window (laptop 1280 × 800 and 1280 × 720): the hero must stay
+   ONE screen even with a long lead and two long button labels. Tighter gaps,
+   H1 scaled off the window height, both buttons in one row, lead across the
+   full column. The copy itself never changes; below 900 px wide the phone
+   rules take over. */
+@media (min-width:900px) and (max-height:920px){
+  .c5-hero--niskie-okno .c5-hero__copyin{gap:clamp(0.75rem,2vh,2rem);padding-block:clamp(0.75rem,2.5vh,3rem);}
+  .c5-hero--niskie-okno .c5-hero__copy .c5-h1{font-size:min(3.125rem,6vh);}
+  .c5-hero--niskie-okno .c5-hero__lead{font-size:1.0625rem;gap:var(--w-space-2);max-width:none;}
+  .c5-hero--niskie-okno .c5-hero__copyin .c5-btn{--c5-btn-px:28px;}
+  .c5-hero--niskie-okno .c5-hero__crumbs{padding-bottom:calc(var(--c5-gutter) * .6);}
+}
+@media (min-width:900px) and (max-height:760px){
+  .c5-hero--niskie-okno .c5-hero__lead{font-size:1rem;}
+  .c5-hero--niskie-okno .c5-hero__lead .wf-small{font-size:0.8125rem;}
+}
+
+/* ===== wariant: player =====
+   A film player stands on the panel instead of a packshot, exactly in its
+   centre; on a phone the film sets the panel height – no 4:5 crop and no
+   70 vh cap.
+   padding-block:0 / min-height:0 / gap:0 take off the kit rules of `.c5-hero`
+   from c5.css, which the page using this variant still loads – to be removed
+   once c5.css is gone from that page. They must NOT move to the base: on
+   pages without c5.css they would change the computed min-height. */
+.c5-hero--player{padding-block:0;min-height:0;}
+.c5-hero--player .c5-hero__copy{gap:0;}
+.c5-hero--player .c5-hero__stage{display:grid;place-items:center;padding:var(--c5-gutter);}
+/* the player: a 16:9 placeholder with a caption under it */
+.pp-film{display:flex;flex-direction:column;gap:var(--w-space-3);margin:0;width:100%;max-width:34rem;}
+.pp-film .wf-ph{width:100%;aspect-ratio:16/9;border-radius:0;display:grid;place-items:center;}
+.pp-film .wf-icon{width:44px;height:44px;color:var(--w-text-secondary);}
+@media (max-width:899px){
+  .c5-hero--player{padding-block:clamp(2rem,6vw,3rem);}
+  .c5-hero--player .c5-hero__stage{padding:var(--w-space-5);aspect-ratio:auto;max-height:none;}
+  .pp-film{max-width:none;}
+}
+
+/* ===== wariant: foto =====
+   The stage of the pattern is an empty light-grey panel; here it carries the
+   field for a photo: a centred icon and a dashed chip in the corner. */
+.on-hero__stage{display:grid;place-items:center;}
+.on-hero__ico{width:40px;height:40px;color:var(--w-gray-400);}
+.on-hero__chip{position:absolute;left:var(--w-space-4);bottom:var(--w-space-4);
+  max-width:calc(100% - 2 * var(--w-space-4));background:var(--w-surface-page);}
+
+/* ===== wariant: dzial =====
+   Section and category pages have no panel: one column two thirds wide, the
+   height comes from the content, the breadcrumb goes back to the top. */
+#hero:has(.c5-hero--dzial){display:block;min-height:0;}
+#hero:has(.c5-hero--dzial) > .c5-wrap{display:block;}
+.c5-hero--dzial{display:flex;flex-direction:column;gap:0;padding-block:clamp(2.25rem,5vw,4rem) clamp(1.5rem,3vw,2.5rem);}
+.c5-hero--dzial .c5-hero__copy{display:flex;flex-direction:column;gap:clamp(1.25rem,2.4vw,2rem);max-width:min(100%,745px);}
+.c5-hero--dzial .c5-hero__copyin{margin-block:0;padding-block:0;max-width:none;}
+.c5-hero--dzial .c5-hero__lead{max-width:none;}
+.c5-hero--dzial .c5-hero__crumbs{padding-bottom:0;order:0;}
+/* Search in the hero: the search box (`.cw-k-findbox`, an element shared with
+   the article index, styled by the page stylesheet) next to the guide button.
+   Below 640 px everything drops into one column. */
+.cw-k-find{display:flex;flex-wrap:wrap;gap:var(--w-space-3);align-items:stretch;}
+.cw-k-find .c5-btn{flex:0 0 auto;}
+@media (max-width:639px){
+  /* column: `flex-basis` stops being a width and becomes a height, so the box
+     has to go back to `auto` here – otherwise it would grow to 320 px */
+  .cw-k-find{flex-direction:column;align-items:stretch;}
+  .cw-k-find .cw-k-findbox{flex:0 0 auto;max-width:none;}
+  .cw-k-find .c5-btn{align-self:flex-start;}
+}
+/* subgroup chips in the hero of a category: filters of the list below */
+.cw-k-herochips{display:flex;flex-wrap:wrap;gap:var(--w-space-2);}
+
+/* ===== wariant: linia-produktow =====
+   Copy on the left, lead and buttons in the right column, and under both a
+   line of packs running to the window edges (40 px margins), outside the
+   content container. The section keeps the height of the screen: the copy
+   takes what it needs, the line of packs fills the rest and scales down on a
+   low window (`object-fit:contain`) instead of pushing the hero past the fold. */
+/* Fixed height, not just a floor: with `min-height` alone the row of the photo is
+   sized by the photo's own height, so at 1280x720 the hero grew 144 px past the
+   screen. A definite height lets the photo row take exactly what is left and the
+   image scale down inside it (`height:100%` + `object-fit:contain`). */
+#hero:has(.c5-hero--linia-produktow){display:flex;flex-direction:column;height:calc(100svh - var(--cx-navbar-h, 0px));}
+#hero:has(.c5-hero--linia-produktow) > .c5-wrap{display:block;flex:0 0 auto;}
+.c5-hero--linia-produktow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:clamp(2rem,5vw,5rem);align-items:start;padding-top:clamp(2rem,5vw,4rem);}
+/* the copy column may use its half of 1800 px – the 585 px of the pattern were cut
+   to the narrow column of the base layout */
+.c5-hero--linia-produktow .c5-hero__copy{max-width:none;}
+.c5-hero--linia-produktow .c5-hero__copyin{margin-block:0;padding-block:0;gap:clamp(1rem,2vw,1.5rem);}
+/* the breadcrumb leaves the bottom edge of the screen: in this layout the bottom of
+   the section belongs to the line of packs, so it sits under the heading instead */
+.c5-hero--linia-produktow .c5-hero__crumbs{padding-block:clamp(1.5rem,3vw,2.5rem) 0;}
+/* right column: the lead where the packshot panel stands in the base, buttons under it */
+.c5-hero--linia-produktow .c5-hero__side{display:flex;flex-direction:column;gap:clamp(1.5rem,3vw,2.25rem);
+  padding-top:clamp(0.5rem,1.6vw,1.25rem);}
+.c5-hero--linia-produktow .c5-hero__lead{max-width:640px;}
+
+/* the line of packs: full window width minus 40 px, always sitting on the bottom
+   edge of the section; `contain` keeps the mock-up whole on every window */
+.c5pr-line{flex:1 1 auto;display:flex;align-items:flex-end;justify-content:center;min-height:0;
+  padding:clamp(1.5rem,3vw,2.5rem) 40px clamp(1.5rem,3vw,2.5rem);}
+.c5pr-line__img{display:block;width:100%;height:100%;object-fit:contain;object-position:center bottom;}
+
+/* Low window: the copy row eats the screen and leaves the line of packs a strip.
+   Two tightening steps – the heading comes down, the air around it comes down,
+   the photo gets its room back. */
+@media (min-width:900px) and (max-height:820px){
+  .c5-hero--linia-produktow{padding-top:clamp(1rem,2.5vw,2rem);gap:clamp(1.5rem,3.5vw,3rem);}
+  .c5-hero--linia-produktow .c5-h1{font-size:clamp(1.75rem,3vw,2.5rem);}
+  .c5-hero--linia-produktow .c5-hero__lead{font-size:1rem;}
+  .c5-hero--linia-produktow .c5-hero__crumbs{padding-block:clamp(0.75rem,1.6vw,1.25rem) 0;}
+  .c5pr-line{padding-block:clamp(0.75rem,1.6vw,1.25rem);}
+}
+@media (min-width:900px) and (max-width:1279px){
+  .c5-hero--linia-produktow .c5-h1{font-size:clamp(1.75rem,3vw,2.25rem);}
+}
+
+@media (max-width:899px){
+  /* one column: copy -> lead and buttons -> line of packs; no full-screen height */
+  #hero:has(.c5-hero--linia-produktow){display:block;height:auto;}
+  .c5-hero--linia-produktow{display:flex;flex-direction:column;gap:clamp(1.5rem,4vw,2.5rem);
+    padding-block:clamp(2rem,6vw,3rem) 0;}
+  .c5-hero--linia-produktow .c5-hero__copy{display:flex;flex-direction:column;}
+  .c5-hero--linia-produktow .c5-hero__crumbs{order:3;padding-block:var(--w-space-4) 0;}
+  .c5-hero--linia-produktow .c5-hero__side{padding-top:0;}
+  .c5pr-line{padding:clamp(1.5rem,5vw,2.5rem) 20px;}
+}
+
+/* ===== wariant: kadr-w-tle ===== (podstrony upraw; spec §14.2)
    Hero podstrony uprawy nie ma osobnego panelu ze zdjęciem: kadr leży w tle
    całej sekcji od krawędzi do krawędzi okna, a treść stoi na nim w bieli.
-   Kickera nie ma (decyzja Mateusza z 19.09 dla wszystkich upraw), zostają
+   Kickera nie ma (na żadnej stronie uprawy), zostają
    okruszki, H1, lead i dwa przyciski. Układ od 900 px: okruszki u góry po
    lewej, u dołu dwie kolumny wyrównane do dolnej linii – wielki H1 po lewej
    (ok. 12 znaków w wierszu), kolumna leadu z przyciskami po prawej. Dół
@@ -70,7 +279,7 @@
    `#hero`) oraz `align-items:center` – w kolumnie flex centrowałoby kontener
    treści w poprzek, a ten ma trzymać pełną szerokość okna i sam liczyć swoje
    `max-width:1800px`. */
-.c5-hero--bg{--c5-hero-scrim:rgb(0 0 0 / .4);--c5-hero-dock:96px;
+.c5-hero--bg{--c5-hero-dock:96px;
   /* soft shadows under the copy on the photo: legibility without dimming the
      frame – no gradients, nothing visible as a shape. The small copy (crumbs,
      lead) takes the tighter, denser one; the big headline a wide, light one.
@@ -87,7 +296,12 @@
 .c5-hero--bg .c5-hero__bg > *{position:absolute;inset:0;width:100%;height:100%;}
 .c5-hero--bg .c5-hero__bgimg{display:block;object-fit:cover;object-position:50% 50%;border:0;}
 /* płaski scrim – rysowany po dzieciach, więc leży na kadrze */
-.c5-hero--bg .c5-hero__bg::after{content:"";position:absolute;inset:0;background:var(--c5-hero-scrim);}
+.c5-hero--bg .c5-hero__bg::after{content:"";position:absolute;inset:0;background:var(--c5-hero-scrim,rgb(0 0 0 / .4));}
+/* the scrim is set per page on section#hero; a page whose photo needs more
+   dimming under the narrow lead column sets --c5-hero-scrim-narrow as well */
+@media (max-width:1099px){
+  .c5-hero--bg .c5-hero__bg::after{background:var(--c5-hero-scrim-narrow,var(--c5-hero-scrim,rgb(0 0 0 / .4)));}
+}
 /* Placeholder do czasu zdjęcia: ciemny, bez ramki i zaokrągleń. Etykieta
    (opis kadru dla grafika) siada pod okruszkami po lewej – środek i dół kadru
    zajmuje treść hero, a prawa strona kolumna leadu. */

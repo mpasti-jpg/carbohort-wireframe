@@ -1,15 +1,5 @@
-/* ===========================================================================
-   ce-rejestr.js – JEDYNE ŹRÓDŁO METADANYCH CONTENT ELEMENTÓW (CE)
-   ---------------------------------------------------------------------------
-   Kod CE-NN nadawany raz, nigdy nie zmieniany ani nie używany ponownie.
-   Wystąpień tu NIE ma – wynikają ze znaczników data-ce="CE-NN" w HTML stron
-   (skanuje je zasoby/kod/_narzedzia/ce-indeks.py, który generuje ce-indeks.html).
-   Strony ładują ten plik jako ../ce-rejestr.js (obok status.js); używa go
-   nakładka v5/ce-overlay.js do nazw w etykietach.
-   W tekstach tylko cudzysłowy typograficzne „…” – prosty " łamie literał.
-   Po edycji: node -e "const c=require('fs').readFileSync('zasoby/kod/ce-rejestr.js','utf8'); new Function('window',c)({})"
-   Spec: 40-strona-www/koncepcja/content-elementy-spec.md
-   =========================================================================== */
+/* ce-rejestr.js – public copy of the CE registry (generated at deploy; the
+   vault keeps the full file with the decision history of every block). */
 window.CW_CE = {
   "meta": {
     "zaktualizowano": "2026-10-02",
@@ -55,7 +45,6 @@ window.CW_CE = {
       "warianty": {
         "podglad-koszyka": "stan, nie osobny układ: nagłówek z otwartym podglądem koszyka (od 28.09.2026, spec sklep-v7-spec §12.11). Zrzut z makiety demonstracyjnej v7/lab/ce-01-podglad-koszyka.html, która wczytuje przykładowy koszyk z makiety koszyka (trzy pozycje, sześć opakowań, 877 zł) i otwiera podgląd przez cw.js"
       },
-      "uwagi": "Jeden plik dla całego serwisu: zmiana w menu = edycja chrome.js, nigdy podstron. 28.09.2026 z paska zniknął „Zaloguj” (link do platformy B2B zostaje w stopce) i doszedł podgląd koszyka (spec sklep-v7-spec §8 i §12.11).",
       "zrzut": {
         "strona": "v7/carbomat.html",
         "maxh": 200
@@ -94,7 +83,6 @@ window.CW_CE = {
         "waskie": "jedna lista (Programy i badania)",
         "grupy": "pięć grup upraw na pełną szerokość kontenera (Rodzaje upraw, 20.09.2026; wygląd pozycji ujednolicony 01.10.2026): tytuł grupy z kreską 2 px i lista pozycji o jednym wyglądzie, a w grupie Rolnicze dwie listy pod śródtytułami Ozime i Jare, bez kart i ikon. Pozycja ze swoją stroną jest linkiem w ciemnym tonie, pozostałe 28 to jaśniejsze spany „cw-crop--soon”; bez strzałek, pogrubień i szyny wyróżnień. Spec: 40-strona-www/koncepcja/menu-rodzaje-upraw-spec.md"
       },
-      "uwagi": "CE zagnieżdżony w CE-01; ukryty do otwarcia. Przycisk „Przejdź do sklepu” w panelu Produkty Carbohort (28.09.2026, spec sklep-v7-spec §12.15): kto otwiera ten dział, szukając sklepu, ma do niego jedno kliknięcie; w menu mobilnym „Sklep” jest ostatnią pozycją.",
       "zrzut": {
         "strona": "v7/carbomat.html",
         "klik": "[data-mega-trigger][aria-controls=\"mega-produkty\"]",
@@ -129,7 +117,6 @@ window.CW_CE = {
         "CTA"
       ],
       "warianty": {},
-      "uwagi": "Widoczna tylko poniżej progu mobilnego.",
       "zrzut": {
         "strona": "v7/carbomat.html",
         "szerokosc": 375,
@@ -155,7 +142,6 @@ window.CW_CE = {
         "pas dolny"
       ],
       "warianty": {},
-      "uwagi": "",
       "zrzut": {
         "strona": "v7/carbomat.html",
         "maxh": 700
@@ -180,7 +166,6 @@ window.CW_CE = {
         "przyciemnienie tła"
       ],
       "warianty": {},
-      "uwagi": "Element position: fixed – etykieta nakładki pojawia się, gdy dok jest widoczny.",
       "zrzut": {
         "strona": "v7/carbomat.html",
         "przewin": "#parametry",
@@ -206,7 +191,6 @@ window.CW_CE = {
         "odnośnik AC"
       ],
       "warianty": {},
-      "uwagi": "Nakładka CE stoi tuż nad plakietką.",
       "zrzut": {
         "strona": "v7/carbomat.html",
         "maxh": 60
@@ -230,7 +214,6 @@ window.CW_CE = {
         "etykiety"
       ],
       "warianty": {},
-      "uwagi": "Liczba i nazwy rozdziałów są treścią strony. Zastąpiła przyklejoną belkę subnawigacji (13.09). Strony z szerokimi scenami wsuwają szynę w sam margines regułą @media (min-width:900px){.c5-dots{right:10px}} – dziś w siedmiu arkuszach stron (na Próchnicy+ bez medium); kandydat do pliku wspólnego klocka w fali 2b.",
       "zrzut": {
         "maxh": 500
       }
@@ -245,7 +228,7 @@ window.CW_CE = {
         "kotwica": "hero"
       },
       "kod": {
-        "css": "ce/CE-08-hero.css (geometria packshotów per strona w <strona>.css)",
+        "css": "ce/CE-08-hero.css",
         "js": "ce/00-base.js (updateDock)"
       },
       "czesci": [
@@ -257,11 +240,14 @@ window.CW_CE = {
         "panel z mediami"
       ],
       "warianty": {
+        "para-w-pudle": "dwa opakowania różnej wielkości na jednej linii półki, wpisane w pudełko budżetowe panelu: większe z tyłu, mniejsze przed nim; od bazy różni się tym, że rozmiar pary wyznacza mniejszy z budżetów szerokości i wysokości, a nie sama wysokość packshotu (element c5-hero__packs w panelu; carbomat.html#hero)",
+        "packshot-szeroki": "szeroki i niski packshot stoi w przepływie na środku panelu i jest sterowany szerokością (72 % panelu, 86 % na telefonie, panel 4:3) zamiast wysokością jak w bazie (modyfikator c5-hero--packshot-szeroki; carbomat-mata.html#hero)",
+        "niskie-okno": "zagęszczenie kolumny tekstu na niskim oknie (do 920 px i do 760 px wysokości, od 900 px szerokości): mniejsze odstępy i H1, lead na całą kolumnę, oba przyciski w jednym rzędzie, żeby hero z długim leadem został jednym ekranem; baza takiego kroku nie ma (modyfikator c5-hero--niskie-okno; carbomat-mata.html#hero)",
         "polka": "półka czterech opakowań rodzin na jasnym panelu po prawej; od 20.09.2026 bez wystąpienia na stronie – Produkty przeszły na wariant linia-produktow, a ten został na stronie demonstracyjnej v7/lab/ce-08-polka.html (wzorzec „wersja alternatywna, stara zostaje w indeksie” jak przy CE-65 i CE-44)",
-        "linia-produktow": "wariant Produktów od 20.09.2026 (komentarze Mateusza w artefakcie): sekcja bierze całą szerokość okna, kontener treści stoi na EL-29 c5-wrap--wide (1800 px, marginesy 40 px). W górnym rzędzie dwie kolumny: kicker i H1 po lewej, lead z dwoma przyciskami po prawej – tam, gdzie wariant polka trzymał panel z packshotami; okruszki schodzą pod nagłówek, bo dolna krawędź sekcji należy teraz do zdjęcia. Pod rzędem cała gama w jednej linii (mock-up klienta) na całą szerokość okna minus 40 px z każdej strony, przyklejona do dolnej krawędzi i skalowana object-fit:contain, więc przy niskim oknie maleje, zamiast wypychać hero. Wysokość sekcji nadal 100 svh minus pasek menu. Kod: produkty.css blok HERO (nic w warstwie wspólnej)",
+        "linia-produktow": "wariant Produktów od 20.09.2026 (komentarze Mateusza w artefakcie): sekcja bierze całą szerokość okna, kontener treści stoi na EL-29 c5-wrap--wide (1800 px, marginesy 40 px). W górnym rzędzie dwie kolumny: kicker i H1 po lewej, lead z dwoma przyciskami po prawej – tam, gdzie wariant polka trzymał panel z packshotami; okruszki schodzą pod nagłówek, bo dolna krawędź sekcji należy teraz do zdjęcia. Pod rzędem cała gama w jednej linii (mock-up klienta) na całą szerokość okna minus 40 px z każdej strony, przyklejona do dolnej krawędzi i skalowana object-fit:contain, więc przy niskim oknie maleje, zamiast wypychać hero. Wysokość sekcji nadal 100 svh minus pasek menu. Modyfikator c5-hero--linia-produktow w ce/CE-08-hero.css",
         "kadr": "kadr zdjęcia uprawy zamiast packshotu – od 19.09.2026 bez wystąpień, na Kukurydzy zastąpił go wariant kadr-w-tle",
-        "kadr-w-tle": "hero podstron upraw (decyzja Mateusza z 19.09.2026): duży kadr uprawy w tle całej sekcji, jednolity scrim, bez kickera; okruszki u góry po lewej, wielki H1 u dołu po lewej, lead i dwa przyciski u dołu po prawej, treść kończy się nad dokiem doradcy; kadr osiada ze skali 1,06, treść wchodzi kaskadą; poniżej 900 px H1 na kadrze, lead i przyciski pod nim (Kukurydza; modyfikator c5-hero--bg w ce/CE-08-hero.css; siłę scrimu ustawia strona zmienną --c5-hero-scrim, domyślnie .4, Kukurydza .35)",
-        "player": "player filmu na panelu (Próchnica+)",
+        "kadr-w-tle": "hero podstron upraw (decyzja Mateusza z 19.09.2026): duży kadr uprawy w tle całej sekcji, jednolity scrim, bez kickera; okruszki u góry po lewej, wielki H1 u dołu po lewej, lead i dwa przyciski u dołu po prawej, treść kończy się nad dokiem doradcy; kadr osiada ze skali 1,06, treść wchodzi kaskadą; poniżej 900 px H1 na kadrze, lead i przyciski pod nim (modyfikator c5-hero--bg w ce/CE-08-hero.css; siłę scrimu ustawia strona własnością --c5-hero-scrim w atrybucie style na section#hero, domyślnie .4; --c5-hero-scrim-narrow daje osobną wartość do 1099 px)",
+        "player": "player filmu na środku panelu zamiast packshotu; na telefonie wysokość panelu wyznacza film, bez kadru 4:5 (modyfikator c5-hero--player; prochnica-plus.html#hero)",
         "foto": "panel ze zdjęciem zamiast packshotu (o-firmie.html#hero)",
         "dzial": "jedna kolumna na dwie trzecie szerokości, wysokość wg treści, wyszukiwarka i przycisk przewodnika (centrum-wiedzy.html#hero, centrum-wiedzy-kategoria.html#hero)",
         "artykul": "nagłówek artykułu: okruszki, chipy, h1, metryka autora, przyciski udostępnij/drukuj (artykul.html#naglowek)"
@@ -272,7 +258,6 @@ window.CW_CE = {
           "kotwica": "hero"
         }
       },
-      "uwagi": "Domyślnie 1–2 packshoty na panelu (strony produktowe).",
       "zrzut": {
         "maxh": 900
       }
@@ -294,9 +279,13 @@ window.CW_CE = {
         "pozycje: tekst + miniatura"
       ],
       "warianty": {
-        "z-ikona": "pozycja z ikoną przed tekstem – bez wystąpień od 02.10.2026 (Próchnica+ przeszła na bazę: „usuń ikonki skoro mamy zdjęcia”)"
+        "z-ikona": "pozycja z 24 px ikoną przed tekstem, bez miniatury; włącza się obecnością ikony w etykiecie (strona główna)",
+        "keep-3": "modyfikator c5-marq--keep-3: przy reduced-motion zostają widoczne trzy pierwsze pozycje",
+        "keep-4": "modyfikator c5-marq--keep-4: przy reduced-motion zostają widoczne cztery pierwsze pozycje",
+        "keep-5": "modyfikator c5-marq--keep-5: przy reduced-motion zostaje widocznych pięć pierwszych pozycji",
+        "thumb-ph": "modyfikator miniatury c5-marq__thumb--ph: puste pole (span) zamiast zdjęcia, kolor z --c5-marq-ph",
+        "thumb-pack": "modyfikator miniatury c5-marq__thumb--pack: packshot opakowania na jasnoszarym polu z 10 % marginesu"
       },
-      "uwagi": "Liczba pozycji (3–4) jest treścią; tor musi być szerszy niż okno 2560 px.",
       "zrzut": {
         "maxh": 320
       }
@@ -311,8 +300,8 @@ window.CW_CE = {
         "kotwica": "parametry"
       },
       "kod": {
-        "css": "ce/CE-10-parametry.css (wariant z-tabami w pliku; od 02.10.2026 linkuje go tylko CARBOMAT Mata); wariant kafelki-z-wejsciem: ce/CE-10-parametry-proba.css (od 02.10.2026 moduł wspólny: CARBOMAT ECO, CARBOHUMIC, CARBOMAT HUMIC)",
-        "js": "ce/CE-10-parametry.js (od 02.10.2026 tylko CARBOMAT Mata); wariant kafelki-z-wejsciem: ce/CE-10-parametry-proba.js (od 02.10.2026 moduł wspólny: CARBOMAT ECO, CARBOHUMIC, CARBOMAT HUMIC)"
+        "css": "ce/CE-10-parametry.css – jeden plik dla wszystkich układów: kafelki domyślnie, warianty col, long i z-tabami w tym samym pliku; ustawienia wystąpienia na korzeniu: --c5-params-scrim, --c5-params-clear, --c5-params-title-font, --c5-params-title-wrap",
+        "js": "kafelki z wejściem: ce/CE-10-parametry-kafelki-z-wejsciem.js (CARBOMAT ECO, CARBOHUMIC, CARBOMAT HUMIC); wariant z-tabami: ce/CE-10-parametry.js (CARBOMAT Mata)"
       },
       "czesci": [
         "warstwa wideo z maską",
@@ -323,10 +312,9 @@ window.CW_CE = {
         "przypis"
       ],
       "warianty": {
-        "z-tabami": "dwa zestawy parametrów przełączane tabami nad tabelą (Mata)",
-        "kafelki-z-wejsciem": "układ i wejście wg ramek Figma „Frame 140-8364” (kicker) i „Frame 140-8369” (tabela), uwagi Mateusza z 20.09.2026 (CARBOMAT ECO „Parametry”): kicker to pigułka bez tła z obrysem 1 px w bieli, promień 10 px, wersaliki 13/14 px, 24 px nad nagłówkiem; nagłówek wyśrodkowany na P22 Mackinac Pro Book 46/54 px; tabela to nie wiersze z liniami, tylko osiem osobnych kafelków – tło rgb(255 255 255 / .07) z rozmyciem 6,7 px, promień 15 px na czterech rogach każdego, wysokość 68 px, odstęp 7 px, bez obramowań i bez naprzemiennych teł; link do analizy pod tabelą bez podkreślenia i bez ikony; wejście sterowane przewijaniem w czterech krokach – kadr wjeżdża od dołu i rozszerza się na pełną szerokość, potem narasta ciemna nakładka, potem kicker z nagłówkiem, na końcu wiersze jeden po drugim, żeby przez chwilę było widać samą warstwę mediów; animacja wisi na .c5-params__media, więc powrót ze zdjęcia na wideo to podmiana jednego znacznika; przy reduced-motion, bez JS i poniżej 900 px wszystko stoi w stanie końcowym od pierwszej klatki. Od 02.10.2026 moduł wspólny dla trzech stron (content-elementy-spec §12). Klasa c5-params--col trzyma treść w wyśrodkowanej kolumnie 732 px (CARBOMAT HUMIC: dziewięć wierszy, w warstwie mediów placeholder strony zamiast filmu). Klasa c5-params--long niesie długą tabelę (CARBOHUMIC: 18 wierszy): wartości zawijają się od jednej krawędzi, od 1240 px kafelki stoją w dwóch kolumnach, wiersze-zdania (c5-params__row--wide) biorą całą szerokość, wiersz-kontrapunkt ma cienką ramkę (c5-params__row--mark), a na telefonie krótki wiersz trzyma nazwę i wartość w jednej linii; przy więcej niż ośmiu wierszach krok wejścia skraca się, żeby ostatni wiersz zdążył przed końcem fazy. Krój P22 Mackinac i kicker-plakietka zostają wyłącznie na CARBOMAT ECO (reguły strony); na pozostałych stronach nagłówek stoi krojem kitu"
+        "z-tabami": "tabela z liniami między wierszami zamiast kafelków, mniejszy nagłówek i dwa zestawy parametrów przełączane tabami nad tabelą (klasa c5-params--tabs na korzeniu)",
+        "kafelki-z-wejsciem": "układ i wejście wg ramek Figma „Frame 140-8364” (kicker) i „Frame 140-8369” (tabela), uwagi Mateusza z 20.09.2026 (CARBOMAT ECO „Parametry”): kicker to pigułka bez tła z obrysem 1 px w bieli, promień 10 px, wersaliki 13/14 px, 24 px nad nagłówkiem; nagłówek wyśrodkowany na P22 Mackinac Pro Book 46/54 px; tabela to nie wiersze z liniami, tylko osiem osobnych kafelków – tło rgb(255 255 255 / .07) z rozmyciem 6,7 px, promień 15 px na czterech rogach każdego, wysokość 68 px, odstęp 7 px, bez obramowań i bez naprzemiennych teł; link do analizy pod tabelą bez podkreślenia i bez ikony; wejście sterowane przewijaniem w czterech krokach – kadr wjeżdża od dołu i rozszerza się na pełną szerokość, potem narasta ciemna nakładka, potem kicker z nagłówkiem, na końcu wiersze jeden po drugim, żeby przez chwilę było widać samą warstwę mediów; animacja wisi na .c5-params__media, więc powrót ze zdjęcia na wideo to podmiana jednego znacznika; przy reduced-motion, bez JS i poniżej 900 px wszystko stoi w stanie końcowym od pierwszej klatki. Od 02.10.2026 moduł wspólny dla trzech stron (content-elementy-spec §12). Klasa c5-params--col trzyma treść w wyśrodkowanej kolumnie 732 px (CARBOMAT HUMIC: dziewięć wierszy, w warstwie mediów placeholder strony zamiast filmu). Klasa c5-params--long niesie długą tabelę (CARBOHUMIC: 18 wierszy): wartości zawijają się od jednej krawędzi, od 1240 px kafelki stoją w dwóch kolumnach, wiersze-zdania (c5-params__row--wide) biorą całą szerokość, wiersz-kontrapunkt ma cienką ramkę (c5-params__row--mark), a na telefonie krótki wiersz trzyma nazwę i wartość w jednej linii; przy więcej niż ośmiu wierszach krok wejścia skraca się, żeby ostatni wiersz zdążył przed końcem fazy. Krój P22 Mackinac i kicker-plakietka zostają wyłącznie na CARBOMAT ECO (krój przez --c5-params-title-font na korzeniu); na pozostałych stronach nagłówek stoi krojem kitu"
       },
-      "uwagi": "Uwaga o kontraście linii źródła .c5-params__src jest nieaktualna od fali 2a: wszystkie cztery wystąpienia klocka (CARBOMAT ECO, CARBOMAT MATA, CARBOHUMIC, CARBOMAT HUMIC) stoją na c5-src c5-src--ondark (biel .8 z ce/00-base.css). Klasa .c5-params__src została już tylko w kicie c5.css i na pdp.html, czyli stronie bez znaczników data-ce. Wariant kafelki-z-wejsciem linkują od 02.10.2026 trzy strony: CARBOMAT ECO (spec carbomat-eco-spec §16.4), CARBOHUMIC (układ długi, carbohumic-spec §13.3) i CARBOMAT HUMIC (carbomat-humic-spec §18.2); bazowe ce/CE-10-parametry.* zostają dla CARBOMAT MATA. Na CARBOMAT ECO sekcja nie ma znacznika data-ce-wariant (stan zastany – indeks pokaże tam wariant tylko z rejestru), na dwóch pozostałych ma. Na CARBOHUMIC sekcja pozostaje dłuższa niż ekran (na stronie testowej 1466 px przy 1440 × 900 wobec 1873 px tabeli z liniami; na telefonie 2709 px wobec 2487 px) – jeśli to za dużo, pięć wierszy opisowych może wyjść z tabeli. Do decyzji Mateusza: treść nagłówka wzięta z ramki („Parametry produktu w suchej masie”, bez kropki środkowej dzisiejszej strony) to zmiana treści, nie tylko formy, a w warstwie mediów stoi tymczasowo zdjęcie parametry-tlo.jpg do czasu dostarczenia nowego filmu (§16.8).",
       "zrzut": {
         "maxh": 900
       }
@@ -341,8 +329,8 @@ window.CW_CE = {
         "kotwica": "ktory-dla-mnie"
       },
       "kod": {
-        "css": "ce/CE-11-warianty-taby.css (od 02.10.2026 bez wystąpień – CARBOHUMIC przeszedł na pasma; Próchnica+: kit c5.css); wariant pasma-z-przelacznikiem: ce/CE-11-warianty-pasma.css (od 02.10.2026 moduł wspólny: CARBOMAT ECO, CARBOHUMIC); wariant historyczny karty-w-taby: ce/CE-11-warianty-taby-proba.css (od 02.10.2026 bez wystąpień)",
-        "js": "ce/CE-11-warianty-taby.js (od 02.10.2026 bez wystąpień; Próchnica+: c5.js); wariant pasma-z-przelacznikiem: ce/CE-11-warianty-pasma.js (od 02.10.2026 moduł wspólny: CARBOMAT ECO, CARBOHUMIC); wariant historyczny karty-w-taby: ce/CE-11-warianty-taby-proba.js (od 02.10.2026 bez wystąpień)"
+        "css": "wariant pasma-z-przelacznikiem: ce/CE-11-warianty-pasma.css (od 02.10.2026 moduł wspólny: CARBOMAT ECO, CARBOHUMIC); taby-lat (Próchnica+): kit c5.css",
+        "js": "wariant pasma-z-przelacznikiem: ce/CE-11-warianty-pasma.js (od 02.10.2026 moduł wspólny: CARBOMAT ECO, CARBOHUMIC); taby-lat (Próchnica+): kit c5.js"
       },
       "czesci": [
         "pasmo produktu: packshot albo kadr zdjęcia (placeholder), przełącznik produktów",
@@ -354,7 +342,8 @@ window.CW_CE = {
         "trzy-warianty": "HISTORYCZNY – bez wystąpień od 02.10.2026 (CARBOHUMIC przeszedł na pasma-z-przelacznikiem; wersja do powrotu: archiwum-wersji/carbohumic-v7-przed-poprawkami-2026-10-02.html). Trzy taby i trzy bloki wariantów (CARBOHUMIC)",
         "taby-lat": "kompaktowe taby lat (ikona kalendarza w kółku + rok); od 02.10.2026 na Próchnicy+ przełączają panele – naraz widać jeden (tabele wyników 2025 / 2026 oraz lista raportów pod jednym tabem 2026), własny moduł strony z hakiem data-pp-tabs (prochnica-plus.js ===== 90), pasek nie przykleja się; bez JS panele stoją jeden pod drugim",
         "karty-w-taby": "HISTORYCZNY – bez wystąpień od 02.10.2026 (zastąpiony na CARBOMAT ECO wariantem pasma-z-przelacznikiem; wersja do powrotu: archiwum-wersji/carbomat-v7-przed-ce11-pasma-2026-10-02.html). karta i tab to jeden element w ruchu (button.c5-way), wg ramek Figma „Frame 310-461” (stan kart) i „Frame 310-418” (stan tabów) oraz trzech adnotacji projektanta (20.09.2026, CARBOMAT ECO „Który dla mnie”): pudełka wjeżdżają wyrównane do dolnej krawędzi okna (20 px nad nią), najpierw rysuje się sam obrys rosnący dwoma końcami ze środka dolnej krawędzi, potem wchodzą etykieta sposobu aplikacji, packshot i nazwa produktu, na końcu karta traci zdjęcie i nazwę, kurczy się 426 → 70 px i przykleja u góry jako tab. Szerokość, pozycje w poziomie i promień 10 px nie są animowane w ogóle – pasek to flex o równych kolumnach, więc oba stany są identyczne z definicji. Napęd to jedna wielkość p liczona z pustego pasa rozbiegu [data-ways-rail] stojącego przed paskiem; cała oś czasu jest odwracalna przy przewijaniu w górę, a przejście w zwykły sticky top:0 następuje dokładnie przy p = 1, bez skoku. Aktywny tab niesie zielony obrys #71C35F pokazujący postęp przewinięcia bloku wariantu pod linią przyklejonego paska – rośnie dwoma końcami ze środka lewej krawędzi i zapala się dopiero od p = 0,62 (przełącznik data-progress=„sekcja” na [data-variants] przestawia licznik na cały pojemnik sekcji); nieaktywne taby noszą tylko szary obrys, ciemne wypełnienie aktywnego tabu znika. Oba obrysy to ścieżki SVG z pathLength=„1”, więc dasharray operuje udziałem, nie pikselami, i jest poprawny przy każdej wysokości pudełka. Kicker to pigułka c5-kicker--outline (EL-06), H2 na P22 Mackinac Pro Book wagi 400 w 54/63 px, a panel wariantu stoi w dwóch kolumnach: kafel #F9F7F5 o proporcji 700/690 z packshotem i przyciskami wielkości opakowania nałożonymi na dole, obok kolumna z nazwą 40 px, siatką korzyści i parametrami (Aplikacja, Gdzie najlepiej, pH z chipami, Frakcja). Ceny przeniosły się z tabelki cennika na te przyciski (decyzja Mateusza z 20.09.2026, liczby co do znaku z AC #30867) – szkło rgb(0 0 0 / --c5-pkg-veil) z backdrop-filter: blur(10px), ikona koszyka i ukryty dopisek „– dodaj do koszyka”. Taby nawigują (przewijają do bloku), nie przełączają paneli, a roving tabindex jest zsynchronizowany ze scrollspy; strzałki, Home i End przenoszą fokus. Poniżej 900 px, przy reduced-motion i bez JS układ statyczny: pasek nieprzyklejony, taby jeden pod drugim, oba panele rozwinięte, przyciski opakowań pod packshotem",
-        "pasma-z-przelacznikiem": "pasmo na produkt na całą szerokość okna, wg ramki Figma „382:1189” (02.10.2026, CARBOMAT ECO „Który dla mnie”): po lewej packshot produktu, pod nim przełącznik produktów (biała pigułka z odnośnikami do pasm, bieżący z aria-current), po prawej biała karta 609 px z nazwą produktu i grupami „Najważniejsze funkcje” (pigułki z ikoną), Aplikacja, Gdzie najlepiej, pH i Frakcja. Wjazd pudełek od dołu i przyklejane taby wariantu karty-w-taby zniknęły. Zakup stoi przy wierszach pH – każde pH to osobny produkt w sklepie: wiersz jest hostem konfiguracji data-cw-product (1:1 jak na kartach sklepu), a przycisk „Dodaj do koszyka” otwiera szybki podgląd CE-76 z sklep-wspolne.js, czyli dodanie do koszyka bez wychodzenia z podstrony; pojemności i cen w sekcji nie ma – wybiera się je w oknie koszyka (decyzja Mateusza z 02.10.2026: lista „Opakowania” zdjęta z kart). Mechanika od 900 px bez reduced-motion ([data-kdm=„ruch”]): pasmo przypięte na wysokość okna, karta jest oknem z wygaszeniem u dołu, a jej treść jedzie 1 px na 1 px przewinięcia strony aż do końca, potem pasmo puszcza i wchodzi następny produkt; budżet przewijania pasma (--kdm-extra) to nadmiar treści karty plus krótki postój, liczony przy każdej zmianie rozmiaru; fokus na kontrolce spod okna wciąga ją w kadr; na czas otwartego okna koszyka warstwa inercji stoi. Przełącznik to zwykłe odnośniki do kotwic pasm – działa bez skryptu przez szynę kotwic z ce/00-base.js. Bez JS i przy reduced-motion: dwie kolumny, lewa przyklejona, karta w pełnej wysokości; poniżej 900 px jedna kolumna. Kolorystyka ramki nie jest przeniesiona – pasma, pigułki i karta stoją w szarościach kitu za zmiennymi --c5-kdm-*; dolny odstęp przypiętego pasma to 104 px zamiast 40 px z ramki, żeby przełącznik i karta nie wchodziły pod dok doradcy (pokrętło --c5-kdm-pad-b). Liczba produktów dowolna: pasma to elementy [data-kdm-track], na CARBOHUMIC wejdą trzy. Od 02.10.2026 moduł wspólny (content-elementy-spec §12). CARBOHUMIC: trzy pasma z packshotami (niefiltrowany, filtrowany, OGRÓD), zakup jako samodzielny, ostatni wiersz karty (c5-kdm__buyrow – host konfiguracji sklepu), pod pasmami zostaje ostrzeżenie CE-31 (blok opakowań CE-28 zdjęty 02.10 na polecenie Mateusza). Moduł umie też kadr zdjęcia albo placeholder 4 : 5 w lewej kolumnie (c5-kdm__photo--frame + c5-kdm__fill), listy (c5-kdm__list), notę (c5-kdm__note) i zwykłe przyciski c5-btn w karcie – dziś bez wystąpień: próba na CARBOMAT HUMIC (pasma „Profesjonalista” i „Hobbysta”) została wycofana 02.10.2026. Przełącznik od trzech pozycji bierze mniejszy stopień pisma i przy wąskiej lewej kolumnie staje w pionie; to samo dla dwóch pozycji daje klasa c5-kdm__switch--auto (od 900 px; CARBOMAT ECO). Klasa c5-kdm--dock na korzeniu kończy przyklejoną lewą kolumnę nad dokiem doradcy w układzie bez ruchu"
+        "pasma-z-przelacznikiem": "pasmo na produkt na całą szerokość okna, wg ramki Figma „382:1189” (02.10.2026, CARBOMAT ECO „Który dla mnie”): po lewej packshot produktu, pod nim przełącznik produktów (biała pigułka z odnośnikami do pasm, bieżący z aria-current), po prawej biała karta 609 px z nazwą produktu i grupami „Najważniejsze funkcje” (pigułki z ikoną), Aplikacja, Gdzie najlepiej, pH i Frakcja. Wjazd pudełek od dołu i przyklejane taby wariantu karty-w-taby zniknęły. Zakup stoi przy wierszach pH – każde pH to osobny produkt w sklepie: wiersz jest hostem konfiguracji data-cw-product (1:1 jak na kartach sklepu), a przycisk „Dodaj do koszyka” otwiera szybki podgląd CE-76 z sklep-wspolne.js, czyli dodanie do koszyka bez wychodzenia z podstrony; pojemności i cen w sekcji nie ma – wybiera się je w oknie koszyka (decyzja Mateusza z 02.10.2026: lista „Opakowania” zdjęta z kart). Mechanika od 900 px bez reduced-motion ([data-kdm=„ruch”]): pasmo przypięte na wysokość okna, karta jest oknem z wygaszeniem u dołu, a jej treść jedzie 1 px na 1 px przewinięcia strony aż do końca, potem pasmo puszcza i wchodzi następny produkt; budżet przewijania pasma (--kdm-extra) to nadmiar treści karty plus krótki postój, liczony przy każdej zmianie rozmiaru; fokus na kontrolce spod okna wciąga ją w kadr; na czas otwartego okna koszyka warstwa inercji stoi. Przełącznik to zwykłe odnośniki do kotwic pasm – działa bez skryptu przez szynę kotwic z ce/00-base.js. Bez JS i przy reduced-motion: dwie kolumny, lewa przyklejona, karta w pełnej wysokości; poniżej 900 px jedna kolumna. Kolorystyka ramki nie jest przeniesiona – pasma, pigułki i karta stoją w szarościach kitu za zmiennymi --c5-kdm-*; dolny odstęp przypiętego pasma to 104 px zamiast 40 px z ramki, żeby przełącznik i karta nie wchodziły pod dok doradcy (pokrętło --c5-kdm-pad-b). Liczba produktów dowolna: pasma to elementy [data-kdm-track], na CARBOHUMIC wejdą trzy. Od 02.10.2026 moduł wspólny (content-elementy-spec §12). CARBOHUMIC: trzy pasma z packshotami (niefiltrowany, filtrowany, OGRÓD), zakup jako samodzielny, ostatni wiersz karty (c5-kdm__buyrow – host konfiguracji sklepu), pod pasmami zostaje ostrzeżenie CE-31 (blok opakowań CE-28 zdjęty 02.10 na polecenie Mateusza). Moduł umie też kadr zdjęcia albo placeholder 4 : 5 w lewej kolumnie (c5-kdm__photo--frame + c5-kdm__fill), listy (c5-kdm__list), notę (c5-kdm__note) i zwykłe przyciski c5-btn w karcie – dziś bez wystąpień: próba na CARBOMAT HUMIC (pasma „Profesjonalista” i „Hobbysta”) została wycofana 02.10.2026. Przełącznik od trzech pozycji bierze mniejszy stopień pisma i przy wąskiej lewej kolumnie staje w pionie; to samo dla dwóch pozycji daje klasa c5-kdm__switch--auto (od 900 px; CARBOMAT ECO). Klasa c5-kdm--dock na korzeniu kończy przyklejoną lewą kolumnę nad dokiem doradcy w układzie bez ruchu",
+        "glowa-frame": "głowa sekcji nad pasmami wg ramki Figma „382:1189”: kicker jako pigułka z ciemnozielonym obrysem, nagłówek w kroju P22 Mackinac Pro w ciemnej zieleni, lead w szarości tekstu karty i mniejszy dolny odstęp sekcji; baza zostawia głowę w stylu wspólnym (klasa c5-sec--kdm-frame na korzeniu)"
       },
       "zrzuty_wariantow": {
         "pasma-z-przelacznikiem": {
@@ -365,7 +354,6 @@ window.CW_CE = {
           "czekaj": 900
         }
       },
-      "uwagi": "⚠️ Zasada Mateusza z 02.10.2026: pasma kojarzymy z prezentacją rodzajów (wersji) produktu – nie używać ich do innej treści, np. do podziału na odbiorców; próba na CARBOMAT HUMIC („Profesjonalista” / „Hobbysta”) została tego samego dnia cofnięta do wierszy CE-36 z pop-upem CE-37 (carbomat-humic-spec §18.5). Od 02.10.2026 wariant pasma-z-przelacznikiem stoi na CARBOMAT ECO (spec carbomat-eco-spec §18) i CARBOHUMIC (carbohumic-spec §13.3); znacznik data-ce-wariant na korzeniu sekcji, moduły ce/CE-11-warianty-pasma.css i .js, strony ładują też sklep-wspolne.css i .js dla okna koszyka. Moduły ce/CE-11-warianty-taby.* (układ z tabami) i próbne ce/CE-11-warianty-taby-proba.* zostają w katalogu bez wystąpień – decyzja Mateusza, czy dostają stronę demonstracyjną w v7/lab/, czy znikają z indeksu. Ikony pigułek i przełącznika to zastępniki ze sprite'u (ikon z ramki w nim nie ma). Do decyzji Mateusza na CARBOMAT ECO: treść nagłówka (ramka: „Wymieszaj z glebą lub rozsyp na powierzchni.”, na stronie zostało dotychczasowe H2 i lead) i dolny odstęp pasma wobec doka doradcy. Na CARBOMAT ECO od 02.10.2026 doszły klasy c5-kdm--dock i c5-kdm__switch--auto (przełącznik przy oknie 1024 px wystawał z kolumny, a przy ograniczonym ruchu wchodził pod dok). Cennik opakowań w układzie z tabami to element interfejsu wspólny z CE-28 (lista opakowań).",
       "zrzut": {
         "maxh": 1400
       }
@@ -380,8 +368,8 @@ window.CW_CE = {
         "kotwica": "czym-jest"
       },
       "kod": {
-        "css": "ce/CE-12-scena-faktow-proba.css – układ wg ramki Figma „Frame 206”, od 19.09.2026 na sześciu stronach. Stary układ ce/CE-12-scena-faktow.css (klasy c5-facts-*) nie ma od 19.09.2026 żadnego wystąpienia; plik zostaje nietknięty do czasu przemianowania prób. Warstwa wyglądu glass-i-zielen jako arkusz wspólny: ce/CE-12-scena-faktow-glass.css (od 02.10.2026: CARBOHUMIC, CARBOMAT HUMIC; włączana atrybutem data-fx-look=„glass” na korzeniu sceny).",
-        "js": "ce/CE-12-scena-faktow-proba.js – układ wg ramki Figma „Frame 206”, od 19.09.2026 na sześciu stronach. Stary moduł ce/CE-12-scena-faktow.js bez wystąpień od 19.09.2026; przemianowanie plików -proba wymaga edycji prochnica-plus.html, więc czeka na skoordynowanie z sesją Próchnicy+."
+        "css": "ce/CE-12-scena-faktow.css – układ wg ramki Figma „Frame 206” i wszystkie warianty (sekcje „wariant: …” na końcu pliku); niesie też boks ilustracji c5-viz i wykres c5-bar. Arkusze stron nie zawierają żadnej reguły sceny: wariant wybiera klasa c5-fx--… na korzeniu, dopasowania pod treść idą przez style=„--nazwa: wartość” na korzeniu.",
+        "js": "ce/CE-12-scena-faktow.js – jeden moduł dla wszystkich wystąpień; przy dwóch blokach nagłówka stan trzyma atrybut data-fx-state na korzeniu (brak = z-naglowkiem). Atrybutu data-ce-wariant moduł nie czyta i nie zmienia."
       },
       "czesci": [
         "kicker + h2 (+ lead)",
@@ -396,7 +384,15 @@ window.CW_CE = {
         "z-leadem": "dwa akapity leadu przyklejone razem z nagłówkiem (Próchnica+ Metodologia) – bez wystąpień od 19.09.2026, Metodologia przeszła na wariant bez-naglowka",
         "z-naglowkiem": "układ wg ramki Figma „Frame 206” z kickerem i H2 w scenie, bez leadu: jeden blok nagłówka przyklejony u góry lewej kolumny, przy dole jeden fakt naraz – tytuł, cienka linia z postępem bieżącego slajdu, opis i licznik „02/05” (Mateusz, 18.09.2026; od 19.09.2026 Produkty #jak-dzialaja, CARBOMAT ECO #czym-jest jako baza klocka i CARBOMAT HUMIC #czym-jest – osiem kroków, --fx-step-min 420, --fx-step-vh 0,7)",
         "bez-naglowka": "ten sam układ bez kickera i H2 w scenie – kicker, H2 i lead stoją nad torem jako zwykły nagłówek sekcji (reguła Mateusza: lead nigdy w scenie); od 19.09.2026 Próchnica+ #metodologia, CARBOMAT MATA #czym-jest-scena (korzeń klocka to wewnętrzny kontener w sekcji #czym-jest) i CARBOHUMIC #czym-jest, a na Produktach do obejrzenia przełącznikiem podglądu",
-        "glass-i-zielen": "sama warstwa wyglądu nałożona na układ z-naglowkiem, wg ramek Figma „Frame 140-8475” (kicker i nagłówek), „Frame 256-1419” (karta faktu) i „Frame 140-8542”/„Frame 140-8543” (karty wizualizacji), bez własnego modułu – nadpisania zamknięte w #czym-jest w carbomat.css (20.09.2026, CARBOMAT ECO): kicker to plakietka c5-kicker--outline (EL-06) z obrysem #0c2b1c, promieniem 8 px i paddingiem 9 px, 24 px nad nagłówkiem; nagłówek 46/51 px w kolorze #0c2b1c na kolumnie 661 px, na P22 Mackinac Pro Book wagi 400 (decyzja Mateusza z 20.09.2026); karta faktu: tytuł 24 px wagi 400 bez trackingu, opis 14 px w #777771, licznik 11 px, tor paska czerń przy kryciu .1, a pasek postępu w zieleni #71C35F; karty wizualizacji: tło rgb(53 46 40 / .43) na pokrętle --c5-fx-viz-bg, promień 24 px i efekt Glass z ramki – Frost 60 jako backdrop-filter: blur(18px), Refraction 47 z Depth 80 jako krawędź inset, Light 0 % czyli bez poświaty (Dispersion 25 i Splay 34 nie mają odpowiednika w CSS); słupki tylko w zakresie .c5-viz, bo .c5-bar żyje też poza kartami. Mechanika, ikony i layout części informacyjnej bez zmian – obie adnotacje projektanta opisują dzisiejsze zachowanie. Od 20.09.2026 także na Produktach (#jak-dzialaja, produkty.css ===== 60b): karta faktu, zielony pasek postępu, plakietka numeru i szkło boksu 1:1, ale BEZ metryk nagłówka sceny (46/51 px, miara 661 px, dwa kroki okna) – są dopasowane do copy CARBOMAT ECO, a nagłówek Produktów jest dłuższy; krój nagłówków i kicker-plakietka wchodzą tam regułą strony na wszystkie sekcje, nie tylko na scenę. Od 02.10.2026 warstwa ma arkusz wspólny ce/CE-12-scena-faktow-glass.css, włączany atrybutem data-fx-look=„glass” na korzeniu sceny (CARBOHUMIC na układzie bez-naglowka, CARBOMAT HUMIC na z-naglowkiem); arkusz niesie kartę faktu, zieloną kreskę postępu, plakietkę numeru i szkło boksu – bez kroju Mackinac, bez metryk nagłówka CARBOMAT ECO i bez kicker-plakietki. CARBOMAT ECO i Produkty zostają na nadpisaniach we własnych arkuszach i atrybutu nie dostają"
+        "glass-i-zielen": "warstwa wyglądu nałożona na dowolny układ sceny, klasa c5-fx--glass na korzeniu: tytuł faktu wagi 400, opis 14 px w #777771, licznik 11 px, kreska postępu czerń .1 z wypełnieniem w zieleni #71C35F (--c5-fx-green), boks ilustracji z promieniem i paddingiem 24 px, tłem rgb(53 46 40 / .43) i szkłem (blur 18 px, krawędź inset), plakietka numeru 16 px, słupki 6 px z etykietami 13–16 px, odstępy przy kresce 11/13 px (CARBOMAT ECO, CARBOHUMIC, CARBOMAT HUMIC).",
+        "glass-v1": "pierwsza wersja warstwy glass, klasa c5-fx--glass-v1: wszystko jak w glass-i-zielen poza typografią słupków w boksie (zostaje 13 px) i odstępami przy kresce (zostają 14/16 px) (Produkty).",
+        "naglowek-ramka": "nagłówek sceny wg ramki Figma „Frame 140-8475”, klasa c5-fx--naglowek-ramka: kicker jako plakietka z obrysem #0c2b1c, 24 px pod nią H2 w P22 Mackinac Pro Book 46/51 px na mierze 661 px, ze stopniami dla wąskiego i niskiego okna (CARBOMAT ECO).",
+        "szeroki": "klasa c5-fx--szeroki: w układzie statycznym od 900 px kolumna sceny stoi w szerokim kontenerze 1800 px z marginesem 40 px zamiast 1180 px (Próchnica+).",
+        "viz-auto": "klasa c5-fx--viz-auto: boks ilustracji bierze wysokość treści zamiast kafla 4:5 z limitem 520 px (Próchnica+).",
+        "viz-min-kafel": "klasa c5-fx--viz-min-kafel: poniżej 900 px kafel 4:5 jest minimum boksu, a boks rośnie z treścią zamiast ją przycinać (CARBOHUMIC).",
+        "skala-opis-dlugi": "klasa c5-fx--skala-opis-dlugi: opis w scenie z interlinią 1,5 schodzi o stopień w oknie do 1000 px wysokości, na szerokości 900–1279 px i ponownie do 780 px wysokości (Próchnica+).",
+        "skala-osiem-krokow": "klasa c5-fx--skala-osiem-krokow: boks ilustracji 68 svh zamiast 62, opis w scenie 14 px, a w oknie do 780 px wysokości opis 13 px i boks 74 svh (CARBOMAT HUMIC).",
+        "skala-waskie-okno": "klasa c5-fx--skala-waskie-okno: boks ilustracji 68 svh, poniżej 1440 px szerokości do krawędzi doku doradcy; na szerokości 900–1199 px tytuł, opis i lista o stopień mniejsze, a przy wysokości do 740 px także tabela w boksie (CARBOHUMIC)."
       },
       "zrzuty_wariantow": {
         "z-naglowkiem": {
@@ -414,7 +410,6 @@ window.CW_CE = {
           "czekaj": 900
         }
       },
-      "uwagi": "Liczba kroków (4–8) jest treścią; jeden moduł czyta ją z DOM. Dobór wariantu: sekcja z leadem → bez-naglowka, sekcja bez leadu → z-naglowkiem z jednym blokiem nagłówka. Zmienne do nadpisywania na korzeniu sekcji: --c5-fx-viz-h, --c5-fx-viz-w, --c5-fx-viz-bg, --c5-fx-static-max, --c5-fx-static-pad (domyślne = wartości sprzed 19.09.2026), obok --fx-step-min i --fx-step-vh; --c5-fx-viz-bg (tło boksu ilustracji w scenie, dopisane 19.09.2026 po niezależnym QA) jako jedyne nie ma deklaracji domyślnej, bo scena maluje boks w dwóch gałęziach – rgb(20 20 20 / .55) z rozmyciem przy backdrop-filter i rgb(20 20 20 / .78) bez niego – i każda trzyma swoją wartość jako fallback; na jasnych zdjęciach treść boksu schodziła poniżej AA, więc CARBOMAT ECO i CARBOHUMIC ustawiają rgb(20 20 20 / .78); warstwa wspólna niesie też regułę .c5-fx__body .wf-list{padding-left:0} i etykietę placeholdera .c5-ph__label. 19.09.2026 układ przeszedł z próby na sześć stron (spece: produkty-wzorzec-eco §23, carbomat-eco §15, carbomat-mata §22, carbohumic §12, carbomat-humic §17). Do decyzji Mateusza: wybór A/B i zdjęcie przełącznika podglądu na Produktach, przemianowanie plików -proba, przyjęcie kosztów układu (licznik 0N/0M, zniknięcie paska progresu z role=progressbar, panel zdjęcia bez przyciemnienia). Wariant glass-i-zielen (20.09.2026) linkuje wyłącznie carbomat.html: to nadpisania w carbomat.css zamknięte w #czym-jest, bez nowego modułu i bez znacznika data-ce-wariant – sekcja nadal niesie data-ce-wariant=„z-naglowkiem”, a ce/CE-12-scena-faktow-proba.* i pozostałe pięć stron zostają nietknięte; spec carbomat-eco-spec §16.5. Kontrast przyjęty świadomie: Mateusz 20.09.2026 wybrał wartość tła prosto z Figmy, więc przypisy w kartach wizualizacji schodzą do 2,09–4,95 : 1 (krok 04 najgorszy: etykieta 4,64, przypis 2,09, treść boksu 3,49) i defekt D-01 wraca – wycofanie to jedna linia --c5-fx-viz-bg. Od 02.10.2026 warstwa glass-i-zielen ma arkusz wspólny (content-elementy-spec §12) i stoi także na CARBOHUMIC i CARBOMAT HUMIC; znacznik data-ce-wariant tych sekcji się nie zmienia (bez-naglowka, z-naglowkiem), o warstwie mówi atrybut data-fx-look. CARBOHUMIC zostawia w arkuszu strony ciemniejsze tło boksu (--c5-fx-viz-bg rgb(20 20 20 / .78)), bo na jasnym kadrze kroku 03 podpis w boksie miałby przy tle warstwy kontrast 2,16 : 1. 02.10.2026: przełącznik podglądu wariantów na Produktach zdjęty – strona zostaje na wariancie z-naglowkiem (jak CARBOMAT ECO), blok nad torem z leadem służy układowi statycznemu; zrzut wariantu bez-naglowka w indeksie pochodzi odtąd z CARBOHUMIC.",
       "zrzut": {
         "maxh": 900,
         "ruch": true,
@@ -432,7 +427,7 @@ window.CW_CE = {
         "kotwica": "jak-stosowac-eco"
       },
       "kod": {
-        "css": "ce/CE-13-scena-produktu.css (stałe toru per strona: --use-*)",
+        "css": "ce/CE-13-scena-produktu.css (warianty w tym samym pliku; kadrowanie zdjęcia drugiej warstwy: --use-pos-b na korzeniu)",
         "js": "ce/CE-13-scena-produktu.js"
       },
       "czesci": [
@@ -443,9 +438,9 @@ window.CW_CE = {
         "taby kadrów"
       ],
       "warianty": {
-        "n-kadrow": "N kadrów = N terminów, tor liczony z liczby kadrów (CARBOHUMIC)"
+        "n-kadrow": "N kadrów = N terminów, tor liczony z liczby kadrów; kartka z nagłówkiem terminu i rozpiską dawek, nazwy terminów w tabach w jednej linii mniejszym stopniem pisma (klasa c5-use--n-kadrow na korzeniu)",
+        "dwa-kadry": "dwa długie kadry na produkt i dłuższy tor niż w bazie – 5,5 ekranu na produkt, więcej czasu na każdą kartkę (klasa c5-use--dwa-kadry na korzeniu)"
       },
-      "uwagi": "Nagłówek sekcji „Jak stosować” stoi nad pierwszym article (data-ce-od).",
       "zrzut": {
         "maxh": 900
       }
@@ -469,8 +464,9 @@ window.CW_CE = {
         "przycisk",
         "zdjęcie"
       ],
-      "warianty": {},
-      "uwagi": "",
+      "warianty": {
+        "rozpiska": "w dolnej części lewej kolumny rozpiska dawek zamiast listy numerowanej i dwa przyciski obok siebie; lewa kolumna szersza niż w bazie, pod przyciskami prześwit na dok doradcy (klasa c5-dose-sec--rozpiska na korzeniu)"
+      },
       "zrzut": {
         "maxh": 900
       }
@@ -485,8 +481,8 @@ window.CW_CE = {
         "kotwica": "sezon-wiersze"
       },
       "kod": {
-        "css": "ce/CE-15-wiersze-packshot.css; wariant kaskada-z-odliczaniem: ce/CE-15-wiersze-packshot-proba.css (bez wystąpień od 02.10.2026 – Produkty przeszły na pin; plik zostaje); wariant kaskada-z-pinem: ce/CE-15-wiersze-packshot-pin.css (od 02.10.2026 moduł wspólny: CARBOMAT ECO, CARBOHUMIC, CARBOMAT Mata, Produkty)",
-        "js": "ce/CE-15-wiersze-packshot.js; wariant kaskada-z-odliczaniem: ce/CE-15-wiersze-packshot-proba.js (bez wystąpień od 02.10.2026 – Produkty przeszły na pin; plik zostaje); wariant kaskada-z-pinem: ce/CE-15-wiersze-packshot-pin.js (od 02.10.2026 moduł wspólny: CARBOMAT ECO, CARBOHUMIC, CARBOMAT Mata, Produkty)"
+        "css": "ce/CE-15-wiersze-packshot.css – wariant kaskada-z-pinem (od 02.10.2026 moduł wspólny: CARBOMAT ECO, CARBOHUMIC, CARBOMAT Mata, Produkty)",
+        "js": "ce/CE-15-wiersze-packshot.js – wariant kaskada-z-pinem (od 02.10.2026 moduł wspólny: CARBOMAT ECO, CARBOHUMIC, CARBOMAT Mata, Produkty)"
       },
       "czesci": [
         "nagłówek przyklejony",
@@ -505,7 +501,6 @@ window.CW_CE = {
           "czekaj": 900
         }
       },
-      "uwagi": "Do 19.09.2026 na Produktach ten sam pin niósł „efekty w czasie”; od iteracji 4 stoi tam wariant kaskada-z-odliczaniem (spec produkty-wzorzec-eco-spec §22). Ramka Mateusza używa treści „Kiedy stosować” z CARBOMAT ECO – do jego decyzji, czy kaskada zastąpi układ bazowy na stronach produktowych. Wariant kaskada-z-pinem ma własne moduły ce/CE-15-wiersze-packshot-pin.css/.js, osobne od ce/CE-15-wiersze-packshot-proba.* Produktów (te zostają nietknięte; spec carbomat-eco-spec §16.6); od 02.10.2026 linkują je trzy strony: CARBOMAT ECO, CARBOHUMIC (carbohumic-spec §13.1) i CARBOMAT Mata (carbomat-mata-spec §23). Na CARBOMAT ECO doszedł 02.10.2026 atrybut data-casc-fit=„frame”: w oknach niższych niż ok. 870 px (np. 1366 × 768) pudełko kaskady wchodziło pod dok doradcy; przy 1440 × 900 i 1920 × 1080 układ jest bez zmian. Bazowy układ ce/CE-15-wiersze-packshot.* nie ma dziś wystąpień. Do decyzji Mateusza: zaokrąglenia 7/12/20 px łamią ostre narożniki linii V5, tytuł karty po otwarciu ustępuje miejsca etykiecie czasu, a zieleń #71C35F wchodzi jako kolor marki do kitu w skali szarości. 02.10.2026 wieczorem Produkty („Co dają – i kiedy to zobaczysz”) przeszły z kaskady z odliczaniem na kaskada-z-pinem: trzy przystanki z wierszem produktu, etykieta czasu na osi i jako c5-casc__when w nagłówku karty, data-casc-fit (poziom 0 przy 1440 × 900 i 1920 × 1080, poziom 2 przy 1366 × 768, 1280 × 720 i 1024 × 768). Pytanie z 19.09, czy kaskada zastępuje układ bazowy na stronach produktowych, jest tym samym rozstrzygnięte: wariant z pinem stoi na czterech stronach, wariant z odliczaniem nie ma wystąpień, a pliki -proba czekają na decyzję o stronie demonstracyjnej w v7/lab/ albo usunięciu.",
       "zrzut": {
         "maxh": 1000
       }
@@ -520,8 +515,8 @@ window.CW_CE = {
         "kotwica": "uprawy-profesjonalne"
       },
       "kod": {
-        "css": "ce/CE-16-pas-pro.css (od 19.09.2026 niesie też regułę krycia nakładki .cx-js .c5-pro__media::after{opacity:var(--pro-o,1)}, przeniesioną z produkty.css); wariant kadr-z-prawej: kit c5.css (c5-pro, c5-pro__photo, c5-pro__grid) + nadpisania strony – sklep.html <style> blok „PAS PRO” (c5sk-pro) i pdp.css (c5pd-pro)",
-        "js": "ce/CE-16-pas-pro.js (Kukurydza, O nas); wariant pozny-wzrost: ce/CE-16-pas-pro-proba.js (Produkty, CARBOMAT ECO, CARBOMAT MATA, CARBOHUMIC, CARBOMAT HUMIC); wariant kadr-z-prawej: brak (statyczny)"
+        "css": "ce/CE-16-pas-pro.css – jeden moduł dla wszystkich stron poza sklepem: baza i sekcje wariantów wybieranych klasami na korzeniu (c5-pro--ramka, c5-pro--kadr-3-2, c5-pro--zielen, c5-pro--scrim-ukosny, c5-pro--h-mackinac, c5-pro--zamykajacy; na placeholderze c5-pro__ph--obrys), dopasowania pod treść przez własności --pro-mt, --pro-img-pos, --pro-scrim i --pro-side-max w atrybucie style korzenia; arkusze stron nie niosą reguł pasa, poza dodatkami strony głównej w home.css (c5h-kontakt); wariant kadr-z-prawej: kit c5.css (c5-pro, c5-pro__photo, c5-pro__grid) + nadpisania strony – sklep.html <style> blok „PAS PRO” (c5sk-pro) i pdp.css (c5pd-pro)",
+        "js": "ce/CE-16-pas-pro.js (Kukurydza, Borówka, O nas, strona główna); wariant pozny-wzrost: ce/CE-16-pas-pro-pozny-wzrost.js (Produkty, CARBOMAT ECO, CARBOMAT MATA, CARBOHUMIC, CARBOMAT HUMIC); wariant kadr-z-prawej: brak (statyczny)"
       },
       "czesci": [
         "kadr",
@@ -531,13 +526,17 @@ window.CW_CE = {
         "link „Nie masz konta? Załóż konto” (c5-pro__signup, opcjonalny)"
       ],
       "warianty": {
-        "zamykajacy": "bez akapitu: nagłówek po lewej, dwa przyciski po prawej, oba na kadrze (Kukurydza; od 18.09.2026 na bazowym kodzie klocka zamiast własnego portu u-end). Od 20.09.2026 (uwaga Mateusza: „Zdjęcie w tle zostaw na pełną szerokość ekranu, natomiast teksty po lewej i przyciski po prawej są w ramach kontenera z treścią o maksymalnej szerokości 1180 px. Typografia i przyciski odwzoruj z Frame 186-253”) kadr zostaje pełnoekranowy, a treść wraca z c5-wrap--wide na c5-wrap; typografia i przyciski jak w wariancie zielen-i-scrim – nagłówek 52/53 px na P22 Mackinac Pro, zielony przycisk podstawowy #86D574 z tuszem #0C2B1C, promienie 20 px, wysokość 56 px, odstęp 11 px, obwódka drugorzędnego rgb(255 255 255 / .5). Nadpisania zamknięte w #u-cta w kukurydza.css, bez nowego modułu; zostaje podłożenie rgb(0 0 0 / .3) pod przyciskiem drugorzędnym (poprawka czytelności na rozświetlonym pyle) i tło pasa --w-gray-600, bo kadr zakrywa je w całości",
+        "zamykajacy": "bez akapitu: nagłówek po lewej, dwa przyciski po prawej, oba na kadrze (Kukurydza; od 18.09.2026 na bazowym kodzie klocka zamiast własnego portu u-end). Od 20.09.2026 (uwaga Mateusza: „Zdjęcie w tle zostaw na pełną szerokość ekranu, natomiast teksty po lewej i przyciski po prawej są w ramach kontenera z treścią o maksymalnej szerokości 1180 px. Typografia i przyciski odwzoruj z Frame 186-253”) kadr zostaje pełnoekranowy, a treść wraca z c5-wrap--wide na c5-wrap; typografia i przyciski jak w wariancie zielen-i-scrim – nagłówek 52/53 px na P22 Mackinac Pro, zielony przycisk podstawowy #86D574 z tuszem #0C2B1C, promienie 20 px, wysokość 56 px, odstęp 11 px, obwódka drugorzędnego rgb(255 255 255 / .5). Reguły w module pod klasami c5-pro--zamykajacy, c5-pro--zielen i c5-pro--h-mackinac; zostaje podłożenie rgb(0 0 0 / .3) pod przyciskiem drugorzędnym (poprawka czytelności na rozświetlonym pyle) i tło pasa --w-gray-600, bo kadr zakrywa je w całości",
         "kontakt": "pas zamykający rozmową: nagłówek po lewej, po prawej akapit i akcje kontaktowe. Na O nas (#porozmawiajmy) dwa przyciski, Kontakt i Zostań partnerem; na stronie głównej (#kontakt, 20.09.2026) numer telefonu jako duży link tel: z cyframi tabelarycznymi, wiersz godzin drobnym drukiem, dwa przyciski i cichy link do wszystkich działów",
         "pozny-wzrost": "kadr stoi na 50 % szerokości ekranu, dopóki górna krawędź pasa jest niżej niż 35 % wysokości okna, potem rośnie i pełny rozmiar osiąga 2 % od góry okna; nakładka przyciemniająca narasta razem ze wzrostem, więc w postoju zdjęcie jest bez przyciemnienia (uwagi Mateusza z 18.09.2026; od 19.09.2026 na pięciu stronach: Produkty, CARBOMAT ECO, CARBOMAT MATA, CARBOHUMIC, CARBOMAT HUMIC)",
-        "zielen-i-scrim": "sama warstwa wyglądu nałożona na mechanikę pozny-wzrost, wg ramki Figma „Frame 186-253”, bez własnego modułu – nadpisania zamknięte w #uprawy-profesjonalne w carbomat.css (20.09.2026, CARBOMAT ECO): tło pasa #777771 zamiast --w-gray-600, nagłówek 52/53 px, akapit 21/26 px w pełnej bieli zamiast krycia .75, przycisk podstawowy w zieleni #86D574 z tekstem #0C2B1C, promieniem 20 px i paddingiem 18/24 px, przycisk drugorzędny z obwódką rgb(255 255 255 / .5), odstęp między przyciskami 11 px; kadr to zdjęcie sadu zakotwiczone dołem pod ukośnym gradientem #1A2405 o kryciu 30/10/10/30 %, rozciągniętym na cały pas z podłogą .55 + .45 × --pro-o. Copy zostaje dzisiejsze – uwaga dotyczyła typografii i przycisków, nie treści; ikony znaku marki z przycisku podstawowego nie odwzorowano, bo nie ma jej w sprite, a ikon się nie dorysowuje. Od 20.09.2026 także na Produktach (#dla-profesjonalistow, produkty.css ===== 80): typografia, przyciski, pas i nakładka 1:1 z wartościami ramki. Przez pierwsze trzy godziny stały tam podkręcone pokrętła --pro-wash-a .50 i --pro-wash-b .35, bo strona pożyczała kadr z CARBOMAT ECO z białym big bagiem w środku i wartości ramki dawały kontrast GORSZY niż zastąpiony scrim (5. percentyl: nagłówek 2,17 wobec 3,15, akapit 4,00 wobec 5,16). Wieczorem strona dostała własny kadr (paczki w prawej jednej trzeciej, po lewej ciemne pole o zmierzchu) i wartości ramki wróciły: 12,69 : 1 dla nagłówka, 11,42 : 1 dla akapitu. Wniosek do przeniesienia wariantu dalej: liczby nakładki są dopasowane do ZDJĘCIA z ramki, nie do dowolnego kadru – pokrętła są właśnie po to",
+        "zielen-i-scrim": "sama warstwa wyglądu nałożona na mechanikę pozny-wzrost, wg ramki Figma „Frame 186-253”, w module pod klasami c5-pro--zielen i c5-pro--scrim-ukosny (20.09.2026, CARBOMAT ECO): tło pasa #777771 zamiast --w-gray-600, nagłówek 52/53 px, akapit 21/26 px w pełnej bieli zamiast krycia .75, przycisk podstawowy w zieleni #86D574 z tekstem #0C2B1C, promieniem 20 px i paddingiem 18/24 px, przycisk drugorzędny z obwódką rgb(255 255 255 / .5), odstęp między przyciskami 11 px; kadr to zdjęcie sadu zakotwiczone dołem pod ukośnym gradientem #1A2405 o kryciu 30/10/10/30 %, rozciągniętym na cały pas z podłogą .55 + .45 × --pro-o. Copy zostaje dzisiejsze – uwaga dotyczyła typografii i przycisków, nie treści; ikony znaku marki z przycisku podstawowego nie odwzorowano, bo nie ma jej w sprite, a ikon się nie dorysowuje. Od 20.09.2026 także na Produktach (#dla-profesjonalistow): typografia, przyciski, pas i nakładka 1:1 z wartościami ramki. Przez pierwsze trzy godziny stały tam podkręcone pokrętła --pro-wash-a .50 i --pro-wash-b .35, bo strona pożyczała kadr z CARBOMAT ECO z białym big bagiem w środku i wartości ramki dawały kontrast GORSZY niż zastąpiony scrim (5. percentyl: nagłówek 2,17 wobec 3,15, akapit 4,00 wobec 5,16). Wieczorem strona dostała własny kadr (paczki w prawej jednej trzeciej, po lewej ciemne pole o zmierzchu) i wartości ramki wróciły: 12,69 : 1 dla nagłówka, 11,42 : 1 dla akapitu. Wniosek do przeniesienia wariantu dalej: liczby nakładki są dopasowane do ZDJĘCIA z ramki, nie do dowolnego kadru – pokrętła są właśnie po to",
+        "ramka": "klasa c5-pro--ramka: bez ruchu kadr stoi nad treścią jako ramka 3:2 odsunięta od krawędzi o margines strony, zamiast kadru 16:10 na pełną szerokość (O nas, Produkty)",
+        "kadr-3-2": "klasa c5-pro--kadr-3-2: bez ruchu jak ramka, a w ruchu kadr trzyma proporcję 3:2 na środku pasa i przy pełnej skali sięga jego górnej i dolnej krawędzi, zamiast wypełniać cały pas (CARBOHUMIC)",
+        "zielen": "klasa c5-pro--zielen: nagłówek do 52 px, zielony przycisk podstawowy #86D574 z ciemnym tekstem, promienie 20 px, wysokość 56 px i odstęp 11 px między przyciskami, zamiast białego przycisku i ostrych narożników bazy (CARBOMAT ECO, Produkty, Kukurydza, Borówka)",
+        "scrim-ukosny": "klasa c5-pro--scrim-ukosny: tło pasa #777771, akapit 21 px w pełnej bieli i ukośny gradient na całym pasie zamiast płaskiego przyciemnienia kadru (CARBOMAT ECO, Produkty)",
+        "h-mackinac": "klasa c5-pro--h-mackinac: nagłówek pasa w kroju P22 Mackinac Pro w wadze 400 zamiast Inter (Produkty, Kukurydza, Borówka)",
         "kadr-z-prawej": "wersja pasa z kitu c5.css na stronach sklepu (sklep.html, pdp.html, pdp-kwasny.html; od 28.09.2026): statyczne zdjęcie img/foto/pro.jpg na prawej połowie pasa, na całą jego wysokość (cover), po lewej kolumna tekstu – nagłówek, akapit, przycisk „Zapytaj o ofertę” (c5-btn--inv) i dwa linki: „Zaloguj się do platformy” i „Załóż konto”. Bez skalowania kadru i bez nakładki. Na liście produktów linki stoją we własnym wierszu pod przyciskiem, na karcie produktu w jednym rzędzie z nim. Poniżej 900 px zdjęcie 220 px w biegu pasa – na liście nad tekstem, na karcie produktu pod nim (kolejność w HTML)"
       },
-      "uwagi": "Na CARBOMAT ECO i CARBOMAT HUMIC stoi wewnątrz sekcji Sezon, na pozostałych jako osobna sekcja. Wariant pozny-wzrost: spec produkty-wzorzec-eco-spec §21.4, §21.8 i §23. Otwarty u Mateusza kontrast białego tekstu na nieprzyciemnionym zdjęciu w fazie postoju: na Produktach akapit min. 2,32 : 1, na CARBOMAT ECO zmierzone minimum akapitu spada z 1,78 na 1,19 (mediana z 6,40 na 5,26), stan końcowy pasa bez zmian. Kukurydza (zamykajacy) i O nas (kontakt) zostają na module bazowym – przejście na pozny-wzrost do decyzji. Wariant zielen-i-scrim (20.09.2026) linkuje wyłącznie carbomat.html: to nadpisania w carbomat.css zamknięte w #uprawy-profesjonalne, bez nowego modułu i bez znacznika data-ce-wariant – pas nadal niesie data-ce-wariant=„pozny-wzrost”, a ce/CE-16-pas-pro*.* i pozostałe strony zostają nietknięte; spec carbomat-eco-spec §16.7. Zdjęcie eco-pro-sad.jpg zastępuje img/foto/pro.jpg tylko tutaj – ten sam plik niosą jeszcze o-firmie.html i produkty.html. Nowy kadr jest jaśniejszy, więc scrim przeniesiono na cały pas z podłogą .55: kontrast akapitu w postoju rośnie z 1,19 na 5,58, czyli otwarta u Mateusza pozycja kontrastu dotyczy już tylko stron bez tego nadpisania. Wariant kadr-z-prawej (28.09.2026) to ta sama rola na starszej implementacji z kitu: strony sklepu nie ładują ce/CE-16-pas-pro.* ani ce/00-base.css; trzy akcje (oferta, logowanie do platformy, konto) wg spec sklep-v7-spec §5.5 i §6.7. Przejście na moduł klocka – przy fali 2b. 02.10.2026: trzecia akcja pasa wg ustalenia z 28.09 (zapytaj o ofertę, zaloguj się, załóż konto) – link „Nie masz konta? Załóż konto” do rejestracja.html pod rzędem przycisków na pięciu stronach działu Produkty (Produkty, CARBOMAT ECO, CARBOHUMIC, CARBOMAT HUMIC, CARBOMAT Mata); klasa c5-pro__signup w ce/CE-16-pas-pro.css (ciemne tło pod tekstem, bo link bywa nad jasnym fragmentem zdjęcia). Rząd przycisków bez zmian – trzy przyciski nie mieszczą się w kolumnie 486 px. Również 02.10.2026: Borówka – wariant „zamykajacy” z krótkim akapitem nad przyciskami (uwaga Mateusza z artefaktu: „Krótki akapit tekstu nad przyciskami?”) – zdanie klienta zapraszające do kontaktu; kolumna przycisków ograniczona do 21 rem, żeby akapit jej nie rozciągał, a nagłówek łamie się po „się”, bo temat kadru (skrzynki z owocami) stoi w środku zdjęcia. Reguły w #b-kontakt w borowka.css blok 90.",
       "zrzut": {
         "maxh": 900
       },
@@ -559,7 +558,7 @@ window.CW_CE = {
         "kotwica": "faq"
       },
       "kod": {
-        "css": "ce/CE-17-faq.css; wariant informacje: pdp.css (c5pd-info, c5pd-acc)",
+        "css": "ce/CE-17-faq.css (baza i warianty plain, z-nota, dla-dociekliwych, grupy); wariant informacje: pdp.css (c5pd-info, c5pd-acc)",
         "js": "ce/CE-17-faq.js; wariant informacje: brak (natywne details)"
       },
       "czesci": [
@@ -567,12 +566,12 @@ window.CW_CE = {
         "pozycje: pytanie + odpowiedź"
       ],
       "warianty": {
-        "z-nota": "nota o statusie odpowiedzi między nagłówkiem a akordeonem (CARBOHUMIC)",
-        "dla-dociekliwych": "wariant c5-faq--plain: pytanie nad odpowiedzią, pełna szerokość, h4 i przycisk do Centrum wiedzy (Produkty, dawny CE-42)",
+        "z-nota": "modyfikator c5-faq--z-nota: nota o statusie odpowiedzi między nagłówkiem a akordeonem, odstęp wzorca podzielony na dwie części (CARBOHUMIC)",
+        "dla-dociekliwych": "pytanie nad odpowiedzią, pełna szerokość, h4 i przycisk do Centrum wiedzy (klasa c5-faq--plain; Produkty, dawny CE-42)",
         "plain": "trzy pytania pod artykułem, odpowiedzi ze zdań tekstu (artykul.html#faq)",
+        "grupy": "kilka akordeonów w grupach, nad każdą mały nagłówek wersalikami, pod spodem opcjonalny rząd linków do filmów (korzeń b-faq; Borówka)",
         "informacje": "trzy akordeony informacji o produkcie na pełną szerokość szerokiego kontenera, pod górną częścią karty produktu sklepu (pdp.html, pdp-kwasny.html; od 28.09.2026, wzór on.com): czarna linia 1 px nad i pod każdą pozycją, tytuł wersalikami z rozstrzeleniem .08 em, plus po prawej (minus po otwarciu), bez kickera i nagłówka sekcji. Natywne details: wszystkie zwinięte na starcie, dowolna liczba otwartych naraz, wysokość otwarcia animowana przez ::details-content (bez animacji przy reduced-motion). W treści tabela parametrów z wierszem metali ciężkich i źródłem, akapit o wysyłce i przyciski dokumentów PDF"
       },
-      "uwagi": "Moduł „zadaj pytanie” zdjęty 13.09. Jeden moduł ce/CE-17-faq.js obsługuje kilka akordeonów na stronie (zakres per blok). Wariant informacje (28.09.2026) ma własną mechanikę natywnych details i nie linkuje ce/CE-17-faq.* – strony sklepu stoją na kicie c5.css.",
       "zrzut": {
         "maxh": 900
       },
@@ -607,7 +606,6 @@ window.CW_CE = {
         "na-pasie": "na jasnym pasie c5-band w środku strony (CARBOHUMIC „Dobierz produkt”)",
         "z-leadem": "z akapitem pod nagłówkiem (Mata; Próchnica+ „Zadaj pytanie” – przyciski „Zapytaj eksperta” i „Kontakt”)"
       },
-      "uwagi": "",
       "zrzut": {
         "maxh": 500
       }
@@ -631,7 +629,6 @@ window.CW_CE = {
         "etykiety-przełączniki"
       ],
       "warianty": {},
-      "uwagi": "Jedyne wystąpienie (model rękawa maty).",
       "zrzut": {
         "maxh": 800
       }
@@ -646,7 +643,7 @@ window.CW_CE = {
         "kotwica": "inwestycja-karty"
       },
       "kod": {
-        "css": "per strona: c5-mt-grid, c5hu-mix, c5pr-goals/c5pr-foliar/c5pr-read, u-cards/u-rules, pp-cards/pp-tiles/pp-rels/pp-charts; sklep: pdp.css (c5pd-also, c5pd-connect, c5pd-pairs), koszyk.css (c5ks-more, c5ks-rec)",
+        "css": "per strona: c5-mt-grid, c5hu-mix, c5pr-goals/c5pr-foliar/c5pr-read, pp-cards/pp-tiles/pp-rels/pp-charts; strony upraw: ce/CE-20-siatka-kart.css (warianty produktowe – u-prod, u-rail – i numerowane – u-rules); sklep: pdp.css (c5pd-also, c5pd-connect, c5pd-pairs), koszyk.css (c5ks-more, c5ks-rec)",
         "js": "reveal: ce/00-base.js ===== 02 (dawne moduły 72 na Carbohumic i Produktach oraz 02 na Próchnicy+ zeszły do warstwy wspólnej 14.09.2026), u-reveal (uprawa.js); sklep: pdp.js ===== 2 (ceny „od … zł”), koszyk.js (dobór „Dorzuć do zamówienia”), przyciski otwierają szybki podgląd z sklep-wspolne.js (CE-76)"
       },
       "czesci": [
@@ -673,7 +670,6 @@ window.CW_CE = {
         "dorzuc": "„Dorzuć do zamówienia” pod koszykiem (koszyk.html; od 28.09.2026): nagłówek, zdanie i do czterech kart sklepowych z jasnym przyciskiem „Dodaj do koszyka” (kasa zostaje jedynym ciemnym przyciskiem strony). Karty rysuje koszyk.js: dla każdego produktu z koszyka pierwszy produkt stosowany razem z nim, którego w koszyku jeszcze nie ma, braki dopełnia stała lista „najczęściej wybierane”; przy pustym koszyku sama lista stała pod nagłówkiem „Najczęściej wybierane” z notą. Przeliczenie po każdej zmianie koszyka; dwie kolumny poniżej 900 px, cztery od 900 px",
         "polacz-z": "„Połącz z” w kolumnie zakupu karty produktu (pdp.html, pdp-kwasny.html; od 28.09.2026, zagnieżdżony w CE-82): pod przyciskiem „Dodaj do koszyka”, za linią – nagłówek, zdanie i rząd dwóch małych kart: pasek miniatury 132 px na jasnoszarym tle, nazwa, jedno zdanie, cena „od …” i jasny przycisk „+ Dodaj”, który otwiera szybki podgląd (CE-76); rząd przewija się w poziomie ze scroll-snap, gdy karty się nie mieszczą"
       },
-      "uwagi": "Najczęstszy klocek serwisu (ponad 20 wystąpień) z osobnymi klasami na każdej stronie – pierwszy kandydat do konsolidacji kodu (faza 2). Warianty sklepowe, dorzuc i polacz-z (28.09.2026) dzielą anatomię karty z kartą listy produktów w CE-78 (kadr z makietą opakowania, nazwa, cena, przycisk szybkiego podglądu) – kandydat na element interfejsu w style guide. Do 02.10.2026 bazą były kafle „Jaka gleba” na CARBOHUMIC (wariant z-ikona); po ich przejściu na CE-67 bazą są karty „Inwestycja” na CARBOMAT Mata (wariant numerowane).",
       "zrzut": {
         "maxh": 900
       },
@@ -714,7 +710,6 @@ window.CW_CE = {
         "2 kolumny: zdjęcie, tytuł, punkty, link"
       ],
       "warianty": {},
-      "uwagi": "Jedyne wystąpienie („Co zastępujesz”).",
       "zrzut": {
         "maxh": 900
       }
@@ -729,7 +724,7 @@ window.CW_CE = {
         "kotwica": "doglebowo-tabela"
       },
       "kod": {
-        "css": "per strona: c5-mt-cmp/c5-mt-tbl, c5hu-cmp, c5pr-cmp/c5pr-cert, u-mt",
+        "css": "per strona: c5-mt-cmp/c5-mt-tbl, c5hu-cmp, c5pr-cmp/c5pr-cert; strony upraw: ce/CE-22-tabela.css (wariant klikalne-wiersze – u-mt, klasa korzenia u-mtce)",
         "js": "kukurydza.js ===== 80 (klikalne wiersze)"
       },
       "czesci": [
@@ -743,7 +738,6 @@ window.CW_CE = {
         "z-packshotami": "kwadratowe pole zdjęcia nad etykietą każdej kolumny (do 220 px, temat na 72 % wysokości, 140 px poniżej 900 px). Czym jest zdjęcie, decyduje treść sekcji: na CARBOHUMIC-u do 02.10.2026 packshot produktu, na Produktach od 20.09.2026 – a na CARBOHUMIC-u od 02.10.2026 – kadr SPOSOBU aplikacji (#doglebowo-tabela, dziś placeholdery – prompty w zasoby/brand/zdjecia-produkty/README.md), bo o produktach mówią dopiero karty pod tabelą. Tego samego dnia z nagłówków Produktów zniknęły nazwy produktów, które szły w parze z packshotami",
         "klikalne-wiersze": "klik w wiersz otwiera stronę lightboxa (Kukurydza)"
       },
-      "uwagi": "Tabela technikaliów na Produktach to osobny CE-40 (ma własną mechanikę). Od 02.10.2026 obie tabele CARBOMAT Maty (warianty porownawcza i danych) stoją w lightboksach CE-25 jednostronicowy – w sekcji zostaje przycisk, bez JS tabela stoi w biegu strony.",
       "zrzut": {
         "maxh": 900
       }
@@ -777,7 +771,6 @@ window.CW_CE = {
         "ciemny": "pas na najciemniejszym tokenie, jasny tekst, na całą szerokość kontenera zamiast kresek: po lewej (7 kolumn) kicker w ramce o jasnym obrysie, h3 i akapit, po prawej (5 kolumn, wyrównanie do prawej krawędzi) dyskretny motyw z linii – cztery puste pola-kroki połączone kreską, bez podpisów – główny przycisk w wersji jasnej (c5-btn--inv) i pod nim cichy link. Jedyna ciemna płaszczyzna swojej sekcji, więc mówi, gdzie zaczyna się wybieranie. Statyczny; poniżej 900 px jedna kolumna, prawa strona schodzi pod tekst i wyrównuje się do lewej. Obrys kickera i pierścienie fokusu przechodzą na wersje jasne.",
         "cichy": "jedno zdanie drobnym drukiem (13 px) z linkiem w tekście zamiast przycisku, na jasnoszarym pasie na całą szerokość okna z linią pod spodem, tekst w szerokim kontenerze; bez ikony i kresek (sklep.html, nad listą produktów: „Kupujesz w większych ilościach albo potrzebujesz stałych dostaw? Zapytaj o ofertę”; od 28.09.2026, spec sklep-v7-spec §5.5 i §12.3)"
       },
-      "uwagi": "Pięć różnych klas o tym samym kształcie – kandydat do jednej klasy w fazie 2.",
       "zrzut": {
         "maxh": 300
       },
@@ -804,8 +797,8 @@ window.CW_CE = {
         "kotwica": "dowod-liczby"
       },
       "kod": {
-        "css": "wariant kafle-2x2: moduł wspólny ce/CE-24-pas-liczb-kafle.css (klasy c5-nums; od 02.10.2026, CARBOMAT Mata) oraz pp-liczby w prochnica-plus.css (Próchnica+ zostaje na własnym kodzie do osobnej decyzji); u-nb (Kukurydza, wariant kolumny); c5h-nums (strona główna, wariant rzad); sufiksy: ce/00-base.css EL-31. Układ podstawowy c5-stats zszedł z carbomat-mata.css 02.10.2026",
-        "js": "ce/CE-24-pas-liczb-kafle.js (kołowrotek cyfr data-c5-odo, CARBOMAT Mata) / uprawa.js data-count / prochnica-plus.js ===== 60 / home.js ===== 40 (kołowrotek pod prefiksem c5h-odo)"
+        "css": "jeden plik ce/CE-24-pas-liczb.css, sekcje wg klas korzenia: c5-nums (kafle-2x2, moduł wspólny, CARBOMAT Mata), pp-dark/pp-liczby (kafle-2x2, własna implementacja Próchnicy+, do osobnej decyzji o przepięciu), on-dark/on-nums (kolowrotek, O firmie), u-nb (kolumny, Kukurydza), b-nb (kolumny, kopia na Borówce); c5h-nums (strona główna, wariant rzad) zostaje w home.css; sufiksy: ce/00-base.css EL-31",
+        "js": "ce/CE-24-pas-liczb.js (kołowrotek cyfr data-c5-odo, CARBOMAT Mata) / uprawa.js data-count / prochnica-plus.js ===== 60 / home.js ===== 40 (kołowrotek pod prefiksem c5h-odo)"
       },
       "czesci": [
         "tytuł",
@@ -816,7 +809,7 @@ window.CW_CE = {
         "odliczanie": "liczby odliczają od zera (mechanika data-count z uprawa.js; na Kukurydzy razem z wariantem kolumny)",
         "kolowrotek": "cyfry wjeżdżają kołowrotkiem (mechanika z Próchnicy+; od 19.09.2026 pracuje w układzie kafle-2x2, sam wariant bez własnych wystąpień)",
         "kolumny": "jasny panel, trzy kolumny rozdzielone pionowymi liniami: chip nad liczbą, wielka liczba z małą jednostką u górnej krawędzi cyfr, podpis pod liczbą (wersja alternatywna sekcji liczb; Kukurydza od 18.09 – decyzja Mateusza)",
-        "kafle-2x2": "ciemny kadr, tytuł z dużym odstępem od górnej krawędzi, pod nim siatka 2 × 2 kafli o ton jaśniejszych od tła: wielka liczba przy górnej krawędzi kafla po prawej, etykieta i nota przy dolnej po lewej; cyfry wjeżdżają kołowrotkiem (Próchnica+ od 19.09.2026 – uwaga Mateusza, inspiracja: ramka Figma 306:2941); od 02.10.2026 także CARBOMAT Mata „Dowód” (uwaga Mateusza z 02.10: sekcja jak na Próchnicy+) na module wspólnym ce/CE-24-pas-liczb-kafle.* – panel bez nagłówka, cztery kafle, liczba ze znakiem i przecinkiem w kołowrotku, sufiksy EL-31 obok liczby, pod nią opis i wiersz źródła; rozmiar liczby liczony z szerokości kafla",
+        "kafle-2x2": "ciemny kadr, tytuł z dużym odstępem od górnej krawędzi, pod nim siatka 2 × 2 kafli o ton jaśniejszych od tła: wielka liczba przy górnej krawędzi kafla po prawej, etykieta i nota przy dolnej po lewej; cyfry wjeżdżają kołowrotkiem (Próchnica+ od 19.09.2026 – uwaga Mateusza, inspiracja: ramka Figma 306:2941); od 02.10.2026 także CARBOMAT Mata „Dowód” (uwaga Mateusza z 02.10: sekcja jak na Próchnicy+) na module wspólnym ce/CE-24-pas-liczb.* – panel bez nagłówka, cztery kafle, liczba ze znakiem i przecinkiem w kołowrotku, sufiksy EL-31 obok liczby, pod nią opis i wiersz źródła; rozmiar liczby liczony z szerokości kafla",
         "rzad": "ciemny kadr na szerokość kontenera (nie na wysokość ekranu): mały tytuł u góry po lewej, pod nim pięć kolumn rozdzielonych pionowymi liniami włosowymi, w kolumnie wielka liczba, etykieta i drobne źródło przy dolnej krawędzi kadru. Wersja pasowa klocka – sekcja pod nią zaczyna się wysoko na stronie, więc liczby są wstępem do dowodu, a nie osobnym ekranem (strona główna od 20.09.2026). Od 1280 px pięć kolumn, między 900 a 1279 px podział 3 + 2, poniżej 900 px wiersze: liczba po lewej, etykieta po prawej, źródło pod nimi na całej szerokości"
       },
       "zrzuty_wariantow": {
@@ -833,7 +826,6 @@ window.CW_CE = {
           "kotwica": "dowod"
         }
       },
-      "uwagi": "Wzór: serverobotics.com (uwaga Mateusza 14.09). Jednostka i sufiksy (%, +) małe i wyrównane do górnej krawędzi cyfr (uwaga Mateusza 15.09) – od 18.09 jako element EL-31 c5-aff (0,24 em, kolor liczby) na wszystkich wystąpieniach: Mata, Próchnica+, Kukurydza; wariant kolumny – wzór UPC Renewables i Yerevan (zrzuty 15.09). Nazwa klocka zmieniona 18.09 z „Ciemny pas liczb”, bo doszła jasna wersja alternatywna.",
       "zrzut": {
         "maxh": 900
       }
@@ -848,7 +840,7 @@ window.CW_CE = {
         "kotwica": "dowod-lb"
       },
       "kod": {
-        "css": "carbomat-mata.css ===== 55 (c5-lb) / uprawa.css 8 (u-lightbox)",
+        "css": "carbomat-mata.css ===== 55 (c5-lb) / strony upraw: ce/CE-25-lightbox.css (u-overlay, u-lightbox, u-prodpop; wąski panel wariantu jednostronicowy: klasa u-lightbox--waski)",
         "js": "carbomat-mata.js ===== 55 / uprawa.js lbEgzemplarz"
       },
       "czesci": [
@@ -860,9 +852,8 @@ window.CW_CE = {
       ],
       "warianty": {
         "popup-produktu": "strona = mapa zastosowań produktu z packshotem w nagłówku i własną stopką (Kukurydza)",
-        "jednostronicowy": "jedna strona treści zamiast N, więc stopka, licznik i przyciski poprzednia/następna nie istnieją; panel szerszy (1280 px), bo niesie tabelę pięciu kolumn, a kontener treści gubi w nakładce swoją miarę i gutter. Klasy i moduł 1:1 z bazy; kod strony w produkty.css ===== 45 / produkty.js ===== 45 (Produkty „Technikalia czterech rodzin”, 20.09.2026). Od 02.10.2026 także CARBOMAT Mata: tabela trzech podłoży (#co-zastepujesz-lb) i pełna analiza podłoża (#analiza-lb) w oknach jednostronicowych na silniku lightboksa strony (klasa c5-lb--solo – pasek z przyciskiem zamknięcia nad treścią, bez osobnego tytułu); otwiera je przycisk w sekcji albo hash tabeli, bez JS tabela stoi w biegu strony"
+        "jednostronicowy": "jedna strona treści zamiast N, więc stopka, licznik i przyciski poprzednia/następna nie istnieją; panel szerszy (1280 px), bo niesie tabelę pięciu kolumn, a kontener treści gubi w nakładce swoją miarę i gutter. Klasy i moduł 1:1 z bazy; kod strony w produkty.css ===== 45 / produkty.js ===== 45 (Produkty „Technikalia czterech rodzin”, 20.09.2026). Od 02.10.2026 także CARBOMAT Mata: tabela trzech podłoży (#co-zastepujesz-lb) i pełna analiza podłoża (#analiza-lb) w oknach jednostronicowych na silniku lightboksa strony (klasa c5-lb--solo – pasek z przyciskiem zamknięcia nad treścią, bez osobnego tytułu); otwiera je przycisk w sekcji albo hash tabeli, bez JS tabela stoi w biegu strony (klasa c5-lb--solo na CARBOMAT Mata, u-lightbox--waski na Borówce)"
       },
-      "uwagi": "Treść stron lightboxa to zwykłe klocki (np. CE-20) oznaczone jako zagnieżdżone. Od 20.09.2026 druga implementacja: Produkty – cała sekcja CE-40 przeniesiona do nakładki (wariant jednostronicowy). Od 02.10.2026 silnik lightboksa CARBOMAT Maty obsługuje też okna zagnieżdżone w kontenerze sekcji (tło inert zbierane po drodze do main) – dwie tabele w wariancie jednostronicowy. Również 02.10.2026: Borówka – okno „Jak liczymy pakiety” (#b-lightbox-pakiety, wariant jednostronicowy) jako drugi egzemplarz lightboksa uprawa.js obok pop-upu produktu: jedna strona tekstu (skład pakietów, założenia przeliczenia na hektar, ceny), panel 760 px; otwiera je odnośnik pod przelicznikiem pakietów (uwaga Mateusza: „daj to na popup a na dole zostaw tylko mały link”), bez JS blok stoi na końcu strony.",
       "zrzut": {
         "hash": "dowod-sggw",
         "maxh": 800
@@ -885,7 +876,6 @@ window.CW_CE = {
         "karty: kadr (zdjęcie albo placeholder), dopisek, numer, tytuł, opis"
       ],
       "warianty": {},
-      "uwagi": "Wzór: portfolio.widehue.co/rezonbio. Od 02.10.2026 jeden moduł i jeden układ dla obu wystąpień – protokół przygotowania na CARBOMAT Mata i kroki mieszaniny na CARBOHUMIC (uwaga Mateusza z 02.10: obsłużyć obie instrukcje jednym klockiem i wspólnym layoutem; content-elementy-spec §12). Kadr zawsze po lewej (modyfikator c5-stack--alt z kadrem na zmianę jest w module, bez wystąpień); pokrętła --c5-stack-* na korzeniu.",
       "zrzut": {
         "maxh": 900
       }
@@ -912,7 +902,6 @@ window.CW_CE = {
       "warianty": {
         "dokument": "ikona dokumentu, materiał do pobrania"
       },
-      "uwagi": "Przydatny także w Centrum wiedzy.",
       "zrzut": {
         "maxh": 200
       }
@@ -942,7 +931,6 @@ window.CW_CE = {
         "lista-opakowan": "HISTORYCZNY – bez wystąpień od 02.10.2026 (blok opakowań pod pasmami na CARBOHUMIC zdjęty na polecenie Mateusza: opakowanie wybiera się w oknie koszyka albo w sklepie). Etykieta i zdanie | wiersze opakowań z miniaturami",
         "cross-sell": "h3, akapit, przypis, rząd przycisków (Carbohumic); od 02.10.2026 jako karta z polem packshotu po lewej (układ kart pod tabelą na Produktach)"
       },
-      "uwagi": "Różni się od CE-31 (nota) tym, że niesie treść blokową, nie jedno zdanie z ikoną.",
       "zrzut": {
         "maxh": 400
       }
@@ -968,7 +956,6 @@ window.CW_CE = {
         "pasek przystanków"
       ],
       "warianty": {},
-      "uwagi": "WYCOFANY 02.10.2026 – licznik sezonów na CARBOMAT Mata (jedyne wystąpienie) zastąpił CE-15 w wariancie kaskada-z-pinem po uwadze Mateusza z 02.10 („przerób tę sekcję … na coś takiego CE-15 na Carbomat ECO”). Kod c5-yrs zdjęty z carbomat-mata.css i carbomat-mata.js; ostatnia wersja: zasoby/kod/archiwum-wersji/carbomat-mata-v7-przed-poprawkami-2026-10-02.html. Kod CE-29 zostaje w rejestrze na stałe, nie jest używany ponownie.",
       "zrzut": {
         "maxh": 900
       },
@@ -984,8 +971,8 @@ window.CW_CE = {
         "kotwica": "z-czym-laczyc-lista"
       },
       "kod": {
-        "css": "per strona: c5hu-mixlist, on-val; wariant akordeon-z-odliczaniem: c5pr-acc i c5pr-pcard w produkty.css oraz moduł wspólny ce/CE-30-akordeon-odliczanie.css (klasy c5-acc30; od 02.10.2026, CARBOMAT Mata); wariant z-kadrem: c5h-crops w home.css ===== 60",
-        "js": "carbohumic.js ===== 72; wariant akordeon-z-odliczaniem: produkty.js ===== 50 oraz moduł wspólny ce/CE-30-akordeon-odliczanie.js (od 02.10.2026, CARBOMAT Mata); wariant z-kadrem: home.js ===== 60"
+        "css": "jeden plik ce/CE-30-lista-z-panelem.css, sekcje wg klas korzenia: c5-acc30 (akordeon-z-odliczaniem, moduł wspólny, CARBOMAT Mata), c5pr-acc i c5pr-pcard (akordeon-z-odliczaniem, własna implementacja Produktów), c5hu-mixlist (CARBOHUMIC), on-val (O firmie); wariant z-kadrem: c5h-crops zostaje w home.css ===== 60",
+        "js": "carbohumic.js ===== 72; wariant akordeon-z-odliczaniem: produkty.js ===== 50 oraz moduł wspólny ce/CE-30-lista-z-panelem.js (od 02.10.2026, CARBOMAT Mata); wariant z-kadrem: home.js ===== 60"
       },
       "czesci": [
         "lista tytułów",
@@ -994,7 +981,7 @@ window.CW_CE = {
       ],
       "warianty": {
         "z-lightboxem": "panel ma przycisk otwierający pełny opis w lightboxie (Kukurydza fazy do 18.09; sekcję przejął CE-65, wariant bez wystąpień)",
-        "akordeon-z-odliczaniem": "akordeon na szerokość kontenera wg ramki Figma „Frame 207” (Mateusz, 18.09.2026; Produkty, ścieżki wg sytuacji): otwarta pozycja ma duży tytuł, po lewej opis z notami, ostrzeżeniem i linkami, po prawej karty produktów z packshotem (po dwie w rzędzie, kolejne zawijają się do następnego wiersza; cała karta prowadzi na stronę produktu, „Kup produkt” odsłania się pod opisem na karcie, a packshot maleje); pierwsza pozycja otwarta od początku, odliczanie 5 s z paskiem na górnej linii następnej pozycji otwiera kolejną i zamyka poprzednią, klik otwiera dowolną albo zamyka otwartą i wyłącza automat, kotwica pozycji otwiera ją i zatrzymuje automat; automat tylko na szerokim ekranie i przy włączonym ruchu, pod kursorem i przy fokusie odliczanie stoi Runda wierności 20.09.2026 („odwzoruj bardziej szczegółowo wygląd CE”): karta 10 px promienia i tło #f6f6f6 z ramki (bez 60 % krycia warstwy Figmy – nad pasem #fafafa kafel byłby niewidoczny), zielony znacznik 32 px #86d574 w prawym górnym rogu, packshot w polu 139 px, nazwa 14 px semibold 38 px pod nim, opis 14 px na mierze 275 px, wiersze zamknięte 15 px w czerni i podziałce 62 px, tytuł otwarty 35 px, opis pozycji 16 px/1,3 w #777771 na mierze 358 px. Od 02.10.2026 także CARBOMAT Mata „Ekonomia” (uwaga Mateusza z 02.10: użyć klocka, którego używamy gdzie indziej) – pięć pozycji „tytuł + opis” bez kart produktów, na module wspólnym ce/CE-30-akordeon-odliczanie.* w skali szarości kitu",
+        "akordeon-z-odliczaniem": "akordeon na szerokość kontenera wg ramki Figma „Frame 207” (Mateusz, 18.09.2026; Produkty, ścieżki wg sytuacji): otwarta pozycja ma duży tytuł, po lewej opis z notami, ostrzeżeniem i linkami, po prawej karty produktów z packshotem (po dwie w rzędzie, kolejne zawijają się do następnego wiersza; cała karta prowadzi na stronę produktu, „Kup produkt” odsłania się pod opisem na karcie, a packshot maleje); pierwsza pozycja otwarta od początku, odliczanie 5 s z paskiem na górnej linii następnej pozycji otwiera kolejną i zamyka poprzednią, klik otwiera dowolną albo zamyka otwartą i wyłącza automat, kotwica pozycji otwiera ją i zatrzymuje automat; automat tylko na szerokim ekranie i przy włączonym ruchu, pod kursorem i przy fokusie odliczanie stoi Runda wierności 20.09.2026 („odwzoruj bardziej szczegółowo wygląd CE”): karta 10 px promienia i tło #f6f6f6 z ramki (bez 60 % krycia warstwy Figmy – nad pasem #fafafa kafel byłby niewidoczny), zielony znacznik 32 px #86d574 w prawym górnym rogu, packshot w polu 139 px, nazwa 14 px semibold 38 px pod nim, opis 14 px na mierze 275 px, wiersze zamknięte 15 px w czerni i podziałce 62 px, tytuł otwarty 35 px, opis pozycji 16 px/1,3 w #777771 na mierze 358 px. Od 02.10.2026 także CARBOMAT Mata „Ekonomia” (uwaga Mateusza z 02.10: użyć klocka, którego używamy gdzie indziej) – pięć pozycji „tytuł + opis” bez kart produktów, na module wspólnym ce/CE-30-lista-z-panelem.* w skali szarości kitu",
         "z-kadrem": "wariant strony głównej (uprawy): po lewej lista sześciu grup upraw rozdzielona liniami włosowymi – numer w węźle, duży tytuł 28–44 px, przygaszony podpis pod tytułem i chevron; otwarta pozycja rozwija się w miejscu (grid 0fr → 1fr) i pokazuje chipy-linki stron upraw, dwa przyciski („Zobacz uprawę”, „Dobierz produkty i dawki”), a w razie potrzeby drugi, cichy link doboru. Po prawej nie ma panelu opisu, tylko przyklejony kadr: sześć warstw zdjęć jedna na drugiej, widoczna ta z wybranej pozycji, w lewym dolnym rogu jasna plakietka z numerem i nazwą grupy. Kadr stoi pod nagłówkiem serwisu (20 px zapasu) i kończy się 96 px nad dołem okna, ponad dokiem doradcy; zmiana kadru to wycieranie clip-path od dolnej krawędzi w górę w 0,7 s z osiadaniem skali 1,04 → 1, a poprzednie zdjęcie zostaje nieruchomo pod spodem, żeby wycieranie nie odsłaniało pustej sceny. Klik wybiera (nigdy nie zamyka – jedna pozycja jest zawsze otwarta), fokus i najechanie tylko podglądają kadr, strzałki oraz Home i End przenoszą fokus między nagłówkami wierszy; kotwice #uprawy-sad, #uprawy-jagodowe, #uprawy-warzywa, #uprawy-pole, #uprawy-szkolka i #uprawy-ogrod otwierają swoją pozycję. Poniżej 900 px akordeon z kadrem 4 : 3 wewnątrz otwartej pozycji, nad przyciskami. Bez JS-u wszystkie pozycje rozwinięte, lista na całą szerokość kontenera, kadry ukryte."
       },
       "zrzuty_wariantow": {
@@ -1009,7 +996,6 @@ window.CW_CE = {
           "maxh": 1100
         }
       },
-      "uwagi": "Dwie implementacje tej samej mechaniki (Carbohumic, O nas; trzecia – Mata – zeszła 02.10.2026) – kandydat do konsolidacji. Do 18.09.2026 bazą były ścieżki na Produktach; po ich przebudowie na wariant akordeon-z-odliczaniem (spec produkty-wzorzec-eco-spec §21.2 i §21.8) baza przeszła na CARBOHUMIC „Z czym łączyć”. Wariant z-kadrem (strona główna, 20.09.2026) zamienia panel opisu na przyklejony kadr i przenosi treść pozycji do rozwinięcia w liście – czwarta implementacja tej mechaniki, więc konsolidacja klocka jest coraz pilniejsza. Od 02.10.2026 wariant akordeon-z-odliczaniem ma moduł wspólny ce/CE-30-akordeon-odliczanie.* (content-elementy-spec §12): pozycja to tytuł i opis, a karty produktów, noty, ostrzeżenie i linki są opcjonalne; stoi na nim „Ekonomia” na CARBOMAT Mata – pięć pozycji bez kart i bez numerów, odliczanie 9 s (pokrętło --c5-acc30-time, bo opisy są dłuższe niż na Produktach). Produkty zostają na c5pr-acc do osobnej decyzji o przepięciu. 02.10.2026: na Produktach „Kup produkt” w 13 kartach, które wskazują jeden produkt sklepu, otwiera okno koszyka (sklep-wspolne.js; konfiguracja 1 : 1 ze sklep.html na karcie, data-cw-open na odnośniku – bez JS zostaje odnośnik do listy sklepu); cztery karty bez jednego produktu w sklepie (trzy razy CARBOMAT HUMIC, raz CARBOHUMIC bez wersji) zostają odnośnikami.",
       "zrzut": {
         "maxh": 900
       }
@@ -1038,7 +1024,6 @@ window.CW_CE = {
         "z-przyciskiem": "ciemny przycisk po prawej",
         "brak-danych": "ramka z kreski przerywanej, bez ikony (c5-note--dashed z ce/00-base.css)"
       },
-      "uwagi": "Wewnątrz innych bloków (przypis pod tabelą, ostrzeżenie w lightboxie) nota jest częścią bloku, nie osobnym CE.",
       "zrzut": {
         "maxh": 200
       }
@@ -1062,7 +1047,6 @@ window.CW_CE = {
         "przypis"
       ],
       "warianty": {},
-      "uwagi": "WYCOFANY 02.10.2026 – oś „Skala czasu” na CARBOHUMIC (jedyne wystąpienie) zastąpił CE-15 w wariancie kaskada-z-pinem (trzy przystanki i nota „gotowe do aplikacji” pod sceną) po uwadze Mateusza z 02.10 („przerób tę sekcję na coś jak CE-15 na stronie Carbomat”). Kod c5hu-time zdjęty z carbohumic.css i carbohumic.js; ostatnia wersja: zasoby/kod/archiwum-wersji/carbohumic-v7-przed-poprawkami-2026-10-02.html. Kod CE-32 zostaje w rejestrze na stałe, nie jest używany ponownie.",
       "zrzut": {
         "maxh": 700
       },
@@ -1078,7 +1062,7 @@ window.CW_CE = {
         "kotwica": "rzetelnosc-cytat"
       },
       "kod": {
-        "css": "per strona: pp-quote, u-quote, c5hu-rule",
+        "css": "per strona: pp-quote, c5hu-rule; strony upraw: ce/CE-33-cytat-zasada.css (wariant ciemny-boks – u-quote; etykieta w osobnej kolumnie od 1100 px: klasa u-quote--obok)",
         "js": "brak"
       },
       "czesci": [
@@ -1086,11 +1070,10 @@ window.CW_CE = {
         "zdanie lub akapit"
       ],
       "warianty": {
-        "ciemny-boks": "ciemne tło, etykieta wersalikami, duży akapit (Kukurydza)",
+        "ciemny-boks": "ciemne tło, etykieta wersalikami, duży akapit (Kukurydza; od 1100 px etykieta w osobnej kolumnie – klasa u-quote--obok)",
         "pasek-zasady": "gruba kreska górna, etykieta i wytłuszczone zdanie w jednym wierszu (Carbohumic)",
         "cytat": "blockquote z kreską i cudzysłowami; na Próchnicy+ od 19.09.2026 biały, na zdjęciu w tle sekcji; na stronie głównej (#motto, 20.09.2026) wyśrodkowany, bardzo duży (36–84 px, miara ok. 10 em, łamanie balance), bez kreski, pod nim wezwanie i podpis wersalikami"
       },
-      "uwagi": "",
       "zrzut": {
         "maxh": 400
       }
@@ -1105,7 +1088,7 @@ window.CW_CE = {
         "kotwica": "roznice-karty"
       },
       "kod": {
-        "css": "carbomat-humic.css (c5-diff) / kukurydza.css ===== 35 (u-rl)",
+        "css": "carbomat-humic.css (c5-diff) / strony upraw: ce/CE-34-karty-od-do.css (wariant regula-z-packshotem – u-rl)",
         "js": "carbomat-humic.js ===== 40 (reveal przez ce/00-base.js ===== 02) / uprawa.js u-reveal"
       },
       "czesci": [
@@ -1119,7 +1102,6 @@ window.CW_CE = {
         "przemiana": "cztery karty CARBOMAT ECO → CARBOMAT HUMIC; od 02.10.2026 w układzie kart reguł z Kukurydzy (uwaga Mateusza z 02.10): siatka 2 × 2, etykieta produktu i małe zdanie o CARBOMAT ECO jako warunek, strzałka, etykieta i duże zdanie o CARBOMAT HUMIC jako wynik, numer 01–04 w rogu, bez packshotu; karty nie są linkami",
         "regula-z-packshotem": "warunek → odpowiedź + sam packshot produktu (bez nazwy i wskazówki od 16.09), karta jako link (Kukurydza)"
       },
-      "uwagi": "",
       "zrzut": {
         "maxh": 700
       }
@@ -1143,7 +1125,6 @@ window.CW_CE = {
         "lista punktów z check"
       ],
       "warianty": {},
-      "uwagi": "Kandydat na blok „dla kogo / kiedy wybrać” na pozostałych stronach produktowych.",
       "zrzut": {
         "maxh": 500
       }
@@ -1158,7 +1139,7 @@ window.CW_CE = {
         "kotwica": "wariant-pro"
       },
       "kod": {
-        "css": "carbomat-humic.css (c5-who); o-firmie.css (on-who – port tych klas); borowka.css bloki 32 i 40 (b-row, b-brief, b-info – wiersz z boksem infografiki na kadrze); wariant z-wartosciami: home.css blok 90 (c5h-about, c5h-vals, c5h-film)",
+        "css": "carbomat-humic.css (c5-who); o-firmie.css (on-who – port tych klas); strony upraw: ce/CE-36-wiersz-zdjecie-opis.css (b-row, b-brief, b-info – wiersz z boksem infografiki na kadrze; wariant odwrocony: klasa b-row--rev); wariant z-wartosciami: home.css blok 90 (c5h-about, c5h-vals, c5h-film)",
         "js": "carbomat-humic.js ===== 40; o-firmie.js (parallax kadru); wariant z-wartosciami: home.js blok 90 (nakładka filmu)"
       },
       "czesci": [
@@ -1172,10 +1153,9 @@ window.CW_CE = {
         "rząd domykający: przycisk i dwa linki ze strzałką"
       ],
       "warianty": {
-        "odwrocony": "opis po lewej, zdjęcie po prawej",
+        "odwrocony": "opis po lewej, zdjęcie po prawej (klasa b-row--rev na Borówce, c5-who--flip na CARBOMAT HUMIC)",
         "z-wartosciami": "siatka 6 / 6 wyrównana do góry: po lewej kadr 4:5 przyklejony na czas prawej kolumny, po prawej kicker i nagłówek sekcji, akapit intro, wyróżniony akapit z kreską po lewej, trzy wartości jako wiersze rozdzielone liniami (ramka ikony, nazwa, zdanie), karta filmu w ramce (kadr 16:9 z plakatem, kwadratowy przycisk odtwarzania, podpis i zdanie) i rząd domykający: przycisk oraz dwa linki ze strzałką; poniżej 900 px kadr 4:3 nad treścią (strona główna #o-nas)"
       },
-      "uwagi": "Wariant „z-wartosciami” (strona główna, 20.09.2026) nie korzysta ze wspólnych klas c5-who – ma własny kod lokalny strony, bo kolumna opisu niesie cztery bloki zamiast jednego; przy konsolidacji fali 2 oba układy schodzą do jednego pliku w v7/ce/. 02.10.2026 (uwagi Mateusza): wiersze na CARBOMAT HUMIC niosą nazwę odbiorcy, jedno zdanie, skrót trzech rzeczy (dawki, częstotliwość, zakup) i przycisk; pełna karta jest w pop-upie CE-37. Samo zdanie z przyciskiem to za mało („Nie sprowadzaj tego do jednego zdania. Przedstaw skrótowo najważniejsze rzeczy. A pełny opis na popup”) – skrót należy do wzorca, a każda jego linia stoi słowo w słowo w pop-upie. Skrót zbudowany lokalnie w arkuszu strony (dl.c5-who__brief, c5-who__fact: etykieta 7,5 rem | wartość, włosowe linie, wartość schodzi pod etykietę w wąskiej kolumnie); docelowo element EL-22. W oknach 900–1099 px kadr bierze wysokość wiersza, nie mniej niż 4:5. Tego samego dnia sekcja stała przez kilka godzin na pasmach CE-11 – próba wycofana. Również 02.10.2026: Borówka „Zakładasz plantację” – dwa wiersze (drugi „odwrocony”) po uwagach Mateusza z artefaktu („skrócić opis i dać infografiki jak w CE-12 na zdjęciach; zdjęcia z lewej dla pierwszej sekcji, a dla drugiej z prawej”, a wieczorem: „Zdjęcia jak w CE-12 na pół ekranu i na wysokość ekranu. A infografika w środku też w tym stylu jak CE-12”): geometria panelu sceny CE-12 bez jej mechaniki – kontener do 1800 px, kadr od zewnętrznej krawędzi do połowy z marginesem 20 px z trzech stron i wysokością okna (100svh minus 40 px), opis 40 px od przeciwnej krawędzi, wyśrodkowany w pionie; każdy wiersz zajmuje jeden ekran, nic nie jest przyklejone i nic nie zależy od przewijania, więc układ jest ten sam przy ograniczonym ruchu i bez JS. Na środku kadru boks infografiki w materiale warstwy glass CE-12 (promień i dopełnienie 24 px, rozmycie tła 18 px, krawędź inset, plakietka 16 px na czarnym 20 %, paski 6 px, wielka liczba, podpis); dwa odstępstwa dla kontrastu na jasnym zdjęciu: tło boksu 72 % zamiast 43 %, podpis biały 80 % zamiast 50 % (pomiar: najmniejszy tekst 5,4 : 1). Poniżej 900 px kadr 4 : 3, boks schodzi pod zdjęcie na pełnym ciemnym tle, potem opis. Kolumna opisu: numer z etykietą miejsca, h3, jedno zdanie, w drugim wierszu skrót „etykieta | wartość”, przycisk i link. Kod lokalny strony (b-row, b-info w borowka.css blok 40), kandydat na wariant „z-infografika” przy fali 2.",
       "zrzut": {
         "maxh": 900
       },
@@ -1210,7 +1190,6 @@ window.CW_CE = {
       "warianty": {
         "jeden-dialog": "jeden dialog na stronę, treść podmieniana z bloków źródłowych (Próchnica+ profile)"
       },
-      "uwagi": "Pop-up wg lightboxu kukurydzy (CE-25).",
       "zrzut": {
         "klik": "#wariant-pro [data-pop-open]",
         "maxh": 800
@@ -1233,7 +1212,6 @@ window.CW_CE = {
         "2 panele: zdjęcie, tytuł, akapity, przycisk"
       ],
       "warianty": {},
-      "uwagi": "Zastąpił przypięte wiersze (CE-15) na CARBOMAT HUMIC (uwaga Mateusza 14.09).",
       "zrzut": {
         "maxh": 900
       }
@@ -1258,7 +1236,6 @@ window.CW_CE = {
         "panele rodzin: packshot, nazwa, obietnica, przyciski, dl"
       ],
       "warianty": {},
-      "uwagi": "Wzór: rivian.com/r1s. Od 20.09.2026 „Porównaj” i szeroki przycisk „Pełna tabela porównawcza” pod pokazem otwierają nakładkę CE-25 z tabelą CE-40 zamiast przewijać do sekcji.",
       "zrzut": {
         "maxh": 1100
       }
@@ -1286,7 +1263,6 @@ window.CW_CE = {
       "warianty": {
         "w-lightboxie": "ta sama treść i mechanika, tylko nie w biegu strony: sekcja jest jedyną stroną nakładki CE-25 (wariant jednostronicowy), którą otwiera link „Porównaj” przy tabach CE-39 i nowy szeroki przycisk „Pełna tabela porównawcza” pod pokazem. Razem z tabelą weszły do nakładki przypis i trzy karty „jak czytać tabelę”, bo dotyczą wprost tabeli. Bez JS blok stoi w biegu strony dokładnie tam, gdzie stała sekcja – treść nigdy nie znika; rozdział znika za to z nawigacji kropkowej, a „pokaż w tabeli” przewija panel nakładki zamiast strony (Produkty, 20.09.2026, komentarze Mateusza w artefakcie)"
       },
-      "uwagi": "Osobny CE, nie port Parametrów (CE-10) – decyzja Mateusza 14.09. Od 20.09.2026 jedyne wystąpienie stoi w nakładce (wariant w-lightboxie).",
       "zrzut": {
         "hash": "porownanie",
         "maxh": 1400
@@ -1311,7 +1287,6 @@ window.CW_CE = {
       "warianty": {
         "jeden-pod-drugim": "oba bloki na całą szerokość (--stack)"
       },
-      "uwagi": "",
       "zrzut": {
         "maxh": 1000
       }
@@ -1335,7 +1310,6 @@ window.CW_CE = {
         "przycisk"
       ],
       "warianty": {},
-      "uwagi": "WYCOFANY 15.09.2026 – scalony z CE-17 (FAQ) jako wariant dla-dociekliwych po decyzji Mateusza o jednym stylu (dwa akordeony obok siebie na Produktach). Kod zostaje w rejestrze na stałe, nie jest używany ponownie.",
       "zrzut": {
         "maxh": 500
       },
@@ -1351,7 +1325,7 @@ window.CW_CE = {
         "kotwica": "u-wybor-potas"
       },
       "kod": {
-        "css": "uprawa.css 6 (u-kbar)",
+        "css": "brak – reguły u-kbar zdjęte z uprawa.css",
         "js": "uprawa.js 5 (pasek potasu)"
       },
       "czesci": [
@@ -1361,7 +1335,6 @@ window.CW_CE = {
         "bloki interpretacji"
       ],
       "warianty": {},
-      "uwagi": "WYCOFANY 01.10.2026 – jedyne wystąpienie (Kukurydza, blok „Ile potasu realnie wnosi CARBOMAT HUMIC”) zdjęte ze strony komentarzem Mateusza z artefaktu „Makieta Kukurydza Hi-Fi 5” („Usuń ten fragment”; Darek 29.09: na stronie uprawy tylko praktyczne minimum). Komponent u-kbar zostaje w uprawa.css i uprawa.js; ostatnia wersja strony z blokiem: archiwum-wersji/kukurydza-v7-przed-uproszczeniem-2026-10-01.html. Kod CE-43 zostaje w rejestrze na stałe, nie jest używany ponownie. Krewny CE-45 (pudełka-przełączniki).",
       "zrzut": {
         "maxh": 600
       },
@@ -1393,7 +1366,6 @@ window.CW_CE = {
           "kotwica": "korzysci"
         }
       },
-      "uwagi": "Wariant tlo-foto: uwagi Mateusza z 18.09.2026 (iteracja 9 Kukurydzy, spec kukurydza-hifi-spec §13.4). 19.09.2026: Próchnica+ – dotychczasowa baza klocka – przeszła na wariant tlo-foto (uwaga Mateusza z artefaktu, spec prochnica-plus-wzorzec-eco-spec §18); wersja bazowa bez zdjęcia została w indeksie na stronie demonstracyjnej v7/lab/ce-44-napis-z-kaflami.html i nie ma wystąpień na podstronach. 01.10.2026: wystąpienie na Kukurydzie zdjęte (komentarz Mateusza, uproszczenie stron upraw po spotkaniu 29.09) – wariant tlo-foto zostaje na Próchnicy+.",
       "zrzut": {
         "maxh": 900
       }
@@ -1408,7 +1380,7 @@ window.CW_CE = {
         "kotwica": "u-pakiety-wybor"
       },
       "kod": {
-        "css": "uprawa.css 11",
+        "css": "ce/CE-45-pudelka-przelaczniki.css (u-vtabs, u-vtab; wariant dwa-pakiety: klasa u-vtabs--2)",
         "js": "uprawa.js 10"
       },
       "czesci": [
@@ -1416,9 +1388,8 @@ window.CW_CE = {
         "panel treści"
       ],
       "warianty": {
-        "dwa-pakiety": "dwa pudełka obok siebie (pakiet minimum, pakiet optimum) z trzecim wierszem – liczbą zabiegów i produktów; stoją w górnym rzędzie sekcji CE-47 „z-pakietami” obok suwaka powierzchni i przełączają panel z wierszami „Etap · Zabieg” oraz boksami przelicznika (Kukurydza, 01.10.2026; Borówka, 02.10.2026 – #b-pakiety-wybor)"
+        "dwa-pakiety": "dwa pudełka obok siebie (pakiet minimum, pakiet optimum) z trzecim wierszem – liczbą zabiegów i produktów (klasa u-vtabs--2); stoją w górnym rzędzie sekcji CE-47 „z-pakietami” obok suwaka powierzchni i przełączają panel z wierszami „Etap · Zabieg” oraz boksami przelicznika (Kukurydza, 01.10.2026; Borówka, 02.10.2026 – #b-pakiety-wybor)"
       },
-      "uwagi": "01.10.2026 (iteracja 17 Kukurydzy, spec kukurydza-hifi-spec §20): trzy warianty technologii przebudowane na dwa pakiety i spięte z przelicznikiem – Darek 29.09 (pakiet minimalny i maksymalny), komentarze Mateusza z artefaktu „Makieta Kukurydza Hi-Fi 5”. Poprzedni układ: archiwum-wersji/kukurydza-v7-przed-uproszczeniem-2026-10-01.html.",
       "zrzut": {
         "maxh": 700
       }
@@ -1442,7 +1413,6 @@ window.CW_CE = {
         "pasek postępu"
       ],
       "warianty": {},
-      "uwagi": "WYCOFANY 18.09.2026 – karuzelę kart na Kukurydzy (jedyne wystąpienie) zastąpił CE-66 „Tablica warunków” po uwadze Mateusza z 18.09 (wspólne elementy ośmiu kart wykorzystane jako stała rama). Kod u-cr* zdjęty z kukurydza.css i kukurydza.js; ostatnia wersja w repo makiet (deploy V7 z 14–15.09). Kod CE-46 zostaje w rejestrze na stałe, nie jest używany ponownie.",
       "zrzut": {
         "maxh": 800
       },
@@ -1458,7 +1428,7 @@ window.CW_CE = {
         "kotwica": "u-pakiety"
       },
       "kod": {
-        "css": "uprawa.css 16 (u-calc, u-out); ustawienia strony: kukurydza.css i borowka.css blok 70",
+        "css": "ce/CE-47-przelicznik.css (u-pk, u-area, u-calc, u-out, u-cost)",
         "js": "c5.js (przelicznik data-calc) + uprawa.js 13 (suwak)"
       },
       "czesci": [
@@ -1468,7 +1438,6 @@ window.CW_CE = {
       "warianty": {
         "z-pakietami": "przelicznik spięty z wyborem pakietu (Kukurydza, 01.10.2026): w górnym rzędzie pudełka-przełączniki CE-45 „dwa-pakiety” i suwak powierzchni, niżej panel wybranego pakietu – wiersze „Etap · Zabieg”, a pod nimi boksy wyników po jednym na produkt (ilość, woda do zabiegu, koszt brutto, przycisk sklepu) i ciemny boks sumy kosztu pakietu; trzy boksy w pakiecie minimum, cztery w optimum; `data-calc` i `data-tabs-group` siedzą na tym samym kontenerze, więc przelicznik wypełnia boksy obu paneli. Na Borówce (02.10.2026) panel ma dwie grupy boksów: „co roku” i „jednorazowo” – każda z ciemnym boksem sumy; boksy jednorazowe (podłoże, „Wodny Stoper”, ściółka) niosą ilość na powierzchnię bez wiersza wody i koszt brutto liczony z największego opakowania (uwaga Mateusza z 02.10: „A tu nie liczysz ceny?”); pod panelami zostaje tylko odnośnik „Jak liczymy pakiety: założenia i ceny”, który otwiera okno CE-25 „jednostronicowy” z notą o roboczej propozycji, założeniami przeliczenia na hektar i cenami"
       },
-      "uwagi": "Ten sam mechanizm na ziemniak.html i borowka.html (poza zakresem 14.09). 01.10.2026: osobna sekcja „Ile produktu na Twoje pole” (cztery boksy niezależnych zabiegów, nota „kosztów nie sumuj”) zeszła z Kukurydzy – przelicznik żyje w sekcji „Pakiety” jako wariant „z-pakietami” (spec kukurydza-hifi-spec §20). ⚠️ Skład pakietów to propozycja crear z dawek programu klienta, do potwierdzenia przez Darka. 02.10.2026: Borówka – drugie wystąpienie wariantu „z-pakietami” (sekcja #b-pakiety). Pierwszy prototyp miał tu własny wariant „trzy-obliczenia” (trzy zakładki: podłoże, ściółka, zabiegi; kilka pól w każdej) – zdjęty tego samego dnia po uwadze Mateusza: „To powinno być pokazane w ramach pakietów minimum i optimum (…) połączyć i uprościć (…) wartości naszej uprawy podawali raz, a nie na osobnych tabach”; ostatnia wersja: archiwum-wersji/borowka-v7-prototyp-1-2026-10-02.html. ⚠️ Skład i dawki pakietów Borówki to propozycja crear złożona z zakresów materiału klienta (zgoda Mateusza z 02.10: dawkowanie wolno przyjąć roboczo, z wyraźną notą drobnym drukiem) – do potwierdzenia przez Darka. Przy okazji: pole packshotu w boksie wyniku (`u-out__ph`) miało dopełnienie w procentach, liczone od szerokości całego boksu, przez co w szerokich boksach packshot kurczył się do zera – na Borówce stała wartość 5 px; na Kukurydzy poprawione tak samo 02.10.2026 wieczorem.",
       "zrzut": {
         "maxh": 700
       }
@@ -1493,7 +1462,6 @@ window.CW_CE = {
         "siatka": "osiem biogramów w siatce 4 kolumn z „czytaj dalej” (o-firmie.html#ludzie)",
         "kompakt": "trzy karty autorów bez rozwijania (centrum-wiedzy.html#autorzy)"
       },
-      "uwagi": "Układ bazowy zmieniony 19.09.2026 z dwóch kolumn na jedną kolumnę ze zdjęciem po lewej (uwaga Mateusza z artefaktu Próchnica+ V7, spec prochnica-plus-wzorzec-eco-spec §18); warianty siatka i kompakt bez zmian.",
       "zrzut": {
         "maxh": 700
       }
@@ -1508,8 +1476,8 @@ window.CW_CE = {
         "kotwica": "harmonogram"
       },
       "kod": {
-        "css": "ce/CE-49-harmonogram.css",
-        "js": "ce/CE-49-harmonogram.js"
+        "css": "usunięty 03.10.2026 (moduł bez wystąpień)",
+        "js": "usunięty 03.10.2026 (moduł bez wystąpień)"
       },
       "czesci": [
         "nagłówek",
@@ -1520,7 +1488,6 @@ window.CW_CE = {
         "znacznik „jesteśmy tutaj”"
       ],
       "warianty": {},
-      "uwagi": "WYCOFANY 02.10.2026 – harmonogram programu na Próchnicy+ (jedyne wystąpienie) zastąpiła wspólna oś CE-90 „Oś programu z punktami zdarzeń” po uwagach Mateusza z 02.10 (spec prochnica-plus-wzorzec-eco-spec §19.5). Pliki klocka zostają w v7/ce/ nieładowane; wersja z klockiem: archiwum-wersji/prochnica-plus-v7-przed-poprawkami-2026-10-02.html. Przebudowany 19.09.2026 wg ramek Figma 251:844 / 251:894 / 251:928 (Mateusz; układ i mechanika, styl wzorca V7) – ten sam kod klocka, bo jedyne wystąpienie (spec prochnica-plus-wzorzec-eco-spec §18). Poprzednia wersja w stylu S1 „Edytorial” (jeden etap na ekran, strzałki): archiwum-wersji/prochnica-plus-v7-przed-iteracja-2-2026-09-19.html. Laboratorium stylów: v5/lab/harmonogram.html.",
       "zrzut": {
         "maxh": 900
       },
@@ -1549,7 +1516,6 @@ window.CW_CE = {
         "kontakt": "formularz z wyborem tematu obok panelu danych firmy i mapy (kontakt.html#napisz)",
         "temat": "formularz „Zaproponuj temat” obok pasa przewodnika (centrum-wiedzy.html#zaproponuj, artykul.html#zaproponuj-temat)"
       },
-      "uwagi": "Od 02.10.2026 formularz „Zadaj pytanie” zszedł z Próchnicy+ (Mateusz: „Nie dajemy tu dodatkowego formularza” – sekcja jest teraz CE-18 z dwoma przyciskami); wersją bazową jest formularz kontaktu (kontakt.html#napisz), kod bazowy w arkuszu i skrypcie tej strony – wpis „kod” do aktualizacji przy najbliższej regeneracji indeksu. Warianty 15.09: „kontakt” na kontakt.html#napisz, „temat” na dziale i artykule Centrum wiedzy.",
       "zrzut": {
         "maxh": 800
       }
@@ -1564,8 +1530,8 @@ window.CW_CE = {
         "kotwica": "etapy-gantt"
       },
       "kod": {
-        "css": "ce/CE-51-os-gantta.css (źródło treści bez JS: prochnica-plus.css ===== 85b)",
-        "js": "ce/CE-51-os-gantta.js"
+        "css": "usunięty 03.10.2026 (moduł bez wystąpień; źródło treści bez JS: prochnica-plus.css ===== 85b)",
+        "js": "usunięty 03.10.2026 (moduł bez wystąpień)"
       },
       "czesci": [
         "panel gospodarstw",
@@ -1578,7 +1544,6 @@ window.CW_CE = {
         "źródło treści (osie kamieni, wersja bez JS)"
       ],
       "warianty": {},
-      "uwagi": "WYCOFANY 02.10.2026 – oś Gantta gospodarstw na Próchnicy+ (jedyne wystąpienie) zastąpiła wspólna oś CE-90 „Oś programu z punktami zdarzeń” po uwagach Mateusza z 02.10 (spec prochnica-plus-wzorzec-eco-spec §19.5). Pliki klocka zostają w v7/ce/ nieładowane; wersja z klockiem: archiwum-wersji/prochnica-plus-v7-przed-poprawkami-2026-10-02.html. Przebudowana 19.09.2026 wg ramki Figma 306:2991 i jej adnotacji (Mateusz) – ten sam kod klocka, bo jedyne wystąpienie (spec prochnica-plus-wzorzec-eco-spec §18); nazwa zmieniona z „Oś Gantta z filtrami”, bo filtry gospodarstw zniknęły. Poprzednia wersja (filtry-chipy, dymek opisu, karta przypięta pod wykresem): archiwum-wersji/prochnica-plus-v7-przed-iteracja-2-2026-09-19.html.",
       "zrzut": {
         "maxh": 1000
       },
@@ -1603,7 +1568,6 @@ window.CW_CE = {
       "warianty": {
         "w-ramce": "cztery pola w ramce z nagłówkiem Filtry – bez wystąpień od 02.10.2026 (filtry Wyników na Próchnicy+ usunięte)"
       },
-      "uwagi": "WYCOFANY 02.10.2026 – ostatnie wystąpienie (pole „Rok” nad raportami na Próchnicy+) zastąpił pasek tabów CE-11 taby-lat (Mateusz: „Zamiast paska wyboru z selectem daj tu taby – aby było spójne z tymi powyżej”; spec prochnica-plus-wzorzec-eco-spec §20.3). Od 02.10.2026 jedyne wystąpienie to pole „Rok” nad raportami rocznymi na Próchnicy+ (spec prochnica-plus-wzorzec-eco-spec §19.2).",
       "zrzut": {
         "maxh": 300
       },
@@ -1628,7 +1592,6 @@ window.CW_CE = {
       "warianty": {
         "dokumenty": "certyfikaty, poradniki i karty do pobrania z numerem lub metryką (o-firmie.html#dowody-listy, centrum-wiedzy.html#poradniki)"
       },
-      "uwagi": "Od 02.10.2026 bez pustego stanu i bez wyłączonych przycisków – raporty za 2026 traktujemy jako gotowe (spec prochnica-plus-wzorzec-eco-spec §19.2).",
       "zrzut": {
         "maxh": 700
       }
@@ -1651,7 +1614,6 @@ window.CW_CE = {
         "3 kafle: zdjęcie, nazwisko, rola, telefon, e-mail"
       ],
       "warianty": {},
-      "uwagi": "Treść 1:1 z dokumentu Sylwii 09.09 (AC #31570).",
       "zrzut": {
         "maxh": 760
       }
@@ -1673,7 +1635,6 @@ window.CW_CE = {
         "wiersze: dział + osoba, opis, telefon, e-mail"
       ],
       "warianty": {},
-      "uwagi": "",
       "zrzut": {
         "maxh": 900
       }
@@ -1698,7 +1659,6 @@ window.CW_CE = {
       "warianty": {
         "o-nas": "kolumna adresu firmy z mapą i lista krajów bez osób (o-firmie.html#gdzie-jestesmy, prefiks on-map)"
       },
-      "uwagi": "",
       "zrzut": {
         "maxh": 900
       }
@@ -1725,7 +1685,6 @@ window.CW_CE = {
       "warianty": {
         "kategoria": "lista jednej kategorii z chipami jej podgrup i wierszem „wkrótce” (centrum-wiedzy-kategoria.html#artykuly)"
       },
-      "uwagi": "Układ z decyzji klienta 10.08: bez miniatur, stronicowanie zamiast doładowywania, podpis autora w każdym wierszu.",
       "zrzut": {
         "maxh": 1000
       }
@@ -1749,7 +1708,6 @@ window.CW_CE = {
         "nota o następnym artykule"
       ],
       "warianty": {},
-      "uwagi": "",
       "zrzut": {
         "maxh": 800
       }
@@ -1774,7 +1732,6 @@ window.CW_CE = {
       "warianty": {
         "kompakt": "wariant zajawkowy (strona główna): boksy kategorii bez zdania opisu, bez listy podgrup i bez liczników – zostaje sama nazwa grupy jako link ze strzałką, która dosuwa się o 4 px przy najechaniu i fokusie, a obrys boksu ciemnieje. Strona główna nie podaje liczb, których nie ma w źródłach, dlatego liczniki artykułów wypadają razem z podgrupami. Pas biegnie w rytmie 7 / 5: po lewej dwa boksy kategorii obok siebie, po prawej dwa wiersze wyjścia – poradniki upraw (ikona pliku, zdanie, cichy link do #poradniki) i przewodnik (ikona rozmowy, zdanie, przycisk z data-jurek-open otwierający dok doradcy). Statyczne, wejście kaskadą revealem strony; poniżej 900 px wszystko w jednej kolumnie."
       },
-      "uwagi": "",
       "zrzut": {
         "maxh": 700
       },
@@ -1805,7 +1762,6 @@ window.CW_CE = {
         "metryka i przyciski udostępnij/drukuj"
       ],
       "warianty": {},
-      "uwagi": "",
       "zrzut": {
         "maxh": 800,
         "przewin": "#spis"
@@ -1829,7 +1785,6 @@ window.CW_CE = {
         "lista 3–5 zdań"
       ],
       "warianty": {},
-      "uwagi": "Zdania wybierane z tekstu autora, nie pisane na nowo (spec Centrum wiedzy §5.1).",
       "zrzut": {
         "maxh": 600
       }
@@ -1856,7 +1811,6 @@ window.CW_CE = {
       "warianty": {
         "boczny": "w kolumnie bocznej strony kategorii, bez etykiety (centrum-wiedzy-kategoria.html#obok-produkt)"
       },
-      "uwagi": "Jeden boks na artykuł, po sekcji, która uzasadnia produkt (życzenie klienta z 01.06: „kup teraz” przy wzmiance produktu).",
       "zrzut": {
         "maxh": 500
       }
@@ -1879,7 +1833,6 @@ window.CW_CE = {
         "wiersz konsultanta"
       ],
       "warianty": {},
-      "uwagi": "Podpisy autorów obowiązkowe (Darek 10.08); dane w makiecie przykładowe – Google Doc nie podaje autorów.",
       "zrzut": {
         "maxh": 600
       }
@@ -1902,7 +1855,6 @@ window.CW_CE = {
         "pozycje: packshot, nazwa, przycisk, link"
       ],
       "warianty": {},
-      "uwagi": "Uwaga Mateusza 15.09: produkty wymienione w artykule widoczne u góry, każdy z przyciskiem „Kup produkt”. Boks „Z tego artykułu” (CE-62) w treści zostaje – decyzja, czy nie jest nadmiarowy.",
       "zrzut": {
         "maxh": 500
       }
@@ -1928,7 +1880,6 @@ window.CW_CE = {
         "panel: etykieta, skrót, boksy produktów, przypis, przycisk"
       ],
       "warianty": {},
-      "uwagi": "Wzór: ramka Figma „Frame 213” (Mateusz, 18.09.2026); decyzja Mateusza z 18.09: osobny content element. Zastąpił na Kukurydzy wariant z-lightboxem klocka CE-30. Na razie jedno wystąpienie (Kukurydza, fazy). Iteracja 9 (18.09 po południu, uwagi Mateusza): numery krojem treści, bez leadu, szeroki kontener, kicker EL-06 w ramce, kadr 1:1 przyklejony do dołu okna – poniżej 1600 px zatrzymuje się 96 px nad krawędzią, żeby nie wchodzić pod dok doradcy. Iteracja 10 (19.09, uwaga Mateusza): kadr wrócił do otwartego panelu jak w ramce Figma, przyklejona scena zniknęła, głowa sekcji stała się przyklejona. Iteracja 12 (19.09 wieczorem, uwaga Mateusza): na Kukurydzy sekcję przejął CE-68 „Akordeon faz z panelem” (wersja alternatywna wg ramki „Frame 223”); CE-65 zostaje czynny w rejestrze i indeksie – bazą jest strona demonstracyjna v7/lab/ce-65-os-faz.html (sekcja sprzed iteracji 12 co do znaku, bez lightboxów), na podstronach chwilowo bez wystąpień.",
       "zrzut": {
         "maxh": 1100
       }
@@ -1954,7 +1905,6 @@ window.CW_CE = {
         "jasne pole: „Nasze produkty” (zdanie i boksy produktów) oraz „Uzupełnienie”"
       ],
       "warianty": {},
-      "uwagi": "Uwaga Mateusza z 18.09.2026 (iteracja 9 Kukurydzy): osiem kart karuzeli miało wspólne elementy – numer i trzy etykiety – więc stoją raz; nowy content element tylko dla tego miejsca, zastąpił CE-46 (karuzela kart, wycofany). 19.09.2026 (iteracja 10): przebudowany wg ramki Figma Mateusza „Frame 218” – pierwsza wersja (ciemna tablica z wielkim licznikiem, kafle 4 × 2, strzałki, pauza i autoprzełączanie co 8 s) zniknęła; kod klocka bez zmian, bo to to samo, jedyne wystąpienie. Etykieta pola „Nasze produkty” wg ramki (w dokumencie klienta kolumna nazywa się „Carbohort”).",
       "zrzut": {
         "maxh": 1100
       }
@@ -1979,8 +1929,15 @@ window.CW_CE = {
         "kadr przyklejony",
         "przycisk na kadrze"
       ],
-      "warianty": {},
-      "uwagi": "Wzór: ramka Figma „Frame 222” (Mateusz, 19.09.2026; układ i mechanika, styl wzorca V7). Na Kukurydzy zastąpił wystąpienie CE-14 (sekcja 100svh z listą i parallaksem, klasy u-dg). Od 02.10.2026 drugie wystąpienie: CARBOHUMIC „Jaka gleba” (uwaga Mateusza z 02.10; zastąpiło kafle CE-20 z-ikona) – moduł bez zmian, różnice niesie sześć reguł w arkuszu strony (kandydat na wariant w module). Trzecie wystąpienie tego samego dnia: Borówka #b-sciolka (uwaga Mateusza: inny, istniejący klocek i mniej tekstu na jednym ekranie; zastąpił wycofany CE-88) – cztery reguły w borowka.css blok 50.",
+      "warianty": {
+        "ikony": "cztery karty 2 × 2 z ikoną w ramce i tytułem zamiast numeru w węźle, bez nagłówka h3 nad siatką (siatka schodzi do dolnej linii kadru); klasa c5-kk--ikony na korzeniu"
+      },
+      "zrzuty_wariantow": {
+        "ikony": {
+          "plik": "v7/borowka.html",
+          "kotwica": "b-sciolka"
+        }
+      },
       "zrzut": {
         "maxh": 1100
       }
@@ -2006,7 +1963,6 @@ window.CW_CE = {
         "kolumna treści: tytuł, opis, boksy produktów w pionie, nota, przycisk na szerokość kolumny"
       ],
       "warianty": {},
-      "uwagi": "Wzór: ramka Figma „Frame 223” (Mateusz, 19.09.2026; układ i mechanika, styl wzorca V7 – ostre narożniki). Wersja alternatywna sekcji faz: na Kukurydzy zastąpiła CE-65 „Oś faz z akordeonem”, który zostaje w rejestrze na stronie demonstracyjnej. Od 02.10.2026 dwa wystąpienia: Kukurydza (fazy) i Borówka (#b-etapy – pięć etapów sezonu bez kalendarza, bo materiał klienta podaje momenty, nie miesiące; piąta pozycja to zabiegi interwencyjne z przyciskiem do kontaktu; nota pod boksami niesie dawki słowami klienta; zastąpił wycofany CE-89). Moduł i arkusz bez zmian. Do decyzji Mateusza: tekst zamkniętego wiersza (tytuł zamiast samej etykiety z ramki) i przycisk w rozmiarze --sm (43 px jak w ramce).",
       "zrzut": {
         "maxh": 1100,
         "przewin": "#u-fazy .c5-fa__list"
@@ -2032,7 +1988,6 @@ window.CW_CE = {
         "boks produktu: packshot, nazwa, cechy, dwa przyciski"
       ],
       "warianty": {},
-      "uwagi": "Wzór: ramka Figma 306:2942 (Mateusz, 19.09.2026; układ i mechanika, styl wzorca V7 – ostre narożniki). Zastąpił na Próchnicy+ cztery karty CE-20 z-ikona w sekcji „O programie” (spec prochnica-plus-wzorzec-eco-spec §18). Boks produktu to lokalna, nieklikalna kopia przyszłego EL-33 z cechami i przyciskami.",
       "zrzut": {
         "maxh": 1300
       }
@@ -2057,7 +2012,6 @@ window.CW_CE = {
         "N kart slajdów: boks ilustracji, tytuł, opis"
       ],
       "warianty": {},
-      "uwagi": "02.10.2026: nagłówek sekcji przeszedł do sceny (Mateusz: „nałóż nagłówek na tło z filmem. Wyśrodkuj. Po scroll przewija się nagłówek i wchodzą 4 punkty”), scrim .55 dla kontrastu nagłówka (spec prochnica-plus-wzorzec-eco-spec §19.4). Wzór: ramka Figma 280:2120 (Mateusz, 19.09.2026; układ i mechanika, styl wzorca V7). Zastąpiła na Próchnicy+ scenę faktów CE-12 w sekcji „Założenia i cele programu” (spec prochnica-plus-wzorzec-eco-spec §18). Spis slajdów używa lokalnej kopii węzła z numerem (EL-32).",
       "zrzut": {
         "maxh": 900,
         "ruch": true,
@@ -2085,7 +2039,6 @@ window.CW_CE = {
         "ciemna komórka z numerem telefonu"
       ],
       "warianty": {},
-      "uwagi": "Zbudowany dla strony głównej (spec „home-spec.md” §5.1) jako „lekki rozdzielacz – wybierz sytuację” z panelu ekspertów. Hero nad nim jest o 112 px niższe niż okno, więc pas wystaje nad linię zgięcia. Tory kolumn nie są równe: komórka telefonu mieści numer i godziny w jednym wierszu, komórka-etykieta tylko dwa słowa. Poniżej ok. 1400 px dłuższe etykiety („Ogród i trawnik”, „Mam już produkt”) łamią się na dwa wiersze i pas rośnie do ok. 140 px. Na razie jedno wystąpienie.",
       "zrzut": {
         "strona": "v7/home.html",
         "kotwica": "sytuacje",
@@ -2115,7 +2068,6 @@ window.CW_CE = {
         "podpis „Schemat poglądowy”"
       ],
       "warianty": {},
-      "uwagi": "Zbudowana dla strony głównej (spec „home-spec.md” §5.3) jako odpowiedź na prośbę klienta o „bajer z glebą – przekształcenie gleby ubogiej w żyzną”. Mechanika toru i przypięcia idzie za CE-12 „-proba”. Rysunek jest poglądowy: docelowa ilustracja albo animacja powstanie na etapie UI Design. Poniżej 900 px rysunek ma ok. 335 px szerokości, więc miarka i skala odczynu tracą swoje podpisy (mikrotypografia byłaby nieczytelna), a etykieta bieżącego kroku rośnie; nic przez to nie ginie, bo SVG jest aria-hidden. Na razie jedno wystąpienie.",
       "zrzut": {
         "strona": "v7/home.html",
         "kotwica": "gleba",
@@ -2145,7 +2097,6 @@ window.CW_CE = {
         "dopisek i link pod osią czasu"
       ],
       "warianty": {},
-      "uwagi": "Zbudowany dla strony głównej (spec 40-strona-www/koncepcja/home-spec.md §5.4). Węzeł z numerem to lokalna kopia elementu EL-32 w skali osi (30 px) – do zgrania przy fali 2b, gdy powstanie klasa c5-node. Horyzont efektu rozdziela pierwszy sezon od 2–5 lat: to wyróżnik treściowy strony głównej, żaden z 14 przejrzanych konkurentów tego nie podaje. Na razie jedno wystąpienie.",
       "zrzut": {
         "strona": "v7/home.html",
         "kotwica": "jak-pomagamy",
@@ -2174,7 +2125,6 @@ window.CW_CE = {
         "rząd linków pod tabami"
       ],
       "warianty": {},
-      "uwagi": "Zbudowany dla strony głównej (spec 40-strona-www/koncepcja/home-spec.md §5.6). Gama dzielona po potrzebie, nie po marce – decyzja treściowa klienta: „dopiero po kliknięciu użytkownik trafia do konkretnych produktów”. Mechanika tabów i packshot na linii podłogi przejęte z CE-39 (produkty.css / produkty.js blok 30), bez przeciągania packshotu i bez linku „Porównaj” w belce. Chip ograniczenia (CALBOR: wyłącznie uprawy sadownicze) niesie styl obrysu, nigdy koloru – zgodnie z EL-16. Kadry „z terenu” to na razie placeholdery dialektu 2 strony (c5-ph + data-ph); opisy zdjęć w spec §8. Na razie jedno wystąpienie.",
       "zrzut": {
         "strona": "v7/home.html",
         "kotwica": "produkty",
@@ -2206,7 +2156,6 @@ window.CW_CE = {
         "karta z osią pięciu kamieni i plakietką punktu bieżącego"
       ],
       "warianty": {},
-      "uwagi": "Zbudowany dla nowej strony głównej (spec home-spec.md §5.8). Oś mówi tym samym językiem co CE-49 i CE-51 (stany kamieni, znacznik „jesteśmy tutaj”), ale jest zajawką, nie harmonogramem: pięć punktów bez mechaniki otwierania. Liczby świadomie bez EL-31 (c5-aff) – sufiks podnosi się do górnej krawędzi cyfr tylko przy naprawdę dużej liczbie. Chip opisu logo korzysta z klasy strony c5h-phchip; na stronie bez niej zostaje zwykły c5-chip--dashed. Na razie jedno wystąpienie.",
       "zrzut": {
         "maxh": 1100
       }
@@ -2238,7 +2187,6 @@ window.CW_CE = {
         "stan „Dodano do koszyka”"
       ],
       "warianty": {},
-      "uwagi": "Element wspólny sklepu budowany skryptem: znacznik data-ce stoi w sklep-wspolne.js (funkcja build), jak nagłówek w chrome.js, więc CE występuje na każdej stronie, która ładuje ten skrypt – dziś lista produktów, obie karty CARBOMAT ECO i koszyk. Wyzwalacze: „dodaj do koszyka” na kartach listy i w kaflu promocyjnym, „+” w podpowiedziach wyszukiwarki, „Dodaj” w „Połącz z”, karty „Zobacz też” i „Dorzuć do zamówienia”. Zastąpił w rundzie 3 (28.09.2026) okno „Dodaj do koszyka” z rundy 2 (spec sklep-v7-spec §12.2, wątek L19); ten sam komponent ma później uprościć zakup na stronach produktowych (spec §2).",
       "zrzut": {
         "strona": "v7/sklep.html",
         "klik": ".c5sk-card[data-sort-nazwa=\"CARBOMAT ECO pH 6,0–6,5\"] [data-cw-open]",
@@ -2268,7 +2216,6 @@ window.CW_CE = {
       "warianty": {
         "z-licznikiem": "koszyk (koszyk.html#naglowek, od 28.09.2026): okruszki, pod nimi H1 „Koszyk” większym krojem (1,75–2,5 rem), a obok, na linii bazowej, liczba opakowań w koszyku („6 opakowań”; ukryta przy pustym koszyku, liczona przez koszyk.js); bez wyszukiwarki, linia pod spodem jak w bazie"
       },
-      "uwagi": "Zbudowany dla sklepu (spec sklep-v7-spec §12.8 – wyszukiwarka, §12.16 – H1 w osobnym wierszu pod okruszkami). Sklep jest listą produktów, nie stroną o sklepie, więc otwarciem jest niski pasek, nie hero CE-08. Identyfikator hero wymagany przez c5.js (od niego zależy moment pojawienia się doku doradcy).",
       "zrzut": {
         "maxh": 200
       },
@@ -2306,7 +2253,6 @@ window.CW_CE = {
         "pas „Poza wynikami”"
       ],
       "warianty": {},
-      "uwagi": "Jeden klocek, bo pas grup, pasek roboczy, kolumna filtrów i siatka są sprzężone mechanicznie (zasada jak przy CE-40 i CE-57): grupa jest filtrem jak każdy inny, a licznik, sortowanie i zwijanie kolumny działają tylko z tą listą. Korzeń to sekcja #lista, a data-ce-od=„#grupy” przesuwa początek na pas grup – nie na przyklejony pasek roboczy, którego położenie zmienia się przy przewijaniu. Spec sklep-v7-spec §5, §12.3–§12.6, §12.14 pkt 5 i §12.16; model danych listy i zasada „żaden atrybut nie jest pusty” – spec sklep-lista-produktow-spec. Ceny poglądowe.",
       "zrzut": {
         "maxh": 1400
       }
@@ -2340,7 +2286,6 @@ window.CW_CE = {
         "dwie-kolumny": "zdjęcie na dwie prawe kolumny siatki (po 15. produkcie; wizualnie po 16.), nagłówek, zdanie i jasny przycisk u dołu",
         "w-miejscu-produktu": "kafel o obrysie i rozmiarze karty produktu: kadr 1 : 1 z makietą opakowania na jasnoszarym tle, znacznikiem „promocja” i dużym „−9%” (kafel promocyjny po 12. produkcie, z najniższą ceną z 30 dni pod nagłówkiem) albo ze zdjęciem cover („Ściółka zamiast kory” po 18. produkcie); pod kadrem wyśrodkowany nagłówek, zdanie i przycisk-link wersalikami"
       },
-      "uwagi": "Zbudowany dla listy produktów (spec sklep-v7-spec §12.4 i §12.14 pkt 6, wzór on.com); pięć wystąpień w czterech wariantach, wszystkie zagnieżdżone w CE-78. Film img/wideo/narodziny-lignitu.mp4 z plakatem.",
       "zrzut": {
         "ukryj": ".c5sk-bar",
         "maxh": 800
@@ -2381,7 +2326,6 @@ window.CW_CE = {
         "linia zaufania: trzy sygnały z kreskami"
       ],
       "warianty": {},
-      "uwagi": "Na liście produktów „O sklepie” – lead i sygnały zaufania zdjęte z góry strony pod listę (zasada: nad listą tylko to, co listę zmienia); kolejność pod listą: ten blok, pas PRO, baner „Nie wiesz, jaki produkt wybrać?” (spec sklep-v7-spec §12.7). Linia zaufania to klasa kitu c5-trust z dawnego hero V5. Na razie jedno wystąpienie.",
       "zrzut": {
         "ukryj": ".c5sk-bar",
         "maxh": 500
@@ -2407,7 +2351,6 @@ window.CW_CE = {
         "zdjęcie"
       ],
       "warianty": {},
-      "uwagi": "Zastąpił na liście produktów wyśrodkowane CTA końcowe i sekcję z polem pytania do wirtualnego doradcy (spec sklep-v7-spec §12.7, wątki L14 i L15; bez przycisku kontaktu – kontakt zostaje na stronie Kontakt). Układ jak CE-36 w wariancie odwróconym, ale na panelu i z CTA zamiast opisu produktu. Na razie jedno wystąpienie.",
       "zrzut": {
         "ukryj": ".c5sk-bar",
         "maxh": 700
@@ -2436,7 +2379,6 @@ window.CW_CE = {
         "„Połącz z” (CE-20, zagnieżdżony)"
       ],
       "warianty": {},
-      "uwagi": "Wzór on.com (spec sklep-v7-spec §12.14 pkt 1, nadrzędny wobec §12.9); dwa wystąpienia o tej samej strukturze – pdp.html (pH 6,0–6,5, karta wzorcowa, do której linkują pozostałe produkty listy) i pdp-kwasny.html (pH 4,5–5,0, jeden kadr to pole zastępcze zdjęcia do wygenerowania). Identyfikatory hero (c5.js) i kup zostają w HTML.",
       "zrzut": {
         "maxh": 900
       }
@@ -2465,7 +2407,6 @@ window.CW_CE = {
         "zdanie z linkiem do strony produktu"
       ],
       "warianty": {},
-      "uwagi": "Wzór on.com (spec sklep-v7-spec §12.14 pkt 3 i §12.9 K13): na desktopie bez akordeonów, na telefonie akordeony. Cel linku „Więcej o produkcie” z kolumny zakupu (CE-82). Teksty wg spec §6.9. Dwa wystąpienia (pdp.html, pdp-kwasny.html).",
       "zrzut": {
         "maxh": 900
       }
@@ -2493,7 +2434,6 @@ window.CW_CE = {
         "pusty stan z przykładowym koszykiem"
       ],
       "warianty": {},
-      "uwagi": "Wzór stinegoya (spec sklep-v7-spec §7 i §12.10, wątki C1 i C2; stawki VAT §12.16). Parametry wysyłki i stawki VAT poglądowe (⚠️ w makiecie). Przycisk „Wczytaj przykładowy koszyk” istnieje tylko dla podglądu makiety. Pod blokiem „Dorzuć do zamówienia” – CE-20 w wariancie dorzuc.",
       "zrzut": {
         "klik": "[data-ks-sample]",
         "maxh": 900
@@ -2520,7 +2460,6 @@ window.CW_CE = {
         "panel: packshot, zdanie, skrót trzech wierszy, przyciski"
       ],
       "warianty": {},
-      "uwagi": "WYCOFANY 02.10.2026 – żył kilka godzin w pierwszym prototypie Borówki (jedyne wystąpienie). Uwagi Mateusza z artefaktu: „Za bardzo wychodzimy poza nasze już istniejące CE” oraz „Nie rób takich ilustracji. Nie zrealizujemy tego do każdego rodzaju upraw” – sekcję produktów zastąpiły karty CE-20 „produktowe” jak na Kukurydzy. Kod b-cut zdjęty z borowka.css i borowka.js; ostatnia wersja: archiwum-wersji/borowka-v7-prototyp-1-2026-10-02.html. Kod CE-85 zostaje w rejestrze na stałe, nie jest używany ponownie. Opis sprzed wycofania: produkty przypisane do miejsca działania na schemacie rzędu zamiast tabeli (ustalenie z 29.09.2026 – produkty wysoko na stronie i dedykowane uprawie).",
       "zrzut": {
         "maxh": 1100
       },
@@ -2548,7 +2487,6 @@ window.CW_CE = {
         "rząd akcji: przycisk i link"
       ],
       "warianty": {},
-      "uwagi": "WYCOFANY 02.10.2026 – żył kilka godzin w pierwszym prototypie Borówki (jedyne wystąpienie). Uwaga Mateusza z artefaktu: zostawić dwie sekcje, skrócić opis i dać infografiki jak w CE-12 na zdjęciach, zdjęcie z lewej w pierwszej, z prawej w drugiej – sekcję zastąpiły dwa wiersze CE-36 (drugi „odwrocony”) z boksem infografiki na kadrze; wskazówki i pełne opisy zeszły do pop-upów produktów. Kod b-steps, b-step, b-mix, b-tips zdjęty z borowka.css; ostatnia wersja: archiwum-wersji/borowka-v7-prototyp-1-2026-10-02.html. Kod CE-86 zostaje w rejestrze na stałe, nie jest używany ponownie.",
       "zrzut": {
         "maxh": 1200
       },
@@ -2574,7 +2512,6 @@ window.CW_CE = {
         "kafel: tytuł i akapit"
       ],
       "warianty": {},
-      "uwagi": "Powstał 02.10.2026 dla Borówki (lignit a torf). Kafle są bliskie CE-20 „Siatka kart”; osobny kod przez wykres trwałości. Jedno wystąpienie.",
       "zrzut": {
         "maxh": 1000
       }
@@ -2600,7 +2537,6 @@ window.CW_CE = {
         "rząd akcji"
       ],
       "warianty": {},
-      "uwagi": "WYCOFANY 02.10.2026 – żył kilka godzin w pierwszym prototypie Borówki (jedyne wystąpienie). Uwaga Mateusza z artefaktu: „Wykorzystaj jakieś inne CE do publikacji tej treści. Za dużo tekstu na jednym oknie” – sekcję ściółki zastąpił CE-67 „Karty z przyklejonym kadrem” (cztery karty z ikoną), a wskazówki i pełny opis zeszły do pop-upu produktu. Kod b-mulch, b-does zdjęty z borowka.css; ostatnia wersja: archiwum-wersji/borowka-v7-prototyp-1-2026-10-02.html. Kod CE-88 zostaje w rejestrze na stałe, nie jest używany ponownie.",
       "zrzut": {
         "maxh": 1200
       },
@@ -2627,7 +2563,6 @@ window.CW_CE = {
         "nota „Ważne”"
       ],
       "warianty": {},
-      "uwagi": "WYCOFANY 02.10.2026 – żył kilka godzin w pierwszym prototypie Borówki (jedyne wystąpienie). Uwaga Mateusza z artefaktu: „Ta sekcja powinna być spójna z CE-68, tak jak na innych stronach pokazujemy etapy programów z zastosowaniem produktów” – etapy sezonu stoją teraz w CE-68 „Akordeon faz z panelem”. Kod b-sez, b-zab, b-always zdjęty z borowka.css i borowka.js; ostatnia wersja: archiwum-wersji/borowka-v7-prototyp-1-2026-10-02.html. Kod CE-89 zostaje w rejestrze na stałe, nie jest używany ponownie. Z opisu sprzed wycofania: materiał klienta nie podaje miesięcy, tylko momenty sezonu, więc etapy stoją bez kalendarza.",
       "zrzut": {
         "maxh": 1200
       },
@@ -2660,7 +2595,6 @@ window.CW_CE = {
         "źródło treści (wersja bez JS)"
       ],
       "warianty": {},
-      "uwagi": "Iteracja 5 (02.10.2026, ok. 22:00, spec prochnica-plus-wzorzec-eco-spec §21) – siedem uwag Mateusza: punkty po prawej stronie linii, zrobione jako ciemny kwadrat z białym ptaszkiem, bez kresek okresów, podpis „jesteśmy tutaj” przy latach, etykiety na tłach z ikoną z przodu i bez terminu (wzór: zrzut Mateusza z ciemnymi prostokątami), biały pas wiersza na szerokość okna, tytuł „Harmonogram działań na lata 2025–2028”. Iteracja 4 (02.10.2026 wieczorem, spec prochnica-plus-wzorzec-eco-spec §20.2), uwagi Mateusza: „zrób bardziej w stylu pionowych linii, jak wcześniej wyglądało to dla harmonogramu… po najechaniu na miesiąc poszerza się on i pojawiają się opisy (już wtedy nie potrzebujemy tooltipów)”, „puste lata – przyszłość – mogą być wąskie”, „nie rób osobnej pozycji Próchnica+” – wiersz programu i jego 11 etapów zeszły z osi. Powstał 02.10.2026 na Próchnicy+ po uwagach Mateusza z artefaktu „Makieta Próchnica+ 02.10” („wystarczy prezentacja wszystkiego na jednej osi”, „zamiast trzech przycisków trzy punkty lub małe kwadraty, na hover tooltip, na click popup”): zastąpił Harmonogram (CE-49) i oś Gantta (CE-51) (spec prochnica-plus-wzorzec-eco-spec §19.5). Krewny CE-89 „Etapy sezonu nad mapą produktów”.",
       "zrzut": {
         "maxh": 900
       }
@@ -2726,8 +2660,7 @@ window.CW_CE = {
         "sześć łat min-height:44px (produkty.css, prochnica-plus.css)",
         "osiem kontekstowych nadpisań padding-inline – dziś token --c5-btn-px",
         "wf-btn z kitu i osiem jego modyfikatorów – w V7 nieużywane"
-      ],
-      "uwagi": "Przycisków kitu (wf-btn) w V7 nie używamy – zero wystąpień na siedmiu stronach. Nowy przycisk to zawsze c5-btn. Wariant --ondark nie ma własnej definicji w warstwie wspólnej: żyje w regule .c5-params .c5-btn--ondark, więc poza pasem parametrów nic nie robi – dlatego nie ma go w przykładzie obok."
+      ]
     },
     "EL-02": {
       "nazwa": "Przycisk ikonowy",
@@ -2750,8 +2683,7 @@ window.CW_CE = {
         "c5-pop__close (CARBOMAT HUMIC, 2)",
         "u-lightbox__close (Kukurydza, 2)",
         "c5-lb__close (CARBOMAT Mata, 1)"
-      ],
-      "uwagi": "Reguły pozycjonujące krzyżyk w rogu i chowające go bez JS zostają w pliku strony – tu mieszka sama anatomia przycisku."
+      ]
     },
     "EL-03": {
       "nazwa": "Link cichy",
@@ -2778,7 +2710,6 @@ window.CW_CE = {
         "u-more (Kukurydza, 3)",
         "pp-more (Próchnica+, 2)"
       ],
-      "uwagi": "Do rozstrzygnięcia przed scaleniem: która dekoracja jest domyślna – podkreślenie czy kreska pod spodem.",
       "status": "planowane (fala 2b/2c)",
       "dzis": [
         "c5pr-doc",
@@ -2816,8 +2747,7 @@ window.CW_CE = {
       "zastepuje": [
         "dziewięć identycznych kopii reguły w arkuszach stron",
         "osiem lokalnych nadpisań gap/margin"
-      ],
-      "uwagi": "Warianty --stack i --end są na razie planem – dziś odstępy poprawia się lokalnie w plikach stron."
+      ]
     },
     "EL-05": {
       "nazwa": "Link treściowy",
@@ -2844,8 +2774,7 @@ window.CW_CE = {
         "CE-29",
         "CE-38"
       ],
-      "zastepuje": [],
-      "uwagi": ""
+      "zastepuje": []
     },
     "EL-06": {
       "nazwa": "Kicker",
@@ -2878,8 +2807,7 @@ window.CW_CE = {
       ],
       "zastepuje": [
         "c5-kicker--center (osobna kopia w ośmiu arkuszach)"
-      ],
-      "uwagi": ""
+      ]
     },
     "EL-07": {
       "nazwa": "Overline",
@@ -2912,7 +2840,6 @@ window.CW_CE = {
         "c5hu-stack__no, c5pr-path__no, c5-cmp2__no, c5-tco__no",
         "u-lab, u-fz__no, u-cr__no, u-rules__no, u-vtab__no (linia kitu)"
       ],
-      "uwagi": "Decyzja z inwentarza §2: skala ECO (0.75 rem / .06em), nie skala kitu (--w-font-caption + .08em) – 92 wystąpienia na sześciu stronach wobec 123 skupionych na jednej.",
       "status": "planowane (fala 2b/2c)",
       "dzis": [
         "c5-viz__tag",
@@ -2935,8 +2862,7 @@ window.CW_CE = {
       ],
       "zastepuje": [
         "lokalne zmniejszenie w carbomat-humic.css (do decyzji)"
-      ],
-      "uwagi": ""
+      ]
     },
     "EL-09": {
       "nazwa": "Nagłówek sekcji",
@@ -2981,7 +2907,6 @@ window.CW_CE = {
         "u-fk__title",
         "pp-liczby__title"
       ],
-      "uwagi": "Warianty --tight i --sm nie są jeszcze w arkuszu; zamiana wf-h2 na Kukurydzy idzie w fali 2a, reszta w 2b.",
       "status": "planowane (fala 2b/2c)",
       "dzis": [
         "wf-h2",
@@ -3025,7 +2950,6 @@ window.CW_CE = {
       "zastepuje": [
         "36 klas h3/h4/h5 z siedmiu stron – m.in. c5-fact__title, pp-step__title, c5-mt-card__title, c5-band__title, u-h3, u-h4"
       ],
-      "uwagi": "Skala jest już w arkuszu (zaliczka z fali 2a), ale prawie nic jej jeszcze nie używa – scalenie 292 wystąpień idzie stroną po stronie w fali 2c.",
       "status": "planowane (fala 2b/2c)",
       "dzis": [
         "c5-fact__title",
@@ -3071,7 +2995,6 @@ window.CW_CE = {
         "c5hu-use__head",
         "c5-mt-proof__head"
       ],
-      "uwagi": "Do rozstrzygnięcia razem z odstępami kitu (wf-stack--N na Kukurydzy, 17 wystąpień) – dwa systemy odstępów obok siebie.",
       "status": "planowane (fala 2b/2c)",
       "dzis": [
         "c5-facts-head",
@@ -3119,8 +3042,7 @@ window.CW_CE = {
         "c5pr-read__lead",
         "c5pr-goals__lead",
         "c5hu-recipe__lead"
-      ],
-      "uwagi": "Wariant --hero jeszcze nie istnieje – dziś hero ma własną klasę c5-hero__lead."
+      ]
     },
     "EL-13": {
       "nazwa": "Akapit",
@@ -3161,7 +3083,6 @@ window.CW_CE = {
       "zastepuje": [
         "c5-muted i 16 klas treści karty – m.in. c5-mt-card__txt, pp-kcard__body, c5-fact__body, c5hu-extra__body, pp-os__desc"
       ],
-      "uwagi": "c5-muted ma dziś dwie definicje (jasny kontekst i wnętrze c5-viz) – wariant --ondark ma je zastąpić.",
       "status": "planowane (fala 2b/2c)",
       "dzis": [
         "c5-muted",
@@ -3206,8 +3127,7 @@ window.CW_CE = {
         "u-end__src",
         "c5hu-time__cap",
         "c5pr-lead-note"
-      ],
-      "uwagi": "Podniesienie bieli z .55/.6 do .8 to jedyna zamierzona zmiana wyglądu w tym elemencie – zapisana w backlogu jako poprawka AA."
+      ]
     },
     "EL-15": {
       "nazwa": "Karta",
@@ -3245,7 +3165,6 @@ window.CW_CE = {
       "zastepuje": [
         "25 klas kart i kafli – m.in. c5-mt-card, c5hu-tile, c5pr-block, pp-mcard, pp-kcard, u-fk__tile, u-cr__card, c5-var__tile, c5-use__box"
       ],
-      "uwagi": "Padding schodzi z ośmiu wartości do trzech (16 / clamp 1,25–1,75 / clamp 1,5–2). Cień zniknął już w fali 2a – jedyny w całym serwisie siedział na u-fk__tile.",
       "status": "planowane (fala 2b/2c)",
       "dzis": [
         "c5-mt-card",
@@ -3292,8 +3211,7 @@ window.CW_CE = {
         "u-num__chip",
         "c5hu-scope",
         "wf-badge z kitu"
-      ],
-      "uwagi": "Chip niesie wersaliki, więc etykieta musi być krótka – tam, gdzie dziś w pigułce siedzi całe zdanie (c5hu-scope, część c5pr-gap), element czeka na decyzję zamiast na sed."
+      ]
     },
     "EL-17": {
       "nazwa": "Nota",
@@ -3328,8 +3246,7 @@ window.CW_CE = {
         "c5hu-faqnote",
         "pp-msg",
         "pp-person__indep"
-      ],
-      "uwagi": "Wariant --dashed to dawna nota brak danych – jedyny bez ikony. c5-mt-note ma dziś kreskę z lewej, nie z góry: przejście na --rule jest widoczną zmianą i czeka na decyzję Mateusza."
+      ]
     },
     "EL-18": {
       "nazwa": "Tab",
@@ -3344,7 +3261,7 @@ window.CW_CE = {
       "opis": "Przełącznik widoku w pięciu dzisiejszych mechanikach – kafel z ikoną, tab tekstowy, pigułka, radio i nagłówek klikalny. Baza to kafel ECO: 56 px, 1 rem, ikona w ramce ⌀36.",
       "przyklad": "<div class=\"sg-stos\"><button type=\"button\" class=\"c5-tab c5-tab--tile\" aria-selected=\"true\"><span class=\"c5-icoframe c5-icoframe--circle\"><svg class=\"wf-icon\" aria-hidden=\"true\"><use href=\"#ti-arrows-sort\"></use></svg></span><span>Dodatek do gleby</span></button><button type=\"button\" class=\"c5-tab c5-tab--compact\" aria-selected=\"false\"><span class=\"c5-icoframe c5-icoframe--circle c5-icoframe--sm\"><svg class=\"wf-icon wf-icon--sm\" aria-hidden=\"true\"><use href=\"#ti-calendar\"></use></svg></span><span>2026</span></button></div>",
       "przyklad_tlo": "jasne",
-      "kod": "dziś ce/CE-11-warianty-taby.css (c5-way, c5-way--compact)",
+      "kod": "c5.css (c5-way, c5-way--compact)",
       "uzywany_w": [
         "CE-10",
         "CE-11",
@@ -3365,7 +3282,6 @@ window.CW_CE = {
         "c5-use__tab",
         "u-vtab"
       ],
-      "uwagi": "Rozjazd 5 jest już spłacony: baza c5-way to skala ECO, a wariant --compact daje 44 px dla paska lat. Przemianowanie na c5-tab czeka na falę 2b razem z wycofaniem c5.css.",
       "status": "planowane (fala 2b/2c)",
       "dzis": [
         "c5-way",
@@ -3391,7 +3307,6 @@ window.CW_CE = {
       "zastepuje": [
         "c5pr-seg i trzy klasy jego wnętrza (Produkty)"
       ],
-      "uwagi": "Do rozstrzygnięcia przy przenoszeniu: promień sterowany zmienną --c5pr-seg-r (dziś 0) i jedyne użycie --w-shadow-xs w całym serwisie.",
       "status": "planowane (fala 2b/2c)",
       "dzis": [
         "c5pr-seg",
@@ -3418,8 +3333,7 @@ window.CW_CE = {
       "zastepuje": [
         "wf-accordion__item / __trigger / __panel (Produkty, 3)",
         "pięć identycznych kopii reguł w arkuszach stron"
-      ],
-      "uwagi": "Bez JS odpowiedzi zostają otwarte – tak jak w przykładzie obok. Na stronie panel otwiera CE-17-faq.js."
+      ]
     },
     "EL-21": {
       "nazwa": "Tabela",
@@ -3446,7 +3360,6 @@ window.CW_CE = {
         "c5-mt-cmp i c5-mt-tbl (Mata)",
         "u-mt (Kukurydza)"
       ],
-      "uwagi": "Przykład obok pokazuje dzisiejszą tabelę kitu – klasa c5-table pojawi się w arkuszu razem z przemianowaniem w fali 2b.",
       "status": "planowane (fala 2b/2c)",
       "dzis": [
         "wf-table",
@@ -3491,7 +3404,6 @@ window.CW_CE = {
         "u-rows (4)",
         "c5-who__brief (6, CARBOMAT HUMIC)"
       ],
-      "uwagi": "Wariant --ondark jest obowiązkowy: pas parametrów stoi na ciemnym tle i ma kreskę w innym kolorze.",
       "status": "planowane (fala 2b/2c)",
       "dzis": [
         "c5-params__rows",
@@ -3542,8 +3454,7 @@ window.CW_CE = {
         "CE-50",
         "CE-53"
       ],
-      "zastepuje": [],
-      "uwagi": "Źródłem ikon jest chrome.js (53 ikony, użytych 38). Plik tabler-sprite.svg nie jest ładowany przez żadną z siedmiu stron – dla V7 jest martwy."
+      "zastepuje": []
     },
     "EL-24": {
       "nazwa": "Ramka ikony",
@@ -3567,15 +3478,16 @@ window.CW_CE = {
         "c5-way__ico (ECO, CARBOHUMIC, Próchnica+ – 11)",
         "c5hu-tile__ico (CARBOHUMIC, 4)",
         "c5-marq__ico"
-      ],
-      "uwagi": ""
+      ]
     },
     "EL-25": {
       "nazwa": "Boks ilustracji",
       "grupa": "ikony",
       "klasa": "c5-viz",
       "warianty": {
-        "c5-viz--light": "wersja jasna (dziś martwa kopia w c5.css)"
+        "c5-viz--light": "wersja jasna (dziś martwa kopia w c5.css)",
+        "c5-viz--rosnie": "w układzie statycznym boks bierze wysokość treści, nie mniej niż 520 px, zamiast kafla 4:5 z przycinaniem",
+        "c5-viz--luz-mobile": "do 456 px szerokości okna boks nie ma limitu wysokości i nie przycina treści"
       },
       "opis": "Ciemny kadr 4:5 pod rysunek, pierścień albo wykres: tło rgb(20 20 20 / .78), tekst biały, przypis pod spodem. Sześć stron ma wersję ciemną – jasna kopia w c5.css jest starsza i nigdzie nie wygrywa kaskadą.",
       "przyklad": "<div class=\"sg-waskie\"><figure class=\"c5-viz\"><span class=\"c5-viz__tag\">02 · Zasobność</span><div class=\"c5-viz__body\"><span class=\"c5-viz__num\">do 70%</span><p class=\"c5-muted\">udział substancji humusowych w suchej masie</p></div><figcaption class=\"c5-src c5-src--ondark\">Karta produktu, partia 2026/01.</figcaption></figure></div>",
@@ -3587,7 +3499,6 @@ window.CW_CE = {
       "zastepuje": [
         "siedem kopii w arkuszach stron (osiem rozjechanych selektorów wnętrza)"
       ],
-      "uwagi": "Rozjazd 8 sprawdzony w przeglądarce w fali 2a: kadr jest ciemny na wszystkich pięciu stronach wzorca, Kukurydza nie ma tego klocka, a Próchnica+ ma własny ciemny odpowiednik pp-sviz.",
       "status": "planowane (fala 2b/2c)",
       "dzis": [
         "c5-viz (kopie w siedmiu arkuszach)",
@@ -3626,7 +3537,6 @@ window.CW_CE = {
         "c5-mt-delta__val",
         "c5-yrs__num"
       ],
-      "uwagi": "c5-yrs__num używa tokena --w-weight-light, którego w tokens.css nie ma (działa fallback 300) – do sprzątnięcia przy scaleniu.",
       "status": "planowane (fala 2b/2c)",
       "dzis": [
         "c5-viz__num",
@@ -3641,7 +3551,8 @@ window.CW_CE = {
       "warianty": {
         "c5-bar--hairline": "kreska 1 – 2 px sterowana scaleX",
         "c5-bar--thick": "tor 40 px",
-        "c5-bar--ondark": "na ciemnym tle – tor biały .25"
+        "c5-bar--ondark": "na ciemnym tle – tor biały .25",
+        "c5-barchart--siatka": "na kontenerze wykresu w boksie ilustracji: wiersze na wspólnej siatce – kolumna etykiet tak szeroka jak najdłuższa etykieta, słupki zaczynają się w jednej linii"
       },
       "opis": "Poziomy wykres słupkowy: etykieta, tor z wypełnieniem i wartość. Wysokość wypełnienia steruje zmienna --bw; trzy cienkie paski postępu na stronach to dziś trzy kopie tej samej reguły.",
       "przyklad": "<div class=\"c5-barchart\"><div class=\"c5-bar\"><span class=\"wf-w-semibold\">Lignit</span><div class=\"c5-bar__track\"><div class=\"c5-bar__fill\" style=\"--bw:100%;\"></div></div><span class=\"c5-muted\">bardzo wysoki</span></div><div class=\"c5-bar\"><span>Torf</span><div class=\"c5-bar__track\"><div class=\"c5-bar__fill\" style=\"--bw:62%;\"></div></div><span class=\"c5-muted\">wysoki / średni</span></div><div class=\"c5-bar\"><span>Obornik</span><div class=\"c5-bar__track\"><div class=\"c5-bar__fill\" style=\"--bw:24%;\"></div></div><span class=\"c5-muted\">niski / średni</span></div></div>",
@@ -3661,8 +3572,7 @@ window.CW_CE = {
         "c5hu-time__track",
         "u-kbar__track",
         "c5-use__bar"
-      ],
-      "uwagi": "Warianty --hairline, --thick i --ondark czekają na falę 2b; wersja na ciemnym tle działa dziś przez kontekst .c5-viz."
+      ]
     },
     "EL-28": {
       "nazwa": "Pole formularza",
@@ -3681,8 +3591,7 @@ window.CW_CE = {
       ],
       "zastepuje": [
         "lokalne min-height:44px w prochnica-plus.css"
-      ],
-      "uwagi": "Reguła celuje w #main, więc pole w doku doradcy (buduje je chrome.js) zostaje z promieniem 8 px – do backlogu."
+      ]
     },
     "EL-29": {
       "nazwa": "Kontener",
@@ -3725,8 +3634,7 @@ window.CW_CE = {
       "zastepuje": [
         "osiem identycznych kopii w arkuszach stron",
         "wf-container z kitu – zero użyć w V7"
-      ],
-      "uwagi": ""
+      ]
     },
     "EL-30": {
       "nazwa": "Sekcja",
@@ -3767,8 +3675,7 @@ window.CW_CE = {
       "zastepuje": [
         "siedem identycznych kopii w arkuszach stron",
         "c5-facts-sec, c5-dose-sec, c5-diff-sec, pp-scene-sec"
-      ],
-      "uwagi": "Na Kukurydzy sekcja jest niższa (76,8 px zamiast 89,6) przez lokalne nadpisanie u-num – do sprzątnięcia w fali 2b."
+      ]
     },
     "EL-31": {
       "nazwa": "Sufiks liczby",
@@ -3787,8 +3694,7 @@ window.CW_CE = {
         "u-nb__unit",
         "pp-liczba__aff (jednostki)",
         "sufiksy w c5-mt-stat__val"
-      ],
-      "uwagi": "Uwagi Mateusza 15–17.09.2026: jednostki i symbol procentu małe, u górnej krawędzi cyfr, w kolorze liczby; jedna reguła dla wszystkich wystąpień CE-24."
+      ]
     },
     "EL-32": {
       "nazwa": "Węzeł z numerem",
@@ -3813,7 +3719,6 @@ window.CW_CE = {
         "c5-kk__card::before (CE-67, karty z kadrem – licznik CSS)",
         "c5-fa__no (CE-68, akordeon faz)"
       ],
-      "uwagi": "W ramkach Figma węzły mają zaokrąglone narożniki – stylistykę ramek opracujemy później w indeksie CE (decyzja Mateusza 19.09.2026).",
       "status": "planowane (fala 2b/2c)",
       "dzis": [
         "c5-tl__no",
@@ -3843,7 +3748,6 @@ window.CW_CE = {
         "c5-cb__prod (CE-66, tablica warunków)",
         "c5-fa__prod (CE-68, akordeon faz)"
       ],
-      "uwagi": "Wzór: ramki Figma Mateusza „Frame 213” i „Frame 218”.",
       "status": "planowane (fala 2b/2c)",
       "dzis": [
         "c5-tl__prod",

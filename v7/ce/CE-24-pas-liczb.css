@@ -1,0 +1,357 @@
+/* ===== CE-24 · Pas liczb – wariant „kafle-2x2" (rejestr: ce-rejestr.js) ======
+   Prefix: c5-nums. A dark panel standing one gutter inside the window, in it a
+   grid of tiles a shade lighter than the panel: the big number at the top
+   edge of the tile on the right, the label and the source line at the bottom
+   edge on the left, the middle left empty. An optional heading stands in the
+   panel above the grid.
+
+   The file carries every layout of the block, one section per variant, told
+   apart by the class of the root: `c5-nums` (this layout, shared module),
+   `pp-dark` (the same `kafle-2x2` layout as the soil programme page builds it),
+   `on-dark` (`kolowrotek`, rows with thin lines), `u-nb` and `b-nb` (`kolumny`,
+   a light panel in three columns). The sets of classes are disjoint, so the
+   sections do not meet in the cascade; inside a section the order of the rules
+   is the order of the source.
+
+   Markup:
+     .c5-nums                            root: a section or a div, NOT a .c5-sec
+       .c5-nums__in.c5-wrap.c5-wrap--wide
+         .c5-nums__title                 optional heading (any level)
+         .c5-nums__grid                  ul / ol
+           .c5-nums__tile                li
+             .c5-nums__num               the number and its affixes (EL-31 host)
+               .c5-aff                   optional affix BEFORE the number („do”)
+               .c5-nums__odo[data-c5-odo]   the number itself, sign and comma
+                                         included: „+33,3”, „−1119,4”
+               .c5-aff                   optional affix after it („%”, „m³/ha”)
+             .c5-nums__label             what the number says
+             .c5-nums__note              optional small remark under the label
+             .c5-src.c5-src--ondark      optional source line (EL-14)
+   The number may also stand as plain text in .c5-nums__num, without the
+   __odo element – it then simply never rolls.
+
+   Tiles per row: one below 700 px, two from 700 px, and from 900 px three when
+   the grid holds exactly 3 or 6 tiles (2 and 4 stay in twos – the 2 x 2 of the
+   name). `--c5-nums-cols` on .c5-nums__grid overrides the count from 700 px.
+   The number is sized from the width of its own tile, so it shrinks by itself
+   in a three-column grid and on a phone; if a value still runs out of room,
+   its affix wraps to the next line instead of being cut.
+
+   Knobs (custom properties on .c5-nums or above it):
+     --c5-nums-mx        side margin of the panel (one gutter by default)
+     --c5-nums-my        margin above and below the panel (0 by default)
+     --c5-nums-minh      minimum height of the panel (100svh = a full screen)
+     --c5-nums-pad       padding above and below the content of the panel
+     --c5-nums-gap       gap between the tiles
+     --c5-nums-tile-h    minimum height of a tile from 700 px
+     --c5-nums-size      size of the number
+     --c5-nums-bg, --c5-nums-tile    panel and tile fill
+
+   The digits roll only with CE-24-pas-liczb.js, on wide screens and
+   without reduced motion; otherwise – and without JS – the final value stands
+   in the markup from the start.
+   ========================================================================== */
+
+/* ===== wariant: kafle-2x2 ===== */
+
+.c5-nums{
+  --c5-nums-mx:var(--c5-gutter,30px);
+  --c5-nums-my:0px;
+  --c5-nums-minh:0px;
+  --c5-nums-pad:clamp(1.25rem,2.8vw,2.5rem);
+  --c5-nums-gap:16px;
+  --c5-nums-tile-h:280px;
+  --c5-nums-size:clamp(3rem,7vw,8.5rem);
+  --c5-nums-bg:var(--w-gray-900);
+  --c5-nums-tile:rgb(255 255 255 / .05);
+  position:relative;display:flex;flex-direction:column;min-height:var(--c5-nums-minh);
+  margin:var(--c5-nums-my) var(--c5-nums-mx);overflow:clip;
+  background:var(--c5-nums-bg);color:var(--w-text-inverse);}
+/* The number follows the width of its own tile wherever container units exist
+   (17.4cqi of a tile in a two-column grid at 1440 px is the 7vw above). A tile
+   that takes a whole row of the two-column grid is about twice as wide, so it
+   reads less than half the share and its number matches the other two. */
+@supports (width:1cqi){
+  .c5-nums{--c5-nums-size:clamp(2.75rem,17.4cqi,8.5rem);}
+  @media (min-width:700px) and (max-width:899px){
+    .c5-nums__grid > .c5-nums__tile:nth-child(3):last-child{--c5-nums-size:clamp(2.75rem,7.85cqi,8.5rem);}
+  }
+}
+/* focus ring on the dark ground */
+.c5-nums :focus-visible{outline-color:var(--w-focus-ring-inverse);}
+
+.c5-nums__in{flex:1 1 auto;display:flex;flex-direction:column;gap:clamp(1.5rem,3vw,2.5rem);
+  width:100%;padding-block:var(--c5-nums-pad);}
+/* the heading keeps a long distance from the top edge of the panel */
+.c5-nums__title{margin:clamp(4.5rem,7.3vw,6.75rem) 0 0;max-width:none;
+  font-size:clamp(2rem,4vw,3.25rem);line-height:1.15;font-weight:var(--w-weight-medium);
+  letter-spacing:-0.01em;color:inherit;}
+
+/* --- Grid ---------------------------------------------------------------------- */
+/* the grid takes the rest of the panel height, so the tiles grow with a panel
+   that is given a minimum height */
+.c5-nums__grid{flex:1 1 auto;display:grid;grid-template-columns:minmax(0,1fr);
+  gap:var(--c5-nums-gap);margin:0;padding:0;list-style:none;}
+
+/* --- Tile ---------------------------------------------------------------------- */
+/* a size container: the number reads its width (cqi) */
+.c5-nums__tile{container-type:inline-size;display:flex;flex-direction:column;gap:var(--w-space-3);
+  min-width:0;margin:0;padding:clamp(1.5rem,2.4vw,2rem);background:var(--c5-nums-tile);}
+/* Host of the affix EL-31 (`c5-aff`, ce/00-base.css): flex, top-aligned,
+   line-height 1, the gap between the number and its affix. */
+.c5-nums__num{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:flex-end;gap:0 .12em;
+  font-size:var(--c5-nums-size);line-height:1;font-weight:var(--w-weight-medium);letter-spacing:-0.03em;
+  font-variant-numeric:tabular-nums;white-space:nowrap;}
+/* label and source go to the bottom edge; the padding is the least distance
+   the label keeps from the number */
+.c5-nums__label{display:block;margin:auto 0 0;padding-top:var(--w-space-5);max-width:38ch;
+  font-size:1.0625rem;line-height:1.35;color:var(--w-gray-200);text-wrap:pretty;}
+.c5-nums__note{display:block;font-size:0.8125rem;line-height:1.4;color:var(--w-gray-400);}
+.c5-nums__tile > .c5-src{display:block;max-width:46ch;}
+
+/* --- Digit reel -------------------------------------------------------------------
+   Every digit is a window one digit high holding a strip of values, the target
+   at the bottom and the way to it above. The strip starts pushed up by its own
+   length, so a 0 stands in the window, and the animation brings it back to 0:
+   the digits roll from top to bottom. A sign or a comma is a still cell of the
+   same height. The script builds all of it; the markup carries a plain number.
+   `line-height` equals the window height, so the plain number sits exactly
+   where the digit of the strip does and the affix aims at one edge in both. */
+.c5-nums__odo{--c5-nums-odo-h:1.06em;display:inline-flex;line-height:var(--c5-nums-odo-h);}
+.c5-nums__odo-wrap{display:inline-flex;}
+.c5-nums__odo-d,.c5-nums__odo-s{display:block;height:var(--c5-nums-odo-h);}
+.c5-nums__odo-d{overflow:hidden;}
+.c5-nums__odo-s{white-space:pre;}
+.c5-nums__odo-strip{display:block;will-change:transform;
+  transform:translateY(calc(var(--c5-nums-i,0) * var(--c5-nums-odo-h) * -1));}
+.c5-nums__odo-strip > span{display:block;height:var(--c5-nums-odo-h);line-height:var(--c5-nums-odo-h);}
+.c5-nums__odo.is-roll .c5-nums__odo-strip{transition:transform 1.1s cubic-bezier(.2,.7,.2,1);
+  transition-delay:var(--c5-nums-delay,0ms);}
+
+/* --- From 700 px: tiles side by side -------------------------------------------- */
+@media (min-width:700px){
+  .c5-nums__grid{grid-template-columns:repeat(var(--c5-nums-cols,2),minmax(0,1fr));}
+  .c5-nums__tile{min-height:var(--c5-nums-tile-h);}
+  .c5-nums__label{font-size:1.25rem;}
+  .c5-nums__grid > .c5-nums__tile:only-child{grid-column:1 / -1;}
+}
+@media (min-width:700px) and (max-width:899px){
+  /* three tiles in two columns: the one left alone takes the whole row */
+  .c5-nums__grid > .c5-nums__tile:nth-child(3):last-child{grid-column:1 / -1;}
+}
+@media (min-width:900px){
+  .c5-nums__grid:has(> :nth-child(3):last-child),
+  .c5-nums__grid:has(> :nth-child(6):last-child){--c5-nums-cols:3;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .c5-nums__odo.is-roll .c5-nums__odo-strip{transition:none;}
+}
+
+
+/* ===== wariant: kafle-2x2 – implementacja Próchnicy+ (pp-*) =====
+   The soil programme page builds the variant under its own classes: a dark frame
+   with a gutter margin at screen height; the title gets a large gap from the top
+   edge and the four rows become a 2 x 2 grid of tiles a shade lighter than the
+   frame – the big number at the top edge on the right, the label at the bottom
+   edge on the left. The digits are vertical strips 0–9 built by JS (module 60), so
+   without JS and with reduced motion a plain number stands in the markup. */
+.pp-dark{position:relative;min-height:100svh;margin-inline:var(--c5-gutter);overflow:clip;
+  background:var(--w-gray-900);color:var(--w-text-inverse);padding-block:var(--c5-gutter);}
+/* focus ring on the dark background */
+.pp-dark :focus-visible{outline-color:var(--w-focus-ring-inverse);}
+.pp-liczby{display:flex;flex-direction:column;gap:clamp(1.5rem,3vw,2.5rem);
+  min-height:calc(100svh - 2 * var(--c5-gutter));
+  padding-block:clamp(4rem,8vw,7.5rem) clamp(1.5rem,3vw,2.5rem);}
+.pp-liczby__title{font-size:clamp(2rem,4vw,3.25rem);max-width:none;}
+/* The 2 x 2 grid fills the rest of the frame height (the tiles grow with it). */
+.pp-liczby__rows{flex:1 1 auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;margin:0;padding:0;list-style:none;}
+
+/* Tile: the number at the top edge on the right, the label at the bottom edge
+   on the left; the middle stays empty. */
+.pp-liczba{display:flex;flex-direction:column;justify-content:space-between;
+  gap:var(--w-space-6);min-height:280px;background:rgb(255 255 255 / .05);
+  padding:clamp(1.5rem,2.4vw,2rem);}
+.pp-liczba__label{font-size:1.25rem;line-height:1.35;color:var(--w-gray-200);max-width:38ch;}
+.pp-liczba__note{display:block;margin-top:var(--w-space-3);font-size:0.8125rem;color:var(--w-gray-400);}
+/* Affix host (EL-31 `c5-aff`): aligned to the TOP, a gap only before the
+   suffix – the „+" prefix stands at the size of the number right next to the
+   digit, so the shared `gap` must not push it away. The suffix offset is the
+   default from `ce/00-base.css`; the rest is up to the `line-height` of the
+   digit reel below. */
+.pp-liczba__num{display:flex;align-items:flex-start;justify-content:flex-end;
+  font-size:clamp(3.5rem,7vw,8.5rem);line-height:1;font-weight:var(--w-weight-medium);
+  letter-spacing:-0.03em;font-variant-numeric:tabular-nums;}
+.pp-odo + .c5-aff{margin-left:.12em;}
+
+/* --- Digit reel -------------------------------------------------------------
+   Every digit is a window one digit high, holding a strip of values (the target
+   at the bottom, the way to it above). Start: the strip is pushed up by its own
+   length, so a 0 stands in the window; the animation brings it back to 0, i.e.
+   the digits scroll from top to bottom. Transform only. */
+/* `line-height` equal to the window height: without JS and with reduced motion a
+   plain text stands here and it must sit exactly where the digit in the strip
+   does – otherwise the suffix would aim at two different edges. */
+.pp-odo{--pp-odo-h:1.06em;display:inline-flex;line-height:var(--pp-odo-h);}
+.pp-odo__wrap{display:inline-flex;}
+.pp-odo__d{display:block;height:var(--pp-odo-h);overflow:hidden;}
+.pp-odo__strip{display:block;transform:translateY(calc(var(--pp-i,0) * var(--pp-odo-h) * -1));will-change:transform;}
+.pp-odo__strip > span{display:block;height:var(--pp-odo-h);line-height:var(--pp-odo-h);}
+.pp-odo.is-roll .pp-odo__strip{transition:transform 1.1s cubic-bezier(.2,.7,.2,1);transition-delay:var(--pp-delay,0ms);}
+
+@media (max-width:699px){
+  /* one column of tiles */
+  .pp-liczby__rows{grid-template-columns:minmax(0,1fr);}
+  .pp-liczba{min-height:0;gap:var(--w-space-5);}
+  .pp-liczba__num{font-size:clamp(3.25rem,15vw,6rem);}
+  .pp-liczba__label{font-size:1.0625rem;max-width:none;}
+}
+@media (prefers-reduced-motion: reduce){
+  .pp-odo.is-roll .pp-odo__strip{transition:none;}
+}
+
+
+/* ===== wariant: kolowrotek (on-*) =====
+   A 30 px inset dark frame the height of the screen, title top left, rows „label
+   and source | big number" separated by thin lines. The digits are vertical
+   strips built by JS, so without JS and with reduced motion the final value
+   simply stands in the markup. */
+.on-dark{position:relative;min-height:100svh;margin-inline:var(--c5-gutter);overflow:clip;
+  background:var(--w-gray-900);color:var(--w-text-inverse);padding-block:var(--c5-gutter);}
+/* focus ring on a dark background */
+.on-dark :focus-visible{outline-color:var(--w-focus-ring-inverse);}
+.on-nums{display:flex;flex-direction:column;gap:clamp(2rem,5vw,4rem);
+  min-height:calc(100svh - 2 * var(--c5-gutter));}
+.on-nums__title{font-size:clamp(2rem,4vw,3.25rem);max-width:none;}
+/* the rows land in the lower part of the frame */
+.on-nums__rows{display:flex;flex-direction:column;margin:auto 0 0;padding:0 0 58px;list-style:none;}
+
+.on-num{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--w-space-5);align-items:center;
+  padding-block:clamp(.35rem,1vw,.75rem);}
+.on-num + .on-num{border-top:1px solid rgb(255 255 255 / .18);}
+.on-num__label{font-size:0.9375rem;line-height:1.45;color:var(--w-gray-300);max-width:46ch;}
+.on-num__src{display:block;margin-top:var(--w-space-2);}
+.on-num__val{display:flex;align-items:flex-end;justify-content:flex-end;
+  font-size:clamp(3.5rem,8vw,7rem);line-height:1;font-weight:var(--w-weight-medium);
+  letter-spacing:-0.03em;font-variant-numeric:tabular-nums;}
+
+/* --- Digit reel -------------------------------------------------------------
+   Every digit is a window one digit high, holding a strip of values (the target
+   at the bottom, the way to it above). Start: the strip is pushed up by its own
+   length, so a 0 stands in the window; the animation brings it back to 0, i.e.
+   the digits scroll from top to bottom. Transform only. */
+.on-odo{--on-odo-h:1.06em;display:inline-flex;}
+.on-odo__wrap{display:inline-flex;}
+.on-odo__d{display:block;height:var(--on-odo-h);overflow:hidden;}
+.on-odo__strip{display:block;transform:translateY(calc(var(--on-i,0) * var(--on-odo-h) * -1));will-change:transform;}
+.on-odo__strip > span{display:block;height:var(--on-odo-h);line-height:var(--on-odo-h);}
+.on-odo.is-roll .on-odo__strip{transition:transform 1.1s cubic-bezier(.2,.7,.2,1);transition-delay:var(--on-delay,0ms);}
+
+@media (max-width:699px){
+  /* label above the number (as on the mat page) */
+  .on-num{grid-template-columns:minmax(0,1fr);gap:var(--w-space-2);
+    padding-block:clamp(.75rem,3vw,1.25rem);}
+  .on-num__val{justify-content:flex-start;font-size:clamp(3rem,14vw,5rem);}
+  .on-num__label{max-width:none;}
+}
+@media (max-width:899px){
+  /* a phone screen is not tall enough for a full-height frame with five rows */
+  .on-dark{min-height:0;}
+  .on-nums{min-height:0;}
+  .on-nums__rows{padding-bottom:0;}
+}
+@media (prefers-reduced-motion: reduce){
+  .on-odo.is-roll .on-odo__strip{transition:none;}
+}
+
+
+/* ===== wariant: kolumny (u-nb*, Kukurydza) =====
+   Key numbers in three columns: a light panel 30 px from the window edge, 70svh
+   high, divided into three columns by thin lines. A column reads: chip, gap,
+   number, caption; the columns share the row tracks of the parent through
+   `subgrid`, so the numbers stand on one line and the captions start at one
+   height however many lines the chip broke into. Without `subgrid` support a
+   column is a plain four-row grid: the rows stop matching between the columns,
+   nothing more. The count-up is the `data-count` mechanic of `uprawa.js`. */
+.u-nb{display:flex;flex-direction:column;justify-content:center;
+  margin-inline:var(--c5-gutter);margin-block:var(--c5-gutter);
+  padding:clamp(3rem,6vw,5rem) clamp(1.5rem,4vw,4rem);
+  min-height:70svh;background:var(--w-surface-subtle);color:var(--w-text-primary);}
+.u-nb__cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  grid-template-rows:auto 1fr auto auto;}
+.u-nb__col{display:grid;grid-row:span 4;grid-template-rows:subgrid;
+  padding-inline:clamp(1.25rem,3vw,2.5rem);}
+.u-nb__col:first-child{padding-inline-start:0;}
+.u-nb__col:last-child{padding-inline-end:0;}
+.u-nb__col + .u-nb__col{border-left:1px solid var(--w-border-default);}
+.u-nb__chip{justify-self:start;align-self:start;}
+/* Row 2 keeps the chip away from the number; `1fr` lets it take the slack. */
+.u-nb__gap{min-height:clamp(2rem,6vh,4rem);}
+/* The big number: light, tightly spaced, equal-width digits; three stand side
+   by side and „20–40 l/ha" is the widest string on the page. Affix host: `flex`
+   + `align-items:flex-start` – the EL-31 suffix `c5-aff` from `ce/00-base.css`
+   sits at the top edge of the digits. */
+.u-nb__val{display:flex;align-items:flex-start;gap:.12em;
+  font-size:clamp(3rem,6.2vw,6.75rem);line-height:1;font-weight:var(--w-weight-regular);
+  letter-spacing:-0.03em;font-variant-numeric:tabular-nums;white-space:nowrap;
+  color:var(--w-text-primary);}
+.u-nb__cap{max-width:22rem;margin-top:var(--w-space-3);}
+.u-nb__chips{display:flex;flex-wrap:wrap;gap:var(--w-space-2);margin-top:var(--w-space-3);}
+
+/* the whole page runs on the wide container, so the
+   panel lines up with it instead of keeping its own 30 px gutter – 40 px from
+   the window edges, capped at 1720 px (the 1800 px container minus its two
+   40 px paddings) and centred above that. The panel is a section, not a
+   `c5-wrap`, so the geometry is written by hand: `width` gives the 40 px
+   margins, `max-width` the cap, `margin-inline:auto` the centring. */
+@media (min-width:900px){
+  .u-nb{margin-inline:auto;width:calc(100% - 80px);max-width:1720px;}
+  /* Three 530 px columns: the caption may take a little more than the 22 rem
+     it needs at 1180 px without breaking the column's two-line rhythm. */
+  .u-nb__cap{max-width:26rem;}
+}
+
+@media (max-width:899px){
+  /* Columns stack, so the vertical rules become one hairline above each
+     following block and the spacer rows go away with the subgrid. */
+  .u-nb{margin-inline:0;min-height:0;}
+  .u-nb__cols{grid-template-columns:minmax(0,1fr);grid-template-rows:none;}
+  .u-nb__col{grid-row:auto;grid-template-rows:none;
+    padding-inline:0;padding-block:var(--w-space-6);}
+  .u-nb__col + .u-nb__col{border-left:0;border-top:1px solid var(--w-border-default);}
+  .u-nb__gap{display:none;}
+  .u-nb__val{font-size:clamp(3.5rem,18vw,6rem);}
+}
+
+
+/* ===== wariant: kolumny – kopia Borówki (b-nb*) =====
+   Same anatomy as the corn page: chip, gap, big number with its affix, caption.
+   Differs in four values: height 60svh, caption width 24rem, the number on a
+   phone clamp(3.25rem,17vw,6rem), no chip row. */
+.b-nb{display:flex;flex-direction:column;justify-content:center;
+  margin-inline:var(--c5-gutter);margin-block:var(--c5-gutter);
+  padding:clamp(3rem,6vw,5rem) clamp(1.5rem,4vw,4rem);
+  min-height:60svh;background:var(--w-surface-subtle);color:var(--w-text-primary);}
+.b-nb__cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:auto 1fr auto auto;}
+.b-nb__col{display:grid;grid-row:span 4;grid-template-rows:subgrid;padding-inline:clamp(1.25rem,3vw,2.5rem);}
+.b-nb__col:first-child{padding-inline-start:0;}
+.b-nb__col:last-child{padding-inline-end:0;}
+.b-nb__col + .b-nb__col{border-left:1px solid var(--w-border-default);}
+.b-nb__chip{justify-self:start;align-self:start;}
+.b-nb__gap{min-height:clamp(2rem,6vh,4rem);}
+.b-nb__val{display:flex;align-items:flex-start;gap:.12em;margin:0;
+  font-size:clamp(3rem,6.2vw,6.75rem);line-height:1;font-weight:var(--w-weight-regular);
+  letter-spacing:-0.03em;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--w-text-primary);}
+.b-nb__cap{max-width:24rem;margin-top:var(--w-space-3);}
+@media (min-width:900px){
+  .b-nb{margin-inline:auto;width:calc(100% - 80px);max-width:1720px;}
+}
+@media (max-width:899px){
+  .b-nb{margin-inline:0;min-height:0;}
+  .b-nb__cols{grid-template-columns:minmax(0,1fr);grid-template-rows:none;}
+  .b-nb__col{grid-row:auto;grid-template-rows:none;padding-inline:0;padding-block:var(--w-space-6);}
+  .b-nb__col + .b-nb__col{border-left:0;border-top:1px solid var(--w-border-default);}
+  .b-nb__gap{display:none;}
+  .b-nb__val{font-size:clamp(3.25rem,17vw,6rem);}
+}

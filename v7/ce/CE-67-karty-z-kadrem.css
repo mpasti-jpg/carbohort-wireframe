@@ -5,13 +5,13 @@
    button lying on it. The frame stands still while the cards scroll past and
    leaves with the end of the section; in the normal flow it starts level with
    the kicker.
-   Pattern: Figma frame „Frame 222” (19.09.2026) – the layout and the mechanics
+   Pattern: Figma frame „Frame 222” – the layout and the mechanics
    only. The type and the colours stay ours: grey scale, --w-* tokens, square
-   corners, no shadows (the outline kicker is Mateusz's one sanctioned round
+   corners, no shadows (the outline kicker is the one sanctioned round
    corner). The card numbers are drawn by a CSS counter, so the six sentences
    of the diagnostic package stay untouched in the HTML.
    The frame keeps the same 20 px to the top, the bottom and the RIGHT edge of
-   the window (designer, 19.09): the height comes straight from the window and
+   the window: the height comes straight from the window and
    the right edge bleeds `--c5-kk-bleed` into the 40 px side padding of the
    wide container, so above 1800 px it stands 20 px inside the outer edge of
    the container. The left column is untouched by that bleed – the `fr` tracks
@@ -30,7 +30,8 @@
    The cascade of the cards uses the reveal of this page (`u-reveal` +
    `is-in` from uprawa.js); the resting state is visible, so without JS and
    with reduced motion every card simply stands there.
-   Built for Kukurydza (#u-decyzje); no other page uses the block yet. ===== */
+   Base layout: Kukurydza (#u-decyzje). Variant `ikony` (class `c5-kk--ikony`
+   on the root): cards with an icon frame and a title, see the end of the file. ===== */
 
 .c5-kk{
   /* the pinned frame: how far it stands from the top, the bottom and the right
@@ -120,7 +121,7 @@
   .c5-kk__grid{order:4;margin-top:var(--w-space-5);}
 }
 
-/* two cards in a row already below the breakpoint (§14.3 point 4) */
+/* two cards in a row already below the breakpoint */
 @media (min-width:640px){
   .c5-kk__grid{grid-template-columns:repeat(2,minmax(0,1fr));}
 }
@@ -134,7 +135,7 @@
     gap:clamp(2rem,2.8vw,3rem);}
   /* NO `align-items`: the side column has to stretch over the whole row, because
      that stretch is the room the pinned frame travels along */
-  /* A tall window (Mateusz, 19.09 evening): when the left column is shorter than
+  /* A tall window: when the left column is shorter than
      the pinned frame, the whole block is on screen at once and the row is as
      high as the frame – the h3 with its cards then stands on the bottom line of
      the frame (20 px above the window edge) instead of leaving the slack under
@@ -158,3 +159,17 @@
 @media (prefers-reduced-motion: reduce){
   .c5-kk__card{transition:none;}
 }
+
+/* ===== wariant: ikony ===== (c5-kk--ikony on the root)
+   Cards with an icon frame (EL c5-icoframe) and a title instead of the numbered
+   node; no h3 above the grid, so the grid itself goes to the bottom line of the
+   pinned frame. CARBOHUMIC #jaka-gleba, Borówka #b-sciolka. */
+.c5-kk--ikony .c5-kk__card::before{content:none;}
+.c5-kk--ikony .c5-kk__card .c5-icoframe{margin-bottom:var(--c5-kk-node-gap);}
+.c5-kk--ikony .c5-kk__card p{margin-top:var(--w-space-2);color:var(--w-text-secondary);}
+@media (min-width:900px){.c5-kk--ikony .c5-kk__grid{margin-top:auto;}}
+
+/* ===== kadr bez zdjęcia: placeholder (CARBOHUMIC, do czasu zdjęcia) =====
+   dark, as a photo will be, the label at the top (the button lies at the bottom) */
+.c5hu-kk__ph{display:block;min-height:0;border:0;border-radius:0;background:var(--w-gray-500);}
+.c5hu-kk__phlabel{position:absolute;left:var(--c5-kk-cta-x);top:var(--w-space-5);font-size:var(--w-font-caption-size);font-weight:var(--w-weight-medium);color:rgb(255 255 255 / .85);}

@@ -1,70 +1,144 @@
 /* ===== CE-16 · Pas PRO (rejestr: ce-rejestr.js) =====
-   Dark strip for the professional audience: a media frame scaling from .5 to 1
-   while it scrolls, heading on the left, paragraph and two buttons on the right.
-   Merged from carbomat.css „Pas PRO"; carbomat-mata.css, carbohumic.css,
-   carbomat-humic.css and produkty.css carry the same rules.
-   What stays in <strona>.css: the `.c5-pro` container (its margin follows the
-   section it sits in – inside „Sezon" on ECO and HUMIC, a section of its own
-   elsewhere), the media frame and whatever fills it (photo or placeholder), and
-   the paragraph colour. Variant „zamykajacy" (Kukurydza, no paragraph) has
-   linked this file since 18.09.2026; its page block only widens the button
-   column for its long labels. ===== */
+   Dark band for the professional audience: a media frame that scales while the
+   band scrolls in, heading on the left, paragraph and two buttons on the right.
+   One file for every page that links the band; nothing about it lives in
+   <strona>.css. A page picks its look with modifier classes on the root and
+   fits its content with custom properties in style="…" on the root:
 
-/* --- Pas PRO (spec §8, wzór sensiq.co) -------------------------------------
-   Szare tło, zdjęcie absolutne skalowane przy przewijaniu od wąskiego kadru
-   (.5) do pełnej szerokości (1); po lewej nagłówek, po prawej akapit i dwa
-   przyciski. Bez ruchu (mobile / reduced / bez JS): zdjęcie statyczne nad
-   treścią, 16:10, bez skalowania. */
-.c5-pro{position:relative;background:var(--w-gray-600);color:var(--w-text-inverse);overflow:hidden;}
-/* `margin-top` pasa zostaje w <strona>.css: na CARBOMAT ECO i CARBOMAT HUMIC
-   pas stoi wewnątrz sekcji „Sezon", na pozostałych jest osobną sekcją. */
-/* narożniki 30 px – jedyny wyjątek od ostrych narożników V5, na wyraźne
-   życzenie Mateusza (§13.8) */
-/* statycznie (reduced / bez JS) zdjęcie stoi nad treścią – kadr wyśrodkowany */
-.c5-pro__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 45%;}
+   modifiers  c5-pro--ramka          static frame inset by the gutter, 3:2
+              c5-pro--kadr-3-2       as above, and in motion the frame keeps 3:2
+              c5-pro--zielen         heading and buttons of „Frame 186-253”
+              c5-pro--scrim-ukosny   ground #777771, 21 px paragraph, diagonal wash
+              c5-pro--h-mackinac     heading in P22 Mackinac Pro
+              c5-pro--zamykajacy     closing band: stacked buttons on the photo
+   knobs      --pro-mt        air above the band (default 0)
+              --pro-img-pos   object-position of the photo (default 50% 45%, in motion 50% 20%)
+              --pro-scrim     alpha of the flat scrim in motion (default .25)
+              --pro-side-max  width of the button column in „zamykajacy” (default none / 240px)
+
+   The variant „kadr-z-prawej” (sklep, pdp, pdp-kwasny) is a separate
+   implementation in c5.css and does not link this file. Pages that load c5.css
+   next to this file (kukurydza, borowka) get its `.c5-pro*` rules first; this
+   file comes later in the cascade and settles every property they touch. ===== */
+
+/* ===== baza ===== */
+.c5-pro{position:relative;background:var(--w-gray-600);color:var(--w-text-inverse);overflow:hidden;margin-top:var(--pro-mt,0);}
+/* 30 px corners – the only exception to the sharp corners of V5 (§13.8) */
+.c5-pro__media{position:relative;width:100%;aspect-ratio:var(--pro-ratio,16/10);border-radius:30px;overflow:hidden;}
+.c5-pro__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--pro-img-pos,50% 45%);}
+/* placeholder until the photo arrives – two classes, so the page's `.c5-ph` does not win */
+.c5-pro__media .c5-pro__ph{position:absolute;inset:0;width:100%;height:100%;background:var(--w-gray-500);}
+.c5-pro__media .c5-pro__ph::after{color:rgb(255 255 255 / .7);}
+.c5-pro__ph .c5-ph__label{color:rgb(255 255 255 / .6);}
+.c5-pro__ph--obrys{display:grid;place-items:start center;padding-top:clamp(1.25rem,4vh,2.5rem);border:1px solid rgb(255 255 255 / .35);}
+.c5-pro__phlabel{font-size:var(--w-font-caption-size);font-weight:var(--w-weight-medium);color:rgb(255 255 255 / .75);}
 .c5-pro__grid{position:relative;z-index:1;padding-block:clamp(2.5rem,6vw,5rem);display:flex;flex-direction:column;gap:clamp(1.5rem,4vw,2.5rem);}
 .c5-pro__grid h2{font-size:clamp(1.75rem,3vw,2.5rem);line-height:1.15;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;max-width:486px;}
 .c5-pro__side{display:flex;flex-direction:column;gap:clamp(1.5rem,3vw,2rem);max-width:486px;}
 .c5-pro__side p{color:var(--w-text-inverse);opacity:.75;}
-.c5-pro__grid .c5-btnrow{gap:var(--w-space-2);}
-/* EL-01: the narrow button of the PRO band – set the token, do not override
-   `padding-inline` (same value as `c5-btn--tight`). */
+/* `margin-top:0` takes back the margin c5.css gives the row on pages that load it */
+.c5-pro__grid .c5-btnrow{gap:var(--w-space-2);margin-top:0;}
+/* EL-01: the narrow button of the PRO band – set the token, do not override `padding-inline` */
 .c5-pro__grid .c5-btn{--c5-btn-px:clamp(18px,2.2vw,32px);}
 .c5-pro__login{background:transparent;color:var(--w-text-inverse);border-color:rgb(255 255 255 / .6);}
 .c5-pro__login:hover{background:rgb(255 255 255 / .12);border-color:var(--w-text-inverse);}
-/* Third action of the band (decision of 28.09.2026: ask for an offer, log in, create an
-   account): a quiet link under the two buttons, so the row keeps its two-button width.
-   The negative margin takes back most of the column gap; the dark backing keeps the
-   line readable wherever the photo under it is light. */
+/* third action of the band: a quiet link under the two buttons */
 .c5-pro__signup{align-self:flex-start;margin-top:calc(var(--w-space-3) - clamp(1.5rem,3vw,2rem));padding:6px 12px;border-radius:999px;background:rgb(0 0 0 / .38);font-size:0.875rem;line-height:1.4;color:var(--w-text-inverse);text-decoration:underline;text-underline-offset:3px;}
 .c5-pro__signup:hover{background:rgb(0 0 0 / .55);}
-/* na ciemnym pasie pierścień fokusu musi być jasny (i ostry jak reszta V5) */
 .c5-pro a:focus-visible{outline-color:var(--w-focus-ring-inverse);border-radius:0;}
 
 @media (min-width:900px){
+  /* static (reduced motion / no JS): the frame above the text does not eat the screen */
+  .c5-pro__media{max-height:min(56vh,520px);}
   .c5-pro__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,486px);gap:clamp(2rem,6vw,6rem);align-items:center;}
-  /* dwa przyciski obok siebie mieszczą się w kolumnie 486 px */
   .c5-pro__grid .c5-btnrow{flex-wrap:nowrap;}
   .c5-pro__grid .c5-btn{white-space:nowrap;}
-  /* statycznie (reduced / bez JS) zdjęcie nad treścią nie zjada całego ekranu */
 }
 @media (min-width:900px) and (prefers-reduced-motion: no-preference){
   .cx-js .c5-pro{min-height:90svh;display:grid;align-items:center;}
-  /* W pasie tekst leży NA zdjęciu: kadr zjeżdża niżej, żeby akapit po prawej
-     trafił na mgłę, a nie na jasną ściankę big baga (poziomo nie ma czym
-     sterować – przy 3:2 w pasie 16:9 przycięcie jest wyłącznie pionowe). */
-  .cx-js .c5-pro__img{object-position:50% 20%;}
-  /* bez gradientów – jednolity, delikatny scrim (§13.8). .25 zamiast .15:
-     jasny big bag stoi dokładnie pod pierwszymi wierszami akapitu po prawej. */
-  .cx-js .c5-pro__media::after{content:"";position:absolute;inset:0;background:rgb(0 0 0 / .25);}
-  /* Variant „pozny-wzrost”: ce/CE-16-pas-pro-proba.js sets --pro-o (0 -> 1) together
-     with the growth, so the scrim is absent while the frame holds its start width.
-     Without the variable – the shared module, no JS, the module not run yet – the
-     fallback 1 keeps the constant .25 scrim above, i.e. the base mechanics unchanged.
-     Moved here from produkty.css on 19.09.2026 so no page repeats it. */
+  /* the frame lies under the text and scales with --pro-s (CE-16-pas-pro*.js) */
+  .cx-js .c5-pro__media{position:absolute;inset:0;width:auto;aspect-ratio:auto;max-height:none;transform:scale(var(--pro-s,1));transform-origin:center;will-change:transform;}
+  .cx-js .c5-pro__img{object-position:var(--pro-img-pos,50% 20%);}
+  /* flat scrim; --pro-o (0 -> 1) comes from CE-16-pas-pro-pozny-wzrost.js, fallback 1 */
+  .cx-js .c5-pro__media::after{content:"";position:absolute;inset:0;background:rgb(0 0 0 / var(--pro-scrim,.25));}
   .cx-js .c5-pro__media::after{opacity:var(--pro-o,1);}
 }
 
-/* `.c5-pro`, `.c5-pro__media` i `.c5-pro__side p` zostają w <strona>.css –
-   margines pasa, kadr (zdjęcie albo placeholder) i kontrast akapitu są
-   ustawieniem podstrony. */
+/* ===== wariant: ramka ===== (o-firmie, produkty; kadr-3-2 shares the static part) */
+.c5-pro--ramka,.c5-pro--kadr-3-2{--pro-ratio:3/2;}
+.c5-pro--ramka .c5-pro__media{background:var(--w-gray-500);}
+@media (max-width:899px){
+  .c5-pro--ramka .c5-pro__media,.c5-pro--kadr-3-2 .c5-pro__media{margin:var(--c5-gutter) var(--c5-gutter) 0;width:auto;}
+}
+@media (prefers-reduced-motion: reduce){
+  .c5-pro--ramka .c5-pro__media,.c5-pro--kadr-3-2 .c5-pro__media{margin-inline:auto;max-width:calc(100% - 2 * var(--c5-gutter));}
+}
+@media (min-width:900px){
+  .c5-pro--ramka .c5-pro__media,.c5-pro--kadr-3-2 .c5-pro__media{margin:var(--c5-gutter) auto 0;width:auto;max-width:calc(100% - 2 * var(--c5-gutter));}
+}
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  .cx-js .c5-pro--ramka .c5-pro__media{margin:0;max-width:none;}
+}
+
+/* ===== wariant: kadr-3-2 ===== (carbohumic) */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  /* in motion the frame keeps 3:2, stands in the middle of the band and at scale 1
+     reaches its top and bottom edge; max-width stays from the static rule above */
+  .cx-js .c5-pro--kadr-3-2 .c5-pro__media{inset:50% auto auto 50%;margin:0;height:100%;aspect-ratio:var(--pro-ratio);transform:translate(-50%,-50%) scale(var(--pro-s,1));}
+}
+
+/* ===== wariant: zielen ===== (carbomat, produkty, kukurydza, borowka – „Frame 186-253”) */
+.c5-pro--zielen{--pro-btn:#86D574;--pro-btn-ink:#0C2B1C;--pro-btn-hover:#77C169;--pro-line:rgb(255 255 255 / .5);--pro-r:20px;}
+.c5-pro--zielen .c5-pro__grid h2{font-size:clamp(var(--pro-h2-min,2rem),3.6vw,3.25rem);line-height:1.02;}
+.c5-pro--zielen .c5-pro__grid .c5-btnrow{gap:11px;}
+.c5-pro--zielen .c5-pro__grid .c5-btn{min-height:56px;line-height:1.25;border-radius:var(--pro-r);--c5-btn-px:24px;}
+.c5-pro--zielen .c5-btn--inv{background:var(--pro-btn);color:var(--pro-btn-ink);border:0;padding:18px 24px;}
+.c5-pro--zielen .c5-btn--inv:hover{background:var(--pro-btn-hover);}
+.c5-pro--zielen .c5-pro__login{border-color:var(--pro-line);padding:15px 24px;}
+/* restore the hover border – the rule above outranks `.c5-pro__login:hover` */
+.c5-pro--zielen .c5-pro__login:hover{border-color:var(--w-text-inverse);}
+.c5-pro--zielen a:focus-visible{border-radius:var(--pro-r);}
+
+/* ===== wariant: scrim-ukosny ===== (carbomat, produkty) */
+.c5-pro--scrim-ukosny{--pro-bg:#777771;background:var(--pro-bg);}
+.c5-pro--scrim-ukosny .c5-pro__side p{font-size:1.3125rem;line-height:1.24;opacity:1;}
+@media (max-width:899px){
+  .c5-pro--scrim-ukosny .c5-pro__side p{font-size:1.0625rem;}
+}
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  html.cx-js .c5-pro--scrim-ukosny{--pro-wash-a:.30;--pro-wash-b:.10;--pro-wash-floor:.55;}
+  /* the flat scrim of the base gives way to a wash over the whole band */
+  html.cx-js .c5-pro--scrim-ukosny .c5-pro__media::after{content:none;}
+  html.cx-js .c5-pro--scrim-ukosny::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(-65.66deg,
+      rgb(26 36 5 / var(--pro-wash-a)) 37.09%,
+      rgb(26 36 5 / var(--pro-wash-b)) 52.41%,
+      rgb(26 36 5 / var(--pro-wash-b)) 60.07%,
+      rgb(26 36 5 / var(--pro-wash-a)) 75.39%);
+    opacity:calc(var(--pro-wash-floor) + (1 - var(--pro-wash-floor)) * var(--pro-o, 1));}
+}
+
+/* ===== wariant: h-mackinac ===== (produkty, kukurydza, borowka) */
+.c5-pro--h-mackinac .c5-pro__grid h2{font-family:"P22 Mackinac Pro",var(--w-font-sans);font-weight:400;}
+
+/* ===== wariant: zamykajacy ===== (kukurydza, borowka) */
+.c5-pro--zamykajacy{--pro-h2-min:1.875rem;}
+/* dark backing: the secondary button lies on the photo */
+.c5-pro--zamykajacy .c5-pro__login{background:rgb(0 0 0 / .3);}
+.c5-pro--zamykajacy .c5-pro__login:hover{background:rgb(0 0 0 / .45);border-color:var(--w-text-inverse);}
+/* optional paragraph above the buttons (borowka) */
+.c5-pro--zamykajacy .c5-pro__side p{margin:0;max-width:21rem;font-size:var(--w-font-sm-size);line-height:var(--w-font-sm-lh);opacity:.85;}
+@media (min-width:900px){
+  .c5-pro--zamykajacy .c5-pro__grid{grid-template-columns:minmax(0,1fr) minmax(0,max-content);}
+  .c5-pro--zamykajacy .c5-pro__grid h2{max-width:min(420px,34vw);}
+  .c5-pro--zamykajacy .c5-pro__side{max-width:var(--pro-side-max,none);}
+  .c5-pro--zamykajacy .c5-pro__grid .c5-btnrow{flex-direction:column;flex-wrap:nowrap;align-items:stretch;}
+}
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  .cx-js .c5-pro--zamykajacy .c5-pro__grid{width:100%;}
+}
+/* narrow desktop: the button column stays clear of the dot rail and of the subject of the photo */
+@media (min-width:900px) and (max-width:1219px){
+  .c5-pro--zamykajacy .c5-pro__grid .c5-btn{white-space:normal;text-align:center;}
+  .c5-pro--zamykajacy .c5-pro__side{max-width:var(--pro-side-max,240px);}
+}

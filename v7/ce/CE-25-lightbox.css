@@ -1,0 +1,93 @@
+/* ===== CE-25 · Lightbox (rejestr: ce-rejestr.js) ============================
+   Implementation used by the crop pages. Prefixes: u-overlay, u-lightbox,
+   u-prodpop. Opening, focus trap and paging: uprawa.js. Without JS the pages
+   of a lightbox render as plain sections in the flow, hence the `html.cx-js`
+   scope of the overlay geometry. Other pages carry their own implementation
+   (`c5-lb`) in their page sheets. */
+
+/* --- shared: backdrop, panel, pages, footer --- */
+.u-overlay{position:fixed;inset:0;background:var(--w-gray-900);opacity:0;z-index:var(--w-z-popover);transition:opacity var(--w-duration-base) var(--w-ease);}
+.u-overlay[data-open="true"]{opacity:.5;}
+.u-chunk{display:flex;flex-direction:column;gap:var(--w-space-3);}
+.u-lightbox{display:block;}
+.u-lightbox__panel{display:flex;flex-direction:column;min-height:0;}
+.u-lightbox__close{display:none;place-items:center;flex:none;width:var(--w-control-h-md);height:var(--w-control-h-md);background:var(--w-surface-page);border:1px solid var(--w-border-default);border-radius:0;color:var(--w-text-primary);cursor:pointer;}
+.u-lightbox__close:hover{background:var(--w-surface-hover);}
+.u-lightbox__scroll{display:flex;flex-direction:column;gap:var(--w-space-12);}
+.u-lightbox__page{display:flex;flex-direction:column;gap:var(--w-space-6);opacity:1;transition:opacity var(--w-duration-base) var(--w-ease);}
+.u-lightbox__head{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:var(--w-space-6);align-items:end;padding-bottom:var(--w-space-5);border-bottom:1px solid var(--w-border-subtle);}
+.u-lightbox__tt{display:flex;flex-direction:column;gap:var(--w-space-2);}
+.u-lightbox__t{margin:0;color:var(--w-text-primary);}
+.u-lightbox__lead{font-size:var(--w-font-sm-size);line-height:var(--w-font-sm-lh);color:var(--w-text-secondary);}
+.u-lightbox__body{display:flex;flex-direction:column;gap:var(--w-space-6);}
+.u-lightbox__foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--w-space-3);}
+.u-lightbox__steps,.u-lightbox__acts{display:flex;flex-wrap:wrap;gap:var(--w-space-2);}
+.u-lightbox__steps .c5-btn[disabled]{opacity:.4;cursor:default;}
+html.cx-js .u-lightbox{position:fixed;inset:0;z-index:var(--w-z-toast);display:grid;place-items:center;padding:var(--w-space-6);opacity:0;visibility:hidden;transition:opacity 220ms var(--w-ease),visibility 0s linear 220ms;}
+html.cx-js .u-lightbox[data-open="true"]{opacity:1;visibility:visible;transition:opacity 220ms var(--w-ease),visibility 0s;}
+html.cx-js .u-lightbox__panel{position:relative;width:100%;max-width:1080px;max-height:90vh;background:var(--w-surface-page);border:1px solid var(--w-border-default);transform:scale(.98);transition:transform 220ms var(--w-ease);}
+html.cx-js .u-lightbox[data-open="true"] .u-lightbox__panel{transform:none;}
+html.cx-js .u-lightbox__close{display:grid;position:absolute;top:var(--w-space-4);right:var(--w-space-4);z-index:1;}
+html.cx-js .u-lightbox__scroll{flex:1 1 auto;min-height:0;overflow-y:auto;gap:0;padding:clamp(1.25rem,3vw,2.5rem);}
+html.cx-js .u-lightbox__head{padding-right:var(--w-control-h-md);}
+html.cx-js .u-lightbox__foot{padding:var(--w-space-4) var(--w-space-6);border-top:1px solid var(--w-border-subtle);background:var(--w-surface-subtle);}
+@media (prefers-reduced-motion: reduce){
+  html.cx-js .u-lightbox__panel{transform:none;}
+  .u-overlay,.u-lightbox__page,
+  html.cx-js .u-lightbox,html.cx-js .u-lightbox__panel{transition:none;}
+}
+
+/* ===== wariant: popup-produktu =====
+   Packshot and name in the head, two columns in the body, footer inside the
+   page (every product has its own links). The block below 900 px also holds
+   the shared full-screen rules of the panel. */
+.u-prodpop__head{grid-template-columns:auto minmax(0,1fr);align-items:center;}
+.u-prodpop__pack{width:160px;aspect-ratio:4/3;object-fit:contain;background:var(--w-gray-100);padding:var(--w-space-3);}
+.u-prodpop__foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--w-space-3);margin-top:auto;padding-top:var(--w-space-5);border-top:1px solid var(--w-border-subtle);}
+.u-prodpop__acts{display:flex;flex-wrap:wrap;gap:var(--w-space-2);}
+.u-prodpop__body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--w-space-8);align-items:start;}
+.u-prodpop__col{display:flex;flex-direction:column;gap:var(--w-space-8);}
+.u-psec{display:flex;flex-direction:column;gap:var(--w-space-4);}
+@media (max-width:899px){
+  .u-lightbox__head{grid-template-columns:1fr;align-items:start;}
+  .u-prodpop__head{grid-template-columns:auto minmax(0,1fr);align-items:center;}
+  .u-prodpop__pack{width:96px;padding:var(--w-space-2);}
+  .u-prodpop__acts{flex:1 1 100%;}
+  .u-prodpop__acts>.c5-btn{flex:1 1 0;padding-inline:var(--w-space-3);}
+  .u-prodpop__body{grid-template-columns:1fr;gap:var(--w-space-6);}
+  html.cx-js .u-lightbox{padding:0;}
+  html.cx-js .u-lightbox__panel{max-width:none;max-height:none;height:100%;border:0;}
+  html.cx-js .u-lightbox__t{font-size:var(--w-font-h3-size);line-height:var(--w-font-h3-lh);}
+  html.cx-js .u-lightbox__foot{padding:var(--w-space-3) var(--w-space-4);}
+  .u-lightbox__steps,.u-lightbox__acts{flex:1 1 100%;}
+  .u-lightbox__steps>.c5-btn,.u-lightbox__acts>.c5-btn{flex:1 1 0;padding-inline:var(--w-space-3);}
+}
+.b-pop__list{list-style:disc;margin:0;padding-left:1.1rem;display:grid;gap:var(--w-space-2);font-size:var(--w-font-sm-size);line-height:var(--w-font-sm-lh);color:var(--w-text-secondary);}
+.u-prodpop .u-txt + .u-txt{margin-top:var(--w-space-3);}
+
+/* ===== wariant: jednostronicowy =====
+   One column of text, so the panel is narrower. */
+html.cx-js .u-lightbox--waski .u-lightbox__panel{max-width:760px;}
+.b-note .u-lightbox__head{grid-template-columns:minmax(0,1fr);}
+.b-note .u-lightbox__body{gap:var(--w-space-6);}
+.b-note .u-psec{gap:var(--w-space-3);}
+.b-note__lead{color:var(--w-text-primary);}
+
+/* ===== treść okna =====
+   Blocks used inside lightbox pages: condition cards, product cards and the
+   vertical stepper. */
+.u-conds{display:grid;gap:var(--w-space-4);grid-template-columns:repeat(auto-fit,minmax(17rem,1fr));}
+.u-conds--tight{grid-template-columns:repeat(auto-fit,minmax(12.5rem,1fr));}
+.u-cond{display:flex;flex-direction:column;gap:var(--w-space-4);border:1px solid var(--w-border-default);border-radius:0;background:var(--w-surface-page);padding:var(--w-space-5);}
+.u-cond__t{font-size:var(--w-font-h5-size);line-height:var(--w-font-h5-lh);font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+.u-pcard{display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--w-space-4);border:1px solid var(--w-border-default);border-radius:0;background:var(--w-surface-page);padding:var(--w-space-4);}
+.u-pcard--muted{border-style:dashed;}
+.u-pcard--muted .u-pcard__n{color:var(--w-text-tertiary);}
+.u-pcard__in{display:flex;flex-direction:column;gap:var(--w-space-1);}
+.u-pcard__n{font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+.u-pcard>.wf-icon{margin-top:2px;color:var(--w-icon-default);}
+.u-steps{display:flex;flex-direction:column;margin:0;border-left:2px solid var(--w-border-default);padding-left:var(--w-space-5);list-style:none;}
+.u-steps__i{position:relative;display:flex;flex-direction:column;gap:var(--w-space-2);padding-bottom:var(--w-space-6);}
+.u-steps__i:last-child{padding-bottom:0;}
+.u-steps__i::before{content:"";position:absolute;left:calc((var(--w-space-5) + 5px) * -1);top:6px;width:8px;height:8px;background:var(--w-gray-900);}
+.u-steps__n{font-weight:var(--w-weight-medium);color:var(--w-text-primary);}

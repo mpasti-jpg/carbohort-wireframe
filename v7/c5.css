@@ -263,26 +263,6 @@
 .c5-pro__link{white-space:nowrap;}
 .c5-pro__link{color:var(--w-text-inverse);text-decoration:underline;text-underline-offset:3px;font-weight:var(--w-weight-medium);padding:12px 24px;}
 
-/* --- FAQ: pytanie z lewej, odpowiedź z prawej ------------------------------- */
-.c5-faq{display:flex;flex-direction:column;margin-top:clamp(1.5rem,3vw,2.25rem);}
-.c5-faq__item{border-top:1px solid var(--w-border-default);position:relative;}
-.c5-faq__item:last-child{border-bottom:1px solid var(--w-border-default);}
-.c5-faq__q{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--w-space-4);width:100%;padding:26px 0;background:none;border:0;font:inherit;font-size:1.125rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;text-align:left;color:var(--w-text-primary);cursor:pointer;}
-.c5-faq__q .wf-icon{flex:none;margin-top:4px;transition:transform var(--w-duration-base) var(--w-ease);}
-.c5-faq__q[aria-expanded="true"] .wf-icon{transform:rotate(180deg);}
-.c5-faq__a{overflow:hidden;height:0;opacity:0;transition:height var(--c5-acc) var(--w-ease),opacity var(--c5-acc-fade) var(--w-ease);}
-.c5-faq__item[data-open] .c5-faq__a{opacity:1;}
-.c5-faq__ain{overflow:hidden;min-height:0;padding-bottom:26px;font-size:1rem;color:var(--w-text-secondary);}
-@media (min-width:900px){
-  /* stały układ dwukolumnowy – bez skoku przy otwieraniu (kolumna odpowiedzi
-     jest zawsze, tylko zwinięta do zera) */
-  .c5-faq__item{display:grid;grid-template-columns:minmax(0,1fr) 515px;gap:var(--w-space-10);align-items:start;}
-  .c5-faq__q{grid-column:1;}
-  .c5-faq__a{grid-column:2;}
-  /* strzałka przy prawej krawędzi wiersza; tekst odpowiedzi z odstępem od niej */
-  .c5-faq__q .wf-icon{position:absolute;right:0;top:30px;}
-  .c5-faq__ain{padding-top:26px;padding-right:60px;}
-}
 /* moduł „zadaj pytanie dr Jurkowi" */
 .c5-ask{max-width:784px;margin-inline:auto;display:flex;flex-direction:column;gap:var(--w-space-5);}
 .c5-ask__lead{font-size:1.125rem;font-weight:var(--w-weight-medium);}
@@ -293,9 +273,6 @@
 .c5-ask__chips{display:flex;flex-wrap:wrap;gap:12px;}
 .c5-ask__chip{font:inherit;font-size:0.9375rem;padding:10px 22px;background:var(--w-surface-page);border:1px solid rgb(0 0 0 / .3);border-radius:var(--w-radius-pill);color:var(--w-text-primary);cursor:pointer;transition:border-color var(--w-duration-base) var(--w-ease);}
 .c5-ask__chip:hover{border-color:var(--w-gray-900);}
-
-/* --- CTA końcowe ------------------------------------------------------------ */
-.c5-cta{display:flex;flex-direction:column;align-items:center;gap:clamp(1.75rem,3.5vw,2.75rem);text-align:center;}
 
 /* --- Dok dr Jurka: pojawia się po zejściu z hero ----------------------------- */
 .cw-jurek{transition:opacity .3s ease,visibility .3s ease;}
@@ -338,9 +315,9 @@
   .c5-params__row{grid-template-columns:1fr;gap:2px;}
 }
 @media (prefers-reduced-motion: reduce){
-  .c5-btn,.c5-way,.c5-fact__btn .wf-icon,.c5-faq__q .wf-icon{transition:none;}
+  .c5-btn,.c5-way,.c5-fact__btn .wf-icon{transition:none;}
   /* bez animacji rozwijania – stany przełączają się natychmiast */
-  .c5-fact__panel,.c5-scene__cardbody,.c5-season__panel,.c5-faq__a{transition:none;}
+  .c5-fact__panel,.c5-scene__cardbody,.c5-season__panel{transition:none;}
   .c5-viz[data-on="true"]{animation:none;}
   .cw-jurek{transition:none;}
 }

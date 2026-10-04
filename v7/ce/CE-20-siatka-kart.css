@@ -1,0 +1,62 @@
+/* ===== CE-20 · Siatka kart (rejestr: ce-rejestr.js) ========================
+   Variants used by the crop pages. Prefixes: u-prod, u-rail, u-rules.
+   Loaded after uprawa.css (shared `u-*` helpers) and ce/00-base.css. Other
+   pages carry their own implementations of CE-20 in their page sheets. */
+
+/* ===== wariant: produktowe =====
+   A row of product cards: three columns from 900 px, a horizontal carousel
+   with a scroll rail (`data-rail`, uprawa.js) below. The whole card is one
+   link that opens the product pop-up (CE-25). */
+.u-prod{display:grid;gap:var(--w-space-4);grid-template-columns:repeat(3,minmax(0,1fr));}
+.u-prod__card{display:flex;flex-direction:column;gap:var(--w-space-3);border:1px solid var(--w-border-default);border-radius:0;background:var(--w-surface-page);padding:var(--w-space-4);color:inherit;text-decoration:none;transition:border-color var(--w-duration-base) var(--w-ease),background var(--w-duration-base) var(--w-ease);}
+.u-prod__card:hover{border-color:var(--w-gray-900);}
+.u-prod__card:focus-visible{outline:2px solid var(--w-focus-ring);outline-offset:2px;}
+.u-prod__card .wf-ph{border-radius:0;aspect-ratio:4/3;min-height:0;}
+.u-prod__name{font-size:var(--w-font-h5-size);line-height:var(--w-font-h5-lh);font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+.u-rail{display:none;height:2px;background:var(--w-surface-sunken);}
+.u-rail__thumb{display:block;height:100%;width:20%;background:var(--w-gray-500);}
+@media (max-width:899px){
+  .u-prod{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:82%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:var(--w-space-2);}
+  .u-prod::-webkit-scrollbar{display:none;}
+  .u-prod__card{scroll-snap-align:start;}
+  .u-rail{display:block;}
+}
+@media (prefers-reduced-motion: reduce){.u-prod__card{transition:none;}}
+
+/* Card interior: packshot on a grey field, one hint with an arrow instead of
+   buttons. */
+.u-prodwrap{margin-top:clamp(2rem,4vw,3.5rem);}
+.u-prod__card{color:inherit;text-decoration:none;transition:border-color var(--w-duration-base) var(--w-ease);}
+.u-prod__card:hover{border-color:var(--w-gray-900);}
+/* `u-reveal` (uprawa.css) has its own transition list on this element, so
+   the border colour and the 80 ms stagger are added to it here. The delay sits
+   in a variable: it applies to the entrance only, not to the hover. */
+html.cx-js .u-prod__card{--u-prod-delay:0ms;
+  transition:opacity var(--w-duration-slow) var(--w-ease) var(--u-prod-delay),
+             transform var(--w-duration-slow) var(--w-ease) var(--u-prod-delay),
+             border-color var(--w-duration-base) var(--w-ease);}
+.u-prod__card:nth-child(2){--u-prod-delay:80ms;}
+.u-prod__card:nth-child(3){--u-prod-delay:160ms;}
+.u-prod__card:nth-child(4){--u-prod-delay:240ms;}
+.u-prod__card:nth-child(5){--u-prod-delay:320ms;}
+.u-prod__card:nth-child(6){--u-prod-delay:400ms;}
+/* `min-height:0` keeps a tall packshot from stretching its field. */
+.u-prod__ph{display:block;aspect-ratio:4/3;min-height:0;background:var(--w-gray-100);padding:12%;}
+.u-prod__img{display:block;width:100%;height:100%;object-fit:contain;}
+.u-prod__go{margin-top:auto;display:inline-flex;align-items:center;gap:var(--w-space-2);
+  font-size:var(--w-font-sm-size);line-height:var(--w-font-sm-lh);font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+.u-prod__go .wf-icon{width:16px;height:16px;transition:transform var(--w-duration-fast) var(--w-ease);}
+.u-prod__card:hover .u-prod__go .wf-icon{transform:translateX(3px);}
+@media (prefers-reduced-motion: reduce){
+  html.cx-js .u-prod__card{--u-prod-delay:0ms;transition:none;}
+  .u-prod__go .wf-icon{transition:none;}
+  .u-prod__card:hover .u-prod__go .wf-icon{transform:none;}
+}
+
+/* ===== wariant: numerowane =====
+   Numbered rule cards: five columns, three below 1200 px, one below 900 px. */
+.u-rules{display:grid;gap:var(--w-space-3);grid-template-columns:repeat(5,minmax(0,1fr));list-style:none;margin:0;padding:0;}
+.u-rules__i{display:flex;flex-direction:column;gap:var(--w-space-3);border:1px solid var(--w-border-default);border-radius:0;background:var(--w-surface-page);padding:var(--w-space-5);}
+.u-rules__no{font-family:var(--w-font-mono);font-size:var(--w-font-caption-size);line-height:var(--w-font-caption-lh);color:var(--w-text-tertiary);}
+@media (max-width:1199px){.u-rules{grid-template-columns:repeat(3,minmax(0,1fr));}}
+@media (max-width:899px){.u-rules{grid-template-columns:1fr;}}

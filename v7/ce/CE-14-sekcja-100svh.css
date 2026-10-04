@@ -1,9 +1,10 @@
 /* ===== CE-14 · Sekcja 100svh z listą i zdjęciem (rejestr: ce-rejestr.js) =====
    One-screen section: heading at the top of the left column, list and button at
    its bottom, a full-height photo with a light parallax on the right. Merged
-   from carbomat.css DAWKOWANIE; the CARBOHUMIC copy („Dawki domowe") keeps its
-   own bottom column (a dose table instead of a numbered list) and the grid rows
-   that go with it in carbohumic.css. No variants.
+   from carbomat.css DAWKOWANIE. The grid from 900 px and the bottom column live
+   here; a placeholder (.c5-dose__ph) may stand in for the photo.
+   Variant: c5-dose-sec--rozpiska (a dose table and two buttons in the bottom
+   column) – at the end of the file.
    Markup: .c5-dose-sec > .c5-dose > __top / __bottom / __media-wrap. ===== */
 
 /* --- DAWKOWANIE – sekcja na 100 % ekranu (spec §7) -------------------------
@@ -24,6 +25,7 @@
 .c5-dose__list li::before{content:counter(dose);display:flex;align-items:center;justify-content:center;
   width:28px;height:28px;border:1px solid currentColor;border-radius:var(--w-radius-circle);
   font-size:0.8125rem;line-height:1;color:var(--w-text-primary);}
+.c5-dose__bottom{display:flex;flex-direction:column;gap:clamp(1.5rem,3vw,2.5rem);align-items:flex-start;}
 
 /* Parallax (§13.6): ramka przycina kadr, obraz jest od niej wyższy (114 %)
    i przesuwa się w niej o kilka procent. Bez ruchu (mobile / reduced / bez JS)
@@ -32,16 +34,38 @@
 .c5-dose__media-wrap{position:relative;width:100%;aspect-ratio:4/5;max-height:70vh;overflow:hidden;}
 .c5-dose__media{display:block;width:100%;height:114%;object-fit:cover;object-position:45% 50%;border-radius:0;
   transform:translateY(calc(var(--dose-par,-7) * 1%));will-change:transform;}
+/* Placeholder instead of the photo: a field with no border and no rounding, the
+   label says what goes here. The kit hides `.wf-ph__label`, so the label has its
+   own class. */
+.c5-dose__ph{display:grid;place-items:center;width:100%;height:114%;border:0;border-radius:0;
+  background:var(--w-gray-200);transform:translateY(calc(var(--dose-par,-7) * 1%));will-change:transform;}
+.c5-dose__phlabel{font-size:var(--w-font-caption-size);font-weight:var(--w-weight-medium);color:var(--w-placeholder-ink);}
 
 @media (min-width:900px){
   .c5-dose-sec{min-height:100svh;display:grid;align-items:stretch;}
   .c5-dose__top{grid-column:1;grid-row:1;}
   .c5-dose__media-wrap{grid-column:2;grid-row:1 / -1;height:100%;max-height:none;aspect-ratio:auto;}
+  /* a second row under the heading: the bottom column sits in row 3 of the left column */
+  .c5-dose{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto;
+           column-gap:clamp(2rem,5vw,5rem);row-gap:0;min-height:calc(100svh - 2*var(--c5-gutter));}
+  .c5-dose__bottom{grid-column:1;grid-row:3;}
 }
 @media (prefers-reduced-motion: reduce){
   .c5-dose__media{transform:translateY(-7%);}
+  .c5-dose__ph{transform:translateY(-7%);}
 }
-/* Siatka sekcji od 900 px i kolumna dolna są treścią strony: ile wierszy ma
-   lewa kolumna i jak szeroka jest kolumna zdjęcia, decyduje jej zawartość –
-   reguły `.c5-dose__bottom` i `@media (min-width:900px) .c5-dose` stoją
-   w <strona>.css. */
+
+/* ===== wariant: rozpiska ===== */
+/* A dose table instead of the numbered list and two buttons side by side: both
+   blocks take the whole column width, capped by a shared max-width; the left
+   column is wider (1.25fr) so the two buttons fit in one row at 1280 px, and the
+   buttons get a tighter padding. */
+.c5-dose-sec--rozpiska .c5-dose__bottom{gap:clamp(1.25rem,2.4vw,1.75rem);align-items:stretch;}
+.c5-dose-sec--rozpiska .c5-dose__bottom .c5hu-dose{max-width:620px;margin-top:0;}
+.c5-dose-sec--rozpiska .c5-dose__bottom .wf-caption{margin:0;max-width:620px;}
+.c5-dose-sec--rozpiska .c5-dose__bottom .c5-btn{--c5-btn-px:clamp(18px,2.4vw,45px);}
+@media (min-width:900px){
+  .c5-dose-sec--rozpiska .c5-dose{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);}
+  /* clearance for the advisor dock floating above the bottom edge of the window */
+  .c5-dose-sec--rozpiska .c5-dose__bottom{padding-bottom:58px;}
+}

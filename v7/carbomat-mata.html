@@ -13,14 +13,14 @@
 <link rel="stylesheet" href="ce/CE-08-hero.css">
 <link rel="stylesheet" href="ce/CE-09-marquee.css">
 <link rel="stylesheet" href="ce/CE-10-parametry.css">
-<link rel="stylesheet" href="ce/CE-12-scena-faktow-proba.css">
-<link rel="stylesheet" href="ce/CE-15-wiersze-packshot-pin.css">
+<link rel="stylesheet" href="ce/CE-12-scena-faktow.css">
+<link rel="stylesheet" href="ce/CE-15-wiersze-packshot.css">
 <link rel="stylesheet" href="ce/CE-16-pas-pro.css">
 <link rel="stylesheet" href="ce/CE-17-faq.css">
 <link rel="stylesheet" href="ce/CE-18-cta.css">
-<link rel="stylesheet" href="ce/CE-24-pas-liczb-kafle.css">
+<link rel="stylesheet" href="ce/CE-24-pas-liczb.css">
 <link rel="stylesheet" href="ce/CE-26-stos-kart.css">
-<link rel="stylesheet" href="ce/CE-30-akordeon-odliczanie.css">
+<link rel="stylesheet" href="ce/CE-30-lista-z-panelem.css">
 <link rel="stylesheet" href="carbomat-mata.css">
 <script src="../status.js"></script>
 <script src="../ce-rejestr.js"></script>
@@ -39,7 +39,7 @@
 
 
 
-<nav id="nawigacja-kropki" class="c5-dots" aria-label="Rozdziały strony CARBOMAT MATA UPRAWOWA" data-dots data-ce="CE-07">
+<nav id="nawigacja-kropki" class="c5-dots" style="--c5-dots-right:10px" aria-label="Rozdziały strony CARBOMAT MATA UPRAWOWA" data-dots data-ce="CE-07">
   <ol>
     <li><a class="c5-dots__link" href="#hero" data-dot="hero"><span class="c5-dots__label">Start</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
     <li><a class="c5-dots__link" href="#parametry" data-dot="parametry"><span class="c5-dots__label">Parametry</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
@@ -83,7 +83,7 @@
 
   <section id="hero" data-chapter="hero" data-ce="CE-08">
     <div class="c5-wrap">
-      <div class="c5-hero">
+      <div class="c5-hero c5-hero--packshot-szeroki c5-hero--niskie-okno">
         <div class="c5-hero__copy">
           <div class="c5-hero__copyin">
             <span class="c5-kicker">CARBOMAT MATA UPRAWOWA</span>
@@ -132,7 +132,7 @@
 
 
 
-  <section class="c5-marq" id="uprawy" data-ce="CE-09">
+  <section class="c5-marq c5-marq--keep-3" id="uprawy" data-ce="CE-09" style="--c5-marq-head:clamp(2rem,4vw,3rem);--c5-marq-ph:var(--w-gray-300)">
     
 
     <ul class="c5-marq__track" aria-label="Uprawy, dla których mamy technologię">
@@ -221,7 +221,7 @@
 
 
 
-  <section class="c5-params" id="parametry" data-chapter="parametry" data-params data-ce="CE-10" data-ce-wariant="z-tabami">
+  <section class="c5-params c5-params--tabs" style="--c5-params-clear:84px" id="parametry" data-chapter="parametry" data-params data-ce="CE-10" data-ce-wariant="z-tabami">
     
     <div class="c5-params__bg" aria-hidden="true">
       <div class="c5-params__frame">
@@ -702,7 +702,7 @@
     
 
 
-    <div id="czym-jest-scena" class="c5-fx" data-fx data-ce="CE-12" data-ce-wariant="bez-naglowka" data-ce-od="#czym-jest">
+    <div id="czym-jest-scena" class="c5-fx" data-fx data-ce="CE-12" data-ce-wariant="bez-naglowka" data-fx-state="bez-naglowka" data-ce-od="#czym-jest" style="--c5-fx-viz-h:clamp(min(560px,86svh),68svh,760px);">
 
     <div class="c5-fx__above c5-wrap" data-fx-head="bez-naglowka">
       <span class="c5-kicker c5-kicker--center">Czym jest</span>
@@ -926,7 +926,7 @@
 
 
 
-    <div id="dowod-liczby" class="c5-nums" data-ce="CE-24" data-ce-wariant="kafle-2x2" data-ce-od="#dowod">
+    <div id="dowod-liczby" class="c5-nums" style="--c5-nums-my:clamp(2.5rem,5vw,4rem)" data-ce="CE-24" data-ce-wariant="kafle-2x2" data-ce-od="#dowod">
       <div class="c5-nums__in c5-wrap c5-wrap--wide">
         <ul class="c5-nums__grid">
           
@@ -1463,7 +1463,7 @@
 
 
   <section class="c5-sec" id="sezon" data-chapter="sezon" style="padding-bottom:0;">
-    <div id="sezon-kaskada" class="c5-casc c5-casc-pin" data-casc data-casc-fit data-ce="CE-15" data-ce-wariant="kaskada-z-pinem">
+    <div id="sezon-kaskada" class="c5-casc c5-casc-pin" style="--c5-casc-green:#71C35F;--c5-casc-kicker-static:calc(clamp(2rem,4vw,3.5rem) - clamp(1.25rem,2.6vw,2.25rem))" data-casc data-casc-fit data-ce="CE-15" data-ce-wariant="kaskada-z-pinem">
 
       
       <div class="c5-casc-headwrap" data-casc-headwrap>
@@ -1556,7 +1556,7 @@
       <div class="c5-wrap">
         <h3 class="c5-band__title">Dlaczego Carbomat kosztuje mniej, niż myślisz?</h3>
         <p class="c5-lead" style="margin-top:var(--w-space-2);">Cena zakupu to tylko część kosztów prowadzenia uprawy. O rzeczywistych oszczędnościach decyduje cały cykl życia podłoża.</p>
-        <div id="ekonomia-lista" class="c5-acc30" role="group" data-c5-acc30 aria-label="Ekonomia cyklu życia podłoża" data-ce="CE-30" data-ce-wariant="akordeon-z-odliczaniem" data-ce-od="#ekonomia">
+        <div id="ekonomia-lista" class="c5-acc30" style="--c5-acc30-time:9s;--c5-acc30-copy-minh:6rem" role="group" data-c5-acc30 aria-label="Ekonomia cyklu życia podłoża" data-ce="CE-30" data-ce-wariant="akordeon-z-odliczaniem" data-ce-od="#ekonomia">
           <ol class="c5-acc30__list">
 
             <li class="c5-acc30__item" id="ekonomia-01">
@@ -1647,7 +1647,7 @@
 
 
 
-  <section class="c5-pro" id="dla-kogo" data-chapter="dla-kogo" data-pro data-ce="CE-16" data-ce-wariant="pozny-wzrost">
+  <section class="c5-pro" style="--pro-mt:clamp(3rem,6vw,5rem)" id="dla-kogo" data-chapter="dla-kogo" data-pro data-ce="CE-16" data-ce-wariant="pozny-wzrost">
     <div class="c5-pro__media" data-pro-media aria-hidden="true">
       <div class="c5-ph c5-pro__ph" data-ph="foto · uprawa bezglebowa pod osłonami"></div>
       
@@ -1735,13 +1735,13 @@
 <script src="ce/00-base.js"></script>
 <script src="ce/CE-07-nawigacja-kropkowa.js"></script>
 <script src="ce/CE-10-parametry.js"></script>
-<script src="ce/CE-12-scena-faktow-proba.js"></script>
-<script src="ce/CE-15-wiersze-packshot-pin.js"></script>
-<script src="ce/CE-16-pas-pro-proba.js"></script>
+<script src="ce/CE-12-scena-faktow.js"></script>
+<script src="ce/CE-15-wiersze-packshot.js"></script>
+<script src="ce/CE-16-pas-pro-pozny-wzrost.js"></script>
 <script src="ce/CE-17-faq.js"></script>
-<script src="ce/CE-24-pas-liczb-kafle.js"></script>
+<script src="ce/CE-24-pas-liczb.js"></script>
 <script src="ce/CE-26-stos-kart.js"></script>
-<script src="ce/CE-30-akordeon-odliczanie.js"></script>
+<script src="ce/CE-30-lista-z-panelem.js"></script>
 <script src="carbomat-mata.js"></script>
 <script src="ce-overlay.js"></script>
 </body>

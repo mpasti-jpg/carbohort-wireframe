@@ -1,0 +1,23 @@
+/* ===== CE-45 · Pudełka-przełączniki (rejestr: ce-rejestr.js) ================
+   Prefixes: u-vtabs, u-vtab. An ARIA tablist of boxes (`data-tabs-group`,
+   uprawa.js); three columns from 640 px, one below. */
+.u-vtabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--w-space-2);}
+.u-vtab{display:flex;flex-direction:column;align-items:flex-start;gap:var(--w-space-2);font:inherit;text-align:left;padding:var(--w-space-5);background:var(--w-surface-page);border:1px solid var(--w-border-default);border-radius:0;cursor:pointer;transition:background var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);}
+.u-vtab:hover{background:var(--w-surface-hover);}
+.u-vtab__t{font-size:var(--w-font-h4-size);line-height:var(--w-font-h4-lh);font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+.u-vtab[aria-selected="true"]{background:var(--w-surface-inverse);border-color:var(--w-gray-900);}
+.u-vtab[aria-selected="true"]:hover{background:var(--w-surface-inverse);}
+.u-vtab[aria-selected="true"] .u-vtab__t{color:var(--w-text-inverse);}
+.u-vtab__no{font-family:var(--w-font-mono);font-size:var(--w-font-caption-size);line-height:var(--w-font-caption-lh);color:var(--w-text-tertiary);}
+.u-vtab[aria-selected="true"] .u-vtab__no{color:var(--w-gray-400);}
+@media (max-width:639px){.u-vtabs{grid-template-columns:1fr;}}
+@media (prefers-reduced-motion: reduce){.u-vtab{transition:none;}}
+
+/* ===== wariant: dwa-pakiety =====
+   `u-vtabs--2`: two boxes instead of three, each with a second line of text
+   (`u-vtab__d`). */
+@media (min-width:640px){
+  .u-vtabs--2{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+.u-vtab__d{font-size:var(--w-font-sm-size);line-height:var(--w-font-sm-lh);color:var(--w-text-secondary);}
+.u-vtab[aria-selected="true"] .u-vtab__d{color:var(--w-gray-400);}

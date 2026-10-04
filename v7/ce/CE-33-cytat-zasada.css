@@ -1,0 +1,18 @@
+/* ===== CE-33 · Cytat / zasada (rejestr: ce-rejestr.js) ======================
+   Variant used by the crop pages. Prefix: u-quote; host section: u-zs.
+   Other pages carry their own implementations of CE-33 in their page sheets. */
+
+/* ===== wariant: ciemny-boks =====
+   A dark box with an overline and one sentence. */
+.u-quote{display:flex;flex-direction:column;gap:var(--w-space-4);background:var(--w-surface-inverse);color:var(--w-text-inverse);border-radius:0;padding:clamp(1.5rem,4vw,3rem);}
+.u-quote__t{font-size:var(--w-font-overline-size);line-height:var(--w-font-overline-lh);letter-spacing:var(--w-tracking-wide);text-transform:uppercase;color:var(--w-gray-400);}
+.u-quote p{font-size:clamp(1.125rem,2.2vw,1.5rem);line-height:1.35;font-weight:var(--w-weight-medium);max-width:var(--w-measure);}
+/* Host section without padding of its own: the neighbours bring theirs. */
+.u-zs{padding-block:0;}
+/* `u-quote--obok`: from 1100 px the overline moves into a column of its own
+   and the sentence keeps its measure on the wide container. */
+@media (min-width:1100px){
+  .u-quote--obok{display:grid;grid-template-columns:minmax(0,12rem) minmax(0,1fr);
+    column-gap:clamp(2rem,4vw,4rem);align-items:start;}
+  .u-quote--obok p{font-size:clamp(1.5rem,2vw,2rem);max-width:52ch;}
+}

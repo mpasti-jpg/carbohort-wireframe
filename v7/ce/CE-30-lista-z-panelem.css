@@ -1,0 +1,473 @@
+/* ===== CE-30 · Lista z panelem opisu – wariant „akordeon-z-odliczaniem" =======
+   (rejestr: ce-rejestr.js). Prefix: c5-acc30 (rows) and c5-acc30-card (the
+   optional product card). Shared copy of the accordion that the product
+   overview page runs under its own classes: same layout, same mechanics.
+
+   The file carries every layout of the block, one section per variant, told
+   apart by the classes of the root: `c5-acc30` (this layout, shared module),
+   `c5pr-acc` (the same layout as the product overview page builds it),
+   `c5hu-mixlist` (a list of names and one description field) and `on-val`
+   (cards, tabs from 900 px, an accordion below). The sets of classes are
+   disjoint, so the sections do not meet in the cascade; inside a section the
+   order of the rules is the order of the source.
+
+   One row per position, as wide as the container, parted by hairlines. The
+   open row shows a large title and, under it, the description on the left and
+   – only if the row has any – product cards pushed to the right edge, two in a
+   line, wrapping. A row is a title plus a description; cards, notes, a warning
+   and text links are optional, row by row.
+
+   Markup:
+     .c5-acc30[data-c5-acc30]              root (role="group" + aria-label)
+       .c5-acc30__list                     ol / ul
+         .c5-acc30__item[id]               li – the anchor of the row
+           .c5-acc30__h                    heading of the level the page needs
+             button.c5-acc30__btn          the title: aria-expanded, aria-controls
+           .c5-acc30__panel[id]            role="region", aria-labelledby
+             .c5-acc30__in                 the ONLY child of the panel
+               .c5-acc30__copy             p, and optionally:
+                 .c5-acc30__notes  ul      ticked remarks
+                 .c5-acc30__warn           framed warning
+                 .c5-acc30__links  ul      text links
+               .c5-acc30__cards    ul      optional
+                 .c5-acc30-card    li      __media > __pack, __tick, __name > __link,
+                                           __txt, __buy
+   The countdown bar (.c5-acc30__timer) is added to every row by the script.
+
+   Knobs (custom properties on .c5-acc30 or above it):
+     --c5-acc30-time          length of the countdown to the next row
+     --c5-acc30-measure       width of the description standing next to cards
+     --c5-acc30-measure-solo  width of the description of a row without cards
+     --c5-acc30-copy-minh     least height of a description from 900 px (auto)
+     --c5-acc30-body          ink of the description
+     --c5-acc30-line, --c5-acc30-bar            hairlines, countdown bar
+     --c5-acc30-card-w, -gap, -h                card width, gap, height
+     --c5-acc30-card-media, -media-open         packshot field at rest / on hover
+     --c5-acc30-card-bg, -bg-hover, -radius     card fill and corner
+     --c5-acc30-tick                            the tick in the corner of a card
+
+   Without JS (and before the script runs) every panel is open and the titles
+   stand in a middle size – a plain list of headings with their descriptions.
+   The script sets [data-c5-acc30="on"]: one row open at a time.
+   ========================================================================== */
+
+/* ===== wariant: akordeon-z-odliczaniem ===== */
+
+/* overflow-anchor: the countdown moves the large title from one row to the next,
+   and scroll anchoring would answer that with a few px of scroll – with the
+   inertia layer running that reads as a jerk. The automatic change must leave
+   the page exactly where the reader left it. */
+.c5-acc30{
+  --c5-acc30-time:5s;
+  --c5-acc30-measure:358px;
+  --c5-acc30-measure-solo:40rem;
+  --c5-acc30-body:var(--w-text-tertiary);
+  --c5-acc30-line:var(--w-border-default);
+  --c5-acc30-bar:var(--w-gray-900);
+  --c5-acc30-card-w:clamp(240px,26vw,340px);
+  --c5-acc30-card-gap:20px;
+  --c5-acc30-card-h:350px;
+  --c5-acc30-card-media:139px;
+  --c5-acc30-card-media-open:100px;
+  --c5-acc30-card-bg:var(--w-gray-100);
+  --c5-acc30-card-bg-hover:var(--w-gray-150);
+  --c5-acc30-card-radius:10px;
+  --c5-acc30-tick:var(--w-gray-500);
+  margin-top:clamp(3rem,6vw,5rem);overflow-anchor:none;}
+.c5-acc30__list{list-style:none;margin:0;padding:0;}
+.c5-acc30__item{position:relative;margin:0;border-top:1px solid var(--c5-acc30-line);
+  scroll-margin-top:var(--c5-gutter);}
+.c5-acc30__item:last-child{border-bottom:1px solid var(--c5-acc30-line);}
+
+/* countdown bar: sits on the top line of the row it will open (the script puts
+   data-timer there) */
+.c5-acc30__timer{position:absolute;left:0;top:-1px;width:100%;height:3px;
+  background:var(--c5-acc30-bar);transform:scaleX(0);transform-origin:left center;pointer-events:none;}
+.c5-acc30__item[data-timer] .c5-acc30__timer{animation:c5-acc30-count var(--c5-acc30-time) linear forwards;}
+.c5-acc30__item[data-timer="hold"] .c5-acc30__timer{animation-play-state:paused;}
+@keyframes c5-acc30-count{from{transform:scaleX(0);}to{transform:scaleX(1);}}
+
+/* title: the only copy of it – small when closed, large when open, the size
+   animated together with the panel */
+.c5-acc30__h{margin:0;font-size:inherit;font-weight:var(--w-weight-regular);}
+.c5-acc30__btn{display:block;width:100%;min-height:44px;margin:0;padding:20px 0;border:0;border-radius:0;
+  background:none;appearance:none;font:inherit;font-size:1.25rem;font-weight:var(--w-weight-medium);
+  letter-spacing:-0.01em;line-height:1.3;text-align:left;color:var(--w-text-primary);cursor:default;
+  transition:font-size var(--c5-acc) var(--w-ease),padding var(--c5-acc) var(--w-ease);}
+.c5-acc30__btn:focus-visible{outline:2px solid var(--w-gray-900);outline-offset:-2px;}
+/* closed row: 15 px in the ink of the title, 22 px of air above and below –
+   a 62 px pitch between two hairlines */
+.c5-acc30[data-c5-acc30="on"] .c5-acc30__btn{font-size:0.9375rem;font-weight:var(--w-weight-regular);
+  line-height:1.2;padding:22px 0;cursor:pointer;}
+/* the open row breathes: air above the large title and between the title and
+   the panel; both paddings ride the same transition as the panel height */
+.c5-acc30[data-c5-acc30="on"] .c5-acc30__item[data-open] .c5-acc30__btn{
+  font-size:clamp(1.5rem,2.6vw,2.1875rem);line-height:1.2;letter-spacing:0;
+  padding:clamp(2rem,4vw,3.5rem) 0 clamp(2rem,3.4vw,3rem);}
+
+/* panel: open by default (no JS), collapsed by the script */
+.c5-acc30__panel{overflow:hidden;}
+.c5-acc30[data-c5-acc30="on"] .c5-acc30__panel{height:0;transition:height var(--c5-acc) var(--w-ease);}
+.c5-acc30__in{display:grid;grid-template-columns:minmax(0,1fr) auto;
+  column-gap:clamp(3rem,8vw,7.875rem);align-items:start;padding-bottom:var(--w-space-10);}
+
+/* left zone: description, notes, warning, text links */
+.c5-acc30__copy{display:flex;flex-direction:column;gap:var(--w-space-4);min-width:0;
+  max-width:var(--c5-acc30-measure);padding-top:6px;}
+.c5-acc30__copy p{margin:0;font-size:1rem;line-height:1.3;color:var(--c5-acc30-body);}
+/* a row without cards: the description is the whole panel, so it takes a
+   reading measure and the leading of running copy */
+.c5-acc30__copy:only-child{grid-column:1 / -1;max-width:var(--c5-acc30-measure-solo);padding-top:0;}
+.c5-acc30__copy:only-child p{line-height:1.5;}
+/* knob: a common floor for the descriptions where the countdown runs, so the
+   list keeps one height while the rows change (set per instance) */
+@media (min-width:900px){
+  .c5-acc30__copy{min-height:var(--c5-acc30-copy-minh,auto);}
+}
+.c5-acc30__notes{display:flex;flex-direction:column;gap:var(--w-space-2);margin:0;padding:0;list-style:none;}
+.c5-acc30__notes li{display:flex;gap:var(--w-space-3);align-items:flex-start;font-size:0.9375rem;color:var(--w-text-primary);}
+.c5-acc30__notes .wf-icon{flex:none;margin-top:3px;color:var(--w-icon-default);}
+.c5-acc30__warn{display:flex;gap:var(--w-space-3);align-items:flex-start;border:1px solid var(--w-gray-900);
+  padding:var(--w-space-3) var(--w-space-4);font-size:0.875rem;}
+.c5-acc30__warn .wf-icon{flex:none;margin-top:2px;}
+.c5-acc30__copy .c5-acc30__warn p{font-size:0.875rem;line-height:1.3;color:var(--w-text-primary);}
+/* one text link per line, each a 44 px target */
+.c5-acc30__links{display:flex;flex-direction:column;margin:0;padding:0;list-style:none;font-size:0.9375rem;}
+.c5-acc30__links .wf-link{display:inline-flex;align-items:center;min-height:44px;}
+
+/* right zone: product cards in two wrapping columns, flush with the right edge
+   of the container */
+.c5-acc30__cards{display:grid;grid-template-columns:repeat(2,var(--c5-acc30-card-w));gap:var(--c5-acc30-card-gap);
+  margin:0;padding:0;list-style:none;width:calc(var(--c5-acc30-card-w) * 2 + var(--c5-acc30-card-gap));}
+
+/* --- Product card (optional) ---------------------------------------------------
+   340 x 350 px at full width, 32 px of side padding and 40 px above the
+   packshot field; the name sits 38 px under the field, the description 15 px
+   under the name. The card narrows with --c5-acc30-card-w, so the paddings ride
+   a clamp. The packshot field has a fixed height, so the names line up across
+   the cards of a row. */
+.c5-acc30-card{position:relative;display:grid;grid-template-columns:minmax(0,1fr);align-content:start;gap:0;
+  height:var(--c5-acc30-card-h);margin:0;border-radius:var(--c5-acc30-card-radius);
+  padding:clamp(24px,3vw,40px) clamp(20px,2.4vw,32px) clamp(20px,2.4vw,32px);
+  background:var(--c5-acc30-card-bg);transition:background var(--w-duration-base) var(--w-ease);}
+.c5-acc30-card:focus-within{background:var(--c5-acc30-card-bg-hover);}
+.c5-acc30-card__media{display:flex;align-items:center;justify-content:center;
+  height:var(--c5-acc30-card-media-open);min-height:0;overflow:hidden;
+  transition:height var(--w-duration-base) var(--w-ease);}
+.c5-acc30-card__pack{width:auto;height:auto;max-width:62%;max-height:100%;object-fit:contain;}
+.c5-acc30-card__tick{position:absolute;top:24px;right:26px;width:32px;height:32px;color:var(--c5-acc30-tick);}
+.c5-acc30-card__name{margin:38px 0 0;font-size:0.875rem;font-weight:var(--w-weight-semibold);line-height:1.2;
+  color:var(--w-text-primary);}
+.c5-acc30-card__txt{margin:15px 0 0;max-width:275px;font-size:0.875rem;line-height:1.25;color:var(--w-text-primary);}
+/* the whole card is the link to the product page; the buy button rides above it */
+.c5-acc30-card__link{color:inherit;text-decoration:none;}
+.c5-acc30-card__link::after{content:"";position:absolute;inset:0;z-index:1;border-radius:inherit;}
+.c5-acc30-card__link:focus-visible{outline:none;}
+.c5-acc30-card__link:focus-visible::after{outline:2px solid var(--w-gray-900);outline-offset:-2px;}
+/* touch and narrow windows: the button simply stands under the description */
+.c5-acc30-card__buy{position:relative;z-index:2;justify-self:start;margin-top:var(--w-space-2);}
+@media (hover:hover) and (min-width:900px){
+  /* on a pointer the packshot field is tall at rest and shrinks on hover / focus,
+     the name and the description ride up with it and the button is uncovered
+     under the description. The button is out of flow, so the card keeps its
+     height whatever the description does. */
+  .c5-acc30-card__media{height:var(--c5-acc30-card-media);}
+  .c5-acc30-card:hover .c5-acc30-card__media,
+  .c5-acc30-card:focus-within .c5-acc30-card__media{height:var(--c5-acc30-card-media-open);}
+  .c5-acc30-card__buy{position:absolute;left:var(--w-space-5);bottom:var(--w-space-5);margin:0;
+    opacity:0;visibility:hidden;
+    transition:opacity var(--w-duration-base) var(--w-ease),visibility 0s linear var(--w-duration-base);}
+  .c5-acc30-card:hover .c5-acc30-card__buy,
+  .c5-acc30-card:focus-within .c5-acc30-card__buy{opacity:1;visibility:visible;transition-delay:0s;}
+  .c5-acc30-card:hover{background:var(--c5-acc30-card-bg-hover);}
+}
+
+/* --- Narrow window: plain accordion, cards in one column, two from ~560 px ------ */
+@media (max-width:899px){
+  .c5-acc30{--c5-acc30-card-h:330px;--c5-acc30-card-media:130px;--c5-acc30-card-media-open:130px;}
+  .c5-acc30__timer{display:none;}
+  .c5-acc30[data-c5-acc30="on"] .c5-acc30__item[data-open] .c5-acc30__btn{font-size:1.375rem;
+    padding:clamp(1.5rem,5vw,2rem) 0 clamp(1.25rem,4vw,1.75rem);}
+  .c5-acc30__in{grid-template-columns:minmax(0,1fr);row-gap:var(--w-space-5);padding-bottom:var(--w-space-8);}
+  .c5-acc30__copy,.c5-acc30__copy:only-child{max-width:none;padding-top:0;}
+  .c5-acc30__cards{width:100%;grid-template-columns:minmax(0,1fr);}
+  /* no countdown here, so a card may grow with its text instead of holding one height */
+  .c5-acc30-card{height:auto;min-height:var(--c5-acc30-card-h);}
+}
+@media (min-width:560px) and (max-width:899px){
+  .c5-acc30__cards{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .c5-acc30__btn,
+  .c5-acc30[data-c5-acc30="on"] .c5-acc30__panel,
+  .c5-acc30-card,
+  .c5-acc30-card__media,
+  .c5-acc30-card__buy{transition:none;}
+  .c5-acc30__item[data-timer] .c5-acc30__timer{animation:none;}
+}
+
+
+/* ===== wariant: akordeon-z-odliczaniem – implementacja Produktów (c5pr-acc*, c5pr-pcard*) =====
+   The product overview page builds the variant under its own classes (the module
+   above is the generalised copy of this block). */
+/* Paths – accordion with a countdown. One row per situation; the open row shows a
+   large title, the description and the notes on the left and the product cards pushed to the
+   right edge of the container. Sizes follow the frame: closed row ~62 px, cards 340 × 350 px
+   with a 20 px gap, two columns that wrap – nothing scrolls sideways anywhere, so every product
+   of a path is on screen at once (path 08 fills 2 × 2 and its panel is simply taller).
+   Default (no JS, or before the module runs): every panel open, titles in a middle size. */
+/* overflow-anchor: the countdown moves the large title from one row to the next, and Chrome's
+   scroll anchoring would answer that with a few px of scroll – with Lenis running that reads as
+   a jerk. The automatic change must leave the page exactly where the reader left it. */
+.c5pr-acc{--pc-w:clamp(240px,26vw,340px);--pc-gap:20px;--pc-h:350px;--pc-media:139px;--pc-media-open:100px;margin-top:clamp(3rem,6vw,5rem);overflow-anchor:none;}
+.c5pr-acc__list{list-style:none;margin:0;padding:0;}
+.c5pr-acc__item{position:relative;border-top:1px solid var(--w-border-default);scroll-margin-top:var(--c5-gutter);}
+.c5pr-acc__item:last-child{border-bottom:1px solid var(--w-border-default);}
+
+/* countdown bar: sits on the top line of the row it will open (the module puts data-timer there) */
+.c5pr-acc__timer{position:absolute;left:0;top:-1px;width:100%;height:3px;background:var(--w-gray-900);transform:scaleX(0);transform-origin:left center;pointer-events:none;}
+.c5pr-acc__item[data-timer] .c5pr-acc__timer{animation:c5pr-count 5s linear forwards;}
+.c5pr-acc__item[data-timer="hold"] .c5pr-acc__timer{animation-play-state:paused;}
+@keyframes c5pr-count{from{transform:scaleX(0);}to{transform:scaleX(1);}}
+
+/* title: the only copy of it – 1 rem closed, large when open, the size animated with the panel */
+.c5pr-acc__h{margin:0;font-weight:var(--w-weight-regular);}
+.c5pr-acc__btn{display:block;width:100%;min-height:44px;padding:20px 0;border:0;background:none;font:inherit;font-size:1.25rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;line-height:1.3;text-align:left;color:var(--w-text-primary);cursor:pointer;
+  transition:font-size var(--c5-acc) var(--w-ease),padding var(--c5-acc) var(--w-ease),color var(--w-duration-base) var(--w-ease);}
+.c5pr-acc__btn:focus-visible{outline:2px solid var(--w-gray-900);outline-offset:-2px;border-radius:0;}
+/* closed row, measured off the frame:
+   15 px in the ink of the body text, 22 px of air above and below – the 62 px pitch the frame
+   draws between two hairlines. The grey of the earlier build is gone: in the frame the closed
+   titles are as black as the open one, only smaller. */
+.c5pr-acc[data-acc="on"] .c5pr-acc__btn{font-size:0.9375rem;font-weight:var(--w-weight-regular);line-height:1.2;padding:22px 0;color:var(--w-text-primary);}
+/* the open row breathes: air above the large title and between the title and the panel;
+   both paddings ride the same transition as the panel height, so nothing jumps */
+/* the open title tops out at the frame's 35 px */
+.c5pr-acc[data-acc="on"] .c5pr-acc__item[data-open] .c5pr-acc__btn{font-size:clamp(1.5rem,2.6vw,2.1875rem);font-weight:var(--w-weight-regular);line-height:1.2;letter-spacing:0;padding:clamp(2rem,4vw,3.5rem) 0 clamp(2rem,3.4vw,3rem);color:var(--w-text-primary);}
+@media (hover:hover){
+  .c5pr-acc[data-acc="on"] .c5pr-acc__btn:hover{color:var(--w-text-primary);}
+}
+
+/* panel: open by default (no JS), collapsed by the module */
+.c5pr-acc__panel{overflow:hidden;}
+.c5pr-acc[data-acc="on"] .c5pr-acc__panel{height:0;transition:height var(--c5-acc) var(--w-ease);}
+.c5pr-acc__in{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:clamp(3rem,8vw,7.875rem);align-items:start;padding-bottom:var(--w-space-10);}
+
+/* left zone: description, notes, warning, text links */
+/* the frame: 358 px of measure, 16 px / 1.3 in the body grey of the design (#777771) */
+.c5pr-acc__copy{display:flex;flex-direction:column;gap:var(--w-space-4);max-width:358px;padding-top:6px;}
+.c5pr-acc__copy p{margin:0;font-size:1rem;line-height:1.3;color:#777771;}
+.c5pr-acc__notes{display:flex;flex-direction:column;gap:var(--w-space-2);margin:0;padding:0;list-style:none;}
+.c5pr-acc__notes li{display:flex;gap:var(--w-space-3);align-items:flex-start;font-size:0.9375rem;color:var(--w-text-primary);}
+.c5pr-acc__notes .wf-icon{flex:none;margin-top:3px;color:var(--w-icon-default);}
+.c5pr-path__warn{display:flex;gap:var(--w-space-3);align-items:flex-start;border:1px solid var(--w-gray-900);padding:var(--w-space-3) var(--w-space-4);font-size:0.875rem;}
+.c5pr-path__warn .wf-icon{flex:none;margin-top:2px;}
+.c5pr-path__warn p{font-size:0.875rem;color:var(--w-text-primary);}
+/* one text link per row, no separators (a separator is not copy); 44 px target */
+.c5pr-acc__links{display:flex;flex-direction:column;margin:0;padding:0;list-style:none;font-size:0.9375rem;}
+.c5pr-acc__links .wf-link{display:inline-flex;align-items:center;min-height:44px;}
+
+/* right zone: product cards in two wrapping columns, flush with the right edge of the container */
+.c5pr-acc__cards{display:grid;grid-template-columns:repeat(2,var(--pc-w));gap:var(--pc-gap);margin:0;padding:0;list-style:none;width:calc(var(--pc-w)*2 + var(--pc-gap));}
+
+/* the packshot field has a fixed height, so the names line up across the cards of a path */
+/* Card geometry straight off the frame: 340 × 350 px, 10 px radius, 32 px of side
+   padding and 40 px above the packshot field, which is 139 px tall; the name sits 38 px under
+   it, the description 15 px under the name on a 275 px measure. Below 1440 px the card narrows
+   with --pc-w, so the paddings ride a clamp whose top is the frame value. The fill is the
+   frame's #f6f6f6 – the 60 % opacity of the Figma layer is not reproduced: over the #fafafa
+   band it would leave the card all but invisible. */
+.c5pr-pcard{position:relative;height:var(--pc-h);display:grid;grid-template-columns:minmax(0,1fr);align-content:start;gap:0;border-radius:10px;
+  padding:clamp(24px,3vw,40px) clamp(20px,2.4vw,32px) clamp(20px,2.4vw,32px);background:#f6f6f6;transition:background var(--w-duration-base) var(--w-ease);}
+.c5pr-pcard:focus-within{background:var(--w-gray-150);}
+.c5pr-pcard__media{display:flex;align-items:center;justify-content:center;height:var(--pc-media-open);min-height:0;overflow:hidden;transition:height var(--w-duration-base) var(--w-ease);}
+.c5pr-pcard__pack{width:auto;height:auto;max-width:62%;max-height:100%;object-fit:contain;}
+/* the check of the frame: 32 px, the green of the design, 24 px down and 26 px in from the
+   top right corner of the card */
+.c5pr-pcard__tick{position:absolute;top:24px;right:26px;width:32px;height:32px;color:#86d574;}
+.c5pr-pcard__name{margin:38px 0 0;font-size:0.875rem;font-weight:var(--w-weight-semibold);line-height:1.2;color:var(--w-text-primary);}
+.c5pr-pcard__txt{margin:15px 0 0;max-width:275px;font-size:0.875rem;line-height:1.25;color:var(--w-text-primary);}
+/* the whole card is the link to the product page; the buy button rides above it */
+.c5pr-pcard__link{color:inherit;text-decoration:none;}
+.c5pr-pcard__link::after{content:"";position:absolute;inset:0;z-index:1;}
+.c5pr-pcard__link:focus-visible::after{outline:2px solid var(--w-gray-900);outline-offset:-2px;}
+/* touch and narrow windows: the button simply stands under the description, packshot field small */
+.c5pr-pcard__buy{position:relative;z-index:2;justify-self:start;margin-top:var(--w-space-2);}
+@media (hover:hover) and (min-width:900px){
+  /* on a pointer the packshot field is tall at rest and shrinks on hover / focus, the name and
+     the description ride up with it and the button is uncovered under the description. The button
+     is out of flow, so the card keeps its 350 px whatever the description does. */
+  .c5pr-pcard__media{height:var(--pc-media);}
+  .c5pr-pcard:hover .c5pr-pcard__media,
+  .c5pr-pcard:focus-within .c5pr-pcard__media{height:var(--pc-media-open);}
+  .c5pr-pcard__buy{position:absolute;left:var(--w-space-5);bottom:var(--w-space-5);margin:0;opacity:0;visibility:hidden;transition:opacity var(--w-duration-base) var(--w-ease),visibility 0s linear var(--w-duration-base);}
+  .c5pr-pcard:hover .c5pr-pcard__buy,
+  .c5pr-pcard:focus-within .c5pr-pcard__buy{opacity:1;visibility:visible;transition-delay:0s;}
+  .c5pr-pcard:hover{background:var(--w-gray-150);}
+}
+
+/* --- narrow window: plain accordion, cards in one column, two from ~560 px ------------------ */
+@media (max-width:899px){
+  .c5pr-acc{--pc-h:330px;--pc-media:130px;--pc-media-open:130px;}
+  .c5pr-acc__timer{display:none;}
+  .c5pr-acc[data-acc="on"] .c5pr-acc__item[data-open] .c5pr-acc__btn{font-size:1.375rem;padding:clamp(1.5rem,5vw,2rem) 0 clamp(1.25rem,4vw,1.75rem);}
+  .c5pr-acc__in{grid-template-columns:minmax(0,1fr);row-gap:var(--w-space-5);padding-bottom:var(--w-space-8);}
+  .c5pr-acc__copy{max-width:none;padding-top:0;}
+  .c5pr-acc__cards{width:100%;grid-template-columns:minmax(0,1fr);}
+  /* no countdown here, so a card may grow with its text instead of holding one height */
+  .c5pr-pcard{height:auto;min-height:var(--pc-h);}
+}
+@media (min-width:560px) and (max-width:899px){
+  .c5pr-acc__cards{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .c5pr-acc__btn,
+  .c5pr-acc[data-acc="on"] .c5pr-acc__panel,
+  .c5pr-pcard__buy,
+  .c5pr-pcard__media,
+  .c5pr-pcard{transition:none;}
+  .c5pr-acc__item[data-timer] .c5pr-acc__timer{animation:none;}
+}
+
+
+/* ===== układ podstawowy: lista z podglądem (c5hu-mixlist*, CARBOHUMIC) ===== */
+/* Five names on the left, one description field on the right. Base state = the
+   static layout (phone, page without JS): name, examples and description one
+   under the other for every item. The order comes from `order` – the `__nav` and
+   `__panels` columns are `display:contents` then, so the buttons and the panels
+   become siblings and can be interleaved without duplicating the content in the
+   markup. Two columns and the switching come only from 900 px. */
+.c5hu-mixlist{display:flex;flex-direction:column;gap:var(--w-space-2);margin-top:clamp(1.5rem,3vw,2.5rem);}
+.c5hu-mixlist__nav,.c5hu-mixlist__panels{display:contents;}
+.c5hu-mixlist__nav > :nth-child(1){order:1;}
+.c5hu-mixlist__panels > :nth-child(1){order:2;}
+.c5hu-mixlist__nav > :nth-child(2){order:3;}
+.c5hu-mixlist__panels > :nth-child(2){order:4;}
+.c5hu-mixlist__nav > :nth-child(3){order:5;}
+.c5hu-mixlist__panels > :nth-child(3){order:6;}
+.c5hu-mixlist__nav > :nth-child(4){order:7;}
+.c5hu-mixlist__panels > :nth-child(4){order:8;}
+.c5hu-mixlist__nav > :nth-child(5){order:9;}
+.c5hu-mixlist__panels > :nth-child(5){order:10;}
+
+/* Name: plain text, no button chrome. The dash before the name always has its
+   place (padding) and appears through `scaleX` – so the names stand on one axis
+   whichever is active. */
+.c5hu-mixlist__name{position:relative;display:block;width:100%;margin:0;
+  padding:.35rem 0;border:0;background:none;appearance:none;cursor:default;
+  font-family:inherit;font-size:1.25rem;font-weight:var(--w-weight-medium);line-height:1.35;
+  letter-spacing:-0.01em;text-align:left;color:var(--w-gray-900);transition:color .2s ease;}
+/* the dash before the name exists only in the two-column layout */
+.c5hu-mixlist__name::before{content:"";display:none;position:absolute;left:0;top:calc(.35rem + .675em);
+  width:1.25rem;height:1px;background:currentColor;
+  transform:scaleX(0);transform-origin:left center;transition:transform .2s cubic-bezier(.2,.7,.2,1);}
+.c5hu-mixlist__name:focus-visible{outline:2px solid var(--w-gray-900);outline-offset:3px;}
+
+/* Panel: a light grey field with the line of examples above the description. */
+.c5hu-mixlist__panel{display:flex;flex-direction:column;gap:var(--w-space-2);
+  background:var(--w-gray-100);padding:clamp(1.25rem,4vw,1.75rem);margin-bottom:var(--w-space-4);}
+.c5hu-mixlist__panel p{margin:0;font-size:1rem;line-height:1.6;color:var(--w-text-secondary);max-width:62ch;}
+
+@media (min-width:900px){
+  /* Two columns: names | panel. The panels lie in one grid cell, so the field has
+     the height of the tallest of them – switching moves nothing. */
+  .c5hu-mixlist{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);
+    column-gap:clamp(2rem,5vw,4rem);row-gap:0;align-items:start;}
+  .c5hu-mixlist__nav{display:flex;flex-direction:column;gap:var(--w-space-3);}
+  .c5hu-mixlist__panels{display:grid;}
+  .c5hu-mixlist__panel{grid-area:1/1;padding:32px;margin-bottom:0;}
+  .c5hu-mixlist__name{padding-left:2rem;cursor:pointer;color:var(--w-gray-500);}
+  .c5hu-mixlist__name::before{display:block;}
+  .c5hu-mixlist__name.is-on{color:var(--w-gray-900);}
+  .c5hu-mixlist__name.is-on::before{transform:scaleX(1);}
+  /* Crossfade: an invisible panel leaves the accessibility tree (visibility)
+     but still counts towards the height of the cell. */
+  .cx-js .c5hu-mixlist__panel{opacity:0;visibility:hidden;
+    transition:opacity .2s linear,visibility 0s linear .2s;}
+  .cx-js .c5hu-mixlist__panel.is-on{opacity:1;visibility:visible;
+    transition:opacity .2s linear,visibility 0s linear 0s;}
+}
+@media (prefers-reduced-motion: reduce){
+  .c5hu-mixlist__name,.c5hu-mixlist__name::before,.cx-js .c5hu-mixlist__panel{transition-duration:0s;}
+}
+/* the line of examples inside the panels of the list */
+.c5hu-mix__ex{font-size:0.8125rem;color:var(--w-text-tertiary);}
+
+
+/* ===== układ podstawowy: karty / taby / akordeon (on-val*, O firmie) =====
+   The same mechanics as the product overview variant above. One DOM, three layouts:
+   · no JS, or before the module runs: four cards in a grid, list buttons hidden;
+   · >= 900 px – tabs: vertical tablist on the left, every panel in one sticky
+     cell on the right;
+   · < 900 px – accordion: one panel open at a time.
+   Anchors #wartosc-01…04 land through CX5.onHash. */
+.on-val{margin-top:clamp(2rem,4vw,3rem);}
+.on-val__panel[id]{scroll-margin-top:var(--c5-gutter);}
+.on-val__list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(310px,100%),1fr));gap:var(--w-space-5);}
+.on-val__row{display:contents;}
+.on-val__tab{display:none;}
+.on-val__panel{display:flex;min-width:0;}
+.on-val__card{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:var(--w-space-3);
+  border:1px solid var(--w-border-default);background:var(--w-surface-page);padding:clamp(1.25rem,2.2vw,1.75rem);}
+.on-val__fig{margin:0;display:flex;flex-direction:column;gap:var(--w-space-2);}
+.on-val__img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;background:var(--w-gray-200);}
+.on-val__cap{font-size:0.75rem;line-height:1.45;color:var(--w-text-tertiary);}
+.on-val__cno{font-size:0.75rem;letter-spacing:.06em;color:var(--w-text-tertiary);}
+.on-val__h{font-size:1.125rem;line-height:1.3;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+.on-val__card p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
+.on-val__no{font-size:0.75rem;letter-spacing:.06em;}
+.on-val__t{font-size:1.125rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;line-height:1.3;}
+.on-val__tab:focus-visible{outline:2px solid var(--w-gray-900);outline-offset:-2px;border-radius:0;}
+/* --- Tabs (>= 900 px, JS): the list of values | a sticky description ---------
+   Rows are display:contents, so every button sits in column 1 (rows 1…n) and
+   every panel in the same cell of column 2 (rows 1…-1, stacked). The extra 1fr
+   row takes the height a panel may add over the list. */
+.on-val[data-vals="tabs"] .on-val__list{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);
+  grid-template-rows:repeat(var(--on-val-n,4),auto) 1fr;column-gap:clamp(2rem,5vw,4.5rem);row-gap:0;align-items:start;}
+.on-val[data-vals="tabs"] .on-val__tab{grid-column:1;display:grid;grid-template-columns:2.5rem minmax(0,1fr);
+  gap:var(--w-space-3);align-items:baseline;width:100%;padding:18px 0 18px 14px;border:0;
+  border-top:1px solid var(--w-border-default);border-left:2px solid transparent;background:none;font:inherit;
+  text-align:left;cursor:pointer;color:var(--w-gray-500);transition:color .2s,border-color .2s;}
+.on-val[data-vals="tabs"] .on-val__row:last-child .on-val__tab{border-bottom:1px solid var(--w-border-default);}
+.on-val[data-vals="tabs"] .on-val__chev{display:none;}
+/* shown (hover preview, is-on) and chosen (aria-selected) */
+.on-val[data-vals="tabs"] .on-val__tab.is-on,
+.on-val[data-vals="tabs"] .on-val__tab[aria-selected="true"]{color:var(--w-gray-900);border-left-color:var(--w-gray-900);}
+@media (hover:hover){
+  .on-val[data-vals="tabs"] .on-val__tab:hover:not(.is-on):not([aria-selected="true"]){color:var(--w-gray-700);}
+}
+/* A panel that would reach under the advisor dock sticks by its bottom edge
+   instead, 84 px above the window bottom (--on-val-ph = its height, set by JS). */
+.on-val[data-vals="tabs"] .on-val__panel{grid-column:2;grid-row:1 / -1;align-self:start;position:sticky;
+  top:min(calc(var(--cx-navbar-h, 0px) + var(--c5-gutter)), calc(100svh - var(--on-val-ph, 0px) - 84px));
+  opacity:0;visibility:hidden;transform:translateY(8px);
+  transition:opacity .25s var(--w-ease),transform .25s var(--w-ease),visibility 0s linear .25s;}
+.on-val[data-vals="tabs"] .on-val__panel[data-on]{z-index:1;opacity:1;visibility:visible;transform:none;transition-delay:0s;}
+.on-val[data-vals="tabs"] .on-val__panel:focus-visible{outline:2px solid var(--w-gray-900);outline-offset:2px;border-radius:0;}
+.on-val[data-vals="tabs"] .on-val__card{padding:clamp(1.5rem,2.6vw,2.25rem);}
+.on-val[data-vals="tabs"] .on-val__h{font-size:clamp(1.375rem,2.2vw,1.75rem);line-height:1.2;}
+
+/* --- Accordion (< 900 px, JS): number · title · chevron, one panel open ------ */
+.on-val[data-vals="acc"] .on-val__list{display:block;}
+.on-val[data-vals="acc"] .on-val__row{display:block;border-top:1px solid var(--w-border-default);}
+.on-val[data-vals="acc"] .on-val__row:last-child{border-bottom:1px solid var(--w-border-default);}
+.on-val[data-vals="acc"] .on-val__tab{display:grid;grid-template-columns:2.5rem minmax(0,1fr) auto;
+  gap:var(--w-space-3);align-items:baseline;width:100%;min-height:56px;padding:16px 0;border:0;background:none;
+  font:inherit;text-align:left;cursor:pointer;color:var(--w-text-primary);}
+.on-val[data-vals="acc"] .on-val__no{color:var(--w-text-tertiary);}
+.on-val[data-vals="acc"] .on-val__chev{align-self:center;transition:transform var(--w-duration-base) var(--w-ease);}
+.on-val[data-vals="acc"] .on-val__tab[aria-expanded="true"] .on-val__chev{transform:rotate(180deg);}
+.on-val[data-vals="acc"] .on-val__panel{display:block;position:relative;overflow:hidden;height:0;
+  transition:height var(--c5-acc) var(--w-ease);}
+.on-val[data-vals="acc"] .on-val__card{border:0;background:none;padding:0 0 var(--w-space-5);}
+/* the row button already shows the number and the title – the card keeps them for screen readers */
+.on-val[data-vals="acc"] .on-val__cno,
+.on-val[data-vals="acc"] .on-val__h{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+
+@media (prefers-reduced-motion: reduce){
+  .on-val[data-vals] .on-val__tab,
+  .on-val[data-vals] .on-val__chev,
+  .on-val[data-vals] .on-val__panel{transition:none;}
+}

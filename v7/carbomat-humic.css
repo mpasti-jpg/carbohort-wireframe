@@ -20,66 +20,7 @@
 .c5-ph__label{position:absolute;left:12px;bottom:10px;font-size:0.6875rem;line-height:1.2;letter-spacing:.04em;text-transform:uppercase;color:rgb(0 0 0 / .45);pointer-events:none;}
 .c5-ph--dark .c5-ph__label{color:rgb(255 255 255 / .55);}
 
-/* --- CE-08 Hero ------------------------------------------------------------
-   The copy column is the pattern block as it stands (ce/CE-08-hero.css): the
-   kicker, the h1, one lead and two buttons centred between the menu and the
-   breadcrumb, at the pattern's type scale. The page used to take the type one
-   step down, because the lead ran to five lines and two notes stood under the
-   buttons; with the short lead those overrides are gone. What stays here is
-   what stands ON the panel. */
-
-/* page-specific: CE-08 – the hero stage and the packshot geometry; the pattern
-   block only sets the frame. The panel stands 30 px from the top, the bottom
-   and the right edge of the screen: flat light grey, no photo and no gradient
-   band behind the packshot. One packshot centred in the panel – the page does
-   not set a bag and a pouch side by side as the CARBOMAT ECO page does, hence
-   the plain `translate(-50%,-50%)` and no `--c5-pouch-scale`. */
-.c5-hero__stage{--c5-pack-h:clamp(260px,46%,520px);position:relative;overflow:hidden;margin-block:var(--c5-gutter);min-height:calc(100svh - var(--cx-navbar-h, 0px) - 2 * var(--c5-gutter));background:var(--w-gray-100);}
-.c5-hero__pack{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);height:var(--c5-pack-h);width:auto;max-width:calc(100% - 2 * var(--c5-gutter));object-fit:contain;}
-
-/* page-specific: the stage rule above is declared after the pattern block, so
-   the phone layout of the stage has to be repeated after it */
-@media (max-width:899px){
-  .c5-hero__stage{order:2;margin-block:0;min-height:0;aspect-ratio:4/5;max-height:70vh;}
-}
-
 /* dots are round on purpose: they are markers, not layout boxes (like .c5-way__ico) */
-
-/* page-specific: CE-07 dot rail. After the CE-12 scene moved to the Frame 206
-   layout its photo panel is no longer bound by the 1180 px container – it reaches
-   20 px from the right edge of a container as wide as the window (up to 1800 px),
-   so at the shared position of the rail (30 px from the edge, 28 px wide) its hit
-   areas lay on 38 px of the panel at 1440 px. Here the rail moves into the margin,
-   exactly as on Produkty, Kukurydza and Próchnica+. */
-@media (min-width:900px){.c5-dots{right:10px;}}
-
-/* Czas dobrany do zmierzonej długości połowy toru, żeby tempo w pikselach było
-   takie jak na stronie CARBOMAT ECO (zmierzone 13.09 na 1280 px: połowa toru
-   4704 px / 42 s = 112 px/s). Połowa toru HUMIC-a mierzy 4810 px, więc 43 s daje
-   111,9 px/s – to samo tempo. */
-.c5-marq__track{display:flex;align-items:center;width:max-content;margin:0;padding:0;list-style:none;animation:c5-marq 43s linear infinite;will-change:transform;}
-/* ⚠️ placeholder miniatury: zdjęcia zalet HUMIC do wygenerowania (prompty w spec §11).
-   Ten sam kwadrat i te same 12 px, tylko zamiast <img> pusty <span>. */
-.c5-marq__thumb--ph{display:block;}
-@media (prefers-reduced-motion: reduce){
-  .c5-marq__track{animation:none;will-change:auto;}
-  .c5-marq__item:nth-child(n+6){display:none;}
-}
-
-/* jedna klasa dla <img> i przyszłego <video> – podmiana to jeden element */
-.c5-params__media{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;}
-/* ⚠️ dopóki nie ma wideo, w kadrze stoi placeholder (spec HUMIC §5): ta sama klasa,
-   ciemniejsza szarość niż domyślne `.c5-ph--dark`, bo pod maską .4 musi zostać
-   czytelne, że to kadr na film, a nie czarna plama. */
-.c5-params__media.c5-ph{background:var(--w-gray-800);}
-/* etykieta placeholdera leży pod maską kadru – podnosimy jej kontrast, żeby dało
-   się ją przeczytać w makiecie */
-.c5-params__media .c5-ph__label{left:auto;right:16px;bottom:14px;color:rgb(255 255 255 / .75);}
-/* page-specific: CE-10 – at its full size the heading of this page is wider than
-   the column of the variant (732 px) and the last word dropped alone to a second
-   line. Balanced, it breaks after the separator dot (kept on the first line by a
-   no-break space in the markup). Type and metrics stay those of the module. */
-#parametry .c5-params__title{text-wrap:balance;}
 
 /* --- ECO CZY HUMIC: four rule cards „ECO -> HUMIC" (CE-34, variant „przemiana") ---
    The difference between the two products is the outcome of one process
@@ -240,85 +181,14 @@ html.c5-pop-lock{overflow:hidden;}
   .c5-pop__panel,.c5-pop-overlay{transition:none;}
 }
 
-/* --- CE-12 „Scena faktów" – eight steps, the Frame 206 layout (19.09.2026) ---
-   The machinery of the scene lives in ce/CE-12-scena-faktow-proba.css, which this
-   page links instead of the shared ce/CE-12-scena-faktow.css. What stays here is
-   only what depends on the CONTENT of this page: the order of the static layout,
-   the knobs of the block (one declaration on the root of the section) and the type
-   scale of the scene. Not a single rule copied from the sheet of the block. */
-
-/* The knobs of the block, all in one declaration (CE-12 contract §2.5):
-   · the step of the track: eight steps instead of five, so shorter than the
-     default (480 px / 80 % of the window) – CE-12-scena-faktow-proba.js reads it;
-   · the height of the illustration box: eight figures, among them the purity table
-     (9 rows) and two bar charts – at the default 62 svh they were short of height,
-     exactly as on Próchnica+. */
-#czym-jest{--fx-step-min:420;--fx-step-vh:0.7;--c5-fx-viz-h:clamp(360px,68svh,760px);}
-
-/* The frames sit together in the DOM (inside the panel), so in the static flow
-   `order` interleaves them: the frame, its description, its illustration. Each of
-   the steps 2-6 has a box of its own while the photo frame is one for all of them
-   – it stands once, before step 2. In the scene all of these elements are
-   positioned against the scene, so `order` changes nothing there. */
-#czym-jest .c5-fx__panel > [data-fx-bg="1"]{order:1;} #czym-jest .c5-fx__fact[data-fx-fact="1"]{order:2;} #czym-jest .c5-viz[data-fx-viz="1"]{order:3;}
-#czym-jest .c5-fx__panel > [data-fx-bg="2-6"]{order:4;}
-#czym-jest .c5-fx__fact[data-fx-fact="2"]{order:5;} #czym-jest .c5-viz[data-fx-viz="2"]{order:6;}
-#czym-jest .c5-fx__fact[data-fx-fact="3"]{order:7;} #czym-jest .c5-viz[data-fx-viz="3"]{order:8;}
-#czym-jest .c5-fx__fact[data-fx-fact="4"]{order:9;} #czym-jest .c5-viz[data-fx-viz="4"]{order:10;}
-#czym-jest .c5-fx__fact[data-fx-fact="5"]{order:11;} #czym-jest .c5-viz[data-fx-viz="5"]{order:12;}
-#czym-jest .c5-fx__fact[data-fx-fact="6"]{order:13;} #czym-jest .c5-viz[data-fx-viz="6"]{order:14;}
-#czym-jest .c5-fx__panel > [data-fx-bg="7"]{order:15;} #czym-jest .c5-fx__fact[data-fx-fact="7"]{order:16;} #czym-jest .c5-viz[data-fx-viz="7"]{order:17;}
-#czym-jest .c5-fx__panel > [data-fx-bg="8"]{order:18;} #czym-jest .c5-fx__fact[data-fx-fact="8"]{order:19;} #czym-jest .c5-viz[data-fx-viz="8"]{order:20;}
-
-/* the drawing scales with the box; max-height keeps a tall viewBox inside it
-   (default preserveAspectRatio letterboxes it instead of overflowing) */
-.c5-viz__body svg:not(.wf-icon){width:100%;height:auto;max-height:100%;color:inherit;}
-
-/* --- Scena: skala typografii tej strony ------------------------------------ */
-@media (min-width:900px) and (prefers-reduced-motion: no-preference){
-  /* w scenie nagłówek jest odrobinę mniejszy – najdłuższy opis (krok 7) musi
-     zmieścić się pod nim na ekranie 800 px bez wchodzenia w nagłówek */
-  .cx-js #czym-jest .c5-fx__head .c5-h2{font-size:clamp(1.5rem,2.6vw,2.125rem);}
-  /* eight steps on one screen: the description is tighter than in the static
-     layout, because the longest of them (step 7 – a paragraph and four points)
-     has to fit above the reserve of the advisor dock */
-  .cx-js #czym-jest .c5-fx__body{font-size:0.875rem;line-height:1.5;}
-}
-/* Low windows (e.g. 1280x720): the heading and the description take a tighter
-   scale, so that the longest point still fits between the heading and the
-   advisor dock. */
-@media (min-width:900px) and (prefers-reduced-motion: no-preference) and (max-height:780px){
-  .cx-js #czym-jest .c5-fx__head .c5-h2{font-size:clamp(1.375rem,2.2vw,1.75rem);}
-  .cx-js #czym-jest .c5-fx__body{font-size:0.8125rem;line-height:1.45;}
-  .cx-js #czym-jest .c5-fx__body ul{gap:var(--w-space-1);}
-  /* The purity table (step 8) has nine rows – it is the one that sets the height
-     of the box. At 68 svh it fitted everywhere except the 1280x720 window, where
-     the last row went under the edge (measured: 21 px; in the layout from before
-     19.09.2026 it was 50 px short). On a low window the box therefore takes
-     74 svh – still one knob of the block, no rule copied from the trial sheet. */
-  #czym-jest{--c5-fx-viz-h:clamp(360px,74svh,760px);}
-}
-
-/* page-specific: CE-12, static layout (below 900 px, reduced motion, no JS).
-   There the illustration box is a 4 : 5 frame capped at 520 px, and it clips.
-   Two illustrations of this page are taller than that frame:
-   · the purity table of step 8 (nine rows): its last rows could only be reached
-     by scrolling inside the box – on a phone, and with the taller number badge of
-     the „glass" layer on a wide window too. The box takes the height of its
-     content instead, never less than the 520 px of its neighbours;
-   · the bar chart of step 7 on a phone, where the labels wrap to two lines. The
-     frame becomes its minimum: with a visible overflow the automatic minimum of
-     a ratio box applies, so the box grows by the few pixels the chart needs
-     (up to 456 px of window the 4 : 5 height stays under the 520 px cap).
-   The scene itself (from 900 px, with motion and JS) sizes the box through
-   --c5-fx-viz-h and is not reached by these rules. */
-@media (max-width:899px), (prefers-reduced-motion: reduce){
-  #czym-jest .c5-viz[data-fx-viz="8"]{aspect-ratio:auto;min-height:520px;max-height:none;}
-}
-html:not(.cx-js) #czym-jest .c5-viz[data-fx-viz="8"]{aspect-ratio:auto;min-height:520px;max-height:none;}
-@media (max-width:456px){
-  #czym-jest .c5-viz[data-fx-viz="7"]{max-height:none;overflow:visible;}
-}
+/* --- CE-12 „Scena faktów” (#czym-jest) – eight steps --------------------------
+   No rule of the scene lives in this sheet. Layout, mechanics and look come from
+   ce/CE-12-scena-faktow.css; this page picks them in carbomat-humic.html: on the
+   root of the scene the classes c5-fx--glass and c5-fx--skala-osiem-krokow and,
+   as style="--…", the step of the track (--fx-step-min, --fx-step-vh: eight
+   steps, so shorter than the default 480 px / 80 % of the window) and
+   --c5-fx-svg-max; the purity table of step 8 carries c5-viz--rosnie, the bar
+   chart of step 7 c5-viz--luz-mobile. */
 
 /* --- KIEDY STOSOWAĆ: dwa panele fotograficzne + pas PRO (spec §16.1) --------
    Two application worlds side by side, not a sequence: the pin, the packshot
@@ -362,40 +232,12 @@ html:not(.cx-js) #czym-jest .c5-viz[data-fx-viz="8"]{aspect-ratio:auto;min-heigh
   .c5-when__panel{min-height:clamp(420px,70svh,560px);}
 }
 
-/* --- Pas PRO (spec §9, wzór sensiq.co) -------------------------------------
-   Szare tło, media absolutne skalowane przy przewijaniu od połowy (.5) do
-   pełnej szerokości (1); po lewej nagłówek, po prawej akapit i dwa przyciski.
-   Bez ruchu (mobile / reduced / bez JS): media statyczne nad treścią, 16:10,
-   bez skalowania. Zdjęcia jeszcze nie ma – placeholder w kadrze. */
-.c5-pro{position:relative;background:var(--w-gray-600);color:var(--w-text-inverse);overflow:hidden;margin-top:clamp(3rem,6vw,5rem);}
-/* narożniki 30 px – jedyny wyjątek od ostrych narożników V5, na wyraźne
-   życzenie Mateusza */
-.c5-pro__media{position:relative;width:100%;aspect-ratio:16/10;border-radius:30px;overflow:hidden;}
-/* placeholder zdjęcia wypełnia kadr – etykieta zostaje czytelna na szarości 500 */
-.c5-pro__ph{position:absolute;inset:0;width:100%;height:100%;background:var(--w-gray-500);}
-.c5-pro__ph .c5-ph__label{color:rgb(255 255 255 / .6);}
-
-@media (min-width:900px){
-  /* statycznie (reduced / bez JS) media nad treścią nie zjadają całego ekranu */
-  .c5-pro__media{max-height:min(56vh,520px);}
-}
-@media (min-width:900px) and (prefers-reduced-motion: no-preference){
-  .cx-js .c5-pro__media{position:absolute;inset:0;width:auto;aspect-ratio:auto;max-height:none;transform:scale(var(--pro-s,1));transform-origin:center;will-change:transform;}
-}
 
 /* Ograniczony ruch: żadnych przejść (parallax i zoom są już wyłączone – JS nie
    ustawia --when-par, a hover żyje tylko w bloku no-preference). */
 @media (prefers-reduced-motion: reduce){
   .c5-when__ph{transition:none;}
 }
-
-/* --- FAQ: pytanie z lewej, odpowiedź z prawej ------------------------------- */
-/* Odstęp nagłówek → pierwszy akordeon: §14.5 dokłada ~100 px do dotychczasowych
-   64 px, czyli ok. 164 px na desktopie. */
-.c5-faq{display:flex;flex-direction:column;margin-top:clamp(8rem,12vw,10.25rem);}
-/* HUMIC: większość odpowiedzi ma po kilka akapitów (spec §10) – jeden odstęp
-   między nimi zamiast marginesów na akapitach */
-.c5-faq__answer{display:flex;flex-direction:column;gap:var(--w-space-3);}
 
 /* The knobs of the CE-12 scene (the step of the track, the height of the
    illustration box) stand in the „Scena faktów" block above – one declaration on

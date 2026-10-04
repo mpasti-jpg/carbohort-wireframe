@@ -5,11 +5,13 @@
    replaces the two-frame version of the pattern: the number of frames is read
    from the DOM and every rule here is index-free, so the same file serves 2, 4
    or 6 frames. CARBOMAT ECO keeps its markup (.c5-use__layer--a/--b and named
-   crops) – the compatibility section at the bottom gives those elements their
-   --ord, and the track constants of a page live in <strona>.css so ECO keeps
-   the length and the phase edges it has today.
-   Everything that follows the CONTENT stays in <strona>.css: the photo crops,
-   the dose lists inside a card, the page-specific card width and type. ===== */
+   crops) – the compatibility section near the bottom gives those elements their
+   --ord.
+   Variants (class on <article class="c5-use">, at the end of the file):
+     c5-use--dwa-kadry  the track of the two-frame pattern, 5.5 screens a product
+     c5-use--n-kadrow   term frames with a dose table in the card
+   Knob on the root: --use-pos-b – crop of the photo of the second layer
+   (markup with --a/--b), default 50% 55%. ===== */
 
 /* The base layer below IS the static reading order – no JS, under 900 px or
    with reduced motion: bar, then photo + title + card for every term, one under
@@ -42,8 +44,8 @@
   /* Track constants read by CE-13-scena-produktu.js, in viewport heights:
      intro (bar docks, photo grows, veil + tabs + first card), hold per frame,
      switch between two frames, outro; --use-card is where the first card starts
-     inside the intro. A page whose cards need more reading time overrides them
-     in <strona>.css – CARBOMAT ECO does, to keep its 5.5-screen track. */
+     inside the intro. A scene whose cards need more reading time overrides
+     them – the variant c5-use--dwa-kadry does, to keep its 5.5-screen track. */
   --use-intro:1; --use-hold:.75; --use-switch:.35; --use-outro:.5; --use-card:.917;
   margin-top:clamp(2.5rem,5vw,4rem);
 }
@@ -89,6 +91,9 @@
 .c5-use__box{background:rgb(20 20 20 / .7);color:var(--w-text-inverse);max-width:var(--w-measure);padding:clamp(20px,3vw,28px);}
 .c5-use__desc{display:flex;flex-direction:column;gap:var(--w-space-4);font-size:0.875rem;line-height:1.55;}
 .c5-use__desc p{margin:0;}
+/* a label line and a list inside the card */
+.c5-use__desc .c5-label{display:block;font-weight:var(--w-weight-semibold);}
+.c5-use__list{display:flex;flex-direction:column;gap:var(--w-space-3);}
 
 /* --- przypięta scena: tylko z JS, od 900 px i bez ograniczenia ruchu ------- */
 @media (min-width:900px) and (prefers-reduced-motion:no-preference){
@@ -170,3 +175,50 @@
 .c5-use__layer--b{--ord:20;}
 .c5-use__crop[data-use-crop="gruntowe"]{--ord:10;}
 .c5-use__crop[data-use-crop="doniczkowe"]{--ord:20;}
+/* crop of the photo of the second layer: style="--use-pos-b:50% 62%" on the root */
+.c5-use__layer--b .c5-use__fill{object-position:var(--use-pos-b,50% 55%);}
+
+/* ===== wariant: dwa-kadry ===== */
+/* The track of the pattern from before the generalisation to N frames: two long
+   frames, 5.5 screens a product. The constants are read by the script. */
+.c5-use--dwa-kadry{--use-intro:1.32;--use-hold:1.76;--use-switch:.33;--use-outro:.33;--use-card:.75;}
+
+/* ===== wariant: n-kadrow ===== */
+/* Term frames with a dose table in the card: term names of up to 44 characters,
+   a taller card. */
+.c5-use--n-kadrow .c5-use__desc{gap:var(--w-space-3);}
+/* the card of a frame: overline + the name of the term + paragraph + dose table;
+   the dose table comes in its light-ground version and is inverted here. In the
+   static layout the header of the card does not show: the name of the term
+   stands right above the card as the title of the frame. In the pinned scene it
+   is the other way round: there it ties the card to the chosen tab. */
+.c5hu-use__head{display:none;flex-direction:column;gap:2px;}
+.c5hu-use__over{font-size:0.75rem;letter-spacing:.06em;text-transform:uppercase;color:rgb(255 255 255 / .6);}
+.c5hu-use__term{font-size:1.0625rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;line-height:1.2;}
+.c5-use__box .c5hu-dose{margin:0;padding-top:0;}
+.c5-use__box .c5hu-dose__row{border-top-color:rgb(255 255 255 / .22);}
+.c5-use__box .c5hu-dose dt{color:rgb(255 255 255 / .6);}
+@media (min-width:900px) and (prefers-reduced-motion:no-preference){
+  /* in the pinned scene the card carries its own header */
+  .cx-js .c5hu-use__head{display:flex;}
+  /* the tabs never wrap, so the size is what keeps the longest name inside the
+     left column: 15 px at 900 px (where the column is 371 px wide), 26 px from
+     1600 px up; a name that still does not fit ends with an ellipsis */
+  .cx-js .c5-use--n-kadrow .c5-use__tab{max-width:100%;overflow:hidden;text-overflow:ellipsis;
+    font-size:clamp(0.9375rem,1.6vw,1.625rem);line-height:1.15;
+    margin-bottom:calc(var(--tabi,0) * (1.15em + 10px));}
+  .cx-js .c5-use--n-kadrow .c5-use__box{max-width:none;}
+}
+/* narrow windows of the scene: below 1280 px the card is only 38 vw wide, so the
+   longest frame outgrew the height between the bar and the dock. The card widens
+   to 46 vw and the type goes one step down – nothing is hidden. */
+@media (min-width:900px) and (max-width:1279px) and (prefers-reduced-motion:no-preference){
+  .cx-js .c5-use--n-kadrow .c5-use__box{width:min(486px,46vw);padding:18px 20px;}
+  .cx-js .c5-use--n-kadrow .c5-use__desc{font-size:0.8125rem;}
+  .cx-js .c5-use__box .c5hu-dose__row{padding-block:5px;font-size:0.8125rem;}
+}
+/* the narrowest windows of the scene: tighter margins, so the column of tabs and
+   the card have room next to each other */
+@media (min-width:900px) and (max-width:1099px) and (prefers-reduced-motion:no-preference){
+  .cx-js .c5-use--n-kadrow .c5-use__crop{gap:var(--w-space-6);padding-inline:var(--w-space-6);}
+}

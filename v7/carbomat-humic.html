@@ -12,9 +12,8 @@
   <link rel="stylesheet" href="ce/CE-07-nawigacja-kropkowa.css">
   <link rel="stylesheet" href="ce/CE-08-hero.css">
   <link rel="stylesheet" href="ce/CE-09-marquee.css">
-  <link rel="stylesheet" href="ce/CE-10-parametry-proba.css">
-  <link rel="stylesheet" href="ce/CE-12-scena-faktow-proba.css">
-  <link rel="stylesheet" href="ce/CE-12-scena-faktow-glass.css">
+  <link rel="stylesheet" href="ce/CE-10-parametry.css">
+  <link rel="stylesheet" href="ce/CE-12-scena-faktow.css">
   <link rel="stylesheet" href="ce/CE-16-pas-pro.css">
   <link rel="stylesheet" href="ce/CE-17-faq.css">
   <link rel="stylesheet" href="ce/CE-18-cta.css">
@@ -34,7 +33,7 @@
 
 
 
-<nav id="nawigacja-kropki" class="c5-dots" aria-label="Rozdziały strony CARBOMAT HUMIC" data-dots data-ce="CE-07">
+<nav id="nawigacja-kropki" class="c5-dots" style="--c5-dots-right:10px" aria-label="Rozdziały strony CARBOMAT HUMIC" data-dots data-ce="CE-07">
   <ol>
     <li><a class="c5-dots__link" href="#hero" data-dot="hero"><span class="c5-dots__label">Start</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
     <li><a class="c5-dots__link" href="#parametry" data-dot="parametry"><span class="c5-dots__label">Parametry</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
@@ -138,7 +137,7 @@
 
 
 
-  <section class="c5-marq" id="zalety" aria-label="Zalety CARBOMAT HUMIC" data-ce="CE-09">
+  <section class="c5-marq c5-marq--keep-5" id="zalety" aria-label="Zalety CARBOMAT HUMIC" data-ce="CE-09" style="--c5-marq-dur:43s">
     <ul class="c5-marq__track">
       <li class="c5-marq__item">
         <span class="c5-marq__txt">pH 9–11 · podnosi odczyn gleb zakwaszonych</span>
@@ -203,7 +202,7 @@
 
 
 
-  <section class="c5-params c5-params--col" id="parametry" data-chapter="parametry" data-params data-ce="CE-10" data-ce-wariant="kafelki-z-wejsciem">
+  <section class="c5-params c5-params--col" style="--c5-params-title-wrap:balance" id="parametry" data-chapter="parametry" data-params data-ce="CE-10" data-ce-wariant="kafelki-z-wejsciem">
     
     <div class="c5-params__bg" aria-hidden="true">
       <div class="c5-params__frame">
@@ -643,7 +642,12 @@
 
 
 
-  <section class="c5-sec c5-fx" id="czym-jest" data-chapter="czym-jest" data-fx data-fx-look="glass" data-ce="CE-12" data-ce-wariant="z-naglowkiem">
+
+
+
+
+
+  <section class="c5-sec c5-fx c5-fx--glass c5-fx--skala-osiem-krokow" id="czym-jest" data-chapter="czym-jest" data-fx data-ce="CE-12" data-ce-wariant="z-naglowkiem" style="--fx-step-min:420;--fx-step-vh:0.7;--c5-fx-svg-max:100%;">
     <div class="c5-fx__track" data-fx-track>
       <div class="c5-fx__stage">
 
@@ -902,7 +906,7 @@
             <span class="c5-fx__count" aria-hidden="true">07/08</span>
           </div>
 
-          <figure class="c5-viz" data-fx-viz="7">
+          <figure class="c5-viz c5-viz--luz-mobile" data-fx-viz="7">
             <span class="c5-viz__tag">07 · Kompleks organiczny</span>
             <div class="c5-viz__body">
               <div class="c5-barchart" role="img" aria-label="Skład CARBOMAT HUMIC w suchej masie wg aktualnej analizy: materia organiczna około 50 procent, ekstrakt humusowy około 48 procent, kwasy huminowe około 45 procent, węgiel organiczny około 28 procent, kwasy fulwowe około 2,5 procent">
@@ -930,7 +934,7 @@
             <span class="c5-fx__count" aria-hidden="true">08/08</span>
           </div>
 
-          <figure class="c5-viz" data-fx-viz="8">
+          <figure class="c5-viz c5-viz--rosnie" data-fx-viz="8">
             <span class="c5-viz__tag">08 · Czystość</span>
             <div class="c5-viz__body">
               <div class="cw-scrollx" tabindex="0">
@@ -1018,7 +1022,7 @@
 
 
 
-    <div class="c5-pro" id="kanal-sprzedazy" data-pro data-ce="CE-16" data-ce-wariant="pozny-wzrost">
+    <div class="c5-pro" style="--pro-mt:clamp(3rem,6vw,5rem)" id="kanal-sprzedazy" data-pro data-ce="CE-16" data-ce-wariant="pozny-wzrost">
       <div class="c5-pro__media" data-pro-media aria-hidden="true">
         <div class="c5-pro__ph c5-ph"><span class="c5-ph__label">foto 3:2 · uprawy polowe · big bag</span></div>
       </div>
@@ -1195,9 +1199,9 @@
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
 <script src="ce/00-base.js"></script>
 <script src="ce/CE-07-nawigacja-kropkowa.js"></script>
-<script src="ce/CE-10-parametry-proba.js"></script>
-<script src="ce/CE-12-scena-faktow-proba.js"></script>
-<script src="ce/CE-16-pas-pro-proba.js"></script>
+<script src="ce/CE-10-parametry-kafelki-z-wejsciem.js"></script>
+<script src="ce/CE-12-scena-faktow.js"></script>
+<script src="ce/CE-16-pas-pro-pozny-wzrost.js"></script>
 <script src="ce/CE-17-faq.js"></script>
 <script src="carbomat-humic.js"></script>
 <script src="ce-overlay.js"></script>

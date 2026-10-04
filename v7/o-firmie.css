@@ -18,66 +18,7 @@
      · CE-33 `on-quote`                      <- uprawa.css (u-quote, wariant ciemny-boks)
    ===================================================================== */
 
-/* ===== 05 · HERO – panel z polem pod zdjęcie (CE-08 wariant „foto") ========
-   The stage of the pattern is an empty light-grey panel; here it carries the
-   field for the team photo: a centred icon and a dashed chip in the corner. */
-.on-hero__stage{display:grid;place-items:center;}
-.on-hero__ico{width:40px;height:40px;color:var(--w-gray-400);}
-.on-hero__chip{position:absolute;left:var(--w-space-4);bottom:var(--w-space-4);
-  max-width:calc(100% - 2 * var(--w-space-4));background:var(--w-surface-page);}
-
-/* ===== 10 · W LICZBACH – ciemny kadr z kołowrotkiem (CE-24 „kolowrotek") ===
-   Ported 1:1 from prochnica-plus.css 60. A 30 px inset dark frame the height of
-   the screen, title top left, rows „label and source | big number" separated by
-   thin lines. The digits are vertical strips built by JS, so without JS and
-   with reduced motion the final value simply stands in the markup. */
-.on-dark{position:relative;min-height:100svh;margin-inline:var(--c5-gutter);overflow:clip;
-  background:var(--w-gray-900);color:var(--w-text-inverse);padding-block:var(--c5-gutter);}
-/* focus ring on a dark background */
-.on-dark :focus-visible{outline-color:var(--w-focus-ring-inverse);}
-.on-nums{display:flex;flex-direction:column;gap:clamp(2rem,5vw,4rem);
-  min-height:calc(100svh - 2 * var(--c5-gutter));}
-.on-nums__title{font-size:clamp(2rem,4vw,3.25rem);max-width:none;}
-/* the rows land in the lower part of the frame */
-.on-nums__rows{display:flex;flex-direction:column;margin:auto 0 0;padding:0 0 58px;list-style:none;}
-
-.on-num{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--w-space-5);align-items:center;
-  padding-block:clamp(.35rem,1vw,.75rem);}
-.on-num + .on-num{border-top:1px solid rgb(255 255 255 / .18);}
-.on-num__label{font-size:0.9375rem;line-height:1.45;color:var(--w-gray-300);max-width:46ch;}
-.on-num__src{display:block;margin-top:var(--w-space-2);}
-.on-num__val{display:flex;align-items:flex-end;justify-content:flex-end;
-  font-size:clamp(3.5rem,8vw,7rem);line-height:1;font-weight:var(--w-weight-medium);
-  letter-spacing:-0.03em;font-variant-numeric:tabular-nums;}
-
-/* --- Kołowrotek cyfr -------------------------------------------------------
-   Every digit is a window one digit high, holding a strip of values (the target
-   at the bottom, the way to it above). Start: the strip is pushed up by its own
-   length, so a 0 stands in the window; the animation brings it back to 0, i.e.
-   the digits scroll from top to bottom. Transform only. */
-.on-odo{--on-odo-h:1.06em;display:inline-flex;}
-.on-odo__wrap{display:inline-flex;}
-.on-odo__d{display:block;height:var(--on-odo-h);overflow:hidden;}
-.on-odo__strip{display:block;transform:translateY(calc(var(--on-i,0) * var(--on-odo-h) * -1));will-change:transform;}
-.on-odo__strip > span{display:block;height:var(--on-odo-h);line-height:var(--on-odo-h);}
-.on-odo.is-roll .on-odo__strip{transition:transform 1.1s cubic-bezier(.2,.7,.2,1);transition-delay:var(--on-delay,0ms);}
-
-@media (max-width:699px){
-  /* label above the number (as on the mat page) */
-  .on-num{grid-template-columns:minmax(0,1fr);gap:var(--w-space-2);
-    padding-block:clamp(.75rem,3vw,1.25rem);}
-  .on-num__val{justify-content:flex-start;font-size:clamp(3rem,14vw,5rem);}
-  .on-num__label{max-width:none;}
-}
-@media (max-width:899px){
-  /* a phone screen is not tall enough for a full-height frame with five rows */
-  .on-dark{min-height:0;}
-  .on-nums{min-height:0;}
-  .on-nums__rows{padding-bottom:0;}
-}
-@media (prefers-reduced-motion: reduce){
-  .on-odo.is-roll .on-odo__strip{transition:none;}
-}
+/* 10 · W LICZBACH → ce/CE-24-pas-liczb.css */
 
 /* ===== 20 · CO ROBIMY – trzy kroki i rząd czterech rodzin (CE-20 ×2) =======
    Card anatomy from c5hu-tiles (carbohumic.css): a framed card, title, body
@@ -153,83 +94,9 @@
   .on-who__ph{transform:none;}
 }
 
-/* ===== 40 · WARTOŚCI – lista z panelem opisu (CE-30) =======================
-   Ported from produkty.css 8.2 (c5pr-paths). One DOM, three layouts:
-   · no JS, or before the module runs: four cards in a grid, list buttons hidden;
-   · >= 900 px – tabs: vertical tablist on the left, every panel in one sticky
-     cell on the right;
-   · < 900 px – accordion: one panel open at a time.
-   Anchors #wartosc-01…04 land through CX5.onHash. */
-.on-val{margin-top:clamp(2rem,4vw,3rem);}
-.on-val__panel[id]{scroll-margin-top:var(--c5-gutter);}
-.on-val__list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(310px,100%),1fr));gap:var(--w-space-5);}
-.on-val__row{display:contents;}
-.on-val__tab{display:none;}
-.on-val__panel{display:flex;min-width:0;}
-.on-val__card{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:var(--w-space-3);
-  border:1px solid var(--w-border-default);background:var(--w-surface-page);padding:clamp(1.25rem,2.2vw,1.75rem);}
-.on-val__fig{margin:0;display:flex;flex-direction:column;gap:var(--w-space-2);}
-.on-val__img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;background:var(--w-gray-200);}
-.on-val__cap{font-size:0.75rem;line-height:1.45;color:var(--w-text-tertiary);}
-.on-val__cno{font-size:0.75rem;letter-spacing:.06em;color:var(--w-text-tertiary);}
-.on-val__h{font-size:1.125rem;line-height:1.3;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
-.on-val__card p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
-.on-val__no{font-size:0.75rem;letter-spacing:.06em;}
-.on-val__t{font-size:1.125rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;line-height:1.3;}
-.on-val__tab:focus-visible{outline:2px solid var(--w-gray-900);outline-offset:-2px;border-radius:0;}
+/* 40 · WARTOŚCI → ce/CE-30-lista-z-panelem.css */
+/* page-specific: the note stands under the CE root, so its spacing is page layout */
 .on-val__note{margin-top:clamp(2rem,4vw,3rem);}
-
-/* --- Taby (>= 900 px, JS): lista wartości | przyklejony opis ----------------
-   Rows are display:contents, so every button sits in column 1 (rows 1…n) and
-   every panel in the same cell of column 2 (rows 1…-1, stacked). The extra 1fr
-   row takes the height a panel may add over the list. */
-.on-val[data-vals="tabs"] .on-val__list{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);
-  grid-template-rows:repeat(var(--on-val-n,4),auto) 1fr;column-gap:clamp(2rem,5vw,4.5rem);row-gap:0;align-items:start;}
-.on-val[data-vals="tabs"] .on-val__tab{grid-column:1;display:grid;grid-template-columns:2.5rem minmax(0,1fr);
-  gap:var(--w-space-3);align-items:baseline;width:100%;padding:18px 0 18px 14px;border:0;
-  border-top:1px solid var(--w-border-default);border-left:2px solid transparent;background:none;font:inherit;
-  text-align:left;cursor:pointer;color:var(--w-gray-500);transition:color .2s,border-color .2s;}
-.on-val[data-vals="tabs"] .on-val__row:last-child .on-val__tab{border-bottom:1px solid var(--w-border-default);}
-.on-val[data-vals="tabs"] .on-val__chev{display:none;}
-/* shown (hover preview, is-on) and chosen (aria-selected) */
-.on-val[data-vals="tabs"] .on-val__tab.is-on,
-.on-val[data-vals="tabs"] .on-val__tab[aria-selected="true"]{color:var(--w-gray-900);border-left-color:var(--w-gray-900);}
-@media (hover:hover){
-  .on-val[data-vals="tabs"] .on-val__tab:hover:not(.is-on):not([aria-selected="true"]){color:var(--w-gray-700);}
-}
-/* A panel that would reach under the advisor dock sticks by its bottom edge
-   instead, 84 px above the window bottom (--on-val-ph = its height, set by JS). */
-.on-val[data-vals="tabs"] .on-val__panel{grid-column:2;grid-row:1 / -1;align-self:start;position:sticky;
-  top:min(calc(var(--cx-navbar-h, 0px) + var(--c5-gutter)), calc(100svh - var(--on-val-ph, 0px) - 84px));
-  opacity:0;visibility:hidden;transform:translateY(8px);
-  transition:opacity .25s var(--w-ease),transform .25s var(--w-ease),visibility 0s linear .25s;}
-.on-val[data-vals="tabs"] .on-val__panel[data-on]{z-index:1;opacity:1;visibility:visible;transform:none;transition-delay:0s;}
-.on-val[data-vals="tabs"] .on-val__panel:focus-visible{outline:2px solid var(--w-gray-900);outline-offset:2px;border-radius:0;}
-.on-val[data-vals="tabs"] .on-val__card{padding:clamp(1.5rem,2.6vw,2.25rem);}
-.on-val[data-vals="tabs"] .on-val__h{font-size:clamp(1.375rem,2.2vw,1.75rem);line-height:1.2;}
-
-/* --- Akordeon (< 900 px, JS): numer · tytuł · szewron, jeden panel otwarty -- */
-.on-val[data-vals="acc"] .on-val__list{display:block;}
-.on-val[data-vals="acc"] .on-val__row{display:block;border-top:1px solid var(--w-border-default);}
-.on-val[data-vals="acc"] .on-val__row:last-child{border-bottom:1px solid var(--w-border-default);}
-.on-val[data-vals="acc"] .on-val__tab{display:grid;grid-template-columns:2.5rem minmax(0,1fr) auto;
-  gap:var(--w-space-3);align-items:baseline;width:100%;min-height:56px;padding:16px 0;border:0;background:none;
-  font:inherit;text-align:left;cursor:pointer;color:var(--w-text-primary);}
-.on-val[data-vals="acc"] .on-val__no{color:var(--w-text-tertiary);}
-.on-val[data-vals="acc"] .on-val__chev{align-self:center;transition:transform var(--w-duration-base) var(--w-ease);}
-.on-val[data-vals="acc"] .on-val__tab[aria-expanded="true"] .on-val__chev{transform:rotate(180deg);}
-.on-val[data-vals="acc"] .on-val__panel{display:block;position:relative;overflow:hidden;height:0;
-  transition:height var(--c5-acc) var(--w-ease);}
-.on-val[data-vals="acc"] .on-val__card{border:0;background:none;padding:0 0 var(--w-space-5);}
-/* the row button already shows the number and the title – the card keeps them for screen readers */
-.on-val[data-vals="acc"] .on-val__cno,
-.on-val[data-vals="acc"] .on-val__h{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
-
-@media (prefers-reduced-motion: reduce){
-  .on-val[data-vals] .on-val__tab,
-  .on-val[data-vals] .on-val__chev,
-  .on-val[data-vals] .on-val__panel{transition:none;}
-}
 
 /* ===== 50 · LUDZIE – karty biogramów (CE-48 „siatka") =====================
    Ported from prochnica-plus.css 55 (pp-team / pp-person / pp-disc / pp-more).
@@ -337,33 +204,6 @@
   .on-map__pin,.on-map__row{transition:none;}
 }
 
-/* ===== 80 · POROZMAWIAJMY – pas PRO (CE-16 „kontakt") =====================
-   page-specific: the media frame and the paragraph contrast belong to the page
-   (ce/CE-16-pas-pro.css keeps only the pattern). Copied from produkty.css. */
-/* 30 px corners – the only exception to the sharp corners of V5, asked for by Mateusz */
-.c5-pro__media{position:relative;width:100%;aspect-ratio:3/2;border-radius:30px;overflow:hidden;background:var(--w-gray-500);}
-/* page-specific: overrides .c5-pro__side p from ce/CE-16-pas-pro.css */
-.c5-pro__side p{margin:0;color:var(--w-text-inverse);opacity:.75;}
-/* the band is the last full-bleed block before the motto */
-.c5-pro{margin-top:clamp(3rem,6vw,5rem);}
-
-@media (max-width:899px){
-  /* static: the frame stands above the content, 30 px from the screen edges */
-  .c5-pro__media{margin:var(--c5-gutter) var(--c5-gutter) 0;width:auto;}
-}
-@media (prefers-reduced-motion: reduce){
-  /* without motion the frame does not scale – it stands above the content, centred */
-  .c5-pro__media{margin-inline:auto;max-width:calc(100% - 2 * var(--c5-gutter));}
-}
-@media (min-width:900px){
-  /* static (reduced / no JS): the frame above the content does not eat the whole screen */
-  .c5-pro__media{margin:var(--c5-gutter) auto 0;width:auto;max-width:calc(100% - 2 * var(--c5-gutter));max-height:min(56vh,520px);}
-}
-@media (min-width:900px) and (prefers-reduced-motion: no-preference){
-  /* in the scene the frame covers the band and scales around its centre */
-  .cx-js .c5-pro__media{position:absolute;inset:0;margin:0;width:auto;max-width:none;aspect-ratio:auto;max-height:none;
-    transform:scale(var(--pro-s,1));transform-origin:center;will-change:transform;}
-}
 
 /* ===== 90 · MOTTO – ciemny boks (CE-33 „ciemny-boks") ====================
    Ported from uprawa.css (u-quote): label in caps, one large sentence, no

@@ -2,19 +2,11 @@
    Klocki wzorca i warstwa wspólna leżą w katalogu ce/ (ładowane wyżej).
    Tutaj zostają wyłącznie klocki unikalne tej podstrony i nadpisania
    treściowe klocków wspólnych. ===== */
-/* `.c5-label` i `.c5-dim` żyły w c5.css wyłącznie jako reguły kontekstowe –
-   tutaj dostają definicję bazową, bo kontekstów jest więcej niż jeden. */
+/* `.c5-label` żyła w c5.css wyłącznie jako reguła kontekstowa –
+   tutaj dostaje definicję bazową, bo kontekstów jest więcej niż jeden. */
 .c5-label{display:block;font-weight:var(--w-weight-semibold);}
-.c5-dim{opacity:.65;}
 /* Braki danych zostają WIDOCZNE – nie chowamy ich pod kreską ani pod milczeniem */
 .c5-mt-gap{opacity:.6;}
-
-/* page-specific: CE-07 dot rail. Since 19.09.2026 the CE-12 scene stands on the
-   Frame 206 layout, whose photo panel fills the right half of a container as wide
-   as the window (up to 1800 px), so at the rail's shared position – 30 px from the
-   edge, 28 px wide – its hit areas lie on the panel. Here the rail moves into the
-   margin, exactly as on Produkty, Kukurydza and Próchnica+. */
-@media (min-width:900px){.c5-dots{right:10px;}}
 
 /* --- Placeholder zdjęcia (spec §0) ----------------------------------------
    Do czasu wygenerowania fotografii każde zdjęcie
@@ -22,18 +14,6 @@
    docelowego siedzi w komentarzu HTML obok. Proporcje ustawia użycie. */
 .c5-ph{position:relative;background:var(--w-gray-200);overflow:hidden;}
 .c5-ph::after{content:attr(data-ph);position:absolute;left:10px;bottom:8px;font-size:0.75rem;line-height:1.2;color:var(--w-gray-500);}
-
-/* page-specific: hero – the base rules below are the same as in ce/CE-08-hero.css,
-   kept here because this page overrides them in its own low-window media queries. */
-.c5-hero__copyin{display:flex;flex-direction:column;gap:clamp(1.25rem,2.4vw,2rem);margin-block:auto;padding-block:clamp(2rem,4vw,3rem);}
-.c5-hero__lead{display:flex;flex-direction:column;gap:var(--w-space-3);font-size:1.125rem;color:var(--w-text-secondary);max-width:486px;}
-.c5-hero__crumbs{font-size:0.75rem;color:var(--w-gray-400);padding-bottom:var(--c5-gutter);}
-/* Panel: 30 px od góry, dołu i prawej krawędzi ekranu. Rękaw jest szeroki
-   i niski (1000 × 313), więc stoi na 72 % szerokości panelu i zachowuje
-   własne proporcje – nic nie rozciągamy (spec §4). */
-/* page-specific: overrides CE-08 – the sleeve is centred in the panel. */
-.c5-hero__stage{position:relative;overflow:hidden;display:grid;place-items:center;margin-block:var(--c5-gutter);min-height:calc(100svh - var(--cx-navbar-h, 0px) - 2 * var(--c5-gutter));background:var(--w-gray-100);}
-.c5-hero__pack{display:block;width:72%;height:auto;max-width:calc(100% - 2 * var(--c5-gutter));object-fit:contain;}
 
 /* --- Siatka kart i karta (z inline <style> bazy) ---------------------------- */
 .c5-mt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:var(--w-space-5);margin-top:clamp(2rem,4vw,3.5rem);}
@@ -61,88 +41,9 @@
 .c5-mt-cross{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:clamp(1.25rem,3vw,2.5rem);border-top:1px solid var(--w-gray-900);border-bottom:1px solid var(--w-gray-900);padding-block:clamp(1.5rem,3vw,2rem);margin-top:clamp(2.5rem,5vw,4rem);}
 .c5-mt-cross > p{max-width:64ch;margin:0;}
 
-/* --- Hero on a low window (laptop 1280 × 800 and 1280 × 720) --------------
-   The hero must stay ONE screen. With the two-sentence lead (spec §23) the
-   untightened block needs an 800 px tall window – it was 912 px with the full
-   lead – because the two long button labels do not fit one row at the base
-   padding. Same idea as the pattern's low-window rule for the "Czym jest"
-   scene (`max-height:780px` tightens the H2 scale): tighter gaps, H1 scaled
-   off the window height, both buttons in one row (saves 58 px), lead across
-   the full column (fewer lines). The copy itself never changes; below 900 px
-   wide the mobile rules take over. Measured after the cut: 300 px to spare at
-   1440 × 900, 170 px at 1280 × 720. */
-@media (min-width:900px) and (max-height:920px){
-  .c5-hero__copyin{gap:clamp(0.75rem,2vh,2rem);padding-block:clamp(0.75rem,2.5vh,3rem);}
-  .c5-hero__copy .c5-h1{font-size:min(3.125rem,6vh);}
-  .c5-hero__lead{font-size:1.0625rem;gap:var(--w-space-2);max-width:none;}
-  #hero .c5-btn{--c5-btn-px:28px;}
-  .c5-hero__crumbs{padding-bottom:calc(var(--c5-gutter) * .6);}
-}
-@media (min-width:900px) and (max-height:760px){
-  .c5-hero__lead{font-size:1rem;}
-  .c5-hero__lead .wf-small{font-size:0.8125rem;}
-}
-
-@media (max-width:899px){
-  .c5-hero__copyin{order:1;margin-block:0;padding-block:0;max-width:585px;}
-  .c5-hero__stage{order:2;margin-block:0;min-height:0;aspect-ratio:4/3;max-height:70vh;}
-  .c5-hero__crumbs{order:3;padding-bottom:0;}
-  .c5-hero__pack{width:86%;}
-}
 @media (max-width:699px){
   .c5-mt-media{grid-template-columns:1fr;}
   .c5-mt-media__ico{width:5rem;}
-}
-
-/* ===== 25 · Uprawy – poziomy marquee między hero a Parametrami (spec §5) =====
-   Port `.c5-marq` z ECO. Jeden ciągły tor: duży tekst uprawy → kwadratowa
-   miniatura → następna uprawa. Tor niesie ten sam zestaw dwa razy, więc
-   translateX(-50%) ląduje dokładnie na początku drugiej kopii – pętla bez szwu.
-   Każda pozycja niesie własny odstęp (padding-right zamiast flex gap), więc
-   odległość na sklejce jest identyczna jak wewnątrz zestawu. Zestaw powtarza
-   trzy uprawy trzy razy, żeby połowa toru była szersza niż okno także na
-   monitorze 2560 px. Czysty CSS – działa bez JS i nie rusza pozycji scrolla.
-   Iteracja 2 (spec §21.2): kicker usunięty. Odstęp, który wnosił nad torem
-   (jego `margin-bottom`), zostaje jako dodatkowe górne powietrze – sekcja
-   skraca się dokładnie o jeden wiersz kickera, nie o cały blok. */
-/* page-specific: overrides CE-09 padding – the removed kicker leaves its own air
-   (--c5-marq-head) above the track. */
-.c5-marq{--c5-marq-gap:clamp(1.5rem,3vw,3rem);--c5-marq-thumb:clamp(56px,6vw,96px);
-  --c5-marq-head:clamp(2rem,4vw,3rem);
-  padding-block:calc(130px + var(--c5-marq-head)) 130px;overflow:hidden;}
-/* 12 px zaokrąglenia – jedyny wyjątek od ostrych narożników w tej sekcji */
-/* page-specific: overrides CE-09 – the thumbnail is an <img>, not a div. */
-.c5-marq__thumb{flex:none;display:block;width:var(--c5-marq-thumb);height:var(--c5-marq-thumb);object-fit:cover;border-radius:12px;background:var(--w-gray-200);}
-/* do czasu zdjęć: samo pole, bez etykiety (podpisem jest tekst obok) */
-.c5-marq__thumb--ph{background:var(--w-gray-300);}
-@keyframes c5-marq{to{transform:translateX(-50%);}}
-
-@media (prefers-reduced-motion: reduce){
-  /* bez ruchu: tor stoi, widoczny pierwszy zestaw, na dotyku przewijany palcem */
-  .c5-marq{overflow-x:auto;overflow-y:hidden;}
-  .c5-marq__item:nth-child(n+4){display:none;}
-}
-/* telefony: 130 px powietrza wokół paska to za dużo */
-@media (max-width:899px){
-  .c5-marq{padding-block:calc(80px + var(--c5-marq-head)) 80px;}
-}
-
-/* Spacing in vh so the content stays centred on the screen. The "Podłoże" set
-   (11 rows) is taller than the screen, so the content scrolls over the pinned
-   video – the bottom must keep the advisor dock's clearance (~84 px including
-   its offset from the edge), otherwise the last rows, the buttons and the
-   footnote end up under the dock once the section is scrolled to its end. */
-/* page-specific: overrides CE-10 – 84 px of bottom clearance (11 rows scroll under
-   the advisor dock), a tighter title gap and a percentage value column. */
-.c5-params__body{position:relative;z-index:1;min-height:100svh;display:grid;align-content:center;padding-block:clamp(1.5rem,5vh,4rem) calc(clamp(1.5rem,5vh,4rem) + 84px);}
-.c5-params__title{font-size:clamp(1.4rem,2.4vw,1.875rem);font-weight:var(--w-weight-medium);letter-spacing:-0.01em;text-align:center;margin-bottom:clamp(1.75rem,3.5vw,2.75rem);}
-
-html.cx-js .c5-params__rows{flex:1 1 auto;}
-html.cx-js .c5-params__row{flex:1 1 auto;align-content:center;}
-.c5-params__row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,46%);gap:var(--w-space-4);padding-block:14px;border-bottom:1px solid rgb(255 255 255 / .35);}
-
-@media (max-width:599px){
-  .c5-params__row{grid-template-columns:1fr;gap:2px;}
 }
 
 /* ===== 35 · W skrócie – model rękawa + pięć kart (spec §7) =====
@@ -278,56 +179,24 @@ html.cx-js .c5-params__row{flex:1 1 auto;align-content:center;}
 
 /* ===== 50 · Czym jest – scena sterowana przewijaniem (spec §9, §21.3, §22) =====
    Since 19.09.2026 the scene stands on the „Frame 206” layout of the CE index
-   (`ce/CE-12-scena-faktow-proba.css/.js`), variant `bez-naglowka`: the head of the
+   (`ce/CE-12-scena-faktow.css/.js`), variant `bez-naglowka`: the head of the
    section (kicker, H2, the full lead) stays an ordinary centred block ABOVE the
    track, and in the scene the fact stands at the BOTTOM edge of the left column
    carrying a progress line and a counter „0N/05” of its own.
    ⚠️ The root of the block is `#czym-jest-scena` (a container INSIDE the section),
    because the section `#czym-jest` also holds the CE-23 cross-sell band – see
-   spec §22.2. The whole machinery of the scene lives in the trial sheet; what
-   stays here is only what depends on the CONTENT of this page: the colour of the
-   placeholder label, the order of the static layout, the lightening of the SVG
-   fills and the scale of the description on a low window. The height of the
-   illustration box is retuned with a variable, never with a copy of a rule. */
+   spec §22.2. The whole machinery of the scene lives in the module, including
+   the colour of the placeholder label, the order of the static layout, the
+   lightening of the SVG fills and the scale of the description on a low window. */
 
-/* page-specific: CE-12 knob (spec §22.4). Fact 2 carries a 150 px ring with a
-   two-line caption AND a two-item list, and the Frame 206 layout narrows the
-   illustration box from ~460 px to ~374 px at 1440, 333 px at 1280. Measured in
-   Chrome on a grid of 19 window sizes: with the sheet's default the content of
-   fact 2 spills out of the box on every window shorter than ~820 px (29 px at
-   1280x720, 4 px at 1366x768). Hence the floor of 560 px – the height fact 2
-   needs. `68svh` and the 760 px ceiling are the values of the shared sheet and
-   of Próchnica+, so from ~824 px of window height up nothing changes; `min(…,86svh)`
-   keeps the floor from pushing the box out of the photo panel in a short window
-   (the panel is the window less 2 x 20 px). */
-#czym-jest-scena{--c5-fx-viz-h:clamp(min(560px,86svh),68svh,760px);}
-
-/* placeholder geometry comes from the shared sheet – only the label colour is ours */
-.c5-fx__ph{background:var(--w-gray-700);}
-.c5-fx__ph::after{color:rgb(255 255 255 / .6);}
-
-/* The background layers sit together in the DOM (inside the panel), so in the
-   static flow `order` interleaves them: the background of a point, its
-   description, its illustration. In the scene all of them are positioned
-   absolutely, so there `order` only rules the paint order (the panel stays
-   underneath). */
-.c5-fx__ph[data-fx-bg="1"]{order:1;} .c5-fx__fact[data-fx-fact="1"]{order:2;} .c5-viz[data-fx-viz="1"]{order:3;}
-.c5-fx__ph[data-fx-bg="2"]{order:4;} .c5-fx__fact[data-fx-fact="2"]{order:5;} .c5-viz[data-fx-viz="2"]{order:6;}
-.c5-fx__ph[data-fx-bg="3"]{order:7;} .c5-fx__fact[data-fx-fact="3"]{order:8;} .c5-viz[data-fx-viz="3"]{order:9;}
-.c5-fx__ph[data-fx-bg="4"]{order:10;} .c5-fx__fact[data-fx-fact="4"]{order:11;} .c5-viz[data-fx-viz="4"]{order:12;}
-.c5-fx__ph[data-fx-bg="5"]{order:13;} .c5-fx__fact[data-fx-fact="5"]{order:14;} .c5-viz[data-fx-viz="5"]{order:15;}
-
-/* Ilustracje przyszły z jasnej sekcji bazy, więc ich neutralne wypełnienia są
-   zapisane tokenem `--w-gray-200`; na ciemnym boksie czytałyby się prawie jak
-   biel i gubiły kontrast z warstwą aktywną – tu wracają na biel z alfą. */
-.c5-viz svg [fill="var(--w-gray-200)"]{fill:rgb(255 255 255 / .3);}
-.c5-viz svg [stroke="var(--w-gray-200)"]{stroke:rgb(255 255 255 / .25);}
-
-/* Low windows (e.g. 1280x720): the description takes a tighter scale, so that the
-   longest point still fits above the clearance of the advisor dock. */
-@media (min-width:900px) and (prefers-reduced-motion: no-preference) and (max-height:780px){
-  .cx-js .c5-fx__body{font-size:0.875rem;}
-}
+/* CE-12 „Scena faktów” (#czym-jest-scena): no rule of the scene lives in this
+   sheet. The height of the illustration box is set in carbomat-mata.html as
+   style="--c5-fx-viz-h: …" on the root of the scene. Fact 2 carries a 150 px
+   ring with a two-line caption AND a two-item list; with the default height its
+   content spills out of the box on every window shorter than about 820 px
+   (29 px at 1280x720). Hence the floor of 560 px; `68svh` and the 760 px ceiling
+   keep taller windows as they are, and `min(…,86svh)` keeps the floor from
+   pushing the box out of the photo panel in a short window. */
 
 /* pas „Ta sama organika…” domyka rozdział – odstęp od dołu niesie już padding
    sekcji, więc pas potrzebuje tylko marginesu górnego */
@@ -342,10 +211,8 @@ html.cx-js .c5-params__row{flex:1 1 auto;align-content:center;}
    "Analiza podłoża" (`c5-lb--solo`, at the end of this block). ------------ */
 
 /* --- Four numbers: CE-24 `kafle-2x2` -----------------------------------------
-   Layout and the digit reel come from ce/CE-24-pas-liczb-kafle.css/.js. */
-/* page-specific: air around the number panel – the distance the section keeps
-   between its head, the panel and the teaser cards */
-#dowod-liczby{--c5-nums-my:clamp(2.5rem,5vw,4rem);}
+   Layout and the digit reel come from ce/CE-24-pas-liczb.css/.js; the air around the
+   panel is `--c5-nums-my` on the root in the HTML. */
 
 /* --- Nagłówek bloku dowodowego (wspólny dla karty i strony lightboxa) ------- */
 .c5-mt-proof__head{display:flex;flex-direction:column;gap:var(--w-space-2);padding-bottom:var(--w-space-4);border-bottom:1px solid var(--w-gray-900);}
@@ -488,60 +355,16 @@ html.cx-js .c5-params__row{flex:1 1 auto;align-content:center;}
 
 /* ===== 80 · Sezon po sezonie – cascade with a pin (spec §23) + Ekonomia =====
    The chapter is the shared CE-15 module, variant `kaskada-z-pinem`
-   (ce/CE-15-wiersze-packshot-pin.css/.js): three stops, a card = row title,
+   (ce/CE-15-wiersze-packshot.css/.js): three stops, a card = row title,
    title, text, an optional supporting paragraph and a button. The columns, the
    pin, the fit check above the advisor dock and the static fallback all live
    in the module; the section keeps `padding-bottom:0` and the band under the
    cascade its own top margin (both inline in the markup). */
-/* page-specific: CE-15 – the accent green of the marker (one line to withdraw) */
-#sezon-kaskada{--c5-casc-green:#71C35F;}
-/* page-specific: CE-15 – the module drops the bottom margin of the kicker, because
-   a pinned head has to stay short. In the static layout (phone, reduced motion,
-   no JS, a window too low for the box) the head stands in the flow like every
-   other section head of the page, so there the kicker gets back the distance
-   to the H2 those heads have: the kicker margin less the gap of `.c5-head`,
-   which the kicker of this section sits inside. */
-#sezon-kaskada:not([data-casc="on"]) .c5-casc-head .c5-kicker{
-  margin-bottom:calc(clamp(2rem,4vw,3.5rem) - clamp(1.25rem,2.6vw,2.25rem));}
 
 /* ===== Ekonomia – accordion with a countdown (spec §21.8, §23) =============
-   The list is the shared CE-30 module (ce/CE-30-akordeon-odliczanie.css/.js),
-   variant `akordeon-z-odliczaniem`: five rows, a title and a description each. */
-/* page-specific: CE-30 knob – the descriptions here run to 210-300 characters,
-   about twice the length the module's 5 s default was tuned for */
-#ekonomia-lista{--c5-acc30-time:9s;}
-/* page-specific: CE-30 – where the countdown runs, every description takes the
-   height of the longest one (four lines at the module's reading measure), so
-   the list keeps one height while the rows change by themselves and nothing
-   below it moves under the reader's eyes */
-@media (min-width:900px){
-  #ekonomia-lista .c5-acc30__copy{min-height:6rem;}
-}
+   The list is the shared CE-30 module (ce/CE-30-lista-z-panelem.css/.js),
+   variant `akordeon-z-odliczaniem`: five rows, a title and a description each.
+   The countdown (`--c5-acc30-time`, 9 s: the descriptions run to 210-300 characters)
+   and the common floor of the descriptions (`--c5-acc30-copy-minh`) are set on the
+   root in the HTML. */
 
-/* ===== 85 · Dla kogo – pas PRO (spec §14) =====
-   Port ECO §8/§13.8/§14.6: szare tło, media absolutne skalowane
-   przy przewijaniu od wąskiego kadru (.5) do pełnej szerokości (1); po lewej
-   nagłówek, po prawej akapity i dwa przyciski. Bez ruchu (mobile / reduced /
-   bez JS): kadr statyczny nad treścią, 16:10, bez skalowania. -------------- */
-/* page-specific: CE-16 – air above the band (the previous section ends flush).
-   `position/background/color/overflow` stay in ce/CE-16-pas-pro.css 18; the shared
-   sheet deliberately leaves `margin-top` to the page, because on CARBOMAT ECO and
-   CARBOMAT HUMIC the band sits inside a section and here it is one of its own. */
-.c5-pro{margin-top:clamp(3rem,6vw,5rem);}
-/* narożniki 30 px – jedyny wyjątek od ostrych narożników V5 (decyzja projektowa) */
-.c5-pro__media{position:relative;width:100%;aspect-ratio:16/10;border-radius:30px;overflow:hidden;}
-.c5-pro__ph{position:absolute;inset:0;width:100%;height:100%;background:var(--w-gray-500);}
-.c5-pro__ph::after{color:rgb(255 255 255 / .7);}
-
-@media (min-width:900px){
-  /* statycznie (reduced / bez JS) kadr nad treścią nie zjada całego ekranu */
-  .c5-pro__media{max-height:min(56vh,520px);}
-}
-@media (min-width:900px) and (prefers-reduced-motion: no-preference){
-  .cx-js .c5-pro__media{position:absolute;inset:0;width:auto;aspect-ratio:auto;max-height:none;transform:scale(var(--pro-s,1));transform-origin:center;will-change:transform;}
-}
-
-/* ===== 90 · FAQ: pytanie z lewej, odpowiedź z prawej (spec §15) =====
-   Port ECO §14.5. Odstęp nagłówek → pierwszy akordeon ok. 164 px na desktopie.
-   Wszystkie pytania są zwinięte; bez JS odpowiedzi zostają otwarte. ------- */
-.c5-faq{display:flex;flex-direction:column;margin-top:clamp(8rem,12vw,10.25rem);}

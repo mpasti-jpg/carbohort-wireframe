@@ -46,6 +46,11 @@
 /* fokus klawiatury: obrys też „w bieli", żeby był widoczny po obu stronach blendu */
 .c5-dots__link:focus-visible{outline:2px solid #fff;outline-offset:2px;}
 
+/* Rail offset from the window edge: the gutter (30 px) by default; a page with a wide
+   container moves the rail into the margin with style="--c5-dots-right:10px" on the root. */
+@media (min-width:900px){
+  .c5-dots{right:var(--c5-dots-right,var(--c5-gutter));}
+}
 @media (max-width:899px){
   /* dotyk nie ma najechania – zostaje zwykłe przewijanie strony */
   .c5-dots{display:none;}

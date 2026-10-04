@@ -1,15 +1,14 @@
 /* ===== CE-17 · FAQ (rejestr: ce-rejestr.js) =====
    Accordion with the question on the left and the answer on the right from
-   900 px up; one question open at a time. Merged from carbomat.css FAQ – the
-   copies in carbomat-mata.css, carbohumic.css, carbomat-humic.css and
-   produkty.css were byte-identical except for the container rule `.c5-faq`
-   (its top margin follows the section above it), which stays in <strona>.css.
-   Variant „z-nota" (CARBOHUMIC) is a note element in the markup, with its own
-   class and no rule of the pattern. ===== */
+   900 px up; one question open at a time. Merged from carbomat.css FAQ. The
+   container rule `.c5-faq` lives here too; the gap above the accordion is
+   --c5-faq-mt, which an occurrence can set on its root. Variants (blocks at the
+   bottom of this file): plain, z-nota, dla-dociekliwych, grupy. ===== */
 
 /* --- FAQ: pytanie z lewej, odpowiedź z prawej ------------------------------- */
-/* Odstęp nagłówek → pierwszy akordeon: §14.5 dokłada ~100 px do dotychczasowych
-   64 px, czyli ok. 164 px na desktopie. */
+/* container: a column; the gap heading -> first accordion is the pattern's ~164 px
+   on desktop (64 px plus ~100 px), unless the occurrence sets --c5-faq-mt on the CE root */
+.c5-faq{display:flex;flex-direction:column;margin-top:var(--c5-faq-mt,clamp(8rem,12vw,10.25rem));}
 .c5-faq__item{border-top:1px solid var(--w-border-default);position:relative;}
 .c5-faq__item:last-child{border-bottom:1px solid var(--w-border-default);}
 .c5-faq__q{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--w-space-4);width:100%;padding:26px 0;background:none;border:0;font:inherit;font-size:1.125rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;text-align:left;color:var(--w-text-primary);cursor:pointer;}
@@ -20,6 +19,10 @@
 .c5-faq__ain{overflow:hidden;min-height:0;padding-bottom:26px;font-size:1rem;color:var(--w-text-secondary);}
 /* bez JS nie ma czym rozwijać paneli – odpowiedzi zostają otwarte (§0) */
 html:not(.cx-js) .c5-faq__a{height:auto;opacity:1;}
+/* an item that is an anchor target lands one gutter below the top edge */
+.c5-faq__item[id]{scroll-margin-top:var(--c5-gutter);}
+/* optional wrapper for answers made of several paragraphs: one gap instead of paragraph margins */
+.c5-faq__answer{display:flex;flex-direction:column;gap:var(--w-space-3);}
 @media (min-width:900px){
   /* stały układ dwukolumnowy – bez skoku przy otwieraniu (kolumna odpowiedzi
      jest zawsze, tylko zwinięta do zera) */
@@ -34,10 +37,9 @@ html:not(.cx-js) .c5-faq__a{height:auto;opacity:1;}
   .c5-faq__q .wf-icon{transition:none;}
   .c5-faq__a{transition:none;}
 }
-/* `.c5-faq{margin-top:…}` zostaje w <strona>.css – odstęp nad akordeonem
-   zależy od tego, co stoi nad nim na danej podstronie. */
 
-/* --- wariant: --plain (pytanie nad odpowiedzią, pełna szerokość) -----------
+/* ===== wariant: plain ===== */
+/* pytanie nad odpowiedzią, pełna szerokość
    EL-20: the same accordion – same type, same 26 px rhythm, same rule between
    items – but without the two-column split above 900 px. Used where the block
    is not a FAQ column but a full-width list („Dla dociekliwych” on Produkty),
@@ -47,3 +49,20 @@ html:not(.cx-js) .c5-faq__a{height:auto;opacity:1;}
   .c5-faq--plain .c5-faq__q .wf-icon{position:static;margin-top:4px;}
   .c5-faq--plain .c5-faq__ain{padding-top:0;padding-right:0;}
 }
+
+/* ===== wariant: z-nota ===== */
+/* A status note (CE-31) stands between the heading and the accordion, so the
+   pattern gap is split in two: heading -> note, note -> first question. */
+.c5-faq--z-nota{margin-top:clamp(4rem,7vw,6.25rem);}
+.c5-note:has(+ .c5-faq--z-nota){margin-top:clamp(2.5rem,5vw,4rem);}
+
+/* ===== wariant: dla-dociekliwych ===== */
+/* The accordion sits inside a content block under its own h3; used with c5-faq--plain. */
+.c5pr-more{--c5-faq-mt:0px;margin-top:clamp(2rem,4vw,3rem);display:flex;flex-direction:column;gap:var(--w-space-3);}
+
+/* ===== wariant: grupy ===== */
+/* Several accordions, each under a small group heading; an optional row of links below. */
+.b-faq{--c5-faq-mt:clamp(1.5rem,3vw,2.25rem);display:grid;gap:clamp(2rem,4vw,3.5rem);margin-top:clamp(2rem,4vw,3.5rem);}
+.b-faq__group{display:grid;gap:var(--w-space-4);}
+.b-faq__t{margin:0;font-size:.75rem;line-height:1.4;letter-spacing:.06em;text-transform:uppercase;color:var(--w-text-tertiary);font-weight:var(--w-weight-regular);}
+.b-films{display:flex;flex-wrap:wrap;gap:var(--w-space-3) var(--w-space-6);margin-top:clamp(1.5rem,3vw,2.5rem);}

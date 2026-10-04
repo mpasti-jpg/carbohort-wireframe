@@ -1,7 +1,6 @@
 /* ===== CE-11 · Warianty – pasma z przełącznikiem (wariant „pasma-z-przelacznikiem") =====
    A shared module since 02.10.2026: every page that carries a `[data-kdm]` root
-   links this pair. The base module ce/CE-11-warianty-taby.css is another variant;
-   the earlier trial (ce/CE-11-warianty-taby-proba.*) is no longer linked by any page.
+   links this pair.
 
    Layout after the Figma frame 382:1189: one full-width band per product.
      left   the packshot (or a photo frame / its placeholder) and, under it, the
@@ -256,3 +255,25 @@
 @media (prefers-reduced-motion:reduce){
   .c5-kdm__opt,.c5-kdm__buy{transition:none;}
 }
+
+/* ===== wariant: glowa-frame ===== */
+/* Section head after the Figma frame 382:1189: metrics, tracking and ink come from
+   the frame; the family stays --w-font-sans except for the heading, set in
+   "P22 Mackinac Pro" (the page stylesheet has to carry its @font-face). */
+/* the bands run edge to edge and close the section; two classes on purpose, so the
+   rule does not depend on the load order against `.c5-sec` */
+.c5-sec.c5-sec--kdm-frame{padding-bottom:clamp(2rem,3.4vw,49px);}
+/* kicker: the outlined badge in the geometry of the frame. The class carries
+   `width:fit-content`, so centring needs the block display plus auto margins;
+   24 px down to the heading. */
+.c5-sec--kdm-frame .c5-kicker--outline{display:block;width:fit-content;margin-inline:auto;
+  margin-bottom:24px;padding:12px 14px;border-color:#0c2b1c;border-radius:12px;
+  font-size:13px;line-height:14px;letter-spacing:.02em;color:#0c2b1c;}
+/* H2: Book 46 / 51 px. Only the Book cut is loaded, so `font-weight:400` keeps the
+   browser from synthesising a bold. The size scales with the window and tops out
+   at the frame value. */
+.c5-sec--kdm-frame .c5-h2{font-family:"P22 Mackinac Pro",var(--w-font-sans);font-weight:400;
+  font-size:clamp(2rem,3.2vw,2.875rem);line-height:1.1087;letter-spacing:-0.01em;
+  color:#0c2b1c;max-width:936px;}
+/* lead: the ink of the frame's body copy, so it does not read louder than the card below */
+.c5-sec--kdm-frame .c5-lead{color:#777771;max-width:820px;}

@@ -12,7 +12,7 @@
 
    Rytm sekcji:
      00 · Wspólne dla obu stron (gate bez JS, kontener czytania)
-     08 · CE-08 hero, wariant „dzial”
+     08 · pole wyszukiwania (hero CE-08 „dzial” żyje w ce/CE-08-hero.css)
      57 · CE-57 indeks artykułów (wiersze, sterowanie, stronicowanie)
      58 · CE-58 karty najnowszych
      59 · CE-59 nawigacja kategorii
@@ -56,40 +56,14 @@ html.cx-js [data-nojs-only]{display:none;}
 .cw-k-ask__name{font-weight:var(--w-weight-semibold);display:block;}
 .cw-k-ask p{margin:var(--w-space-2) 0 0;font-size:0.9375rem;color:var(--w-text-secondary);}
 
-/* ===== 08 · CE-08 Hero, wariant „dzial” ==================================
-   Baza CE-08 (carbomat.html#hero) to pierwszy ekran z panelem po prawej.
-   Dział i kategoria nie mają panelu: jedna kolumna na dwie trzecie szerokości,
-   wysokość wyznacza treść, breadcrumb wraca na górę. Stąd te nadpisania –
-   plik strony ładuje się po ce/CE-08-hero.css. */
-/* zawężone przez :has(), żeby nadpisanie nie dotknęło hero innej strony,
-   gdyby kiedyś zlinkowała ten arkusz (ten sam zapis co w ce/CE-08-hero.css) */
-#hero:has(.c5-hero--dzial){display:block;min-height:0;}
-#hero:has(.c5-hero--dzial) > .c5-wrap{display:block;}
-.c5-hero--dzial{display:flex;flex-direction:column;gap:0;padding-block:clamp(2.25rem,5vw,4rem) clamp(1.5rem,3vw,2.5rem);}
-.c5-hero--dzial .c5-hero__copy{display:flex;flex-direction:column;gap:clamp(1.25rem,2.4vw,2rem);max-width:min(100%,745px);}
-.c5-hero--dzial .c5-hero__copyin{margin-block:0;padding-block:0;max-width:none;}
-.c5-hero--dzial .c5-hero__lead{max-width:none;}
-.c5-hero--dzial .c5-hero__crumbs{padding-bottom:0;order:0;}
-
-/* Wyszukiwarka hero: pole + przycisk ikonowy w jednej ramce, obok przycisk
-   przewodnika. Poniżej 640 px wszystko schodzi na jeden słupek. */
-.cw-k-find{display:flex;flex-wrap:wrap;gap:var(--w-space-3);align-items:stretch;}
+/* ===== Search box (shared: CE-08 hero „dzial” and the CE-57 tools row) ====
+   Field + icon button in one frame. Its wrapper in the hero (`.cw-k-find`)
+   and the whole „dzial” variant live in ce/CE-08-hero.css. */
 .cw-k-findbox{display:flex;align-items:stretch;border:1px solid var(--w-border-default);background:var(--w-surface-page);flex:1 1 320px;max-width:420px;}
 .cw-k-findbox .wf-input{border:0;min-height:44px;flex:1 1 auto;min-width:0;}
 .cw-k-findbox .wf-input:hover{border-color:transparent;}
 .cw-k-findbox__go{flex:none;display:grid;place-items:center;width:46px;background:none;border:0;border-left:1px solid var(--w-border-default);color:var(--w-text-primary);cursor:pointer;}
 .cw-k-findbox__go:hover{background:var(--w-surface-hover);}
-.cw-k-find .c5-btn{flex:0 0 auto;}
-@media (max-width:639px){
-  /* słupek: `flex-basis` przestaje być szerokością i staje się wysokością,
-     więc pole musi tu wrócić na `auto` – inaczej urosłoby do 320 px */
-  .cw-k-find{flex-direction:column;align-items:stretch;}
-  .cw-k-find .cw-k-findbox{flex:0 0 auto;max-width:none;}
-  .cw-k-find .c5-btn{align-self:flex-start;}
-}
-
-/* Chipy podgrup w hero kategorii: filtry listy, ten sam element co w CE-57. */
-.cw-k-herochips{display:flex;flex-wrap:wrap;gap:var(--w-space-2);}
 
 /* ===== 57 · CE-57 · Indeks artykułów =====================================
    Lista wierszy BEZ MINIATUR (Mateusz + Sylwia 10.08) ze stronicowaniem po 10

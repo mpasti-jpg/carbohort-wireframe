@@ -1,0 +1,55 @@
+/* ===== CE-34 · Karty „od – do” (rejestr: ce-rejestr.js) =====================
+   Variant used by the crop pages. Prefix: u-rl.
+   Other pages carry their own implementations of CE-34 in their page sheets. */
+
+/* ===== wariant: regula-z-packshotem =====
+   A 2 x 2 grid of rule cards: condition on top, an arrow, the answer at the
+   bottom, the packshot of the product the answer leads to. The whole card is
+   a link. Up to 1099 px the packshot is a row under a hairline; from 1100 px
+   it is the right column of the card. */
+.u-rl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--w-space-5);}
+.u-rl__card{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:1fr auto;
+  gap:var(--w-space-4);border:1px solid var(--w-border-default);border-radius:0;
+  padding:var(--w-space-6);color:inherit;text-decoration:none;
+  transition:border-color var(--w-duration-base) var(--w-ease);}
+.u-rl__card:hover,.u-rl__card:focus-visible{border-color:var(--w-gray-900);}
+/* `u-reveal` (uprawa.css) has its own transition list on this element, so
+   the border colour and the 80 ms stagger are added to it here. */
+html.cx-js .u-rl__card{--u-rl-delay:0ms;
+  transition:opacity var(--w-duration-slow) var(--w-ease) var(--u-rl-delay),
+             transform var(--w-duration-slow) var(--w-ease) var(--u-rl-delay),
+             border-color var(--w-duration-base) var(--w-ease);}
+.u-rl__card:nth-child(2){--u-rl-delay:80ms;}
+.u-rl__card:nth-child(3){--u-rl-delay:160ms;}
+.u-rl__card:nth-child(4){--u-rl-delay:240ms;}
+.u-rl__rule{display:flex;flex-direction:column;gap:var(--w-space-3);}
+.u-rl__cond{font-size:var(--w-font-sm-size);line-height:var(--w-font-sm-lh);color:var(--w-text-secondary);}
+.u-rl__down{width:24px;height:24px;margin-top:auto;color:var(--w-icon-default);
+  transition:transform var(--w-duration-base) var(--w-ease);}
+.u-rl__card:hover .u-rl__down,.u-rl__card:focus-visible .u-rl__down{transform:translateY(3px);}
+.u-rl__ans{font-size:var(--w-font-h4-size);line-height:var(--w-font-h4-lh);
+  font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+.u-rl__prod{display:flex;padding-top:var(--w-space-4);
+  border-top:1px solid var(--w-border-subtle);}
+.u-rl__ph{display:grid;place-items:center;width:88px;aspect-ratio:4/3;
+  background:var(--w-gray-100);padding:8px;overflow:clip;}
+.u-rl__img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;
+  transition:transform var(--w-duration-base) var(--w-ease);}
+.u-rl__card:hover .u-rl__img,.u-rl__card:focus-visible .u-rl__img{transform:scale(1.04);}
+/* The fixed column width keeps the `auto` track from pushing the sentence. */
+@media (min-width:1100px) and (max-width:1439px){
+  .u-rl__card{grid-template-columns:minmax(0,1fr) auto;gap:var(--w-space-6);}
+  .u-rl__prod{justify-content:center;align-self:center;width:132px;
+    padding-top:0;border-top:0;}
+  .u-rl__ph{width:120px;}
+}
+@media (max-width:639px){
+  .u-rl{grid-template-columns:minmax(0,1fr);}
+  .u-rl__card{padding:var(--w-space-4);}
+}
+@media (prefers-reduced-motion: reduce){
+  html.cx-js .u-rl__card{--u-rl-delay:0ms;transition:none;}
+  .u-rl__down,.u-rl__img{transition:none;}
+  .u-rl__card:hover .u-rl__down,.u-rl__card:focus-visible .u-rl__down{transform:none;}
+  .u-rl__card:hover .u-rl__img,.u-rl__card:focus-visible .u-rl__img{transform:none;}
+}

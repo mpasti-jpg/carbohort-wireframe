@@ -6,7 +6,7 @@
 /* ===== 40 · Scroll-driven scene of „Założenia i cele" and „Metodologia" =====
    Removed 19.09.2026 (iteration 2): both sections left this module. #zalozenia
    now runs on CE-70 (`ce/CE-70-scena-slajdow.js`) and #metodologia on the CE-12
-   trial (`ce/CE-12-scena-faktow-proba.js`), so nothing on the page carries
+   module (`ce/CE-12-scena-faktow.js`), so nothing on the page carries
    [data-ppscene] any more. Block 40 of the sheet keeps only the illustration
    boxes of the Metodologia figures – they have no script of their own. */
 
@@ -349,9 +349,9 @@
 
 /* ===== 80 · Metodologia – bez własnego kodu ================================
    Od iteracji 2 (spec §18.4b) sceną sześciu kroków steruje moduł próby CE-12
-   `ce/CE-12-scena-faktow-proba.js`: uruchamia się dla KAŻDEJ sekcji [data-fx],
-   czyta liczbę kroków z DOM-u, a wariant bierze z `data-ce-wariant` sekcji –
-   u nas `bez-naglowka` na stałe, bez przełącznika podglądu. Ten blok zostaje
+   `ce/CE-12-scena-faktow.js`: uruchamia się dla KAŻDEJ sekcji [data-fx],
+   czyta liczbę kroków z DOM-u; sekcja ma jeden blok nagłówka (nad torem),
+   więc moduł niczego nie przełącza. Ten blok zostaje
    jako miejsce na ewentualne różnice Metodologii – celowo pusty. */
 
 /* ===== 85 · Etapy prac – kod klocka mieszka w ce/CE-90-os-programu.js ======

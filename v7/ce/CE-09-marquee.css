@@ -1,12 +1,13 @@
 /* ===== CE-09 · Marquee (rejestr: ce-rejestr.js) =====
    Horizontal, seamless track of advantages between the hero and the next
    section. Pure CSS – works without JS and never touches the scroll position.
-   Merged from carbomat.css ZALETY; the copies in carbomat-mata.css,
-   carbohumic.css, carbomat-humic.css, produkty.css and prochnica-plus.css were
-   identical apart from numbers that follow the CONTENT (track duration = track
-   length, and how many items the reduced-motion layout keeps) – those stay in
-   <strona>.css. Variant „z-ikona" (Próchnica+) lives at the bottom of this file
-   and switches itself on through the icon inside the label. ===== */
+   Merged from carbomat.css ZALETY. The numbers that follow the CONTENT of an
+   occurrence are set on its root: the track duration (--c5-marq-dur), the extra
+   air above the track (--c5-marq-head) and the colour of the empty thumbnail
+   field (--c5-marq-ph) through style="--…", and how many items the
+   reduced-motion layout keeps through c5-marq--keep-3 / --keep-4 / --keep-5.
+   Variant „z-ikona" lives at the bottom of this file and switches itself on
+   through the icon inside the label. ===== */
 
 /* --- ZALETY: poziomy marquee między hero a Parametrami (spec §14.3) --------
    One continuous track: big advantage text, square thumbnail, next advantage.
@@ -16,30 +17,40 @@
    the splice is identical to the spacing inside the set. Half the track has to
    stay wider than the viewport even on a 2560 px screen – otherwise the end of
    the cycle would leave empty space at the right edge. ------------------- */
-.c5-marq{--c5-marq-gap:clamp(1.5rem,3vw,3rem);--c5-marq-thumb:clamp(56px,6vw,96px);padding-block:130px;overflow:hidden;}
+.c5-marq{--c5-marq-gap:clamp(1.5rem,3vw,3rem);--c5-marq-thumb:clamp(56px,6vw,96px);--c5-marq-dur:42s;--c5-marq-head:0px;--c5-marq-ph:var(--w-gray-200);padding-block:calc(130px + var(--c5-marq-head)) 130px;overflow:hidden;}
 /* 56 s, nie 28 s ze spec: blok jest dwa razy dłuższy (trzy zalety ×2), więc
    podwojony czas daje dokładnie to tempo w pikselach, które spec zakładała. */
-.c5-marq__track{display:flex;align-items:center;width:max-content;margin:0;padding:0;list-style:none;animation:c5-marq 42s linear infinite;will-change:transform;}
+.c5-marq__track{display:flex;align-items:center;width:max-content;margin:0;padding:0;list-style:none;animation:c5-marq var(--c5-marq-dur) linear infinite;will-change:transform;}
 .c5-marq__item{display:flex;align-items:center;gap:var(--c5-marq-gap);padding-right:var(--c5-marq-gap);}
 .c5-marq__txt{font-size:clamp(2rem,4.4vw,3.5rem);line-height:1.1;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;white-space:nowrap;color:var(--w-text-primary);}
 /* 12 px zaokrąglenia – jedyny wyjątek od ostrych narożników w tej sekcji (§14.3) */
 .c5-marq__thumb{flex:none;width:var(--c5-marq-thumb);height:var(--c5-marq-thumb);object-fit:cover;border-radius:12px;background:var(--w-gray-200);}
+/* thumbnail as an empty field (a <span>) until the photo exists */
+.c5-marq__thumb--ph{display:block;background:var(--c5-marq-ph);}
+/* packshot instead of a photo: the inset is a length derived from the square's own size,
+   NOT a percentage (percentage padding resolves against the whole flex item) */
+.c5-marq__thumb--pack{object-fit:contain;padding:calc(var(--c5-marq-thumb) * .1);background:var(--w-gray-100);}
 @keyframes c5-marq{to{transform:translateX(-50%);}}
 /* kursor na sekcji zatrzymuje tor */
 .c5-marq:hover .c5-marq__track{animation-play-state:paused;}
 @media (prefers-reduced-motion: reduce){
   /* bez ruchu: tor stoi, widoczny pierwszy zestaw, na dotyku przewijany palcem.
-     Ile pozycji zostaje widocznych, mówi <strona>.css – to liczba zalet. */
+     Ile pozycji zostaje widocznych, mówi modyfikator --keep-N na korzeniu –
+     to liczba zalet w danym wystąpieniu. */
   .c5-marq{overflow-x:auto;overflow-y:hidden;}
   .c5-marq__track{animation:none;will-change:auto;}
+  /* how many items of the first set stay visible – follows the content of the occurrence */
+  .c5-marq--keep-3 .c5-marq__item:nth-child(n+4){display:none;}
+  .c5-marq--keep-4 .c5-marq__item:nth-child(n+5){display:none;}
+  .c5-marq--keep-5 .c5-marq__item:nth-child(n+6){display:none;}
 }
 /* phones: 130 px of air around a two-line strip is too much – tighten (orchestrator, it. 4) */
 @media (max-width:899px){
-  .c5-marq{padding-block:80px;}
+  .c5-marq{padding-block:calc(80px + var(--c5-marq-head)) 80px;}
 }
 
-/* --- wariant: z-ikona (Próchnica+, „Stan programu") ------------------------
-   Pozycja niesie 24 px ikonę przed tekstem. Włącza się sama obecnością ikony
-   w etykiecie – strona nie potrzebuje żadnego dodatkowego haka. */
+/* ===== wariant: z-ikona ===== */
+/* Each item carries a 24 px icon before the text (the home page uses it).
+   It switches itself on through the icon inside the label – no extra hook. */
 .c5-marq__ico{flex:none;width:24px;height:24px;color:var(--w-icon-default);}
 .c5-marq__txt:has(> .c5-marq__ico){display:inline-flex;align-items:center;gap:var(--w-space-4);}

@@ -1,7 +1,7 @@
 /* ===== CE-10 · Parametry na wideo – variant „kafelki-z-wejsciem" (spec §16.4) ====
    A shared module since 02.10.2026 (see the CSS half for what a page chooses).
-   The shared ce/CE-10-parametry.js keeps the ruled table and the tabs of the
-   variant „z-tabami"; a page links one pair or the other, never both.
+   ce/CE-10-parametry.js keeps the ruled table and the tabs of the variant
+   „z-tabami"; a page links one pair or the other, never both.
 
    Two jobs.
 

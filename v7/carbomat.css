@@ -1,198 +1,29 @@
+/* This page sheet is the place only for exceptions that belong to this one page.
+   CE styles live in ce/CE-NN-*.css. */
 /* ===== carbomat.css – warstwa strony (V7) =====
    Klocki wzorca i warstwa wspólna leżą w katalogu ce/ (ładowane wyżej).
    Tutaj zostają wyłącznie klocki unikalne tej podstrony i nadpisania
    treściowe klocków wspólnych. ===== */
 
-/* page-specific: CE-07 dot rail. Since 19.09.2026 the photo panel of the CE-12
-   scene runs to 20 px from the right edge of the window, so at its shared
-   position – 30 px from the edge and 28 px wide – the rail would lie on the
-   panel. Here it moves into the margin, exactly as on Produkty, Kukurydza and
-   Próchnica+. */
-@media (min-width:900px){.c5-dots{right:10px;}}
-
-/* page-specific: CE-08 – hero stage and packshot geometry of the two ECO
-   packages; the pattern block only sets the frame.
-   Panel: 30 px od góry, dołu i prawej krawędzi ekranu; §14.2 – bez zdjęcia
-   w tle i bez pasa gradientu, jednolita jasna szarość pod packshotami */
-.c5-hero__stage{--c5-pack-h:clamp(260px,46%,520px);--c5-pouch-scale:.55;position:relative;overflow:hidden;margin-block:var(--c5-gutter);min-height:calc(100svh - var(--cx-navbar-h, 0px) - 2 * var(--c5-gutter));background:var(--w-gray-100);}
-/* Dwa opakowania jak na półce. Both images are pinned to the panel centre and
-   moved by percentages of their OWN box, so the whole group keeps its
-   proportions at every panel size (mobile included).
-   Bag: height H, aspect 0.661 -> width 0.661H. Pouch: 0.55H tall, aspect 0.657
-   -> width 0.361H; its left edge sits at 66 % of the bag's width, its bottom
-   edge level with the bag's bottom. That puts the group's centre 0.068H right
-   of the panel centre, so both images shift left by that much (expressed as a
-   share of each image's own width: 10.3 % of the bag, 10.4 % of the pouch)
-   and the PAIR ends up centred, not the bag alone. */
-.c5-hero__pack{position:absolute;left:50%;top:50%;transform:translate(calc(-50% - 10.3%),-50%);height:var(--c5-pack-h);width:auto;max-width:calc(100% - 2 * var(--c5-gutter));object-fit:contain;}
-/* torebka: bottom edge level with the bag's (0.909 of its own height below the
-   panel centre), left edge 10.4 % of its width right of the panel centre */
-.c5-hero__pack--sm{height:calc(var(--c5-pack-h) * var(--c5-pouch-scale));transform:translate(10.4%,-9.1%);}
-
-@media (max-width:899px){
-  .c5-hero__stage{order:2;margin-block:0;min-height:0;aspect-ratio:4/5;max-height:70vh;}
-}
-
-/* page-specific: CE-09 – with motion off ECO shows only the first three
-   advantages (the pattern block keeps them all). */
-@media (prefers-reduced-motion: reduce){
-  .c5-marq__item:nth-child(n+4){display:none;}
-}
 
 /* The `.c5-price*` block that stood here is gone: the CE-11 rebuild of 2026-09-20
    moved the prices onto the package buttons of the product card (spec section 17.3
    point 2), so no element on this page carries those classes any more. */
 
 
-/* page-specific: CE-12 – five facts of ECO: photo crops, their place in the
-   reading order and the type scale of the scene; all of it depends on the
-   CONTENT of this page. The machinery lives in
-   ce/CE-12-scena-faktow-proba.css, which this page links since 19.09.2026
-   instead of the shared ce/CE-12-scena-faktow.css (spec §15).
-   Crop per layer: in the scene the panel is taller than it is wide, so the whole
-   height of the photo shows and the crop takes the width away; in the static
-   layout it is the other way round – hence both values are picked for the subject
-   of the frame. */
-
-/* The knob of the block (CE-12 contract §2.5), one declaration on the root of the
-   section: the wash of the illustration box. Frame 206 dropped the darkening of
-   the photo panel, and the photos of steps 03 and 04 are the brightest ones of
-   this page (boards in daylight, a bowl and a beaker on a lab bench), so on the
-   .55 of the sheet the tag of the box measured 4.04 and 3.35 : 1 and the caption
-   of 04 measured 4.60 – below AA (independent QA, defect D-01). .78 is the value
-   .c5-viz carries everywhere outside the scene, so the box looks the same in both
-   layouts and keeps the blur of Frame 206. Measured in Chrome at 1440x900 and
-   1920x1080, in the middle of every step: the lowest number of the section is now
-   the tag of step 04, 5.22 / 5.17 median and 4.89 / 4.88 at the 5th percentile.
-   ONE value for the whole section on purpose – the box is not to change colour
-   from step to step. */
-#czym-jest{--c5-fx-viz-bg:rgb(20 20 20 / .78);}
-
-.c5-fx__img[data-fx-bg="1"]{object-position:42% 46%;}  /* ściana pokładu po lewej */
-.c5-fx__img[data-fx-bg="2"]{object-position:50% 52%;}  /* kopczyk z korzeniami */
-.c5-fx__img[data-fx-bg="3"]{object-position:50% 54%;}  /* dwie kupki na deskach */
-.c5-fx__img[data-fx-bg="4"]{object-position:55% 56%;}  /* miska i zlewka */
-.c5-fx__img[data-fx-bg="5"]{object-position:50% 58%;}  /* makro z korzeniem */
-
-/* The photo layers sit together in the DOM (inside the panel), so in the static
-   flow `order` interleaves them: the photo of a point, its description, its
-   illustration. In the scene all of them are positioned against the scene, so
-   `order` changes nothing there. */
-.c5-fx__panel > [data-fx-bg="1"]{order:1;} .c5-fx__fact[data-fx-fact="1"]{order:2;} .c5-viz[data-fx-viz="1"]{order:3;}
-.c5-fx__panel > [data-fx-bg="2"]{order:4;} .c5-fx__fact[data-fx-fact="2"]{order:5;} .c5-viz[data-fx-viz="2"]{order:6;}
-.c5-fx__panel > [data-fx-bg="3"]{order:7;} .c5-fx__fact[data-fx-fact="3"]{order:8;} .c5-viz[data-fx-viz="3"]{order:9;}
-.c5-fx__panel > [data-fx-bg="4"]{order:10;} .c5-fx__fact[data-fx-fact="4"]{order:11;} .c5-viz[data-fx-viz="4"]{order:12;}
-.c5-fx__panel > [data-fx-bg="5"]{order:13;} .c5-fx__fact[data-fx-fact="5"]{order:14;} .c5-viz[data-fx-viz="5"]{order:15;}
-
-/* --- Scena: sticky 100svh w wysokim torze (JS ustawia wysokość toru) -------- */
-@media (min-width:900px) and (prefers-reduced-motion: no-preference){
-  /* w scenie nagłówek jest odrobinę mniejszy – najdłuższy opis musi zmieścić się
-     pod nim na ekranie 800 px bez wchodzenia w nagłówek */
-  .cx-js .c5-fx__head .c5-h2{font-size:clamp(1.5rem,2.6vw,2.125rem);}
-}
-/* Low windows (e.g. 1280x720): the heading and the description take a tighter
-   scale, so that the longest point still fits under the heading (the line and the
-   title are tightened by the sheet of the block itself). */
-@media (min-width:900px) and (prefers-reduced-motion: no-preference) and (max-height:780px){
-  .cx-js .c5-fx__head .c5-h2{font-size:clamp(1.375rem,2.2vw,1.75rem);}
-  .cx-js .c5-fx__fact .c5-fx__body{font-size:0.875rem;}
-}
-/* Narrow desktop (900-1279 px): the left column is at its narrowest there (about
-   411 px at 1024 px against 594 px at 1440 px) and the fact block stands above the
-   88 px reserved for the advisor dock, so the longest point (03, two paragraphs)
-   ran into the sticky heading. The step is the one Produkty uses; it comes after
-   the height threshold, because it is the tighter of the two. */
-@media (min-width:900px) and (max-width:1279px) and (prefers-reduced-motion: no-preference){
-  .cx-js .c5-fx__fact .c5-fx__body{font-size:0.8125rem;}
-}
-
-/* --- JAK STOSOWAĆ: dwie sceny produktowe sterowane przewijaniem ------------ */
-/* The base layer below IS the static reading order – no JS, under 900 px or
-   with reduced motion: bar, then photo + title + description for each crop,
-   one under another, nothing hidden. The pinned choreography is added in the
-   media query at the end of this block. Every single move is a function of the
-   track progress p – there is no transition and no animation in the pinned
-   scene, so whatever the wheel does, the picture does, and it stops the moment
-   the wheel stops. 60-jak-stosowac.js writes only these numbers on
-   <article class="c5-use">:
-     --t      0→1     hero packshot shrinks into the 110 px bar      (A 0–.14)
-     --grow   .5→1    photo scale, origin on its bottom edge         (A .05–.14)
-     --ui     0→1→0   tabs + card                        (C .14–.19, E .92–.96)
-     --vl     0→1→0   the veil behind them               (C .14–.19, E .92–1)
-     --sw     0→1     crossfade gruntowe → doniczkowe               (D .56–.64)
-     --k1/--k1y       card „gruntowe": opacity and travel in px
-                      (in .18–.24, out upwards .56–.60)
-     --k2/--k2y       card „doniczkowe" (in .60–.64, out .92–.96, drifting up)
-     --par-a/--par-b  parallax of each photo layer, in %             (D)
-     --ovis, --bvis   visible/hidden – keeps what is invisible out of the tab
-                      order and out of the reach of the mouse (not a move)
-   The photo box is anchored to the BOTTOM of the stage: 30 px above it in
-   every phase, 30 px from the sides, top at the bar. scale(var(--grow)) with
-   the origin on that bottom edge therefore grows the frame upwards and
-   sideways and never leaves white underneath it. The opaque bar retracts from
-   100svh to 110 px above the photo, so the frame comes out from under it –
-   from the bottom edge of the screen up. */
-
-/* page-specific: CE-13 – crops and the list inside the card, per ECO photo */
-/* greenhouse frame: the blown-out windows sit at the top, so drop the crop */
-[data-use-product="eco"] .c5-use__layer--b .c5-use__fill{object-position:50% 62%;}
-/* terrace frame: pot and bag are centred, nothing to trim */
-[data-use-product="sciolka"] .c5-use__layer--b .c5-use__fill{object-position:50% 50%;}
-
-.c5-use__desc .c5-label{display:block;font-weight:var(--w-weight-semibold);}
-.c5-use__list{display:flex;flex-direction:column;gap:var(--w-space-3);}
-
-/* page-specific: CE-14 – the dose section of ECO carries a second row under
-   the two columns, so it sets its own grid. */
-.c5-dose{display:grid;gap:clamp(2rem,5vw,3rem);}
-.c5-dose__bottom{display:flex;flex-direction:column;gap:clamp(1.5rem,3vw,2.5rem);align-items:flex-start;}
-
-@media (min-width:900px){
-  .c5-dose{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto;
-           column-gap:clamp(2rem,5vw,5rem);row-gap:0;min-height:calc(100svh - 2*var(--c5-gutter));}
-  .c5-dose__bottom{grid-column:1;grid-row:3;}
-}
+/* CE-12 „Scena faktów” (#czym-jest): no rule of the scene lives in this sheet.
+   Layout, mechanics and look come from ce/CE-12-scena-faktow.css; this page
+   picks them in carbomat.html on the root of the scene – the classes
+   c5-fx--glass and c5-fx--naglowek-ramka and the photo crops as
+   style="--c5-fx-pos-N: …". */
 
 /* The `.c5-season*` rules that used to live here are gone: the 2026-09-20
    iteration rebuilt the season block on the scroll-driven pin module
-   (`ce/CE-15-wiersze-packshot-pin.*`, classes `c5-casc*`), so nothing on this
+   (`ce/CE-15-wiersze-packshot.*`, classes `c5-casc*`), so nothing on this
    page carries the old class names any more. See spec section 16.6. */
 
-/* page-specific: CE-16 – ECO keeps the 30 px corners and the frame proportions
-   of the strip. The band itself (grey ground, inverse text, overflow) comes
-   from ce/CE-16-pas-pro.css since 18.09.2026 – what stays here is the margin,
-   because on this page the band sits INSIDE the „Sezon" section.
-   --- Pas PRO (spec §8, after sensiq.co) ------------------------------------
-   Grey ground, the photo absolutely positioned and scaled on scroll from a narrow
-   frame (.5) to the full width (1); heading on the left, a paragraph and two
-   buttons on the right. Since 19.09.2026 the variant „pozny-wzrost" (spec §15.1):
-   the frame holds half the width until the top edge of the band passes 35 % of the
-   window, then it grows, and the scrim comes in together with it. Without motion
-   (mobile / reduced / no JS): a static photo above the text, 16:10, no scaling. */
-.c5-pro{margin-top:clamp(3rem,6vw,5rem);}
-/* narożniki 30 px – jedyny wyjątek od ostrych narożników V5, na wyraźne
-   życzenie Mateusza (§13.8) */
-.c5-pro__media{position:relative;width:100%;aspect-ratio:16/10;border-radius:30px;overflow:hidden;}
-
-@media (min-width:900px){
-  /* statycznie (reduced / bez JS) zdjęcie nad treścią nie zjada całego ekranu */
-  .c5-pro__media{max-height:min(56vh,520px);}
-}
-@media (min-width:900px) and (prefers-reduced-motion: no-preference){
-  .cx-js .c5-pro__media{position:absolute;inset:0;width:auto;aspect-ratio:auto;max-height:none;transform:scale(var(--pro-s,1));transform-origin:center;will-change:transform;}
-}
 
 
-/* page-specific: CE-17 – only the gap above the first accordion.
-   --- FAQ: pytanie z lewej, odpowiedź z prawej ------------------------------- */
-/* Odstęp nagłówek → pierwszy akordeon: §14.5 dokłada ~100 px do dotychczasowych
-   64 px, czyli ok. 164 px na desktopie. */
-.c5-faq{display:flex;flex-direction:column;margin-top:clamp(8rem,12vw,10.25rem);}
-
-/* page-specific: CE-13 – ECO ma dwa długie kadry, więc jego tor zostaje przy
-   proporcjach wzorca sprzed uogólnienia na N kadrów (5,5 ekranu na produkt).
-   Stałe czyta CE-13-scena-produktu.js. */
-.c5-use{--use-intro:1.32;--use-hold:1.76;--use-switch:.33;--use-outro:.33;--use-card:.75;}
 
 
 /* =====================================================================
@@ -202,87 +33,17 @@
    are shared with five other pages and must not change for them.
    ===================================================================== */
 
-/* --- hero --- */
-/* ===== #hero – kompozycja dwóch opakowań po iteracji „Figma” (spec §16.3) ====
-   Appended at the end of carbomat.css; every selector is closed inside `#hero`,
-   so the shared block ce/CE-08-hero.css and the other six pages stay untouched.
-
-   What changed: the second package on the stage is the big bag 1000 l, not the
-   1 l / 2 l pouch, so the size roles swap – the big bag is the dominant object
-   standing at the back, the 20 l bag stands in FRONT of it as the smaller one
-   (DOM order does the overlapping; no z-index, no shadows – §14.2 holds).
-
-   GEOMETRY. Both PNGs are full-bleed – the alpha box fills the canvas to within
-   1 px – so the canvas ratios ARE the object ratios, but the two files carry
-   different content:
-     worek_1000l_1500l.png  854 x 1000, ratio .8546; the lifting loops take the
-                            TOP 16.1 % of the frame, the bag body is the lower
-                            83.9 % and its bottom edge is the bottom of the file;
-     worek_20l.png          578 x  875, ratio .6606, body edge to edge.
-   Percentages of the file height are therefore NOT comparable between the two,
-   and the scale had to be set on the bodies: the 20 l bag is 40 % of the big
-   bag's FILE height, i.e. .40 / .839 = 48 % of its BODY – a 20 l bag (~50 cm)
-   against the body of a 1000 l big bag (~110 cm). Reads like two packages
-   standing on one shelf.
-
-   Let H be the rendered height of the big bag. Then
-     big bag   .8546 H wide, standing on the shelf line;
-     20 l bag  .40 H tall -> .6606 * .40 H = .26424 H wide, same shelf line;
-   sideways 55 % of the 20 l bag's width covers the big bag and 45 % stands out
-   past its right edge onto the grey panel, so the smaller bag keeps a whole
-   silhouette (white on white would otherwise merge) AND occludes the bigger one.
-   The pair therefore measures .9735 H by H, and every offset below is a share of
-   the image's OWN box, so the composition holds its proportions at every panel
-   size, phone included:
-     big bag   centred, then pushed left by .0595 H = 6.96 % of its own width, so
-               what ends up centred is the PAIR, not the big bag alone;
-     20 l bag  left edge .2225 H right of the centre = 84.2 % of its own width,
-               top edge .10 H below the centre = 25 % of its own height, which
-               puts its bottom exactly on the big bag's bottom – one shelf line.
-
-   SIZE. „Kadr nie może urosnąć poza panel sceny; jeżeli big bag się nie mieści,
-   maleje cała kompozycja, a nie panel.” Height alone cannot be the input,
-   because the pair is .9735 H WIDE: a tall, narrow panel (a big monitor, where
-   the 520 px cap is already in force) would run the 20 l bag off the edge.
-   So `.c5-hero__packs` is only the BUDGET box – panel minus 30 px on both sides,
-   62 % of the panel height, never over 520 px – and each image finds its own
-   size inside it with `width/height:auto` plus a max on both axes, which is the
-   one thing in CSS that takes the smaller of a width and a height budget:
-     big bag   max-height 100 %, max-width .8546 / .9735 = 87.79 % of the box;
-     20 l bag  max-height  40 %, max-width .26424 / .9735 = 27.14 % of the box;
-   both land on H = min(box height, box width / .9735). No aspect-ratio and no
-   container query units: `container-type:size` on the stage reports cqh = 0,
-   because the panel's height comes from the grid row stretching it, and an
-   `aspect-ratio` box with `max-width` gets its width clamped while its height
-   stays – the pair would silently change proportions on a tall window. */
-
-#hero .c5-hero__packs{position:absolute;left:50%;top:50%;
-  transform:translate(-50%,-50%);
-  width:calc(100% - 2 * var(--c5-gutter));height:62%;max-height:520px;}
-
-/* big bag – the back object; -6.96 % of its own width centres the PAIR */
-#hero .c5-hero__pack{top:50%;height:auto;width:auto;
-  max-height:100%;max-width:87.79%;
-  transform:translate(calc(-50% - 6.96%),-50%);}
-/* 20 l bag – the front object, on the same shelf line */
-#hero .c5-hero__pack--sm{height:auto;max-height:40%;max-width:27.14%;
-  transform:translate(84.2%,25%);}
-
 /* --- parametry --- */
-/* ===== CARBOMAT ECO, Parametry – page overrides (spec section 16.4) =========
-   Appended to carbomat.css. Everything is scoped to `#parametry` except the
-   `@font-face`, which is global by nature. The rest of the section – the table
-   tiles, the kicker metrics and the whole scroll-driven entry – lives in
-   ce/CE-10-parametry-proba.css / .js, linked by carbomat.html alone.
+/* ===== CARBOMAT ECO, Parametry – page layer (spec section 16.4) ============
+   The section itself lives in ce/CE-10-parametry.css; what belongs to this page
+   is set on the root in carbomat.html: the family of the heading
+   (--c5-params-title-font) and the strength of the wash (--c5-params-scrim).
+   Here stays only the `@font-face`, which is global by nature.
    ========================================================================= */
 
 /* --- P22 Mackinac Pro Book (spec section 16.4) -----------------------------
-   The project's display face. Its licence is confirmed: the owner stated on
-   2026-09-20 that it may ship to the public wireframe repo, so this is not a
-   deploy blocker. Exactly ONE selector in the whole site uses the family –
-   `.c5-params__title` – because the rollout to the remaining headings waits
-   for an explicit go-ahead. `font-display:swap` keeps the heading readable in
-   Inter from the first frame. */
+   The project's display face. `font-display:swap` keeps the headings readable
+   in Inter from the first frame. */
 @font-face{
   font-family:"P22 Mackinac Pro";
   src:url("font/P22MackinacPro-Book.woff2") format("woff2");
@@ -290,24 +51,9 @@
   font-style:normal;
   font-display:swap;
 }
-#parametry .c5-params__title{font-family:"P22 Mackinac Pro",var(--w-font-sans);}
-
-/* --- kadr zdjęcia w warstwie mediów (stan tymczasowy, 20.09.2026) ----------
-   The media layer holds a still photo until Mateusz delivers the new film, and
-   the frame does not care which element carries it: `.c5-params__media` sets
-   position, size and `object-fit:cover` for <img> and <video> alike, and the
-   entry animation crops the FRAME (clip-path), never the picture. Only the crop
-   anchor is a decision about this one photo: the hands and the falling soil sit
-   in the middle band of the shot, which is exactly what the narrow opening
-   frame shows, so the centre stays the anchor. When the video comes back this
-   rule may simply go. */
-#parametry .c5-params__media{object-position:50% 50%;}
 
 /* --- wash strength under the text (a measurement, not a taste call) --------
-   Raised to .50 on 2026-09-20 for the still photo that stood in the media layer
-   while the new film was being generated, and **re-measured when the film
-   arrived** – it earns its place there too, so the rule stays.
-
+   --c5-params-scrim is .5 on this page (default .4).
    Under the still (headless Chrome 1440 x 900, only the <dt>/<dd> rectangles,
    16 boxes, glyphs made transparent for the measurement):
      wash .40 – mean 6.90:1, 95th pct 3.91:1, worst pixel 3.50:1
@@ -317,329 +63,11 @@
      wash .40 – 2.93:1   wash .45 – 3.45:1   wash .50 – 4.08:1
    The median over the table sits at 8.17:1 and the 5th percentile at 6.98:1, so
    only a small travelling highlight reaches 4.08. Going darker would buy that
-   one pixel at the cost of the film itself, which Mateusz asked to stay visible
-   („żeby ono też coś przekazywało, poza byciem po prostu tłem"), so .50 stands.
+   one pixel at the cost of the film itself, so .50 stands.
    Rule of section 16.7: measure after every swap of the media layer. */
-#parametry{--c5-params-scrim:.5;}
 
 /* --- czym-jest --- */
-/* ===== #czym-jest · CE-12 scene after the Figma frames (iteration 20.09.2026) ==
-   Comments 4, 10 and 11 of Mateusz: the head of the scene (Frame 140-8475), the
-   fact card with its hairline and progress (Frame 256-1419) and the illustration
-   box (Frames 140-8542 / 140-8543). Spec §16.5 is the contract.
+/* CE-12: see the note at the top of this sheet. The heading of the scene is set
+   in P22 Mackinac Pro (variant c5-fx--naglowek-ramka of the module), which
+   relies on the @font-face above. */
 
-   Append this block verbatim at the end of v7/carbomat.css. EVERY rule is closed
-   in #czym-jest: ce/CE-12-scena-faktow-proba.* are linked by six pages of the
-   pattern and stay untouched, and .c5-bar* lives outside the illustration box as
-   well (the "Dowód" section on a light background), so every bar rule below is
-   additionally closed in .c5-viz.
-
-   The frames are drawn in Instrument Sans and P22 Mackinac Pro. Neither font
-   enters the page (spec §16.2 pt 2): metrics, tracking, case and colour are
-   taken, the family stays --w-font-sans. ==================================== */
-
-#czym-jest{
-  /* Frame 256-1419 – the accent green of the progress fill. One variable, so a
-     single line takes the colour back out of a greyscale kit (spec §16.2 pt 3). */
-  --c5-eco-green:#71C35F;
-  /* Frame 140-8542 – warm brown wash of the illustration box at 43 %. This knob
-     (spec §15.8) rules BOTH branches of the scene, the one with backdrop-filter
-     and the one without, and replaces the rgb(20 20 20 / .78) this section has
-     carried since defect D-01. It does NOT reach the static layout, which is
-     deliberate – see the note over .c5-viz below. */
-  --c5-fx-viz-bg:rgb(53 46 40 / .43);
-  /* Frame 256-1419 – title to hairline and hairline to description. Declared on
-     the section, so it also replaces the 10/12 px of the low-window step of the
-     block; the 2 px difference is smaller than the step it would keep. */
-  --c5-fx-line-top:11px;
-  --c5-fx-line-bottom:13px;
-}
-
-/* --- section heading on the display face (owner's note of 2026-09-20, 13:08:
-   "inna typografia. Zrob jak w Figma") --------------------------------------
-   Frame 140-8475 sets this heading in P22 Mackinac Pro Book, the same face the
-   Parametry heading took earlier today. Only THIS heading moves: the rollout to
-   the rest of the site still waits for an explicit go-ahead (spec 16.2 pt 2).
-   `font-weight:400` is not decoration - only the Book cut is loaded, so any
-   heavier weight would have the browser synthesise a fake bold. Size, tracking
-   and colour were already on the frame's values. */
-#czym-jest .c5-h2{font-family:"P22 Mackinac Pro",var(--w-font-sans);font-weight:400;}
-
-/* --- Head of the scene (Frame 140-8475, no annotations) --------------------- */
-/* The kicker becomes the outlined badge EL-06 – the markup gained the
-   c5-kicker--outline class; the frame keeps that geometry and only retunes the
-   padding, the size and the ink. Ink is the very dark green of the frame, not
-   the black of the kit. */
-#czym-jest .c5-kicker--outline{padding:9px;border-color:#0c2b1c;border-radius:8px;
-  font-size:13px;line-height:14px;letter-spacing:.03em;color:#0c2b1c;}
-/* 24 px between the badge and the heading, on both layouts */
-#czym-jest .c5-fx__head{gap:24px;}
-/* 46/51 px (leading 1.109), 661 px of measure, the dark green ink of the frame.
-   The family stays as it is today – Mackinac enters only in Parametry for now
-   (spec §16.5).
-   The size is written as a clamp whose TOP is the frame's 46 px, reached from
-   1440 px – the width the frame itself is drawn at – and above. A flat 46 px was
-   measured first and had to go: at 375 px the word "Skondensowana" then ran
-   21 px out of its box (document scrollWidth 376 against innerWidth 375), and in
-   the scene at 1280x720 and 1024x768 the heading ran INTO the fact block
-   (overlap of 14 and 135 px), because a flat value also overrides the two
-   tightening steps this page keeps for a low and for a narrow window. Those two
-   steps are repeated below, so they keep working. */
-#czym-jest .c5-fx__head .c5-h2{max-width:661px;
-  font-size:clamp(1.7rem,3.2vw,2.875rem);line-height:1.109;
-  letter-spacing:-0.01em;color:#0c2b1c;}
-/* narrow desktop (900-1279 px): the left column of the scene is at its narrowest,
-   so the heading keeps the scale of the page (carbomat.css) */
-@media (min-width:900px) and (max-width:1279px) and (prefers-reduced-motion: no-preference){
-  .cx-js #czym-jest .c5-fx__head .c5-h2{font-size:clamp(1.5rem,2.6vw,2.125rem);}
-}
-/* low window (e.g. 1280x720): the tightest step, again the one of the page */
-@media (min-width:900px) and (prefers-reduced-motion: no-preference) and (max-height:780px){
-  .cx-js #czym-jest .c5-fx__head .c5-h2{font-size:clamp(1.375rem,2.2vw,1.75rem);}
-}
-
-/* --- Fact card (Frame 256-1419) -------------------------------------------- */
-/* Annotations of the frame ("Delikatny pasek postępu…", "Jednocześnie widzimy
-   tylko jeden opis. Nie jest to akordeon.") describe what the block already
-   does, so the mechanics are untouched – only type and colour move.
-   The size of the title is left to the clamp of the block: its top is 1.5rem,
-   i.e. exactly the 24 px of the frame at 1440 px, and the clamp is what keeps
-   the title readable on a low window. */
-#czym-jest .c5-fx__title{font-weight:var(--w-weight-regular);line-height:1.2;
-  letter-spacing:normal;color:#000;}
-#czym-jest .c5-fx__body{font-size:14px;line-height:1.3;color:#777771;}
-#czym-jest .c5-fx__count{font-size:11px;line-height:1.2;letter-spacing:normal;color:#000;}
-/* the hairline: black at 10 % (≈ #e6e6e6 on white), the fill: the green above */
-#czym-jest .c5-fx__line{background:rgb(0 0 0 / .1);}
-#czym-jest .c5-fx__fill{background:var(--c5-eco-green);}
-
-/* --- Illustration box (Frames 140-8542 root / 140-8543 content) ------------- */
-/* The wash arrives through the knob at the top of this block. Below 900 px, with
-   reduced motion and without JS the box keeps the rgb(20 20 20 / .78) of .c5-viz
-   itself: there it does not float over a photo but stands on the white page,
-   where the 43 % of the frame would leave white text at 2.45 : 1. The knob not
-   reaching the static layout is what makes that split possible – no new property
-   is introduced for it.
-   GLASS (owner's note of 2026-09-20, 13:10, with the Figma panel attached).
-   `get_design_context` does not expose Figma's Glass material, so the first pass
-   read "no blur" and took the backdrop-filter off. The panel reads:
-   Light -45 deg at 0%, Refraction 47, Depth 80, Dispersion 25, Frost 60, Splay 34.
-   What CSS can carry, and what it cannot:
-     * Frost 60      -> backdrop blur. 18px on this scale, the value the block
-                        used before, so the box frosts the photo again.
-     * Refraction 47
-       + Depth 80    -> a real material bends the backdrop at the edge. CSS has
-                        no refraction, so the thickness is suggested by an inset
-                        hairline: light on the top edge, dark on the bottom.
-     * Light 0%      -> intensity is zero, so NO specular sheen is added. This is
-                        why the edge stays this quiet.
-     * Dispersion 25
-       + Splay 34    -> chromatic fringing along the edge. No CSS equivalent
-                        without an SVG filter chain; left out on purpose rather
-                        than faked. Noted in the backlog.
-   Saturation is NOT restored: the pre-Figma block also carried saturate(.9),
-   which the frame gives no basis for. */
-#czym-jest .c5-viz{border-radius:24px;padding:24px;
-  -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
-  box-shadow:inset 0 1px 0 rgb(255 255 255 / .10),
-             inset 0 -1px 0 rgb(0 0 0 / .12);}
-/* Where backdrop-filter does not work the box has no photo to frost, so it keeps
-   the flat fill alone – the inset edge would read as a border with nothing
-   behind it. */
-@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
-  #czym-jest .c5-viz{box-shadow:none;}
-}
-
-/* the number badge: 16 px, no case change, full white on a black wash at 20 % */
-#czym-jest .c5-viz__tag{align-self:flex-start;padding:12px 15px;border-radius:11px;
-  background:rgb(0 0 0 / .2);font-size:16px;line-height:normal;letter-spacing:normal;
-  text-transform:none;color:#fff;}
-
-/* Bars – closed in .c5-viz, never on the bare .c5-bar*: the same classes carry
-   the "Dowód" section of other pages of the pattern, on a light background. */
-/* 16/28 px = a ratio of 1.75. Written as a clamp for the same reason as the
-   heading: the frame's card is 462 px wide, the box of this scene is 374 px at
-   1440 px and 333 px at 1280x720, where a flat 16 px pushed the chart 18 px past
-   the bottom of the box (and .c5-viz clips). The clamp reaches the frame's 16 px
-   at 1440 px and steps down to today's 13 px on a narrow window. */
-#czym-jest .c5-viz .c5-bar{font-size:clamp(0.8125rem,1.12vw,1rem);line-height:1.75;
-  letter-spacing:-0.02em;}
-#czym-jest .c5-viz .c5-bar__track{height:6px;border:0;border-radius:2px;
-  background:rgb(255 255 255 / .12);}
-#czym-jest .c5-viz .c5-bar__fill{border-radius:2px;background:rgb(255 255 255 / .7);}
-/* The value label keeps its place BESIDE the bar – the frame puts it under the
-   bar, and moving it is a layout change, which this iteration does not make
-   (Mateusz: no icons, no animation, no layout of the information part). Only its
-   type comes from the frame. */
-#czym-jest .c5-viz .c5-muted{font-size:9px;line-height:14px;letter-spacing:.03em;
-  text-transform:uppercase;color:#fff;}
-/* The caption under the illustration: 14/22 px = a ratio of 1.571, again as a
-   clamp reaching the frame's value at 1440 px. Four lines of a flat 14 px are
-   30 px taller than today's 12 px on a low window, which was the last 7 px of
-   the chart running past the bottom of the box at 1280x720. */
-#czym-jest .c5-viz .c5-src--ondark{font-size:clamp(0.75rem,0.98vw,0.875rem);
-  line-height:1.571;color:rgb(255 255 255 / .5);}
-
-/* --- sezon --- */
-/* ===== SEZON · CE-15 „kaskada-z-pinem" – page layer (spec §16.6) ===========
-   Everything general about the variant lives in ce/CE-15-wiersze-packshot-pin.css
-   (linked by this page only). What stays here are the page-level decisions,
-   all of them closed inside #sezon-wiersze so nothing can leak to another
-   section or another subpage.
-   To be appended at the end of carbomat.css. ============================== */
-
-/* The brand green of the frame (#71C35F) enters the grayscale kit as ONE
-   declaration: the module reads it as var(--c5-casc-green, var(--w-gray-400)),
-   so deleting this line puts the 4 x 4 px marker back on the kit's grey and
-   changes nothing else on the page (spec §16.2 pt 3). */
-#sezon-wiersze{--c5-casc-green:#71C35F;}
-
-/* The frame gives the card titles, the axis labels and the description a flat
-   black; the kit's --w-text-primary is that same darkest step, so no colour is
-   overridden here – only the description, which used to run on
-   --w-text-secondary, moves up to primary inside the module. */
-
-/* The section below the cascade is the PRO band, so the section keeps
-   padding-bottom:0 (inline in the markup, as before). The pin track is as tall
-   as the cycle needs and JS sets its height – nothing to add here. */
-
-/* --- pas-pro --- */
-/* ===== #uprawy-profesjonalne – pas PRO wg Frame 186-253 (spec §16.7) ========
-   Appended at the end of carbomat.css; every selector is closed inside
-   `#uprawy-profesjonalne`, because ce/CE-16-pas-pro.css serves SIX pages and
-   `.c5-btn` in ce/00-base.css serves the whole site. Nothing here may leak out.
-
-   From the frame: the section ground #777771, the photo of the orchard anchored
-   by its bottom edge, the diagonal olive wash instead of the flat black scrim,
-   52/53 px heading, 21/26 px paragraph in full white, the green primary button
-   and the 20 px corners. NOT from the frame (§16.2 pt 2 and the brief): the
-   heading keeps today's family – P22 Mackinac goes only into Parametry – the
-   brand glyph of the primary button is not redrawn, because it is not in the
-   sprite, and the copy stays as it is: the frame drops the sentence about
-   pallets and the 1,5 m3 big bag, and that is a commercial fact, not a form. */
-
-#uprawy-profesjonalne{
-  --pro-bg:#777771;              /* section ground, uwaga 7 */
-  --pro-btn:#86D574;             /* primary button fill */
-  --pro-btn-ink:#0C2B1C;         /* primary button label */
-  --pro-btn-hover:#77C169;       /* hover is not in the frame – one step down */
-  --pro-line:rgb(255 255 255 / .5);
-  --pro-r:20px;
-  background:var(--pro-bg);
-}
-
-/* --- typografia (B3 raportu) ---------------------------------------------- */
-/* 52 px / 53 px; 3.6vw hits 52 px at the 1440 px of the frame. Family stays. */
-#uprawy-profesjonalne .c5-pro__grid h2{
-  font-size:clamp(2rem,3.6vw,3.25rem);line-height:1.02;}
-/* 21 px / 26 px, full white – today it is base size at `opacity:.75` */
-#uprawy-profesjonalne .c5-pro__side p{
-  font-size:1.3125rem;line-height:1.24;opacity:1;}
-/* The frame is a 1439 px view and its 21 px hold wherever its two-column layout
-   holds. On one column 21 px would give about 25 characters to a line, so the
-   phone keeps a size of its own – still a step up from today's 16 px. */
-@media (max-width:899px){
-  #uprawy-profesjonalne .c5-pro__side p{font-size:1.0625rem;}
-}
-
-/* --- przyciski (B4 raportu) ----------------------------------------------- */
-/* 11 px between them, against 8 px from the shared block */
-#uprawy-profesjonalne .c5-btnrow{gap:11px;}
-/* Both buttons: 56 px tall, 20 px corners. With a 1rem label in a 1.25 line box
-   the primary makes 18 + 20 + 18 = 56 exactly – but only once the 1 px border of
-   `.c5-btn` goes, and the frame draws the primary without one anyway. The
-   secondary keeps its border and its 15 px padding, which leaves it 4 px short,
-   so `min-height` finishes it off; on a desktop row both stretch to 56 px. */
-#uprawy-profesjonalne .c5-pro__grid .c5-btn{
-  min-height:56px;line-height:1.25;border-radius:var(--pro-r);--c5-btn-px:24px;}
-#uprawy-profesjonalne .c5-btn--inv{
-  background:var(--pro-btn);color:var(--pro-btn-ink);border:0;
-  padding:18px 24px;}
-#uprawy-profesjonalne .c5-btn--inv:hover{background:var(--pro-btn-hover);}
-#uprawy-profesjonalne .c5-pro__login{
-  border-color:var(--pro-line);padding:15px 24px;}
-/* the shared block lightens the border on hover – restore it, the ID selector
-   above would otherwise win over `.c5-pro__login:hover` */
-#uprawy-profesjonalne .c5-pro__login:hover{border-color:var(--w-text-inverse);}
-/* the shared block squares the focus ring off (`border-radius:0`) because V5
-   corners are sharp; here the buttons are round, so the ring follows them */
-#uprawy-profesjonalne a:focus-visible{border-radius:var(--pro-r);}
-
-/* --- kadr i nakładka (B2 raportu) ----------------------------------------- */
-/* the frame shows the photo anchored by its bottom edge, full width */
-#uprawy-profesjonalne .c5-pro__img{object-position:50% 100%;}
-
-/* The wash. Two things had to meet here:
-   – the frame replaces the flat `rgb(0 0 0 / .25)` with a diagonal olive
-     (#1A2405 at 30 / 10 / 10 / 30 %): dark corners along the diagonal, a
-     lighter band through the middle;
-   – the measurement (numbers in the manifest). The section ground #777771 gives
-     white text exactly 4,50 : 1 – it clears AA by three thousandths – and in the
-     hold phase `--pro-o` is 0, so the old scrim was absent altogether and the
-     text stood on the bare photo, a backlit orchard with blown-out sky.
-   So the wash moved from the media to the WHOLE band: in the frame the photo
-   covers the band edge to edge and no ground shows at all, so the bare ground
-   is an artefact of our hold phase, and the band is the only layer that lifts
-   the ground and the photo at once. It still rides the growth, only from a floor
-   instead of from zero: at the end of growth the opacity is 1, i.e. exactly the
-   values of the frame, during the hold it is FLOOR of them, and that floor is
-   what takes the hold off the 4,50 line.
-   All three numbers are knobs on the section root (§16.2 pt 3): the strength of
-   the wash can be dialled, or the whole layer dropped, in one line.
-   Both guards of the shared block are kept, so the static layout (under 900 px,
-   reduced motion, no JS – there the frame stands ABOVE the text and there is
-   nothing to darken, spec §15.8 D-09) is untouched. */
-@media (min-width:900px) and (prefers-reduced-motion: no-preference){
-  html.cx-js #uprawy-profesjonalne{
-    --pro-wash-a:.30;      /* Frame 186-253: the two ends of the diagonal */
-    --pro-wash-b:.10;      /* Frame 186-253: the lighter band in the middle */
-    --pro-wash-floor:.55;  /* how much of it is already there during the hold */
-  }
-  /* the flat scrim of the shared block gives way to the band-wide wash */
-  html.cx-js #uprawy-profesjonalne .c5-pro__media::after{content:none;}
-  html.cx-js #uprawy-profesjonalne::after{content:"";position:absolute;inset:0;
-    pointer-events:none;
-    background:linear-gradient(-65.66deg,
-      rgb(26 36 5 / var(--pro-wash-a)) 37.09%,
-      rgb(26 36 5 / var(--pro-wash-b)) 52.41%,
-      rgb(26 36 5 / var(--pro-wash-b)) 60.07%,
-      rgb(26 36 5 / var(--pro-wash-a)) 75.39%);
-    opacity:calc(var(--pro-wash-floor)
-      + (1 - var(--pro-wash-floor)) * var(--pro-o, 1));}
-}
-
-/* --- ktory-dla-mnie (CE-11 rebuild, spec section 18) --- */
-/* ===== #ktory-dla-mnie · CE-11 after the Figma frame 382:1189 ================
-   Page-level overrides only, every selector closed inside the section id. The
-   machinery of the block lives in ce/CE-11-warianty-pasma.css/.js (linked by
-   this page only – the base module still runs carbohumic.html).
-
-   The families of the frame do not enter the page: metrics, tracking and ink
-   come from the frame, the family stays --w-font-sans. The one exception is the
-   heading, set in P22 Mackinac Pro – the face this page already loads. The
-   colours of the frame are not taken over yet (spec §18.2).
-   ========================================================================= */
-
-/* --- Section: the bands run edge to edge and close the section --------------- */
-#ktory-dla-mnie{padding-bottom:clamp(2rem,3.4vw,49px);}
-
-/* --- Kicker (EL-06) – the outlined badge in the geometry of the frame --------
-   The class carries `width:fit-content`, so centring needs the block display
-   plus auto margins; 24 px down to the heading, exactly as in the frame. */
-#ktory-dla-mnie .c5-kicker--outline{display:block;width:fit-content;margin-inline:auto;
-  margin-bottom:24px;padding:12px 14px;border-color:#0c2b1c;border-radius:12px;
-  font-size:13px;line-height:14px;letter-spacing:.02em;color:#0c2b1c;}
-
-/* --- H2: P22 Mackinac Pro Book 46 / 51 px -----------------------------------
-   `font-weight:400` is not decoration – only the Book cut is loaded, so any
-   heavier weight would have the browser synthesise a fake bold. Measure 936 px
-   and centring come from the frame; the size scales with the window and tops
-   out at the frame value. */
-#ktory-dla-mnie .c5-h2{font-family:"P22 Mackinac Pro",var(--w-font-sans);font-weight:400;
-  font-size:clamp(2rem,3.2vw,2.875rem);line-height:1.1087;letter-spacing:-0.01em;
-  color:#0c2b1c;max-width:936px;}
-
-/* --- Lead -------------------------------------------------------------------
-   The frame does not show it; it stays (spec §18.3) and takes the ink of the
-   frame's body copy so it does not read louder than the card below. */
-#ktory-dla-mnie .c5-lead{color:#777771;max-width:820px;}

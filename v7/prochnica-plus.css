@@ -18,11 +18,6 @@
 
 #main [id]{scroll-margin-top:0;}
 
-/* page-specific: CE-07 – przy szerokim kontenerze (1800 px, §18.0 pkt 4)
-   treść dochodzi bliżej krawędzi okna, więc kropki nawigacji wsuwamy w sam
-   margines: 10 px zamiast domyślnych 30 px z ce/CE-07 (spec §18.11). */
-.c5-dots{right:10px;}
-
 /* Dostępność (DS §5b): --w-text-tertiary przy rozmiarze caption nie przechodzi
    AA, a podpisy pod placeholderami stoją także w pasmach. Na tej stronie
    podpisy idą więc na --w-text-secondary. */
@@ -40,21 +35,6 @@
 .pp-ms .c5-chip,.pp-empty .c5-chip{width:max-content;margin-top:var(--w-space-1);}
 .pp-ms__warn{font-size:0.8125rem;color:var(--w-text-secondary);}
 
-/* page-specific: CE-08 – nadpisanie siatki hero (c5.css + ce/CE-08): bez
-   własnego paddingu i min-height – wysokość wyznacza sekcja, a kolumny
-   rozciągają się na jej pełną wysokość. */
-.c5-hero{flex:1 1 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,5vw,5rem);align-items:stretch;padding-block:0;min-height:0;}
-.c5-hero__copy{display:flex;flex-direction:column;gap:0;max-width:585px;}
-
-/* page-specific: CE-08 – panel hero tej strony: 30 px od góry, dołu i prawej
-   krawędzi ekranu; jednolita jasna szarość, player dokładnie na środku. */
-.c5-hero__stage{position:relative;display:grid;place-items:center;overflow:hidden;margin-block:var(--c5-gutter);min-height:calc(100svh - var(--cx-navbar-h, 0px) - 2 * var(--c5-gutter));background:var(--w-gray-100);padding:var(--c5-gutter);}
-
-/* Player YouTube jako placeholder 16:9 z podpisem pod spodem. */
-.pp-film{display:flex;flex-direction:column;gap:var(--w-space-3);margin:0;width:100%;max-width:34rem;}
-.pp-film .wf-ph{width:100%;aspect-ratio:16/9;border-radius:0;display:grid;place-items:center;}
-.pp-film .wf-icon{width:44px;height:44px;color:var(--w-text-secondary);}
-
 /* --- UJAWNIANIE PRZY PRZEWIJANIU ------------------------------------------
    Klasę .pp-reveal dokłada JS (02-reveal.js) wyłącznie elementom, które przy
    starcie leżą PONIŻEJ pierwszego ekranu; .is-in wchodzi przy wejściu w widok.
@@ -63,24 +43,8 @@
   transition:opacity .45s var(--w-ease),transform .45s var(--w-ease);}
 .pp-reveal.is-in{opacity:1;transform:none;}
 
-@media (max-width:899px){
-  /* page-specific: CE-08 – układ hero na telefonie (panel z playerem zamiast
-     zdjęcia), reszta zachowania zostaje z ce/CE-08-hero.css. */
-  .c5-hero{display:flex;flex-direction:column;gap:clamp(1.5rem,4vw,2.5rem);padding-block:clamp(2rem,6vw,3rem);}
-  .c5-hero__copy{display:contents;}
-  .c5-hero__stage{order:2;margin-block:0;min-height:0;padding:var(--w-space-5);}
-  .pp-film{max-width:none;}
-}
 @media (prefers-reduced-motion: reduce){
   .pp-reveal{opacity:1;transform:none;transition:none;}
-}
-
-/* page-specific: CE-09 – skala i odstęp tekstu w marquee tej strony. */
-.c5-marq__txt{display:inline-flex;align-items:center;gap:var(--w-space-4);font-size:clamp(2rem,4.4vw,3.5rem);line-height:1.1;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;white-space:nowrap;color:var(--w-text-primary);}
-@media (prefers-reduced-motion: reduce){
-  /* page-specific: CE-09 – bez ruchu pokazujemy cztery pozycje (strona ma ich
-     więcej niż wzorzec). */
-  .c5-marq__item:nth-child(n+5){display:none;}
 }
 
 /* ===== 30 · O PROGRAMIE – blok pusty od 19.09 (iteracja 2, spec §18.2) ======
@@ -135,10 +99,6 @@
 .pp-sviz{position:relative;margin:0;display:flex;flex-direction:column;gap:var(--w-space-5);
   width:100%;max-width:480px;padding:clamp(1.25rem,2.4vw,2rem);
   background:rgb(20 20 20 / .86);color:#fff;overflow:hidden;}
-.pp-sviz .c5-viz__tag{color:rgb(255 255 255 / .6);}
-.pp-sviz .c5-viz__body{flex:1;min-height:0;}
-.pp-sviz .c5-viz__body svg:not(.wf-icon){color:inherit;}
-.pp-sviz .c5-viz__list .wf-icon{color:rgb(255 255 255 / .75);}
 /* placeholder zdjęcia w ciemnym boksie */
 .pp-sviz .wf-ph{background:rgb(255 255 255 / .06);border-color:rgb(255 255 255 / .3);
   --w-placeholder-stroke:rgb(255 255 255 / .3);}
@@ -432,68 +392,7 @@ html:not(.cx-js) #koordynatorzy .pp-more{display:none;}
   .pp-team > li{transition-delay:0s;}
 }
 
-/* ===== 60 · Program w liczbach – CE-24 wariant `kafle-2x2` (spec §18.8) =====
-   Ciemny kadr z marginesem 30 px na wysokość ekranu zostaje (jak Parametry na
-   CARBOMAT ECO). Iteracja 2 (uwagi Mateusza `8e9194e7` i `edf4be0a`, ramka
-   306:2941): tytuł dostaje duży odstęp od górnej krawędzi kadru, a cztery
-   wiersze zamieniają się w siatkę 2 × 2 kafli o ton jaśniejszych od kadru –
-   w kaflu wielka liczba przy górnej krawędzi po prawej, etykieta przy dolnej
-   po lewej. Cyfry to pionowe taśmy 0–9 przewijane od góry do dołu – taśmy
-   buduje JS (moduł 60), więc bez JS i przy ograniczonym ruchu w kodzie stoi
-   zwyczajna liczba. Mechanika kołowrotka bez zmian. */
-.pp-dark{position:relative;min-height:100svh;margin-inline:var(--c5-gutter);overflow:clip;
-  background:var(--w-gray-900);color:var(--w-text-inverse);padding-block:var(--c5-gutter);}
-/* pierścień fokusu na ciemnym tle (przeniesione z warstwy 99) */
-.pp-dark :focus-visible{outline-color:var(--w-focus-ring-inverse);}
-.pp-liczby{display:flex;flex-direction:column;gap:clamp(1.5rem,3vw,2.5rem);
-  min-height:calc(100svh - 2 * var(--c5-gutter));
-  padding-block:clamp(4rem,8vw,7.5rem) clamp(1.5rem,3vw,2.5rem);}
-.pp-liczby__title{font-size:clamp(2rem,4vw,3.25rem);max-width:none;}
-/* Siatka 2 × 2 wypełnia resztę wysokości kadru (kafle rosną razem z nim). */
-.pp-liczby__rows{flex:1 1 auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:16px;margin:0;padding:0;list-style:none;}
-
-/* Kafel: liczba przy górnej krawędzi po prawej, etykieta przy dolnej po lewej;
-   środek zostaje pusty – tak jak w ramce. */
-.pp-liczba{display:flex;flex-direction:column;justify-content:space-between;
-  gap:var(--w-space-6);min-height:280px;background:rgb(255 255 255 / .05);
-  padding:clamp(1.5rem,2.4vw,2rem);}
-.pp-liczba__label{font-size:1.25rem;line-height:1.35;color:var(--w-gray-200);max-width:38ch;}
-.pp-liczba__note{display:block;margin-top:var(--w-space-3);font-size:0.8125rem;color:var(--w-gray-400);}
-/* Kontener sufiksu EL-31 (`c5-aff`): wyrównanie GÓRĄ, odstęp tylko przed
-   sufiksem – prefiks „+" stoi w rozmiarze liczby tuż przy cyfrze, więc nie
-   może go rozepchnąć wspólny `gap`. Przesunięcie sufiksu bierzemy domyślne
-   z `ce/00-base.css`; o resztę dba `line-height` kołowrotka niżej. */
-.pp-liczba__num{display:flex;align-items:flex-start;justify-content:flex-end;
-  font-size:clamp(3.5rem,7vw,8.5rem);line-height:1;font-weight:var(--w-weight-medium);
-  letter-spacing:-0.03em;font-variant-numeric:tabular-nums;}
-.pp-odo + .c5-aff{margin-left:.12em;}
-
-/* --- Kołowrotek cyfr -------------------------------------------------------
-   Każda cyfra to okno wysokości jednej cyfry, a w nim taśma z kolejnymi
-   wartościami (na dole cel, wyżej droga do niego). Start: taśma przesunięta w
-   górę o całą swoją długość, więc w oknie stoi 0; animacja sprowadza ją do 0,
-   czyli cyfry przesuwają się od góry do dołu. Wszystko na transformie. */
-/* `line-height` równe wysokości okienka: bez JS i przy ograniczonym ruchu stoi
-   tu zwyczajny tekst, a ma siedzieć dokładnie tam, gdzie cyfra w taśmie – inaczej
-   sufiks celowałby w dwie różne krawędzie. */
-.pp-odo{--pp-odo-h:1.06em;display:inline-flex;line-height:var(--pp-odo-h);}
-.pp-odo__wrap{display:inline-flex;}
-.pp-odo__d{display:block;height:var(--pp-odo-h);overflow:hidden;}
-.pp-odo__strip{display:block;transform:translateY(calc(var(--pp-i,0) * var(--pp-odo-h) * -1));will-change:transform;}
-.pp-odo__strip > span{display:block;height:var(--pp-odo-h);line-height:var(--pp-odo-h);}
-.pp-odo.is-roll .pp-odo__strip{transition:transform 1.1s cubic-bezier(.2,.7,.2,1);transition-delay:var(--pp-delay,0ms);}
-
-@media (max-width:699px){
-  /* jedna kolumna kafli (spec §18.8) */
-  .pp-liczby__rows{grid-template-columns:minmax(0,1fr);}
-  .pp-liczba{min-height:0;gap:var(--w-space-5);}
-  .pp-liczba__num{font-size:clamp(3.25rem,15vw,6rem);}
-  .pp-liczba__label{font-size:1.0625rem;max-width:none;}
-}
-@media (prefers-reduced-motion: reduce){
-  .pp-odo.is-roll .pp-odo__strip{transition:none;}
-}
+/* 60 · Program w liczbach → ce/CE-24-pas-liczb.css */
 
 /* ===== 65 · HARMONOGRAM PROGRAMU ==========================================
    Od 02.10.2026 (spec §19.5, §20.2) harmonogram nie jest osobną sekcją:
@@ -574,80 +473,19 @@ html:not(.cx-js) #koordynatorzy .pp-more{display:none;}
    The section is CE-18 „CTA wyśrodkowane" (variant `z-leadem`); its only rule
    lives in ce/CE-18-cta.css. The demo form and the photo left the page. === */
 
-/* ===== 80 · Metodologia – CE-12 wariant `bez-naglowka` (spec §18.4b) =======
-   Układ i mechanikę niesie próba z Produktów (`ce/CE-12-scena-faktow-proba.css`,
-   znaczniki `c5-fx*`), której NIE wolno tutaj zmieniać. Tutaj zostaje wyłącznie
-   to, co zależy od TREŚCI tej strony: nagłówek nad torem, kadrowanie sześciu
-   zdjęć panelu, `order` układu statycznego i dopasowanie dotychczasowych figur
-   ilustracji (`pp-sviz` z bloku 40) do boksu nowego układu. */
+/* ===== 80 · Metodologia – CE-12 (spec §18.4b) ==============================
+   No rule of the scene lives in this sheet. Layout and mechanics come from
+   `ce/CE-12-scena-faktow.css`; this page picks them in prochnica-plus.html on
+   the root of the scene: the classes `c5-fx--szeroki`, `c5-fx--viz-auto` and
+   `c5-fx--skala-opis-dlugi`, and as style="--…" the height of the illustration
+   box (`--c5-fx-viz-h`: the plot diagram of figure 01 is the tallest figure and
+   ran out of the box at the default 62 svh) and the six photo crops
+   (`--c5-fx-pos-N`). The figures keep `pp-sviz` (block 40) for the inverted
+   colours of their content. What stays here is the lead above the track. */
 
 /* Lead pod h2 w bloku nad torem – dwa akapity jeden pod drugim (klasa `c5-lead`
    z kitu jest jednym boksem tekstu). */
 .pp-fxlead{display:flex;flex-direction:column;gap:var(--w-space-3);margin-top:var(--w-space-5);}
-
-/* Listy w opisach kroków są listami kitu (`wf-list`), które niosą własne
-   wcięcie w `li`; wcięcie `ul` z próby dołożyłoby drugie. */
-#metodologia .c5-fx__body .wf-list{padding-left:0;}
-
-/* Figury ilustracji zostają na klasach z bloku 40 (odwrócone kolory klocków
-   wizuali), ale w układzie nowej sceny pudełko ma dostać rozmiar z próby, a nie
-   proporcję 4 : 5 z `.c5-viz` – inaczej w układzie statycznym schemat kwatery
-   nie mieści się w kadrze i jest przycinany. */
-#metodologia .c5-viz{aspect-ratio:auto;max-height:none;}
-
-/* Warstwy zdjęć leżą razem w panelu, więc w biegu strony `order` przeplata je
-   z opisami: tło tematu, jego opis, jego ilustracja. W scenie każdy element
-   jest ustawiony względem sceny, więc `order` niczego tam nie zmienia. */
-#metodologia .c5-fx__panel > [data-fx-bg="1"]{order:1;} #metodologia .c5-fx__fact[data-fx-fact="1"]{order:2;} #metodologia .c5-viz[data-fx-viz="1"]{order:3;}
-#metodologia .c5-fx__panel > [data-fx-bg="2"]{order:4;} #metodologia .c5-fx__fact[data-fx-fact="2"]{order:5;} #metodologia .c5-viz[data-fx-viz="2"]{order:6;}
-#metodologia .c5-fx__panel > [data-fx-bg="3"]{order:7;} #metodologia .c5-fx__fact[data-fx-fact="3"]{order:8;} #metodologia .c5-viz[data-fx-viz="3"]{order:9;}
-#metodologia .c5-fx__panel > [data-fx-bg="4"]{order:10;} #metodologia .c5-fx__fact[data-fx-fact="4"]{order:11;} #metodologia .c5-viz[data-fx-viz="4"]{order:12;}
-#metodologia .c5-fx__panel > [data-fx-bg="5"]{order:13;} #metodologia .c5-fx__fact[data-fx-fact="5"]{order:14;} #metodologia .c5-viz[data-fx-viz="5"]{order:15;}
-#metodologia .c5-fx__panel > [data-fx-bg="6"]{order:16;} #metodologia .c5-fx__fact[data-fx-fact="6"]{order:17;} #metodologia .c5-viz[data-fx-viz="6"]{order:18;}
-
-/* Układ statyczny na szerokim ekranie (ograniczony ruch albo brak JS): scena
-   nie jest sceną, więc kolumna treści jedzie w tym samym szerokim kontenerze
-   co nagłówek nad torem. Obie reguły są celowo rozdzielone – wspólny selektor
-   wygrałby specyficznością ze sceną i wepchnął jej warstwy o 40 px do środka. */
-@media (min-width:900px) and (prefers-reduced-motion: reduce){
-  #metodologia .c5-fx__stage{max-width:1800px;padding-inline:40px;}
-}
-@media (min-width:900px){
-  html:not(.cx-js) #metodologia .c5-fx__stage{max-width:1800px;padding-inline:40px;}
-}
-
-/* --- Scena tej strony ------------------------------------------------------
-   Najdłuższe opisy to 01 (akapit + trzy pozycje listy + akapit) i 05 (dwa długie
-   akapity); strefa opisu jest tak wysoka jak najdłuższy z nich i musi zmieścić
-   się nad prześwitem doku, więc przy niższych oknach copy schodzi o stopień. */
-@media (min-width:900px) and (prefers-reduced-motion: no-preference){
-  .cx-js #metodologia .c5-fx__body{line-height:1.5;gap:10px;}
-  .cx-js #metodologia .c5-fx__body .wf-list{gap:var(--w-space-2);}
-  /* Boks ilustracji tej strony jest o kilka procent wyższy niż na Produktach:
-     schemat kwatery (figura 01) to najwyższy klocek wizuali w serwisie i przy
-     62 svh z próby wychodził poza pole, które przycina zawartość. */
-  .cx-js #metodologia .c5-fx__flow > .c5-viz{height:clamp(360px,68svh,760px);}
-}
-@media (min-width:900px) and (prefers-reduced-motion: no-preference) and (max-height:1000px){
-  .cx-js #metodologia .c5-fx__body{font-size:0.875rem;}
-  .cx-js #metodologia .c5-fx__body .wf-list{gap:var(--w-space-1);}
-}
-/* Wąski desktop (900–1279 px): lewa kolumna jest tu najwęższa, więc najdłuższy
-   opis potrzebuje najciaśniejszego stopnia niezależnie od wysokości okna. */
-@media (min-width:900px) and (max-width:1279px) and (prefers-reduced-motion: no-preference){
-  .cx-js #metodologia .c5-fx__body{font-size:0.8125rem;}
-}
-@media (min-width:900px) and (prefers-reduced-motion: no-preference) and (max-height:780px){
-  .cx-js #metodologia .c5-fx__body{font-size:0.8125rem;line-height:1.45;}
-}
-
-/* --- Kadrowanie zdjęć sceny „Metodologia" ---------------------------------- */
-#metodologia .c5-fx__img[data-fx-bg="1"]{object-position:50% 50%;}  /* rzędy w niskim słońcu */
-#metodologia .c5-fx__img[data-fx-bg="2"]{object-position:50% 45%;}  /* gleba w dłoniach */
-#metodologia .c5-fx__img[data-fx-bg="3"]{object-position:50% 60%;}  /* siewka w glebie */
-#metodologia .c5-fx__img[data-fx-bg="4"]{object-position:50% 55%;}  /* rzędy warzyw liściowych */
-#metodologia .c5-fx__img[data-fx-bg="5"]{object-position:50% 52%;}  /* rzędy upraw o zachodzie */
-#metodologia .c5-fx__img[data-fx-bg="6"]{object-position:50% 48%;}  /* winnica na wzgórzach */
 
 /* ===== 85 · Etapy prac – styl klocka mieszka w ce/CE-90-os-programu.css ====
    Od 02.10.2026 (spec §19.5) jedna oś programu z punktami zdarzeń (CE-90)

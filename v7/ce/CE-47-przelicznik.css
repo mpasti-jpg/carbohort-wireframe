@@ -1,0 +1,66 @@
+/* ===== CE-47 · Przelicznik (rejestr: ce-rejestr.js) =========================
+   Prefixes: u-pk, u-area, u-calc, u-out, u-cost, u-vpanel.
+   Scripts: `data-calc` (c5.js), `data-calc-range` and `data-tabs-group`
+   (uprawa.js). */
+
+/* ===== wariant: z-pakietami =====
+   The package switch (CE-45) and the area slider on top, then the open panel:
+   what the package consists of (`u-rows`) and one result box per product, the
+   last one being the sum. */
+.u-vpanel{opacity:1;transition:opacity var(--w-duration-base) var(--w-ease);}
+.u-vtabs__sub{font-size:var(--w-font-h4-size);line-height:var(--w-font-h4-lh);font-weight:var(--w-weight-medium);color:var(--w-text-secondary);}
+.u-area{display:flex;flex-direction:column;gap:var(--w-space-2);}
+.u-area__row{display:flex;align-items:center;gap:var(--w-space-4);}
+.u-area__range{flex:1 1 auto;min-width:0;accent-color:var(--w-gray-900);}
+.u-area__row .wf-input-group{flex:none;width:9rem;}
+.u-area__scale{display:flex;justify-content:space-between;}
+@media (max-width:479px){.u-area__row{flex-wrap:wrap;}.u-area__row .wf-input-group{width:100%;}}
+.u-calc{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--w-space-4);align-items:stretch;}
+.u-out{height:100%;display:flex;flex-direction:column;gap:var(--w-space-2);border:1px solid var(--w-border-default);border-radius:0;padding:var(--w-space-4);}
+.u-out b{font-size:var(--w-font-h4-size);line-height:var(--w-font-h4-lh);font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+.u-out .wf-caption{color:var(--w-text-tertiary);}
+.u-out__ph{width:64px;aspect-ratio:4/3;min-height:0;border-radius:0;}
+.u-out__buy{margin-top:auto;}
+@media (max-width:1199px){.u-calc{grid-template-columns:repeat(3,minmax(0,1fr));}}
+@media (max-width:899px){.u-calc{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (max-width:479px){.u-calc{grid-template-columns:1fr;}}
+.u-cost{border:1px dashed var(--w-border-strong);border-radius:0;padding:var(--w-space-4);}
+@media (prefers-reduced-motion: reduce){.u-vpanel{transition:none;}}
+/* The two controls side by side from 1000 px, both on the bottom line. */
+.u-pk__top{display:grid;gap:var(--w-space-6);}
+@media (min-width:1000px){
+  .u-pk__top{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);
+    column-gap:clamp(2rem,4vw,4rem);align-items:end;}
+}
+@media (min-width:900px){
+  .u-pk > .u-measure{max-width:60ch;}
+  .u-pk .u-row dd{max-width:64ch;}
+}
+/* Fixed padding: a percentage would be taken from the width of the whole box,
+   not of this 64 px field. */
+.u-out__ph{display:block;background:var(--w-gray-100);padding:5px;}
+.u-out__img{display:block;width:100%;height:100%;object-fit:contain;}
+/* The column count follows the package, so no row ends with a hole: one box
+   a row, two from 640 px, a full row from 1000 px (five boxes: 3 + 2, one row
+   from 1280 px). */
+.u-calc{grid-template-columns:minmax(0,1fr);}
+@media (min-width:640px){.u-calc{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (min-width:1000px){
+  .u-calc--3{grid-template-columns:repeat(3,minmax(0,1fr));}
+  .u-calc--4{grid-template-columns:repeat(4,minmax(0,1fr));}
+}
+@media (min-width:1000px){.u-calc--5{grid-template-columns:repeat(3,minmax(0,1fr));}}
+@media (min-width:1280px){.u-calc--5{grid-template-columns:repeat(5,minmax(0,1fr));}}
+/* Helper rows inside a product box: one step smaller than the main value. */
+.u-out__sub{display:flex;flex-direction:column;gap:var(--w-space-1);
+  padding-top:var(--w-space-3);border-top:1px solid var(--w-border-subtle);}
+.u-out__sub b{font-size:var(--w-font-h5-size);line-height:var(--w-font-h5-lh);}
+.u-out__cost{display:flex;flex-direction:column;gap:var(--w-space-1);
+  padding-top:var(--w-space-3);border-top:1px solid var(--w-border-subtle);}
+.u-out__cost b{font-size:var(--w-font-h5-size);line-height:var(--w-font-h5-lh);}
+/* The sum of the package: the one dark box of the row. */
+.u-out--sum{justify-content:center;background:var(--w-surface-inverse);border-color:var(--w-gray-900);}
+.u-out--sum b{color:var(--w-text-inverse);font-size:clamp(1.25rem,2vw,1.5rem);line-height:1.2;}
+.u-out--sum .wf-caption{color:var(--w-gray-400);}
+.u-cost p + p{margin-top:var(--w-space-3);}
+.b-pk__more{margin:0;font-size:var(--w-font-sm-size);line-height:var(--w-font-sm-lh);}
