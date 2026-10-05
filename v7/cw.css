@@ -491,3 +491,33 @@ a.cw-crop:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   .cw-nav-trigger .wf-icon { transition: none; }
 }
+
+/* --- CE-01, state "zalogowany-pro": account strip above the site header ---
+   Added by chrome.js only when the state is on (attribute data-widok="pro",
+   widok=pro in the address or the cw:widok event); a page without the state
+   has no .cw-probar in the DOM. The strip scrolls away with the page – only
+   the header below it stays pinned. .cw-probar-btn is the "Panel B2B" button
+   standing in place of the cart icon. */
+.cw-probar { border-bottom: 1px solid var(--w-border-subtle); background: var(--w-surface-subtle);
+  font-family: var(--w-font-sans); font-size: var(--w-font-caption-size); line-height: var(--w-font-caption-lh); color: var(--w-text-secondary); }
+.cw-probar__inner { display: flex; flex-wrap: wrap; align-items: center; gap: 0 var(--w-space-5); min-height: 40px; }
+.cw-probar__who { margin-right: auto; padding-block: var(--w-space-2); }
+.cw-probar__who b { font-weight: var(--w-weight-semibold); color: var(--w-text-primary); }
+.cw-probar__link { display: inline-flex; align-items: center; min-height: 40px; color: var(--w-text-primary);
+  text-decoration: underline; text-underline-offset: 2px; text-decoration-thickness: 1px; white-space: nowrap; }
+.cw-probar__link:focus-visible { outline: var(--w-focus-ring-width) solid var(--w-focus-ring); outline-offset: var(--w-focus-ring-offset); border-radius: var(--w-radius-xs); }
+.cw-probar-btn { white-space: nowrap; }
+/* Below 1280 px the header row has no room for a text button in place of the
+   40 px cart icon – the strip's "wróć do panelu B2B" link is the way back. */
+@media (max-width: 1279px) { .cw-probar-btn { display: none; } }
+@media (max-width: 980px) {
+  .cw-probar__who { flex: 0 0 100%; padding-bottom: 0; }
+  .cw-probar__link { min-height: var(--w-tap-min); }
+}
+
+/* --- CE-04, variant "panel": footer of the B2B panel and the sales desk ----
+   Rendered by chrome.js on pages with cw-navbar[data-uklad]: the bottom strip
+   only. The strip is lower than the site footer; the link without a target is
+   a plain button that looks like the link next to it. */
+.wf-footer.cw-footer--panel { padding-block: var(--w-space-6); }
+.cw-footer--panel button.wf-link--quiet { background: none; border: 0; padding: 0; font-family: inherit; }

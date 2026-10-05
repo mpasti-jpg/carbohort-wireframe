@@ -8,7 +8,10 @@
       quick view and the cart): pH variant links carrying the pack anchor,
       pack chosen by the URL anchor (#w20, #bb1000, #bb1500), extra options
       (fraction), quantity, price with promotion and the 30-day lowest
-      price, one-sentence shipping line, "add to cart" with a live message.
+      price, net price in small print, one-sentence shipping line, "add to
+      cart" with a live message. State "zalogowany-pro" (platforma-b2b-spec.md
+      16.5): a link to the B2B panel in place of the stepper and the cart
+      button – from the address, the fragment or the mock-up state bar.
    2. "Od … zł" of the "Połącz z" and "Zobacz też" cards out of their own
       data-cw-product; their buttons open the shared quick view
       (sklep-wspolne.js, delegated).
@@ -44,24 +47,46 @@
     var packsBox = $("[data-c5pd-packs]", form);
     var qtyIn = $("[data-c5pd-qty]", form);
     var priceOut = $("[data-c5pd-price]", col);
+    var netOut = $("[data-c5pd-net]", col);
     var lowestOut = $("[data-c5pd-lowest]", col);
     var totalOut = $("[data-c5pd-total]", form);
     var shipOut = $("[data-c5pd-ship]", form);
     var fb = $("[data-c5pd-fb]", form);
     var variants = $$("[data-c5pd-variant]", form);
+    var cartRow = $("[data-c5pd-cart]", form);
+    var proBox = $("[data-c5pd-pro]", form);
+    var specialOut = $("[data-c5pd-special]", form);
+    var proBand = doc.getElementById("dla-profesjonalistow");
     var fbTimer = 0;
 
     function packById(id) {
       return product.packs.filter(function (k) { return k.id === id; })[0] || null;
     }
     var DEFAULT_PACK = packById("w20") ? "w20" : product.packs[0].id;
-    /* Pack id from the address anchor, or null when it is not one of ours. */
-    function packFromHash() {
+    /* The address anchor split at "&": a pack id may stand next to the view
+       parameters of the mock-up ("#bb1000&widok=pro"). */
+    function hashParts() {
       var h = (location.hash || "").slice(1);
       try { h = decodeURIComponent(h); } catch (e) { /* keep the raw text */ }
-      return packById(h) ? h : null;
+      return h ? h.split("&") : [];
     }
-    var state = { pack: packFromHash() || DEFAULT_PACK, qty: 1, opts: {} };
+    /* Pack id from the address anchor, or null when it is not one of ours. */
+    function packFromHash() {
+      return hashParts().filter(function (t) { return !!packById(t); })[0] || null;
+    }
+    /* View of the page: a shop customer (default) or a logged-in professional
+       account, optionally with a special price waiting in the panel. Read
+       from the address query first, then from the fragment. */
+    function viewFromAddress() {
+      var q = new URLSearchParams(location.search || "");
+      if (q.get("widok") !== "pro") {
+        q = new URLSearchParams(hashParts().filter(function (t) { return t.indexOf("=") !== -1; }).join("&"));
+      }
+      var pro = q.get("widok") === "pro";
+      return { pro: pro, cena: pro && q.get("cena") === "specjalna" };
+    }
+    var view = viewFromAddress();
+    var state = { pack: packFromHash() || DEFAULT_PACK, qty: 1, opts: {}, pro: view.pro, special: view.cena };
 
     /* Packs: one radio each, price markup from the shared module. */
     packsBox.innerHTML = product.packs.map(function (k) {
@@ -111,10 +136,14 @@
       });
 
       priceOut.innerHTML = S.priceHTML(pack);
+      /* Net price of the price shown (promotion included), product VAT rate. */
+      if (netOut) {
+        netOut.textContent = S.fmt(S.vatSplit(S.priceOf(pack), S.rateOf(product, pack)).net) + " netto";
+      }
       var low = S.lowestText(pack);
       lowestOut.textContent = low;
       lowestOut.hidden = !low;
-      if (state.qty >= 2) {
+      if (state.qty >= 2 && !state.pro) {
         var each = S.priceOf(pack);
         totalOut.textContent = "Razem: " + state.qty + " × " + S.fmt(each) + " = " + S.fmt(each * state.qty);
         totalOut.hidden = false;
@@ -137,14 +166,56 @@
         : "Wysyłka kurierem: " + S.fmt(S.SHIP.parcelPrice) + " za paczkę przy przedpłacie" + when;
     }
 
-    /* The anchor follows the chosen pack without a new history entry. */
+    /* The anchor follows the chosen pack without a new history entry; view
+       parameters carried by the fragment stay behind the pack id. */
     function writeHash(id) {
-      if (location.hash === "#" + id) return;
-      try { history.replaceState(history.state, "", "#" + id); }
+      var h = "#" + [id].concat(hashParts().filter(function (t) { return t.indexOf("=") !== -1; })).join("&");
+      if (location.hash === h) return;
+      try { history.replaceState(history.state, "", h); }
       catch (e) {
-        try { location.replace("#" + id); } catch (e2) { /* the address stays as it was */ }
+        try { location.replace(h); } catch (e2) { /* the address stays as it was */ }
       }
     }
+
+    /* State "zalogowany-pro": the order goes through the B2B panel, so the
+       stepper, the cart button and their messages give way to one link.
+       The price stays public – no account price and no discount here. */
+    function renderView() {
+      form.classList.toggle("c5pd-buy--pro", state.pro);
+      if (cartRow) cartRow.hidden = state.pro;
+      if (proBox) proBox.hidden = !state.pro;
+      if (specialOut) specialOut.hidden = !(state.pro && state.special);
+      fb.hidden = state.pro;
+      /* The PRO band invites to log in or to apply for an account – not for
+         an account that is already logged in. */
+      if (proBand) proBand.hidden = state.pro;
+      if (state.pro) {
+        window.clearTimeout(fbTimer);
+        fb.textContent = "";
+      }
+      render();
+      var name = !state.pro ? "sklep" : state.special ? "specjalna" : "pro";
+      $$(".c5b-stan [data-stan-ustaw]").forEach(function (b) {
+        b.setAttribute("aria-pressed", b.getAttribute("data-stan-ustaw") === name ? "true" : "false");
+      });
+    }
+    /* Sent by the mock-up state bar below; chrome.js listens to the same
+       event and switches the header. */
+    doc.addEventListener("cw:widok", function (e) {
+      var d = e.detail || {};
+      state.pro = !!d.pro;
+      state.special = state.pro && !!d.cena;
+      renderView();
+    });
+    /* Mock-up state bar above <main>. Focus stays on the pressed button. */
+    doc.addEventListener("click", function (e) {
+      var b = e.target && e.target.closest ? e.target.closest(".c5b-stan [data-stan-ustaw]") : null;
+      if (!b) return;
+      var name = b.getAttribute("data-stan-ustaw");
+      doc.dispatchEvent(new CustomEvent("cw:widok", {
+        detail: { pro: name !== "sklep", cena: name === "specjalna" }
+      }));
+    });
 
     packsBox.addEventListener("change", function (e) {
       if (e.target.name !== "c5pd-pack") return;
@@ -185,6 +256,7 @@
        announces it again even when the same line is added twice. */
     form.addEventListener("submit", function (e) {
       e.preventDefault();
+      if (state.pro) return;
       var pack = packById(state.pack);
       var key = S.add(product, pack.id, state.qty, state.opts);
       if (!key) return;
@@ -199,7 +271,7 @@
       }, 50);
     });
 
-    render();
+    if (state.pro) renderView(); else render();
   }
 
   /* ----- 2. "Od … zł" of the small product cards ---------------------- */

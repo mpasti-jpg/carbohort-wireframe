@@ -375,7 +375,8 @@ window.CW_CE = {
         ]
       },
       "skroty_wariantow": {
-        "podglad-koszyka": "Nagłówek z wysuniętym panelem podglądu koszyka: pozycje z miniaturą, suma, przyciski."
+        "podglad-koszyka": "Nagłówek z wysuniętym panelem podglądu koszyka: pozycje z miniaturą, suma, przyciski.",
+        "zalogowany-pro": "Pasek zalogowanego profesjonalisty nad nagłówkiem i przycisk „Panel B2B” zamiast koszyka."
       },
       "opis": "Pasek nagłówka na całą szerokość: wordmark po lewej, główna nawigacja na środku (trzy wyzwalacze mega-menu i trzy linki działów), po prawej przycisk Konfiguratora, przycisk „Sklep”, ikona koszyka z licznikiem opakowań i przycisk menu mobilnego. Pod paskiem, na szerokość kontenera, wysuwa się podgląd koszyka (od 28.09.2026). Renderowany przez chrome.js ze znacznika cw-navbar.",
       "mechanika": "Wyzwalacze otwierają mega-menu (aria-expanded, przyciemnienie tła), pozycja bieżąca podświetlona z data-current; poniżej progu mobilnego pasek pokazuje przycisk otwierający nawigację mobilną. Licznik przy ikonie koszyka i jej etykietę dostępną odświeża sklep-wspolne.js, na stronach bez tego skryptu cw.js czyta liczbę z sessionStorage. Podgląd koszyka: po najechaniu na ikonę koszyka (tylko wskaźnik z kursorem, od 980 px, nigdy na stronie koszyka) po 150 ms wysuwa się pod nagłówkiem panel – pozycje w rzędzie (miniatura opakowania, nazwa, opakowanie, „3 × 39 zł”, wartość; strzałki przewijania, gdy pozycje się nie mieszczą) i pasek z liczbą opakowań, wartością produktów oraz przyciskami „Koszyk” i „Przejdź do kasy”; przy pustym koszyku zdanie i „Przejdź do sklepu”. Zamyka się 250 ms po zjechaniu kursorem z ikony i panelu, Escape albo przy otwarciu mega-menu; klik w ikonę dalej prowadzi do koszyka, na dotyku panelu nie ma. Dane z sessionStorage cw_cart_items, przerysowanie przy zdarzeniu cw:cart. Obsługa w cw.js.",
@@ -384,8 +385,8 @@ window.CW_CE = {
         "kotwica": "serwis-naglowek"
       },
       "kod": {
-        "css": "wireframe.css (wf-navbar) + cw.css (cw-nav, cw-brand, cw-cart, cw-minicart)",
-        "js": "chrome.js (szablon NAVBAR) + cw.js (mega-menu, podgląd koszyka, licznik) + sklep-wspolne.js (licznik na stronach sklepu)"
+        "css": "wireframe.css (wf-navbar) + cw.css (cw-nav, cw-brand, cw-cart, cw-minicart) + cw.css (cw-probar)",
+        "js": "chrome.js (szablon NAVBAR) + cw.js (mega-menu, podgląd koszyka, licznik) + sklep-wspolne.js (licznik na stronach sklepu) + chrome.js (stan zalogowany-pro)"
       },
       "czesci": [
         "wordmark",
@@ -398,7 +399,8 @@ window.CW_CE = {
         "przyciemnienie tła (cw-scrim)"
       ],
       "warianty": {
-        "podglad-koszyka": "stan, nie osobny układ: nagłówek z otwartym podglądem koszyka (od 28.09.2026, spec sklep-v7-spec §12.11). Zrzut z makiety demonstracyjnej v7/lab/ce-01-podglad-koszyka.html, która wczytuje przykładowy koszyk z makiety koszyka (trzy pozycje, sześć opakowań, 877 zł) i otwiera podgląd przez cw.js"
+        "podglad-koszyka": "stan, nie osobny układ: nagłówek z otwartym podglądem koszyka (od 28.09.2026, spec sklep-v7-spec §12.11). Zrzut z makiety demonstracyjnej v7/lab/ce-01-podglad-koszyka.html, która wczytuje przykładowy koszyk z makiety koszyka (trzy pozycje, sześć opakowań, 877 zł) i otwiera podgląd przez cw.js",
+        "zalogowany-pro": "stan, nie osobny układ: nad nagłówkiem pasek z nazwą zalogowanego konta profesjonalnego, odnośnikiem powrotu do panelu i odnośnikiem do karty produktu (klasa cw-probar), w miejscu ikony koszyka przycisk „Panel B2B”"
       },
       "zrzut": {
         "strona": "v7/carbomat.html",
@@ -411,6 +413,12 @@ window.CW_CE = {
           "od": "#serwis-naglowek",
           "czekaj": 900,
           "maxh": 500
+        },
+        "zalogowany-pro": {
+          "plik": "v7/lab/ce-01-zalogowany-pro.html",
+          "kotwica": "serwis-naglowek",
+          "od": ".cw-probar",
+          "maxh": 260
         }
       }
     },
@@ -570,6 +578,9 @@ window.CW_CE = {
           "uniwersalny"
         ]
       },
+      "skroty_wariantow": {
+        "panel": "Sam pas dolny – stopka panelu."
+      },
       "opis": "Stopka na całą szerokość: cztery kolumny (marka i opis, odnośniki działów, produkty, kontakt) i pas dolny z prawami i odnośnikami prawnymi.",
       "mechanika": "Statyczna.",
       "baza": {
@@ -578,16 +589,25 @@ window.CW_CE = {
       },
       "kod": {
         "css": "wireframe.css (wf-footer)",
-        "js": "chrome.js (szablon FOOTER)"
+        "js": "chrome.js (szablon FOOTER) + chrome.js (szablon footerPanel())"
       },
       "czesci": [
         "4 kolumny",
         "pas dolny"
       ],
-      "warianty": {},
+      "warianty": {
+        "panel": "sam pas dolny z prawami i odnośnikami (klasa cw-footer--panel) – stopka stron z nagłówkiem panelu (CE-91)"
+      },
       "zrzut": {
         "strona": "v7/carbomat.html",
         "maxh": 700
+      },
+      "zrzuty_wariantow": {
+        "panel": {
+          "plik": "v7/platforma-b2b.html",
+          "kotwica": "serwis-stopka",
+          "maxh": 120
+        }
       }
     },
     "CE-05": {
@@ -1598,7 +1618,8 @@ window.CW_CE = {
         "szklane": "Karty ze szkła na zdjęciu w tle sekcji, biały tekst.",
         "sklepowe": "Cztery karty sklepu: makieta opakowania, nazwa, cena od, przycisk Dodaj do koszyka.",
         "dorzuc": "Do czterech kart sklepowych z jasnym przyciskiem pod koszykiem.",
-        "polacz-z": "Dwie małe karty z miniaturą, nazwą, zdaniem, ceną i przyciskiem Dodaj w kolumnie zakupu."
+        "polacz-z": "Dwie małe karty z miniaturą, nazwą, zdaniem, ceną i przyciskiem Dodaj w kolumnie zakupu.",
+        "z-rozpiska": "Karty bez mediów z rozpiską i przyciskami u dołu."
       },
       "opis": "Siatka kart auto-fit (2–5 kolumn zależnie od szerokości), karta w ramce: ikona, numer, zdjęcie albo packshot, tytuł, akapit, opcjonalnie lista dl i rząd przycisków.",
       "mechanika": "Statyczna albo z jednorazowym wejściem od dołu po wejściu w widok (data-reveal, IntersectionObserver, stagger 80–90 ms); poniżej 900 px, przy reduced-motion i bez JS karty po prostu widoczne; w wariancie produktowym na telefonie karuzela scroll-snap.",
@@ -1607,7 +1628,7 @@ window.CW_CE = {
         "kotwica": "inwestycja-karty"
       },
       "kod": {
-        "css": "per strona: c5-mt-grid, c5hu-mix, c5pr-goals/c5pr-foliar/c5pr-read, pp-cards/pp-tiles/pp-rels/pp-charts; strony upraw: ce/CE-20-siatka-kart.css (warianty produktowe – u-prod, u-rail – i numerowane – u-rules); sklep: pdp.css (c5pd-also, c5pd-connect, c5pd-pairs), koszyk.css (c5ks-more, c5ks-rec)",
+        "css": "per strona: c5-mt-grid, c5hu-mix, c5pr-goals/c5pr-foliar/c5pr-read, pp-cards/pp-tiles/pp-rels/pp-charts; strony upraw: ce/CE-20-siatka-kart.css (warianty produktowe – u-prod, u-rail – i numerowane – u-rules); sklep: pdp.css (c5pd-also, c5pd-connect, c5pd-pairs), koszyk.css (c5ks-more, c5ks-rec) + panel: ce/CE-20-siatka-kart.css (c5-cards, c5-cards--z-rozpiska)",
         "js": "reveal: ce/00-base.js ===== 02 (dawne moduły 72 na Carbohumic i Produktach oraz 02 na Próchnicy+ zeszły do warstwy wspólnej 14.09.2026), u-reveal (uprawa.js); sklep: pdp.js ===== 2 (ceny „od … zł”), koszyk.js (dobór „Dorzuć do zamówienia”), przyciski otwierają szybki podgląd z sklep-wspolne.js (CE-76)"
       },
       "czesci": [
@@ -1632,7 +1653,8 @@ window.CW_CE = {
         "szklane": "karty ze szkła na zdjęciu w tle sekcji: rozmycie tła pod kartą (backdrop-filter), półprzezroczyste jasne wypełnienie, jasny obrys, biały tekst, ostre narożniki (Próchnica+ #rzetelnosc-kafle, od 19.09.2026)",
         "sklepowe": "karty produktów sklepu – „Zobacz też” na karcie produktu (pdp.html, pdp-kwasny.html; od 28.09.2026): nagłówek sekcji i cztery karty jak na liście produktów – kadr 1 : 1 z makietą opakowania na jasnoszarym tle, nazwa, cena „od … zł” (przy obniżce z najniższą ceną z 30 dni), ciemny przycisk „Dodaj do koszyka” na całą szerokość karty, który otwiera szybki podgląd (CE-76); każda karta niesie własny JSON w data-cw-product. Od 900 px cztery kolumny, niżej rząd przewijany w poziomie ze scroll-snap. Nazwa jest linkiem tylko przy produkcie z własną kartą (druga odmiana CARBOMAT ECO)",
         "dorzuc": "„Dorzuć do zamówienia” pod koszykiem (koszyk.html; od 28.09.2026): nagłówek, zdanie i do czterech kart sklepowych z jasnym przyciskiem „Dodaj do koszyka” (kasa zostaje jedynym ciemnym przyciskiem strony). Karty rysuje koszyk.js: dla każdego produktu z koszyka pierwszy produkt stosowany razem z nim, którego w koszyku jeszcze nie ma, braki dopełnia stała lista „najczęściej wybierane”; przy pustym koszyku sama lista stała pod nagłówkiem „Najczęściej wybierane” z notą. Przeliczenie po każdej zmianie koszyka; dwie kolumny poniżej 900 px, cztery od 900 px",
-        "polacz-z": "„Połącz z” w kolumnie zakupu karty produktu (pdp.html, pdp-kwasny.html; od 28.09.2026, zagnieżdżony w CE-82): pod przyciskiem „Dodaj do koszyka”, za linią – nagłówek, zdanie i rząd dwóch małych kart: pasek miniatury 132 px na jasnoszarym tle, nazwa, jedno zdanie, cena „od …” i jasny przycisk „+ Dodaj”, który otwiera szybki podgląd (CE-76); rząd przewija się w poziomie ze scroll-snap, gdy karty się nie mieszczą"
+        "polacz-z": "„Połącz z” w kolumnie zakupu karty produktu (pdp.html, pdp-kwasny.html; od 28.09.2026, zagnieżdżony w CE-82): pod przyciskiem „Dodaj do koszyka”, za linią – nagłówek, zdanie i rząd dwóch małych kart: pasek miniatury 132 px na jasnoszarym tle, nazwa, jedno zdanie, cena „od …” i jasny przycisk „+ Dodaj”, który otwiera szybki podgląd (CE-76); rząd przewija się w poziomie ze scroll-snap, gdy karty się nie mieszczą",
+        "z-rozpiska": "karty bez mediów (klasa c5-cards--z-rozpiska; platforma-b2b.html#pulpit): tytuł, treść, rozpiska i rząd przycisków przy dolnej krawędzi; od 900 px trzy kolumny równej wysokości, niżej jedna pod drugą"
       },
       "zrzut": {
         "maxh": 900
@@ -1652,6 +1674,11 @@ window.CW_CE = {
         "polacz-z": {
           "plik": "v7/pdp.html",
           "kotwica": "polacz-z",
+          "maxh": 600
+        },
+        "z-rozpiska": {
+          "plik": "v7/platforma-b2b.html",
+          "kotwica": "pulpit",
           "maxh": 600
         }
       }
@@ -1741,31 +1768,43 @@ window.CW_CE = {
         "porownawcza": "Kolumny jako porównywane pozycje.",
         "danych": "Kolumny liczbowe wyrównane do prawej.",
         "z-packshotami": "Kwadratowe pole zdjęcia nad każdą kolumną.",
-        "klikalne-wiersze": "Wiersze otwierają stronę lightboxa."
+        "klikalne-wiersze": "Wiersze otwierają stronę lightboxa.",
+        "z-akcja": "Tabela danych z przyciskiem albo polem w ostatniej kolumnie."
       },
       "opis": "Samodzielna tabela w kontenerze przewijanym w poziomie na wąskich ekranach (cw-scrollx, tabindex), nagłówki kolumn, opcjonalnie packshoty w nagłówkach i przypis pod tabelą.",
-      "mechanika": "Statyczna; wariant z klikalnymi wierszami otwiera lightbox; wiersze mogą wchodzić z reveal.",
+      "mechanika": "Statyczna; wariant z klikalnymi wierszami otwiera lightbox; wiersze mogą wchodzić z reveal. W panelu pierwsza kolumna przyklejona do lewej w przewijanym kontenerze. W module c5-tbl dwa pokrętła wpisywane w style na korzeniu wystąpienia: --c5-tbl-min (najmniejsza szerokość tabeli w przewijanym kontenerze, domyślnie 640 px) i --c5-tbl-first (stała szerokość przyklejonej pierwszej kolumny poniżej 600 px).",
       "baza": {
         "plik": "v7/produkty.html",
         "kotwica": "doglebowo-tabela"
       },
       "kod": {
-        "css": "per strona: c5-mt-cmp/c5-mt-tbl, c5hu-cmp, c5pr-cmp/c5pr-cert; strony upraw: ce/CE-22-tabela.css (wariant klikalne-wiersze – u-mt, klasa korzenia u-mtce)",
+        "css": "per strona: c5-mt-cmp/c5-mt-tbl, c5hu-cmp, c5pr-cmp/c5pr-cert; strony upraw: ce/CE-22-tabela.css (wariant klikalne-wiersze – u-mt, klasa korzenia u-mtce) + panel: ce/CE-22-tabela.css (c5-tbl, c5-tbl--danych, c5-tbl--z-akcja)",
         "js": "kukurydza.js ===== 80 (klikalne wiersze)"
       },
       "czesci": [
         "thead",
         "tbody",
-        "przypis"
+        "przypis",
+        "stopka z sumą (opcjonalnie)",
+        "chip stanu albo odnośnik w komórce (opcjonalnie)"
       ],
       "warianty": {
         "porownawcza": "kolumny = porównywane pozycje (2×6, 3 podłoża)",
         "danych": "kolumny liczbowe wyrównane do prawej (analiza, certyfikaty)",
         "z-packshotami": "kwadratowe pole zdjęcia nad etykietą każdej kolumny (do 220 px, temat na 72 % wysokości, 140 px poniżej 900 px). Czym jest zdjęcie, decyduje treść sekcji: na CARBOHUMIC-u do 02.10.2026 packshot produktu, na Produktach od 20.09.2026 – a na CARBOHUMIC-u od 02.10.2026 – kadr SPOSOBU aplikacji (#doglebowo-tabela, dziś placeholdery – prompty w zasoby/brand/zdjecia-produkty/README.md), bo o produktach mówią dopiero karty pod tabelą. Tego samego dnia z nagłówków Produktów zniknęły nazwy produktów, które szły w parze z packshotami",
-        "klikalne-wiersze": "klik w wiersz otwiera stronę lightboxa (Kukurydza)"
+        "klikalne-wiersze": "klik w wiersz otwiera stronę lightboxa (Kukurydza)",
+        "z-akcja": "tabela danych z kolumną kontrolek (klasa c5-tbl--z-akcja; b2b-zamowienia.html#lista): w ostatniej kolumnie przycisk, odnośnik albo pole wyboru, opcjonalnie przycisk dodania wiersza pod tabelą"
       },
       "zrzut": {
         "maxh": 900
+      },
+      "zrzuty_wariantow": {
+        "z-akcja": {
+          "plik": "v7/b2b-zamowienia.html",
+          "kotwica": "lista",
+          "szerokosc": 1440,
+          "maxh": 500
+        }
       }
     },
     "CE-23": {
@@ -2129,20 +2168,24 @@ window.CW_CE = {
         "cross-sell": "Karta z polem packshotu po lewej, h3, akapit, przypis i rząd przycisków"
       },
       "opis": "Obramowany boks (1 px) z tytułem i akapitem; wnętrze w jednej lub dwóch kolumnach, opcjonalnie rozpiska dl, lista opakowań, przypis i przyciski.",
-      "mechanika": "Statyczne; poniżej 900 px jedna kolumna.",
+      "mechanika": "Statyczne; poniżej 900 px jedna kolumna. W module c5-box proporcje dwóch kolumn ustawia pokrętło --c5-box-cols wpisane w style na korzeniu wystąpienia (domyślnie dwie równe kolumny).",
       "baza": {
         "plik": "v7/carbomat-mata.html",
         "kotwica": "analiza-nota"
       },
       "kod": {
-        "css": "per strona: c5-mt-note (Mata), c5hu-extra/c5hu-foliar (Carbohumic)",
+        "css": "per strona: c5-mt-note (Mata), c5hu-extra/c5hu-foliar (Carbohumic) + panel: ce/CE-28-boks-w-ramce.css (c5-box, c5-box--z-rozpiska)",
         "js": "brak"
       },
       "czesci": [
         "tytuł",
         "akapit",
         "rozpiska dl / lista / przypis (opcjonalnie)",
-        "przyciski (opcjonalnie)"
+        "przyciski (opcjonalnie)",
+        "tytuł boksu wersalikami (c5-box__title)",
+        "dwie kolumny (c5-box__cols, c5-box__col)",
+        "nazwa w kolumnie – osoba, zamówienie albo produkt (c5-box__name)",
+        "stopka z przyciskami pod kolumnami, oddzielona linią (c5-box__foot)"
       ],
       "warianty": {
         "z-przyciskiem": "tytuł, akapit z oznaczeniem braku danych, przycisk (Mata)",
@@ -2296,14 +2339,15 @@ window.CW_CE = {
         "kotwica": "ktory-dla-mnie-ostrzezenie"
       },
       "kod": {
-        "css": "per strona: c5hu-warn/c5hu-faqnote, c5-gap, u-callout, pp-note",
+        "css": "per strona: c5hu-warn/c5hu-faqnote, c5-gap, u-callout, pp-note + panel: ce/CE-31-nota.css (c5-note--akcja; baza c5-note z ce/00-base.css)",
         "js": "brak"
       },
       "czesci": [
         "ikona",
         "zdanie główne",
         "zdanie wyjaśniające (opcjonalnie)",
-        "przycisk (opcjonalnie)"
+        "przycisk (opcjonalnie)",
+        "treść obok ikony: tytuł i akapit (c5-note__body, c5-note__title; opcjonalnie)"
       ],
       "warianty": {
         "miekka": "mniejsza ikona, tło strony",
@@ -3200,7 +3244,9 @@ window.CW_CE = {
       },
       "skroty_wariantow": {
         "kontakt": "Formularz z wyborem tematu obok panelu danych firmy i pola mapy",
-        "temat": "Formularz „Zaproponuj temat” obok pasa przewodnika"
+        "temat": "Formularz „Zaproponuj temat” obok pasa przewodnika",
+        "z-przelacznikiem": "Pola logowania z przełącznikiem trybu i boksem wniosku.",
+        "z-podsumowaniem": "Grupy pól obok przyklejonego podsumowania kwot z przyciskiem."
       },
       "opis": "Dwie kolumny: formularz (pola, zgoda, przycisk) i zdjęcie zespołu.",
       "mechanika": "Demonstracyjny: nic nie wychodzi na serwer, walidacja i komunikat po wysłaniu w JS. Moduł 75.",
@@ -3209,21 +3255,37 @@ window.CW_CE = {
         "kotwica": "napisz"
       },
       "kod": {
-        "css": "prochnica-plus.css ===== 75 (pp-form)",
-        "js": "prochnica-plus.js ===== 75"
+        "css": "prochnica-plus.css ===== 75 (pp-form) + panel i logowanie: osobna implementacja ce/CE-50-formularz.css (c5-form; segment w grupie pól: c5-form__switch, odnośnik w panelu: c5-form__more); Próchnica+ i Kontakt na swoich klasach",
+        "js": "prochnica-plus.js ===== 75 + ce/CE-50-formularz.js"
       },
       "czesci": [
         "pola",
         "zgoda",
         "przycisk",
-        "zdjęcie"
+        "panel obok: zdjęcie albo tekst (kroki, dane, podsumowanie)",
+        "segment w grupie pól – fieldset bez ramki z legendą jak etykieta pola",
+        "odnośnik w panelu, w osobnym wierszu"
       ],
       "warianty": {
         "kontakt": "formularz z wyborem tematu obok panelu danych firmy i mapy (kontakt.html#napisz)",
-        "temat": "formularz „Zaproponuj temat” obok pasa przewodnika (centrum-wiedzy.html#zaproponuj, artykul.html#zaproponuj-temat)"
+        "temat": "formularz „Zaproponuj temat” obok pasa przewodnika (centrum-wiedzy.html#zaproponuj, artykul.html#zaproponuj-temat)",
+        "z-przelacznikiem": "wąska kolumna pól z przełącznikiem trybu nad nagłówkiem (przełącznik zmienia nagłówek i cel przycisku), obok boks wejścia do wniosku o konto (klasa c5-form--z-przelacznikiem; logowanie.html#logowanie)",
+        "z-podsumowaniem": "pola w nazwanych grupach, a panel obok to podsumowanie kwot – rozpiska, wiersz sumy, VAT – z przyciskiem wysyłki, przyklejone od 900 px (klasa c5-form--z-podsumowaniem; b2b-dostawa.html#dostawa)"
       },
       "zrzut": {
         "maxh": 800
+      },
+      "zrzuty_wariantow": {
+        "z-przelacznikiem": {
+          "plik": "v7/logowanie.html",
+          "kotwica": "logowanie",
+          "maxh": 700
+        },
+        "z-podsumowaniem": {
+          "plik": "v7/b2b-dostawa.html",
+          "kotwica": "dostawa",
+          "maxh": 722
+        }
       }
     },
     "CE-51": {
@@ -3319,11 +3381,14 @@ window.CW_CE = {
         "kotwica": "wyniki-raporty"
       },
       "kod": {
-        "css": "prochnica-plus.css ===== 90 (pp-reports)",
+        "css": "prochnica-plus.css ===== 90 (pp-reports) + panel: ce/CE-53-lista-wierszy.css (c5-rows, c5-rows--dokumenty)",
         "js": "prochnica-plus.js ===== 02 (reveal)"
       },
       "czesci": [
-        "wiersze: tytuł, metryka, przycisk"
+        "wiersze: tytuł, metryka, przycisk",
+        "tytuł listy wersalikami (c5-rows__title)",
+        "lista (c5-rows__list)",
+        "wiersz: nazwa z opcjonalną ikoną, metryka z opcjonalnym odnośnikiem, akcja – przycisk albo odnośnik (c5-rows__row, c5-rows__name, c5-rows__meta, c5-rows__act)"
       ],
       "warianty": {
         "dokumenty": "certyfikaty, poradniki i karty do pobrania z numerem lub metryką (o-firmie.html#dowody-listy, centrum-wiedzy.html#poradniki)"
@@ -4391,6 +4456,9 @@ window.CW_CE = {
           "uniwersalny"
         ]
       },
+      "skroty_wariantow": {
+        "sama-os": "Sama oś z wypełnieniem do bieżącego kroku, bez horyzontu."
+      },
       "opis": "Szeroka sekcja (kontener do 1800 px, marginesy 40 px) złożona z dwóch części pod wspólną głową. U góry oś procesu: cztery kolumny pod jedną poziomą linią 1 px, na linii kwadratowe węzły 30 px z numerami 01–04, pod każdym węzłem tytuł kroku i jedno zdanie. Niżej, oddzielony dużym odstępem, horyzont efektu: nadpis, wspólna oś czasu z dwoma odcinkami w proporcji 1 : 4 (nad paskiem etykieta okresu, pod paskiem znacznik czasu i treść), pierwszy pasek ciemny, drugi w średniej szarości; pod osią dopisek i link. Pasek ma 12 px wysokości i obrys 1 px.",
       "mechanika": "Linia osi wypełnia się od lewej (scaleX) wraz z przejściem sekcji przez okno: postęp 0 przy 80 % wysokości okna, 1 przy 35 %; węzeł zapala się (ciemne wypełnienie, jasna cyfra), gdy wypełnienie do niego dochodzi – moduł mierzy położenie każdego węzła na linii. Kolumny wchodzą kaskadą revealem strony. Odcinki horyzontu wypełniają się od lewej po wejściu w widok (600 ms i 900 ms). Mechanika scrollowa tylko za CX5.motionOn(); bez JS, poniżej 900 px i przy reduced-motion linia jest pełna, wszystkie węzły zapalone, a paski w stanie końcowym. Poniżej 900 px oś staje pionowo: węzły po lewej, linia wypełnia się w pionie, horyzont rozpada się na dwa wiersze z własnymi paskami, których szerokość trzyma proporcję 1 : 4.",
       "baza": {
@@ -4398,7 +4466,7 @@ window.CW_CE = {
         "kotwica": "jak-pomagamy"
       },
       "kod": {
-        "css": "ce/CE-73-os-krokow.css",
+        "css": "ce/CE-73-os-krokow.css + wariant sama-os w tym samym pliku (c5-st--sama-os)",
         "js": "ce/CE-73-os-krokow.js"
       },
       "czesci": [
@@ -4408,11 +4476,20 @@ window.CW_CE = {
         "horyzont: nadpis, dwa odcinki 1 : 4 z etykietami i znacznikami czasu",
         "dopisek i link pod osią czasu"
       ],
-      "warianty": {},
+      "warianty": {
+        "sama-os": "sama oś bez horyzontu (klasa c5-st--sama-os; potwierdzenie-b2b.html#stan): pięć węzłów, linia wypełniona na stałe do bieżącego kroku, pod węzłem nazwa i data; bez sterowania przewijaniem"
+      },
       "zrzut": {
         "strona": "v7/home.html",
         "kotwica": "jak-pomagamy",
         "maxh": 900
+      },
+      "zrzuty_wariantow": {
+        "sama-os": {
+          "plik": "v7/potwierdzenie-b2b.html",
+          "kotwica": "stan",
+          "maxh": 300
+        }
       }
     },
     "CE-74": {
@@ -4625,7 +4702,8 @@ window.CW_CE = {
         ]
       },
       "skroty_wariantow": {
-        "z-licznikiem": "Okruszki, duży H1 „Koszyk” i obok liczba opakowań, bez wyszukiwarki."
+        "z-licznikiem": "Okruszki, duży H1 „Koszyk” i obok liczba opakowań, bez wyszukiwarki.",
+        "z-akcja": "H1 z metą albo chipem stanu i rzędem akcji po prawej."
       },
       "opis": "Niski pasek otwierający stronę sklepu zamiast hero, w szerokim kontenerze (EL-29) z linią pod spodem: po lewej okruszki i pod nimi H1 w osobnym wierszu (1,35–1,75 rem), po prawej narzędzie strony – w wersji bazowej wyszukiwarka produktów: pole 48 px (do 520 px od 900 px) z ikoną lupy i animowanym placeholderem oraz panel podpowiedzi pod polem. Wysokość wg treści (ok. 90 px), żeby pierwsza karta listy stała jak najwyżej.",
       "mechanika": "Wyszukiwarka szuka tylko produktów sklepu. Placeholder „Szukaj: ” dopisuje i kasuje frazy po literze z migającym kursorem, staje przy fokusie i przy wpisanym tekście, przy reduced-motion zostaje stały tekst; nazwa dostępna pola jest stała. Od dwóch znaków panel podpowiedzi (niemodalny popup comboboxa): do sześciu produktów z miniaturą 56 px, nazwą z wyróżnioną frazą, meta i ceną „od …”; klik prowadzi do karty produktu, „+” otwiera szybki podgląd (CE-76). W zawężonym widoku wiersz o dopasowaniach poza bieżącym widokiem z przyciskiem „Szukaj w całym sklepie”; bez wyników zdanie i „Zapytaj wirtualnego asystenta”. Wpisywanie nie przestawia siatki – dopiero Enter albo stopka „Pokaż wszystkie wyniki (N)” nakłada frazę na listę (chip filtra w CE-78) i przewija do listy. Strzałka w dół przenosi do panelu, strzałki poruszają po pozycjach, Escape zamyka i wraca do pola (aria-expanded, aria-controls). Poniżej 700 px okruszki znikają, a pole zajmuje całą szerokość.",
@@ -4634,7 +4712,7 @@ window.CW_CE = {
         "kotwica": "hero"
       },
       "kod": {
-        "css": "sklep.html <style> bloki „2. PASEK TYTUŁOWY” i wyszukiwarka (c5sk-topbar, c5sk-search, c5sk-suggest); wariant z-licznikiem: koszyk.css (c5ks-top)",
+        "css": "sklep.html <style> bloki „2. PASEK TYTUŁOWY” i wyszukiwarka (c5sk-topbar, c5sk-search, c5sk-suggest); wariant z-licznikiem: koszyk.css (c5ks-top) + wariant z-akcja: ce/CE-77-pasek-tytulowy.css (c5-titlebar)",
         "js": "sklep.html <script> (wyszukiwarka, placeholder, podpowiedzi); wariant z-licznikiem: koszyk.js (licznik opakowań)"
       },
       "czesci": [
@@ -4642,10 +4720,14 @@ window.CW_CE = {
         "H1",
         "wyszukiwarka z animowanym placeholderem",
         "panel podpowiedzi: produkty z miniaturą i „+”, stopka „Pokaż wszystkie wyniki”",
-        "liczba opakowań obok H1 (wariant z-licznikiem)"
+        "liczba opakowań obok H1 (wariant z-licznikiem)",
+        "wariant z-akcja – strefa lewa: okruszki albo link powrotu, wiersz H1 (c5-titlebar__l, c5-titlebar__back, c5-titlebar__head, c5-titlebar__h1)",
+        "wariant z-akcja – zdanie meta albo chip stanu obok H1 (c5-titlebar__meta)",
+        "wariant z-akcja – rząd akcji po prawej: przycisk, segment albo pole z etykietą (c5-titlebar__acts, c5-titlebar__field)"
       ],
       "warianty": {
-        "z-licznikiem": "koszyk (koszyk.html#naglowek, od 28.09.2026): okruszki, pod nimi H1 „Koszyk” większym krojem (1,75–2,5 rem), a obok, na linii bazowej, liczba opakowań w koszyku („6 opakowań”; ukryta przy pustym koszyku, liczona przez koszyk.js); bez wyszukiwarki, linia pod spodem jak w bazie"
+        "z-licznikiem": "koszyk (koszyk.html#naglowek, od 28.09.2026): okruszki, pod nimi H1 „Koszyk” większym krojem (1,75–2,5 rem), a obok, na linii bazowej, liczba opakowań w koszyku („6 opakowań”; ukryta przy pustym koszyku, liczona przez koszyk.js); bez wyszukiwarki, linia pod spodem jak w bazie",
+        "z-akcja": "pasek ekranu aplikacji (klasa c5-titlebar--z-akcja; platforma-b2b.html#naglowek): okruszki albo link powrotu (opcjonalnie), H1, obok meta albo chip stanu, po prawej rząd akcji – od zera do dwóch kontrolek (przycisk, segment albo pole)"
       },
       "zrzut": {
         "maxh": 200
@@ -4655,6 +4737,11 @@ window.CW_CE = {
           "plik": "v7/koszyk.html",
           "kotwica": "naglowek",
           "klik": "[data-ks-sample]",
+          "maxh": 200
+        },
+        "z-akcja": {
+          "plik": "v7/platforma-b2b.html",
+          "kotwica": "naglowek",
           "maxh": 200
         }
       }
@@ -4944,6 +5031,9 @@ window.CW_CE = {
           "typ-strony"
         ]
       },
+      "skroty_wariantow": {
+        "zalogowany-pro": "Przycisk „Zamów w panelu B2B” zamiast koszyka."
+      },
       "opis": "Górna część karty produktu sklepu w szerokim kontenerze. Od 900 px dwie kolumny 64 : 36: po lewej galeria jako poziomy slider – jeden duży kadr 1 : 1 (makiety opakowań na jasnoszarym tle w całości, zdjęcia cover), obok wystaje brzeg następnego, pod kadrem strzałki ← → i licznik „1 / 6”; po prawej okruszki i kolumna zakupu: kicker, H1, cena z obniżką i najniższą ceną z 30 dni, dwa zdania opisu z linkiem „Więcej o produkcie”, przełącznik odmiany (pH), opakowania z cenami, frakcja z podpowiedzią, liczba opakowań obok przycisku „Dodaj do koszyka”, komunikat po dodaniu, jedno zdanie o wysyłce, a pod nimi „Połącz z” (CE-20). Poniżej 900 px okruszki, slider na całą szerokość ekranu i kolumna zakupu pod nim.",
       "mechanika": "Slider przewija się w bok ze scroll-snap (palec, gładzik, strzałki na zogniskowanym torze); przyciski przesuwają o jeden kadr, licznik i stan przycisków (aria-disabled na końcach) idą za przewijaniem. Od 900 px obie kolumny są przyklejone z logiką dwukierunkową: krótsza kolumna jedzie ze stroną, aż jej koniec dojdzie do dołu okna, i tam staje, dłuższa jedzie dalej; po zmianie kierunku odwrotnie (top liczony na bieżąco, przeliczenie przy zmianie rozmiaru i wysokości kolumny). Opcje i ceny rysowane z JSON-u data-cw-product kolumny – tego samego co na liście, w szybkim podglądzie i w koszyku. Druga odmiana pH jest linkiem do jej karty z kotwicą wybranego opakowania; kotwica #w20 / #bb1000 / #bb1500 wybiera opakowanie przy wejściu i przy hashchange, a zmiana opakowania zapisuje ją przez replaceState. „Dodaj do koszyka” zapisuje pozycję w koszyku (CWSklep.add) i ogłasza w regionie aria-live „Dodano: … W koszyku: N opakowań.” z linkiem do koszyka; od dwóch opakowań pod przyciskiem pojawia się suma. „Więcej o produkcie” przewija do CE-83 i ustawia fokus na jego nagłówku (bez płynności przy reduced-motion).",
       "baza": {
@@ -4951,8 +5041,8 @@ window.CW_CE = {
         "kotwica": "hero"
       },
       "kod": {
-        "css": "pdp.css (c5pd-top, c5pd-gallery, c5pd-shots, c5pd-buycol, c5pd-buy, c5pd-opts) + sklep-wspolne.css (cws-qty, cws-price, cws-btn)",
-        "js": "pdp.js ===== 1 (kolumna zakupu), 3 (przyklejone kolumny), 4 („Więcej o produkcie”), 6 (slider) + sklep-wspolne.js (koszyk, ceny)"
+        "css": "pdp.css (c5pd-top, c5pd-gallery, c5pd-shots, c5pd-buycol, c5pd-buy, c5pd-opts) + sklep-wspolne.css (cws-qty, cws-price, cws-btn) + pdp.css (c5pd-net, c5pd-proact, c5pd-special; stan niesie klasa c5pd-buy--pro bez własnych reguł)",
+        "js": "pdp.js ===== 1 (kolumna zakupu), 3 (przyklejone kolumny), 4 („Więcej o produkcie”), 6 (slider) + sklep-wspolne.js (koszyk, ceny) + pdp.js (cena netto, stan zalogowany-pro)"
       },
       "czesci": [
         "okruszki",
@@ -4961,9 +5051,12 @@ window.CW_CE = {
         "dwa zdania opisu i „Więcej o produkcie”",
         "przełącznik odmiany (pH), opakowania z cenami, frakcja",
         "liczba opakowań i „Dodaj do koszyka”, komunikat po dodaniu, zdanie o wysyłce",
-        "„Połącz z” (CE-20, zagnieżdżony)"
+        "„Połącz z” (CE-20, zagnieżdżony)",
+        "cena netto małym drukiem pod ceną brutto"
       ],
-      "warianty": {},
+      "warianty": {
+        "zalogowany-pro": "stan dla zalogowanego konta profesjonalnego (klasa c5pd-buy--pro): przycisk „Zamów w panelu B2B” zamiast krokomierza i koszyka, opcjonalna linijka o cenie specjalnej; w tym stanie znikają zdanie o wysyłce sklepu pod przyciskiem i pas dla profesjonalistów pod kartą"
+      },
       "zrzut": {
         "maxh": 900
       }
@@ -5297,6 +5390,139 @@ window.CW_CE = {
       "warianty": {},
       "zrzut": {
         "maxh": 900
+      }
+    },
+    "CE-91": {
+      "nazwa": "Nagłówek panelu",
+      "grupa": "wspolne",
+      "rodzina": "wspolne",
+      "skrot": "Nagłówek aplikacji w dwóch wierszach: marka z nazwą konta i odnośnikami, pod nią zakładki działów.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "bez-mediow"
+        ],
+        "tekst": [
+          "tylko-naglowek"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "nawigacja"
+        ],
+        "mechanika": [
+          "statyczny"
+        ],
+        "zakres": [
+          "typ-strony"
+        ]
+      },
+      "skroty_wariantow": {
+        "handlowiec": "Etykieta „Stanowisko handlowca”, nazwisko pracownika i jedna zakładka."
+      },
+      "opis": "Pas na całą szerokość w szerokim kontenerze, zamiast nagłówka serwisu. Wiersz górny: wordmark, etykieta obszaru „Platforma B2B”, nazwa zalogowanego konta, po prawej odnośnik „Strona CarboHort” i „Wyloguj”. Wiersz dolny: zakładki działów na linii, bieżąca podkreślona.",
+      "mechanika": "Renderowany przez chrome.js ze znacznika cw-navbar z atrybutem data-uklad. Zakładki to nawigacja ze zwykłymi odnośnikami, bieżąca z data-current dostaje aria-current. Bez mega-menu, koszyka i nawigacji mobilnej. Poniżej 900 px wiersz górny zawija się, a zakładki przewijają się w poziomie; bieżąca zakładka jest przy starcie przewijana w widok.",
+      "baza": {
+        "plik": "v7/chrome.js",
+        "kotwica": "panel-naglowek"
+      },
+      "kod": {
+        "css": "ce/CE-91-naglowek-panelu.css (c5-panelbar)",
+        "js": "chrome.js (szablon panelbar())"
+      },
+      "czesci": [
+        "wordmark",
+        "etykieta obszaru",
+        "nazwa konta",
+        "odnośnik do serwisu",
+        "„Wyloguj”",
+        "zakładki działów"
+      ],
+      "warianty": {
+        "handlowiec": "stanowisko pracownika (klasa c5-panelbar--handlowiec): etykieta „Stanowisko handlowca”, nazwisko pracownika, „Wyloguj” i jedna zakładka „Zamówienia klientów” (admin.html i strony handlowiec-*)"
+      },
+      "zrzut": {
+        "strona": "v7/platforma-b2b.html",
+        "maxh": 160
+      },
+      "zrzuty_wariantow": {
+        "handlowiec": {
+          "plik": "v7/admin.html",
+          "kotwica": "panel-naglowek",
+          "maxh": 160
+        }
+      }
+    },
+    "CE-92": {
+      "nazwa": "Tabela zamówieniowa",
+      "grupa": "dane",
+      "rodzina": "sklep-formularze",
+      "skrot": "Lista produktów i koszyk w jednej tabeli: dwie ceny, krokomierz, wartość i przyklejony pasek sumy z przyciskiem.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "bez-mediow"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "taby-przelacznik"
+        ],
+        "pozycje": [
+          "9+"
+        ],
+        "nadaje": [
+          "sklep-transakcja",
+          "lista-produktow"
+        ],
+        "mechanika": [
+          "klik",
+          "formularz"
+        ],
+        "zakres": [
+          "typ-strony"
+        ]
+      },
+      "skroty_wariantow": {
+        "handlowiec": "Z polem wyboru klienta i kolumną „Cena klienta”, bez paska sumy."
+      },
+      "opis": "Tabela w szerokim kontenerze: produkt z odnośnikiem „Karta produktu (PDF)”, opakowanie, cena w sklepie netto, cena klienta z rabatem zapisanym słownie albo ze znacznikiem ceny specjalnej, krokomierz ilości i wartość netto. Nad tabelą pasek narzędzi – przełącznik „Moje produkty / Wszystkie” i wyszukiwarka – oraz zdanie o cenach; pod tabelą blok dużego zamówienia i pasek sumy przyklejony do dołu okna: liczba pozycji, wartość netto, małym drukiem brutto i przycisk następnego kroku. Blok dużego zamówienia stoi bezpośrednio nad paskiem sumy i przykleja się razem z nim – oba tworzą jeden dok w ramce (c5-order__dock).",
+      "mechanika": "Wiersze i ceny stoją w HTML (data-cena-gr w groszach); moduł czyta wyłącznie DOM. Krokomierz 0–999 przelicza wartość wiersza i pasek sumy, a zmianę ogłasza osobny region aria-live i zdarzenie c5-order:zmiana (pozycje, nettoGr, bruttoGr, duze). Przełącznik zawęża listę do produktów klienta, wyszukiwarka filtruje po nazwie. Od progu z data-prog-gr pojawia się blok dużego zamówienia z przyciskiem uzgodnienia – w przyklejonym doku, nad paskiem sumy, więc jest widoczny od razu i nie przesuwa tabeli; wysokość całego doku niesie zmienna --c5-order-bar-h (scroll-padding strony), a kontrolka z fokusem nie chowa się pod dokiem; przy pustym zamówieniu przycisk następnego kroku ma aria-disabled. Poniżej 900 px wiersz składa się w kartę z etykietami kolumn (role tabeli zostają); poniżej 600 px pasek sumy ma dwa wiersze. Bez JS tabela stoi z ilościami wpisanymi w HTML.",
+      "baza": {
+        "plik": "v7/b2b-zamow.html",
+        "kotwica": "tabela"
+      },
+      "kod": {
+        "css": "ce/CE-92-tabela-zamowieniowa.css (c5-order) + sklep-wspolne.css (cws-qty)",
+        "js": "ce/CE-92-tabela-zamowieniowa.js"
+      },
+      "czesci": [
+        "pasek narzędzi: przełącznik zakresu, wyszukiwarka",
+        "zdanie o cenach",
+        "wiersz: produkt z kartą PDF, opakowanie, dwie ceny, rabat albo znacznik ceny specjalnej, krokomierz, wartość",
+        "zdanie o progu dużego zamówienia w biegu strony",
+        "blok dużego zamówienia",
+        "przyklejony pasek sumy z przyciskiem",
+        "przyklejony dok: blok dużego zamówienia nad paskiem sumy, przyklejane razem"
+      ],
+      "warianty": {
+        "handlowiec": "zamówienie wpisywane przez pracownika (klasa c5-order--handlowiec; handlowiec-zamowienie.html): pole wyboru klienta w pasku narzędzi, kolumna „Cena klienta”, bez karty PDF, bez bloku dużego zamówienia i bez przyklejonego paska – sumę niesie panel formularza obok (CE-50 z-podsumowaniem), wypełniany ze zdarzenia c5-order:zmiana"
+      },
+      "zrzut": {
+        "maxh": 900,
+        "ukryj": ".c5-order__dock"
+      },
+      "zrzuty_wariantow": {
+        "handlowiec": {
+          "plik": "v7/handlowiec-zamowienie.html",
+          "kotwica": "pozycje",
+          "maxh": 648
+        }
       }
     }
   },

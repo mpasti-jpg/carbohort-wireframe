@@ -57,3 +57,106 @@ html.cx-js .u-mt__row{cursor:pointer;}
 @media (prefers-reduced-motion: reduce){
   .u-mt__row,.u-mt__ar{transition:none;}
 }
+
+/* ===== warianty: danych, z-akcja =====
+   Block: c5-tbl, modifiers: c5-tbl--danych and c5-tbl--z-akcja. Tables for
+   reading on the application screens. The table itself is EL-21
+   (`c5-table c5-table--num`, defined outside this module); this module only
+   sets the scrolling container, the first column pinned to the left, the
+   column of controls, the footer row and the "add a row" button under the
+   table.
+
+   The container (`role="region"`, `tabindex="0"`, `aria-label`) scrolls
+   sideways on its own, so the page never does. The minimal width of the table
+   is a knob set on the root of one occurrence: `style="--c5-tbl-min:860px"`.
+   `position:relative` makes the container the containing block of the
+   visually hidden labels inside the cells, so they are clipped with the table
+   and never widen the page. */
+.c5-tbl{--c5-tbl-min:640px;--c5-tbl-first:auto;min-width:0;}
+.c5-tbl__scroll{position:relative;max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;}
+.c5-tbl__scroll:focus-visible{outline:2px solid var(--w-focus-ring);outline-offset:2px;}
+.c5-tbl__scroll > table{width:100%;min-width:var(--c5-tbl-min);}
+
+/* First column (order number or product) pinned to the left. The cell takes
+   the background of its row, so a highlighted row stays in one piece; the
+   1 px line on its right edge is drawn with a shadow, because a collapsed
+   border does not travel with a sticky cell. */
+.c5-tbl :is(thead,tbody) tr{background:var(--w-surface-page);}
+.c5-tbl :is(thead,tbody) tr > :first-child{position:sticky;left:0;z-index:1;background:inherit;box-shadow:1px 0 0 var(--w-border-subtle);}
+.c5-tbl thead tr > :first-child{background:var(--w-surface-subtle);}
+
+/* Parts of a cell: a second, quiet line under the main value and a state chip
+   that never breaks. */
+/* An order or offer number in a cell never breaks at its hyphen. */
+.c5-tbl .c5-tbl__nr{white-space:nowrap;}
+.c5-tbl__sub{display:block;margin-top:2px;font-size:0.75rem;line-height:1.45;font-weight:var(--w-weight-regular);color:var(--w-text-tertiary);white-space:nowrap;}
+.c5-tbl .c5-chip{white-space:nowrap;}
+
+/* Footer row with a total: `<tfoot>` with a label cell spanning the columns
+   and the amount. Its rule and weight come from EL-21; here it only gets the
+   quiet band, and it is not pinned, because its first cell spans columns. */
+.c5-tbl tfoot :is(th,td){background:var(--w-surface-subtle);}
+
+/* A visible heading of the table (optional; otherwise the h2 is hidden).
+   Same overline as the titles of boxes, cards and row lists; capitals come
+   from CSS. */
+.c5-tbl__h{margin:0 0 var(--w-space-4);font-size:var(--w-font-overline-size);line-height:var(--w-font-overline-lh);font-weight:var(--w-weight-regular);letter-spacing:var(--w-tracking-wide);text-transform:uppercase;color:var(--w-text-tertiary);}
+
+/* A source line under the table. */
+.c5-tbl__src{margin:var(--w-space-3) 0 0;}
+
+/* ----- z-akcja: the column of controls -----
+   The last column holds a button, a link or a checkbox. It takes only the
+   width it needs and its content never wraps; every control keeps the 44 px
+   touch height. `--pole` is the checkbox flavour, aligned to the left under a
+   visible column heading. */
+.c5-tbl--z-akcja .c5-tbl__act{width:1%;text-align:right;white-space:nowrap;}
+.c5-tbl--z-akcja th.c5-tbl__act{white-space:normal;}
+.c5-tbl--z-akcja .c5-tbl__act--pole{text-align:left;}
+.c5-tbl--z-akcja th.c5-tbl__act--pole{min-width:11rem;}
+.c5-tbl--z-akcja td.c5-tbl__act .wf-link{display:inline-flex;align-items:center;min-height:44px;padding:0;border:0;background:none;font:inherit;cursor:pointer;}
+.c5-tbl--z-akcja td.c5-tbl__act .wf-link:focus-visible{outline:2px solid var(--w-focus-ring);outline-offset:2px;}
+.c5-tbl--z-akcja .c5-tbl__check{display:inline-flex;align-items:center;gap:var(--w-space-2);min-height:44px;cursor:pointer;}
+/* Several links in one cell (documents of an order) stand in a row and wrap
+   when the column is too narrow. From 900 px the lines of a wrapped list move
+   closer (the negative margin takes back part of the 44 px height), so such a
+   row is no taller than a row with a two-line cell; on touch widths every
+   link keeps the full height. */
+.c5-tbl__links{display:flex;flex-wrap:wrap;gap:0 var(--w-space-3);margin:0;padding:0;list-style:none;}
+.c5-tbl__links .wf-link{display:inline-flex;align-items:center;min-height:44px;padding:0;border:0;background:none;font:inherit;cursor:pointer;white-space:nowrap;}
+.c5-tbl__links .wf-link:focus-visible{outline:2px solid var(--w-focus-ring);outline-offset:2px;}
+@media (min-width:900px){
+  .c5-tbl__links .wf-link{margin-block:-10px;}
+}
+
+/* A link standing alone in a cell (order number, customer name): 44 px touch
+   height; the negative margin takes the cell padding back, so the row does
+   not grow. */
+.c5-tbl :is(th,td) > a.wf-link{display:inline-flex;align-items:center;min-height:44px;margin-block:calc(-1 * var(--w-space-3));}
+
+/* The "add a row" button under the table. */
+.c5-tbl__add{display:flex;margin-top:var(--w-space-4);}
+
+/* Phone: a pinned column with long names (products) may not take more than
+   its share of the window. The second knob, `--c5-tbl-first` (for example
+   9.5rem), fixes its width there, so the name wraps instead of pushing the
+   other columns out of sight. Without the knob the column keeps its own
+   width, which suits short order numbers. The quiet second line of the cell
+   wraps there as well, otherwise it would hold the column wide.
+   Cells get tighter and the minimal width is capped at 30rem, so a table of
+   four or five columns nearly fits the window; wide lists still scroll.
+   A soft shadow on the right edge of the container says there is more to
+   the side; where scroll-driven animations are supported it fades out at
+   the end of the scroll and is absent when nothing overflows. */
+@keyframes c5-tbl-edge{from,92%{opacity:1;}to{opacity:0;}}
+@media (max-width:599px){
+  .c5-tbl__scroll{display:grid;}
+  .c5-tbl__scroll > table{grid-area:1 / 1;min-width:min(var(--c5-tbl-min),30rem);}
+  .c5-tbl__scroll::after{content:"";grid-area:1 / 1;justify-self:end;position:sticky;right:0;z-index:2;width:20px;pointer-events:none;background:linear-gradient(to left,rgba(0,0,0,.16),rgba(0,0,0,0));}
+  @supports (animation-timeline:scroll()){
+    .c5-tbl__scroll::after{opacity:0;animation:c5-tbl-edge linear both;animation-timeline:scroll(nearest inline);}
+  }
+  .c5-tbl .c5-table :is(th,td){padding-inline:var(--w-space-2);}
+  .c5-tbl :is(thead,tbody) tr > :first-child{width:var(--c5-tbl-first);min-width:var(--c5-tbl-first);max-width:var(--c5-tbl-first);overflow-wrap:break-word;}
+  .c5-tbl :is(thead,tbody) tr > :first-child .c5-tbl__sub{white-space:normal;}
+}

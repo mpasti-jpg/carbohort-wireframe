@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Karta klienta – stanowisko handlowca</title>
+<meta name="description" content="Stanowisko handlowca CarboHort: karta klienta – status PRO, poziom konta, opiekun, notatka dla zespołu, ostatnie zamówienia i ceny specjalne.">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="wireframe.css">
+<link rel="stylesheet" href="cw.css">
+<link rel="stylesheet" href="ce/00-base.css">
+<link rel="stylesheet" href="ce/CE-22-tabela.css">
+<link rel="stylesheet" href="ce/CE-50-formularz.css">
+<link rel="stylesheet" href="ce/CE-77-pasek-tytulowy.css">
+<link rel="stylesheet" href="ce/CE-91-naglowek-panelu.css">
+<link rel="stylesheet" href="b2b-wspolne.css">
+<script src="../status.js"></script>
+<script src="../ce-rejestr.js"></script>
+<script src="b2b-wspolne.js"></script>
+<script src="chrome.js"></script>
+</head>
+<body>
+<a class="wf-sr-only" href="#main">Przejdź do treści</a>
+
+<cw-icons></cw-icons>
+
+<cw-navbar data-uklad="handlowiec" data-current="zamowienia"></cw-navbar>
+<noscript><p class="c5-wrap c5-wrap--wide wf-small">Nagłówek i stopka stanowiska handlowca wymagają włączonej obsługi JavaScriptu.</p></noscript>
+
+<main id="main" class="c5b-main" tabindex="-1">
+
+  
+  <section class="c5-titlebar c5-titlebar--z-akcja" id="naglowek" data-ce="CE-77" data-ce-wariant="z-akcja" aria-labelledby="naglowek-h">
+    <div class="c5-titlebar__l">
+      <a class="c5-titlebar__back" href="admin.html">← Zamówienia</a>
+      <div class="c5-titlebar__head">
+        <h1 class="c5-titlebar__h1" id="naglowek-h">Gospodarstwo Sadownicze Zielony Jar (przykład)</h1>
+        <span class="c5-chip c5-chip--solid">status PRO</span>
+      </div>
+    </div>
+  </section>
+
+  
+
+  <section class="c5-form" id="konto" data-ce="CE-50" aria-labelledby="konto-h">
+    <h2 class="wf-sr-only" id="konto-h">Konto klienta</h2>
+    <form class="c5-form__grid" novalidate>
+
+      <div class="c5-form__main">
+        <fieldset class="c5-form__group">
+          <legend class="c5-form__legend">Konto</legend>
+          <label class="c5-form__check" for="kl-pro">
+            <input class="wf-checkbox" type="checkbox" id="kl-pro" name="pro" checked>
+            <span>Status PRO</span>
+          </label>
+          <fieldset class="c5-form__switch">
+            <legend>Poziom konta</legend>
+            <div class="c5-seg">
+              <label class="c5-seg__tab"><input class="wf-sr-only" type="radio" name="poziom" value="bronze" data-nazwa="Bronze"><span class="c5-seg__lbl">Bronze</span></label>
+              <label class="c5-seg__tab"><input class="wf-sr-only" type="radio" name="poziom" value="silver" data-nazwa="Silver" checked><span class="c5-seg__lbl">Silver</span></label>
+              <label class="c5-seg__tab"><input class="wf-sr-only" type="radio" name="poziom" value="gold" data-nazwa="Gold"><span class="c5-seg__lbl">Gold</span></label>
+            </div>
+          </fieldset>
+          <div class="c5-form__fields">
+            <div class="wf-field">
+              <label class="wf-label" for="kl-opiekun">Opiekun</label>
+              <select class="wf-select" id="kl-opiekun" name="opiekun">
+                <option selected>Anna Przykładowa (przykład)</option>
+                <option>Jan Przykładowy (przykład)</option>
+              </select>
+            </div>
+            <div class="wf-field">
+              <label class="wf-label" for="kl-notatka">Notatka widoczna dla zespołu</label>
+              <textarea class="wf-textarea" id="kl-notatka" name="notatka" rows="3">Notatka (przykład): preferowany kontakt telefoniczny po południu.</textarea>
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="c5-form__actions">
+          <button type="submit" class="c5-btn c5-btn--dark">Zapisz</button>
+        </div>
+
+        <div class="c5-note c5-note--strong c5-form__msg" role="status" tabindex="-1" hidden>
+          <svg class="wf-icon" aria-hidden="true"><use href="#ti-check"></use></svg>
+          <p>Zapisano.</p>
+        </div>
+      </div>
+
+      <aside class="c5-form__panel" aria-labelledby="konto-poziom-h">
+        <h3 class="c5-form__ptitle" id="konto-poziom-h">Poziom i rabaty</h3>
+        <p aria-live="polite">Poziom konta: <span data-wynik="poziom">Silver</span> · próg dużego zamówienia <span data-wynik="prog">40&nbsp;000&nbsp;zł</span> netto</p>
+        <dl class="c5-dl c5-dl--rows">
+          <div class="c5-dl__row"><dt>CARBOMAT</dt><dd data-wynik="carbomat">rabat 15%</dd></div>
+          <div class="c5-dl__row"><dt>CARBOHUMIC</dt><dd data-wynik="carbohumic">rabat 12%</dd></div>
+          <div class="c5-dl__row"><dt>pozostałe</dt><dd data-wynik="pozostale">rabat 10%</dd></div>
+        </dl>
+        <p class="c5-src">Nazwy poziomu klient nie widzi – w panelu ma tylko swój rabat w procentach. Progi i rabaty są przykładowe.</p>
+      </aside>
+
+    </form>
+  </section>
+
+  
+  <section class="c5-tbl c5-tbl--danych" id="zamowienia" data-ce="CE-22" data-ce-wariant="danych" aria-labelledby="zamowienia-h" style="--c5-tbl-min:560px">
+    <h2 class="c5-h3 c5-tbl__h" id="zamowienia-h">Ostatnie zamówienia</h2>
+    <div class="c5-tbl__scroll" role="region" tabindex="0" aria-label="Ostatnie zamówienia klienta">
+      <table class="c5-table c5-table--num">
+        <caption class="wf-sr-only">Ostatnie zamówienia klienta – kwoty netto</caption>
+        <thead>
+          <tr>
+            <th scope="col">Numer</th>
+            <th scope="col">Data</th>
+            <th scope="col">Źródło</th>
+            <th scope="col" class="c5-table__num">Wartość netto</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row" class="c5-tbl__nr">B2B-0412</th>
+            <td>04.10.2026</td>
+            <td>platforma</td>
+            <td class="c5-table__num">12&nbsp;945,72&nbsp;zł</td>
+          </tr>
+          <tr>
+            <th scope="row" class="c5-tbl__nr">B2B-0388</th>
+            <td>12.09.2026</td>
+            <td>telefon</td>
+            <td class="c5-table__num">7&nbsp;496,30&nbsp;zł</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  
+  <section class="c5-tbl c5-tbl--danych c5-tbl--z-akcja" id="ceny-specjalne" data-ce="CE-22" data-ce-wariant="z-akcja" aria-labelledby="ceny-specjalne-h" style="--c5-tbl-min:620px;--c5-tbl-first:9.5rem">
+    <h2 class="c5-h3 c5-tbl__h" id="ceny-specjalne-h">Ceny specjalne</h2>
+    <div class="c5-tbl__scroll" role="region" tabindex="0" aria-label="Ceny specjalne klienta">
+      <table class="c5-table c5-table--num">
+        <caption class="wf-sr-only">Ceny specjalne klienta – ceny netto za opakowanie</caption>
+        <thead>
+          <tr>
+            <th scope="col">Produkt</th>
+            <th scope="col" class="c5-table__num">Cena netto</th>
+            <th scope="col">Ważna do</th>
+            <th scope="col" class="c5-tbl__act c5-tbl__act--pole">Pokaż informację w panelu klienta</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">CARBOHUMIC MAXI PLUS<span class="c5-tbl__sub">kanister 20 l</span></th>
+            <td class="c5-table__num">595,00&nbsp;zł</td>
+            <td>31.10.2026</td>
+            <td class="c5-tbl__act c5-tbl__act--pole">
+              <label class="c5-tbl__check"><input type="checkbox" class="wf-checkbox" checked> pokaż<span class="wf-sr-only"> – CARBOHUMIC MAXI PLUS, kanister 20 l</span></label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="c5-tbl__add">
+      <button type="button" class="c5-btn c5-btn--light c5-btn--sm">+ Dodaj cenę specjalną</button>
+    </div>
+  </section>
+
+</main>
+
+<cw-footer></cw-footer>
+
+<script src="ce/CE-50-formularz.js"></script>
+<script src="handlowiec.js"></script>
+<script src="ce-overlay.js"></script>
+</body>
+</html>

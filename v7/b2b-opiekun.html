@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Opiekun – platforma B2B CarboHort</title>
+<meta name="description" content="Opiekun klienta na platformie B2B CarboHort: wizytówka z telefonem, adresem e-mail i godzinami pracy, formularz wiadomości oraz lista spraw.">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="wireframe.css">
+<link rel="stylesheet" href="cw.css">
+<link rel="stylesheet" href="ce/00-base.css">
+<link rel="stylesheet" href="ce/CE-28-boks-w-ramce.css">
+<link rel="stylesheet" href="ce/CE-50-formularz.css">
+<link rel="stylesheet" href="ce/CE-53-lista-wierszy.css">
+<link rel="stylesheet" href="ce/CE-77-pasek-tytulowy.css">
+<link rel="stylesheet" href="ce/CE-91-naglowek-panelu.css">
+<link rel="stylesheet" href="b2b-wspolne.css">
+<script src="../status.js"></script>
+<script src="../ce-rejestr.js"></script>
+<script src="b2b-wspolne.js"></script>
+<script src="chrome.js"></script>
+</head>
+<body>
+<a class="wf-sr-only" href="#main">Przejdź do treści</a>
+
+<cw-icons></cw-icons>
+
+<cw-navbar data-uklad="panel" data-current="opiekun"></cw-navbar>
+<noscript><p class="c5-wrap c5-wrap--wide wf-small">Nagłówek i stopka platformy B2B wymagają włączonej obsługi JavaScriptu.</p></noscript>
+
+<main id="main" class="c5b-main" tabindex="-1">
+
+  
+  <section class="c5-titlebar c5-titlebar--z-akcja" id="naglowek" data-ce="CE-77" data-ce-wariant="z-akcja" aria-labelledby="naglowek-h">
+    <div class="c5-titlebar__l">
+      <div class="c5-titlebar__head">
+        <h1 class="c5-titlebar__h1" id="naglowek-h">Twój opiekun</h1>
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="c5-box c5-box--z-rozpiska" id="wizytowka" data-ce="CE-28" data-ce-wariant="z-rozpiska" aria-labelledby="wizytowka-h" style="--c5-box-cols:minmax(0,20rem) minmax(0,1fr)">
+    <h2 class="wf-sr-only" id="wizytowka-h">Wizytówka opiekuna</h2>
+    <div class="c5-box__cols">
+      <div class="c5-box__col">
+        <h3 class="c5-box__name">Anna Przykładowa (przykład)</h3>
+        <p>opiekun klienta</p>
+      </div>
+      <div class="c5-box__col">
+        <dl class="c5-dl c5-dl--rows c5-dl--grid">
+          <div class="c5-dl__row"><dt>Telefon</dt><dd>000 000 000</dd></div>
+          <div class="c5-dl__row"><dt>E-mail</dt><dd>opiekun@example.com</dd></div>
+          <div class="c5-dl__row"><dt>Godziny pracy</dt><dd>pon.–pt. 8–16</dd></div>
+          <div class="c5-dl__row"><dt>Dostępność</dt><dd>dziś do 16:00 (przykład)</dd></div>
+          <div class="c5-dl__row"><dt>Czas odpowiedzi</dt><dd>Odpowiadamy w dni robocze. Przy uzgodnieniu zamówienia podajemy termin odpowiedzi z datą.</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="c5-form" id="napisz" data-ce="CE-50" aria-labelledby="napisz-h">
+    <form class="c5-form__grid" novalidate>
+
+      <div class="c5-form__main">
+        <div class="c5-form__group">
+          <h2 class="c5-form__legend" id="napisz-h">Napisz do opiekuna</h2>
+          <div class="c5-form__fields">
+            <div class="wf-field c5-form__fields--narrow">
+              <label class="wf-label" for="op-temat">Temat</label>
+              <select class="wf-select" id="op-temat" name="temat">
+                <option>zamówienie</option>
+                <option>oferta</option>
+                <option>dostawa</option>
+                <option>dokumenty</option>
+                <option>inne</option>
+              </select>
+            </div>
+            <div class="wf-field">
+              <label class="wf-label" for="op-wiadomosc">Wiadomość</label>
+              <textarea class="wf-textarea" id="op-wiadomosc" name="wiadomosc" rows="5"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="c5-form__actions">
+          <button type="submit" class="c5-btn c5-btn--dark">Wyślij</button>
+        </div>
+
+        <div class="c5-note c5-note--strong c5-form__msg" role="status" tabindex="-1" hidden>
+          <svg class="wf-icon" aria-hidden="true"><use href="#ti-check"></use></svg>
+          <p>Wiadomość wysłana do opiekuna.</p>
+        </div>
+      </div>
+
+      <aside class="c5-form__panel" aria-labelledby="napisz-jak-h">
+        <h3 class="c5-form__ptitle" id="napisz-jak-h">Jak odpowiadamy</h3>
+        <p>Odpowiadamy w dni robocze. Przy uzgodnieniu zamówienia podajemy termin odpowiedzi z datą.</p>
+      </aside>
+
+    </form>
+  </section>
+
+  
+  <section class="c5-rows" id="sprawy" data-ce="CE-53" aria-labelledby="sprawy-h">
+    <h2 class="c5-rows__title" id="sprawy-h">Twoje sprawy</h2>
+    <ul class="c5-rows__list">
+      <li class="c5-rows__row">
+        <p class="c5-rows__name">UZG-0031</p>
+        <p class="c5-rows__meta">uzgodnienie zamówienia · 04.10.2026 · Oferta od opiekuna – ważna do 16.10.2026</p>
+        <a class="c5-btn c5-btn--light c5-btn--sm c5-rows__act" href="b2b-oferta.html">Otwórz<span class="wf-sr-only"> – UZG-0031</span></a>
+      </li>
+    </ul>
+  </section>
+
+</main>
+
+<cw-footer></cw-footer>
+
+<script src="ce/CE-50-formularz.js"></script>
+<script src="ce-overlay.js"></script>
+</body>
+</html>

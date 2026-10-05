@@ -1,0 +1,56 @@
+/* ===== CE-77 · Pasek tytułowy – wariant „z-akcja” (rejestr: ce-rejestr.js) =====
+   Title bar of an application screen: optional breadcrumbs or a back link, the
+   H1, next to it a meta line or a status chip, and on the right a row of
+   actions – from zero to two controls (button, segment or field).
+   `c5-titlebar` is the class of this variant only. The shop base of CE-77
+   (`c5sk-topbar` in sklep.html) and the variant „z-licznikiem” (`c5ks-top` in
+   koszyk.css) stay on their own classes.
+   The bar fills the container it is given – it carries no page gutters and no
+   margin; the frame of the page provides both.
+   Controls placed in the action row (`c5-btn`, `c5-seg`, fields of the kit)
+   keep their own rules; this module only lays them out. ===== */
+
+.c5-titlebar{padding-block:var(--w-space-4) var(--w-space-5);border-bottom:1px solid var(--w-border-subtle);}
+
+/* Two zones on one line; the action row drops under the title when it no
+   longer fits (no fixed breakpoint – the bar works in narrow containers too). */
+.c5-titlebar--z-akcja{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:var(--w-space-4) var(--w-space-6);}
+
+/* --- Left zone: breadcrumbs or back link, then the H1 with its companion --- */
+.c5-titlebar__l{display:flex;flex-direction:column;align-items:flex-start;gap:var(--w-space-2);flex:1 1 20rem;min-width:0;}
+.c5-titlebar .wf-breadcrumb{padding:0;}
+.c5-titlebar .wf-breadcrumb ol{margin:0;}
+
+/* Back link: quiet at rest, underlined on hover; 44 px touch target without
+   pushing the H1 down (the negative margin takes back the extra height). */
+.c5-titlebar__back{display:inline-flex;align-items:center;min-height:44px;margin-block:-10px -8px;font-size:0.875rem;color:var(--w-text-secondary);text-decoration:none;}
+.c5-titlebar__back:hover{color:var(--w-text-primary);text-decoration:underline;text-underline-offset:2px;}
+
+/* H1 and, on the same line, a meta sentence or a status chip. */
+.c5-titlebar__head{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--w-space-2) var(--w-space-4);min-width:0;max-width:100%;}
+.c5-titlebar__h1{margin:0;min-width:0;font-size:clamp(1.5rem,2.6vw,2rem);line-height:1.15;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;overflow-wrap:anywhere;}
+.c5-titlebar__meta{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
+/* The chip sits on the text line of the H1, not on its baseline box. */
+.c5-titlebar__head > .c5-chip{align-self:center;}
+
+/* --- Right zone: action row ------------------------------------------------ */
+.c5-titlebar__acts{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:var(--w-space-3);flex:0 1 auto;min-width:0;}
+.c5-titlebar__acts:empty{display:none;}
+
+/* Field in the action row: label and control side by side, control as wide as
+   its content needs (the kit sets width:100%). */
+.c5-titlebar__field{display:flex;align-items:center;gap:var(--w-space-2);}
+.c5-titlebar__field .wf-label{white-space:nowrap;}
+.c5-titlebar__field .wf-select,
+.c5-titlebar__field .wf-input{width:auto;min-width:6.5rem;}
+
+/* --- Narrow screens --------------------------------------------------------
+   Breadcrumbs go away (as in the shop base), the action row takes its own
+   line under the title, aligned left; a lone button fills the row. */
+@media (max-width:699px){
+  .c5-titlebar{padding-block:var(--w-space-3) var(--w-space-4);}
+  .c5-titlebar .wf-breadcrumb{display:none;}
+  .c5-titlebar__l{flex-basis:100%;}
+  .c5-titlebar__acts{flex:1 1 100%;justify-content:flex-start;}
+  .c5-titlebar__acts > .c5-btn{flex:1 1 auto;}
+}

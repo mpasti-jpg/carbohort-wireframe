@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Logowanie – CarboHort</title>
+<meta name="description" content="Wspólna strona logowania CarboHort: konto sklepu albo panel B2B. Jedno konto i jedno hasło.">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="wireframe.css">
+<link rel="stylesheet" href="cw.css">
+<link rel="stylesheet" href="ce/00-base.css">
+<link rel="stylesheet" href="ce/CE-50-formularz.css">
+<link rel="stylesheet" href="b2b-wspolne.css">
+<script src="../status.js"></script>
+<script src="../ce-rejestr.js"></script>
+<script src="b2b-wspolne.js"></script>
+<script src="chrome.js"></script>
+</head>
+<body>
+<a class="wf-sr-only" href="#main">Przejdź do treści</a>
+
+<cw-icons></cw-icons>
+
+<cw-navbar></cw-navbar>
+<noscript><p class="c5-wrap c5-wrap--wide wf-small">Nagłówek i stopka serwisu wymagają włączonej obsługi JavaScriptu.</p></noscript>
+
+<main id="main" class="c5b-main c5b-main--serwis" tabindex="-1">
+
+  
+  <section class="c5-form c5-form--z-przelacznikiem" id="logowanie" data-ce="CE-50" data-ce-wariant="z-przelacznikiem" aria-labelledby="logowanie-h">
+    <form class="c5-form__grid" novalidate>
+
+      <div class="c5-form__main">
+        <fieldset class="c5-form__switch">
+          <legend>Gdzie się logujesz</legend>
+          <div class="c5-seg">
+            <label class="c5-seg__tab"><input class="wf-sr-only" type="radio" name="tryb" value="sklep" data-naglowek="Logowanie do konta sklepu" data-cel="sklep.html" checked><span class="c5-seg__lbl">Konto sklepu</span></label>
+            <label class="c5-seg__tab"><input class="wf-sr-only" type="radio" name="tryb" value="b2b" data-naglowek="Logowanie do panelu B2B" data-cel="platforma-b2b.html"><span class="c5-seg__lbl">Panel B2B</span></label>
+          </div>
+        </fieldset>
+
+        <h1 class="c5-h1 c5-form__title" id="logowanie-h" aria-live="polite">Logowanie do konta sklepu</h1>
+
+        <div class="c5-form__group">
+          <div class="c5-form__fields">
+            <div class="wf-field">
+              <label class="wf-label" for="log-mail">E-mail</label>
+              <input class="wf-input" type="email" id="log-mail" name="email" autocomplete="username">
+            </div>
+            <div class="wf-field">
+              <label class="wf-label" for="log-haslo">Hasło</label>
+              <input class="wf-input" type="password" id="log-haslo" name="haslo" autocomplete="current-password">
+            </div>
+          </div>
+        </div>
+
+        <div class="c5-form__actions">
+          <a class="c5-btn c5-btn--dark" href="sklep.html">Zaloguj</a>
+          <button type="button" class="wf-link">Nie pamiętasz hasła?</button>
+        </div>
+
+        <p class="c5-form__text">Jedno konto i jedno hasło. Konto PRO po zalogowaniu zawsze trafia do panelu.</p>
+      </div>
+
+      <aside class="c5-form__panel" aria-labelledby="logowanie-pro-h">
+        <h2 class="c5-h3 c5-h3--md" id="logowanie-pro-h">Nie masz konta PRO?</h2>
+        <p>Złóż wniosek – konto zatwierdza CarboHort.</p>
+        <a class="c5-btn c5-btn--light" href="rejestracja.html">Złóż wniosek o status PRO</a>
+      </aside>
+
+    </form>
+  </section>
+
+</main>
+
+<cw-footer></cw-footer>
+
+<script src="cw.js"></script>
+<script src="ce/CE-50-formularz.js"></script>
+<script src="logowanie.js"></script>
+<script src="ce-overlay.js"></script>
+</body>
+</html>

@@ -2,7 +2,7 @@
    the vault keeps the full file with internal notes). */
 window.CW_STATUS = {
   "meta": {
-    "wersja": "0.1.0",
+    "wersja": "0.2.0",
     "zaktualizowano": "2026-10-04",
     "projektAC": 837,
     "bazaAC": "https://pm.bizwebstudio.pl/projects/837/tasks/",
@@ -30,11 +30,30 @@ window.CW_STATUS = {
         {
           "klucz": "poprawki",
           "nazwa": "poprawki",
-          "ton": "poprawki"
+          "ton": "poprawki",
+          "wraca_do": "do-akceptacji"
         },
         {
           "klucz": "zaakceptowany",
           "nazwa": "układ zaakceptowany",
+          "ton": "ok"
+        }
+      ]
+    },
+    {
+      "klucz": "tresc",
+      "nazwa": "Treść",
+      "pelna": "Treść – ostateczne teksty i dane",
+      "kto": "CarboHort",
+      "stany": [
+        {
+          "klucz": "oczekuje",
+          "nazwa": "oczekuje na ostateczną treść",
+          "ton": "czeka"
+        },
+        {
+          "klucz": "zaakceptowana",
+          "nazwa": "zaakceptowana",
           "ton": "ok"
         }
       ]
@@ -51,14 +70,15 @@ window.CW_STATUS = {
           "ton": "neutral"
         },
         {
-          "klucz": "w-projekcie",
-          "nazwa": "w projekcie",
+          "klucz": "w-trakcie-projektowania",
+          "nazwa": "w trakcie projektowania",
           "ton": "praca"
         },
         {
           "klucz": "poprawki",
           "nazwa": "poprawki",
-          "ton": "poprawki"
+          "ton": "poprawki",
+          "wraca_do": "w-trakcie-projektowania"
         },
         {
           "klucz": "gotowy",
@@ -89,6 +109,12 @@ window.CW_STATUS = {
           "ton": "praca"
         },
         {
+          "klucz": "poprawki",
+          "nazwa": "poprawki",
+          "ton": "poprawki",
+          "wraca_do": "w-przygotowaniu"
+        },
+        {
           "klucz": "gotowe",
           "nazwa": "gotowe",
           "ton": "ok"
@@ -107,14 +133,9 @@ window.CW_STATUS = {
       "kto": "crear",
       "stany": [
         {
-          "klucz": "do-zebrania",
-          "nazwa": "do zebrania",
+          "klucz": "do-zrobienia",
+          "nazwa": "do zrobienia",
           "ton": "neutral"
-        },
-        {
-          "klucz": "w-projekcie",
-          "nazwa": "w projekcie",
-          "ton": "praca"
         },
         {
           "klucz": "gotowe",
@@ -125,24 +146,6 @@ window.CW_STATUS = {
           "klucz": "nie-dotyczy",
           "nazwa": "nie dotyczy",
           "ton": "neutral"
-        }
-      ]
-    },
-    {
-      "klucz": "tresc",
-      "nazwa": "Treść",
-      "pelna": "Treść – ostateczne teksty i dane",
-      "kto": "CarboHort",
-      "stany": [
-        {
-          "klucz": "oczekuje",
-          "nazwa": "oczekuje na ostateczną treść",
-          "ton": "czeka"
-        },
-        {
-          "klucz": "zaakceptowana",
-          "nazwa": "zaakceptowana",
-          "ton": "ok"
         }
       ]
     },
@@ -161,10 +164,10 @@ window.CW_STATUS = {
       "nazwa": "Strona główna",
       "stan": {
         "makieta": "w-przygotowaniu",
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": 31562,
@@ -175,10 +178,10 @@ window.CW_STATUS = {
       "nazwa": "Produkty Carbohort",
       "stan": {
         "makieta": "do-akceptacji",
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": 31789,
@@ -189,10 +192,10 @@ window.CW_STATUS = {
       "nazwa": "CARBOMAT ECO",
       "stan": {
         "makieta": "do-akceptacji",
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": 31223,
@@ -203,10 +206,10 @@ window.CW_STATUS = {
       "nazwa": "CARBOMAT Mata Uprawowa",
       "stan": {
         "makieta": "do-akceptacji",
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": 31563,
@@ -217,10 +220,10 @@ window.CW_STATUS = {
       "nazwa": "CARBOHUMIC",
       "stan": {
         "makieta": "do-akceptacji",
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": 31564,
@@ -231,10 +234,10 @@ window.CW_STATUS = {
       "nazwa": "CARBOMAT HUMIC",
       "stan": {
         "makieta": "do-akceptacji",
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": 31565,
@@ -245,10 +248,10 @@ window.CW_STATUS = {
       "nazwa": "Hub upraw",
       "stan": {
         "makieta": "w-przygotowaniu",
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": 30722,
@@ -259,10 +262,10 @@ window.CW_STATUS = {
       "nazwa": "Kukurydza",
       "stan": {
         "makieta": "do-akceptacji",
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": 31566,
@@ -273,10 +276,10 @@ window.CW_STATUS = {
       "nazwa": "Ziemniak",
       "stan": {
         "makieta": "do-akceptacji",
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": 31567,
@@ -287,10 +290,10 @@ window.CW_STATUS = {
       "nazwa": "Borówka",
       "stan": {
         "makieta": "do-akceptacji",
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": 31568,
@@ -301,10 +304,10 @@ window.CW_STATUS = {
       "nazwa": "Sadownicze",
       "stan": {
         "makieta": null,
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": null,
@@ -315,10 +318,10 @@ window.CW_STATUS = {
       "nazwa": "Jagodowe",
       "stan": {
         "makieta": null,
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": null,
@@ -329,10 +332,10 @@ window.CW_STATUS = {
       "nazwa": "Warzywnicze",
       "stan": {
         "makieta": null,
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": null,
@@ -343,10 +346,10 @@ window.CW_STATUS = {
       "nazwa": "Zboża i pole",
       "stan": {
         "makieta": null,
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": null,
@@ -357,10 +360,10 @@ window.CW_STATUS = {
       "nazwa": "Szkółki",
       "stan": {
         "makieta": null,
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": null,
@@ -371,10 +374,10 @@ window.CW_STATUS = {
       "nazwa": "Trawnik",
       "stan": {
         "makieta": null,
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": null,
@@ -385,10 +388,10 @@ window.CW_STATUS = {
       "nazwa": "Ogród i działka",
       "stan": {
         "makieta": null,
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": null,
@@ -399,10 +402,10 @@ window.CW_STATUS = {
       "nazwa": "Krzewy i tuje",
       "stan": {
         "makieta": null,
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": null,
@@ -413,10 +416,10 @@ window.CW_STATUS = {
       "nazwa": "Zieleń miejska",
       "stan": {
         "makieta": null,
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": null,
@@ -427,10 +430,10 @@ window.CW_STATUS = {
       "nazwa": "Próchnica+",
       "stan": {
         "makieta": "do-akceptacji",
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": 31569,
@@ -441,10 +444,10 @@ window.CW_STATUS = {
       "nazwa": "Centrum wiedzy",
       "stan": {
         "makieta": null,
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": null,
@@ -455,10 +458,10 @@ window.CW_STATUS = {
       "nazwa": "Centrum wiedzy – kategoria",
       "stan": {
         "makieta": null,
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": null,
@@ -469,10 +472,10 @@ window.CW_STATUS = {
       "nazwa": "Centrum wiedzy – artykuł",
       "stan": {
         "makieta": null,
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": null,
@@ -483,10 +486,10 @@ window.CW_STATUS = {
       "nazwa": "O nas",
       "stan": {
         "makieta": null,
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": null,
@@ -497,10 +500,10 @@ window.CW_STATUS = {
       "nazwa": "Kontakt",
       "stan": {
         "makieta": "w-przygotowaniu",
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": 31570,
@@ -511,10 +514,10 @@ window.CW_STATUS = {
       "nazwa": "Konfigurator",
       "stan": {
         "makieta": "w-przygotowaniu",
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": 30721,
@@ -525,10 +528,10 @@ window.CW_STATUS = {
       "nazwa": "Lista produktów",
       "stan": {
         "makieta": null,
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": 31512,
@@ -539,10 +542,10 @@ window.CW_STATUS = {
       "nazwa": "Karta produktu – CARBOMAT ECO pH 6,0–6,5",
       "stan": {
         "makieta": null,
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": 31512,
@@ -553,10 +556,10 @@ window.CW_STATUS = {
       "nazwa": "Karta produktu – CARBOMAT ECO pH 4,5–5,0",
       "stan": {
         "makieta": null,
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": null,
@@ -567,10 +570,10 @@ window.CW_STATUS = {
       "nazwa": "Koszyk",
       "stan": {
         "makieta": null,
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": null,
@@ -581,10 +584,10 @@ window.CW_STATUS = {
       "nazwa": "Kasa",
       "stan": {
         "makieta": null,
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": null,
@@ -595,80 +598,234 @@ window.CW_STATUS = {
       "nazwa": "Potwierdzenie zamówienia",
       "stan": {
         "makieta": null,
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": null,
       "data": "25.07"
     },
-    "platforma-b2b.html": {
+    "logowanie.html": {
       "sekcja": "10. Platforma B2B",
-      "nazwa": "Panel zamówień",
+      "nazwa": "Logowanie",
       "stan": {
         "makieta": null,
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
-      "ac": 31514,
-      "data": "25.07"
+      "ac": null,
+      "data": "04.10"
     },
     "rejestracja.html": {
       "sekcja": "10. Platforma B2B",
-      "nazwa": "Rejestracja B2B",
+      "nazwa": "Wniosek o konto PRO",
       "stan": {
         "makieta": null,
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": null,
-      "data": "25.07"
+      "data": "04.10"
+    },
+    "platforma-b2b.html": {
+      "sekcja": "10. Platforma B2B",
+      "nazwa": "Panel – Pulpit",
+      "stan": {
+        "makieta": null,
+        "tresc": null,
+        "projekt": null,
+        "media": null,
+        "infografiki": null,
+        "wdrozenie": null
+      },
+      "ac": 31514,
+      "data": "04.10"
+    },
+    "b2b-zamow.html": {
+      "sekcja": "10. Platforma B2B",
+      "nazwa": "Panel – Zamów",
+      "stan": {
+        "makieta": null,
+        "tresc": null,
+        "projekt": null,
+        "media": null,
+        "infografiki": null,
+        "wdrozenie": null
+      },
+      "ac": null,
+      "data": "04.10"
+    },
+    "b2b-dostawa.html": {
+      "sekcja": "10. Platforma B2B",
+      "nazwa": "Panel – Dostawa i płatność",
+      "stan": {
+        "makieta": null,
+        "tresc": null,
+        "projekt": null,
+        "media": null,
+        "infografiki": null,
+        "wdrozenie": null
+      },
+      "ac": null,
+      "data": "04.10"
     },
     "potwierdzenie-b2b.html": {
       "sekcja": "10. Platforma B2B",
-      "nazwa": "Potwierdzenie B2B",
+      "nazwa": "Panel – Zamówienie",
       "stan": {
         "makieta": null,
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": null,
-      "data": "25.07"
+      "data": "04.10"
+    },
+    "b2b-zamowienia.html": {
+      "sekcja": "10. Platforma B2B",
+      "nazwa": "Panel – Zamówienia",
+      "stan": {
+        "makieta": null,
+        "tresc": null,
+        "projekt": null,
+        "media": null,
+        "infografiki": null,
+        "wdrozenie": null
+      },
+      "ac": null,
+      "data": "04.10"
+    },
+    "b2b-uzgodnienie.html": {
+      "sekcja": "10. Platforma B2B",
+      "nazwa": "Panel – Uzgodnienie z opiekunem",
+      "stan": {
+        "makieta": null,
+        "tresc": null,
+        "projekt": null,
+        "media": null,
+        "infografiki": null,
+        "wdrozenie": null
+      },
+      "ac": null,
+      "data": "04.10"
+    },
+    "b2b-oferta.html": {
+      "sekcja": "10. Platforma B2B",
+      "nazwa": "Panel – Oferta od opiekuna",
+      "stan": {
+        "makieta": null,
+        "tresc": null,
+        "projekt": null,
+        "media": null,
+        "infografiki": null,
+        "wdrozenie": null
+      },
+      "ac": null,
+      "data": "04.10"
+    },
+    "b2b-dokumenty.html": {
+      "sekcja": "10. Platforma B2B",
+      "nazwa": "Panel – Dokumenty",
+      "stan": {
+        "makieta": null,
+        "tresc": null,
+        "projekt": null,
+        "media": null,
+        "infografiki": null,
+        "wdrozenie": null
+      },
+      "ac": null,
+      "data": "04.10"
+    },
+    "b2b-opiekun.html": {
+      "sekcja": "10. Platforma B2B",
+      "nazwa": "Panel – Opiekun",
+      "stan": {
+        "makieta": null,
+        "tresc": null,
+        "projekt": null,
+        "media": null,
+        "infografiki": null,
+        "wdrozenie": null
+      },
+      "ac": null,
+      "data": "04.10"
     },
     "admin.html": {
       "sekcja": "10. Platforma B2B",
-      "nazwa": "Panel producenta",
+      "nazwa": "Handlowiec – Zamówienia klientów PRO",
       "stan": {
         "makieta": null,
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": null,
-      "data": "24.07"
+      "data": "04.10"
+    },
+    "handlowiec-zamowienie.html": {
+      "sekcja": "10. Platforma B2B",
+      "nazwa": "Handlowiec – Zamówienie z telefonu",
+      "stan": {
+        "makieta": null,
+        "tresc": null,
+        "projekt": null,
+        "media": null,
+        "infografiki": null,
+        "wdrozenie": null
+      },
+      "ac": null,
+      "data": "04.10"
+    },
+    "handlowiec-klient.html": {
+      "sekcja": "10. Platforma B2B",
+      "nazwa": "Handlowiec – Karta klienta",
+      "stan": {
+        "makieta": null,
+        "tresc": null,
+        "projekt": null,
+        "media": null,
+        "infografiki": null,
+        "wdrozenie": null
+      },
+      "ac": null,
+      "data": "04.10"
+    },
+    "handlowiec-uzgodnienie.html": {
+      "sekcja": "10. Platforma B2B",
+      "nazwa": "Handlowiec – Odpowiedź na prośbę",
+      "stan": {
+        "makieta": null,
+        "tresc": null,
+        "projekt": null,
+        "media": null,
+        "infografiki": null,
+        "wdrozenie": null
+      },
+      "ac": null,
+      "data": "04.10"
     },
     "partner.html": {
       "sekcja": "Pozostałe",
       "nazwa": "Zostań partnerem",
       "stan": {
         "makieta": null,
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": null,
@@ -679,10 +836,10 @@ window.CW_STATUS = {
       "nazwa": "Zalecenia (QR)",
       "stan": {
         "makieta": null,
+        "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
-        "tresc": null,
         "wdrozenie": null
       },
       "ac": null,

@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zamówienia – platforma B2B CarboHort</title>
+<meta name="description" content="Lista zamówień na platformie B2B: zamówienia z platformy i wpisane przez opiekuna, stan, termin dostawy, wartość netto i dokumenty.">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="wireframe.css">
+<link rel="stylesheet" href="cw.css">
+<link rel="stylesheet" href="ce/00-base.css">
+<link rel="stylesheet" href="ce/CE-22-tabela.css">
+<link rel="stylesheet" href="ce/CE-77-pasek-tytulowy.css">
+<link rel="stylesheet" href="ce/CE-91-naglowek-panelu.css">
+<link rel="stylesheet" href="b2b-wspolne.css">
+<script src="../status.js"></script>
+<script src="../ce-rejestr.js"></script>
+<script src="b2b-wspolne.js"></script>
+<script src="chrome.js"></script>
+</head>
+<body>
+<a class="wf-sr-only" href="#main">Przejdź do treści</a>
+
+<cw-icons></cw-icons>
+
+<cw-navbar data-uklad="panel" data-current="zamowienia"></cw-navbar>
+<noscript><p class="c5-wrap c5-wrap--wide wf-small">Nagłówek i stopka platformy B2B wymagają włączonej obsługi JavaScriptu.</p></noscript>
+
+<main id="main" class="c5b-main" tabindex="-1">
+
+  
+  <section class="c5-titlebar c5-titlebar--z-akcja" id="naglowek" data-ce="CE-77" data-ce-wariant="z-akcja" aria-labelledby="naglowek-h">
+    <div class="c5-titlebar__l">
+      <div class="c5-titlebar__head">
+        <h1 class="c5-titlebar__h1" id="naglowek-h">Zamówienia</h1>
+      </div>
+    </div>
+    <div class="c5-titlebar__acts">
+      <a class="c5-btn c5-btn--dark c5-btn--sm" href="b2b-zamow.html">+ Nowe zamówienie</a>
+    </div>
+  </section>
+
+  
+  <section class="c5-tbl c5-tbl--danych c5-tbl--z-akcja" id="lista" data-ce="CE-22" data-ce-wariant="z-akcja" aria-labelledby="lista-h" style="--c5-tbl-min:1120px">
+    <h2 class="wf-sr-only" id="lista-h">Lista zamówień</h2>
+    <div class="c5-tbl__scroll" role="region" tabindex="0" aria-label="Lista zamówień">
+      <table class="c5-table c5-table--num">
+        <caption class="wf-sr-only">Zamówienia ze wszystkich kanałów – kwoty netto</caption>
+        <thead>
+          <tr>
+            <th scope="col">Numer</th>
+            <th scope="col">Data</th>
+            <th scope="col">Źródło</th>
+            <th scope="col">Stan</th>
+            <th scope="col">Dostawa</th>
+            <th scope="col" class="c5-table__num">Produkty netto</th>
+            <th scope="col">Dokumenty</th>
+            <th scope="col" class="c5-tbl__act"><span class="wf-sr-only">Zamów ponownie</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row" class="c5-tbl__nr"><a class="wf-link" href="potwierdzenie-b2b.html?nr=B2B-0412">B2B-0412</a></th>
+            <td>04.10.2026</td>
+            <td>platforma</td>
+            <td><span class="c5-chip c5-chip--solid">Potwierdzone – do zapłaty</span></td>
+            <td>16.10.2026<span class="c5-tbl__sub">przewidywana</span></td>
+            <td class="c5-table__num">12&nbsp;945,72&nbsp;zł</td>
+            <td>
+              <ul class="c5-tbl__links">
+                <li><button type="button" class="wf-link">pro forma PDF<span class="wf-sr-only"> – B2B-0412, otwiera się w nowym oknie</span></button></li>
+              </ul>
+            </td>
+            <td class="c5-tbl__act"><a class="wf-link" href="b2b-zamow.html?ponow=B2B-0412">Zamów ponownie<span class="wf-sr-only"> – B2B-0412</span></a></td>
+          </tr>
+          <tr>
+            <th scope="row" class="c5-tbl__nr"><a class="wf-link" href="potwierdzenie-b2b.html?nr=B2B-0388">B2B-0388</a></th>
+            <td>12.09.2026</td>
+            <td>telefon<span class="c5-tbl__sub">wpisane przez opiekuna</span></td>
+            <td><span class="c5-chip c5-chip--solid">Potwierdzone – do zapłaty</span></td>
+            <td>09.10.2026<span class="c5-tbl__sub">przewidywana</span></td>
+            <td class="c5-table__num">7&nbsp;496,30&nbsp;zł</td>
+            <td>
+              <ul class="c5-tbl__links">
+                <li><button type="button" class="wf-link">pro forma PDF<span class="wf-sr-only"> – B2B-0388, otwiera się w nowym oknie</span></button></li>
+              </ul>
+            </td>
+            <td class="c5-tbl__act"><a class="wf-link" href="b2b-zamow.html?ponow=B2B-0388">Zamów ponownie<span class="wf-sr-only"> – B2B-0388</span></a></td>
+          </tr>
+          <tr>
+            <th scope="row" class="c5-tbl__nr"><a class="wf-link" href="potwierdzenie-b2b.html?nr=B2B-0351">B2B-0351</a></th>
+            <td>21.08.2026</td>
+            <td>platforma</td>
+            <td><span class="c5-chip">Dostarczone</span></td>
+            <td>28.08.2026</td>
+            <td class="c5-table__num">3&nbsp;069,42&nbsp;zł</td>
+            <td>
+              <ul class="c5-tbl__links">
+                <li><button type="button" class="wf-link">pro forma PDF<span class="wf-sr-only"> – B2B-0351, otwiera się w nowym oknie</span></button></li>
+                <li><button type="button" class="wf-link">faktura PDF<span class="wf-sr-only"> – B2B-0351, otwiera się w nowym oknie</span></button></li>
+                <li><button type="button" class="wf-link">dokument wydania PDF<span class="wf-sr-only"> – B2B-0351, otwiera się w nowym oknie</span></button></li>
+              </ul>
+            </td>
+            <td class="c5-tbl__act"><a class="wf-link" href="b2b-zamow.html?ponow=B2B-0351">Zamów ponownie<span class="wf-sr-only"> – B2B-0351</span></a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<cw-footer></cw-footer>
+
+<script src="ce-overlay.js"></script>
+</body>
+</html>

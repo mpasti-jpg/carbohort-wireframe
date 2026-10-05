@@ -1,0 +1,44 @@
+/* ===== CE-53 · Lista wierszy z akcją (rejestr: ce-rejestr.js) =====
+   List of rows separated by thin lines: name | meta | action on the right.
+   Module implementation of the block for the B2B panel: `c5-rows` and the
+   variant „dokumenty” (`c5-rows--dokumenty`: name | order | date | action).
+   Earlier occurrences keep their page classes (`pp-reports`, `on-docs`).
+   Every row has an action – `c5-rows__act` on a button or a link.
+   The list fills its container and carries no outer margin. ===== */
+
+.c5-rows{display:flex;flex-direction:column;gap:var(--w-space-4);min-width:0;}
+
+/* Title of the list (h2): capitals through CSS, plain spelling in HTML;
+   the same overline as the card titles of CE-20 „z-rozpiska”. */
+.c5-rows__title{margin:0;font-size:var(--w-font-overline-size);line-height:var(--w-font-overline-lh);font-weight:var(--w-weight-regular);letter-spacing:var(--w-tracking-wide);text-transform:uppercase;color:var(--w-text-tertiary);}
+
+.c5-rows__list{display:flex;flex-direction:column;margin:0;padding:0;list-style:none;}
+
+/* Row – narrow layout first: name and meta stacked on the left, the action
+   on the right, centred on the whole row. */
+.c5-rows__row{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:var(--w-space-4);row-gap:2px;align-items:center;padding-block:var(--w-space-4);border-top:1px solid var(--w-border-default);}
+.c5-rows__row:last-child{border-bottom:1px solid var(--w-border-default);}
+/* The name may open with an icon of the kit – both stay on one line. */
+.c5-rows__name{grid-column:1;display:flex;align-items:center;gap:var(--w-space-2);min-width:0;margin:0;font-size:1rem;line-height:1.35;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+.c5-rows__name > .wf-icon{color:var(--w-text-tertiary);}
+.c5-rows__meta{grid-column:1;margin:0;font-size:0.875rem;line-height:1.45;color:var(--w-text-secondary);font-variant-numeric:tabular-nums;}
+.c5-rows__act{grid-column:2;grid-row:1 / span 3;align-self:center;justify-self:end;}
+/* A link in the meta line (an order number): 44 px touch height without
+   making the row taller. */
+.c5-rows__meta .wf-link{display:inline-flex;align-items:center;min-height:44px;margin-block:-13px;}
+/* A text control as the action keeps the 44 px touch target. */
+.c5-rows__act.wf-link{display:inline-flex;align-items:center;min-height:44px;font:inherit;font-size:0.875rem;background:none;border:0;padding:0;}
+
+/* From 900 px one line: name | meta | action. */
+@media (min-width:900px){
+  .c5-rows__row{grid-template-columns:minmax(0,1fr) minmax(0,2fr) auto;row-gap:0;}
+  .c5-rows__name,
+  .c5-rows__meta,
+  .c5-rows__act{grid-column:auto;grid-row:auto;}
+}
+
+/* --- Wariant „dokumenty” ---------------------------------------------------
+   Four cells in a row: document | order | date | action. */
+@media (min-width:900px){
+  .c5-rows--dokumenty .c5-rows__row{grid-template-columns:minmax(0,2fr) minmax(0,1.5fr) minmax(0,1fr) auto;}
+}

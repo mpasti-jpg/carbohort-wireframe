@@ -1,0 +1,198 @@
+/* =====================================================================
+   b2b-wspolne.css – shared sheet of the B2B platform mock-ups.
+   Spec: platforma-b2b-spec.md 16.1 and 16.6. Loaded last in <head>, after
+   the CE modules, by the panel pages, the sales desk pages, logowanie.html
+   and rejestracja.html.
+
+   Three parts and nothing else:
+   1. EL-19 / EL-21 / EL-22 – one definition of three interface elements;
+   2. the c5b- layer – page frame and the mock-up state bar. c5b- classes
+      stand OUTSIDE content element roots only;
+   3. the inactive state of EL-01 (aria-disabled), to be moved to
+      ce/00-base.css in wave 2a.
+   Rules of the content elements themselves live in ce/CE-NN-*.css.
+   Tokens --w-* only, greyscale, sharp corners.
+   ===================================================================== */
+
+/* =====================================================================
+   EL-19 / EL-21 / EL-22 – target classes, to be moved to ce/00-base.css in wave 2a
+   Class and modifier names exactly as in the `elementy` section of
+   ce-rejestr.js. CE modules do not repeat these rules – they only set the
+   layout around the element.
+   c5-dl__row--sum and c5-table__num are not in the registry yet – to be
+   added to EL-22 and EL-21 when the rules move to ce/00-base.css (wave 2a).
+   ===================================================================== */
+
+/* --- EL-19 Segment (c5-seg) -------------------------------------------
+   Segmented switch. In the panel it is either a set of radio inputs inside
+   a <fieldset> (label.c5-seg__tab > input.wf-sr-only + span.c5-seg__lbl)
+   or a group of buttons with aria-pressed (button.c5-seg__tab). The chosen
+   option is filled; there is no floating thumb and no script here.
+   Total height 44 px – the same as fields and buttons next to it. */
+.c5-seg{display:inline-flex;align-items:stretch;max-width:100%;vertical-align:middle;background:var(--w-surface-page);border:1px solid var(--w-border-strong);border-radius:0;}
+.c5-seg__tab{position:relative;flex:0 1 auto;display:inline-flex;align-items:center;justify-content:center;min-height:44px;margin:0;padding:8px var(--w-space-5);font:inherit;font-size:0.9375rem;font-weight:var(--w-weight-medium);line-height:1.2;letter-spacing:-0.01em;white-space:nowrap;color:var(--w-text-primary);background:none;border:0;border-radius:0;cursor:pointer;transition:background-color var(--w-duration-base) var(--w-ease),color var(--w-duration-base) var(--w-ease);}
+.c5-seg__tab + .c5-seg__tab{border-left:1px solid var(--w-border-strong);}
+.c5-seg__lbl{display:block;}
+.c5-seg__tab:hover{background:var(--w-surface-hover);}
+.c5-seg__tab[aria-pressed="true"],
+.c5-seg__tab:has(input:checked){background:var(--w-gray-900);color:var(--w-text-inverse);cursor:default;}
+.c5-seg__tab:focus-visible,
+.c5-seg__tab:has(input:focus-visible){z-index:1;outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:var(--w-focus-ring-offset);}
+@media (max-width:420px){
+  .c5-seg__tab{padding-inline:var(--w-space-3);font-size:0.875rem;}
+}
+@media (forced-colors:active){
+  .c5-seg__tab[aria-pressed="true"],
+  .c5-seg__tab:has(input:checked){forced-color-adjust:none;background:Highlight;color:HighlightText;}
+}
+@media (prefers-reduced-motion:reduce){ .c5-seg__tab{transition:none;} }
+
+/* --- EL-21 Table (c5-table) --------------------------------------------
+   Data table: 0.875 rem, padding 12/16, column headers on the subtle
+   surface, hairline under every row, hovered row tinted.
+   --num: tabular figures; cells marked c5-table__num (th and td) are
+   right-aligned and never wrap. The scroll container, the sticky first
+   column and the controls column belong to the CE module, not to this
+   element. */
+.c5-table{width:100%;border-collapse:collapse;font-size:0.875rem;line-height:1.45;color:var(--w-text-primary);}
+.c5-table th,
+.c5-table td{padding:var(--w-space-3) var(--w-space-4);text-align:left;vertical-align:middle;border-bottom:1px solid var(--w-border-subtle);}
+.c5-table th{font-weight:var(--w-weight-semibold);}
+.c5-table thead th{background:var(--w-surface-subtle);border-bottom-color:var(--w-border-default);white-space:nowrap;}
+.c5-table tbody th{font-weight:var(--w-weight-medium);}
+.c5-table tbody tr:hover{background:var(--w-surface-hover);}
+.c5-table tfoot th,
+.c5-table tfoot td{font-weight:var(--w-weight-semibold);border-bottom:0;}
+/* the dark rule above the footer is drawn by the last body row: with collapsed
+   borders the hairline of that row would win over a footer border of the same width */
+.c5-table:has(tfoot) tbody tr:last-child > *{border-bottom-color:var(--w-gray-900);}
+.c5-table--num{font-variant-numeric:tabular-nums;}
+.c5-table--num .c5-table__num{text-align:right;white-space:nowrap;}
+
+/* --- EL-22 Definition list (c5-dl) -------------------------------------
+   Name – value pairs: <dl class="c5-dl"> of <div class="c5-dl__row"> with
+   one <dt> and one <dd>. Base: name on the left, value at the right edge.
+   --rows: a hairline under every row.
+   --grid: a fixed name column and a left-aligned value – for values that
+           are sentences (contact data, conversation entries); stacks
+           below 600 px. Combines with --rows.
+   c5-dl__row--sum: the total row – darker rule above, heavier type; no rule
+           when it is the only row.
+   In --rows without --grid a row is a two-column grid: a long name wraps in
+   its own column and the value stays on the first line, at the right edge. */
+.c5-dl{display:flex;flex-direction:column;gap:var(--w-space-2);margin:0;font-size:0.9375rem;line-height:1.45;}
+.c5-dl__row{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:2px var(--w-space-4);}
+.c5-dl dt{min-width:0;color:var(--w-text-secondary);font-weight:var(--w-weight-regular);}
+.c5-dl dd{min-width:0;margin:0 0 0 auto;text-align:right;color:var(--w-text-primary);font-variant-numeric:tabular-nums;}
+.c5-dl--rows{gap:0;}
+.c5-dl--rows .c5-dl__row{padding-block:10px;border-bottom:1px solid var(--w-border-subtle);}
+.c5-dl--rows .c5-dl__row:last-child{border-bottom:0;}
+.c5-dl__row--sum dt,
+.c5-dl__row--sum dd{color:var(--w-text-primary);font-weight:var(--w-weight-semibold);}
+.c5-dl__row--sum{margin-top:var(--w-space-1);padding-top:var(--w-space-3);border-top:1px solid var(--w-gray-900);}
+.c5-dl--rows .c5-dl__row--sum{margin-top:-1px;padding-top:10px;}
+.c5-dl .c5-dl__row--sum:first-child{margin-top:0;padding-top:0;border-top:0;}
+.c5-dl--rows:not(.c5-dl--grid) .c5-dl__row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;}
+.c5-dl--grid .c5-dl__row{display:grid;grid-template-columns:minmax(0,1fr);gap:2px var(--w-space-5);}
+.c5-dl--grid dd{margin-left:0;text-align:left;}
+@media (min-width:600px){
+  .c5-dl--grid .c5-dl__row{grid-template-columns:minmax(0,14rem) minmax(0,1fr);}
+}
+
+/* =====================================================================
+   c5b- layer – outside content element roots only
+   ===================================================================== */
+
+/* --- Page frame (c5b-main) ---------------------------------------------
+   <main id="main" class="c5b-main" tabindex="-1">. The frame IS the wide
+   container of the page (1800 px at most, 20 px of side air, 40 px from
+   900 px – the numbers of c5-wrap--wide and of the panel header), so the
+   content element roots stand directly in it, one under another, without
+   a c5-wrap inside.
+   Black on white: the kit's body text is grey-600.
+
+   Vertical rhythm. The air between the roots stands INSIDE each root, as its
+   top padding (selected by structure: every child of the frame), not as a
+   gap of the frame. The preview overlay draws the code label of a content
+   element in the top left corner of its root (about 21 px high); with the
+   air inside the root the label lands above the content instead of on it.
+   - a root without a frame: top padding = the gap between sections;
+   - the first root also carries the top air of the page (it replaces the top
+     padding of the frame; the 16 px is the head room of the title bar);
+   - a framed root (note, box) keeps the gap outside its frame, as a margin,
+     and its own padding inside; the note gets a few more pixels of head
+     room, because its own padding is lower than the label.
+
+   Short pages: the body is a column of the window height and the frame takes
+   the spare room, so the footer stands on the bottom edge. The header and
+   footer hosts give their boxes away (display:contents) – the sticky site
+   header keeps the body as its containing block. */
+body:has(> .c5b-main){display:flex;flex-direction:column;min-height:100vh;}
+body:has(> .c5b-main) > :is(cw-navbar,cw-footer){display:contents;}
+.c5b-main{--c5b-gutter:var(--w-space-5);--c5b-gap:clamp(1.5rem,2.6vw,2.5rem);--c5b-top:clamp(1.5rem,3vw,2.5rem);display:flex;flex-direction:column;flex:1 0 auto;width:100%;max-width:1800px;margin-inline:auto;padding:0 var(--c5b-gutter) clamp(3.5rem,7vw,6rem);background:var(--w-surface-page);color:var(--w-text-primary);}
+.c5b-main > *{min-width:0;}
+.c5b-main > :not(.c5-note):not(.c5-box){padding-top:var(--c5b-gap);}
+.c5b-main > :first-child:not(.c5-note):not(.c5-box){padding-top:calc(var(--c5b-top) + var(--w-space-4));}
+.c5b-main > .c5-note,
+.c5b-main > .c5-box{margin-top:var(--c5b-gap);}
+.c5b-main > .c5-note{padding-top:22px;}
+.c5b-main:focus{outline:none;}  /* programmatic target of the skip link */
+@media (min-width:900px){
+  .c5b-main{--c5b-gutter:40px;}
+}
+/* Pages that keep the site header and footer (login, account request): the
+   frame takes the width and the side air of the site container, so the
+   content starts on the line of the logo. */
+.c5b-main--serwis{--c5b-gutter:var(--w-page-padding);max-width:var(--w-container);}
+@media (min-width:1024px){
+  .c5b-main--serwis{--c5b-gutter:var(--w-page-padding-lg);}
+}
+
+/* --- Link in a note or in a status message ------------------------------
+   A link inside a sentence gets a 43–44 px touch area; the negative margin
+   takes the padding back, so the line does not move. */
+:is(.c5-note,[role="status"]) :is(p,li,span) > a.wf-link,
+:is(.c5-note,[role="status"]) > a.wf-link{display:inline-block;padding-block:12px;margin-block:-12px;}
+
+/* --- Inactive button (EL-01 state, shared by the platform pages) --------
+   A control switched off through aria-disabled="true" (the reason stands in
+   its label): weaker tone plus a quiet frame, never the tone alone. One
+   definition for every CE of the platform. */
+.c5-btn[aria-disabled="true"],
+.c5-btn[aria-disabled="true"]:hover{background:var(--w-surface-subtle);color:var(--w-text-tertiary);border-color:var(--w-border-subtle);cursor:not-allowed;}
+
+
+/* --- Mock-up state bar (c5b-stan) --------------------------------------
+   A preview tool, not page content: stands above <main>, carries no
+   data-ce. Dashed rules, sunken surface and the monospace face keep it
+   apart from the screen below. Buttons are plain <button data-stan-ustaw>
+   with aria-pressed; b2b-wspolne.js switches the state. */
+.c5b-stan{--c5b-gutter:var(--w-space-5);--c5b-max:1800px;display:flex;flex-wrap:wrap;align-items:center;gap:var(--w-space-2);padding:var(--w-space-2) max(var(--c5b-gutter),calc((100% - var(--c5b-max)) / 2 + var(--c5b-gutter)));background:var(--w-surface-sunken);border-block:1px dashed var(--w-border-strong);font-family:var(--w-font-mono);font-size:0.75rem;line-height:1.3;color:var(--w-text-secondary);}
+/* a notice of the mock-up under the bar (one sentence in its own state block): no second rule */
+.c5b-stan--nota{border-top:0;margin:0;}
+.c5b-stan__lbl{margin-right:var(--w-space-1);font-weight:var(--w-weight-semibold);letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;}
+.c5b-stan button{display:inline-flex;align-items:center;min-height:32px;padding:4px 12px;font:inherit;color:var(--w-text-primary);background:var(--w-surface-page);border:1px dashed var(--w-border-strong);border-radius:0;cursor:pointer;}
+.c5b-stan button:hover{border-style:solid;}
+.c5b-stan button[aria-pressed="true"]{background:var(--w-gray-900);color:var(--w-text-inverse);border:1px solid var(--w-gray-900);cursor:default;}
+.c5b-stan button:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:var(--w-focus-ring-offset);}
+@media (min-width:900px){
+  .c5b-stan{--c5b-gutter:40px;}
+}
+@media (max-width:899px){
+  .c5b-stan button{min-height:44px;}
+}
+/* Phone: one row that scrolls sideways (like the tabs of the panel header),
+   so a page with five states does not open with five rows of buttons. */
+@media (max-width:599px){
+  .c5b-stan{flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;}
+  .c5b-stan::-webkit-scrollbar{display:none;}
+  .c5b-stan__lbl,
+  .c5b-stan button{flex:none;white-space:nowrap;}
+  .c5b-stan button:focus-visible{outline-offset:-2px;}
+}
+/* On a page with the site header the bar follows the site container. */
+.c5b-stan--serwis{--c5b-gutter:var(--w-page-padding);--c5b-max:var(--w-container);}
+@media (min-width:1024px){
+  .c5b-stan--serwis{--c5b-gutter:var(--w-page-padding-lg);}
+}
+@media print{ .c5b-stan{display:none;} }

@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zamów – platforma B2B CarboHort</title>
+<meta name="description" content="Tabela zamówieniowa platformy B2B: cena w sklepie i Twoja cena netto, ilości, wartość zamówienia i przejście do dostawy i płatności.">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="wireframe.css">
+<link rel="stylesheet" href="cw.css">
+<link rel="stylesheet" href="ce/00-base.css">
+<link rel="stylesheet" href="sklep-wspolne.css">
+<link rel="stylesheet" href="ce/CE-77-pasek-tytulowy.css">
+<link rel="stylesheet" href="ce/CE-91-naglowek-panelu.css">
+<link rel="stylesheet" href="ce/CE-92-tabela-zamowieniowa.css">
+<link rel="stylesheet" href="b2b-wspolne.css">
+<script src="../status.js"></script>
+<script src="../ce-rejestr.js"></script>
+<script src="b2b-wspolne.js"></script>
+<script src="chrome.js"></script>
+</head>
+<body data-stan-domyslny="zwykle">
+<a class="wf-sr-only" href="#main">Przejdź do treści</a>
+
+<cw-icons></cw-icons>
+
+<cw-navbar data-uklad="panel" data-current="zamow"></cw-navbar>
+<noscript><p class="c5-wrap c5-wrap--wide wf-small">Nagłówek i stopka platformy B2B wymagają włączonej obsługi JavaScriptu.</p></noscript>
+
+
+<div class="c5b-stan" role="group" aria-label="Stan makiety">
+  <span class="c5b-stan__lbl">Stan makiety:</span>
+  <button type="button" data-stan-ustaw="zwykle" aria-pressed="true">zwykłe zamówienie</button>
+  <button type="button" data-stan-ustaw="duze" aria-pressed="false">duże zamówienie</button>
+</div>
+
+<main id="main" class="c5b-main" tabindex="-1">
+
+  
+  <section class="c5-titlebar c5-titlebar--z-akcja" id="naglowek" data-ce="CE-77" data-ce-wariant="z-akcja" aria-labelledby="naglowek-h">
+    <div class="c5-titlebar__l">
+      <div class="c5-titlebar__head">
+        <h1 class="c5-titlebar__h1" id="naglowek-h">Zamów</h1>
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="c5-order" id="tabela" data-ce="CE-92" data-vat="8" data-prog-gr="4000000" aria-labelledby="tabela-h">
+    <h2 class="wf-sr-only" id="tabela-h">Tabela zamówieniowa</h2>
+
+    <div class="c5-order__tools">
+      <div class="c5-seg" role="group" aria-label="Zakres listy">
+        <button type="button" class="c5-seg__tab" data-zakres="moje" aria-pressed="true"><span class="c5-seg__lbl">Moje produkty</span></button>
+        <button type="button" class="c5-seg__tab" data-zakres="wszystkie" aria-pressed="false"><span class="c5-seg__lbl">Wszystkie</span></button>
+      </div>
+      <div class="c5-order__search">
+        <label class="wf-sr-only" for="tabela-szukaj">Szukaj produktu</label>
+        <svg class="wf-icon" aria-hidden="true"><use href="#ti-search"></use></svg>
+        <input class="wf-input" type="search" id="tabela-szukaj" name="szukaj" placeholder="Szukaj produktu…" autocomplete="off">
+      </div>
+    </div>
+
+    <p class="c5-order__note">Obie ceny netto, za sztukę opakowania. Cenę w sklepie przeliczono z brutto stawką VAT&nbsp;8%.</p>
+
+    <table class="c5-order__table" role="table">
+      <caption class="wf-sr-only">Produkty: cena w sklepie, Twoja cena, ilość i wartość netto</caption>
+        <thead role="rowgroup">
+          <tr role="row">
+            <th class="c5-order__prod" role="columnheader" scope="col">Produkt</th>
+            <th class="c5-order__pack" role="columnheader" scope="col">Opakowanie</th>
+            <th class="c5-order__shop" role="columnheader" scope="col">Cena w sklepie (netto)</th>
+            <th class="c5-order__price" role="columnheader" scope="col">Twoja cena</th>
+            <th class="c5-order__qty" role="columnheader" scope="col">Ilość</th>
+            <th class="c5-order__val" role="columnheader" scope="col">Wartość netto</th>
+          </tr>
+        </thead>
+      <tbody role="rowgroup">
+          <tr class="c5-order__row is-active" role="row" id="w-carbomat-eco-6-bb1000" data-produkt="carbomat-eco-6" data-opakowanie="bb1000" data-cena-gr="51157" data-moje="1">
+            <td class="c5-order__prod" role="cell" data-label="Produkt">
+              <span class="c5-order__name">CARBOMAT ECO pH 6,0–6,5</span>
+              <button type="button" class="wf-link c5-order__pdf">Karta produktu (PDF)<span class="wf-sr-only"> – CARBOMAT ECO pH 6,0–6,5, big bag 1000 l, otwiera się w nowym oknie</span></button>
+            </td>
+            <td class="c5-order__pack" role="cell" data-label="Opakowanie">big bag 1000 l</td>
+            <td class="c5-order__shop" role="cell" data-label="Cena w sklepie (netto)">601,85&nbsp;zł</td>
+            <td class="c5-order__price" role="cell" data-label="Twoja cena">
+              <span class="c5-order__mine">511,57&nbsp;zł</span>
+              <span class="c5-order__disc">rabat 15%</span>
+            </td>
+            <td class="c5-order__qty" role="cell" data-label="Ilość">
+              <div class="cws-qty">
+                <button type="button" class="cws-qty__b" data-krok="-1" aria-label="Zmniejsz ilość: CARBOMAT ECO pH 6,0–6,5, big bag 1000 l">−</button>
+                <label class="wf-sr-only" for="q-carbomat-eco-6-bb1000">Ilość: CARBOMAT ECO pH 6,0–6,5, big bag 1000 l</label>
+                <input class="cws-qty__v" type="number" id="q-carbomat-eco-6-bb1000" name="q-carbomat-eco-6-bb1000" min="0" max="999" step="1" inputmode="numeric" value="6">
+                <button type="button" class="cws-qty__b" data-krok="1" aria-label="Zwiększ ilość: CARBOMAT ECO pH 6,0–6,5, big bag 1000 l">+</button>
+              </div>
+            </td>
+            <td class="c5-order__val" role="cell" data-label="Wartość netto">3&nbsp;069,42&nbsp;zł</td>
+          </tr>
+          <tr class="c5-order__row is-active" role="row" id="w-carbohumic-187mesh-m1000" data-produkt="carbohumic-187mesh" data-opakowanie="m1000" data-cena-gr="749630" data-moje="1">
+            <td class="c5-order__prod" role="cell" data-label="Produkt">
+              <span class="c5-order__name">CARBOHUMIC filtrowany (187 mesh)</span>
+              <button type="button" class="wf-link c5-order__pdf">Karta produktu (PDF)<span class="wf-sr-only"> – CARBOHUMIC filtrowany (187 mesh), mauzer 1000 l, otwiera się w nowym oknie</span></button>
+            </td>
+            <td class="c5-order__pack" role="cell" data-label="Opakowanie">mauzer 1000 l</td>
+            <td class="c5-order__shop" role="cell" data-label="Cena w sklepie (netto)">8&nbsp;518,52&nbsp;zł</td>
+            <td class="c5-order__price" role="cell" data-label="Twoja cena">
+              <span class="c5-order__mine">7&nbsp;496,30&nbsp;zł</span>
+              <span class="c5-order__disc">rabat 12%</span>
+            </td>
+            <td class="c5-order__qty" role="cell" data-label="Ilość">
+              <div class="cws-qty">
+                <button type="button" class="cws-qty__b" data-krok="-1" aria-label="Zmniejsz ilość: CARBOHUMIC filtrowany (187 mesh), mauzer 1000 l">−</button>
+                <label class="wf-sr-only" for="q-carbohumic-187mesh-m1000">Ilość: CARBOHUMIC filtrowany (187 mesh), mauzer 1000 l</label>
+                <input class="cws-qty__v" type="number" id="q-carbohumic-187mesh-m1000" name="q-carbohumic-187mesh-m1000" min="0" max="999" step="1" inputmode="numeric" value="1">
+                <button type="button" class="cws-qty__b" data-krok="1" aria-label="Zwiększ ilość: CARBOHUMIC filtrowany (187 mesh), mauzer 1000 l">+</button>
+              </div>
+            </td>
+            <td class="c5-order__val" role="cell" data-label="Wartość netto">7&nbsp;496,30&nbsp;zł</td>
+          </tr>
+          <tr class="c5-order__row is-active" role="row" id="w-maxi-plus-k20" data-produkt="maxi-plus" data-opakowanie="k20" data-cena-gr="59500" data-moje="1">
+            <td class="c5-order__prod" role="cell" data-label="Produkt">
+              <span class="c5-order__name">CARBOHUMIC MAXI PLUS</span>
+              <button type="button" class="wf-link c5-order__pdf">Karta produktu (PDF)<span class="wf-sr-only"> – CARBOHUMIC MAXI PLUS, kanister 20 l, otwiera się w nowym oknie</span></button>
+            </td>
+            <td class="c5-order__pack" role="cell" data-label="Opakowanie">kanister 20 l</td>
+            <td class="c5-order__shop" role="cell" data-label="Cena w sklepie (netto)">787,04&nbsp;zł</td>
+            <td class="c5-order__price" role="cell" data-label="Twoja cena">
+              <span class="c5-order__mine">595,00&nbsp;zł</span>
+              <span class="c5-chip c5-order__tag">cena specjalna do 31.10.2026</span>
+            </td>
+            <td class="c5-order__qty" role="cell" data-label="Ilość">
+              <div class="cws-qty">
+                <button type="button" class="cws-qty__b" data-krok="-1" aria-label="Zmniejsz ilość: CARBOHUMIC MAXI PLUS, kanister 20 l">−</button>
+                <label class="wf-sr-only" for="q-maxi-plus-k20">Ilość: CARBOHUMIC MAXI PLUS, kanister 20 l</label>
+                <input class="cws-qty__v" type="number" id="q-maxi-plus-k20" name="q-maxi-plus-k20" min="0" max="999" step="1" inputmode="numeric" value="4">
+                <button type="button" class="cws-qty__b" data-krok="1" aria-label="Zwiększ ilość: CARBOHUMIC MAXI PLUS, kanister 20 l">+</button>
+              </div>
+            </td>
+            <td class="c5-order__val" role="cell" data-label="Wartość netto">2&nbsp;380,00&nbsp;zł</td>
+          </tr>
+          <tr class="c5-order__row" role="row" id="w-carbomat-eco-sciolka-bb1000" data-produkt="carbomat-eco-sciolka" data-opakowanie="bb1000" data-cena-gr="47223" data-moje="1">
+            <td class="c5-order__prod" role="cell" data-label="Produkt">
+              <span class="c5-order__name">CARBOMAT ECO Ściółka pH 4,5–5,0</span>
+              <button type="button" class="wf-link c5-order__pdf">Karta produktu (PDF)<span class="wf-sr-only"> – CARBOMAT ECO Ściółka pH 4,5–5,0, big bag 1000 l, otwiera się w nowym oknie</span></button>
+            </td>
+            <td class="c5-order__pack" role="cell" data-label="Opakowanie">big bag 1000 l</td>
+            <td class="c5-order__shop" role="cell" data-label="Cena w sklepie (netto)">555,56&nbsp;zł</td>
+            <td class="c5-order__price" role="cell" data-label="Twoja cena">
+              <span class="c5-order__mine">472,23&nbsp;zł</span>
+              <span class="c5-order__disc">rabat 15%</span>
+            </td>
+            <td class="c5-order__qty" role="cell" data-label="Ilość">
+              <div class="cws-qty">
+                <button type="button" class="cws-qty__b" data-krok="-1" aria-label="Zmniejsz ilość: CARBOMAT ECO Ściółka pH 4,5–5,0, big bag 1000 l">−</button>
+                <label class="wf-sr-only" for="q-carbomat-eco-sciolka-bb1000">Ilość: CARBOMAT ECO Ściółka pH 4,5–5,0, big bag 1000 l</label>
+                <input class="cws-qty__v" type="number" id="q-carbomat-eco-sciolka-bb1000" name="q-carbomat-eco-sciolka-bb1000" min="0" max="999" step="1" inputmode="numeric" value="0">
+                <button type="button" class="cws-qty__b" data-krok="1" aria-label="Zwiększ ilość: CARBOMAT ECO Ściółka pH 4,5–5,0, big bag 1000 l">+</button>
+              </div>
+            </td>
+            <td class="c5-order__val" role="cell" data-label="Wartość netto">–</td>
+          </tr>
+          <tr class="c5-order__row" role="row" id="w-vinassa-m1000" data-produkt="vinassa" data-opakowanie="m1000" data-cena-gr="316667" data-moje="0">
+            <td class="c5-order__prod" role="cell" data-label="Produkt">
+              <span class="c5-order__name">VINASSA nawóz organiczny</span>
+              <button type="button" class="wf-link c5-order__pdf">Karta produktu (PDF)<span class="wf-sr-only"> – VINASSA nawóz organiczny, mauzer 1000 l, otwiera się w nowym oknie</span></button>
+            </td>
+            <td class="c5-order__pack" role="cell" data-label="Opakowanie">mauzer 1000 l</td>
+            <td class="c5-order__shop" role="cell" data-label="Cena w sklepie (netto)">3&nbsp;518,52&nbsp;zł</td>
+            <td class="c5-order__price" role="cell" data-label="Twoja cena">
+              <span class="c5-order__mine">3&nbsp;166,67&nbsp;zł</span>
+              <span class="c5-order__disc">rabat 10%</span>
+            </td>
+            <td class="c5-order__qty" role="cell" data-label="Ilość">
+              <div class="cws-qty">
+                <button type="button" class="cws-qty__b" data-krok="-1" aria-label="Zmniejsz ilość: VINASSA nawóz organiczny, mauzer 1000 l">−</button>
+                <label class="wf-sr-only" for="q-vinassa-m1000">Ilość: VINASSA nawóz organiczny, mauzer 1000 l</label>
+                <input class="cws-qty__v" type="number" id="q-vinassa-m1000" name="q-vinassa-m1000" min="0" max="999" step="1" inputmode="numeric" value="0">
+                <button type="button" class="cws-qty__b" data-krok="1" aria-label="Zwiększ ilość: VINASSA nawóz organiczny, mauzer 1000 l">+</button>
+              </div>
+            </td>
+            <td class="c5-order__val" role="cell" data-label="Wartość netto">–</td>
+          </tr>
+          <tr class="c5-order__row" role="row" id="w-carbomat-eco-6-w20" data-produkt="carbomat-eco-6" data-opakowanie="w20" data-cena-gr="3384" data-moje="0">
+            <td class="c5-order__prod" role="cell" data-label="Produkt">
+              <span class="c5-order__name">CARBOMAT ECO pH 6,0–6,5</span>
+              <button type="button" class="wf-link c5-order__pdf">Karta produktu (PDF)<span class="wf-sr-only"> – CARBOMAT ECO pH 6,0–6,5, worek 20 l, otwiera się w nowym oknie</span></button>
+            </td>
+            <td class="c5-order__pack" role="cell" data-label="Opakowanie">worek 20 l</td>
+            <td class="c5-order__shop" role="cell" data-label="Cena w sklepie (netto)">39,81&nbsp;zł</td>
+            <td class="c5-order__price" role="cell" data-label="Twoja cena">
+              <span class="c5-order__mine">33,84&nbsp;zł</span>
+              <span class="c5-order__disc">rabat 15%</span>
+            </td>
+            <td class="c5-order__qty" role="cell" data-label="Ilość">
+              <div class="cws-qty">
+                <button type="button" class="cws-qty__b" data-krok="-1" aria-label="Zmniejsz ilość: CARBOMAT ECO pH 6,0–6,5, worek 20 l">−</button>
+                <label class="wf-sr-only" for="q-carbomat-eco-6-w20">Ilość: CARBOMAT ECO pH 6,0–6,5, worek 20 l</label>
+                <input class="cws-qty__v" type="number" id="q-carbomat-eco-6-w20" name="q-carbomat-eco-6-w20" min="0" max="999" step="1" inputmode="numeric" value="0">
+                <button type="button" class="cws-qty__b" data-krok="1" aria-label="Zwiększ ilość: CARBOMAT ECO pH 6,0–6,5, worek 20 l">+</button>
+              </div>
+            </td>
+            <td class="c5-order__val" role="cell" data-label="Wartość netto">–</td>
+          </tr>
+          <tr class="c5-order__row" role="row" id="w-carbomat-eco-6-bb1500" data-produkt="carbomat-eco-6" data-opakowanie="bb1500" data-cena-gr="66898" data-moje="0">
+            <td class="c5-order__prod" role="cell" data-label="Produkt">
+              <span class="c5-order__name">CARBOMAT ECO pH 6,0–6,5</span>
+              <button type="button" class="wf-link c5-order__pdf">Karta produktu (PDF)<span class="wf-sr-only"> – CARBOMAT ECO pH 6,0–6,5, big bag 1500 l, otwiera się w nowym oknie</span></button>
+            </td>
+            <td class="c5-order__pack" role="cell" data-label="Opakowanie">big bag 1500 l</td>
+            <td class="c5-order__shop" role="cell" data-label="Cena w sklepie (netto)">787,04&nbsp;zł</td>
+            <td class="c5-order__price" role="cell" data-label="Twoja cena">
+              <span class="c5-order__mine">668,98&nbsp;zł</span>
+              <span class="c5-order__disc">rabat 15%</span>
+            </td>
+            <td class="c5-order__qty" role="cell" data-label="Ilość">
+              <div class="cws-qty">
+                <button type="button" class="cws-qty__b" data-krok="-1" aria-label="Zmniejsz ilość: CARBOMAT ECO pH 6,0–6,5, big bag 1500 l">−</button>
+                <label class="wf-sr-only" for="q-carbomat-eco-6-bb1500">Ilość: CARBOMAT ECO pH 6,0–6,5, big bag 1500 l</label>
+                <input class="cws-qty__v" type="number" id="q-carbomat-eco-6-bb1500" name="q-carbomat-eco-6-bb1500" min="0" max="999" step="1" inputmode="numeric" value="0">
+                <button type="button" class="cws-qty__b" data-krok="1" aria-label="Zwiększ ilość: CARBOMAT ECO pH 6,0–6,5, big bag 1500 l">+</button>
+              </div>
+            </td>
+            <td class="c5-order__val" role="cell" data-label="Wartość netto">–</td>
+          </tr>
+          <tr class="c5-order__row" role="row" id="w-carbohumic-20mesh-m1000" data-produkt="carbohumic-20mesh" data-opakowanie="m1000" data-cena-gr="488889" data-moje="0">
+            <td class="c5-order__prod" role="cell" data-label="Produkt">
+              <span class="c5-order__name">CARBOHUMIC niefiltrowany (20 mesh)</span>
+              <button type="button" class="wf-link c5-order__pdf">Karta produktu (PDF)<span class="wf-sr-only"> – CARBOHUMIC niefiltrowany (20 mesh), mauzer 1000 l, otwiera się w nowym oknie</span></button>
+            </td>
+            <td class="c5-order__pack" role="cell" data-label="Opakowanie">mauzer 1000 l</td>
+            <td class="c5-order__shop" role="cell" data-label="Cena w sklepie (netto)">5&nbsp;555,56&nbsp;zł</td>
+            <td class="c5-order__price" role="cell" data-label="Twoja cena">
+              <span class="c5-order__mine">4&nbsp;888,89&nbsp;zł</span>
+              <span class="c5-order__disc">rabat 12%</span>
+            </td>
+            <td class="c5-order__qty" role="cell" data-label="Ilość">
+              <div class="cws-qty">
+                <button type="button" class="cws-qty__b" data-krok="-1" aria-label="Zmniejsz ilość: CARBOHUMIC niefiltrowany (20 mesh), mauzer 1000 l">−</button>
+                <label class="wf-sr-only" for="q-carbohumic-20mesh-m1000">Ilość: CARBOHUMIC niefiltrowany (20 mesh), mauzer 1000 l</label>
+                <input class="cws-qty__v" type="number" id="q-carbohumic-20mesh-m1000" name="q-carbohumic-20mesh-m1000" min="0" max="999" step="1" inputmode="numeric" value="0">
+                <button type="button" class="cws-qty__b" data-krok="1" aria-label="Zwiększ ilość: CARBOHUMIC niefiltrowany (20 mesh), mauzer 1000 l">+</button>
+              </div>
+            </td>
+            <td class="c5-order__val" role="cell" data-label="Wartość netto">–</td>
+          </tr>
+          <tr class="c5-order__row" role="row" id="w-carbohumic-187mesh-k20" data-produkt="carbohumic-187mesh" data-opakowanie="k20" data-cena-gr="21185" data-moje="0">
+            <td class="c5-order__prod" role="cell" data-label="Produkt">
+              <span class="c5-order__name">CARBOHUMIC filtrowany (187 mesh)</span>
+              <button type="button" class="wf-link c5-order__pdf">Karta produktu (PDF)<span class="wf-sr-only"> – CARBOHUMIC filtrowany (187 mesh), kanister 20 l, otwiera się w nowym oknie</span></button>
+            </td>
+            <td class="c5-order__pack" role="cell" data-label="Opakowanie">kanister 20 l</td>
+            <td class="c5-order__shop" role="cell" data-label="Cena w sklepie (netto)">240,74&nbsp;zł</td>
+            <td class="c5-order__price" role="cell" data-label="Twoja cena">
+              <span class="c5-order__mine">211,85&nbsp;zł</span>
+              <span class="c5-order__disc">rabat 12%</span>
+            </td>
+            <td class="c5-order__qty" role="cell" data-label="Ilość">
+              <div class="cws-qty">
+                <button type="button" class="cws-qty__b" data-krok="-1" aria-label="Zmniejsz ilość: CARBOHUMIC filtrowany (187 mesh), kanister 20 l">−</button>
+                <label class="wf-sr-only" for="q-carbohumic-187mesh-k20">Ilość: CARBOHUMIC filtrowany (187 mesh), kanister 20 l</label>
+                <input class="cws-qty__v" type="number" id="q-carbohumic-187mesh-k20" name="q-carbohumic-187mesh-k20" min="0" max="999" step="1" inputmode="numeric" value="0">
+                <button type="button" class="cws-qty__b" data-krok="1" aria-label="Zwiększ ilość: CARBOHUMIC filtrowany (187 mesh), kanister 20 l">+</button>
+              </div>
+            </td>
+            <td class="c5-order__val" role="cell" data-label="Wartość netto">–</td>
+          </tr>
+          <tr class="c5-order__row" role="row" id="w-calbor-k20" data-produkt="calbor" data-opakowanie="k20" data-cena-gr="81400" data-moje="0">
+            <td class="c5-order__prod" role="cell" data-label="Produkt">
+              <span class="c5-order__name">CARBOHUMIC CALBOR</span>
+              <button type="button" class="wf-link c5-order__pdf">Karta produktu (PDF)<span class="wf-sr-only"> – CARBOHUMIC CALBOR, kanister 20 l, otwiera się w nowym oknie</span></button>
+            </td>
+            <td class="c5-order__pack" role="cell" data-label="Opakowanie">kanister 20 l</td>
+            <td class="c5-order__shop" role="cell" data-label="Cena w sklepie (netto)">925,00&nbsp;zł</td>
+            <td class="c5-order__price" role="cell" data-label="Twoja cena">
+              <span class="c5-order__mine">814,00&nbsp;zł</span>
+              <span class="c5-order__disc">rabat 12%</span>
+            </td>
+            <td class="c5-order__qty" role="cell" data-label="Ilość">
+              <div class="cws-qty">
+                <button type="button" class="cws-qty__b" data-krok="-1" aria-label="Zmniejsz ilość: CARBOHUMIC CALBOR, kanister 20 l">−</button>
+                <label class="wf-sr-only" for="q-calbor-k20">Ilość: CARBOHUMIC CALBOR, kanister 20 l</label>
+                <input class="cws-qty__v" type="number" id="q-calbor-k20" name="q-calbor-k20" min="0" max="999" step="1" inputmode="numeric" value="0">
+                <button type="button" class="cws-qty__b" data-krok="1" aria-label="Zwiększ ilość: CARBOHUMIC CALBOR, kanister 20 l">+</button>
+              </div>
+            </td>
+            <td class="c5-order__val" role="cell" data-label="Wartość netto">–</td>
+          </tr>
+      </tbody>
+    </table>
+    <p class="c5-order__none" hidden>Brak produktów pasujących do wyszukiwania.</p>
+
+    <p class="c5-order__prog c5-src">próg dużego zamówienia dla tego konta: 40&nbsp;000&nbsp;zł netto (przykład)</p>
+    <p class="c5-order__ship c5-src">dostawa: policzymy w następnym kroku</p>
+
+    
+    <div class="c5-order__dock">
+      <div class="c5-order__big" hidden>
+        <p><strong>To duże zamówienie.</strong> <span class="c5-order__bigmore">Możesz je uzgodnić z opiekunem.</span> <span class="c5-src">próg dla tego konta: 40&nbsp;000&nbsp;zł netto (przykład)</span></p>
+        <a class="c5-btn c5-btn--light" href="b2b-uzgodnienie.html"><span>Uzgodnij<span class="c5-order__bigword"> zamówienie</span> z opiekunem</span></a>
+      </div>
+      <div class="c5-order__bar">
+        <div>
+          <p class="c5-order__sum"><span class="c5-order__count">3&nbsp;pozycje</span> · <span class="c5-order__net">12&nbsp;945,72&nbsp;zł netto</span> <span class="c5-order__gross">(13&nbsp;981,38&nbsp;zł brutto)</span></p>
+          <p class="c5-order__empty" id="tabela-puste" hidden>Wpisz ilość przy co najmniej jednym produkcie.</p>
+        </div>
+        <a class="c5-btn c5-btn--dark c5-order__next" href="b2b-dostawa.html">Dalej: dostawa i płatność</a>
+      </div>
+    </div>
+
+    <p class="c5-order__live wf-sr-only" aria-live="polite">3 pozycje, 12&nbsp;945,72&nbsp;zł netto</p>
+  </section>
+
+</main>
+
+<cw-footer></cw-footer>
+
+<script src="ce/CE-92-tabela-zamowieniowa.js"></script>
+<script src="b2b-zamow.js"></script>
+<script src="ce-overlay.js"></script>
+</body>
+</html>

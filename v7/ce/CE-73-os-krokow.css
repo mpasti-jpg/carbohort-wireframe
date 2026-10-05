@@ -157,3 +157,53 @@
 @media (prefers-reduced-motion:reduce){
   .c5-st__fill,.c5-st__node,.c5-st__barf,.c5-st__link .wf-icon{transition:none;}
 }
+
+/* ===== wariant: sama-os ================================================
+   Modifier: c5-st--sama-os. The axis alone, without the horizon and without
+   the scroll script: a state axis of an order. Five nodes by default
+   (`--c5-st-n`), the line filled for good up to the current step through the
+   existing `--c5-st-p` (0 to 1, set in the `style` attribute of the axis:
+   (current step - 1) / (number of steps - 1)). Under every node the name of
+   the state and, optionally, a date.
+
+   State of a step: `is-done` on the steps already passed, `aria-current="step"`
+   on the current one; the remaining steps are still ahead. The current node
+   carries a ring, so the state never rests on the fill alone.
+
+   The line runs from the centre of the first node to the centre of the last
+   one, so the fill ends exactly on the current node. From 600 px the steps are
+   columns; below that the axis turns and runs down the left edge, with rows of
+   equal height, so the same share of the line still lands on the node. Every
+   rule below is scoped to the modifier and overrides the phone layout of the
+   base block between 600 and 899 px. */
+.c5-st.c5-st--sama-os{--c5-st-n:5;--c5-st-node:28px;--c5-st-row:var(--w-space-5);}
+.c5-st--sama-os .c5-st__axis{position:relative;}
+.c5-st--sama-os .c5-st__fill{transform:scaleX(var(--c5-st-p,0));transform-origin:left center;}
+.c5-st--sama-os .c5-st__steps{display:grid;margin:0;padding:0;list-style:none;}
+.c5-st--sama-os .c5-st__step{gap:2px;min-width:0;}
+.c5-st--sama-os .c5-st__node{background:var(--w-surface-page);border-color:var(--w-border-strong);color:var(--w-text-tertiary);}
+.c5-st--sama-os .c5-st__step.is-done .c5-st__node,
+.c5-st--sama-os .c5-st__step[aria-current="step"] .c5-st__node{background:var(--w-gray-900);border-color:var(--w-gray-900);color:var(--w-text-inverse);}
+.c5-st--sama-os .c5-st__step[aria-current="step"] .c5-st__node{outline:1px solid var(--w-gray-900);outline-offset:3px;}
+.c5-st--sama-os .c5-st__name{display:block;font-size:0.875rem;line-height:1.35;font-weight:var(--w-weight-regular);color:var(--w-text-secondary);overflow-wrap:break-word;}
+.c5-st--sama-os .c5-st__step.is-done .c5-st__name{color:var(--w-text-primary);}
+.c5-st--sama-os .c5-st__step[aria-current="step"] .c5-st__name{font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+.c5-st--sama-os .c5-st__date{display:block;font-size:0.75rem;line-height:1.45;color:var(--w-text-tertiary);font-variant-numeric:tabular-nums;overflow-wrap:break-word;}
+
+@media (min-width:600px){
+  .c5-st--sama-os .c5-st__steps{grid-template-columns:repeat(var(--c5-st-n),minmax(0,1fr));gap:var(--c5-st-gap);align-items:start;}
+  .c5-st--sama-os .c5-st__line{top:calc(var(--c5-st-node) / 2);bottom:auto;left:calc(var(--c5-st-node) / 2);
+    right:calc((100% - (var(--c5-st-n) - 1) * var(--c5-st-gap)) / var(--c5-st-n) - var(--c5-st-node) / 2);
+    width:auto;height:1px;}
+  .c5-st--sama-os .c5-st__step{padding-left:0;}
+  .c5-st--sama-os .c5-st__node{position:static;margin-bottom:var(--w-space-3);}
+}
+@media (max-width:599px){
+  .c5-st--sama-os .c5-st__steps{grid-template-columns:minmax(0,1fr);grid-auto-rows:1fr;gap:var(--c5-st-row);}
+  .c5-st--sama-os .c5-st__line{top:calc(var(--c5-st-node) / 2);left:calc(var(--c5-st-node) / 2);right:auto;
+    bottom:calc((100% - (var(--c5-st-n) - 1) * var(--c5-st-row)) / var(--c5-st-n) - var(--c5-st-node) / 2);
+    width:1px;height:auto;}
+  .c5-st--sama-os .c5-st__fill{transform:scaleY(var(--c5-st-p,0));transform-origin:top center;}
+  .c5-st--sama-os .c5-st__step{min-height:var(--c5-st-node);padding-left:calc(var(--c5-st-node) + var(--w-space-4));justify-content:flex-start;}
+  .c5-st--sama-os .c5-st__name{padding-top:4px;}
+}

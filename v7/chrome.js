@@ -46,6 +46,23 @@
    data-ce attributes mark content elements (CE) of the site: the registry
    of codes and names lives in ../ce-rejestr.js, the highlighting overlay
    in ce-overlay.js. They are metadata only and change no layout or behaviour.
+
+   B2B platform (04.10.2026) – three additions, all in this file:
+   - <cw-navbar data-uklad="panel" data-current="zamow"> renders the panel
+     header (CE-91, template panelbar()) instead of the site header; no mega
+     menus, no cart, no mobile navigation, no scrim. data-uklad="handlowiec"
+     renders the same block in the sales desk variant. data-current takes:
+     pulpit · zamow · zamowienia · oferty · dokumenty · opiekun (panel),
+     zamowienia (sales desk). Styles: ce/CE-91-naglowek-panelu.css.
+   - <cw-footer> on a page that holds cw-navbar[data-uklad] renders CE-04 in
+     the "panel" variant: the bottom strip only.
+   - State "zalogowany-pro" of the site header (CE-01): switched on by
+     <cw-navbar data-widok="pro">, by widok=pro in the address, by widok=pro
+     in the address fragment, or by the cw:widok event on document
+     (detail: {pro: true/false}). It adds the cw-probar strip above the header
+     and puts the "Panel B2B" button in place of the cart icon (from 1280 px;
+     a narrower header shows the strip only). A page without
+     the state has no strip in the DOM. Styles: .cw-probar in cw.css.
    ===================================================================== */
 (function () {
   "use strict";
@@ -410,7 +427,7 @@
         <a class="wf-link--quiet" href="o-firmie.html">O nas</a>
         <a class="wf-link--quiet" href="kontakt.html">Kontakt</a>
         <a class="wf-link--quiet" href="partner.html">Zostań partnerem</a>
-        <a class="wf-link--quiet" href="platforma-b2b.html">Panel / Zaloguj</a>
+        <a class="wf-link--quiet" href="logowanie.html?tryb=b2b">Panel / Zaloguj</a>
       </nav>
     </div>
     <div class="wf-footer__bottom wf-cluster wf-cluster--between">
@@ -419,6 +436,175 @@
     </div>
   </div>
 </footer>`;
+
+  /* ===== B2B platform: panel header (CE-91) and panel footer (CE-04 "panel") ===== */
+  function esc(t) {
+    return String(t).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  }
+
+  /* Names come from the sample data script (b2b-wspolne.js, window.CWB2B) that
+     stands in <head> before this file; the fallback keeps the header complete
+     on a page that does not load it. */
+  function b2bName(key, fallback) {
+    var d = window.CWB2B && window.CWB2B[key];
+    return (d && d.nazwa) || fallback;
+  }
+  var KLIENT = "Gospodarstwo Sadownicze Zielony Jar (przykład)";
+  var OPIEKUN = "Anna Przykładowa (przykład)";
+
+  /* data-nav → file → label; data-current on <cw-navbar> picks the current one. */
+  var PANEL_TABS = [
+    ["pulpit", "platforma-b2b.html", "Pulpit"],
+    ["zamow", "b2b-zamow.html", "Zamów"],
+    ["zamowienia", "b2b-zamowienia.html", "Zamówienia"],
+    ["oferty", "b2b-oferta.html", "Oferty"],
+    ["dokumenty", "b2b-dokumenty.html", "Dokumenty"],
+    ["opiekun", "b2b-opiekun.html", "Opiekun"]
+  ];
+  var DESK_TABS = [["zamowienia", "admin.html", "Zamówienia klientów"]];
+
+  /* Two rows: brand, area label, account name and links; below them the tabs –
+     plain links in a <nav>, the current one gets aria-current (no tab roles). */
+  function panelbar(desk) {
+    var tabs = desk ? DESK_TABS : PANEL_TABS, li = "", i;
+    for (i = 0; i < tabs.length; i++) {
+      li += '\n        <li><a class="c5-panelbar__tab" data-nav="' + tabs[i][0] + '" href="' + tabs[i][1] + '">' + tabs[i][2] + "</a></li>";
+    }
+    return '<header class="c5-panelbar' + (desk ? " c5-panelbar--handlowiec" : "") + '" id="panel-naglowek" data-ce="CE-91"' +
+      (desk ? ' data-ce-wariant="handlowiec"' : "") + `>
+  <div class="c5-wrap c5-wrap--wide">
+    <div class="c5-panelbar__top">
+      <a class="c5-panelbar__brand" href="` + (desk ? "admin.html" : "platforma-b2b.html") + `">Carbohort</a>
+      <span class="c5-panelbar__area">` + (desk ? "Stanowisko handlowca" : "Platforma B2B") + `</span>
+      <span class="c5-panelbar__who"><span class="wf-sr-only">` + (desk ? "Zalogowany pracownik: " : "Zalogowane konto: ") + "</span>" +
+        esc(desk ? b2bName("opiekun", OPIEKUN) : b2bName("klient", KLIENT)) + `</span>
+      <div class="c5-panelbar__links">` + (desk ? "" : `
+        <a class="c5-panelbar__link" href="home.html?widok=pro">Strona CarboHort<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-external-link"></use></svg></a>`) + `
+        <a class="c5-panelbar__link" href="` + (desk ? "logowanie.html" : "logowanie.html?tryb=b2b") + `">Wyloguj</a>
+      </div>
+    </div>
+    <nav class="c5-panelbar__tabs" aria-label="` + (desk ? "Stanowisko handlowca" : "Platforma B2B") + `">
+      <ul>` + li + `
+      </ul>
+    </nav>
+  </div>
+</header>`;
+  }
+
+  /* Below 900 px the tabs scroll sideways; the current one is brought to the
+     middle of the strip. The strip's own scrollLeft is set instead of calling
+     scrollIntoView, so a page opened at an anchor is never moved vertically. */
+  function centerTab(host) {
+    var strip = host.querySelector(".c5-panelbar__tabs");
+    var tab = strip && strip.querySelector('[aria-current="page"]');
+    if (!tab || strip.scrollWidth <= strip.clientWidth) return;
+    var s = strip.getBoundingClientRect(), t = tab.getBoundingClientRect();
+    strip.scrollLeft += (t.left + t.width / 2) - (s.left + s.width / 2);
+  }
+
+  /* The sales desk is not a customer account: its footer links to the site
+     without the professional state and carries no platform terms. */
+  function footerPanel(desk) {
+    return `<footer class="wf-footer cw-footer--panel" id="serwis-stopka" data-ce="CE-04" data-ce-wariant="panel">
+  <div class="c5-wrap c5-wrap--wide">
+    <div class="wf-cluster wf-cluster--between">
+      <span class="wf-caption wf-t-secondary">© Carbohort – makieta. Kwoty i dane przykładowe.</span>
+      <span class="wf-cluster wf-gap-4">` + (desk ? "" : `
+        <button type="button" class="wf-link--quiet wf-caption">Regulamin platformy</button>`) + `
+        <a class="wf-link--quiet wf-caption" href="` + (desk ? "home.html" : "home.html?widok=pro") + `">Strona CarboHort</a>
+      </span>
+    </div>
+  </div>
+</footer>`;
+  }
+
+  /* ===== CE-01, state "zalogowany-pro" ======================================
+     A professional account looking at the site: a strip above the header with
+     the account name, the way back to the panel and a link to a product page,
+     and the "Panel B2B" button in place of the cart icon. Everything is added
+     and taken away in place – the header itself is not rendered again, so the
+     listeners cw.js hangs on it stay. `carry` says how the state travels on
+     the local links of the header and the strip – in the form it came in:
+     "?" appends ?widok=pro, "#" appends #widok=pro (a link with its own anchor
+     keeps it), "" leaves the links alone. The product page link is left out
+     on the product pages themselves. */
+  function proBar(carry) {
+    var onPdp = /(?:^|\/)pdp(?:-kwasny)?\.html$/.test(location.pathname || "");
+    return '<div class="wf-container cw-probar__inner">' +
+      '<span class="cw-probar__who">Zalogowany: <b>' + esc(b2bName("klient", KLIENT)) + "</b></span>" +
+      '<a class="cw-probar__link" href="platforma-b2b.html">← wróć do panelu B2B</a>' +
+      (onPdp ? "" : '<a class="cw-probar__link" href="pdp.html' + (carry === "#" ? "#widok=pro" : "?widok=pro") + '">Zobacz kartę produktu</a>') +
+      "</div>";
+  }
+
+  function setPro(host, on, carry) {
+    var head = host.querySelector("#serwis-naglowek");
+    if (!head) return;
+    var bar = host.querySelector(".cw-probar");
+    if (!!bar === !!on) return;
+    var cart = head.querySelector("a.cw-cart"), btn = head.querySelector("[data-cw-panelbtn]");
+    var mini = head.querySelector("[data-cw-minicart]");
+
+    if (!on) {
+      bar.parentNode.removeChild(bar);
+      if (btn) btn.parentNode.removeChild(btn);
+      if (cart) { cart.hidden = false; cart.style.display = ""; }
+      head.classList.remove("cw-nav--pro");
+      head.removeAttribute("data-ce-wariant");
+      head.removeAttribute("data-ce-od");
+      (host._cwCarried || []).forEach(function (p) { p[0].setAttribute("href", p[1]); });
+      host._cwCarried = null;
+      return;
+    }
+
+    bar = document.createElement("div");
+    bar.className = "cw-probar";
+    bar.id = "serwis-pasek-pro";
+    bar.setAttribute("role", "region");
+    bar.setAttribute("aria-label", "Konto profesjonalne");
+    bar.innerHTML = proBar(carry);
+    host.insertBefore(bar, head);
+
+    if (cart) {
+      btn = document.createElement("a");
+      btn.className = "wf-btn wf-btn--secondary wf-btn--sm cw-probar-btn";
+      btn.setAttribute("data-cw-panelbtn", "");
+      btn.href = "platforma-b2b.html";
+      btn.textContent = "Panel B2B";
+      cart.parentNode.insertBefore(btn, cart);
+      /* The cart link stays in the DOM, hidden, so the preview wiring of cw.js
+         survives switching the state off again. */
+      cart.hidden = true;
+      cart.style.display = "none";
+    }
+    if (mini) mini.setAttribute("data-open", "false");
+    head.classList.add("cw-nav--pro");
+    head.setAttribute("data-ce-wariant", "zalogowany-pro");
+    head.setAttribute("data-ce-od", "#serwis-pasek-pro");
+
+    if (carry) {
+      var done = [];
+      Array.prototype.forEach.call(host.querySelectorAll("a[href]"), function (a) {
+        var h = a.getAttribute("href"), m = /^([a-z0-9-]+\.html)(#.*)?$/i.exec(h || "");
+        if (!m || m[1] === "platforma-b2b.html") return;
+        if (carry === "#" && m[2]) return; /* a link with its own anchor keeps it */
+        done.push([a, h]);
+        a.setAttribute("href", carry === "#" ? m[1] + "#widok=pro" : m[1] + "?widok=pro" + (m[2] || ""));
+      });
+      host._cwCarried = done;
+    }
+  }
+
+  function proInQuery() { return /[?&]widok=pro(?:&|$)/.test(location.search || ""); }
+  function proInHash() { return /(?:^#|&)widok=pro(?:&|$)/.test(location.hash || ""); }
+  function proCarry() { return proInQuery() ? "?" : proInHash() ? "#" : ""; }
+
+  document.addEventListener("cw:widok", function (e) {
+    var host = document.querySelector("cw-navbar:not([data-uklad])");
+    if (host) setPro(host, !!(e.detail && e.detail.pro), proCarry());
+  });
 
   var DOCK = `<!-- ===== dr Jurek – pływający dok (ukryty do przewinięcia) ===== -->
 <div class="cw-jurek-backdrop" data-jurek-backdrop data-open="false" aria-hidden="true"></div>
@@ -595,9 +781,25 @@
 
   define("cw-icons",  function (el) { el.innerHTML = ICONS; });
   define("cw-navbar", function (el) {
+    var uklad = el.getAttribute("data-uklad");
+    if (uklad === "panel" || uklad === "handlowiec") {
+      el.innerHTML = panelbar(uklad === "handlowiec");
+      markCurrent(el, el.getAttribute("data-current"));
+      centerTab(el);
+      /* once more when the stylesheets and fonts have settled the widths */
+      window.addEventListener("load", function () { centerTab(el); });
+      return;
+    }
     el.innerHTML = NAVBAR + SCRIM;
     markCurrent(el, el.getAttribute("data-current"));
+    /* Three sources, in this order: attribute, address query, address fragment. */
+    if (el.getAttribute("data-widok") === "pro") setPro(el, true, "");
+    else if (proInQuery()) setPro(el, true, "?");
+    else if (proInHash()) setPro(el, true, "#");
   });
-  define("cw-footer", function (el) { el.innerHTML = FOOTER; });
+  define("cw-footer", function (el) {
+    var bar = document.querySelector("cw-navbar[data-uklad]");
+    el.innerHTML = bar ? footerPanel(bar.getAttribute("data-uklad") === "handlowiec") : FOOTER;
+  });
   define("cw-dock",   function (el) { el.innerHTML = DOCK; });
 })();

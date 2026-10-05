@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="c5.css">
 <link rel="stylesheet" href="sklep-wspolne.css">
 <link rel="stylesheet" href="pdp.css">
+<link rel="stylesheet" href="b2b-wspolne.css">
 <script src="../status.js"></script>
 <script src="../ce-rejestr.js"></script>
 <script src="chrome.js"></script>
@@ -33,6 +34,17 @@
 <a class="c5pd-skip" href="#main">Przejdź do treści</a>
 
 <cw-navbar data-current="sklep"></cw-navbar>
+
+
+
+
+
+<div class="c5b-stan c5b-stan--serwis" role="group" aria-label="Stan makiety">
+  <span class="c5b-stan__lbl">Stan makiety:</span>
+  <button type="button" data-stan-ustaw="sklep" aria-pressed="true">klient sklepu</button>
+  <button type="button" data-stan-ustaw="pro" aria-pressed="false">zalogowany profesjonalista</button>
+  <button type="button" data-stan-ustaw="specjalna" aria-pressed="false">z ceną specjalną</button>
+</div>
 
 <main id="main">
 
@@ -81,6 +93,7 @@
             <div class="c5pd-pricebox">
               <div class="c5pd-price" data-c5pd-price></div>
               <p class="c5pd-note">cena brutto za opakowanie</p>
+              <p class="c5pd-net" data-c5pd-net>36,11 zł netto</p>
               <p class="c5pd-note" data-c5pd-lowest hidden></p>
             </div>
           </div>
@@ -116,7 +129,7 @@
               <p class="c5pd-note">Frakcja 0,1–2 mm docelowo tylko w odmianie kwaśnej ⚠️</p>
             </fieldset>
 
-            <div class="c5pd-field">
+            <div class="c5pd-field" data-c5pd-cart>
               <label class="c5pd-label" for="c5pd-qty">Liczba opakowań</label>
               <div class="c5pd-addrow">
                 <div class="cws-qty">
@@ -129,6 +142,15 @@
             </div>
             <p class="c5pd-total" data-c5pd-total hidden></p>
             <div class="c5pd-fb" data-c5pd-fb role="status" aria-live="polite"></div>
+
+            
+
+
+
+            <div class="c5pd-proact" data-c5pd-pro hidden>
+              <a class="cws-btn cws-btn--dark c5pd-add" href="b2b-zamow.html">Zamów w panelu B2B</a>
+              <p class="c5pd-special" data-c5pd-special hidden>W panelu czeka na Ciebie cena specjalna</p>
+            </div>
 
             <p class="c5pd-ship"><svg class="wf-icon" aria-hidden="true"><use href="#ti-truck"></use></svg><span data-c5pd-ship></span></p>
           </form>
@@ -339,8 +361,8 @@
         <p>Przy większych ilościach i stałych dostawach przygotujemy ofertę. Klienci profesjonalni zamawiają na naszej platformie – po swojej cenie.</p>
         <div class="c5-btnrow">
           <a class="c5-btn c5-btn--inv" href="kontakt.html">Zapytaj o ofertę</a>
-          <a class="c5-pro__link" href="platforma-b2b.html">Zaloguj się do platformy</a>
-          <a class="c5-pro__link" href="rejestracja.html">Załóż konto</a>
+          <a class="c5-pro__link" href="logowanie.html?tryb=b2b">Zaloguj się do platformy B2B</a>
+          <a class="c5-pro__link" href="rejestracja.html">Załóż konto PRO</a>
         </div>
       </div>
     </div>

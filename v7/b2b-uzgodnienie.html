@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Uzgodnienie z opiekunem – platforma B2B CarboHort</title>
+<meta name="description" content="Platforma B2B CarboHort – uzgodnienie dużego zamówienia z opiekunem: pozycje z tabeli i wiadomość do opiekuna (makieta, dane przykładowe).">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="wireframe.css">
+<link rel="stylesheet" href="cw.css">
+<link rel="stylesheet" href="ce/00-base.css">
+<link rel="stylesheet" href="ce/CE-22-tabela.css">
+<link rel="stylesheet" href="ce/CE-50-formularz.css">
+<link rel="stylesheet" href="ce/CE-77-pasek-tytulowy.css">
+<link rel="stylesheet" href="ce/CE-91-naglowek-panelu.css">
+<link rel="stylesheet" href="b2b-wspolne.css">
+<script src="../status.js"></script>
+<script src="../ce-rejestr.js"></script>
+<script src="b2b-wspolne.js"></script>
+<script src="chrome.js"></script>
+</head>
+<body>
+<a class="wf-sr-only" href="#main">Przejdź do treści</a>
+
+<cw-icons></cw-icons>
+
+<cw-navbar data-uklad="panel" data-current="zamow"></cw-navbar>
+<noscript><p class="c5-wrap c5-wrap--wide wf-small">Nagłówek i stopka platformy B2B wymagają włączonej obsługi JavaScriptu.</p></noscript>
+
+<main id="main" class="c5b-main" tabindex="-1">
+
+  
+  <section class="c5-titlebar c5-titlebar--z-akcja" id="naglowek" data-ce="CE-77" data-ce-wariant="z-akcja" aria-labelledby="naglowek-h">
+    <div class="c5-titlebar__l">
+      <a class="c5-titlebar__back" href="b2b-zamow.html?stan=duze">← Wróć do tabeli</a>
+      <div class="c5-titlebar__head">
+        <h1 class="c5-titlebar__h1" id="naglowek-h">Uzgodnij zamówienie z opiekunem</h1>
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="c5-tbl c5-tbl--danych" id="pozycje" data-ce="CE-22" data-ce-wariant="danych" aria-labelledby="pozycje-h" style="--c5-tbl-min:720px;--c5-tbl-first:9.5rem">
+    <h2 class="wf-sr-only" id="pozycje-h">Pozycje zamówienia</h2>
+    <div class="c5-tbl__scroll" role="region" tabindex="0" aria-label="Pozycje zamówienia">
+      <table class="c5-table c5-table--num">
+        <caption class="wf-sr-only">Pozycje zamówienia – ceny netto</caption>
+        <thead>
+          <tr>
+            <th scope="col">Produkt</th>
+            <th scope="col" class="c5-table__num">Ilość</th>
+            <th scope="col" class="c5-table__num">Cena w sklepie (netto)</th>
+            <th scope="col" class="c5-table__num">Twoja cena</th>
+            <th scope="col" class="c5-table__num">Wartość netto</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">CARBOMAT ECO pH 6,0–6,5<span class="c5-tbl__sub">big bag 1000 l</span></th>
+            <td class="c5-table__num">24</td>
+            <td class="c5-table__num">601,85&nbsp;zł</td>
+            <td class="c5-table__num">511,57&nbsp;zł<span class="c5-tbl__sub">rabat 15%</span></td>
+            <td class="c5-table__num">12&nbsp;277,68&nbsp;zł</td>
+          </tr>
+          <tr>
+            <th scope="row">CARBOHUMIC filtrowany (187 mesh)<span class="c5-tbl__sub">mauzer 1000 l</span></th>
+            <td class="c5-table__num">4</td>
+            <td class="c5-table__num">8&nbsp;518,52&nbsp;zł</td>
+            <td class="c5-table__num">7&nbsp;496,30&nbsp;zł<span class="c5-tbl__sub">rabat 12%</span></td>
+            <td class="c5-table__num">29&nbsp;985,20&nbsp;zł</td>
+          </tr>
+          <tr>
+            <th scope="row">CARBOHUMIC MAXI PLUS<span class="c5-tbl__sub">kanister 20 l · cena specjalna do 31.10.2026</span></th>
+            <td class="c5-table__num">10</td>
+            <td class="c5-table__num">787,04&nbsp;zł</td>
+            <td class="c5-table__num">595,00&nbsp;zł</td>
+            <td class="c5-table__num">5&nbsp;950,00&nbsp;zł</td>
+          </tr>
+          <tr>
+            <th scope="row">CARBOMAT ECO Ściółka pH 4,5–5,0<span class="c5-tbl__sub">big bag 1000 l</span></th>
+            <td class="c5-table__num">12</td>
+            <td class="c5-table__num">555,56&nbsp;zł</td>
+            <td class="c5-table__num">472,23&nbsp;zł<span class="c5-tbl__sub">rabat 15%</span></td>
+            <td class="c5-table__num">5&nbsp;666,76&nbsp;zł</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th scope="row" colspan="4">4 pozycje netto</th>
+            <td class="c5-table__num">53&nbsp;879,64&nbsp;zł</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <p class="c5-src c5-tbl__src">Te same pozycje co w tabeli. Obie ceny netto.</p>
+  </section>
+
+  
+  <section class="c5-form c5-form--z-podsumowaniem" id="wiadomosc" data-ce="CE-50" data-ce-wariant="z-podsumowaniem" aria-labelledby="wiadomosc-h">
+    <h2 class="wf-sr-only" id="wiadomosc-h">Wiadomość do opiekuna i wysyłka</h2>
+    <form class="c5-form__grid" novalidate>
+
+      <div class="c5-form__main">
+        <fieldset class="c5-form__group">
+          <legend class="c5-form__legend">Wiadomość</legend>
+          <div class="c5-form__fields">
+            <div class="wf-field">
+              <label class="wf-label" for="uz-wiadomosc">Wiadomość do opiekuna</label>
+              <textarea class="wf-textarea" id="uz-wiadomosc" name="wiadomosc" rows="5">Chcę odebrać całość jedną dostawą w październiku. Proszę o propozycję.</textarea>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <aside class="c5-form__panel" aria-labelledby="wiadomosc-suma-h">
+        <h3 class="c5-form__ptitle" id="wiadomosc-suma-h">Podsumowanie</h3>
+        <dl class="c5-dl c5-dl--rows">
+          <div class="c5-dl__row c5-dl__row--sum"><dt>4 pozycje netto</dt><dd>53&nbsp;879,64&nbsp;zł</dd></div>
+        </dl>
+        <p class="c5-form__text">Próg dla tego konta: 40&nbsp;000&nbsp;zł netto (przykład)</p>
+        <p class="c5-form__text">Odpowiemy do: <strong>poniedziałek 05.10.2026, godz. 12:00</strong></p>
+        <p class="c5-src">Kwoty, stawki VAT i terminy są przykładowe.</p>
+        <a class="c5-btn c5-btn--dark" href="b2b-oferta.html?stan=wyslane">Wyślij do opiekuna</a>
+      </aside>
+
+    </form>
+  </section>
+
+</main>
+
+<cw-footer></cw-footer>
+
+<script src="ce/CE-50-formularz.js"></script>
+<script src="ce-overlay.js"></script>
+</body>
+</html>

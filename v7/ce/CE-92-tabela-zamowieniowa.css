@@ -1,0 +1,135 @@
+/* ==========================================================================
+   CE-92 – Order table (c5-order)
+   Product list and basket in one table: two prices, a quantity stepper, the
+   row value and a dock that sticks to the bottom of the window: the
+   large-order block (from the threshold up) standing on the summary bar.
+   Variant: c5-order--handlowiec (customer field in the toolbar, no PDF link,
+   no dock – neither the large-order block nor the summary bar; the form
+   panel next to it carries the total).
+   The stepper takes its look from cws-qty (sklep-wspolne.css); the segment
+   (c5-seg) and the chip (c5-chip) are interface elements defined elsewhere –
+   this file only places them.
+   Script: ce/CE-92-tabela-zamowieniowa.js
+   ========================================================================== */
+
+/* --- Toolbar: list scope, search, customer field ------------------------- */
+.c5-order__tools { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--w-space-3) var(--w-space-4); }
+.c5-order__search { position: relative; flex: 1 1 16rem; max-width: 28rem; }
+.c5-order__search .wf-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--w-icon-default); }
+.c5-order__search .wf-input { padding-left: 40px; }
+.c5-order__client { flex: 1 1 20rem; max-width: 36rem; }
+
+/* --- Sentence about prices ------------------------------------------------ */
+.c5-order__note { margin: var(--w-space-4) 0 0; font-size: 0.875rem; line-height: 1.55; color: var(--w-text-secondary); max-width: 68ch; }
+
+/* --- Table ---------------------------------------------------------------- */
+.c5-order__table { width: 100%; margin-top: var(--w-space-4); border-collapse: collapse; font-size: 0.9375rem; line-height: 1.45; font-variant-numeric: tabular-nums; }
+.c5-order__table th,
+.c5-order__table td { padding: 14px 16px; text-align: left; vertical-align: middle; }
+.c5-order__table thead th { font-size: 0.8125rem; font-weight: var(--w-weight-semibold); color: var(--w-text-primary); background: var(--w-surface-subtle); border-block: 1px solid var(--w-border-default); white-space: nowrap; }
+.c5-order__row { border-bottom: 1px solid var(--w-border-subtle); scroll-margin-top: var(--w-space-6); }
+.c5-order__row.is-active { background: var(--w-surface-subtle); }
+.c5-order__row:target { outline: 2px solid var(--w-gray-900); outline-offset: -2px; }
+
+.c5-order__table .c5-order__shop,
+.c5-order__table .c5-order__price,
+.c5-order__table .c5-order__val { text-align: right; white-space: nowrap; }
+.c5-order__table .c5-order__qty { width: 1%; white-space: nowrap; }
+.c5-order__shop { color: var(--w-text-secondary); }
+td.c5-order__val { font-weight: var(--w-weight-semibold); }
+
+.c5-order__name { display: block; font-weight: var(--w-weight-medium); color: var(--w-text-primary); }
+.c5-order__pdf { margin-top: 2px; padding: 0; background: none; border: 0; font: inherit; font-size: 0.8125rem; cursor: pointer; }
+.c5-order__pdf:focus-visible { outline: 2px solid var(--w-focus-ring); outline-offset: 2px; }
+.c5-order__mine { display: block; font-weight: var(--w-weight-semibold); color: var(--w-text-primary); }
+.c5-order__disc { display: block; font-size: 0.8125rem; color: var(--w-text-secondary); }
+.c5-order__tag { margin-top: 4px; white-space: normal; text-align: left; }
+
+.c5-order .cws-qty__b[aria-disabled="true"] { color: var(--w-text-disabled); cursor: default; }
+.c5-order .cws-qty__b[aria-disabled="true"]:hover { background: none; }
+
+/* Message shown when the filter leaves no rows */
+.c5-order__none { margin: 0; padding: var(--w-space-5) 16px; font-size: 0.9375rem; color: var(--w-text-secondary); border-bottom: 1px solid var(--w-border-subtle); }
+
+/* --- Sentence above the dock --------------------------------------------- */
+.c5-order__ship { margin: var(--w-space-5) 0 var(--w-space-2); }
+/* Threshold sentence in the page flow: shown below 600 px only, while the
+   large-order block is on (there the block itself is cut to one row). */
+.c5-order__prog { display: none; margin: var(--w-space-5) 0 calc(-1 * var(--w-space-4)); }
+
+/* --- Sticky dock: large-order block on top, summary bar below -------------
+   One framed box that sticks 20 px above the bottom edge of the window. The
+   large-order block is the upper row of the dock, so it is in view the moment
+   it appears and the table above does not move. */
+.c5-order__dock { position: sticky; bottom: 20px; z-index: var(--w-z-sticky); background: var(--w-surface-page); border: 1px solid var(--w-gray-900); box-shadow: var(--w-shadow-md); }
+
+.c5-order__big { display: flex; align-items: center; justify-content: space-between; gap: var(--w-space-2) var(--w-space-6); padding: 10px 20px; background: var(--w-surface-subtle); border-bottom: 1px solid var(--w-border-default); font-size: 0.9375rem; line-height: 1.45; }
+.c5-order__big p { margin: 0; min-width: 0; }
+.c5-order__big .c5-src { display: block; margin-top: 2px; }
+.c5-order__big .c5-btn { flex: none; }
+
+.c5-order__bar { display: flex; align-items: center; justify-content: space-between; gap: var(--w-space-3) var(--w-space-6); padding: 14px 20px; }
+.c5-order__sum { margin: 0; font-size: 1.0625rem; line-height: 1.4; font-variant-numeric: tabular-nums; }
+.c5-order__count,
+.c5-order__net { font-weight: var(--w-weight-semibold); white-space: nowrap; }
+.c5-order__gross { font-size: 0.8125rem; color: var(--w-text-secondary); white-space: nowrap; }
+.c5-order__empty { margin: 2px 0 0; font-size: 0.8125rem; color: var(--w-text-secondary); }
+.c5-order__next { flex: none; }
+/* The look of the inactive next-step button (aria-disabled) comes from b2b-wspolne.css. */
+.c5-order__next:focus-visible { outline: 2px solid var(--w-focus-ring); outline-offset: 2px; }
+
+/* The focused control must never end up under the dock: the scroll port of
+   the page is shortened by the dock height – large-order block included (the
+   script keeps the variable exact). */
+html:has(.c5-order__dock) { scroll-padding-bottom: calc(var(--c5-order-bar-h, 5.5rem) + 36px); }
+
+/* --- Below 900 px: a row becomes a card ----------------------------------
+   The table roles stay in the markup (role="table", "row", "cell"…), so the
+   semantics survive the change of display. */
+@media (max-width:899px) {
+  .c5-order__table,
+  .c5-order__table tbody,
+  .c5-order__table td { display: block; }
+  .c5-order__table thead { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+  .c5-order__table td { padding: 0; }
+  .c5-order__row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px 16px; align-items: start; margin-top: var(--w-space-3); padding: 16px; border: 1px solid var(--w-border-default); }
+  .c5-order__row.is-active { border-color: var(--w-gray-900); }
+  .c5-order__table .c5-order__prod,
+  .c5-order__table .c5-order__pack { grid-column: 1 / -1; }
+  .c5-order__table .c5-order__shop,
+  .c5-order__table .c5-order__price { text-align: left; white-space: normal; }
+  .c5-order__table .c5-order__qty { width: auto; }
+  .c5-order__table .c5-order__val { align-self: end; }
+  .c5-order__table td[data-label]::before { content: attr(data-label); content: attr(data-label) / ""; display: block; margin-bottom: 2px; font-size: 0.75rem; font-weight: var(--w-weight-regular); line-height: 1.45; color: var(--w-text-tertiary); white-space: normal; }
+  .c5-order__table td.c5-order__prod[data-label]::before { content: none; }
+  .c5-order__table td.c5-order__qty[data-label]::before { margin-bottom: 6px; }
+  .c5-order__name { font-size: 1rem; }
+  .c5-order__pdf { display: inline-flex; align-items: center; min-height: 44px; margin-block: 0 -12px; }
+  .c5-order .cws-qty__b { width: 44px; min-height: 44px; }
+  .c5-order__none { margin-top: var(--w-space-3); padding: 16px; border: 1px solid var(--w-border-default); }
+  /* Compact large-order block: the lead with the threshold and the button;
+     the second sentence says what the button says, so it steps aside. */
+  .c5-order__big { flex-direction: column; align-items: stretch; padding: 10px 16px; }
+  .c5-order__bigmore { display: none; }
+  .c5-order__big .c5-btn { min-height: 44px; --c5-btn-px: 16px; text-align: center; }
+}
+
+/* --- Below 600 px: the bar takes two rows -------------------------------- */
+@media (max-width:599px) {
+  /* Large-order block in one row: the lead and a text link. The threshold
+     sentence moves into the page flow (c5-order__prog), so the dock leaves
+     room for the list. */
+  .c5-order__big { flex-direction: row; align-items: center; gap: var(--w-space-2); padding-block: 0; font-size: 0.875rem; }
+  .c5-order__big p { white-space: nowrap; }
+  .c5-order__big .c5-src { display: none; }
+  .c5-order__big .c5-btn { min-height: 44px; padding: 0; background: none; border: 0; font-size: inherit; font-weight: var(--w-weight-medium); color: var(--w-text-primary); text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
+  .c5-order__bigword { font-size: 0; } /* shorter label, the full name stays in the text */
+  .c5-order:has(.c5-order__big:not([hidden])) .c5-order__prog { display: block; }
+  .c5-order__bar { flex-direction: column; align-items: stretch; gap: var(--w-space-2); padding: 10px 16px 12px; }
+  .c5-order__sum { font-size: 1rem; }
+  .c5-order__next { width: 100%; --c5-btn-px: 16px; }
+}
+
+/* --- Variant: handlowiec --------------------------------------------------
+   Same table; the toolbar holds the customer field and there is no dock. */
+.c5-order--handlowiec .c5-order__search { max-width: 22rem; }

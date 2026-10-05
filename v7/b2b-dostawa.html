@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dostawa i płatność – platforma B2B CarboHort</title>
+<meta name="description" content="Krok zamówienia na platformie B2B: adres dostawy, rozładunek i termin, sposób dostawy, płatność oraz podsumowanie kwot netto i brutto.">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="wireframe.css">
+<link rel="stylesheet" href="cw.css">
+<link rel="stylesheet" href="ce/00-base.css">
+<link rel="stylesheet" href="ce/CE-50-formularz.css">
+<link rel="stylesheet" href="ce/CE-77-pasek-tytulowy.css">
+<link rel="stylesheet" href="ce/CE-91-naglowek-panelu.css">
+<link rel="stylesheet" href="b2b-wspolne.css">
+<script src="../status.js"></script>
+<script src="../ce-rejestr.js"></script>
+<script src="b2b-wspolne.js"></script>
+<script src="chrome.js"></script>
+</head>
+<body data-stan-domyslny="zwykle">
+<a class="wf-sr-only" href="#main">Przejdź do treści</a>
+
+<cw-icons></cw-icons>
+
+<cw-navbar data-uklad="panel" data-current="zamow"></cw-navbar>
+<noscript><p class="c5-wrap c5-wrap--wide wf-small">Nagłówek i stopka platformy B2B wymagają włączonej obsługi JavaScriptu.</p></noscript>
+
+
+<div class="c5b-stan" role="group" aria-label="Stan makiety">
+  <span class="c5b-stan__lbl">Stan makiety:</span>
+  <button type="button" data-stan-ustaw="zwykle" aria-pressed="true">zwykłe zamówienie</button>
+  <button type="button" data-stan-ustaw="duze" aria-pressed="false">duże zamówienie</button>
+  <button type="button" data-stan-ustaw="oferta" aria-pressed="false">po przyjęciu oferty</button>
+</div>
+
+<div data-stan="ponow" hidden>
+  <p class="c5b-stan c5b-stan--nota">Makieta: krok pokazuje zamówienie przykładowe – kwoty nie idą za tabelą.</p>
+</div>
+
+<main id="main" class="c5b-main" tabindex="-1">
+
+  
+  <section class="c5-titlebar c5-titlebar--z-akcja" id="naglowek" data-ce="CE-77" data-ce-wariant="z-akcja" aria-labelledby="naglowek-h">
+    <div class="c5-titlebar__l">
+      <a class="c5-titlebar__back" href="b2b-zamow.html" data-stan="zwykle ponow">← Wróć do tabeli</a>
+      <a class="c5-titlebar__back" href="b2b-zamow.html?stan=duze" data-stan="duze" hidden>← Wróć do tabeli</a>
+      <a class="c5-titlebar__back" href="b2b-oferta.html" data-stan="oferta" hidden>← Wróć do oferty</a>
+      <div class="c5-titlebar__head">
+        <h1 class="c5-titlebar__h1" id="naglowek-h">Dostawa i płatność</h1>
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="c5-form c5-form--z-podsumowaniem" id="dostawa" data-ce="CE-50" data-ce-wariant="z-podsumowaniem" aria-labelledby="dostawa-h">
+    <h2 class="wf-sr-only" id="dostawa-h">Formularz dostawy i płatności</h2>
+    <form class="c5-form__grid" novalidate>
+
+      <div class="c5-form__main">
+        <fieldset class="c5-form__group">
+          <legend class="c5-form__legend">Adres dostawy</legend>
+          <div class="c5-form__fields">
+            <div class="wf-field">
+              <label class="wf-label" for="ds-adres">Adres</label>
+              <select class="wf-select" id="ds-adres" name="adres">
+                <option selected>Gospodarstwo – ul. Przykładowa 1, 00-000 Miejscowość</option>
+              </select>
+            </div>
+          </div>
+          <button type="button" class="wf-link">+ inny adres</button>
+        </fieldset>
+
+        <fieldset class="c5-form__group">
+          <legend class="c5-form__legend">Rozładunek i termin</legend>
+          <div class="c5-form__checks">
+            <label class="c5-form__check" for="ds-wozek-tak">
+              <input class="wf-radio" type="radio" id="ds-wozek-tak" name="rozladunek" value="wozek" checked>
+              <span>Mam wózek widłowy</span>
+            </label>
+            <label class="c5-form__check" for="ds-wozek-nie">
+              <input class="wf-radio" type="radio" id="ds-wozek-nie" name="rozladunek" value="brak">
+              <span>Nie mam wózka widłowego</span>
+            </label>
+          </div>
+          <div class="c5-form__fields c5-form__fields--narrow">
+            <div class="wf-field">
+              <label class="wf-label" for="ds-termin">Potrzebuję do</label>
+              <input class="wf-input" type="text" id="ds-termin" name="termin" value="20.10.2026">
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="c5-form__group">
+          <legend class="c5-form__legend">Dostawa</legend>
+          <p class="c5-form__text" data-stan="zwykle ponow">Transport ciężarowy – 8 miejsc paletowych · <strong>1&nbsp;200,00&nbsp;zł netto</strong></p>
+          <p class="c5-form__text" data-stan="duze" hidden>Transport ciężarowy; <strong>koszt i termin potwierdzi opiekun</strong></p>
+          <p class="c5-form__text" data-stan="oferta" hidden>Z oferty OF-0127: transport ciężarowy · <strong>2&nbsp;400,00&nbsp;zł netto</strong></p>
+          <p class="c5-src" data-stan="zwykle ponow">Sposób dostawy dobiera kalkulator z wagi i objętości produktów: paczkomat, paczka kurierska, paleta (kurier, 1–2 palety), transport ciężarowy (od 3 palet).</p>
+          <p class="c5-src" data-stan="duze" hidden>Przy transporcie ciężarowym koszt i termin potwierdza opiekun.</p>
+          <p class="c5-src" data-stan="oferta" hidden>Koszt dostawy przyjęty z oferty opiekuna.</p>
+        </fieldset>
+
+        <fieldset class="c5-form__group">
+          <legend class="c5-form__legend">Płatność</legend>
+          <div class="c5-form__checks">
+            <label class="c5-form__check" for="ds-plat-proforma">
+              <input class="wf-radio" type="radio" id="ds-plat-proforma" name="platnosc" value="proforma" checked>
+              <span>Przedpłata na pro formę (domyślnie)</span>
+            </label>
+            <label class="c5-form__check" for="ds-plat-przelew">
+              <input class="wf-radio" type="radio" id="ds-plat-przelew" name="platnosc" value="przelew">
+              <span>Przelew z terminem – dla klientów, którzy go mają</span>
+            </label>
+          </div>
+        </fieldset>
+      </div>
+
+      <aside class="c5-form__panel" aria-labelledby="dostawa-suma-h">
+        <h3 class="c5-form__ptitle" id="dostawa-suma-h">Podsumowanie</h3>
+
+        <dl class="c5-dl c5-dl--rows" data-stan="zwykle ponow">
+          <div class="c5-dl__row"><dt>3 pozycje netto</dt><dd>12&nbsp;945,72&nbsp;zł</dd></div>
+          <div class="c5-dl__row"><dt>Dostawa netto</dt><dd>1&nbsp;200,00&nbsp;zł</dd></div>
+          <div class="c5-dl__row"><dt>Razem netto</dt><dd>14&nbsp;145,72&nbsp;zł</dd></div>
+          <div class="c5-dl__row"><dt>VAT 8% – produkty</dt><dd>1&nbsp;035,66&nbsp;zł</dd></div>
+          <div class="c5-dl__row"><dt>VAT 23% – dostawa</dt><dd>276,00&nbsp;zł</dd></div>
+          <div class="c5-dl__row"><dt>VAT razem</dt><dd>1&nbsp;311,66&nbsp;zł</dd></div>
+          <div class="c5-dl__row c5-dl__row--sum"><dt>Brutto</dt><dd>15&nbsp;457,38&nbsp;zł</dd></div>
+        </dl>
+        <dl class="c5-dl c5-dl--rows" data-stan="duze" hidden>
+          <div class="c5-dl__row"><dt>4 pozycje netto</dt><dd>53&nbsp;879,64&nbsp;zł</dd></div>
+          <div class="c5-dl__row"><dt>Dostawa netto</dt><dd>potwierdzi opiekun</dd></div>
+          <div class="c5-dl__row"><dt>VAT 8% – produkty</dt><dd>4&nbsp;310,37&nbsp;zł</dd></div>
+          <div class="c5-dl__row c5-dl__row--sum"><dt>Brutto bez dostawy</dt><dd>58&nbsp;190,01&nbsp;zł</dd></div>
+        </dl>
+        <dl class="c5-dl c5-dl--rows" data-stan="oferta" hidden>
+          <div class="c5-dl__row"><dt>4 pozycje netto</dt><dd>53&nbsp;879,64&nbsp;zł</dd></div>
+          <div class="c5-dl__row"><dt>Dodatkowy rabat na całe zamówienie 5%</dt><dd>−2&nbsp;693,98&nbsp;zł</dd></div>
+          <div class="c5-dl__row"><dt>Po rabacie netto</dt><dd>51&nbsp;185,66&nbsp;zł</dd></div>
+          <div class="c5-dl__row"><dt>Dostawa netto – z oferty</dt><dd>2&nbsp;400,00&nbsp;zł</dd></div>
+          <div class="c5-dl__row"><dt>Razem netto</dt><dd>53&nbsp;585,66&nbsp;zł</dd></div>
+          <div class="c5-dl__row"><dt>VAT 8% – produkty</dt><dd>4&nbsp;094,85&nbsp;zł</dd></div>
+          <div class="c5-dl__row"><dt>VAT 23% – dostawa</dt><dd>552,00&nbsp;zł</dd></div>
+          <div class="c5-dl__row"><dt>VAT razem</dt><dd>4&nbsp;646,85&nbsp;zł</dd></div>
+          <div class="c5-dl__row c5-dl__row--sum"><dt>Brutto</dt><dd>58&nbsp;232,51&nbsp;zł</dd></div>
+        </dl>
+
+        <p class="c5-src">Kwoty, stawki VAT i terminy są przykładowe.</p>
+
+        <a class="c5-btn c5-btn--dark" href="potwierdzenie-b2b.html" data-stan="zwykle ponow">Zamawiam</a>
+        <a class="c5-btn c5-btn--dark" href="potwierdzenie-b2b.html?stan=duze" data-stan="duze" hidden>Zamawiam</a>
+        <a class="c5-btn c5-btn--dark" href="potwierdzenie-b2b.html?stan=oferta" data-stan="oferta" hidden>Zamawiam</a>
+      </aside>
+
+    </form>
+  </section>
+
+</main>
+
+<cw-footer></cw-footer>
+
+<script src="ce/CE-50-formularz.js"></script>
+<script src="ce-overlay.js"></script>
+</body>
+</html>

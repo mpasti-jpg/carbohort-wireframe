@@ -1,12 +1,12 @@
 window.CE_DANE = {
  "meta": {
-  "wygenerowano": "04.10.2026",
+  "wygenerowano": "05.10.2026",
   "wersja": "0.1.0",
   "projekt": "CarboHort",
-  "aktywnych": 78,
+  "aktywnych": 80,
   "wycofanych": 12,
-  "wystapien": 251,
-  "stron": 18,
+  "wystapien": 296,
+  "stron": 33,
   "bazaStron": "v7/"
  },
  "projekt": {
@@ -387,6 +387,17 @@ window.CE_DANE = {
       "w": 1280,
       "h": 354
      }
+    },
+    {
+     "slug": "zalogowany-pro",
+     "opis": "stan, nie osobny układ: nad nagłówkiem pasek z nazwą zalogowanego konta profesjonalnego, odnośnikiem powrotu do panelu i odnośnikiem do karty produktu (klasa cw-probar), w miejscu ikony koszyka przycisk „Panel B2B”",
+     "skrot": "Pasek zalogowanego profesjonalisty nad nagłówkiem i przycisk „Panel B2B” zamiast koszyka.",
+     "zrzut": {
+      "mini": "ce-indeks/img/m/CE-01--wariant-zalogowany-pro.webp",
+      "pelny": "ce-indeks/img/p/CE-01--wariant-zalogowany-pro.webp",
+      "w": 1280,
+      "h": 114
+     }
     }
    ],
    "wystapienia": [],
@@ -408,8 +419,8 @@ window.CE_DANE = {
     "przyciemnienie tła (cw-scrim)"
    ],
    "kod_zrodlowy": {
-    "css": "wireframe.css (wf-navbar) + cw.css (cw-nav, cw-brand, cw-cart, cw-minicart)",
-    "js": "chrome.js (szablon NAVBAR) + cw.js (mega-menu, podgląd koszyka, licznik) + sklep-wspolne.js (licznik na stronach sklepu)"
+    "css": "wireframe.css (wf-navbar) + cw.css (cw-nav, cw-brand, cw-cart, cw-minicart) + cw.css (cw-probar)",
+    "js": "chrome.js (szablon NAVBAR) + cw.js (mega-menu, podgląd koszyka, licznik) + sklep-wspolne.js (licznik na stronach sklepu) + chrome.js (stan zalogowany-pro)"
    }
   },
   {
@@ -600,7 +611,19 @@ window.CE_DANE = {
     "w": 1280,
     "h": 405
    },
-   "warianty": [],
+   "warianty": [
+    {
+     "slug": "panel",
+     "opis": "sam pas dolny z prawami i odnośnikami (klasa cw-footer--panel) – stopka stron z nagłówkiem panelu (CE-91)",
+     "skrot": "Sam pas dolny – stopka panelu.",
+     "zrzut": {
+      "mini": "ce-indeks/img/m/CE-04--wariant-panel.webp",
+      "pelny": "ce-indeks/img/p/CE-04--wariant-panel.webp",
+      "w": 1280,
+      "h": 66
+     }
+    }
+   ],
    "wystapienia": [],
    "wspolny": "każda podstrona (chrome.js)",
    "baza": {
@@ -615,7 +638,7 @@ window.CE_DANE = {
    ],
    "kod_zrodlowy": {
     "css": "wireframe.css (wf-footer)",
-    "js": "chrome.js (szablon FOOTER)"
+    "js": "chrome.js (szablon FOOTER) + chrome.js (szablon footerPanel())"
    }
   },
   {
@@ -2066,7 +2089,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-16--wariant-kadr-z-prawej.webp",
       "pelny": "ce-indeks/img/p/CE-16--wariant-kadr-z-prawej.webp",
       "w": 1280,
-      "h": 492
+      "h": 549
      }
     }
    ],
@@ -2679,6 +2702,17 @@ window.CE_DANE = {
       "w": 1280,
       "h": 475
      }
+    },
+    {
+     "slug": "z-rozpiska",
+     "opis": "karty bez mediów (klasa c5-cards--z-rozpiska; platforma-b2b.html#pulpit): tytuł, treść, rozpiska i rząd przycisków przy dolnej krawędzi; od 900 px trzy kolumny równej wysokości, niżej jedna pod drugą",
+     "skrot": "Karty bez mediów z rozpiską i przyciskami u dołu.",
+     "zrzut": {
+      "mini": "ce-indeks/img/m/CE-20--wariant-z-rozpiska.webp",
+      "pelny": "ce-indeks/img/p/CE-20--wariant-z-rozpiska.webp",
+      "w": 1280,
+      "h": 418
+     }
     }
    ],
    "wystapienia": [
@@ -2823,6 +2857,13 @@ window.CE_DANE = {
      "wariant": "sklepowe"
     },
     {
+     "plik": "platforma-b2b.html",
+     "strona": "Panel – Pulpit",
+     "id": "pulpit",
+     "naglowek": "Twoje zamówienia i opiekun",
+     "wariant": "z-rozpiska"
+    },
+    {
      "plik": "prochnica-plus.html",
      "strona": "Próchnica+",
      "id": "uczestnicy-programu",
@@ -2873,7 +2914,7 @@ window.CE_DANE = {
     "rząd przycisków (opcjonalnie)"
    ],
    "kod_zrodlowy": {
-    "css": "per strona: c5-mt-grid, c5hu-mix, c5pr-goals/c5pr-foliar/c5pr-read, pp-cards/pp-tiles/pp-rels/pp-charts; strony upraw: ce/CE-20-siatka-kart.css (warianty produktowe – u-prod, u-rail – i numerowane – u-rules); sklep: pdp.css (c5pd-also, c5pd-connect, c5pd-pairs), koszyk.css (c5ks-more, c5ks-rec)",
+    "css": "per strona: c5-mt-grid, c5hu-mix, c5pr-goals/c5pr-foliar/c5pr-read, pp-cards/pp-tiles/pp-rels/pp-charts; strony upraw: ce/CE-20-siatka-kart.css (warianty produktowe – u-prod, u-rail – i numerowane – u-rules); sklep: pdp.css (c5pd-also, c5pd-connect, c5pd-pairs), koszyk.css (c5ks-more, c5ks-rec) + panel: ce/CE-20-siatka-kart.css (c5-cards, c5-cards--z-rozpiska)",
     "js": "reveal: ce/00-base.js ===== 02 (dawne moduły 72 na Carbohumic i Produktach oraz 02 na Próchnicy+ zeszły do warstwy wspólnej 14.09.2026), u-reveal (uprawa.js); sklep: pdp.js ===== 2 (ceny „od … zł”), koszyk.js (dobór „Dorzuć do zamówienia”), przyciski otwierają szybki podgląd z sklep-wspolne.js (CE-76)"
    }
   },
@@ -3007,6 +3048,17 @@ window.CE_DANE = {
      "opis": "klik w wiersz otwiera stronę lightboxa (Kukurydza)",
      "skrot": "Wiersze otwierają stronę lightboxa.",
      "zrzut": null
+    },
+    {
+     "slug": "z-akcja",
+     "opis": "tabela danych z kolumną kontrolek (klasa c5-tbl--z-akcja; b2b-zamowienia.html#lista): w ostatniej kolumnie przycisk, odnośnik albo pole wyboru, opcjonalnie przycisk dodania wiersza pod tabelą",
+     "skrot": "Tabela danych z przyciskiem albo polem w ostatniej kolumnie.",
+     "zrzut": {
+      "mini": "ce-indeks/img/m/CE-22--wariant-z-akcja.webp",
+      "pelny": "ce-indeks/img/p/CE-22--wariant-z-akcja.webp",
+      "w": 1440,
+      "h": 285
+     }
     }
    ],
    "wystapienia": [
@@ -3023,6 +3075,34 @@ window.CE_DANE = {
      "id": "doglebowo-tabela",
      "naglowek": "",
      "wariant": "z-packshotami"
+    },
+    {
+     "plik": "admin.html",
+     "strona": "Handlowiec – Zamówienia klientów PRO",
+     "id": "lista",
+     "naglowek": "Lista zamówień i próśb o uzgodnienie",
+     "wariant": "z-akcja"
+    },
+    {
+     "plik": "b2b-oferta.html",
+     "strona": "Panel – Oferta od opiekuna",
+     "id": "pozycje",
+     "naglowek": "Pozycje",
+     "wariant": "danych"
+    },
+    {
+     "plik": "b2b-uzgodnienie.html",
+     "strona": "Panel – Uzgodnienie z opiekunem",
+     "id": "pozycje",
+     "naglowek": "Pozycje zamówienia",
+     "wariant": "danych"
+    },
+    {
+     "plik": "b2b-zamowienia.html",
+     "strona": "Panel – Zamówienia",
+     "id": "lista",
+     "naglowek": "Lista zamówień",
+     "wariant": "z-akcja"
     },
     {
      "plik": "carbohumic.html",
@@ -3046,11 +3126,39 @@ window.CE_DANE = {
      "wariant": "danych"
     },
     {
+     "plik": "handlowiec-klient.html",
+     "strona": "Handlowiec – Karta klienta",
+     "id": "zamowienia",
+     "naglowek": "Ostatnie zamówienia",
+     "wariant": "danych"
+    },
+    {
+     "plik": "handlowiec-klient.html",
+     "strona": "Handlowiec – Karta klienta",
+     "id": "ceny-specjalne",
+     "naglowek": "Ceny specjalne",
+     "wariant": "z-akcja"
+    },
+    {
+     "plik": "handlowiec-uzgodnienie.html",
+     "strona": "Handlowiec – Odpowiedź na prośbę",
+     "id": "pozycje",
+     "naglowek": "Pozycje klienta",
+     "wariant": "danych"
+    },
+    {
      "plik": "kukurydza.html",
      "strona": "Kukurydza",
      "id": "u-mieszaniny-tabela",
      "naglowek": "",
      "wariant": "klikalne-wiersze"
+    },
+    {
+     "plik": "potwierdzenie-b2b.html",
+     "strona": "Panel – Zamówienie",
+     "id": "pozycje",
+     "naglowek": "Pozycje zamówienia",
+     "wariant": "danych"
     }
    ],
    "wspolny": null,
@@ -3059,14 +3167,16 @@ window.CE_DANE = {
     "kotwica": "doglebowo-tabela"
    },
    "opis": "Samodzielna tabela w kontenerze przewijanym w poziomie na wąskich ekranach (cw-scrollx, tabindex), nagłówki kolumn, opcjonalnie packshoty w nagłówkach i przypis pod tabelą.",
-   "mechanika": "Statyczna; wariant z klikalnymi wierszami otwiera lightbox; wiersze mogą wchodzić z reveal.",
+   "mechanika": "Statyczna; wariant z klikalnymi wierszami otwiera lightbox; wiersze mogą wchodzić z reveal. W panelu pierwsza kolumna przyklejona do lewej w przewijanym kontenerze. W module c5-tbl dwa pokrętła wpisywane w style na korzeniu wystąpienia: --c5-tbl-min (najmniejsza szerokość tabeli w przewijanym kontenerze, domyślnie 640 px) i --c5-tbl-first (stała szerokość przyklejonej pierwszej kolumny poniżej 600 px).",
    "czesci": [
     "thead",
     "tbody",
-    "przypis"
+    "przypis",
+    "stopka z sumą (opcjonalnie)",
+    "chip stanu albo odnośnik w komórce (opcjonalnie)"
    ],
    "kod_zrodlowy": {
-    "css": "per strona: c5-mt-cmp/c5-mt-tbl, c5hu-cmp, c5pr-cmp/c5pr-cert; strony upraw: ce/CE-22-tabela.css (wariant klikalne-wiersze – u-mt, klasa korzenia u-mtce)",
+    "css": "per strona: c5-mt-cmp/c5-mt-tbl, c5hu-cmp, c5pr-cmp/c5pr-cert; strony upraw: ce/CE-22-tabela.css (wariant klikalne-wiersze – u-mt, klasa korzenia u-mtce) + panel: ce/CE-22-tabela.css (c5-tbl, c5-tbl--danych, c5-tbl--z-akcja)",
     "js": "kukurydza.js ===== 80 (klikalne wiersze)"
    }
   },
@@ -3769,6 +3879,27 @@ window.CE_DANE = {
      "wariant": "z-przyciskiem"
     },
     {
+     "plik": "b2b-oferta.html",
+     "strona": "Panel – Oferta od opiekuna",
+     "id": "rozmowa",
+     "naglowek": "Historia rozmowy",
+     "wariant": "z-rozpiska"
+    },
+    {
+     "plik": "b2b-oferta.html",
+     "strona": "Panel – Oferta od opiekuna",
+     "id": "podsumowanie",
+     "naglowek": "Podsumowanie oferty Podsumowanie uzgodnienia",
+     "wariant": "z-rozpiska"
+    },
+    {
+     "plik": "b2b-opiekun.html",
+     "strona": "Panel – Opiekun",
+     "id": "wizytowka",
+     "naglowek": "Wizytówka opiekuna",
+     "wariant": "z-rozpiska"
+    },
+    {
      "plik": "carbohumic.html",
      "strona": "CARBOHUMIC",
      "id": "jak-stosowac-zaprawianie",
@@ -3788,6 +3919,20 @@ window.CE_DANE = {
      "id": "doglebowo-nalistne",
      "naglowek": "Szybkie wsparcie rośliny wtedy, gdy liczy się czas",
      "wariant": "cross-sell"
+    },
+    {
+     "plik": "handlowiec-uzgodnienie.html",
+     "strona": "Handlowiec – Odpowiedź na prośbę",
+     "id": "rozmowa",
+     "naglowek": "Wiadomość klienta",
+     "wariant": "z-rozpiska"
+    },
+    {
+     "plik": "potwierdzenie-b2b.html",
+     "strona": "Panel – Zamówienie",
+     "id": "szczegoly",
+     "naglowek": "Szczegóły zamówienia",
+     "wariant": "z-rozpiska"
     }
    ],
    "wspolny": null,
@@ -3796,15 +3941,19 @@ window.CE_DANE = {
     "kotwica": "analiza-nota"
    },
    "opis": "Obramowany boks (1 px) z tytułem i akapitem; wnętrze w jednej lub dwóch kolumnach, opcjonalnie rozpiska dl, lista opakowań, przypis i przyciski.",
-   "mechanika": "Statyczne; poniżej 900 px jedna kolumna.",
+   "mechanika": "Statyczne; poniżej 900 px jedna kolumna. W module c5-box proporcje dwóch kolumn ustawia pokrętło --c5-box-cols wpisane w style na korzeniu wystąpienia (domyślnie dwie równe kolumny).",
    "czesci": [
     "tytuł",
     "akapit",
     "rozpiska dl / lista / przypis (opcjonalnie)",
-    "przyciski (opcjonalnie)"
+    "przyciski (opcjonalnie)",
+    "tytuł boksu wersalikami (c5-box__title)",
+    "dwie kolumny (c5-box__cols, c5-box__col)",
+    "nazwa w kolumnie – osoba, zamówienie albo produkt (c5-box__name)",
+    "stopka z przyciskami pod kolumnami, oddzielona linią (c5-box__foot)"
    ],
    "kod_zrodlowy": {
-    "css": "per strona: c5-mt-note (Mata), c5hu-extra/c5hu-foliar (Carbohumic)",
+    "css": "per strona: c5-mt-note (Mata), c5hu-extra/c5hu-foliar (Carbohumic) + panel: ce/CE-28-boks-w-ramce.css (c5-box, c5-box--z-rozpiska)",
     "js": "brak"
    }
   },
@@ -4066,6 +4215,13 @@ window.CE_DANE = {
      "wariant": "miekka"
     },
     {
+     "plik": "b2b-oferta.html",
+     "strona": "Panel – Oferta od opiekuna",
+     "id": "rezygnacja",
+     "naglowek": "Rezygnacja z oferty",
+     "wariant": null
+    },
+    {
      "plik": "borowka.html",
      "strona": "Borówka",
      "id": "b-etapy-wazne",
@@ -4077,6 +4233,20 @@ window.CE_DANE = {
      "strona": "Kukurydza",
      "id": "u-wybor-nota",
      "naglowek": "",
+     "wariant": null
+    },
+    {
+     "plik": "platforma-b2b.html",
+     "strona": "Panel – Pulpit",
+     "id": "cena-specjalna",
+     "naglowek": "Cena specjalna dla Ciebie",
+     "wariant": "z-przyciskiem"
+    },
+    {
+     "plik": "potwierdzenie-b2b.html",
+     "strona": "Panel – Zamówienie",
+     "id": "przyjete",
+     "naglowek": "Potwierdzenie przyjęcia zamówienia",
      "wariant": null
     }
    ],
@@ -4091,10 +4261,11 @@ window.CE_DANE = {
     "ikona",
     "zdanie główne",
     "zdanie wyjaśniające (opcjonalnie)",
-    "przycisk (opcjonalnie)"
+    "przycisk (opcjonalnie)",
+    "treść obok ikony: tytuł i akapit (c5-note__body, c5-note__title; opcjonalnie)"
    ],
    "kod_zrodlowy": {
-    "css": "per strona: c5hu-warn/c5hu-faqnote, c5-gap, u-callout, pp-note",
+    "css": "per strona: c5hu-warn/c5hu-faqnote, c5-gap, u-callout, pp-note + panel: ce/CE-31-nota.css (c5-note--akcja; baza c5-note z ce/00-base.css)",
     "js": "brak"
    }
   },
@@ -5394,6 +5565,28 @@ window.CE_DANE = {
      "opis": "formularz „Zaproponuj temat” obok pasa przewodnika (centrum-wiedzy.html#zaproponuj, artykul.html#zaproponuj-temat)",
      "skrot": "Formularz „Zaproponuj temat” obok pasa przewodnika",
      "zrzut": null
+    },
+    {
+     "slug": "z-przelacznikiem",
+     "opis": "wąska kolumna pól z przełącznikiem trybu nad nagłówkiem (przełącznik zmienia nagłówek i cel przycisku), obok boks wejścia do wniosku o konto (klasa c5-form--z-przelacznikiem; logowanie.html#logowanie)",
+     "skrot": "Pola logowania z przełącznikiem trybu i boksem wniosku.",
+     "zrzut": {
+      "mini": "ce-indeks/img/m/CE-50--wariant-z-przelacznikiem.webp",
+      "pelny": "ce-indeks/img/p/CE-50--wariant-z-przelacznikiem.webp",
+      "w": 1280,
+      "h": 643
+     }
+    },
+    {
+     "slug": "z-podsumowaniem",
+     "opis": "pola w nazwanych grupach, a panel obok to podsumowanie kwot – rozpiska, wiersz sumy, VAT – z przyciskiem wysyłki, przyklejone od 900 px (klasa c5-form--z-podsumowaniem; b2b-dostawa.html#dostawa)",
+     "skrot": "Grupy pól obok przyklejonego podsumowania kwot z przyciskiem.",
+     "zrzut": {
+      "mini": "ce-indeks/img/m/CE-50--wariant-z-podsumowaniem.webp",
+      "pelny": "ce-indeks/img/p/CE-50--wariant-z-podsumowaniem.webp",
+      "w": 1280,
+      "h": 722
+     }
     }
    ],
    "wystapienia": [
@@ -5412,11 +5605,67 @@ window.CE_DANE = {
      "wariant": "temat"
     },
     {
+     "plik": "b2b-dostawa.html",
+     "strona": "Panel – Dostawa i płatność",
+     "id": "dostawa",
+     "naglowek": "Formularz dostawy i płatności",
+     "wariant": "z-podsumowaniem"
+    },
+    {
+     "plik": "b2b-opiekun.html",
+     "strona": "Panel – Opiekun",
+     "id": "napisz",
+     "naglowek": "Napisz do opiekuna",
+     "wariant": null
+    },
+    {
+     "plik": "b2b-uzgodnienie.html",
+     "strona": "Panel – Uzgodnienie z opiekunem",
+     "id": "wiadomosc",
+     "naglowek": "Wiadomość do opiekuna i wysyłka",
+     "wariant": "z-podsumowaniem"
+    },
+    {
      "plik": "centrum-wiedzy.html",
      "strona": "Centrum wiedzy",
      "id": "zaproponuj",
      "naglowek": "Masz pytanie, na które chcesz obszernej odpowiedzi?",
      "wariant": "temat"
+    },
+    {
+     "plik": "handlowiec-klient.html",
+     "strona": "Handlowiec – Karta klienta",
+     "id": "konto",
+     "naglowek": "Konto klienta",
+     "wariant": null
+    },
+    {
+     "plik": "handlowiec-uzgodnienie.html",
+     "strona": "Handlowiec – Odpowiedź na prośbę",
+     "id": "odpowiedz",
+     "naglowek": "Odpowiedź dla klienta",
+     "wariant": "z-podsumowaniem"
+    },
+    {
+     "plik": "handlowiec-zamowienie.html",
+     "strona": "Handlowiec – Zamówienie z telefonu",
+     "id": "warunki",
+     "naglowek": "Warunki zamówienia",
+     "wariant": "z-podsumowaniem"
+    },
+    {
+     "plik": "logowanie.html",
+     "strona": "Logowanie",
+     "id": "logowanie",
+     "naglowek": "Logowanie do konta sklepu",
+     "wariant": "z-przelacznikiem"
+    },
+    {
+     "plik": "rejestracja.html",
+     "strona": "Wniosek o konto PRO",
+     "id": "wniosek",
+     "naglowek": "Formularz wniosku",
+     "wariant": null
     }
    ],
    "wspolny": null,
@@ -5430,11 +5679,13 @@ window.CE_DANE = {
     "pola",
     "zgoda",
     "przycisk",
-    "zdjęcie"
+    "panel obok: zdjęcie albo tekst (kroki, dane, podsumowanie)",
+    "segment w grupie pól – fieldset bez ramki z legendą jak etykieta pola",
+    "odnośnik w panelu, w osobnym wierszu"
    ],
    "kod_zrodlowy": {
-    "css": "prochnica-plus.css ===== 75 (pp-form)",
-    "js": "prochnica-plus.js ===== 75"
+    "css": "prochnica-plus.css ===== 75 (pp-form) + panel i logowanie: osobna implementacja ce/CE-50-formularz.css (c5-form; segment w grupie pól: c5-form__switch, odnośnik w panelu: c5-form__more); Próchnica+ i Kontakt na swoich klasach",
+    "js": "prochnica-plus.js ===== 75 + ce/CE-50-formularz.js"
    }
   },
   {
@@ -5557,6 +5808,27 @@ window.CE_DANE = {
      "wariant": null
     },
     {
+     "plik": "b2b-dokumenty.html",
+     "strona": "Panel – Dokumenty",
+     "id": "lista",
+     "naglowek": "Lista dokumentów",
+     "wariant": "dokumenty"
+    },
+    {
+     "plik": "b2b-oferta.html",
+     "strona": "Panel – Oferta od opiekuna",
+     "id": "oferty",
+     "naglowek": "Wszystkie oferty",
+     "wariant": null
+    },
+    {
+     "plik": "b2b-opiekun.html",
+     "strona": "Panel – Opiekun",
+     "id": "sprawy",
+     "naglowek": "Twoje sprawy",
+     "wariant": null
+    },
+    {
      "plik": "centrum-wiedzy-kategoria.html",
      "strona": "Centrum wiedzy – kategoria",
      "id": "obok-poradniki",
@@ -5593,10 +5865,13 @@ window.CE_DANE = {
    "opis": "Lista wierszy rozdzielonych cienkimi liniami: tytuł | metryka | przycisk po prawej.",
    "mechanika": "Fade-in wierszy; przyciski aktywne (w makiecie niczego nie pobierają).",
    "czesci": [
-    "wiersze: tytuł, metryka, przycisk"
+    "wiersze: tytuł, metryka, przycisk",
+    "tytuł listy wersalikami (c5-rows__title)",
+    "lista (c5-rows__list)",
+    "wiersz: nazwa z opcjonalną ikoną, metryka z opcjonalnym odnośnikiem, akcja – przycisk albo odnośnik (c5-rows__row, c5-rows__name, c5-rows__meta, c5-rows__act)"
    ],
    "kod_zrodlowy": {
-    "css": "prochnica-plus.css ===== 90 (pp-reports)",
+    "css": "prochnica-plus.css ===== 90 (pp-reports) + panel: ce/CE-53-lista-wierszy.css (c5-rows, c5-rows--dokumenty)",
     "js": "prochnica-plus.js ===== 02 (reveal)"
    }
   },
@@ -6573,7 +6848,12 @@ window.CE_DANE = {
      "slug": "ikony",
      "opis": "cztery karty 2 × 2 z ikoną w ramce i tytułem zamiast numeru w węźle, bez nagłówka h3 nad siatką (siatka schodzi do dolnej linii kadru); klasa c5-kk--ikony na korzeniu",
      "skrot": "",
-     "zrzut": null
+     "zrzut": {
+      "mini": "ce-indeks/img/m/CE-67--wariant-ikony.webp",
+      "pelny": "ce-indeks/img/p/CE-67--wariant-ikony.webp",
+      "w": 1280,
+      "h": 799
+     }
     }
    ],
    "wystapienia": [
@@ -7012,7 +7292,19 @@ window.CE_DANE = {
     "w": 1280,
     "h": 799
    },
-   "warianty": [],
+   "warianty": [
+    {
+     "slug": "sama-os",
+     "opis": "sama oś bez horyzontu (klasa c5-st--sama-os; potwierdzenie-b2b.html#stan): pięć węzłów, linia wypełniona na stałe do bieżącego kroku, pod węzłem nazwa i data; bez sterowania przewijaniem",
+     "skrot": "Sama oś z wypełnieniem do bieżącego kroku, bez horyzontu.",
+     "zrzut": {
+      "mini": "ce-indeks/img/m/CE-73--wariant-sama-os.webp",
+      "pelny": "ce-indeks/img/p/CE-73--wariant-sama-os.webp",
+      "w": 1280,
+      "h": 113
+     }
+    }
+   ],
    "wystapienia": [
     {
      "plik": "home.html",
@@ -7020,6 +7312,13 @@ window.CE_DANE = {
      "id": "jak-pomagamy",
      "naglowek": "Od diagnozy do próchnicy na lata",
      "wariant": null
+    },
+    {
+     "plik": "potwierdzenie-b2b.html",
+     "strona": "Panel – Zamówienie",
+     "id": "stan",
+     "naglowek": "Stan zamówienia",
+     "wariant": "sama-os"
     }
    ],
    "wspolny": null,
@@ -7037,7 +7336,7 @@ window.CE_DANE = {
     "dopisek i link pod osią czasu"
    ],
    "kod_zrodlowy": {
-    "css": "ce/CE-73-os-krokow.css",
+    "css": "ce/CE-73-os-krokow.css + wariant sama-os w tym samym pliku (c5-st--sama-os)",
     "js": "ce/CE-73-os-krokow.js"
    }
   },
@@ -7306,6 +7605,17 @@ window.CE_DANE = {
       "w": 1280,
       "h": 108
      }
+    },
+    {
+     "slug": "z-akcja",
+     "opis": "pasek ekranu aplikacji (klasa c5-titlebar--z-akcja; platforma-b2b.html#naglowek): okruszki albo link powrotu (opcjonalnie), H1, obok meta albo chip stanu, po prawej rząd akcji – od zera do dwóch kontrolek (przycisk, segment albo pole)",
+     "skrot": "H1 z metą albo chipem stanu i rzędem akcji po prawej.",
+     "zrzut": {
+      "mini": "ce-indeks/img/m/CE-77--wariant-z-akcja.webp",
+      "pelny": "ce-indeks/img/p/CE-77--wariant-z-akcja.webp",
+      "w": 1280,
+      "h": 119
+     }
     }
    ],
    "wystapienia": [
@@ -7317,11 +7627,109 @@ window.CE_DANE = {
      "wariant": null
     },
     {
+     "plik": "admin.html",
+     "strona": "Handlowiec – Zamówienia klientów PRO",
+     "id": "naglowek",
+     "naglowek": "Zamówienia klientów PRO",
+     "wariant": "z-akcja"
+    },
+    {
+     "plik": "b2b-dokumenty.html",
+     "strona": "Panel – Dokumenty",
+     "id": "naglowek",
+     "naglowek": "Dokumenty",
+     "wariant": "z-akcja"
+    },
+    {
+     "plik": "b2b-dostawa.html",
+     "strona": "Panel – Dostawa i płatność",
+     "id": "naglowek",
+     "naglowek": "Dostawa i płatność",
+     "wariant": "z-akcja"
+    },
+    {
+     "plik": "b2b-oferta.html",
+     "strona": "Panel – Oferta od opiekuna",
+     "id": "naglowek",
+     "naglowek": "Oferta OF-0127 (przykład) Uzgodnienie UZG-0031 (przykład)",
+     "wariant": "z-akcja"
+    },
+    {
+     "plik": "b2b-opiekun.html",
+     "strona": "Panel – Opiekun",
+     "id": "naglowek",
+     "naglowek": "Twój opiekun",
+     "wariant": "z-akcja"
+    },
+    {
+     "plik": "b2b-uzgodnienie.html",
+     "strona": "Panel – Uzgodnienie z opiekunem",
+     "id": "naglowek",
+     "naglowek": "Uzgodnij zamówienie z opiekunem",
+     "wariant": "z-akcja"
+    },
+    {
+     "plik": "b2b-zamow.html",
+     "strona": "Panel – Zamów",
+     "id": "naglowek",
+     "naglowek": "Zamów",
+     "wariant": "z-akcja"
+    },
+    {
+     "plik": "b2b-zamowienia.html",
+     "strona": "Panel – Zamówienia",
+     "id": "naglowek",
+     "naglowek": "Zamówienia",
+     "wariant": "z-akcja"
+    },
+    {
+     "plik": "handlowiec-klient.html",
+     "strona": "Handlowiec – Karta klienta",
+     "id": "naglowek",
+     "naglowek": "Gospodarstwo Sadownicze Zielony Jar (przykład)",
+     "wariant": "z-akcja"
+    },
+    {
+     "plik": "handlowiec-uzgodnienie.html",
+     "strona": "Handlowiec – Odpowiedź na prośbę",
+     "id": "naglowek",
+     "naglowek": "Prośba UZG-0031",
+     "wariant": "z-akcja"
+    },
+    {
+     "plik": "handlowiec-zamowienie.html",
+     "strona": "Handlowiec – Zamówienie z telefonu",
+     "id": "naglowek",
+     "naglowek": "Nowe zamówienie z telefonu",
+     "wariant": "z-akcja"
+    },
+    {
      "plik": "koszyk.html",
      "strona": "Koszyk",
      "id": "naglowek",
      "naglowek": "Koszyk",
      "wariant": "z-licznikiem"
+    },
+    {
+     "plik": "platforma-b2b.html",
+     "strona": "Panel – Pulpit",
+     "id": "naglowek",
+     "naglowek": "Dzień dobry",
+     "wariant": "z-akcja"
+    },
+    {
+     "plik": "potwierdzenie-b2b.html",
+     "strona": "Panel – Zamówienie",
+     "id": "naglowek",
+     "naglowek": "Zamówienie B2B-0412 B2B-0388 B2B-0351 B2B-0413 (przykład)",
+     "wariant": "z-akcja"
+    },
+    {
+     "plik": "rejestracja.html",
+     "strona": "Wniosek o konto PRO",
+     "id": "naglowek",
+     "naglowek": "Wniosek o konto PRO",
+     "wariant": "z-akcja"
     }
    ],
    "wspolny": null,
@@ -7336,10 +7744,13 @@ window.CE_DANE = {
     "H1",
     "wyszukiwarka z animowanym placeholderem",
     "panel podpowiedzi: produkty z miniaturą i „+”, stopka „Pokaż wszystkie wyniki”",
-    "liczba opakowań obok H1 (wariant z-licznikiem)"
+    "liczba opakowań obok H1 (wariant z-licznikiem)",
+    "wariant z-akcja – strefa lewa: okruszki albo link powrotu, wiersz H1 (c5-titlebar__l, c5-titlebar__back, c5-titlebar__head, c5-titlebar__h1)",
+    "wariant z-akcja – zdanie meta albo chip stanu obok H1 (c5-titlebar__meta)",
+    "wariant z-akcja – rząd akcji po prawej: przycisk, segment albo pole z etykietą (c5-titlebar__acts, c5-titlebar__field)"
    ],
    "kod_zrodlowy": {
-    "css": "sklep.html <style> bloki „2. PASEK TYTUŁOWY” i wyszukiwarka (c5sk-topbar, c5sk-search, c5sk-suggest); wariant z-licznikiem: koszyk.css (c5ks-top)",
+    "css": "sklep.html <style> bloki „2. PASEK TYTUŁOWY” i wyszukiwarka (c5sk-topbar, c5sk-search, c5sk-suggest); wariant z-licznikiem: koszyk.css (c5ks-top) + wariant z-akcja: ce/CE-77-pasek-tytulowy.css (c5-titlebar)",
     "js": "sklep.html <script> (wyszukiwarka, placeholder, podpowiedzi); wariant z-licznikiem: koszyk.js (licznik opakowań)"
    }
   },
@@ -7739,7 +8150,14 @@ window.CE_DANE = {
     "w": 1280,
     "h": 800
    },
-   "warianty": [],
+   "warianty": [
+    {
+     "slug": "zalogowany-pro",
+     "opis": "stan dla zalogowanego konta profesjonalnego (klasa c5pd-buy--pro): przycisk „Zamów w panelu B2B” zamiast krokomierza i koszyka, opcjonalna linijka o cenie specjalnej; w tym stanie znikają zdanie o wysyłce sklepu pod przyciskiem i pas dla profesjonalistów pod kartą",
+     "skrot": "Przycisk „Zamów w panelu B2B” zamiast koszyka.",
+     "zrzut": null
+    }
+   ],
    "wystapienia": [
     {
      "plik": "pdp.html",
@@ -7770,11 +8188,12 @@ window.CE_DANE = {
     "dwa zdania opisu i „Więcej o produkcie”",
     "przełącznik odmiany (pH), opakowania z cenami, frakcja",
     "liczba opakowań i „Dodaj do koszyka”, komunikat po dodaniu, zdanie o wysyłce",
-    "„Połącz z” (CE-20, zagnieżdżony)"
+    "„Połącz z” (CE-20, zagnieżdżony)",
+    "cena netto małym drukiem pod ceną brutto"
    ],
    "kod_zrodlowy": {
-    "css": "pdp.css (c5pd-top, c5pd-gallery, c5pd-shots, c5pd-buycol, c5pd-buy, c5pd-opts) + sklep-wspolne.css (cws-qty, cws-price, cws-btn)",
-    "js": "pdp.js ===== 1 (kolumna zakupu), 3 (przyklejone kolumny), 4 („Więcej o produkcie”), 6 (slider) + sklep-wspolne.js (koszyk, ceny)"
+    "css": "pdp.css (c5pd-top, c5pd-gallery, c5pd-shots, c5pd-buycol, c5pd-buy, c5pd-opts) + sklep-wspolne.css (cws-qty, cws-price, cws-btn) + pdp.css (c5pd-net, c5pd-proact, c5pd-special; stan niesie klasa c5pd-buy--pro bez własnych reguł)",
+    "js": "pdp.js ===== 1 (kolumna zakupu), 3 (przyklejone kolumny), 4 („Więcej o produkcie”), 6 (slider) + sklep-wspolne.js (koszyk, ceny) + pdp.js (cena netto, stan zalogowany-pro)"
    }
   },
   {
@@ -8188,6 +8607,168 @@ window.CE_DANE = {
    "kod_zrodlowy": {
     "css": "ce/CE-90-os-programu.css",
     "js": "ce/CE-90-os-programu.js"
+   }
+  },
+  {
+   "kod": "CE-91",
+   "nazwa": "Nagłówek panelu",
+   "skrot": "Nagłówek aplikacji w dwóch wierszach: marka z nazwą konta i odnośnikami, pod nią zakładki działów.",
+   "status": "aktywny",
+   "projekt": null,
+   "tagi": {
+    "rodzina": [
+     "wspolne"
+    ],
+    "media": [
+     "bez-mediow"
+    ],
+    "tekst": [
+     "tylko-naglowek"
+    ],
+    "ukryte": [
+     "wszystko-widoczne"
+    ],
+    "pozycje": [
+     "5-8"
+    ],
+    "nadaje": [
+     "nawigacja"
+    ],
+    "mechanika": [
+     "statyczny"
+    ],
+    "zakres": [
+     "typ-strony"
+    ]
+   },
+   "zrzut": {
+    "mini": "ce-indeks/img/m/CE-91.webp",
+    "pelny": "ce-indeks/img/p/CE-91.webp",
+    "w": 1280,
+    "h": 108
+   },
+   "warianty": [
+    {
+     "slug": "handlowiec",
+     "opis": "stanowisko pracownika (klasa c5-panelbar--handlowiec): etykieta „Stanowisko handlowca”, nazwisko pracownika, „Wyloguj” i jedna zakładka „Zamówienia klientów” (admin.html i strony handlowiec-*)",
+     "skrot": "Etykieta „Stanowisko handlowca”, nazwisko pracownika i jedna zakładka.",
+     "zrzut": {
+      "mini": "ce-indeks/img/m/CE-91--wariant-handlowiec.webp",
+      "pelny": "ce-indeks/img/p/CE-91--wariant-handlowiec.webp",
+      "w": 1280,
+      "h": 108
+     }
+    }
+   ],
+   "wystapienia": [],
+   "wspolny": "każda podstrona (chrome.js)",
+   "baza": {
+    "plik": "v7/chrome.js",
+    "kotwica": "panel-naglowek"
+   },
+   "opis": "Pas na całą szerokość w szerokim kontenerze, zamiast nagłówka serwisu. Wiersz górny: wordmark, etykieta obszaru „Platforma B2B”, nazwa zalogowanego konta, po prawej odnośnik „Strona CarboHort” i „Wyloguj”. Wiersz dolny: zakładki działów na linii, bieżąca podkreślona.",
+   "mechanika": "Renderowany przez chrome.js ze znacznika cw-navbar z atrybutem data-uklad. Zakładki to nawigacja ze zwykłymi odnośnikami, bieżąca z data-current dostaje aria-current. Bez mega-menu, koszyka i nawigacji mobilnej. Poniżej 900 px wiersz górny zawija się, a zakładki przewijają się w poziomie; bieżąca zakładka jest przy starcie przewijana w widok.",
+   "czesci": [
+    "wordmark",
+    "etykieta obszaru",
+    "nazwa konta",
+    "odnośnik do serwisu",
+    "„Wyloguj”",
+    "zakładki działów"
+   ],
+   "kod_zrodlowy": {
+    "css": "ce/CE-91-naglowek-panelu.css (c5-panelbar)",
+    "js": "chrome.js (szablon panelbar())"
+   }
+  },
+  {
+   "kod": "CE-92",
+   "nazwa": "Tabela zamówieniowa",
+   "skrot": "Lista produktów i koszyk w jednej tabeli: dwie ceny, krokomierz, wartość i przyklejony pasek sumy z przyciskiem.",
+   "status": "aktywny",
+   "projekt": null,
+   "tagi": {
+    "rodzina": [
+     "sklep-formularze"
+    ],
+    "media": [
+     "bez-mediow"
+    ],
+    "tekst": [
+     "krotki"
+    ],
+    "ukryte": [
+     "taby-przelacznik"
+    ],
+    "pozycje": [
+     "9+"
+    ],
+    "nadaje": [
+     "sklep-transakcja",
+     "lista-produktow"
+    ],
+    "mechanika": [
+     "klik",
+     "formularz"
+    ],
+    "zakres": [
+     "typ-strony"
+    ]
+   },
+   "zrzut": {
+    "mini": "ce-indeks/img/m/CE-92.webp",
+    "pelny": "ce-indeks/img/p/CE-92.webp",
+    "w": 1280,
+    "h": 630
+   },
+   "warianty": [
+    {
+     "slug": "handlowiec",
+     "opis": "zamówienie wpisywane przez pracownika (klasa c5-order--handlowiec; handlowiec-zamowienie.html): pole wyboru klienta w pasku narzędzi, kolumna „Cena klienta”, bez karty PDF, bez bloku dużego zamówienia i bez przyklejonego paska – sumę niesie panel formularza obok (CE-50 z-podsumowaniem), wypełniany ze zdarzenia c5-order:zmiana",
+     "skrot": "Z polem wyboru klienta i kolumną „Cena klienta”, bez paska sumy.",
+     "zrzut": {
+      "mini": "ce-indeks/img/m/CE-92--wariant-handlowiec.webp",
+      "pelny": "ce-indeks/img/p/CE-92--wariant-handlowiec.webp",
+      "w": 1280,
+      "h": 648
+     }
+    }
+   ],
+   "wystapienia": [
+    {
+     "plik": "b2b-zamow.html",
+     "strona": "Panel – Zamów",
+     "id": "tabela",
+     "naglowek": "Tabela zamówieniowa",
+     "wariant": null
+    },
+    {
+     "plik": "handlowiec-zamowienie.html",
+     "strona": "Handlowiec – Zamówienie z telefonu",
+     "id": "pozycje",
+     "naglowek": "Pozycje zamówienia",
+     "wariant": "handlowiec"
+    }
+   ],
+   "wspolny": null,
+   "baza": {
+    "plik": "v7/b2b-zamow.html",
+    "kotwica": "tabela"
+   },
+   "opis": "Tabela w szerokim kontenerze: produkt z odnośnikiem „Karta produktu (PDF)”, opakowanie, cena w sklepie netto, cena klienta z rabatem zapisanym słownie albo ze znacznikiem ceny specjalnej, krokomierz ilości i wartość netto. Nad tabelą pasek narzędzi – przełącznik „Moje produkty / Wszystkie” i wyszukiwarka – oraz zdanie o cenach; pod tabelą blok dużego zamówienia i pasek sumy przyklejony do dołu okna: liczba pozycji, wartość netto, małym drukiem brutto i przycisk następnego kroku. Blok dużego zamówienia stoi bezpośrednio nad paskiem sumy i przykleja się razem z nim – oba tworzą jeden dok w ramce (c5-order__dock).",
+   "mechanika": "Wiersze i ceny stoją w HTML (data-cena-gr w groszach); moduł czyta wyłącznie DOM. Krokomierz 0–999 przelicza wartość wiersza i pasek sumy, a zmianę ogłasza osobny region aria-live i zdarzenie c5-order:zmiana (pozycje, nettoGr, bruttoGr, duze). Przełącznik zawęża listę do produktów klienta, wyszukiwarka filtruje po nazwie. Od progu z data-prog-gr pojawia się blok dużego zamówienia z przyciskiem uzgodnienia – w przyklejonym doku, nad paskiem sumy, więc jest widoczny od razu i nie przesuwa tabeli; wysokość całego doku niesie zmienna --c5-order-bar-h (scroll-padding strony), a kontrolka z fokusem nie chowa się pod dokiem; przy pustym zamówieniu przycisk następnego kroku ma aria-disabled. Poniżej 900 px wiersz składa się w kartę z etykietami kolumn (role tabeli zostają); poniżej 600 px pasek sumy ma dwa wiersze. Bez JS tabela stoi z ilościami wpisanymi w HTML.",
+   "czesci": [
+    "pasek narzędzi: przełącznik zakresu, wyszukiwarka",
+    "zdanie o cenach",
+    "wiersz: produkt z kartą PDF, opakowanie, dwie ceny, rabat albo znacznik ceny specjalnej, krokomierz, wartość",
+    "zdanie o progu dużego zamówienia w biegu strony",
+    "blok dużego zamówienia",
+    "przyklejony pasek sumy z przyciskiem",
+    "przyklejony dok: blok dużego zamówienia nad paskiem sumy, przyklejane razem"
+   ],
+   "kod_zrodlowy": {
+    "css": "ce/CE-92-tabela-zamowieniowa.css (c5-order) + sklep-wspolne.css (cws-qty)",
+    "js": "ce/CE-92-tabela-zamowieniowa.js"
    }
   }
  ]
