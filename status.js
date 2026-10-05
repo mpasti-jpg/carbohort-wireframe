@@ -3,7 +3,7 @@
 window.CW_STATUS = {
   "meta": {
     "wersja": "0.2.0",
-    "zaktualizowano": "2026-10-04",
+    "zaktualizowano": "2026-10-05",
     "projektAC": 837,
     "bazaAC": "https://pm.bizwebstudio.pl/projects/837/tasks/",
     "live": "https://mpasti-jpg.github.io/carbohort-wireframe/v7/",
@@ -185,7 +185,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31789,
-      "data": "02.10"
+      "data": "05.10"
     },
     "carbomat.html": {
       "sekcja": "2. Produkty Carbohort",
@@ -199,7 +199,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31223,
-      "data": "02.10"
+      "data": "05.10"
     },
     "carbomat-mata.html": {
       "sekcja": "2. Produkty Carbohort",
@@ -213,7 +213,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31563,
-      "data": "02.10"
+      "data": "05.10"
     },
     "carbohumic.html": {
       "sekcja": "2. Produkty Carbohort",
@@ -227,7 +227,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31564,
-      "data": "02.10"
+      "data": "05.10"
     },
     "carbomat-humic.html": {
       "sekcja": "2. Produkty Carbohort",
@@ -241,13 +241,13 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31565,
-      "data": "02.10"
+      "data": "05.10"
     },
     "uprawy.html": {
-      "sekcja": "3. Rodzaje upraw",
+      "sekcja": "Poza tabelą",
       "nazwa": "Hub upraw",
       "stan": {
-        "makieta": "w-przygotowaniu",
+        "makieta": null,
         "tresc": null,
         "projekt": null,
         "media": null,
@@ -255,7 +255,8 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 30722,
-      "data": "07.09"
+      "data": "05.10",
+      "wTabeli": false
     },
     "kukurydza.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -269,7 +270,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31566,
-      "data": "02.10"
+      "data": "05.10"
     },
     "ziemniak.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -297,7 +298,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31568,
-      "data": "02.10"
+      "data": "05.10"
     },
     "sadownicze.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -437,7 +438,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31569,
-      "data": "02.10"
+      "data": "05.10"
     },
     "centrum-wiedzy.html": {
       "sekcja": "5. Centrum wiedzy",
