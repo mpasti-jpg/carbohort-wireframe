@@ -227,7 +227,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31564,
-      "data": "05.10"
+      "data": "07.10"
     },
     "carbomat-humic.html": {
       "sekcja": "2. Produkty Carbohort",
