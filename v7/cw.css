@@ -77,6 +77,9 @@
 .cw-mega--wide {
   left: var(--w-page-padding-lg); right: var(--w-page-padding-lg);
   width: auto;
+  /* On a short window the panel scrolls instead of running off the screen. */
+  max-height: calc(100dvh - 7rem);
+  overflow-y: auto; overscroll-behavior: contain;
 }
 .cw-mega--right { left: auto; right: 0; }
 /* Wąski dropdown (np. „Programy i badania" – pojedyncze pozycje) */
@@ -91,7 +94,13 @@
 
 /* Mega „Nasze produkty" (V5, 24.07): nagłówek z CTA → 4 boxy-linki na pełną
    szerokość → pasek „wg potrzeby" na dole. Cały box jest klikalny, więc nie ma
-   już przycisków „Poznaj rodzinę"; miejsce na miniaturę produktu dojdzie. */
+   już przycisków „Poznaj rodzinę".
+   09.10.2026: the boxes are taller and carry a packshot. Each box has four
+   parts – category, name, packshot, description – and the description sits on
+   the bottom edge. The boxes share their four rows through subgrid, so the
+   packshots and the descriptions line up across the row whatever the length of
+   a name or a description; without subgrid the box is a plain column with the
+   packshot and the description pushed to the bottom. */
 .cw-mega__head {
   display: flex; align-items: center; justify-content: space-between; gap: var(--w-space-4);
   padding-bottom: var(--w-space-4); margin-bottom: var(--w-space-5);
@@ -117,6 +126,44 @@
 .cw-prodbox__name { display: block; }
 /* Przy 4 boxach overline musi się zawijać (np. „Płynne · doglebowe i nalistne"). */
 .cw-prodbox > .wf-overline { white-space: normal; }
+/* Packshot well: one height in every box and 40 px of air on every side.
+   All packshots stand on one floor line, 40 px above the bottom edge: bags and
+   bottles fill the height between the margins, the sleeve fills the width. */
+.cw-prodbox__media {
+  display: flex; align-items: flex-end; justify-content: center;
+  height: 12rem; margin-top: auto; padding: var(--w-space-10);
+  background: var(--w-surface-sunken); border-radius: var(--w-radius-sm);
+}
+.cw-prodbox__img {
+  display: block; width: auto; height: auto; max-width: 100%; max-height: 100%;
+  object-fit: contain;
+}
+/* Two variants side by side (CARBOHUMIC). The bottles stand on the floor line
+   like the other packshots; each caption hangs under its bottle, in the bottom
+   margin of the well. The gap keeps the two captions apart. */
+.cw-prodbox__media--pair { gap: var(--w-space-12); }
+.cw-prodbox__variant { position: relative; flex: none; height: 100%; }
+.cw-prodbox__variant .cw-prodbox__img { height: 100%; max-width: none; }
+.cw-prodbox__tag {
+  position: absolute; top: calc(100% + 0.625rem); left: 50%; transform: translateX(-50%);
+  font-size: 0.75rem; line-height: 1.2; font-weight: var(--w-weight-bold);
+  letter-spacing: var(--w-tracking-wide); text-transform: uppercase;
+  color: var(--w-text-primary); white-space: nowrap;
+}
+/* Description: one step smaller and tighter than wf-small (14 / 1.55). */
+.cw-prodbox__desc { font-size: 0.8125rem; line-height: 1.4; color: var(--w-text-secondary); }
+@supports (grid-template-rows: subgrid) {
+  .cw-prodbox { display: grid; grid-template-rows: subgrid; grid-row: span 4; row-gap: var(--w-space-2); }
+  .cw-prodbox__media { margin-top: 0; align-self: end; }
+  .cw-prodbox__desc { align-self: end; }
+}
+/* 981–1199 px: a box is about 200 px wide, so the side margins of the well go
+   down to 20 px and the two bottles and their captions are set tighter. */
+@media (min-width: 981px) and (max-width: 1199px) {
+  .cw-prodbox__media { padding-inline: var(--w-space-5); }
+  .cw-prodbox__media--pair { gap: var(--w-space-8); }
+  .cw-prodbox__tag { font-size: 0.6875rem; letter-spacing: 0.04em; }
+}
 /* „Wg potrzeby" – pasek na dole panelu, etykieta z lewej, pozycje w rzędzie. */
 .cw-mega__needs {
   margin-top: var(--w-space-5); padding-top: var(--w-space-4);

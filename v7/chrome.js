@@ -67,7 +67,13 @@
 (function () {
   "use strict";
 
-  var ICONS = `<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true" id="wf-icon-sprite">
+  /* Folder of this file as the page sees it ("" on pages in v7/, "../" in
+     v7/lab/). The packshots of the product menu are addressed from here, so
+     they load on every page that renders the header. */
+  var HERE = (/^(.*)chrome\.js(?:[?#].*)?$/.exec(
+    (document.currentScript && document.currentScript.getAttribute("src")) || "") || ["", ""])[1];
+
+  var ICONS =`<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true" id="wf-icon-sprite">
   <symbol id="ti-alert-triangle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4" /><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0" /><path d="M12 16h.01" /></symbol>
   <symbol id="ti-arrow-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5l0 14" />
   <path d="M18 13l-6 6" />
@@ -184,26 +190,38 @@
             </div>
           </div>
           <div class="cw-mega__layout">
-            <!-- Cały box = link (bez osobnych przycisków); miniatura produktu dojdzie -->
+            <!-- The whole box is one link. Four parts in a fixed order: category,
+                 name, packshot, description (09.10.2026). The packshot is
+                 decorative, the name next to it carries the meaning, hence the
+                 empty alt. CARBOHUMIC shows two bottles of one shape and size
+                 with a caption each: white for soil application, black for
+                 foliar application. -->
             <a class="cw-prodbox" href="carbomat.html">
               <span class="wf-overline wf-t-tertiary">Sypkie · doglebowe</span>
               <span class="wf-h5 cw-prodbox__name">CARBOMAT ECO</span>
-              <span class="wf-small wf-t-secondary">Surowy lignit, który na lata przebudowuje strukturę i retencję gleby.</span>
+              <span class="cw-prodbox__media"><img class="cw-prodbox__img" src="img/opakowania/worek_20l.png" alt="" width="578" height="875" decoding="async" fetchpriority="low"></span>
+              <span class="cw-prodbox__desc">Surowy lignit, który na lata przebudowuje strukturę i retencję gleby.</span>
             </a>
             <a class="cw-prodbox" href="carbomat-mata.html">
               <span class="wf-overline wf-t-tertiary">Sypkie · uprawa bezglebowa</span>
               <span class="wf-h5 cw-prodbox__name">CARBOMAT Mata Uprawowa</span>
-              <span class="wf-small wf-t-secondary">Naturalne podłoże nowej generacji do upraw bezglebowych – wieloletnia alternatywa dla wełny mineralnej i maty kokosowej.</span>
+              <span class="cw-prodbox__media"><img class="cw-prodbox__img" src="img/opakowania/mata_uprawowa.png" alt="" width="1000" height="313" decoding="async" fetchpriority="low"></span>
+              <span class="cw-prodbox__desc">Naturalne podłoże nowej generacji do upraw bezglebowych – wieloletnia alternatywa dla wełny mineralnej i maty kokosowej.</span>
             </a>
             <a class="cw-prodbox" href="carbohumic.html">
               <span class="wf-overline wf-t-tertiary">Płynne · doglebowe i nalistne</span>
               <span class="wf-h5 cw-prodbox__name">CARBOHUMIC</span>
-              <span class="wf-small wf-t-secondary">„Próchnica w płynie" – kondycjonuje glebę i biostymuluje roślinę.</span>
+              <span class="cw-prodbox__media cw-prodbox__media--pair">
+                <span class="cw-prodbox__variant"><img class="cw-prodbox__img" src="img/opakowania/butelka_1l_biala.webp" alt="" width="391" height="1000" decoding="async" fetchpriority="low"><span class="cw-prodbox__tag">Doglebowe</span></span>
+                <span class="cw-prodbox__variant"><img class="cw-prodbox__img" src="img/opakowania/butelka_1l_czarna.webp" alt="" width="391" height="1000" decoding="async" fetchpriority="low"><span class="cw-prodbox__tag">Dolistne</span></span>
+              </span>
+              <span class="cw-prodbox__desc">„Próchnica w płynie" – kondycjonuje glebę i biostymuluje roślinę.</span>
             </a>
             <a class="cw-prodbox" href="carbomat-humic.html">
               <span class="wf-overline wf-t-tertiary">Sypkie · doglebowe</span>
               <span class="wf-h5 cw-prodbox__name">CARBOMAT HUMIC</span>
-              <span class="wf-small wf-t-secondary">Kondycjoner + potas + biostymulator; podnosi pH zakwaszonej gleby – na pole i do ogrodu.</span>
+              <span class="cw-prodbox__media"><img class="cw-prodbox__img" src="img/opakowania/worek_20l.png" alt="" width="578" height="875" decoding="async" fetchpriority="low"></span>
+              <span class="cw-prodbox__desc">Kondycjoner + potas + biostymulator; podnosi pH zakwaszonej gleby – na pole i do ogrodu.</span>
             </a>
           </div>
           <div class="cw-mega__needs">
@@ -790,7 +808,7 @@
       window.addEventListener("load", function () { centerTab(el); });
       return;
     }
-    el.innerHTML = NAVBAR + SCRIM;
+    el.innerHTML = (HERE ? NAVBAR.replace(/src="img\//g, 'src="' + HERE + "img/") : NAVBAR) + SCRIM;
     markCurrent(el, el.getAttribute("data-current"));
     /* Three sources, in this order: attribute, address query, address fragment. */
     if (el.getAttribute("data-widok") === "pro") setPro(el, true, "");

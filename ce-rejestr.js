@@ -430,7 +430,7 @@ window.CW_CE = {
       "projekt": null,
       "tagi": {
         "media": [
-          "bez-mediow"
+          "packshot"
         ],
         "tekst": [
           "krotki"
@@ -454,7 +454,7 @@ window.CW_CE = {
         ]
       },
       "skroty_wariantow": {
-        "szerokie": "Cztery boksy produktów, dwa przyciski w nagłówku panelu, rząd potrzeb.",
+        "szerokie": "Cztery boksy produktów z miniaturą opakowania, dwa przyciski w nagłówku panelu, rząd potrzeb.",
         "domyslne": "Trzy kolumny list odnośników.",
         "waskie": "Jedna wąska lista odnośników.",
         "grupy": "Pięć grup upraw z listami nazw (Ozime i Jare), stopka z Konfiguratorem."
@@ -475,7 +475,7 @@ window.CW_CE = {
         "stopka panelu"
       ],
       "warianty": {
-        "szerokie": "cztery boksy produktowe (Produkty Carbohort); w nagłówku panelu dwa przyciski – „Poznaj całą gamę produktów” (jasny) i „Przejdź do sklepu” (ciemny, z ikoną koszyka, od 28.09.2026)",
+        "szerokie": "cztery boksy produktowe (Produkty Carbohort); w nagłówku panelu dwa przyciski – „Poznaj całą gamę produktów” (jasny) i „Przejdź do sklepu” (ciemny, z ikoną koszyka, od 28.09.2026); od 09.10.2026 boks ma cztery części w stałej kolejności – kategoria, nazwa, miniatura opakowania, opis przy dolnej krawędzi – a boks CARBOHUMIC pokazuje dwie butelki z podpisami „Doglebowe” i „Dolistne”",
         "domyslne": "trzy kolumny list – bez wystąpień od 20.09.2026, zastąpiony wariantem „grupy”",
         "waskie": "jedna lista (Programy i badania)",
         "grupy": "pięć grup upraw na pełną szerokość kontenera (Rodzaje upraw, 20.09.2026; wygląd pozycji ujednolicony 01.10.2026): tytuł grupy z kreską 2 px i lista pozycji o jednym wyglądzie, a w grupie Rolnicze dwie listy pod śródtytułami Ozime i Jare, bez kart i ikon. Pozycja ze swoją stroną jest linkiem w ciemnym tonie, pozostałe 28 to jaśniejsze spany „cw-crop--soon”; bez strzałek, pogrubień i szyny wyróżnień. Spec: 40-strona-www/koncepcja/menu-rodzaje-upraw-spec.md"

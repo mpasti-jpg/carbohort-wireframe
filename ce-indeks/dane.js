@@ -1,6 +1,6 @@
 window.CE_DANE = {
  "meta": {
-  "wygenerowano": "05.10.2026",
+  "wygenerowano": "09.10.2026",
   "wersja": "0.1.0",
   "projekt": "CarboHort",
   "aktywnych": 80,
@@ -434,7 +434,7 @@ window.CE_DANE = {
      "wspolne"
     ],
     "media": [
-     "bez-mediow"
+     "packshot"
     ],
     "tekst": [
      "krotki"
@@ -461,13 +461,13 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-02.webp",
     "pelny": "ce-indeks/img/p/CE-02.webp",
     "w": 1280,
-    "h": 381
+    "h": 567
    },
    "warianty": [
     {
      "slug": "szerokie",
-     "opis": "cztery boksy produktowe (Produkty Carbohort); w nagłówku panelu dwa przyciski – „Poznaj całą gamę produktów” (jasny) i „Przejdź do sklepu” (ciemny, z ikoną koszyka, od 28.09.2026)",
-     "skrot": "Cztery boksy produktów, dwa przyciski w nagłówku panelu, rząd potrzeb.",
+     "opis": "cztery boksy produktowe (Produkty Carbohort); w nagłówku panelu dwa przyciski – „Poznaj całą gamę produktów” (jasny) i „Przejdź do sklepu” (ciemny, z ikoną koszyka, od 28.09.2026); od 09.10.2026 boks ma cztery części w stałej kolejności – kategoria, nazwa, miniatura opakowania, opis przy dolnej krawędzi – a boks CARBOHUMIC pokazuje dwie butelki z podpisami „Doglebowe” i „Dolistne”",
+     "skrot": "Cztery boksy produktów z miniaturą opakowania, dwa przyciski w nagłówku panelu, rząd potrzeb.",
      "zrzut": null
     },
     {
