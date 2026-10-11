@@ -1043,7 +1043,7 @@ window.CW_CE = {
       "nazwa": "Scena faktów",
       "grupa": "sceny",
       "rodzina": "sceny",
-      "skrot": "Przypięta scena: po lewej tytuł, opis i licznik jednego faktu naraz, po prawej zdjęcie z boksem ilustracji.",
+      "skrot": "Przypięta scena: po lewej jeden fakt naraz – tytuł z plakietką numeru, pasek postępu z klikalnych odcinków i opis, po prawej zdjęcie z boksem ilustracji.",
       "projekt": null,
       "tagi": {
         "media": [
@@ -1075,12 +1075,12 @@ window.CW_CE = {
         "naglowek-nad-scena": "Nagłówek i lead nad torem, w scenie tylko opis punktu.",
         "osiem-krokow": "Scena z ośmioma krokami, kroki 2–6 na wspólnym zdjęciu.",
         "z-leadem": "Scena z dwoma akapitami leadu przyklejonymi z nagłówkiem.",
-        "z-naglowkiem": "Kicker i H2 przyklejone w lewej kolumnie, pod nimi fakt z linią postępu i licznikiem.",
+        "z-naglowkiem": "Kicker i H2 przyklejone w lewej kolumnie, pod nimi fakt z plakietką numeru i paskiem postępu z odcinków.",
         "bez-naglowka": "Scena bez kickera i H2; nagłówek stoi nad torem jako zwykły nagłówek sekcji.",
         "glass-i-zielen": "Warstwa wyglądu: szklane karty faktu i wizualizacji na zielonym tonie."
       },
-      "opis": "Scena sticky 100svh w wysokim torze, układ wg ramki Figma „Frame 206”: kontener na całą szerokość okna (do 1800 px), po lewej przyklejony kicker i H2 (wariant z-naglowkiem) albo sama kolumna tekstu, przy dolnej krawędzi jeden fakt naraz – tytuł, cienka linia z postępem slajdu, opis i licznik „02/05”; po prawej panel zdjęcia na wysokość ekranu z marginesem 20 px, bez przyciemnienia, z boksem ilustracji na rozmytym tle (kolory odwrócone).",
-      "mechanika": "Pozycja przewijania wybiera krok (długość kroku ze zmiennych --fx-step-min 480 i --fx-step-vh 0,8), zdjęcie panelu crossfade, ilustracja podmieniana, linia postępu bieżącego slajdu z --fx-f; jedyny blok [data-fx-head] w sekcji nigdy nie dostaje hidden (strażnik modułu). Poniżej 900 px, przy reduced-motion i bez JS bloki stoją jeden pod drugim. Moduł 50.",
+      "opis": "Scena sticky 100svh w wysokim torze, układ wg ramki Figma „Frame 206”: kontener na całą szerokość okna (do 1800 px), po lewej przyklejony kicker i H2 (wariant z-naglowkiem) albo sama kolumna tekstu, przy dolnej krawędzi jeden fakt naraz – tytuł, na prawym końcu jego wiersza plakietka z numerem opisu (sama liczba, wg ramki Figma 870:2992), pod nim cienka linia postępu podzielona na N odcinków z odstępem 10 px (N = liczba opisów) i opis; po prawej panel zdjęcia na wysokość ekranu z marginesem 20 px, bez przyciemnienia, z boksem ilustracji na rozmytym tle (kolory odwrócone).",
+      "mechanika": "Pozycja przewijania wybiera krok (długość kroku ze zmiennych --fx-step-min 480 i --fx-step-vh 0,8), zdjęcie panelu crossfade, ilustracja podmieniana; każdy odcinek linii jest paskiem postępu swojego opisu (wcześniejsze pełne, bieżący wypełnia się z --fx-f, dalsze puste) i przyciskiem, który przewija scenę na początek tego opisu – odcinki buduje moduł z pustej linii znacznika przy pierwszym uruchomieniu sceny; jedyny blok [data-fx-head] w sekcji nigdy nie dostaje hidden (strażnik modułu). Poniżej 900 px, przy reduced-motion i bez JS bloki stoją jeden pod drugim, bez linii i plakietki. Moduł 50.",
       "baza": {
         "plik": "v7/carbomat.html",
         "kotwica": "czym-jest"
@@ -1092,7 +1092,7 @@ window.CW_CE = {
       "czesci": [
         "kicker + h2 (+ lead)",
         "N opisów",
-        "kreska postępu i licznik przy każdym opisie",
+        "pasek postępu z N odcinków i plakietka numeru przy każdym opisie",
         "panel zdjęcia",
         "boks ilustracji"
       ],
@@ -1100,9 +1100,9 @@ window.CW_CE = {
         "naglowek-nad-scena": "nagłówek i lead nad torem, w scenie tylko opis punktu (Mata) – bez wystąpień od 19.09.2026, CARBOMAT MATA przeszła na wariant bez-naglowka",
         "osiem-krokow": "8 kroków, kroki 2–6 na wspólnym zdjęciu (CARBOMAT HUMIC) – bez wystąpień od 19.09.2026: liczba kroków jest treścią, a długość kroku toru ustawiają zmienne --fx-step-min i --fx-step-vh, więc CARBOMAT HUMIC stoi dziś na wariancie z-naglowkiem",
         "z-leadem": "dwa akapity leadu przyklejone razem z nagłówkiem (Próchnica+ Metodologia) – bez wystąpień od 19.09.2026, Metodologia przeszła na wariant bez-naglowka",
-        "z-naglowkiem": "układ wg ramki Figma „Frame 206” z kickerem i H2 w scenie, bez leadu: jeden blok nagłówka przyklejony u góry lewej kolumny, przy dole jeden fakt naraz – tytuł, cienka linia z postępem bieżącego slajdu, opis i licznik „02/05” (Mateusz, 18.09.2026; od 19.09.2026 Produkty #jak-dzialaja, CARBOMAT ECO #czym-jest jako baza CE i CARBOMAT HUMIC #czym-jest – osiem kroków, --fx-step-min 420, --fx-step-vh 0,7)",
+        "z-naglowkiem": "układ wg ramki Figma „Frame 206” z kickerem i H2 w scenie, bez leadu: jeden blok nagłówka przyklejony u góry lewej kolumny, przy dole jeden fakt naraz – tytuł z plakietką numeru, cienka linia postępu z odcinków i opis (Mateusz, 18.09.2026; plakietka i odcinki od 11.10.2026; od 19.09.2026 Produkty #jak-dzialaja, CARBOMAT ECO #czym-jest jako baza CE i CARBOMAT HUMIC #czym-jest – osiem kroków, --fx-step-min 420, --fx-step-vh 0,7)",
         "bez-naglowka": "ten sam układ bez kickera i H2 w scenie – kicker, H2 i lead stoją nad torem jako zwykły nagłówek sekcji (reguła Mateusza: lead nigdy w scenie); od 19.09.2026 Próchnica+ #metodologia, CARBOMAT MATA #czym-jest-scena (korzeń CE to wewnętrzny kontener w sekcji #czym-jest) i CARBOHUMIC #czym-jest, a na Produktach do obejrzenia przełącznikiem podglądu",
-        "glass-i-zielen": "warstwa wyglądu nałożona na dowolny układ sceny, klasa c5-fx--glass na korzeniu: tytuł faktu wagi 400, opis 14 px w #777771, licznik 11 px, kreska postępu czerń .1 z wypełnieniem w zieleni #71C35F (--c5-fx-green), boks ilustracji z promieniem i paddingiem 24 px, tłem rgb(53 46 40 / .43) i szkłem (blur 18 px, krawędź inset), plakietka numeru 16 px, słupki 6 px z etykietami 13–16 px, odstępy przy kresce 11/13 px (CARBOMAT ECO, CARBOHUMIC, CARBOMAT HUMIC).",
+        "glass-i-zielen": "warstwa wyglądu nałożona na dowolny układ sceny, klasa c5-fx--glass na korzeniu: tytuł faktu wagi 400, opis 14 px w #777771, odcinki paska postępu czerń .1 z wypełnieniem w zieleni #71C35F (--c5-fx-green), boks ilustracji z promieniem i paddingiem 24 px, tłem rgb(53 46 40 / .43) i szkłem (blur 18 px, krawędź inset), plakietka numeru 16 px, słupki 6 px z etykietami 13–16 px, odstępy przy kresce 11/13 px (CARBOMAT ECO, CARBOHUMIC, CARBOMAT HUMIC).",
         "glass-v1": "pierwsza wersja warstwy glass, klasa c5-fx--glass-v1: wszystko jak w glass-i-zielen poza typografią słupków w boksie (zostaje 13 px) i odstępami przy kresce (zostają 14/16 px) (Produkty).",
         "naglowek-ramka": "nagłówek sceny wg ramki Figma „Frame 140-8475”, klasa c5-fx--naglowek-ramka: kicker jako plakietka z obrysem #0c2b1c, 24 px pod nią H2 w P22 Mackinac Pro Book 46/51 px na mierze 661 px, ze stopniami dla wąskiego i niskiego okna (CARBOMAT ECO).",
         "szeroki": "klasa c5-fx--szeroki: w układzie statycznym od 900 px kolumna sceny stoi w szerokim kontenerze 1800 px z marginesem 40 px zamiast 1180 px (Próchnica+).",
@@ -5523,6 +5523,58 @@ window.CW_CE = {
           "kotwica": "pozycje",
           "maxh": 648
         }
+      }
+    },
+    "CE-93": {
+      "nazwa": "Karuzela relacji filmowych",
+      "grupa": "przelaczniki",
+      "rodzina": "karty",
+      "skrot": "Nagłówek ze strzałkami po prawej i rząd kart z filmami: trzy obok siebie, reszta do przewijania.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "wideo"
+        ],
+        "tekst": [
+          "tylko-naglowek"
+        ],
+        "ukryte": [
+          "karuzela"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "galeria-media",
+          "harmonogram-czas"
+        ],
+        "mechanika": [
+          "klik",
+          "przewijanie"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "opis": "Wiersz nagłówka: po lewej kicker i nagłówek sekcji, po prawej – na wysokości nagłówka, przy prawej krawędzi kontenera – dwa przyciski ikonowe ze strzałkami. Pod nim rząd kart przewijany w poziomie; karta to kadr odtwarzacza 16:9 ze znakiem play, rodzaj materiału, tytuł i data publikacji. Od 900 px stoją trzy karty obok siebie, od 600 px dwie, niżej jedna z widocznym brzegiem następnej. Pasek przewijania jest ukryty.",
+      "mechanika": "Rząd przewija się natywnie (palec, gładzik, klawiatura po fokusie na torze) z dociąganiem do krawędzi karty (scroll-snap). Strzałka przesuwa rząd o jedną kartę – płynnie, a przy prefers-reduced-motion od razu; na początku rzędu nieaktywna jest strzałka „poprzednie”, na końcu „następne”, a gdy wszystkie karty mieszczą się w torze – obie. Stan strzałek idzie za pozycją przewinięcia i przelicza się po zmianie szerokości okna. Strzałki są w HTML-u ukryte (hidden) i odsłania je skrypt, więc bez JS zostaje sam przewijany rząd. Karuzela nie przewija się sama.",
+      "baza": {
+        "plik": "v7/prochnica-plus.html",
+        "kotwica": "etapy-relacje"
+      },
+      "kod": {
+        "css": "ce/CE-93-karuzela-relacji.css (c5-relc)",
+        "js": "ce/CE-93-karuzela-relacji.js"
+      },
+      "czesci": [
+        "wiersz nagłówka: kicker i nagłówek sekcji",
+        "dwie strzałki (przycisk ikonowy EL-02)",
+        "tor przewijany w poziomie",
+        "karta: kadr odtwarzacza 16:9, rodzaj, tytuł, data publikacji"
+      ],
+      "warianty": {},
+      "zrzut": {
+        "maxh": 700
       }
     }
   },

@@ -8,9 +8,16 @@
    scroll pass reads ONLY the track rectangle and writes the result into two
    custom properties, one class and the data-on attributes.
      · --fx-f  = progress of the CURRENT slide (0 -> 1, back to 0 on every change)
-                 and it drives the fill of the 1 px line of the fact on screen.
-   Every fact carries its own line and counter (static text in the markup), so the
-   block simply stands at the bottom of the column and nothing has to be measured.
+                 and it drives the fill of the current segment of the line of the
+                 fact on screen.
+   Every fact carries its own line and number badge (static text in the markup), so
+   the block simply stands at the bottom of the column and nothing has to be
+   measured. The line of the markup is empty apart from one fill; the first time the
+   scene runs this module cuts it into one segment per fact – a <button> each. In
+   the line of fact i the segments before i are full, segment i is the current one
+   (it reads --fx-f) and the rest are empty, so the states are set once, at build
+   time, and the scroll pass does not touch them. A segment takes the reader to the
+   start of its fact.
    Below 900 px, with reduced motion and without JS the section is static –
    everything visible (CSS) – and the header block with the lead (variant B) is
    the one on screen.
@@ -41,6 +48,7 @@
     var btns = $$("[data-fx-var]", sec);
     if (!track || !stage || !facts.length) return;
     var STEPS = facts.length, stageH = 0, idx = -1;
+    var segs = null;   /* segs[i][k] – segment k in the line of fact i */
 
     function cssNum(name, dflt) {
       var v = parseFloat(window.getComputedStyle(sec).getPropertyValue(name));
@@ -77,8 +85,44 @@
       });
     }
 
+    function titleOf(f) {
+      var t = $(".c5-fx__title", f);
+      return t ? t.textContent.replace(/\s+/g, " ").trim() : "";
+    }
+
+    /* Built once, on the first pass with the scene on: below 900 px, with reduced
+       motion and without JS the line is hidden and its markup stays as shipped.
+       The accessible names are Polish, as the pages are. */
+    function buildSegs() {
+      if (segs) return;
+      segs = facts.map(function (f, i) {
+        var line = $(".c5-fx__line", f), row = [];
+        if (!line) return row;
+        line.textContent = "";
+        /* the markup hides the decorative line; with buttons inside it must not */
+        line.removeAttribute("aria-hidden");
+        line.setAttribute("role", "group");
+        line.setAttribute("aria-label", "Opisy w tej sekcji");
+        facts.forEach(function (g, k) {
+          var b = document.createElement("button"), fill = document.createElement("span");
+          b.type = "button";
+          b.className = "c5-fx__seg" + (k < i ? " is-done" : k === i ? " is-now" : "");
+          var name = titleOf(g);
+          b.setAttribute("aria-label", "Opis " + (k + 1) + " z " + STEPS + (name ? ": " + name : ""));
+          if (k === i) b.setAttribute("aria-current", "step");
+          fill.className = "c5-fx__fill";
+          b.appendChild(fill);
+          b.addEventListener("click", function () { goTo(k, b); });
+          line.appendChild(b);
+          row.push(b);
+        });
+        return row;
+      });
+    }
+
     function measure() {
       applyHeads();
+      if (CX5.motionOn()) buildSegs();
       if (!CX5.motionOn()) {
         track.style.height = "";
         sec.style.removeProperty("--fx-f");
@@ -112,6 +156,23 @@
       top = Math.max(0, Math.round(top));
       if (CX5.lenis && CX5.lenis.scrollTo) { CX5.lenis.scrollTo(top, { immediate: true, force: true }); return; }
       window.scrollTo(0, top);
+    }
+
+    /* Fact k from its start: the scene lands 2 px into the step, so rounding of
+       the scroll position can never leave it on the step before, and the fill of
+       the segment starts from (nearly) zero. The jump is instant – a glide across
+       several steps would flash every fact on the way. The fact that held the
+       pressed segment goes off screen with it, so the focus moves to the same
+       segment in the line of the fact that came in. */
+    function goTo(k, from) {
+      if (!stageH) return;
+      var r = track.getBoundingClientRect();
+      var span = r.height - stageH;
+      if (span <= 0) return;
+      var hadFocus = document.activeElement === from;
+      jumpTo(Math.ceil(window.scrollY + r.top + span * k / STEPS) + 2);
+      update();
+      if (hadFocus && segs && segs[k] && segs[k][k]) segs[k][k].focus({ preventScroll: true });
     }
 
     btns.forEach(function (b) {

@@ -11,11 +11,14 @@
      right half OF THAT CONTAINER (20 px from its right, top and bottom edges),
      the illustration box floats in its middle on a blurred dark wash, the left
      column starts 40 px from the container's left edge – kicker and heading at
-     the top, the current fact at the BOTTOM of the column: title, a 1 px line
-     whose fill is the progress of the current slide, and under it the
-     description on the left with the counter on the right. Every fact carries
-     its own line and counter, so the whole block stands at the bottom edge
-     whatever the length of the description.
+     the top, the current fact at the BOTTOM of the column: the title with the
+     number badge of the fact at the right end of its row, a 1 px progress line
+     cut into one segment per fact (10 px apart; every segment is a button that
+     takes the reader to its fact and fills with the progress of that fact),
+     and under it the description. Every fact carries its own line and badge,
+     so the whole block stands at the bottom edge whatever the length of the
+     description. The segments are built by the module script from the empty
+     line of the markup, the first time the scene runs.
 
    Layout classes carry the c5-fx prefix, hooks are data-fx*. A page sheet holds
    NO rule with these classes and no rule under the id of its scene: what a page
@@ -34,7 +37,7 @@
      --c5-fx-viz-h, --c5-fx-viz-w, --c5-fx-viz-bg, --c5-fx-static-max,
      --c5-fx-static-pad                    see "What a page may retune" below
      --fx-step-min (480), --fx-step-vh (0.8)   step of the track, read by the JS
-     --c5-fx-pos-1 … --c5-fx-pos-8 (50% 58%)   crop of the photo of a step
+     --c5-fx-pos-1 … --c5-fx-pos-9 (50% 58%)   crop of the photo of a step
      --c5-fx-head-gap        kicker to heading (static clamp(1rem,2vw,1.5rem),
                              scene clamp(0.75rem,1.4vw,1rem))
      --c5-fx-h2-max (486px)  measure of the heading in the scene head
@@ -47,6 +50,10 @@
      --c5-fx-body-gap, --c5-fx-list-gap   gaps of the description in the scene
      --c5-fx-svg-max (none)  max-height of a drawing in the illustration box
      --c5-fx-green           accent of the progress fill (glass variants)
+     --c5-fx-badge-bg (#f2ec7d), --c5-fx-badge-ink (#0c2b1c)
+                             field and ink of the number badge of a fact
+                             (Figma frame 870-2992); no declaration in this
+                             sheet, the two values are var() fallbacks
    Only values WITHOUT a media step belong in style="…": an inline value beats
    every rule of a sheet, the steps of the variants included. ================= */
 
@@ -108,6 +115,7 @@
 .c5-fx__img[data-fx-bg="6"]{object-position:var(--c5-fx-pos-6,50% 58%);}
 .c5-fx__img[data-fx-bg="7"]{object-position:var(--c5-fx-pos-7,50% 58%);}
 .c5-fx__img[data-fx-bg="8"]{object-position:var(--c5-fx-pos-8,50% 58%);}
+.c5-fx__img[data-fx-bg="9"]{object-position:var(--c5-fx-pos-9,50% 58%);}
 /* A placeholder labelled through data-ph: dark field, light label. The attribute
    lifts the rule over the page-level .c5-ph, whose sheet loads later. */
 .c5-fx__ph[data-ph]{background:var(--w-gray-700);}
@@ -136,8 +144,9 @@
 .c5-fx__panel > [data-fx-bg="6"],.c5-fx__panel > [data-fx-bg^="6-"]{order:16;} .c5-fx__fact[data-fx-fact="6"]{order:17;} .c5-viz[data-fx-viz="6"]{order:18;}
 .c5-fx__panel > [data-fx-bg="7"],.c5-fx__panel > [data-fx-bg^="7-"]{order:19;} .c5-fx__fact[data-fx-fact="7"]{order:20;} .c5-viz[data-fx-viz="7"]{order:21;}
 .c5-fx__panel > [data-fx-bg="8"],.c5-fx__panel > [data-fx-bg^="8-"]{order:22;} .c5-fx__fact[data-fx-fact="8"]{order:23;} .c5-viz[data-fx-viz="8"]{order:24;}
+.c5-fx__panel > [data-fx-bg="9"],.c5-fx__panel > [data-fx-bg^="9-"]{order:25;} .c5-fx__fact[data-fx-fact="9"]{order:26;} .c5-viz[data-fx-viz="9"]{order:27;}
 
-/* line + counter belong to the scene only */
+/* the progress line and the number badge belong to the scene only */
 .c5-fx__line,.c5-fx__count{display:none;}
 
 /* Static layout on a wide screen (reduced motion or no JS): the boxes must not
@@ -202,25 +211,32 @@
   .cx-js .c5-fx__ph::after,
   .cx-js .c5-fx__ph > .c5-ph__label{top:12px;bottom:auto;left:14px;}
 
-  /* One fact at a time, standing at the BOTTOM of the left column: all five sit in
-     the same place (same insets), so the swap is a cross-fade. Three rows – title,
-     line, description – and the counter beside the description, at the right end of
-     the line. The block ends where the dock clearance begins, so the bottom edge of
-     the description is the same on every step whatever its length. */
+  /* One fact at a time, standing at the BOTTOM of the left column: all of them sit
+     in the same place (same insets), so the swap is a cross-fade. Three rows –
+     title, line, description – and the number badge in the row of the title, at the
+     right end of the column (Figma frame 870-2989): its right edge is the right
+     edge of the line, it is centred on the title, and the title wraps before it.
+     The block ends where the dock clearance begins, so the bottom edge of the
+     description is the same on every step whatever its length. */
   .cx-js .c5-fx__fact{position:absolute;left:var(--c5-fx-side);right:calc(50% + var(--c5-fx-gap));bottom:var(--c5-fx-dock);
-    display:grid;grid-template-columns:85% minmax(0,1fr);grid-template-rows:auto auto auto;gap:0 var(--w-space-3);
+    display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto auto;gap:0 clamp(1.5rem,3vw,4rem);
     max-width:none;opacity:0;visibility:hidden;transform:translateY(12px);
     transition:opacity .18s var(--w-ease),transform .18s var(--w-ease),visibility 0s linear .18s;}
   .cx-js .c5-fx__fact.is-on{opacity:1;visibility:visible;transform:none;
     transition:opacity .26s var(--w-ease),transform .26s var(--w-ease);}
-  .cx-js .c5-fx__title{grid-row:1;grid-column:1 / -1;}
-  .cx-js .c5-fx__line{display:block;grid-row:2;grid-column:1 / -1;margin-block:var(--c5-fx-line-top) var(--c5-fx-line-bottom);}
-  /* the line and the counter span the whole column (Frame 206), the description keeps
-     a readable measure – on 1920+ the column is much wider than the frame's */
-  .cx-js .c5-fx__body{grid-row:3;grid-column:1;max-width:34rem;gap:var(--c5-fx-body-gap,var(--w-space-3));}
+  .cx-js .c5-fx__title{grid-row:1;grid-column:1;align-self:center;}
+  /* the segments share the line evenly, 10 px apart */
+  .cx-js .c5-fx__line{display:flex;gap:10px;grid-row:2;grid-column:1 / -1;margin-block:var(--c5-fx-line-top) var(--c5-fx-line-bottom);}
+  /* the line spans the whole column (Frame 206), the description keeps a readable
+     measure – on 1920+ the column is much wider than the frame's */
+  .cx-js .c5-fx__body{grid-row:3;grid-column:1 / -1;max-width:34rem;gap:var(--c5-fx-body-gap,var(--w-space-3));}
   .cx-js .c5-fx__body ul{gap:var(--c5-fx-list-gap,var(--w-space-2));}
-  .cx-js .c5-fx__count{display:block;grid-row:3;grid-column:2;justify-self:end;align-self:start;
-    font-size:0.75rem;line-height:1.45;letter-spacing:.06em;color:var(--w-text-tertiary);font-variant-numeric:tabular-nums;}
+  /* the number badge (Figma frame 870-2992): 43 px square at one digit, the same
+     in every variant of the scene */
+  .cx-js .c5-fx__count{display:block;grid-row:1;grid-column:2;align-self:center;box-sizing:border-box;min-width:43px;
+    padding:12px 15px;border-radius:11px;background:var(--c5-fx-badge-bg,#f2ec7d);color:var(--c5-fx-badge-ink,#0c2b1c);
+    font-size:16px;line-height:normal;font-weight:var(--w-weight-regular);letter-spacing:normal;text-align:center;
+    font-variant-numeric:tabular-nums;}
 
   /* the illustration box floats in the middle of the photo panel: the same rect,
      a fixed size and auto margins centre it on both axes */
@@ -293,9 +309,22 @@
 .c5-bar__track{height:12px;background:var(--w-gray-100);border:1px solid var(--w-border-subtle);overflow:hidden;}
 .c5-bar__fill{height:100%;width:var(--bw);background:var(--w-gray-900);}
 
-/* the 1 px line under the title and its progress fill (scene only, see above) */
-.c5-fx__line{position:relative;height:1px;background:var(--w-gray-300);}
-.c5-fx__fill{position:absolute;inset:0;background:var(--w-gray-900);transform:scaleX(var(--fx-f,0));transform-origin:left center;will-change:transform;}
+/* The 1 px line under the title (scene only, see above). The module script cuts
+   it into one segment per fact: a <button> that is the 1 px track of its fact
+   and carries the fill. In the line of fact i the segments before i are full
+   (is-done), segment i fills with the progress of the current slide (is-now,
+   --fx-f) and the ones after it stay empty. The pointer and touch target is the
+   ::before – 25 px tall and reaching half of the 10 px gap on either side, so
+   the row of segments has no dead spots and the layout does not move. */
+.c5-fx__line{position:relative;height:1px;}
+.c5-fx__seg{-webkit-appearance:none;appearance:none;position:relative;flex:1 1 0;min-width:0;height:1px;margin:0;padding:0;border:0;border-radius:0;
+  background:var(--w-gray-300);color:inherit;font:inherit;cursor:pointer;}
+.c5-fx__seg::before{content:"";position:absolute;inset:-12px -5px;}
+.c5-fx__seg:hover{box-shadow:0 0 0 1px var(--w-gray-300);}
+.c5-fx__seg:focus-visible{outline:2px solid var(--w-focus-ring,currentColor);outline-offset:5px;}
+.c5-fx__fill{position:absolute;inset:0;background:var(--w-gray-900);transform:scaleX(0);transform-origin:left center;pointer-events:none;}
+.c5-fx__seg.is-done .c5-fx__fill{transform:none;}
+.c5-fx__seg.is-now .c5-fx__fill{transform:scaleX(var(--fx-f,0));will-change:transform;}
 
 /* ===== wariant: glass ===== */
 /* ===== wariant: glass-v1 ===== */
@@ -317,8 +346,9 @@
 
    What is in the layer:
      · the fact card – title in the regular weight, description 14 px / 1.3 in
-       the grey of the frame, counter 11 px, the hairline at black 10 % and its
-       progress fill in the accent green (--c5-fx-green, one line to withdraw);
+       the grey of the frame, the hairline at black 10 % and its progress fill
+       in the accent green (--c5-fx-green, one line to withdraw); the number
+       badge of the fact is the one of the layout;
      · the illustration box – 24 px corners and padding, the Glass material of
        the frame (see below), the wash through the knob --c5-fx-viz-bg;
      · the number badge of the box, the bars and the caption inside the box.
@@ -360,9 +390,9 @@
 .c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-fx__title{font-weight:var(--w-weight-regular);line-height:1.2;
   letter-spacing:normal;color:#000;}
 .c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-fx__body{font-size:14px;line-height:1.3;color:#777771;}
-.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-fx__count{font-size:11px;line-height:1.2;letter-spacing:normal;color:#000;}
 /* the hairline: black at 10 % (about #e6e6e6 on white), the fill: the green above */
-.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-fx__line{background:rgb(0 0 0 / .1);}
+.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-fx__seg{background:rgb(0 0 0 / .1);}
+.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-fx__seg:hover{box-shadow:0 0 0 1px rgb(0 0 0 / .1);}
 .c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-fx__fill{background:var(--c5-fx-green);}
 
 /* --- Illustration box (Frames 140-8542 root / 140-8543 content) ---------------
@@ -493,6 +523,22 @@ html:not(.cx-js) .c5-fx .c5-viz--rosnie{aspect-ratio:auto;min-height:520px;max-h
    column of the box. */
 .c5-viz .c5-barchart--siatka{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:var(--w-space-3) var(--w-space-2);}
 .c5-viz .c5-barchart--siatka .c5-bar{grid-column:1 / -1;grid-template-columns:subgrid;}
+
+/* ----- The narrowest low window ---------------------------------------------
+   900–1023 px wide and up to 740 px tall (e.g. 900x700): the text column is at
+   its narrowest and the stage at its lowest, so the longest description would
+   reach the scene head. The title, the description and its gaps take one step
+   down for every scene (the gaps of the tightest step of skala-waskie-okno;
+   the description at 12.5 px, half a pixel above that step – the smallest
+   size at which the longest description of produkty.html clears the head).
+   The selector carries five classes on purpose – one more than the glass layer,
+   whose 14 px would otherwise take the size back – and the block stands BEFORE
+   the scale ladders, which have the same weight and must keep the last word. */
+@media (min-width:900px) and (max-width:1023px) and (prefers-reduced-motion: no-preference) and (max-height:740px){
+  .cx-js .c5-fx[data-fx] .c5-fx__fact .c5-fx__title{font-size:1rem;}
+  .cx-js .c5-fx[data-fx] .c5-fx__fact .c5-fx__body{font-size:0.78125rem;gap:6px;}
+  .cx-js .c5-fx[data-fx] .c5-fx__fact .c5-fx__body ul{gap:4px;}
+}
 
 /* ----- Scale ladders of the scene -------------------------------------------
    Three variants that step the description down by window size. They depend on

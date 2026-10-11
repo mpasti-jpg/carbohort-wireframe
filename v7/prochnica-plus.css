@@ -29,7 +29,7 @@
    jest niesiony samym tonem – zawsze ikona + etykieta + kształt obrysu. */
 .pp-tile__name{font-size:1.0625rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;margin:0;}
 /* Pigułka stanu to element c5-chip (EL-16, ce/00-base.css); stan niesie styl
-   obrysu: --solid „w toku”, --dashed „zaplanowane”, --dotted „nie dotyczy”.
+   obrysu: --solid „w toku”, --dashed „zaplanowane”.
    Tu zostaje tylko miejsce pigułki w kamieniu i w pustym slocie (wiersz osi S1
    `pp-os__slide` odpadł razem z blokiem 65, przebudowa CE-49 z 19.09). */
 .pp-ms .c5-chip,.pp-empty .c5-chip{width:max-content;margin-top:var(--w-space-1);}
@@ -47,11 +47,47 @@
   .pp-reveal{opacity:1;transform:none;transition:none;}
 }
 
-/* ===== 30 · O PROGRAMIE – blok pusty od 19.09 (iteracja 2, spec §18.2) ======
-   Sekcja stoi na klocku CE-69; cały jej styl przeniósł się do
-   `ce/CE-69-wstep-z-kadrem.css` (prefiks `c5-opener`). Dawne klasy
-   `pp-manifest` / `pp-mcard` zniknęły ze strony i nie używa ich nic innego.
-   ===================================================================== */
+/* ===== 20 · HERO – page exception: smaller H1 (11.10.2026) =================
+   The H1 carries the slogan together with the full statement sentence (about
+   240 characters), so it drops below the pattern size of `.c5-h1` to fit the
+   first screen at 1440 × 900 and stay readable on a phone. CE-08 has no knob
+   for the heading size – this is an exception of this one page. ========== */
+#hero .c5-hero__copy .c5-h1{font-size:clamp(1.375rem,2.15vw,2rem);line-height:1.22;text-wrap:pretty;}
+
+/* ===== 30 · O PROGRAMIE – CE-69, page exception of the layout (11.10.2026) ==
+   The section stands on CE-69 (`ce/CE-69-wstep-z-kadrem.css`, prefix
+   `c5-opener`). On this page the heading, kicker and description are gone and
+   the whole content sits in the left column of the top band: two tiles side
+   by side, the product box under them; the photo frame keeps the right
+   column. The bottom band of the module (`c5-opener__row`) is not used here.
+   Breakpoints repeat the module: one column of bands below 900 px, tiles one
+   under another below 600 px. ============================================ */
+.pp-opener{align-items:stretch;}
+.pp-opener__left{display:flex;flex-direction:column;gap:20px;min-width:0;}
+.pp-opener__tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;}
+.pp-opener__left .c5-opener__prod{flex:1 1 auto;}
+.pp-opener__tiles > *:nth-child(2){transition-delay:.08s;}
+.pp-opener__left > .c5-opener__prod{transition-delay:.16s;}
+/* the photo frame follows the height of the left column (two columns only) */
+@media (min-width:900px){
+  .pp-opener .c5-opener__shot img{flex:1 1 0;min-height:0;aspect-ratio:auto;height:0;}
+}
+@media (max-width:899px){
+  .pp-opener__left .c5-opener__prod{min-height:0;}
+}
+@media (max-width:599px){
+  .pp-opener__tiles{grid-template-columns:minmax(0,1fr);}
+}
+@media (prefers-reduced-motion: reduce){
+  .pp-opener__tiles > *,.pp-opener__left > .c5-opener__prod{transition-delay:0s;}
+}
+
+/* ===== 35 · ZAŁOŻENIA – CE-70, slide 03: three areas (11.10.2026) ===========
+   Page exception: the plot shows three areas in one line (test 200 l/ha,
+   test 500 l/ha, one control), each marked with ONE square instead of three
+   row marks. The module keeps its two-column field for other pages. ====== */
+#zalozenia .c5-vs__field{grid-template-columns:repeat(3,minmax(0,1fr));}
+#zalozenia .c5-vs__rows i{width:28px;height:28px;}
 
 /* ===== 40 · Boksy ilustracji sceny „Metodologia" ============================
    (pp-sviz, pp-layout, pp-lband, pp-dots, pp-cal2, pp-stack)
@@ -213,9 +249,9 @@
   .cx-js .pp-kcard{border-color:var(--w-border-subtle);box-shadow:0 24px 60px rgb(0 0 0 / .18);}
 }
 
-/* ===== 50 · Uczestnicy programu – siatka kart poziomych 2 × 3 (spec §18.5) ==
-   Karuzela ze strzałkami i licznikiem znika: sześć gospodarstw stoi naraz w
-   siatce dwóch kolumn i trzech wierszy, w zwykłym kontenerze 1180 px (uwaga
+/* ===== 50 · Uczestnicy programu – siatka kart poziomych (spec §18.5) ========
+   Karuzela ze strzałkami i licznikiem znika: wszystkie gospodarstwa (od
+   11.10.2026 pięć) stoją naraz w siatce dwóch kolumn, w zwykłym kontenerze 1180 px (uwaga
    Mateusza z 19.09 – reszta strony idzie na 1800 px).
    Karta jest pozioma: kadr zdjęcia po lewej (40 % szerokości, wypełnia całą
    wysokość karty, bez marginesu), po prawej chip uprawy, nazwa gospodarstwa,
@@ -469,10 +505,6 @@ html:not(.cx-js) #koordynatorzy .pp-more{display:none;}
   .pp-rz__bg img{transform:none;}
 }
 
-/* ===== 75 · ZADAJ PYTANIE – empty block since iteration 3 (spec §19.2) =====
-   The section is CE-18 „CTA wyśrodkowane" (variant `z-leadem`); its only rule
-   lives in ce/CE-18-cta.css. The demo form and the photo left the page. === */
-
 /* ===== 80 · Metodologia – CE-12 (spec §18.4b) ==============================
    No rule of the scene lives in this sheet. Layout and mechanics come from
    `ce/CE-12-scena-faktow.css`; this page picks them in prochnica-plus.html on
@@ -498,11 +530,11 @@ html:not(.cx-js) #koordynatorzy .pp-more{display:none;}
 #main #harmonogram{scroll-margin-top:clamp(1.5rem,8vh,5rem);}
 
 /* ===== 85b · Listy kamieni milowych i sloty relacji (przeniesione z warstwy
-   legacy 11–12.09). Sześć list gospodarstw stoi pod osią
+   legacy 11–12.09). Pięć list gospodarstw stoi pod osią
    jako wersja bez JS i jako źródło treści punktów; z JS kontener jest
    `hidden`. Klony kamieni w pop-upie korzystają z tej samej typografii. === */
 
-/* --- 8. LISTY KAMIENI MILOWYCH („Etapy prac”: sześć gospodarstw) ----------- */
+/* --- 8. LISTY KAMIENI MILOWYCH („Etapy prac”: pięć gospodarstw) ----------- */
 /* Bez JS każda lista jest pionowa, z torem po lewej, na każdej szerokości.
    Stan kamienia niesie ikona + etykieta + ton, nigdy sam kolor. */
 .pp-tl{margin-top:clamp(1.25rem,2.5vw,2rem);}
@@ -526,7 +558,6 @@ html:not(.cx-js) #koordynatorzy .pp-more{display:none;}
 .pp-ms::before{content:"";position:absolute;left:-25px;top:22px;width:11px;height:11px;
   background:var(--w-surface-page);border:1px solid var(--w-gray-900);}
 .pp-ms[data-state="done"]::before{background:var(--w-gray-900);}
-.pp-ms[data-state="na"]::before{border-style:dotted;}
 .pp-ms__term{font-size:0.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--w-text-secondary);}
 .pp-ms__name{font-size:1.0625rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
 .pp-ms p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
@@ -545,15 +576,10 @@ html:not(.cx-js) #koordynatorzy .pp-more{display:none;}
 .pp-rel__kind{font-size:0.75rem;letter-spacing:.04em;text-transform:uppercase;color:var(--w-text-secondary);}
 .pp-rel__title{font-size:0.9375rem;font-weight:var(--w-weight-medium);}
 .pp-rel__date{font-size:0.8125rem;color:var(--w-text-secondary);}
-.pp-rels{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--w-space-4);
-  margin:clamp(1.25rem,2.5vw,2rem) 0 0;padding:0;list-style:none;}
-.pp-rels .pp-rel{margin-top:0;border-style:solid;border-color:var(--w-border-default);
-  transition:border-color var(--w-duration-base) var(--w-ease);}
-.pp-rels .pp-rel:hover{border-color:var(--w-gray-900);}
 
 /* reduced motion – legacy rule kept from 99 (14.09) */
 @media (prefers-reduced-motion: reduce){
-  .pp-ms,.pp-rels .pp-rel{transition:none;}
+  .pp-ms{transition:none;}
 }
 
 /* ===== 90 · WYNIKI: taby lat, tabele, wiersze raportów =====================

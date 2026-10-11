@@ -129,7 +129,8 @@
    nothing is opened by the scroll any more. What is left here:
    1. Parallax of the two panel photos – only at `CX5.motionOn()`.
    2. Reveal of the panels – through `CX5.reveal` (ce/00-base.js).
-   Pas PRO tej sekcji prowadzi ce/CE-16-pas-pro.js. ====================== */
+   The PRO band (since 11.10.2026 a block of its own after the comparison
+   #roznice-eco-humic) is driven by ce/CE-16-pas-pro.js. ================== */
 (function () {
   "use strict";
   var $$ = CX5.$$;

@@ -185,7 +185,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31789,
-      "data": "05.10"
+      "data": "11.10"
     },
     "carbomat.html": {
       "sekcja": "2. Produkty Carbohort",
@@ -199,7 +199,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31223,
-      "data": "05.10"
+      "data": "11.10"
     },
     "carbomat-mata.html": {
       "sekcja": "2. Produkty Carbohort",
@@ -213,7 +213,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31563,
-      "data": "05.10"
+      "data": "11.10"
     },
     "carbohumic.html": {
       "sekcja": "2. Produkty Carbohort",
@@ -227,7 +227,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31564,
-      "data": "07.10"
+      "data": "11.10"
     },
     "carbomat-humic.html": {
       "sekcja": "2. Produkty Carbohort",
@@ -241,7 +241,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31565,
-      "data": "05.10"
+      "data": "11.10"
     },
     "uprawy.html": {
       "sekcja": "Poza tabelą",
@@ -438,7 +438,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31569,
-      "data": "05.10"
+      "data": "11.10"
     },
     "centrum-wiedzy.html": {
       "sekcja": "5. Centrum wiedzy",

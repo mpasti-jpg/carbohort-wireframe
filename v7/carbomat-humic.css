@@ -181,16 +181,16 @@ html.c5-pop-lock{overflow:hidden;}
   .c5-pop__panel,.c5-pop-overlay{transition:none;}
 }
 
-/* --- CE-12 „Scena faktów” (#czym-jest) – eight steps --------------------------
-   No rule of the scene lives in this sheet. Layout, mechanics and look come from
+/* --- CE-12 „Scena faktów” (#czym-jest) – nine steps ---------------------------
+   Nothing of this scene lives in this sheet. Layout, mechanics and look come from
    ce/CE-12-scena-faktow.css; this page picks them in carbomat-humic.html: on the
    root of the scene the classes c5-fx--glass and c5-fx--skala-osiem-krokow and,
-   as style="--…", the step of the track (--fx-step-min, --fx-step-vh: eight
+   as style="--…", the step of the track (--fx-step-min, --fx-step-vh: nine
    steps, so shorter than the default 480 px / 80 % of the window) and
    --c5-fx-svg-max; the purity table of step 8 carries c5-viz--rosnie, the bar
    chart of step 7 c5-viz--luz-mobile. */
 
-/* --- KIEDY STOSOWAĆ: dwa panele fotograficzne + pas PRO (spec §16.1) --------
+/* --- KIEDY STOSOWAĆ: dwa panele fotograficzne (spec §16.1) ------------------
    Two application worlds side by side, not a sequence: the pin, the packshot
    scenes, the rows and the spacer of iteration 1 are gone (Mateusz, 14.09 – the
    row mechanics did not fit this content). Each panel is a full photograph with
@@ -198,8 +198,9 @@ html.c5-pop-lock{overflow:hidden;}
    the parallax (--when-par) and the hover zoom (--when-zoom) never uncover the
    panel edge. Below 900 px the pair becomes one column, and every mechanic is
    gated by prefers-reduced-motion / hover, so the content never depends on it. */
-/* pas PRO zamyka sekcję na styk – stąd brak dolnego oddechu (dawniej inline) */
-.c5-when-sec{padding-bottom:0;}
+/* 11.10.2026: the PRO band no longer closes this section (the comparison
+   #roznice-eco-humic stands between them), so the section keeps the bottom
+   padding of .c5-sec – the rule `.c5-when-sec{padding-bottom:0}` is gone. */
 /* panele od 30 px do 30 px szerokości ekranu – ten sam kadr co w Parametrach */
 .c5-when{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:clamp(2.5rem,5vw,4rem) var(--c5-gutter) 0;}
 .c5-when__panel{position:relative;min-height:clamp(460px,80svh,760px);overflow:hidden;background:var(--w-gray-700);color:var(--w-text-inverse);display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(1.5rem,3.5vw,3rem);}

@@ -1,11 +1,11 @@
 window.CE_DANE = {
  "meta": {
-  "wygenerowano": "09.10.2026",
+  "wygenerowano": "11.10.2026",
   "wersja": "0.1.0",
   "projekt": "CarboHort",
-  "aktywnych": 80,
+  "aktywnych": 81,
   "wycofanych": 12,
-  "wystapien": 296,
+  "wystapien": 295,
   "stron": 33,
   "bazaStron": "v7/"
  },
@@ -1087,7 +1087,7 @@ window.CE_DANE = {
      "plik": "prochnica-plus.html",
      "strona": "Próchnica+",
      "id": "hero",
-     "naglowek": "Wspólnie wracamy do korzeni",
+     "naglowek": "Wspólnie wracamy do korzeni. Troska o glebę nie jest jedynie kosztem, ale kluczową inwest…",
      "wariant": "player"
     },
     {
@@ -1496,7 +1496,7 @@ window.CE_DANE = {
   {
    "kod": "CE-12",
    "nazwa": "Scena faktów",
-   "skrot": "Przypięta scena: po lewej tytuł, opis i licznik jednego faktu naraz, po prawej zdjęcie z boksem ilustracji.",
+   "skrot": "Przypięta scena: po lewej jeden fakt naraz – tytuł z plakietką numeru, pasek postępu z klikalnych odcinków i opis, po prawej zdjęcie z boksem ilustracji.",
    "status": "aktywny",
    "projekt": null,
    "tagi": {
@@ -1555,8 +1555,8 @@ window.CE_DANE = {
     },
     {
      "slug": "z-naglowkiem",
-     "opis": "układ wg ramki Figma „Frame 206” z kickerem i H2 w scenie, bez leadu: jeden blok nagłówka przyklejony u góry lewej kolumny, przy dole jeden fakt naraz – tytuł, cienka linia z postępem bieżącego slajdu, opis i licznik „02/05” (Mateusz, 18.09.2026; od 19.09.2026 Produkty #jak-dzialaja, CARBOMAT ECO #czym-jest jako baza CE i CARBOMAT HUMIC #czym-jest – osiem kroków, --fx-step-min 420, --fx-step-vh 0,7)",
-     "skrot": "Kicker i H2 przyklejone w lewej kolumnie, pod nimi fakt z linią postępu i licznikiem.",
+     "opis": "układ wg ramki Figma „Frame 206” z kickerem i H2 w scenie, bez leadu: jeden blok nagłówka przyklejony u góry lewej kolumny, przy dole jeden fakt naraz – tytuł z plakietką numeru, cienka linia postępu z odcinków i opis (Mateusz, 18.09.2026; plakietka i odcinki od 11.10.2026; od 19.09.2026 Produkty #jak-dzialaja, CARBOMAT ECO #czym-jest jako baza CE i CARBOMAT HUMIC #czym-jest – osiem kroków, --fx-step-min 420, --fx-step-vh 0,7)",
+     "skrot": "Kicker i H2 przyklejone w lewej kolumnie, pod nimi fakt z plakietką numeru i paskiem postępu z odcinków.",
      "zrzut": {
       "mini": "ce-indeks/img/m/CE-12--wariant-z-naglowkiem.webp",
       "pelny": "ce-indeks/img/p/CE-12--wariant-z-naglowkiem.webp",
@@ -1577,7 +1577,7 @@ window.CE_DANE = {
     },
     {
      "slug": "glass-i-zielen",
-     "opis": "warstwa wyglądu nałożona na dowolny układ sceny, klasa c5-fx--glass na korzeniu: tytuł faktu wagi 400, opis 14 px w #777771, licznik 11 px, kreska postępu czerń .1 z wypełnieniem w zieleni #71C35F (--c5-fx-green), boks ilustracji z promieniem i paddingiem 24 px, tłem rgb(53 46 40 / .43) i szkłem (blur 18 px, krawędź inset), plakietka numeru 16 px, słupki 6 px z etykietami 13–16 px, odstępy przy kresce 11/13 px (CARBOMAT ECO, CARBOHUMIC, CARBOMAT HUMIC).",
+     "opis": "warstwa wyglądu nałożona na dowolny układ sceny, klasa c5-fx--glass na korzeniu: tytuł faktu wagi 400, opis 14 px w #777771, odcinki paska postępu czerń .1 z wypełnieniem w zieleni #71C35F (--c5-fx-green), boks ilustracji z promieniem i paddingiem 24 px, tłem rgb(53 46 40 / .43) i szkłem (blur 18 px, krawędź inset), plakietka numeru 16 px, słupki 6 px z etykietami 13–16 px, odstępy przy kresce 11/13 px (CARBOMAT ECO, CARBOHUMIC, CARBOMAT HUMIC).",
      "skrot": "Warstwa wyglądu: szklane karty faktu i wizualizacji na zielonym tonie.",
      "zrzut": null
     },
@@ -1679,12 +1679,12 @@ window.CE_DANE = {
     "plik": "v7/carbomat.html",
     "kotwica": "czym-jest"
    },
-   "opis": "Scena sticky 100svh w wysokim torze, układ wg ramki Figma „Frame 206”: kontener na całą szerokość okna (do 1800 px), po lewej przyklejony kicker i H2 (wariant z-naglowkiem) albo sama kolumna tekstu, przy dolnej krawędzi jeden fakt naraz – tytuł, cienka linia z postępem slajdu, opis i licznik „02/05”; po prawej panel zdjęcia na wysokość ekranu z marginesem 20 px, bez przyciemnienia, z boksem ilustracji na rozmytym tle (kolory odwrócone).",
-   "mechanika": "Pozycja przewijania wybiera krok (długość kroku ze zmiennych --fx-step-min 480 i --fx-step-vh 0,8), zdjęcie panelu crossfade, ilustracja podmieniana, linia postępu bieżącego slajdu z --fx-f; jedyny blok [data-fx-head] w sekcji nigdy nie dostaje hidden (strażnik modułu). Poniżej 900 px, przy reduced-motion i bez JS bloki stoją jeden pod drugim. Moduł 50.",
+   "opis": "Scena sticky 100svh w wysokim torze, układ wg ramki Figma „Frame 206”: kontener na całą szerokość okna (do 1800 px), po lewej przyklejony kicker i H2 (wariant z-naglowkiem) albo sama kolumna tekstu, przy dolnej krawędzi jeden fakt naraz – tytuł, na prawym końcu jego wiersza plakietka z numerem opisu (sama liczba, wg ramki Figma 870:2992), pod nim cienka linia postępu podzielona na N odcinków z odstępem 10 px (N = liczba opisów) i opis; po prawej panel zdjęcia na wysokość ekranu z marginesem 20 px, bez przyciemnienia, z boksem ilustracji na rozmytym tle (kolory odwrócone).",
+   "mechanika": "Pozycja przewijania wybiera krok (długość kroku ze zmiennych --fx-step-min 480 i --fx-step-vh 0,8), zdjęcie panelu crossfade, ilustracja podmieniana; każdy odcinek linii jest paskiem postępu swojego opisu (wcześniejsze pełne, bieżący wypełnia się z --fx-f, dalsze puste) i przyciskiem, który przewija scenę na początek tego opisu – odcinki buduje moduł z pustej linii znacznika przy pierwszym uruchomieniu sceny; jedyny blok [data-fx-head] w sekcji nigdy nie dostaje hidden (strażnik modułu). Poniżej 900 px, przy reduced-motion i bez JS bloki stoją jeden pod drugim, bez linii i plakietki. Moduł 50.",
    "czesci": [
     "kicker + h2 (+ lead)",
     "N opisów",
-    "kreska postępu i licznik przy każdym opisie",
+    "pasek postępu z N odcinków i plakietka numeru przy każdym opisie",
     "panel zdjęcia",
     "boks ilustracji"
    ],
@@ -2457,13 +2457,6 @@ window.CE_DANE = {
      "wariant": "z-leadem"
     },
     {
-     "plik": "prochnica-plus.html",
-     "strona": "Próchnica+",
-     "id": "zadaj-pytanie",
-     "naglowek": "Zadaj pytanie",
-     "wariant": "z-leadem"
-    },
-    {
      "plik": "produkty.html",
      "strona": "Produkty Carbohort",
      "id": "cta-koncowe",
@@ -2876,13 +2869,6 @@ window.CE_DANE = {
      "id": "rzetelnosc-kafle",
      "naglowek": "",
      "wariant": "szklane"
-    },
-    {
-     "plik": "prochnica-plus.html",
-     "strona": "Próchnica+",
-     "id": "etapy-relacje",
-     "naglowek": "",
-     "wariant": "sloty-poziome"
     },
     {
      "plik": "produkty.html",
@@ -3438,7 +3424,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-24--wariant-kafle-2x2.webp",
       "pelny": "ce-indeks/img/p/CE-24--wariant-kafle-2x2.webp",
       "w": 1280,
-      "h": 800
+      "h": 799
      }
     },
     {
@@ -7022,7 +7008,7 @@ window.CE_DANE = {
      "plik": "prochnica-plus.html",
      "strona": "Próchnica+",
      "id": "o-programie",
-     "naglowek": "Troska o glebę nie jest jedynie kosztem, ale kluczową inwestycją w przyszłość rolnictwa,…",
+     "naglowek": "5 uczestników",
      "wariant": null
     }
    ],
@@ -8572,7 +8558,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-90.webp",
     "pelny": "ce-indeks/img/p/CE-90.webp",
     "w": 1280,
-    "h": 771
+    "h": 667
    },
    "warianty": [],
    "wystapienia": [
@@ -8769,6 +8755,74 @@ window.CE_DANE = {
    "kod_zrodlowy": {
     "css": "ce/CE-92-tabela-zamowieniowa.css (c5-order) + sklep-wspolne.css (cws-qty)",
     "js": "ce/CE-92-tabela-zamowieniowa.js"
+   }
+  },
+  {
+   "kod": "CE-93",
+   "nazwa": "Karuzela relacji filmowych",
+   "skrot": "Nagłówek ze strzałkami po prawej i rząd kart z filmami: trzy obok siebie, reszta do przewijania.",
+   "status": "aktywny",
+   "projekt": null,
+   "tagi": {
+    "rodzina": [
+     "karty"
+    ],
+    "media": [
+     "wideo"
+    ],
+    "tekst": [
+     "tylko-naglowek"
+    ],
+    "ukryte": [
+     "karuzela"
+    ],
+    "pozycje": [
+     "5-8"
+    ],
+    "nadaje": [
+     "galeria-media",
+     "harmonogram-czas"
+    ],
+    "mechanika": [
+     "klik",
+     "przewijanie"
+    ],
+    "zakres": [
+     "uniwersalny"
+    ]
+   },
+   "zrzut": {
+    "mini": "ce-indeks/img/m/CE-93.webp",
+    "pelny": "ce-indeks/img/p/CE-93.webp",
+    "w": 1280,
+    "h": 585
+   },
+   "warianty": [],
+   "wystapienia": [
+    {
+     "plik": "prochnica-plus.html",
+     "strona": "Próchnica+",
+     "id": "etapy-relacje",
+     "naglowek": "Etapy prac",
+     "wariant": null
+    }
+   ],
+   "wspolny": null,
+   "baza": {
+    "plik": "v7/prochnica-plus.html",
+    "kotwica": "etapy-relacje"
+   },
+   "opis": "Wiersz nagłówka: po lewej kicker i nagłówek sekcji, po prawej – na wysokości nagłówka, przy prawej krawędzi kontenera – dwa przyciski ikonowe ze strzałkami. Pod nim rząd kart przewijany w poziomie; karta to kadr odtwarzacza 16:9 ze znakiem play, rodzaj materiału, tytuł i data publikacji. Od 900 px stoją trzy karty obok siebie, od 600 px dwie, niżej jedna z widocznym brzegiem następnej. Pasek przewijania jest ukryty.",
+   "mechanika": "Rząd przewija się natywnie (palec, gładzik, klawiatura po fokusie na torze) z dociąganiem do krawędzi karty (scroll-snap). Strzałka przesuwa rząd o jedną kartę – płynnie, a przy prefers-reduced-motion od razu; na początku rzędu nieaktywna jest strzałka „poprzednie”, na końcu „następne”, a gdy wszystkie karty mieszczą się w torze – obie. Stan strzałek idzie za pozycją przewinięcia i przelicza się po zmianie szerokości okna. Strzałki są w HTML-u ukryte (hidden) i odsłania je skrypt, więc bez JS zostaje sam przewijany rząd. Karuzela nie przewija się sama.",
+   "czesci": [
+    "wiersz nagłówka: kicker i nagłówek sekcji",
+    "dwie strzałki (przycisk ikonowy EL-02)",
+    "tor przewijany w poziomie",
+    "karta: kadr odtwarzacza 16:9, rodzaj, tytuł, data publikacji"
+   ],
+   "kod_zrodlowy": {
+    "css": "ce/CE-93-karuzela-relacji.css (c5-relc)",
+    "js": "ce/CE-93-karuzela-relacji.js"
    }
   }
  ]

@@ -99,7 +99,7 @@
 })();
 
 /* ===== 52 · Pop-up profilu gospodarstwa (spec §8) ==========================
-   Jedna implementacja, sześć egzemplarzy – jak lightbox strony kukurydzy
+   Jedna implementacja, pięć egzemplarzy – jak lightbox strony kukurydzy
    (v5/uprawa.js §7), tylko na natywnym <dialog>: `showModal()` daje pułapkę
    fokusu, `Esc` i `::backdrop`, więc ręcznie obsługujemy tylko klik w tło,
    powrót fokusu, blokadę przewijania i zatrzymanie inercji (Lenis).
@@ -341,11 +341,6 @@
 
   CX5.register({ scroll: frame, resize: frame });
 })();
-
-/* ===== 75 · Zadaj pytanie – no code of its own ==============================
-   Since iteration 3 (spec §19.2) the section is a static CE-18 call to action;
-   the „Zapytaj eksperta" button opens the advisor dock through
-   `data-jurek-open`, handled in cw.js. The demo form module is gone. ====== */
 
 /* ===== 80 · Metodologia – bez własnego kodu ================================
    Od iteracji 2 (spec §18.4b) sceną sześciu kroków steruje moduł próby CE-12
