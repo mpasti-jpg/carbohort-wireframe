@@ -233,15 +233,15 @@ window.CW_STATUS = {
       "sekcja": "2. Produkty Carbohort",
       "nazwa": "CARBOHUMIC dolistny",
       "stan": {
-        "makieta": null,
+        "makieta": "do-akceptacji",
         "tresc": null,
         "projekt": null,
         "media": null,
         "infografiki": null,
         "wdrozenie": null
       },
-      "ac": null,
-      "data": "15.10"
+      "ac": 31564,
+      "data": "16.10"
     },
     "carbomat-humic.html": {
       "sekcja": "2. Produkty Carbohort",
@@ -326,6 +326,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": null,
+      "wTabeli": false,
       "data": "25.07"
     },
     "jagodowe.html": {
@@ -507,7 +508,7 @@ window.CW_STATUS = {
         "infografiki": null,
         "wdrozenie": null
       },
-      "ac": null,
+      "ac": 31863,
       "data": "15.10"
     },
     "kontakt.html": {
@@ -549,7 +550,7 @@ window.CW_STATUS = {
         "infografiki": null,
         "wdrozenie": null
       },
-      "ac": 31512,
+      "ac": 31864,
       "data": "15.10"
     },
     "pdp.html": {
@@ -577,7 +578,7 @@ window.CW_STATUS = {
         "infografiki": null,
         "wdrozenie": null
       },
-      "ac": null,
+      "ac": 31865,
       "data": "28.09"
     },
     "koszyk.html": {
