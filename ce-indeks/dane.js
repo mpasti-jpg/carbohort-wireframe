@@ -3,9 +3,9 @@ window.CE_DANE = {
   "wygenerowano": "16.10.2026",
   "wersja": "0.1.0",
   "projekt": "CarboHort",
-  "aktywnych": 84,
+  "aktywnych": 85,
   "wycofanych": 14,
-  "wystapien": 311,
+  "wystapien": 312,
   "stron": 34,
   "bazaStron": "v7/"
  },
@@ -7612,7 +7612,7 @@ window.CE_DANE = {
   {
    "kod": "CE-77",
    "nazwa": "Pasek tytułowy",
-   "skrot": "Niski pasek otwarcia: okruszki i H1 po lewej, wyszukiwarka z podpowiedziami po prawej.",
+   "skrot": "Niski pasek otwarcia: okruszki i H1 (wyszukiwarka sklepu – CE-99).",
    "status": "aktywny",
    "projekt": null,
    "tagi": {
@@ -7792,8 +7792,8 @@ window.CE_DANE = {
     "plik": "v7/sklep.html",
     "kotwica": "hero"
    },
-   "opis": "Niski pasek otwierający stronę sklepu zamiast hero, w szerokim kontenerze (EL-29) z linią pod spodem: po lewej okruszki i pod nimi H1 w osobnym wierszu (1,35–1,75 rem), po prawej narzędzie strony – w wersji bazowej wyszukiwarka produktów: pole 48 px (do 520 px od 900 px) z ikoną lupy i animowanym placeholderem oraz panel podpowiedzi pod polem. Wysokość wg treści (ok. 90 px), żeby pierwsza karta listy stała jak najwyżej.",
-   "mechanika": "Wyszukiwarka szuka tylko produktów sklepu. Placeholder „Szukaj: ” dopisuje i kasuje frazy po literze z migającym kursorem, staje przy fokusie i przy wpisanym tekście, przy reduced-motion zostaje stały tekst; nazwa dostępna pola jest stała. Od dwóch znaków panel podpowiedzi (niemodalny popup comboboxa): do sześciu produktów z miniaturą 56 px, nazwą z wyróżnioną frazą, meta i ceną „od …”; klik prowadzi do karty produktu, „+” otwiera szybki podgląd (CE-76). W zawężonym widoku wiersz o dopasowaniach poza bieżącym widokiem z przyciskiem „Szukaj w całym sklepie”; bez wyników zdanie i „Zapytaj wirtualnego asystenta”. Wpisywanie nie przestawia siatki – dopiero Enter albo stopka „Pokaż wszystkie wyniki (N)” nakłada frazę na listę (chip filtra w CE-78) i przewija do listy. Strzałka w dół przenosi do panelu, strzałki poruszają po pozycjach, Escape zamyka i wraca do pola (aria-expanded, aria-controls). Poniżej 700 px okruszki znikają, a pole zajmuje całą szerokość.",
+   "opis": "Od 16.10.2026 w wersji bazowej bez wyszukiwarki – przeniesiona nad kolumnę kart jako CE-99; zostają okruszki i H1. Wcześniej: Niski pasek otwierający stronę sklepu zamiast hero, w szerokim kontenerze (EL-29) z linią pod spodem: po lewej okruszki i pod nimi H1 w osobnym wierszu (1,35–1,75 rem), po prawej narzędzie strony – w wersji bazowej wyszukiwarka produktów: pole 48 px (do 520 px od 900 px) z ikoną lupy i animowanym placeholderem oraz panel podpowiedzi pod polem. Wysokość wg treści (ok. 90 px), żeby pierwsza karta listy stała jak najwyżej.",
+   "mechanika": "Od 16.10.2026 wyszukiwarka to CE-99 (opis niżej dotyczy wersji do 15.10.2026). Wyszukiwarka szuka tylko produktów sklepu. Placeholder „Szukaj: ” dopisuje i kasuje frazy po literze z migającym kursorem, staje przy fokusie i przy wpisanym tekście, przy reduced-motion zostaje stały tekst; nazwa dostępna pola jest stała. Od dwóch znaków panel podpowiedzi (niemodalny popup comboboxa): do sześciu produktów z miniaturą 56 px, nazwą z wyróżnioną frazą, meta i ceną „od …”; klik prowadzi do karty produktu, „+” otwiera szybki podgląd (CE-76). W zawężonym widoku wiersz o dopasowaniach poza bieżącym widokiem z przyciskiem „Szukaj w całym sklepie”; bez wyników zdanie i „Zapytaj wirtualnego asystenta”. Wpisywanie nie przestawia siatki – dopiero Enter albo stopka „Pokaż wszystkie wyniki (N)” nakłada frazę na listę (chip filtra w CE-78) i przewija do listy. Strzałka w dół przenosi do panelu, strzałki poruszają po pozycjach, Escape zamyka i wraca do pola (aria-expanded, aria-controls). Poniżej 700 px okruszki znikają, a pole zajmuje całą szerokość.",
    "czesci": [
     "okruszki",
     "H1",
@@ -7805,8 +7805,8 @@ window.CE_DANE = {
     "wariant z-akcja – rząd akcji po prawej: przycisk, segment albo pole z etykietą (c5-titlebar__acts, c5-titlebar__field)"
    ],
    "kod_zrodlowy": {
-    "css": "sklep.html <style> bloki „2. PASEK TYTUŁOWY” i wyszukiwarka (c5sk-topbar, c5sk-search, c5sk-suggest); wariant z-licznikiem: koszyk.css (c5ks-top) + wariant z-akcja: ce/CE-77-pasek-tytulowy.css (c5-titlebar)",
-    "js": "sklep.html <script> (wyszukiwarka, placeholder, podpowiedzi); wariant z-licznikiem: koszyk.js (licznik opakowań)"
+    "css": "sklep.html <style> blok „2. PASEK TYTUŁOWY” (c5sk-topbar); wariant z-licznikiem: koszyk.css (c5ks-top) + wariant z-akcja: ce/CE-77-pasek-tytulowy.css (c5-titlebar)",
+    "js": "wariant z-licznikiem: koszyk.js (licznik opakowań)"
    }
   },
   {
@@ -7866,8 +7866,8 @@ window.CE_DANE = {
     "plik": "v7/sklep.html",
     "kotwica": "lista"
    },
-   "opis": "Cała powierzchnia wyboru produktów sklepu w szerokim kontenerze. U góry pas grup: nagłówek „Wybierz uprawę lub potrzebę”, pastylki z okrągłym zdjęciem, etykietą i licznikiem oraz link do konfiguratora po prawej; pod nim przyklejony pasek roboczy – przełącznik kolumny filtrów z liczbą aktywnych, licznik „Pokazujemy N z N produktów”, przycisk szuflady filtrów i sortowanie. Niżej od 1000 px kolumna filtrów 280 px (11 grup: pięć rozwiniętych na wierzchu, sześć pod „Pokaż wszystkie filtry”; przy każdej opcji licznik) obok siatki trzech kolumn kart produktu; nad siatką wiersz aktywnych filtrów z chipami i „Resetuj wszystkie filtry”, podpowiedź „Zawęź dalej”, pas przywracania filtrów i zdanie wykluczające, pod siatką pusty stan i rozwijany pas „Poza wynikami”. Karta: kadr 1 : 1 z makietą opakowania na jasnoszarym tle, znacznik „promocja”, pastylki opakowań, linia meta, nazwa, cena „od …” (przy obniżce cena, przekreślona regularna, „−9%” i najniższa cena z 30 dni) i „dodaj do koszyka” na całą szerokość karty.",
-   "mechanika": "Stan listy = grupa (wybór jednokrotny; pastylka to przycisk przełączający z aria-pressed, ponowny klik zdejmuje wybór) + fasety (wybór wielokrotny) + zakres ceny + fraza z wyszukiwarki (CE-77) + sortowanie. Każdy aktywny filtr ma chip z „×”, grupa jest pierwszym chipem. Liczniki przy pastylkach i opcjach liczone na żywo; opcja o wyniku 0 jest wygaszona, nigdy ukryta; produkt zdjęty z listy dostaje zdanie w „Poza wynikami”, reguła twarda – zdanie nad siatką. Sortowanie „Polecane”, „Nazwa A–Z”, „Cena rosnąco” i filtr ceny liczą cenę po obniżce. Stan w adresie (polka, f, q, cena_od, cena_do, sort) – świadome akcje przez pushState, Wstecz i Dalej odtwarzają widok. Od 1000 px przycisk „Ukryj filtry / Pokaż filtry” zwija kolumnę (siatka zostaje trzykolumnowa na całej szerokości), stan pamiętany w sesji, domyślny z data-filters-default; kolumna filtrów przyklejona pod paskiem roboczym. Poniżej 1000 px filtry to szuflada na pełny ekran z przyciskiem „Pokaż produkty”, siatka ma dwie kolumny, a poniżej 900 px pas grup przewija się w poziomie (kółka 56 px, scroll-snap). Karta: pastylki opakowań na kadrze po najechaniu albo przy fokusie (wskaźnik z kursorem, od 600 px), w pozostałych przypadkach stale pod kadrem; pastylka prowadzi do karty produktu z kotwicą opakowania; na kartach rodziny CARBOMAT ECO druga klatka z fakturą przenika się ze zdjęciem opakowania po najechaniu; „dodaj do koszyka” otwiera szybki podgląd (CE-76). W widoku bez zawężenia w siatkę wplecione są kafle promocyjne (CE-79).",
+   "opis": "Cała powierzchnia wyboru produktów sklepu w szerokim kontenerze. U góry pas grup: nagłówek „Wybierz uprawę lub potrzebę”, pastylki z okrągłym zdjęciem, etykietą i licznikiem oraz link do konfiguratora po prawej; pod nim przyklejony pasek roboczy – przełącznik kolumny filtrów z liczbą aktywnych, licznik „Pokazujemy N z N produktów”, przycisk szuflady filtrów i sortowanie. Niżej od 1000 px kolumna filtrów 280 px (11 grup: pięć rozwiniętych na wierzchu, sześć pod „Pokaż wszystkie filtry”; przy każdej opcji licznik) obok siatki trzech kolumn kart produktu; nad siatką wiersz aktywnych filtrów z chipami i „Resetuj wszystkie filtry”, podpowiedź „Zawęź dalej”, pas przywracania filtrów i zdanie wykluczające, pod siatką pusty stan i rozwijany pas „Poza wynikami”. Karta: kadr 1 : 1 z makietą opakowania na jasnoszarym tle, znacznik „promocja”, pastylki opakowań, linia meta, nazwa, cena „od …” (przy obniżce cena, przekreślona regularna, „−9%” i najniższa cena z 30 dni) i „dodaj do koszyka” na całą szerokość karty. Od 16.10.2026 nad siatką kart, na jej pełnej szerokości, stoi wyszukiwarka CE-99, a pod nią „Zawęź dalej”, chipy aktywnych filtrów i pasek przywracania.",
+   "mechanika": "Stan listy = grupa (wybór jednokrotny; pastylka to przycisk przełączający z aria-pressed, ponowny klik zdejmuje wybór) + fasety (wybór wielokrotny) + zakres ceny + filtry z zapytania (CE-99, chipy pod etykietą „Z zapytania”) + sortowanie. Każdy aktywny filtr ma chip z „×”, grupa jest pierwszym chipem. Liczniki przy pastylkach i opcjach liczone na żywo; opcja o wyniku 0 jest wygaszona, nigdy ukryta; produkt zdjęty z listy dostaje zdanie w „Poza wynikami”, reguła twarda – zdanie nad siatką. Sortowanie „Polecane”, „Nazwa A–Z”, „Cena rosnąco” i filtr ceny liczą cenę po obniżce. Stan w adresie (polka, f, q, cena_od, cena_do, sort) – świadome akcje przez pushState, Wstecz i Dalej odtwarzają widok. Od 1000 px przycisk „Ukryj filtry / Pokaż filtry” zwija kolumnę (siatka zostaje trzykolumnowa na całej szerokości), stan pamiętany w sesji, domyślny z data-filters-default; kolumna filtrów przyklejona pod paskiem roboczym. Poniżej 1000 px filtry to szuflada na pełny ekran z przyciskiem „Pokaż produkty”, siatka ma dwie kolumny, a poniżej 900 px pas grup przewija się w poziomie (kółka 56 px, scroll-snap). Karta: pastylki opakowań na kadrze po najechaniu albo przy fokusie (wskaźnik z kursorem, od 600 px), w pozostałych przypadkach stale pod kadrem; pastylka prowadzi do karty produktu z kotwicą opakowania; na kartach rodziny CARBOMAT ECO druga klatka z fakturą przenika się ze zdjęciem opakowania po najechaniu; „dodaj do koszyka” otwiera szybki podgląd (CE-76). W widoku bez zawężenia w siatkę wplecione są kafle promocyjne (CE-79).",
    "czesci": [
     "pas grup: nagłówek, pastylki ze zdjęciem i licznikiem, link do konfiguratora",
     "przyklejony pasek roboczy: przełącznik kolumny filtrów, licznik, szuflada, sortowanie",
@@ -9209,6 +9209,76 @@ window.CE_DANE = {
    "kod_zrodlowy": {
     "css": "archiwum-wersji/ce-98-karty-wachlarz-2026-10-15/CE-98-karty-wachlarz.css (c5-fan)",
     "js": "archiwum-wersji/ce-98-karty-wachlarz-2026-10-15/CE-98-karty-wachlarz.js"
+   }
+  },
+  {
+   "kod": "CE-99",
+   "nazwa": "Wyszukiwarka sklepu",
+   "skrot": "Pole na całą szerokość kolumny kart: rozumie nazwę, kategorię i opis potrzeby, podpowiada produkty i kategorie, Enter włącza filtry listy.",
+   "status": "aktywny",
+   "projekt": null,
+   "tagi": {
+    "rodzina": [
+     "sklep-formularze"
+    ],
+    "media": [
+     "packshot",
+     "ikona"
+    ],
+    "tekst": [
+     "krotki"
+    ],
+    "ukryte": [
+     "okno"
+    ],
+    "pozycje": [
+     "1"
+    ],
+    "nadaje": [
+     "lista-produktow",
+     "nawigacja"
+    ],
+    "mechanika": [
+     "formularz",
+     "ruch-wlasny"
+    ],
+    "zakres": [
+     "typ-strony"
+    ]
+   },
+   "zrzut": {
+    "mini": "ce-indeks/img/m/CE-99.webp",
+    "pelny": "ce-indeks/img/p/CE-99.webp",
+    "w": 1280,
+    "h": 52
+   },
+   "warianty": [],
+   "wystapienia": [
+    {
+     "plik": "sklep.html",
+     "strona": "Lista produktów",
+     "id": "szukaj",
+     "naglowek": "",
+     "wariant": null
+    }
+   ],
+   "wspolny": null,
+   "baza": {
+    "plik": "v7/sklep.html",
+    "kotwica": "szukaj"
+   },
+   "opis": "Pole 52 px (48 px poniżej 600 px) z lupą, animowanym placeholderem z przykładami zapytań i czarnym przyciskiem „Szukaj”, nad kolumną kart CE-78 na jej pełną szerokość (przy zwiniętych filtrach – na całą szerokość listy). Pod polem panel podpowiedzi: od 900 px dwie kolumny – „Produkty” (do 5: miniatura, nazwa z wyróżnionym słowem, meta, cena „od”, przycisk „Do koszyka”) i „Kategorie i filtry” (nazwa grupy, wartość, licznik); na dole stopka „Pokaż N produktów” z listą filtrów, które się włączą.",
+   "mechanika": "Hybryda: słownik zamienia frazy na wartości istniejących filtrów (cena, promocja, grupy roślin, zastosowanie, postać, pH, opakowanie, potrzeby, nazwy linii, także pisownia fonetyczna i bez polskich znaków), przeczenia są rozpoznawane, reszta zostaje wyszukiwaniem tekstowym; w produkcji resztę interpretuje model językowy z katalogiem sklepu i zwraca wyłącznie JSON filtrów (window.CWShopSearch.parse daje ten sam kształt). Wpisywanie nie zmienia siatki; Enter, „Szukaj” albo stopka włączają filtry w panelu CE-78 (chipy pod etykietą „Z zapytania”, adres f / cena_od / cena_do / q / sort), nowe zapytanie podmienia filtry poprzedniego, ręczne zostają. Klik w kategorię włącza filtr; „Do koszyka” otwiera szybki podgląd (CE-76). Bez wyników: komunikat i chipy z zapytania do zdjęcia. Combobox ARIA: strzałki, lewo / prawo nazwa ↔ „Do koszyka”, Escape zamyka. Placeholder staje przy fokusie, tekście i reduced-motion.",
+   "czesci": [
+    "pole z animowanym placeholderem i przyciskiem „Szukaj”",
+    "panel: sekcja Produkty z „Do koszyka”",
+    "panel: sekcja Kategorie i filtry",
+    "stopka „Pokaż N produktów” z listą filtrów",
+    "wiersz „Szukaj w całym sklepie”, stan bez wyników"
+   ],
+   "kod_zrodlowy": {
+    "css": "ce/CE-99-wyszukiwarka-sklepu.css (c5-find)",
+    "js": "ce/CE-99-wyszukiwarka-sklepu.js (most: window.CWShopList w skrypcie sklep.html)"
    }
   }
  ]

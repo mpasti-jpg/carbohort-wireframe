@@ -10,14 +10,16 @@
 <link rel="stylesheet" href="cw.css">
 <script src="../status.js"></script>
 <script src="../ce-rejestr.js"></script>
+
 <script src="chrome.js"></script>
 <link rel="stylesheet" href="c5.css">
 <link rel="stylesheet" href="sklep-wspolne.css">
+<link rel="stylesheet" href="ce/CE-99-wyszukiwarka-sklepu.css">
 <style>
 /* =====================================================================
    SKLEP – widok listy produktów, przebudowa 2026-08-09.
    Podstawa: 40-strona-www/koncepcja/sklep-lista-produktow-spec.md
-   (panel trzech propozycji + werdykt sędziego, uwagi Mateusza z 03.08).
+   (panel trzech propozycji + werdykt sędziego, runda uwag z 03.08).
 
    ZASADA PORZĄDKUJĄCA: sklep jest listą produktów, nie stroną o sklepie.
    Nad listą stoją WYŁĄCZNIE elementy, które listę zmieniają: wyszukiwarka,
@@ -42,10 +44,9 @@
 /* Pułapka wykryta w tym projekcie trzykrotnie (konfigurator 05.07, kalkulator
    10.07, sklep 02.08): element z display:flex/grid nadpisuje domyślne
    [hidden]{display:none}. Reguła scoped, żeby nie ruszać kitu. */
-.c5sk-grid [hidden], .c5sk-empty[hidden], .c5sk-chips [hidden],
+.c5sk-grid [hidden], .c5sk-empty[hidden], .c5sk-chips [hidden], .c5sk-chips[hidden],
 .c5sk-refine[hidden], .c5sk-facet__body[hidden],
-.c5sk-restore[hidden], .c5sk-suggest[hidden], .c5sk-suggest [hidden],
-.c5sk-search__ph[hidden] { display: none !important; }
+.c5sk-restore[hidden] { display: none !important; }
 
 /* Górne menu serwisu nie jest przyklejone – do góry ekranu klei się
    wyłącznie pasek roboczy. */
@@ -61,7 +62,6 @@
 .c5sk-topbar__in { display: flex; flex-wrap: wrap; align-items: center; gap: var(--w-space-4) var(--w-space-5); padding-block: var(--w-space-4); }
 /* Round 3b (comment 9aa250ba): the page name sits on its own row under the breadcrumbs. */
 .c5sk-topbar__l { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; flex: 0 1 auto; min-width: 0; }
-.c5sk-topbar__r { display: flex; align-items: center; gap: var(--w-space-4); flex: 1 1 20rem; justify-content: flex-end; min-width: 0; }
 .c5sk-h1 { font-size: clamp(1.35rem, 2.2vw, 1.75rem); font-weight: var(--w-weight-medium); letter-spacing: -0.01em; line-height: 1.1; }
 .c5sk-topbar .wf-breadcrumb { padding: 0; }
 .c5sk-topbar .wf-breadcrumb ol { margin: 0; }
@@ -69,59 +69,10 @@
   .c5sk-topbar .wf-breadcrumb { display: none; }
   .c5sk-topbar__in { gap: var(--w-space-3); padding-block: var(--w-space-3); }
   .c5sk-topbar__l { width: 100%; }
-  .c5sk-topbar__r { flex: 1 1 100%; }
 }
 
-/* Wyszukiwarka – klient 21.07: „wyszukiwarka w sklepie jest potrzebna,
-   obsługuje klienta, który zna produkt". Round 3 (L18, §12.8): only shop
-   products; typing opens the suggestions panel and leaves the grid alone,
-   Enter or the panel footer applies the phrase as a chip, as before. */
-.c5sk-search { position: relative; flex: 1 1 16rem; max-width: 520px; min-width: 0; }
-@media (min-width: 900px) { .c5sk-search { flex: 0 1 520px; } }
-.c5sk-search__field { display: flex; align-items: center; gap: var(--w-space-3); height: 48px; padding-inline: 14px; border: 1px solid var(--w-gray-900); background: var(--w-surface-page); cursor: text; }
-/* Pierścień fokusa przeniesiony z pola na całą ramkę – `outline:none` na inpucie
-   bez zamiennika kasowałby jedyny widoczny wskaźnik fokusa w tej kontrolce. */
-.c5sk-search__field:focus-within { outline: 2px solid var(--w-gray-900); outline-offset: 2px; }
-.c5sk-search__field > .wf-icon { flex: none; opacity: .55; }
-.c5sk-search__box { position: relative; display: flex; align-items: center; flex: 1; min-width: 0; height: 100%; }
-.c5sk-search input { width: 100%; min-width: 0; height: 100%; border: 0; outline: none; font: inherit; font-size: 1rem; background: transparent; color: var(--w-text-primary); }
-.c5sk-search input::placeholder { color: var(--w-text-tertiary); opacity: 1; }
-/* Animated placeholder: the script types into this overlay while the field
-   is empty and unfocused; the static native placeholder shows on focus and
-   with reduced motion. The field keeps one constant accessible name. */
-.c5sk-search.is-typing input::placeholder { color: transparent; }
-.c5sk-search__ph { position: absolute; inset: 0; display: flex; align-items: center; pointer-events: none; font-size: 1rem; color: var(--w-text-tertiary); white-space: nowrap; overflow: hidden; }
-.c5sk-search__caret { flex: none; width: 1px; height: 1.2em; margin-left: 2px; background: var(--w-text-secondary); animation: c5sk-caret 1s steps(1) infinite; }
-@keyframes c5sk-caret { 50% { opacity: 0; } }
-
-/* Suggestions panel (pattern of rudolphcare, the "Shop" part only): up to
-   six products, a quick-view button on each row, footer applying the phrase. */
-.c5sk-suggest { position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 110; background: var(--w-surface-page); border: 1px solid var(--w-gray-900); box-shadow: var(--w-shadow-lg); max-height: min(72vh, 38rem); overflow-y: auto; overscroll-behavior: contain; }
-.c5sk-suggest__head { padding: 12px 14px 2px; font-size: 0.75rem; letter-spacing: .06em; text-transform: uppercase; color: var(--w-text-tertiary); }
-.c5sk-suggest__list { list-style: none; margin: 0; padding: 4px 0 8px; }
-.c5sk-suggest__item { display: flex; align-items: center; gap: 6px; padding-right: 10px; }
-.c5sk-suggest__link { flex: 1 1 auto; min-width: 0; display: grid; grid-template-columns: 56px minmax(0, 1fr); align-items: center; gap: 12px; padding: 6px 8px 6px 10px; color: var(--w-text-primary); text-decoration: none; }
-.c5sk-suggest__link:hover { background: var(--w-gray-100); }
-.c5sk-suggest__link:focus-visible { outline: 2px solid var(--w-focus-ring); outline-offset: -2px; background: var(--w-gray-100); }
-.c5sk-suggest__thumb { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); place-items: center; gap: 2px; width: 56px; height: 56px; padding: 6px; background: var(--w-gray-100); }
-.c5sk-suggest__thumb img { display: block; width: 100%; height: 100%; min-height: 0; object-fit: contain; }
-.c5sk-suggest__thumb.wf-ph { padding: 0; min-height: 0; border-radius: 0; }
-.c5sk-suggest__txt { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.c5sk-suggest__name { font-size: 0.9375rem; font-weight: var(--w-weight-medium); letter-spacing: -0.01em; line-height: 1.25; }
-.c5sk-suggest__name mark { background: none; color: inherit; font-weight: var(--w-weight-semibold); text-decoration: underline; text-underline-offset: 3px; }
-.c5sk-suggest__meta { font-size: 0.75rem; line-height: 1.3; color: var(--w-text-tertiary); }
-.c5sk-suggest__price { font-size: 0.8125rem; font-weight: var(--w-weight-semibold); font-variant-numeric: tabular-nums; }
-.c5sk-suggest__add { flex: none; display: grid; place-items: center; width: 40px; height: 40px; padding: 0; background: var(--w-surface-page); color: var(--w-text-primary); border: 1px solid rgb(0 0 0 / .35); border-radius: 0; cursor: pointer; }
-.c5sk-suggest__add:hover { background: var(--w-gray-900); color: var(--w-text-inverse); border-color: var(--w-gray-900); }
-.c5sk-suggest__add:focus-visible { outline: 2px solid var(--w-focus-ring); outline-offset: 2px; }
-.c5sk-suggest__more { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; padding: 10px 14px; border-top: 1px solid var(--w-border-subtle); font-size: 0.8125rem; color: var(--w-text-secondary); }
-.c5sk-suggest__linkbtn { font: inherit; padding: 0; background: none; border: 0; color: var(--w-text-primary); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
-.c5sk-suggest__linkbtn:focus-visible { outline: 2px solid var(--w-focus-ring); outline-offset: 2px; }
-.c5sk-suggest__all { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; padding: 13px 14px; font: inherit; font-size: 0.875rem; font-weight: var(--w-weight-semibold); text-align: left; background: var(--w-surface-page); color: var(--w-text-primary); border: 0; border-top: 1px solid var(--w-border-default); border-radius: 0; cursor: pointer; }
-.c5sk-suggest__all:hover { background: var(--w-gray-100); }
-.c5sk-suggest__all:focus-visible { outline: 2px solid var(--w-focus-ring); outline-offset: -2px; }
-.c5sk-suggest__all .wf-icon { width: 16px; height: 16px; }
-.c5sk-suggest__none { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 16px 14px; font-size: 0.9375rem; }
+/* The shop search left this bar on 16.10.2026: it stands over the product
+   column as CE-99 (ce/CE-99-wyszukiwarka-sklepu.css / .js). */
 
 /* --- 3. PASEK SYTUACJI (predefiniowane sety) ------------------------------
    Round 3 (L11–L13): one row of situation pills with a round photo, without
@@ -225,8 +176,15 @@
 .c5sk-refine__b { font: inherit; font-size: 0.875rem; padding: 5px 11px; background: var(--w-gray-100); color: var(--w-text-primary); border: 0; border-radius: var(--w-radius-pill); cursor: pointer; }
 .c5sk-refine__b:hover { background: var(--w-gray-200); }
 
-.c5sk-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.c5sk-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .c5sk-chips:not(:empty) { margin-top: var(--w-space-4); }
+/* Chips switched on by a search query (CE-99) open the row under a short
+   label; the empty state repeats them so one click takes a filter off. */
+.c5sk-chips__lab { font-size: 0.8125rem; color: var(--w-text-secondary); }
+.c5sk-chips__lab q { quotes: "„" "”"; color: var(--w-text-primary); }
+.c5sk-chips__sep { flex: 0 0 1px; align-self: stretch; margin-inline: 4px; background: var(--w-border-default); }
+.c5sk-chips--empty { justify-content: center; }
+.c5sk-chips--empty:not(:empty) { margin-top: 0; }
 .c5sk-chip { display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 0.8125rem; padding: 6px 12px; background: var(--w-gray-100); color: var(--w-text-primary); border: 0; border-radius: var(--w-radius-pill); cursor: pointer; }
 .c5sk-chip .wf-icon { width: 14px; height: 14px; opacity: .55; }
 .c5sk-chip:hover { background: var(--w-gray-200); }
@@ -249,6 +207,10 @@
 /* Poniżej 1000 px kolumna filtrów jest szufladą (position:fixed), więc jej pusta
    komórka w gridzie zostawiała 24 px martwej przerwy nad pierwszą kartą. */
 @media (max-width: 999px) { .c5sk-list { display: block; margin-top: var(--w-space-3); } }
+/* Product column (16.10.2026): the search (CE-99) on top, at the full width
+   of the grid, then refine hints, active filters and the grid itself. */
+.c5sk-list__main { min-width: 0; }
+.c5sk-list__main > .c5sk-grid { margin-top: var(--w-space-4); }
 
 .c5sk-facets { display: flex; flex-direction: column; gap: var(--w-space-4); }
 @media (min-width: 1000px) { .c5sk-facets { position: sticky; top: 72px; max-height: calc(100svh - 96px); overflow-y: auto; padding-right: var(--w-space-2); } }
@@ -409,8 +371,9 @@
 .c5sk-card__val--quiet { font-size: 0.9375rem; font-weight: var(--w-weight-medium); color: var(--w-text-secondary); }
 .c5sk-card__low { font-size: 0.6875rem; line-height: 1.35; color: var(--w-text-tertiary); }
 .c5sk-card__add { width: 100%; margin-top: var(--w-space-3); padding-inline: 12px; }
-/* Filtr ceny – klasyka sklepowa, zamówienie Mateusza z 10.08. Filtr ma czym
-   odsiewać (20–9200 zł); liczy cenę po obniżce (data-cena). */
+/* Price filter (from / to fields with presets). Prices span 20–9200 zł,
+   so the filter has something to sift; it reads the price after the
+   discount (data-cena). */
 .c5sk-price { display: flex; align-items: center; gap: 8px; }
 .c5sk-price input { width: 100%; min-width: 0; font: inherit; font-size: 0.875rem; padding: 7px 9px; border: 1px solid rgb(0 0 0 / .35); border-radius: 0; background: var(--w-surface-page); color: var(--w-text-primary); }
 .c5sk-price label { flex: 1 1 0; min-width: 0; }
@@ -445,7 +408,7 @@
 .c5sk-about .c5-lead { max-width: 34em; }
 
 /* Banner instead of the final CTA: assistant and configurator, no contact
-   button (Mateusz, 28.09 – contact stays on the Kontakt page). */
+   button (contact stays on the Kontakt page). */
 .c5sk-help { display: grid; grid-template-columns: minmax(0, 1fr); background: var(--w-gray-100); }
 @media (min-width: 900px) { .c5sk-help { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
 .c5sk-help__txt { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: clamp(1.25rem, 2.4vw, 2rem); padding: clamp(1.75rem, 4vw, 4rem); }
@@ -458,7 +421,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .c5sk-need, .c5sk-need__img, .c5sk-facet__title .wf-icon { transition: none; }
-  .c5sk-search__caret { animation: none; }
 }
 </style>
 </head>
@@ -481,6 +443,8 @@
 
 
 
+
+
   <div class="c5sk-topbar" id="hero" data-ce="CE-77">
     <div class="c5-wrap c5-wrap--wide c5sk-topbar__in">
       <div class="c5sk-topbar__l">
@@ -492,41 +456,6 @@
           </ol>
         </nav>
         <h1 class="c5sk-h1">Sklep</h1>
-      </div>
-      <div class="c5sk-topbar__r">
-        
-
-
-
-
-        <div class="c5sk-search" data-search>
-          <label class="c5sk-search__field">
-            <svg class="wf-icon" aria-hidden="true"><use href="#ti-search"></use></svg>
-            <span class="c5sk-search__box">
-              <input type="search" data-shop-search role="combobox" aria-label="Szukaj w sklepie" aria-haspopup="dialog" aria-expanded="false" aria-controls="sklep-podpowiedzi" autocomplete="off" spellcheck="false" placeholder="Szukaj produktu, uprawy albo opakowania">
-              <span class="c5sk-search__ph" aria-hidden="true" data-search-ph hidden><span data-search-ph-t>Szukaj: </span><span class="c5sk-search__caret"></span></span>
-            </span>
-          </label>
-          <div class="c5sk-suggest" id="sklep-podpowiedzi" role="dialog" aria-label="Podpowiedzi wyszukiwania" data-suggest hidden>
-            <p class="c5sk-suggest__head" data-suggest-head>Produkty w sklepie</p>
-            <ul class="c5sk-suggest__list" data-suggest-list></ul>
-            
-            <div class="c5sk-suggest__more" data-sg-row data-suggest-more hidden>
-              <span data-suggest-more-t></span>
-              <button type="button" class="c5sk-suggest__linkbtn" data-sg-nav data-suggest-wide>Szukaj w całym sklepie</button>
-            </div>
-            
-
-            <div class="c5sk-suggest__none" data-sg-row data-suggest-none hidden>
-              <p>Nie mamy produktu dla frazy „<span data-suggest-q></span>”.</p>
-              <button type="button" class="c5-btn c5-btn--dark c5-btn--sm" data-sg-nav data-jurek-open>Zapytaj wirtualnego asystenta</button>
-            </div>
-            <div data-sg-row data-suggest-foot>
-              <button type="button" class="c5sk-suggest__all" data-sg-nav data-suggest-all><span>Pokaż wszystkie wyniki (<span data-suggest-n>0</span>)</span> <svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></button>
-            </div>
-          </div>
-          <p class="wf-sr-only" role="status" aria-live="polite" aria-atomic="true" data-suggest-status></p>
-        </div>
       </div>
     </div>
   </div>
@@ -603,21 +532,7 @@
   <section class="c5-sec c5sk-listsec" id="lista" tabindex="-1" aria-labelledby="lista-h" data-ce="CE-78" data-ce-od="#grupy">
     <div class="c5-wrap c5-wrap--wide">
 
-      
-
-
       <h2 class="wf-sr-only" id="lista-h">Lista produktów</h2>
-      <div class="c5sk-refine" data-refine hidden></div>
-
-      
-      <div class="c5sk-chips" role="group" data-chips aria-label="Aktywne filtry"></div>
-
-      
-      <div class="c5sk-restore" data-restore hidden>
-        <span data-restore-txt></span>
-        <button type="button" class="c5sk-chip" data-restore-btn>przywróć filtry</button>
-      </div>
-
 
       
 
@@ -705,7 +620,7 @@
               <label class="c5sk-opt"><input type="checkbox" data-facet="uprawa" value="ozdobne"> <span class="c5sk-opt__t">Rośliny ozdobne, iglaki, rabaty</span> <span class="c5sk-opt__n"></span></label>
               <label class="c5sk-opt"><input type="checkbox" data-facet="uprawa" value="szkolka"> <span class="c5sk-opt__t">Szkółka i zieleń urządzona</span> <span class="c5sk-opt__n"></span></label>
               <label class="c5sk-opt"><input type="checkbox" data-facet="uprawa" value="bezglebowe"> <span class="c5sk-opt__t">Uprawy pod osłonami i bezglebowe</span> <span class="c5sk-opt__n"></span></label>
-              <p class="c5sk-facet__src">⚠️ Bez „trawnika" – klient 21.07 („trawniki odpadają") wobec decyzji D35, która go eksponuje.</p>
+              
             </div>
           </div>
 
@@ -792,7 +707,159 @@
 
 
 
-        <div>
+        <div class="c5sk-list__main">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <div class="c5-find" id="szukaj" data-find data-ce="CE-99">
+            <form class="c5-find__form" role="search" aria-label="Wyszukiwarka produktów" data-find-form>
+              <label class="c5-find__field">
+                <svg class="wf-icon" aria-hidden="true"><use href="#ti-search"></use></svg>
+                <span class="c5-find__box">
+                  <input type="search" data-shop-search role="combobox" aria-label="Szukaj produktu albo opisz, czego potrzebujesz" aria-describedby="szukaj-podp" aria-haspopup="dialog" aria-expanded="false" aria-controls="sklep-podpowiedzi" autocomplete="off" spellcheck="false" enterkeyhint="search" placeholder="Wpisz produkt albo opisz, czego potrzebujesz">
+                  <span class="c5-find__ph" aria-hidden="true" data-find-ph hidden><span data-find-ph-t></span><span class="c5-find__caret"></span></span>
+                </span>
+              </label>
+              <button type="submit" class="c5-find__go" aria-label="Szukaj"><svg class="wf-icon" aria-hidden="true"><use href="#ti-search"></use></svg><span class="c5-find__go-t">Szukaj</span></button>
+            </form>
+            <p class="wf-sr-only" id="szukaj-podp">Na przykład: promocje do 50 zł dla roślin domowych. Enter włącza pasujące filtry.</p>
+            <div class="c5-find__panel" id="sklep-podpowiedzi" role="dialog" aria-label="Podpowiedzi wyszukiwania" data-find-panel hidden>
+              <div class="c5-find__sec" data-find-sec-prod>
+                <p class="c5-find__head" data-find-head-prod>Produkty</p>
+                <ul class="c5-find__list" data-find-list-prod></ul>
+              </div>
+              <div class="c5-find__sec" data-find-sec-cat>
+                <p class="c5-find__head">Kategorie i filtry</p>
+                <ul class="c5-find__cats" data-find-list-cat></ul>
+              </div>
+              
+              <div class="c5-find__more" data-find-row data-find-more hidden>
+                <span data-find-more-t></span>
+                <button type="button" class="c5-find__linkbtn" data-find-nav data-find-wide>Szukaj w całym sklepie</button>
+              </div>
+              
+              <div class="c5-find__none" data-find-row data-find-none hidden>
+                <p>Nic w sklepie nie pasuje do „<span data-find-q></span>”.</p>
+                <p class="c5-find__none-why" data-find-none-why hidden></p>
+                <button type="button" class="c5-btn c5-btn--dark c5-btn--sm" data-find-nav data-jurek-open>Zapytaj wirtualnego asystenta</button>
+              </div>
+              <div data-find-row data-find-foot>
+                <button type="button" class="c5-find__apply" data-find-nav data-find-apply>
+                  <span class="c5-find__apply-t"><span data-find-n-t>Pokaż produkty</span><span class="c5-find__apply-f" data-find-filters></span></span>
+                  <svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg>
+                </button>
+              </div>
+            </div>
+            <p class="wf-sr-only" role="status" aria-live="polite" aria-atomic="true" data-find-status></p>
+          </div>
+
+          
+
+
+          <div class="c5sk-refine" data-refine hidden></div>
+
+          
+          <div class="c5sk-chips" role="group" data-chips aria-label="Aktywne filtry"></div>
+
+          
+          <div class="c5sk-restore" data-restore hidden>
+            <span data-restore-txt></span>
+            <button type="button" class="c5sk-chip" data-restore-btn>przywróć filtry</button>
+          </div>
+
           <div class="c5sk-grid" data-grid>
             <article class="c5sk-card" data-marka="carbohort" data-sort-nazwa="CARBOMAT ECO pH 4,5–5,0" data-cena="43" data-cena-max="800"
               data-name="CARBOMAT ECO pH 4,5–5,0 carbomat-eco jagodowe ogrod ozdobne szkolka sad bezglebowe doglebowe"
@@ -1033,7 +1100,7 @@
               data-oferta="staly" data-cert="nd" data-polka="ogrod"
               data-cw-product='{"id": "carbohumic-flora", "name": "CARBOHUMIC FLORA · do roślin ozdobnych", "meta": "płynny · doglebowy",
                   "img": "img/opakowania/butelka_1l.png", "url": "pdp.html",
-                  "short": "Linia konsumencka pod rośliny ozdobne. ⚠️ Vault notuje ją jako wycofaną 21.07, a sklep nadal ją sprzedaje – do rozstrzygnięcia.",
+                  "short": "Linia konsumencka pod rośliny ozdobne.",
                   "packs": [
                     {"id": "b1", "label": "butelka 1 l", "short": "1 l", "img": "img/opakowania/butelka_1l.png", "price": 20, "ship": "parcel", "kg": 1.2},
                     {"id": "k5", "label": "kanister 5 l", "short": "5 l", "img": "img/opakowania/kanister_5l.png", "price": 70, "ship": "parcel", "kg": 5.8}
@@ -1057,7 +1124,7 @@
               data-oferta="staly" data-cert="nd" data-polka="sad"
               data-cw-product='{"id": "carbohumic-sad", "name": "CARBOHUMIC SAD", "meta": "płynny · doglebowy",
                   "img": "img/opakowania/kanister_20l.png", "url": "pdp.html",
-                  "short": "Linia konsumencka pod sad i jagodowe. ⚠️ Vault notuje ją jako wycofaną 21.07, a sklep nadal ją sprzedaje – do rozstrzygnięcia.",
+                  "short": "Linia konsumencka pod sad i jagodowe.",
                   "packs": [
                     {"id": "k20", "label": "kanister 20 l", "short": "20 l", "img": "img/opakowania/kanister_20l.png", "price": 164, "ship": "parcel", "kg": 22}
                   ]}'>
@@ -1080,7 +1147,7 @@
               data-oferta="staly" data-cert="nd" data-polka="pole"
               data-cw-product='{"id": "carbohumic-biomas", "name": "CARBOHUMIC BIOMAS", "meta": "płynny · doglebowy",
                   "img": "img/opakowania/mauzer_1000l_1500l.png", "url": "pdp.html",
-                  "short": "⚠️ Produkt jest w sprzedaży, ale nie ma go w kanonie produktowym vaulta – brak karty, składu i przeznaczenia.",
+                  "short": "Opis produktu w przygotowaniu.",
                   "packs": [
                     {"id": "m1000", "label": "mauzer 1000 l", "short": "1000 l", "img": "img/opakowania/mauzer_1000l_1500l.png", "price": 2500, "ship": "pallet"}
                   ]}'>
@@ -1289,7 +1356,7 @@
               data-oferta="zestaw" data-cert="nd" data-polka="sad pole sprzet"
               data-cw-product='{"id": "zestaw-maxi-pure", "name": "Zestaw: CARBOHUMIC MAXI PLUS + PURE ONE", "meta": "zestaw · dolistny",
                   "img": "img/opakowania/butelka_1l.png", "imgs": ["img/opakowania/butelka_1l.png", "img/opakowania/butelka_1l.png"], "url": "pdp.html",
-                  "short": "Zestaw dolistny: CARBOHUMIC MAXI PLUS z biostymulatorem mineralnym PURE ONE. Trzy rozmiary – w każdym oba produkty rosną razem. ⚠️ Skład i ceny rozmiarów do ustalenia z CarboHortem.",
+                  "short": "Zestaw dolistny: CARBOHUMIC MAXI PLUS z biostymulatorem mineralnym PURE ONE. Trzy rozmiary – w każdym oba produkty rosną razem.",
                   "packsLabel": "Rozmiar zestawu",
                   "qtyLabel": "Liczba zestawów",
                   "packs": [
@@ -1325,7 +1392,7 @@
               data-oferta="staly" data-cert="nd" data-polka="pole sad"
               data-cw-product='{"id": "vinassa", "name": "VINASSA nawóz organiczny", "meta": "płynny · doglebowy",
                   "url": "pdp.html",
-                  "short": "⚠️ Kanon produktu bez danych – skład, dawkowanie i dopuszczenia do uzupełnienia ze źródeł producenta.",
+                  "short": "Opis produktu w przygotowaniu.",
                   "packs": [
                     {"id": "k5", "label": "5 l", "short": "5 l", "price": 34, "ship": "parcel", "kg": 6},
                     {"id": "k20", "label": "20 l", "short": "20 l", "price": 99, "ship": "parcel", "kg": 24},
@@ -1351,7 +1418,7 @@
               data-oferta="staly" data-cert="nd" data-polka="sad pole sprzet"
               data-cw-product='{"id": "pure-one", "name": "PURE ONE biostymulator mineralny", "meta": "płynny · dolistny",
                   "url": "pdp.html",
-                  "short": "Biostymulator mineralny zewnętrznego producenta, stosowany w zestawach z CARBOHUMIC MAXI PLUS. ⚠️ Kanon bez danych.",
+                  "short": "Biostymulator mineralny zewnętrznego producenta, stosowany w zestawach z CARBOHUMIC MAXI PLUS.",
                   "packs": [
                     {"id": "b1", "label": "1 l", "short": "1 l", "price": 160, "ship": "parcel", "kg": 1.2},
                     {"id": "k5", "label": "5 l", "short": "5 l", "price": 800, "ship": "parcel", "kg": 6}
@@ -1375,7 +1442,7 @@
               data-oferta="staly" data-cert="nd" data-polka="sad sprzet"
               data-cw-product='{"id": "bio-algeen-s90", "name": "BIO-ALGEEN S90", "meta": "płynny · dolistny",
                   "url": "pdp.html",
-                  "short": "⚠️ Brak karty produktu w vaulcie – parametry i dopuszczenia po stronie producenta.",
+                  "short": "Opis produktu w przygotowaniu.",
                   "packs": [
                     {"id": "z22", "label": "2 + 2 l", "short": "2 + 2 l", "price": 112, "ship": "parcel", "kg": 4.8},
                     {"id": "zb", "label": "opakowanie zbiorcze", "short": "zbiorcze", "price": 477, "ship": "parcel", "kg": 14}
@@ -1413,6 +1480,8 @@
           <div class="c5sk-empty" data-shop-empty hidden>
             <span class="wf-w-semibold">Żaden produkt nie spełnia tych warunków.</span>
             <span class="wf-small wf-t-secondary" data-empty-why></span>
+            
+            <div class="c5sk-chips c5sk-chips--empty" role="group" aria-label="Filtry z zapytania" data-empty-chips hidden></div>
             <div class="c5-btnrow">
               <button type="button" class="c5-btn c5-btn--light c5-btn--sm" data-undo>Zdejmij ostatni filtr</button>
               <button type="button" class="c5-btn c5-btn--dark c5-btn--sm" data-jurek-open>Zapytaj wirtualnego asystenta</button>
@@ -1559,6 +1628,8 @@
   var totalEl   = $("[data-shop-total]");
   var emptyEl   = $("[data-shop-empty]");
   var emptyWhy  = $("[data-empty-why]");
+  var emptyChips = $("[data-empty-chips]");
+  var hooks     = [];                            /* CE-99 search listens to every render */
   var chipsWrap = $("[data-chips]");
   var refineEl  = $("[data-refine]");
   var sortEl    = $("[data-sort]");
@@ -1710,8 +1781,18 @@
     return true;
   }
 
-  var state = { shelf: "", facets: {}, q: "", sort: "polecane", cenaOd: null, cenaDo: null };
+  /* all: facet keys whose values must ALL hold (set only by a search query,
+     e.g. "zestaw w promocji"); boost: words that only move matching cards up;
+     not: {key: [values]} a card holding any of them is hidden (set only by
+     a search query with a negation, e.g. "nie do oprysku"). */
+  var state = { shelf: "", facets: {}, q: "", sort: "polecane", cenaOd: null, cenaDo: null, all: {}, boost: [], not: {} };
   KEYS.forEach(function (k) { state.facets[k] = []; });
+  /* What the last search query switched on (CE-99): { raw, facets: {k: [v]},
+     cena: bool, q: bool, qUnknown: bool, sort: "", all: {k: true},
+     boost: [words that matched cards], unknown: [words nothing matched] }. Only these filters are dropped when the next query
+     comes; filters set by hand stay. The chips row shows them first, under
+     a "Z zapytania" label. */
+  var qtag = null;
   /* Stos typowanych czynności – „Zdejmij ostatni filtr" ma cofać ostatnią
      rzecz, którą użytkownik zrobił, a nie ostatnią zaznaczoną fasetę. */
   var stack = [];
@@ -1776,11 +1857,23 @@
     if (s.shelf && !has(card, "polka", s.shelf)) {
       return { ok: false, kind: "shelf", why: SHELVES[s.shelf].label };
     }
+    var nk = Object.keys(s.not || {});
+    for (var n0 = 0; n0 < nk.length; n0++) {
+      var nv = s.not[nk[n0]];
+      for (var n1 = 0; n1 < nv.length; n1++) {
+        if (has(card, nk[n0], nv[n1])) return { ok: false, kind: "not", why: GROUP[nk[n0]] };
+      }
+    }
     for (var i = 0; i < KEYS.length; i++) {
       var k = KEYS[i], sel = s.facets[k];
       if (!sel.length) continue;
       var hit = false;
-      for (var j = 0; j < sel.length; j++) { if (has(card, k, sel[j])) { hit = true; break; } }
+      if (s.all && s.all[k]) {
+        hit = true;
+        for (var j0 = 0; j0 < sel.length; j0++) { if (!has(card, k, sel[j0])) { hit = false; break; } }
+      } else {
+        for (var j = 0; j < sel.length; j++) { if (has(card, k, sel[j])) { hit = true; break; } }
+      }
       if (!hit) {
         var own = (card.getAttribute("data-" + k) || "");
         /* „nd" to jawna informacja („ta grupa go nie dotyczy"), a nie luka
@@ -1809,7 +1902,9 @@
   }
 
   function clone(s) {
-    var c = { shelf: s.shelf, q: s.q, sort: s.sort, cenaOd: s.cenaOd, cenaDo: s.cenaDo, facets: {} };
+    var c = { shelf: s.shelf, q: s.q, sort: s.sort, cenaOd: s.cenaOd, cenaDo: s.cenaDo, facets: {}, all: {}, boost: (s.boost || []).slice(), not: {} };
+    Object.keys(s.all || {}).forEach(function (k) { if (s.all[k]) c.all[k] = true; });
+    Object.keys(s.not || {}).forEach(function (k) { if (s.not[k].length) c.not[k] = s.not[k].slice(); });
     KEYS.forEach(function (k) { c.facets[k] = s.facets[k].slice(); });
     return c;
   }
@@ -1831,6 +1926,8 @@
       var k = b.getAttribute("data-facet"), v = b.value;
       var s = clone(state);
       if (s.facets[k].indexOf(v) === -1) s.facets[k] = s.facets[k].concat([v]);
+      /* ticking a value the query excluded lifts that exclusion */
+      if (s.not[k]) s.not[k] = s.not[k].filter(function (x) { return x !== v; });
       var n = countWith(s);
       var lab = b.parentNode;
       var out = $(".c5sk-opt__n", lab);
@@ -1850,73 +1947,137 @@
     });
   }
 
+  /* One removable chip: label, accessible name, action. */
+  function chip(label, aria, onClick) {
+    var b = doc.createElement("button");
+    b.type = "button"; b.className = "c5sk-chip";
+    var sp = doc.createElement("span"); sp.textContent = label; b.appendChild(sp);
+    b.insertAdjacentHTML("beforeend", '<svg class="wf-icon" aria-hidden="true"><use href="#ti-x"></use></svg>');
+    b.setAttribute("aria-label", aria + ": " + label);
+    b.addEventListener("click", function () { onClick(b); });
+    return b;
+  }
+  function priceLabel() {
+    var o = state.cenaOd, d = state.cenaDo;
+    if (o !== null && d !== null) return "Cena " + o + "–" + d + " zł";
+    return o !== null ? "Cena od " + o + " zł" : "Cena do " + d + " zł";
+  }
+  function isTagged(k, v) { return !!qtag && (qtag.facets[k] || []).indexOf(v) !== -1; }
+  function isTaggedNot(k, v) { return !!qtag && ((qtag.not || {})[k] || []).indexOf(v) !== -1; }
+  /* An exclusion from a query ("nie do oprysku" → "Bez: Dolistne"). */
+  function notChip(k, v) {
+    return chip("Bez: " + ((LABELS[k] && LABELS[k][v]) || v), "Usuń wykluczenie", function (b) {
+      var idx = $$(".c5sk-chip:not(.c5sk-chip--clear)", chipsWrap).indexOf(b);
+      state.not[k] = (state.not[k] || []).filter(function (x) { return x !== v; });
+      if (!state.not[k].length) delete state.not[k];
+      apply("push"); focusSafe(idx < 0 ? 0 : idx);
+    });
+  }
+  function facetChip(k, v) {
+    return chip((LABELS[k] && LABELS[k][v]) || v, "Usuń filtr", function (b) { removeFacet(k, v, b); });
+  }
+  function priceChip() {
+    return chip(priceLabel(), "Usuń filtr", function () {
+      state.cenaOd = state.cenaDo = null;
+      if (cenaOdEl) cenaOdEl.value = ""; if (cenaDoEl) cenaDoEl.value = "";
+      stack = stack.filter(function (it) { return it.type !== "cena"; });
+      apply("push"); focusSafe(0);
+    });
+  }
+  function phraseChip(inQuery) {
+    var unknown = inQuery && qtag && qtag.qUnknown;
+    return chip((unknown ? "Nie zrozumiano: " : inQuery ? "Tekst: " : "") + "„" + (unknown && qtag.label.q || state.q) + "”", "Wyczyść wyszukiwanie", function () {
+      state.q = "";
+      if (searchEl && !qtag) searchEl.value = "";
+      stack = stack.filter(function (it) { return it.type !== "q"; });
+      apply("push"); focusSafe(0);
+    });
+  }
+  /* Chips of what the last search query switched on, in the order of the
+     filter column. Built fresh for the chips row and for the empty state. */
+  function queryChips() {
+    var out = [];
+    if (!qtag) return out;
+    KEYS.forEach(function (k) {
+      state.facets[k].forEach(function (v) { if (isTagged(k, v)) out.push(facetChip(k, v)); });
+    });
+    KEYS.forEach(function (k) {
+      (state.not[k] || []).forEach(function (v) { if (isTaggedNot(k, v)) out.push(notChip(k, v)); });
+    });
+    if (qtag.cena && (state.cenaOd !== null || state.cenaDo !== null)) out.push(priceChip());
+    if (qtag.q && state.q) out.push(phraseChip(true));
+    if (qtag.sort && state.sort === qtag.sort) {
+      out.push(chip(SORT_LABEL[qtag.sort] || qtag.sort, "Przywróć kolejność polecaną", function () {
+        state.sort = "polecane"; if (sortEl) sortEl.value = state.sort;
+        apply("push"); focusSafe(0);
+      }));
+    }
+    /* Words no filter took: the ones found in cards only move them up,
+       the rest is shown as not understood. Either chip just drops them. */
+    if (qtag.boost.length && state.boost.length) {
+      out.push(chip("Najpierw: „" + (qtag.label.boost || qtag.boost.join(" ")) + "”", "Usuń", function () {
+        state.boost = []; qtag.boost = []; apply("push"); focusSafe(0);
+      }));
+    }
+    if (qtag.unknown.length) {
+      out.push(chip("Nie zrozumiano: „" + (qtag.label.unknown || qtag.unknown.join(" ")) + "”", "Usuń", function () {
+        qtag.unknown = []; apply("push"); focusSafe(0);
+      }));
+    }
+    /* Values no product holds were not switched on – said, not hidden. */
+    if (qtag.skipped.length) {
+      out.push(chip("Brak produktów: " + qtag.skipped.join(", "), "Usuń", function () {
+        qtag.skipped = []; apply("push"); focusSafe(0);
+      }));
+    }
+    return out;
+  }
+  var SORT_LABEL = { cena: "od najtańszych", nazwa: "alfabetycznie" };
+  function queryLabel() {
+    var lab = doc.createElement("span");
+    lab.className = "c5sk-chips__lab";
+    var raw = qtag.raw.length > 48 ? qtag.raw.slice(0, 46).trim() + "…" : qtag.raw;
+    lab.appendChild(doc.createTextNode("Z zapytania "));
+    var qq = doc.createElement("q"); qq.textContent = raw; lab.appendChild(qq);
+    /* "zestaw w promocji": no product is both, so either one is shown */
+    var loose = qtag.relaxed && KEYS.some(function (k) { return (qtag.facets[k] || []).length > 1 && !state.all[k]; });
+    lab.appendChild(doc.createTextNode(loose ? ", luźniej – wystarczy jeden z warunków:" : ":"));
+    return lab;
+  }
+
   function renderChips() {
     chipsWrap.textContent = "";
-    var any = false;
+    var fromQuery = queryChips(), rest = [];
     /* Round 3b: the chosen group is one of the filters – a chip like the
        others, removable, and cleared by "Resetuj wszystkie filtry". */
     if (state.shelf) {
-      any = true;
-      var gb = doc.createElement("button");
-      gb.type = "button"; gb.className = "c5sk-chip";
-      var gs = doc.createElement("span"); gs.textContent = SHELVES[state.shelf].label; gb.appendChild(gs);
-      gb.insertAdjacentHTML("beforeend", '<svg class="wf-icon" aria-hidden="true"><use href="#ti-x"></use></svg>');
-      gb.setAttribute("aria-label", "Usuń grupę: " + SHELVES[state.shelf].label);
-      gb.addEventListener("click", function () { setShelf("", "push"); focusSafe(0); });
-      chipsWrap.appendChild(gb);
+      rest.push(chip(SHELVES[state.shelf].label, "Usuń grupę", function () { setShelf("", "push"); focusSafe(0); }));
     }
     KEYS.forEach(function (k) {
-      state.facets[k].forEach(function (v) {
-        any = true;
-        var b = doc.createElement("button");
-        b.type = "button"; b.className = "c5sk-chip";
-        var sp = doc.createElement("span");
-        sp.textContent = (LABELS[k] && LABELS[k][v]) || v;
-        b.appendChild(sp);
-        b.insertAdjacentHTML("beforeend", '<svg class="wf-icon" aria-hidden="true"><use href="#ti-x"></use></svg>');
-        b.setAttribute("aria-label", "Usuń filtr: " + sp.textContent);
-        b.addEventListener("click", function () { removeFacet(k, v, b); });
-        chipsWrap.appendChild(b);
-      });
+      state.facets[k].forEach(function (v) { if (!isTagged(k, v)) rest.push(facetChip(k, v)); });
+      (state.not[k] || []).forEach(function (v) { if (!isTaggedNot(k, v)) rest.push(notChip(k, v)); });
     });
-    if (state.cenaOd !== null || state.cenaDo !== null) {
-      any = true;
-      var cb = doc.createElement("button");
-      cb.type = "button"; cb.className = "c5sk-chip";
-      var cs = doc.createElement("span");
-      cs.textContent = "Cena " + (state.cenaOd !== null ? state.cenaOd : "0") + "–" + (state.cenaDo !== null ? state.cenaDo : "∞") + " zł";
-      cb.appendChild(cs);
-      cb.insertAdjacentHTML("beforeend", '<svg class="wf-icon" aria-hidden="true"><use href="#ti-x"></use></svg>');
-      cb.setAttribute("aria-label", "Usuń filtr: " + cs.textContent);
-      cb.addEventListener("click", function () {
-        state.cenaOd = state.cenaDo = null;
-        if (cenaOdEl) cenaOdEl.value = ""; if (cenaDoEl) cenaDoEl.value = "";
-        apply("push"); focusSafe(0);
-      });
-      chipsWrap.appendChild(cb);
+    if ((state.cenaOd !== null || state.cenaDo !== null) && !(qtag && qtag.cena)) rest.push(priceChip());
+    if (state.q && !(qtag && qtag.q)) rest.push(phraseChip());
+    if (fromQuery.length) {
+      chipsWrap.appendChild(queryLabel());
+      fromQuery.forEach(function (b) { chipsWrap.appendChild(b); });
+      if (rest.length) {
+        var sep = doc.createElement("span"); sep.className = "c5sk-chips__sep"; sep.setAttribute("aria-hidden", "true");
+        chipsWrap.appendChild(sep);
+      }
     }
-    if (state.q) {
-      any = true;
-      var q = doc.createElement("button");
-      q.type = "button"; q.className = "c5sk-chip";
-      var qs = doc.createElement("span"); qs.textContent = "„" + state.q + "”"; q.appendChild(qs);
-      q.insertAdjacentHTML("beforeend", '<svg class="wf-icon" aria-hidden="true"><use href="#ti-x"></use></svg>');
-      q.setAttribute("aria-label", "Wyczyść wyszukiwanie " + qs.textContent);
-      q.addEventListener("click", function () {
-        state.q = ""; if (searchEl) searchEl.value = "";
-        stack = stack.filter(function (it) { return it.type !== "q"; });
-        apply("push"); focusSafe(0);
-      });
-      chipsWrap.appendChild(q);
-    }
-    if (any) {
+    rest.forEach(function (b) { chipsWrap.appendChild(b); });
+    if (fromQuery.length || rest.length) {
       var c = doc.createElement("button");
       c.type = "button"; c.className = "c5sk-chip c5sk-chip--clear";
       c.textContent = "Resetuj wszystkie filtry";
       c.addEventListener("click", function () {
         state.shelf = ""; syncShelfUI();
         KEYS.forEach(function (k) { state.facets[k] = []; });
-        state.q = ""; stack = []; if (searchEl) searchEl.value = "";
+        if (qtag && qtag.sort && state.sort === qtag.sort) { state.sort = "polecane"; if (sortEl) sortEl.value = state.sort; }
+        state.q = ""; stack = []; qtag = null; if (searchEl) searchEl.value = "";
+        state.all = {}; state.boost = []; state.not = {};
         state.cenaOd = state.cenaDo = null;
         if (cenaOdEl) cenaOdEl.value = ""; if (cenaDoEl) cenaDoEl.value = "";
         lastFacets = null; var rb = $("[data-restore]"); if (rb) rb.hidden = true;
@@ -1939,6 +2100,7 @@
     var idx = $$(".c5sk-chip:not(.c5sk-chip--clear)", chipsWrap).indexOf(el);
     state.facets[k] = state.facets[k].filter(function (x) { return x !== v; });
     stack = stack.filter(function (it) { return !(it.type === "facet" && it.k === k && it.v === v); });
+    delete state.all[k];
     syncBoxes(); apply("push");
     focusSafe(idx < 0 ? 0 : idx);
   }
@@ -1946,7 +2108,7 @@
   /* Jedyna forma drugiego poziomu, na jaką stać jedenaście pozycji: podpowiedzi
      liczone na żywo z bieżącego zbioru, pokazywane tylko przy wyniku ≥ 2.
      JEDNA runda – po pierwszym użyciu filtra pasek znika, żeby nie zamienić się
-     w sekwencję pytań, czyli w to, co klient odrzucił 03.08. */
+     w sekwencję pytań (kreator krok po kroku). */
   function renderRefine() {
     refineEl.textContent = "";
     var uzyto = stack.some(function (it) { return it.type === "facet"; });
@@ -1983,6 +2145,12 @@
 
   function renderEmpty(shown) {
     emptyEl.hidden = shown !== 0;
+    if (emptyChips) {
+      emptyChips.textContent = "";
+      var qc = shown === 0 ? queryChips() : [];
+      qc.forEach(function (b) { emptyChips.appendChild(b); });
+      emptyChips.hidden = !qc.length;
+    }
     if (shown !== 0) return;
     /* Pusty stan nazywa KONKRETNĄ rzecz, która wyzerowała listę – najpierw
        ostatnią czynność użytkownika, potem resztę stanu. */
@@ -1991,9 +2159,11 @@
       var s0 = clone(state);
       if (last.type === "facet") s0.facets[last.k] = s0.facets[last.k].filter(function (v) { return v !== last.v; });
       else if (last.type === "q") s0.q = "";
+      else if (last.type === "cena") s0.cenaOd = s0.cenaDo = null;
       else if (last.type === "shelf") s0.shelf = "";
       if (countWith(s0) > 0) {
         culprit = last.type === "facet" ? GROUP[last.k]
+                : last.type === "cena" ? "Cena"
                 : last.type === "q" ? "wyszukiwanie „" + state.q + "”"
                 : "grupa „" + SHELVES[state.shelf].label + "”";
       }
@@ -2007,7 +2177,11 @@
     }
     if (!culprit && state.q) culprit = "wyszukiwanie „" + state.q + "”";
     if (!culprit && state.shelf) culprit = "grupa „" + SHELVES[state.shelf].label + "”";
-    emptyWhy.textContent = culprit
+    emptyWhy.textContent = qtag && qtag.qUnknown && qtag.q && state.q
+      ? "Żaden produkt nie pasuje do „" + (qtag.label.q || state.q) + "”. Zdejmij zapytanie jednym kliknięciem:"
+      : qtag
+      ? (culprit ? "Listę wyzerował filtr: " + culprit + ". " : "") + "Zdejmij jeden z filtrów z zapytania:"
+      : culprit
       ? "Listę wyzerował filtr: " + culprit + ". Zdejmij go albo pozwól, żeby produkty dobrał konfigurator."
       : "Rozluźnij filtry albo pozwól, żeby dobrał je za Ciebie konfigurator.";
   }
@@ -2028,6 +2202,14 @@
         return x - y;
       });
     }
+    /* Words of a query that no filter took only reorder: cards holding more
+       of them go first (stable, inside the own / partner split below). */
+    if (state.boost.length) {
+      var hits = function (c) { var n = 0; state.boost.forEach(function (w) { if (c._hay.indexOf(w) !== -1) n++; }); return n; };
+      arr = arr.map(function (c, i) { return { c: c, i: i, h: hits(c) }; })
+        .sort(function (a, b) { return b.h - a.h || a.i - b.i; })
+        .map(function (x) { return x.c; });
+    }
     var own = arr.filter(function (c) { return (c.getAttribute("data-marka") || "carbohort") === "carbohort"; });
     var oth = arr.filter(function (c) { return (c.getAttribute("data-marka") || "carbohort") !== "carbohort"; });
     own.concat(oth).forEach(function (c) { grid.appendChild(c); });
@@ -2040,7 +2222,7 @@
      2-column tile would leave empty. The counter never sees them. */
   function isNarrowed(s) {
     if (s.shelf || s.q || s.cenaOd !== null || s.cenaDo !== null) return true;
-    for (var i = 0; i < KEYS.length; i++) { if (s.facets[KEYS[i]].length) return true; }
+    for (var i = 0; i < KEYS.length; i++) { if (s.facets[KEYS[i]].length || (s.not && (s.not[KEYS[i]] || []).length)) return true; }
     return false;
   }
   function placeTiles() {
@@ -2067,7 +2249,30 @@
   }
 
   /* mode: "push" (świadome kliknięcie) | "replace" (pisanie, strzałki) | false */
+  /* Drops from the query tag whatever the visitor has since taken off by
+     hand; once nothing is left, the query is over and the field empties. */
+  function pruneTag() {
+    if (!qtag) return;
+    var any = false;
+    KEYS.forEach(function (k) {
+      qtag.facets[k] = (qtag.facets[k] || []).filter(function (v) { return state.facets[k].indexOf(v) !== -1; });
+      if (qtag.facets[k].length) any = true;
+      qtag.not[k] = (qtag.not[k] || []).filter(function (v) { return (state.not[k] || []).indexOf(v) !== -1; });
+      if (qtag.not[k].length) any = true;
+    });
+    if (qtag.cena && state.cenaOd === null && state.cenaDo === null) qtag.cena = false;
+    if (qtag.q && !state.q) qtag.q = false;
+    if (qtag.sort && state.sort !== qtag.sort) qtag.sort = "";
+    if (!state.boost.length) qtag.boost = [];
+    if (!any && !qtag.cena && !qtag.q && !qtag.sort && !qtag.boost.length && !qtag.unknown.length && !qtag.skipped.length) {
+      state.all = {};
+      qtag = null;
+      if (searchEl && doc.activeElement !== searchEl) searchEl.value = "";
+    }
+  }
+
   function apply(mode) {
+    pruneTag();
     applySort();
     var shown = 0;
     cards.forEach(function (card) {
@@ -2082,8 +2287,8 @@
     placeTiles();
     renderChips(); renderCounts();
     renderRefine(); renderEmpty(shown); renderFacetsCount(); renderDrawerCta(shown);
-    typeSync();
     if (mode) syncURL(mode);
+    hooks.forEach(function (fn) { try { fn(); } catch (e) { /* a listener error stays local */ } });
   }
 
   function addFacet(k, v) {
@@ -2122,6 +2327,8 @@
       var p = new URLSearchParams();
       if (state.shelf) p.set("polka", state.shelf);
       KEYS.forEach(function (k) { state.facets[k].forEach(function (v) { p.append("f", k + ":" + v); }); });
+      KEYS.forEach(function (k) { if (state.all[k] && state.facets[k].length > 1) p.append("i", k); });
+      KEYS.forEach(function (k) { (state.not[k] || []).forEach(function (v) { p.append("x", k + ":" + v); }); });
       if (state.q) p.set("q", state.q);
       if (state.cenaOd !== null) p.set("cena_od", String(state.cenaOd));
       if (state.cenaDo !== null) p.set("cena_do", String(state.cenaDo));
@@ -2139,6 +2346,7 @@
   function readURL() {
     KEYS.forEach(function (k) { state.facets[k] = []; });
     state.shelf = ""; state.q = ""; state.sort = "polecane"; stack = []; lastFacets = null;
+    state.all = {}; state.boost = []; state.not = {};
     state.cenaOd = state.cenaDo = null;
     if (cenaOdEl) cenaOdEl.value = ""; if (cenaDoEl) cenaDoEl.value = "";
     var restore = $("[data-restore]"); if (restore) restore.hidden = true;
@@ -2156,6 +2364,18 @@
           state.facets[k].push(v); stack.push({ type: "facet", k: k, v: v });
         }
       });
+      /* i=<key>: values of that group must all hold (a shared query link). */
+      p.getAll("i").forEach(function (k) { if (GROUP[k]) state.all[k] = true; });
+      /* x=<key>:<value>: an exclusion from a query ("Bez: Dolistne") */
+      p.getAll("x").forEach(function (raw) {
+        var i = raw.indexOf(":");
+        if (i < 0) return;
+        var k = raw.slice(0, i), v = raw.slice(i + 1);
+        if (LABELS[k] && LABELS[k][v] && state.facets[k].indexOf(v) === -1) {
+          state.not[k] = state.not[k] || [];
+          if (state.not[k].indexOf(v) === -1) state.not[k].push(v);
+        }
+      });
       var q = p.get("q") || "";
       if (q) { state.q = fold(q.trim()); stack.push({ type: "q" }); }
       if (searchEl) searchEl.value = q;
@@ -2164,7 +2384,7 @@
       if (!isNaN(cd)) { state.cenaDo = cd; if (cenaDoEl) cenaDoEl.value = cd; }
       var srt = p.get("sort");
       if (srt && SORTS.indexOf(srt) !== -1) state.sort = srt;
-      /* Własny adres kategorii zestawów – „osobna kategoria" z uwag Mateusza. */
+      /* Own address of the sets category: ?oferta=zestawy switches the set filter on. */
       if (p.get("oferta") === "zestawy" && state.facets.oferta.indexOf("zestaw") === -1) { state.facets.oferta.push("zestaw"); stack.push({ type: "facet", k: "oferta", v: "zestaw" }); }
       /* Stare parametry z makiet V4 – linki stojące już w serwisie nie mogą paść. */
       var LEGACY = { carbomat: ["carbomat-eco", "carbomat-eco-sciolka"], "carbomat-humic": ["carbomat-humic"], carbohumic: ["carbohumic", "carbohumic-dolistny"] };
@@ -2174,7 +2394,7 @@
       if (n && LABELS.funkcja && LABELS.funkcja[n] && state.facets.funkcja.indexOf(n) === -1) { state.facets.funkcja.push(n); stack.push({ type: "facet", k: "funkcja", v: n }); }
     } catch (e) { /* brak URLSearchParams – stan domyślny */ }
     if (sortEl) sortEl.value = state.sort;
-    closeSuggest(false);
+    qtag = null;
     syncBoxes(); syncShelfUI(); apply(false);
   }
 
@@ -2193,6 +2413,11 @@
       /* aria-disabled nie blokuje zmiany sam z siebie – blokujemy ją tutaj,
          zachowując element w kolejności Tab. */
       if (b.getAttribute("aria-disabled") === "true" && b.checked) { b.checked = false; return; }
+      delete state.all[k];
+      if (b.checked && state.not[k]) {
+        state.not[k] = state.not[k].filter(function (v) { return v !== b.value; });
+        if (!state.not[k].length) delete state.not[k];
+      }
       if (b.checked) { if (state.facets[k].indexOf(b.value) === -1) { state.facets[k].push(b.value); stack.push({ type: "facet", k: k, v: b.value }); } }
       else { state.facets[k] = state.facets[k].filter(function (v) { return v !== b.value; }); stack = stack.filter(function (it) { return !(it.type === "facet" && it.k === k && it.v === b.value); }); }
       if (lastFacets) { lastFacets = null; var r = $("[data-restore]"); if (r) r.hidden = true; }
@@ -2200,268 +2425,187 @@
     });
   });
 
-  /* --- Wyszukiwarka (round 3, spec §12.8) --------------------------------
-     Shop products only. From 2 characters a panel lists up to 6 products
-     (thumbnail, name, meta, price, a quick-view "+"); typing never touches
-     the grid. Enter or the footer applies the phrase – chip, address and a
-     scroll to the list, as before. The phrase joins the situation and the
-     filters (as the chip always did), so the panel counts within the current
-     view; when a narrowed view hides matches, the panel says so and offers
-     the whole shop. */
-  var searchWrap = $("[data-search]");
-  var suggestEl  = $("[data-suggest]");
-  var sgList     = $("[data-suggest-list]");
-  var sgHead     = $("[data-suggest-head]");
-  var sgMore     = $("[data-suggest-more]");
-  var sgMoreT    = $("[data-suggest-more-t]");
-  var sgNone     = $("[data-suggest-none]");
-  var sgFoot     = $("[data-suggest-foot]");
-  var sgN        = $("[data-suggest-n]");
-  var sgQ        = $("[data-suggest-q]");
-  var sgStatus   = $("[data-suggest-status]");
-  var sgTimer    = null;
-  var SG_MAX     = 6;
-
-  /* "pasuje 1 produkt", "pasują 3 produkty", "pasuje 5 produktów" */
-  function pasuje(n) { return (plural(n) === "produkty" ? "pasują " : "pasuje ") + n + " " + plural(n); }
-  function fmtZl(n) { return SK ? SK.fmt(n) : n + " zł"; }
-  function priceLine(card) {
-    var lo = parseFloat(card.getAttribute("data-cena")), hi = parseFloat(card.getAttribute("data-cena-max"));
-    if (isNaN(lo)) { var q = $(".c5sk-card__val--quiet", card); return q ? q.textContent.trim() : ""; }
-    return (!isNaN(hi) && hi !== lo ? "od " : "") + fmtZl(lo);
-  }
-  /* Marks the words of the phrase in the name. fold() keeps the length of
-     Polish text (one letter in, one letter out), so indexes carry over. */
-  function markName(el, text, q) {
-    var f = fold(text), spans = [];
-    if (f.length === text.length) {
-      q.split(/\s+/).forEach(function (w) { var i = w ? f.indexOf(w) : -1; if (i !== -1) spans.push([i, i + w.length]); });
-    }
-    spans.sort(function (a, b) { return a[0] - b[0]; });
-    var at = 0;
-    spans.forEach(function (s) {
-      if (s[0] < at) return;
-      if (s[0] > at) el.appendChild(doc.createTextNode(text.slice(at, s[0])));
-      var m = doc.createElement("mark"); m.textContent = text.slice(s[0], s[1]); el.appendChild(m);
-      at = s[1];
-    });
-    if (at < text.length) el.appendChild(doc.createTextNode(text.slice(at)));
-  }
-  function suggestRow(card, q) {
-    var li = doc.createElement("li");
-    li.className = "c5sk-suggest__item";
-    li.setAttribute("data-sg-row", "");
-    var link = $(".c5sk-card__name a", card);
-    var a = doc.createElement("a");
-    a.className = "c5sk-suggest__link";
-    a.href = link ? link.getAttribute("href") : "pdp.html";
-    a.setAttribute("data-sg-nav", "");
-    var th = doc.createElement("span");
-    th.className = "c5sk-suggest__thumb";
-    th.setAttribute("aria-hidden", "true");
-    var shots = $$(".c5sk-card__shot img:not(.c5sk-card__alt)", card);
-    if (!shots.length) th.className += " wf-ph wf-ph--cross";
-    shots.forEach(function (im) {
-      var img = doc.createElement("img");
-      img.src = im.getAttribute("src"); img.alt = ""; img.decoding = "async";
-      th.appendChild(img);
-    });
-    var tx = doc.createElement("span"); tx.className = "c5sk-suggest__txt";
-    var nm = doc.createElement("span"); nm.className = "c5sk-suggest__name";
-    markName(nm, cardName(card), q);
-    var mt = doc.createElement("span"); mt.className = "c5sk-suggest__meta";
-    var meta = $(".c5sk-card__meta", card); mt.textContent = meta ? meta.textContent.trim() : "";
-    var pr = doc.createElement("span"); pr.className = "c5sk-suggest__price"; pr.textContent = priceLine(card);
-    tx.appendChild(nm); tx.appendChild(mt); tx.appendChild(pr);
-    a.appendChild(th); a.appendChild(tx);
-    li.appendChild(a);
-    /* "+" opens the quick view of the shared layer: the row is the host. */
-    if (card._p && card._p.packs && card._p.packs.length) {
-      li.setAttribute("data-cw-product", card.getAttribute("data-cw-product"));
-      var b = doc.createElement("button");
-      b.type = "button"; b.className = "c5sk-suggest__add";
-      b.setAttribute("data-cw-open", ""); b.setAttribute("data-sg-alt", ""); b.setAttribute("aria-haspopup", "dialog");
-      b.setAttribute("aria-label", "Szybki podgląd – " + cardName(card));
-      b.innerHTML = '<svg class="wf-icon" aria-hidden="true"><use href="#ti-plus"></use></svg>';
-      li.appendChild(b);
-    }
-    return li;
-  }
-  function announce(t) {
-    clearTimeout(sgTimer);
-    sgTimer = setTimeout(function () { if (sgStatus) sgStatus.textContent = t; }, 450);
-  }
-  function openSuggest() {
-    if (!suggestEl.hidden) return;
-    suggestEl.hidden = false;
-    searchEl.setAttribute("aria-expanded", "true");
-  }
-  var sgQuiet = false;   /* focus handed back by the panel must not reopen it */
-  function closeSuggest(backToField) {
-    if (!suggestEl || suggestEl.hidden) return;
-    suggestEl.hidden = true;
-    searchEl.setAttribute("aria-expanded", "false");
-    if (backToField) { sgQuiet = true; searchEl.focus(); sgQuiet = false; }
-  }
-  function renderSuggest() {
-    if (!suggestEl) return;
-    var raw = searchEl.value.trim(), q = fold(raw);
-    if (q.length < 2) { closeSuggest(false); announce(""); return; }
-    var probe = clone(state); probe.q = q;
-    var seq = $$(".c5sk-card", grid);
-    var hits = seq.filter(function (c) { return testCard(c, probe).ok; });
-    var all = cards.filter(function (c) { return matchQ(c, q); }).length;
-    /* Ranking, each group in the current order of the grid: the name starts
-       with the phrase; a word of the name starts with it; a word of the
-       index starts with it ("bor" → borówka); the name holds it (CALBOR);
-       the rest. */
-    function words(t) { return " " + t.replace(/[^a-z0-9]+/g, " ") + " "; }
-    var wq = " " + q.replace(/[^a-z0-9]+/g, " ").trim();
-    function rank(c) {
-      var n = fold(cardName(c));
-      if (n.indexOf(q) === 0) return 0;
-      if (words(n).indexOf(wq) !== -1) return 1;
-      if (words(c._hay).indexOf(wq) !== -1) return 2;
-      return n.indexOf(q) !== -1 ? 3 : 4;
-    }
-    hits.sort(function (a, b) { return rank(a) - rank(b) || seq.indexOf(a) - seq.indexOf(b); });
-    var extra = all - hits.length;
-    sgList.textContent = "";
-    hits.slice(0, SG_MAX).forEach(function (c) { sgList.appendChild(suggestRow(c, q)); });
-    sgHead.textContent = isNarrowed(state) ? "Produkty w bieżącym widoku" : "Produkty w sklepie";
-    sgHead.hidden = sgList.hidden = sgFoot.hidden = !hits.length;
-    sgN.textContent = String(hits.length);
-    sgNone.hidden = all > 0;
-    if (!all) sgQ.textContent = raw;
-    sgMore.hidden = extra <= 0;
-    if (extra > 0) {
-      sgMoreT.textContent = hits.length
-        ? "Poza bieżącym widokiem " + pasuje(extra) + "."
-        : "W tym widoku nie ma produktu dla frazy „" + raw + "”. Poza nim " + pasuje(extra) + ".";
-    }
-    openSuggest();
-    announce(hits.length
-      ? "Podpowiedzi: " + hits.length + " " + plural(hits.length) + ". Strzałka w dół przenosi do listy."
-      : (all ? "W tym widoku brak podpowiedzi." : "Brak produktów dla tej frazy."));
-  }
-  /* Applies the phrase to the grid. `wide` first clears the situation, the
-     filters and the price – the explicit "Szukaj w całym sklepie". */
-  function applyPhrase(raw, wide) {
-    raw = (raw || "").trim();
-    if (wide) {
-      state.shelf = ""; state.cenaOd = state.cenaDo = null;
-      KEYS.forEach(function (k) { state.facets[k] = []; });
-      if (cenaOdEl) cenaOdEl.value = ""; if (cenaDoEl) cenaDoEl.value = "";
-      stack = []; lastFacets = null;
-      var r = $("[data-restore]"); if (r) r.hidden = true;
-      syncBoxes(); syncShelfUI();
-    }
-    state.q = fold(raw);
-    stack = stack.filter(function (it) { return it.type !== "q"; });
-    if (state.q) stack.push({ type: "q" });
-    closeSuggest(false);
-    apply("push");
-    if (state.q) toList();
-  }
-  /* Brings the top of the list under the sticky bar and moves focus there. */
+  /* --- Search bridge (CE-99, 16.10.2026) -----------------------------------
+     The shop search lives in its own module (ce/CE-99-wyszukiwarka-sklepu.js)
+     and reaches the list only through window.CWShopList: it reads the cards
+     and the filter labels, previews a parsed query against the current state
+     and switches the parsed filters on. Nothing here reads language – the
+     module hands over a plain spec:
+       { raw: "…", facets: { oferta: ["promocja"], … }, all: ["oferta"],
+         cenaOd: null | number, cenaDo: null | number, q: "hard text",
+         qUnknown: bool, boost: ["word"], unknown: ["word"], sort: "",
+         not: { zast: ["dolistne"] }, skipped: ["label"], relaxed: "A lub B",
+         labels: { q: "as typed", boost: "…", unknown: "…" } }
+     `not` hides cards holding any of those values (a negated phrase);
+     `skipped` names values no product holds, which were not switched on;
+     `relaxed` says that `all` was loosened to any of the values.
+     `all` lists groups whose values must all hold; `boost` words only move
+     cards up; `unknown` words are only shown (chip "Nie zrozumiano").
+     A new query replaces the filters of the previous one; filters set by
+     hand stay. `wide` first clears the hand-set ones too ("Szukaj w całym
+     sklepie"). */
   function toList() {
     var l = doc.getElementById("lista");
     if (!l) return;
     l.scrollIntoView({ behavior: reduceMq.matches ? "auto" : "smooth", block: "start" });
     try { l.focus({ preventScroll: true }); } catch (e) { l.focus(); }
   }
-  function inSearchScope(el) {
-    return !!el && !!searchWrap && (searchWrap.contains(el) || !!(el.closest && el.closest(".cws-dlg, [data-jurek-dock]")));
+  function dropTag(s) {
+    if (!qtag) return;
+    KEYS.forEach(function (k) {
+      (qtag.facets[k] || []).forEach(function (v) { s.facets[k] = s.facets[k].filter(function (x) { return x !== v; }); });
+      if (qtag.all[k]) delete s.all[k];
+      ((qtag.not || {})[k] || []).forEach(function (v) {
+        if (s.not[k]) s.not[k] = s.not[k].filter(function (x) { return x !== v; });
+        if (s.not[k] && !s.not[k].length) delete s.not[k];
+      });
+    });
+    if (qtag.cena) s.cenaOd = s.cenaDo = null;
+    if (qtag.q) s.q = "";
+    if (qtag.sort && s.sort === qtag.sort) s.sort = "polecane";
+    s.boost = [];
+  }
+  function clearHand(s) {
+    s.shelf = ""; s.cenaOd = s.cenaDo = null; s.q = ""; s.all = {}; s.boost = []; s.not = {};
+    KEYS.forEach(function (k) { s.facets[k] = []; });
+  }
+  function valid(k, v) { return !!(LABELS[k] && LABELS[k][v]); }
+  function num(x) { return typeof x === "number" && !isNaN(x) ? x : null; }
+  function words(a) { return (Array.isArray(a) ? a : []).map(function (w) { return fold(String(w)).trim(); }).filter(Boolean); }
+  /* The state a spec would give, without touching the page. */
+  function preview(spec, wide) {
+    spec = spec || {};
+    var s = clone(state);
+    dropTag(s);
+    if (wide) clearHand(s);
+    var f = spec.facets || {};
+    KEYS.forEach(function (k) {
+      (f[k] || []).forEach(function (v) { if (valid(k, v) && s.facets[k].indexOf(v) === -1) s.facets[k].push(v); });
+    });
+    (spec.all || []).forEach(function (k) { if (GROUP[k]) s.all[k] = true; });
+    var nf = spec.not || {};
+    KEYS.forEach(function (k) {
+      (nf[k] || []).forEach(function (v) {
+        if (!valid(k, v)) return;
+        s.not[k] = s.not[k] || [];
+        if (s.not[k].indexOf(v) === -1) s.not[k].push(v);
+      });
+    });
+    if (num(spec.cenaOd) !== null || num(spec.cenaDo) !== null) { s.cenaOd = num(spec.cenaOd); s.cenaDo = num(spec.cenaDo); }
+    s.q = fold((spec.q || "").trim());
+    s.boost = words(spec.boost);
+    if (spec.shelf !== undefined) s.shelf = SHELVES[spec.shelf] ? spec.shelf : "";
+    return s;
+  }
+  /* Takes off whatever the last query switched on, the price fields of
+     the filter column included (they must never show a filter that is off). */
+  function dropQuery() {
+    if (!qtag) return;
+    KEYS.forEach(function (k) {
+      (qtag.facets[k] || []).forEach(function (v) {
+        state.facets[k] = state.facets[k].filter(function (x) { return x !== v; });
+        stack = stack.filter(function (it) { return !(it.type === "facet" && it.k === k && it.v === v); });
+      });
+      if (qtag.all[k]) delete state.all[k];
+      ((qtag.not || {})[k] || []).forEach(function (v) {
+        if (state.not[k]) state.not[k] = state.not[k].filter(function (x) { return x !== v; });
+        if (state.not[k] && !state.not[k].length) delete state.not[k];
+      });
+    });
+    if (qtag.cena) {
+      state.cenaOd = state.cenaDo = null;
+      if (cenaOdEl) cenaOdEl.value = ""; if (cenaDoEl) cenaDoEl.value = "";
+      stack = stack.filter(function (it) { return it.type !== "cena"; });
+    }
+    if (qtag.q) { state.q = ""; }
+    if (qtag.sort && state.sort === qtag.sort) { state.sort = "polecane"; if (sortEl) sortEl.value = state.sort; }
+    state.boost = [];
+    qtag = null;
+  }
+  function runQuery(spec, wide) {
+    dropQuery();
+    if (wide) {
+      clearHand(state); stack = [];
+      lastFacets = null;
+      var r = $("[data-restore]"); if (r) r.hidden = true;
+      syncShelfUI();
+    }
+    stack = stack.filter(function (it) { return it.type !== "q"; });
+    var tag = { raw: (spec.raw || "").trim(), facets: {}, not: {}, cena: false, q: false, qUnknown: false, sort: "", all: {}, boost: [], unknown: [], skipped: [], relaxed: "", label: {} };
+    /* chip texts as typed (with Polish letters); matching uses folded words */
+    var lb = spec.labels || {};
+    ["q", "boost", "unknown"].forEach(function (k) { if (typeof lb[k] === "string") tag.label[k] = lb[k]; });
+    var f = spec.facets || {};
+    KEYS.forEach(function (k) {
+      (f[k] || []).forEach(function (v) {
+        if (!valid(k, v) || state.facets[k].indexOf(v) !== -1) return;
+        state.facets[k].push(v);
+        stack.push({ type: "facet", k: k, v: v });
+        (tag.facets[k] = tag.facets[k] || []).push(v);
+      });
+    });
+    (spec.all || []).forEach(function (k) {
+      if (GROUP[k] && (tag.facets[k] || []).length > 1) { state.all[k] = true; tag.all[k] = true; }
+    });
+    var nf = spec.not || {};
+    KEYS.forEach(function (k) {
+      (nf[k] || []).forEach(function (v) {
+        if (!valid(k, v) || state.facets[k].indexOf(v) !== -1) return;
+        state.not[k] = state.not[k] || [];
+        if (state.not[k].indexOf(v) === -1) state.not[k].push(v);
+        (tag.not[k] = tag.not[k] || []).push(v);
+      });
+    });
+    tag.skipped = (Array.isArray(spec.skipped) ? spec.skipped : []).map(String);
+    tag.relaxed = typeof spec.relaxed === "string" ? spec.relaxed : "";
+    if (num(spec.cenaOd) !== null || num(spec.cenaDo) !== null) {
+      state.cenaOd = num(spec.cenaOd); state.cenaDo = num(spec.cenaDo);
+      if (cenaOdEl) cenaOdEl.value = state.cenaOd !== null ? state.cenaOd : "";
+      if (cenaDoEl) cenaDoEl.value = state.cenaDo !== null ? state.cenaDo : "";
+      stack = stack.filter(function (it) { return it.type !== "cena"; });
+      stack.push({ type: "cena" });
+      tag.cena = true;
+    }
+    state.q = fold((spec.q || "").trim());
+    if (state.q) { stack.push({ type: "q" }); tag.q = true; tag.qUnknown = !!spec.qUnknown; }
+    state.boost = words(spec.boost); tag.boost = state.boost.slice();
+    tag.unknown = words(spec.unknown);
+    if (spec.sort && SORTS.indexOf(spec.sort) !== -1) {
+      state.sort = spec.sort; if (sortEl) sortEl.value = state.sort; tag.sort = spec.sort;
+    }
+    qtag = tag;
+    syncBoxes(); apply("push");
   }
 
-  if (searchEl && suggestEl && searchWrap) {
-    searchEl.addEventListener("input", function () { typeSync(); renderSuggest(); });
-    searchEl.addEventListener("focus", function () {
-      typeSync();
-      var q = fold(searchEl.value.trim());
-      if (!sgQuiet && suggestEl.hidden && q.length >= 2 && q !== state.q) renderSuggest();
-    });
-    searchEl.addEventListener("blur", typeSync);
-    searchEl.addEventListener("keydown", function (e) {
-      if (e.key === "ArrowDown") {
-        if (suggestEl.hidden) renderSuggest();
-        var first = suggestEl.hidden ? null : $("[data-sg-row]:not([hidden]) [data-sg-nav]", suggestEl);
-        if (first) { e.preventDefault(); first.focus(); }
-      } else if (e.key === "Escape") {
-        if (!suggestEl.hidden) { e.preventDefault(); closeSuggest(false); }
-      } else if (e.key === "Enter") {
-        e.preventDefault();
-        applyPhrase(searchEl.value, false);
-      }
-    });
-    /* The clear button of the search field also clears the applied phrase. */
-    searchEl.addEventListener("search", function () { if (!searchEl.value && state.q) applyPhrase("", false); });
-    /* Arrows inside the panel: up/down between rows (the first row's ArrowUp
-       returns to the field), left/right between a product and its "+". */
-    suggestEl.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") { e.preventDefault(); closeSuggest(true); return; }
-      var row = e.target.closest ? e.target.closest("[data-sg-row]") : null;
-      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
-        var rows = $$("[data-sg-row]", suggestEl).filter(function (r) { return !r.hidden && r.getClientRects().length && $("[data-sg-nav]", r); });
-        var j = rows.indexOf(row) + (e.key === "ArrowDown" ? 1 : -1);
-        e.preventDefault();
-        if (j < 0) { searchEl.focus(); return; }
-        $("[data-sg-nav]", rows[Math.min(j, rows.length - 1)]).focus();
-      } else if (e.key === "ArrowRight" && row && e.target.hasAttribute("data-sg-nav")) {
-        var alt = $("[data-sg-alt]", row); if (alt) { e.preventDefault(); alt.focus(); }
-      } else if (e.key === "ArrowLeft" && row && e.target.hasAttribute("data-sg-alt")) {
-        var nav = $("[data-sg-nav]", row); if (nav) { e.preventDefault(); nav.focus(); }
-      }
-    });
-    $("[data-suggest-all]", suggestEl).addEventListener("click", function () { applyPhrase(searchEl.value, false); });
-    $("[data-suggest-wide]", suggestEl).addEventListener("click", function () { applyPhrase(searchEl.value, true); });
-    /* Clicks on the empty parts of the panel keep the focus where it was. */
-    suggestEl.addEventListener("mousedown", function (e) { if (!e.target.closest("a,button,input")) e.preventDefault(); });
-    /* The panel closes when focus or a click leaves it – but not for the
-       quick view it opened, nor for the assistant's dock. */
-    doc.addEventListener("pointerdown", function (e) { if (!suggestEl.hidden && !inSearchScope(e.target)) closeSuggest(false); });
-    searchWrap.addEventListener("focusout", function (e) {
-      if (inSearchScope(e.relatedTarget)) return;
-      setTimeout(function () {
-        if (!doc.hasFocus() || inSearchScope(doc.activeElement)) return;
-        closeSuggest(false);
-      }, 0);
-    });
-  }
-
-  /* Animated placeholder (§12.8): "Szukaj: " + phrases typed and deleted
-     letter by letter, with a blinking caret. It stops on focus and whenever
-     the field holds text; with reduced motion the static native placeholder
-     stays. The field's accessible name never changes. */
-  var PHRASES = ["borówka", "worek 20 l", "ściółka zamiast kory", "opryskiwacz", "big bag 1000 l", "CARBOHUMIC"];
-  var phEl = $("[data-search-ph]"), phTxt = $("[data-search-ph-t]");
-  var tw = { i: 0, n: 0, dir: 1, timer: null, on: false };
-  function typeTick() {
-    var w = PHRASES[tw.i], delay;
-    if (tw.dir > 0) {
-      tw.n++;
-      if (tw.n >= w.length) { tw.dir = -1; delay = 1600; } else delay = 70 + Math.round(Math.random() * 50);
-    } else {
-      tw.n--;
-      if (tw.n <= 0) { tw.n = 0; tw.dir = 1; tw.i = (tw.i + 1) % PHRASES.length; delay = 450; } else delay = 32;
-    }
-    phTxt.textContent = "Szukaj: " + w.slice(0, tw.n);
-    tw.timer = setTimeout(typeTick, delay);
-  }
-  function typeSync() {
-    if (!searchEl || !phEl || !phTxt || !searchWrap) return;
-    var want = !reduceMq.matches && !searchEl.value && doc.activeElement !== searchEl && !doc.hidden;
-    if (want === tw.on) return;
-    tw.on = want;
-    searchWrap.classList.toggle("is-typing", want);
-    phEl.hidden = !want;
-    clearTimeout(tw.timer);
-    if (want) {
-      phTxt.textContent = "Szukaj: " + PHRASES[tw.i].slice(0, tw.n);
-      tw.timer = setTimeout(typeTick, 400);
-    }
-  }
-  doc.addEventListener("visibilitychange", typeSync);
+  window.CWShopList = {
+    order: function () { return $$(".c5sk-card", grid); },
+    labels: LABELS,
+    groups: GROUP,
+    shelves: SHELVES,
+    keys: KEYS,
+    fold: fold,
+    plural: plural,
+    name: cardName,
+    /* the view is narrowed by hand (not by the last query) */
+    narrowed: function () { var s = clone(state); dropTag(s); return isNarrowed(s); },
+    preview: preview,
+    passes: function (card, s) { return testCard(card, s).ok; },
+    count: countWith,
+    /* folded searchable text of a card (name, meta, filter labels, packs) */
+    text: function (card) { return card._hay || ""; },
+    /* counts and states below read the view without the last query: a
+       category picked in the suggestions replaces that query */
+    countAdding: function (k, v) { var s = preview({}); if (s.facets[k].indexOf(v) === -1) s.facets[k].push(v); return countWith(s); },
+    countShelf: function (slug) { return countWith(preview({ shelf: slug })); },
+    active: function (k, v) { return preview({}).facets[k].indexOf(v) !== -1; },
+    shelf: function () { return state.shelf; },
+    run: runQuery,
+    dropQuery: dropQuery,
+    addFilter: function (k, v) { if (valid(k, v)) addFacet(k, v); },
+    setShelf: function (slug) { setShelf(SHELVES[slug] ? slug : "", "push"); },
+    tag: function () { return qtag; },
+    onChange: function (fn) { if (typeof fn === "function") hooks.push(fn); }
+  };
 
   /* --- Tile actions and the video tile (round 3, spec §12.4) -------------
      Banner buttons switch a situation on and bring the top of the list into
@@ -2507,7 +2651,7 @@
       }, { threshold: [0, 0.35, 0.7] }).observe(vTile);
     }
   }
-  if (reduceMq.addEventListener) reduceMq.addEventListener("change", function () { typeSync(); videoSync(); });
+  if (reduceMq.addEventListener) reduceMq.addEventListener("change", videoSync);
 
   /* --- Filtr ceny ------------------------------------------------------- */
   var cenaOdEl = $("[data-cena-od]"), cenaDoEl = $("[data-cena-do]");
@@ -2539,9 +2683,10 @@
   var undo = $("[data-undo]");
   if (undo) undo.addEventListener("click", function () {
     var last = stack.pop();
-    if (!last) { KEYS.forEach(function (k) { state.facets[k] = []; }); state.q = ""; if (searchEl) searchEl.value = ""; }
+    if (!last) { KEYS.forEach(function (k) { state.facets[k] = []; }); state.q = ""; qtag = null; if (searchEl) searchEl.value = ""; }
     else if (last.type === "facet") state.facets[last.k] = state.facets[last.k].filter(function (v) { return v !== last.v; });
-    else if (last.type === "q") { state.q = ""; if (searchEl) searchEl.value = ""; }
+    else if (last.type === "q") { state.q = ""; if (searchEl && !qtag) searchEl.value = ""; }
+    else if (last.type === "cena") { state.cenaOd = state.cenaDo = null; if (cenaOdEl) cenaOdEl.value = ""; if (cenaDoEl) cenaDoEl.value = ""; }
     else if (last.type === "shelf") { state.shelf = ""; syncShelfUI(); }
     syncBoxes(); apply("push");
   });
@@ -2692,6 +2837,7 @@
   readURL();
 })();
 </script>
+<script src="ce/CE-99-wyszukiwarka-sklepu.js"></script>
 <script src="ce-overlay.js"></script>
 </body>
 </html>
