@@ -2,7 +2,7 @@
    Two jobs: keep the background loop from running with reduced motion, and –
    where the page has them – switch the parameter sets on tabs. Merged from
    carbomat-mata.js 30, which already carried both (the copies in carbomat.js,
-   carbohumic.js and carbomat-humic.js are the video half of it, byte for byte).
+   carbohumic-doglebowy.js and carbomat-humic.js are the video half of it, byte for byte).
    The section frame, the pinned media layer and the crop are pure CSS.
    No [data-params] -> no-op; no tabs -> only the video half runs. ======== */
 (function () {

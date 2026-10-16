@@ -161,29 +161,16 @@
   letter-spacing: var(--w-tracking-wide); text-transform: uppercase;
   color: var(--w-text-primary); white-space: nowrap;
 }
-/* CARBOHUMIC box with two pages (15.10.2026): the box is a <div>, its name
-   link stretches over the whole box through ::after, so a click on the box
-   outside the tiles goes where it went before (carbohumic.html). Each tile is
-   a link of its own lying above that layer: white bottle to the soil page,
-   black bottle to the foliar page. A hovered or focused tile turns a step
-   darker, underlines its caption and takes the hover off the box, so only the
-   tile under the pointer reads as the target; a focused tile also gets the
-   focus ring on its own edge. The box shows the focus ring of its name link
-   on its own edge. */
+/* CARBOHUMIC box with two pages (15.10.2026; since 16.10.2026 without a link
+   of its own): the box is a plain <div> that does not react to the pointer;
+   only its two tiles are links – white bottle to the soil page, black bottle
+   to the foliar page. A hovered or focused tile turns a step darker and
+   underlines its caption; a focused tile gets the focus ring on its own edge. */
 /* a <div> inherits the grey of the panel, where the other boxes are links in
    the primary text colour – the same colour is set here */
-.cw-prodbox--split { position: relative; color: var(--w-text-primary); }
-.cw-prodbox__main { color: inherit; text-decoration: none; }
-.cw-prodbox__main::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
-.cw-prodbox__main:focus-visible { outline: none; }
-.cw-prodbox--split:has(.cw-prodbox__main:focus-visible) {
-  border-color: var(--w-border-strong); background: var(--w-surface-subtle);
-  outline: var(--w-focus-ring-width) solid var(--w-focus-ring); outline-offset: var(--w-focus-ring-offset);
-}
-.cw-prodbox--split .cw-prodbox__variant { z-index: 1; color: inherit; text-decoration: none; }
-.cw-prodbox--split:has(.cw-prodbox__variant:hover) {
-  border-color: var(--w-border-default); background: transparent;
-}
+.cw-prodbox--split { color: var(--w-text-primary); }
+.cw-prodbox--split:hover { border-color: var(--w-border-default); background: transparent; }
+.cw-prodbox--split .cw-prodbox__variant { color: inherit; text-decoration: none; }
 .cw-prodbox--split .cw-prodbox__variant:hover,
 .cw-prodbox--split .cw-prodbox__variant:focus-visible { background: var(--w-gray-200); }
 .cw-prodbox--split .cw-prodbox__variant:focus-visible {

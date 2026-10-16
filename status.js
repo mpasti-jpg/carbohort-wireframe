@@ -215,7 +215,7 @@ window.CW_STATUS = {
       "ac": 31563,
       "data": "15.10"
     },
-    "carbohumic.html": {
+    "carbohumic-doglebowy.html": {
       "sekcja": "2. Produkty Carbohort",
       "nazwa": "CARBOHUMIC doglebowy",
       "stan": {

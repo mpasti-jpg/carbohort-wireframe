@@ -1,6 +1,6 @@
 /* ===== CE-13 · Przypięta scena produktu (rejestr: ce-rejestr.js) =============
    One track per product: 100svh of sticky stage + runway(N) screens, where N is
-   the number of frames read from the DOM. Base = carbohumic.js 60 (the N-frame
+   the number of frames read from the DOM. Base = carbohumic-doglebowy.js 60 (the N-frame
    generalisation of the two-frame pattern module of carbomat.js 60): the
    per-frame numbers are written on the frame elements, so neither this module
    nor CE-13-scena-produktu.css knows how many frames a product has.

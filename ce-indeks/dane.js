@@ -466,7 +466,7 @@ window.CE_DANE = {
    "warianty": [
     {
      "slug": "szerokie",
-     "opis": "cztery boksy produktowe (Produkty Carbohort); w nagłówku panelu dwa przyciski – „Poznaj całą gamę produktów” (jasny) i „Przejdź do sklepu” (ciemny, z ikoną koszyka, od 28.09.2026); od 09.10.2026 boks ma cztery części w stałej kolejności – kategoria, nazwa, miniatura opakowania, opis przy dolnej krawędzi – a boks CARBOHUMIC pokazuje dwie butelki z podpisami „Doglebowe” i „Dolistne”; od 16.10.2026 boks CARBOHUMIC to dwa szare kafle obok siebie (odstęp 8 px), każdy osobnym linkiem z butelką na środku i podpisem: biała „Doglebowe” → carbohumic.html, czarna „Dolistne” → carbohumic-dolistny.html; najechany kafel ciemnieje i zdejmuje podświetlenie z boksu",
+     "opis": "cztery boksy produktowe (Produkty Carbohort); w nagłówku panelu dwa przyciski – „Poznaj całą gamę produktów” (jasny) i „Przejdź do sklepu” (ciemny, z ikoną koszyka, od 28.09.2026); od 09.10.2026 boks ma cztery części w stałej kolejności – kategoria, nazwa, miniatura opakowania, opis przy dolnej krawędzi – a boks CARBOHUMIC pokazuje dwie butelki z podpisami „Doglebowe” i „Dolistne”; od 16.10.2026 boks CARBOHUMIC to dwa szare kafle obok siebie (odstęp 8 px), każdy osobnym linkiem z butelką na środku i podpisem: biała „Doglebowe” → carbohumic-doglebowy.html, czarna „Dolistne” → carbohumic-dolistny.html; najechany kafel ciemnieje i zdejmuje podświetlenie z boksu",
      "skrot": "Cztery boksy produktów z miniaturą opakowania, dwa przyciski w nagłówku panelu, rząd potrzeb.",
      "zrzut": null
     },
@@ -620,7 +620,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-04.webp",
     "pelny": "ce-indeks/img/p/CE-04.webp",
     "w": 1280,
-    "h": 405
+    "h": 439
    },
    "warianty": [
     {
@@ -825,15 +825,15 @@ window.CE_DANE = {
      "wariant": null
     },
     {
-     "plik": "carbohumic-dolistny.html",
-     "strona": "CARBOHUMIC dolistny",
+     "plik": "carbohumic-doglebowy.html",
+     "strona": "CARBOHUMIC doglebowy",
      "id": "nawigacja-kropki",
      "naglowek": "",
      "wariant": null
     },
     {
-     "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC doglebowy",
+     "plik": "carbohumic-dolistny.html",
+     "strona": "CARBOHUMIC dolistny",
      "id": "nawigacja-kropki",
      "naglowek": "",
      "wariant": null
@@ -1047,17 +1047,17 @@ window.CE_DANE = {
      "wariant": "kadr-w-tle"
     },
     {
+     "plik": "carbohumic-doglebowy.html",
+     "strona": "CARBOHUMIC doglebowy",
+     "id": "hero",
+     "naglowek": "Próchnica w płynie do regeneracji gleby i biostymulacji roślin",
+     "wariant": null
+    },
+    {
      "plik": "carbohumic-dolistny.html",
      "strona": "CARBOHUMIC dolistny",
      "id": "hero",
      "naglowek": "Szybkie wsparcie rośliny wtedy, gdy liczy się czas",
-     "wariant": null
-    },
-    {
-     "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC doglebowy",
-     "id": "hero",
-     "naglowek": "Próchnica w płynie do regeneracji gleby i biostymulacji roślin",
      "wariant": null
     },
     {
@@ -1230,7 +1230,7 @@ window.CE_DANE = {
      "wariant": null
     },
     {
-     "plik": "carbohumic.html",
+     "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "zalety",
      "naglowek": "",
@@ -1351,18 +1351,18 @@ window.CE_DANE = {
      "wariant": null
     },
     {
+     "plik": "carbohumic-doglebowy.html",
+     "strona": "CARBOHUMIC doglebowy",
+     "id": "parametry",
+     "naglowek": "Parametry produktu · wersja filtrowana",
+     "wariant": "kafelki-z-wejsciem"
+    },
+    {
      "plik": "carbohumic-dolistny.html",
      "strona": "CARBOHUMIC dolistny",
      "id": "parametry",
      "naglowek": "Szybkie porównanie produktów",
      "wariant": "z-tabami"
-    },
-    {
-     "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC doglebowy",
-     "id": "parametry",
-     "naglowek": "Parametry produktu · wersja filtrowana",
-     "wariant": "kafelki-z-wejsciem"
     },
     {
      "plik": "carbomat-humic.html",
@@ -1487,7 +1487,7 @@ window.CE_DANE = {
      "wariant": "pasma-z-przelacznikiem"
     },
     {
-     "plik": "carbohumic.html",
+     "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "ktory-dla-mnie",
      "naglowek": "Wybierz po funkcji i sposobie aplikacji.",
@@ -1672,7 +1672,7 @@ window.CE_DANE = {
      "wariant": "z-naglowkiem"
     },
     {
-     "plik": "carbohumic.html",
+     "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "czym-jest",
      "naglowek": "CARBOHUMIC to substancja najbardziej zbliżona do trwałej i stabilnej próchnicy glebowej,…",
@@ -1798,14 +1798,14 @@ window.CE_DANE = {
      "wariant": null
     },
     {
-     "plik": "carbohumic.html",
+     "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "jak-stosowac-filtrowany",
      "naglowek": "",
      "wariant": "n-kadrow"
     },
     {
-     "plik": "carbohumic.html",
+     "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "jak-stosowac-niefiltrowany",
      "naglowek": "",
@@ -1887,7 +1887,7 @@ window.CE_DANE = {
      "wariant": null
     },
     {
-     "plik": "carbohumic.html",
+     "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "dawki-domowe",
      "naglowek": "Dawki domowe – ogród, działka i pojedyncze rośliny (wg karty produktu)",
@@ -1983,7 +1983,7 @@ window.CE_DANE = {
      "wariant": "kaskada-z-pinem"
     },
     {
-     "plik": "carbohumic.html",
+     "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "czas-prochnicy-kaskada",
      "naglowek": "Ile trwa powstawanie stabilnej próchnicy",
@@ -2142,17 +2142,17 @@ window.CE_DANE = {
      "wariant": "zamykajacy"
     },
     {
+     "plik": "carbohumic-doglebowy.html",
+     "strona": "CARBOHUMIC doglebowy",
+     "id": "uprawy-profesjonalne",
+     "naglowek": "Prowadzisz uprawę profesjonalną – pole, sad, plantację lub szkółkę?",
+     "wariant": "pozny-wzrost"
+    },
+    {
      "plik": "carbohumic-dolistny.html",
      "strona": "CARBOHUMIC dolistny",
      "id": "uprawy-profesjonalne",
      "naglowek": "Prowadzisz uprawę profesjonalną – sad, plantację lub szkółkę?",
-     "wariant": "pozny-wzrost"
-    },
-    {
-     "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC doglebowy",
-     "id": "uprawy-profesjonalne",
-     "naglowek": "Prowadzisz uprawę profesjonalną – pole, sad, plantację lub szkółkę?",
      "wariant": "pozny-wzrost"
     },
     {
@@ -2336,17 +2336,17 @@ window.CE_DANE = {
      "wariant": null
     },
     {
+     "plik": "carbohumic-doglebowy.html",
+     "strona": "CARBOHUMIC doglebowy",
+     "id": "faq",
+     "naglowek": "Najczęstsze pytania o CARBOHUMIC",
+     "wariant": "z-nota"
+    },
+    {
      "plik": "carbohumic-dolistny.html",
      "strona": "CARBOHUMIC dolistny",
      "id": "faq",
      "naglowek": "Najczęstsze pytania o CARBOHUMIC dolistny",
-     "wariant": "z-nota"
-    },
-    {
-     "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC doglebowy",
-     "id": "faq",
-     "naglowek": "Najczęstsze pytania o CARBOHUMIC",
      "wariant": "z-nota"
     },
     {
@@ -2476,24 +2476,24 @@ window.CE_DANE = {
      "wariant": null
     },
     {
-     "plik": "carbohumic-dolistny.html",
-     "strona": "CARBOHUMIC dolistny",
-     "id": "cta-koncowe",
-     "naglowek": "Nie wiesz, czego potrzebujesz? Skorzystaj z naszego pomocnika produktowego.",
-     "wariant": null
-    },
-    {
-     "plik": "carbohumic.html",
+     "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "dobierz-produkt",
      "naglowek": "Nie wiesz czego potrzebujesz? Skorzystaj z naszego pomocnika produktowego",
      "wariant": "na-pasie"
     },
     {
-     "plik": "carbohumic.html",
+     "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "cta-koncowe",
      "naglowek": "Zacznij od wersji dopasowanej do Twojego sprzętu i celu zabiegu.",
+     "wariant": null
+    },
+    {
+     "plik": "carbohumic-dolistny.html",
+     "strona": "CARBOHUMIC dolistny",
+     "id": "cta-koncowe",
+     "naglowek": "Nie wiesz, czego potrzebujesz? Skorzystaj z naszego pomocnika produktowego.",
      "wariant": null
     },
     {
@@ -2827,7 +2827,7 @@ window.CE_DANE = {
      "wariant": "z-rozpiska"
     },
     {
-     "plik": "carbohumic.html",
+     "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "z-czym-laczyc-unikamy",
      "naglowek": "",
@@ -3152,7 +3152,7 @@ window.CE_DANE = {
      "wariant": "z-akcja"
     },
     {
-     "plik": "carbohumic.html",
+     "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "doglebowo-tabela",
      "naglowek": "",
@@ -3741,17 +3741,17 @@ window.CE_DANE = {
      "wariant": null
     },
     {
+     "plik": "carbohumic-doglebowy.html",
+     "strona": "CARBOHUMIC doglebowy",
+     "id": "z-czym-laczyc-kroki",
+     "naglowek": "",
+     "wariant": null
+    },
+    {
      "plik": "carbohumic-dolistny.html",
      "strona": "CARBOHUMIC dolistny",
      "id": "efekty-karty",
      "naglowek": "Lepsza regeneracja po stresie",
-     "wariant": null
-    },
-    {
-     "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC doglebowy",
-     "id": "z-czym-laczyc-kroki",
-     "naglowek": "",
      "wariant": null
     }
    ],
@@ -3766,7 +3766,7 @@ window.CE_DANE = {
     "karty: kadr (zdjęcie albo placeholder), dopisek, numer, tytuł, opis"
    ],
    "kod_zrodlowy": {
-    "css": "ce/CE-26-stos-kart.css (klasy c5-stack; moduł wspólny od 02.10.2026 – wcześniej dwie implementacje: c5-steps w carbomat-mata.css i c5hu-stack w carbohumic.css)",
+    "css": "ce/CE-26-stos-kart.css (klasy c5-stack; moduł wspólny od 02.10.2026 – wcześniej dwie implementacje: c5-steps w carbomat-mata.css i c5hu-stack w carbohumic-doglebowy.css)",
     "js": "ce/CE-26-stos-kart.js"
    }
   },
@@ -3954,14 +3954,14 @@ window.CE_DANE = {
      "wariant": "z-rozpiska"
     },
     {
-     "plik": "carbohumic.html",
+     "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "jak-stosowac-zaprawianie",
      "naglowek": "",
      "wariant": "z-rozpiska"
     },
     {
-     "plik": "carbohumic.html",
+     "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "jak-stosowac-dodatkowe",
      "naglowek": "",
@@ -4107,7 +4107,7 @@ window.CE_DANE = {
    ],
    "wystapienia": [
     {
-     "plik": "carbohumic.html",
+     "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "z-czym-laczyc-lista",
      "naglowek": "",
@@ -4151,7 +4151,7 @@ window.CE_DANE = {
    ],
    "wspolny": null,
    "baza": {
-    "plik": "v7/carbohumic.html",
+    "plik": "v7/carbohumic-doglebowy.html",
     "kotwica": "z-czym-laczyc-lista"
    },
    "opis": "Dwie kolumny: po lewej lista dużych tytułów (z numerami), po prawej przyklejony panel z opisem aktywnej pozycji (opcjonalnie przycisk); na telefonie akordeon.",
@@ -4163,7 +4163,7 @@ window.CE_DANE = {
    ],
    "kod_zrodlowy": {
     "css": "jeden plik ce/CE-30-lista-z-panelem.css, sekcje wg klas korzenia: c5-acc30 (akordeon-z-odliczaniem, moduł wspólny, CARBOMAT Mata), c5pr-acc i c5pr-pcard (akordeon-z-odliczaniem, własna implementacja Produktów), c5hu-mixlist (CARBOHUMIC), on-val (O firmie); wariant z-kadrem: c5h-crops zostaje w home.css ===== 60",
-    "js": "carbohumic.js ===== 72; wariant akordeon-z-odliczaniem: produkty.js ===== 50 oraz moduł wspólny ce/CE-30-lista-z-panelem.js (od 02.10.2026, CARBOMAT Mata); wariant z-kadrem: home.js ===== 60"
+    "js": "carbohumic-doglebowy.js ===== 72; wariant akordeon-z-odliczaniem: produkty.js ===== 50 oraz moduł wspólny ce/CE-30-lista-z-panelem.js (od 02.10.2026, CARBOMAT Mata); wariant z-kadrem: home.js ===== 60"
    }
   },
   {
@@ -4227,42 +4227,42 @@ window.CE_DANE = {
    ],
    "wystapienia": [
     {
-     "plik": "carbohumic.html",
+     "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "ktory-dla-mnie-ostrzezenie",
      "naglowek": "",
      "wariant": "z-przyciskiem"
     },
     {
-     "plik": "carbohumic.html",
+     "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "czas-prochnicy-gotowe",
      "naglowek": "",
      "wariant": null
     },
     {
-     "plik": "carbohumic.html",
+     "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "jak-stosowac-nota-1",
      "naglowek": "",
      "wariant": "miekka"
     },
     {
-     "plik": "carbohumic.html",
+     "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "jak-stosowac-nota-2",
      "naglowek": "",
      "wariant": null
     },
     {
-     "plik": "carbohumic.html",
+     "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "z-czym-laczyc-nota",
      "naglowek": "",
      "wariant": "miekka"
     },
     {
-     "plik": "carbohumic.html",
+     "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "faq-nota",
      "naglowek": "",
@@ -4313,7 +4313,7 @@ window.CE_DANE = {
    ],
    "wspolny": null,
    "baza": {
-    "plik": "v7/carbohumic.html",
+    "plik": "v7/carbohumic-doglebowy.html",
     "kotwica": "ktory-dla-mnie-ostrzezenie"
    },
    "opis": "Obramowany pas z małą ikoną i jednym–dwoma zdaniami (wstęp wytłuszczony), opcjonalnie przycisk po prawej; wariant „brak danych” to akapit w ramce z kreski przerywanej.",
@@ -4342,7 +4342,7 @@ window.CE_DANE = {
    "wystapienia": [],
    "wspolny": null,
    "baza": {
-    "plik": "v7/carbohumic.html",
+    "plik": "v7/carbohumic-doglebowy.html",
     "kotwica": "czas-prochnicy"
    },
    "opis": "Pozioma oś z przystankami (etykieta czasu, tytuł, opis) i przypisem; na wąskich ekranach oś pionowa.",
@@ -4353,8 +4353,8 @@ window.CE_DANE = {
     "przypis"
    ],
    "kod_zrodlowy": {
-    "css": "carbohumic.css (c5hu-time)",
-    "js": "carbohumic.js ===== 48"
+    "css": "carbohumic-doglebowy.css (c5hu-time)",
+    "js": "carbohumic-doglebowy.js ===== 48"
    }
   },
   {
@@ -4432,7 +4432,7 @@ window.CE_DANE = {
      "wariant": "cytat"
     },
     {
-     "plik": "carbohumic.html",
+     "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "jak-stosowac-zasada",
      "naglowek": "",
@@ -6920,17 +6920,17 @@ window.CE_DANE = {
      "wariant": "ikony"
     },
     {
+     "plik": "carbohumic-doglebowy.html",
+     "strona": "CARBOHUMIC doglebowy",
+     "id": "jaka-gleba",
+     "naglowek": "Jaka powinna być gleba, aby kwasy humusowe działały najlepiej?",
+     "wariant": "ikony"
+    },
+    {
      "plik": "carbohumic-dolistny.html",
      "strona": "CARBOHUMIC dolistny",
      "id": "warunki",
      "naglowek": "Warunki skutecznego zabiegu nalistnego",
-     "wariant": "ikony"
-    },
-    {
-     "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC doglebowy",
-     "id": "jaka-gleba",
-     "naglowek": "Jaka powinna być gleba, aby kwasy humusowe działały najlepiej?",
      "wariant": "ikony"
     }
    ],

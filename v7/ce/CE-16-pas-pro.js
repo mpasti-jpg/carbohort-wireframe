@@ -4,7 +4,7 @@
    10 % from the top – ease-out cubic (§13.8: start from half size). The loop
    reads only the band rectangle and writes one custom property; without
    CX5.motionOn() the property is removed and the frame stands still (CSS).
-   Merged from carbohumic.js 80; carbomat.js and carbomat-humic.js carried the
+   Merged from carbohumic-doglebowy.js 80; carbomat.js and carbomat-humic.js carried the
    same `updatePro` inside a bigger module, carbomat-mata.js and produkty.js as
    a module of their own. No [data-pro] -> no-op. ========================= */
 (function () {

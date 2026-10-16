@@ -252,16 +252,15 @@
               <span class="cw-prodbox__desc">Naturalne podłoże nowej generacji do upraw bezglebowych – wieloletnia alternatywa dla wełny mineralnej i maty kokosowej.</span>
             </a>
             <!-- CARBOHUMIC has two pages since 15.10.2026 (soil and foliar) but keeps
-                 one box: links cannot nest, so the box is a <div> and its name
-                 link stretches over the whole box (cw-prodbox__main), while each
-                 grey tile (bottle and caption) is a link of its own lying above
-                 it – white bottle to the soil page, black bottle to the foliar
-                 page (two separate tiles since 16.10.2026). -->
+                 one box. Since 16.10.2026 the box itself is not a link and has no
+                 hover: it is a plain <div>, and only its two grey tiles (bottle and
+                 caption) are links – white bottle to the soil page, black bottle
+                 to the foliar page. -->
             <div class="cw-prodbox cw-prodbox--split">
               <span class="wf-overline wf-t-tertiary">Płynne · doglebowe i nalistne</span>
-              <a class="wf-h5 cw-prodbox__name cw-prodbox__main" href="carbohumic.html">CARBOHUMIC</a>
+              <span class="wf-h5 cw-prodbox__name">CARBOHUMIC</span>
               <span class="cw-prodbox__media cw-prodbox__media--pair">
-                <a class="cw-prodbox__variant" data-nav="carbohumic" data-nav-parent="produkty" href="carbohumic.html" aria-label="CARBOHUMIC doglebowy"><img class="cw-prodbox__img" src="img/opakowania/butelka_1l_biala.webp" alt="" width="391" height="1000" decoding="async" fetchpriority="low"><span class="cw-prodbox__tag">Doglebowe</span></a>
+                <a class="cw-prodbox__variant" data-nav="carbohumic" data-nav-parent="produkty" href="carbohumic-doglebowy.html" aria-label="CARBOHUMIC doglebowy"><img class="cw-prodbox__img" src="img/opakowania/butelka_1l_biala.webp" alt="" width="391" height="1000" decoding="async" fetchpriority="low"><span class="cw-prodbox__tag">Doglebowe</span></a>
                 <a class="cw-prodbox__variant" data-nav="carbohumic-dolistny" data-nav-parent="produkty" href="carbohumic-dolistny.html" aria-label="CARBOHUMIC dolistny"><img class="cw-prodbox__img" src="img/opakowania/butelka_1l_czarna.webp" alt="" width="391" height="1000" decoding="async" fetchpriority="low"><span class="cw-prodbox__tag">Dolistne</span></a>
               </span>
               <span class="cw-prodbox__desc">„Próchnica w płynie" – kondycjonuje glebę i biostymuluje roślinę.</span>
@@ -414,7 +413,7 @@
     <a class="wf-navitem" data-nav="produkty" href="produkty.html">Produkty Carbohort</a>
     <!-- The two CARBOHUMIC pages (15.10.2026) – the second level under the
          products, indented like the crop groups. -->
-    <a class="wf-navitem cw-mobilenav__sub" data-nav="carbohumic" data-nav-parent="produkty" href="carbohumic.html">CARBOHUMIC doglebowy</a>
+    <a class="wf-navitem cw-mobilenav__sub" data-nav="carbohumic" data-nav-parent="produkty" href="carbohumic-doglebowy.html">CARBOHUMIC doglebowy</a>
     <a class="wf-navitem cw-mobilenav__sub" data-nav="carbohumic-dolistny" data-nav-parent="produkty" href="carbohumic-dolistny.html">CARBOHUMIC dolistny</a>
     <p class="wf-navitem cw-mobilenav__label" data-nav="uprawy">Rodzaje upraw</p>
     <!-- Ta sama treść co w #mega-uprawy: pięć grup, 31 pozycji, te same stany.
@@ -506,7 +505,8 @@
         <a class="wf-link--quiet" href="produkty.html">Produkty Carbohort</a>
         <a class="wf-link--quiet" href="carbomat.html">CARBOMAT ECO</a>
         <a class="wf-link--quiet" href="carbomat-mata.html">CARBOMAT Mata Uprawowa</a>
-        <a class="wf-link--quiet" href="carbohumic.html">CARBOHUMIC</a>
+        <a class="wf-link--quiet" href="carbohumic-doglebowy.html">CARBOHUMIC doglebowy</a>
+        <a class="wf-link--quiet" href="carbohumic-dolistny.html">CARBOHUMIC dolistny</a>
         <a class="wf-link--quiet" href="carbomat-humic.html">CARBOMAT HUMIC</a>
         <a class="wf-link--quiet" href="sklep.html">Sklep</a>
       </nav>

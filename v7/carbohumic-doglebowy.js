@@ -1,4 +1,4 @@
-/* ===== carbohumic.js – warstwa strony (V7) =================================
+/* ===== carbohumic-doglebowy.js – warstwa strony (V7) =================================
    Szyna CX5, warstwa wspólna i moduły klocków wzorca leżą w ce/*.js (ładowane
    wcześniej). Tutaj zostają wyłącznie moduły klocków unikalnych tej podstrony.
    Bez własnej definicji `window.CX5` i bez `CX5.start()` – szyna startuje sama

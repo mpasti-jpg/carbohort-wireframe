@@ -12,17 +12,31 @@
 function cwRedirectTarget(pathname, search, hash) {
   var base = '/carbohort-wireframe/';
   var current = 'v7';
+  // pages that moved or were merged into another page (name -> new address)
+  var moved = {
+    'carbohumic.html': 'carbohumic-doglebowy.html',
+    'partner.html': 'kontakt.html#partner'
+  };
+  function target(tail) {
+    if (!moved[tail]) return null;
+    var to = moved[tail];
+    return base + current + '/' + (to.indexOf('#') < 0 ? to + search + hash : to);
+  }
   if (pathname.indexOf(base) !== 0) return null;
   var rest = pathname.slice(base.length);
+  var cur = new RegExp('^' + current + '/(.+)$', 'i').exec(rest);
+  if (cur && moved[cur[1]]) return target(cur[1]);
   if (rest === '' || rest === 'index.html') return base + 'stan-podstron.html' + hash;
   var old = /^v[456](?:\/(.*))?$/i.exec(rest);
   if (old) {
     var tail = old[1] || '';
     if (tail === '' || tail === 'index.html') tail = 'home.html';
+    if (moved[tail]) return target(tail);
     return base + current + '/' + tail + search + hash;
   }
   if (/^v\d+(\/|$)/i.test(rest)) return null;      // current folder: a real 404
   if (/^ce-indeks(\/|$)/.test(rest)) return null;   // root-level tool files
+  if (moved[rest]) return target(rest);
   return base + current + '/' + rest + search + hash;
 }
 (function () {

@@ -6,7 +6,7 @@
    (page start = instant, in-page links, Back/Forward), so this module has no
    hashchange or link-click listeners of its own; the hash stays in the address,
    the accordion itself never changes it. Without JS the answers stay open (CSS).
-   Merged from produkty.js 90 – the fullest copy: carbomat.js, carbohumic.js and
+   Merged from produkty.js 90 – the fullest copy: carbomat.js, carbohumic-doglebowy.js and
    carbomat-mata.js carry the accordion alone (no item there has an id, so the
    anchor half never fires) and carbomat-humic.js the same anchor behaviour
    written against `location.hash` before the bus had hash routing.

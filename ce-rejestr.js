@@ -476,7 +476,7 @@ window.CW_CE = {
         "stopka panelu"
       ],
       "warianty": {
-        "szerokie": "cztery boksy produktowe (Produkty Carbohort); w nagłówku panelu dwa przyciski – „Poznaj całą gamę produktów” (jasny) i „Przejdź do sklepu” (ciemny, z ikoną koszyka, od 28.09.2026); od 09.10.2026 boks ma cztery części w stałej kolejności – kategoria, nazwa, miniatura opakowania, opis przy dolnej krawędzi – a boks CARBOHUMIC pokazuje dwie butelki z podpisami „Doglebowe” i „Dolistne”; od 16.10.2026 boks CARBOHUMIC to dwa szare kafle obok siebie (odstęp 8 px), każdy osobnym linkiem z butelką na środku i podpisem: biała „Doglebowe” → carbohumic.html, czarna „Dolistne” → carbohumic-dolistny.html; najechany kafel ciemnieje i zdejmuje podświetlenie z boksu",
+        "szerokie": "cztery boksy produktowe (Produkty Carbohort); w nagłówku panelu dwa przyciski – „Poznaj całą gamę produktów” (jasny) i „Przejdź do sklepu” (ciemny, z ikoną koszyka, od 28.09.2026); od 09.10.2026 boks ma cztery części w stałej kolejności – kategoria, nazwa, miniatura opakowania, opis przy dolnej krawędzi – a boks CARBOHUMIC pokazuje dwie butelki z podpisami „Doglebowe” i „Dolistne”; od 16.10.2026 boks CARBOHUMIC to dwa szare kafle obok siebie (odstęp 8 px), każdy osobnym linkiem z butelką na środku i podpisem: biała „Doglebowe” → carbohumic-doglebowy.html, czarna „Dolistne” → carbohumic-dolistny.html; najechany kafel ciemnieje i zdejmuje podświetlenie z boksu",
         "domyslne": "trzy kolumny list – bez wystąpień od 20.09.2026, zastąpiony wariantem „grupy”",
         "waskie": "jedna lista (Programy i badania)",
         "grupy": "bez wystąpień od 15.10.2026, zastąpiony wariantem grupy-ze-zdjeciem; dawniej: pięć grup upraw na pełną szerokość kontenera (Rodzaje upraw, 20.09.2026; wygląd pozycji ujednolicony 01.10.2026): tytuł grupy z kreską 2 px i lista pozycji o jednym wyglądzie, a w grupie Rolnicze dwie listy pod śródtytułami Ozime i Jare, bez kart i ikon. Pozycja ze swoją stroną jest linkiem w ciemnym tonie, pozostałe 28 to jaśniejsze spany „cw-crop--soon”; bez strzałek, pogrubień i szyny wyróżnień. Spec: 40-strona-www/koncepcja/menu-rodzaje-upraw-spec.md",
@@ -1129,7 +1129,7 @@ window.CW_CE = {
           "czekaj": 900
         },
         "bez-naglowka": {
-          "plik": "v7/carbohumic.html",
+          "plik": "v7/carbohumic-doglebowy.html",
           "kotwica": "czym-jest",
           "ruch": true,
           "przewin": "#czym-jest [data-fx-track]",
@@ -2071,7 +2071,7 @@ window.CW_CE = {
         "kotwica": "przygotowanie-protokol"
       },
       "kod": {
-        "css": "ce/CE-26-stos-kart.css (klasy c5-stack; moduł wspólny od 02.10.2026 – wcześniej dwie implementacje: c5-steps w carbomat-mata.css i c5hu-stack w carbohumic.css)",
+        "css": "ce/CE-26-stos-kart.css (klasy c5-stack; moduł wspólny od 02.10.2026 – wcześniej dwie implementacje: c5-steps w carbomat-mata.css i c5hu-stack w carbohumic-doglebowy.css)",
         "js": "ce/CE-26-stos-kart.js"
       },
       "czesci": [
@@ -2272,12 +2272,12 @@ window.CW_CE = {
       "opis": "Dwie kolumny: po lewej lista dużych tytułów (z numerami), po prawej przyklejony panel z opisem aktywnej pozycji (opcjonalnie przycisk); na telefonie akordeon.",
       "mechanika": "Najechanie podgląda, klik wybiera, strzałki nawigują, kotwice trafiają w pozycje; bez JS wszystkie opisy otwarte. Moduły 72 (Carbohumic) i 40 (O nas); moduł 80 Maty zszedł 02.10.2026 razem z przejściem „Ekonomii” na wariant akordeon-z-odliczaniem.",
       "baza": {
-        "plik": "v7/carbohumic.html",
+        "plik": "v7/carbohumic-doglebowy.html",
         "kotwica": "z-czym-laczyc-lista"
       },
       "kod": {
         "css": "jeden plik ce/CE-30-lista-z-panelem.css, sekcje wg klas korzenia: c5-acc30 (akordeon-z-odliczaniem, moduł wspólny, CARBOMAT Mata), c5pr-acc i c5pr-pcard (akordeon-z-odliczaniem, własna implementacja Produktów), c5hu-mixlist (CARBOHUMIC), on-val (O firmie); wariant z-kadrem: c5h-crops zostaje w home.css ===== 60",
-        "js": "carbohumic.js ===== 72; wariant akordeon-z-odliczaniem: produkty.js ===== 50 oraz moduł wspólny ce/CE-30-lista-z-panelem.js (od 02.10.2026, CARBOMAT Mata); wariant z-kadrem: home.js ===== 60"
+        "js": "carbohumic-doglebowy.js ===== 72; wariant akordeon-z-odliczaniem: produkty.js ===== 50 oraz moduł wspólny ce/CE-30-lista-z-panelem.js (od 02.10.2026, CARBOMAT Mata); wariant z-kadrem: home.js ===== 60"
       },
       "czesci": [
         "lista tytułów",
@@ -2343,7 +2343,7 @@ window.CW_CE = {
       "opis": "Obramowany pas z małą ikoną i jednym–dwoma zdaniami (wstęp wytłuszczony), opcjonalnie przycisk po prawej; wariant „brak danych” to akapit w ramce z kreski przerywanej.",
       "mechanika": "Statyczne (role note).",
       "baza": {
-        "plik": "v7/carbohumic.html",
+        "plik": "v7/carbohumic-doglebowy.html",
         "kotwica": "ktory-dla-mnie-ostrzezenie"
       },
       "kod": {
@@ -2372,12 +2372,12 @@ window.CW_CE = {
       "opis": "Pozioma oś z przystankami (etykieta czasu, tytuł, opis) i przypisem; na wąskich ekranach oś pionowa.",
       "mechanika": "Oś dorysowuje się przy przewijaniu, przystanki rozświetlają się kolejno (tylko motionOn). Moduł 48.",
       "baza": {
-        "plik": "v7/carbohumic.html",
+        "plik": "v7/carbohumic-doglebowy.html",
         "kotwica": "czas-prochnicy"
       },
       "kod": {
-        "css": "carbohumic.css (c5hu-time)",
-        "js": "carbohumic.js ===== 48"
+        "css": "carbohumic-doglebowy.css (c5hu-time)",
+        "js": "carbohumic-doglebowy.js ===== 48"
       },
       "czesci": [
         "oś",

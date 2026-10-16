@@ -6,7 +6,7 @@
    (onHash / routeHash / scrollToHash). Also here: the reveal of [data-reveal]
    and the scroll inertia (Lenis); the advisor dock hiding moved to chrome.js.
    Merged from produkty.js 00 + 05 (the fullest copy of the bus – the other six
-   pages carried the same code without the hash routing), carbohumic.js 72,
+   pages carried the same code without the hash routing), carbohumic-doglebowy.js 72,
    produkty.js 72, prochnica-plus.js 02 and carbomat-humic.js 35 (reveal).
    Nothing leaks globally except `CX5`. The bus starts itself on
    DOMContentLoaded, so a page never calls CX5.start() – a second call is
