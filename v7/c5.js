@@ -12,7 +12,7 @@
 /* ===== CARBOMAT ECO – V5: mechanika layoutu wg makiet 24.07 =====
    Celowo minimalna (bez animacji – dopracujemy je osobno, sekcja po sekcji):
    scrollspy + pasek postępu, przełącznik wariantu, akordeony (Czym jest /
-   Sezon / FAQ), karty recept, dok dr. Jurka po zejściu z hero. */
+   Sezon / FAQ), karty recept. */
 (function () {
   "use strict";
   var doc = document;
@@ -323,14 +323,8 @@
     askInput.addEventListener("focus", function () { openJurek(null); askInput.blur(); });
   }
 
-  /* --- Dok dr. Jurka: pojawia się po zejściu z hero ------------------------- */
-  var dock = $("[data-jurek-dock]");
-  var hero = doc.getElementById("hero");
-  function updateDock() {
-    if (!dock || !hero) return;
-    var past = window.scrollY > hero.offsetHeight * 0.6;
-    dock.classList.toggle("cx-dockhide", !past);
-  }
+  /* The advisor dock hides over the opening block: chrome.js (CE-05) owns
+     that rule on every page since 16.10.2026. */
 
   /* --- Subnawigacja: wjeżdża od góry dopiero, gdy główne menu wyjedzie ------ */
   var navbarEl = $(".wf-navbar");
@@ -359,7 +353,6 @@
     updateSpy();
     updateTabs();
     updateSeason();
-    updateDock();
   }
   function onResize() { sizeSeasonPin(); onScroll(); }
   onResize();

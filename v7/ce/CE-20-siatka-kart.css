@@ -86,3 +86,22 @@ html.cx-js .u-prod__card{--u-prod-delay:0ms;
 @media (min-width:900px){
   .c5-cards--z-rozpiska .c5-cards__list{grid-template-columns:repeat(3,minmax(0,1fr));}
 }
+
+/* ===== wariant: produktowe – karta partnerska =====
+   Modifier `u-prod__card--partner`: a product of a partner company in the same
+   card. A pill (EL-16 `c5-chip c5-chip--solid u-prod__tag`) sits on the photo
+   field in the top left corner; a missing packshot is an icon on the grey field
+   (`u-prod__noimg`). From 900 px the card takes a full row after the own
+   products: the photo keeps the width of one column (gap and padding of the
+   grid: --u-prod-gap, --u-prod-pad), name, rows and hint stand beside it. */
+.u-prod__card--partner{--u-prod-gap:var(--w-space-4);--u-prod-pad:var(--w-space-4);}
+.u-prod__card--partner .u-prod__ph{position:relative;display:flex;align-items:center;justify-content:center;}
+.u-prod__noimg{width:40px;height:40px;color:var(--w-text-tertiary);}
+.u-prod__tag{position:absolute;top:var(--w-space-2);left:var(--w-space-2);background:var(--w-surface-page);}
+@media (min-width:900px){
+  .u-prod__card--partner{grid-column:1 / -1;display:grid;
+    grid-template-columns:calc((100% - 2 * var(--u-prod-gap) - 4 * var(--u-prod-pad)) / 3) minmax(0,1fr);
+    grid-template-rows:auto auto 1fr;column-gap:calc(var(--u-prod-gap) + 2 * var(--u-prod-pad));row-gap:var(--w-space-3);align-items:start;}
+  .u-prod__card--partner .u-prod__ph{grid-column:1;grid-row:1 / -1;}
+  .u-prod__card--partner .u-prod__go{align-self:end;}
+}

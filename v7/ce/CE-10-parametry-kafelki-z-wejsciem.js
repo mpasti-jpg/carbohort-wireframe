@@ -76,7 +76,7 @@
   }
 
   /* --- wejście sterowane przewijaniem -------------------------------------- */
-  /* phase bounds in units of q – waiting for Mateusz to confirm the pace */
+  /* phase bounds in units of q – waiting for confirmation of the pace */
   var G_A = 0.30, G_B = 0.72;       /* crop: holds narrow to G_A, full width at G_B */
   var O_A = 0.72, O_B = 0.88;       /* scrim */
   var H_A = 0.86, H_B = 1.00;       /* kicker + heading */

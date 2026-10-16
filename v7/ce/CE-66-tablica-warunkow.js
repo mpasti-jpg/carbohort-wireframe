@@ -1,5 +1,5 @@
 /* ===== CE-66 · Tablica warunków (rejestr: ce-rejestr.js) ===================
-   Rebuilt on 19.09 to Mateusz's frame (Figma „Frame 218”, spec §14.5). The
+   Rebuilt on 19.09 to the supplied frame (Figma „Frame 218”, spec §14.5). The
    eight conditions are a vertical tab set: a list of rows (tablist with
    automatic activation and a roving tabindex), Up/Down/Home/End with wrap, and
    a swipe across the strip on a phone. The odometer, the prev/next buttons,

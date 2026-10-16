@@ -208,6 +208,31 @@
 }
 
 
+/* ===== wariant: akordeon-z-odliczaniem + foto (modifier c5-acc30--foto) =====
+   Every row carries a photo next to its description: `figure.c5-acc30__ph >
+   img` as the second child of `.c5-acc30__in` (instead of the cards). The
+   photo lives in the panel, so it shows when the row opens; with motion on it
+   fades in a beat after the panel. The frame holds its ratio before the image
+   loads, so the panel height is known at once.
+   Knobs: --c5-acc30-ph-w (photo column from 900 px), --c5-acc30-ph-ratio,
+   --c5-acc30-ph-ratio-sm (below 900 px). */
+.c5-acc30--foto .c5-acc30__in{grid-template-columns:minmax(0,1fr) var(--c5-acc30-ph-w,clamp(300px,34vw,480px));}
+.c5-acc30--foto .c5-acc30__copy{max-width:var(--c5-acc30-measure-solo);padding-top:0;}
+.c5-acc30--foto .c5-acc30__copy p{line-height:1.5;}
+.c5-acc30--foto .c5-acc30__ph{margin:0;aspect-ratio:var(--c5-acc30-ph-ratio,4/3);overflow:hidden;
+  border-radius:var(--c5-acc30-card-radius);background:var(--w-gray-300);}
+.c5-acc30--foto .c5-acc30__ph > img{display:block;width:100%;height:100%;object-fit:cover;}
+@media (prefers-reduced-motion:no-preference){
+  .c5-acc30--foto[data-c5-acc30="on"] .c5-acc30__ph > img{opacity:0;transform:scale(1.04);
+    transition:opacity .5s var(--w-ease) .12s,transform .9s var(--w-ease) .12s;}
+  .c5-acc30--foto[data-c5-acc30="on"] .c5-acc30__item[data-open] .c5-acc30__ph > img{opacity:1;transform:none;}
+}
+@media (max-width:899px){
+  .c5-acc30--foto .c5-acc30__in{grid-template-columns:minmax(0,1fr);}
+  .c5-acc30--foto .c5-acc30__ph{aspect-ratio:var(--c5-acc30-ph-ratio-sm,16/10);}
+}
+
+
 /* ===== wariant: akordeon-z-odliczaniem – implementacja Produktów (c5pr-acc*, c5pr-pcard*) =====
    The product overview page builds the variant under its own classes (the module
    above is the generalised copy of this block). */

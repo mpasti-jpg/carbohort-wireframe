@@ -8,24 +8,24 @@
    Plikow kitu (wireframe.css, tokens.css, tabler-sprite.svg) NIE edytujemy.
    ========================================================================= */
 /* =====================================================================
-   CARBOMAT ECO – V5 (2026-07-24). Layout wg makiet Mateusza (Figma
-   „wireframes" → /carbomat, node 3:584) + treść 1:1 wg dokumentu Darka
+   CARBOMAT ECO – V5 (2026-07-24). Layout wg makiet (Figma
+   „wireframes" → /carbomat, node 3:584) + treść 1:1 wg dokumentu klienta
    „Produkty na stronę" 24.07. Nowy język układu: ostre narożniki,
    pełnoekranowe sekcje, kicker + centralny H2, ciemna sekcja parametrów.
    Prefiks c5-*; chrome (navbar/mega/stopka) bez zmian. Tylko tokeny --w-*
    i skala szarości. Animacje celowo MINIMALNE – dopracujemy je osobno,
-   sekcja po sekcji (polecenie Mateusza 24.07).
+   sekcja po sekcji (ustalenie z 24.07).
    ===================================================================== */
 :root { --cx-subnav-h: 64px; --cx-chrome: var(--cx-subnav-h); --c5-acc: .2s; --c5-acc-fade: .14s; }
 
-/* Górne menu serwisu NIE jest przyklejone (decyzja Mateusza 24.07) – scrolluje
+/* Górne menu serwisu NIE jest przyklejone (decyzja z 24.07) – scrolluje
    się razem ze stroną; do góry ekranu klei się wyłącznie subnawigacja. Kit
    pozostaje nietknięty – to nadpisanie tylko w obrębie tej strony. */
 .wf-navbar{position:static;}
 
 /* --- Subnawigacja produktu (Figma node 9:224): pigułki do lewej + „kup teraz"
    do prawej; przyklejona do górnej krawędzi ekranu -------------------------- */
-/* Belka bez własnego tła (polecenie Mateusza 24.07) – pływa nad treścią;
+/* Belka bez własnego tła (ustalenie z 24.07) – pływa nad treścią;
    pointer-events tylko na pigułkach i przycisku, żeby pusty obszar belki
    nie blokował klikania w treść pod spodem. Pozycja FIXED (nie sticky), bo
    w pierwszym widoku belki ma nie być – wjeżdża od góry dopiero, gdy główne
@@ -274,12 +274,7 @@
 .c5-ask__chip{font:inherit;font-size:0.9375rem;padding:10px 22px;background:var(--w-surface-page);border:1px solid rgb(0 0 0 / .3);border-radius:var(--w-radius-pill);color:var(--w-text-primary);cursor:pointer;transition:border-color var(--w-duration-base) var(--w-ease);}
 .c5-ask__chip:hover{border-color:var(--w-gray-900);}
 
-/* --- Dok dr Jurka: pojawia się po zejściu z hero ----------------------------- */
-.cw-jurek{transition:opacity .3s ease,visibility .3s ease;}
-.cw-jurek.cx-dockhide{opacity:0;visibility:hidden;pointer-events:none;}
-/* An opened dock stays visible above #hero too: buttons with data-jurek-open
-   (e.g. in the shop banner) must not open an invisible dock (28.09.2026). */
-.cw-jurek[data-open="true"].cx-dockhide{opacity:1;visibility:visible;pointer-events:auto;}
+/* The advisor dock hiding rule (cx-dockhide) lives in cw.css since 16.10.2026. */
 
 /* --- Responsywność ----------------------------------------------------------- */
 @media (max-width:899px){
@@ -319,5 +314,4 @@
   /* bez animacji rozwijania – stany przełączają się natychmiast */
   .c5-fact__panel,.c5-scene__cardbody,.c5-season__panel{transition:none;}
   .c5-viz[data-on="true"]{animation:none;}
-  .cw-jurek{transition:none;}
 }

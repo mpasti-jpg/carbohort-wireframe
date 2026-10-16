@@ -138,17 +138,60 @@
   display: block; width: auto; height: auto; max-width: 100%; max-height: 100%;
   object-fit: contain;
 }
-/* Two variants side by side (CARBOHUMIC). The bottles stand on the floor line
-   like the other packshots; each caption hangs under its bottle, in the bottom
-   margin of the well. The gap keeps the two captions apart. */
-.cw-prodbox__media--pair { gap: var(--w-space-12); }
-.cw-prodbox__variant { position: relative; flex: none; height: 100%; }
-.cw-prodbox__variant .cw-prodbox__img { height: 100%; max-width: none; }
+/* Two variants side by side (CARBOHUMIC, 16.10.2026): instead of one well, two
+   grey tiles of the same height 8 px apart. Each tile is a link of its own with
+   its bottle in the middle; the bottle stands on the floor line 40 px above the
+   bottom edge like the other packshots, and the caption sits in that bottom
+   margin, inside its tile. */
+.cw-prodbox__media.cw-prodbox__media--pair {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr); align-items: stretch;
+  gap: var(--w-space-2); padding: 0; background: none; border-radius: 0;
+}
+.cw-prodbox__variant {
+  position: relative; display: flex; align-items: flex-end; justify-content: center;
+  min-width: 0; min-height: 0; padding: var(--w-space-10) var(--w-space-2);
+  background: var(--w-surface-sunken); border-radius: var(--w-radius-sm);
+  transition: background-color var(--w-duration-base) var(--w-ease);
+}
+.cw-prodbox__variant .cw-prodbox__img { height: 100%; }
 .cw-prodbox__tag {
-  position: absolute; top: calc(100% + 0.625rem); left: 50%; transform: translateX(-50%);
+  position: absolute; top: calc(100% - var(--w-space-10) + 0.625rem); left: 50%; transform: translateX(-50%);
   font-size: 0.75rem; line-height: 1.2; font-weight: var(--w-weight-bold);
   letter-spacing: var(--w-tracking-wide); text-transform: uppercase;
   color: var(--w-text-primary); white-space: nowrap;
+}
+/* CARBOHUMIC box with two pages (15.10.2026): the box is a <div>, its name
+   link stretches over the whole box through ::after, so a click on the box
+   outside the tiles goes where it went before (carbohumic.html). Each tile is
+   a link of its own lying above that layer: white bottle to the soil page,
+   black bottle to the foliar page. A hovered or focused tile turns a step
+   darker, underlines its caption and takes the hover off the box, so only the
+   tile under the pointer reads as the target; a focused tile also gets the
+   focus ring on its own edge. The box shows the focus ring of its name link
+   on its own edge. */
+/* a <div> inherits the grey of the panel, where the other boxes are links in
+   the primary text colour – the same colour is set here */
+.cw-prodbox--split { position: relative; color: var(--w-text-primary); }
+.cw-prodbox__main { color: inherit; text-decoration: none; }
+.cw-prodbox__main::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+.cw-prodbox__main:focus-visible { outline: none; }
+.cw-prodbox--split:has(.cw-prodbox__main:focus-visible) {
+  border-color: var(--w-border-strong); background: var(--w-surface-subtle);
+  outline: var(--w-focus-ring-width) solid var(--w-focus-ring); outline-offset: var(--w-focus-ring-offset);
+}
+.cw-prodbox--split .cw-prodbox__variant { z-index: 1; color: inherit; text-decoration: none; }
+.cw-prodbox--split:has(.cw-prodbox__variant:hover) {
+  border-color: var(--w-border-default); background: transparent;
+}
+.cw-prodbox--split .cw-prodbox__variant:hover,
+.cw-prodbox--split .cw-prodbox__variant:focus-visible { background: var(--w-gray-200); }
+.cw-prodbox--split .cw-prodbox__variant:focus-visible {
+  outline: var(--w-focus-ring-width) solid var(--w-focus-ring); outline-offset: var(--w-focus-ring-offset);
+}
+.cw-prodbox--split .cw-prodbox__variant:hover .cw-prodbox__tag,
+.cw-prodbox--split .cw-prodbox__variant:focus-visible .cw-prodbox__tag {
+  text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px;
 }
 /* Description: one step smaller and tighter than wf-small (14 / 1.55). */
 .cw-prodbox__desc { font-size: 0.8125rem; line-height: 1.4; color: var(--w-text-secondary); }
@@ -158,10 +201,9 @@
   .cw-prodbox__desc { align-self: end; }
 }
 /* 981–1199 px: a box is about 200 px wide, so the side margins of the well go
-   down to 20 px and the two bottles and their captions are set tighter. */
+   down to 20 px and the captions of the two CARBOHUMIC tiles are set tighter. */
 @media (min-width: 981px) and (max-width: 1199px) {
   .cw-prodbox__media { padding-inline: var(--w-space-5); }
-  .cw-prodbox__media--pair { gap: var(--w-space-8); }
   .cw-prodbox__tag { font-size: 0.6875rem; letter-spacing: 0.04em; }
 }
 /* „Wg potrzeby" – pasek na dole panelu, etykieta z lewej, pozycje w rzędzie. */
@@ -198,6 +240,13 @@
    Listy (.cw-crops__list, .cw-crop) są wspólne z nawigacją mobilną –
    różnice mobilne siedzą niżej, w sekcji nawigacji mobilnej.
    Skala szarości i wyłącznie tokeny kitu.
+
+   Since 15.10.2026 the desktop panel uses the variant "grupy-ze-zdjeciem"
+   (cw-mega--crop-switch, ce/CE-02-mega-menu.css). The item rules here
+   (.cw-crops__list, .cw-crop, .cw-crops__split, .cw-crops__season-name)
+   serve both the new panel and the mobile navigation; .cw-mega--crops,
+   .cw-crops, .cw-crops__group and .cw-crops__title belong to the old
+   five-column variant and have no occurrence now.
    ===================================================================== */
 .cw-mega--crops {
   max-height: calc(100dvh - 7rem);
@@ -252,8 +301,7 @@ a.cw-crop:focus-visible {
 }
 
 /* Ozime / Jare – dwie listy obok siebie, każda pod własnym śródtytułem.
-   Bez kart, ikon i tła: podział niesie sam dodatkowy nagłówek
-   (uwaga Mateusza z 01.10). */
+   Bez kart, ikon i tła: podział niesie sam dodatkowy nagłówek (01.10). */
 .cw-crops__split {
   display: grid; align-items: start;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--w-space-6);
@@ -281,6 +329,10 @@ a.cw-crop:focus-visible {
 }
 .cw-mobilenav[data-open="true"] { display: block; }
 .cw-mobilenav .wf-navitem { font-size: var(--w-font-body-size); }
+/* The parent of the current second-level item (markCurrent adds wf-w-semibold,
+   e.g. „Produkty Carbohort” on a CARBOHUMIC page) has to win over the weight
+   of the nav item itself. */
+.cw-mobilenav .wf-navitem.wf-w-semibold { font-weight: var(--w-weight-semibold); }
 /* Drugi poziom w nawigacji mobilnej: nazwy grup upraw pod „Rodzaje upraw".
    Mega-menu ma na to osobne kolumny, na mobile hierarchię niesie wcięcie. */
 .cw-mobilenav__sub { padding-left: var(--w-space-8); font-size: var(--w-font-sm-size);
@@ -325,7 +377,15 @@ a.cw-crop:focus-visible {
   position: fixed; left: 50%; transform: translateX(-50%);
   bottom: var(--w-space-5); width: min(var(--cw-dock-w), 92vw);
   z-index: var(--w-z-modal); display: flex; flex-direction: column; gap: var(--w-space-3);
+  transition: opacity .3s ease, visibility .3s ease;
 }
+/* Hidden over the opening block of the page (cx-dockhide, set by chrome.js on
+   every page with the dock; moved here from c5.css and ce/00-base.css on
+   16.10.2026). An opened dock stays visible: buttons with data-jurek-open
+   (e.g. in the shop banner) must not open an invisible dock. */
+.cw-jurek.cx-dockhide { opacity: 0; visibility: hidden; pointer-events: none; }
+.cw-jurek[data-open="true"].cx-dockhide { opacity: 1; visibility: visible; pointer-events: auto; }
+@media (prefers-reduced-motion: reduce) { .cw-jurek { transition: none; } }
 .cw-jurek__panel {
   display: none; background: var(--w-surface-raised);
   border: 1px solid var(--w-border-default); border-radius: var(--w-radius-lg);

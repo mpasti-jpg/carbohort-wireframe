@@ -20,7 +20,7 @@
    No [data-pro] -> no-op. ================================================== */
 (function () {
   "use strict";
-  /* the three numbers of §21.4 / §21.8 – waiting for Mateusz to confirm them (§21.6.4) */
+  /* the three numbers of §21.4 / §21.8 – waiting for confirmation of them (§21.6.4) */
   var HOLD_W = 0.5;   /* held width of the frame = half the width of the band (= of the screen) */
   var START = 0.35;   /* growth starts when the top edge of the band passes 35 % of the window */
   var END = 0.02;     /* full width when that edge is 2 % from the top of the window */

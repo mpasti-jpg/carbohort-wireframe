@@ -3,6 +3,89 @@
    wcześniej). Tutaj zostają wyłącznie moduły klocków unikalnych tej podstrony.
    Bez własnej definicji `window.CX5` i bez `CX5.start()` – szyna startuje sama
    na DOMContentLoaded. ==================================================== */
+/* ===== 20 · Hero → „O programie”: tło, przyklejony player, okno filmu =====
+   15.10.2026, ramki Figma 916:1427 i 916:3487 (adnotacje). Trzy rzeczy:
+   (1) Tło. Po zejściu z góry strony (12 % wysokości hero) sekcja dostaje
+   `.is-light` – szare tło przechodzi w białe; przy powrocie na górę wraca.
+   (2) Szyna playera. Od 900 px player stoi w `position: sticky` (CSS, blok 20)
+   wewnątrz szyny `[data-pp-rail]`, która zwisa z panelu hero aż do końca opisu
+   w #o-programie. Wysokość szyny liczymy tak, by dolna krawędź playera
+   zrównała się z dolną krawędzią boksu produktu w chwili odklejenia:
+   koniec opisu − góra szyny + (wysokość przypinki − wysokość playera) / 2.
+   Poniżej 900 px szyna nie działa (zmienną kasujemy).
+   (3) Okno filmu. Klik w player albo w „obejrzyj film otwarcia” otwiera
+   natywny <dialog> na szerokość filmu: przyciemnione tło, strona pod spodem
+   stoi (`html.pp-lock` z bloku 52, Lenis stop). Treść okna to klon plakatu
+   i podpisu playera – w wersji live trafi tu player YouTube. */
+(function () {
+  "use strict";
+  var doc = document;
+  var $ = CX5.$, $$ = CX5.$$;
+  var hero = $("[data-pp-intro]");
+  if (!hero) return;
+  var rail = $("[data-pp-rail]", hero);
+  var pin = rail && $(".pp-intro__pin", rail);
+  var film = $("#film", hero);
+  var end = $("#o-programie .pp-opis__prod");
+  var wide = window.matchMedia("(min-width: 900px)");
+
+  function measure() {
+    if (!rail || !pin || !film || !end) return;
+    if (!wide.matches) { hero.style.removeProperty("--pp-rail-h"); return; }
+    hero.style.removeProperty("--pp-rail-h");
+    var top = rail.getBoundingClientRect().top + window.scrollY;
+    var bottom = end.getBoundingClientRect().bottom + window.scrollY;
+    var slack = (pin.offsetHeight - film.offsetHeight) / 2;
+    var h = Math.max(pin.offsetHeight, Math.round(bottom - top + slack));
+    hero.style.setProperty("--pp-rail-h", h + "px");
+  }
+  function update() {
+    hero.classList.toggle("is-light", window.scrollY > hero.offsetHeight * 0.12);
+  }
+  CX5.register({ scroll: update, resize: function () { measure(); update(); } });
+  if (window.ResizeObserver && end) new ResizeObserver(function () { measure(); }).observe(end.closest("section"));
+
+  /* --- okno filmu ------------------------------------------------------- */
+  if (!film) return;
+  var dlg = doc.createElement("dialog");
+  dlg.className = "pp-filmdlg";
+  dlg.setAttribute("aria-label", "Film otwarcia programu");
+  var close = doc.createElement("button");
+  close.type = "button";
+  close.className = "pp-filmdlg__close";
+  close.setAttribute("aria-label", "zamknij");
+  close.innerHTML = '<svg class="wf-icon" aria-hidden="true"><use href="#ti-x"></use></svg>';
+  var screen = doc.createElement("div");
+  screen.className = "wf-ph";
+  screen.innerHTML = '<svg class="wf-icon" aria-hidden="true"><use href="#ti-player-play"></use></svg>';
+  dlg.appendChild(close);
+  dlg.appendChild(screen);
+  var cap = $("figcaption", film);
+  if (cap) dlg.appendChild(cap.cloneNode(true));
+  doc.body.appendChild(dlg);
+
+  var opener = null;
+  function open(btn) {
+    if (dlg.open) return;
+    opener = btn || null;
+    dlg.showModal();
+    doc.documentElement.classList.add("pp-lock");
+    if (CX5.lenis) CX5.lenis.stop();
+    close.focus();
+  }
+  $$("[data-pp-film-open]", hero).forEach(function (el) {
+    el.addEventListener("click", function (e) { e.preventDefault(); open(el); });
+  });
+  close.addEventListener("click", function () { dlg.close(); });
+  dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); });
+  dlg.addEventListener("close", function () {
+    doc.documentElement.classList.remove("pp-lock");
+    if (CX5.lenis) CX5.lenis.start();
+    if (opener && opener.focus) opener.focus();
+    opener = null;
+  });
+})();
+
 /* ===== 40 · Scroll-driven scene of „Założenia i cele" and „Metodologia" =====
    Removed 19.09.2026 (iteration 2): both sections left this module. #zalozenia
    now runs on CE-70 (`ce/CE-70-scena-slajdow.js`) and #metodologia on the CE-12
@@ -311,7 +394,7 @@
 
 /* ===== 70 · Rzetelność: delikatny parallaks kadru w tle (spec §18.9) =======
    Kadr sekcji przesuwa się o maks. ±40 px wobec strony – tyle, żeby zdjęcie
-   „oddychało", i nie więcej (Mateusz: animacje mają dodawać tylko smaku).
+   „oddychało", i nie więcej (ustalenie: animacje mają dodawać tylko smaku).
    Ruch liczymy z pozycji sekcji w oknie na zdarzeniu scroll szyny CX5 (rAF),
    bez nasłuchu `wheel` i bez przechwytywania przewijania. Poniżej 900 px
    i przy `prefers-reduced-motion` zmienna znika i obraz stoi; obraz ma zapas

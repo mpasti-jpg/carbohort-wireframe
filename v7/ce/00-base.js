@@ -3,8 +3,8 @@
    resize functions and the bus calls them in a single rAF-throttled pass.
    Shared helpers: $, $$, panelSet (animated panel height), reducedMQ, wideMQ,
    clamp, lerp, motionOn, scrollTo, and the hash routing for in-page links
-   (onHash / routeHash / scrollToHash). Also here: the advisor dock, the reveal
-   of [data-reveal] and the scroll inertia (Lenis).
+   (onHash / routeHash / scrollToHash). Also here: the reveal of [data-reveal]
+   and the scroll inertia (Lenis); the advisor dock hiding moved to chrome.js.
    Merged from produkty.js 00 + 05 (the fullest copy of the bus – the other six
    pages carried the same code without the hash routing), carbohumic.js 72,
    produkty.js 72, prochnica-plus.js 02 and carbomat-humic.js 35 (reveal).
@@ -171,18 +171,8 @@ window.CX5 = (function () {
   });
   window.addEventListener("hashchange", function () { routeHash(window.location.hash, false); });
 
-  /* --- Dok dr. Jurka: pojawia się po zejściu z hero ------------------------- */
-  var dock = $("[data-jurek-dock]");
-  /* The dock hides while the opening block is on screen. Pages without an
-     `#hero` (Kontakt, the article template) opt in with `data-dock-hero`
-     on their opening section (15.09). */
-  var hero = doc.getElementById("hero") || doc.querySelector("[data-dock-hero]");
-  function updateDock() {
-    if (!dock || !hero) return;
-    var past = window.scrollY > hero.offsetHeight * 0.6;
-    dock.classList.toggle("cx-dockhide", !past);
-  }
-  scrollFns.push(updateDock);
+  /* The advisor dock hides over the opening block (#hero or [data-dock-hero]):
+     chrome.js (CE-05) owns that rule on every page since 16.10.2026. */
 
   /* Programmatic scroll: through the inertia layer (Lenis) when it is active, else native.
      `behavior` "auto" forces an instant native jump. */

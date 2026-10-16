@@ -1,0 +1,122 @@
+/* =====================================================================
+   CE-05 – advisor dock: landing section above the footer (15.10.2026)
+
+   On every page with <cw-dock>, chrome.js (dockLanding) inserts a section
+   right before the site footer – heading and one sentence – and moves the
+   dock right below it. From then on the dock (class cw-jurek--land) is
+   position: sticky instead of fixed: it floats at the bottom of the window
+   like before and stops in its own slot above the footer, so it never runs
+   over the footer. Standing in the slot it gets is-landed: the field grows
+   (taller, rounded box with the buttons on a strip below the input) and the
+   heading of the section fades in. Scrolling up returns the floating dock.
+
+   Geometry: the landed bar grows by --cw-dock-grow and the dock pulls itself
+   up by the same amount (negative margin-top), so its bottom edge and the
+   footer below never move – no jump of the page, no flicker at the edge.
+   --cw-dock-h0 = height of the floating bar, measured by chrome.js.
+   The chat panel opens above the bar (absolute), so opening it never changes
+   the page height either.
+
+   The base look of the dock and of the chat panel stays in cw.css, and so
+   does the hiding rule (cx-dockhide over the opening block of the page, set
+   by chrome.js on every page with the dock); it applies to the floating
+   dock.
+   The landed dock is part of the page, so it stays visible.
+   This sheet is attached by chrome.js; no page links it by hand.
+   ===================================================================== */
+
+/* set on the two blocks only, so nothing else on the page inherits them */
+.cw-dockland, .cw-jurek.cw-jurek--land {
+  --cw-dock-w-land: 720px;     /* width of the landed field */
+  --cw-dock-grow: 72px;        /* extra height of the landed field */
+  --cw-dock-ease: .4s cubic-bezier(.2, .7, .2, 1);
+}
+
+/* --- the section --------------------------------------------------------- */
+.cw-dockland {
+  padding: clamp(3.5rem, 7vw, 6rem) var(--w-page-padding, 1rem) 0;
+  /* room for the growth of the landed field plus air above it */
+  padding-bottom: calc(var(--cw-dock-grow) + var(--w-space-6));
+  text-align: center;
+  background: var(--w-surface-page);
+}
+.cw-dockland__in {
+  max-width: 44rem; margin-inline: auto;
+  opacity: 0; transform: translateY(10px);
+  transition: opacity var(--cw-dock-ease), transform var(--cw-dock-ease);
+}
+.cw-dockland.is-on .cw-dockland__in { opacity: 1; transform: none; }
+.cw-dockland__title {
+  margin: 0; font-size: clamp(1.7rem, 3.2vw, 2.5rem); line-height: 1.15;
+  font-weight: var(--w-weight-medium); letter-spacing: -0.01em;
+  color: var(--w-text-primary); text-wrap: balance;
+}
+.cw-dockland__lead {
+  margin: var(--w-space-3) 0 0; font-size: 1rem; line-height: 1.5;
+  color: var(--w-text-secondary); text-wrap: pretty;
+}
+
+/* --- the dock in the page flow ------------------------------------------- */
+.cw-jurek.cw-jurek--land {
+  position: sticky; left: auto; transform: none;
+  bottom: var(--w-space-5);
+  display: block;
+  width: min(var(--cw-dock-w), 92vw);
+  margin: 0 auto clamp(2.5rem, 5vw, 4rem);
+  transition: opacity .3s ease, visibility .3s ease,
+              width var(--cw-dock-ease), margin-top var(--cw-dock-ease);
+}
+.cw-jurek--land .cw-jurek__panel {
+  position: absolute; left: 0; right: 0; bottom: calc(100% + var(--w-space-3));
+}
+/* not enough room above the landed bar (chrome.js decides): open below it */
+.cw-jurek--land.is-drop .cw-jurek__panel {
+  bottom: auto; top: calc(100% + var(--w-space-3));
+}
+.cw-jurek--land .cw-jurek__bar {
+  height: var(--cw-dock-h0, auto);
+  /* half of the height = the pill of cw.css, but animatable */
+  border-radius: calc(var(--cw-dock-h0, 60px) / 2);
+  transition: height var(--cw-dock-ease), border-radius var(--cw-dock-ease),
+              box-shadow var(--cw-dock-ease);
+}
+
+/* --- landed: a larger field with a strip of buttons ----------------------- */
+.cw-jurek--land.is-landed {
+  width: min(var(--cw-dock-w-land), 92vw);
+  margin-top: calc(-1 * var(--cw-dock-grow));
+}
+.cw-jurek--land.is-landed .cw-jurek__bar {
+  height: calc(var(--cw-dock-h0, 60px) + var(--cw-dock-grow));
+  border-radius: var(--w-radius-lg);
+  box-shadow: var(--w-shadow-lg);
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-rows: minmax(0, 1fr) auto; align-items: start;
+  padding: var(--w-space-3) var(--w-space-3) var(--w-space-3) var(--w-space-4);
+}
+.cw-jurek--land.is-landed .cw-jurek__bar .wf-input {
+  grid-column: 1 / -1; grid-row: 1; padding-inline: 0;
+  animation: cw-dock-in var(--cw-dock-ease) both;
+}
+.cw-jurek--land.is-landed .cw-jurek__bar > svg { grid-column: 1; grid-row: 2; }
+.cw-jurek--land.is-landed .cw-jurek__bar > button { grid-column: 3; grid-row: 2; }
+@keyframes cw-dock-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* the landed dock belongs to the page: the floating-dock hiding rule stops here */
+.cw-jurek.cw-jurek--land.is-landed.cx-dockhide {
+  opacity: 1; visibility: visible; pointer-events: auto;
+}
+
+@media (max-width: 640px) {
+  .cw-dockland, .cw-jurek.cw-jurek--land { --cw-dock-grow: 56px; }
+  .cw-dockland { padding-top: var(--w-space-10, 2.5rem); }
+  .cw-dockland__title { font-size: 1.5rem; }
+  .cw-dockland__lead { font-size: .9375rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cw-jurek.cw-jurek--land, .cw-jurek--land .cw-jurek__bar, .cw-dockland__in { transition: none; }
+  .cw-jurek--land.is-landed .cw-jurek__bar .wf-input { animation: none; }
+}
+
+@media print { .cw-dockland { display: none; } }

@@ -3,7 +3,8 @@
    hover or focus of the whole nav. Merged from carbomat.css 10 – the copies of
    the six other pages differed only in how far the label stagger ran (one rule
    per chapter), so this file carries the stagger up to eleven positions; a page
-   with fewer chapters simply has no such <li>. No variants.
+   with fewer chapters simply has no such <li>. No variants; one option – the
+   tag over a label (span.c5-dots__stage, e.g. „Etap 1”).
    Markup: .c5-dots with [data-dot] links, chapters marked [data-chapter].
 
    Fixed, pionowo na środku ekranu. Etykiety wjeżdżają po najechaniu na cały
@@ -43,6 +44,14 @@
 .c5-dots:hover li:nth-child(9) .c5-dots__label,.c5-dots:focus-within li:nth-child(9) .c5-dots__label{transition-delay:.16s;}
 .c5-dots:hover li:nth-child(10) .c5-dots__label,.c5-dots:focus-within li:nth-child(10) .c5-dots__label{transition-delay:.18s;}
 .c5-dots:hover li:nth-child(11) .c5-dots__label,.c5-dots:focus-within li:nth-child(11) .c5-dots__label{transition-delay:.20s;}
+/* Option: a tag over the name (e.g. „Etap 1”) – span.c5-dots__stage at the start
+   of the label, then a space and the name. The tag stands absolutely above the
+   name, so the name stays level with the dot as in every other item; an item
+   with a tag gets 38 px instead of 28, so the tag never reaches its neighbour.
+   Pages without this element are unchanged. */
+.c5-dots__link:has(.c5-dots__stage){min-height:38px;}
+.c5-dots__stage{position:absolute;right:6px;bottom:calc(100% - 5px);font-size:10px;line-height:11px;
+  letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;}
 /* fokus klawiatury: obrys też „w bieli", żeby był widoczny po obu stronach blendu */
 .c5-dots__link:focus-visible{outline:2px solid #fff;outline-offset:2px;}
 

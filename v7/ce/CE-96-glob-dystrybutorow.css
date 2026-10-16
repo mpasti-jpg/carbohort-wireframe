@@ -1,0 +1,338 @@
+/* ===== CE-96 · Glob dystrybutorów (rejestr: ce-rejestr.js) =================
+   A dotted globe (canvas) with one point per partner (SVG overlay) next to the
+   partner cards. The cards in the markup are the only source of content: each
+   `.c5-glob__item` carries its point as data-* (lon, lat, label), so a partner
+   on another continent is one more card. ce/CE-96-glob-dystrybutorow.js draws
+   the globe, rotates it to the chosen country and pairs points with cards.
+   The globe turns freely when dragged (cursor grab / grabbing; on touch only
+   sideways – the stage keeps vertical panning for the page); it never moves by
+   itself – only a pick or a drag turns it.
+
+   Root: <section class="c5-sec c5-glob c5-glob--<variant>" data-glob
+                  data-glob-land="data/land-110m.json">
+   Variants (modifier class on the root):
+     · c5-glob--pol-kuli  the top half of a large globe rises from the bottom
+                          edge of the stage, turned to Europe; below it a row
+                          of cards scrolled sideways to the chosen partner, plus
+                          previous / next buttons. No page uses A today; the
+                          code stays, variant łuki borrows its points and labels.
+     · c5-glob--srodek    (Figma 528-184, mirrored) a large light grey globe
+                          fills the section from just below the heading, cut by
+                          the left and bottom edges, its right rim in view and
+                          ending well before the right edge; seen from close by
+                          so Europe comes out larger; numbered stems mark the
+                          countries in the right part of the globe (at rest
+                          they sit in the middle of the free field right of the
+                          cards); a 340 px
+                          column of numbered accordion cards stands in the
+                          bottom left corner over the globe (its top stays put,
+                          an open card grows it downwards). Up to 767 px: a
+                          smaller globe in a band, the accordion below it.
+     · c5-glob--luki      no globe: a flat dotted map of Europe (conformal
+                          conic projection) fitted to all points, standing
+                          still, with arcs from the head office to every
+                          country; the stage runs past the wrap to the edges of
+                          the section (at most 1600 px) and fades out at its
+                          edges. Below it a list of plain link rows (the rows
+                          carry the points, nothing on the map is clickable).
+                          Fixed at load – not switchable.
+   Without JS, or when the libraries do not load, `is-ready` never appears:
+   the stage stays hidden and the cards form a plain grid.
+   Per-instance tuning (set in `style` on the root):
+     --c5-glob-r        globe radius as a share of the stage width, variant A
+                        (default 0.7; 0.85 below 900 px, 1.5 below 600 px)
+     --c5-glob-stage-h  stage height, variants A and łuki (A default
+                        clamp(300px,36vw,460px))
+     --c5-glob-b-r      globe radius the section height is sized for, variant B
+     --c5-glob-spacing  distance between land dots in px (default 7, B 5)
+     --c5-glob-dot / --c5-glob-sphere / --c5-glob-edge   globe colours
+     --c5-glob-dot-min  opacity of the land dots at the rim (default .3, B .15)
+     --c5-glob-card / --c5-glob-badge-bg / --c5-glob-badge-ink   variant B cards
+     --c5-glob-arc      arc and point colour, variant łuki (default badge ink)
+     --c5-glob-rows     rows per column of the list from 768 px, variant łuki
+                        (default 4; the list fills the left column first)
+   ========================================================================== */
+
+.c5-glob{
+  --c5-glob-dot:var(--w-gray-400);
+  --c5-glob-sphere:var(--w-gray-50);
+  --c5-glob-edge:var(--w-gray-200);
+  --c5-glob-r:0.7;
+  --c5-glob-stage-h:clamp(300px,36vw,460px);
+  --c5-glob-b-r:min(55.7vw,900px);
+  --c5-glob-card:#f3f3f0;
+  --c5-glob-badge-bg:#f2ec7d;
+  --c5-glob-badge-ink:#0c2b1c;
+  --c5-glob-gap:var(--w-space-4);
+}
+.c5-glob__head{margin-bottom:clamp(1.5rem,3vw,2.25rem);}
+
+/* --- base (no JS): a plain grid of partner cards --------------------------- */
+.c5-glob__stage{display:none;}
+.c5-glob__nav{display:none;}
+.c5-glob__list{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+  gap:var(--c5-glob-gap);margin:0;padding:0;list-style:none;}
+.c5-glob__item{display:flex;flex-direction:column;align-items:flex-start;gap:var(--w-space-2);min-width:0;
+  background:var(--w-surface-page);border:1px solid var(--w-border-default);
+  padding:clamp(1rem,1.8vw,1.25rem);scroll-margin-top:clamp(1rem,4vw,3rem);
+  transition:border-color var(--w-duration-base) var(--w-ease),background var(--w-duration-base) var(--w-ease);}
+.c5-glob__name{display:flex;flex-direction:column;align-items:flex-start;gap:var(--w-space-2);margin:0;align-self:stretch;}
+.c5-glob__more{display:flex;flex-direction:column;gap:var(--w-space-2);width:100%;}
+.c5-glob__who{margin:0;font-size:0.875rem;}
+.c5-glob__act{display:flex;flex-direction:column;gap:var(--w-space-2);align-items:stretch;width:100%;
+  margin-top:var(--w-space-2);}
+/* long e-mail addresses wrap inside the small button instead of widening the card */
+.c5-glob__act .c5-btn{--c5-btn-px:14px;justify-content:flex-start;text-align:left;
+  white-space:normal;overflow-wrap:anywhere;line-height:1.3;}
+.c5-glob__act .c5-btn > span{min-width:0;}
+.c5-glob__item:hover{border-color:var(--w-gray-900);}
+
+/* the heading button the script puts around the chip and the company name */
+.c5-glob__pick{display:flex;flex-direction:column;align-items:flex-start;gap:var(--w-space-2);
+  width:100%;margin:0;padding:0;background:none;border:0;border-radius:0;
+  font:inherit;color:inherit;text-align:left;cursor:pointer;}
+.c5-glob__pick:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:var(--w-focus-ring-offset);}
+.c5-glob__pick-txt{display:flex;flex-direction:column;align-items:flex-start;gap:var(--w-space-2);min-width:0;}
+.c5-glob__pick-n{display:block;}
+/* the number badge the script adds (shown in variant B only) */
+.c5-glob__no{display:none;}
+
+/* --- stage (globe) ---------------------------------------------------------- */
+.c5-glob.is-ready .c5-glob__list{position:relative;}
+.c5-glob.is-ready .c5-glob__stage{display:block;position:relative;overflow:hidden;
+  user-select:none;-webkit-user-select:none;touch-action:pan-y;}
+/* dragging turns the globe (the script sets `grab` over the sphere itself) */
+.c5-glob.is-dragging .c5-glob__stage,.c5-glob.is-dragging .c5-glob__pt{cursor:grabbing !important;}
+.c5-glob__canvas{position:absolute;inset:0;width:100%;height:100%;display:block;}
+.c5-glob__svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible;}
+
+/* partner point: a small dark square with a white rim and its country label */
+.c5-glob__pt{cursor:pointer;}
+.c5-glob__pt-hit{fill:transparent;}
+.c5-glob__pt-dot{fill:var(--w-gray-700);stroke:var(--w-white);stroke-width:2px;
+  transition:fill var(--w-duration-base) var(--w-ease);}
+.c5-glob__pt-ring{fill:none;stroke:var(--w-gray-900);stroke-width:1px;opacity:0;}
+.c5-glob__pt-bg{fill:var(--w-gray-900);opacity:0;}
+.c5-glob__pt-t{font-family:var(--w-font-sans);font-size:11px;font-weight:var(--w-weight-semibold);
+  letter-spacing:.04em;text-transform:uppercase;fill:var(--w-gray-700);
+  paint-order:stroke;stroke:var(--w-white);stroke-width:3px;stroke-linejoin:round;}
+.c5-glob__pt:hover .c5-glob__pt-dot{fill:var(--w-gray-900);}
+.c5-glob__pt:hover .c5-glob__pt-t{fill:var(--w-gray-900);}
+/* a hovered card lights its point (is-hot, set by the script) */
+.c5-glob__pt.is-hot .c5-glob__pt-dot{fill:var(--w-gray-900);}
+.c5-glob__pt.is-hot .c5-glob__pt-ring{opacity:1;}
+.c5-glob__pt.is-active .c5-glob__pt-dot{fill:var(--w-gray-900);}
+.c5-glob__pt.is-active .c5-glob__pt-ring{opacity:1;}
+.c5-glob__pt.is-active .c5-glob__pt-bg{opacity:1;}
+.c5-glob__pt.is-active .c5-glob__pt-t{fill:var(--w-white);stroke:none;}
+/* labels the script hides on a crowded globe (variant B, phones) */
+.c5-glob__pt.is-quiet:not(.is-active):not(:hover):not(.is-hot) .c5-glob__pt-t{display:none;}
+
+/* variant A draws the square with a label, variant B the numbered stem */
+.c5-glob__pt-b{display:none;}
+.c5-glob--srodek .c5-glob__pt-a{display:none;}
+.c5-glob--srodek .c5-glob__pt-b{display:inline;}
+
+/* head office: an outlined diamond, label in the legend only */
+.c5-glob__hq{pointer-events:none;}
+.c5-glob__hq-dot{fill:var(--w-white);stroke:var(--w-gray-900);stroke-width:1.5px;}
+
+.c5-glob__legend{position:absolute;left:0;top:0;display:flex;flex-wrap:wrap;gap:var(--w-space-2) var(--w-space-4);
+  margin:0;padding:0;list-style:none;font-size:0.75rem;line-height:1.4;color:var(--w-text-secondary);
+  pointer-events:none;}
+.c5-glob__legend li{display:inline-flex;align-items:center;gap:6px;}
+.c5-glob__key{display:inline-block;width:8px;height:8px;background:var(--w-gray-700);}
+.c5-glob__key--hq{background:var(--w-white);border:1.5px solid var(--w-gray-900);transform:rotate(45deg);}
+
+/* --- variant A · c5-glob--pol-kuli ---------------------------------------- */
+.c5-glob--pol-kuli.is-ready .c5-glob__stage{height:var(--c5-glob-stage-h);}
+/* the globe fades out at both sides and towards the cards (the legend does not) */
+.c5-glob--pol-kuli.is-ready .c5-glob__canvas,
+.c5-glob--pol-kuli.is-ready .c5-glob__svg{
+  -webkit-mask-image:linear-gradient(to right,transparent 0,#000 7%,#000 93%,transparent 100%),
+                     linear-gradient(to bottom,#000 72%,transparent 100%);
+  -webkit-mask-composite:source-in;
+  mask-image:linear-gradient(to right,transparent 0,#000 7%,#000 93%,transparent 100%),
+             linear-gradient(to bottom,#000 72%,transparent 100%);
+  mask-composite:intersect;}
+/* the row of cards: scrolled sideways, snapped to a card, four in view */
+.c5-glob--pol-kuli.is-ready .c5-glob__list{position:relative;z-index:1;margin-top:calc(var(--w-space-6,1.5rem) * -1);
+  display:flex;gap:var(--c5-glob-gap);overflow-x:auto;overflow-y:hidden;
+  scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;
+  padding:2px;}
+.c5-glob--pol-kuli.is-ready .c5-glob__list::-webkit-scrollbar{display:none;}
+.c5-glob--pol-kuli.is-ready .c5-glob__item{flex:none;scroll-snap-align:start;
+  width:calc((100% - 3 * var(--c5-glob-gap)) / 4);}
+.c5-glob--pol-kuli.is-ready .c5-glob__item.is-active{border-color:var(--w-gray-900);
+  background:var(--w-surface-subtle);box-shadow:inset 0 0 0 1px var(--w-gray-900);}
+.c5-glob--pol-kuli.is-ready .c5-glob__item{cursor:pointer;}
+.c5-glob--pol-kuli.is-ready .c5-glob__nav{display:flex;align-items:center;justify-content:flex-end;
+  gap:var(--w-space-2);margin-top:var(--w-space-4);}
+.c5-glob__nav[hidden]{display:none !important;}
+.c5-glob__count{margin-right:var(--w-space-2);font-size:0.875rem;color:var(--w-text-secondary);
+  font-variant-numeric:tabular-nums;}
+
+/* --- variant B · c5-glob--srodek (Figma 528-184) ------------------------- */
+/* a light sphere: land dots a step darker than it, stems and numbers dark */
+.c5-glob--srodek{--c5-glob-sphere:#ececec;--c5-glob-dot:#aaaaaa;--c5-glob-edge:transparent;
+  --c5-glob-spacing:5;--c5-glob-dot-min:.15;}
+.c5-glob--srodek.is-ready{position:relative;overflow:hidden;}
+/* the legend moves under the lead */
+.c5-glob__head .c5-glob__legend{position:static;margin-top:calc(var(--w-space-2) * -1);}
+
+/* numbered stem: a small number over a 1 px line whose lower end sits on the
+   country (the vertical-line look of CE-90); the active or hovered one gets
+   a darker, thicker line and its number on the yellow badge of the cards */
+.c5-glob__stem{stroke:var(--w-gray-800);stroke-width:1px;shape-rendering:crispEdges;
+  transition:stroke-width var(--w-duration-base) var(--w-ease);}
+.c5-glob__stem-tip{fill:var(--w-gray-900);}
+.c5-glob__stem-no{font-family:var(--w-font-sans);font-size:12px;font-weight:var(--w-weight-medium);
+  fill:var(--w-gray-900);font-variant-numeric:tabular-nums;
+  paint-order:stroke;stroke:var(--c5-glob-sphere);stroke-width:3px;stroke-linejoin:round;}
+.c5-glob__stem-bg{fill:var(--c5-glob-badge-bg);opacity:0;transition:opacity var(--w-duration-base) var(--w-ease);}
+.c5-glob__pt-b .c5-glob__pt-hit{fill:transparent;}
+.c5-glob__pt:hover .c5-glob__stem,.c5-glob__pt.is-hot .c5-glob__stem,
+.c5-glob__pt.is-active .c5-glob__stem{stroke:var(--c5-glob-badge-ink);stroke-width:2px;}
+.c5-glob__pt:hover .c5-glob__stem-bg,.c5-glob__pt.is-hot .c5-glob__stem-bg,
+.c5-glob__pt.is-active .c5-glob__stem-bg{opacity:1;}
+.c5-glob__pt:hover .c5-glob__stem-no,.c5-glob__pt.is-hot .c5-glob__stem-no,
+.c5-glob__pt.is-active .c5-glob__stem-no{fill:var(--c5-glob-badge-ink);font-weight:var(--w-weight-semibold);stroke:none;}
+
+/* accordion cards: a number badge and the name in one row, details below */
+.c5-glob--srodek.is-ready .c5-glob__list{display:flex;flex-direction:column;gap:8px;}
+.c5-glob--srodek.is-ready .c5-glob__item{border:0;border-radius:12px;padding:0;gap:0;
+  background:var(--c5-glob-card);}
+.c5-glob--srodek.is-ready .c5-glob__item:hover{border-color:transparent;background:#ebebe6;}
+.c5-glob--srodek.is-ready .c5-glob__item.is-open{background:var(--c5-glob-card);
+  box-shadow:inset 0 0 0 1px var(--c5-glob-badge-ink);}
+.c5-glob--srodek.is-ready .c5-glob__name{display:block;}
+.c5-glob--srodek.is-ready .c5-glob__pick{position:relative;display:grid;grid-template-columns:43px minmax(0,1fr);
+  align-items:center;column-gap:14px;min-height:44px;
+  padding:10px calc(20px + 18px) 10px 32px;border-radius:12px;color:var(--c5-glob-badge-ink);}
+.c5-glob--srodek.is-ready .c5-glob__pick-txt{gap:4px;}
+.c5-glob--srodek.is-ready .c5-glob__pick .c5-chip{padding:1px 7px;font-size:0.6875rem;}
+.c5-glob--srodek.is-ready .c5-glob__pick-n{font-size:0.9375rem;line-height:1.25;}
+.c5-glob--srodek.is-ready .c5-glob__no{display:flex;align-items:center;justify-content:center;
+  width:43px;height:43px;border-radius:8px;background:var(--c5-glob-badge-bg);color:var(--c5-glob-badge-ink);
+  font-size:16px;line-height:1;font-weight:var(--w-weight-regular);font-variant-numeric:tabular-nums;}
+.c5-glob--srodek.is-ready .c5-glob__pick::after{content:"";position:absolute;right:20px;top:50%;
+  width:8px;height:8px;margin-top:-6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;
+  transform:rotate(45deg);transition:transform var(--w-duration-base) var(--w-ease);}
+.c5-glob--srodek.is-ready .c5-glob__pick[aria-expanded="true"]::after{transform:rotate(-135deg);margin-top:-2px;}
+.c5-glob--srodek.is-ready .c5-glob__more{padding:4px 32px 22px;}
+.c5-glob--srodek.is-ready .c5-glob__item:not(.is-open) .c5-glob__more{display:none;}
+
+/* desktop and tablet: the globe fills the section behind the heading and the
+   cards; the column of cards stands in the bottom left corner */
+@media (min-width:768px){
+  .c5-glob--srodek.is-ready{padding-bottom:40px;}
+  .c5-glob--srodek.is-ready .c5-glob__stage{position:absolute;inset:0;z-index:0;}
+  .c5-glob--srodek.is-ready > .c5-wrap > :not(.c5-glob__body){position:relative;z-index:1;}
+  /* empty parts of the layout let the pointer through to the globe */
+  .c5-glob--srodek.is-ready > .c5-wrap,
+  .c5-glob--srodek.is-ready .c5-glob__body{pointer-events:none;}
+  .c5-glob--srodek.is-ready > .c5-wrap > :not(.c5-glob__body),
+  .c5-glob--srodek.is-ready .c5-glob__stage,
+  .c5-glob--srodek.is-ready .c5-glob__side{pointer-events:auto;}
+  /* the body reaches the globe's centre (the script reads the radius from
+     this min-height); the column starts a fixed distance below the top of
+     the globe, so opening a card grows it – and the section – downwards */
+  .c5-glob--srodek.is-ready .c5-glob__body{display:flex;flex-direction:column;justify-content:flex-start;
+    min-height:calc(var(--c5-glob-b-r) - 16px);}
+  .c5-glob--srodek.is-ready .c5-glob__side{position:relative;z-index:1;width:340px;max-width:100%;margin-right:auto;
+    margin-top:max(0px,calc(var(--c5-glob-b-r) * 0.163 - 18px));}
+}
+/* phone: a smaller globe in a band under the heading, the accordion below */
+@media (max-width:767px){
+  .c5-glob--srodek.is-ready .c5-glob__stage{height:clamp(260px,82vw,380px);
+    margin-inline:calc(var(--w-space-5) * -1);margin-bottom:var(--w-space-4);}
+  .c5-glob--srodek.is-ready .c5-glob__pick{padding-left:16px;column-gap:12px;}
+  .c5-glob--srodek.is-ready .c5-glob__more{padding:4px 16px 18px;}
+}
+
+/* --- tablet and phone (variant A) ------------------------------------------ */
+@media (max-width:899px){
+  .c5-glob{--c5-glob-r:0.85;--c5-glob-stage-h:clamp(240px,52vw,360px);}
+  .c5-glob--pol-kuli.is-ready .c5-glob__item{width:min(300px,78%);}
+}
+@media (max-width:599px){
+  .c5-glob{--c5-glob-r:1.5;}
+  .c5-glob__legend{font-size:0.6875rem;}
+}
+
+/* --- variant łuki · c5-glob--luki ------------------------------------------
+   A flat dotted map of Europe, standing still and fitted to all points, with
+   an arc from the head office to every country. The list under the map is a column
+   of plain link rows (country chip + company), two columns from 768 px filled
+   top to bottom; each row carries its point as data-glob-lon / -lat / -label
+   (-skrot below 600 px). Points and arcs take no pointer input – only the rows
+   navigate. Without JS: the rows alone. The section is a size container, so
+   the stage can reach its edges (100cqw) whatever the wrap. */
+.c5-glob--luki{--c5-glob-arc:var(--c5-glob-badge-ink);
+  --c5-glob-stage-h:clamp(320px,44vw,620px);container-type:inline-size;}
+.c5-glob--luki.is-ready .c5-glob__stage{height:var(--c5-glob-stage-h);cursor:default;
+  margin-inline:calc((100% - min(100cqw,1600px)) / 2);}
+/* the map fades out on all four edges (the labels keep clear of the fade) */
+.c5-glob--luki.is-ready .c5-glob__canvas,
+.c5-glob--luki.is-ready .c5-glob__svg{
+  -webkit-mask-image:linear-gradient(to right,transparent 0,#000 7%,#000 93%,transparent 100%),
+                     linear-gradient(to bottom,transparent 0,#000 5%,#000 85%,transparent 100%);
+  -webkit-mask-composite:source-in;
+  mask-image:linear-gradient(to right,transparent 0,#000 7%,#000 93%,transparent 100%),
+             linear-gradient(to bottom,transparent 0,#000 5%,#000 85%,transparent 100%);
+  mask-composite:intersect;}
+.c5-glob--luki .c5-glob__svg,.c5-glob--luki .c5-glob__pt{pointer-events:none;cursor:default;}
+.c5-glob--luki .c5-glob__pt-dot{fill:var(--c5-glob-arc);}
+.c5-glob__hq-t{font-family:var(--w-font-sans);font-size:11px;font-weight:var(--w-weight-semibold);
+  letter-spacing:.04em;text-transform:uppercase;fill:var(--w-gray-900);
+  paint-order:stroke;stroke:var(--w-white);stroke-width:3px;stroke-linejoin:round;}
+
+/* arcs: drawn in one after another (pathLength = 1, so the dash is the arc) */
+.c5-glob__arc{fill:none;stroke:var(--c5-glob-arc);stroke-width:1.25px;stroke-linecap:round;
+  stroke-dasharray:1 1;stroke-dashoffset:1;opacity:.9;
+  transition:stroke-dashoffset 900ms var(--w-ease) calc(var(--i,0) * 110ms),
+             opacity var(--w-duration-base) var(--w-ease),stroke-width var(--w-duration-base) var(--w-ease);}
+.c5-glob--luki.is-drawn .c5-glob__arc{stroke-dashoffset:0;}
+.c5-glob--luki.has-hot .c5-glob__arc{opacity:.22;}
+.c5-glob--luki.has-hot .c5-glob__arc.is-hot{opacity:1;stroke-width:2.25px;}
+
+/* the list: rows with a top rule, the last one closed below */
+.c5-glob--luki .c5-glob__list{display:grid;grid-template-columns:minmax(0,1fr);gap:0 var(--w-space-6);}
+.c5-glob--luki .c5-glob__list > li{border-bottom:1px solid var(--w-border-default);}
+.c5-glob--luki .c5-glob__list > li:first-child{border-top:1px solid var(--w-border-default);}
+.c5-glob__row{display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr) auto;gap:var(--w-space-4);
+  align-items:center;min-height:56px;padding:var(--w-space-3) var(--w-space-2) var(--w-space-3) 0;
+  text-decoration:none;color:inherit;transition:background-color var(--w-duration-base) var(--w-ease);}
+.c5-glob__row:hover{background:var(--w-surface-hover);}
+.c5-glob__row:focus-visible{outline:2px solid var(--w-gray-900);outline-offset:-2px;}
+.c5-glob__c{justify-self:start;white-space:nowrap;}
+.c5-glob__firm{font-size:0.9375rem;color:var(--w-text-secondary);}
+.c5-glob__go{color:var(--w-text-tertiary);transition:transform var(--w-duration-base) var(--w-ease),color var(--w-duration-base) var(--w-ease);}
+.c5-glob__row:hover .c5-glob__go,.c5-glob__row:focus-visible .c5-glob__go{color:var(--w-gray-900);transform:translateX(3px);}
+@media (min-width:768px){
+  /* two columns read top to bottom; the top rule is drawn per column */
+  .c5-glob--luki .c5-glob__list{grid-template-columns:repeat(2,minmax(0,1fr));
+    grid-template-rows:repeat(var(--c5-glob-rows,4),auto);grid-auto-flow:column;
+    background:
+      linear-gradient(var(--w-border-default),var(--w-border-default)) left top / calc((100% - var(--w-space-6)) / 2) 1px no-repeat,
+      linear-gradient(var(--w-border-default),var(--w-border-default)) right top / calc((100% - var(--w-space-6)) / 2) 1px no-repeat;}
+  .c5-glob--luki .c5-glob__list > li:first-child{border-top:0;}
+  /* one start line for the company names, unless a chip is longer */
+  .c5-glob__row{grid-template-columns:minmax(9.5rem,max-content) minmax(0,1fr) auto;}
+}
+@media (max-width:899px){
+  .c5-glob--luki{--c5-glob-stage-h:clamp(260px,52vw,420px);}
+}
+@media (max-width:599px){
+  .c5-glob--luki{--c5-glob-stage-h:clamp(260px,88vw,360px);}
+  /* smaller points and labels on a small map (the script reads the size) */
+  .c5-glob--luki .c5-glob__pt-dot{transform:scale(.75);}
+  .c5-glob--luki .c5-glob__pt-t,.c5-glob--luki .c5-glob__hq-t{font-size:10px;letter-spacing:.02em;}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .c5-glob__item,.c5-glob__pt-dot,.c5-glob__stem,.c5-glob__stem-bg,
+  .c5-glob--srodek.is-ready .c5-glob__pick::after{transition:none;}
+  .c5-glob__arc,.c5-glob__row,.c5-glob__go{transition:none;}
+  .c5-glob__arc{stroke-dashoffset:0;}
+}

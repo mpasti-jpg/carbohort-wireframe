@@ -213,11 +213,11 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31563,
-      "data": "11.10"
+      "data": "15.10"
     },
     "carbohumic.html": {
       "sekcja": "2. Produkty Carbohort",
-      "nazwa": "CARBOHUMIC",
+      "nazwa": "CARBOHUMIC doglebowy",
       "stan": {
         "makieta": "do-akceptacji",
         "tresc": null,
@@ -227,7 +227,21 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31564,
-      "data": "11.10"
+      "data": "15.10"
+    },
+    "carbohumic-dolistny.html": {
+      "sekcja": "2. Produkty Carbohort",
+      "nazwa": "CARBOHUMIC dolistny",
+      "stan": {
+        "makieta": null,
+        "tresc": null,
+        "projekt": null,
+        "media": null,
+        "infografiki": null,
+        "wdrozenie": null
+      },
+      "ac": null,
+      "data": "15.10"
     },
     "carbomat-humic.html": {
       "sekcja": "2. Produkty Carbohort",
@@ -298,7 +312,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31568,
-      "data": "05.10"
+      "data": "15.10"
     },
     "sadownicze.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -430,7 +444,7 @@ window.CW_STATUS = {
       "sekcja": "4. Programy i badania",
       "nazwa": "Próchnica+",
       "stan": {
-        "makieta": "do-akceptacji",
+        "makieta": "zaakceptowany",
         "tresc": null,
         "projekt": null,
         "media": null,
@@ -438,7 +452,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31569,
-      "data": "11.10"
+      "data": "15.10"
     },
     "centrum-wiedzy.html": {
       "sekcja": "5. Centrum wiedzy",
@@ -494,7 +508,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": null,
-      "data": "15.09"
+      "data": "15.10"
     },
     "kontakt.html": {
       "sekcja": "7. Kontakt",
@@ -508,7 +522,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31570,
-      "data": "15.09"
+      "data": "15.10"
     },
     "konfigurator.html": {
       "sekcja": "8. Konfigurator",
@@ -522,7 +536,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 30721,
-      "data": "08.09"
+      "data": "15.10"
     },
     "sklep.html": {
       "sekcja": "9. Sklep",
@@ -536,7 +550,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31512,
-      "data": "28.09"
+      "data": "15.10"
     },
     "pdp.html": {
       "sekcja": "9. Sklep",
@@ -817,20 +831,6 @@ window.CW_STATUS = {
       },
       "ac": null,
       "data": "04.10"
-    },
-    "partner.html": {
-      "sekcja": "Pozostałe",
-      "nazwa": "Zostań partnerem",
-      "stan": {
-        "makieta": null,
-        "tresc": null,
-        "projekt": null,
-        "media": null,
-        "infografiki": null,
-        "wdrozenie": null
-      },
-      "ac": null,
-      "data": "25.07"
     },
     "zalecenia.html": {
       "sekcja": "Poza tabelą",

@@ -12,7 +12,8 @@
      · 40 lista wartości       <- produkty.js 50 (c5pr-paths)
      · 50 szuflada biogramu    <- prochnica-plus.js 55 (pp-disc)
      · 30 parallax kadru       <- carbomat-humic.js 40, część 2 (c5-who)
-     · 70 mapa i lista krajów  <- new block (CE-56)
+   Section 70 (map of Europe and country list) is CE-96 variant łuki since 15.10.2026
+   and runs from ce/CE-96-glob-dystrybutorow.js – nothing here.
    ===================================================================== */
 
 /* ===== 10 · W liczbach: kołowrotek cyfr (spec §4) ==========================
@@ -374,44 +375,5 @@
       var txt = btn.getAttribute(open ? "data-label-less" : "data-label-more");
       if (lbl && txt) lbl.textContent = txt;
     });
-  });
-})();
-
-/* ===== 70 · Gdzie jesteśmy: mapa i lista krajów (spec §10, CE-56) ==========
-   Pointing at a country row lights its pin and the other way round – the class
-   `is-hot` on both ends, so the pair is readable in either direction. Keyboard
-   parity: focus on a row lights the pin too. Nothing here depends on motion;
-   the module only toggles a class, and without JS both halves simply stand next
-   to each other. */
-(function () {
-  "use strict";
-  var root = CX5.$("[data-on-map]");
-  if (!root) return;
-  var rows = CX5.$$("[data-on-row]", root);
-  var pins = CX5.$$("[data-on-pin]", root);
-  if (!rows.length || !pins.length) return;
-
-  var byKey = {};
-  pins.forEach(function (p) { byKey[p.getAttribute("data-on-pin")] = p; });
-
-  function hot(key, on) {
-    var pin = byKey[key];
-    if (pin) pin.classList.toggle("is-hot", on);
-    rows.forEach(function (r) {
-      if (r.getAttribute("data-on-row") === key) r.classList.toggle("is-hot", on);
-    });
-  }
-
-  rows.forEach(function (r) {
-    var key = r.getAttribute("data-on-row");
-    r.addEventListener("mouseenter", function () { hot(key, true); });
-    r.addEventListener("mouseleave", function () { hot(key, false); });
-    r.addEventListener("focus", function () { hot(key, true); });
-    r.addEventListener("blur", function () { hot(key, false); });
-  });
-  pins.forEach(function (p) {
-    var key = p.getAttribute("data-on-pin");
-    p.addEventListener("mouseenter", function () { hot(key, true); });
-    p.addEventListener("mouseleave", function () { hot(key, false); });
   });
 })();

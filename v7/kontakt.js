@@ -1,13 +1,16 @@
 /* ===== Kontakt · moduły strony ===========================================
    Loaded after `ce/00-base.js`, so the CX5 bus already exists and has already
    started itself – this file only registers modules on it and never defines
-   or starts `CX5`. Three blocks of mechanics, each usable on its own:
+   or starts `CX5`. Blocks of mechanics, each usable on its own:
      10 – demo form (CE-50, variant „kontakt")
      20 – chips „Wybierz sprawę" -> highlight of a department row (CE-55)
-     30 – pins of the distributor map <-> location cards (CE-56)
-   Everything here is an ADDITION: without JS the chips and the pins are plain
-   anchors, the rows and the cards are readable, and the form simply does not
-   pretend to send anything. ============================================== */
+     25 – chips „Wybierz sprawę" -> highlight of the people
+   The distributor globe (CE-96, variant B, since 15.10.2026 instead of the
+   CE-56 map) lives entirely in ce/CE-96-glob-dystrybutorow.js; the former
+   block 40 (prototype switch between variants A and B) is gone.
+   Everything here is an ADDITION: without JS the chips are plain anchors, the
+   rows and the cards are readable, and the form simply does not pretend to
+   send anything. ============================================== */
 
 
 /* ===== 10 · Formularz demonstracyjny (CE-50 „kontakt") ====================
@@ -99,57 +102,75 @@
 })();
 
 
-/* ===== 30 · Mapa dystrybutorów: pinezki <-> karty (CE-56) =================
-   Hovering or focusing a card lights the pin with the same `data-pin`, and the
-   other way round; a click on a pin is a plain anchor to the card, so it works
-   without this module as well. Below 900 px the map sits above the grid and
-   pairing by hover stops making sense – the bus tells us about a layout change
-   through `resize`, and we simply drop any highlight left over. ========== */
+/* ===== 25 · Topic chips -> people highlight ===============================
+   A click on a chip of „Wybierz sprawę" lights up the people listed in the
+   chip's `data-kt-osoby` (space-separated ids) on every element carrying a
+   matching `data-kt-osoba` – the quick-contact cards and the department rows –
+   and dims the rest. A second click on the same chip, or the „Pokaż wszystkich"
+   button, clears it. The assignment is a working draft kept in the markup only.
+   Without JS the chips stay plain anchors to the department rows. ========= */
 (function () {
   "use strict";
   var $$ = CX5.$$;
-  var pins = $$(".kt-pin");
-  var cards = $$(".kt-dcard");
-  if (!pins.length || !cards.length) return;
+  var chips = $$(".kt-case[data-kt-osoby]");
+  var people = $$("[data-kt-osoba]");
+  if (!chips.length || !people.length) return;
+  var reset = document.querySelector("[data-kt-reset]");
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var active = null;
 
-  var byPin = {};
-  cards.forEach(function (card) {
-    var key = card.getAttribute("data-pin");
-    if (key) byPin["c" + key] = card;
-  });
-  var pinByKey = {};
-  pins.forEach(function (pin) {
-    var key = pin.getAttribute("data-pin");
-    if (key) pinByKey["p" + key] = pin;
-  });
-
-  function light(map, prefix, key, on) {
-    var el = map[prefix + key];
-    if (el) el.classList.toggle("is-hot", on);
+  function clear() {
+    active = null;
+    chips.forEach(function (c) { c.setAttribute("aria-pressed", "false"); });
+    people.forEach(function (p) { p.classList.remove("is-pick", "is-dim"); });
+    if (reset) reset.hidden = true;
   }
 
-  pins.forEach(function (pin) {
-    var key = pin.getAttribute("data-pin");
-    if (!key) return;
-    pin.addEventListener("mouseenter", function () { light(byPin, "c", key, true); });
-    pin.addEventListener("mouseleave", function () { light(byPin, "c", key, false); });
-    pin.addEventListener("focus", function () { light(byPin, "c", key, true); });
-    pin.addEventListener("blur", function () { light(byPin, "c", key, false); });
-  });
+  function inView(el) {
+    var r = el.getBoundingClientRect();
+    return r.top >= 80 && r.bottom <= window.innerHeight;
+  }
 
-  cards.forEach(function (card) {
-    var key = card.getAttribute("data-pin");
-    if (!key) return;
-    card.addEventListener("mouseenter", function () { light(pinByKey, "p", key, true); });
-    card.addEventListener("mouseleave", function () { light(pinByKey, "p", key, false); });
-    card.addEventListener("focusin", function () { light(pinByKey, "p", key, true); });
-    card.addEventListener("focusout", function () { light(pinByKey, "p", key, false); });
-  });
-
-  CX5.register({
-    resize: function () {
-      pins.forEach(function (pin) { pin.classList.remove("is-hot"); });
-      cards.forEach(function (card) { card.classList.remove("is-hot"); });
+  function show(chip) {
+    var ids = chip.getAttribute("data-kt-osoby").split(/\s+/).filter(Boolean);
+    active = chip;
+    chips.forEach(function (c) { c.setAttribute("aria-pressed", c === chip ? "true" : "false"); });
+    var picked = [];
+    people.forEach(function (p) {
+      var on = ids.indexOf(p.getAttribute("data-kt-osoba")) !== -1;
+      p.classList.toggle("is-pick", on);
+      p.classList.toggle("is-dim", !on);
+      if (on) picked.push(p);
+    });
+    if (reset) reset.hidden = false;
+    /* scroll only when a highlighted card is off screen; department rows come first */
+    var rows = picked.filter(function (p) { return p.classList.contains("kt-dept"); });
+    var target = (rows.length ? rows : picked).filter(function (p) { return !inView(p); })[0];
+    if (target) {
+      var top = target.getBoundingClientRect().top + window.scrollY - Math.round(window.innerHeight * 0.18);
+      CX5.scrollTo(Math.max(0, top), reduced.matches ? "auto" : "smooth");
     }
+  }
+
+  chips.forEach(function (chip) {
+    chip.setAttribute("role", "button");
+    chip.setAttribute("aria-pressed", "false");
+    chip.addEventListener("click", function (e) {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+      e.preventDefault();
+      e.stopPropagation();   /* keep the bus from treating it as an anchor jump */
+      if (active === chip) clear(); else show(chip);
+    });
+    /* role=button must answer Space as well (Enter already clicks an anchor) */
+    chip.addEventListener("keydown", function (e) {
+      if (e.key === " " || e.key === "Spacebar") { e.preventDefault(); chip.click(); }
+    });
+  });
+
+  if (reset) reset.addEventListener("click", function () {
+    var chip = active;
+    clear();
+    if (chip) chip.focus({ preventScroll: true });
   });
 })();
+

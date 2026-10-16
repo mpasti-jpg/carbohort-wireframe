@@ -1,6 +1,6 @@
 /* ===== borowka.css – page layer (V7) =======================================
    Blueberry crop page (spec: 40-strona-www/koncepcja/borowka-spec.md).
-   Iteration 2 (02.10.2026, six comments of Mateusz on the first prototype):
+   Iteration 2 (02.10.2026, six review comments on the first prototype):
    the page stands on blocks that already exist in V7 – product cards (CE-20
    „produktowe”), rows photo | text (CE-36), cards with a pinned photo (CE-67),
    the stage accordion (CE-68), packages with the calculator (CE-47
@@ -9,7 +9,15 @@
    Shared layers come first in the cascade: kit, cw.css, c5.css, uprawa.css,
    ce/00-base.css and the CE-NN files. This sheet holds page settings of those
    blocks and the few rules that exist only here (prefix `b-`).
+   Iteration 4 (15.10.2026, review comments of 13.10): the page is the
+   template of the berry crops group – four stages of the plantation's life,
+   each listing its products (block 47), three packages without money
+   (block 70). Only the lignite and peat section (block 45) is the blueberry's
+   own; every other rule here serves the whole group.
    Heading type, section head and text link: uprawa-skorka.css.
+   15.10.2026 (review comments): the heads of stages 1 and 2 centred
+   (block 40 below), the ruler of the packages moved to CE-47 „linijka”, the
+   stage tag over the names in the dot rail is an option of CE-07.
    ========================================================================= */
 
 /* --- 00 · Page tokens ------------------------------------------------------
@@ -52,3 +60,52 @@
 }
 
 
+
+/* --- 47 · Products of a stage (stages 1–4, iteration 4 of 15.10.2026) -------
+   Under the head of each stage section: a small label and the products the
+   stage uses, each one opening its card of use (CE-25, uprawa.js) – no cart
+   button here (an open question). The boxes are a page copy
+   of EL-33 „Boks produktu z packshotem”, which is still planned in the
+   registry (today: local copies in CE-65, CE-66, CE-68); once EL-33 lands in
+   ce/00-base.css these rules give way to `c5-prodbox`. A product with no card
+   of use (Vinassa) takes the plain form: dashed stroke, an icon in place of
+   the packshot, no arrow, and it links to the shop. Group template of the
+   berry crops: the next berry page fills the same list with its products. */
+.b-stage{display:flex;flex-direction:column;gap:var(--w-space-3);margin-top:clamp(1.5rem,3vw,2.25rem);}
+.b-stage__lab{margin:0;font-size:.75rem;line-height:1.4;letter-spacing:.06em;text-transform:uppercase;color:var(--w-text-tertiary);}
+.b-prods{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:var(--w-space-2);}
+.b-prods > li{display:flex;max-width:100%;}
+.b-prodbox{display:inline-grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;
+  min-height:60px;max-width:100%;padding:7px 12px 7px 9px;background:var(--w-surface-page);
+  border:1px solid var(--w-border-default);border-radius:0;font:inherit;font-size:var(--w-font-sm-size);
+  line-height:1.35;font-weight:var(--w-weight-medium);color:var(--w-text-primary);text-align:left;
+  text-decoration:none;cursor:pointer;transition:border-color var(--w-duration-base) var(--w-ease);}
+.b-prodbox:hover,.b-prodbox:focus-visible{border-color:var(--w-gray-900);}
+.b-prodbox:focus-visible{outline:2px solid var(--w-focus-ring);outline-offset:2px;}
+.b-prodbox--plain{grid-template-columns:auto minmax(0,1fr);border-style:dashed;color:var(--w-text-secondary);}
+.b-prodbox__pack{display:flex;align-items:center;justify-content:center;width:40px;height:44px;background:var(--w-gray-100);}
+.b-prodbox__pack img{width:100%;height:100%;object-fit:contain;}
+.b-prodbox__pack .wf-icon{color:var(--w-text-tertiary);}
+.b-prodbox__name{min-width:0;}
+.b-prodbox > .wf-icon{justify-self:end;color:var(--w-text-tertiary);}
+.b-stage__skip{align-self:flex-start;min-height:44px;}
+@media (prefers-reduced-motion: reduce){.b-prodbox{transition:none;}}
+
+/* --- 70 · Packages: three boxes (iteration 4) ---------------------------------
+   Three packages are the base layout of CE-45 (three columns from 640 px).
+   Since 15.10.2026 the area control is the ruler of CE-47 „linijka”
+   (ce/CE-47-przelicznik.css/.js): the switch keeps the full row, the ruler
+   stands right below it in the flow of the page, the products of the open
+   package follow in a fixed four-column grid, the treatments last – all of it
+   lives in the module, no page rule left here. */
+
+/* --- 40 · Centred stage head (15.10.2026) -------------------------------------
+   Modifier of the section head of uprawa-skorka.css: kicker, heading, lead and
+   the products of the stage on the centre axis; the lead keeps 60 characters a
+   line. Stages 1 and 2 (the two heads of this pattern among the stages). */
+.b-head--center{align-items:center;text-align:center;}
+.b-head--center .c5-head{display:flex;flex-direction:column;align-items:center;}
+.b-head--center .c5-lead{max-width:60ch;margin-inline:auto;}
+.b-head--center .b-stage{align-items:center;}
+.b-head--center .b-prods{justify-content:center;}
+.b-head--center .b-stage__skip{align-self:center;}

@@ -1,0 +1,70 @@
+/* =====================================================================
+   CE-95 – promotion strip above the site menu (15.10.2026)
+
+   One thin, clearly marked line over the header on every page of the site:
+   a "Promocja" label, one sentence with a link and a close button.
+   Markup, configuration (id, text, address, on/off) and the close logic live
+   in chrome.js (PROMO); this sheet is attached by chrome.js as well, so no
+   page links it by hand.
+
+   Placement: first child of header.wf-navbar (CE-01). That keeps every
+   existing measurement right without touching the pages:
+   - ce/00-base.js measures .wf-navbar into --cx-navbar-h, so heroes on
+     100svh and the sticky scenes sized from it still fit the first screen;
+   - c5.js shows its sub-navigation once the whole .wf-navbar has scrolled
+     away (offsetHeight includes the strip).
+   Where the header is sticky (cw.css – pages without the c5 layer), the
+   header sticks at top: -strip height, so the strip scrolls away and only
+   the menu stays pinned (--c5-promo-h is set on the header by chrome.js).
+   Closing removes the strip from the DOM and re-measures (resize event).
+   ===================================================================== */
+.wf-navbar:has(> .c5-promo) { top: calc(-1 * var(--c5-promo-h, 0px)); }
+/* The wide mega-menus cap their height at 100dvh - 7rem (cw.css), counted
+   from a header at the top of the window; the strip pushes them down. */
+.wf-navbar:has(> .c5-promo) .cw-mega--wide,
+.wf-navbar:has(> .c5-promo) .cw-mega--crops { max-height: calc(100dvh - 7rem - var(--c5-promo-h, 0px)); }
+
+.c5-promo {
+  /* dark green: white text on it is 6.6 : 1 (WCAG AA for small text) */
+  --c5-promo-bg: #2d6a22;
+  background: var(--c5-promo-bg);
+  color: #fff;
+  font-family: var(--w-font-sans);
+  font-size: 0.8125rem;
+  line-height: 1.35;
+}
+.c5-promo__in {
+  display: flex; align-items: center; gap: 4px var(--w-space-3);
+  min-height: 36px;
+}
+.c5-promo__txt { flex: 1 1 auto; min-width: 0; margin: 0; padding-block: 6px; text-align: center; }
+.c5-promo__badge {
+  display: inline-block; margin-right: 8px; padding: 1px 6px;
+  border: 1px solid rgb(255 255 255 / .7);
+  font-size: 0.6875rem; font-weight: var(--w-weight-semibold);
+  letter-spacing: .06em; text-transform: uppercase; vertical-align: 1px;
+}
+.c5-promo__t { font-weight: var(--w-weight-semibold); }
+.c5-promo__link {
+  margin-left: 6px; color: #fff; white-space: nowrap;
+  text-decoration: underline; text-underline-offset: 2px; text-decoration-thickness: 1px;
+}
+.c5-promo__link:hover { text-decoration-thickness: 2px; }
+.c5-promo__link:focus-visible,
+.c5-promo__x:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.c5-promo__x {
+  flex: none; display: grid; place-items: center;
+  width: 32px; height: 32px; margin-right: -6px; padding: 0;
+  border: 0; background: none; color: #fff; cursor: pointer; opacity: .85;
+}
+.c5-promo__x:hover { opacity: 1; }
+.c5-promo__x .wf-icon { width: 18px; height: 18px; }
+/* An empty cell of the close button's width keeps the sentence centred. */
+.c5-promo__in::before { content: ""; flex: none; width: 26px; }
+
+@media (max-width: 640px) {
+  .c5-promo__in::before { display: none; }
+  .c5-promo__txt { text-align: left; }
+}
+
+@media print { .c5-promo { display: none; } }

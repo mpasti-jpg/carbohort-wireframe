@@ -1,0 +1,168 @@
+/* ===== CE-97 · Oś historii (rejestr: ce-rejestr.js) ==========================
+   Prefix: c5-hist. A company timeline: a heading, a row of milestone cards
+   that scrolls sideways and, under it, an axis of years. A card is split in
+   two: a photo on the left, a dark panel on the right with a large year, a
+   short title and one or two sentences. The next card shows at the right edge
+   of the window. Below 768 px a card stands upright (photo on top) and the
+   axis of years scrolls on its own.
+
+   Markup:
+     section.c5-sec.c5-hist[data-hist]      root (full width – the row of cards
+                                            runs from edge to edge of the window)
+       .c5-wrap                             heading block
+         .c5-kicker.c5-kicker--outline      EL-06
+         .c5-head > .c5-h2                  EL-09
+       .c5-hist__view[data-hist-view]       the scroller (role, tabindex and
+                                            aria-label are set by the script)
+         ol.c5-hist__track
+           li.c5-hist__card[data-hist-card]#<id>
+             .c5-hist__media                photo (img, cover) or .wf-ph
+               .c5-hist__cap                optional caption chip on the photo
+             .c5-hist__panel
+               .c5-hist__year               the year, large
+               .c5-hist__title              title (any heading level)
+               .c5-hist__text               one or two sentences
+       .c5-wrap
+         nav.c5-hist__axis[data-hist-axis][hidden]   the axis of years
+           ol.c5-hist__years
+             li.c5-hist__yr
+               a.c5-hist__go[data-hist-go][href="#<card id>"]
+                 .c5-hist__yrnum            the year
+                 .c5-hist__dot              the dot (decorative)
+
+   States (set by CE-97-os-historii.js):
+     .c5-hist.is-ready        the script runs: the row scrolls sideways and the
+                              axis is shown; without it the cards stand one
+                              under another and the axis stays hidden
+     .c5-hist__card.is-active the card at the start of the row; the others get
+                              a muted panel
+     .c5-hist__view.is-dragging  a mouse drag is in progress (snap off)
+     a[aria-current="true"]   the active year on the axis
+
+   Knobs (custom properties on .c5-hist):
+     --c5-hist-wrap        width of the page container the row aligns with
+                           (keep in step with .c5-wrap)
+     --c5-hist-share       share of the container taken by one card from 768 px
+     --c5-hist-card-max    cap on the card width
+     --c5-hist-card-h      minimum card height from 768 px
+     --c5-hist-gap         gap between the cards
+     --c5-hist-peek        how much wider than a card the row is below 768 px
+                           (the visible edge of the next card = this minus the gap)
+     --c5-hist-card-w      card width in the sideways row (derived from the
+                           knobs above; the end of the row gets room for the
+                           last card to stand at the container edge too)
+     --c5-hist-mt          distance between the heading and the cards
+     --c5-hist-panel       background of the panel
+     --c5-hist-panel-ink   text colour on the panel
+     --c5-hist-muted       background of the panel of an inactive card
+     --c5-hist-muted-ink   text colour on that panel
+     --c5-hist-radius      corner radius of a card (0 by default)
+   ========================================================================== */
+
+.c5-hist{
+  --c5-hist-wrap:1180px;
+  --c5-hist-share:.7;
+  --c5-hist-card-max:52.5rem;
+  --c5-hist-card-h:clamp(22rem,34cqi,29.5rem);
+  --c5-hist-gap:clamp(1rem,2.8vw,2.5rem);
+  --c5-hist-peek:2.75rem;
+  --c5-hist-mt:clamp(2rem,4vw,3rem);
+  --c5-hist-panel:var(--w-gray-900);
+  --c5-hist-panel-ink:var(--w-white);
+  --c5-hist-muted:var(--w-gray-200);
+  --c5-hist-muted-ink:var(--w-gray-900);
+  --c5-hist-radius:0px;
+  /* left edge of the page container, measured from the edge of the window */
+  --c5-hist-inset:calc(max((100cqi - var(--c5-hist-wrap)) / 2, 0px) + var(--w-space-5));
+  container-type:inline-size;
+}
+
+/* --- the row: without the script the cards stand one under another ---------- */
+.c5-hist__view{margin-top:var(--c5-hist-mt);}
+.c5-hist__track{display:grid;gap:var(--c5-hist-gap);margin:0;padding:0 var(--c5-hist-inset);list-style:none;}
+
+/* --- the card ------------------------------------------------------------------ */
+.c5-hist__card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  min-height:var(--c5-hist-card-h);overflow:hidden;border-radius:var(--c5-hist-radius);
+  background:var(--c5-hist-panel);}
+.c5-hist__media{position:relative;min-height:0;overflow:hidden;background:var(--w-gray-100);}
+.c5-hist__media img,
+.c5-hist__media .wf-ph{position:absolute;inset:0;width:100%;height:100%;max-width:none;
+  object-fit:cover;border:0;border-radius:0;}
+.c5-hist__media .wf-ph{display:grid;place-items:center;}
+.c5-hist__cap{position:absolute;left:var(--w-space-3);bottom:var(--w-space-3);
+  padding:.25rem .5rem;font-size:.6875rem;line-height:1.2;letter-spacing:.02em;
+  color:var(--w-gray-700);background:rgba(255,255,255,.86);}
+
+.c5-hist__panel{display:flex;flex-direction:column;min-width:0;
+  padding:clamp(1.5rem,2.6vw,2.25rem) clamp(1.5rem,2.8vw,2.5rem);
+  background:var(--c5-hist-panel);color:var(--c5-hist-panel-ink);
+  transition:background-color var(--w-duration-base) var(--w-ease),color var(--w-duration-base) var(--w-ease);}
+.c5-hist__year{display:block;margin:0;font-size:clamp(3rem,6.4cqi,5rem);line-height:1;
+  font-weight:300;letter-spacing:.01em;font-variant-numeric:tabular-nums;}
+.c5-hist__title{margin:auto 0 0;padding-top:var(--w-space-6);color:inherit;
+  font-size:clamp(1.25rem,2.1cqi,1.75rem);line-height:1.25;font-weight:var(--w-weight-regular);letter-spacing:-0.005em;}
+.c5-hist__text{margin:var(--w-space-4) 0 0;max-width:34em;font-size:.9375rem;line-height:1.55;color:inherit;opacity:.82;}
+
+/* --- the axis of years (shown by the script) ---------------------------------- */
+.c5-hist__axis{margin-top:clamp(1.75rem,3.5vw,2.75rem);}
+.c5-hist__axis[hidden]{display:none;}
+.c5-hist__years{position:relative;display:flex;margin:0;padding:0;list-style:none;}
+.c5-hist__yr{position:relative;flex:1 1 0;min-width:5.5rem;}
+.c5-hist__yr:last-child{flex:none;min-width:0;}
+/* the line between two dots, kept clear of both dots */
+.c5-hist__yr:not(:last-child)::after{content:"";position:absolute;
+  top:calc(1.25rem * 1.2 + var(--w-space-3) + 5px);left:calc(2.25rem + .9rem);right:calc(-2.25rem + .9rem);
+  height:1px;background:var(--w-border-strong);pointer-events:none;}
+.c5-hist__go{display:inline-flex;flex-direction:column;align-items:center;gap:var(--w-space-3);
+  width:4.5rem;padding:0 0 var(--w-space-2);color:var(--w-text-tertiary);text-decoration:none;
+  transition:color var(--w-duration-base) var(--w-ease);}
+.c5-hist__go:hover,
+.c5-hist__go[aria-current="true"]{color:var(--w-text-primary);}
+.c5-hist__go:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:var(--w-focus-ring-offset);}
+.c5-hist__yrnum{font-size:1.25rem;line-height:1.2;font-variant-numeric:tabular-nums;}
+.c5-hist__dot{width:10px;height:10px;border-radius:2px;background:var(--w-gray-400);
+  transition:background-color var(--w-duration-base) var(--w-ease),transform var(--w-duration-base) var(--w-ease);}
+.c5-hist__go:hover .c5-hist__dot{background:var(--w-gray-600);}
+.c5-hist__go[aria-current="true"] .c5-hist__dot{background:var(--w-gray-900);transform:scale(1.2);}
+
+/* --- the script runs: one row that scrolls sideways ----------------------------- */
+.c5-hist.is-ready .c5-hist__view{position:relative;overflow-x:auto;overflow-y:hidden;
+  scroll-snap-type:x mandatory;scroll-padding-inline:var(--c5-hist-inset);
+  overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.c5-hist.is-ready .c5-hist__view::-webkit-scrollbar{display:none;}
+.c5-hist.is-ready .c5-hist__view:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:-2px;}
+.c5-hist{--c5-hist-card-w:min(var(--c5-hist-card-max),(100cqi - 2 * var(--c5-hist-inset)) * var(--c5-hist-share));}
+/* room after the last card: every card, the last one too, can stand at the container edge */
+.c5-hist.is-ready .c5-hist__track{display:flex;width:max-content;
+  padding-inline-end:max(var(--c5-hist-inset),100cqi - var(--c5-hist-inset) - var(--c5-hist-card-w));}
+.c5-hist.is-ready .c5-hist__card{flex:none;scroll-snap-align:start;width:var(--c5-hist-card-w);}
+.c5-hist.is-ready .c5-hist__card:not(.is-active) .c5-hist__panel{background:var(--c5-hist-muted);color:var(--c5-hist-muted-ink);}
+@media (hover:hover) and (pointer:fine){
+  .c5-hist.is-ready .c5-hist__view{cursor:grab;}
+}
+.c5-hist.is-ready .c5-hist__view.is-dragging{cursor:grabbing;scroll-snap-type:none;user-select:none;}
+.c5-hist.is-ready .c5-hist__view.is-dragging *{pointer-events:none;}
+
+/* --- phones: the card stands upright, the axis scrolls on its own --------------- */
+@media (max-width:767px){
+  .c5-hist{--c5-hist-gap:var(--w-space-4);}
+  .c5-hist__card{grid-template-columns:minmax(0,1fr);grid-template-rows:auto 1fr;min-height:0;}
+  .c5-hist__media{aspect-ratio:4/3;}
+  .c5-hist__year{font-size:clamp(2.5rem,12cqi,3.25rem);}
+  .c5-hist__title{margin-top:0;padding-top:var(--w-space-4);font-size:1.25rem;}
+  .c5-hist{--c5-hist-card-w:calc(100cqi - 2 * var(--c5-hist-inset) - var(--c5-hist-peek));}
+  /* the axis runs past the container edge and scrolls without a scrollbar */
+  .c5-hist__years{overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;
+    margin-inline:calc(-1 * var(--w-space-5));padding-inline:var(--w-space-5);}
+  .c5-hist__years::-webkit-scrollbar{display:none;}
+  .c5-hist__yr{flex:none;width:6.5rem;min-width:0;}
+  .c5-hist__yr:last-child{width:auto;padding-right:var(--w-space-5);}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .c5-hist__panel,.c5-hist__go,.c5-hist__dot{transition:none;}
+}
+
+/* document numbers and year ranges never break across lines */
+.c5-hist__nb{white-space:nowrap;}

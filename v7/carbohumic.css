@@ -121,12 +121,13 @@ ul.c5hu-sq{list-style:none;padding-left:0;}
 
 /* ===== 76 · Doglebowo czy nalistnie ===== */
 
-/* The comparison of the two ways of application and, under the table, the card
-   of the foliar products. The layout is the one this section has on the product
-   overview page, carried over under the classes of this page.
-   The table rows enter through `data-reveal` on `tbody` and the card through
-   `data-reveal` on its container (shared module in ce/00-base.js); the transform
-   runs on the table row, so the column layout stays untouched. */
+/* The comparison of the two ways of application – since 15.10.2026 the last
+   section of the narrative: the foliar products have a page of their own
+   (carbohumic-dolistny.html) and the card under the table is gone. The layout
+   is the one this section has on the product overview page, carried over under
+   the classes of this page. The table rows enter through `data-reveal` on
+   `tbody` (shared module in ce/00-base.js); the transform runs on the table
+   row, so the column layout stays untouched. */
 .c5hu-cmp{margin-top:clamp(1.5rem,3vw,2.5rem);}
 /* a row still sliding in (translateY) must not add a vertical scrollbar to the scroll box */
 .c5hu-cmp.cw-scrollx{overflow-y:hidden;}
@@ -136,8 +137,8 @@ ul.c5hu-sq{list-style:none;padding-left:0;}
 /* --- Frames above the column labels -------------------------------------------
    A square field on the centre of each column (up to 220 px, 140 px below
    900 px) filled with a photo of the WAY OF APPLICATION: it shows what the
-   treatment looks like before anyone reads the rows, while the products
-   themselves stand in the card under the table. The label under the square is
+   treatment looks like before anyone reads the rows (the foliar products
+   themselves are shown on their own page). The label under the square is
    centred with it – the only change to the look of the table itself.
    The image lies absolutely, so its own proportions never push the square. */
 .c5hu-cmp thead th{text-align:center;}
@@ -148,33 +149,13 @@ ul.c5hu-sq{list-style:none;padding-left:0;}
   .c5hu-cmp__shot{max-width:140px;}
 }
 
-/* --- Card of the foliar products under the table --------------------------------
-   The container is a grid of cards with the metrics of the product overview
-   page: a framed card, a light field with the pack inscribed in 72 % of its
-   height, the name, the copy and the buttons at the bottom edge. The pack lies
-   absolutely: `height:72%` needs a box to refer to, and the proportions of the
-   image must not push the field. */
-.c5hu-foliar{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:var(--w-space-5);margin-top:clamp(2rem,4vw,3rem);}
-.c5hu-foliar__card{display:flex;flex-direction:column;gap:var(--w-space-3);border:1px solid var(--w-border-default);padding:clamp(1.25rem,2.2vw,1.75rem);}
-.c5hu-foliar__shot{position:relative;display:block;width:100%;aspect-ratio:16/10;background:var(--w-gray-100);}
-.c5hu-foliar__shot img{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-  height:72%;width:auto;max-width:82%;object-fit:contain;}
-.c5hu-foliar__body{flex:1 1 auto;display:flex;flex-direction:column;gap:var(--w-space-3);min-width:0;}
-.c5hu-foliar__name{font-size:1.25rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
-.c5hu-foliar__body p{margin:0;color:var(--w-text-secondary);}
-.c5hu-foliar__txt{font-size:0.9375rem;}
-/* the number of the decision would break after its hyphen in a narrow column – keep it whole */
-.c5hu-nobr{white-space:nowrap;}
-.c5hu-foliar__body .c5-btnrow{margin-top:auto;padding-top:var(--w-space-2);}
-@media (min-width:900px){
-  /* This page has one card: the copy speaks of both foliar products at once. A
-     lone card would stretch its 16:10 field across the whole container, so it
-     lies down – the field on the left at the height of the copy, the copy on
-     the right. One third to two thirds: in the full container that leaves the
-     copy a column in which the note under it stays on one line. A second card
-     next to it brings back the upright cards. */
-  .c5hu-foliar__card:only-child{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:clamp(1.5rem,3vw,2.5rem);}
-  .c5hu-foliar__card:only-child .c5hu-foliar__shot{aspect-ratio:auto;height:100%;min-height:240px;}
-}
-
-
+/* --- Link to the foliar page under the label of the foliar column ------------
+   A quiet text link on its own line under the label: the same size as the
+   label's small print, underlined on hover and focus, with the arrow of the
+   kit. It points the reader of the last section to the other page. */
+.c5hu-cmp__go{display:inline-flex;align-items:center;gap:var(--w-space-1);margin-top:var(--w-space-2);
+  font-size:0.875rem;font-weight:var(--w-weight-medium);color:var(--w-text-primary);text-decoration:none;
+  border-bottom:1px solid var(--w-border-strong);padding-bottom:1px;}
+.c5hu-cmp__go:hover{border-bottom-color:var(--w-gray-900);}
+.c5hu-cmp__go:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:var(--w-focus-ring-offset);}
+.c5hu-cmp thead th .c5hu-cmp__go{display:flex;width:fit-content;margin-inline:auto;}

@@ -357,7 +357,7 @@
     el.palletsCost.textContent = S.fmt(sh.palletCost);
     el.total.textContent = S.fmt(s.total);
     /* One row per VAT rate in the cart, then the net value (C2, rates per
-       product – Mateusz 28.09: mostly 8%, some 23%). */
+       product – review of 28.09: mostly 8%, some 23%). */
     var html = "";
     tax.rows.forEach(function (r) {
       html += '<div class="c5ks-sum__row c5ks-sum__row--tax"><dt>w tym VAT ' + r.rate + '% ⚠️:</dt> <dd>' + S.fmt(r.vat) + "</dd></div>";

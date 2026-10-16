@@ -42,8 +42,8 @@
 /* Pułapka wykryta w tym projekcie trzykrotnie (konfigurator 05.07, kalkulator
    10.07, sklep 02.08): element z display:flex/grid nadpisuje domyślne
    [hidden]{display:none}. Reguła scoped, żeby nie ruszać kitu. */
-.c5sk-grid [hidden], .c5sk-note[hidden], .c5sk-empty[hidden], .c5sk-chips [hidden],
-.c5sk-refine[hidden], .c5sk-outside[hidden], .c5sk-facet__body[hidden],
+.c5sk-grid [hidden], .c5sk-empty[hidden], .c5sk-chips [hidden],
+.c5sk-refine[hidden], .c5sk-facet__body[hidden],
 .c5sk-restore[hidden], .c5sk-suggest[hidden], .c5sk-suggest [hidden],
 .c5sk-search__ph[hidden] { display: none !important; }
 
@@ -125,11 +125,18 @@
 
 /* --- 3. PASEK SYTUACJI (predefiniowane sety) ------------------------------
    Round 3 (L11–L13): one row of situation pills with a round photo, without
-   the "all situations" panel. From 900 px a wrapping row (28 px circles) with
-   the configurator link at its right end; below a horizontal scroller of
-   56 px circles with the label underneath and the next pill peeking out. */
+   the "all situations" panel. 15.10.2026: circles twice the size (56 px from
+   900 px, 96 px below, so a close-up photo still shows its subject) and ONE
+   row at every width – what does not fit scrolls sideways (scroll-snap,
+   thin scrollbar on desktop, none on touch widths). */
 .c5sk-hurt { border-bottom: 1px solid var(--w-border-subtle); background: var(--w-gray-100); }
-.c5sk-hurt__in { padding-block: 7px; font-size: 0.8125rem; color: var(--w-text-secondary); }
+.c5sk-hurt__in { display: flex; align-items: center; gap: var(--w-space-3); padding-block: 4px; min-height: 36px; font-size: 0.8125rem; color: var(--w-text-secondary); }
+.c5sk-hurt__in > span { flex: 1 1 auto; min-width: 0; padding-block: 3px; }
+.c5sk-hurt__x { flex: none; display: grid; place-items: center; width: 32px; height: 32px; margin-right: -6px; padding: 0; border: 0; background: none; color: var(--w-text-secondary); cursor: pointer; }
+.c5sk-hurt__x:hover { color: var(--w-text-primary); }
+.c5sk-hurt__x:focus-visible { outline: 2px solid var(--w-focus-ring); outline-offset: -2px; }
+.c5sk-hurt__x .wf-icon { width: 18px; height: 18px; }
+.c5sk-hurt[hidden] { display: none; }
 .c5sk-needsbar { border-bottom: 1px solid var(--w-border-subtle); }
 .c5sk-needsbar__in { display: flex; flex-wrap: wrap; align-items: center; gap: 10px var(--w-space-6); padding-block: 12px 14px; }
 /* Round 3b: a short heading over the groups; the groups act as one more filter,
@@ -142,13 +149,15 @@
   .c5sk-needsbar__in > .c5sk-toconf { order: 1; }
   .c5sk-needs { order: 2; flex: 1 0 100%; }
 }
-.c5sk-needs { display: flex; flex-wrap: wrap; gap: 8px; min-width: 0; flex: 1 1 auto; }
-.c5sk-need { flex: none; display: inline-flex; align-items: center; gap: 8px; padding: 4px 14px 4px 4px; font: inherit; font-size: 0.875rem; letter-spacing: -0.01em; line-height: 1.2; white-space: nowrap; background: var(--w-surface-page); color: var(--w-text-primary); border: 1px solid rgb(0 0 0 / .2); border-radius: 0; cursor: pointer; transition: border-color var(--w-duration-base) var(--w-ease); }
+.c5sk-needs { display: flex; flex-wrap: nowrap; gap: 8px; min-width: 0; flex: 1 1 auto; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; padding: 6px 4px 8px; margin-inline: -4px; scrollbar-width: thin; scrollbar-color: var(--w-gray-300, #ccc) transparent; }
+.c5sk-needs::-webkit-scrollbar { height: 6px; }
+.c5sk-needs::-webkit-scrollbar-thumb { background: var(--w-gray-300, #ccc); }
+.c5sk-need { flex: none; display: inline-flex; align-items: center; gap: 10px; padding: 4px 14px 4px 4px; scroll-snap-align: start; font: inherit; font-size: 0.875rem; letter-spacing: -0.01em; line-height: 1.2; white-space: nowrap; background: var(--w-surface-page); color: var(--w-text-primary); border: 1px solid rgb(0 0 0 / .2); border-radius: 0; cursor: pointer; transition: border-color var(--w-duration-base) var(--w-ease); }
 .c5sk-need:hover { border-color: var(--w-gray-900); }
 .c5sk-need:focus-visible { outline: 2px solid var(--w-focus-ring); outline-offset: 2px; }
-.c5sk-need__img { flex: none; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; overflow: hidden; background: var(--w-gray-150); color: var(--w-text-primary); transition: box-shadow var(--w-duration-base) var(--w-ease); }
+.c5sk-need__img { flex: none; display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; overflow: hidden; background: var(--w-gray-150); color: var(--w-text-primary); transition: box-shadow var(--w-duration-base) var(--w-ease); }
 .c5sk-need__img img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.c5sk-need__img .wf-icon { width: 16px; height: 16px; }
+.c5sk-need__img .wf-icon { width: 24px; height: 24px; }
 /* Selected pill: black ring round the photo and a bold label. The bold copy
    in ::after (hidden) reserves the width, so the row does not jump. */
 .c5sk-need__t { display: inline-grid; }
@@ -162,13 +171,13 @@
   /* nowrap: in a wrapping column the scroller would take its max-content width */
   .c5sk-needsbar__in { flex-direction: column; flex-wrap: nowrap; align-items: stretch; gap: 8px; padding-block: 10px 12px; }
   .c5sk-needs__h { flex: none; font-size: 0.9375rem; }
-  .c5sk-needs { flex-wrap: nowrap; gap: 2px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-inline: var(--w-space-5); margin-inline: calc(-1 * var(--w-space-5)); padding: 6px var(--w-space-5) 2px; scrollbar-width: none; }
+  .c5sk-needs { gap: 2px; scroll-snap-type: x mandatory; scroll-padding-inline: var(--w-space-5); margin-inline: calc(-1 * var(--w-space-5)); padding: 6px var(--w-space-5) 2px; scrollbar-width: none; }
   .c5sk-needs::-webkit-scrollbar { display: none; }
-  /* 106 px keeps the longest label ("Sadzenie, szkółka i zieleń") and its
+  /* 112 px keeps the longest label ("Sadzenie, szkółka i zieleń") and its
      count in two lines, and still lets the fourth pill peek in at 375 px. */
-  .c5sk-need { flex-direction: column; align-items: center; justify-content: flex-start; gap: 6px; width: 106px; padding: 0 2px 2px; border: 0; background: none; white-space: normal; text-align: center; font-size: 0.75rem; line-height: 1.25; scroll-snap-align: start; }
-  .c5sk-need__img { width: 56px; height: 56px; }
-  .c5sk-need__img .wf-icon { width: 24px; height: 24px; }
+  .c5sk-need { flex-direction: column; align-items: center; justify-content: flex-start; gap: 6px; width: 112px; padding: 0 2px 2px; border: 0; background: none; white-space: normal; text-align: center; font-size: 0.75rem; line-height: 1.25; scroll-snap-align: start; }
+  .c5sk-need__img { width: 96px; height: 96px; }
+  .c5sk-need__img .wf-icon { width: 32px; height: 32px; }
   .c5sk-need__t { display: inline; }
   .c5sk-need__t::after { content: none; }
   .c5sk-need__n { font-size: 0.75rem; }
@@ -223,9 +232,6 @@
 .c5sk-chip:hover { background: var(--w-gray-200); }
 .c5sk-chip--clear { background: transparent; text-decoration: underline; text-underline-offset: 3px; padding-inline: 6px; }
 
-.c5sk-note { display: flex; gap: var(--w-space-3); align-items: flex-start; border: 1px solid var(--w-gray-900); padding: 12px 16px; margin-top: var(--w-space-4); font-size: 0.9375rem; }
-.c5sk-note .wf-icon { flex: none; margin-top: 2px; }
-.c5sk-note__body { display: flex; flex-direction: column; gap: 4px; }
 
 .c5sk-restore { display: flex; flex-wrap: wrap; align-items: center; gap: var(--w-space-3); margin-top: var(--w-space-4); padding: 10px 14px; border: 1px dashed var(--w-border-default); font-size: 0.875rem; }
 
@@ -429,11 +435,6 @@
 .c5sk-pro__links .c5-pro__link { padding: 8px 0; }
 
 /* --- 9–10. POZA WYNIKAMI I PUSTY STAN ------------------------------------- */
-.c5sk-outside { margin-top: var(--w-space-5); border-top: 1px solid var(--w-border-default); padding-top: var(--w-space-4); }
-.c5sk-outside__sum { font-size: 0.875rem; cursor: pointer; color: var(--w-text-secondary); }
-.c5sk-outside__list { list-style: none; margin: var(--w-space-3) 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
-.c5sk-outside__list li { font-size: 0.875rem; color: var(--w-text-secondary); }
-.c5sk-outside__list b { color: var(--w-text-primary); font-weight: var(--w-weight-semibold); }
 
 .c5sk-empty { border: 1px dashed var(--w-border-default); padding: clamp(1.5rem,3vw,2.5rem); text-align: center; display: flex; flex-direction: column; gap: var(--w-space-3); align-items: center; }
 
@@ -534,9 +535,23 @@
 
 
 
-  <div class="c5sk-hurt" id="pasek-hurtowy" data-ce="CE-23" data-ce-wariant="cichy">
-    <div class="c5-wrap c5-wrap--wide c5sk-hurt__in">
-      <span>Kupujesz w większych ilościach albo potrzebujesz stałych dostaw? <a class="wf-link" href="kontakt.html">Zapytaj o ofertę</a></span>
+
+
+
+
+  <div class="c5sk-needsbar" id="grupy">
+    <div class="c5-wrap c5-wrap--wide c5sk-needsbar__in">
+      <h2 class="c5sk-needs__h" id="grupy-h">Wybierz uprawę lub potrzebę</h2>
+      <div class="c5sk-needs" role="group" aria-labelledby="grupy-h" data-needs>
+        <button type="button" class="c5sk-need" data-shelf="ogrod" aria-pressed="false"><span class="c5sk-need__img"><img src="img/foto/prochnica-06-leafy-greens-rows.jpg" alt="" width="96" height="96" decoding="async"></span><span class="c5sk-need__lab"><span class="c5sk-need__t" data-t="Ogród i warzywnik">Ogród i warzywnik</span> <span class="c5sk-need__n" data-count-shelf="ogrod"></span></span></button>
+        <button type="button" class="c5sk-need" data-shelf="borowka" aria-pressed="false"><span class="c5sk-need__img"><img src="img/foto/sciolka-gruntowe.jpg" alt="" width="96" height="96" decoding="async"></span><span class="c5sk-need__lab"><span class="c5sk-need__t" data-t="Borówka i kwasolubne">Borówka i kwasolubne</span> <span class="c5sk-need__n" data-count-shelf="borowka"></span></span></button>
+        <button type="button" class="c5sk-need" data-shelf="sad" aria-pressed="false"><span class="c5sk-need__img"><img src="img/foto/produkty-cel-jakosc.jpg" alt="" width="96" height="96" decoding="async"></span><span class="c5sk-need__lab"><span class="c5sk-need__t" data-t="Sad i plantacja jagodowa">Sad i plantacja jagodowa</span> <span class="c5sk-need__n" data-count-shelf="sad"></span></span></button>
+        <button type="button" class="c5sk-need" data-shelf="pole" aria-pressed="false"><span class="c5sk-need__img"><img src="img/foto/kukurydza-hero.jpg" alt="" width="96" height="96" decoding="async"></span><span class="c5sk-need__lab"><span class="c5sk-need__t" data-t="Pole i uprawy towarowe">Pole i uprawy towarowe</span> <span class="c5sk-need__n" data-count-shelf="pole"></span></span></button>
+        <button type="button" class="c5sk-need" data-shelf="nasadzenia" aria-pressed="false"><span class="c5sk-need__img"><img src="img/foto/eco-gruntowe.jpg" alt="" width="96" height="96" decoding="async"></span><span class="c5sk-need__lab"><span class="c5sk-need__t" data-t="Sadzenie, szkółka i zieleń">Sadzenie, szkółka i zieleń</span> <span class="c5sk-need__n" data-count-shelf="nasadzenia"></span></span></button>
+        <button type="button" class="c5sk-need" data-shelf="sciolka" aria-pressed="false"><span class="c5sk-need__img"><img src="img/foto/sciolka-doniczkowe.jpg" alt="" width="96" height="96" decoding="async"></span><span class="c5sk-need__lab"><span class="c5sk-need__t" data-t="Ściółkowanie zamiast kory">Ściółkowanie zamiast kory</span> <span class="c5sk-need__n" data-count-shelf="sciolka"></span></span></button>
+        <button type="button" class="c5sk-need" data-shelf="sprzet" aria-pressed="false"><span class="c5sk-need__img"><img src="img/foto/produkty-aplikacja-nalistna.jpg" alt="" width="96" height="96" decoding="async"></span><span class="c5sk-need__lab"><span class="c5sk-need__t" data-t="Opryskiwacz i kroplowanie">Opryskiwacz i kroplowanie</span> <span class="c5sk-need__n" data-count-shelf="sprzet"></span></span></button>
+      </div>
+      <a class="wf-link--quiet c5sk-toconf" href="konfigurator.html">Dobierz produkty do swojej uprawy <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
     </div>
   </div>
 
@@ -546,21 +561,10 @@
 
 
 
-
-
-  <div class="c5sk-needsbar" id="grupy">
-    <div class="c5-wrap c5-wrap--wide c5sk-needsbar__in">
-      <h2 class="c5sk-needs__h" id="grupy-h">Wybierz uprawę lub potrzebę</h2>
-      <div class="c5sk-needs" role="group" aria-labelledby="grupy-h" data-needs>
-        <button type="button" class="c5sk-need" data-shelf="ogrod" aria-pressed="false"><span class="c5sk-need__img"><img src="img/foto/prochnica-06-leafy-greens-rows.jpg" alt="" width="56" height="56" decoding="async"></span><span class="c5sk-need__lab"><span class="c5sk-need__t" data-t="Ogród i warzywnik">Ogród i warzywnik</span> <span class="c5sk-need__n" data-count-shelf="ogrod"></span></span></button>
-        <button type="button" class="c5sk-need" data-shelf="borowka" aria-pressed="false"><span class="c5sk-need__img"><img src="img/foto/sciolka-gruntowe.jpg" alt="" width="56" height="56" decoding="async"></span><span class="c5sk-need__lab"><span class="c5sk-need__t" data-t="Borówka i kwasolubne">Borówka i kwasolubne</span> <span class="c5sk-need__n" data-count-shelf="borowka"></span></span></button>
-        <button type="button" class="c5sk-need" data-shelf="sad" aria-pressed="false"><span class="c5sk-need__img"><img src="img/foto/produkty-cel-jakosc.jpg" alt="" width="56" height="56" decoding="async"></span><span class="c5sk-need__lab"><span class="c5sk-need__t" data-t="Sad i plantacja jagodowa">Sad i plantacja jagodowa</span> <span class="c5sk-need__n" data-count-shelf="sad"></span></span></button>
-        <button type="button" class="c5sk-need" data-shelf="pole" aria-pressed="false"><span class="c5sk-need__img"><img src="img/foto/kukurydza-hero.jpg" alt="" width="56" height="56" decoding="async"></span><span class="c5sk-need__lab"><span class="c5sk-need__t" data-t="Pole i uprawy towarowe">Pole i uprawy towarowe</span> <span class="c5sk-need__n" data-count-shelf="pole"></span></span></button>
-        <button type="button" class="c5sk-need" data-shelf="nasadzenia" aria-pressed="false"><span class="c5sk-need__img"><img src="img/foto/eco-gruntowe.jpg" alt="" width="56" height="56" decoding="async"></span><span class="c5sk-need__lab"><span class="c5sk-need__t" data-t="Sadzenie, szkółka i zieleń">Sadzenie, szkółka i zieleń</span> <span class="c5sk-need__n" data-count-shelf="nasadzenia"></span></span></button>
-        <button type="button" class="c5sk-need" data-shelf="sciolka" aria-pressed="false"><span class="c5sk-need__img"><img src="img/foto/sciolka-doniczkowe.jpg" alt="" width="56" height="56" decoding="async"></span><span class="c5sk-need__lab"><span class="c5sk-need__t" data-t="Ściółkowanie zamiast kory">Ściółkowanie zamiast kory</span> <span class="c5sk-need__n" data-count-shelf="sciolka"></span></span></button>
-        <button type="button" class="c5sk-need" data-shelf="sprzet" aria-pressed="false"><span class="c5sk-need__img"><img src="img/foto/produkty-aplikacja-nalistna.jpg" alt="" width="56" height="56" decoding="async"></span><span class="c5sk-need__lab"><span class="c5sk-need__t" data-t="Opryskiwacz i kroplowanie">Opryskiwacz i kroplowanie</span> <span class="c5sk-need__n" data-count-shelf="sprzet"></span></span></button>
-      </div>
-      <a class="wf-link--quiet c5sk-toconf" href="konfigurator.html">Dobierz produkty do swojej uprawy <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+  <div class="c5sk-hurt" id="pasek-hurtowy" data-ce="CE-23" data-ce-wariant="cichy">
+    <div class="c5-wrap c5-wrap--wide c5sk-hurt__in">
+      <span>Kupujesz w większych ilościach albo potrzebujesz stałych dostaw? <a class="wf-link" href="kontakt.html">Zapytaj o ofertę</a></span>
+      <button type="button" class="c5sk-hurt__x" data-hurt-close aria-label="Zamknij"><svg class="wf-icon" aria-hidden="true"><use href="#ti-x"></use></svg></button>
     </div>
   </div>
 
@@ -614,13 +618,6 @@
         <button type="button" class="c5sk-chip" data-restore-btn>przywróć filtry</button>
       </div>
 
-      
-
-
-      <div class="c5sk-note" data-note hidden>
-        <svg class="wf-icon" aria-hidden="true"><use href="#ti-alert-triangle"></use></svg>
-        <div class="c5sk-note__body" data-note-body></div>
-      </div>
 
       
 
@@ -1422,15 +1419,6 @@
             </div>
           </div>
 
-          
-
-
-          <div class="c5sk-outside" data-outside hidden>
-            <details>
-              <summary class="c5sk-outside__sum">Poza wynikami: <b data-outside-n>0</b> – zobacz dlaczego</summary>
-              <ul class="c5sk-outside__list" data-outside-list></ul>
-            </details>
-          </div>
 
         </div>
       </div>
@@ -1504,6 +1492,23 @@
 <script src="sklep-wspolne.js"></script>
 
 
+<script>
+(function () {
+  "use strict";
+  /* Without storage access the bar still closes – until the next reload. */
+  var KEY = "c5sk-hurt-zamkniety";
+  var bar = document.getElementById("pasek-hurtowy");
+  if (!bar) return;
+  try { if (window.localStorage.getItem(KEY) === "1") bar.hidden = true; } catch (e) {}
+  var x = bar.querySelector("[data-hurt-close]");
+  if (x) x.addEventListener("click", function () {
+    bar.hidden = true;
+    try { window.localStorage.setItem(KEY, "1"); } catch (e) {}
+  });
+})();
+</script>
+
+
 
 
 
@@ -1556,8 +1561,6 @@
   var emptyWhy  = $("[data-empty-why]");
   var chipsWrap = $("[data-chips]");
   var refineEl  = $("[data-refine]");
-  var noteEl    = $("[data-note]");
-  var outsideEl = $("[data-outside]");
   var sortEl    = $("[data-sort]");
   var reduceMq  = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : { matches: false };
 
@@ -1727,9 +1730,9 @@
   }
 
   /* --- Reguły twarde ----------------------------------------------------
-     KAŻDA reguła realnie zawęża listę i KAŻDA ma zdanie – inaczej ekran sam
-     sobie przeczy („nie jest tu pokazany" nad produktem stojącym w siatce).
-     Kolejność = pierwszeństwo: prawna, agronomiczna, techniczna. */
+     Each rule narrows the list without a message above the grid (warning
+     frame removed 15.10.2026 – nobody would maintain the copy for every case).
+     Order = precedence: legal, agronomic, technical. */
   var RULES = [
     {
       id: "calbor",
@@ -1738,30 +1741,21 @@
         var u = s.facets.uprawa;
         return u.length > 0 && u.indexOf("sad") === -1;
       },
-      hits: function (c) { return c.getAttribute("data-tylko-sad") === "1"; },
-      powod: "wyklucza go zakres rejestracji MRiRW G-1733/25",
-      h: "CARBOHUMIC CALBOR nie jest tu pokazany.",
-      b: "Decyzja MRiRW G-1733/25 dopuszcza go wyłącznie w uprawach sadowniczych – nie w uprawach polowych, warzywach ani na roślinach ozdobnych."
+      hits: function (c) { return c.getAttribute("data-tylko-sad") === "1"; }
     },
     {
       id: "kwasolubne",
       fires: function (s) {
         return s.shelf === "borowka" || onlyWithin(s.facets.uprawa, ["jagodowe"]) || onlyWithin(s.facets.ph, ["kwasny"]);
       },
-      hits: function (c) { return has(c, "ph", "podnosi"); },
-      powod: "podnosi odczyn, więc nie pod rośliny kwasolubne",
-      h: "CARBOMAT HUMIC nie jest tu pokazany.",
-      b: "Ma odczyn 9–11, czyli podnosi pH gleby – pod borówkę, wrzosowate, różaneczniki i azalie go nie stosuj. Do tych roślin służy CARBOMAT ECO w odmianie 4,5–5,0."
+      hits: function (c) { return has(c, "ph", "podnosi"); }
     },
     {
       id: "dysze",
       fires: function (s) {
         return s.shelf === "sprzet" || onlyWithin(s.facets.filtry, ["tak"]);
       },
-      hits: function (c) { return has(c, "filtry", "nie"); },
-      powod: "nie przejdzie przez filtry i dysze",
-      h: "Nie wszystko przejdzie przez filtry i dysze.",
-      b: "Zdjęliśmy z tej listy CARBOHUMIC niefiltrowany (20 mesh) oraz produkty sypkie. Cytat z karty producenta: „Produktu niefiltrowanego nie stosujemy do fertygacji ani urządzeń z filtrami”."
+      hits: function (c) { return has(c, "filtry", "nie"); }
     }
   ];
 
@@ -1773,14 +1767,14 @@
   }
 
   /* --- Dopasowanie ------------------------------------------------------
-     Zwraca powód odrzucenia, bo bez niego nie da się zbudować pasa
-     „Poza wynikami" ani nazwać filtra w pustym stanie. */
+     Zwraca rodzaj odrzucenia (kind, why) – bez niego nie da się nazwać filtra
+     w pustym stanie. */
   function testCard(card, s) {
     var r = blockedByRule(card, s);
-    if (r) return { ok: false, kind: "rule", why: r.h, txt: r.powod };
+    if (r) return { ok: false, kind: "rule", why: r.id };
 
     if (s.shelf && !has(card, "polka", s.shelf)) {
-      return { ok: false, kind: "shelf", why: SHELVES[s.shelf].label, txt: "nie należy do grupy „" + SHELVES[s.shelf].label + "”" };
+      return { ok: false, kind: "shelf", why: SHELVES[s.shelf].label };
     }
     for (var i = 0; i < KEYS.length; i++) {
       var k = KEYS[i], sel = s.facets[k];
@@ -1792,9 +1786,9 @@
         /* „nd" to jawna informacja („ta grupa go nie dotyczy"), a nie luka
            w danych – mylenie tych dwóch stanów kazało stronie twierdzić,
            że nie znamy odczynu produktów, których odczyn jest opublikowany. */
-        if (own === "nd") return { ok: false, kind: "nd", why: GROUP[k], txt: "ta grupa go nie dotyczy: " + GROUP[k] };
-        if (own === "")   return { ok: false, kind: "brak", why: GROUP[k], txt: "nie mamy dla niego tej danej: " + GROUP[k] + " ⚠️" };
-        return { ok: false, kind: "facet", why: GROUP[k], txt: "nie pasuje do filtra „" + GROUP[k] + "”" };
+        if (own === "nd") return { ok: false, kind: "nd", why: GROUP[k] };
+        if (own === "")   return { ok: false, kind: "brak", why: GROUP[k] };
+        return { ok: false, kind: "facet", why: GROUP[k] };
       }
     }
     /* Cena: produkt pasuje, gdy JEGO przedział cenowy zachodzi na przedział
@@ -1803,13 +1797,13 @@
     if (s.cenaOd !== null || s.cenaDo !== null) {
       var cmin = parseFloat(card.getAttribute("data-cena"));
       var cmax = parseFloat(card.getAttribute("data-cena-max"));
-      if (isNaN(cmin)) return { ok: false, kind: "brak", why: GROUP.zast, txt: "nie ma ceny w cenniku ⚠️" };
+      if (isNaN(cmin)) return { ok: false, kind: "brak", why: GROUP.zast };
       if (isNaN(cmax)) cmax = cmin;
-      if (s.cenaDo !== null && cmin > s.cenaDo) return { ok: false, kind: "cena", why: "Cena", txt: "najtańsze opakowanie kosztuje " + cmin + " zł" };
-      if (s.cenaOd !== null && cmax < s.cenaOd) return { ok: false, kind: "cena", why: "Cena", txt: "najdroższe opakowanie kosztuje " + cmax + " zł" };
+      if (s.cenaDo !== null && cmin > s.cenaDo) return { ok: false, kind: "cena", why: "Cena" };
+      if (s.cenaOd !== null && cmax < s.cenaOd) return { ok: false, kind: "cena", why: "Cena" };
     }
     if (s.q) {
-      if (!matchQ(card, s.q)) return { ok: false, kind: "q", why: "wyszukiwanie", txt: "nie zawiera frazy „" + s.q + "”" };
+      if (!matchQ(card, s.q)) return { ok: false, kind: "q", why: "wyszukiwanie" };
     }
     return { ok: true };
   }
@@ -1949,42 +1943,6 @@
     focusSafe(idx < 0 ? 0 : idx);
   }
 
-  /* Wszystkie zapalone reguły naraz – przy dwóch aktywnych druga gubiła
-     swoje uzasadnienie. */
-  function renderNote() {
-    var fired = [];
-    RULES.forEach(function (R) {
-      if (!R.fires(state)) return;
-      for (var j = 0; j < cards.length; j++) { if (R.hits(cards[j])) { fired.push(R); return; } }
-    });
-    var body = $("[data-note-body]");
-    body.textContent = "";
-    if (!fired.length) { noteEl.hidden = true; return; }
-    fired.forEach(function (R) {
-      var d = doc.createElement("div");
-      var h = doc.createElement("span"); h.className = "wf-w-semibold"; h.textContent = R.h;
-      var p = doc.createElement("span"); p.className = "wf-t-secondary"; p.textContent = " " + R.b;
-      d.appendChild(h); d.appendChild(p);
-      body.appendChild(d);
-    });
-    noteEl.hidden = false;
-  }
-
-  function renderOutside(rejected) {
-    var list = $("[data-outside-list]");
-    if (!rejected.length) { outsideEl.hidden = true; return; }
-    list.textContent = "";
-    rejected.forEach(function (r) {
-      var li = doc.createElement("li");
-      var b = doc.createElement("b"); b.textContent = cardName(r.card);
-      li.appendChild(b);
-      li.appendChild(doc.createTextNode(" – " + r.res.txt + "."));
-      list.appendChild(li);
-    });
-    $("[data-outside-n]").textContent = String(rejected.length) + " " + plural(rejected.length);
-    outsideEl.hidden = false;
-  }
-
   /* Jedyna forma drugiego poziomu, na jaką stać jedenaście pozycji: podpowiedzi
      liczone na żywo z bieżącego zbioru, pokazywane tylko przy wyniku ≥ 2.
      JEDNA runda – po pierwszym użyciu filtra pasek znika, żeby nie zamienić się
@@ -2111,18 +2069,18 @@
   /* mode: "push" (świadome kliknięcie) | "replace" (pisanie, strzałki) | false */
   function apply(mode) {
     applySort();
-    var shown = 0, rejected = [];
+    var shown = 0;
     cards.forEach(function (card) {
       var res = testCard(card, state);
       card.hidden = !res.ok;
-      if (res.ok) shown++; else rejected.push({ card: card, res: res });
+      if (res.ok) shown++;
     });
     /* Region live przepisujemy tylko przy realnej zmianie liczby – inaczej
        czytnik czytał całe zdanie po każdym wpisanym znaku. */
     if (shownEl && shownEl.textContent !== String(shown)) shownEl.textContent = String(shown);
     if (totalEl && totalEl.textContent !== String(cards.length)) totalEl.textContent = String(cards.length);
     placeTiles();
-    renderChips(); renderCounts(); renderNote(); renderOutside(rejected);
+    renderChips(); renderCounts();
     renderRefine(); renderEmpty(shown); renderFacetsCount(); renderDrawerCta(shown);
     typeSync();
     if (mode) syncURL(mode);
@@ -2209,7 +2167,7 @@
       /* Własny adres kategorii zestawów – „osobna kategoria" z uwag Mateusza. */
       if (p.get("oferta") === "zestawy" && state.facets.oferta.indexOf("zestaw") === -1) { state.facets.oferta.push("zestaw"); stack.push({ type: "facet", k: "oferta", v: "zestaw" }); }
       /* Stare parametry z makiet V4 – linki stojące już w serwisie nie mogą paść. */
-      var LEGACY = { carbomat: ["carbomat-eco", "carbomat-eco-sciolka"], "carbomat-humic": ["carbomat-humic"], carbohumic: ["carbohumic", "carbohumic-nalistny"] };
+      var LEGACY = { carbomat: ["carbomat-eco", "carbomat-eco-sciolka"], "carbomat-humic": ["carbomat-humic"], carbohumic: ["carbohumic", "carbohumic-dolistny"] };
       var g = p.get("grupa");
       if (g && LEGACY[g]) LEGACY[g].forEach(function (v) { if (state.facets.linia.indexOf(v) === -1) { state.facets.linia.push(v); stack.push({ type: "facet", k: "linia", v: v }); } });
       var n = p.get("potrzeba") || p.get("funkcja");

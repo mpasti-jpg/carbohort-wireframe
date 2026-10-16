@@ -47,39 +47,99 @@
   .pp-reveal{opacity:1;transform:none;transition:none;}
 }
 
-/* ===== 20 · HERO – page exception: smaller H1 (11.10.2026) =================
-   The H1 carries the slogan together with the full statement sentence (about
-   240 characters), so it drops below the pattern size of `.c5-h1` to fit the
-   first screen at 1440 × 900 and stay readable on a phone. CE-08 has no knob
-   for the heading size – this is an exception of this one page. ========== */
-#hero .c5-hero__copy .c5-h1{font-size:clamp(1.375rem,2.15vw,2rem);line-height:1.22;text-wrap:pretty;}
-
-/* ===== 30 · O PROGRAMIE – CE-69, page exception of the layout (11.10.2026) ==
-   The section stands on CE-69 (`ce/CE-69-wstep-z-kadrem.css`, prefix
-   `c5-opener`). On this page the heading, kicker and description are gone and
-   the whole content sits in the left column of the top band: two tiles side
-   by side, the product box under them; the photo frame keeps the right
-   column. The bottom band of the module (`c5-opener__row`) is not used here.
-   Breakpoints repeat the module: one column of bands below 900 px, tiles one
-   under another below 600 px. ============================================ */
-.pp-opener{align-items:stretch;}
-.pp-opener__left{display:flex;flex-direction:column;gap:20px;min-width:0;}
-.pp-opener__tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;}
-.pp-opener__left .c5-opener__prod{flex:1 1 auto;}
-.pp-opener__tiles > *:nth-child(2){transition-delay:.08s;}
-.pp-opener__left > .c5-opener__prod{transition-delay:.16s;}
-/* the photo frame follows the height of the left column (two columns only) */
+/* ===== 20 · HERO – page exception: sticky player into „O programie” (15.10.2026)
+   Figma frames 916:1427 and 916:3487 (annotation): the hero starts on a tinted
+   background (the beige of the design, here the grey of the wireframe) that
+   turns white once the reader scrolls (`.is-light`, set by prochnica-plus.js,
+   block 20). The right column keeps the player: from 900 px up it stays in the
+   middle of the screen while the description of #o-programie scrolls by in the
+   left column, then it lets go and leaves upwards with the page.
+   Mechanics: the stage of CE-08 holds a rail (`.pp-intro__rail`) that hangs
+   from the top of the stage down to the end of the description – its height
+   `--pp-rail-h` is measured by the script; inside it the pin
+   (`.pp-intro__pin`, the height of the stage) is `position: sticky` and centres
+   the player. Without the script the rail is the stage and nothing moves.
+   The decorative motif behind the right column of the design has no graphic
+   in the wireframe – the stage panel is transparent here.
+   The H1 has the pattern size of CE-08 again (the size exception of 11.10 is
+   gone). Root modifier `pp-intro`; module CE-08 unchanged. ================ */
+#hero.pp-intro{position:relative;z-index:2;background:var(--w-surface-sunken);
+  transition:background-color .6s var(--w-ease);}
+#hero.pp-intro.is-light{background:var(--w-surface-page);}
+#hero.pp-intro .c5-hero__stage{overflow:visible;background:transparent;display:block;place-items:normal;padding:0;}
+.pp-intro .pp-film{max-width:none;}
+/* the poster of the film: the proportion of the frame in the design (781 × 553);
+   the whole poster is the play button */
+.pp-intro .pp-film .pp-film__play{width:100%;aspect-ratio:781/553;display:grid;place-items:center;
+  padding:0;border:1px solid var(--w-border-default);border-radius:0;
+  background:var(--w-placeholder-fill);color:var(--w-text-secondary);cursor:pointer;
+  transition:background-color var(--w-duration-base) var(--w-ease);}
+.pp-intro .pp-film .pp-film__play:hover{background:var(--w-gray-200);}
 @media (min-width:900px){
-  .pp-opener .c5-opener__shot img{flex:1 1 0;min-height:0;aspect-ratio:auto;height:0;}
+  .pp-intro__rail{position:absolute;top:0;left:0;right:0;height:var(--pp-rail-h,100%);}
+  .pp-intro__pin{position:sticky;top:calc(var(--cx-navbar-h,0px) / 2 + var(--c5-gutter));
+    height:calc(100svh - var(--cx-navbar-h,0px) - 2 * var(--c5-gutter));
+    display:grid;place-items:center;}
 }
 @media (max-width:899px){
-  .pp-opener__left .c5-opener__prod{min-height:0;}
+  #hero.pp-intro .c5-hero__stage{padding:0;}
+}
+
+/* --- film window (annotation of the player in frame 916:1427) ---------------
+   Play opens the film in a window as wide as the film, over a darkened page
+   that does not scroll (`html.pp-lock`, block 52). The window is built by the
+   script from the poster; in the live site the YouTube player goes here. */
+.pp-filmdlg{position:fixed;inset:0;margin:auto;padding:0;max-width:none;
+  width:min(1280px, 100% - 2 * var(--c5-gutter), (100svh - 2 * var(--c5-gutter) - 88px) * 16 / 9);
+  border:0;border-radius:0;background:transparent;color:var(--w-text-inverse);overflow:visible;}
+.pp-filmdlg[open]{display:flex;flex-direction:column;gap:var(--w-space-3);}
+.pp-filmdlg::backdrop{background:rgb(0 0 0 / .78);}
+.pp-filmdlg .wf-ph{width:100%;aspect-ratio:16/9;display:grid;place-items:center;
+  border:0;border-radius:0;background:var(--w-gray-800);color:var(--w-gray-300);}
+.pp-filmdlg .wf-ph .wf-icon{width:56px;height:56px;}
+.pp-filmdlg .wf-caption{color:var(--w-gray-300);}
+.pp-filmdlg__close{align-self:flex-end;display:grid;place-items:center;width:44px;height:44px;
+  padding:0;border:1px solid rgb(255 255 255 / .5);border-radius:0;background:transparent;
+  color:var(--w-text-inverse);cursor:pointer;}
+.pp-filmdlg__close:hover{border-color:var(--w-white);}
+@media (prefers-reduced-motion: no-preference){
+  .pp-filmdlg[open]{animation:ppFilmGrow .35s var(--w-ease) both;}
+  .pp-filmdlg[open]::backdrop{animation:ppFilmFade .35s var(--w-ease) both;}
+}
+@keyframes ppFilmGrow{from{opacity:0;transform:scale(.62);}to{opacity:1;transform:none;}}
+@keyframes ppFilmFade{from{opacity:0;}to{opacity:1;}}
+
+/* ===== 30 · O PROGRAMIE – CE-69, page exception of the layout (15.10.2026) ==
+   Figma frame 916:3487. The section stands on CE-69 (`ce/CE-69-wstep-z-
+   kadrem.css`, prefix `c5-opener`) but only the left column of the top band
+   is used: the description of the programme (two paragraphs), then the label
+   „Produkt badany w programie:” and the product box. The right column stays
+   empty – the sticky player of the hero (block 20) runs through it. Tiles,
+   photo frame and the bottom band of the module are not used here.
+   Box after the frame: name on top, list of features with the packshot on its
+   right, two buttons of equal width. Module CE-69 unchanged. ============== */
+.pp-opis__left{display:flex;flex-direction:column;gap:clamp(2.5rem,12.6vw,11.375rem);min-width:0;max-width:555px;}
+.pp-opis__txt{display:flex;flex-direction:column;gap:var(--w-space-4);max-width:31rem;}
+.pp-opis__txt p,.pp-opis__label{margin:0;font-size:1.125rem;line-height:1.55;color:var(--w-text-secondary);}
+.pp-opis__prodwrap{display:flex;flex-direction:column;gap:clamp(1.5rem,2.8vw,2.5625rem);}
+.pp-opis__prodwrap{transition-delay:.08s;}
+.pp-opis__prod{min-height:0;gap:clamp(1.75rem,3.5vw,3.125rem);}
+.pp-opis__prod .c5-opener__prodname{font-size:1.125rem;font-weight:var(--w-weight-regular, 400);color:var(--w-text-secondary);}
+.pp-opis__prodtop{grid-template-columns:minmax(0,1fr) auto;align-items:center;}
+.pp-opis__prodtop .c5-opener__feats{margin-top:0;}
+.pp-opis__prodtop .c5-opener__pack{background:none;padding:0;}
+.pp-opis__prodtop .c5-opener__pack img{height:clamp(150px,16vw,228px);}
+.pp-opis__btns{grid-template-columns:repeat(2,minmax(0,1fr));}
+@media (max-width:899px){
+  .pp-opis__left{max-width:none;}
 }
 @media (max-width:599px){
-  .pp-opener__tiles{grid-template-columns:minmax(0,1fr);}
+  .pp-opis__prodtop{grid-template-columns:minmax(0,1fr);}
+  .pp-opis__prodtop .c5-opener__pack{justify-self:start;}
+  .pp-opis__btns{grid-template-columns:minmax(0,1fr);}
 }
 @media (prefers-reduced-motion: reduce){
-  .pp-opener__tiles > *,.pp-opener__left > .c5-opener__prod{transition-delay:0s;}
+  .pp-opis__prodwrap{transition-delay:0s;}
 }
 
 /* ===== 35 · ZAŁOŻENIA – CE-70, slide 03: three areas (11.10.2026) ===========
@@ -252,7 +312,7 @@
 /* ===== 50 · Uczestnicy programu – siatka kart poziomych (spec §18.5) ========
    Karuzela ze strzałkami i licznikiem znika: wszystkie gospodarstwa (od
    11.10.2026 pięć) stoją naraz w siatce dwóch kolumn, w zwykłym kontenerze 1180 px (uwaga
-   Mateusza z 19.09 – reszta strony idzie na 1800 px).
+   z przeglądu 19.09 – reszta strony idzie na 1800 px).
    Karta jest pozioma: kadr zdjęcia po lewej (40 % szerokości, wypełnia całą
    wysokość karty, bez marginesu), po prawej chip uprawy, nazwa gospodarstwa,
    gospodarz, dwie linie „Uprawa / Lokalizacja" i – przy dolnej krawędzi –
@@ -437,7 +497,7 @@ html:not(.cx-js) #koordynatorzy .pp-more{display:none;}
    ===================================================================== */
 
 /* ===== 70 · RZETELNOŚĆ: zdjęcie w tle + trzy karty ze szkła (spec §18.9) ====
-   Iteracja 2, uwaga Mateusza `7bf3730a`. Sekcja bierze zdjęcie na całą
+   Iteracja 2, uwaga z przeglądu `7bf3730a`. Sekcja bierze zdjęcie na całą
    szerokość okna, kładzie na nie jednolity scrim i stawia na nim nagłówek,
    cytat i trzy karty zasad (CE-20 wariant `szklane`). Cudzysłowy cytatu
    dokłada CSS, więc tekst w HTML zostaje co do znaku.

@@ -1,0 +1,108 @@
+/* ===== carbohumic-dolistny.css – page layer (V7) =====
+   The shared layer and the CE modules live in ce/ (loaded above). Only the
+   blocks without a module of their own and the exceptions of this page stay
+   here. ===== */
+
+/* --- KTÓRY DLA MNIE: two products (rows CE-36, pop-ups CE-37) ---------------
+   CE-36 in the dialect of the CARBOMAT HUMIC page and CE-37 have no module in
+   ce/ yet; their rules are carried here 1:1 from carbomat-humic.css (sections
+   „Page helpers”, „KTÓRY DLA MNIE” and „Pop-up with the full card”) so that the
+   two pages look and behave the same. When the shared module is cut, both
+   pages switch to it and these rules go. Only addition: the photo layer of a
+   row may be a real <img> (`img.c5-who__ph`), which has to cover its layer.
+   A row carries the name of the product, a one-sentence teaser, a brief of
+   three things (word for word from the pop-up) and one button; the button
+   opens a pop-up with the full card. */
+.c5-label{display:block;font-weight:var(--w-weight-semibold);color:var(--w-text-primary);}
+.c5-variant__block{display:flex;flex-direction:column;gap:var(--w-space-1);}
+.c5-variant__block ul{margin:var(--w-space-1) 0 0;padding-left:1.35rem;display:flex;flex-direction:column;gap:var(--w-space-1);}
+.c5-who{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,6vw,6rem);align-items:center;margin-top:clamp(3rem,6vw,5rem);}
+.c5-who--flip .c5-who__media{order:2;}
+/* The photo frame clips a layer taller than itself, which makes room for the
+   parallax. `--who-par` (-6 -> 0, per cent of the layer height) is set by JS
+   only at `CX5.motionOn()`; without it the crop rests on the default value. */
+.c5-who__media{position:relative;aspect-ratio:4/5;max-height:calc(100svh - 2 * var(--c5-gutter));overflow:hidden;background:var(--w-gray-300);}
+.c5-who__ph{position:absolute;inset:-6% 0 auto;height:118%;transform:translateY(calc(var(--who-par,-6) * 1%));will-change:transform;}
+.c5-who__body{display:flex;flex-direction:column;gap:clamp(1rem,2vw,1.5rem);max-width:520px;}
+.c5-who__name{font-size:clamp(2rem,3.6vw,3rem);font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+.c5-who__teaser{font-size:1.0625rem;color:var(--w-text-secondary);}
+/* The brief: label | value rows divided by hairlines. `flex-wrap` does the work
+   of a container query – when the column cannot hold the label and 19rem of
+   value side by side, the value drops under its label. */
+.c5-who__brief{margin:0;display:flex;flex-direction:column;border-bottom:1px solid var(--w-border-default);font-size:0.9375rem;}
+.c5-who__fact{display:flex;flex-wrap:wrap;gap:var(--w-space-1) var(--w-space-4);padding:var(--w-space-3) 0;border-top:1px solid var(--w-border-default);}
+.c5-who__fact > dt{flex:0 0 7.5rem;margin:0;font-weight:var(--w-weight-semibold);color:var(--w-text-primary);}
+.c5-who__fact > dd{flex:1 1 19rem;min-width:0;margin:0;color:var(--w-text-secondary);}
+.c5-who__list{margin:0;padding:0;display:flex;flex-direction:column;gap:var(--w-space-2);}
+.c5-who__body .c5-btn{align-self:flex-start;}
+
+/* the photo layer as an image: it fills the taller parallax layer */
+img.c5-who__ph{display:block;width:100%;object-fit:cover;}
+/* packshot on the photo: stands on the bottom edge of the frame, on the side
+   that faces the copy, outside the parallax layer (it does not move with it) */
+.c5-who__pack{position:absolute;z-index:1;bottom:clamp(12px,4%,32px);right:clamp(16px,8%,64px);
+  width:auto;height:clamp(100px,44%,360px);max-width:calc(100% - 32px);object-fit:contain;
+  filter:drop-shadow(0 14px 18px rgb(0 0 0 / .32)) drop-shadow(0 2px 4px rgb(0 0 0 / .25));pointer-events:none;}
+.c5-who--flip .c5-who__pack{right:auto;left:clamp(16px,8%,64px);}
+/* a value of the brief that is still missing in the sources */
+.c5hd-gap{opacity:.6;}
+
+/* --- Pop-up with the full card ----------------------------------------------
+   Pattern: the lightbox of the maize page. Without JS the pop-up is a plain
+   block in the flow of the page under its row – the whole content visible, the
+   opening button and the X hidden. With JS: an overlay, the panel in the
+   centre, the X, Escape, a focus trap, `inert` on the background, the page
+   scroll locked. Both layers stand above the advisor dock (the overlay on
+   --w-z-popover, the dialog on --w-z-toast). */
+html:not(.cx-js) [data-pop-open],
+html:not(.cx-js) .c5-pop .c5-iconbtn{display:none;}
+html:not(.cx-js) .c5-pop{margin-top:1.5rem;border:1px solid var(--w-border-default);padding:clamp(1.25rem,3vw,2rem);}
+.c5-pop__panel{display:flex;flex-direction:column;min-height:0;}
+.c5-pop__head{display:flex;flex-direction:column;gap:var(--w-space-2);padding-bottom:var(--w-space-5);border-bottom:1px solid var(--w-border-subtle);margin-bottom:var(--w-space-5);}
+.c5-pop__title{font-size:clamp(1.5rem,2.6vw,2.125rem);font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+.c5-pop__body{display:flex;flex-direction:column;gap:var(--w-space-5);font-size:1rem;}
+.c5-pop__body ul{padding-left:1.35rem;gap:var(--w-space-1);color:var(--w-text-secondary);}
+.c5-pop__body .c5-btnrow{margin-top:var(--w-space-3);}
+
+html.cx-js .c5-pop{position:fixed;inset:0;z-index:var(--w-z-toast);display:grid;place-items:center;padding:var(--c5-gutter);opacity:0;visibility:hidden;transition:opacity .22s var(--w-ease),visibility 0s linear .22s;}
+html.cx-js .c5-pop[data-open="true"]{opacity:1;visibility:visible;transition:opacity .22s var(--w-ease),visibility 0s;}
+html.cx-js .c5-pop__panel{position:relative;width:100%;max-width:760px;max-height:calc(100svh - 2 * var(--c5-gutter));background:var(--w-surface-page);border:1px solid var(--w-border-default);transform:translateY(16px);transition:transform .26s cubic-bezier(.2,.8,.2,1);}
+html.cx-js .c5-pop[data-open="true"] .c5-pop__panel{transform:none;}
+html.cx-js .c5-pop .c5-iconbtn{display:grid;position:absolute;top:14px;right:14px;z-index:1;}
+html.cx-js .c5-pop__scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:clamp(1.5rem,4vw,2.75rem);}
+html.cx-js .c5-pop__head{padding-right:56px;}
+
+.c5-pop-overlay{position:fixed;inset:0;background:var(--w-gray-900);opacity:0;z-index:var(--w-z-popover);transition:opacity .22s var(--w-ease);}
+.c5-pop-overlay[data-open="true"]{opacity:.55;}
+/* an open pop-up stops the page under it (Lenis gets `stop()` in JS) */
+html.c5-pop-lock{overflow:hidden;}
+
+@media (min-width:900px) and (max-width:1099px){
+  /* two narrow columns: the copy may outgrow a 4:5 frame, so the frame follows
+     the height of its row instead of standing short beside the text; the
+     spacer keeps 4:5 as the floor */
+  .c5-who__media{align-self:stretch;aspect-ratio:auto;}
+  .c5-who__media::before{content:"";display:block;padding-top:125%;}
+}
+@media (max-width:899px){
+  /* one column: the photo above the copy, the same in both rows */
+  .c5-who{grid-template-columns:1fr;}
+  .c5-who--flip .c5-who__media{order:0;}
+  .c5-who__media{aspect-ratio:16/10;max-height:none;}
+  .c5-who__body{max-width:none;}
+}
+@media (max-width:599px){
+  /* the panel takes the whole screen – as the lightbox of the maize page does */
+  html.cx-js .c5-pop{padding:0;}
+  html.cx-js .c5-pop__panel{max-width:none;max-height:none;height:100%;border:0;}
+}
+@media (prefers-reduced-motion: reduce){
+  /* no transitions: the pop-up shows and hides at once, the photo crop stands still */
+  html.cx-js .c5-pop,html.cx-js .c5-pop[data-open="true"],
+  .c5-pop__panel,.c5-pop-overlay{transition:none;}
+}
+
+/* the closing line of the section „Przewaga”: a pointer to the comparison on the soil page */
+.c5hd-more{margin-top:var(--w-space-6);font-size:0.875rem;}
+/* the number of the decision would break after its hyphen in a narrow column – keep it whole */
+.c5hd-nobr{white-space:nowrap;}

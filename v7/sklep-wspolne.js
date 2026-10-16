@@ -57,7 +57,7 @@
      from the B2B admin mock-up and waits for CarboHort's courier terms. */
   var SHIP = { parcelPrice: 10, parcelMaxKg: 30, palletPrice: 300, days: 7 };
 
-  /* VAT – rates differ per product (Mateusz 28.09: mostly 8%, some 23%), so
+  /* VAT – rates differ per product (review of 28.09: mostly 8%, some 23%), so
      every product or pack may carry its own "vat"; without it the default
      rate applies. The rates are illustrative – CarboHort confirms them per
      product (the carbohort.com shop states none). Prices are gross. */

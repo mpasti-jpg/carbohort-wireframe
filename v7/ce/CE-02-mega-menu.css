@@ -1,0 +1,105 @@
+/* =====================================================================
+   CE-02 – mega menu, variant "grupy-ze-zdjeciem" (15.10.2026)
+
+   The "Rodzaje upraw" panel (#mega-uprawy, class cw-mega--crop-switch):
+   five group names as vertical tabs in the left column; the active group
+   shows its list in the middle and its photo on the right (one photo per
+   group, illustrative). The bottom strip of the panel (cw-mega__foot,
+   Konfigurator) stays as in cw.css.
+   Markup and behaviour (tabs, intent triangle, keys, touch) live in
+   chrome.js (NAVBAR, bindCropSwitch); chrome.js also attaches this sheet,
+   so no page links it by hand.
+   The other CE-02 variants (szerokie, waskie) and the item styles shared
+   with the mobile navigation (.cw-crops__list, .cw-crop, .cw-crops__split,
+   .cw-crops__season-name) still live in cw.css.
+   Greyscale and kit tokens only.
+
+   Position (16.10.2026): the panel does not span the whole content
+   container. Its left edge stands under the left edge of the "Rodzaje
+   upraw" trigger, its right edge on the right edge of the container, so a
+   pointer moved straight down from the trigger lands in the group column.
+   chrome.js (placeCropPanel) measures the trigger on every opening and on
+   window resize and writes the offset into --cw-mega-left. The left edge
+   stays under the trigger at every desktop width; in a narrow panel the
+   photo gives way instead (below an inner width of 46rem, i.e. windows up
+   to 1199 px: the groups and the list only, the list takes the freed room).
+   Only below 36rem (groups and list without a photo; a safety net for a
+   large root font size) the panel keeps that width and moves left, never
+   past the left edge of the container. Without the script the panel falls
+   back to the full container width.
+   ===================================================================== */
+
+.cw-mega--wide.cw-mega--crop-switch { left: var(--cw-mega-left, var(--w-page-padding-lg)); }
+
+.cw-cropsw {
+  container: cw-cropsw / inline-size;
+  display: grid; align-items: stretch;
+  grid-template-columns: minmax(12rem, 15rem) minmax(0, 1fr);
+  gap: var(--w-space-6);
+}
+
+/* --- left column: the groups -------------------------------------------- */
+.cw-cropsw__groups {
+  display: flex; flex-direction: column; gap: var(--w-space-1);
+  padding-right: var(--w-space-6);
+  border-right: 1px solid var(--w-border-subtle);
+}
+.cw-cropsw__group {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--w-space-3);
+  width: 100%; min-height: 44px; padding: var(--w-space-2) var(--w-space-3);
+  font: inherit; font-size: 1rem; line-height: 1.35; text-align: left;
+  color: var(--w-text-secondary); background: none;
+  border: 0; border-radius: var(--w-radius-sm, 8px); cursor: pointer;
+  transition: background-color var(--w-duration-base) var(--w-ease),
+              color var(--w-duration-base) var(--w-ease);
+}
+.cw-cropsw__group:hover { color: var(--w-text-primary); background: var(--w-surface-subtle); }
+.cw-cropsw__group[aria-selected="true"] {
+  color: var(--w-text-primary); background: var(--w-surface-sunken);
+  font-weight: var(--w-weight-semibold);
+}
+.cw-cropsw__group:focus-visible {
+  outline: var(--w-focus-ring-width) solid var(--w-focus-ring);
+  outline-offset: calc(-1 * var(--w-focus-ring-width));
+}
+/* the chevron says "the list opens to the right" – shown on the active group only */
+.cw-cropsw__chev { flex: none; color: var(--w-icon-muted); opacity: 0;
+  transition: opacity var(--w-duration-base) var(--w-ease); }
+.cw-cropsw__group[aria-selected="true"] .cw-cropsw__chev { opacity: 1; }
+
+/* --- the active group: list in the middle, photo on the right ----------- */
+.cw-cropsw__panel {
+  display: grid; align-items: start;
+  /* most groups list 4–5 short names: a narrower list, a wider photo;
+     the same floor for all five panels (Rolnicze, two columns, needs ~248 px),
+     so switching groups never moves the photo */
+  grid-template-columns: minmax(16rem, 0.8fr) minmax(0, 1.2fr);
+  gap: var(--w-space-6);
+}
+.cw-cropsw__panel[hidden] { display: none; }
+.cw-cropsw__panel:focus-visible {
+  outline: var(--w-focus-ring-width) solid var(--w-focus-ring);
+  outline-offset: var(--w-focus-ring-offset); border-radius: var(--w-radius-xs);
+}
+.cw-cropsw__list { min-width: 0; padding-top: var(--w-space-1); }
+/* Rolnicze: Ozime and Jare side by side as before (grid from cw.css) */
+.cw-cropsw__list .cw-crops__split { gap: var(--w-space-6); }
+
+/* The same frame for all five photos, so switching groups never moves the
+   panel; the frame is wide, the photo is cropped to it. */
+.cw-cropsw__photo {
+  display: block; width: 100%; height: auto; aspect-ratio: 3 / 2;
+  object-fit: cover; border-radius: var(--w-radius-md);
+  background: var(--w-surface-sunken);
+}
+
+/* Narrow panel (windows up to 1199 px, where the panel starts under its
+   trigger): no room for a photo of a useful size, so the list stands alone. */
+@container cw-cropsw (max-width: 46rem) {
+  .cw-cropsw__panel { grid-template-columns: minmax(0, 1fr); }
+  .cw-cropsw__photo { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cw-cropsw__group, .cw-cropsw__chev { transition: none; }
+}

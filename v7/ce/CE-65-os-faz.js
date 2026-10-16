@@ -6,7 +6,7 @@
    When the collapsing phase sits ABOVE the one being opened, its title would
    jump over the top edge of the window, so the module pulls it back to one
    --c5-gutter from the top (instant with reduced motion).
-   Iteration 10 (19.09.2026, uwaga 4 of Mateusz): the photo of a phase stays in
+   Iteration 10 (19.09.2026, review note 4): the photo of a phase stays in
    its panel at every width, so the module no longer moves the figures into a
    pinned stage – nothing here depends on the viewport any more and the module
    registers neither scroll nor resize. Where the photo stands inside the open

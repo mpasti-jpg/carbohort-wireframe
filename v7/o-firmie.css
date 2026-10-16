@@ -6,24 +6,22 @@
 
    Blocks ported from other pages, renamed to the `on-` prefix, mechanics kept:
      · CE-24 `on-dark` / `on-nums` / `on-odo` <- prochnica-plus.css 60 (pp-liczby)
-     · CE-20 `on-steps` / `on-fams`          <- carbohumic.css (c5hu-tiles), own layout
+     · CE-20 `on-steps`                      <- carbohumic.css (c5hu-tiles), own layout
      · CE-36 `on-who`                        <- carbomat-humic.css (c5-who)
      · CE-30 `on-val*`                       <- produkty.css 8.2 (c5pr-paths)
      · CE-48 `on-team` / `on-person` / `on-disc` / `on-more` <- prochnica-plus.css 55
      · CE-53 `on-docs` / `on-doc`            <- prochnica-plus.css 90 (pp-reports)
-     · CE-56 `on-map*`                       <- wariant `o-nas` klocka CE-56;
-       wersja bazowa stoi na kontakt.html#dystrybutorzy (prefiks kt-eumap / kt-pin,
-       pinezki numerowane i klikalne) – tutaj pinezki są kropkami bez numerów,
-       bo lista obok podaje sam kraj i firmę. Do zgrania w fali 2b.
+     · CE-96 wariant łuki (ce/CE-96-glob-dystrybutorow.css) – map and list;
+       only the address column next to the list (`on-map*`) stays here
      · CE-33 `on-quote`                      <- uprawa.css (u-quote, wariant ciemny-boks)
    ===================================================================== */
 
 /* 10 · W LICZBACH → ce/CE-24-pas-liczb.css */
 
-/* ===== 20 · CO ROBIMY – trzy kroki i rząd czterech rodzin (CE-20 ×2) =======
+/* ===== 20 · CO ROBIMY – trzy kroki i rząd czterech rodzin (CE-20) ===
    Card anatomy from c5hu-tiles (carbohumic.css): a framed card, title, body
    text. The steps add an ordinal and, on wide screens, a thin arrow drawn in
-   the gap between cards; the family row adds a packshot stage and a link. */
+   the gap between cards. The families are plain tiles of the same anatomy. */
 .on-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:var(--w-space-5);
   margin:clamp(2rem,4vw,3rem) 0 0;padding:0;list-style:none;}
 .on-step{position:relative;display:flex;flex-direction:column;gap:var(--w-space-3);
@@ -61,6 +59,9 @@
 .on-fam__go{margin-top:auto;padding-top:var(--w-space-2);display:inline-flex;align-items:center;gap:8px;
   min-height:44px;font-size:0.875rem;font-weight:var(--w-weight-medium);}
 .on-fam__go .wf-icon{flex:none;}
+/* CARBOHUMIC has two entry links; side by side, stacked on a narrow card. */
+.on-fam__gos{margin-top:auto;display:flex;flex-wrap:wrap;column-gap:var(--w-space-4);}
+.on-fam__gos .on-fam__go{margin-top:0;padding-top:var(--w-space-2);}
 .on-fams__more{margin-top:clamp(1.5rem,3vw,2.25rem);}
 
 @media (prefers-reduced-motion: reduce){
@@ -140,8 +141,9 @@
 
 /* ===== 60 · DOWODY – listy wierszy z akcją (CE-53 „dokumenty") ============
    Ported from prochnica-plus.css 90 (pp-reports): rows separated by thin lines,
-   name | metric | button. Buttons with no PDF behind them are `disabled` – the
-   state is carried by the attribute plus an outline, never by tone alone. */
+   name | metric | button. Since 15.10.2026 every button is active, as in the
+   CE-53 base (no disabled state since 02.10.2026); in the mockup nothing
+   downloads. */
 .on-docs{margin-top:clamp(2rem,4vw,3rem);}
 .on-docs__h{margin-top:clamp(2rem,4vw,3rem);}
 .on-docs__h:first-child{margin-top:0;}
@@ -151,57 +153,29 @@
 .on-docs__list > li:last-child .on-doc{border-bottom:1px solid var(--w-border-default);}
 .on-doc__name{font-size:1rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;margin:0;}
 .on-doc__meta{margin:0;font-size:0.875rem;color:var(--w-text-secondary);}
-/* page-specific: „unavailable" state of the c5-btn from ce/00-base.css */
-.c5-btn[disabled]{background:var(--w-surface-subtle);color:var(--w-text-disabled);
-  border-color:var(--w-border-subtle);cursor:not-allowed;}
 
 @media (max-width:899px){
   .on-doc{grid-template-columns:minmax(0,1fr);align-items:start;gap:var(--w-space-2);}
   .on-doc .c5-btn{justify-self:start;}
 }
 
-/* ===== 70 · GDZIE JESTEŚMY – mapa z listą krajów (CE-56, nowy klocek) =====
-   Two columns: the address block and the indicative map on the left, the eight
-   distributor rows on the right. Hovering a row lights its pin and the other
-   way round (`is-hot`, module in o-firmie.js); the pins are positioned by two
-   custom properties set in the markup, so the map carries no coordinates in
-   CSS. Without JS both halves simply stand next to each other. */
-.on-map{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(2rem,5vw,4.5rem);
-  margin-top:clamp(2rem,4vw,3rem);align-items:start;}
+/* ===== 70 · GDZIE JESTEŚMY – mapa Europy z łukami i lista krajów (CE-96 łuki)
+   The map and the list rows live in ce/CE-96-glob-dystrybutorow.css. This
+   page only sets the row under the map: the address and buttons on the left,
+   the list on the right; up to 767 px the list comes right under the map and
+   the address after it. */
+.on-map{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,2fr);gap:clamp(2rem,5vw,4rem);
+  margin-top:clamp(1.5rem,3vw,2.25rem);align-items:start;}
 .on-map__side{display:flex;flex-direction:column;gap:var(--w-space-5);}
 .on-map__addr{font-style:normal;font-size:1rem;line-height:1.6;color:var(--w-text-secondary);}
 .on-map__co{display:block;font-size:1.125rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;
   color:var(--w-text-primary);margin-bottom:var(--w-space-2);}
-.on-map__fig{margin:0;display:flex;flex-direction:column;gap:var(--w-space-2);}
-.on-map__frame{position:relative;aspect-ratio:16/10;background:var(--w-placeholder-fill);
-  border:1px solid var(--w-placeholder-stroke);overflow:hidden;}
-.on-map__cap{font-size:0.75rem;line-height:1.45;color:var(--w-text-tertiary);}
-/* pins: a small ring that fills in and grows when its row is hot */
-.on-map__pin{position:absolute;left:var(--x);top:var(--y);width:10px;height:10px;margin:-5px 0 0 -5px;
-  border:1px solid var(--w-gray-600);border-radius:var(--w-radius-circle);background:var(--w-surface-page);
-  transition:transform var(--w-duration-base) var(--w-ease),background-color var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);}
-.on-map__pin.is-hot{background:var(--w-gray-900);border-color:var(--w-gray-900);transform:scale(1.8);}
-/* the plant in Jordanowo – a filled square, so it never reads as one of the eight */
-.on-map__home{position:absolute;left:var(--x);top:var(--y);width:12px;height:12px;margin:-6px 0 0 -6px;
-  background:var(--w-gray-900);border:2px solid var(--w-surface-page);}
-.on-map__homelbl{position:absolute;left:16px;top:-3px;white-space:nowrap;font-size:0.6875rem;
-  line-height:1.2;letter-spacing:.04em;text-transform:uppercase;color:var(--w-text-primary);}
-
-.on-map__list{display:flex;flex-direction:column;margin:0;padding:0;list-style:none;}
-.on-map__row{display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr);gap:var(--w-space-4);
-  align-items:center;min-height:56px;padding-block:var(--w-space-3);text-decoration:none;color:inherit;
-  border-top:1px solid var(--w-border-default);transition:background-color var(--w-duration-base) var(--w-ease);}
-.on-map__list > li:last-child .on-map__row{border-bottom:1px solid var(--w-border-default);}
-.on-map__row:hover,.on-map__row.is-hot{background:var(--w-surface-hover);}
-.on-map__row:focus-visible{outline:2px solid var(--w-gray-900);outline-offset:-2px;}
-.on-map__c{white-space:nowrap;}
-.on-map__firm{font-size:0.9375rem;color:var(--w-text-secondary);}
 
 @media (max-width:899px){
   .on-map{grid-template-columns:1fr;gap:clamp(1.5rem,4vw,2.5rem);}
 }
-@media (prefers-reduced-motion: reduce){
-  .on-map__pin,.on-map__row{transition:none;}
+@media (max-width:767px){
+  .on-map__side{order:2;}
 }
 
 

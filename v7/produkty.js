@@ -172,7 +172,7 @@
 
   /* --- „Porównaj": opens the comparison overlay ----------------------------------------
      Until 19.09.2026 the link only scrolled to the section and moved focus to the table. Since
-     20.09 (Mateusz's comment in the preview) the whole comparison lives in a lightbox, so the
+     20.09 (review comment in the preview) the whole comparison lives in a lightbox, so the
      link carries `data-lightbox-open="porownanie"` and module 45 owns the click: it calls
      preventDefault, opens the dialog and puts focus inside it. Nothing to do here – the
      reference to the link stays only for the tab bar layout above. Without JS the href still

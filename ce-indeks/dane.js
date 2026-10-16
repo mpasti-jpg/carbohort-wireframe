@@ -1,12 +1,12 @@
 window.CE_DANE = {
  "meta": {
-  "wygenerowano": "11.10.2026",
+  "wygenerowano": "16.10.2026",
   "wersja": "0.1.0",
   "projekt": "CarboHort",
-  "aktywnych": 81,
-  "wycofanych": 12,
-  "wystapien": 295,
-  "stron": 33,
+  "aktywnych": 84,
+  "wycofanych": 14,
+  "wystapien": 311,
+  "stron": 34,
   "bazaStron": "v7/"
  },
  "projekt": {
@@ -374,7 +374,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-01.webp",
     "pelny": "ce-indeks/img/p/CE-01.webp",
     "w": 1280,
-    "h": 73
+    "h": 109
    },
    "warianty": [
     {
@@ -385,7 +385,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-01--wariant-podglad-koszyka.webp",
       "pelny": "ce-indeks/img/p/CE-01--wariant-podglad-koszyka.webp",
       "w": 1280,
-      "h": 354
+      "h": 390
      }
     },
     {
@@ -396,7 +396,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-01--wariant-zalogowany-pro.webp",
       "pelny": "ce-indeks/img/p/CE-01--wariant-zalogowany-pro.webp",
       "w": 1280,
-      "h": 114
+      "h": 150
      }
     }
    ],
@@ -466,7 +466,7 @@ window.CE_DANE = {
    "warianty": [
     {
      "slug": "szerokie",
-     "opis": "cztery boksy produktowe (Produkty Carbohort); w nagłówku panelu dwa przyciski – „Poznaj całą gamę produktów” (jasny) i „Przejdź do sklepu” (ciemny, z ikoną koszyka, od 28.09.2026); od 09.10.2026 boks ma cztery części w stałej kolejności – kategoria, nazwa, miniatura opakowania, opis przy dolnej krawędzi – a boks CARBOHUMIC pokazuje dwie butelki z podpisami „Doglebowe” i „Dolistne”",
+     "opis": "cztery boksy produktowe (Produkty Carbohort); w nagłówku panelu dwa przyciski – „Poznaj całą gamę produktów” (jasny) i „Przejdź do sklepu” (ciemny, z ikoną koszyka, od 28.09.2026); od 09.10.2026 boks ma cztery części w stałej kolejności – kategoria, nazwa, miniatura opakowania, opis przy dolnej krawędzi – a boks CARBOHUMIC pokazuje dwie butelki z podpisami „Doglebowe” i „Dolistne”; od 16.10.2026 boks CARBOHUMIC to dwa szare kafle obok siebie (odstęp 8 px), każdy osobnym linkiem z butelką na środku i podpisem: biała „Doglebowe” → carbohumic.html, czarna „Dolistne” → carbohumic-dolistny.html; najechany kafel ciemnieje i zdejmuje podświetlenie z boksu",
      "skrot": "Cztery boksy produktów z miniaturą opakowania, dwa przyciski w nagłówku panelu, rząd potrzeb.",
      "zrzut": null
     },
@@ -484,13 +484,24 @@ window.CE_DANE = {
     },
     {
      "slug": "grupy",
-     "opis": "pięć grup upraw na pełną szerokość kontenera (Rodzaje upraw, 20.09.2026; wygląd pozycji ujednolicony 01.10.2026): tytuł grupy z kreską 2 px i lista pozycji o jednym wyglądzie, a w grupie Rolnicze dwie listy pod śródtytułami Ozime i Jare, bez kart i ikon. Pozycja ze swoją stroną jest linkiem w ciemnym tonie, pozostałe 28 to jaśniejsze spany „cw-crop--soon”; bez strzałek, pogrubień i szyny wyróżnień. Spec: 40-strona-www/koncepcja/menu-rodzaje-upraw-spec.md",
-     "skrot": "Pięć grup upraw z listami nazw (Ozime i Jare), stopka z Konfiguratorem.",
+     "opis": "bez wystąpień od 15.10.2026, zastąpiony wariantem grupy-ze-zdjeciem; dawniej: pięć grup upraw na pełną szerokość kontenera (Rodzaje upraw, 20.09.2026; wygląd pozycji ujednolicony 01.10.2026): tytuł grupy z kreską 2 px i lista pozycji o jednym wyglądzie, a w grupie Rolnicze dwie listy pod śródtytułami Ozime i Jare, bez kart i ikon. Pozycja ze swoją stroną jest linkiem w ciemnym tonie, pozostałe 28 to jaśniejsze spany „cw-crop--soon”; bez strzałek, pogrubień i szyny wyróżnień. Spec: 40-strona-www/koncepcja/menu-rodzaje-upraw-spec.md",
+     "skrot": "Pięć grup upraw z listami nazw (Ozime i Jare), stopka z Konfiguratorem. (bez wystąpień od 15.10.2026)",
      "zrzut": {
       "mini": "ce-indeks/img/m/CE-02--wariant-grupy.webp",
       "pelny": "ce-indeks/img/p/CE-02--wariant-grupy.webp",
       "w": 1280,
-      "h": 400
+      "h": 355
+     }
+    },
+    {
+     "slug": "grupy-ze-zdjeciem",
+     "opis": "Rodzaje upraw (15.10.2026, komentarz Mateusza; klasa cw-mega--crop-switch, style ce/CE-02-mega-menu.css): po lewej pięć nazw grup jako pionowe zakładki, w środku lista roślin aktywnej grupy (te same pozycje, linki i stany co w wariancie grupy, Rolnicze z listami Ozime i Jare), po prawej zdjęcie grupy w ramce 3:2 – pięć różnych zdjęć poglądowych. Domyślnie pierwsza grupa, na stronie uprawy grupa tej uprawy; przełączanie najechaniem (z trójkątem intencji), fokusem, strzałkami góra / dół, Home / End i dotknięciem; Tab wchodzi w listę, Escape zamyka. Dolny pasek z Konfiguratorem bez zmian; menu mobilne bez zmian. Od 16.10.2026 panel zaczyna się pod lewą krawędzią przycisku „Rodzaje upraw” i kończy na prawej krawędzi kontenera treści; poniżej 840 px szerokości dostępnej zachowuje tę szerokość i przesuwa się w lewo, nie dalej niż do kontenera",
+     "skrot": "Grupy upraw w lewej kolumnie; po najechaniu lista grupy i jej zdjęcie, pod spodem pasek z Konfiguratorem",
+     "zrzut": {
+      "mini": "ce-indeks/img/m/CE-02--wariant-grupy-ze-zdjeciem.webp",
+      "pelny": "ce-indeks/img/p/CE-02--wariant-grupy-ze-zdjeciem.webp",
+      "w": 1280,
+      "h": 355
      }
     }
    ],
@@ -508,7 +519,7 @@ window.CE_DANE = {
     "stopka panelu"
    ],
    "kod_zrodlowy": {
-    "css": "cw.css (cw-mega)",
+    "css": "cw.css (cw-mega) + ce/CE-02-mega-menu.css (wariant grupy-ze-zdjeciem)",
     "js": "chrome.js (szablon NAVBAR) + cw.js"
    }
   },
@@ -549,7 +560,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-03.webp",
     "pelny": "ce-indeks/img/p/CE-03.webp",
     "w": 375,
-    "h": 544
+    "h": 627
    },
    "warianty": [],
    "wystapienia": [],
@@ -678,7 +689,7 @@ window.CE_DANE = {
    "zrzut": {
     "mini": "ce-indeks/img/m/CE-05.webp",
     "pelny": "ce-indeks/img/p/CE-05.webp",
-    "w": 560,
+    "w": 1280,
     "h": 59
    },
    "warianty": [],
@@ -689,14 +700,15 @@ window.CE_DANE = {
     "kotwica": "serwis-dok"
    },
    "opis": "Pływający dok w prawym dolnym rogu: pasek z polem pytania i przyciskiem, po otwarciu panel rozmowy (nagłówek, wiadomości, formularz).",
-   "mechanika": "Ukryty na stronach z sekcją hero do czasu zejścia z hero (sterowanie w warstwie strony), otwierany przyciskiem albo z linków data-jurek-open; panel z tłem przyciemnionym. Obsługa w cw.js.",
+   "mechanika": "Ukryty na stronach z sekcją hero do czasu zejścia z hero (sterowanie w warstwie strony), otwierany przyciskiem albo z linków data-jurek-open; panel z tłem przyciemnionym. Obsługa w cw.js. Od 15.10.2026 (komentarz Mateusza, wzór Figma 390-162): na stronach z <cw-dock> chrome.js wstawia przed stopką sekcję lądowania i przenosi dok tuż pod nią; dok jest przyklejony do dołu okna i zatrzymuje się nad stopką (klasa is-landed) – pole rośnie, pojawia się nagłówek; nigdy nie wchodzi na stopkę; przewinięcie w górę przywraca dok przyklejony. Chowanie nad hero i przy linijce CE-47 działa dalej. Od 16.10.2026 jedna reguła chowania w chrome.js dla każdej strony z dokiem: dok ukryty, dopóki czytelnik nie przewinie 60% bloku otwierającego (#hero, inaczej [data-dock-hero], inaczej pierwsza sekcja main); otwarty dok i dok osadzony nad stopką zawsze widoczne. Dok jest na każdej stronie serwisu poza koszykiem, logowaniem, rejestracją i panelami B2B / handlowca.",
    "czesci": [
     "pasek pytania",
     "panel rozmowy",
-    "przyciemnienie tła"
+    "przyciemnienie tła",
+    "sekcja lądowania nad stopką (#serwis-dok-sekcja: nagłówek „Czy chcesz jeszcze o coś zapytać?” i zdanie)"
    ],
    "kod_zrodlowy": {
-    "css": "cw.css (cw-jurek)",
+    "css": "cw.css (cw-jurek) + ce/CE-05-dok-doradcy.css",
     "js": "chrome.js (szablon DOCK) + cw.js + moduł 00 stron (updateDock)"
    }
   },
@@ -813,8 +825,15 @@ window.CE_DANE = {
      "wariant": null
     },
     {
+     "plik": "carbohumic-dolistny.html",
+     "strona": "CARBOHUMIC dolistny",
+     "id": "nawigacja-kropki",
+     "naglowek": "",
+     "wariant": null
+    },
+    {
      "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC",
+     "strona": "CARBOHUMIC doglebowy",
      "id": "nawigacja-kropki",
      "naglowek": "",
      "wariant": null
@@ -882,7 +901,7 @@ window.CE_DANE = {
     "kotwica": "nawigacja-kropki"
    },
    "opis": "Pionowa lista kropek przyklejona przy prawej krawędzi ekranu, jedna kropka na rozdział strony; etykiety rozdziałów wysuwają się po najechaniu na całą nawigację.",
-   "mechanika": "Scrollspy po sekcjach z data-chapter (kropka aktywna większa), klik przewija płynnie do rozdziału (przez Lenis, gdy aktywny); mix-blend-mode difference na ciemnym tle; ukryta poniżej 900 px.",
+   "mechanika": "Scrollspy po sekcjach z data-chapter (kropka aktywna większa), klik przewija płynnie do rozdziału (przez Lenis, gdy aktywny); mix-blend-mode difference na ciemnym tle; ukryta poniżej 900 px. Opcja (15.10.2026, Borówka): span.c5-dots__stage w etykiecie – mały dopisek „Etap N” nad nazwą rozdziału; pozycja z dopiskiem ma 38 px wysokości zamiast 28; strony bez tego elementu bez zmian.",
    "czesci": [
     "lista kropek",
     "etykiety"
@@ -930,7 +949,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-08.webp",
     "pelny": "ce-indeks/img/p/CE-08.webp",
     "w": 1280,
-    "h": 727
+    "h": 691
    },
    "warianty": [
     {
@@ -977,7 +996,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-08--wariant-kadr-w-tle.webp",
       "pelny": "ce-indeks/img/p/CE-08--wariant-kadr-w-tle.webp",
       "w": 1280,
-      "h": 727
+      "h": 691
      }
     },
     {
@@ -1028,8 +1047,15 @@ window.CE_DANE = {
      "wariant": "kadr-w-tle"
     },
     {
+     "plik": "carbohumic-dolistny.html",
+     "strona": "CARBOHUMIC dolistny",
+     "id": "hero",
+     "naglowek": "Szybkie wsparcie rośliny wtedy, gdy liczy się czas",
+     "wariant": null
+    },
+    {
      "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC",
+     "strona": "CARBOHUMIC doglebowy",
      "id": "hero",
      "naglowek": "Próchnica w płynie do regeneracji gleby i biostymulacji roślin",
      "wariant": null
@@ -1087,7 +1113,7 @@ window.CE_DANE = {
      "plik": "prochnica-plus.html",
      "strona": "Próchnica+",
      "id": "hero",
-     "naglowek": "Wspólnie wracamy do korzeni. Troska o glebę nie jest jedynie kosztem, ale kluczową inwest…",
+     "naglowek": "Wspólnie wracamy do korzeni",
      "wariant": "player"
     },
     {
@@ -1205,7 +1231,7 @@ window.CE_DANE = {
     },
     {
      "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC",
+     "strona": "CARBOHUMIC doglebowy",
      "id": "zalety",
      "naglowek": "",
      "wariant": null
@@ -1325,8 +1351,15 @@ window.CE_DANE = {
      "wariant": null
     },
     {
+     "plik": "carbohumic-dolistny.html",
+     "strona": "CARBOHUMIC dolistny",
+     "id": "parametry",
+     "naglowek": "Szybkie porównanie produktów",
+     "wariant": "z-tabami"
+    },
+    {
      "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC",
+     "strona": "CARBOHUMIC doglebowy",
      "id": "parametry",
      "naglowek": "Parametry produktu · wersja filtrowana",
      "wariant": "kafelki-z-wejsciem"
@@ -1455,7 +1488,7 @@ window.CE_DANE = {
     },
     {
      "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC",
+     "strona": "CARBOHUMIC doglebowy",
      "id": "ktory-dla-mnie",
      "naglowek": "Wybierz po funkcji i sposobie aplikacji.",
      "wariant": "pasma-z-przelacznikiem"
@@ -1640,7 +1673,7 @@ window.CE_DANE = {
     },
     {
      "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC",
+     "strona": "CARBOHUMIC doglebowy",
      "id": "czym-jest",
      "naglowek": "CARBOHUMIC to substancja najbardziej zbliżona do trwałej i stabilnej próchnicy glebowej,…",
      "wariant": "bez-naglowka"
@@ -1766,14 +1799,14 @@ window.CE_DANE = {
     },
     {
      "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC",
+     "strona": "CARBOHUMIC doglebowy",
      "id": "jak-stosowac-filtrowany",
      "naglowek": "",
      "wariant": "n-kadrow"
     },
     {
      "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC",
+     "strona": "CARBOHUMIC doglebowy",
      "id": "jak-stosowac-niefiltrowany",
      "naglowek": "",
      "wariant": "n-kadrow"
@@ -1855,7 +1888,7 @@ window.CE_DANE = {
     },
     {
      "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC",
+     "strona": "CARBOHUMIC doglebowy",
      "id": "dawki-domowe",
      "naglowek": "Dawki domowe – ogród, działka i pojedyncze rośliny (wg karty produktu)",
      "wariant": null
@@ -1951,7 +1984,7 @@ window.CE_DANE = {
     },
     {
      "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC",
+     "strona": "CARBOHUMIC doglebowy",
      "id": "czas-prochnicy-kaskada",
      "naglowek": "Ile trwa powstawanie stabilnej próchnicy",
      "wariant": "kaskada-z-pinem"
@@ -2109,8 +2142,15 @@ window.CE_DANE = {
      "wariant": "zamykajacy"
     },
     {
+     "plik": "carbohumic-dolistny.html",
+     "strona": "CARBOHUMIC dolistny",
+     "id": "uprawy-profesjonalne",
+     "naglowek": "Prowadzisz uprawę profesjonalną – sad, plantację lub szkółkę?",
+     "wariant": "pozny-wzrost"
+    },
+    {
      "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC",
+     "strona": "CARBOHUMIC doglebowy",
      "id": "uprawy-profesjonalne",
      "naglowek": "Prowadzisz uprawę profesjonalną – pole, sad, plantację lub szkółkę?",
      "wariant": "pozny-wzrost"
@@ -2296,8 +2336,15 @@ window.CE_DANE = {
      "wariant": null
     },
     {
+     "plik": "carbohumic-dolistny.html",
+     "strona": "CARBOHUMIC dolistny",
+     "id": "faq",
+     "naglowek": "Najczęstsze pytania o CARBOHUMIC dolistny",
+     "wariant": "z-nota"
+    },
+    {
      "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC",
+     "strona": "CARBOHUMIC doglebowy",
      "id": "faq",
      "naglowek": "Najczęstsze pytania o CARBOHUMIC",
      "wariant": "z-nota"
@@ -2429,15 +2476,22 @@ window.CE_DANE = {
      "wariant": null
     },
     {
+     "plik": "carbohumic-dolistny.html",
+     "strona": "CARBOHUMIC dolistny",
+     "id": "cta-koncowe",
+     "naglowek": "Nie wiesz, czego potrzebujesz? Skorzystaj z naszego pomocnika produktowego.",
+     "wariant": null
+    },
+    {
      "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC",
+     "strona": "CARBOHUMIC doglebowy",
      "id": "dobierz-produkt",
      "naglowek": "Nie wiesz czego potrzebujesz? Skorzystaj z naszego pomocnika produktowego",
      "wariant": "na-pasie"
     },
     {
      "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC",
+     "strona": "CARBOHUMIC doglebowy",
      "id": "cta-koncowe",
      "naglowek": "Zacznij od wersji dopasowanej do Twojego sprzętu i celu zabiegu.",
      "wariant": null
@@ -2617,7 +2671,7 @@ window.CE_DANE = {
     },
     {
      "slug": "produktowe",
-     "opis": "packshot na szarym polu, cała karta jednym linkiem, który otwiera kartę zastosowania w pop-upie (Kukurydza; od 02.10.2026 także Borówka – sześć kart 3 + 3, dwa wiersze „etykieta | wartość” słowami klienta)",
+     "opis": "packshot na szarym polu, cała karta jednym linkiem, który otwiera kartę zastosowania w pop-upie (Kukurydza; od 02.10.2026 także Borówka – sześć kart 3 + 3, dwa wiersze „etykieta | wartość” słowami klienta); karta partnerska (15.10.2026, Borówka – Vinassa): klasa u-prod__card--partner, pigułka EL-16 c5-chip--solid „Produkt partnerski” (u-prod__tag) w lewym górnym rogu pola zdjęcia, zaślepka-ikona przy braku packshotu (u-prod__noimg); od 900 px karta na cały rząd, zdjęcie w szerokości kolumny, opis obok",
      "skrot": "Packshot na szarym polu, dwa wiersze etykieta-wartość, cała karta jest linkiem do pop-upu.",
      "zrzut": null
     },
@@ -2766,8 +2820,15 @@ window.CE_DANE = {
      "wariant": "produktowe"
     },
     {
+     "plik": "borowka.html",
+     "strona": "Borówka",
+     "id": "b-sadzenie-karty",
+     "naglowek": "Moczenie korzeni",
+     "wariant": "z-rozpiska"
+    },
+    {
      "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC",
+     "strona": "CARBOHUMIC doglebowy",
      "id": "z-czym-laczyc-unikamy",
      "naglowek": "",
      "wariant": "ostrzegawcze"
@@ -3092,7 +3153,7 @@ window.CE_DANE = {
     },
     {
      "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC",
+     "strona": "CARBOHUMIC doglebowy",
      "id": "doglebowo-tabela",
      "naglowek": "",
      "wariant": "z-packshotami"
@@ -3248,7 +3309,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-23--wariant-cichy.webp",
       "pelny": "ce-indeks/img/p/CE-23--wariant-cichy.webp",
       "w": 1280,
-      "h": 35
+      "h": 41
      }
     }
    ],
@@ -3424,7 +3485,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-24--wariant-kafle-2x2.webp",
       "pelny": "ce-indeks/img/p/CE-24--wariant-kafle-2x2.webp",
       "w": 1280,
-      "h": 799
+      "h": 800
      }
     },
     {
@@ -3680,8 +3741,15 @@ window.CE_DANE = {
      "wariant": null
     },
     {
+     "plik": "carbohumic-dolistny.html",
+     "strona": "CARBOHUMIC dolistny",
+     "id": "efekty-karty",
+     "naglowek": "Lepsza regeneracja po stresie",
+     "wariant": null
+    },
+    {
      "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC",
+     "strona": "CARBOHUMIC doglebowy",
      "id": "z-czym-laczyc-kroki",
      "naglowek": "",
      "wariant": null
@@ -3887,24 +3955,17 @@ window.CE_DANE = {
     },
     {
      "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC",
+     "strona": "CARBOHUMIC doglebowy",
      "id": "jak-stosowac-zaprawianie",
      "naglowek": "",
      "wariant": "z-rozpiska"
     },
     {
      "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC",
+     "strona": "CARBOHUMIC doglebowy",
      "id": "jak-stosowac-dodatkowe",
      "naglowek": "",
      "wariant": "z-rozpiska"
-    },
-    {
-     "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC",
-     "id": "doglebowo-nalistne",
-     "naglowek": "Szybkie wsparcie rośliny wtedy, gdy liczy się czas",
-     "wariant": "cross-sell"
     },
     {
      "plik": "handlowiec-uzgodnienie.html",
@@ -4023,7 +4084,7 @@ window.CE_DANE = {
     },
     {
      "slug": "akordeon-z-odliczaniem",
-     "opis": "akordeon na szerokość kontenera wg ramki Figma „Frame 207” (Mateusz, 18.09.2026; Produkty, ścieżki wg sytuacji): otwarta pozycja ma duży tytuł, po lewej opis z notami, ostrzeżeniem i linkami, po prawej karty produktów z packshotem (po dwie w rzędzie, kolejne zawijają się do następnego wiersza; cała karta prowadzi na stronę produktu, „Kup produkt” odsłania się pod opisem na karcie, a packshot maleje); pierwsza pozycja otwarta od początku, odliczanie 5 s z paskiem na górnej linii następnej pozycji otwiera kolejną i zamyka poprzednią, klik otwiera dowolną albo zamyka otwartą i wyłącza automat, kotwica pozycji otwiera ją i zatrzymuje automat; automat tylko na szerokim ekranie i przy włączonym ruchu, pod kursorem i przy fokusie odliczanie stoi Runda wierności 20.09.2026 („odwzoruj bardziej szczegółowo wygląd CE”): karta 10 px promienia i tło #f6f6f6 z ramki (bez 60 % krycia warstwy Figmy – nad pasem #fafafa kafel byłby niewidoczny), zielony znacznik 32 px #86d574 w prawym górnym rogu, packshot w polu 139 px, nazwa 14 px semibold 38 px pod nim, opis 14 px na mierze 275 px, wiersze zamknięte 15 px w czerni i podziałce 62 px, tytuł otwarty 35 px, opis pozycji 16 px/1,3 w #777771 na mierze 358 px. Od 02.10.2026 także CARBOMAT Mata „Ekonomia” (uwaga Mateusza z 02.10: użyć CE, którego używamy gdzie indziej) – pięć pozycji „tytuł + opis” bez kart produktów, na module wspólnym ce/CE-30-lista-z-panelem.* w skali szarości kitu",
+     "opis": "akordeon na szerokość kontenera wg ramki Figma „Frame 207” (Mateusz, 18.09.2026; Produkty, ścieżki wg sytuacji): otwarta pozycja ma duży tytuł, po lewej opis z notami, ostrzeżeniem i linkami, po prawej karty produktów z packshotem (po dwie w rzędzie, kolejne zawijają się do następnego wiersza; cała karta prowadzi na stronę produktu, „Kup produkt” odsłania się pod opisem na karcie, a packshot maleje); pierwsza pozycja otwarta od początku, odliczanie 5 s z paskiem na górnej linii następnej pozycji otwiera kolejną i zamyka poprzednią, klik otwiera dowolną albo zamyka otwartą i wyłącza automat, kotwica pozycji otwiera ją i zatrzymuje automat; automat tylko na szerokim ekranie i przy włączonym ruchu, pod kursorem i przy fokusie odliczanie stoi Runda wierności 20.09.2026 („odwzoruj bardziej szczegółowo wygląd CE”): karta 10 px promienia i tło #f6f6f6 z ramki (bez 60 % krycia warstwy Figmy – nad pasem #fafafa kafel byłby niewidoczny), zielony znacznik 32 px #86d574 w prawym górnym rogu, packshot w polu 139 px, nazwa 14 px semibold 38 px pod nim, opis 14 px na mierze 275 px, wiersze zamknięte 15 px w czerni i podziałce 62 px, tytuł otwarty 35 px, opis pozycji 16 px/1,3 w #777771 na mierze 358 px. Od 02.10.2026 także CARBOMAT Mata „Ekonomia” (uwaga Mateusza z 02.10: użyć CE, którego używamy gdzie indziej) – pięć pozycji „tytuł + opis” bez kart produktów, na module wspólnym ce/CE-30-lista-z-panelem.* w skali szarości kitu; modyfikator c5-acc30--foto (15.10.2026, CARBOHUMIC dolistny #przewaga-lista): każdy punkt ma zdjęcie w panelu – od 900 px w kolumnie obok opisu (4:3), węziej pod opisem (16:10), pojawia się po otwarciu punktu; pokrętła --c5-acc30-ph-w, --c5-acc30-ph-ratio, --c5-acc30-ph-ratio-sm",
      "skrot": "Akordeon: otwarta pozycja z opisem i kartami produktów z packshotem",
      "zrzut": {
       "mini": "ce-indeks/img/m/CE-30--wariant-akordeon-z-odliczaniem.webp",
@@ -4047,10 +4108,17 @@ window.CE_DANE = {
    "wystapienia": [
     {
      "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC",
+     "strona": "CARBOHUMIC doglebowy",
      "id": "z-czym-laczyc-lista",
      "naglowek": "",
      "wariant": null
+    },
+    {
+     "plik": "carbohumic-dolistny.html",
+     "strona": "CARBOHUMIC dolistny",
+     "id": "przewaga-lista",
+     "naglowek": "Szybka reakcja",
+     "wariant": "akordeon-z-odliczaniem"
     },
     {
      "plik": "carbomat-mata.html",
@@ -4160,42 +4228,42 @@ window.CE_DANE = {
    "wystapienia": [
     {
      "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC",
+     "strona": "CARBOHUMIC doglebowy",
      "id": "ktory-dla-mnie-ostrzezenie",
      "naglowek": "",
      "wariant": "z-przyciskiem"
     },
     {
      "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC",
+     "strona": "CARBOHUMIC doglebowy",
      "id": "czas-prochnicy-gotowe",
      "naglowek": "",
      "wariant": null
     },
     {
      "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC",
+     "strona": "CARBOHUMIC doglebowy",
      "id": "jak-stosowac-nota-1",
      "naglowek": "",
      "wariant": "miekka"
     },
     {
      "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC",
+     "strona": "CARBOHUMIC doglebowy",
      "id": "jak-stosowac-nota-2",
      "naglowek": "",
      "wariant": null
     },
     {
      "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC",
+     "strona": "CARBOHUMIC doglebowy",
      "id": "z-czym-laczyc-nota",
      "naglowek": "",
      "wariant": "miekka"
     },
     {
      "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC",
+     "strona": "CARBOHUMIC doglebowy",
      "id": "faq-nota",
      "naglowek": "",
      "wariant": "miekka"
@@ -4213,6 +4281,13 @@ window.CE_DANE = {
      "id": "b-etapy-wazne",
      "naglowek": "",
      "wariant": null
+    },
+    {
+     "plik": "carbohumic-dolistny.html",
+     "strona": "CARBOHUMIC dolistny",
+     "id": "faq-nota",
+     "naglowek": "",
+     "wariant": "miekka"
     },
     {
      "plik": "kukurydza.html",
@@ -4358,7 +4433,7 @@ window.CE_DANE = {
     },
     {
      "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC",
+     "strona": "CARBOHUMIC doglebowy",
      "id": "jak-stosowac-zasada",
      "naglowek": "",
      "wariant": "pasek-zasady"
@@ -4611,7 +4686,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-36--wariant-z-wartosciami.webp",
       "pelny": "ce-indeks/img/p/CE-36--wariant-z-wartosciami.webp",
       "w": 1280,
-      "h": 800
+      "h": 799
      }
     }
    ],
@@ -4633,15 +4708,29 @@ window.CE_DANE = {
     {
      "plik": "borowka.html",
      "strona": "Borówka",
-     "id": "b-sadzenie-stoper",
+     "id": "b-podloze-stoper",
      "naglowek": "Technologia „Wodnego Stopera”",
      "wariant": null
     },
     {
      "plik": "borowka.html",
      "strona": "Borówka",
-     "id": "b-sadzenie-podloze",
+     "id": "b-podloze-mieszanka",
      "naglowek": "Podłoże z udziałem CARBOMAT ECO",
+     "wariant": "odwrocony"
+    },
+    {
+     "plik": "carbohumic-dolistny.html",
+     "strona": "CARBOHUMIC dolistny",
+     "id": "maxi-plus",
+     "naglowek": "CARBOHUMIC MAXI PLUS",
+     "wariant": null
+    },
+    {
+     "plik": "carbohumic-dolistny.html",
+     "strona": "CARBOHUMIC dolistny",
+     "id": "calbor",
+     "naglowek": "CARBOHUMIC CALBOR",
      "wariant": "odwrocony"
     },
     {
@@ -4741,6 +4830,20 @@ window.CE_DANE = {
      "strona": "CARBOMAT HUMIC",
      "id": "pop-hobby",
      "naglowek": "Hobbysta",
+     "wariant": null
+    },
+    {
+     "plik": "carbohumic-dolistny.html",
+     "strona": "CARBOHUMIC dolistny",
+     "id": "pop-maxi",
+     "naglowek": "CARBOHUMIC MAXI PLUS",
+     "wariant": null
+    },
+    {
+     "plik": "carbohumic-dolistny.html",
+     "strona": "CARBOHUMIC dolistny",
+     "id": "pop-calbor",
+     "naglowek": "CARBOHUMIC CALBOR",
      "wariant": null
     },
     {
@@ -5254,7 +5357,7 @@ window.CE_DANE = {
      "strona": "Borówka",
      "id": "b-pakiety-wybor",
      "naglowek": "",
-     "wariant": "dwa-pakiety"
+     "wariant": null
     }
    ],
    "wspolny": null,
@@ -5343,7 +5446,7 @@ window.CE_DANE = {
    "warianty": [
     {
      "slug": "z-pakietami",
-     "opis": "przelicznik spięty z wyborem pakietu (Kukurydza, 01.10.2026): w górnym rzędzie pudełka-przełączniki CE-45 „dwa-pakiety” i suwak powierzchni, niżej panel wybranego pakietu – wiersze „Etap · Zabieg”, a pod nimi boksy wyników po jednym na produkt (ilość, woda do zabiegu, koszt brutto, przycisk sklepu) i ciemny boks sumy kosztu pakietu; trzy boksy w pakiecie minimum, cztery w optimum; `data-calc` i `data-tabs-group` siedzą na tym samym kontenerze, więc przelicznik wypełnia boksy obu paneli. Na Borówce (02.10.2026) panel ma dwie grupy boksów: „co roku” i „jednorazowo” – każda z ciemnym boksem sumy; boksy jednorazowe (podłoże, „Wodny Stoper”, ściółka) niosą ilość na powierzchnię bez wiersza wody i koszt brutto liczony z największego opakowania (uwaga Mateusza z 02.10: „A tu nie liczysz ceny?”); pod panelami zostaje tylko odnośnik „Jak liczymy pakiety: założenia i ceny”, który otwiera okno CE-25 „jednostronicowy” z notą o roboczej propozycji, założeniami przeliczenia na hektar i cenami",
+     "opis": "przelicznik spięty z wyborem pakietu (Kukurydza, 01.10.2026): w górnym rzędzie pudełka-przełączniki CE-45 „dwa-pakiety” i suwak powierzchni, niżej panel wybranego pakietu – wiersze „Etap · Zabieg”, a pod nimi boksy wyników po jednym na produkt (ilość, woda do zabiegu, koszt brutto, przycisk sklepu) i ciemny boks sumy kosztu pakietu; trzy boksy w pakiecie minimum, cztery w optimum; `data-calc` i `data-tabs-group` siedzą na tym samym kontenerze, więc przelicznik wypełnia boksy obu paneli. Na Borówce (02.10.2026) panel ma dwie grupy boksów: „co roku” i „jednorazowo” – każda z ciemnym boksem sumy; boksy jednorazowe (podłoże, „Wodny Stoper”, ściółka) niosą ilość na powierzchnię bez wiersza wody i koszt brutto liczony z największego opakowania (uwaga Mateusza z 02.10: „A tu nie liczysz ceny?”); pod panelami zostaje tylko odnośnik „Jak liczymy pakiety: założenia i ceny”, który otwiera okno CE-25 „jednostronicowy” z notą o roboczej propozycji, założeniami przeliczenia na hektar i cenami; modyfikator u-pk--linijka (Borówka, wzór Figma 466-161; od 15.10.2026 wieczorem w przepływie strony): kolejność – przełącznik pakietów, tuż pod nim linijka powierzchni (gęsta podziałka, etykiety w skali logarytmicznej data-ruler-marks, domyślnie 0,5 · 1 · 2 · 5 · 10 · 20 · 50, uchwyt z kreską i ←→, duża wartość z „ha”; przeciąganie i klik, role=slider, strzałki, PageUp / PageDown, Home, End; kroki data-ruler-steps – 0,5 ha do 10 ha, potem 1 ha; wpisuje do [data-calc-in], liczy dalej c5.js), produkty wybranego pakietu w stałej siatce 4 kolumn od 1000 px (karta = 1/4 wiersza bez względu na liczbę kart; poniżej 2 kolumny, także na telefonie), na końcu zalecenia „Etap · Zabieg”; bez przyklejania i bez wpływu na dok doradcy; bez JS suwak natywny. Wzór dla kolejnych stron upraw (decyzja Mateusza z 16.10.2026 – wdrażać przy poprawianiu ich treści)",
      "skrot": "Pudełka wyboru pakietu, suwak, wiersze zabiegów i boksy wyników z sumą kosztu",
      "zrzut": null
     }
@@ -5360,7 +5463,7 @@ window.CE_DANE = {
      "plik": "borowka.html",
      "strona": "Borówka",
      "id": "b-pakiety",
-     "naglowek": "Dwa pakiety i ilość produktu na Twoją plantację",
+     "naglowek": "Trzy pakiety i ilość produktu na Twoją plantację",
      "wariant": "z-pakietami"
     }
    ],
@@ -5377,7 +5480,7 @@ window.CE_DANE = {
    ],
    "kod_zrodlowy": {
     "css": "ce/CE-47-przelicznik.css (u-pk, u-area, u-calc, u-out, u-cost)",
-    "js": "c5.js (przelicznik data-calc) + uprawa.js 13 (suwak)"
+    "js": "c5.js (przelicznik data-calc) + uprawa.js 13 (suwak) + ce/CE-47-przelicznik.js (modyfikator u-pk--linijka)"
    }
   },
   {
@@ -5537,7 +5640,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-50.webp",
     "pelny": "ce-indeks/img/p/CE-50.webp",
     "w": 1280,
-    "h": 799
+    "h": 800
    },
    "warianty": [
     {
@@ -5775,7 +5878,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-53.webp",
     "pelny": "ce-indeks/img/p/CE-53.webp",
     "w": 1280,
-    "h": 473
+    "h": 396
    },
    "warianty": [
     {
@@ -5899,7 +6002,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-54.webp",
     "pelny": "ce-indeks/img/p/CE-54.webp",
     "w": 1280,
-    "h": 737
+    "h": 682
    },
    "warianty": [],
    "wystapienia": [
@@ -5964,7 +6067,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-55.webp",
     "pelny": "ce-indeks/img/p/CE-55.webp",
     "w": 1280,
-    "h": 800
+    "h": 799
    },
    "warianty": [],
    "wystapienia": [
@@ -5995,35 +6098,9 @@ window.CE_DANE = {
    "kod": "CE-56",
    "nazwa": "Mapa z listą lokalizacji",
    "skrot": "Pole mapy z numerowanymi pinezkami obok siatki kart lokalizacji z kontaktem.",
-   "status": "aktywny",
+   "status": "wycofany",
    "projekt": null,
-   "tagi": {
-    "rodzina": [
-     "sklep-formularze"
-    ],
-    "media": [
-     "schemat-wykres"
-    ],
-    "tekst": [
-     "krotki"
-    ],
-    "ukryte": [
-     "wszystko-widoczne"
-    ],
-    "pozycje": [
-     "5-8"
-    ],
-    "nadaje": [
-     "kontakt-formularz",
-     "ludzie"
-    ],
-    "mechanika": [
-     "klik"
-    ],
-    "zakres": [
-     "typ-strony"
-    ]
-   },
+   "tagi": {},
    "zrzut": {
     "mini": "ce-indeks/img/m/CE-56.webp",
     "pelny": "ce-indeks/img/p/CE-56.webp",
@@ -6038,22 +6115,7 @@ window.CE_DANE = {
      "zrzut": null
     }
    ],
-   "wystapienia": [
-    {
-     "plik": "kontakt.html",
-     "strona": "Kontakt",
-     "id": "dystrybutorzy",
-     "naglowek": "Nasi zagraniczni dystrybutorzy",
-     "wariant": null
-    },
-    {
-     "plik": "o-firmie.html",
-     "strona": "O nas",
-     "id": "gdzie-jestesmy",
-     "naglowek": "Z Jordanowa do ośmiu krajów",
-     "wariant": "o-nas"
-    }
-   ],
+   "wystapienia": [],
    "wspolny": null,
    "baza": {
     "plik": "v7/kontakt.html",
@@ -6838,7 +6900,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-67--wariant-ikony.webp",
       "pelny": "ce-indeks/img/p/CE-67--wariant-ikony.webp",
       "w": 1280,
-      "h": 799
+      "h": 800
      }
     }
    ],
@@ -6854,12 +6916,19 @@ window.CE_DANE = {
      "plik": "borowka.html",
      "strona": "Borówka",
      "id": "b-sciolka",
-     "naglowek": "Masz już plantację: CARBOMAT ECO Ściółka",
+     "naglowek": "Ściółkowanie",
+     "wariant": "ikony"
+    },
+    {
+     "plik": "carbohumic-dolistny.html",
+     "strona": "CARBOHUMIC dolistny",
+     "id": "warunki",
+     "naglowek": "Warunki skutecznego zabiegu nalistnego",
      "wariant": "ikony"
     },
     {
      "plik": "carbohumic.html",
-     "strona": "CARBOHUMIC",
+     "strona": "CARBOHUMIC doglebowy",
      "id": "jaka-gleba",
      "naglowek": "Jaka powinna być gleba, aby kwasy humusowe działały najlepiej?",
      "wariant": "ikony"
@@ -6937,7 +7006,7 @@ window.CE_DANE = {
      "plik": "borowka.html",
      "strona": "Borówka",
      "id": "b-etapy",
-     "naglowek": "Zabiegi od wczesnej wiosny do jesieni",
+     "naglowek": "Produkty płynne w sezonie",
      "wariant": null
     }
    ],
@@ -7008,7 +7077,7 @@ window.CE_DANE = {
      "plik": "prochnica-plus.html",
      "strona": "Próchnica+",
      "id": "o-programie",
-     "naglowek": "5 uczestników",
+     "naglowek": "",
      "wariant": null
     }
    ],
@@ -7874,7 +7943,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-79--wariant-wideo.webp",
       "pelny": "ce-indeks/img/p/CE-79--wariant-wideo.webp",
       "w": 1280,
-      "h": 799
+      "h": 800
      }
     },
     {
@@ -7885,7 +7954,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-79--wariant-dwie-kolumny.webp",
       "pelny": "ce-indeks/img/p/CE-79--wariant-dwie-kolumny.webp",
       "w": 1280,
-      "h": 488
+      "h": 489
      }
     },
     {
@@ -8558,7 +8627,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-90.webp",
     "pelny": "ce-indeks/img/p/CE-90.webp",
     "w": 1280,
-    "h": 667
+    "h": 666
    },
    "warianty": [],
    "wystapienia": [
@@ -8823,6 +8892,323 @@ window.CE_DANE = {
    "kod_zrodlowy": {
     "css": "ce/CE-93-karuzela-relacji.css (c5-relc)",
     "js": "ce/CE-93-karuzela-relacji.js"
+   }
+  },
+  {
+   "kod": "CE-94",
+   "nazwa": "Kontakt z ekspertem",
+   "skrot": "Jeden ekspert produktu albo uprawy: portret, nagłówek, zdanie, nazwisko, telefon i e-mail oraz przyciski „Zadzwoń” i „Napisz e-mail”.",
+   "status": "aktywny",
+   "projekt": null,
+   "tagi": {
+    "rodzina": [
+     "pasy"
+    ],
+    "media": [
+     "zdjecie"
+    ],
+    "tekst": [
+     "krotki"
+    ],
+    "ukryte": [
+     "wszystko-widoczne"
+    ],
+    "pozycje": [
+     "1"
+    ],
+    "nadaje": [
+     "kontakt-formularz",
+     "ludzie",
+     "cta"
+    ],
+    "mechanika": [
+     "statyczny"
+    ],
+    "zakres": [
+     "uniwersalny"
+    ]
+   },
+   "zrzut": {
+    "mini": "ce-indeks/img/m/CE-94.webp",
+    "pelny": "ce-indeks/img/p/CE-94.webp",
+    "w": 1280,
+    "h": 600
+   },
+   "warianty": [],
+   "wystapienia": [
+    {
+     "plik": "carbomat-mata.html",
+     "strona": "CARBOMAT Mata Uprawowa",
+     "id": "kontakt-ekspert",
+     "naglowek": "Masz pytania o CARBOMAT MATA UPRAWOWA?",
+     "wariant": null
+    }
+   ],
+   "wspolny": null,
+   "baza": {
+    "plik": "v7/carbomat-mata.html",
+    "kotwica": "kontakt-ekspert"
+   },
+   "opis": "Ostatnia sekcja przed stopką: ramka w kontenerze 1180 px, po lewej portret 4 : 5 (220 px; do czasu zdjęcia zaślepka wf-ph), po prawej kicker, H2, jedno zdanie, imię i nazwisko z tytułem, numer telefonu jako link tel: i adres e-mail jako link mailto:, pod nimi rząd dwóch przycisków – ciemny „Zadzwoń” i jasny „Napisz e-mail”. Poniżej 700 px portret (do 160 px) stoi nad tekstem, a przyciski dzielą szerokość.",
+   "mechanika": "Statyczne. Przyciski kontaktowe w treści strony („zapytaj o ofertę”, „porozmawiaj z agronomem”…) to zwykłe kotwice do id sekcji – szyna CX5 z 00-base.js przewija do niej płynnie, bez pop-upu; dopiero tu czytelnik dzwoni albo pisze.",
+   "czesci": [
+    "portret 4 : 5 albo zaślepka (c5-expert__photo)",
+    "kicker, H2 i zdanie (c5-expert__lead)",
+    "imię i nazwisko z tytułem (c5-expert__name)",
+    "telefon i e-mail jako linki z ikonami (c5-expert__lines, c5-expert__line)",
+    "rząd przycisków „Zadzwoń” i „Napisz e-mail” (EL-01, EL-04; c5-expert__acts)"
+   ],
+   "kod_zrodlowy": {
+    "css": "ce/CE-94-kontakt-z-ekspertem.css (c5-expert)",
+    "js": "00-base.js (kotwice)"
+   }
+  },
+  {
+   "kod": "CE-95",
+   "nazwa": "Pasek promocji",
+   "skrot": "Cienki zielony pasek nad menu na każdej stronie: etykieta „Promocja”, jedno zdanie z odnośnikiem i przycisk zamknięcia.",
+   "status": "aktywny",
+   "projekt": null,
+   "tagi": {
+    "rodzina": [
+     "wspolne"
+    ],
+    "media": [
+     "ikona"
+    ],
+    "tekst": [
+     "krotki"
+    ],
+    "ukryte": [
+     "wszystko-widoczne"
+    ],
+    "pozycje": [
+     "1"
+    ],
+    "nadaje": [
+     "nawigacja",
+     "sklep-transakcja"
+    ],
+    "mechanika": [
+     "klik"
+    ],
+    "zakres": [
+     "uniwersalny"
+    ]
+   },
+   "zrzut": {
+    "mini": "ce-indeks/img/m/CE-95.webp",
+    "pelny": "ce-indeks/img/p/CE-95.webp",
+    "w": 1280,
+    "h": 36
+   },
+   "warianty": [],
+   "wystapienia": [],
+   "wspolny": "każda podstrona (chrome.js)",
+   "baza": {
+    "plik": "v7/chrome.js",
+    "kotwica": "serwis-promocja"
+   },
+   "opis": "Pasek na całą szerokość nad wierszem menu (pierwsze dziecko nagłówka CE-01), ciemnozielone tło z białym tekstem (kontrast 6,6 : 1). W kontenerze: etykieta „Promocja” w ramce, zdanie o promocji i odnośnik „Zobacz w sklepie”, po prawej przycisk X (aria-label „Zamknij”). Od 641 px zdanie wyśrodkowane, poniżej wyrównane do lewej i może łamać się na dwa wiersze.",
+   "mechanika": "Wstawia go chrome.js razem z nagłówkiem serwisu – na podstronach nie ma ani jednej linii jego kodu. Jedna konfiguracja PROMO w chrome.js: id, etykieta, tekst, odnośnik, adres i przełącznik włączona / wyłączona. Zamknięcie zdejmuje pasek z DOM i zapisuje w localStorage klucz „cw-promo-zamknieta:<id>”, więc pasek nie wraca na kolejnych stronach ani po przeładowaniu, a promocja z nowym id pokaże się znowu; bez dostępu do pamięci przeglądarki pasek zamyka się do przeładowania. Pasek jest częścią nagłówka, dlatego mierzona wysokość menu (--cx-navbar-h z 00-base.js) i próg podnawigacji c5.js obejmują go bez zmian na stronach; tam, gdzie nagłówek jest przyklejony, przykleja się z przesunięciem o wysokość paska, więc przyklejone zostaje samo menu.",
+   "czesci": [
+    "etykieta „Promocja” (c5-promo__badge)",
+    "zdanie o promocji (c5-promo__t)",
+    "odnośnik do sklepu (c5-promo__link)",
+    "przycisk zamknięcia (c5-promo__x)"
+   ],
+   "kod_zrodlowy": {
+    "css": "ce/CE-95-pasek-promocji.css (c5-promo; dołącza go chrome.js)",
+    "js": "chrome.js (PROMO, promoBar)"
+   }
+  },
+  {
+   "kod": "CE-96",
+   "nazwa": "Glob dystrybutorów",
+   "skrot": "Kropkowany glob z punktami partnerów i karty partnerów; wybór karty albo punktu obraca glob do kraju.",
+   "status": "aktywny",
+   "projekt": null,
+   "tagi": {
+    "rodzina": [
+     "sklep-formularze"
+    ],
+    "media": [
+     "schemat-wykres"
+    ],
+    "tekst": [
+     "krotki"
+    ],
+    "ukryte": [
+     "akordeon",
+     "przewijanie"
+    ],
+    "pozycje": [
+     "5-8"
+    ],
+    "nadaje": [
+     "kontakt-formularz",
+     "ludzie"
+    ],
+    "mechanika": [
+     "klik",
+     "ruch-wlasny"
+    ],
+    "zakres": [
+     "typ-strony"
+    ]
+   },
+   "zrzut": {
+    "mini": "ce-indeks/img/m/CE-96.webp",
+    "pelny": "ce-indeks/img/p/CE-96.webp",
+    "w": 1280,
+    "h": 799
+   },
+   "warianty": [
+    {
+     "slug": "pol-kuli",
+     "opis": "górna połowa kuli nad rzędem kart przewijanym w bok (c5-glob--pol-kuli); bez wystąpień od 15.10.2026 – przełącznik porównawczy na Kontakcie zdjęty po wyborze wariantu B; kod zostaje, na jego geometrii stoi wariant luki",
+     "skrot": "Górna połowa kuli wychodzi spod dolnej krawędzi pola, pod nią rząd kart przewijany w bok (bez wystąpień od 15.10.2026)",
+     "zrzut": null
+    },
+    {
+     "slug": "srodek",
+     "opis": "lustro ramki Figma 528-184 (15.10.2026): duża kula wychodzi spod lewej krawędzi sekcji, prawy brzeg widoczny przed krawędzią okna, Europa i znaczniki w prawej części kuli – numer nad pionową kreską 1 px, punkt na dolnym końcu, numery 1–8 = żółte plakietki kart; kolumna zwiniętych akordeonów 340 px w lewym dolnym rogu; otwarcie karty obraca kraj w wolną prawą część kuli; jasna kula (#ececec, kropki #aaaaaa), brzeg wygasa; do 767 px kula w pasie, karty pod nią (c5-glob--srodek); kontakt.html#dystrybutorzy; od 15.10.2026 wieczorem bez samoczynnego ruchu (kula obraca się tylko po wyborze partnera i przy przeciąganiu), kadr startowy: Europa wyśrodkowana w wolnym polu między kolumną akordeonów a prawym brzegiem kuli",
+     "skrot": "Duża kula wychodzi spod lewej krawędzi, Europa i numerowane kreski w jej prawej części, po lewej kolumna zwiniętych akordeonów",
+     "zrzut": null
+    },
+    {
+     "slug": "luki",
+     "opis": "płaska mapa Europy (od 15.10.2026 wieczorem zamiast kuli – na kuli Europa była za mała): rzut stożkowy wiernokątny dopasowany do punktów i siedziby, kropkowany ląd z wygaszonymi krawędziami; z rombu siedziby (podpis data-glob-hq-label) płaskie łuki do krajów, każdy z wygięciem dobranym tak, żeby się nie krzyżowały i nie zlewały (bliskie pary w przeciwne strony), rysowane kolejno po wejściu w okno (przy ograniczonym ruchu od razu); mapa nieruchoma i nieklikalna; punkty czytane z wierszy listy linków (data-glob-lon/lat/label), najechanie albo fokus na wiersz wyróżnia jego łuk; bez JS sama lista (c5-glob--luki); o-firmie.html#gdzie-jestesmy",
+     "skrot": "Płaska mapa Europy z łukami z siedziby do krajów, pod nią lista linków",
+     "zrzut": null
+    }
+   ],
+   "wystapienia": [
+    {
+     "plik": "kontakt.html",
+     "strona": "Kontakt",
+     "id": "dystrybutorzy",
+     "naglowek": "Nasi zagraniczni dystrybutorzy",
+     "wariant": null
+    },
+    {
+     "plik": "o-firmie.html",
+     "strona": "O nas",
+     "id": "gdzie-jestesmy",
+     "naglowek": "Z Jordanowa do ośmiu krajów",
+     "wariant": "luki"
+    }
+   ],
+   "wspolny": null,
+   "baza": {
+    "plik": "v7/kontakt.html",
+    "kotwica": "dystrybutorzy"
+   },
+   "opis": "Kropkowany glob w szarościach (lądy jako siatka kwadratowych kropek, kula w jasnej szarości) z ciemnym kwadratowym punktem i etykietą kraju dla każdego partnera oraz rombem siedziby firmy; legenda w rogu pola. Karty partnerów: kraj wersalikami, firma, osoba, telefon i e-mail jako przyciski. Dane punktu niosą atrybuty karty (długość i szerokość geograficzna, etykieta, strona etykiety), więc partner z innego kontynentu to jedna nowa karta. Wariant pol-kuli: duża kula widoczna od góry do połowy, zwrócona ku Europie, wygaszona przy bokach i dole; pod nią rząd czterech kart przewijany w bok i przyciski poprzedni / następny z licznikiem. Wariant srodek: cała kula na środku pola, po prawej kolumna około ćwierci szerokości na wysokość ekranu z akordeonem (kraj i firma w nagłówku, osoba i kontakt po rozwinięciu). Poniżej 900 px mniejszy glob nad kartami, oba warianty w jednej kolumnie.",
+   "mechanika": "Klik w punkt albo w kartę wybiera partnera: glob obraca się do jego kraju (płynnie, przy prefers-reduced-motion od razu), punkt i karta się wyróżniają; w wariancie pol-kuli rząd kart przewija się w bok do karty, w wariancie srodek otwiera się pozycja akordeonu. Nagłówek karty to przycisk (aria-pressed albo aria-expanded), więc z klawiatury wybiera się kartami; punkty mają w nich odpowiedniki. Najechanie na kartę podświetla punkt. Adres z kotwicą karty (np. #dyst-rumunia) wybiera partnera po wejściu. W spoczynku glob kołysze się o kilka stopni – tylko bez ograniczenia ruchu, gdy jest na ekranie, i nie przez 8 s po interakcji. Wariant wybiera klasa-modyfikator; zmiana klasy przebudowuje widok. Bez JS albo bez bibliotek z CDN: zwykła siatka kart. Od 15.10.2026 wieczorem moduł nie ma żadnego samoczynnego ruchu (kołysanie usunięte we wszystkich wariantach).",
+   "czesci": [
+    "pole globu: kula, kropki lądów, punkty z etykietami, romb siedziby, legenda (c5-glob__stage)",
+    "karta partnera: przycisk z krajem i firmą, osoba, telefon i e-mail (c5-glob__item)",
+    "nawigacja poprzedni / następny z licznikiem – wariant pol-kuli (c5-glob__nav)"
+   ],
+   "kod_zrodlowy": {
+    "css": "ce/CE-96-glob-dystrybutorow.css (c5-glob)",
+    "js": "ce/CE-96-glob-dystrybutorow.js (d3@7.9.0 i topojson-client@3.1.0 z CDN, lądy z data/land-110m.json)"
+   }
+  },
+  {
+   "kod": "CE-97",
+   "nazwa": "Oś historii",
+   "skrot": "Kamienie milowe firmy w rzędzie kart przewijanych w poziomie (zdjęcie i ciemny panel z rokiem) i oś lat pod spodem.",
+   "status": "aktywny",
+   "projekt": null,
+   "tagi": {
+    "rodzina": [
+     "karty"
+    ],
+    "media": [
+     "zdjecie"
+    ],
+    "tekst": [
+     "krotki"
+    ],
+    "ukryte": [
+     "karuzela",
+     "przewijanie"
+    ],
+    "pozycje": [
+     "5-8"
+    ],
+    "nadaje": [
+     "harmonogram-czas"
+    ],
+    "mechanika": [
+     "klik",
+     "przewijanie"
+    ],
+    "zakres": [
+     "uniwersalny"
+    ]
+   },
+   "zrzut": {
+    "mini": "ce-indeks/img/m/CE-97.webp",
+    "pelny": "ce-indeks/img/p/CE-97.webp",
+    "w": 1280,
+    "h": 800
+   },
+   "warianty": [],
+   "wystapienia": [
+    {
+     "plik": "o-firmie.html",
+     "strona": "O nas",
+     "id": "historia",
+     "naglowek": "Nasza historia",
+     "wariant": null
+    }
+   ],
+   "wspolny": null,
+   "baza": {
+    "plik": "v7/o-firmie.html",
+    "kotwica": "historia"
+   },
+   "opis": "Nagłówek sekcji, pod nim rząd kart przewijany w poziomie od krawędzi do krawędzi okna; karta to po lewej zdjęcie, po prawej ciemny panel z dużym rokiem, krótkim tytułem i jednym–dwoma zdaniami; kolejna karta wystaje z prawej, karty nieaktywne mają jasny panel (wzór: ramka Figma 368-115). Pod rzędem oś lat: lata z kropkami połączonymi linią, aktywny rok wyróżniony. Poniżej 768 px karta stoi pionowo (zdjęcie u góry), a oś lat przewija się sama.",
+   "mechanika": "Rząd przewija się natywnie ze scroll-snap (palec, gładzik, klawiatura po fokusie na torze), myszą można go przeciągnąć. Klik w rok przewija rząd do karty – płynnie albo od razu przy prefers-reduced-motion; strzałki, Home i End przenoszą po osi. Przewinięcie rzędu ustawia aktywny rok (aria-current). Adres z kotwicą karty otwiera rząd na tej karcie. Bez JS karty stoją jedna pod drugą, a oś jest ukryta.",
+   "czesci": [
+    "kicker i nagłówek sekcji",
+    "tor kart (c5-hist__track)",
+    "karta: zdjęcie, rok, tytuł, opis (c5-hist__card)",
+    "oś lat: rok, kropka, linia (c5-hist__axis)"
+   ],
+   "kod_zrodlowy": {
+    "css": "ce/CE-97-os-historii.css (c5-hist)",
+    "js": "ce/CE-97-os-historii.js"
+   }
+  },
+  {
+   "kod": "CE-98",
+   "nazwa": "Karty w wachlarzu",
+   "skrot": "Kilka kart z linkami ułożonych w wachlarz; wlatują od dołu przy przewijaniu, najechana karta się prostuje.",
+   "status": "wycofany",
+   "projekt": null,
+   "tagi": {},
+   "zrzut": null,
+   "warianty": [],
+   "wystapienia": [],
+   "wspolny": null,
+   "baza": {
+    "plik": "v7/o-firmie.html",
+    "kotwica": "co-robimy-rodziny"
+   },
+   "opis": "Rząd kart: szare pole 4:3 z packshotem, nazwa, jedno zdanie i link albo para linków przypięta do dołu karty. Od 900 px karty stoją w łuku: skrajne obrócone mocniej i niżej, środkowe prawie proste (wzór: ramki Figma 350-274 i 100-110, bez napisu w tle). Od 768 do 899 px, bez JS i przy ograniczonym ruchu – zwykła siatka kart. Do 767 px rząd przewijany w poziomie z dociąganiem, widać brzeg następnej karty, karty lekko obrócone na przemian.",
+   "mechanika": "Od 900 px przy dozwolonym ruchu karty wlatują od dołu z obrotem, jedna po drugiej od lewej; postęp idzie za przewijaniem i jest odwracalny, wlot kończy się, gdy górna krawędź rzędu dochodzi do 40% wysokości okna. Karta w pierwszej połowie lotu nie przyjmuje kliknięć. Najechanie albo fokus na linku prostuje kartę i unosi ją o 12 px. Kotwica rzędu otwiera go w stanie końcowym. Pokrętła na korzeniu: --c5-fan-tilt, --c5-fan-drop, --c5-fan-fly, --c5-fan-w, --c5-fan-radius.",
+   "czesci": [
+    "rząd kart: wachlarz, siatka albo tor przewijany (c5-fan)",
+    "karta: pole packshotu 4:3, nazwa, zdanie (c5-fan__card)",
+    "link albo para linków przypięta do dołu karty"
+   ],
+   "kod_zrodlowy": {
+    "css": "archiwum-wersji/ce-98-karty-wachlarz-2026-10-15/CE-98-karty-wachlarz.css (c5-fan)",
+    "js": "archiwum-wersji/ce-98-karty-wachlarz-2026-10-15/CE-98-karty-wachlarz.js"
    }
   }
  ]

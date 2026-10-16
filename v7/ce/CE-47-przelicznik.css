@@ -1,7 +1,7 @@
 /* ===== CE-47 · Przelicznik (rejestr: ce-rejestr.js) =========================
    Prefixes: u-pk, u-area, u-calc, u-out, u-cost, u-vpanel.
    Scripts: `data-calc` (c5.js), `data-calc-range` and `data-tabs-group`
-   (uprawa.js). */
+   (uprawa.js); the ruler of the variant „linijka” – CE-47-przelicznik.js. */
 
 /* ===== wariant: z-pakietami =====
    The package switch (CE-45) and the area slider on top, then the open panel:
@@ -64,3 +64,69 @@
 .u-out--sum .wf-caption{color:var(--w-gray-400);}
 .u-cost p + p{margin-top:var(--w-space-3);}
 .b-pk__more{margin:0;font-size:var(--w-font-sm-size);line-height:var(--w-font-sm-lh);}
+
+/* ===== wariant: linijka =====
+   Modifier class `u-pk--linijka` on the calculator box. Order of the box: the
+   package switch (full row), the area ruler right below it (the area block is
+   the second child of .u-pk__top), the products of the open package, then its
+   treatments. The ruler (CE-47-przelicznik.js): dense ticks, labelled long
+   ticks on a logarithmic scale, a handle with a line and a ←→ grip, the large
+   value beside it. It stands in the flow of the page – not pinned to the
+   window. From 600 px the number field stays in the label row for an exact
+   area (any value, also above the end of the scale; the ruler then stands at
+   its end and shows the typed value). The product boxes stand in a fixed grid
+   of four columns from 1000 px: each box takes a quarter of the row whatever
+   the number of boxes (two boxes = half a row, the rest stays empty); two
+   columns below, also on the phone (narrower gap and padding there, so the
+   longest value fits). Without JS: the native range and the number field. */
+@media (min-width:1000px){
+  .u-pk--linijka .u-pk__top{grid-template-columns:minmax(0,1fr);}
+  .u-pk--linijka .u-calc{grid-template-columns:repeat(4,minmax(0,1fr));}
+}
+.u-pk--linijka .u-area{gap:var(--w-space-1);}
+@media (max-width:639px){
+  .u-pk--linijka .u-calc{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--w-space-2);}
+  .u-pk--linijka .u-out{padding:var(--w-space-3);}
+}
+.u-pk--linijka .u-area.is-ruler{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;
+  column-gap:var(--w-space-3);}
+.u-pk--linijka .u-area.is-ruler > .wf-label{grid-column:1;grid-row:1;}
+.u-pk--linijka .u-area.is-ruler .u-area__row{grid-column:2;grid-row:1;}
+.u-pk--linijka .u-area.is-ruler .u-area__row .wf-input-group{width:7.5rem;}
+.u-pk--linijka .u-area.is-ruler > .u-ruler{grid-column:1 / -1;}
+.u-pk--linijka .u-area.is-ruler .u-area__range,
+.u-pk--linijka .u-area.is-ruler .u-area__scale{display:none;}
+.u-ruler{--u-ruler-h:86px;--u-ruler-num:clamp(2.75rem,4.6vw,4rem);
+  position:relative;touch-action:pan-y;cursor:ew-resize;user-select:none;-webkit-user-select:none;
+  -webkit-tap-highlight-color:transparent;}
+.u-ruler:focus{outline:none;}
+.u-ruler:focus-visible{outline:2px solid var(--w-focus-ring);outline-offset:4px;}
+.u-ruler__track{position:relative;height:var(--u-ruler-h);}
+.u-ruler__ticks{position:absolute;inset:0;}
+.u-ruler__tick{position:absolute;bottom:0;width:1px;height:calc(8px + var(--k,0) * 22px);
+  background:var(--w-gray-300);transform:translateX(-50%);}
+.u-ruler__tick--major{width:2px;height:calc(16px + var(--k,0) * 16px);background:var(--w-gray-700);}
+.u-ruler__marks{position:relative;height:16px;margin-top:6px;}
+.u-ruler__mark{position:absolute;top:0;transform:translateX(-50%);font-size:11px;line-height:16px;
+  font-variant-numeric:tabular-nums;color:var(--w-text-tertiary);white-space:nowrap;}
+.u-ruler__mark--first{transform:none;}
+.u-ruler__mark--last{transform:translateX(-100%);}
+.u-ruler__handle{position:absolute;top:0;bottom:0;width:0;}
+.u-ruler__line{position:absolute;top:0;bottom:0;left:-1px;width:2px;background:var(--w-gray-900);}
+.u-ruler__grip{position:absolute;left:0;top:46%;transform:translate(-50%,-50%);display:flex;align-items:center;
+  gap:1px;padding:5px 6px;background:var(--w-surface-page);border:1px solid var(--w-border-strong);color:var(--w-text-primary);}
+.u-ruler__grip .wf-icon{width:12px;height:12px;}
+.u-ruler.is-drag .u-ruler__grip,.u-ruler:focus-visible .u-ruler__grip{border-color:var(--w-gray-900);}
+.u-ruler__val{position:absolute;top:0;left:26px;display:flex;align-items:flex-start;gap:4px;white-space:nowrap;color:var(--w-text-primary);}
+.u-ruler__val.is-left{left:auto;right:26px;}
+.u-ruler__num{font-size:var(--u-ruler-num);line-height:.86;font-weight:var(--w-weight-medium);letter-spacing:-0.035em;
+  font-variant-numeric:tabular-nums;}
+.u-ruler__unit{font-size:.875rem;line-height:1;font-weight:var(--w-weight-medium);color:var(--w-text-secondary);}
+@media (max-width:599px){
+  /* compact: label, value and ruler; no number field */
+  .u-pk--linijka .u-area.is-ruler .u-area__row{display:none;}
+  .u-ruler{--u-ruler-h:54px;--u-ruler-num:2.125rem;}
+  .u-ruler__grip{padding:3px 4px;}
+  .u-ruler__val{left:20px;}
+  .u-ruler__val.is-left{right:20px;}
+}
