@@ -247,7 +247,7 @@ window.CW_STATUS = {
       "sekcja": "2. Produkty Carbohort",
       "nazwa": "CARBOMAT HUMIC",
       "stan": {
-        "makieta": "do-akceptacji",
+        "makieta": "zaakceptowany",
         "tresc": null,
         "projekt": null,
         "media": null,
@@ -255,7 +255,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31565,
-      "data": "11.10"
+      "data": "16.10"
     },
     "uprawy.html": {
       "sekcja": "Poza tabelą",
@@ -276,7 +276,7 @@ window.CW_STATUS = {
       "sekcja": "3. Rodzaje upraw",
       "nazwa": "Kukurydza",
       "stan": {
-        "makieta": "do-akceptacji",
+        "makieta": null,
         "tresc": null,
         "projekt": null,
         "media": null,
@@ -284,13 +284,13 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31566,
-      "data": "05.10"
+      "data": "16.10"
     },
     "ziemniak.html": {
       "sekcja": "3. Rodzaje upraw",
       "nazwa": "Ziemniak",
       "stan": {
-        "makieta": "do-akceptacji",
+        "makieta": null,
         "tresc": null,
         "projekt": null,
         "media": null,
@@ -298,7 +298,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31567,
-      "data": "07.09"
+      "data": "16.10"
     },
     "borowka.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -501,7 +501,7 @@ window.CW_STATUS = {
       "sekcja": "6. O nas",
       "nazwa": "O nas",
       "stan": {
-        "makieta": null,
+        "makieta": "do-akceptacji",
         "tresc": null,
         "projekt": null,
         "media": null,
@@ -509,7 +509,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31863,
-      "data": "15.10"
+      "data": "16.10"
     },
     "kontakt.html": {
       "sekcja": "7. Kontakt",
@@ -543,7 +543,7 @@ window.CW_STATUS = {
       "sekcja": "9. Sklep",
       "nazwa": "Lista produktów",
       "stan": {
-        "makieta": null,
+        "makieta": "do-akceptacji",
         "tresc": null,
         "projekt": null,
         "media": null,
@@ -551,7 +551,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31864,
-      "data": "15.10"
+      "data": "16.10"
     },
     "pdp.html": {
       "sekcja": "9. Sklep",
@@ -571,7 +571,7 @@ window.CW_STATUS = {
       "sekcja": "9. Sklep",
       "nazwa": "Karta produktu – CARBOMAT ECO pH 4,5–5,0",
       "stan": {
-        "makieta": null,
+        "makieta": "do-akceptacji",
         "tresc": null,
         "projekt": null,
         "media": null,
@@ -579,7 +579,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31865,
-      "data": "28.09"
+      "data": "16.10"
     },
     "koszyk.html": {
       "sekcja": "9. Sklep",
