@@ -233,83 +233,145 @@ window.CX5 = (function () {
    Hence the union here: --i for elements inside a [data-reveal-group], the
    `pp-reveal` start class for what begins below the fold and inside the window
    horizontally (a track scrolled sideways must never stay invisible), `is-in`
-   on entry, plus a scroll-bus safety net and beforeprint. With reduced motion
-   or without IntersectionObserver everything simply gets `is-in` at once.
+   on entry, plus beforeprint. With reduced motion everything simply gets
+   `is-in` at once.
    `CX5.reveal(els)` stays exported: a module that reveals elements of its own
-   (CARBOMAT HUMIC 40) keeps working unchanged. No [data-reveal] -> no-op. */
+   (CARBOMAT HUMIC 40) keeps working unchanged. No [data-reveal] -> no-op.
+
+   Trigger (20.10.2026, Produkty comments – rows and questions appeared before
+   they were on screen): one shared watcher, `CX5.onEnter(el, fn)`. It fires
+   once, when the TOP edge of the element crosses the trigger line at 88 % of
+   the window height (the bottom 12 %), measured with getBoundingClientRect
+   against innerHeight on every pass of the scroll bus. It deliberately does not
+   use an IntersectionObserver rootMargin: inside a cross-origin iframe (the
+   claude.ai artifact) rootMargin is ignored and the observer fires at the very
+   edge of the window. The observer only wakes the watcher for content that
+   shows up without a scroll (a tab, an accordion, the end of the page).
+   Before, the whole group got `is-in` when the CONTAINER entered, so a long
+   table or FAQ animated its lower rows below the fold, where nobody saw it. */
 (function () {
   "use strict";
   var $$ = CX5.$$;
   var IO = window.IntersectionObserver;
-  var els = $$("[data-reveal]");
-  /* a page without the layer still gets the API – a module may add elements later */
-  if (!els.length) {
-    CX5.reveal = function (more) {
-      Array.prototype.slice.call(more || []).forEach(function (el) { el.classList.add("is-in"); });
-    };
-    return;
+  var LINE = 0.88;          /* trigger line, share of the window height */
+  var STEP = 70;            /* ms between elements that cross the line together */
+
+  /* --- Enter watcher ---------------------------------------------------------
+     fn(el, k): k = order among the elements that fired in the same pass (0, 1,
+     2…; -1 for an element already scrolled past, above the window). An element
+     without a box (display:none) waits. At the end of the page, where the line
+     can no longer be reached, whatever is on screen fires. */
+  var watch = [], queued = false;
+  function fire(w, k) {
+    var i = watch.indexOf(w);
+    if (i < 0) return;
+    watch.splice(i, 1);
+    if (wio) wio.unobserve(w.el);
+    w.fn(w.el, k);
   }
+  function check() {
+    queued = false;
+    if (!watch.length) return;
+    var vh = window.innerHeight || 1;
+    var se = document.scrollingElement || document.documentElement;
+    var atEnd = (window.scrollY || 0) + vh >= se.scrollHeight - 2;
+    var k = 0;
+    watch.slice().forEach(function (w) {
+      var r = w.el.getBoundingClientRect();
+      if (!r.width && !r.height) return;
+      if (r.bottom < 0) fire(w, -1);
+      else if (r.top < vh * LINE || (atEnd && r.top < vh)) fire(w, k++);
+    });
+  }
+  function queue() { if (!queued) { queued = true; window.requestAnimationFrame(check); } }
+  /* wake-up only: content that became visible without a scroll fires after a
+     short stay on screen, even if it never reaches the line */
+  var wio = IO ? new IO(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var el = e.target;
+      window.setTimeout(function () {
+        for (var i = 0; i < watch.length; i++) {
+          if (watch[i].el !== el) continue;
+          var r = el.getBoundingClientRect();
+          if ((r.width || r.height) && r.top < (window.innerHeight || 1) && r.bottom > 0) fire(watch[i], 0);
+          return;
+        }
+      }, 700);
+    });
+    queue();
+  }) : null;
+  CX5.onEnter = function (el, fn) {
+    watch.push({ el: el, fn: fn });
+    if (wio) wio.observe(el);
+    queue();
+  };
+  CX5.register({ scroll: check, resize: check });
 
-  function showAll() { els.forEach(function (el) { el.classList.add("is-in"); }); }
-
-  /* --i = position inside [data-reveal-group]; drives the stagger in CSS */
-  els.forEach(function (el) {
-    var group = el.closest && el.closest("[data-reveal-group]");
-    if (group) el.style.setProperty("--i", $$("[data-reveal]", group).indexOf(el));
+  /* Stagger tool (Produkty comments, 19–20.10.2026): `data-reveal-stagger` on a
+     container (or on a <table>) makes each of its children (or each row of its
+     <tbody>) rise on its own, when THAT element crosses the line – ~70 ms apart
+     for the ones that cross together. Start state `cx-rise`, end `cx-risen`
+     (00-base.css). Every CE-17 FAQ gets it automatically, so no page needs the
+     attribute for its questions. What is already above the line at load is
+     never hidden. */
+  $$(".c5-faq").forEach(function (f) { f.setAttribute("data-reveal-stagger", ""); });
+  var rise = [];
+  $$("[data-reveal-stagger]").forEach(function (c) {
+    rise = rise.concat(c.tagName === "TABLE" ? $$("tbody > tr", c) : Array.prototype.slice.call(c.children));
   });
-
-  /* with reduced motion or without the observer nothing is ever hidden – every
-     block gets `is-in` at once, and so does anything revealed later */
-  if (!IO || CX5.reducedMQ.matches) {
-    showAll();
-    CX5.reveal = function (more) {
-      Array.prototype.slice.call(more || []).forEach(function (el) { el.classList.add("is-in"); });
-    };
-    return;
+  var els = $$("[data-reveal]");
+  function instant(more) {
+    Array.prototype.slice.call(more || []).forEach(function (el) { el.classList.add("is-in"); });
   }
+  /* a page without the layer still gets the API – a module may add elements later */
+  if (!els.length && !rise.length) { CX5.reveal = instant; return; }
 
-  var pending = els.slice();
-  function show(el) {
-    el.classList.add("is-in");
-    io.unobserve(el);
-    var i = pending.indexOf(el);
-    if (i > -1) pending.splice(i, 1);
+  function showAll() {
+    els.forEach(function (el) { el.classList.add("is-in"); });
+    rise.forEach(function (el) { el.classList.add("cx-risen"); });
   }
-  var io = new IO(function (entries) {
-    entries.forEach(function (e) { if (e.isIntersecting) show(e.target); });
-  }, { threshold: 0, rootMargin: "0px 0px -12% 0px" });
+  /* --i = position inside [data-reveal-group]; drives the stagger in CSS */
+  function group(list) {
+    list.forEach(function (el) {
+      var g = el.closest && el.closest("[data-reveal-group]");
+      if (g) el.style.setProperty("--i", $$("[data-reveal]", g).indexOf(el));
+    });
+  }
+  group(els);
 
-  function observe(list) {
+  /* with reduced motion nothing is ever hidden – every block gets `is-in` at
+     once, and so does anything revealed later */
+  if (CX5.reducedMQ.matches) { showAll(); CX5.reveal = instant; return; }
+
+  function arm(list) {
     list.forEach(function (el) {
       var r = el.getBoundingClientRect();
       /* only what starts below the fold gets the JS start state – a block that
          is already on screen (or outside the window horizontally) must stay
          visible whatever happens next */
       if (r.top > window.innerHeight && r.left < window.innerWidth && r.right > 0) el.classList.add("pp-reveal");
-      if (pending.indexOf(el) < 0) pending.push(el);
-      io.observe(el);
+      CX5.onEnter(el, function (x) { x.classList.add("is-in"); });
     });
   }
-  observe(els);
+  arm(els);
 
-  /* Safety net: if IntersectionObserver stays silent (background tab, preview
-     without a render pass, print), the content MUST still appear. */
-  function scan() {
-    if (!pending.length) return;
-    var h = window.innerHeight * 0.94;
-    pending.slice().forEach(function (el) {
-      var b = el.getBoundingClientRect();
-      if (b.top < h && b.bottom > 0) show(el);
+  var lineY = window.innerHeight * LINE;
+  rise.forEach(function (it) {
+    if (it.getBoundingClientRect().top < lineY) return;
+    it.classList.add("cx-rise");
+    CX5.onEnter(it, function (x, k) {
+      x.style.setProperty("--cx-rise-d", (k > 0 ? Math.min(k, 4) * STEP : 0) + "ms");
+      x.classList.add("cx-risen");
     });
-  }
-  CX5.register({ scroll: scan });
-  window.addEventListener("beforeprint", function () { pending.slice().forEach(show); });
+  });
+
+  window.addEventListener("beforeprint", showAll);
 
   /* switching to a narrow window or to reduced motion later: release everything
      at once, so nothing stays hidden if the reader comes back */
   function releaseIfStatic() {
     if (CX5.motionOn()) return;
-    io.disconnect();
     showAll();
   }
   if (CX5.wideMQ.addEventListener) {
@@ -321,12 +383,10 @@ window.CX5 = (function () {
   CX5.reveal = function (more) {
     more = Array.prototype.slice.call(more || []);
     if (!more.length) return;
-    more.forEach(function (el) {
-      var group = el.closest && el.closest("[data-reveal-group]");
-      if (group) el.style.setProperty("--i", $$("[data-reveal]", group).indexOf(el));
-    });
-    if (CX5.reducedMQ.matches) { more.forEach(function (el) { el.classList.add("is-in"); }); return; }
-    observe(more);
+    group(more);
+    if (CX5.reducedMQ.matches) { instant(more); return; }
+    els = els.concat(more);
+    arm(more);
   };
 })();
 

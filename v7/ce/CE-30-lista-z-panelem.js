@@ -214,53 +214,38 @@
    „akordeon-z-odliczaniem – implementacja Produktów” + „akordeon-przewijany”).
 
    · No JS: every row open (CSS default).
-   · With JS: data-acc="on" – one row open at a time, the first at start.
-     The root is bound after DOMContentLoaded, so the countdown module of
-     produkty.js (it binds [data-acc] while the page loads) never sees it.
-   · Scroll mode (CX5.motionOn() and a window of at least 640 px):
-     data-acc-scroll="on". The root becomes a track: head + one pinned screen
-     + one stretch per row (32 % of the window, at least 220 px). The scroll
-     position picks the open row – down and up alike – and the list rides up
-     inside the pinned stage (transform, CSS transition) so the open row
-     stands right under the row before it. A row taller than the stage scrolls
-     through its own stretch. A click (or Enter / Space) on a title opens that
-     row by scrolling to the middle of its stretch; the focus landing on a
-     title of another row does the same at once, so Tab never ends up behind
-     the clipped stage.
-   · Plain mode (below 900 px, reduced motion, a low window): a click opens a
-     row and a click on the open one closes it.
+   · With JS: data-acc="on" – EVERY row closed at start; a click (or Enter /
+     Space) on a title opens that row and closes the one open before; a click
+     on the open row closes it. The root is bound after DOMContentLoaded, so
+     the countdown module of produkty.js (it binds [data-acc] while the page
+     loads) never sees it.
+   · 19.10.2026 (Mateusz): the scroll mode of R04 (pinned stage, the scroll
+     opening the rows one after another) is retired – the scroll never opens
+     anything. The module keeps data-acc-scroll="off" on the root.
    · #sciezka-NN (goal cards, mega-menu, typed hash) comes through CX5.onHash:
-     scroll mode – the stretch of that row; plain mode – open it and land on it
-     one gutter under the top of the window.
-   Nothing here listens to `wheel`; the module only writes attributes, one
-   custom property (--acc-y) and the inline height of the track. ======== */
+     open that row and land on it one gutter under the top of the window.
+   Nothing here listens to `wheel` or `scroll`; the module only writes
+   attributes. ============================================================ */
 (function () {
   "use strict";
-  var doc = document, $ = CX5.$, $$ = CX5.$$, clamp = CX5.clamp;
+  var doc = document, $ = CX5.$, $$ = CX5.$$;
   var roots = $$("[data-acc-scroll]");
   if (!roots.length) return;
-
-  var MIN_H = 640;          /* lower windows keep the plain accordion */
-  var STEP_VH = 0.32, STEP_MIN = 220;
 
   function gutter() {
     return parseFloat(window.getComputedStyle(doc.documentElement).getPropertyValue("--c5-gutter")) || 0;
   }
 
   function init(root) {
-    var stage = $(".c5pr-acc__stage", root);
-    var head = $(".c5pr-acc__head", root);
     var list = $(".c5pr-acc__list", root);
-    if (!stage || !list) return null;
+    if (!list) return null;
     var items = $$(".c5pr-acc__item", list).filter(function (it) { return it.parentNode === list; });
     var btns = items.map(function (it) { return $(".c5pr-acc__btn", it); });
     var panels = items.map(function (it) { return $(".c5pr-acc__panel", it); });
     var n = items.length;
     if (!n || btns.indexOf(null) !== -1 || panels.indexOf(null) !== -1) return null;   /* rows stay open */
 
-    var cur = 0, scroll = false, step = 0, stageH = 0, sTop = 0, pad = 0;
-    var hcl = [];             /* closed height of every row, refreshed when the rows settle */
-    var settle = 0;
+    var cur = -1;             /* every row closed at start (19.10.2026) */
 
     root.setAttribute("data-acc", "on");
 
@@ -273,116 +258,21 @@
         CX5.panelSet(panels[j], on, instant);
         if (instant) { void btns[j].offsetHeight; btns[j].style.transition = ""; }
       });
-      /* the closed heights are read again once the rows have settled */
-      window.clearTimeout(settle);
-      settle = window.setTimeout(readClosed, instant ? 0 : 520);
-    }
-
-    function readClosed() {
-      var known = [];
-      items.forEach(function (it, j) {
-        if (j !== cur) { hcl[j] = it.offsetHeight; known.push(hcl[j]); }
-      });
-      if (cur >= 0 && !hcl[cur]) {
-        known.sort(function (a, b) { return a - b; });
-        hcl[cur] = known.length ? known[Math.floor(known.length / 2)] : 89;
-      }
-      place();
-    }
-
-    /* rows above the open one: all but the one right before it leave the stage */
-    function place() {
-      if (!scroll) return;
-      var k = Math.max(cur, 0), y = 0, j;
-      for (j = 0; j < k - 1; j++) y -= hcl[j] || 0;
-      /* a row taller than the stage scrolls through its own stretch */
-      var u = progress() - k;
-      var above = k > 0 ? (hcl[k - 1] || 0) : 0;
-      var room = stageH - pad - above - pad;
-      /* the open row's height once its panel has opened (estimated while it still moves:
-         the closed title is ~22 px taller than the open one, the panel adds its inside) */
-      var settled = panels[k].style.height === "auto";
-      var inner = panels[k].firstElementChild;
-      var openH = settled || !inner ? items[k].offsetHeight
-        : (hcl[k] || 89) - 22 + inner.getBoundingClientRect().height;
-      var tall = openH - room;
-      if (tall > 0) y -= tall * clamp((u - 0.15) / 0.7, 0, 1);
-      /* never leave the bottom of the stage empty (the last rows): the list ends one pad
-         above the bottom edge at the latest */
-      var listH = openH;
-      for (j = 0; j < n; j++) if (j !== k) listH += hcl[j] || 0;
-      y = Math.max(y, Math.min(0, stageH - pad - pad - listH));
-      list.style.setProperty("--acc-y", Math.round(y) + "px");
-    }
-
-    function progress() {
-      var r = root.getBoundingClientRect();
-      var span = n * step;
-      return span > 0 ? clamp(-(r.top + sTop) / span, 0, 1) * n : 0;
-    }
-
-    function update() {
-      if (!scroll) return;
-      var k = clamp(Math.floor(progress()), 0, n - 1);
-      if (k !== cur) { cur = k; paint(false); }
-      place();
-    }
-
-    function measure() {
-      var want = CX5.motionOn() && window.innerHeight >= MIN_H;
-      if (!want) {
-        if (scroll) {
-          scroll = false;
-          root.setAttribute("data-acc-scroll", "off");
-          root.style.height = "";
-          list.style.removeProperty("--acc-y");
-        } else {
-          root.setAttribute("data-acc-scroll", "off");
-        }
-        return;
-      }
-      if (!scroll) {
-        scroll = true;
-        root.setAttribute("data-acc-scroll", "on");
-        if (cur < 0) { cur = 0; paint(true); }
-      }
-      root.style.height = "";
-      stageH = stage.offsetHeight;
-      /* where the stage starts in the track: under the head and its margin (a sticky box
-         reports its stuck place, so it is not measured directly) */
-      sTop = 0;
-      if (head) sTop = head.offsetHeight + (parseFloat(window.getComputedStyle(head).marginBottom) || 0);
-      pad = parseFloat(window.getComputedStyle(stage).paddingTop) || 0;
-      step = Math.max(STEP_MIN, Math.round(window.innerHeight * STEP_VH));
-      root.style.height = Math.round(sTop + stageH + n * step) + "px";
-      readClosed();
-    }
-
-    /* the scroll position of the middle of row i's stretch */
-    function stretchTop(i) {
-      return root.getBoundingClientRect().top + window.scrollY + sTop + step * (i + 0.5);
     }
 
     function openAt(i, instant, focusTitle) {
-      if (scroll) {
-        CX5.scrollTo(stretchTop(i), instant || CX5.reducedMQ.matches ? "auto" : "smooth");
-      } else {
-        cur = i;
-        paint(instant);
-        CX5.scrollTo(items[i].getBoundingClientRect().top + window.scrollY - gutter(),
-                     instant || CX5.reducedMQ.matches ? "auto" : "smooth");
-      }
+      cur = i;
+      paint(instant);
+      CX5.scrollTo(items[i].getBoundingClientRect().top + window.scrollY - gutter(),
+                   instant || CX5.reducedMQ.matches ? "auto" : "smooth");
       if (focusTitle) btns[i].focus({ preventScroll: true });
     }
 
     btns.forEach(function (b, i) {
       b.addEventListener("click", function () {
-        if (scroll) { openAt(i, false, false); return; }
         cur = i === cur ? -1 : i;
         paint(false);
-      });
-      b.addEventListener("focus", function () {
-        if (scroll && i !== cur) openAt(i, true, false);
+        if (cur >= 0) landOpen(cur);
       });
       /* arrows, Home and End walk the row titles; Tab keeps its usual order */
       b.addEventListener("keydown", function (e) {
@@ -398,8 +288,24 @@
       });
     });
 
+    /* Mateusz 20.10.2026: after a click the opened row lands with its top edge 25 px
+       under the top of the window. The row above may be closing at the same moment,
+       which moves the opened row up, so we measure after the height transition has
+       settled (reduced motion: nothing animates, so at once and without a glide). */
+    var landToken = 0, LAND_TOP = 25;
+    function landOpen(i) {
+      var token = ++landToken;
+      var go = function () {
+        if (token !== landToken || cur !== i) return;
+        CX5.scrollTo(items[i].getBoundingClientRect().top + window.scrollY - LAND_TOP,
+                     CX5.reducedMQ.matches ? "auto" : "smooth");
+      };
+      if (CX5.reducedMQ.matches) go();
+      else window.setTimeout(go, 280);
+    }
+
     paint(true);
-    CX5.register({ scroll: update, resize: measure });
+    root.setAttribute("data-acc-scroll", "off");
     return { items: items, openAt: openAt };
   }
 

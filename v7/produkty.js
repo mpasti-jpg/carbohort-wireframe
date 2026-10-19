@@ -131,8 +131,20 @@
     enter(to, 72 * dir, 0, 110);
   }
 
+  /* 19.10.2026 (Mateusz): a click on any tab brings the beige panel to the top of the window,
+     25 px under its edge, so the four columns under it are in view. Smooth through CX5.scrollTo
+     (Lenis), a plain jump with reduced motion. Below 1120 px the rail stands above the panel,
+     so the rail gets the 25 px instead – the tabs stay at hand. */
+  var FIT_GAP = 25;
+  var railInside = window.matchMedia("(min-width: 1120px)");
+  function fitPanel() {
+    var box = railInside.matches ? panels[cur].querySelector(".c5pr-fam__panel") : seg;
+    if (!box) return;
+    CX5.scrollTo(Math.round(box.getBoundingClientRect().top + window.scrollY - FIT_GAP),
+                 reducedMQ.matches ? "auto" : "smooth");
+  }
   tabs.forEach(function (t, i) {
-    t.addEventListener("click", function () { select(i); });
+    t.addEventListener("click", function () { select(i); fitPanel(); });
   });
   seg.addEventListener("keydown", function (e) {
     if (e.altKey || e.ctrlKey || e.metaKey) return;       /* browser shortcuts (Back/Forward) */

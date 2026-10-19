@@ -1,6 +1,6 @@
 window.CE_DANE = {
  "meta": {
-  "wygenerowano": "19.10.2026",
+  "wygenerowano": "20.10.2026",
   "wersja": "0.1.0",
   "projekt": "CarboHort",
   "aktywnych": 85,
@@ -374,7 +374,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-01.webp",
     "pelny": "ce-indeks/img/p/CE-01.webp",
     "w": 1280,
-    "h": 120
+    "h": 84
    },
    "warianty": [
     {
@@ -385,7 +385,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-01--wariant-podglad-koszyka.webp",
       "pelny": "ce-indeks/img/p/CE-01--wariant-podglad-koszyka.webp",
       "w": 1280,
-      "h": 377
+      "h": 341
      }
     },
     {
@@ -396,7 +396,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-01--wariant-zalogowany-pro.webp",
       "pelny": "ce-indeks/img/p/CE-01--wariant-zalogowany-pro.webp",
       "w": 1280,
-      "h": 161
+      "h": 125
      }
     }
    ],
@@ -950,7 +950,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-08.webp",
     "pelny": "ce-indeks/img/p/CE-08.webp",
     "w": 1280,
-    "h": 680
+    "h": 716
    },
    "warianty": [
     {
@@ -997,7 +997,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-08--wariant-kadr-w-tle.webp",
       "pelny": "ce-indeks/img/p/CE-08--wariant-kadr-w-tle.webp",
       "w": 1280,
-      "h": 680
+      "h": 716
      }
     },
     {
@@ -6370,7 +6370,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-59--wariant-kompakt.webp",
       "pelny": "ce-indeks/img/p/CE-59--wariant-kompakt.webp",
       "w": 1280,
-      "h": 220
+      "h": 219
      }
     }
    ],
@@ -7270,7 +7270,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-71.webp",
     "pelny": "ce-indeks/img/p/CE-71.webp",
     "w": 1280,
-    "h": 143
+    "h": 144
    },
    "warianty": [],
    "wystapienia": [
@@ -7338,7 +7338,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-72.webp",
     "pelny": "ce-indeks/img/p/CE-72.webp",
     "w": 1280,
-    "h": 800
+    "h": 799
    },
    "warianty": [],
    "wystapienia": [

@@ -5699,7 +5699,7 @@ window.CW_CE = {
       ],
       "warianty": {},
       "zrzut": {
-        "strona": "v7/home.html",
+        "strona": "v7/sklep.html",
         "maxh": 200
       }
     },

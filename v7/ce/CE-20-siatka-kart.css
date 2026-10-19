@@ -141,6 +141,17 @@ html.cx-js .u-prod__card{--u-prod-delay:0ms;
 .c5-cards__row dd{margin:0;font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);color:var(--ch-text-primary);}
 .c5-cards--z-przyciskami .c5-cards__acts{margin-top:auto;}
 
+/* ----- modifier c5-cards--wyrownane (Mateusz 20.10.2026) -----
+   Two cards side by side share their rows (subgrid): packshot, description, outlined box and
+   buttons start on the same line in both cards whatever the length of the text; the two boxes
+   also end on the same line. The rows are the card's own, so the list gap does not enter them.
+   Below 900 px the cards stack and the modifier does nothing. */
+@media (min-width:900px){
+  .c5-cards--z-przyciskami.c5-cards--wyrownane:not(.c5-cards--poziome) .c5-cards__card{display:grid;grid-template-rows:subgrid;grid-row:span 5;row-gap:var(--ch-space-10);}
+  .c5-cards--z-przyciskami.c5-cards--wyrownane:not(.c5-cards--poziome) .c5-cards__body{display:grid;grid-template-rows:subgrid;grid-row:span 3;row-gap:var(--ch-space-4);}
+  .c5-cards--wyrownane .c5-cards__acts{align-self:end;}
+}
+
 /* ----- c5-cards--poziome ----- */
 .c5-cards.c5-cards--poziome{gap:var(--ch-space-5);}
 @media (min-width:1100px){

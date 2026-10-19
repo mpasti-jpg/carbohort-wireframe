@@ -12,13 +12,15 @@
      the illustration box floats in its middle on a blurred dark wash, the left
      column starts 40 px from the container's left edge – kicker and heading at
      the top, the current fact at the BOTTOM of the column: the title with the
-     number badge of the fact at the right end of its row, a 1 px progress line
-     cut into one segment per fact (10 px apart; every segment is a button that
-     takes the reader to its fact and fills with the progress of that fact),
-     and under it the description. Every fact carries its own line and badge,
-     so the whole block stands at the bottom edge whatever the length of the
-     description. The segments are built by the module script from the empty
-     line of the markup, the first time the scene runs.
+     number badge of the fact at the right end of its row, one light 1 px line
+     (since 19.10.2026 with no visible segments and no progress fill; invisible
+     segment buttons inside it still take a keyboard or screen reader user to a
+     fact), and under it the description. Every fact carries its own line and
+     badge; every fact is as tall as the tallest one, so the title row stands
+     in the same place on every step. The segments are built by the module
+     script from the empty line of the markup, the first time the scene runs.
+     Also since 19.10.2026: the number in the badge rolls up / down on a change,
+     the illustration box has a fixed px size and the photo drifts (parallax).
 
    Layout classes carry the c5-fx prefix, hooks are data-fx*. A page sheet holds
    NO rule with these classes and no rule under the id of its scene: what a page
@@ -142,7 +144,10 @@
 .c5-fx__title{font-size:clamp(1.125rem,1.8vw,1.5rem);line-height:1.22;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
 .c5-fx__body{display:flex;flex-direction:column;gap:var(--w-space-3);font-size:0.9375rem;line-height:1.55;color:var(--w-text-secondary);}
 .c5-fx__body p{margin:0;}
-.c5-fx__body ul{margin:0;padding-left:1.35rem;display:flex;flex-direction:column;gap:var(--w-space-2);}
+.c5-fx__body ul{margin:0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:var(--w-space-2);}
+/* Bullet = the small square of .c5-list / .c5pr-lit (EL-36), on every list in a scene description */
+.c5-fx__body ul:not(.wf-list) > li{position:relative;padding-left:var(--ch-space-4);}
+.c5-fx__body ul:not(.wf-list) > li::before{content:"";position:absolute;left:2px;top:.62em;top:calc(.5lh - 1.5px);width:3px;height:3px;border-radius:1px;background:currentColor;}
 /* Kit lists (.wf-list) carry their own indent in the <li>, so the rule above would
    add a second one. */
 .c5-fx__body .wf-list{padding-left:0;}
@@ -208,8 +213,19 @@
     /* default size of the illustration box: .71 of the panel wide (462 of 651),
        .74 of its height (519 of 800 in the frame, a little taller here because
        the box carries the same content in a shorter window) */
-    --c5-fx-viz-w:min(max(330px,calc(var(--c5-fx-panel-w) * .71)),calc(var(--c5-fx-panel-w) - 40px));
-    --c5-fx-viz-h:clamp(340px,calc((100svh - 2 * var(--c5-fx-pad-y)) * .74),760px);
+    /* 19.10.2026 (comment of the owner): the box has ONE size on every desktop
+       window – 462 x 520 px (the 462 x 519 of the frame), the same at 1280, 1440
+       and 1920 px. The min() only steps in where the panel itself is smaller
+       (900–1279 px wide, or a window lower than about 740 px), so the box never
+       runs out of it. A page or a variant that sets --c5-fx-viz-w / -h keeps its
+       own value; --c5-fx-viz-w-fix / -h-fix retune the fixed size alone.
+       20.10.2026: all six pages of the scene use this size – no page and no
+       variant sets --c5-fx-viz-w / -h any more; a figure that does not fit is
+       fitted inside the box, never by resizing it. */
+    --c5-fx-viz-w:min(var(--c5-fx-viz-w-fix,462px),calc(var(--c5-fx-panel-w) - 40px));
+    --c5-fx-viz-h:min(var(--c5-fx-viz-h-fix,520px),calc(100svh - 2 * var(--c5-fx-pad-y) - 24px));
+    /* parallax of the photo: how far it travels either way over the whole scene */
+    --c5-fx-par-max:28px;
     padding-block:0;
   }
   /* P08 (18.10.2026): the scene drops the padding of the section, so a head
@@ -242,6 +258,12 @@
   .cx-js .c5-fx__img,.cx-js .c5-fx__ph{position:absolute;inset:0;width:100%;height:100%;max-width:none;max-height:none;aspect-ratio:auto;
     opacity:0;transition:opacity .45s var(--w-ease);will-change:opacity;}
   .cx-js .c5-fx__img[data-on="true"],.cx-js .c5-fx__ph[data-on="true"]{opacity:1;}
+  /* 19.10.2026: parallax – the photo drifts up while the page scrolls down and
+     back while it scrolls up. Every layer reads the same --fx-par (written by the
+     module script on the panel), so a change of slide never makes it jump; the
+     layer is taller than the panel by the travel at either end, so no edge shows. */
+  .cx-js .c5-fx__img{top:calc(-1 * var(--c5-fx-par-max));bottom:calc(-1 * var(--c5-fx-par-max));height:auto;
+    transform:translate3d(0,var(--fx-par,0px),0);will-change:opacity,transform;}
   /* the dock floats over the bottom edge of the window, right where the placeholder
      label sits – in the scene the label goes to the top-left corner of the panel.
      Two conventions live in the pattern: `content:attr(data-ph)` on ::after
@@ -257,14 +279,40 @@
      edge of the line, it is centred on the title, and the title wraps before it.
      The block ends where the dock clearance begins, so the bottom edge of the
      description is the same on every step whatever its length. */
+  /* 19.10.2026 (comment of the owner): the title, its line and the number badge
+     stand in ONE place on every step. Every fact is as tall as the tallest one
+     (--fx-fact-h, measured by the module script) and its rows start at the top,
+     so the title row sits where the longest description puts it and only the
+     description below it changes. The fact itself no longer fades or slides:
+     the title and the description cross-fade, the line and the badge switch at
+     once (they look the same on every step), so nothing in the row moves. */
   .cx-js .c5-fx__fact{position:absolute;left:var(--c5-fx-side);right:calc(var(--c5-fx-side) + var(--c5-fx-panel-w) + var(--c5-fx-gap));bottom:var(--c5-fx-dock);
-    display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto auto;gap:0 clamp(1.5rem,4.4vw,4rem);
-    max-width:var(--c5-fx-fact-w);opacity:0;visibility:hidden;transform:translateY(12px);
-    transition:opacity .18s var(--w-ease),transform .18s var(--w-ease),visibility 0s linear .18s;}
-  .cx-js .c5-fx__fact.is-on{opacity:1;visibility:visible;transform:none;
-    transition:opacity .26s var(--w-ease),transform .26s var(--w-ease);}
-  .cx-js .c5-fx__title{grid-row:1;grid-column:1;align-self:center;}
-  /* the segments share the line evenly, 10 px apart */
+    display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:minmax(var(--fx-row1-h,0px),auto) auto auto;gap:0 clamp(1.5rem,4.4vw,4rem);
+    align-content:start;min-height:var(--fx-fact-h,0px);
+    max-width:var(--c5-fx-fact-w);visibility:hidden;transition:visibility 0s linear .18s;}
+  .cx-js .c5-fx__fact.is-on{visibility:visible;transition:none;}
+  .cx-js .c5-fx__fact > .c5-fx__title,.cx-js .c5-fx__fact > .c5-fx__body{opacity:0;transition:opacity .18s var(--w-ease);}
+  .cx-js .c5-fx__fact.is-on > .c5-fx__title,.cx-js .c5-fx__fact.is-on > .c5-fx__body{opacity:1;transition:opacity .26s var(--w-ease);}
+  .cx-js .c5-fx__fact > .c5-fx__line,.cx-js .c5-fx__fact > .c5-fx__count{opacity:0;}
+  .cx-js .c5-fx__fact.is-on > .c5-fx__line,.cx-js .c5-fx__fact.is-on > .c5-fx__count{opacity:1;}
+  /* 20.10.2026 (comments of the owner): the title and the badge still start in one
+     place on every step, but the line and the description follow the bottom edge
+     of the title of THIS step – a one-line title brings them up, a two-line one
+     takes them down, always the same distance from the text. The reserve of the
+     fact (--fx-fact-h) is measured with the tallest title row, so the scene never
+     changes height. The row is the title alone: the badge gives back its height
+     with a negative bottom margin and only hangs in the row.
+     · padding-top centres the FIRST line of the title on the badge
+       ((badge - one line) / 2, 1lh = the line of the title itself);
+     · padding-bottom is what the badge still hangs below a one-line title (the
+       same half) plus 8 px of air, minus the gap of the line – zero whenever
+       the gap is larger, so the line stands --c5-fx-line-top under the text, or
+       further where the badge needs it; per window it is one constant. */
+  .cx-js .c5-fx__title{grid-row:1;grid-column:1;align-self:start;
+    padding-top:max(0px,calc((var(--ch-size-badge,44px) - 1lh) / 2));
+    padding-bottom:max(0px,calc((var(--ch-size-badge,44px) - 1lh) / 2 + 8px - var(--c5-fx-line-top)));}
+  /* one light 1 px line (19.10.2026); the invisible segment buttons share it
+     evenly, 10 px apart */
   .cx-js .c5-fx__line{display:flex;gap:10px;grid-row:2;grid-column:1 / -1;margin-block:var(--c5-fx-line-top) var(--c5-fx-line-bottom);}
   /* the line spans the whole column (Frame 206), the description keeps a readable
      measure – on 1920+ the column is much wider than the frame's */
@@ -272,11 +320,21 @@
   .cx-js .c5-fx__body ul{gap:var(--c5-fx-list-gap,var(--w-space-2));}
   /* the number badge (Figma frames 397:1860 / 870-2992): a 44 px square at one
      digit (badge size token; the frame draws 43), the same in every variant */
-  .cx-js .c5-fx__count{display:grid;place-items:center;grid-row:1;grid-column:2;align-self:center;box-sizing:border-box;
+  .cx-js .c5-fx__count{display:grid;place-items:center;grid-row:1;grid-column:2;align-self:start;box-sizing:border-box;
+    margin-bottom:calc(-1 * var(--ch-size-badge,44px));
     min-width:var(--ch-size-badge);height:var(--ch-size-badge);padding:0 var(--ch-space-3);border-radius:var(--ch-radius-md);
     background:var(--c5-fx-badge-bg,var(--ch-badge-active));color:var(--c5-fx-badge-ink,var(--ch-text-primary));
     font-size:var(--ch-type-body-size);line-height:1;font-weight:var(--ch-font-weight-regular);letter-spacing:normal;
-    font-variant-numeric:tabular-nums;}
+    font-variant-numeric:tabular-nums;overflow:hidden;}
+  /* 19.10.2026: the number rolls like a counter. On a change the module script puts
+     the old and the new number into the badge of the incoming fact: going forward
+     the old one leaves upwards and the new one comes in from below, going back
+     the other way round. Both stand in the one cell of the badge grid. */
+  .cx-js .c5-fx__digit{grid-area:1 / 1;display:block;}
+  .cx-js .c5-fx__count[data-fx-dir="up"] .c5-fx__digit--old{animation:c5-fx-out-up .42s var(--w-ease) both;}
+  .cx-js .c5-fx__count[data-fx-dir="up"] .c5-fx__digit--new{animation:c5-fx-in-up .42s var(--w-ease) both;}
+  .cx-js .c5-fx__count[data-fx-dir="down"] .c5-fx__digit--old{animation:c5-fx-out-down .42s var(--w-ease) both;}
+  .cx-js .c5-fx__count[data-fx-dir="down"] .c5-fx__digit--new{animation:c5-fx-in-down .42s var(--w-ease) both;}
 
   /* the illustration box floats in the middle of the photo panel: the same
      vertical rect and auto vertical margins centre it, horizontally it is offset
@@ -358,19 +416,31 @@
    ::before – 25 px tall and reaching half of the 10 px gap on either side, so
    the row of segments has no dead spots and the layout does not move. */
 .c5-fx__line{position:relative;height:1px;}
+/* 19.10.2026 (comment of the owner): ONE light line, no visible segments and no
+   darker progress fill. The line itself carries the colour (--c5-fx-line-c); the
+   segment buttons stay in it, transparent, so the keyboard and screen readers
+   keep "Opis 1 z 5 …" – a segment shows only its focus ring. The fill span of
+   the markup stays hidden. */
+.c5-fx__line{background:var(--c5-fx-line-c,var(--w-gray-300));}
+/* 20.10.2026 (comment of the owner): the segments are invisible, so the mouse
+   must not find them – no click, no hand cursor. They stay in the tab order and
+   in the accessibility tree; Enter / Space still fire their click. */
 .c5-fx__seg{-webkit-appearance:none;appearance:none;position:relative;flex:1 1 0;min-width:0;height:1px;margin:0;padding:0;border:0;border-radius:0;
-  background:var(--w-gray-300);color:inherit;font:inherit;cursor:pointer;}
-.c5-fx__seg::before{content:"";position:absolute;inset:-12px -5px;}
-.c5-fx__seg:hover{outline:1px solid var(--w-gray-300);outline-offset:0;}
+  background:transparent;color:inherit;font:inherit;cursor:default;pointer-events:none;}
+.c5-fx__seg::before{content:"";position:absolute;inset:-12px -5px;pointer-events:none;}
 .c5-fx__seg:focus-visible{outline:2px solid var(--w-focus-ring,currentColor);outline-offset:5px;}
-.c5-fx__fill{position:absolute;inset:0;background:var(--w-gray-900);transform:scaleX(0);transform-origin:left center;pointer-events:none;}
-/* E10 (18.10.2026, comment of the owner): the fill is back – a darker, but not
-   black, line shows on which step of the scene the reader is and how much of
-   it is left before the next one (the decision of the morning of 18.10 to show
-   plain lines only is withdrawn). The colour is --c5-fx-green of the glass
-   layer below. */
-.c5-fx__seg.is-done .c5-fx__fill{transform:none;}
-.c5-fx__seg.is-now .c5-fx__fill{transform:scaleX(var(--fx-f,0));will-change:transform;}
+.c5-fx__fill{display:none;}
+/* 20.10.2026 (comment of the owner): the rolling number fades as it moves, so it
+   does not simply vanish behind the edge of the badge – the leaving one is gone
+   before it reaches the edge, the incoming one appears a little way in. */
+@keyframes c5-fx-out-up{from{transform:none;opacity:1;}70%{opacity:0;}to{transform:translateY(calc(-1 * var(--ch-size-badge,44px)));opacity:0;}}
+@keyframes c5-fx-in-up{from{transform:translateY(var(--ch-size-badge,44px));opacity:0;}30%{opacity:0;}to{transform:none;opacity:1;}}
+@keyframes c5-fx-out-down{from{transform:none;opacity:1;}70%{opacity:0;}to{transform:translateY(var(--ch-size-badge,44px));opacity:0;}}
+@keyframes c5-fx-in-down{from{transform:translateY(calc(-1 * var(--ch-size-badge,44px)));opacity:0;}30%{opacity:0;}to{transform:none;opacity:1;}}
+@media (prefers-reduced-motion: reduce){
+  .c5-fx__digit{animation:none !important;}
+  .c5-fx__img{transform:none !important;}
+}
 
 /* ===== wariant: glass ===== */
 /* ===== wariant: glass-v1 ===== */
@@ -449,10 +519,9 @@
   .c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-fx__body{font-size:0.875rem;line-height:1.5;}
 }
 /* the hairline: E10 – a step more visible than the subtle grey of the frame
-   (border-control), the fill: the mid grey above (text-secondary) */
-.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-fx__seg{background:var(--ch-border-control);}
-.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-fx__seg:hover{outline:1px solid var(--ch-border-control);outline-offset:0;}
-.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-fx__fill{background:var(--c5-fx-green);}
+   (border-control); since 19.10.2026 one line with no fill (--c5-fx-green is
+   no longer drawn) */
+.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1){--c5-fx-line-c:var(--ch-border-control);}
 
 /* --- Illustration box (Frames 140-8542 root / 140-8543 content) ---------------
    The wash arrives through the knob at the top. Below 900 px, with reduced
@@ -649,32 +718,33 @@ html:not(.cx-js) .c5-fx .c5-viz--rosnie{aspect-ratio:auto;min-height:520px;max-h
 }
 
 /* ===== wariant: skala-osiem-krokow ===== */
-/* Many steps and tall figures (a nine-row table, bar charts): the box is 68 svh
-   tall instead of 62, the description is tighter than in the static layout, and
-   in a low window (e.g. 1280x720) both take one more step – the box 74 svh. */
-.c5-fx.c5-fx--skala-osiem-krokow{--c5-fx-viz-h:clamp(360px,68svh,760px);}
+/* Many steps and tall figures (a nine-row table, bar charts): the description is
+   tighter than in the static layout, and in a low window (e.g. 1280x720) it takes
+   one more step. 20.10.2026: the box no longer grows with the window – it keeps
+   the fixed 462 x 520 px of the scene; what the tall figures need to fit is in
+   the section "Content fitted to the fixed box" below. */
 @media (min-width:900px) and (prefers-reduced-motion: no-preference){
   .cx-js .c5-fx[data-fx].c5-fx--skala-osiem-krokow .c5-fx__body{font-size:0.875rem;line-height:1.5;}
 }
 @media (min-width:900px) and (prefers-reduced-motion: no-preference) and (max-height:780px){
   .cx-js .c5-fx[data-fx].c5-fx--skala-osiem-krokow .c5-fx__body{font-size:0.8125rem;line-height:1.45;}
   .cx-js .c5-fx[data-fx].c5-fx--skala-osiem-krokow .c5-fx__body ul{gap:var(--w-space-1);}
-  .c5-fx.c5-fx--skala-osiem-krokow{--c5-fx-viz-h:clamp(360px,74svh,760px);}
+}
+/* Content fitted to the fixed box (20.10.2026): in the 520 px box a table of nine
+   rows (the purity table of carbomat-humic) ran 6 px past its scroll frame, so
+   the rows of a table in the box of this variant take a tighter padding. */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  .cx-js .c5-fx[data-fx].c5-fx--skala-osiem-krokow .c5-viz .wf-table th,
+  .cx-js .c5-fx[data-fx].c5-fx--skala-osiem-krokow .c5-viz .wf-table td{padding-block:6px;}
 }
 
 /* ===== wariant: skala-waskie-okno ===== */
 /* A scene whose head stands above the track: the default scale fits from
    1280 px up, it gets tight only where the text column is half as wide.
-   · box: 68 svh; below 1440 px whatever is left ABOVE the advisor dock (the box
-     is centred in the panel, 20 px from top and bottom, so for its lower edge to
-     stand 88 px above the edge of the window its height is 100svh - 176px);
+   · box: since 20.10.2026 the fixed 462 x 520 px of the scene (it was 68 svh);
    · 900–1199 px: title, description and list one step down;
    · 900–1199 px and up to 740 px tall: the tightest step, and a table in the
      box comes down in type and cell padding. */
-.c5-fx.c5-fx--skala-waskie-okno{--c5-fx-viz-h:clamp(360px,68svh,760px);}
-@media (min-width:900px) and (max-width:1439px) and (prefers-reduced-motion: no-preference){
-  .c5-fx.c5-fx--skala-waskie-okno{--c5-fx-viz-h:min(760px,calc(100svh - 176px));}
-}
 @media (min-width:900px) and (max-width:1199px) and (prefers-reduced-motion: no-preference){
   .cx-js .c5-fx[data-fx].c5-fx--skala-waskie-okno .c5-fx__title{font-size:clamp(1rem,1.4vw,1.1875rem);}
   .cx-js .c5-fx[data-fx].c5-fx--skala-waskie-okno .c5-fx__body{font-size:0.8125rem;line-height:1.5;gap:8px;}

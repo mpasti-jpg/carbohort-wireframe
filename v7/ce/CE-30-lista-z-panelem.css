@@ -240,7 +240,12 @@
 .c5pr-acc[data-acc="on"] .c5pr-acc__item[data-open] .c5pr-acc__btn::before{width:43.55px;height:43px;background:var(--ch-badge-active);color:var(--ch-text-primary);border-radius:var(--ch-radius-md);}
 
 /* panel: open by default (no JS), collapsed by the module */
+/* `clip` (not `hidden`) from 900 px: it clips the height animation without making the panel
+   a scroll container, so the sticky copy column below sticks to the window, not to the panel. */
 .c5pr-acc__panel{overflow:hidden;}
+@media (min-width:900px){
+  .c5pr-acc__panel{overflow:clip;}
+}
 .c5pr-acc[data-acc="on"] .c5pr-acc__panel{height:0;transition:height var(--c5-acc) var(--w-ease);}
 .c5pr-acc__in{display:grid;grid-template-columns:minmax(0,320px) auto;justify-content:space-between;column-gap:var(--ch-space-6);align-items:start;
   padding:var(--ch-space-3) 0 var(--ch-space-14) var(--acc-col);}
@@ -248,6 +253,12 @@
 
 /* left zone: description, notes, warning, text links (320 px, 40 px between the blocks) */
 .c5pr-acc__copy{display:flex;flex-direction:column;gap:var(--ch-space-10);max-width:320px;}
+/* Mateusz 20.10.2026: from 900 px the column sticks 50 px under the top of the window while
+   the product cards on the right scroll; it lets go at the bottom of the cards (the grid
+   area of the row is as tall as the cards). Below 900 px nothing sticks. */
+@media (min-width:900px){
+  .c5pr-acc__copy{position:sticky;top:50px;}
+}
 .c5pr-acc__copy p{margin:0;font-family:var(--ch-type-body-font);font-size:var(--ch-type-body-size);line-height:24px;color:var(--ch-text-secondary);}
 .c5pr-acc__notes{display:flex;flex-direction:column;gap:var(--ch-space-2);margin:0;padding:0;list-style:none;}
 .c5pr-acc__notes li{display:flex;gap:var(--ch-space-3);align-items:flex-start;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-primary);}
@@ -324,6 +335,35 @@
 .c5pr-acc__head .c5-kicker{justify-self:start;margin:0;}
 .c5pr-acc__title{margin:0;max-width:730px;}
 .c5pr-acc--przewijany .c5pr-acc__timer{display:none;}
+/* 19.10.2026 (Mateusz, round C1) – the scroll mode is retired (rows open on a click only):
+   · more air above the head, as in Figma 637:200 (Frame 321 stands 144 px under the end of
+     the yellow scene at 1440);
+   · hover on a closed row: the number takes the look AND the place of the open row (yellow
+     square, full ink, 24 px to the right), so after the click it does not move any further;
+   · open / close: nothing slides sideways – the card's side padding switches at once (it is
+     drawn under a 0-high panel or a hover-placed number), the panel keeps one geometry in
+     both states, and the white product cards unroll downwards on opening and roll up on
+     closing (clip-path, fast). */
+.c5pr-acc--przewijany{margin-top:clamp(5rem,10vw,9rem);}
+.c5pr-acc--przewijany .c5pr-acc__item{transition:background-color var(--c5-acc) var(--w-ease);}
+.c5pr-acc--przewijany .c5pr-acc__btn::before{transition:background-color var(--w-duration-base) var(--w-ease),color var(--w-duration-base) var(--w-ease),transform var(--w-duration-base) var(--w-ease);}
+.c5pr-acc--przewijany[data-acc="on"] .c5pr-acc__item:not([data-open]) .c5pr-acc__btn:hover::before{
+  width:43.55px;height:43px;margin-block:-9px;background:var(--ch-badge-active);color:var(--ch-text-primary);border-radius:var(--ch-radius-md);
+  transform:translateX(var(--ch-space-6));}
+/* the open row: the number stands still (no transform transition at the moment of opening) */
+.c5pr-acc--przewijany[data-acc="on"] .c5pr-acc__item[data-open] .c5pr-acc__btn::before{transition:none;}
+@media (min-width:900px){
+  .c5pr-acc--przewijany[data-acc="on"] .c5pr-acc__item:not([data-open]) .c5pr-acc__in{padding:55px var(--ch-space-6) var(--ch-space-14) var(--acc-col);}
+}
+@media (max-width:899px){
+  .c5pr-acc--przewijany[data-acc="on"] .c5pr-acc__item:not([data-open]) .c5pr-acc__in{padding-inline:var(--ch-space-6);}
+}
+.c5pr-acc--przewijany[data-acc="on"] .c5pr-pcard{clip-path:inset(0 0 100% 0 round var(--ch-radius-md));transition:clip-path .18s var(--w-ease);}
+.c5pr-acc--przewijany[data-acc="on"] .c5pr-acc__item[data-open] .c5pr-pcard{clip-path:inset(0 0 0 0 round var(--ch-radius-md));transition-duration:.24s;}
+@media (prefers-reduced-motion: reduce){
+  .c5pr-acc--przewijany .c5pr-acc__btn::before,
+  .c5pr-acc--przewijany[data-acc="on"] .c5pr-pcard{transition:none;}
+}
 /* notes in the copy column: EL-17 note with the „i” (G16) – the copy column's paragraph size
    must not reach into the note */
 .c5pr-acc__copy .c5-note p{font-size:inherit;line-height:inherit;color:inherit;}

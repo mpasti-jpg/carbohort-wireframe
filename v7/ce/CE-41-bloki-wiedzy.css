@@ -60,8 +60,11 @@
 .c5pr-mix__seg--a{background:var(--ch-color-green-300);}
 .c5pr-mix__seg--b{background:var(--ch-color-blue-200);}
 /* air: hatching as in Figma 778:1995 – 1 px green-950 lines falling to the right („\\”), one every
-   8 px along the row (5.66 px across the lines), with a solid chip on it */
-.c5pr-mix__seg--c{background:repeating-linear-gradient(45deg,rgb(12 43 28 / .7) 0 1px,transparent 1px 5.66px);}
+   8 px along the row (5.66 px across the lines), with a solid chip on it.
+   19.10.2026 (owner: the gradient hatching rendered unevenly): the pattern is a tile exported
+   from Figma (113 x 113 px at 2x, transparent, #0C2B1C lines at 45 deg, seamless), repeated at
+   its 56.5 px natural size. */
+.c5pr-mix__seg--c{background-image:url("../img/wzor-kreski-powietrze@2x.png");background-repeat:repeat;background-size:56.5px 56.5px;}
 .c5pr-mix__seg--c span{background:var(--ch-color-white);}
 .c5pr-mix__names{padding-top:2px;font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);color:var(--ch-text-primary);}
 .c5pr-mix__names span{text-align:center;}
@@ -129,6 +132,15 @@
 .c5pr-stat__ico .wf-icon{width:28px;height:28px;}
 .c5pr-stat__num{display:inline-flex;align-items:baseline;gap:var(--ch-space-2);font-family:var(--ch-type-display-num-font);font-size:clamp(2.75rem,4.4vw,var(--ch-type-display-num-size));line-height:var(--ch-type-display-num-lh);font-weight:var(--ch-type-display-num-weight);letter-spacing:var(--ch-type-display-num-ls);}
 .c5pr-stat__unit{font-family:var(--ch-font-text);font-size:var(--ch-type-title-s-size);line-height:28px;}
+/* Odometer of the proof numbers (CE-41-bloki-wiedzy.js, 20.10.2026): exists only while it runs.
+   A column is an inline-block sized by its final digit (hidden), the strip of digits lies over
+   it and slides up; clip-path cuts it to one line without touching the baseline. */
+.c5-odo{white-space:nowrap;}
+.c5-odo__col{position:relative;display:inline-block;clip-path:inset(0 -.2em);
+  -webkit-mask-image:linear-gradient(transparent,#000 16%,#000 84%,transparent);mask-image:linear-gradient(transparent,#000 16%,#000 84%,transparent);}
+.c5-odo__fin{visibility:hidden;}
+.c5-odo__strip{position:absolute;left:0;top:0;width:100%;text-align:center;will-change:transform;}
+.c5-odo__strip > span{display:block;}
 .c5pr-stat p{margin:0;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-primary);}
 @media (min-width:900px){
   .c5pr-block--lit{display:grid;grid-template-columns:minmax(0,588px) minmax(0,683px);justify-content:space-between;grid-template-rows:auto minmax(0,1fr) auto;column-gap:var(--ch-space-8);}

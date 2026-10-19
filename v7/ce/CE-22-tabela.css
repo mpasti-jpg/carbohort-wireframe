@@ -189,7 +189,8 @@ html.cx-js .u-mt__row{cursor:pointer;}
 .c5pr-cmp__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
 .c5pr-cmp__panel{position:absolute;left:var(--c5pr-cmp-x);top:var(--c5pr-cmp-y);width:67%;display:flex;flex-direction:column;gap:var(--ch-space-6);padding:var(--ch-space-6) var(--c5pr-cmp-pad) var(--c5pr-cmp-pad);border-radius:var(--ch-radius-lg);background:var(--ch-surface-raised);color:inherit;text-decoration:none;}
 .c5pr-cmp__name{display:flex;align-items:center;gap:var(--ch-space-4);padding-inline:14px;font-size:var(--ch-type-title-size);line-height:var(--ch-type-title-lh);letter-spacing:var(--ch-type-title-ls);color:var(--ch-text-primary);}
-.c5pr-cmp__name .wf-icon{flex:none;width:var(--ch-size-icon-m);height:var(--ch-size-icon-m);}
+/* 24 px as in Figma (792:3511 grain-2, 792:3590 watering-plants; 20.10.2026) */
+.c5pr-cmp__name .wf-icon{flex:none;width:var(--ch-size-icon-l);height:var(--ch-size-icon-l);}
 /* The window of the panel is a LOUPE, not a thumbnail (R11, Figma 792:3443): it shows the photo of
    the frame at the frame's own scale, cut out exactly where the window lies – the image inside is
    frame-sized and pulled back by the panel's offset (cq units of the frame) – with the white
@@ -216,6 +217,20 @@ a.c5pr-cmp__panel:focus-visible{outline:var(--w-focus-ring-width) solid var(--ch
   a.c5pr-cmp__panel:hover .c5pr-cmp__name{text-decoration:underline;text-underline-offset:.2em;}
 }
 .c5pr-cmp__defs{position:absolute;width:0;height:0;overflow:hidden;}
+
+/* Light parallax of the frame photos (19.10.2026, owner; ce/CE-22-tabela.js): the script sets
+   `data-par` on the root and writes `--c5pr-par` (px) on every frame while it is on screen. The
+   photo is enlarged by 10 % (5 % of overscan per side) and slides vertically with the scroll;
+   the loupe image inside the panel gets the SAME translate and scale, so it keeps showing exactly
+   the piece of photo under the window. Individual `translate` / `scale` properties, so the hover
+   `transform` of the loupe above composes with them. Without the script or with reduced motion
+   nothing of this applies. */
+.c5pr-cmp[data-par] :is(.c5pr-cmp__bg,.c5pr-cmp__inner img){scale:1.1;translate:0 var(--c5pr-par,0px);will-change:translate;}
+/* Two planes (20.10.2026, owner): the loupe image runs at its own, faster speed
+   (`--c5pr-par-in`, 2.5× the photo on wide screens, 1.5× on narrow ones), so the panel reads
+   as a second plane over the photo. The window sits well inside the 10 % overscan, so no
+   edge of the image shows within the visible scroll range. */
+.c5pr-cmp[data-par] .c5pr-cmp__inner img{translate:0 var(--c5pr-par-in,var(--c5pr-par,0px));}
 
 /* Entry links under the frames (16.10.2026, CARBOHUMIC split into a soil-applied and a
    foliar page). */

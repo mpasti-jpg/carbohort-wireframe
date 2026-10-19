@@ -65,7 +65,7 @@
 .c5pr-fam__panel::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:var(--ch-motif-on-warm);-webkit-mask:url(../img/motyw-cta-lisci.svg) no-repeat center / cover;mask:url(../img/motyw-cta-lisci.svg) no-repeat center / cover;}
 
 /* Packshot (no floor shadow – the design has no shadows) */
-.c5pr-stage{position:relative;display:flex;align-items:flex-end;justify-content:center;height:clamp(240px,64vw,380px);touch-action:pan-y;}
+.c5pr-stage{position:relative;display:flex;align-items:center;justify-content:center;height:clamp(240px,64vw,380px);touch-action:pan-y;}
 .c5pr-shot{position:relative;z-index:0;display:flex;align-items:flex-end;justify-content:center;height:calc(100% * var(--c5pr-shot-k,1));max-width:100%;}
 .c5pr-shot[data-shape="kanister"]{height:calc(92% * var(--c5pr-shot-k,1));}
 .c5pr-shot[data-shape="rekaw"]{height:auto;width:calc(min(72%,560px) * var(--c5pr-shot-k,1));}
@@ -101,6 +101,8 @@
 @media (max-width:859px){
   .c5pr-js .c5pr-show .c5pr-seg.c5-seg--rail{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;min-height:0;}
   .c5pr-seg .c5pr-seg__tab{justify-content:center;white-space:normal;text-align:center;padding:12px 10px;font-size:0.9375rem;line-height:1.3;min-height:56px;}
+  /* five tabs since 19.10.2026: the odd last one spans the row */
+  .c5pr-seg .c5pr-seg__tab:last-child:nth-of-type(odd){grid-column:1 / -1;}
 }
 @media (max-width:899px){
   .c5pr-fam__acts .c5-btnrow{flex-wrap:wrap;}
@@ -122,18 +124,26 @@
     display:flex;flex-direction:row;justify-content:center;align-items:flex-start;padding:var(--ch-space-6) var(--ch-space-8) 0;pointer-events:none;}
   .c5pr-show__bar > *{pointer-events:auto;}
   .c5pr-js .c5pr-show .c5pr-seg.c5-seg--rail{position:sticky;top:var(--ch-space-4);}
-  .c5pr-fam__panel{height:var(--c5pr-panel-h);padding:0;}
-  .c5pr-stage{position:absolute;inset:clamp(110px,10.4vw,150px) 0 clamp(80px,7.5vw,108px);height:auto;}
-  .c5pr-fam__cap{position:absolute;left:var(--ch-space-8);right:var(--ch-space-8);bottom:var(--ch-space-8);grid-template-columns:minmax(0,1fr) auto;margin:0;}
+  /* 19.10.2026 (Mateusz): the packshot stands in the optical middle of the free band between
+     the white tab rail and the family name (no longer on the floor of the band, where the mat
+     touched the heading), and is ~12 % larger (k .85 → .95). The panel is a column: the top
+     padding clears the rail (24 px + its 60 px), the stage takes the rest down to the caption
+     and centres the shot; the shot keeps the size of the R02 stage, scaled by k. */
+  .c5pr-studio{--c5pr-shot-k:.95;--c5pr-rail-h:60px;
+    --c5pr-shot-h:calc((var(--c5pr-panel-h) - clamp(110px,10.4vw,150px) - clamp(80px,7.5vw,108px)) * var(--c5pr-shot-k));}
+  .c5pr-fam__panel{height:var(--c5pr-panel-h);display:flex;flex-direction:column;box-sizing:border-box;
+    padding:calc(var(--ch-space-6) + var(--c5pr-rail-h) + var(--ch-space-4)) var(--ch-space-8) var(--ch-space-8);}
+  .c5pr-stage{flex:1 1 auto;min-height:0;height:auto;align-items:center;}
+  .c5pr-shot{height:var(--c5pr-shot-h);max-height:100%;}
+  .c5pr-shot[data-shape="kanister"]{height:calc(var(--c5pr-shot-h) * .92);}
+  .c5pr-shot[data-shape="rekaw"]{height:auto;}
+  .c5pr-fam__cap{flex:none;grid-template-columns:minmax(0,1fr) auto;margin:var(--ch-space-4) 0 0;}
   .c5pr-fam__acts{align-items:flex-end;}
   .c5pr-fam__acts .c5-btnrow{justify-content:flex-end;flex-wrap:nowrap;}
 }
 
-/* three buttons in one row (Carbohumic, R02) reach the middle of a narrower panel: the
-   packshot stands a little higher there, so it keeps clear air above the buttons */
-@media (min-width:1120px) and (max-width:1359.98px){
-  .c5pr-fam__panel:has(.c5pr-fam__acts .c5-btn:nth-child(3)) .c5pr-stage{bottom:calc(clamp(80px,7.5vw,108px) + var(--ch-space-6));}
-}
+/* (19.10.2026: the three-button row of Carbohumic is gone – every panel has two buttons and the
+   stage is a flex band above the caption, so the 1120–1359 px lift is no longer needed) */
 
 @media (forced-colors:active){
   .c5pr-seg__thumb{forced-color-adjust:none;background:Highlight;}

@@ -35,9 +35,8 @@
      18.10.2026). The photo of a card rolls down from / up to its top edge
      with --vs-e (CSS); below e = .02 the card carries data-shut and the
      photo frame is hidden.
-     Path links of a card stay on one line: wider than the card, the line
-     becomes a marquee (CSS animation on transform, paused under the pointer
-     and while a link has the focus; none with reduced motion).
+     Path links of a card stand one per row (19.10.2026 – the one-line
+     marquee of R03 is gone; CSS only).
 
    The tab row under the stage ([data-vs-go]) marks the current step with
    aria-current (+ .is-active for EL-18) and a click / Enter scrolls to the
@@ -108,33 +107,8 @@
 
     var PROPS = ["--vs-t", "--vs-travel", "--vs-s", "--vs-o", "--vs-e", "--vs-k", "--vs-y"];
 
-    /* --- path links on one line: a run, doubled into a marquee when it does not fit --- */
-    var gos = stack ? $$(".c5-vs__ggo", root) : [];
-    gos.forEach(function (go) {
-      var run = document.createElement("span");
-      run.className = "c5-vs__run";
-      while (go.firstChild) run.appendChild(go.firstChild);
-      go.appendChild(run);
-      go.classList.add("is-run");
-    });
-    function fitRuns() {
-      gos.forEach(function (go) {
-        var runs = $$(".c5-vs__run", go);
-        for (var i = 1; i < runs.length; i++) go.removeChild(runs[i]);
-        go.classList.remove("is-marquee");
-        go.style.removeProperty("--c5-vs-run-t");
-        if (CX5.reducedMQ.matches) return;
-        var run = runs[0];
-        if (!run || run.scrollWidth <= go.clientWidth + 1) return;
-        var copy = run.cloneNode(true);
-        copy.setAttribute("aria-hidden", "true");
-        $$("a", copy).forEach(function (a) { a.tabIndex = -1; });
-        go.appendChild(copy);
-        go.classList.add("is-marquee");
-        /* ~40 px a second, whatever the length of the line */
-        go.style.setProperty("--c5-vs-run-t", Math.max(6, run.offsetWidth / 40).toFixed(1) + "s");
-      });
-    }
+    /* Path links of a card: since 19.10.2026 (Mateusz: no marquee) every link stands in its
+       own row, one under another – pure CSS (.c5-vs__ggo), nothing to measure here. */
     function clear() {
       track.style.height = "";
       cards.concat(head ? [head] : []).forEach(function (c) {
@@ -156,7 +130,6 @@
     function measure() {
       /* the video layer is hidden by the zielen variant – then it never plays */
       videoOn = !!video && video.getClientRects().length > 0;
-      fitRuns();
       if (!CX5.motionOn()) { clear(); syncVideo(); return; }
       /* the stage is the sticky 100 svh box – the part of the track that stands
          still while the pieces swap inside it */

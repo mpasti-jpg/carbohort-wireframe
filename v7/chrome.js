@@ -115,6 +115,15 @@
     link: "Zobacz w sklepie",
     adres: "sklep.html?f=linia:carbohumic-dolistny"
   };
+  /* Temporarily (Produkty comment, 19.10.2026) the strip shows ONLY on the shop pages –
+     the pages whose <cw-navbar> has data-current="sklep". To bring it back everywhere,
+     set this to null. */
+  var PROMO_PAGES = ["sklep.html", "pdp.html", "pdp-kwasny.html", "koszyk.html", "checkout.html", "potwierdzenie.html"];
+  function promoPage() {
+    if (!PROMO_PAGES) return true;
+    var f = (location.pathname.split("/").pop() || "");
+    return PROMO_PAGES.indexOf(f) > -1;
+  }
 
   var ICONS =`<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true" id="wf-icon-sprite">
   <!-- ch-liscie: the four-leaf sign of the logo (Figma 397:1685, button icon in the footer).
@@ -757,7 +766,7 @@
     document.head.appendChild(l);
   }
   function promoBar(head) {
-    if (!PROMO.wlaczona || !head || promoClosed() || head.querySelector(".c5-promo")) return;
+    if (!PROMO.wlaczona || !promoPage() || !head || promoClosed() || head.querySelector(".c5-promo")) return;
     promoSheet();
     var href = HERE ? HERE + PROMO.adres : PROMO.adres;
     var bar = document.createElement("div");
