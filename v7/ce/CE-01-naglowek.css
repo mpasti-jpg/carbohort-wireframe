@@ -1,0 +1,121 @@
+/* ===== CE-01 · Nagłówek serwisu – design system v0.1 (Figma 397:1282) =====
+   Attached by chrome.js (ceSheet) on every page that renders <cw-navbar>
+   without data-uklad, after the page stylesheets. Content of the bar (menu
+   items, buttons, links) comes from the v7 template in chrome.js; the look
+   from Figma (decision 2, 17.10.2026):
+   - a floating white bar, 16 px corners, padding 12/20, 68 px high, 8 px in
+     from the window edges, logo with the sign (img/carbohort-logo.svg);
+   - menu 14 px Suisse Regular, 32 px apart, items of other sections at .5,
+     the current section at full colour, chevrons 12 px at 4 px;
+   - buttons M (44 px, 14 px corners): Konfigurator dark, Sklep outlined,
+     the cart an outlined 44 px square with a 16 px counter;
+   - the bar is NOT sticky (Mateusz 18.10.2026): it keeps the 12 px gap above
+     it and scrolls away with the page; the promotion strip (CE-95) stands full
+     width above it.
+   Mobile and the open mega menu are not in Figma – v7 behaviour, Figma look. */
+
+.wf-navbar{position:relative;top:auto;z-index:var(--w-z-sticky);display:flow-root;background:transparent;border-bottom:0;pointer-events:none;}
+/* not sticky: the header scrolls with the page (cw.css pins the kit navbar, CE-95
+   lifts a pinned header by the strip height – both undone here); the header is a
+   flow root, so the 12 px gap counts in its measured height (--cx-navbar-h). */
+header.wf-navbar:has(> .c5-promo){top:auto;}
+.wf-navbar > *{pointer-events:auto;}
+
+.wf-navbar__inner{
+  width:calc(100% - 2 * var(--ch-layout-header-inset));
+  max-width:calc(var(--ch-layout-container-max) + 2 * (var(--ch-layout-gutter) - var(--ch-layout-header-inset)));
+  min-height:var(--ch-layout-header-h);margin:var(--ch-layout-header-top) auto 0;padding:var(--ch-space-3) var(--ch-space-5);
+  background:var(--ch-surface-raised);border-radius:var(--ch-radius-lg);gap:var(--ch-space-6);
+}
+
+/* Logo with the sign – 169 × 33 px as in Figma */
+.wf-navbar .cw-brand{display:inline-flex;align-items:center;flex:none;line-height:0;}
+.wf-navbar .cw-brand img{display:block;width:169px;height:auto;}
+
+/* Menu: 14 px Regular, 32 px apart; the other sections at .5, the current one at full colour */
+.wf-navbar .cw-nav{gap:var(--ch-space-8);}
+.wf-navbar .cw-nav > .wf-navbar__link,
+.wf-navbar .cw-nav > .cw-haspopup > .cw-nav-trigger{
+  font-family:var(--ch-type-nav-font);font-size:var(--ch-type-nav-size);line-height:var(--ch-type-nav-lh);
+  font-weight:var(--ch-type-nav-weight);gap:var(--ch-space-1);color:rgb(12 43 28 / .5);
+  transition:color var(--w-duration-base) var(--w-ease);
+}
+.wf-navbar .cw-nav > .wf-navbar__link[aria-current="page"],
+.wf-navbar .cw-nav > .wf-navbar__link:hover,
+.wf-navbar .cw-nav > .cw-haspopup:has([aria-current="page"]) > .cw-nav-trigger,
+.wf-navbar .cw-nav > .cw-haspopup > .cw-nav-trigger:hover,
+.wf-navbar .cw-nav > .cw-haspopup > .cw-nav-trigger[aria-expanded="true"],
+cw-navbar[data-current="produkty"] .cw-haspopup[data-nav-grupa="produkty"] > .cw-nav-trigger,
+cw-navbar[data-current="uprawy"] .cw-haspopup[data-nav-grupa="uprawy"] > .cw-nav-trigger,
+cw-navbar[data-current="prochnica-plus"] .cw-haspopup[data-nav-grupa="prochnica-plus"] > .cw-nav-trigger{color:var(--ch-text-primary);}
+/* the section of the page: the host's data-current against the group of the
+   trigger (data-nav-grupa, chrome.js) – a page of the group lights its trigger
+   even when the page itself is not a link inside the panel */
+.wf-navbar .cw-nav-trigger .wf-icon{width:12px;height:12px;}
+/* 981–1199 px: the whole v7 bar has to fit (as in cw.css since 28.09) – menu
+   13 px, 10 px apart, smaller logo and buttons, the cart without its group gap. */
+@media (min-width:981px) and (max-width:1199px){
+  .wf-navbar__inner{gap:var(--ch-space-3);padding-inline:var(--ch-space-4);}
+  .wf-navbar .cw-brand img{width:112px;}
+  .wf-navbar .cw-nav{gap:var(--ch-space-2);}
+  .wf-navbar .cw-nav > .wf-navbar__link,.wf-navbar .cw-nav > .cw-haspopup > .cw-nav-trigger{font-size:13px;}
+  .wf-navbar__inner > .wf-cluster > .wf-btn:not(.wf-btn--icon){padding-inline:10px;font-size:13px;}
+  header .wf-navbar__inner > .wf-cluster > .cw-cart{margin-left:0;}
+}
+/* 1200–1339 px: Figma sizes, menu gaps 20 instead of 32 */
+@media (min-width:1200px) and (max-width:1339px){
+  .wf-navbar .cw-nav{gap:var(--ch-space-5);}
+  .wf-navbar .cw-brand img{width:150px;}
+}
+
+/* Buttons M on the right (kit buttons in the template, Figma look) */
+.wf-navbar__inner > .wf-cluster{gap:6px;flex-wrap:nowrap;}
+.wf-navbar__inner > .wf-cluster > .wf-btn{
+  height:var(--ch-size-control-m);min-height:var(--ch-size-control-m);padding-inline:var(--ch-space-4);
+  border-radius:var(--ch-radius-control-m);font-family:var(--ch-type-button-m-font);font-size:var(--ch-type-button-m-size);
+  line-height:var(--ch-type-button-m-lh);font-weight:var(--ch-type-button-m-weight);
+}
+.wf-navbar__inner > .wf-cluster > .wf-btn--primary{background:var(--ch-action-primary-bg);border-color:var(--ch-action-primary-bg);color:var(--ch-action-primary-fg);}
+.wf-navbar__inner > .wf-cluster > .wf-btn--primary:hover{background:var(--ch-color-green-900);border-color:var(--ch-color-green-900);}
+.wf-navbar__inner > .wf-cluster > .wf-btn--ghost{background:var(--ch-surface-raised);border-color:var(--ch-border-control);color:var(--ch-text-primary);}
+.wf-navbar__inner > .wf-cluster > .wf-btn--ghost:hover{background:var(--ch-surface-warm);border-color:var(--ch-border-strong);}
+.wf-navbar__inner > .wf-cluster > .wf-btn--icon{width:var(--ch-size-control-m);padding:0;}
+/* Konfigurator: the Figma sliders icon after the label, 16 px at 10 px – from 1340 px, where the bar has room for it */
+.wf-navbar__inner > .wf-cluster > .wf-btn .cw-btn-ico{width:var(--ch-size-icon-s);height:var(--ch-size-icon-s);margin-left:10px;}
+@media (max-width:1339px){.wf-navbar__inner > .wf-cluster > .wf-btn .cw-btn-ico{display:none;}}
+.wf-navbar__inner > .wf-cluster > .wf-btn--icon .wf-icon{width:var(--ch-size-icon-m);height:var(--ch-size-icon-m);}
+/* the Figma group gap between Sklep and the cart (20 px) */
+.wf-navbar__inner > .wf-cluster > .cw-cart{margin-left:14px;}
+/* cart counter: a 16 px green-950 circle with a 3 px white ring, 9 px digits */
+.wf-navbar .cw-cart .wf-count{
+  --wf-badge-offset:5px;min-width:16px;height:16px;padding:0 3px;box-sizing:content-box;border:3px solid var(--ch-surface-raised);
+  border-radius:56px;background:var(--ch-text-primary);color:var(--ch-text-inverse);
+  font-size:9px;line-height:10px;font-weight:var(--ch-font-weight-semibold);display:grid;place-items:center;
+}
+@media (max-width:980px){
+  .wf-navbar__inner > .wf-cluster > .cw-cart{margin-left:0;}
+}
+/* Phones (no Figma mobile): the bar keeps its v7 content in a tighter set –
+   36 px controls, a smaller logo; below 420 px „Sklep” leaves the bar (it is
+   the last item of the mobile menu), so nothing pushes the page sideways. */
+@media (max-width:560px){
+  .wf-navbar__inner{min-height:56px;padding:var(--ch-space-2) 10px;gap:var(--ch-space-2);}
+  .wf-navbar .cw-brand img{width:112px;}
+  .wf-navbar__inner > .wf-cluster{gap:var(--ch-space-1);}
+  .wf-navbar__inner > .wf-cluster > .wf-btn{height:36px;min-height:36px;padding-inline:10px;font-size:13px;border-radius:var(--ch-radius-md);}
+  .wf-navbar__inner > .wf-cluster > .wf-btn--icon{width:36px;padding:0;}
+}
+@media (max-width:419px){
+  .wf-navbar__inner > .wf-cluster > .wf-btn[data-nav="sklep"]{display:none;}
+}
+
+/* Mobile menu (CE-03, v7 behaviour): a white panel under the bar, same inset and corners */
+.wf-navbar .cw-mobilenav{
+  width:calc(100% - 2 * var(--ch-layout-header-inset));margin:var(--ch-space-2) auto 0;
+  padding:var(--ch-space-4) var(--ch-space-5);border-top:0;border-radius:var(--ch-radius-lg);
+  background:var(--ch-surface-raised);max-height:calc(100dvh - var(--ch-layout-header-h) - 3 * var(--ch-layout-header-top));overflow-y:auto;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .wf-navbar .cw-nav > .wf-navbar__link,.wf-navbar .cw-nav > .cw-haspopup > .cw-nav-trigger{transition:none;}
+}

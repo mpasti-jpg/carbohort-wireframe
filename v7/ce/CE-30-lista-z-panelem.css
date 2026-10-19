@@ -39,171 +39,136 @@
      --c5-acc30-measure       width of the description standing next to cards
      --c5-acc30-measure-solo  width of the description of a row without cards
      --c5-acc30-copy-minh     least height of a description from 900 px (auto)
-     --c5-acc30-body          ink of the description
-     --c5-acc30-line, --c5-acc30-bar            hairlines, countdown bar
-     --c5-acc30-card-w, -gap, -h                card width, gap, height
-     --c5-acc30-card-media, -media-open         packshot field at rest / on hover
-     --c5-acc30-card-bg, -bg-hover, -radius     card fill and corner
-     --c5-acc30-tick                            the tick in the corner of a card
+     --c5-acc30-ph-w, -ph-ratio, -ph-ratio-sm   photo variant (see below)
+     --acc30-open-bg          fill of the open row (default beige; white on a beige band)
 
    Without JS (and before the script runs) every panel is open and the titles
    stand in a middle size – a plain list of headings with their descriptions.
    The script sets [data-c5-acc30="on"]: one row open at a time.
    ========================================================================== */
 
-/* ===== wariant: akordeon-z-odliczaniem ===== */
-
-/* overflow-anchor: the countdown moves the large title from one row to the next,
-   and scroll anchoring would answer that with a few px of scroll – with the
-   inertia layer running that reads as a jerk. The automatic change must leave
-   the page exactly where the reader left it. */
+/* ===== wariant: akordeon-z-odliczaniem =====
+   Stage D (18.10.2026): the module wears the look of the Produkty frame (777:1420),
+   the same as `c5pr-acc` below: hairlines (grey-200) between rows, every row has a
+   number (CSS counter) in the first column and a 22 px title in the second (25.29 %
+   of the width), the open row is a beige card (r12) with the number in a yellow
+   square, product cards are white r12. Layout of the block (rows, description on the
+   left, cards or a photo on the right) and the mechanics of v7 (countdown, one row
+   open, no JS = every panel open) are untouched. */
 .c5-acc30{
   --c5-acc30-time:5s;
-  --c5-acc30-measure:358px;
+  --c5-acc30-measure:320px;
   --c5-acc30-measure-solo:40rem;
-  --c5-acc30-body:var(--w-text-tertiary);
-  --c5-acc30-line:var(--w-border-default);
-  --c5-acc30-bar:var(--w-gray-900);
-  --c5-acc30-card-w:clamp(240px,26vw,340px);
-  --c5-acc30-card-gap:20px;
-  --c5-acc30-card-h:350px;
-  --c5-acc30-card-media:139px;
-  --c5-acc30-card-media-open:100px;
-  --c5-acc30-card-bg:var(--w-gray-100);
-  --c5-acc30-card-bg-hover:var(--w-gray-150);
-  --c5-acc30-card-radius:10px;
-  --c5-acc30-tick:var(--w-gray-500);
+  --acc30-col:25.29%;
+  --acc30-open-col:calc((100% + 48px) * .2529 - 24px);
+  --pc30-w:clamp(200px,20.35vw,293px);
+  --pc30-gap:12px;
+  --pc30-h:405px;
   margin-top:clamp(3rem,6vw,5rem);overflow-anchor:none;}
-.c5-acc30__list{list-style:none;margin:0;padding:0;}
-.c5-acc30__item{position:relative;margin:0;border-top:1px solid var(--c5-acc30-line);
-  scroll-margin-top:var(--c5-gutter);}
-.c5-acc30__item:last-child{border-bottom:1px solid var(--c5-acc30-line);}
+.c5-acc30__list{list-style:none;margin:0;padding:0;counter-reset:c5-acc30;}
+.c5-acc30__item{position:relative;counter-increment:c5-acc30;margin:0;border-top:1px solid var(--ch-border-subtle);
+  scroll-margin-top:var(--c5-gutter);
+  transition:background-color var(--c5-acc) var(--w-ease),padding var(--c5-acc) var(--w-ease);}
+.c5-acc30__item:last-child{border-bottom:1px solid var(--ch-border-subtle);}
 
 /* countdown bar: sits on the top line of the row it will open (the script puts
-   data-timer there) */
+   data-timer there). overflow-anchor: the countdown moves the open state from one
+   row to the next, and scroll anchoring would answer that with a few px of scroll. */
 .c5-acc30__timer{position:absolute;left:0;top:-1px;width:100%;height:3px;
-  background:var(--c5-acc30-bar);transform:scaleX(0);transform-origin:left center;pointer-events:none;}
+  background:var(--ch-color-green-950);transform:scaleX(0);transform-origin:left center;pointer-events:none;}
 .c5-acc30__item[data-timer] .c5-acc30__timer{animation:c5-acc30-count var(--c5-acc30-time) linear forwards;}
 .c5-acc30__item[data-timer="hold"] .c5-acc30__timer{animation-play-state:paused;}
 @keyframes c5-acc30-count{from{transform:scaleX(0);}to{transform:scaleX(1);}}
 
-/* title: the only copy of it – small when closed, large when open, the size
-   animated together with the panel */
-.c5-acc30__h{margin:0;font-size:inherit;font-weight:var(--w-weight-regular);}
-.c5-acc30__btn{display:block;width:100%;min-height:44px;margin:0;padding:20px 0;border:0;border-radius:0;
-  background:none;appearance:none;font:inherit;font-size:1.25rem;font-weight:var(--w-weight-medium);
-  letter-spacing:-0.01em;line-height:1.3;text-align:left;color:var(--w-text-primary);cursor:default;
-  transition:font-size var(--c5-acc) var(--w-ease),padding var(--c5-acc) var(--w-ease);}
-.c5-acc30__btn:focus-visible{outline:2px solid var(--w-gray-900);outline-offset:-2px;}
-/* closed row: 15 px in the ink of the title, 22 px of air above and below –
-   a 62 px pitch between two hairlines */
-.c5-acc30[data-c5-acc30="on"] .c5-acc30__btn{font-size:0.9375rem;font-weight:var(--w-weight-regular);
-  line-height:1.2;padding:22px 0;cursor:pointer;}
-/* the open row breathes: air above the large title and between the title and
-   the panel; both paddings ride the same transition as the panel height */
-.c5-acc30[data-c5-acc30="on"] .c5-acc30__item[data-open] .c5-acc30__btn{
-  font-size:clamp(1.5rem,2.6vw,2.1875rem);line-height:1.2;letter-spacing:0;
-  padding:clamp(2rem,4vw,3.5rem) 0 clamp(2rem,3.4vw,3rem);}
+/* row title: 22 px in both states, number in the first column */
+.c5-acc30__h{margin:0;font-size:inherit;font-weight:var(--ch-type-title-weight);}
+.c5-acc30__btn{display:grid;grid-template-columns:var(--acc30-col) minmax(0,1fr);align-items:center;width:100%;min-height:44px;
+  margin:0;padding:32px 0 31px;border:0;border-radius:0;background:none;appearance:none;
+  font:inherit;font-family:var(--ch-type-title-font);font-size:var(--ch-type-title-size);line-height:25px;
+  font-weight:var(--ch-type-title-weight);letter-spacing:var(--ch-type-title-ls);text-align:left;color:var(--ch-text-primary);cursor:default;
+  transition:padding var(--c5-acc) var(--w-ease),color var(--w-duration-base) var(--w-ease);}
+.c5-acc30__btn:focus-visible{outline:2px solid var(--ch-color-green-950);outline-offset:-2px;border-radius:var(--ch-radius-md);}
+.c5-acc30[data-c5-acc30="on"] .c5-acc30__btn{cursor:pointer;}
+/* the number: 13/14 caps, +2 %, the ink at 50 %; in the open row it is a yellow square */
+.c5-acc30__btn::before{content:counter(c5-acc30,decimal-leading-zero) / "";content:counter(c5-acc30,decimal-leading-zero);
+  justify-self:start;display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;min-width:0;
+  font-family:var(--ch-type-kicker-font);font-size:var(--ch-type-kicker-size);line-height:var(--ch-type-kicker-lh);letter-spacing:var(--ch-type-kicker-ls);text-transform:uppercase;color:rgba(12,43,28,.5);
+  transition:background-color var(--c5-acc) var(--w-ease),color var(--c5-acc) var(--w-ease);}
+/* with JS: one open row = the card */
+.c5-acc30[data-c5-acc30="on"] .c5-acc30__item[data-open]{background:var(--acc30-open-bg,var(--ch-surface-warm));border-radius:var(--ch-radius-md);padding-inline:var(--ch-space-6);border-top-color:transparent;}
+.c5-acc30[data-c5-acc30="on"] .c5-acc30__item[data-open] + .c5-acc30__item{border-top-color:transparent;}
+.c5-acc30[data-c5-acc30="on"] .c5-acc30__item[data-open] .c5-acc30__btn{grid-template-columns:var(--acc30-open-col) minmax(0,1fr);min-height:43px;box-sizing:content-box;padding:var(--ch-space-6) 0 0;}
+.c5-acc30[data-c5-acc30="on"] .c5-acc30__item[data-open] .c5-acc30__btn::before{width:43.55px;height:43px;background:var(--ch-badge-active);color:var(--ch-text-primary);border-radius:var(--ch-radius-md);}
 
 /* panel: open by default (no JS), collapsed by the script */
 .c5-acc30__panel{overflow:hidden;}
 .c5-acc30[data-c5-acc30="on"] .c5-acc30__panel{height:0;transition:height var(--c5-acc) var(--w-ease);}
-.c5-acc30__in{display:grid;grid-template-columns:minmax(0,1fr) auto;
-  column-gap:clamp(3rem,8vw,7.875rem);align-items:start;padding-bottom:var(--w-space-10);}
+.c5-acc30__in{display:grid;grid-template-columns:minmax(0,var(--c5-acc30-measure)) auto;justify-content:space-between;column-gap:var(--ch-space-6);align-items:start;
+  padding:var(--ch-space-3) 0 var(--ch-space-14) var(--acc30-col);}
+.c5-acc30[data-c5-acc30="on"] .c5-acc30__item[data-open] .c5-acc30__in{padding:55px 0 var(--ch-space-14) var(--acc30-open-col);}
 
-/* left zone: description, notes, warning, text links */
-.c5-acc30__copy{display:flex;flex-direction:column;gap:var(--w-space-4);min-width:0;
-  max-width:var(--c5-acc30-measure);padding-top:6px;}
-.c5-acc30__copy p{margin:0;font-size:1rem;line-height:1.3;color:var(--c5-acc30-body);}
-/* a row without cards: the description is the whole panel, so it takes a
-   reading measure and the leading of running copy */
-.c5-acc30__copy:only-child{grid-column:1 / -1;max-width:var(--c5-acc30-measure-solo);padding-top:0;}
-.c5-acc30__copy:only-child p{line-height:1.5;}
+/* left zone: description, notes, warning, text links (40 px between the blocks) */
+.c5-acc30__copy{display:flex;flex-direction:column;gap:var(--ch-space-10);min-width:0;max-width:var(--c5-acc30-measure);}
+.c5-acc30__copy p{margin:0;font-family:var(--ch-type-body-font);font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary);}
+/* a row without cards or photo: the description is the whole panel, so it takes a reading measure */
+.c5-acc30__copy:only-child{grid-column:1 / -1;max-width:var(--c5-acc30-measure-solo);}
 /* knob: a common floor for the descriptions where the countdown runs, so the
    list keeps one height while the rows change (set per instance) */
 @media (min-width:900px){
   .c5-acc30__copy{min-height:var(--c5-acc30-copy-minh,auto);}
 }
-.c5-acc30__notes{display:flex;flex-direction:column;gap:var(--w-space-2);margin:0;padding:0;list-style:none;}
-.c5-acc30__notes li{display:flex;gap:var(--w-space-3);align-items:flex-start;font-size:0.9375rem;color:var(--w-text-primary);}
-.c5-acc30__notes .wf-icon{flex:none;margin-top:3px;color:var(--w-icon-default);}
-.c5-acc30__warn{display:flex;gap:var(--w-space-3);align-items:flex-start;border:1px solid var(--w-gray-900);
-  padding:var(--w-space-3) var(--w-space-4);font-size:0.875rem;}
-.c5-acc30__warn .wf-icon{flex:none;margin-top:2px;}
-.c5-acc30__copy .c5-acc30__warn p{font-size:0.875rem;line-height:1.3;color:var(--w-text-primary);}
-/* one text link per line, each a 44 px target */
-.c5-acc30__links{display:flex;flex-direction:column;margin:0;padding:0;list-style:none;font-size:0.9375rem;}
-.c5-acc30__links .wf-link{display:inline-flex;align-items:center;min-height:44px;}
+.c5-acc30__notes{display:flex;flex-direction:column;gap:var(--ch-space-2);margin:0;padding:0;list-style:none;}
+.c5-acc30__notes li{display:flex;gap:var(--ch-space-3);align-items:flex-start;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-primary);}
+.c5-acc30__notes .wf-icon{flex:none;margin-top:3px;color:var(--ch-color-green-300);}
+/* the warning: beige note (EL-17), info icon 16 px, 12/20 grey */
+.c5-acc30__warn{display:flex;gap:13px;align-items:flex-start;padding:var(--ch-space-4) var(--ch-space-3);border-radius:var(--ch-radius-md);background:var(--ch-surface-warm-strong);}
+.c5-acc30__warn .wf-icon{flex:none;width:16px;height:16px;margin-top:2px;color:var(--ch-text-secondary);}
+.c5-acc30__copy .c5-acc30__warn p{font-size:var(--ch-type-caption-size);line-height:var(--ch-type-caption-lh);color:var(--ch-text-secondary);}
+/* text links: Book 16, no underline at rest; a 44 px target each */
+.c5-acc30__links{display:flex;flex-direction:column;margin:0;padding:0;list-style:none;font-size:var(--ch-type-body-size);}
+.c5-acc30__links .wf-link{display:inline-flex;align-items:center;min-height:44px;font-weight:var(--ch-font-weight-book);color:var(--ch-text-primary);text-decoration:none;}
+.c5-acc30__links .wf-link:hover{text-decoration:underline;}
 
-/* right zone: product cards in two wrapping columns, flush with the right edge
-   of the container */
-.c5-acc30__cards{display:grid;grid-template-columns:repeat(2,var(--c5-acc30-card-w));gap:var(--c5-acc30-card-gap);
-  margin:0;padding:0;list-style:none;width:calc(var(--c5-acc30-card-w) * 2 + var(--c5-acc30-card-gap));}
+/* right zone: product cards, two columns of 293 px + 12 px gap, flush with the right edge */
+.c5-acc30__cards{display:grid;grid-template-columns:repeat(2,var(--pc30-w));gap:var(--pc30-gap);margin:0;padding:0;list-style:none;width:calc(var(--pc30-w)*2 + var(--pc30-gap));}
 
-/* --- Product card (optional) ---------------------------------------------------
-   340 x 350 px at full width, 32 px of side padding and 40 px above the
-   packshot field; the name sits 38 px under the field, the description 15 px
-   under the name. The card narrows with --c5-acc30-card-w, so the paddings ride
-   a clamp. The packshot field has a fixed height, so the names line up across
-   the cards of a row. */
-.c5-acc30-card{position:relative;display:grid;grid-template-columns:minmax(0,1fr);align-content:start;gap:0;
-  height:var(--c5-acc30-card-h);margin:0;border-radius:var(--c5-acc30-card-radius);
-  padding:clamp(24px,3vw,40px) clamp(20px,2.4vw,32px) clamp(20px,2.4vw,32px);
-  background:var(--c5-acc30-card-bg);transition:background var(--w-duration-base) var(--w-ease);}
-.c5-acc30-card:focus-within{background:var(--c5-acc30-card-bg-hover);}
-.c5-acc30-card__media{display:flex;align-items:center;justify-content:center;
-  height:var(--c5-acc30-card-media-open);min-height:0;overflow:hidden;
-  transition:height var(--w-duration-base) var(--w-ease);}
-.c5-acc30-card__pack{width:auto;height:auto;max-width:62%;max-height:100%;object-fit:contain;}
-.c5-acc30-card__tick{position:absolute;top:24px;right:26px;width:32px;height:32px;color:var(--c5-acc30-tick);}
-.c5-acc30-card__name{margin:38px 0 0;font-size:0.875rem;font-weight:var(--w-weight-semibold);line-height:1.2;
-  color:var(--w-text-primary);}
-.c5-acc30-card__txt{margin:15px 0 0;max-width:275px;font-size:0.875rem;line-height:1.25;color:var(--w-text-primary);}
+/* Product card (optional): white, r12, packshot field 195 px tall, name 18/25, the
+   one-line description, the buy button always visible at the bottom. */
+.c5-acc30-card{position:relative;display:flex;flex-direction:column;box-sizing:border-box;min-height:var(--pc30-h);margin:0;
+  border-radius:var(--ch-radius-md);padding:39px var(--ch-space-6) var(--ch-space-5);background:var(--ch-surface-raised);}
+.c5-acc30-card__media{display:flex;align-items:center;justify-content:center;flex:none;height:195px;overflow:hidden;}
+.c5-acc30-card__pack{width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;}
+.c5-acc30-card__tick{display:none;}
+.c5-acc30-card__name{margin:41px 0 0;font-family:var(--ch-type-tab-font);font-size:var(--ch-type-tab-size);line-height:25px;font-weight:var(--ch-type-tab-weight);letter-spacing:var(--ch-type-tab-ls);color:var(--ch-text-primary);}
+.c5-acc30-card__txt{margin:var(--ch-space-2) 0 var(--ch-space-4);font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-secondary);}
 /* the whole card is the link to the product page; the buy button rides above it */
 .c5-acc30-card__link{color:inherit;text-decoration:none;}
-.c5-acc30-card__link::after{content:"";position:absolute;inset:0;z-index:1;border-radius:inherit;}
-.c5-acc30-card__link:focus-visible{outline:none;}
-.c5-acc30-card__link:focus-visible::after{outline:2px solid var(--w-gray-900);outline-offset:-2px;}
-/* touch and narrow windows: the button simply stands under the description */
-.c5-acc30-card__buy{position:relative;z-index:2;justify-self:start;margin-top:var(--w-space-2);}
-@media (hover:hover) and (min-width:900px){
-  /* on a pointer the packshot field is tall at rest and shrinks on hover / focus,
-     the name and the description ride up with it and the button is uncovered
-     under the description. The button is out of flow, so the card keeps its
-     height whatever the description does. */
-  .c5-acc30-card__media{height:var(--c5-acc30-card-media);}
-  .c5-acc30-card:hover .c5-acc30-card__media,
-  .c5-acc30-card:focus-within .c5-acc30-card__media{height:var(--c5-acc30-card-media-open);}
-  .c5-acc30-card__buy{position:absolute;left:var(--w-space-5);bottom:var(--w-space-5);margin:0;
-    opacity:0;visibility:hidden;
-    transition:opacity var(--w-duration-base) var(--w-ease),visibility 0s linear var(--w-duration-base);}
-  .c5-acc30-card:hover .c5-acc30-card__buy,
-  .c5-acc30-card:focus-within .c5-acc30-card__buy{opacity:1;visibility:visible;transition-delay:0s;}
-  .c5-acc30-card:hover{background:var(--c5-acc30-card-bg-hover);}
-}
+.c5-acc30-card__link::after{content:"";position:absolute;inset:0;z-index:1;}
+.c5-acc30-card__link:focus-visible::after{outline:2px solid var(--ch-color-green-950);outline-offset:-2px;border-radius:var(--ch-radius-md);}
+.c5-acc30-card__buy{position:relative;z-index:2;align-self:flex-start;margin-top:auto;}
+.c5-acc30-card__name + .c5-acc30-card__buy{margin-top:var(--ch-space-4);}
 
-/* --- Narrow window: plain accordion, cards in one column, two from ~560 px ------ */
+/* --- narrow window: plain accordion, cards in one column, two from ~560 px ------ */
 @media (max-width:899px){
-  .c5-acc30{--c5-acc30-card-h:330px;--c5-acc30-card-media:130px;--c5-acc30-card-media-open:130px;}
+  .c5-acc30{--acc30-col:56px;--acc30-open-col:calc(43.55px + 16px);--pc30-h:0px;}
   .c5-acc30__timer{display:none;}
-  .c5-acc30[data-c5-acc30="on"] .c5-acc30__item[data-open] .c5-acc30__btn{font-size:1.375rem;
-    padding:clamp(1.5rem,5vw,2rem) 0 clamp(1.25rem,4vw,1.75rem);}
-  .c5-acc30__in{grid-template-columns:minmax(0,1fr);row-gap:var(--w-space-5);padding-bottom:var(--w-space-8);}
-  .c5-acc30__copy,.c5-acc30__copy:only-child{max-width:none;padding-top:0;}
+  .c5-acc30__btn{padding:24px 0;font-size:1.125rem;line-height:1.3;}
+  .c5-acc30[data-c5-acc30="on"] .c5-acc30__item[data-open] .c5-acc30__btn{padding:var(--ch-space-4) 0 0;}
+  .c5-acc30__in,
+  .c5-acc30[data-c5-acc30="on"] .c5-acc30__item[data-open] .c5-acc30__in{grid-template-columns:minmax(0,1fr);row-gap:var(--ch-space-8);padding:var(--ch-space-5) 0 var(--ch-space-8);}
+  .c5-acc30__copy,.c5-acc30__copy:only-child{max-width:none;}
   .c5-acc30__cards{width:100%;grid-template-columns:minmax(0,1fr);}
-  /* no countdown here, so a card may grow with its text instead of holding one height */
-  .c5-acc30-card{height:auto;min-height:var(--c5-acc30-card-h);}
+  .c5-acc30-card__media{height:180px;}
 }
 @media (min-width:560px) and (max-width:899px){
   .c5-acc30__cards{grid-template-columns:repeat(2,minmax(0,1fr));}
 }
 
 @media (prefers-reduced-motion:reduce){
+  .c5-acc30__item,
   .c5-acc30__btn,
-  .c5-acc30[data-c5-acc30="on"] .c5-acc30__panel,
-  .c5-acc30-card,
-  .c5-acc30-card__media,
-  .c5-acc30-card__buy{transition:none;}
+  .c5-acc30__btn::before,
+  .c5-acc30[data-c5-acc30="on"] .c5-acc30__panel{transition:none;}
   .c5-acc30__item[data-timer] .c5-acc30__timer{animation:none;}
 }
 
@@ -213,14 +178,13 @@
    img` as the second child of `.c5-acc30__in` (instead of the cards). The
    photo lives in the panel, so it shows when the row opens; with motion on it
    fades in a beat after the panel. The frame holds its ratio before the image
-   loads, so the panel height is known at once.
+   loads, so the panel height is known at once. Large photo: r20.
    Knobs: --c5-acc30-ph-w (photo column from 900 px), --c5-acc30-ph-ratio,
    --c5-acc30-ph-ratio-sm (below 900 px). */
-.c5-acc30--foto .c5-acc30__in{grid-template-columns:minmax(0,1fr) var(--c5-acc30-ph-w,clamp(300px,34vw,480px));}
-.c5-acc30--foto .c5-acc30__copy{max-width:var(--c5-acc30-measure-solo);padding-top:0;}
-.c5-acc30--foto .c5-acc30__copy p{line-height:1.5;}
+.c5-acc30--foto .c5-acc30__in{grid-template-columns:minmax(0,var(--c5-acc30-measure-solo)) var(--c5-acc30-ph-w,clamp(280px,28vw,420px));}
+.c5-acc30--foto .c5-acc30__copy{max-width:var(--c5-acc30-measure-solo);}
 .c5-acc30--foto .c5-acc30__ph{margin:0;aspect-ratio:var(--c5-acc30-ph-ratio,4/3);overflow:hidden;
-  border-radius:var(--c5-acc30-card-radius);background:var(--w-gray-300);}
+  border-radius:var(--ch-radius-control-l);background:var(--ch-color-grey-200);}
 .c5-acc30--foto .c5-acc30__ph > img{display:block;width:100%;height:100%;object-fit:cover;}
 @media (prefers-reduced-motion:no-preference){
   .c5-acc30--foto[data-c5-acc30="on"] .c5-acc30__ph > img{opacity:0;transform:scale(1.04);
@@ -228,134 +192,151 @@
   .c5-acc30--foto[data-c5-acc30="on"] .c5-acc30__item[data-open] .c5-acc30__ph > img{opacity:1;transform:none;}
 }
 @media (max-width:899px){
-  .c5-acc30--foto .c5-acc30__in{grid-template-columns:minmax(0,1fr);}
+  .c5-acc30--foto .c5-acc30__in,
+  .c5-acc30--foto[data-c5-acc30="on"] .c5-acc30__item[data-open] .c5-acc30__in{grid-template-columns:minmax(0,1fr);}
   .c5-acc30--foto .c5-acc30__ph{aspect-ratio:var(--c5-acc30-ph-ratio-sm,16/10);}
 }
 
 
 /* ===== wariant: akordeon-z-odliczaniem – implementacja Produktów (c5pr-acc*, c5pr-pcard*) =====
-   The product overview page builds the variant under its own classes (the module
-   above is the generalised copy of this block). */
-/* Paths – accordion with a countdown. One row per situation; the open row shows a
-   large title, the description and the notes on the left and the product cards pushed to the
-   right edge of the container. Sizes follow the frame: closed row ~62 px, cards 340 × 350 px
-   with a 20 px gap, two columns that wrap – nothing scrolls sideways anywhere, so every product
-   of a path is on screen at once (path 08 fills 2 × 2 and its panel is simply taller).
-   Default (no JS, or before the module runs): every panel open, titles in a middle size. */
-/* overflow-anchor: the countdown moves the large title from one row to the next, and Chrome's
-   scroll anchoring would answer that with a few px of scroll – with Lenis running that reads as
-   a jerk. The automatic change must leave the page exactly where the reader left it. */
-.c5pr-acc{--pc-w:clamp(240px,26vw,340px);--pc-gap:20px;--pc-h:350px;--pc-media:139px;--pc-media-open:100px;margin-top:clamp(3rem,6vw,5rem);overflow-anchor:none;}
-.c5pr-acc__list{list-style:none;margin:0;padding:0;}
-.c5pr-acc__item{position:relative;border-top:1px solid var(--w-border-default);scroll-margin-top:var(--c5-gutter);}
-.c5pr-acc__item:last-child{border-bottom:1px solid var(--w-border-default);}
+   Look of Figma frame 777:1420 (Produkty, "Gama"), 18.10.2026. The product overview page builds
+   the variant under its own classes (the module above is the generalised copy of this block).
+   A list of rows parted by hairlines; every row has a number (CSS counter, no text in the HTML)
+   and a 22 px title that sits in the second column (25.29 % of the width). The open row is a
+   beige card (r12) with the number in a yellow square; inside it: the description, the optional
+   notes / warning / text links in a 320 px column and the product cards pushed to the right edge
+   (two white cards, 293 px wide, 12 px gap, wrapping). Mechanics are untouched: the module in
+   produkty.js sets data-acc="on", data-open on the open row and data-timer on the row the bar
+   counts to. Default (no JS): every panel open, no card. */
+.c5pr-acc{--acc-col:25.29%;--acc-open-col:calc((100% + 48px) * .2529 - 24px);--pc-w:clamp(200px,20.35vw,293px);--pc-gap:12px;--pc-h:405px;
+  margin-top:clamp(3rem,6vw,5rem);overflow-anchor:none;}
+.c5pr-acc__list{list-style:none;margin:0;padding:0;counter-reset:c5pr-acc;}
+.c5pr-acc__item{position:relative;counter-increment:c5pr-acc;border-top:1px solid var(--ch-border-subtle);scroll-margin-top:var(--c5-gutter);
+  transition:background-color var(--c5-acc) var(--w-ease),padding var(--c5-acc) var(--w-ease);}
+.c5pr-acc__item:last-child{border-bottom:1px solid var(--ch-border-subtle);}
 
 /* countdown bar: sits on the top line of the row it will open (the module puts data-timer there) */
-.c5pr-acc__timer{position:absolute;left:0;top:-1px;width:100%;height:3px;background:var(--w-gray-900);transform:scaleX(0);transform-origin:left center;pointer-events:none;}
+.c5pr-acc__timer{position:absolute;left:0;top:-1px;width:100%;height:3px;background:var(--ch-color-green-950);transform:scaleX(0);transform-origin:left center;pointer-events:none;}
 .c5pr-acc__item[data-timer] .c5pr-acc__timer{animation:c5pr-count 5s linear forwards;}
 .c5pr-acc__item[data-timer="hold"] .c5pr-acc__timer{animation-play-state:paused;}
 @keyframes c5pr-count{from{transform:scaleX(0);}to{transform:scaleX(1);}}
 
-/* title: the only copy of it – 1 rem closed, large when open, the size animated with the panel */
-.c5pr-acc__h{margin:0;font-weight:var(--w-weight-regular);}
-.c5pr-acc__btn{display:block;width:100%;min-height:44px;padding:20px 0;border:0;background:none;font:inherit;font-size:1.25rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;line-height:1.3;text-align:left;color:var(--w-text-primary);cursor:pointer;
-  transition:font-size var(--c5-acc) var(--w-ease),padding var(--c5-acc) var(--w-ease),color var(--w-duration-base) var(--w-ease);}
-.c5pr-acc__btn:focus-visible{outline:2px solid var(--w-gray-900);outline-offset:-2px;border-radius:0;}
-/* closed row, measured off the frame:
-   15 px in the ink of the body text, 22 px of air above and below – the 62 px pitch the frame
-   draws between two hairlines. The grey of the earlier build is gone: in the frame the closed
-   titles are as black as the open one, only smaller. */
-.c5pr-acc[data-acc="on"] .c5pr-acc__btn{font-size:0.9375rem;font-weight:var(--w-weight-regular);line-height:1.2;padding:22px 0;color:var(--w-text-primary);}
-/* the open row breathes: air above the large title and between the title and the panel;
-   both paddings ride the same transition as the panel height, so nothing jumps */
-/* the open title tops out at the frame's 35 px */
-.c5pr-acc[data-acc="on"] .c5pr-acc__item[data-open] .c5pr-acc__btn{font-size:clamp(1.5rem,2.6vw,2.1875rem);font-weight:var(--w-weight-regular);line-height:1.2;letter-spacing:0;padding:clamp(2rem,4vw,3.5rem) 0 clamp(2rem,3.4vw,3rem);color:var(--w-text-primary);}
-@media (hover:hover){
-  .c5pr-acc[data-acc="on"] .c5pr-acc__btn:hover{color:var(--w-text-primary);}
-}
+/* row title: 22 px in both states (the frame does not grow it), number in the first column.
+   Closed row = 1 px line + 32 px + 25 px text + 31 px = the 89 px pitch of the frame. */
+.c5pr-acc__h{margin:0;font-weight:var(--ch-type-title-weight);}
+.c5pr-acc__btn{display:grid;grid-template-columns:var(--acc-col) minmax(0,1fr);align-items:center;width:100%;min-height:44px;padding:32px 0 31px;border:0;background:none;
+  font:inherit;font-family:var(--ch-type-title-font);font-size:var(--ch-type-title-size);line-height:25px;font-weight:var(--ch-type-title-weight);letter-spacing:var(--ch-type-title-ls);text-align:left;color:var(--ch-text-primary);cursor:pointer;
+  transition:padding var(--c5-acc) var(--w-ease),color var(--w-duration-base) var(--w-ease);}
+.c5pr-acc__btn:focus-visible{outline:2px solid var(--ch-color-green-950);outline-offset:-2px;border-radius:var(--ch-radius-md);}
+/* the number: 13/14 caps, +2 %, the ink at 50 %; in the open row it is a yellow square */
+.c5pr-acc__btn::before{content:counter(c5pr-acc,decimal-leading-zero) / "";content:counter(c5pr-acc,decimal-leading-zero);
+  justify-self:start;display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;min-width:0;
+  font-family:var(--ch-type-kicker-font);font-size:var(--ch-type-kicker-size);line-height:var(--ch-type-kicker-lh);letter-spacing:var(--ch-type-kicker-ls);text-transform:uppercase;color:rgba(12,43,28,.5);
+  transition:background-color var(--c5-acc) var(--w-ease),color var(--c5-acc) var(--w-ease);}
+/* with JS: one open row = the card */
+.c5pr-acc[data-acc="on"] .c5pr-acc__item[data-open]{background:var(--ch-surface-warm);border-radius:var(--ch-radius-md);padding-inline:var(--ch-space-6);border-top-color:transparent;}
+.c5pr-acc[data-acc="on"] .c5pr-acc__item[data-open] + .c5pr-acc__item{border-top-color:transparent;}
+.c5pr-acc[data-acc="on"] .c5pr-acc__item[data-open] .c5pr-acc__btn{grid-template-columns:var(--acc-open-col) minmax(0,1fr);min-height:43px;box-sizing:content-box;padding:var(--ch-space-6) 0 0;}
+.c5pr-acc[data-acc="on"] .c5pr-acc__item[data-open] .c5pr-acc__btn::before{width:43.55px;height:43px;background:var(--ch-badge-active);color:var(--ch-text-primary);border-radius:var(--ch-radius-md);}
 
 /* panel: open by default (no JS), collapsed by the module */
 .c5pr-acc__panel{overflow:hidden;}
 .c5pr-acc[data-acc="on"] .c5pr-acc__panel{height:0;transition:height var(--c5-acc) var(--w-ease);}
-.c5pr-acc__in{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:clamp(3rem,8vw,7.875rem);align-items:start;padding-bottom:var(--w-space-10);}
+.c5pr-acc__in{display:grid;grid-template-columns:minmax(0,320px) auto;justify-content:space-between;column-gap:var(--ch-space-6);align-items:start;
+  padding:var(--ch-space-3) 0 var(--ch-space-14) var(--acc-col);}
+.c5pr-acc[data-acc="on"] .c5pr-acc__item[data-open] .c5pr-acc__in{padding:55px 0 var(--ch-space-14) var(--acc-open-col);}
 
-/* left zone: description, notes, warning, text links */
-/* the frame: 358 px of measure, 16 px / 1.3 in the body grey of the design (#777771) */
-.c5pr-acc__copy{display:flex;flex-direction:column;gap:var(--w-space-4);max-width:358px;padding-top:6px;}
-.c5pr-acc__copy p{margin:0;font-size:1rem;line-height:1.3;color:#777771;}
-.c5pr-acc__notes{display:flex;flex-direction:column;gap:var(--w-space-2);margin:0;padding:0;list-style:none;}
-.c5pr-acc__notes li{display:flex;gap:var(--w-space-3);align-items:flex-start;font-size:0.9375rem;color:var(--w-text-primary);}
-.c5pr-acc__notes .wf-icon{flex:none;margin-top:3px;color:var(--w-icon-default);}
-.c5pr-path__warn{display:flex;gap:var(--w-space-3);align-items:flex-start;border:1px solid var(--w-gray-900);padding:var(--w-space-3) var(--w-space-4);font-size:0.875rem;}
-.c5pr-path__warn .wf-icon{flex:none;margin-top:2px;}
-.c5pr-path__warn p{font-size:0.875rem;color:var(--w-text-primary);}
-/* one text link per row, no separators (a separator is not copy); 44 px target */
-.c5pr-acc__links{display:flex;flex-direction:column;margin:0;padding:0;list-style:none;font-size:0.9375rem;}
-.c5pr-acc__links .wf-link{display:inline-flex;align-items:center;min-height:44px;}
+/* left zone: description, notes, warning, text links (320 px, 40 px between the blocks) */
+.c5pr-acc__copy{display:flex;flex-direction:column;gap:var(--ch-space-10);max-width:320px;}
+.c5pr-acc__copy p{margin:0;font-family:var(--ch-type-body-font);font-size:var(--ch-type-body-size);line-height:24px;color:var(--ch-text-secondary);}
+.c5pr-acc__notes{display:flex;flex-direction:column;gap:var(--ch-space-2);margin:0;padding:0;list-style:none;}
+.c5pr-acc__notes li{display:flex;gap:var(--ch-space-3);align-items:flex-start;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-primary);}
+.c5pr-acc__notes .wf-icon{flex:none;margin-top:3px;color:var(--ch-color-green-300);}
+/* the warning: beige note (EL-17), info icon 16 px, 12/20 grey */
+.c5pr-path__warn{display:flex;gap:13px;align-items:flex-start;padding:var(--ch-space-4) var(--ch-space-3);border-radius:var(--ch-radius-md);background:var(--ch-surface-warm-strong);}
+.c5pr-path__warn .wf-icon{flex:none;width:16px;height:16px;margin-top:2px;color:var(--ch-text-secondary);}
+.c5pr-path__warn p{font-size:var(--ch-type-caption-size);line-height:var(--ch-type-caption-lh);color:var(--ch-text-secondary);}
+/* text links: Book 16, no underline at rest; a 44 px target each */
+.c5pr-acc__links{display:flex;flex-direction:column;margin:0;padding:0;list-style:none;font-size:var(--ch-type-body-size);}
+.c5pr-acc__links .wf-link{display:inline-flex;align-items:center;min-height:44px;font-weight:var(--ch-font-weight-book);color:var(--ch-text-primary);text-decoration:none;}
+.c5pr-acc__links .wf-link:hover{text-decoration:underline;}
 
-/* right zone: product cards in two wrapping columns, flush with the right edge of the container */
+/* right zone: product cards, two columns of 293 px + 12 px gap, flush with the right edge */
 .c5pr-acc__cards{display:grid;grid-template-columns:repeat(2,var(--pc-w));gap:var(--pc-gap);margin:0;padding:0;list-style:none;width:calc(var(--pc-w)*2 + var(--pc-gap));}
 
-/* the packshot field has a fixed height, so the names line up across the cards of a path */
-/* Card geometry straight off the frame: 340 × 350 px, 10 px radius, 32 px of side
-   padding and 40 px above the packshot field, which is 139 px tall; the name sits 38 px under
-   it, the description 15 px under the name on a 275 px measure. Below 1440 px the card narrows
-   with --pc-w, so the paddings ride a clamp whose top is the frame value. The fill is the
-   frame's #f6f6f6 – the 60 % opacity of the Figma layer is not reproduced: over the #fafafa
-   band it would leave the card all but invisible. */
-.c5pr-pcard{position:relative;height:var(--pc-h);display:grid;grid-template-columns:minmax(0,1fr);align-content:start;gap:0;border-radius:10px;
-  padding:clamp(24px,3vw,40px) clamp(20px,2.4vw,32px) clamp(20px,2.4vw,32px);background:#f6f6f6;transition:background var(--w-duration-base) var(--w-ease);}
-.c5pr-pcard:focus-within{background:var(--w-gray-150);}
-.c5pr-pcard__media{display:flex;align-items:center;justify-content:center;height:var(--pc-media-open);min-height:0;overflow:hidden;transition:height var(--w-duration-base) var(--w-ease);}
-.c5pr-pcard__pack{width:auto;height:auto;max-width:62%;max-height:100%;object-fit:contain;}
-/* the check of the frame: 32 px, the green of the design, 24 px down and 26 px in from the
-   top right corner of the card */
-.c5pr-pcard__tick{position:absolute;top:24px;right:26px;width:32px;height:32px;color:#86d574;}
-.c5pr-pcard__name{margin:38px 0 0;font-size:0.875rem;font-weight:var(--w-weight-semibold);line-height:1.2;color:var(--w-text-primary);}
-.c5pr-pcard__txt{margin:15px 0 0;max-width:275px;font-size:0.875rem;line-height:1.25;color:var(--w-text-primary);}
+/* Product card (frame 293 × 405): white, r12, packshot field 195 px tall 39 px from the top,
+   name 18/25 41 px under it, the green buy button always visible at the bottom. The one-line
+   description of the row is kept (copy of v7, not in the frame) between the name and the button.
+   The tick of the old build is gone. */
+.c5pr-pcard{position:relative;display:flex;flex-direction:column;box-sizing:border-box;min-height:var(--pc-h);border-radius:var(--ch-radius-md);
+  padding:39px var(--ch-space-6) var(--ch-space-5);background:var(--ch-surface-raised);}
+.c5pr-pcard__media{display:flex;align-items:center;justify-content:center;flex:none;height:195px;overflow:hidden;}
+.c5pr-pcard__pack{width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;}
+.c5pr-pcard__tick{display:none;}
+.c5pr-pcard__name{margin:41px 0 0;font-family:var(--ch-type-tab-font);font-size:var(--ch-type-tab-size);line-height:25px;font-weight:var(--ch-type-tab-weight);letter-spacing:var(--ch-type-tab-ls);color:var(--ch-text-primary);}
+.c5pr-pcard__name .wf-w-semibold{font-weight:inherit;}
+.c5pr-pcard__txt{margin:var(--ch-space-2) 0 var(--ch-space-4);font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-secondary);}
 /* the whole card is the link to the product page; the buy button rides above it */
 .c5pr-pcard__link{color:inherit;text-decoration:none;}
 .c5pr-pcard__link::after{content:"";position:absolute;inset:0;z-index:1;}
-.c5pr-pcard__link:focus-visible::after{outline:2px solid var(--w-gray-900);outline-offset:-2px;}
-/* touch and narrow windows: the button simply stands under the description, packshot field small */
-.c5pr-pcard__buy{position:relative;z-index:2;justify-self:start;margin-top:var(--w-space-2);}
-@media (hover:hover) and (min-width:900px){
-  /* on a pointer the packshot field is tall at rest and shrinks on hover / focus, the name and
-     the description ride up with it and the button is uncovered under the description. The button
-     is out of flow, so the card keeps its 350 px whatever the description does. */
-  .c5pr-pcard__media{height:var(--pc-media);}
-  .c5pr-pcard:hover .c5pr-pcard__media,
-  .c5pr-pcard:focus-within .c5pr-pcard__media{height:var(--pc-media-open);}
-  .c5pr-pcard__buy{position:absolute;left:var(--w-space-5);bottom:var(--w-space-5);margin:0;opacity:0;visibility:hidden;transition:opacity var(--w-duration-base) var(--w-ease),visibility 0s linear var(--w-duration-base);}
-  .c5pr-pcard:hover .c5pr-pcard__buy,
-  .c5pr-pcard:focus-within .c5pr-pcard__buy{opacity:1;visibility:visible;transition-delay:0s;}
-  .c5pr-pcard:hover{background:var(--w-gray-150);}
-}
+.c5pr-pcard__link:focus-visible::after{outline:2px solid var(--ch-color-green-950);outline-offset:-2px;border-radius:var(--ch-radius-md);}
+.c5pr-pcard__buy{position:relative;z-index:2;align-self:flex-start;margin-top:auto;}
+.c5pr-pcard__name + .c5pr-pcard__buy{margin-top:var(--ch-space-4);}
 
 /* --- narrow window: plain accordion, cards in one column, two from ~560 px ------------------ */
 @media (max-width:899px){
-  .c5pr-acc{--pc-h:330px;--pc-media:130px;--pc-media-open:130px;}
+  .c5pr-acc{--acc-col:56px;--acc-open-col:calc(43.55px + 16px);--pc-h:0px;}
   .c5pr-acc__timer{display:none;}
-  .c5pr-acc[data-acc="on"] .c5pr-acc__item[data-open] .c5pr-acc__btn{font-size:1.375rem;padding:clamp(1.5rem,5vw,2rem) 0 clamp(1.25rem,4vw,1.75rem);}
-  .c5pr-acc__in{grid-template-columns:minmax(0,1fr);row-gap:var(--w-space-5);padding-bottom:var(--w-space-8);}
-  .c5pr-acc__copy{max-width:none;padding-top:0;}
+  .c5pr-acc__btn{padding:24px 0;font-size:1.125rem;line-height:1.3;}
+  .c5pr-acc[data-acc="on"] .c5pr-acc__item[data-open] .c5pr-acc__btn{padding:var(--ch-space-4) 0 0;}
+  .c5pr-acc__in,
+  .c5pr-acc[data-acc="on"] .c5pr-acc__item[data-open] .c5pr-acc__in{grid-template-columns:minmax(0,1fr);row-gap:var(--ch-space-8);padding:var(--ch-space-5) 0 var(--ch-space-8);}
+  .c5pr-acc__copy{max-width:none;gap:var(--ch-space-6);}
   .c5pr-acc__cards{width:100%;grid-template-columns:minmax(0,1fr);}
-  /* no countdown here, so a card may grow with its text instead of holding one height */
-  .c5pr-pcard{height:auto;min-height:var(--pc-h);}
+  .c5pr-pcard__media{height:180px;}
 }
 @media (min-width:560px) and (max-width:899px){
   .c5pr-acc__cards{grid-template-columns:repeat(2,minmax(0,1fr));}
 }
 
 @media (prefers-reduced-motion: reduce){
+  .c5pr-acc__item,
   .c5pr-acc__btn,
-  .c5pr-acc[data-acc="on"] .c5pr-acc__panel,
-  .c5pr-pcard__buy,
-  .c5pr-pcard__media,
-  .c5pr-pcard{transition:none;}
+  .c5pr-acc__btn::before,
+  .c5pr-acc[data-acc="on"] .c5pr-acc__panel{transition:none;}
   .c5pr-acc__item[data-timer] .c5pr-acc__timer{animation:none;}
 }
 
+
+/* ===== wariant: akordeon-przewijany (Produkty, R04 18.10.2026; modifier c5pr-acc--przewijany) =====
+   The rows open with the scroll instead of the countdown. Markup: the root carries
+   [data-acc-scroll]; inside it `.c5pr-acc__head` (Figma 777:1419: kicker in the number column,
+   54/63 heading in the title column, 56 px above the first row) and `.c5pr-acc__stage` around
+   the list. ce/CE-30-lista-z-panelem.js (block „akordeon-przewijany”) sets data-acc="on" (the
+   one-open look above) and, when the scroll may drive it (>= 900 px, no reduced motion, a window
+   of at least 640 px), data-acc-scroll="on": the root becomes a tall track, the stage pins for
+   one screen and the list rides up inside it (transform only) so the open row always stands
+   under the row before it; one short stretch of scrolling (~32 % of the window) per row, both
+   ways. A click on a title opens that row and scrolls to its stretch. Otherwise (narrow window,
+   reduced motion, low window) it is the plain accordion of the variant above, opened by a click;
+   without JS every row is open. The countdown bars of the markup are not drawn here. */
+.c5pr-acc__head{display:grid;grid-template-columns:var(--acc-col) minmax(0,1fr);align-items:start;margin-bottom:var(--ch-space-14);}
+.c5pr-acc__head .c5-kicker{justify-self:start;margin:0;}
+.c5pr-acc__title{margin:0;max-width:730px;}
+.c5pr-acc--przewijany .c5pr-acc__timer{display:none;}
+/* notes in the copy column: EL-17 note with the „i” (G16) – the copy column's paragraph size
+   must not reach into the note */
+.c5pr-acc__copy .c5-note p{font-size:inherit;line-height:inherit;color:inherit;}
+/* the scroll-driven stage */
+.c5pr-acc[data-acc-scroll="on"]{--c5-acc:.42s;--acc-pad:var(--ch-space-6);}
+.c5pr-acc[data-acc-scroll="on"] .c5pr-acc__stage{position:sticky;top:0;height:100svh;overflow:hidden;overflow:clip;padding-top:var(--acc-pad);box-sizing:border-box;}
+.c5pr-acc[data-acc-scroll="on"] .c5pr-acc__list{transform:translate3d(0,var(--acc-y,0px),0);transition:transform var(--c5-acc) var(--w-ease);will-change:transform;}
+@media (max-width:899px){
+  .c5pr-acc__head{grid-template-columns:minmax(0,1fr);row-gap:var(--ch-space-5);margin-bottom:var(--ch-space-8);}
+}
+@media (prefers-reduced-motion: reduce){
+  .c5pr-acc[data-acc-scroll="on"] .c5pr-acc__list{transition:none;}
+}
 
 /* ===== układ podstawowy: lista z podglądem (c5hu-mixlist*, CARBOHUMIC) ===== */
 /* Five names on the left, one description field on the right. Base state = the
@@ -382,18 +363,18 @@
    whichever is active. */
 .c5hu-mixlist__name{position:relative;display:block;width:100%;margin:0;
   padding:.35rem 0;border:0;background:none;appearance:none;cursor:default;
-  font-family:inherit;font-size:1.25rem;font-weight:var(--w-weight-medium);line-height:1.35;
-  letter-spacing:-0.01em;text-align:left;color:var(--w-gray-900);transition:color .2s ease;}
+  font-family:var(--ch-type-title-font);font-size:var(--ch-type-title-size);font-weight:var(--ch-type-title-weight);line-height:var(--ch-type-title-lh);
+  letter-spacing:var(--ch-type-title-ls);text-align:left;color:var(--ch-text-primary);transition:color .2s ease;}
 /* the dash before the name exists only in the two-column layout */
-.c5hu-mixlist__name::before{content:"";display:none;position:absolute;left:0;top:calc(.35rem + .675em);
+.c5hu-mixlist__name::before{content:"";display:none;position:absolute;left:0;top:calc(.35rem + var(--ch-type-title-lh) / 2);
   width:1.25rem;height:1px;background:currentColor;
   transform:scaleX(0);transform-origin:left center;transition:transform .2s cubic-bezier(.2,.7,.2,1);}
 .c5hu-mixlist__name:focus-visible{outline:2px solid var(--w-gray-900);outline-offset:3px;}
 
-/* Panel: a light grey field with the line of examples above the description. */
-.c5hu-mixlist__panel{display:flex;flex-direction:column;gap:var(--w-space-2);
-  background:var(--w-gray-100);padding:clamp(1.25rem,4vw,1.75rem);margin-bottom:var(--w-space-4);}
-.c5hu-mixlist__panel p{margin:0;font-size:1rem;line-height:1.6;color:var(--w-text-secondary);max-width:62ch;}
+/* Panel: a beige card (EL-15, r12) with the line of examples above the description. */
+.c5hu-mixlist__panel{display:flex;flex-direction:column;gap:var(--ch-space-2);
+  background:var(--ch-surface-warm);border-radius:var(--ch-radius-md);padding:clamp(1.25rem,4vw,var(--ch-space-8));margin-bottom:var(--ch-space-4);}
+.c5hu-mixlist__panel p{margin:0;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary);max-width:62ch;}
 
 @media (min-width:900px){
   /* Two columns: names | panel. The panels lie in one grid cell, so the field has
@@ -402,10 +383,10 @@
     column-gap:clamp(2rem,5vw,4rem);row-gap:0;align-items:start;}
   .c5hu-mixlist__nav{display:flex;flex-direction:column;gap:var(--w-space-3);}
   .c5hu-mixlist__panels{display:grid;}
-  .c5hu-mixlist__panel{grid-area:1/1;padding:32px;margin-bottom:0;}
-  .c5hu-mixlist__name{padding-left:2rem;cursor:pointer;color:var(--w-gray-500);}
+  .c5hu-mixlist__panel{grid-area:1/1;padding:var(--ch-space-8);margin-bottom:0;}
+  .c5hu-mixlist__name{padding-left:2rem;cursor:pointer;color:var(--ch-text-secondary);}
   .c5hu-mixlist__name::before{display:block;}
-  .c5hu-mixlist__name.is-on{color:var(--w-gray-900);}
+  .c5hu-mixlist__name.is-on{color:var(--ch-text-primary);}
   .c5hu-mixlist__name.is-on::before{transform:scaleX(1);}
   /* Crossfade: an invisible panel leaves the accessibility tree (visibility)
      but still counts towards the height of the cell. */
@@ -418,7 +399,7 @@
   .c5hu-mixlist__name,.c5hu-mixlist__name::before,.cx-js .c5hu-mixlist__panel{transition-duration:0s;}
 }
 /* the line of examples inside the panels of the list */
-.c5hu-mix__ex{font-size:0.8125rem;color:var(--w-text-tertiary);}
+.c5hu-mix__ex{font-size:var(--ch-type-caption-size);line-height:var(--ch-type-caption-lh);color:var(--ch-text-secondary);}
 
 
 /* ===== układ podstawowy: karty / taby / akordeon (on-val*, O firmie) =====
@@ -435,15 +416,15 @@
 .on-val__tab{display:none;}
 .on-val__panel{display:flex;min-width:0;}
 .on-val__card{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:var(--w-space-3);
-  border:1px solid var(--w-border-default);background:var(--w-surface-page);padding:clamp(1.25rem,2.2vw,1.75rem);}
+  border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-md);background:var(--ch-surface-raised);padding:clamp(1.25rem,2.2vw,1.75rem);}
 .on-val__fig{margin:0;display:flex;flex-direction:column;gap:var(--w-space-2);}
-.on-val__img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;background:var(--w-gray-200);}
-.on-val__cap{font-size:0.75rem;line-height:1.45;color:var(--w-text-tertiary);}
-.on-val__cno{font-size:0.75rem;letter-spacing:.06em;color:var(--w-text-tertiary);}
-.on-val__h{font-size:1.125rem;line-height:1.3;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
-.on-val__card p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
-.on-val__no{font-size:0.75rem;letter-spacing:.06em;}
-.on-val__t{font-size:1.125rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;line-height:1.3;}
+.on-val__img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:var(--ch-radius-sm);background:var(--ch-color-grey-200);}
+.on-val__cap{font-size:var(--ch-type-caption-size);line-height:var(--ch-type-caption-lh);color:var(--ch-text-secondary);}
+.on-val__cno{font-size:var(--ch-type-kicker-size);line-height:var(--ch-type-kicker-lh);letter-spacing:var(--ch-type-kicker-ls);color:rgba(12,43,28,.5);}
+.on-val__h{font-size:var(--ch-type-tab-size);line-height:var(--ch-type-tab-lh);font-weight:var(--ch-type-tab-weight);letter-spacing:var(--ch-type-tab-ls);}
+.on-val__card p{margin:0;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary);}
+.on-val__no{font-size:var(--ch-type-kicker-size);line-height:var(--ch-type-kicker-lh);letter-spacing:var(--ch-type-kicker-ls);}
+.on-val__t{font-family:var(--ch-type-title-font);font-size:var(--ch-type-title-size);font-weight:var(--ch-type-title-weight);letter-spacing:var(--ch-type-title-ls);line-height:var(--ch-type-title-lh);}
 .on-val__tab:focus-visible{outline:2px solid var(--w-gray-900);outline-offset:-2px;border-radius:0;}
 /* --- Tabs (>= 900 px, JS): the list of values | a sticky description ---------
    Rows are display:contents, so every button sits in column 1 (rows 1…n) and
@@ -452,16 +433,20 @@
 .on-val[data-vals="tabs"] .on-val__list{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);
   grid-template-rows:repeat(var(--on-val-n,4),auto) 1fr;column-gap:clamp(2rem,5vw,4.5rem);row-gap:0;align-items:start;}
 .on-val[data-vals="tabs"] .on-val__tab{grid-column:1;display:grid;grid-template-columns:2.5rem minmax(0,1fr);
-  gap:var(--w-space-3);align-items:baseline;width:100%;padding:18px 0 18px 14px;border:0;
-  border-top:1px solid var(--w-border-default);border-left:2px solid transparent;background:none;font:inherit;
-  text-align:left;cursor:pointer;color:var(--w-gray-500);transition:color .2s,border-color .2s;}
-.on-val[data-vals="tabs"] .on-val__row:last-child .on-val__tab{border-bottom:1px solid var(--w-border-default);}
+  gap:var(--ch-space-3);align-items:center;width:100%;padding:24px 0;border:0;
+  border-top:1px solid var(--ch-border-subtle);border-radius:0;background:none;font:inherit;
+  text-align:left;cursor:pointer;color:var(--ch-text-primary);transition:background-color .2s,color .2s,padding .2s;}
+.on-val[data-vals="tabs"] .on-val__row:last-child .on-val__tab{border-bottom:1px solid var(--ch-border-subtle);}
+/* the number: kicker type at 50 % ink; on the shown row a yellow square (as in the Produkty list) */
+.on-val[data-vals="tabs"] .on-val__no{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:var(--ch-radius-md);color:rgba(12,43,28,.5);transition:background-color .2s,color .2s;}
 .on-val[data-vals="tabs"] .on-val__chev{display:none;}
 /* shown (hover preview, is-on) and chosen (aria-selected) */
 .on-val[data-vals="tabs"] .on-val__tab.is-on,
-.on-val[data-vals="tabs"] .on-val__tab[aria-selected="true"]{color:var(--w-gray-900);border-left-color:var(--w-gray-900);}
+.on-val[data-vals="tabs"] .on-val__tab[aria-selected="true"]{background:var(--ch-surface-warm);border-radius:var(--ch-radius-md);padding-inline:var(--ch-space-3);border-top-color:transparent;color:var(--ch-text-primary);}
+.on-val[data-vals="tabs"] .on-val__tab.is-on .on-val__no,
+.on-val[data-vals="tabs"] .on-val__tab[aria-selected="true"] .on-val__no{background:var(--ch-badge-active);color:var(--ch-text-primary);}
 @media (hover:hover){
-  .on-val[data-vals="tabs"] .on-val__tab:hover:not(.is-on):not([aria-selected="true"]){color:var(--w-gray-700);}
+  .on-val[data-vals="tabs"] .on-val__tab:hover:not(.is-on):not([aria-selected="true"]){background:var(--ch-surface-warm-row);}
 }
 /* A panel that would reach under the advisor dock sticks by its bottom edge
    instead, 84 px above the window bottom (--on-val-ph = its height, set by JS). */
@@ -472,16 +457,16 @@
 .on-val[data-vals="tabs"] .on-val__panel[data-on]{z-index:1;opacity:1;visibility:visible;transform:none;transition-delay:0s;}
 .on-val[data-vals="tabs"] .on-val__panel:focus-visible{outline:2px solid var(--w-gray-900);outline-offset:2px;border-radius:0;}
 .on-val[data-vals="tabs"] .on-val__card{padding:clamp(1.5rem,2.6vw,2.25rem);}
-.on-val[data-vals="tabs"] .on-val__h{font-size:clamp(1.375rem,2.2vw,1.75rem);line-height:1.2;}
+.on-val[data-vals="tabs"] .on-val__h{font-size:var(--ch-type-title-m-size);line-height:var(--ch-type-title-m-lh);letter-spacing:var(--ch-type-title-m-ls);}
 
 /* --- Accordion (< 900 px, JS): number · title · chevron, one panel open ------ */
 .on-val[data-vals="acc"] .on-val__list{display:block;}
-.on-val[data-vals="acc"] .on-val__row{display:block;border-top:1px solid var(--w-border-default);}
-.on-val[data-vals="acc"] .on-val__row:last-child{border-bottom:1px solid var(--w-border-default);}
+.on-val[data-vals="acc"] .on-val__row{display:block;border-top:1px solid var(--ch-border-subtle);}
+.on-val[data-vals="acc"] .on-val__row:last-child{border-bottom:1px solid var(--ch-border-subtle);}
 .on-val[data-vals="acc"] .on-val__tab{display:grid;grid-template-columns:2.5rem minmax(0,1fr) auto;
   gap:var(--w-space-3);align-items:baseline;width:100%;min-height:56px;padding:16px 0;border:0;background:none;
   font:inherit;text-align:left;cursor:pointer;color:var(--w-text-primary);}
-.on-val[data-vals="acc"] .on-val__no{color:var(--w-text-tertiary);}
+.on-val[data-vals="acc"] .on-val__no{color:rgba(12,43,28,.5);}
 .on-val[data-vals="acc"] .on-val__chev{align-self:center;transition:transform var(--w-duration-base) var(--w-ease);}
 .on-val[data-vals="acc"] .on-val__tab[aria-expanded="true"] .on-val__chev{transform:rotate(180deg);}
 .on-val[data-vals="acc"] .on-val__panel{display:block;position:relative;overflow:hidden;height:0;

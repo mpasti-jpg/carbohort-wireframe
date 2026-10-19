@@ -1,0 +1,146 @@
+/* ===== CE-84 · Koszyk z podsumowaniem (rejestr: ce-rejestr.js) ==============
+   Cart body: column labels, line items (thumbnail r8 on beige, stepper, line
+   value), undo bar, empty state, and the summary as a beige card (EL-15 warm)
+   with the shipping calculator, total, VAT and buttons. Moved from koszyk.css
+   in stage D (18.10.2026). The header bar is CE-77, "Dorzuć do zamówienia" is
+   CE-20. Shared pieces (.cws-qty, .cws-price, .cws-btn) come from
+   sklep-wspolne.css; here they are re-shaped only inside .c5ks. Tokens --ch-*. */
+
+/* --- Layout -------------------------------------------------------------
+   One column on phones and tablets (summary under the items); from 900 px
+   items 7fr + summary 5fr (at least 340 px), the summary stuck to the top.
+   koszyk.js lowers --ks-sum-top below the 24 px default when the summary is
+   taller than the window, so its buttons stay in view while it sticks. */
+.c5ks-sec { padding-block: clamp(1.5rem, 3vw, 2.5rem) clamp(3rem, 6vw, 5rem); }
+.c5ks-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--w-space-10); align-items: start; }
+.c5ks-items, .c5ks-sum { min-width: 0; }
+@media (min-width: 900px) {
+  .c5ks-grid { grid-template-columns: minmax(0, 7fr) minmax(340px, 5fr); column-gap: clamp(40px, 5vw, 80px); }
+  .c5ks-grid.is-empty { grid-template-columns: minmax(0, 1fr); }
+  /* The site navbar scrolls away (c5.css), so the offset counts from the viewport edge. */
+  .c5ks-sum { position: sticky; top: var(--ks-sum-top, 24px); }
+}
+
+/* Column label over a black rule – both columns, like "Items" in the pattern. */
+.c5ks-label { padding-bottom: var(--w-space-3); border-bottom: 1px solid var(--ch-border-subtle); font-size: 0.8125rem; font-weight: var(--w-weight-semibold); line-height: 1.3; letter-spacing: .04em; text-transform: uppercase; }
+
+/* --- Line items ----------------------------------------------------------
+   A card-row per line, rules between: square thumbnail (96 px on phones,
+   160 px from 600 px) · name and "×" on top, pack and unit price under it,
+   stepper bottom-left and line value bottom-right. */
+.c5ks-item {
+  display: grid; grid-template-columns: 96px minmax(0, 1fr); column-gap: var(--w-space-4);
+  padding-block: var(--w-space-5); border-bottom: 1px solid var(--ch-border-subtle);
+}
+.c5ks-item__img { display: block; align-self: start; aspect-ratio: 1; border-radius: var(--ch-radius-sm); background: var(--ch-surface-warm-strong); overflow: hidden; }
+.c5ks-item__img img { display: block; width: 100%; height: 100%; object-fit: contain; padding: 12%; }
+.c5ks-item__img.wf-ph { min-height: 0; border-radius: var(--ch-radius-sm); }
+.c5ks-item__body { display: flex; flex-direction: column; min-width: 0; min-height: 96px; }
+.c5ks-item__head { display: flex; align-items: flex-start; gap: var(--w-space-2); }
+.c5ks-item__name { flex: 1 1 auto; min-width: 0; padding-top: 1px; font-size: 1rem; font-weight: var(--w-weight-medium); letter-spacing: -0.01em; line-height: 1.3; }
+.c5ks-item__name a { color: inherit; text-decoration: none; }
+.c5ks-item__name a:hover { text-decoration: underline; text-underline-offset: 3px; }
+/* "×": a 40 px target whose icon lines up with the column edge. */
+.c5ks-item__rm { flex: none; display: grid; place-items: center; width: 40px; height: 40px; margin: -9px -10px -9px 0; padding: 0; background: none; border: 0; border-radius: var(--ch-radius-sm); color: var(--ch-text-primary); cursor: pointer; transition: background var(--w-duration-base) var(--w-ease); }
+.c5ks-item__rm:hover { background: var(--ch-surface-warm-strong); }
+.c5ks-item__rm .wf-icon { width: 20px; height: 20px; }
+.c5ks-item__pack { margin-top: var(--w-space-1); font-size: 0.875rem; line-height: 1.4; color: var(--w-text-secondary); }
+.c5ks-item__price { margin-top: var(--w-space-2); font-size: 0.9375rem; }
+.c5ks-item__vat { font-size: 0.75rem; color: var(--w-text-tertiary); white-space: nowrap; }
+.c5ks-item__low { margin-top: 2px; font-size: 0.75rem; line-height: 1.4; color: var(--w-text-tertiary); }
+.c5ks-item__foot { display: flex; flex-wrap: wrap; align-items: center; gap: var(--w-space-3) var(--w-space-4); margin-top: auto; padding-top: var(--w-space-4); }
+.c5ks-item__sum { margin-left: auto; white-space: nowrap; font-size: 1.0625rem; font-variant-numeric: tabular-nums; }
+.c5ks-item__sum b { font-weight: var(--w-weight-semibold); }
+.c5ks-item__name a:focus-visible, .c5ks-item__rm:focus-visible, .c5ks-undo__btn:focus-visible, .c5ks-how summary:focus-visible { outline: 2px solid var(--w-focus-ring); outline-offset: 2px; }
+.c5ks-item__rm:focus-visible { outline-offset: -2px; }
+/* Stepper ends: aria-disabled keeps the focus on the button at 1 and 99. */
+.c5ks-item .cws-qty__b[aria-disabled="true"] { color: var(--w-text-disabled); cursor: default; }
+.c5ks-item .cws-qty__b[aria-disabled="true"]:hover { background: none; }
+
+@media (min-width: 600px) {
+  .c5ks-item { grid-template-columns: 160px minmax(0, 1fr); column-gap: clamp(1rem, 2vw, 1.75rem); padding-block: var(--w-space-6); }
+  .c5ks-item__body { min-height: 160px; }
+  .c5ks-item__name { font-size: 1.0625rem; }
+  .c5ks-item__sum { font-size: 1.125rem; }
+}
+
+/* Undo bar in place of a removed line, for 6 s (paused while focused). */
+.c5ks-undo {
+  position: relative; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: var(--w-space-3) var(--w-space-4); padding: 14px 16px; background: var(--ch-surface-warm-strong);
+  border-radius: var(--ch-radius-md); margin-top: 6px; font-size: 0.9375rem; overflow: hidden;
+}
+.c5ks-undo__txt { min-width: 0; flex: 1 1 14rem; }
+.c5ks-undo__txt b { font-weight: var(--w-weight-semibold); }
+.c5ks-undo__btn { flex: none; font: inherit; font-size: 0.875rem; font-weight: var(--w-weight-medium); padding: 8px 18px; background: var(--ch-surface-page); color: var(--ch-text-primary); border: 1px solid var(--ch-border-control); border-radius: var(--ch-radius-sm); cursor: pointer; transition: background var(--w-duration-base) var(--w-ease), color var(--w-duration-base) var(--w-ease); }
+.c5ks-undo__btn:hover { background: var(--ch-action-primary-bg); color: var(--ch-action-primary-fg); border-color: var(--ch-action-primary-bg); }
+.c5ks-undo__bar { position: absolute; left: 0; bottom: 0; width: 100%; height: 2px; background: var(--w-gray-900); transform-origin: left; animation: c5ks-undo 6s linear forwards; }
+.c5ks-undo.is-paused .c5ks-undo__bar { animation-play-state: paused; }
+@keyframes c5ks-undo { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+
+/* --- Empty state ------------------------------------------------------ */
+.c5ks-empty { display: flex; flex-direction: column; align-items: center; gap: var(--w-space-4); text-align: center; border: 1px dashed var(--ch-border-dashed); border-radius: var(--ch-radius-md); padding: clamp(2rem, 5vw, 3.5rem) var(--w-space-5); }
+.c5ks-list:not([hidden]) + .c5ks-empty { margin-top: var(--w-space-5); }   /* undo bar above the empty state */
+.c5ks-empty__ico { display: grid; place-items: center; width: var(--ch-size-icon-frame); height: var(--ch-size-icon-frame); border-radius: 50%; background: var(--ch-icon-frame-light); }
+.c5ks-empty__ico .wf-icon { width: 24px; height: 24px; }
+.c5ks-empty__h { font-family: var(--ch-type-display-sm-font); font-size: var(--ch-type-display-sm-size); line-height: var(--ch-type-display-sm-lh); font-weight: var(--ch-type-display-sm-weight); letter-spacing: var(--ch-type-display-sm-ls); }
+.c5ks-empty__h:focus { outline: none; }
+.c5ks-empty__h:focus-visible { outline: 2px solid var(--w-focus-ring); outline-offset: 4px; }
+.c5ks-empty__act { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: var(--w-space-2); }
+@media (max-width: 599px) {
+  .c5ks-empty__act { flex-direction: column; align-self: stretch; }   /* equal, full-width buttons */
+}
+.c5ks-empty__note { max-width: 36rem; font-size: 0.8125rem; color: var(--w-text-tertiary); }
+.c5ks-noscript { padding: var(--w-space-5); border: 1px solid var(--ch-border-strong); border-radius: var(--ch-radius-md); }
+
+/* --- Summary: shipping calculator, total with VAT, buttons ------------------ */
+.c5ks-sum__list { margin: 0; }
+.c5ks-sum__row { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--w-space-4); align-items: baseline; padding-block: 14px; border-top: 1px solid var(--ch-border-subtle); }
+.c5ks-sum__row:first-child { border-top: 0; }   /* the label's black rule is above */
+.c5ks-sum__row dt { font-size: 0.9375rem; }
+.c5ks-sum__row dd { margin: 0; font-size: 0.9375rem; font-weight: var(--w-weight-semibold); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.c5ks-sum__calc { display: block; margin-top: 2px; font-size: 0.8125rem; color: var(--w-text-secondary); font-variant-numeric: tabular-nums; }
+.c5ks-sum__row dd.c5ks-sum__how { grid-column: 1 / -1; margin-top: var(--w-space-2); text-align: left; white-space: normal; font-weight: var(--w-weight-regular); }
+.c5ks-sum__row--total { margin-top: var(--w-space-1); padding-block: var(--w-space-4) var(--w-space-2); border-top-color: var(--ch-border-strong); align-items: center; }
+.c5ks-sum__row--total dt { font-size: 1rem; font-weight: var(--w-weight-semibold); }
+.c5ks-sum__row--total dd { font-size: var(--ch-type-title-l-size); line-height: var(--ch-type-title-l-lh); letter-spacing: var(--ch-type-title-l-ls); }
+/* VAT (C2): smaller lines right under the gross total. */
+.c5ks-sum__row--tax { padding-block: 1px; border-top: 0; }
+.c5ks-sum__row--tax dt, .c5ks-sum__row--tax dd { font-size: 0.8125rem; font-weight: var(--w-weight-regular); color: var(--w-text-secondary); }
+.c5ks-sum__vatnote { margin-top: var(--w-space-3); font-size: 0.75rem; line-height: 1.45; color: var(--w-text-secondary); }
+
+/* Buttons: one under the other; side by side from 1200 px when both labels
+   fit on one line (a long sum drops the second button to its own row). */
+.c5ks-sum__act { display: flex; flex-direction: column; gap: var(--w-space-2); margin-top: var(--w-space-5); }
+.c5ks-sum__act .cws-btn { width: 100%; min-height: 52px; padding-inline: 20px; text-align: center; }
+.c5ks-sum__back { border-color: var(--ch-border-control); }
+.c5ks-sum__back:hover { background: var(--ch-surface-page); border-color: var(--ch-border-strong); }
+@media (min-width: 1200px) {
+  .c5ks-sum__act { flex-direction: row; flex-wrap: wrap; }
+  .c5ks-sum__act .cws-btn { flex: 1 1 0; width: auto; min-width: max-content; }
+}
+.c5ks-sum__notes { display: flex; flex-direction: column; gap: 6px; margin-top: var(--w-space-5); padding-top: var(--w-space-4); border-top: 1px solid var(--ch-border-subtle); font-size: 0.75rem; line-height: 1.5; color: var(--w-text-secondary); }
+
+.c5ks-how summary { display: inline-flex; align-items: center; gap: 4px; font-size: 0.8125rem; color: var(--w-text-secondary); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; list-style: none; }
+.c5ks-how summary::-webkit-details-marker { display: none; }
+.c5ks-how summary:hover { color: var(--w-text-primary); }
+.c5ks-how summary .wf-icon { width: 14px; height: 14px; transition: transform var(--w-duration-base) var(--w-ease); }
+.c5ks-how[open] summary .wf-icon { transform: rotate(180deg); }
+.c5ks-how__body { display: flex; flex-direction: column; gap: 4px; margin-top: var(--w-space-2); padding: 10px 12px; border-radius: var(--ch-radius-sm); background: var(--ch-surface-page); font-size: 0.8125rem; line-height: 1.45; color: var(--w-text-secondary); }
+.c5ks-how__kg { color: var(--w-text-primary); font-variant-numeric: tabular-nums; }
+
+
+/* --- Summary as a beige card (EL-15 warm), shop buttons in the EL-01 shape --- */
+.c5ks-sum { padding: var(--ch-space-6); border-radius: var(--ch-radius-md); background: var(--ch-surface-warm); }
+.c5ks .cws-btn { border-radius: var(--ch-radius-control-l); font-family: var(--ch-type-button-l-font); font-weight: var(--ch-type-button-l-weight); letter-spacing: 0; }
+.c5ks .cws-btn--dark { background: var(--ch-action-primary-bg); color: var(--ch-action-primary-fg); border-color: var(--ch-action-primary-bg); }
+.c5ks .cws-btn--dark:hover { background: var(--ch-color-green-900); border-color: var(--ch-color-green-900); }
+.c5ks .cws-btn--light { border-color: var(--ch-border-control); }
+.c5ks .cws-qty { overflow: hidden; border-color: var(--ch-border-control); border-radius: var(--ch-radius-control-l); }
+.c5ks .cws-qty__v { border-inline-color: var(--ch-border-subtle); }
+.c5ks .cws-price__pct { border-radius: var(--ch-radius-xs); }
+
+@media (prefers-reduced-motion: reduce) {
+  .c5ks-undo__bar { display: none; }
+  .c5ks-undo__btn, .c5ks-item__rm, .c5ks-how summary .wf-icon { transition: none; }
+}

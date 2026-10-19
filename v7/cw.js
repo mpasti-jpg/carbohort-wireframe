@@ -226,8 +226,15 @@
       if (openMega) closeMega(false);
       render();
       panel.setAttribute("data-open", "true");
+      /* G09 (18.10.2026): the page dims behind the preview as behind a mega menu */
+      showScrim(true);
     }
-    function hide() { clearTimeout(tOpen); panel.setAttribute("data-open", "false"); }
+    function hide() {
+      clearTimeout(tOpen);
+      if (!isOpen()) return;
+      panel.setAttribute("data-open", "false");
+      if (!openMega) showScrim(false);
+    }
     function enter() {
       if (!mq.matches) return;
       clearTimeout(tClose);
@@ -243,6 +250,8 @@
     panel.addEventListener("mouseleave", leave);
     doc.addEventListener("keydown", function (e) { if (e.key === "Escape" && isOpen()) hide(); });
     $$("[data-mega-trigger]").forEach(function (t) { t.addEventListener("click", hide); });
+    var scr = scrim();
+    if (scr) scr.addEventListener("click", hide);
     window.addEventListener("cw:cart", function () { if (isOpen()) { render(); } });
     if (mq.addEventListener) mq.addEventListener("change", function () { if (!mq.matches) hide(); });
   })();

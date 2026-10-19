@@ -1,0 +1,118 @@
+/* ===== CE-48 · Karty biogramów – module (design system v0.1, stage C 18.10.2026) =====
+   Look from the Figma frames, content from the v7 markup. Styles of this CE
+   live here; the page sheet keeps only exceptions of one page.
+
+   Figma 859:2597. Layout „kolumny” as the soil programme page builds it (`pp-*`):
+   the head on the left (336 px, heading left-aligned), on the right two cards
+   side by side, aligned to the TOP – an expanded biography grows only its own
+   card. Card: photo (450 : 313, r 8 on top) -> name bar in the accent yellow
+   (r 8 at the bottom) -> body: biography, then the row „button + note”
+   (no frame, no fill). o-firmie (`--siatka`) and centrum-wiedzy (`--kompakt`)
+   use the same card in their own layouts (variants below).
+
+   Markup:
+     .pp-bio                                root of the layout (with .c5-wrap)
+       .pp-bio__title                       heading (left)
+       ul.pp-team > li > .pp-person
+         .pp-person__ph                     photo (placeholder .wf-ph or img)
+         .pp-person__name                   name bar
+         .pp-person__body
+           p                                biography (first paragraph)
+           .pp-disc > .pp-discin            drawer with the rest (prochnica-plus.js, module 55)
+           .pp-person__act                  row: .pp-more[data-disc] + .pp-person__indep
+   Without JS the drawer stands open and the button disappears; JS folds it at
+   start through `CX5.panelSet` and drives the height with inline style, so the
+   folded state hangs on `html.cx-js`. =========================================== */
+
+/* --- Layout: head | two cards -------------------------------------------------- */
+.pp-bio{display:grid;grid-template-columns:minmax(0,336px) minmax(0,1fr);
+  gap:var(--ch-space-8) clamp(2rem,5vw,var(--ch-space-16));align-items:start;}
+.pp-bio__title{margin:0;max-width:none;text-align:left;}
+/* P05 (18.10.2026): kicker over the heading (Figma 859:2597) – one head block */
+.pp-bio__head{display:flex;flex-direction:column;align-items:flex-start;min-width:0;}
+.pp-team{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ch-space-5);
+  align-items:start;max-width:921px;width:100%;margin:0 0 0 auto;padding:0;list-style:none;}
+
+/* --- Card ---------------------------------------------------------------------- */
+.pp-person{display:flex;flex-direction:column;min-width:0;}
+.pp-person__ph{width:100%;aspect-ratio:450 / 313;min-height:0;
+  border-radius:var(--ch-radius-sm) var(--ch-radius-sm) 0 0;}
+.pp-person__ph img{display:block;width:100%;height:100%;object-fit:cover;}
+/* a photo field without the placeholder class (photo in an img): a block that clips it */
+.pp-person__ph:not(.wf-ph){display:block;overflow:hidden;}
+/* P05: the first paragraph of the biographies in one row gets the same height
+   (`--pp-bio-p`, set by prochnica-plus.js, module 55), so the „Czytaj dalej”
+   buttons stand at one height whatever the line count */
+.pp-person__body > p:first-child{min-height:var(--pp-bio-p,0px);}
+.pp-person__name{margin:0;padding:22px var(--ch-space-5);border-radius:0 0 var(--ch-radius-sm) var(--ch-radius-sm);
+  background:var(--ch-surface-accent-yellow);color:var(--ch-text-primary);
+  font-family:var(--ch-type-title-s-font);font-size:var(--ch-type-title-s-size);
+  line-height:var(--ch-type-title-s-lh);font-weight:var(--ch-type-title-s-weight);
+  letter-spacing:var(--ch-type-title-s-ls);}
+.pp-person__body{display:flex;flex-direction:column;gap:var(--ch-space-8);min-width:0;
+  padding:var(--ch-space-8) var(--ch-space-5);}
+.pp-person p{margin:0;font-family:var(--ch-type-body-font);font-size:var(--ch-type-body-size);
+  line-height:24px;color:var(--ch-text-secondary);}
+
+/* --- Row: button + note ------------------------------------------------------------ */
+/* P05 (18.10.2026): the row hangs from its top – the button never moves with a
+   note of more lines – and the FIRST line of the note is centred on the label
+   of the button: (button height − line height) / 2 above it. */
+.pp-person__act{display:flex;flex-wrap:wrap;align-items:flex-start;gap:var(--ch-space-3) var(--ch-space-5);}
+.pp-more{flex:none;}
+/* the note without frame and fill: icon + text (Figma 859:2577); the sentence is
+   the v7 one, so it may wrap – it takes the rest of the row, then a line of its own */
+.pp-person .pp-person__indep{flex:1 1 180px;min-width:0;background:none;border:0;border-radius:0;padding:0;
+  font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-secondary);}
+.pp-person__act > .pp-more + .pp-person__indep{margin-top:calc((var(--ch-size-control-m) - var(--ch-type-small-lh)) / 2);}
+.pp-person__indep > .wf-icon{margin-top:3px;}
+
+/* --- Drawer (the rest of the biography) ------------------------------------------- */
+.pp-disc{overflow:hidden;
+  transition:height var(--c5-acc) var(--w-ease),opacity var(--c5-acc-fade) var(--w-ease);}
+html.cx-js .pp-disc{height:0;opacity:0;}
+html.cx-js .pp-disc[data-open="true"]{opacity:1;}
+html:not(.cx-js) .pp-team .pp-more{display:none;}
+.pp-discin{overflow:hidden;min-height:0;display:flex;flex-direction:column;gap:var(--ch-space-3);}
+
+/* Staggered entrance of the cards (80 ms). */
+.pp-team > li:nth-child(2){transition-delay:.08s;}
+
+/* --- Narrow screens: head above the cards, then one card under another ------------- */
+@media (max-width:1099px){
+  .pp-bio{grid-template-columns:minmax(0,1fr);}
+  .pp-team{margin-left:0;max-width:none;}
+}
+@media (max-width:699px){
+  .pp-team{grid-template-columns:minmax(0,1fr);gap:var(--ch-space-8);}
+}
+
+/* --- Role line (under the name bar of the cards that carry one) ------------------- */
+.pp-person .pp-person__role{color:var(--ch-text-primary);}
+.pp-person__body > .c5-chip,
+.pp-person .pp-person__chip{align-self:flex-start;margin:0;}
+
+/* --- Variants (stage D, 18.10.2026) --------------------------------------------------
+   The same card in two more layouts; the head (kicker, H2, lead) stays in the
+   usual `.c5-head` above the cards, so the grid takes the whole width.
+     · `--siatka`  (o-firmie)       team grid: four columns from 1100 px, two from
+                                    600 px, one below; bios fold through the drawer
+     · `--kompakt` (centrum-wiedzy) authors: cards in a row, no drawer
+   Markup: `.c5-wrap.pp-bio.pp-bio--<variant>` > kicker, `.c5-head`,
+   `ul.pp-team.pp-team--<variant>` > the same `.pp-person` cards as above. */
+.pp-bio--siatka,
+.pp-bio--kompakt{display:block;}
+.pp-team--siatka,
+.pp-team--kompakt{max-width:none;width:auto;margin:clamp(1.5rem,3vw,2.25rem) 0 0;}
+.pp-team--siatka{grid-template-columns:repeat(auto-fit,minmax(min(255px,100%),1fr));}
+.pp-team--kompakt{grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));}
+@media (min-width:1100px){
+  .pp-team--siatka{grid-template-columns:repeat(4,minmax(0,1fr));}
+}
+.pp-team--siatka .pp-person__body,
+.pp-team--kompakt .pp-person__body{gap:var(--ch-space-4);padding-block:var(--ch-space-6);}
+
+@media (prefers-reduced-motion: reduce){
+  .pp-disc{transition:none;}
+  .pp-team > li{transition-delay:0s;}
+}

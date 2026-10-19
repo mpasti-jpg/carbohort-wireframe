@@ -1,0 +1,61 @@
+/* ===== CE-55 · Wiersze działów z akcjami (rejestr: ce-rejestr.js) ===========
+   Module (design system v0.1, stage D 18.10.2026): rows in the language of the
+   list CE-53 (Figma 888:6233) – a thin line under every row, padding 20 / 0,
+   name 18/28, text 16/25 grey, small outline buttons EL-01 without a shadow.
+   Layout and content stay as in v7. Prefix: `kt-dept`.
+
+   Each row is a three column grid: department with the person, the description,
+   and the action column with the full number and the full address. Below 900 px
+   the columns stack and the buttons run full width. `is-hot` (set for 1.5 s by
+   the chips or by a `#dzial-…` hash) lights the row up without moving the
+   layout; `is-pick` / `is-dim` come from the chip row (kontakt.js).
+
+   Markup:
+     section[data-ce="CE-55"] > .c5-wrap > h2 + ul.kt-depts
+       li.kt-dept#dzial-… [data-kt-osoba]
+         .kt-dept__who   > h3 + p.kt-dept__person
+         .kt-dept__desc  > p…
+         .kt-dept__act   > a.c5-btn.c5-btn--light.c5-btn--sm (phone, e-mail)
+   ========================================================================== */
+
+.kt-depts-sec{padding-block:clamp(1.75rem,3.5vw,2.75rem) clamp(3.5rem,7vw,6.25rem);}
+
+.kt-depts{display:flex;flex-direction:column;margin:clamp(1.5rem,3vw,2.25rem) 0 0;
+  padding:0;list-style:none;}
+.kt-dept{display:grid;grid-template-columns:minmax(0,0.95fr) minmax(0,1.35fr) minmax(0,20rem);
+  gap:var(--ch-space-5);align-items:start;padding:var(--ch-space-5) 0;
+  border-bottom:1px solid var(--ch-border-subtle);position:relative;isolation:isolate;
+  scroll-margin-top:clamp(1rem,4vw,3rem);
+  transition:opacity var(--ch-motion-duration-base) var(--ch-motion-ease);}
+.kt-dept:focus{outline:none;}
+
+.kt-dept__who{display:flex;flex-direction:column;gap:var(--ch-space-1);}
+.kt-dept__who h3{margin:0;font-family:var(--ch-type-tab-font);font-size:var(--ch-type-tab-size);
+  line-height:var(--ch-type-tab-lh);font-weight:var(--ch-type-tab-weight);letter-spacing:var(--ch-type-tab-ls);}
+.kt-dept__person{margin:0;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary);}
+
+.kt-dept__desc{display:flex;flex-direction:column;gap:var(--ch-space-3);}
+.kt-dept__desc p{margin:0;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary);}
+
+.kt-dept__act{display:flex;flex-direction:column;gap:var(--ch-space-2);align-items:stretch;}
+/* Long contact labels (35-character e-mail addresses) wrap inside the small
+   button instead of pushing the grid wider than the viewport; the shared
+   `c5-btn` stays single-line elsewhere. */
+.kt-dept__act .c5-btn{--c5-btn-px:14px;justify-content:flex-start;text-align:left;
+  white-space:normal;overflow-wrap:anywhere;line-height:1.3;}
+.kt-dept__act .c5-btn > span{min-width:0;}
+
+/* highlight after a chip click or a #dzial-… hash: a warm field (r12) that
+   reaches 16 px past the text on both sides – drawn behind the row, so nothing
+   shifts by a pixel */
+.kt-dept::before{content:"";position:absolute;inset:0 calc(-1 * var(--ch-space-4));z-index:-1;
+  border-radius:var(--ch-radius-md);background:transparent;
+  transition:background var(--ch-motion-duration-base) var(--ch-motion-ease);}
+.kt-dept.is-hot::before,
+.kt-dept.is-pick::before{background:var(--ch-surface-warm);}
+.kt-dept.is-dim{opacity:.4;}
+
+@media (max-width:899px){
+  .kt-dept{grid-template-columns:minmax(0,1fr);gap:var(--ch-space-4);}
+}
+@media (prefers-reduced-motion: reduce){ .kt-dept,.kt-dept::before{transition:none;} }

@@ -16,97 +16,21 @@
 .c5-ph::after{content:attr(data-ph);position:absolute;left:10px;bottom:8px;font-size:0.75rem;line-height:1.2;color:var(--w-gray-500);}
 
 /* --- Siatka kart i karta (z inline <style> bazy) ---------------------------- */
-.c5-mt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:var(--w-space-5);margin-top:clamp(2rem,4vw,3.5rem);}
-.c5-mt-grid--wide{grid-template-columns:repeat(auto-fit,minmax(min(100%,24rem),1fr));}
-.c5-mt-card{border:1px solid var(--w-border-default);background:var(--w-surface-page);padding:clamp(1.25rem,2.4vw,1.75rem);display:flex;flex-direction:column;gap:var(--w-space-3);}
-.c5-mt-card__no{font-size:0.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--w-text-tertiary);}
-.c5-mt-card__title{margin:0;font-size:1.125rem;line-height:1.3;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
-.c5-mt-card__txt{font-size:var(--w-font-sm-size);line-height:1.55;color:var(--w-text-secondary);}
-.c5-mt-card__txt + .c5-mt-card__txt{margin-top:calc(-1 * var(--w-space-1));}
-.c5-mt-card ul{margin:0;padding-left:1.2rem;display:flex;flex-direction:column;gap:var(--w-space-1);font-size:var(--w-font-sm-size);color:var(--w-text-secondary);}
+/* The grid and the card (`c5-mt-grid`, `c5-mt-card*`) are styled in ce/CE-20-siatka-kart.css. */
 
 /* --- Notatka / widoczny brak danych ---------------------------------------- */
-.c5-mt-note{border-left:3px solid var(--w-gray-900);padding:var(--w-space-3) 0 var(--w-space-3) var(--w-space-4);margin-top:clamp(1.5rem,3vw,2.5rem);display:flex;flex-direction:column;gap:var(--w-space-2);align-items:flex-start;font-size:var(--w-font-sm-size);color:var(--w-text-secondary);}
-.c5-mt-note__title{font-weight:var(--w-weight-semibold);color:var(--w-text-primary);}
 
-/* --- Blok medialny (film YT, raport z wizyty) -------------------------------
-   Bez placeholdera zdjęcia (spec §10, §11.6): kwadrat z ikoną zamiast kadru. */
-.c5-mt-media{display:grid;grid-template-columns:minmax(0,7rem) minmax(0,1fr);gap:clamp(1.25rem,3vw,2.5rem);align-items:center;border:1px solid var(--w-border-default);padding:clamp(1rem,2.4vw,1.5rem);margin-top:clamp(1.5rem,3vw,2.5rem);}
-.c5-mt-media__ico{display:grid;place-items:center;width:100%;aspect-ratio:1;background:var(--w-gray-100);}
-.c5-mt-media__ico .wf-icon{width:32px;height:32px;color:var(--w-gray-600);}
-.c5-mt-media__body{display:flex;flex-direction:column;gap:var(--w-space-2);align-items:flex-start;}
+/* Media block (film, visit report – CE-27): ce/CE-27-blok-materialu.css */
 
 /* --- Pas domykający rozdział (dawny `.c5-alert`, bez placeholdera) ----------
    Tekst po lewej, przycisk po prawej, obramowanie górne i dolne (spec §9, §11.6). */
-.c5-mt-cross{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:clamp(1.25rem,3vw,2.5rem);border-top:1px solid var(--w-gray-900);border-bottom:1px solid var(--w-gray-900);padding-block:clamp(1.5rem,3vw,2rem);margin-top:clamp(2.5rem,5vw,4rem);}
-.c5-mt-cross > p{max-width:64ch;margin:0;}
-
-@media (max-width:699px){
-  .c5-mt-media{grid-template-columns:1fr;}
-  .c5-mt-media__ico{width:5rem;}
-}
+/* look of the band: ce/CE-23-pas-cta.css (`c5-ctabar`) */
 
 /* ===== 35 · W skrócie – model rękawa + pięć kart (spec §7) =====
-   Model przeniesiony z ciemnej sekcji Parametrów na jasne tło: obrys sceny
-   `--w-border-default`, SVG w `--w-gray-900`, warstwa bazowa .45, część
-   aktywna 1, nieaktywne .28; przełączniki obrys `rgb(0 0 0 / .35)`, aktywny
-   `--w-gray-900` z białym tekstem. Układ i mechanika bez zmian: grupa radio
-   + selektory :checked, zero JS. ------------------------------------------- */
-/* The model and its switch strip are one block: columns wide apart, ROWS
-   tight, so the strip reads as attached to the stage rather than as a separate
-   block. The model -> cards gap is set by the single rule below. */
-.c5-mt-model{position:relative;border:0;margin:clamp(2rem,4vw,3.5rem) 0 0;padding:0;min-width:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,20rem);column-gap:clamp(1.5rem,4vw,3.5rem);row-gap:var(--w-space-5);align-items:start;color:var(--w-gray-900);}
-/* model + switches and the five cards read as one section (spec §7) */
+   The model (CE-19) lives in ce/CE-19-model-interaktywny.css; only the page's
+   own rhythm stays here: model + switches and the five cards read as one
+   section (spec §7). */
 .c5-mt-model + .c5-mt-grid{margin-top:clamp(2.5rem,5vw,4rem);}
-.c5-mt-model__radio{position:absolute;width:1px;height:1px;opacity:0;}
-.c5-mt-model__stage{grid-column:1;grid-row:1;border:1px solid var(--w-border-default);padding:clamp(1rem,2.5vw,1.75rem);}
-.c5-mt-model__stage svg{display:block;width:100%;height:auto;color:var(--w-gray-900);}
-.c5-mt-model__base{opacity:.45;}
-.c5-mt-model__part{opacity:.28;transition:opacity var(--w-duration-base) var(--w-ease);}
-.c5-mt-model__panels{grid-column:2;grid-row:1;display:flex;flex-direction:column;gap:var(--w-space-4);padding-top:var(--w-space-2);}
-.c5-mt-model__panel{display:none;flex-direction:column;gap:var(--w-space-2);}
-.c5-mt-model__val{font-size:clamp(1.375rem,2.6vw,1.75rem);font-weight:var(--w-weight-medium);letter-spacing:-0.01em;line-height:1.15;color:var(--w-gray-900);}
-.c5-mt-model__desc{font-size:var(--w-font-sm-size);line-height:1.55;color:var(--w-text-secondary);}
-.c5-mt-model__tabs{grid-column:1 / -1;grid-row:2;display:flex;flex-wrap:wrap;gap:6px;}
-.c5-mt-model__tab{display:inline-flex;align-items:center;padding:9px 18px;font-size:0.8125rem;letter-spacing:-0.01em;border:1px solid rgb(0 0 0 / .35);cursor:pointer;transition:background var(--w-duration-base) var(--w-ease),color var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);}
-.c5-mt-model__tab:hover{border-color:var(--w-gray-900);}
-#mt-part-1:checked ~ .c5-mt-model__panels [data-panel="1"],
-#mt-part-2:checked ~ .c5-mt-model__panels [data-panel="2"],
-#mt-part-3:checked ~ .c5-mt-model__panels [data-panel="3"],
-#mt-part-4:checked ~ .c5-mt-model__panels [data-panel="4"],
-#mt-part-5:checked ~ .c5-mt-model__panels [data-panel="5"]{display:flex;}
-#mt-part-1:checked ~ .c5-mt-model__stage [data-part="1"],
-#mt-part-2:checked ~ .c5-mt-model__stage [data-part="2"],
-#mt-part-3:checked ~ .c5-mt-model__stage [data-part="3"],
-#mt-part-4:checked ~ .c5-mt-model__stage [data-part="4"],
-#mt-part-5:checked ~ .c5-mt-model__stage [data-part="5"]{opacity:1;}
-#mt-part-1:checked ~ .c5-mt-model__tabs [for="mt-part-1"],
-#mt-part-2:checked ~ .c5-mt-model__tabs [for="mt-part-2"],
-#mt-part-3:checked ~ .c5-mt-model__tabs [for="mt-part-3"],
-#mt-part-4:checked ~ .c5-mt-model__tabs [for="mt-part-4"],
-#mt-part-5:checked ~ .c5-mt-model__tabs [for="mt-part-5"]{background:var(--w-gray-900);color:var(--w-text-inverse);border-color:var(--w-gray-900);}
-#mt-part-1:focus-visible ~ .c5-mt-model__tabs [for="mt-part-1"],
-#mt-part-2:focus-visible ~ .c5-mt-model__tabs [for="mt-part-2"],
-#mt-part-3:focus-visible ~ .c5-mt-model__tabs [for="mt-part-3"],
-#mt-part-4:focus-visible ~ .c5-mt-model__tabs [for="mt-part-4"],
-#mt-part-5:focus-visible ~ .c5-mt-model__tabs [for="mt-part-5"]{outline:2px solid var(--w-gray-900);outline-offset:2px;}
-
-@media (max-width:899px){
-  /* one column, order stage -> switches -> panel: the control sits right
-     under the drawing it drives, the description reads last */
-  .c5-mt-model{grid-template-columns:1fr;}
-  .c5-mt-model__stage,.c5-mt-model__panels,.c5-mt-model__tabs{grid-column:1;}
-  .c5-mt-model__stage{grid-row:1;padding:clamp(0.75rem,3vw,1.25rem);}
-  .c5-mt-model__tabs{grid-row:2;}
-  .c5-mt-model__panels{grid-row:3;padding-top:0;}
-  /* Dimension labels are drawn in viewBox units (660 wide): on a 375 px
-     screen they fall to ~6 px. Bumping them to 20 units gives ~9 px and still
-     fits the viewBox (the farthest label, "20 cm", ends at 648 of 660). */
-  .c5-mt-model__stage svg text{font-size:20px;}
-}
-@media (prefers-reduced-motion: reduce){
-  .c5-mt-model__part,.c5-mt-model__tab{transition:none;}
-}
 
 /* ===== 40 · Co zastępujesz – two columns and one table (spec §21.4, §23) =====
    Iteration 2: no switch, no `data-swap` states. The chapter is a plain
@@ -115,22 +39,7 @@
    lightbox opened by that button (the overlay rules sit in block 55); without
    JS the table stands in the flow, between the button and the CTA row. ------ */
 
-/* --- Overline above the pair of columns ------------------------------------ */
-.c5-cmp2__label{margin-top:clamp(2.5rem,5vw,4rem);font-size:0.8125rem;letter-spacing:.06em;text-transform:uppercase;color:var(--w-text-secondary);}
-
-/* --- Two advantage columns ------------------------------------------------- */
-.c5-cmp2{display:grid;gap:clamp(1.5rem,4vw,3.5rem);margin-top:clamp(1.25rem,2.5vw,1.75rem);}
-.c5-cmp2__col{display:flex;flex-direction:column;gap:var(--w-space-3);align-items:flex-start;}
-.c5-cmp2__ph{width:100%;aspect-ratio:3/2;}
-/* which substrate this column is about - the base page's variant-tab label,
-   with the same icon, now reading as an overline over the column title */
-.c5-cmp2__from{display:flex;align-items:center;gap:8px;margin-top:var(--w-space-2);font-size:0.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--w-text-tertiary);}
-.c5-cmp2__from .wf-icon{flex:none;opacity:.7;}
-.c5-variant__name{font-size:clamp(1.375rem,2.2vw,1.75rem);font-weight:var(--w-weight-medium);letter-spacing:-0.01em;line-height:1.2;}
-.c5-cmp2__points{list-style:none;margin:var(--w-space-2) 0 0;padding:0;display:flex;flex-direction:column;gap:var(--w-space-4);}
-.c5-cmp2__point{display:grid;grid-template-columns:2.25rem minmax(0,1fr);gap:var(--w-space-2);align-items:start;}
-.c5-cmp2__no{font-size:0.75rem;letter-spacing:.06em;color:var(--w-text-tertiary);padding-top:2px;}
-.c5-cmp2__block{display:flex;flex-direction:column;gap:var(--w-space-1);font-size:var(--w-font-sm-size);}
+/* The overline and the two columns (CE-21): ce/CE-21-dwie-kolumny-przewag.css */
 
 /* --- Row with the button that opens a table in its lightbox ----------------
    Shared by this chapter and by "Analiza podłoża": centred like the section
@@ -145,13 +54,6 @@
    lightbox panel ever scrolls sideways. The top margin counts in the flow
    only (no JS); inside the overlay the panel sets the distances. */
 .c5-cmp2__table{margin-top:clamp(2.5rem,5vw,4rem);}
-.c5-mt-cmp{width:100%;min-width:56rem;border-collapse:collapse;font-size:var(--w-font-sm-size);line-height:1.5;}
-.c5-mt-cmp caption{text-align:left;font-size:0.75rem;color:var(--w-text-tertiary);padding-bottom:var(--w-space-3);}
-.c5-mt-cmp th,.c5-mt-cmp td{text-align:left;vertical-align:top;padding:var(--w-space-3) var(--w-space-4);border-bottom:1px solid var(--w-border-default);}
-.c5-mt-cmp thead th{border-bottom:1px solid var(--w-gray-900);font-weight:var(--w-weight-semibold);}
-.c5-mt-cmp tbody th{width:12rem;font-weight:var(--w-weight-medium);color:var(--w-text-secondary);}
-.c5-mt-cmp__feat{width:12rem;color:var(--w-text-secondary);}
-.c5-mt-cmp td{color:var(--w-text-secondary);}
 /* The caption is part of the table, so by default it is as wide as the table
    and on a phone most of it would run out of sight. Both table wrappers (this
    one and the one in "Analiza podłoża") are size containers: the caption takes
@@ -159,23 +61,10 @@
    scrolls sideways. Without container units the declaration is dropped and the
    caption scrolls with the table. */
 .c5-cmp2__table,.c5-mt-tblwrap{container-type:inline-size;}
-.c5-mt-cmp caption,.c5-mt-tbl caption{max-width:100cqi;position:sticky;left:0;}
-/* CARBOMAT column is the only highlighted one: dark head, filled body */
-.c5-mt-cmp__own{background:var(--w-surface-sunken);color:var(--w-text-primary);}
-.c5-mt-cmp thead .c5-mt-cmp__own{background:var(--w-gray-900);color:var(--w-text-inverse);}
+/* The two tables are CE-22 variants `porownanie` and `wartosci` (ce/CE-22-tabela.css). */
 
 /* --- CTA row of the chapter (the base page's `.c5-alert`, no placeholder) --- */
-.c5-cmp2__cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:clamp(1.25rem,3vw,2.5rem);border-top:1px solid var(--w-gray-900);padding-top:clamp(1.5rem,3vw,2rem);margin-top:clamp(2.5rem,5vw,4rem);}
-/* text on the left, buttons on the right: the paragraph gives way first, so the
-   two buttons stay on the same row as long as the chapter is wide enough */
-.c5-cmp2__cta > p{flex:1 1 24rem;min-width:0;max-width:64ch;margin:0;}
-.c5-cmp2__cta .c5-btnrow{flex:0 1 auto;}
-
-@media (min-width:900px){
-  /* wool on the left, coco on the right; below this width they stack in the
-     same order, so the DOM order is already the reading order */
-  .c5-cmp2{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;}
-}
+/* look of the band: ce/CE-23-pas-cta.css (`c5-ctabar`) */
 
 /* ===== 50 · Czym jest – scena sterowana przewijaniem (spec §9, §21.3, §22) =====
    Since 19.09.2026 the scene stands on the „Frame 206” layout of the CE index
@@ -223,101 +112,15 @@
 .c5-mt-pubs li:first-child{border-top:0;}
 
 /* --- Siatka trzech kart-zajawek (spec §21.5 pkt 2) -------------------------- */
-.c5-proofs{display:grid;grid-template-columns:1fr;gap:var(--w-space-5);margin-top:clamp(2.5rem,5vw,4rem);}
-.c5-proof{display:flex;flex-direction:column;gap:var(--w-space-3);align-items:flex-start;border:1px solid var(--w-border-default);background:var(--w-surface-page);padding:clamp(1.25rem,2.4vw,1.75rem);}
-.c5-proof__ph{width:100%;aspect-ratio:3/2;margin-bottom:var(--w-space-2);}
-.c5-proof .c5-mt-proof__title{padding-bottom:var(--w-space-3);border-bottom:1px solid var(--w-gray-900);width:100%;}
-.c5-proof__list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;width:100%;font-size:var(--w-font-sm-size);color:var(--w-text-secondary);}
-.c5-proof__list li{padding-block:var(--w-space-2);border-bottom:1px solid var(--w-border-subtle);}
-.c5-proof__list li:last-child{border-bottom:0;}
-.c5-proof .c5-barchart{width:100%;}
-.c5-proof__btn{margin-top:auto;}
-
-/* two columns on tablets (700–999 px) so the 3:2 placeholders do not grow into one tall column;
-   three cards in one row only when a column is wide enough */
-@media (min-width:700px) and (max-width:999px){
-  .c5-proofs{grid-template-columns:repeat(2,minmax(0,1fr));}
-}
-@media (min-width:1000px){
-  .c5-proofs{grid-template-columns:repeat(3,minmax(0,1fr));}
-}
+/* The three cards (`c5-proofs`, `c5-proof*`) are styled in ce/CE-20-siatka-kart.css. */
 
 /* --- Rząd CTA pod kartami: doświadczenia w gospodarstwach (spec §21.5 pkt 4) */
-.c5-proofs__cta{display:grid;grid-template-columns:1fr;gap:clamp(1rem,3vw,2.5rem);
-  border-top:1px solid var(--w-gray-900);padding-top:clamp(1.5rem,3vw,2rem);margin-top:clamp(2.5rem,5vw,4rem);}
-.c5-proofs__ctah{margin:0;font-size:clamp(1.25rem,2.2vw,1.5rem);font-weight:var(--w-weight-medium);letter-spacing:-0.01em;line-height:1.25;}
-.c5-proofs__ctabody{display:flex;flex-direction:column;gap:var(--w-space-3);align-items:flex-start;max-width:64ch;}
-@media (min-width:900px){
-  .c5-proofs__cta{grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);align-items:start;}
-}
+/* The band is CE-23 `--z-naglowkiem`: ce/CE-23-pas-cta.css. */
 
-/* --- Lightbox: stan bez JS = zwykły blok pod kartami ------------------------
-   Bez `is-js` (czyli bez JS) `.c5-lb` to zwykły blok w biegu strony: trzy
-   strony jedna pod drugą, pełna treść, stopka nawigacji schowana. Dopiero
-   55-dowod.js dokłada `is-js`, semantykę dialogu i warstwę nakładki. */
-.c5-lb{display:block;max-width:1180px;margin:clamp(2.5rem,5vw,4rem) auto 0;padding-inline:var(--w-space-5);}
-.c5-lb__panel{display:flex;flex-direction:column;min-height:0;}
-/* The close button exists only in JS mode (anatomy: EL-02 c5-iconbtn). */
-.c5-lb .c5-iconbtn{display:none;}
-.c5-lb__scroll{display:flex;flex-direction:column;gap:clamp(2.5rem,5vw,4rem);}
-.c5-lb__page{display:flex;flex-direction:column;gap:var(--w-space-5);}
-.c5-lb__src{margin-top:var(--w-space-3);}
-/* stopka strony SGGW: publikacje, na których opierają się jej liczby */
-.c5-lb__pubs{display:flex;flex-direction:column;gap:var(--w-space-3);align-items:flex-start;border-top:1px solid var(--w-gray-900);padding-top:clamp(1.25rem,2.5vw,1.75rem);}
-.c5-lb__pubh{margin:0;font-size:1rem;font-weight:var(--w-weight-semibold);letter-spacing:-0.01em;}
-/* bez JS nawigacja stron nie ma czego przełączać */
-.c5-lb:not(.is-js) .c5-lb__foot{display:none;}
-.c5-lb__foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--w-space-3);}
-.c5-lb__steps{display:flex;flex-wrap:wrap;gap:var(--w-space-2);}
-.c5-lb__steps .c5-btn[disabled]{opacity:.4;cursor:default;}
-.c5-lb__count{font-size:0.8125rem;color:var(--w-text-tertiary);}
-
-/* --- Lightbox: warstwa nakładki (włącza ją 55-dowod.js) --------------------
-   Zamknięty lightbox z JS to `display:none` – w biegu strony zostają tylko
-   liczby i trzy karty-zajawki. Wejście gramy animacją (a nie przejściem),
-   bo element wchodzi z `display:none`; zamknięcie jest natychmiastowe. */
-.c5-lb.is-js{display:none;position:fixed;inset:0;z-index:var(--w-z-toast);place-items:center;padding:var(--c5-gutter);max-width:none;margin:0;background:rgb(0 0 0 / .55);}
-.c5-lb.is-js[data-open="true"]{display:grid;animation:c5-lb-in 200ms var(--w-ease);}
-.c5-lb.is-js .c5-lb__panel{position:relative;width:100%;max-width:1040px;max-height:calc(100svh - 2 * var(--c5-gutter));background:var(--w-surface-page);border:1px solid var(--w-border-default);}
-.c5-lb.is-js[data-open="true"] .c5-lb__panel{animation:c5-lb-panel-in 220ms var(--w-ease);}
-.c5-lb.is-js .c5-iconbtn{display:grid;position:absolute;top:var(--w-space-4);right:var(--w-space-4);z-index:1;}
-.c5-lb.is-js .c5-lb__scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;gap:0;padding:clamp(1.25rem,3vw,2.5rem);}
-.c5-lb.is-js .c5-lb__page{animation:c5-lb-page-in 180ms var(--w-ease);}
-.c5-lb.is-js .c5-mt-proof__head{padding-right:var(--w-control-h-md);}
-.c5-lb.is-js .c5-lb__foot{padding:var(--w-space-4) var(--w-space-6);border-top:1px solid var(--w-border-subtle);background:var(--w-surface-subtle);}
-@keyframes c5-lb-in{from{opacity:0;}to{opacity:1;}}
-@keyframes c5-lb-panel-in{from{transform:scale(.98);}to{transform:none;}}
-@keyframes c5-lb-page-in{from{opacity:0;}to{opacity:1;}}
-
-@media (max-width:899px){
-  /* telefon: panel na całą szerokość z marginesem 16 px */
-  .c5-lb.is-js{padding:16px;}
-  .c5-lb.is-js .c5-lb__panel{max-width:none;max-height:calc(100svh - 32px);}
-  .c5-lb.is-js .c5-lb__foot{padding:var(--w-space-3) var(--w-space-4);}
-  .c5-lb__steps{flex:1 1 100%;}
-  .c5-lb__steps > .c5-btn{flex:1 1 0;--c5-btn-px:var(--w-space-3);}
-}
-@media (prefers-reduced-motion: reduce){
-  .c5-lb.is-js[data-open="true"],.c5-lb.is-js[data-open="true"] .c5-lb__panel,.c5-lb.is-js .c5-lb__page{animation:none;}
-}
-
-/* --- Single-page lightbox: one table with its caption (spec §23) ------------
-   `c5-lb--solo` = CE-25 `jednostronicowy`: no footer, no counter, one page.
-   The box stands INSIDE the section's container, where the table always stood.
-   In the flow (no JS) it therefore adds nothing of its own – no measure, no
-   side padding, no margin – and the table keeps the top margin it always had. */
-.c5-lb--solo:not(.is-js){max-width:none;margin:0;padding-inline:0;}
-/* A table has a min-width, and an item of the overlay grid may not shrink below
-   its min-content width by default – the panel would grow past a phone window.
-   With `min-width:0` down the chain the table scrolls inside `.cw-scrollx`. */
-.c5-lb.is-js .c5-lb__panel,.c5-lb.is-js .c5-lb__scroll,.c5-lb.is-js .c5-lb__page{min-width:0;}
-/* No page head here to give way to the close button, so the button gets a strip
-   of its own: the panel keeps the top of the box (the button and its offsets)
-   and the scroller starts under a hairline, the way the footer of the
-   three-page box is set off. The table never slides under the button. */
-.c5-lb--solo.is-js .c5-lb__panel{padding-top:calc(var(--w-space-4) + var(--w-control-h-md) + var(--w-space-4));}
-.c5-lb--solo.is-js .c5-lb__scroll{padding-top:var(--w-space-5);border-top:1px solid var(--w-border-subtle);}
-.c5-lb--solo.is-js .cw-scrollx{margin-top:0;}
+/* --- Lightbox windows (CE-25): the window shell, the pages and the footer of
+   the three boxes of this page live in ce/CE-25-lightbox.css (`c5-lb`, variant
+   `c5-lb--strony`; the single-page boxes add `c5-lb--solo`). The content of a
+   window (proof cards, tables) stays in the modules of its own CEs. */
 
 /* ===== 60 · Przygotowanie – protocol as a stack of cards (spec §11, §23) =====
    The stack is the shared CE-26 module (ce/CE-26-stos-kart.css/.js): layout,
@@ -329,29 +132,11 @@
    w kaflach są większe (`clamp(1.5rem,2.6vw,2rem)`), chip bez zmian. Od fali 2a
    chip jest wspólnym `c5-chip` (EL-16, ce/00-base.css); tutaj zostaje wyłącznie
    jego położenie w kaflu. ------------------------------------------------- */
-.c5-mt-delta{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:var(--w-space-5);margin-top:clamp(2rem,4vw,3rem);}
-.c5-mt-delta__item{border:1px solid var(--w-border-default);padding:clamp(1rem,2vw,1.5rem);display:flex;flex-direction:column;gap:var(--w-space-3);}
-.c5-mt-delta__name{font-size:var(--w-font-sm-size);font-weight:var(--w-weight-semibold);}
-/* The value reserves two lines because some readings ("156 -> 495 mg/dm³")
-   wrap and some do not – without it the bar charts and chips sit at a
-   different height in every tile. The chip pushed to the bottom of the tile
-   completes the alignment. */
-.c5-mt-delta__val{font-size:clamp(1.5rem,2.6vw,2rem);font-weight:var(--w-weight-medium);letter-spacing:-0.01em;line-height:1.15;min-height:2.3em;}
-.c5-mt-delta__note{font-size:0.75rem;color:var(--w-text-tertiary);}
-.c5-mt-delta .c5-bar{grid-template-columns:minmax(4.5rem,32%) 1fr minmax(3.5rem,auto);gap:var(--w-space-2);font-size:0.75rem;}
-.c5-mt-delta__item .c5-chip{margin-top:auto;align-self:flex-start;white-space:nowrap;}
+/* The tiles (`c5-mt-delta*`) are styled in ce/CE-20-siatka-kart.css. */
 
 /* The full table of 15 parameters lives in a single-page lightbox (block 55,
    `c5-lb--solo`); this top margin counts only in the flow, without JS. */
 .c5-mt-tblwrap{margin-top:clamp(2rem,4vw,3rem);}
-.c5-mt-tbl{width:100%;min-width:34rem;border-collapse:collapse;font-size:var(--w-font-sm-size);}
-.c5-mt-tbl caption{text-align:left;font-size:0.75rem;color:var(--w-text-tertiary);padding-bottom:var(--w-space-3);}
-.c5-mt-tbl th,.c5-mt-tbl td{padding:var(--w-space-2) var(--w-space-3);border-bottom:1px solid var(--w-border-subtle);text-align:right;}
-.c5-mt-tbl thead th{border-bottom:1px solid var(--w-gray-900);font-weight:var(--w-weight-semibold);}
-.c5-mt-tbl th:first-child,.c5-mt-tbl td:first-child{text-align:left;}
-.c5-mt-tbl tbody th{font-weight:var(--w-weight-regular);color:var(--w-text-primary);}
-.c5-mt-tbl td{color:var(--w-text-secondary);}
-.c5-mt-tbl td:last-child{color:var(--w-text-primary);}
 
 /* ===== 80 · Sezon po sezonie – cascade with a pin (spec §23) + Ekonomia =====
    The chapter is the shared CE-15 module, variant `kaskada-z-pinem`

@@ -1,11 +1,11 @@
 window.CE_DANE = {
  "meta": {
-  "wygenerowano": "16.10.2026",
+  "wygenerowano": "19.10.2026",
   "wersja": "0.1.0",
   "projekt": "CarboHort",
   "aktywnych": 85,
   "wycofanych": 14,
-  "wystapien": 312,
+  "wystapien": 319,
   "stron": 34,
   "bazaStron": "v7/"
  },
@@ -374,7 +374,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-01.webp",
     "pelny": "ce-indeks/img/p/CE-01.webp",
     "w": 1280,
-    "h": 109
+    "h": 120
    },
    "warianty": [
     {
@@ -385,7 +385,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-01--wariant-podglad-koszyka.webp",
       "pelny": "ce-indeks/img/p/CE-01--wariant-podglad-koszyka.webp",
       "w": 1280,
-      "h": 390
+      "h": 377
      }
     },
     {
@@ -396,7 +396,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-01--wariant-zalogowany-pro.webp",
       "pelny": "ce-indeks/img/p/CE-01--wariant-zalogowany-pro.webp",
       "w": 1280,
-      "h": 150
+      "h": 161
      }
     }
    ],
@@ -461,7 +461,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-02.webp",
     "pelny": "ce-indeks/img/p/CE-02.webp",
     "w": 1280,
-    "h": 567
+    "h": 561
    },
    "warianty": [
     {
@@ -490,7 +490,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-02--wariant-grupy.webp",
       "pelny": "ce-indeks/img/p/CE-02--wariant-grupy.webp",
       "w": 1280,
-      "h": 355
+      "h": 367
      }
     },
     {
@@ -501,7 +501,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-02--wariant-grupy-ze-zdjeciem.webp",
       "pelny": "ce-indeks/img/p/CE-02--wariant-grupy-ze-zdjeciem.webp",
       "w": 1280,
-      "h": 355
+      "h": 367
      }
     }
    ],
@@ -560,7 +560,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-03.webp",
     "pelny": "ce-indeks/img/p/CE-03.webp",
     "w": 375,
-    "h": 627
+    "h": 621
    },
    "warianty": [],
    "wystapienia": [],
@@ -620,7 +620,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-04.webp",
     "pelny": "ce-indeks/img/p/CE-04.webp",
     "w": 1280,
-    "h": 439
+    "h": 700
    },
    "warianty": [
     {
@@ -631,7 +631,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-04--wariant-panel.webp",
       "pelny": "ce-indeks/img/p/CE-04--wariant-panel.webp",
       "w": 1280,
-      "h": 66
+      "h": 69
      }
     }
    ],
@@ -690,7 +690,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-05.webp",
     "pelny": "ce-indeks/img/p/CE-05.webp",
     "w": 1280,
-    "h": 59
+    "h": 15
    },
    "warianty": [],
    "wystapienia": [],
@@ -747,7 +747,7 @@ window.CE_DANE = {
    "zrzut": {
     "mini": "ce-indeks/img/m/CE-06.webp",
     "pelny": "ce-indeks/img/p/CE-06.webp",
-    "w": 204,
+    "w": 197,
     "h": 17
    },
    "warianty": [],
@@ -805,8 +805,8 @@ window.CE_DANE = {
    "zrzut": {
     "mini": "ce-indeks/img/m/CE-07.webp",
     "pelny": "ce-indeks/img/p/CE-07.webp",
-    "w": 28,
-    "h": 224
+    "w": 382,
+    "h": 372
    },
    "warianty": [],
    "wystapienia": [
@@ -900,11 +900,12 @@ window.CE_DANE = {
     "plik": "v7/carbomat.html",
     "kotwica": "nawigacja-kropki"
    },
-   "opis": "Pionowa lista kropek przyklejona przy prawej krawędzi ekranu, jedna kropka na rozdział strony; etykiety rozdziałów wysuwają się po najechaniu na całą nawigację.",
-   "mechanika": "Scrollspy po sekcjach z data-chapter (kropka aktywna większa), klik przewija płynnie do rozdziału (przez Lenis, gdy aktywny); mix-blend-mode difference na ciemnym tle; ukryta poniżej 900 px. Opcja (15.10.2026, Borówka): span.c5-dots__stage w etykiecie – mały dopisek „Etap N” nad nazwą rozdziału; pozycja z dopiskiem ma 38 px wysokości zamiast 28; strony bez tego elementu bez zmian.",
+   "opis": "Małe kwadraty (5 × 5 px, zaokrąglone) w prostej kolumnie przy prawej krawędzi ekranu, na wysokości środka ekranu, jeden na dział strony; kwadrat aktywnego działu zielony. Po najechaniu na wąski pas przy krawędzi kolumna rozwija się w łuk wygięty w lewo, a przy kwadracie aktywnego działu i przy kwadracie pod kursorem odsłaniają się opisy na jasnych, rozmytych tłach (Figma 966:1440, 959:1632, 959:1607, 959:1608, 959:1681, 959:1698).",
+   "mechanika": "Od 19.10.2026 (runda 5, paski opisów z 19.10): dwa stany. Spoczynek – kwadraty 5 × 5 px w prostej kolumnie co 35 px (Figma 966:1440), 10 px od prawej krawędzi ekranu, czyli w 25-pikselowym marginesie kontenera treści; kwadrat aktywnego działu zielony. Rozwijanie otwiera tylko pas 25 px od prawej krawędzi wzdłuż kolumny (+ 12 px); JS śledzi wskaźnik na całym dokumencie, zwinięta nawigacja nie łapie wskaźnika. Po otwarciu kwadraty rozjeżdżają się z kolumny na łuk (od środka na zewnątrz, ok. 0,26 s): łuk z Figmy (okrąg R 337 px w zakresie ±21,2°) rozciągnięty w pionie tak, że skrajne punkty stoją na 35 % wysokości okna; najdalszy kwadrat 15 px od krawędzi; reguła odstępów – tła opisów (ok. 33 px) nie schodzą bliżej niż 4 px, wtedy łuk rośnie ponad 35 %, a wszystko zostaje ok. 10 px w oknie. Kropka wskazana w kolumnie zostaje wyróżniona po otwarciu, dopóki wskaźnik nie przesunie się o 8 px. Po dojeździe kwadratów widać dwa opisy: aktywnego działu i pozycji pod wskaźnikiem; opisy odsłaniają się od prawej do lewej (clip-path, 0,16 s) i tak samo chowają (0,1 s), więc przy przejeździe w pionie rozwijają się po kolei. Paski opisów (19.10, Figma 969:1447 i 959:1698): padding 9 px góra i dół, 8 px boki, promień 5 px, Instrument Sans 14 px / 120 %, tekst #0C2B1C 100 %, wysokość 35 px; aktywny dział – tło #A7D781 (--ch-color-green-300) w pełni; pozycja pod wskaźnikiem – biel 65 % z backdrop-filter blur(6px) (odpowiednik warstw Figmy: biel Darken + #EEECEC 70 % Screen; bez wsparcia rozmycia biel 85 %). Szare kwadraty – biel 30 % z mix-blend-mode difference (.c5-dots__marks), zielony #80B960 bez blendu (.c5-dots__accent). Strefa wyboru .c5-dots__zone obejmuje same kwadraty łuku (+ 16 px) do krawędzi ekranu: pozycja pod wskaźnikiem = najbliższa w pionie, klik przewija do niej; pokazany opis też trzyma wachlarz; zwinięcie 250 ms po wyjechaniu ponad 24 px poza strefę. Fokus klawiatury otwiera wachlarz, obrys na tle opisu. Scrollspy po sekcjach z data-chapter, klik przewija płynnie (przez Lenis, gdy aktywny); pierwsza pozycja nazywa się „Początek” i przewija na samą górę strony, z menu (19.10). Przy stopce wszystkie warstwy wyjeżdżają w prawą krawędź. prefers-reduced-motion: bez animacji. Ukryta poniżej 900 px (widok mobilny do analizy). Opcja (15.10.2026, Borówka): span.c5-dots__stage – dopisek „Etap N” w jednej linii przed nazwą działu.",
    "czesci": [
-    "lista kropek",
-    "etykiety"
+    "kwadraty na łuku",
+    "zielony kwadrat aktywnego działu",
+    "opisy działów na tłach po łuku"
    ],
    "kod_zrodlowy": {
     "css": "ce/CE-07-nawigacja-kropkowa.css",
@@ -949,7 +950,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-08.webp",
     "pelny": "ce-indeks/img/p/CE-08.webp",
     "w": 1280,
-    "h": 691
+    "h": 680
    },
    "warianty": [
     {
@@ -996,7 +997,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-08--wariant-kadr-w-tle.webp",
       "pelny": "ce-indeks/img/p/CE-08--wariant-kadr-w-tle.webp",
       "w": 1280,
-      "h": 691
+      "h": 680
      }
     },
     {
@@ -1181,7 +1182,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-09.webp",
     "pelny": "ce-indeks/img/p/CE-09.webp",
     "w": 1280,
-    "h": 320
+    "h": 232
    },
    "warianty": [
     {
@@ -1362,7 +1363,7 @@ window.CE_DANE = {
      "strona": "CARBOHUMIC dolistny",
      "id": "parametry",
      "naglowek": "Szybkie porównanie produktów",
-     "wariant": "z-tabami"
+     "wariant": "porownanie"
     },
     {
      "plik": "carbomat-humic.html",
@@ -1439,7 +1440,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-11.webp",
     "pelny": "ce-indeks/img/p/CE-11.webp",
     "w": 1280,
-    "h": 800
+    "h": 799
    },
    "warianty": [
     {
@@ -1468,7 +1469,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-11--wariant-pasma-z-przelacznikiem.webp",
       "pelny": "ce-indeks/img/p/CE-11--wariant-pasma-z-przelacznikiem.webp",
       "w": 1280,
-      "h": 800
+      "h": 799
      }
     },
     {
@@ -1483,7 +1484,7 @@ window.CE_DANE = {
      "plik": "carbomat.html",
      "strona": "CARBOMAT ECO",
      "id": "ktory-dla-mnie",
-     "naglowek": "Dwa warianty, dwie czynności: przemieszać z glebą albo rozsypać po powierzchni.",
+     "naglowek": "Przemieszaj z glebą albo rozsyp po powierzchni.",
      "wariant": "pasma-z-przelacznikiem"
     },
     {
@@ -1675,7 +1676,7 @@ window.CE_DANE = {
      "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "czym-jest",
-     "naglowek": "CARBOHUMIC to substancja najbardziej zbliżona do trwałej i stabilnej próchnicy glebowej,…",
+     "naglowek": "Carbohumic to substancja najbardziej zbliżona do trwałej i stabilnej próchnicy glebowej,…",
      "wariant": "bez-naglowka"
     },
     {
@@ -1696,7 +1697,7 @@ window.CE_DANE = {
      "plik": "prochnica-plus.html",
      "strona": "Próchnica+",
      "id": "metodologia",
-     "naglowek": "Metodologia",
+     "naglowek": "Metodologia badań terenowych",
      "wariant": "bez-naglowka"
     },
     {
@@ -1810,6 +1811,13 @@ window.CE_DANE = {
      "id": "jak-stosowac-niefiltrowany",
      "naglowek": "",
      "wariant": "n-kadrow"
+    },
+    {
+     "plik": "carbohumic-dolistny.html",
+     "strona": "CARBOHUMIC dolistny",
+     "id": "efekty-scena",
+     "naglowek": "",
+     "wariant": "lista"
     }
    ],
    "wspolny": null,
@@ -1868,7 +1876,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-14.webp",
     "pelny": "ce-indeks/img/p/CE-14.webp",
     "w": 1280,
-    "h": 799
+    "h": 800
    },
    "warianty": [
     {
@@ -1953,7 +1961,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-15.webp",
     "pelny": "ce-indeks/img/p/CE-15.webp",
     "w": 1280,
-    "h": 799
+    "h": 800
    },
    "warianty": [
     {
@@ -2122,7 +2130,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-16--wariant-kadr-z-prawej.webp",
       "pelny": "ce-indeks/img/p/CE-16--wariant-kadr-z-prawej.webp",
       "w": 1280,
-      "h": 549
+      "h": 700
      }
     }
    ],
@@ -2235,7 +2243,7 @@ window.CE_DANE = {
    ],
    "kod_zrodlowy": {
     "css": "ce/CE-16-pas-pro.css – jeden moduł dla wszystkich stron poza sklepem: baza i sekcje wariantów wybieranych klasami na korzeniu (c5-pro--ramka, c5-pro--kadr-3-2, c5-pro--zielen, c5-pro--scrim-ukosny, c5-pro--h-mackinac, c5-pro--zamykajacy; na placeholderze c5-pro__ph--obrys), dopasowania pod treść przez własności --pro-mt, --pro-img-pos, --pro-scrim i --pro-side-max w atrybucie style korzenia; arkusze stron nie niosą reguł pasa, poza dodatkami strony głównej w home.css (c5h-kontakt); wariant kadr-z-prawej: kit c5.css (c5-pro, c5-pro__photo, c5-pro__grid) + nadpisania strony – sklep.html <style> blok „PAS PRO” (c5sk-pro) i pdp.css (c5pd-pro)",
-    "js": "ce/CE-16-pas-pro.js (Kukurydza, Borówka, O nas, strona główna); wariant pozny-wzrost: ce/CE-16-pas-pro-pozny-wzrost.js (Produkty, CARBOMAT ECO, CARBOMAT MATA, CARBOHUMIC, CARBOMAT HUMIC); wariant kadr-z-prawej: brak (statyczny)"
+    "js": "ce/CE-16-pas-pro.js – jeden skrypt na wszystkich 13 stronach: ruch „showroom” wg adnotacji fluid.glass (etap E, 18.10.2026); poniżej 900 px i przy reduced-motion statycznie"
    }
   },
   {
@@ -2274,7 +2282,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-17.webp",
     "pelny": "ce-indeks/img/p/CE-17.webp",
     "w": 1280,
-    "h": 799
+    "h": 800
    },
    "warianty": [
     {
@@ -2309,7 +2317,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-17--wariant-informacje.webp",
       "pelny": "ce-indeks/img/p/CE-17--wariant-informacje.webp",
       "w": 1280,
-      "h": 358
+      "h": 345
      }
     }
    ],
@@ -2318,7 +2326,7 @@ window.CE_DANE = {
      "plik": "carbomat.html",
      "strona": "CARBOMAT ECO",
      "id": "faq",
-     "naglowek": "Najczęstsze pytania o CARBOMAT ECO",
+     "naglowek": "Najczęstsze pytania o Carbomat Eco",
      "wariant": null
     },
     {
@@ -2339,28 +2347,28 @@ window.CE_DANE = {
      "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "faq",
-     "naglowek": "Najczęstsze pytania o CARBOHUMIC",
+     "naglowek": "Najczęstsze pytania o Carbohumic",
      "wariant": "z-nota"
     },
     {
      "plik": "carbohumic-dolistny.html",
      "strona": "CARBOHUMIC dolistny",
      "id": "faq",
-     "naglowek": "Najczęstsze pytania o CARBOHUMIC dolistny",
+     "naglowek": "Najczęstsze pytania o Carbohumic dolistny",
      "wariant": "z-nota"
     },
     {
      "plik": "carbomat-humic.html",
      "strona": "CARBOMAT HUMIC",
      "id": "faq",
-     "naglowek": "Najczęstsze pytania o CARBOMAT HUMIC",
+     "naglowek": "Najczęstsze pytania o Carbomat Humic",
      "wariant": null
     },
     {
      "plik": "carbomat-mata.html",
      "strona": "CARBOMAT Mata Uprawowa",
      "id": "faq",
-     "naglowek": "Najczęstsze pytania o CARBOMAT MATA UPRAWOWA",
+     "naglowek": "Najczęstsze pytania o Carbomat Mata Uprawowa",
      "wariant": null
     },
     {
@@ -2451,7 +2459,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-18.webp",
     "pelny": "ce-indeks/img/p/CE-18.webp",
     "w": 1280,
-    "h": 320
+    "h": 500
    },
    "warianty": [
     {
@@ -2572,7 +2580,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-19.webp",
     "pelny": "ce-indeks/img/p/CE-19.webp",
     "w": 1280,
-    "h": 747
+    "h": 799
    },
    "warianty": [],
    "wystapienia": [
@@ -2642,7 +2650,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-20.webp",
     "pelny": "ce-indeks/img/p/CE-20.webp",
     "w": 1280,
-    "h": 554
+    "h": 730
    },
    "warianty": [
     {
@@ -2725,7 +2733,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-20--wariant-sklepowe.webp",
       "pelny": "ce-indeks/img/p/CE-20--wariant-sklepowe.webp",
       "w": 1280,
-      "h": 680
+      "h": 699
      }
     },
     {
@@ -2736,7 +2744,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-20--wariant-dorzuc.webp",
       "pelny": "ce-indeks/img/p/CE-20--wariant-dorzuc.webp",
       "w": 1280,
-      "h": 689
+      "h": 713
      }
     },
     {
@@ -2747,7 +2755,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-20--wariant-polacz-z.webp",
       "pelny": "ce-indeks/img/p/CE-20--wariant-polacz-z.webp",
       "w": 1280,
-      "h": 475
+      "h": 522
      }
     },
     {
@@ -2758,7 +2766,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-20--wariant-z-rozpiska.webp",
       "pelny": "ce-indeks/img/p/CE-20--wariant-z-rozpiska.webp",
       "w": 1280,
-      "h": 418
+      "h": 416
      }
     }
    ],
@@ -2879,7 +2887,7 @@ window.CE_DANE = {
      "plik": "o-firmie.html",
      "strona": "O nas",
      "id": "co-robimy-rodziny",
-     "naglowek": "CARBOMAT ECO",
+     "naglowek": "Carbomat Eco",
      "wariant": "z-przyciskami"
     },
     {
@@ -2934,15 +2942,8 @@ window.CE_DANE = {
     {
      "plik": "produkty.html",
      "strona": "Produkty Carbohort",
-     "id": "wg-potrzeby-cele",
-     "naglowek": "",
-     "wariant": "ze-zdjeciem"
-    },
-    {
-     "plik": "produkty.html",
-     "strona": "Produkty Carbohort",
      "id": "doglebowo-nalistne",
-     "naglowek": "CARBOHUMIC MAXI PLUS",
+     "naglowek": "Carbohumic Maxi Plus",
      "wariant": "z-przyciskami"
     }
    ],
@@ -3069,7 +3070,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-22.webp",
     "pelny": "ce-indeks/img/p/CE-22.webp",
     "w": 1280,
-    "h": 799
+    "h": 800
    },
    "warianty": [
     {
@@ -3104,7 +3105,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-22--wariant-z-akcja.webp",
       "pelny": "ce-indeks/img/p/CE-22--wariant-z-akcja.webp",
       "w": 1440,
-      "h": 285
+      "h": 296
      }
     }
    ],
@@ -3263,7 +3264,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-23.webp",
     "pelny": "ce-indeks/img/p/CE-23.webp",
     "w": 1280,
-    "h": 134
+    "h": 226
    },
    "warianty": [
     {
@@ -3298,7 +3299,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-23--wariant-ciemny.webp",
       "pelny": "ce-indeks/img/p/CE-23--wariant-ciemny.webp",
       "w": 1280,
-      "h": 257
+      "h": 281
      }
     },
     {
@@ -3309,7 +3310,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-23--wariant-cichy.webp",
       "pelny": "ce-indeks/img/p/CE-23--wariant-cichy.webp",
       "w": 1280,
-      "h": 41
+      "h": 45
      }
     }
    ],
@@ -3451,7 +3452,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-24.webp",
     "pelny": "ce-indeks/img/p/CE-24.webp",
     "w": 1280,
-    "h": 799
+    "h": 800
    },
    "warianty": [
     {
@@ -3541,7 +3542,7 @@ window.CE_DANE = {
      "strona": "Próchnica+",
      "id": "w-liczbach",
      "naglowek": "Program w liczbach",
-     "wariant": "kafle-2x2"
+     "wariant": "wiersze-ze-zdjeciem"
     }
    ],
    "wspolny": null,
@@ -3642,7 +3643,7 @@ window.CE_DANE = {
      "plik": "borowka.html",
      "strona": "Borówka",
      "id": "b-lightbox-produkty",
-     "naglowek": "CARBOHUMIC niefiltrowany",
+     "naglowek": "Carbohumic niefiltrowany",
      "wariant": "popup-produktu"
     },
     {
@@ -3656,7 +3657,7 @@ window.CE_DANE = {
      "plik": "kukurydza.html",
      "strona": "Kukurydza",
      "id": "u-lightbox-produkty",
-     "naglowek": "CARBOMAT ECO",
+     "naglowek": "Carbomat Eco",
      "wariant": "popup-produktu"
     },
     {
@@ -3745,13 +3746,6 @@ window.CE_DANE = {
      "strona": "CARBOHUMIC doglebowy",
      "id": "z-czym-laczyc-kroki",
      "naglowek": "",
-     "wariant": null
-    },
-    {
-     "plik": "carbohumic-dolistny.html",
-     "strona": "CARBOHUMIC dolistny",
-     "id": "efekty-karty",
-     "naglowek": "Lepsza regeneracja po stresie",
      "wariant": null
     }
    ],
@@ -3889,7 +3883,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-28.webp",
     "pelny": "ce-indeks/img/p/CE-28.webp",
     "w": 1280,
-    "h": 151
+    "h": 199
    },
    "warianty": [
     {
@@ -4073,7 +4067,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-30.webp",
     "pelny": "ce-indeks/img/p/CE-30.webp",
     "w": 1280,
-    "h": 668
+    "h": 614
    },
    "warianty": [
     {
@@ -4090,7 +4084,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-30--wariant-akordeon-z-odliczaniem.webp",
       "pelny": "ce-indeks/img/p/CE-30--wariant-akordeon-z-odliczaniem.webp",
       "w": 1280,
-      "h": 800
+      "h": 799
      }
     },
     {
@@ -4101,7 +4095,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-30--wariant-z-kadrem.webp",
       "pelny": "ce-indeks/img/p/CE-30--wariant-z-kadrem.webp",
       "w": 1280,
-      "h": 800
+      "h": 799
      }
     }
    ],
@@ -4112,13 +4106,6 @@ window.CE_DANE = {
      "id": "z-czym-laczyc-lista",
      "naglowek": "",
      "wariant": null
-    },
-    {
-     "plik": "carbohumic-dolistny.html",
-     "strona": "CARBOHUMIC dolistny",
-     "id": "przewaga-lista",
-     "naglowek": "Szybka reakcja",
-     "wariant": "akordeon-z-odliczaniem"
     },
     {
      "plik": "carbomat-mata.html",
@@ -4145,8 +4132,8 @@ window.CE_DANE = {
      "plik": "produkty.html",
      "strona": "Produkty Carbohort",
      "id": "wg-potrzeby-sciezki",
-     "naglowek": "Zakładam plantację, sad albo nowe nasadzenie",
-     "wariant": "akordeon-z-odliczaniem"
+     "naglowek": "Dziesięć sytuacji, w których klienci do nas trafiają",
+     "wariant": "akordeon-przewijany"
     }
    ],
    "wspolny": null,
@@ -4203,7 +4190,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-31.webp",
     "pelny": "ce-indeks/img/p/CE-31.webp",
     "w": 1280,
-    "h": 105
+    "h": 88
    },
    "warianty": [
     {
@@ -4394,7 +4381,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-33.webp",
     "pelny": "ce-indeks/img/p/CE-33.webp",
     "w": 1280,
-    "h": 398
+    "h": 400
    },
    "warianty": [
     {
@@ -4601,7 +4588,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-35.webp",
     "pelny": "ce-indeks/img/p/CE-35.webp",
     "w": 1280,
-    "h": 319
+    "h": 360
    },
    "warianty": [],
    "wystapienia": [
@@ -4716,21 +4703,21 @@ window.CE_DANE = {
      "plik": "borowka.html",
      "strona": "Borówka",
      "id": "b-podloze-mieszanka",
-     "naglowek": "Podłoże z udziałem CARBOMAT ECO",
+     "naglowek": "Podłoże z udziałem Carbomat Eco",
      "wariant": "odwrocony"
     },
     {
      "plik": "carbohumic-dolistny.html",
      "strona": "CARBOHUMIC dolistny",
      "id": "maxi-plus",
-     "naglowek": "CARBOHUMIC MAXI PLUS",
+     "naglowek": "Carbohumic Maxi Plus",
      "wariant": null
     },
     {
      "plik": "carbohumic-dolistny.html",
      "strona": "CARBOHUMIC dolistny",
      "id": "calbor",
-     "naglowek": "CARBOHUMIC CALBOR",
+     "naglowek": "Carbohumic Calbor",
      "wariant": "odwrocony"
     },
     {
@@ -4836,14 +4823,35 @@ window.CE_DANE = {
      "plik": "carbohumic-dolistny.html",
      "strona": "CARBOHUMIC dolistny",
      "id": "pop-maxi",
-     "naglowek": "CARBOHUMIC MAXI PLUS",
+     "naglowek": "Carbohumic Maxi Plus",
      "wariant": null
     },
     {
      "plik": "carbohumic-dolistny.html",
      "strona": "CARBOHUMIC dolistny",
      "id": "pop-calbor",
-     "naglowek": "CARBOHUMIC CALBOR",
+     "naglowek": "Carbohumic Calbor",
+     "wariant": null
+    },
+    {
+     "plik": "carbomat.html",
+     "strona": "CARBOMAT ECO",
+     "id": "czym-jest-wiecej-2",
+     "naglowek": "Najbardziej zasobna substancja organiczna w kwasy humusowe i fulwowe",
+     "wariant": null
+    },
+    {
+     "plik": "carbomat.html",
+     "strona": "CARBOMAT ECO",
+     "id": "czym-jest-wiecej-3",
+     "naglowek": "Lignit to najbardziej dojrzała i stabilna forma materii organicznej",
+     "wariant": null
+    },
+    {
+     "plik": "carbomat.html",
+     "strona": "CARBOMAT ECO",
+     "id": "czym-jest-wiecej-5",
+     "naglowek": "Każda gruzełka Carbomatu Eco to ogromny mikrokosmos",
      "wariant": null
     },
     {
@@ -4852,6 +4860,34 @@ window.CE_DANE = {
      "id": "profile",
      "naglowek": "ARONIOWA DEMO FARMA MICHAŁ PIĄTEK",
      "wariant": "jeden-dialog"
+    },
+    {
+     "plik": "produkty.html",
+     "strona": "Produkty Carbohort",
+     "id": "jak-dzialaja-wiecej-2",
+     "naglowek": "Najbardziej zasobna substancja organiczna w kwasy humusowe i fulwowe",
+     "wariant": null
+    },
+    {
+     "plik": "produkty.html",
+     "strona": "Produkty Carbohort",
+     "id": "jak-dzialaja-wiecej-3",
+     "naglowek": "Lignit to najbardziej dojrzała i stabilna forma materii organicznej",
+     "wariant": null
+    },
+    {
+     "plik": "produkty.html",
+     "strona": "Produkty Carbohort",
+     "id": "jak-dzialaja-wiecej-4",
+     "naglowek": "Trzy frakcje substancji humusowych – trzy różne role",
+     "wariant": null
+    },
+    {
+     "plik": "produkty.html",
+     "strona": "Produkty Carbohort",
+     "id": "jak-dzialaja-wiecej-5",
+     "naglowek": "Postać produktu decyduje o tempie, nie o zadaniu",
+     "wariant": null
     }
    ],
    "wspolny": null,
@@ -4911,7 +4947,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-38.webp",
     "pelny": "ce-indeks/img/p/CE-38.webp",
     "w": 1280,
-    "h": 800
+    "h": 799
    },
    "warianty": [],
    "wystapienia": [
@@ -5043,8 +5079,8 @@ window.CE_DANE = {
    "zrzut": {
     "mini": "ce-indeks/img/m/CE-40.webp",
     "pelny": "ce-indeks/img/p/CE-40.webp",
-    "w": 1141,
-    "h": 730
+    "w": 1182,
+    "h": 716
    },
    "warianty": [
     {
@@ -5119,7 +5155,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-41.webp",
     "pelny": "ce-indeks/img/p/CE-41.webp",
     "w": 1280,
-    "h": 799
+    "h": 800
    },
    "warianty": [
     {
@@ -5269,7 +5305,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-44--wariant-tlo-foto.webp",
       "pelny": "ce-indeks/img/p/CE-44--wariant-tlo-foto.webp",
       "w": 1280,
-      "h": 800
+      "h": 799
      }
     }
    ],
@@ -5334,7 +5370,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-45.webp",
     "pelny": "ce-indeks/img/p/CE-45.webp",
     "w": 1280,
-    "h": 123
+    "h": 120
    },
    "warianty": [
     {
@@ -5878,7 +5914,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-53.webp",
     "pelny": "ce-indeks/img/p/CE-53.webp",
     "w": 1280,
-    "h": 396
+    "h": 455
    },
    "warianty": [
     {
@@ -6002,7 +6038,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-54.webp",
     "pelny": "ce-indeks/img/p/CE-54.webp",
     "w": 1280,
-    "h": 682
+    "h": 694
    },
    "warianty": [],
    "wystapienia": [
@@ -6067,7 +6103,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-55.webp",
     "pelny": "ce-indeks/img/p/CE-55.webp",
     "w": 1280,
-    "h": 799
+    "h": 800
    },
    "warianty": [],
    "wystapienia": [
@@ -6170,7 +6206,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-57.webp",
     "pelny": "ce-indeks/img/p/CE-57.webp",
     "w": 1280,
-    "h": 800
+    "h": 799
    },
    "warianty": [
     {
@@ -6251,7 +6287,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-58.webp",
     "pelny": "ce-indeks/img/p/CE-58.webp",
     "w": 1280,
-    "h": 799
+    "h": 800
    },
    "warianty": [],
    "wystapienia": [
@@ -6323,7 +6359,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-59.webp",
     "pelny": "ce-indeks/img/p/CE-59.webp",
     "w": 1280,
-    "h": 700
+    "h": 683
    },
    "warianty": [
     {
@@ -6334,7 +6370,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-59--wariant-kompakt.webp",
       "pelny": "ce-indeks/img/p/CE-59--wariant-kompakt.webp",
       "w": 1280,
-      "h": 252
+      "h": 220
      }
     }
    ],
@@ -6472,7 +6508,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-61.webp",
     "pelny": "ce-indeks/img/p/CE-61.webp",
     "w": 1280,
-    "h": 476
+    "h": 516
    },
    "warianty": [],
    "wystapienia": [
@@ -6537,7 +6573,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-62.webp",
     "pelny": "ce-indeks/img/p/CE-62.webp",
     "w": 1280,
-    "h": 278
+    "h": 310
    },
    "warianty": [
     {
@@ -6552,7 +6588,7 @@ window.CE_DANE = {
      "plik": "artykul.html",
      "strona": "Centrum wiedzy – artykuł",
      "id": "produkt",
-     "naglowek": "CARBOHUMIC filtrowany 187 mesh",
+     "naglowek": "Carbohumic filtrowany 187 mesh",
      "wariant": null
     },
     {
@@ -6619,7 +6655,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-63.webp",
     "pelny": "ce-indeks/img/p/CE-63.webp",
     "w": 1280,
-    "h": 458
+    "h": 466
    },
    "warianty": [],
    "wystapienia": [
@@ -6684,7 +6720,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-64.webp",
     "pelny": "ce-indeks/img/p/CE-64.webp",
     "w": 1280,
-    "h": 333
+    "h": 334
    },
    "warianty": [],
    "wystapienia": [
@@ -7141,7 +7177,20 @@ window.CE_DANE = {
     "w": 1280,
     "h": 800
    },
-   "warianty": [],
+   "warianty": [
+    {
+     "slug": "zielen",
+     "opis": "tło jednolita zieleń green-200 z motywem liści zamiast wideo (Figma 853:2059, 847:855; etap C 18.10.2026); wideo ukryte, bez autoplay",
+     "skrot": "",
+     "zrzut": null
+    },
+    {
+     "slug": "stos",
+     "opis": "scena „stos z fokusem” wg Figmy 772:1079 i adnotacji usealia (etap E 18.10.2026, Produkty #wg-potrzeby – zastąpiła siatkę 6 kart CE-20 ze-zdjeciem): nagłówek rozcięty na dwie strony, w środku stos kart celów, karta w środku rozwinięta (zdjęcie, opis, linki ścieżek), wygaszacze u góry i u dołu, pod sceną rząd zakładek celów; kotwice mega-menu lądują na właściwej karcie; poniżej 900 px, przy reduced-motion i bez JS karty jedna pod drugą rozwinięte",
+     "skrot": "",
+     "zrzut": null
+    }
+   ],
    "wystapienia": [
     {
      "plik": "prochnica-plus.html",
@@ -7149,6 +7198,20 @@ window.CE_DANE = {
      "id": "zalozenia",
      "naglowek": "Nasz nadrzędny cel: Odbudowa i systematyczne zwiększanie zawartości materii organicznej (…",
      "wariant": null
+    },
+    {
+     "plik": "carbohumic-dolistny.html",
+     "strona": "CARBOHUMIC dolistny",
+     "id": "przewaga",
+     "naglowek": "Na czym polega przewaga aplikacji nalistnej?",
+     "wariant": "zielen"
+    },
+    {
+     "plik": "produkty.html",
+     "strona": "Produkty Carbohort",
+     "id": "wg-potrzeby-cele",
+     "naglowek": "Wybierz, co chcesz zrobić lub problem – My dobierzemy produkt oraz procedurę.",
+     "wariant": "stos"
     }
    ],
    "wspolny": null,
@@ -7207,7 +7270,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-71.webp",
     "pelny": "ce-indeks/img/p/CE-71.webp",
     "w": 1280,
-    "h": 141
+    "h": 143
    },
    "warianty": [],
    "wystapienia": [
@@ -7275,7 +7338,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-72.webp",
     "pelny": "ce-indeks/img/p/CE-72.webp",
     "w": 1280,
-    "h": 799
+    "h": 800
    },
    "warianty": [],
    "wystapienia": [
@@ -7345,7 +7408,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-73.webp",
     "pelny": "ce-indeks/img/p/CE-73.webp",
     "w": 1280,
-    "h": 799
+    "h": 800
    },
    "warianty": [
     {
@@ -7433,7 +7496,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-74.webp",
     "pelny": "ce-indeks/img/p/CE-74.webp",
     "w": 1280,
-    "h": 799
+    "h": 800
    },
    "warianty": [],
    "wystapienia": [
@@ -7506,7 +7569,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-75.webp",
     "pelny": "ce-indeks/img/p/CE-75.webp",
     "w": 1280,
-    "h": 800
+    "h": 799
    },
    "warianty": [],
    "wystapienia": [
@@ -7647,7 +7710,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-77.webp",
     "pelny": "ce-indeks/img/p/CE-77.webp",
     "w": 1280,
-    "h": 88
+    "h": 108
    },
    "warianty": [
     {
@@ -7849,7 +7912,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-78.webp",
     "pelny": "ce-indeks/img/p/CE-78.webp",
     "w": 1280,
-    "h": 800
+    "h": 799
    },
    "warianty": [],
    "wystapienia": [
@@ -7926,7 +7989,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-79.webp",
     "pelny": "ce-indeks/img/p/CE-79.webp",
     "w": 1280,
-    "h": 307
+    "h": 306
    },
    "warianty": [
     {
@@ -7943,7 +8006,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-79--wariant-wideo.webp",
       "pelny": "ce-indeks/img/p/CE-79--wariant-wideo.webp",
       "w": 1280,
-      "h": 800
+      "h": 799
      }
     },
     {
@@ -7954,7 +8017,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-79--wariant-dwie-kolumny.webp",
       "pelny": "ce-indeks/img/p/CE-79--wariant-dwie-kolumny.webp",
       "w": 1280,
-      "h": 489
+      "h": 463
      }
     },
     {
@@ -7965,7 +8028,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-79--wariant-w-miejscu-produktu.webp",
       "pelny": "ce-indeks/img/p/CE-79--wariant-w-miejscu-produktu.webp",
       "w": 1280,
-      "h": 458
+      "h": 489
      }
     }
    ],
@@ -7988,7 +8051,7 @@ window.CE_DANE = {
      "plik": "sklep.html",
      "strona": "Lista produktów",
      "id": "kafel-promocja",
-     "naglowek": "CARBOMAT ECO pH 6,0–6,5, worek 20 l: 39 zł zamiast 43 zł",
+     "naglowek": "Carbomat Eco pH 6,0–6,5, worek 20 l: 39 zł zamiast 43 zł",
      "wariant": "w-miejscu-produktu"
     },
     {
@@ -8065,7 +8128,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-80.webp",
     "pelny": "ce-indeks/img/p/CE-80.webp",
     "w": 1280,
-    "h": 379
+    "h": 420
    },
    "warianty": [],
    "wystapienia": [
@@ -8131,7 +8194,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-81.webp",
     "pelny": "ce-indeks/img/p/CE-81.webp",
     "w": 1280,
-    "h": 620
+    "h": 693
    },
    "warianty": [],
    "wystapienia": [
@@ -8218,14 +8281,14 @@ window.CE_DANE = {
      "plik": "pdp.html",
      "strona": "Karta produktu – CARBOMAT ECO pH 6,0–6,5",
      "id": "hero",
-     "naglowek": "CARBOMAT ECO pH 6,0–6,5",
+     "naglowek": "Carbomat Eco pH 6,0–6,5",
      "wariant": null
     },
     {
      "plik": "pdp-kwasny.html",
      "strona": "Karta produktu – CARBOMAT ECO pH 4,5–5,0",
      "id": "hero",
-     "naglowek": "CARBOMAT ECO pH 4,5–5,0",
+     "naglowek": "Carbomat Eco pH 4,5–5,0",
      "wariant": null
     }
    ],
@@ -8369,7 +8432,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-84.webp",
     "pelny": "ce-indeks/img/p/CE-84.webp",
     "w": 1280,
-    "h": 772
+    "h": 786
    },
    "warianty": [],
    "wystapienia": [
@@ -8627,7 +8690,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-90.webp",
     "pelny": "ce-indeks/img/p/CE-90.webp",
     "w": 1280,
-    "h": 666
+    "h": 678
    },
    "warianty": [],
    "wystapienia": [
@@ -8774,7 +8837,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-92.webp",
     "pelny": "ce-indeks/img/p/CE-92.webp",
     "w": 1280,
-    "h": 630
+    "h": 624
    },
    "warianty": [
     {
@@ -8864,7 +8927,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-93.webp",
     "pelny": "ce-indeks/img/p/CE-93.webp",
     "w": 1280,
-    "h": 585
+    "h": 496
    },
    "warianty": [],
    "wystapienia": [
@@ -8940,7 +9003,7 @@ window.CE_DANE = {
      "plik": "carbomat-mata.html",
      "strona": "CARBOMAT Mata Uprawowa",
      "id": "kontakt-ekspert",
-     "naglowek": "Masz pytania o CARBOMAT MATA UPRAWOWA?",
+     "naglowek": "Masz pytania o Carbomat Mata Uprawowa?",
      "wariant": null
     }
    ],
@@ -9154,7 +9217,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-97.webp",
     "pelny": "ce-indeks/img/p/CE-97.webp",
     "w": 1280,
-    "h": 800
+    "h": 799
    },
    "warianty": [],
    "wystapienia": [

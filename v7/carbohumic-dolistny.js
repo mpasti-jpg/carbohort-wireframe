@@ -125,3 +125,91 @@
   /* --- 3. Reveal ----------------------------------------------------------- */
   if (CX5.reveal) CX5.reveal(revealEls);
 })();
+
+/* ===== 50 · Efekty: CE-13 variant `lista` – the rolling list and the leaves ==
+   Figma 948:1437 (D01, 18.10.2026). CE-13-scena-produktu.js runs the scene
+   (thresholds, is-on / is-past, parallax); this block only adds two things
+   the variant `lista` draws in carbohumic-dolistny.css:
+   · the place of every name in one rolling list: --use-y (px, from the bottom
+     line of its crop) and data-dist ("0" open, "1" a neighbour, "far");
+     the open name stands one line above the bottom, the next one under it,
+     the previous one above it – heights are measured, so a name that wraps
+     pushes its neighbours instead of covering them;
+   · data-leaves (0–4) on the open crop: how far the reader is in this term –
+     the hold of a term is cut into five parts, the first without a leaf, so
+     the fourth leaf comes before the next term opens and scrolling back takes
+     them away one by one.
+   The term index uses the very formula of the module (the constants come from
+   the same custom properties), so both always agree. Discrete writes only;
+   one getBoundingClientRect() of the track per frame. Below 900 px, with
+   reduced motion and without JS nothing is written (the static layout).
+   ⚠ To be moved into ce/CE-13-scena-produktu.js as the variant `lista`
+   (moduleRequests of round 18.10.2026). ===================================== */
+(function () {
+  "use strict";
+  var $ = CX5.$, $$ = CX5.$$, clamp = CX5.clamp;
+  var art = $("[data-use-list]");
+  if (!art) return;
+  var track = $("[data-use-track]", art);
+  var crops = $$("[data-use-crop]", art);
+  var tabs = crops.map(function (c) { return $("[data-use-tab]", c); });
+  var n = crops.length;
+  if (!track || !n) return;
+
+  var on = false, INTRO = .1, HOLD = .8, GAP = 20, h = [], act = -1, leaves = -1;
+
+  function num(cs, name, dflt) {
+    var v = parseFloat(cs.getPropertyValue(name));
+    return isNaN(v) ? dflt : v;
+  }
+  function clear() {
+    crops.forEach(function (c) {
+      c.style.removeProperty("--use-y");
+      c.removeAttribute("data-dist");
+      c.removeAttribute("data-leaves");
+    });
+    act = -1; leaves = -1;
+  }
+  /* y of every name against the bottom line of its crop, for the open term a */
+  function place(a) {
+    var y = [], i;
+    var lift = (a + 1 < n ? h[a + 1] : Math.min.apply(null, h)) + GAP;
+    y[a] = -lift;
+    for (i = a + 1; i < n; i++) y[i] = y[i - 1] + GAP + h[i];
+    for (i = a - 1; i >= 0; i--) y[i] = y[i + 1] - h[i + 1] - GAP;
+    crops.forEach(function (c, k) {
+      var d = Math.abs(k - a);
+      c.style.setProperty("--use-y", String(Math.round(y[k])));
+      c.setAttribute("data-dist", d === 0 ? "0" : d === 1 ? "1" : "far");
+    });
+  }
+  function measure() {
+    on = CX5.motionOn();
+    if (!on) { clear(); return; }
+    var cs = window.getComputedStyle(art);
+    INTRO = num(cs, "--use-intro", INTRO);
+    HOLD = num(cs, "--use-hold", HOLD);
+    GAP = num(cs, "--use-list-gap", GAP);
+    h = tabs.map(function (t) { return t ? t.offsetHeight : 0; });
+    act = -1; leaves = -1;
+  }
+  function frame() {
+    if (!on) return;
+    var s = -track.getBoundingClientRect().top / window.innerHeight;
+    var a = clamp(Math.floor((s - INTRO) / HOLD), 0, n - 1);
+    var k = clamp(Math.floor(((s - INTRO - HOLD * a) / HOLD) * 5), 0, 4);
+    if (a !== act) { act = a; leaves = -1; place(a); }
+    if (k === leaves) return;
+    leaves = k;
+    crops.forEach(function (c, i) {
+      if (i === a) c.setAttribute("data-leaves", String(k));
+      else c.removeAttribute("data-leaves");
+    });
+  }
+
+  /* the type arrives after the first layout: measure the names again */
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function () { if (on) { measure(); frame(); } });
+  }
+  CX5.register({ scroll: frame, resize: measure });
+})();

@@ -5,27 +5,35 @@
    through a plain in-page anchor – no pop-up, no script of its own.
    Typical place: the last section before <cw-footer>.
    Root: <section class="c5-sec c5-expert" id="…">; on a light band add c5-band.
+   Look (design system v0.1, stage D 18.10.2026 – no Figma frame, carried over
+   from the finished CEs): the box is an EL-15 card (white, 12 px corners, no
+   outline on the beige band), the portrait has 20 px corners, the kicker is the
+   framed EL-06, the heading is the display H2, contact lines carry their icon in
+   an EL-24 frame (32 px), the actions are EL-01 L buttons (the primary one dark).
    Per-instance tuning (set in `style` on the root):
      --c5-expert-photo-w   portrait width from 700 px up (default 220px). ===== */
 
-.c5-expert__box{display:grid;grid-template-columns:var(--c5-expert-photo-w,220px) minmax(0,1fr);gap:clamp(1.5rem,4vw,3.5rem);align-items:start;border:1px solid var(--w-border-default);background:var(--w-surface-page);padding:clamp(1.25rem,3vw,2.5rem);}
+.c5-expert__box{display:grid;grid-template-columns:var(--c5-expert-photo-w,220px) minmax(0,1fr);gap:clamp(1.5rem,4vw,3.5rem);align-items:start;border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-md);background:var(--ch-surface-raised);padding:clamp(1.25rem,3vw,2.5rem);}
+.c5-expert.c5-band .c5-expert__box{border-color:transparent;}
 
 /* Portrait 4:5 – a real <img> or the kit placeholder (wf-ph) until the photo arrives. */
-.c5-expert__photo{display:block;width:100%;aspect-ratio:4/5;min-height:0;object-fit:cover;border-radius:0;}
+.c5-expert__photo{display:block;width:100%;aspect-ratio:4/5;min-height:0;object-fit:cover;border-radius:var(--ch-radius-control-l);border:0;background:var(--ch-surface-warm-strong);color:var(--ch-text-secondary);}
 span.c5-expert__photo{display:grid;}
 
 .c5-expert__body{display:flex;flex-direction:column;align-items:flex-start;min-width:0;}
-.c5-expert .c5-kicker{margin-bottom:var(--w-space-3);}
+.c5-expert .c5-kicker{margin-bottom:var(--ch-space-5);}
 .c5-expert .c5-h2{margin:0;}
-.c5-expert__lead{margin-top:var(--w-space-4);}
+.c5-expert__lead{margin-top:var(--ch-space-4);}
 
-/* Name with title, then the two contact lines. */
-.c5-expert__name{margin:clamp(1.5rem,3vw,2rem) 0 0;font-size:1.125rem;line-height:1.3;font-weight:var(--w-weight-semibold);}
-.c5-expert__lines{list-style:none;margin:var(--w-space-3) 0 0;padding:0;display:flex;flex-direction:column;gap:var(--w-space-2);}
-.c5-expert__line{display:inline-flex;align-items:center;gap:var(--w-space-2);min-height:44px;overflow-wrap:anywhere;}
-.c5-expert__line .wf-icon{flex:none;}
+/* Name with title (title-s), then the two contact lines. */
+.c5-expert__name{margin:clamp(1.5rem,3vw,2rem) 0 0;font-size:var(--ch-type-title-s-size);line-height:var(--ch-type-title-s-lh);letter-spacing:var(--ch-type-title-s-ls);font-weight:var(--ch-type-title-s-weight);color:var(--ch-text-primary);}
+.c5-expert__lines{list-style:none;margin:var(--ch-space-3) 0 0;padding:0;display:flex;flex-direction:column;gap:var(--ch-space-1);}
+.c5-expert__line{display:inline-flex;align-items:center;gap:var(--ch-space-3);min-height:44px;overflow-wrap:anywhere;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-primary);text-decoration:none;}
+.c5-expert__line:hover{text-decoration:underline;text-underline-offset:0.18em;}
+/* the icon sits in an EL-24 frame: 32 px circle, beige-300 */
+.c5-expert__line .wf-icon{flex:none;box-sizing:border-box;width:32px;height:32px;padding:7px;border-radius:var(--w-radius-circle);background:var(--ch-icon-frame-light);color:var(--ch-text-primary);}
 
-.c5-expert__acts{margin-top:var(--w-space-5);}
+.c5-expert__acts{margin-top:var(--ch-space-6);}
 
 /* Below 700 px the portrait stands above the text, narrower. */
 @media (max-width:699.98px){

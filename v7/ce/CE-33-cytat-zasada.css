@@ -1,18 +1,62 @@
 /* ===== CE-33 · Cytat / zasada (rejestr: ce-rejestr.js) ======================
    Variant used by the crop pages. Prefix: u-quote; host section: u-zs.
-   Other pages carry their own implementations of CE-33 in their page sheets. */
+   Since stage D every page uses the module: `c5-quote--split` (photo / dark
+   field), `--wstawka` (inside an article column), `--zasada` (rule strip),
+   `--ciemny` (dark box), `--motto` (closing line of the home page). */
 
 /* ===== wariant: ciemny-boks =====
-   A dark box with an overline and one sentence. */
-.u-quote{display:flex;flex-direction:column;gap:var(--w-space-4);background:var(--w-surface-inverse);color:var(--w-text-inverse);border-radius:0;padding:clamp(1.5rem,4vw,3rem);}
-.u-quote__t{font-size:var(--w-font-overline-size);line-height:var(--w-font-overline-lh);letter-spacing:var(--w-tracking-wide);text-transform:uppercase;color:var(--w-gray-400);}
-.u-quote p{font-size:clamp(1.125rem,2.2vw,1.5rem);line-height:1.35;font-weight:var(--w-weight-medium);max-width:var(--w-measure);}
+   Dark box (card EL-15 dark, r12): overline label and one sentence in the
+   title style. Stage D (18.10.2026): the same look for `c5-quote--ciemny`
+   (about-us page) and for the crop-page class `u-quote`. */
+.u-quote,.c5-quote--ciemny{display:flex;flex-direction:column;gap:var(--ch-space-4);margin:0;background:var(--ch-surface-inverse);color:var(--ch-text-inverse);border-radius:var(--ch-radius-md);padding:clamp(var(--ch-space-6),4vw,var(--ch-space-10));}
+.u-quote__t,.c5-quote__label{margin:0;font-size:var(--ch-type-overline-size);line-height:var(--ch-type-overline-lh);letter-spacing:var(--ch-type-overline-ls);text-transform:uppercase;color:var(--ch-text-inverse-subtle);}
+.u-quote p,.c5-quote--ciemny p{margin:0;font-size:var(--ch-type-title-size);line-height:var(--ch-type-title-lh);letter-spacing:var(--ch-type-title-ls);font-weight:var(--ch-type-title-weight);color:inherit;max-width:var(--w-measure);}
 /* Host section without padding of its own: the neighbours bring theirs. */
 .u-zs{padding-block:0;}
+@media (min-width:900px){
+  .u-quote p,.c5-quote--ciemny p{font-size:var(--ch-type-title-m-size);line-height:var(--ch-type-title-m-lh);}
+}
 /* `u-quote--obok`: from 1100 px the overline moves into a column of its own
    and the sentence keeps its measure on the wide container. */
 @media (min-width:1100px){
   .u-quote--obok{display:grid;grid-template-columns:minmax(0,12rem) minmax(0,1fr);
     column-gap:clamp(2rem,4vw,4rem);align-items:start;}
-  .u-quote--obok p{font-size:clamp(1.5rem,2vw,2rem);max-width:52ch;}
+  .u-quote--obok p{max-width:52ch;}
 }
+
+/* ===== wariant: cytat – układ „split” (Figma 867:2937) =====
+   Block: c5-quote, modifier: c5-quote--split. A quote on a photo or a dark
+   field, set in two paragraphs: the first one large (22/33, tracking −2 %), the
+   second one small (16/24). No rule, no quotation marks. The column is 453 px
+   wide and takes the colour of its host (white on the dark section); the host
+   places it (a column on the right of the heading). */
+.c5-quote{margin:0;}
+.c5-quote--split{display:flex;flex-direction:column;gap:var(--ch-space-6);width:100%;max-width:var(--c5-quote-w,453px);color:inherit;}
+.c5-quote--split p{margin:0;color:inherit;}
+.c5-quote--split p:first-child{font-size:var(--ch-type-title-size);line-height:33px;letter-spacing:var(--ch-type-title-ls);font-weight:var(--ch-type-title-weight);}
+.c5-quote--split p + p{font-size:var(--ch-type-body-size);line-height:24px;}
+
+/* ===== wariant: wstawka (cytat wyróżniony w kolumnie artykułu) =====
+   Same type as `--split`, but it fills a text column and has air above and
+   below. Used together with `c5-quote--split`. */
+.c5-quote--wstawka{max-width:none;margin-block:clamp(1.75rem,4vw,2.5rem);color:var(--ch-text-primary);}
+
+/* ===== wariant: zasada (pasek zasady) =====
+   White card with a grey-200 outline (EL-15, r12): overline label and the rule in the title style, in
+   one row that wraps on narrow screens. */
+.c5-quote--zasada{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--ch-space-2) var(--ch-space-6);margin-top:var(--ch-space-6);padding:var(--ch-space-6);background:var(--ch-surface-raised);border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-md);color:var(--ch-text-primary);}
+.c5-quote--zasada .c5-quote__label{color:var(--ch-text-secondary);}
+.c5-quote__txt{font-size:var(--ch-type-title-size);line-height:var(--ch-type-title-lh);letter-spacing:var(--ch-type-title-ls);font-weight:var(--ch-type-title-weight);}
+
+/* ===== wariant: motto (zamknięcie strony głównej) =====
+   Closing line, big and centred, in the display face; the words brighten with
+   the scroll (mechanics in home.js, one rule per word in home.css). Under it
+   the call (lead) and the signature in a kicker frame. */
+.c5-quote--motto{display:flex;flex-direction:column;align-items:center;gap:clamp(2rem,4vw,3.25rem);text-align:center;margin:0;}
+.c5-quote__q{margin:0;}
+/* About ten of the quote's own em per line: the sentence breaks into three
+   lines at every size; the measure is in em, so it follows the clamp. */
+.c5-quote__t{margin:0 auto;max-width:min(100%,10em);font-family:var(--ch-type-h1-font);font-size:clamp(2.25rem,5.5vw,5.25rem);line-height:1.08;font-weight:var(--ch-type-h1-weight);letter-spacing:var(--ch-type-h1-ls);text-wrap:balance;color:var(--ch-text-primary);}
+.c5-quote__cap{display:flex;flex-direction:column;align-items:center;gap:var(--ch-space-4);}
+.c5-quote__call{font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);color:var(--ch-text-secondary);}
+.c5-quote__cap .c5-kicker{margin-bottom:0;}

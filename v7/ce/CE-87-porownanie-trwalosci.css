@@ -1,0 +1,28 @@
+/* ===== CE-87 · Porównanie trwałości z kaflami zalet (rejestr: ce-rejestr.js) =
+   Prefixes: b-peat, b-dur, b-tile. One fact drawn to scale (how long each
+   material lasts in the soil: two rows with a big number and a bar) next to a
+   2 × 2 grid of advantage tiles. The bars are decoration: the numbers stand in
+   text. First use: Borówka (#b-torf); the module moved here from borowka.css
+   in stage D (18.10.2026).
+   Look: the tiles are the EL-15 card (white, grey-200 frame, 12 px corners);
+   the bars sit in an 8 px track; the earth colours come from the palette
+   (peat = grey-400, lignite = brown-900) – no own hex values. ============== */
+.b-peat__grid{display:grid;gap:clamp(2rem,4vw,4rem);}
+.b-dur{display:grid;gap:var(--ch-space-5);margin:0;}
+.b-dur__row{display:grid;gap:var(--ch-space-2);}
+.b-dur__lab{display:flex;justify-content:space-between;align-items:baseline;gap:var(--ch-space-4);}
+.b-dur__name{font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);font-weight:var(--ch-font-weight-medium);color:var(--ch-text-primary);}
+.b-dur__val{font-size:clamp(1.5rem,2.6vw,var(--ch-type-title-xl-size));line-height:1;letter-spacing:var(--ch-type-title-xl-ls);font-weight:var(--ch-font-weight-regular);font-variant-numeric:tabular-nums;color:var(--ch-text-primary);white-space:nowrap;}
+.b-dur__track{position:relative;height:14px;overflow:hidden;background:var(--ch-surface-raised);border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-sm);}
+.b-dur__fill{position:absolute;inset:0 auto 0 0;width:var(--p);background:var(--ch-color-grey-400);}
+.b-dur__fill--lig{background:var(--ch-color-brown-900);}
+.b-dur__fill--open{-webkit-mask-image:linear-gradient(90deg,#000 70%,transparent);mask-image:linear-gradient(90deg,#000 70%,transparent);}
+.b-dur__src{max-width:60ch;}
+.b-tiles{list-style:none;margin:0;padding:0;display:grid;gap:var(--ch-space-3);grid-template-columns:minmax(0,1fr);}
+.b-tile{display:flex;flex-direction:column;gap:var(--ch-space-3);padding:var(--ch-space-5);background:var(--ch-surface-raised);border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-md);}
+.b-tile__t{font-size:var(--ch-type-title-s-size);line-height:var(--ch-type-title-s-lh);letter-spacing:var(--ch-type-title-s-ls);font-weight:var(--ch-font-weight-regular);color:var(--ch-text-primary);}
+.b-tile p{margin:0;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-secondary);}
+@media (min-width:640px){.b-tiles{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (min-width:1000px){
+  .b-peat__grid{grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:start;}
+}

@@ -1,0 +1,91 @@
+/* ===== CE-57 · Indeks artykułów (rejestr: ce-rejestr.js) ====================
+   Module (design system v0.1, stage D 18.10.2026): rows in the language of the
+   list CE-53 – a thin line under every row, padding 20 / 0, title 18/28, text
+   16/25 grey; filter chips EL-16, search field and select with r14, pager
+   buttons r14, no shadows. Layout, copy and the script (centrum-wiedzy.js) stay
+   as in v7. Prefix: `cw-k-`.
+
+   The list has NO thumbnails (review 10.08), 10 items per page, paged – not
+   loaded on demand. A row: title, two lines of the teaser, a small metric with
+   the subgroup chip, the author, the month and the reading time. Above the list
+   a control strip: subgroup chips (`aria-pressed`), sorting and search; under
+   it the pager. Everything the script does is gated with `data-js-only`.
+
+   Markup:
+     section[data-ce="CE-57"][data-cw-index] > .c5-wrap
+       .cw-k-sechead                         heading with the counter
+       .cw-k-controls[data-js-only]          .cw-k-filters (chips) + .cw-k-tools
+       p.cw-k-count[data-js-only]            „Pokazujemy 1–10 z 13”
+       ul.cw-k-list > li.cw-k-list__item > article.cw-k-row
+         h3.cw-k-row__title > a  ·  p.cw-k-row__lead  ·  p.cw-k-row__meta
+       p.c5-note.cw-k-empty                  empty result (EL-17) + button
+       nav.cw-k-pager                        .cw-k-pager__nums + c5-btn
+   The search field `.cw-k-findbox` (shared with the hero „dzial”) lives in
+   ce/CE-08-hero.css. ======================================================== */
+
+/* Section head with the counter on the right. The list has to be pleasant to
+   read (review remark), so the column does not stretch across the whole width. */
+.cw-k-sechead{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:var(--ch-space-4);max-width:860px;}
+
+/* Eight chips with long names always take several lines, so the control strip
+   has two floors: the chips, and under them sorting and search. */
+.cw-k-controls{display:flex;flex-direction:column;gap:var(--ch-space-4);align-items:stretch;margin-top:clamp(1.5rem,3vw,2.25rem);max-width:860px;}
+.cw-k-filters{display:flex;flex-wrap:wrap;gap:var(--ch-space-2);}
+/* The chip as a filter button: the state is carried by the fill, never by the
+   colour of the text alone. */
+.cw-k-filters .c5-chip{cursor:pointer;min-height:36px;
+  transition:border-color var(--ch-motion-duration-base) var(--ch-motion-ease),background var(--ch-motion-duration-base) var(--ch-motion-ease),
+    color var(--ch-motion-duration-base) var(--ch-motion-ease);}
+.cw-k-filters .c5-chip:hover{border-color:var(--ch-border-strong);color:var(--ch-text-primary);}
+.cw-k-filters .c5-chip[aria-pressed="true"]{background:var(--ch-action-primary-bg);border-color:var(--ch-action-primary-bg);
+  color:var(--ch-action-primary-fg);}
+.cw-k-tools{display:flex;flex-wrap:wrap;gap:var(--ch-space-3);align-items:center;}
+.cw-k-tools .wf-select{flex:0 1 200px;}
+.cw-k-tools .cw-k-findbox{flex:1 1 240px;max-width:340px;}
+
+.cw-k-count{margin:clamp(1.25rem,2.5vw,1.75rem) 0 0;}
+
+/* List: a line under every row (CE-53 pattern). */
+.cw-k-list{list-style:none;margin:var(--ch-space-4) 0 0;padding:0;max-width:860px;}
+.cw-k-row{display:flex;flex-direction:column;gap:var(--ch-space-2);padding-block:var(--ch-space-5);
+  border-bottom:1px solid var(--ch-border-subtle);
+  transition:border-color var(--ch-motion-duration-base) var(--ch-motion-ease);}
+.cw-k-list__item:first-child .cw-k-row{border-top:1px solid var(--ch-border-subtle);}
+.cw-k-row:hover{border-bottom-color:var(--ch-border-control);}
+.cw-k-row__title{margin:0;font-family:var(--ch-type-tab-font);font-size:var(--ch-type-tab-size);line-height:var(--ch-type-tab-lh);
+  font-weight:var(--ch-type-tab-weight);letter-spacing:var(--ch-type-tab-ls);}
+.cw-k-row__title a{color:inherit;text-decoration:none;}
+.cw-k-row:hover .cw-k-row__title a,
+.cw-k-row__title a:focus-visible{text-decoration:underline;}
+.cw-k-row__lead{margin:0;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.cw-k-row__meta{margin:0;}
+/* A teaser row (text ready, not yet published): no link, muted – the state is
+   carried by the „w przygotowaniu” chip, not by the colour alone. */
+.cw-k-row--soon .cw-k-row__title{color:var(--ch-text-secondary);}
+
+/* Empty filter result – a note (EL-17) with the clearing button. */
+.cw-k-empty{margin-top:clamp(1.25rem,2.5vw,1.75rem);max-width:860px;flex-wrap:wrap;align-items:center;}
+.cw-k-empty .c5-btn{margin-left:auto;}
+
+/* Pager: „‹ Poprzednia”, numbers, „Następna ›”. With a single page the controls
+   stay visible but inactive. */
+.cw-k-pager{display:flex;flex-wrap:wrap;gap:var(--ch-space-2);align-items:center;margin-top:clamp(1.5rem,3vw,2.25rem);max-width:860px;}
+.cw-k-pager__nums{display:flex;gap:var(--ch-space-2);margin-inline:var(--ch-space-2);}
+.cw-k-pager__num{min-width:44px;min-height:44px;padding:10px 14px;font:inherit;font-size:var(--ch-type-body-size);
+  background:var(--ch-surface-page);border:1px solid var(--ch-border-control);border-radius:var(--ch-radius-control-m);
+  color:var(--ch-text-primary);cursor:pointer;
+  transition:border-color var(--ch-motion-duration-base) var(--ch-motion-ease),background var(--ch-motion-duration-base) var(--ch-motion-ease);}
+.cw-k-pager__num:hover:not(:disabled){border-color:var(--ch-border-strong);}
+.cw-k-pager__num[aria-current="page"]{border-color:var(--ch-border-strong);font-weight:var(--ch-font-weight-medium);background:var(--ch-surface-warm);}
+.cw-k-pager .c5-btn[disabled],
+.cw-k-pager__num:disabled{background:var(--ch-action-disabled-bg);color:var(--ch-text-secondary-on-warm);border-color:var(--ch-action-disabled-bg);cursor:not-allowed;}
+
+@media (max-width:899px){
+  /* touch: the chip gets the full 44 px field, the tools run across the width */
+  .cw-k-filters .c5-chip{min-height:44px;}
+  .cw-k-tools .wf-select,.cw-k-tools .cw-k-findbox{flex:1 1 100%;max-width:none;}
+}
+@media (prefers-reduced-motion: reduce){
+  .cw-k-row,.cw-k-filters .c5-chip,.cw-k-pager__num{transition:none;}
+}

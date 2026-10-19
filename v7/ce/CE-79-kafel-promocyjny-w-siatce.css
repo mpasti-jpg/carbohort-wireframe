@@ -1,0 +1,61 @@
+/* ===== CE-79 · Kafel promocyjny w siatce (rejestr: ce-rejestr.js) ===========
+   Promo tile woven into the product grid of CE-78 (after product 6, 8, 12,
+   15, 18): wide banner, video 2 x 2, tile in a product slot, half banner.
+   Variants are modifier classes of the tile (--wide, --video, --slot, --half).
+   Moved from the inline sheet of sklep.html in stage D (18.10.2026). */
+
+/* Promo tiles: a photo or video under a dark shade, white type, r20 (large
+   photo) or r12 (tile in a product slot); none links outside the shop. */
+.c5sk-tile { position: relative; display: flex; flex-direction: column; justify-content: flex-end; min-width: 0; overflow: hidden; border-radius: var(--ch-radius-control-l); background: var(--ch-surface-forest); color: var(--ch-text-inverse); }
+.c5sk-tile__bg { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
+.c5sk-tile__shade { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to top, rgb(0 0 0 / .74) 0%, rgb(0 0 0 / .4) 45%, rgb(0 0 0 / 0) 78%); }
+.c5sk-tile__body { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; max-width: 36rem; padding: clamp(1.25rem, 2.4vw, 2rem); }
+.c5sk-tile__kicker { display: inline-flex; align-items: center; min-height: var(--ch-size-kicker); padding: var(--ch-space-3) 14px; border: 1px solid var(--ch-border-on-dark); border-radius: var(--ch-radius-md); font-family: var(--ch-type-kicker-font); font-size: var(--ch-type-kicker-size); line-height: var(--ch-type-kicker-lh); letter-spacing: var(--ch-type-kicker-ls); text-transform: var(--ch-type-kicker-tt); color: var(--ch-text-inverse); }
+.c5sk-tile__h { font-family: var(--ch-type-display-sm-font); font-size: clamp(1.5rem, 2.2vw, var(--ch-type-display-sm-size)); font-weight: var(--ch-type-display-sm-weight); letter-spacing: var(--ch-type-display-sm-ls); line-height: 1.25; }
+.c5sk-tile__txt { font-size: 0.9375rem; line-height: 1.45; opacity: .9; }
+.c5sk-tile__body .c5-btn { margin-top: 6px; }
+.c5sk-tile .c5-btn--inv:focus-visible { outline: 2px solid var(--w-surface-page); outline-offset: 2px; }
+/* 1. Banner across the whole grid (after product 6), copy on the left. */
+.c5sk-tile--wide { grid-column: 1 / -1; justify-content: center; min-height: clamp(240px, 24vw, 360px); }
+.c5sk-tile--wide .c5sk-tile__shade { background: linear-gradient(90deg, rgb(0 0 0 / .74) 0%, rgb(0 0 0 / .46) 45%, rgb(0 0 0 / .06) 80%); }
+/* 2. Video 2 × 2 (after product 8); full width on the 2-column grid. */
+.c5sk-tile--video { grid-column: 1 / -1; aspect-ratio: 16 / 9; }
+@media (max-width: 599px) { .c5sk-tile--video { aspect-ratio: 1 / 1; } }
+@media (min-width: 1000px) { .c5sk-tile--video { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; } }
+.c5sk-tile__play { position: absolute; top: 12px; right: 12px; z-index: 2; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; background: var(--ch-surface-page); color: var(--ch-text-primary); border: 0; border-radius: var(--ch-radius-sm); cursor: pointer; }
+.c5sk-tile__play:hover { background: var(--ch-surface-warm); }
+.c5sk-tile__play:focus-visible { outline: 2px solid var(--w-surface-page); outline-offset: 2px; }
+.c5sk-tile__play .c5sk-ico-pause, .c5sk-tile__play.is-playing .c5sk-ico-play { display: none; }
+.c5sk-tile__play.is-playing .c5sk-ico-pause { display: block; }
+/* 3 and 5. Tiles in a product slot (§12.14 item 6, pattern on.com): the
+   outline and footprint of a card – a 1:1 frame, then a centred headline
+   larger than a product name, one sentence and an uppercase underlined
+   link-button. Promo (after product 12): pack mock-up on grey with "−9%";
+   "Ściółka zamiast kory" (after product 18): a photo, cover. */
+.c5sk-tile--slot { justify-content: flex-start; padding: var(--ch-space-2); border: 1px solid var(--ch-border-subtle); border-radius: var(--ch-radius-md); background: var(--ch-surface-page); color: var(--ch-text-primary); }
+.c5sk-tile__shot { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); place-items: center; aspect-ratio: 1 / 1; padding: 12%; background: var(--ch-surface-warm-strong); border-radius: var(--ch-radius-sm); overflow: hidden; }
+.c5sk-tile__shot img { display: block; width: 100%; height: 100%; min-height: 0; object-fit: contain; }
+.c5sk-tile__shot--photo { padding: 0; }
+.c5sk-tile__shot--photo img { object-fit: cover; }
+.c5sk-tile__pct { position: absolute; right: 10px; bottom: 10px; padding: 6px 10px; font-size: clamp(1.25rem, 2vw, 1.75rem); font-weight: var(--w-weight-semibold); line-height: 1; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; background: var(--ch-action-primary-bg); color: var(--ch-action-primary-fg); border-radius: var(--ch-radius-sm); }
+.c5sk-tile__slotbody { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; padding: var(--w-space-5) var(--w-space-4); text-align: center; }
+.c5sk-tile__sh { font-family: var(--ch-type-display-sm-font); font-size: clamp(1.375rem, 1.8vw, var(--ch-type-display-sm-size)); font-weight: var(--ch-type-display-sm-weight); letter-spacing: var(--ch-type-display-sm-ls); line-height: 1.2; text-wrap: balance; }
+.c5sk-tile__sh b { font-weight: inherit; }
+.c5sk-tile__stxt { max-width: 34ch; font-size: 0.9375rem; line-height: 1.45; color: var(--ch-text-secondary); }
+.c5sk-tile__cta:not(.c5-btn) { margin-top: 6px; padding: 4px 0 3px; font: inherit; font-size: 0.8125rem; font-weight: var(--w-weight-semibold); letter-spacing: .08em; text-transform: uppercase; color: var(--w-text-primary); background: none; border: 0; border-bottom: 2px solid currentColor; border-radius: 0; cursor: pointer; }
+.c5sk-tile__cta:not(.c5-btn):hover { color: var(--w-text-secondary); }
+/* the buy button in a tile is the green button M (buy rule, decision 13) */
+.c5sk-tile__cta.c5-btn { margin-top: var(--ch-space-2); }
+.c5sk-tile__cta:focus-visible { outline: 2px solid var(--w-focus-ring); outline-offset: 3px; }
+/* 4. Banner over two columns (after product 15): right-hand on the
+   3-column grid, full width on the 2-column one. */
+.c5sk-tile--half { grid-column: 1 / -1; min-height: 280px; }
+@media (min-width: 1000px) { .c5sk-tile--half { grid-column: 2 / span 2; min-height: 0; } }
+@media (max-width: 599px) {
+  .c5sk-tile__body { gap: 8px; }
+  .c5sk-tile__slotbody { gap: 6px; padding: var(--w-space-4) var(--w-space-3); }
+  .c5sk-tile__sh { font-size: 1.25rem; }
+  .c5sk-tile__stxt { font-size: 0.8125rem; }
+  .c5sk-tile__cta:not(.c5-btn) { font-size: 0.75rem; letter-spacing: .06em; }
+}
+

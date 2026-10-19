@@ -73,7 +73,7 @@ html.cx-js .u-mt__row{cursor:pointer;}
    visually hidden labels inside the cells, so they are clipped with the table
    and never widen the page. */
 .c5-tbl{--c5-tbl-min:640px;--c5-tbl-first:auto;min-width:0;}
-.c5-tbl__scroll{position:relative;max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;}
+.c5-tbl__scroll{position:relative;max-width:100%;border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-md);background:var(--ch-surface-page);overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;}
 .c5-tbl__scroll:focus-visible{outline:2px solid var(--w-focus-ring);outline-offset:2px;}
 .c5-tbl__scroll > table{width:100%;min-width:var(--c5-tbl-min);}
 
@@ -81,26 +81,27 @@ html.cx-js .u-mt__row{cursor:pointer;}
    the background of its row, so a highlighted row stays in one piece; the
    1 px line on its right edge is drawn with a shadow, because a collapsed
    border does not travel with a sticky cell. */
-.c5-tbl :is(thead,tbody) tr{background:var(--w-surface-page);}
-.c5-tbl :is(thead,tbody) tr > :first-child{position:sticky;left:0;z-index:1;background:inherit;box-shadow:1px 0 0 var(--w-border-subtle);}
-.c5-tbl thead tr > :first-child{background:var(--w-surface-subtle);}
+.c5-tbl :is(thead,tbody) tr{background:var(--ch-surface-page);}
+.c5-tbl :is(thead,tbody) tr > :first-child{position:sticky;left:0;z-index:1;background:inherit;box-shadow:1px 0 0 var(--ch-border-subtle);}
+.c5-tbl thead tr > :first-child{background:var(--ch-surface-page);}
+.c5-tbl tbody tr:last-child > :is(th,td){border-bottom:0;}
+.c5-tbl tbody tr:hover{background:var(--ch-surface-warm);}
 
 /* Parts of a cell: a second, quiet line under the main value and a state chip
    that never breaks. */
 /* An order or offer number in a cell never breaks at its hyphen. */
 .c5-tbl .c5-tbl__nr{white-space:nowrap;}
-.c5-tbl__sub{display:block;margin-top:2px;font-size:0.75rem;line-height:1.45;font-weight:var(--w-weight-regular);color:var(--w-text-tertiary);white-space:nowrap;}
+.c5-tbl__sub{display:block;margin-top:2px;font-size:var(--ch-type-caption-size);line-height:var(--ch-type-caption-lh);font-weight:var(--ch-font-weight-regular);color:var(--ch-text-secondary);white-space:nowrap;}
 .c5-tbl .c5-chip{white-space:nowrap;}
 
 /* Footer row with a total: `<tfoot>` with a label cell spanning the columns
    and the amount. Its rule and weight come from EL-21; here it only gets the
    quiet band, and it is not pinned, because its first cell spans columns. */
-.c5-tbl tfoot :is(th,td){background:var(--w-surface-subtle);}
+.c5-tbl tfoot :is(th,td){background:var(--ch-surface-warm);}
 
-/* A visible heading of the table (optional; otherwise the h2 is hidden).
-   Same overline as the titles of boxes, cards and row lists; capitals come
-   from CSS. */
-.c5-tbl__h{margin:0 0 var(--w-space-4);font-size:var(--w-font-overline-size);line-height:var(--w-font-overline-lh);font-weight:var(--w-weight-regular);letter-spacing:var(--w-tracking-wide);text-transform:uppercase;color:var(--w-text-tertiary);}
+/* A visible heading of the table (optional; otherwise the h2 is hidden):
+   the small text role, medium weight. */
+.c5-tbl__h{margin:0 0 var(--ch-space-3);font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);font-weight:var(--ch-font-weight-medium);color:var(--ch-text-primary);}
 
 /* A source line under the table. */
 .c5-tbl__src{margin:var(--w-space-3) 0 0;}
@@ -152,7 +153,7 @@ html.cx-js .u-mt__row{cursor:pointer;}
 @media (max-width:599px){
   .c5-tbl__scroll{display:grid;}
   .c5-tbl__scroll > table{grid-area:1 / 1;min-width:min(var(--c5-tbl-min),30rem);}
-  .c5-tbl__scroll::after{content:"";grid-area:1 / 1;justify-self:end;position:sticky;right:0;z-index:2;width:20px;pointer-events:none;background:linear-gradient(to left,rgba(0,0,0,.16),rgba(0,0,0,0));}
+  .c5-tbl__scroll::after{content:"";grid-area:1 / 1;justify-self:end;position:sticky;right:0;z-index:2;width:20px;pointer-events:none;background:linear-gradient(to left,var(--ch-border-subtle),rgb(232 232 232 / 0));}
   @supports (animation-timeline:scroll()){
     .c5-tbl__scroll::after{opacity:0;animation:c5-tbl-edge linear both;animation-timeline:scroll(nearest inline);}
   }
@@ -160,3 +161,108 @@ html.cx-js .u-mt__row{cursor:pointer;}
   .c5-tbl :is(thead,tbody) tr > :first-child{width:var(--c5-tbl-first);min-width:var(--c5-tbl-first);max-width:var(--c5-tbl-first);overflow-wrap:break-word;}
   .c5-tbl :is(thead,tbody) tr > :first-child .c5-tbl__sub{white-space:normal;}
 }
+
+/* ===== warianty: z-packshotami, danych (strony produktowe) – stage C 18.10.2026 =====
+   Look from the Figma frames 792:3300 and 778:2009, content from the v7 markup.
+   Separate from the `c5-tbl` block above (the pinned-column tables of the application
+   screens): these use their own classes and do not touch it. ===== */
+
+/* ----- z-packshotami: two columns, a photo frame with a floating panel over each, then
+   a column of row cards. The markup stays a `table` (rows pair a feature of one way with a
+   feature of the other, so a row is as tall as its taller card): on wide screens the table
+   parts become grid rows, below 900 px the groups stack way by way (order + contents). ----- */
+.c5pr-cmp{margin-top:clamp(2.5rem,5vw,var(--ch-space-20));}
+.c5pr-cmp__table{display:block;width:100%;}
+.c5pr-cmp__table :is(thead,tbody){display:block;}
+.c5pr-cmp__table thead{margin-bottom:var(--ch-space-5);}
+.c5pr-cmp__table tbody{display:flex;flex-direction:column;gap:6px;}
+.c5pr-cmp__table :is(thead,tbody) tr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--ch-space-6);}
+.c5pr-cmp__table th{display:block;min-width:0;padding:0;text-align:left;font-weight:inherit;}
+.c5pr-cmp__table td{display:flex;align-items:center;gap:var(--ch-space-5);min-width:0;min-height:60px;padding:var(--ch-space-4) var(--ch-space-5);border-radius:var(--ch-radius-md);background:var(--ch-surface-raised);font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);color:var(--ch-text-secondary);}
+/* row marker as the list bullet of the design system (G15: 3 px square, radius 1 px) */
+.c5pr-cmp__table td::before{content:"";flex:none;width:3px;height:3px;border-radius:1px;background:var(--ch-text-secondary);}
+
+.c5pr-cmp__frame{position:relative;display:block;aspect-ratio:684 / 503;overflow:hidden;border-radius:var(--ch-radius-md);background:var(--ch-surface-warm-strong);
+  /* the frame is the measuring box of the loupe below: panel position and header height */
+  container-type:size;--c5pr-cmp-x:16.4cqw;--c5pr-cmp-y:15.9cqh;--c5pr-cmp-pad:var(--ch-space-2);
+  --c5pr-cmp-head:calc(var(--ch-space-6) + var(--ch-type-title-lh) + var(--ch-space-6));}
+.c5pr-cmp__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.c5pr-cmp__panel{position:absolute;left:var(--c5pr-cmp-x);top:var(--c5pr-cmp-y);width:67%;display:flex;flex-direction:column;gap:var(--ch-space-6);padding:var(--ch-space-6) var(--c5pr-cmp-pad) var(--c5pr-cmp-pad);border-radius:var(--ch-radius-lg);background:var(--ch-surface-raised);color:inherit;text-decoration:none;}
+.c5pr-cmp__name{display:flex;align-items:center;gap:var(--ch-space-4);padding-inline:14px;font-size:var(--ch-type-title-size);line-height:var(--ch-type-title-lh);letter-spacing:var(--ch-type-title-ls);color:var(--ch-text-primary);}
+.c5pr-cmp__name .wf-icon{flex:none;width:var(--ch-size-icon-m);height:var(--ch-size-icon-m);}
+/* The window of the panel is a LOUPE, not a thumbnail (R11, Figma 792:3443): it shows the photo of
+   the frame at the frame's own scale, cut out exactly where the window lies – the image inside is
+   frame-sized and pulled back by the panel's offset (cq units of the frame) – with the white
+   crosshair of the design over it (lines at 25 %, the leaf mark of the sign turned 45°). */
+.c5pr-cmp__inner{position:relative;display:block;aspect-ratio:431 / 243;overflow:hidden;border-radius:var(--ch-radius-md);}
+.c5pr-cmp__inner img{position:absolute;display:block;max-width:none;width:100cqw;height:100cqh;object-fit:cover;
+  left:calc(-1 * (var(--c5pr-cmp-x) + var(--c5pr-cmp-pad)));top:calc(-1 * (var(--c5pr-cmp-y) + var(--c5pr-cmp-head)));}
+.c5pr-cmp__inner::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 362 195'%3E%3Cg stroke='%23fff' stroke-opacity='.25' fill='none'%3E%3Cpath vector-effect='non-scaling-stroke' d='M0 97.5H149M213 97.5H362M181 0V69M181 126V195'/%3E%3C/g%3E%3Cg fill='%23fff' transform='translate(181 97.5) rotate(45) scale(1.365) translate(-9.5 -9.5)'%3E%3Cg transform='translate(1.117 2.352)'%3E%3Cpath d='M6.40047 5.58824C6.47878 5.58824 6.55709 5.58824 6.6354 5.5805C6.71371 5.57276 6.69022 5.55728 6.69022 5.52632C6.70588 5.44118 6.70588 5.36378 6.70588 5.28638C6.70588 2.36842 4.30958 0 1.35727 0C-1.59504 0 1.20065 0 1.12233 0.00773994C1.04402 0.0154799 1.06752 0.0309598 1.06752 0.0619195C1.06752 0.139319 1.05969 0.216718 1.05969 0.294118C1.05969 3.21207 3.45599 5.5805 6.4083 5.5805L6.40047 5.58824Z'/%3E%3Cpath d='M1.41234 14.4115C1.33484 14.4115 1.25733 14.4115 1.17982 14.4037C1.10232 14.396 1.12557 14.3805 1.12557 14.3495C1.12557 14.272 1.11782 14.1945 1.11782 14.117C1.11782 11.1949 3.48953 8.82324 6.41153 8.82324C6.48904 8.82324 6.56654 8.82324 6.64405 8.83099C6.72156 8.83874 6.6983 8.85425 6.6983 8.88525C6.70605 8.96275 6.70605 9.04026 6.70605 9.11777C6.70605 12.0398 4.33435 14.4115 1.41234 14.4115Z'/%3E%3C/g%3E%3Cg transform='translate(17.765 2.352) scale(-1 1)'%3E%3Cpath d='M6.40047 5.58824C6.47878 5.58824 6.55709 5.58824 6.6354 5.5805C6.71371 5.57276 6.69022 5.55728 6.69022 5.52632C6.70588 5.44118 6.70588 5.36378 6.70588 5.28638C6.70588 2.36842 4.30958 0 1.35727 0C-1.59504 0 1.20065 0 1.12233 0.00773994C1.04402 0.0154799 1.06752 0.0309598 1.06752 0.0619195C1.06752 0.139319 1.05969 0.216718 1.05969 0.294118C1.05969 3.21207 3.45599 5.5805 6.4083 5.5805L6.40047 5.58824Z'/%3E%3Cpath d='M1.41234 14.4115C1.33484 14.4115 1.25733 14.4115 1.17982 14.4037C1.10232 14.396 1.12557 14.3805 1.12557 14.3495C1.12557 14.272 1.11782 14.1945 1.11782 14.117C1.11782 11.1949 3.48953 8.82324 6.41153 8.82324C6.48904 8.82324 6.56654 8.82324 6.64405 8.83099C6.72156 8.83874 6.6983 8.85425 6.6983 8.88525C6.70605 8.96275 6.70605 9.04026 6.70605 9.11777C6.70605 12.0398 4.33435 14.4115 1.41234 14.4115Z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") center / min(362px,84%) auto no-repeat;}
+
+/* The panel as the way in (a.c5pr-cmp__panel – Produkty: Carbohumic doglebowy / dolistny): on
+   hover it rises 10 px and the loupe image slides the other way, a little, as a parallax.
+   Transform only; with reduced motion the panel stays put and the name underlines instead. */
+a.c5pr-cmp__panel{cursor:pointer;transition:transform .5s cubic-bezier(.2,.7,.2,1),box-shadow .5s cubic-bezier(.2,.7,.2,1);}
+a.c5pr-cmp__panel .c5pr-cmp__inner img{transition:transform .6s cubic-bezier(.2,.7,.2,1);}
+@media (hover:hover){
+  a.c5pr-cmp__panel:hover{transform:translateY(-10px);box-shadow:0 18px 40px -24px rgb(12 43 28 / .45);}
+  a.c5pr-cmp__panel:hover .c5pr-cmp__inner img{transform:translateY(6px) scale(1.02);}
+}
+a.c5pr-cmp__panel:focus-visible{outline:var(--w-focus-ring-width) solid var(--ch-color-white);outline-offset:3px;}
+@media (prefers-reduced-motion:reduce){
+  a.c5pr-cmp__panel,a.c5pr-cmp__panel .c5pr-cmp__inner img{transition:none;}
+  a.c5pr-cmp__panel:hover,a.c5pr-cmp__panel:hover .c5pr-cmp__inner img{transform:none;box-shadow:none;}
+  a.c5pr-cmp__panel:hover .c5pr-cmp__name{text-decoration:underline;text-underline-offset:.2em;}
+}
+.c5pr-cmp__defs{position:absolute;width:0;height:0;overflow:hidden;}
+
+/* Entry links under the frames (16.10.2026, CARBOHUMIC split into a soil-applied and a
+   foliar page). */
+.c5pr-cmp__go{display:flex;align-items:center;gap:var(--w-space-1);width:fit-content;margin:var(--ch-space-3) 0 0;padding-bottom:1px;font-size:var(--ch-type-small-size);font-weight:var(--ch-font-weight-medium);color:var(--ch-text-primary);text-decoration:none;border-bottom:1px solid var(--ch-border-control);}
+.c5pr-cmp__go:hover{border-bottom-color:var(--ch-text-primary);}
+.c5pr-cmp__go:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:var(--w-focus-ring-offset);}
+
+@media (max-width:899px){
+  .c5pr-cmp__table{display:flex;flex-direction:column;gap:6px;}
+  .c5pr-cmp__table :is(thead,tbody),.c5pr-cmp__table :is(thead,tbody) tr{display:contents;}
+  .c5pr-cmp__table th{order:1;margin-bottom:var(--ch-space-2);}
+  .c5pr-cmp__table th:nth-child(2){order:3;margin-top:var(--ch-space-8);}
+  .c5pr-cmp__table td:nth-child(1){order:2;}
+  .c5pr-cmp__table td:nth-child(2){order:4;}
+  .c5pr-cmp__frame{aspect-ratio:1 / 1.05;}
+  .c5pr-cmp__frame{--c5pr-cmp-x:6cqw;--c5pr-cmp-y:7cqh;--c5pr-cmp-head:calc(var(--ch-space-4) + var(--ch-type-title-lh) + var(--ch-space-4));}
+  .c5pr-cmp__panel{width:88%;gap:var(--ch-space-4);padding-top:var(--ch-space-4);}
+  .c5pr-cmp__name{font-size:var(--ch-type-title-s-size);}
+}
+
+/* ----- danych (Produkty, certificates): EL-21 as row cards, 18/28 cells in the primary
+   colour, a green check before every "tak", the missing data as plain text ----- */
+.c5pr-cert{min-width:600px;table-layout:fixed;}
+.c5pr-cert th:nth-child(1){width:32%;}
+.c5pr-cert th:nth-child(2){width:25%;}
+.c5pr-cert th{font-size:var(--ch-type-body-size);}
+.c5pr-block--danych.c5pr-block--plain .c5-table--cards td,.c5pr-block--danych .c5pr-gap{color:var(--ch-text-primary);}
+/* the kit sets `svg{display:block}`; the check has to stand in the line of the text */
+.c5pr-ok{display:inline-block;width:20px;height:20px;margin:-4px 10px 0 0;vertical-align:middle;color:var(--ch-color-green-300);}
+
+/* ===== warianty: porownanie, wartosci (CARBOMAT Mata Uprawowa, stage D 18.10.2026) =====
+   Two tables inside the lightbox pages of CE-25. Look: EL-21 as row cards
+   (`c5-table c5-table--cards`, defined in ce/00-base.css); this module adds the
+   minimal width (the wrapper scrolls sideways, never the panel), the caption
+   that stays in place while the table scrolls, the highlighted column of the
+   product and the right-aligned figures. ----- */
+.c5-table--porownanie{min-width:56rem;}
+.c5-table--wartosci{min-width:34rem;}
+.c5-table--porownanie :is(td,th),.c5-table--wartosci :is(td,th){vertical-align:top;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);}
+.c5-table--porownanie thead th,.c5-table--wartosci thead th{color:var(--ch-text-secondary);font-weight:var(--ch-font-weight-regular);}
+.c5-table--porownanie caption,.c5-table--wartosci caption{max-width:100cqi;position:sticky;left:0;padding-bottom:var(--ch-space-3);text-align:left;font-size:var(--ch-type-caption-size);line-height:var(--ch-type-caption-lh);color:var(--ch-text-secondary);}
+.c5-table--porownanie tbody th{width:12rem;font-weight:var(--ch-font-weight-medium);color:var(--ch-text-primary);}
+.c5-table--porownanie tbody td{color:var(--ch-text-secondary);}
+/* The product's own column is the only highlighted one: dark head, stronger beige body. */
+.c5-table--porownanie tbody td.c5-table__own{background:var(--ch-surface-warm-strong);color:var(--ch-text-primary);}
+.c5-table--porownanie thead th.c5-table__own{background:var(--ch-surface-inverse);color:var(--ch-text-inverse);padding-block:var(--ch-space-3);border-radius:var(--ch-radius-md) var(--ch-radius-md) 0 0;}
+.c5-table--wartosci :is(th,td):not(:first-child){text-align:right;font-variant-numeric:tabular-nums;}
+.c5-table--wartosci tbody th{font-weight:var(--ch-font-weight-regular);color:var(--ch-text-primary);}
+.c5-table--wartosci tbody td{color:var(--ch-text-secondary);}
+.c5-table--wartosci tbody td:last-child{color:var(--ch-text-primary);}

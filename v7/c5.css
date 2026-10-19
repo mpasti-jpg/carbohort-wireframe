@@ -21,7 +21,8 @@
 /* Górne menu serwisu NIE jest przyklejone (decyzja z 24.07) – scrolluje
    się razem ze stroną; do góry ekranu klei się wyłącznie subnawigacja. Kit
    pozostaje nietknięty – to nadpisanie tylko w obrębie tej strony. */
-.wf-navbar{position:static;}
+/* Site header: ce/CE-01-naglowek.css (loaded by chrome.js after this file) –
+   a floating bar that scrolls with the page, not sticky (18.10.2026). */
 
 /* --- Subnawigacja produktu (Figma node 9:224): pigułki do lewej + „kup teraz"
    do prawej; przyklejona do górnej krawędzi ekranu -------------------------- */
@@ -45,29 +46,174 @@
 /* kotwice lądują pod przyklejoną belką */
 [data-chapter]{scroll-margin-top:calc(var(--cx-subnav-h) + 8px);}
 
+/* Design system v0.1 (17.10.2026): this block is a byte copy of the same block
+   in ce/00-base.css (container, section, kicker, headings, lead, EL-01 button,
+   EL-04 row) – the old core keeps the same values as the pattern base. */
 /* --- Wspólne klocki nowego layoutu -------------------------------------- */
-.c5-wrap{max-width:1180px;margin-inline:auto;padding-inline:var(--w-space-5);}
-.c5-sec{padding-block:clamp(3.5rem,7vw,6.25rem);}
-.c5-kicker{display:block;font-size:0.875rem;font-weight:var(--w-weight-medium);letter-spacing:.03em;text-transform:uppercase;margin-bottom:clamp(2rem,4vw,3.5rem);}
-.c5-h1{font-size:clamp(2.1rem,4vw,3.125rem);line-height:1.12;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
-.c5-h2{font-size:clamp(1.7rem,3.2vw,2.5rem);line-height:1.15;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;max-width:784px;}
+/* EL-29 container – design system v0.1 (decision 5, 17.10.2026): content is
+   1600 px at most with a 24 px margin, so at the 1440 Figma frame it is 1392 px
+   wide; backgrounds and background photos stay full-bleed (they sit on the
+   section, not on the container). Below 768 px the v7 mobile margin (20 px).
+   `--wide` (1800 / 40 px, frames of 18-19.09) is now the same container – the
+   class stays valid in the markup and adds nothing. */
+.c5-wrap{max-width:calc(var(--ch-layout-container-max) + 2 * var(--ch-layout-gutter));margin-inline:auto;padding-inline:var(--w-page-padding);}
+@media (min-width:768px){.c5-wrap{padding-inline:var(--ch-layout-gutter);}}
+/* Section rhythm: 120 px at the 1440 frame (layout.section-y), 64 px at least. */
+.c5-sec{padding-block:clamp(4rem,8.334vw,var(--ch-layout-section-y));}
+/* EL-06 kicker – the Figma kicker is always framed: 13/14 caps +2 %, padding
+   12/14 (38 px high), 1 px control border, 12 px corners. It sizes to its
+   text; `--center` centres the frame. `--outline` (CE-65, 18.09) is the same
+   kicker now and adds nothing. `--ondark` on photos and dark bands (border
+   white .28), `--ongreen` on the green band (border green-950). */
+.c5-kicker{display:flex;align-items:center;justify-content:center;width:fit-content;max-width:100%;min-height:var(--ch-size-kicker);padding:var(--ch-space-3) 14px;border:1px solid var(--ch-border-control);border-radius:var(--ch-radius-md);font-family:var(--ch-type-kicker-font);font-size:var(--ch-type-kicker-size);line-height:var(--ch-type-kicker-lh);font-weight:var(--ch-type-kicker-weight);letter-spacing:var(--ch-type-kicker-ls);text-transform:uppercase;color:var(--ch-text-primary);margin-bottom:var(--ch-space-6);}
+.c5-kicker--center{text-align:center;margin-inline:auto;}
+.c5-kicker--flush{margin-bottom:0;}
+.c5-kicker--ondark{border-color:var(--ch-border-on-dark);color:var(--ch-text-inverse);}
+.c5-kicker--ongreen{border-color:var(--ch-border-strong);}
+/* G13 (Mateusz 18.10.2026): the lower kicker of the design – 32 px, padding 9/14,
+   12/14 caps. Figma uses it for the FAQ (CE-17, 637:296) and the closing CTA
+   (CE-18, 397:1611); every other kicker of the frames is the 38 px one above. */
+.c5-kicker--sm{min-height:var(--ch-size-kicker-sm);padding:9px 14px;font-size:var(--ch-type-kicker-sm-size);line-height:var(--ch-type-kicker-sm-lh);letter-spacing:var(--ch-type-kicker-sm-ls);}
+/* EL-08 / EL-09 headings – display font (Season Mix Regular, -1 %): H1 63/65 and
+   H2 54/63 at the 1440 frame, scaled down with the window. */
+.c5-h1{font-family:var(--ch-type-h1-font);font-size:clamp(2.125rem,4.375vw,var(--ch-type-h1-size));line-height:1.032;font-weight:var(--ch-type-h1-weight);letter-spacing:var(--ch-type-h1-ls);}
+.c5-h2{font-family:var(--ch-type-h2-font);font-size:clamp(1.875rem,3.75vw,var(--ch-type-h2-size));line-height:1.167;font-weight:var(--ch-type-h2-weight);letter-spacing:var(--ch-type-h2-ls);max-width:var(--ch-layout-head);}
 .c5-h2--center{margin-inline:auto;text-align:center;}
-.c5-lead{font-size:1rem;color:var(--w-text-secondary);max-width:710px;}
+/* Heading ink (design system v0.1): Figma sets every heading in text.primary;
+   the kit body text is the secondary grey, so headings no longer inherit it.
+   A dark or photo context that draws its headings in its own text colour sets
+   `--c5-heading-ink: currentColor` on itself (the heading then inherits). */
+.c5-h1,.c5-h2,.c5-h3{color:var(--c5-heading-ink,var(--ch-text-primary));}
+/* Lead – 18/28, secondary text, 843 px measure (layout.lead). */
+.c5-lead{font-size:var(--ch-type-lead-size);line-height:1.556;color:var(--ch-text-secondary);max-width:var(--ch-layout-lead);}
 .c5-lead--center{margin-inline:auto;text-align:center;}
-.c5-head{display:flex;flex-direction:column;gap:clamp(1.25rem,2.6vw,2.25rem);}
+.c5-head{display:flex;flex-direction:column;gap:clamp(1rem,1.7vw,var(--ch-space-6));}
 .c5-muted{color:var(--w-text-secondary);}
 
-/* Przyciski nowego języka: ostre narożniki, etykiety jak w makiecie */
-.c5-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 45px;font:inherit;font-size:1rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;border:1px solid rgb(0 0 0 / .2);border-radius:0;cursor:pointer;text-decoration:none;transition:background var(--w-duration-base) var(--w-ease),color var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);}
-.c5-btn--dark{background:var(--w-gray-900);color:var(--w-text-inverse);border-color:var(--w-gray-900);}
-.c5-btn--dark:hover{background:var(--w-gray-700);border-color:var(--w-gray-700);}
-.c5-btn--light{background:var(--w-surface-page);color:var(--w-text-primary);}
-.c5-btn--light:hover{border-color:var(--w-border-strong);}
-.c5-btn--sm{padding:10px 25px;font-size:0.8125rem;}
-.c5-btn--inv{background:var(--w-surface-page);color:var(--w-text-primary);border-color:var(--w-surface-page);}
-.c5-btn--inv:hover{background:var(--w-gray-100);}
-.c5-btn .wf-icon{width:16px;height:16px;opacity:.55;}
-.c5-btnrow{display:flex;gap:6px;flex-wrap:wrap;}
+/* EL-01 button – design system v0.1. L: 54 px (Figma 56, two to four px lower
+   after Mateusz 18.10.2026 – G03), padding 16/24, 20 px corners, Book 16/20,
+   a trailing icon 20 px set 40 px from the text. `--sm` is
+   the Figma M: 44 px, 12/16, 14 px corners, Book 14/18, icon 16 at 10 px.
+   Side padding still goes through `--c5-btn-px`, which contexts set for
+   themselves. Variants (fundament §7, rule of 17.10): `--dark` primary on light
+   surfaces, `--accent` green (on photos and dark bands, and „Kup w sklepie” in
+   product cards – always dark text), `--light` outlined, `--inv` white on dark,
+   `--ghost` outlined on a photo; `:disabled` / `--disabled` beige. */
+.c5-btn{--c5-btn-px:var(--ch-space-6);display:inline-flex;align-items:center;justify-content:center;gap:var(--ch-space-3);min-height:var(--ch-size-control-l);padding:calc((var(--ch-size-control-l) - var(--ch-type-button-l-lh)) / 2 - 1px) var(--c5-btn-px);font:inherit;font-family:var(--ch-type-button-l-font);font-size:var(--ch-type-button-l-size);line-height:var(--ch-type-button-l-lh);font-weight:var(--ch-type-button-l-weight);letter-spacing:0;border:1px solid transparent;border-radius:var(--ch-radius-control-l);cursor:pointer;text-decoration:none;transition:background var(--w-duration-base) var(--w-ease),color var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);}
+.c5-btn--dark{background:var(--ch-action-primary-bg);color:var(--ch-action-primary-fg);border-color:var(--ch-action-primary-bg);}
+.c5-btn--dark:hover{background:var(--ch-color-green-900);border-color:var(--ch-color-green-900);}
+/* G05 (18.10.2026): the outlined button has no fill – it takes the colour of whatever it stands on */
+.c5-btn--light{background:transparent;color:var(--ch-action-secondary-fg);border-color:var(--ch-action-secondary-border);}
+.c5-btn--light:hover{border-color:var(--ch-action-secondary-fg);}
+.c5-btn--accent{background:var(--ch-action-accent-bg);color:var(--ch-action-accent-fg);border-color:var(--ch-action-accent-bg);}
+.c5-btn--accent:hover{background:var(--ch-color-green-350);border-color:var(--ch-color-green-350);}
+.c5-btn--kup{background:var(--ch-action-buy-bg);color:var(--ch-action-buy-fg);border-color:var(--ch-action-buy-bg);}
+.c5-btn--kup:hover{background:var(--ch-action-buy-bg-hover);border-color:var(--ch-action-buy-bg-hover);}
+.c5-btn--ghost{background:transparent;color:var(--ch-text-inverse);border-color:var(--ch-border-ghost-on-image);}
+.c5-btn--ghost:hover{background:rgb(255 255 255 / .1);border-color:var(--ch-text-inverse);}
+.c5-btn--sm{--c5-btn-px:var(--ch-space-4);gap:10px;min-height:var(--ch-size-control-m);padding:var(--ch-space-3) var(--c5-btn-px);font-size:var(--ch-type-button-m-size);line-height:var(--ch-type-button-m-lh);border-radius:var(--ch-radius-control-m);}
+.c5-btn--inv{background:var(--ch-action-inverse-bg);color:var(--ch-action-inverse-fg);border-color:var(--ch-action-inverse-bg);}
+.c5-btn--inv:hover{background:var(--ch-surface-warm);border-color:var(--ch-surface-warm);}
+.c5-btn:disabled,.c5-btn[aria-disabled="true"],.c5-btn--disabled{background:var(--ch-action-disabled-bg);border-color:var(--ch-action-disabled-bg);color:var(--ch-text-secondary-on-warm);cursor:not-allowed;}
+/* narrow variant (PRO band, section footers) – must come after --sm to win */
+.c5-btn--tight{--c5-btn-px:clamp(18px,2.2vw,32px);}
+.c5-btn .wf-icon{width:var(--ch-size-icon-m);height:var(--ch-size-icon-m);flex:none;}
+.c5-btn > .c5-btn__t + .wf-icon:last-child{margin-left:calc(var(--ch-size-button-icon-gap) - var(--ch-space-3));}
+.c5-btn--sm .wf-icon{width:var(--ch-size-icon-s);height:var(--ch-size-icon-s);}
+.c5-btn--sm > .c5-btn__t + .wf-icon:last-child{margin-left:0;}
+/* EL-01 trailing icon by action (decision 18.10.2026, Figma buttons): `--ico-liscie`
+   the four-leaf sign of the logo on main actions (kup, zapytaj, kontakt),
+   `--ico-suwaki` the sliders on choosing a dose or a product (dobierz,
+   konfigurator). Drawn by CSS (mask in the text colour), 40 px from the label;
+   the button markup carries only the class. */
+.c5-btn--ico-liscie{--c5-btn-ico:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 19 19'%3E%3Cg transform='translate(1.117 2.352)'%3E%3Cpath d='M6.40047 5.58824C6.47878 5.58824 6.55709 5.58824 6.6354 5.5805C6.71371 5.57276 6.69022 5.55728 6.69022 5.52632C6.70588 5.44118 6.70588 5.36378 6.70588 5.28638C6.70588 2.36842 4.30958 0 1.35727 0C-1.59504 0 1.20065 0 1.12233 0.00773994C1.04402 0.0154799 1.06752 0.0309598 1.06752 0.0619195C1.06752 0.139319 1.05969 0.216718 1.05969 0.294118C1.05969 3.21207 3.45599 5.5805 6.4083 5.5805L6.40047 5.58824Z'/%3E%3Cpath d='M1.41234 14.4115C1.33484 14.4115 1.25733 14.4115 1.17982 14.4037C1.10232 14.396 1.12557 14.3805 1.12557 14.3495C1.12557 14.272 1.11782 14.1945 1.11782 14.117C1.11782 11.1949 3.48953 8.82324 6.41153 8.82324C6.48904 8.82324 6.56654 8.82324 6.64405 8.83099C6.72156 8.83874 6.6983 8.85425 6.6983 8.88525C6.70605 8.96275 6.70605 9.04026 6.70605 9.11777C6.70605 12.0398 4.33435 14.4115 1.41234 14.4115Z'/%3E%3C/g%3E%3Cg transform='translate(17.765 2.352) scale(-1 1)'%3E%3Cpath d='M6.40047 5.58824C6.47878 5.58824 6.55709 5.58824 6.6354 5.5805C6.71371 5.57276 6.69022 5.55728 6.69022 5.52632C6.70588 5.44118 6.70588 5.36378 6.70588 5.28638C6.70588 2.36842 4.30958 0 1.35727 0C-1.59504 0 1.20065 0 1.12233 0.00773994C1.04402 0.0154799 1.06752 0.0309598 1.06752 0.0619195C1.06752 0.139319 1.05969 0.216718 1.05969 0.294118C1.05969 3.21207 3.45599 5.5805 6.4083 5.5805L6.40047 5.58824Z'/%3E%3Cpath d='M1.41234 14.4115C1.33484 14.4115 1.25733 14.4115 1.17982 14.4037C1.10232 14.396 1.12557 14.3805 1.12557 14.3495C1.12557 14.272 1.11782 14.1945 1.11782 14.117C1.11782 11.1949 3.48953 8.82324 6.41153 8.82324C6.48904 8.82324 6.56654 8.82324 6.64405 8.83099C6.72156 8.83874 6.6983 8.85425 6.6983 8.88525C6.70605 8.96275 6.70605 9.04026 6.70605 9.11777C6.70605 12.0398 4.33435 14.4115 1.41234 14.4115Z'/%3E%3C/g%3E%3C/svg%3E");}
+.c5-btn--ico-suwaki{--c5-btn-ico:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 7h-9'/%3E%3Cpath d='M14 17H5'/%3E%3Ccircle cx='17' cy='17' r='3'/%3E%3Ccircle cx='7' cy='7' r='3'/%3E%3C/svg%3E");}
+.c5-btn--ico-liscie::after,.c5-btn--ico-suwaki::after{content:"";flex:none;width:var(--ch-size-icon-m);height:var(--ch-size-icon-m);margin-left:calc(var(--ch-size-button-icon-gap) - var(--ch-space-3));background:currentColor;-webkit-mask:var(--c5-btn-ico) center / contain no-repeat;mask:var(--c5-btn-ico) center / contain no-repeat;}
+.c5-btn--sm.c5-btn--ico-liscie::after,.c5-btn--sm.c5-btn--ico-suwaki::after{width:var(--ch-size-icon-s);height:var(--ch-size-icon-s);margin-left:0;}
+/* G04 – hover of the buttons (Mateusz 18.10.2026, Figma 938:1629). The label of an
+   L button moves 4 px to the right; the icon has its own motion: the four leaves
+   of the sign draw 1 unit (of 19) closer to the centre, the two knobs of the
+   sliders run in opposite directions (the upper to the right, the lower to the
+   left) while their tracks shorten. chrome.js (EL-01 motion) wraps the label in
+   `.c5-btn__t` and swaps the mask icon for an inline copy whose parts can move
+   (`.c5-btn__ico`); without the script the button stays as drawn above.
+   Only transform; none of it below the hover media or with reduced motion. */
+.c5-btn__t{display:inline-block;}
+.c5-btn:has(> .c5-btn__ico)::after{content:none;}
+.c5-btn__ico{flex:none;width:var(--ch-size-icon-m);height:var(--ch-size-icon-m);margin-left:calc(var(--ch-size-button-icon-gap) - var(--ch-space-3));overflow:visible;}
+.c5-btn--sm > .c5-btn__ico{width:var(--ch-size-icon-s);height:var(--ch-size-icon-s);margin-left:0;}
+.c5-btn__ico *{transform-box:view-box;}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  .c5-btn__t,.c5-btn__ico *{transition:transform var(--ch-motion-duration-base) var(--ch-motion-ease);}
+  .c5-btn:not(.c5-btn--sm):not(:disabled):not([aria-disabled="true"]):not(.c5-btn--disabled):hover > .c5-btn__t{transform:translateX(4px);}
+  .c5-btn:hover .c5-btn__ico .c5-ico-tl{transform:translate(1px,1px);}
+  .c5-btn:hover .c5-btn__ico .c5-ico-bl{transform:translate(1px,-1px);}
+  .c5-btn:hover .c5-btn__ico .c5-ico-k1{transform:translateX(5px);}
+  .c5-btn:hover .c5-btn__ico .c5-ico-k2{transform:translateX(-5px);}
+  .c5-btn:hover .c5-btn__ico .c5-ico-s1{transform:scaleX(.444);}
+  .c5-btn:hover .c5-btn__ico .c5-ico-s2{transform:scaleX(.444);}
+}
+.c5-btn__ico .c5-ico-s1{transform-origin:20px 7px;}
+.c5-btn__ico .c5-ico-s2{transform-origin:5px 17px;}
+/* EL-04 button row – 12 px apart */
+.c5-btnrow{display:flex;gap:var(--ch-space-3);flex-wrap:wrap;}
+
+/* The utilities below are byte copies from ce/00-base.css too (18.10.2026): pages on
+   this core (shop, cart, configurator, crops) use the divider, the list and the sign. */
+/* G11 – divider between two sections (Mateusz 18.10.2026; Figma: the 1 px #E8E8E8
+   rule at the bottom of a section, e.g. 859:2542, 637:295). It stands IN the
+   container – as wide as the content (1600 px at most, 24 px from the window,
+   20 px on a phone) – between the two sections it separates:
+   `<hr class="c5-divider">` after the closing tag of the upper section. Used
+   where two sections of the same background meet; a change of background is
+   its own boundary. */
+.c5-divider{display:block;width:calc(100% - 2 * var(--w-page-padding));max-width:var(--ch-layout-container-max);height:1px;margin:0 auto;border:0;background:var(--ch-border-subtle);}
+@media (min-width:768px){.c5-divider{width:calc(100% - 2 * var(--ch-layout-gutter));}}
+
+/* G15 – bullets (Mateusz 18.10.2026): a 3 px square with 1 px corners in the text
+   colour, centred on the first line. `.c5-list` is the bulleted list of the
+   pattern (the kit `wf-list` takes the same bullet in cw.css). */
+.c5-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--ch-space-2);}
+.c5-list > li{position:relative;padding-left:var(--ch-space-4);}
+.c5-list > li::before{content:"";position:absolute;left:2px;top:.62em;top:calc(.5lh - 1.5px);width:3px;height:3px;border-radius:1px;background:currentColor;}
+
+/* G12 – the sign of the logo in the background (Mateusz 18.10.2026; Figma: filled
+   803:1629 in the hero of Próchnica+, outlined 397:1871 in the packshot field of
+   CE-11 and 397:1359 in the hero panel). The four leaves of the logo, drawn by
+   `::before` of the element that carries the class (it becomes a positioned,
+   isolated box, so the sign lies over its background and under its content).
+     `.c5-sygnet`         filled, colour motif.on-warm (the tone of a beige-50
+                          surface −1);
+     `.c5-sygnet--obrys`  the outline, 1 px at any size (non-scaling stroke),
+                          motif.line-on-warm;
+     tone modifiers for other surfaces: `--onwhite`, `--ongreen`, `--onyellow`,
+     `--onforest`, `--onbrown` (filled), `--obrys.c5-sygnet--onwhite` (outline).
+   Placement goes through custom properties on the same element (inline style or
+   the CE module): --c5-sygnet-size (mask-size, default `contain`),
+   --c5-sygnet-x / --c5-sygnet-y (mask-position, default 50% 50%),
+   --c5-sygnet-top (how far the layer reaches above the box, default 0 – e.g.
+   behind a header), --c5-sygnet-ink (any other colour), --c5-sygnet-o (opacity,
+   fades with the reveal timing). The same shape is the sprite symbol `ch-sygnet`
+   (chrome.js) for inline use. */
+:root{
+  --c5-sygnet-fill:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 980 980'%3E%3Cpath d='M25.5 472.8C19 472.8 12.4 472.8 5.9 472.2C-0.7 471.5 1.3 470.2 1.3 467.6C0 460.4 0 453.9 0 447.3C0 200.9 200 0.9 446.4 0.9C692.9 0.9 459.5 0.9 466.1 1.5C472.6 2.2 470.6 3.5 470.6 6.1C470.6 12.6 471.3 19.2 471.3 25.7C471.3 272.1 271.3 472.2 24.8 472.2L25.5 472.8Z'/%3E%3Cpath d='M454.1 977.5C460.6 977.5 467.1 977.5 473.7 976.8C480.2 976.2 478.2 974.9 478.2 972.3C478.2 965.7 478.9 959.2 478.9 952.7C478.9 706.6 279.2 506.9 33.1 506.9C26.6 506.9 20 506.9 13.5 507.5C7 508.2 8.9 509.5 8.9 512.1C8.3 518.6 8.3 525.2 8.3 531.7C8.3 777.8 208 977.5 454.1 977.5Z'/%3E%3Cpath d='M978.6 973.3C966.2 711.2 669.5 500.7 301.5 495.5C298.2 495.5 296.9 500.1 300.2 501.4C500.9 603.3 641.4 788.9 658.4 974.6C658.4 977.2 661 979.1 663.6 979.1H974C976.7 979.1 979.3 976.5 979.3 973.9L978.6 973.3Z'/%3E%3Cpath d='M967.3 5.2C954.9 267.6 657.8 478.2 289.5 483.5C286.3 483.5 285 478.9 288.2 477.6C489.1 375.5 629.7 189.7 646.7 4.6C646.7 2 648.7 0 651.3 0H962C964.7 0 967.3 2.6 967.3 5.2Z'/%3E%3C/svg%3E");
+  --c5-sygnet-line:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 980 980' fill='none' stroke='%23000' stroke-width='1'%3E%3Cg vector-effect='non-scaling-stroke'%3E%3Cpath vector-effect='non-scaling-stroke' d='M25.5 472.8C19 472.8 12.4 472.8 5.9 472.2C-0.7 471.5 1.3 470.2 1.3 467.6C0 460.4 0 453.9 0 447.3C0 200.9 200 0.9 446.4 0.9C692.9 0.9 459.5 0.9 466.1 1.5C472.6 2.2 470.6 3.5 470.6 6.1C470.6 12.6 471.3 19.2 471.3 25.7C471.3 272.1 271.3 472.2 24.8 472.2L25.5 472.8Z'/%3E%3Cpath vector-effect='non-scaling-stroke' d='M454.1 977.5C460.6 977.5 467.1 977.5 473.7 976.8C480.2 976.2 478.2 974.9 478.2 972.3C478.2 965.7 478.9 959.2 478.9 952.7C478.9 706.6 279.2 506.9 33.1 506.9C26.6 506.9 20 506.9 13.5 507.5C7 508.2 8.9 509.5 8.9 512.1C8.3 518.6 8.3 525.2 8.3 531.7C8.3 777.8 208 977.5 454.1 977.5Z'/%3E%3Cpath vector-effect='non-scaling-stroke' d='M978.6 973.3C966.2 711.2 669.5 500.7 301.5 495.5C298.2 495.5 296.9 500.1 300.2 501.4C500.9 603.3 641.4 788.9 658.4 974.6C658.4 977.2 661 979.1 663.6 979.1H974C976.7 979.1 979.3 976.5 979.3 973.9L978.6 973.3Z'/%3E%3Cpath vector-effect='non-scaling-stroke' d='M967.3 5.2C954.9 267.6 657.8 478.2 289.5 483.5C286.3 483.5 285 478.9 288.2 477.6C489.1 375.5 629.7 189.7 646.7 4.6C646.7 2 648.7 0 651.3 0H962C964.7 0 967.3 2.6 967.3 5.2Z'/%3E%3C/g%3E%3C/svg%3E");
+  --c5-ico-info:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0'/%3E%3Cpath d='M12 9h.01'/%3E%3Cpath d='M11 12h1v4h1'/%3E%3C/svg%3E");
+}
+.c5-sygnet{position:relative;isolation:isolate;}
+.c5-sygnet::before{content:"";position:absolute;z-index:-1;left:0;right:0;bottom:0;top:var(--c5-sygnet-top,0px);pointer-events:none;
+  background:var(--c5-sygnet-ink,var(--ch-motif-on-warm));
+  -webkit-mask:var(--c5-sygnet-img,var(--c5-sygnet-fill)) var(--c5-sygnet-x,50%) var(--c5-sygnet-y,50%) / var(--c5-sygnet-size,contain) no-repeat;
+  mask:var(--c5-sygnet-img,var(--c5-sygnet-fill)) var(--c5-sygnet-x,50%) var(--c5-sygnet-y,50%) / var(--c5-sygnet-size,contain) no-repeat;
+  opacity:var(--c5-sygnet-o,1);transition:opacity var(--ch-motion-duration-reveal) var(--ch-motion-ease);}
+.c5-sygnet--obrys{--c5-sygnet-img:var(--c5-sygnet-line);--c5-sygnet-ink:var(--ch-motif-line-on-warm);}
+.c5-sygnet--onwhite{--c5-sygnet-ink:var(--ch-motif-on-white);}
+.c5-sygnet--obrys.c5-sygnet--onwhite{--c5-sygnet-ink:var(--ch-motif-line-on-white);}
+.c5-sygnet--ongreen{--c5-sygnet-ink:var(--ch-motif-on-green);}
+.c5-sygnet--onyellow{--c5-sygnet-ink:var(--ch-motif-on-yellow);}
+.c5-sygnet--onforest{--c5-sygnet-ink:var(--ch-motif-on-forest);}
+.c5-sygnet--onbrown{--c5-sygnet-ink:var(--ch-motif-on-brown);}
+@media (prefers-reduced-motion: reduce){.c5-sygnet::before{transition:none;}}
 
 /* --- HERO ----------------------------------------------------------------- */
 .c5-hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,5vw,5rem);align-items:center;padding-block:clamp(2.5rem,5vw,4.5rem) clamp(2rem,4vw,3rem);min-height:min(42rem,calc(100svh - var(--cx-chrome)));}
@@ -251,7 +397,8 @@
 /* wygaszone kropki przy aktywnym filtrze */
 .c5-dot.is-off{opacity:.12;}
 /* Pas PRO wg Figmy 9:152 – ciemne tło, treść na lewej połowie, foto na prawej */
-.c5-pro{position:relative;background:var(--w-gray-600);color:var(--w-text-inverse);overflow:hidden;}
+/* design system v0.1: the PRO band (CE-16) is the brown Figma band on the old core too */
+.c5-pro{position:relative;background:var(--ch-surface-earth);color:var(--w-text-inverse);overflow:hidden;}
 .c5-pro__photo{position:absolute;inset:0 0 0 50%;}
 .c5-pro__photo .wf-ph{width:100%;height:100%;border:0;border-radius:0;background:var(--w-gray-500);}
 .c5-pro .c5-wrap{position:relative;z-index:1;}

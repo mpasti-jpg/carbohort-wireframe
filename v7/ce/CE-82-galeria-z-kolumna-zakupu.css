@@ -1,0 +1,149 @@
+/* ===== CE-82 · Galeria z kolumną zakupu (rejestr: ce-rejestr.js) ============
+   Product card hero of the shop: photo slider (r20 frames on beige), buy
+   column with kicker, H1 (display), price, variant / pack / fraction options
+   (r12 outlines, dark when chosen), quantity stepper and the green "Dodaj do
+   koszyka". Moved from pdp.css in stage D (18.10.2026). "Połącz z" under the
+   button is CE-20 (variant polacz-z), the accordions CE-17. Linked by pdp and
+   pdp-kwasny. Tokens --ch-*; no shadows. */
+
+/* A display rule on an element must not beat [hidden] in the buy column. */
+.c5pd-buycol [hidden] { display: none !important; }
+
+.c5pd-crumbs [aria-current="page"] { color: var(--ch-text-primary); font-weight: var(--ch-font-weight-medium); }
+
+
+/* --- Top: slider on the left, buy column on the right (§12.14 item 1) --
+   Phones: breadcrumbs, slider, buy column. From 900 px the slider takes
+   64% and spans both rows; breadcrumbs sit on top of the buy column. */
+.c5pd-top { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-areas: "crumbs" "gallery" "buy"; row-gap: var(--w-space-5); padding-block: var(--w-space-5) clamp(2.5rem, 5vw, 4rem); }
+.c5pd-crumbs { grid-area: crumbs; min-width: 0; }
+.c5pd-gallery { grid-area: gallery; min-width: 0; }
+.c5pd-buycol { grid-area: buy; }
+@media (min-width: 900px) {
+  .c5pd-top { grid-template-columns: minmax(0, 64fr) minmax(0, 36fr); grid-template-rows: auto 1fr; grid-template-areas: "gallery crumbs" "gallery buy"; column-gap: clamp(40px, 5vw, 96px); row-gap: var(--w-space-4); align-items: start; }
+  /* Both columns stick; pdp.js keeps their `top` in range (two-way logic
+     of §6.2). The slider is lower than the window, so in practice it just
+     stays in view next to the longer buy column – no empty field. */
+  .c5pd-col { position: sticky; top: var(--w-space-6); align-self: start; }
+}
+
+/* Slider: one large square frame with the edge of the next one peeking,
+   scroll-snap for fingers and trackpads, arrows and a counter below. */
+.c5pd-gallery { display: flex; flex-direction: column; gap: 6px; margin-inline: calc(-1 * var(--w-space-5)); }
+.c5pd-shots { position: relative; display: flex; gap: 10px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; padding-inline: var(--w-space-5); scroll-padding-inline: var(--w-space-5); scrollbar-width: none; }
+.c5pd-shots::-webkit-scrollbar { display: none; }
+/* The track takes the focus (arrow keys scroll it); the ring goes inside. */
+.c5pd-shots:focus-visible { outline-offset: -2px; }
+.c5pd-shot { position: relative; flex: 0 0 min(86%, 26rem); aspect-ratio: 1; overflow: hidden; border-radius: var(--ch-radius-control-l); background: var(--ch-surface-warm-strong); scroll-snap-align: start; }
+.c5pd-shot img { width: 100%; height: 100%; object-fit: cover; }
+/* Pack mock-ups: whole object with room around it. */
+.c5pd-shot--pack img { object-fit: contain; padding: 12%; }
+/* Frame of a photo still to be generated (spec §9). */
+.c5pd-shot--todo { display: grid; place-items: center; padding: var(--w-space-6); border: 1px dashed var(--ch-border-dashed); background: var(--w-placeholder-fill); }
+.c5pd-shot__todo { display: flex; flex-direction: column; align-items: center; gap: var(--w-space-3); max-width: 20rem; text-align: center; font-size: 0.875rem; line-height: 1.45; color: var(--w-text-secondary); }
+.c5pd-shot__todo .wf-icon { width: 28px; height: 28px; color: var(--w-icon-muted); }
+.c5pd-slider__nav { display: flex; align-items: center; gap: 2px; padding-inline: calc(var(--w-space-5) - 12px); }
+.c5pd-slider__btn { display: grid; place-items: center; width: 44px; height: 44px; border-radius: var(--ch-radius-sm); color: var(--ch-text-primary); transition: background var(--w-duration-base) var(--w-ease); }
+.c5pd-slider__btn:hover { background: var(--w-gray-100); }
+.c5pd-slider__btn[aria-disabled="true"] { color: var(--w-gray-300); background: none; cursor: default; }
+.c5pd-slider__count { margin-left: 10px; font-size: 0.875rem; letter-spacing: .02em; font-variant-numeric: tabular-nums; color: var(--w-text-primary); }
+@media (min-width: 900px) {
+  .c5pd-gallery { margin-inline: 0; }
+  .c5pd-shots { padding-inline: 0; scroll-padding-inline: 0; }
+  /* The frame fits the window with the arrows under it (header, margins
+     and the arrow row ≈ 190 px); at least 26rem on short windows. */
+  .c5pd-shot { flex-basis: min(86%, max(26rem, calc(100svh - 190px))); }
+  .c5pd-slider__nav { padding-inline: 0; margin-left: -12px; }
+}
+
+/* --- Buy column: kicker, H1, price, short text, switches, cart, shipping,
+   "Połącz z" (§12.14 item 1; kicker K14 unchanged) ---------------------- */
+.c5pd-buycol { display: flex; flex-direction: column; gap: var(--w-space-6); min-width: 0; }
+.c5pd-head { display: flex; flex-direction: column; gap: 10px; }
+.c5pd-buycol .c5-kicker { margin-bottom: 0; font-size: 0.8125rem; color: var(--w-text-secondary); }
+.c5pd-h1 { font-family: var(--ch-type-h3-display-font); font-size: clamp(2rem, 3vw, var(--ch-type-h3-display-size)); line-height: 1.15; font-weight: var(--ch-type-h3-display-weight); letter-spacing: var(--ch-type-h3-display-ls); color: var(--ch-text-primary); }
+/* Keeps "pH 6,0–6,5" in one piece when a heading or label wraps. */
+.c5pd-nowrap { white-space: nowrap; }
+/* "pH" stays as written inside uppercase labels. */
+.c5pd-ph { text-transform: none; }
+
+.c5pd-pricebox { display: flex; flex-direction: column; gap: 2px; margin-top: 4px; }
+.c5pd-price { font-size: var(--ch-type-title-l-size); line-height: var(--ch-type-title-l-lh); letter-spacing: var(--ch-type-title-l-ls); }
+.c5pd-price .cws-price { gap: 4px 10px; }
+.c5pd-price .cws-price__pct { align-self: center; padding: 3px 7px; font-size: var(--ch-type-caption-size); line-height: 1.2; border-radius: var(--ch-radius-xs); }
+.c5pd-opt .cws-price__pct { border-radius: var(--ch-radius-xs); }
+/* Net price of the chosen pack, in small print under the gross price
+   (pdp.js, CWSklep.vatSplit). */
+.c5pd-net { font-size: 0.8125rem; line-height: 1.45; color: var(--w-text-secondary); font-variant-numeric: tabular-nums; }
+
+.c5pd-intro { display: flex; flex-direction: column; gap: 10px; font-size: 0.9375rem; line-height: 1.6; color: var(--w-text-secondary); }
+/* "Więcej o produkcie": jump to the full description further down. */
+.c5pd-more a { display: inline-flex; align-items: center; gap: 6px; font-weight: var(--w-weight-medium); }
+
+/* Switches and cart: variant → pack → fraction → quantity + cart → shipping */
+.c5pd-buy { container-type: inline-size; display: flex; flex-direction: column; gap: var(--w-space-5); scroll-margin-top: var(--w-space-6); }
+.c5pd-field { min-width: 0; margin: 0; padding: 0; border: 0; }
+.c5pd-label { display: block; margin-bottom: 10px; padding: 0; font-size: 0.8125rem; font-weight: var(--w-weight-semibold); line-height: 1.3; letter-spacing: .02em; text-transform: uppercase; color: var(--w-text-primary); }
+.c5pd-hint { margin: -4px 0 10px; font-size: 0.8125rem; line-height: 1.45; color: var(--w-text-secondary); }
+.c5pd-note { font-size: 0.8125rem; line-height: 1.45; color: var(--w-text-tertiary); }
+.c5pd-field .c5pd-note { margin-top: 8px; }
+
+.c5pd-opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.c5pd-opts--packs { grid-template-columns: minmax(0, 1fr); }
+.c5pd-opts--vals { grid-template-columns: repeat(auto-fit, minmax(5.5rem, 1fr)); }
+
+/* One option: pH variant link, pack radio or fraction radio. */
+.c5pd-opt { position: relative; display: flex; flex-direction: column; justify-content: center; gap: 3px; min-height: 48px; padding: 10px 14px; border: 1px solid var(--ch-border-control); border-radius: var(--ch-radius-md); background: var(--ch-surface-page); color: var(--ch-text-primary); font-size: 0.9375rem; line-height: 1.3; text-decoration: none; cursor: pointer; transition: background var(--w-duration-base) var(--w-ease), border-color var(--w-duration-base) var(--w-ease), color var(--w-duration-base) var(--w-ease); }
+.c5pd-opt:hover { border-color: var(--ch-border-strong); }
+.c5pd-opt:focus-visible { border-radius: var(--ch-radius-md); }
+.c5pd-opt input { position: absolute; width: 1px; height: 1px; margin: 0; opacity: 0; pointer-events: none; }
+.c5pd-opt:has(input:focus-visible) { outline: var(--w-focus-ring-width) solid var(--w-focus-ring); outline-offset: 2px; }
+.c5pd-opt.is-on, .c5pd-opt[aria-current="page"] { background: var(--ch-action-primary-bg); border-color: var(--ch-action-primary-bg); color: var(--ch-action-primary-fg); }
+.c5pd-opt__name { font-weight: var(--w-weight-medium); }
+.c5pd-opt__sub { font-size: 0.75rem; color: var(--w-text-tertiary); }
+.c5pd-opt[aria-current="page"] .c5pd-opt__sub { color: var(--w-gray-300); }
+.c5pd-opt .cws-price { gap: 2px 6px; }
+.c5pd-opt.is-on .cws-price__now { color: var(--w-text-inverse); }
+.c5pd-opt.is-on .cws-price__old { color: var(--w-gray-300); }
+.c5pd-opt.is-on .cws-price__pct { background: var(--w-surface-page); color: var(--w-text-primary); }
+.c5pd-opt--val { align-items: center; min-height: 44px; padding: 9px 10px; text-align: center; }
+/* Narrow column: pack name on the left, price on the right, one a row. */
+.c5pd-opts--packs .c5pd-opt { flex-direction: row; flex-wrap: wrap; align-items: baseline; justify-content: space-between; column-gap: 12px; }
+@container (min-width: 25rem) {
+  .c5pd-opts--packs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .c5pd-opts--packs .c5pd-opt { flex-direction: column; align-items: flex-start; justify-content: flex-start; }
+}
+
+/* Quantity and "Dodaj do koszyka" in one row; the button drops under the
+   stepper when the column is narrow. */
+.c5pd-addrow { display: flex; flex-wrap: wrap; align-items: stretch; gap: 8px; }
+.c5pd-addrow .cws-qty { flex: none; overflow: hidden; border-color: var(--ch-border-control); border-radius: var(--ch-radius-control-l); }
+.c5pd-addrow .cws-qty__v { border-inline-color: var(--ch-border-subtle); }
+/* Buying button of the product box: always green with dark text (rule of the green button). */
+.c5pd-add { flex: 1 1 11rem; min-height: var(--ch-size-control-l); padding-inline: 16px; border-radius: var(--ch-radius-control-l); font-family: var(--ch-type-button-l-font); font-weight: var(--ch-type-button-l-weight); background: var(--ch-action-accent-bg); color: var(--ch-action-accent-fg); border-color: var(--ch-action-accent-bg); }
+.c5pd-add:hover { background: var(--ch-color-green-350); border-color: var(--ch-color-green-350); }
+.c5pd-total { margin-top: -8px; font-size: 0.9375rem; font-weight: var(--w-weight-medium); color: var(--w-text-primary); font-variant-numeric: tabular-nums; }
+/* State "zalogowany-pro" (c5pd-buy--pro on the form): one button to the B2B
+   panel in place of the stepper and the cart button, and an optional line
+   about a special price. The block is [hidden] outside this state. */
+.c5pd-proact { display: flex; flex-direction: column; align-items: stretch; gap: var(--w-space-3); }
+.c5pd-proact .c5pd-add { flex: none; }
+/* The shop shipping line gives way too: delivery is set in the panel. */
+.c5pd-buy--pro .c5pd-ship { display: none; }
+.c5pd-special { padding: 10px 14px; border-radius: var(--ch-radius-md); background: var(--ch-surface-warm-strong); font-size: 0.875rem; line-height: 1.5; font-weight: var(--w-weight-medium); color: var(--w-text-primary); }
+
+/* Live region: always rendered (so screen readers hear it), boxed once
+   filled; empty it takes no room in the column. */
+.c5pd-fb { font-size: 0.875rem; line-height: 1.5; color: var(--w-text-primary); }
+.c5pd-fb:empty { margin-top: calc(-1 * var(--w-space-5)); }
+.c5pd-fb:not(:empty) { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 10px 14px; border-radius: var(--ch-radius-md); background: var(--ch-surface-warm-strong); }
+
+.c5pd-ship { display: flex; align-items: flex-start; gap: 10px; font-size: 0.875rem; line-height: 1.5; color: var(--w-text-secondary); }
+.c5pd-ship .wf-icon { flex: none; width: 18px; height: 18px; margin-top: 1px; color: var(--w-icon-default); }
+
+.c5pd-small { font-size: 0.8125rem; line-height: 1.5; color: var(--w-text-secondary); }
+
+
+@media (prefers-reduced-motion: reduce) {
+  .c5pd-opt, .c5pd-slider__btn { transition: none !important; }
+}

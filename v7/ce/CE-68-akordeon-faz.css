@@ -67,12 +67,12 @@
    set 20 px inside the container – not a label to read, a place to count from */
 .c5-fa__no{justify-self:start;display:flex;align-items:center;justify-content:center;
   width:var(--c5-fa-no);height:var(--c5-fa-no);margin-left:var(--c5-fa-inset);
-  border:1px solid var(--w-border-strong);background:var(--w-surface-page);
-  font-family:inherit;font-size:0.6875rem;font-weight:var(--w-weight-medium);
+  border:1px solid var(--ch-border-control);border-radius:var(--ch-radius-sm);background:var(--ch-surface-raised);
+  font-family:inherit;font-size:var(--ch-type-overline-size);font-weight:var(--ch-font-weight-regular);
   font-variant-numeric:tabular-nums;letter-spacing:.02em;line-height:1;
-  color:var(--w-text-tertiary);
+  color:var(--ch-text-secondary);
   transition:border-color var(--w-duration-base) var(--w-ease);}
-.c5-fa__row:hover .c5-fa__no{border-color:var(--w-gray-900);}
+.c5-fa__row:hover .c5-fa__no{border-color:var(--ch-text-primary);}
 .c5-fa__rowtxt{min-width:0;font-size:0.9375rem;line-height:1.35;
   font-weight:var(--w-weight-regular);}
 /* one of the two texts at a time; `aria-expanded` is the switch, so the state
@@ -85,7 +85,7 @@
 /* the panel is the item itself: background from the container edge to the
    container edge, the row as its first line, 10 px of air above and below */
 .c5-fa__item[data-open],
-html:not(.cx-js) .c5-fa__item{background:var(--w-surface-subtle);
+html:not(.cx-js) .c5-fa__item{background:var(--ch-surface-warm);border-radius:var(--ch-radius-control-l);
   margin-block:var(--c5-fa-gap);}
 .c5-fa__item[data-open]::before,
 html:not(.cx-js) .c5-fa__item::before{display:none;}
@@ -105,7 +105,7 @@ html:not(.cx-js) .c5-fa__panel{height:auto;opacity:1;}
 /* the title of the open phase is a <p>, so it would take the grey the kit gives
    paragraphs – it has to read as strongly as the titles in the closed rows */
 .c5-fa__pt{margin:0;font-size:clamp(1.25rem,1.7vw,1.5rem);line-height:1.25;
-  font-weight:var(--w-weight-medium);letter-spacing:-0.01em;color:var(--w-text-primary);}
+  font-weight:var(--ch-font-weight-regular);letter-spacing:var(--ch-type-title-ls);color:var(--ch-text-primary);}
 .c5-fa__lead{margin:clamp(2rem,4.2vw,3.75rem) 0 0;font-size:var(--w-font-body-size);
   line-height:1.3;color:var(--w-text-secondary);}
 .c5-fa__prods{display:flex;flex-direction:column;align-items:flex-start;
@@ -131,19 +131,19 @@ html:not(.cx-js) .c5-fa__panel{height:auto;opacity:1;}
    frame puts CARBOMAT HUMIC at 222 px next to a 320 px neighbour */
 .c5-fa__prod{display:inline-grid;grid-template-columns:auto minmax(0,1fr) auto;
   gap:12px;align-items:center;min-height:69px;max-width:100%;
-  padding:9px 12px 9px 13px;background:var(--w-surface-page);
-  border:1px solid var(--w-border-default);border-radius:0;
+  padding:9px 12px 9px 13px;background:var(--ch-surface-raised);
+  border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-md);
   font:inherit;font-size:var(--w-font-sm-size);line-height:1.35;
   font-weight:var(--w-weight-medium);color:var(--w-text-primary);text-align:left;
   transition:border-color var(--w-duration-base) var(--w-ease);}
 button.c5-fa__prod{cursor:pointer;}
-button.c5-fa__prod:hover,button.c5-fa__prod:focus-visible{border-color:var(--w-gray-900);}
+button.c5-fa__prod:hover,button.c5-fa__prod:focus-visible{border-color:var(--ch-border-control);}
 /* a product with no map and no packshot („CARBOHUMIC BIOMAS”): same box,
    dashed stroke, an icon in place of the packshot and no arrow */
 .c5-fa__prod--plain{grid-template-columns:auto minmax(0,1fr);border-style:dashed;
   color:var(--w-text-secondary);}
 .c5-fa__pack{display:flex;align-items:center;justify-content:center;
-  width:45px;height:50px;background:var(--w-gray-100);}
+  width:45px;height:50px;border-radius:var(--ch-radius-sm);background:var(--ch-surface-warm);}
 .c5-fa__pack img{width:100%;height:100%;object-fit:contain;}
 .c5-fa__pack .wf-icon{color:var(--w-text-tertiary);}
 .c5-fa__prodn{min-width:0;}
@@ -158,7 +158,7 @@ button.c5-fa__prod:hover,button.c5-fa__prod:focus-visible{border-color:var(--w-g
    (`min-height:auto`) and beat the 7 : 5 */
 .c5-fa__fig{position:relative;grid-column:1;align-self:end;justify-self:start;
   width:var(--c5-fa-fig);margin:0 0 0 var(--c5-fa-inset);
-  aspect-ratio:7 / 5;background:var(--w-gray-100);}
+  aspect-ratio:7 / 5;border-radius:var(--ch-radius-control-l);overflow:hidden;background:var(--ch-surface-warm);}
 .c5-fa__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
 /* the photo arrives with the panel; the only move of its own is a short fade,
    so one decoded late does not pop in when the height is already there */

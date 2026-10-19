@@ -4,7 +4,32 @@
    (the dead copies in c5.css and kukurydza.css were removed).
    The variants of the registry – „na-pasie" (CARBOHUMIC „Dobierz produkt", the
    block simply stands on a .c5-band section) and „z-leadem" (Mata, a paragraph
-   under the heading) – are markup only and need no CSS of their own. ===== */
+   under the heading) – are markup only and need no CSS of their own.
+
+   design system v0.1 (Figma 397:1607, 17.10.2026): the section is the warm
+   beige band (--ch-surface-warm) with the leaf motif behind the content –
+   four quarter-leaves in the corners, drawn from img/motyw-cta-lisci.svg
+   (Figma 637:194) through a mask, so the colour is the token
+   --ch-motif-on-warm; heading in Season Mix 54/63, lead 18/28 (grey), buttons
+   dark + outlined (E15: the outlined one has no fill, G05), 40 px between the
+   text and the buttons. Kicker (framed, low variant, 24 px
+   above the heading) and lead (18/28 secondary, 16 px under it) are optional
+   parts of the block – a page that gives no text for them simply has no element. The band is
+   found by its content (`:has`), not by a class on the section. ===== */
 
 /* --- CTA końcowe ------------------------------------------------------------ */
-.c5-cta{display:flex;flex-direction:column;align-items:center;gap:clamp(1.75rem,3.5vw,2.75rem);text-align:center;}
+/* E15 (18.10.2026): a taller band – 186 px above and below at 1440 px and up,
+   so the section with a kicker, a heading, a lead and the buttons is the 700 px
+   of the frame 397:1607 (it was 616); a phone keeps 88 px. */
+.c5-sec:has(> .c5-wrap > .c5-cta){position:relative;overflow:hidden;background:var(--ch-surface-warm);padding-block:clamp(5.5rem,13vw,186px);}
+.c5-sec:has(> .c5-wrap > .c5-cta)::before{content:"";position:absolute;inset:0;pointer-events:none;background:var(--ch-motif-on-warm);-webkit-mask:url(../img/motyw-cta-lisci.svg) no-repeat center / cover;mask:url(../img/motyw-cta-lisci.svg) no-repeat center / cover;}
+.c5-sec:has(> .c5-wrap > .c5-cta) > .c5-wrap{position:relative;}
+.c5-cta{display:flex;flex-direction:column;align-items:center;gap:var(--ch-space-10);text-align:center;}
+.c5-cta .c5-h2{max-width:14em;text-wrap:balance;}
+/* optional kicker above the heading: 24 px to the heading (Figma), the rest of the stack is 40 px.
+   E15 / G13: the frame draws the LOWER kicker here (32 px, 9/14 padding, 12 px
+   caps) – the markup carries `c5-kicker--sm` (EL-06, ce/00-base.css). */
+.c5-cta .c5-kicker{margin:0 0 calc(var(--ch-space-6) - var(--ch-space-10));}
+/* optional lead: 16 px under the heading (Figma), the rest of the stack is 40 px */
+.c5-cta .c5-lead{margin-top:calc(var(--ch-space-4) - var(--ch-space-10));}
+.c5-cta .c5-btnrow{justify-content:center;gap:11px;}

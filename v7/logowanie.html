@@ -11,6 +11,10 @@
 <link rel="stylesheet" href="ce/00-base.css">
 <link rel="stylesheet" href="ce/CE-50-formularz.css">
 <link rel="stylesheet" href="b2b-wspolne.css">
+<style>
+  .logowanie__nowe { display: none; }
+  #logowanie:has(input[name="tryb"][value="b2b"]:checked) .logowanie__nowe { display: flex; }
+</style>
 <script src="../status.js"></script>
 <script src="../ce-rejestr.js"></script>
 <script src="b2b-wspolne.js"></script>
@@ -60,6 +64,12 @@
         </div>
 
         <p class="c5-form__text">Jedno konto i jedno hasło. Konto PRO po zalogowaniu zawsze trafia do panelu.</p>
+
+        
+        <div class="c5-form__actions logowanie__nowe">
+          <p class="c5-form__text">Nie masz jeszcze konta?</p>
+          <a class="c5-btn c5-btn--light" href="rejestracja.html">Załóż konto</a>
+        </div>
       </div>
 
       <aside class="c5-form__panel" aria-labelledby="logowanie-pro-h">

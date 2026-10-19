@@ -1,0 +1,69 @@
+/* ===== CE-60 · Spis treści z paskiem postępu (rejestr: ce-rejestr.js) ========
+   Module (design system v0.1, stage D 18.10.2026): the contents is a card EL-15
+   (r12, 1 px grey-200 outline, no shadow), the active entry a warm field with a
+   rule on the left; type from the foundation scale. Layout and mechanics
+   (artykul.js: scrollspy, progress) stay as in v7. Prefix: `cw-a-toc` /
+   `cw-a-progress`.
+
+   Reading progress: 2 px above the service menu; the width is the share of the
+   article already scrolled (JS). Fixed, never a scroll target, ignores pointer
+   events, and disappears in print. With prefers-reduced-motion it jumps instead
+   of sliding.
+
+   Contents: one `details` for both layouts – open and non-interactive in the
+   sticky column from 1100 px, a plain accordion below it. The active entry
+   comes from the scrollspy (`aria-current="true"`), marked by a rule on the
+   left and weight – never by colour alone. Without JS they are plain anchors
+   and the list is open.
+
+   Markup:
+     .cw-a-progress[role=progressbar] > .cw-a-progress__bar
+     details.cw-a-toc[data-ce="CE-60"][open]
+       summary.cw-a-toc__sum > h2.cw-a-toc__h + svg.cw-a-toc__chev
+       nav.cw-a-toc__nav > ol.cw-a-toc__list > li > a.cw-a-toc__link
+         (.cw-a-toc__lab + .cw-a-toc__txt)
+     .cw-a-sidemeta                short metric under the contents (side column only)
+   ============================================================================ */
+
+/* --- progress bar ------------------------------------------------------------ */
+.cw-a-progress{position:fixed;inset:0 0 auto 0;height:2px;z-index:calc(var(--w-z-dropdown) + 1);
+  pointer-events:none;background:transparent;}
+.cw-a-progress__bar{display:block;height:100%;width:0;background:var(--ch-text-primary);
+  transition:width 90ms linear;}
+
+/* --- contents card ----------------------------------------------------------- */
+.cw-a-toc{border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-md);background:var(--ch-surface-raised);overflow:hidden;}
+.cw-a-toc__sum{display:flex;align-items:center;justify-content:space-between;
+  gap:var(--ch-space-3);min-height:44px;padding:10px var(--ch-space-4);
+  cursor:pointer;list-style:none;}
+.cw-a-toc__sum::-webkit-details-marker{display:none;}
+.cw-a-toc__h{margin:0;font-family:var(--ch-type-overline-font);font-size:var(--ch-type-overline-size);line-height:var(--ch-type-overline-lh);
+  font-weight:var(--ch-font-weight-medium);letter-spacing:var(--ch-type-overline-ls);text-transform:uppercase;color:var(--ch-text-secondary);}
+.cw-a-toc__chev{flex:none;transition:transform var(--ch-motion-duration-base) var(--ch-motion-ease);}
+.cw-a-toc[open] .cw-a-toc__chev{transform:rotate(180deg);}
+.cw-a-toc__nav{border-top:1px solid var(--ch-border-subtle);}
+.cw-a-toc__list{margin:0;padding:var(--ch-space-2) 0;list-style:none;}
+.cw-a-toc__link{display:flex;flex-direction:column;gap:1px;
+  padding:6px var(--ch-space-4) 6px 13px;
+  border-left:3px solid transparent;
+  text-decoration:none;color:var(--ch-text-secondary);}
+.cw-a-toc__link:hover{background:var(--ch-surface-warm);color:var(--ch-text-primary);}
+.cw-a-toc__lab{font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);font-weight:var(--ch-font-weight-medium);color:var(--ch-text-primary);}
+.cw-a-toc__txt{font-size:var(--ch-type-caption-size);line-height:1.35;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.cw-a-toc__link[aria-current="true"]{border-left-color:var(--ch-border-strong);background:var(--ch-surface-warm);}
+.cw-a-toc__link[aria-current="true"] .cw-a-toc__lab{font-weight:var(--ch-font-weight-semibold);}
+
+/* short metric under the contents – only in the side column, because on a
+   narrow screen the same data and the same buttons stand in the article header */
+.cw-a-sidemeta{display:none;}
+@media (min-width:1100px){
+  .cw-a-sidemeta{display:flex;flex-direction:column;gap:var(--ch-space-3);margin-top:var(--ch-space-5);}
+  .cw-a-sidemeta .c5-btn{flex:1 1 auto;}
+  .cw-a-toc__sum{pointer-events:none;}   /* on a wide screen the contents stands open */
+  .cw-a-toc__chev{display:none;}
+}
+@media (prefers-reduced-motion: reduce){
+  .cw-a-progress__bar{transition:none;}
+  .cw-a-toc__chev{transition:none;}
+}

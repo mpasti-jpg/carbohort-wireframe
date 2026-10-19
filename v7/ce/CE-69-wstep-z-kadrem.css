@@ -4,9 +4,13 @@
    left (kicker, statement heading, muted description), a tall photo frame on
    the right (12 : 13, the proportion of the frame). Bottom band: the same grid
    split 1fr 1fr 2fr – two facts as grey tiles and a wide product box.
-   Layout and mechanics come from the frame, the look stays with the V7 pattern:
-   grey scale, sharp corners, --w-* tokens. No JS of its own – the entrance is
-   the [data-reveal] bus from ce/00-base.js. ===== */
+   Look from Figma 847:1738 (stage C, 18.10.2026): beige tiles r12, photo
+   frame r12, product box white with a grey-200 outline r12, packshot on the
+   right without a field, green checks, two equal buttons. No JS of its own –
+   the entrance is the [data-reveal] bus from ce/00-base.js.
+   Variant `c5-opener--z-playerem` (Próchnica+, Figma 916:3487): only the left
+   column – description, label and product box; the right column stays empty
+   for the sticky film player of the hero (page script, prochnica-plus.js). ===== */
 
 /* --- Top band: copy + photo frame ---------------------------------------- */
 .c5-opener__top{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
@@ -18,46 +22,77 @@
 /* The statement heading takes the whole column; `max-width` of .c5-h2 (784 px)
    still keeps the line length readable on a 1800 px container. */
 .c5-opener__desc{margin:clamp(2rem,4vw,3.75rem) 0 0;max-width:34rem;
-  font-size:0.9375rem;line-height:1.6;color:var(--w-text-secondary);}
+  font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary);}
 
 .c5-opener__shot{margin:0;display:flex;flex-direction:column;gap:var(--w-space-3);}
 .c5-opener__shot img{display:block;width:100%;aspect-ratio:12/13;object-fit:cover;
-  border-radius:0;background:var(--w-gray-100);}
+  border-radius:var(--ch-radius-md);background:var(--ch-surface-warm);}
 
 /* --- Bottom band: two tiles + product box -------------------------------- */
 .c5-opener__row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,2fr);
   gap:20px;margin-top:45px;align-items:stretch;}
 
 /* Tile: icon at the top, name and sentence pinned to the bottom edge. */
-.c5-opener__tile{display:flex;flex-direction:column;min-height:350px;
-  background:var(--w-gray-100);padding:32px;}
+.c5-opener__tile{display:flex;flex-direction:column;min-height:288px;
+  background:var(--ch-surface-warm);border-radius:var(--ch-radius-md);padding:var(--ch-space-8);}
 .c5-opener__ico{flex:none;width:32px;height:32px;color:var(--w-text-primary);}
 .c5-opener__tfoot{margin-top:auto;padding-top:var(--w-space-6);}
 .c5-opener__tname{margin:0;}
-.c5-opener__tdesc{margin:var(--w-space-3) 0 0;font-size:0.9375rem;line-height:1.6;
-  color:var(--w-text-secondary);}
+.c5-opener__tdesc{margin:var(--w-space-3) 0 0;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);
+  color:var(--ch-text-secondary);}
 
 /* Product box: packshot and copy side by side, buttons across the whole box. */
-.c5-opener__prod{display:flex;flex-direction:column;gap:var(--w-space-6);
-  min-height:350px;border:1px solid var(--w-border-default);
-  background:var(--w-surface-page);padding:32px;}
-.c5-opener__prodtop{display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr);
-  gap:clamp(1.5rem,2.5vw,2.5rem);align-items:start;}
-.c5-opener__pack{display:grid;place-items:center;background:var(--w-gray-100);
-  padding:var(--w-space-4);}
-.c5-opener__pack img{display:block;height:180px;width:auto;max-width:100%;object-fit:contain;}
-.c5-opener__prodname{margin:0;font-size:1rem;line-height:1.45;
-  font-weight:var(--w-weight-medium);letter-spacing:-0.01em;color:var(--w-text-primary);}
-.c5-opener__feats{margin:var(--w-space-5) 0 0;padding:0;list-style:none;
-  display:flex;flex-direction:column;gap:var(--w-space-3);}
-.c5-opener__feats li{display:flex;gap:var(--w-space-3);align-items:flex-start;
-  font-size:0.9375rem;line-height:1.5;color:var(--w-text-secondary);}
-.c5-opener__feats .wf-icon{flex:none;width:16px;height:16px;margin-top:3px;
-  color:var(--w-text-primary);}
-/* Two buttons on the bottom edge, roughly 3 : 2 of the box width. */
-.c5-opener__btns{display:grid;grid-template-columns:3fr 2fr;gap:var(--w-space-2);
+.c5-opener__prod{display:flex;flex-direction:column;gap:var(--ch-space-10);
+  min-height:350px;border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-md);
+  background:var(--ch-surface-raised);padding:var(--ch-space-8);}
+/* list on the left, packshot on the right in its own column – the packshot
+   never runs over the text (fundament §9.1 p. 11) */
+.c5-opener__prodtop{display:grid;grid-template-columns:minmax(0,1fr) auto;
+  gap:clamp(1.5rem,2.5vw,2.5rem);align-items:center;}
+.c5-opener__pack{display:grid;place-items:center;background:none;padding:0;}
+.c5-opener__pack img{display:block;height:clamp(150px,16vw,228px);width:auto;max-width:100%;object-fit:contain;}
+.c5-opener__prodname{margin:0;font-size:var(--ch-type-title-m-size);line-height:var(--ch-type-title-m-lh);
+  font-weight:var(--ch-type-title-m-weight);letter-spacing:var(--ch-type-title-m-ls);color:var(--ch-text-primary);}
+.c5-opener__feats{margin:0;padding:0;list-style:none;
+  display:flex;flex-direction:column;gap:var(--ch-space-3);}
+.c5-opener__feats li{display:flex;gap:var(--ch-space-4);align-items:flex-start;
+  font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary);}
+.c5-opener__feats .wf-icon{flex:none;width:var(--ch-size-icon-s);height:var(--ch-size-icon-s);margin-top:4.5px;
+  color:var(--ch-color-green-400);}
+/* Two equal buttons on the bottom edge of the box. */
+.c5-opener__btns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ch-space-3);
   margin-top:auto;}
-.c5-opener__btns .c5-btn{--c5-btn-px:16px;width:100%;}
+.c5-opener__btns .c5-btn{--c5-btn-px:var(--ch-space-6);width:100%;}
+
+/* --- Variant `z-playerem` (Figma 916:3487) ---------------------------------
+   Left column only (555 px): the description as lead text, a long pause, the
+   label „Produkt badany w programie:” and the product box. The name of the
+   product is lead-size secondary text here, not a title. The buttons stay
+   inside the box on its bottom edge (in the frame they straddle the outline –
+   a leftover of fitting the frame to new copy, read as the 847:1735 box). */
+/* P02 (18.10.2026, Mateusz: „nie ma aż tak dużego marginesu górnego do
+   przycisków”): the description follows the hero buttons closer – the section
+   starts with 56 px instead of 120 px of air (the hero already leaves the lower
+   part of the first screen empty). It still enters with the fade-up of the
+   reveal bus (`data-reveal`, start state `pp-reveal`). */
+.c5-opener--z-playerem{padding-top:clamp(var(--ch-space-8),4vw,var(--ch-space-14));}
+.c5-opener--z-playerem .c5-opener__copy{display:flex;flex-direction:column;gap:clamp(2.5rem,12.6vw,11.375rem);
+  min-width:0;max-width:555px;}
+.c5-opener--z-playerem .c5-opener__txt{display:flex;flex-direction:column;gap:var(--ch-space-4);max-width:31rem;}
+.c5-opener--z-playerem .c5-opener__txt p,
+.c5-opener--z-playerem .c5-opener__label{margin:0;font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);
+  color:var(--ch-text-secondary);}
+.c5-opener--z-playerem .c5-opener__prodwrap{display:flex;flex-direction:column;gap:clamp(1.5rem,2.8vw,2.5625rem);
+  transition-delay:.08s;}
+.c5-opener--z-playerem .c5-opener__prod{min-height:0;gap:clamp(1.75rem,3.5vw,3.125rem);}
+.c5-opener--z-playerem .c5-opener__prodname{font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);
+  letter-spacing:0;color:var(--ch-text-secondary);}
+@media (max-width:899px){
+  .c5-opener--z-playerem .c5-opener__copy{max-width:none;gap:clamp(2rem,8vw,3rem);}
+}
+@media (max-width:599px){
+  .c5-opener--z-playerem .c5-opener__pack{justify-self:start;}
+}
 
 /* --- Entrance: 80 ms stagger over the [data-reveal] bus ------------------- */
 .c5-opener__top > *:nth-child(2){transition-delay:.08s;}
@@ -89,5 +124,5 @@
 }
 
 @media (prefers-reduced-motion: reduce){
-  .c5-opener__top > *,.c5-opener__row > *{transition-delay:0s;}
+  .c5-opener__top > *,.c5-opener__row > *,.c5-opener--z-playerem .c5-opener__prodwrap{transition-delay:0s;}
 }

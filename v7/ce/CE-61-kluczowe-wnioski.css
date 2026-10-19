@@ -1,0 +1,23 @@
+/* ===== CE-61 · Kluczowe wnioski (rejestr: ce-rejestr.js) =====================
+   Module (design system v0.1, stage D 18.10.2026): the BLUF box at the top of
+   the article as a warm card EL-15 (r12, beige-50, no outline, no shadow), the
+   heading in the display face, the list in the body type with a small green
+   square as the marker. Layout and copy stay as in v7. Prefix: `cw-a-key`.
+
+   A list of single sentences quoted from the text. The heading enters the
+   contents of the article (CE-60) as its first entry.
+
+   Markup:
+     section.cw-a-key[data-ce="CE-61"] > h2.c5-h2.cw-a-h2.cw-a-key__h + ul.cw-a-key__list > li
+   ============================================================================ */
+
+.cw-a-key{max-width:var(--cw-a-col,720px);background:var(--ch-surface-warm);border-radius:var(--ch-radius-md);
+  padding:clamp(var(--ch-space-5),3vw,var(--ch-space-8));}
+.cw-a-key .cw-a-key__h{margin:0;font-family:var(--ch-type-display-sm-font);font-size:clamp(1.375rem,2.2vw,var(--ch-type-display-sm-size));
+  line-height:1.25;font-weight:var(--ch-type-display-sm-weight);letter-spacing:var(--ch-type-display-sm-ls);}
+.cw-a-key__list{margin:clamp(0.85rem,2vw,1.25rem) 0 0;padding:0;list-style:none;
+  display:flex;flex-direction:column;gap:var(--ch-space-3);
+  font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-primary);}
+.cw-a-key__list li{position:relative;padding-left:var(--ch-space-6);}
+.cw-a-key__list li::before{content:"";position:absolute;left:2px;top:calc(.5lh - 1.5px);
+  width:3px;height:3px;border-radius:1px;background:var(--ch-surface-accent-green);}

@@ -1,0 +1,277 @@
+/* ===== CE-78 · Lista produktów z filtrami (rejestr: ce-rejestr.js) ==========
+   Shop list: situation pills, sticky work bar (count, filters, sort), active
+   chips, filter column / drawer, 3-column grid and the product card (EL-15:
+   white, grey-200 outline, r12, pack shot on beige r8). Moved from the inline
+   sheet of sklep.html in stage D (18.10.2026). The search over the product
+   column is CE-99, the promo tiles woven into the grid are CE-79.
+   Colours, radii and type from --ch-* tokens; no shadows.
+   Page-level exceptions: the sticky offsets of the work bar live here as the
+   bar belongs to the list. */
+
+/* An element with display:flex/grid beats the default [hidden]{display:none}. */
+.c5sk-grid [hidden], .c5sk-empty[hidden], .c5sk-chips [hidden], .c5sk-chips[hidden],
+.c5sk-refine[hidden], .c5sk-facet__body[hidden],
+.c5sk-restore[hidden] { display: none !important; }
+
+.c5sk-needsbar { border-bottom: 1px solid var(--w-border-subtle); }
+.c5sk-needsbar__in { display: flex; flex-wrap: wrap; align-items: center; gap: 10px var(--w-space-6); padding-block: 12px 14px; }
+/* Round 3b: a short heading over the groups; the groups act as one more filter,
+   shown as a chip under the bar once chosen (no "all products" pill). */
+.c5sk-needs__h { flex: 1 0 100%; margin: 0; font-size: 1rem; font-weight: var(--w-weight-semibold); letter-spacing: -0.01em; line-height: 1.3; color: var(--w-text-primary); }
+/* From 900 px the configurator link shares the heading's row, the groups get
+   their own row under it (no extra line for the link). */
+@media (min-width: 900px) {
+  .c5sk-needs__h { flex: 1 1 auto; order: 0; }
+  .c5sk-needsbar__in > .c5sk-toconf { order: 1; }
+  .c5sk-needs { order: 2; flex: 1 0 100%; }
+}
+.c5sk-needs { display: flex; flex-wrap: nowrap; gap: 8px; min-width: 0; flex: 1 1 auto; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; padding: 6px 4px 8px; margin-inline: -4px; scrollbar-width: thin; scrollbar-color: var(--w-gray-300, #ccc) transparent; }
+.c5sk-needs::-webkit-scrollbar { height: 6px; }
+.c5sk-needs::-webkit-scrollbar-thumb { background: var(--w-gray-300, #ccc); }
+.c5sk-need { flex: none; display: inline-flex; align-items: center; gap: 10px; padding: 4px 14px 4px 4px; scroll-snap-align: start; font: inherit; font-size: 0.875rem; letter-spacing: -0.01em; line-height: 1.2; white-space: nowrap; background: var(--w-surface-page); color: var(--ch-text-primary); border: 1px solid var(--ch-border-control); border-radius: var(--ch-radius-md); cursor: pointer; transition: border-color var(--w-duration-base) var(--w-ease); }
+.c5sk-need:hover { border-color: var(--w-gray-900); }
+.c5sk-need:focus-visible { outline: 2px solid var(--w-focus-ring); outline-offset: 2px; }
+.c5sk-need__img { flex: none; display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; overflow: hidden; background: var(--w-gray-150); color: var(--w-text-primary); transition: box-shadow var(--w-duration-base) var(--w-ease); }
+.c5sk-need__img img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.c5sk-need__img .wf-icon { width: 24px; height: 24px; }
+/* Selected pill: black ring round the photo and a bold label. The bold copy
+   in ::after (hidden) reserves the width, so the row does not jump. */
+.c5sk-need__t { display: inline-grid; }
+.c5sk-need__t::after { content: attr(data-t); font-weight: var(--w-weight-semibold); visibility: hidden; height: 0; overflow: hidden; }
+.c5sk-need__n { font-size: 0.8125rem; color: var(--w-text-tertiary); font-variant-numeric: tabular-nums; }
+.c5sk-need[aria-pressed="true"] { border-color: var(--w-gray-900); }
+.c5sk-need[aria-pressed="true"] .c5sk-need__img { outline: 2px solid var(--ch-border-strong); outline-offset: 2px; }
+.c5sk-need[aria-pressed="true"] .c5sk-need__t { font-weight: var(--w-weight-semibold); }
+.c5sk-toconf { flex: none; display: inline-flex; align-items: center; gap: 6px; margin-left: auto; font-size: 0.875rem; white-space: nowrap; }
+@media (max-width: 899px) {
+  /* nowrap: in a wrapping column the scroller would take its max-content width */
+  .c5sk-needsbar__in { flex-direction: column; flex-wrap: nowrap; align-items: stretch; gap: 8px; padding-block: 10px 12px; }
+  .c5sk-needs__h { flex: none; font-size: 0.9375rem; }
+  .c5sk-needs { gap: 2px; scroll-snap-type: x mandatory; scroll-padding-inline: var(--w-space-5); margin-inline: calc(-1 * var(--w-space-5)); padding: 6px var(--w-space-5) 2px; scrollbar-width: none; }
+  .c5sk-needs::-webkit-scrollbar { display: none; }
+  /* 112 px keeps the longest label ("Sadzenie, szkółka i zieleń") and its
+     count in two lines, and still lets the fourth pill peek in at 375 px. */
+  .c5sk-need { flex-direction: column; align-items: center; justify-content: flex-start; gap: 6px; width: 112px; padding: 0 2px 2px; border: 0; background: none; white-space: normal; text-align: center; font-size: 0.75rem; line-height: 1.25; scroll-snap-align: start; }
+  .c5sk-need__img { width: 96px; height: 96px; }
+  .c5sk-need__img .wf-icon { width: 32px; height: 32px; }
+  .c5sk-need__t { display: inline; }
+  .c5sk-need__t::after { content: none; }
+  .c5sk-need__n { font-size: 0.75rem; }
+  .c5sk-toconf { align-self: flex-start; margin-left: 0; white-space: normal; }
+}
+
+
+/* --- 4. PASEK ROBOCZY (lepki) --------------------------------------------- */
+.c5sk-bar { position: sticky; top: 0; z-index: 90; background: var(--ch-surface-page); border-bottom: 1px solid var(--ch-border-subtle); }
+.c5sk-bar__in { display: flex; align-items: center; gap: var(--w-space-3) var(--w-space-4); padding-block: 8px; flex-wrap: nowrap; }
+/* Round 3 (L10): count and sort line smaller – about 13 px, select 32 px. */
+.c5sk-count { font-size: 0.8125rem; color: var(--w-text-secondary); flex: 0 1 auto; min-width: 0; }
+.c5sk-count b { font-variant-numeric: tabular-nums; color: var(--w-text-primary); }
+.c5sk-bar__sp { flex: 1 1 auto; }
+.c5sk-bar__act { flex: none; display: flex; align-items: center; gap: var(--w-space-3); }
+.c5sk-btn { display: inline-flex; align-items: center; gap: 8px; height: 32px; font: inherit; font-size: 0.8125rem; padding: 0 12px; background: var(--w-surface-page); color: var(--w-text-primary); border: 1px solid var(--ch-border-control); border-radius: var(--ch-radius-sm); cursor: pointer; white-space: nowrap; }
+.c5sk-btn:hover { border-color: var(--w-gray-900); }
+.c5sk-btn .wf-icon { width: 16px; height: 16px; flex: none; }
+.c5sk-sortwrap { display: flex; align-items: center; gap: 8px; font-size: 0.8125rem; color: var(--w-text-secondary); white-space: nowrap; }
+.c5sk-sortwrap select { height: 32px; font: inherit; font-size: 0.8125rem; padding: 0 8px; border: 1px solid var(--ch-border-control); border-radius: var(--ch-radius-sm); background: var(--w-surface-page); color: var(--w-text-primary); }
+/* "Ukryj filtry" / "Pokaż filtry" (§12.14 item 5) – from 1000 px only, first
+   in the bar; below that the "Filtry" button opens the drawer as before. */
+.c5sk-bar__fold { display: none; }
+@media (min-width: 1000px) { .c5sk-bar__fold { display: inline-flex; flex: none; } }
+@media (max-width: 899px) {
+  .c5sk-sortwrap label { display: none; }
+  /* Narrow bar: count and actions on one row (the chosen group lives in the
+     chip row under the bar since round 3b). */
+  .c5sk-bar__in { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "count act"; column-gap: 12px; row-gap: 0; }
+  .c5sk-count { grid-area: count; }
+  .c5sk-bar__act { grid-area: act; gap: 8px; }
+  .c5sk-bar__sp { display: none; }
+}
+
+/* Cele przewijania lądują POD lepkim paskiem roboczym. */
+#lista { scroll-margin-top: 72px; }
+/* The list section takes focus after a search or a tile action; a ring round
+   the whole list would only add noise. */
+#lista:focus { outline: none; }
+
+/* --- 5–7. ZAWĘŻANIE, CHIPSY, ZDANIE WYKLUCZAJĄCE -------------------------- */
+/* Wszystkie trzy mają w spoczynku wysokość 0 – dlatego marginesy siedzą
+   na elementach, nie na kontenerze (margin nie zwija się we flexie). */
+.c5sk-refine { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; margin-top: var(--w-space-4); font-size: 0.875rem; }
+.c5sk-refine__lab { color: var(--w-text-tertiary); }
+.c5sk-refine__b { font: inherit; font-size: 0.875rem; padding: 5px 11px; background: var(--w-gray-100); color: var(--w-text-primary); border: 0; border-radius: var(--ch-radius-sm); cursor: pointer; }
+.c5sk-refine__b:hover { background: var(--ch-color-beige-200); }
+
+.c5sk-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.c5sk-chips:not(:empty) { margin-top: var(--w-space-4); }
+/* Chips switched on by a search query (CE-99) open the row under a short
+   label; the empty state repeats them so one click takes a filter off. */
+.c5sk-chips__lab { font-size: 0.8125rem; color: var(--w-text-secondary); }
+.c5sk-chips__lab q { quotes: "„" "”"; color: var(--w-text-primary); }
+.c5sk-chips__sep { flex: 0 0 1px; align-self: stretch; margin-inline: 4px; background: var(--w-border-default); }
+.c5sk-chips--empty { justify-content: center; }
+.c5sk-chips--empty:not(:empty) { margin-top: 0; }
+.c5sk-chip { display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 0.8125rem; padding: 6px 12px; background: var(--w-gray-100); color: var(--w-text-primary); border: 0; border-radius: var(--ch-radius-sm); cursor: pointer; }
+.c5sk-chip .wf-icon { width: 14px; height: 14px; opacity: .55; }
+.c5sk-chip:hover { background: var(--ch-color-beige-200); }
+.c5sk-chip--clear { background: transparent; text-decoration: underline; text-underline-offset: 3px; padding-inline: 6px; }
+
+
+.c5sk-restore { display: flex; flex-wrap: wrap; align-items: center; gap: var(--w-space-3); margin-top: var(--w-space-4); padding: 10px 14px; border: 1px dashed var(--ch-border-dashed); border-radius: var(--ch-radius-md); font-size: 0.875rem; }
+
+/* --- 8. UKŁAD LISTY -------------------------------------------------------- */
+.c5sk-listsec { padding-block: var(--w-space-4) clamp(2.5rem,5vw,4rem); }
+.c5sk-list { display: grid; grid-template-columns: minmax(0,1fr); gap: clamp(1.5rem,3vw,2.5rem); margin-top: var(--w-space-5); align-items: start; }
+/* Round 3 (L7): filters stay in the left column – 280 px in the wide layout.
+   Folded (§12.14 item 5) the column takes no room and the 3-column grid
+   runs across the full width. */
+@media (min-width: 1000px) {
+  .c5sk-list { grid-template-columns: 280px minmax(0,1fr); }
+  .c5sk-list.is-folded { grid-template-columns: minmax(0,1fr); }
+  .c5sk-list.is-folded > .c5sk-list__side { display: none; }
+}
+/* Poniżej 1000 px kolumna filtrów jest szufladą (position:fixed), więc jej pusta
+   komórka w gridzie zostawiała 24 px martwej przerwy nad pierwszą kartą. */
+@media (max-width: 999px) { .c5sk-list { display: block; margin-top: var(--w-space-3); } }
+/* Product column (16.10.2026): the search (CE-99) on top, at the full width
+   of the grid, then refine hints, active filters and the grid itself. */
+.c5sk-list__main { min-width: 0; }
+.c5sk-list__main > .c5sk-grid { margin-top: var(--w-space-4); }
+
+.c5sk-facets { display: flex; flex-direction: column; gap: var(--w-space-4); }
+@media (min-width: 1000px) { .c5sk-facets { position: sticky; top: 72px; max-height: calc(100svh - 96px); overflow-y: auto; padding-right: var(--w-space-2); } }
+.c5sk-facet { border-top: 1px solid var(--ch-border-subtle); padding-top: var(--w-space-3); }
+.c5sk-facet--first { border-top: 0; padding-top: 0; }
+.c5sk-facet__h { margin: 0; }
+.c5sk-facet__title { display: flex; align-items: center; justify-content: space-between; gap: var(--w-space-3); width: 100%; font: inherit; font-size: 0.8125rem; font-weight: var(--w-weight-semibold); letter-spacing: .02em; text-transform: uppercase; background: none; border: 0; padding: 0 0 var(--w-space-3); cursor: pointer; color: var(--w-text-primary); text-align: left; }
+.c5sk-facet__title .wf-icon { flex: none; width: 16px; height: 16px; transition: transform var(--w-duration-base) var(--w-ease); }
+.c5sk-facet__title[aria-expanded="false"] .wf-icon { transform: rotate(-90deg); }
+.c5sk-facet__body { display: flex; flex-direction: column; gap: 9px; padding-bottom: var(--w-space-3); }
+.c5sk-facet__sub { font-size: 0.75rem; letter-spacing: .04em; text-transform: uppercase; color: var(--w-text-tertiary); margin-top: var(--w-space-2); }
+.c5sk-opt { display: flex; align-items: flex-start; gap: 10px; font-size: 0.9375rem; line-height: 1.35; cursor: pointer; color: var(--w-text-primary); }
+.c5sk-opt input { flex: none; margin-top: 3px; accent-color: var(--w-gray-900); width: 15px; height: 15px; }
+.c5sk-opt__t { flex: 1; }
+.c5sk-opt__note { display: block; font-size: 0.8125rem; color: var(--w-text-tertiary); }
+.c5sk-opt__n { flex: none; font-size: 0.8125rem; color: var(--w-text-tertiary); font-variant-numeric: tabular-nums; }
+/* Opcja bez wyników nigdy nie znika – jest wygaszona i policzona. */
+.c5sk-opt.is-zero { color: var(--w-text-tertiary); cursor: not-allowed; }
+.c5sk-opt.is-zero input { cursor: not-allowed; }
+.c5sk-facet__src { font-size: 0.75rem; color: var(--w-text-tertiary); margin-top: var(--w-space-2); }
+.c5sk-morefilters { font: inherit; font-size: 0.875rem; text-align: left; background: none; border: 0; padding: var(--w-space-3) 0 0; color: var(--w-text-primary); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+
+/* Mobilna szuflada filtrów: pełny ekran, nie rozpychanie dokumentu.
+   Przed przebudową panel spychał siatkę z 3621 na 5157 px. */
+.c5sk-scrim { position: fixed; inset: 0; background: rgb(0 0 0 / .45); z-index: 120; }
+@media (max-width: 999px) {
+  /* Szuflada sterowana KLASĄ, nie atrybutem hidden: hidden ukrywa też przed
+     czytnikiem ekranu, a na desktopie kolumna filtrów ma być dostępna zawsze. */
+  .c5sk-facets { display: none; position: fixed; inset: 0; z-index: 130; background: var(--w-surface-page); padding: var(--w-space-5); overflow-y: auto; gap: var(--w-space-4); padding-bottom: 96px; }
+  .c5sk-facets.is-open { display: flex; }
+  .c5sk-facets:not(.is-open) .c5sk-drawerfoot { display: none; }
+  .c5sk-drawerhead { display: flex; align-items: center; justify-content: space-between; gap: var(--w-space-3); }
+  .c5sk-drawerfoot { position: fixed; left: 0; right: 0; bottom: 0; z-index: 131; padding: var(--w-space-3) var(--w-space-5) var(--w-space-4); background: var(--w-surface-page); border-top: 1px solid var(--w-border-default); }
+  .c5sk-drawerfoot .c5-btn { width: 100%; }
+}
+@media (min-width: 1000px) {
+  .c5sk-drawerhead, .c5sk-drawerfoot { display: none; }
+  /* Kolumna filtrów jest tu zawsze widoczna – opener szuflady tylko
+     przyciemniałby stronę i blokował scroll bez żadnego zysku. */
+  .c5sk-bar [data-facets-toggle] { display: none; }
+}
+
+/* --- TOOLBAR/SIATKA --------------------------------------------------------
+   Round 3 (L8): exactly 3 columns from 1000 px (next to the filter column),
+   2 columns below. The promo tiles (.c5sk-tile) are woven in by the script,
+   in the unfiltered view only; `dense` packing fills the cell a 2-column tile
+   leaves behind, so no hole opens in the grid. */
+.c5sk-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); grid-auto-flow: row dense; gap: var(--w-space-4); }
+@media (min-width: 1000px) { .c5sk-grid { grid-template-columns: repeat(3, minmax(0,1fr)); } }
+@media (max-width: 599px) { .c5sk-grid { gap: var(--w-space-3); } }
+
+
+/* --- KARTA – runda 2 (28.09.2026, spec sklep-v7-spec §5.1) ---------------
+   Order: frame 1:1 → [pack pills] → meta → name → price → button. No
+   description, tag boxes, pack select or documents link (L1, L4). */
+.c5sk-card { display: flex; flex-direction: column; padding: var(--ch-space-2); border: 1px solid var(--ch-border-subtle); border-radius: var(--ch-radius-md); background: var(--ch-surface-page); }
+.c5sk-card__media { position: relative; }
+/* Square frame, pack mock-up centred with ~12% breathing space. One grid
+   cell with a definite size gives the images a box to fit into. */
+.c5sk-card__shot { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); place-items: center; aspect-ratio: 1 / 1; padding: 12%; background: var(--ch-surface-warm-strong); border-radius: var(--ch-radius-sm); overflow: hidden; }
+.c5sk-card__shot img { display: block; width: 100%; height: 100%; min-height: 0; object-fit: contain; }
+.c5sk-card__shot--set { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 4%; }
+/* L17 (round 3): a second frame with the texture of the granules, on the
+   three CARBOMAT ECO family cards only, cross-fading on hover (pointer
+   devices only); the pack pills and flags stay on top. */
+.c5sk-card__shot .c5sk-card__alt { display: none; }
+@media (hover: hover) {
+  .c5sk-card__shot .c5sk-card__alt { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity var(--w-duration-base) var(--w-ease); }
+  .c5sk-card:hover .c5sk-card__alt { opacity: 1; }
+}
+/* Partner products get no CarboHort mock-up: kit placeholder, sharp corners. */
+.c5sk-card__shot--ph { padding: 0; min-height: 0; border: 0; border-radius: var(--ch-radius-sm); }
+.c5sk-card__flags { position: absolute; top: 10px; left: 10px; z-index: 1; display: flex; flex-wrap: wrap; gap: 4px; pointer-events: none; }
+.c5sk-flag { padding: 4px 7px; font-size: 0.6875rem; font-weight: var(--w-weight-semibold); letter-spacing: .04em; line-height: 1.2; text-transform: uppercase; background: var(--ch-surface-page); color: var(--ch-text-primary); border: 1px solid var(--ch-border-strong); border-radius: var(--ch-radius-xs); }
+.c5sk-flag--promo { background: var(--ch-action-primary-bg); color: var(--ch-action-primary-fg); }
+
+/* Pack pills (L5) link to the product card with the pack preselected.
+   Default (touch screens and narrow windows): a quiet row under the frame,
+   always shown. */
+.c5sk-packs { list-style: none; margin: 0; padding: 10px var(--ch-space-2) 0; display: flex; flex-wrap: wrap; gap: 4px; }
+.c5sk-pill { display: inline-flex; align-items: baseline; gap: 4px; padding: 4px 7px; font-size: 0.6875rem; font-weight: var(--w-weight-medium); line-height: 1.3; white-space: nowrap; font-variant-numeric: tabular-nums; color: var(--w-text-primary); background: var(--ch-surface-page); border: 1px solid var(--ch-border-strong); border-radius: var(--ch-radius-xs); text-decoration: none; transition: background var(--w-duration-base) var(--w-ease), color var(--w-duration-base) var(--w-ease); }
+.c5sk-pill:hover { background: var(--w-gray-900); color: var(--w-text-inverse); }
+.c5sk-pill:focus-visible { outline: 2px solid var(--w-focus-ring); outline-offset: 2px; }
+.c5sk-pill__pct { font-weight: var(--w-weight-semibold); }
+/* Pointer devices: pills sit on the lower edge of the frame and show on
+   card hover or on focus inside the card. Hidden with opacity, not
+   visibility, so they stay in the tab order and a focused pill reveals the row.
+   Below 600 px the frame is too small for an overlay (up to three rows of
+   pills), so narrow windows keep the row under the frame. */
+@media (hover: hover) and (min-width: 600px) {
+  .c5sk-packs { position: absolute; left: 10px; right: 10px; bottom: 10px; z-index: 1; padding: 0; gap: 6px; opacity: 0; transform: translateY(4px); pointer-events: none; transition: opacity var(--w-duration-base) var(--w-ease), transform var(--w-duration-base) var(--w-ease); }
+  .c5sk-card:hover .c5sk-packs, .c5sk-card:focus-within .c5sk-packs { opacity: 1; transform: none; pointer-events: auto; }
+  .c5sk-pill { padding: 5px 10px; font-size: 0.75rem; }
+}
+
+.c5sk-card__body { display: flex; flex-direction: column; gap: 4px; padding: var(--ch-space-3) var(--ch-space-2) var(--ch-space-2); flex: 1; }
+.c5sk-card__meta { font-size: 0.75rem; line-height: 1.35; color: var(--w-text-tertiary); }
+.c5sk-card__name { font-size: 1rem; font-weight: var(--w-weight-medium); letter-spacing: -0.01em; line-height: 1.25; }
+.c5sk-card__name a { color: inherit; text-decoration: none; }
+.c5sk-card__name a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.c5sk-card__price { display: flex; flex-direction: column; gap: 3px; margin-top: auto; padding-top: var(--w-space-2); }
+.c5sk-card__val { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 6px; font-size: var(--ch-type-title-size); line-height: var(--ch-type-title-lh); letter-spacing: var(--ch-type-title-ls); font-weight: var(--ch-font-weight-medium); font-variant-numeric: tabular-nums; color: var(--ch-text-primary); }
+/* "od", price, old price and "−9%" wrap as separate items on narrow cards. */
+.c5sk-card__val .cws-price { display: contents; }
+.c5sk-card__val .cws-price__pct { align-self: center; padding: 3px 7px; font-size: var(--ch-type-caption-size); line-height: 1.2; border-radius: var(--ch-radius-xs); background: var(--ch-action-primary-bg); color: var(--ch-action-primary-fg); }
+.c5sk-card__from { font-weight: var(--w-weight-medium); color: var(--w-text-secondary); }
+.c5sk-card__val--quiet { font-size: 0.9375rem; font-weight: var(--w-weight-medium); color: var(--w-text-secondary); }
+.c5sk-card__low { font-size: 0.6875rem; line-height: 1.35; color: var(--w-text-tertiary); }
+/* Buying button of a product card: always green with dark text (rule of the green button). The markup keeps the dark modifier, so the colour is set here. */
+.c5sk-card .c5sk-card__add { width: 100%; margin-top: var(--ch-space-3); padding-inline: 12px; }  /* green: c5-btn--accent in the markup (buy rule) */
+/* Price filter (from / to fields with presets). Prices span 20–9200 zł,
+   so the filter has something to sift; it reads the price after the
+   discount (data-cena). */
+.c5sk-price { display: flex; align-items: center; gap: 8px; }
+.c5sk-price input { width: 100%; min-width: 0; font: inherit; font-size: 0.875rem; padding: 7px 9px; border: 1px solid var(--ch-border-control); border-radius: var(--ch-radius-control-m); background: var(--w-surface-page); color: var(--w-text-primary); }
+.c5sk-price label { flex: 1 1 0; min-width: 0; }
+.c5sk-price__zl { font-size: 0.875rem; color: var(--w-text-tertiary); }
+.c5sk-price__quick { display: flex; flex-wrap: wrap; gap: 6px; margin-top: var(--w-space-3); }
+@media (max-width: 599px) {
+  .c5sk-card__body { padding: var(--ch-space-3) var(--ch-space-1) var(--ch-space-1); gap: 5px; }
+  .c5sk-packs { padding-inline: var(--ch-space-1); }
+  .c5sk-card__val { font-size: var(--ch-type-title-s-size); line-height: var(--ch-type-title-s-lh); }
+  .c5sk-card__name { font-size: 0.9375rem; }
+  .c5sk-card__add { margin-top: var(--w-space-2); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .c5sk-packs, .c5sk-pill, .c5sk-card__shot .c5sk-card__alt { transition: none; }
+  .c5sk-packs { transform: none; }
+}
+
+
+/* --- 9–10. POZA WYNIKAMI I PUSTY STAN ------------------------------------- */
+
+.c5sk-empty { border: 1px dashed var(--ch-border-dashed); border-radius: var(--ch-radius-md); padding: clamp(1.5rem,3vw,2.5rem); text-align: center; display: flex; flex-direction: column; gap: var(--w-space-3); align-items: center; }
+
+@media (prefers-reduced-motion: reduce) {
+  .c5sk-need, .c5sk-need__img, .c5sk-facet__title .wf-icon { transition: none; }
+}

@@ -1,0 +1,52 @@
+/* ===== CE-38 · Dwa panele fotograficzne – module (design system v0.1, stage D 18.10.2026) =====
+   No Figma frame: the look is carried over from the finished CEs (photo with a
+   scrim and text on it, 20 px photo corners, display heading, EL-01 buttons), the
+   layout and the mechanics are v7's.
+   Prefix: c5-when. Two application worlds side by side, not a sequence: each
+   panel is a full photograph with the copy resting on its bottom edge. The photo
+   layer is 118 % of the frame, so the parallax (--when-par, set by the page's
+   script only at `CX5.motionOn()`) and the hover zoom (--when-zoom) never uncover
+   the panel edge. Below 900 px the pair is one column. Every mechanic is gated by
+   prefers-reduced-motion / hover, so the content never depends on it.
+
+   Markup (root `.c5-when`, the entrance `data-reveal-group` is the page's rule):
+     article.c5-when__panel
+       .c5-when__media[data-when-media]   .c5-when__ph (the photo layer, 118 %) +
+                                          optional .c5-ph__label of an empty frame
+       .c5-when__body                     h3.c5-when__title, paragraphs, one button
+   The button on a photo is the green one (`c5-btn--accent`, dark text).
+   Per-instance tuning (style on the root): --c5-when-min-h (panel height floor). ===== */
+
+.c5-when{display:grid;grid-template-columns:1fr 1fr;gap:var(--ch-space-4);width:min(var(--ch-layout-container-max),100% - 2 * var(--ch-layout-gutter));margin:clamp(2.5rem,5vw,4rem) auto 0;}
+.c5-when__panel{position:relative;min-height:var(--c5-when-min-h,clamp(460px,80svh,760px));overflow:hidden;border-radius:var(--ch-radius-control-l);background:var(--ch-surface-forest);color:var(--ch-text-inverse);display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(1.5rem,3.5vw,3rem);}
+.c5-when__media{position:absolute;inset:0;}
+/* The photo layer is taller than the frame (118 %) and sticks out of both edges,
+   so the shift and the zoom never uncover the background of the panel. */
+.c5-when__ph{position:absolute;inset:-6% 0 auto;height:118%;
+  transform:translateY(calc(var(--when-par,-6) * 1%)) scale(var(--when-zoom,1));transform-origin:50% 50%;
+  transition:transform .6s cubic-bezier(.2,.7,.2,1);will-change:transform;}
+/* a flat scrim, no gradient: the text lies ON the photo */
+.c5-when__media::after{content:"";position:absolute;inset:0;background:rgb(0 0 0 / .4);}
+/* The label of an empty frame sits on the frame, not on the moving layer (a
+   parallax would drag it out of the corner) – and above the scrim. */
+.c5-when__media > .c5-ph__label{z-index:1;color:var(--ch-text-inverse-subtle);}
+.c5-when__body{position:relative;z-index:1;display:flex;flex-direction:column;gap:var(--ch-space-4);max-width:486px;}
+.c5-when__title{margin:0;font-family:var(--ch-type-h3-display-font);font-size:clamp(2rem,3.6vw,var(--ch-type-h3-display-size));line-height:1.1;font-weight:var(--ch-type-h3-display-weight);letter-spacing:var(--ch-type-h3-display-ls);color:var(--ch-text-inverse);}
+.c5-when__body p{margin:0;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-inverse-muted);}
+.c5-when__body .wf-link{color:var(--ch-text-inverse);}
+.c5-when__body .c5-btn{align-self:flex-start;margin-top:var(--ch-space-2);}
+/* on a dark frame the focus ring must be light */
+.c5-when a:focus-visible{outline-color:var(--w-focus-ring-inverse);}
+
+/* Zoom only where there is a cursor and where motion is allowed. */
+@media (hover:hover) and (prefers-reduced-motion: no-preference){
+  .c5-when__panel:hover{--when-zoom:1.04;}
+}
+/* One column: lower panels, the side margin of narrow screens. */
+@media (max-width:899px){
+  .c5-when{grid-template-columns:1fr;width:calc(100% - 32px);}
+  .c5-when__panel{min-height:clamp(420px,70svh,560px);}
+}
+@media (prefers-reduced-motion: reduce){
+  .c5-when__ph{transition:none;}
+}

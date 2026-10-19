@@ -1,9 +1,12 @@
 /* ===== CE-93 · Karuzela relacji filmowych (rejestr: ce-rejestr.js) ===========
-   Prefix: c5-relc. A heading row with two arrow buttons at its right edge and,
-   under it, a row of video cards that scrolls sideways: native scrolling with
-   scroll snap, the scrollbar hidden. Three cards stand side by side from
-   900 px, two from 600 px, and below that one card with the edge of the next
-   one showing. The carousel never moves by itself.
+   Prefix: c5-relc. The card follows Figma 870:3153 (18.10.2026): a wide card,
+   two side by side from 600 px. A heading row with two arrow buttons at its
+   right edge and, under it, a row of video cards that scrolls sideways: native
+   scrolling with scroll snap, the scrollbar hidden. Below 600 px one card with
+   the edge of the next one showing. The carousel never moves by itself.
+   Mateusz, 18.10.2026: a photo in the frame of every card, no „kind of
+   material” label, the date of publication stands in the kicker of the card,
+   and the kicker with the title sits at the bottom edge of the card (34 px).
 
    Markup:
      .c5-relc                             root (a div inside .c5-wrap)
@@ -18,28 +21,34 @@
                                           aria-label
          ul.c5-relc__track
            li.c5-relc__card
-             .wf-ph.c5-relc__ph           16:9 player placeholder with a play icon
+             .c5-relc__ph                 the frame (aria-hidden): a photo and a play sign
+               img.c5-relc__img           cover photo; its focus point in the custom
+                                          property --c5-relc-pos on the img (default centre)
+               .c5-relc__play             48 px play sign (the triangle is a CSS mask)
              .c5-relc__body
-               .c5-relc__kind             kind of material
+               .c5-relc__kicker           fill chip with the date of publication
+                                          (a <time> when the date is known)
                .c5-relc__title            title (any heading level)
-               .c5-relc__date             date of publication
 
    Knobs (custom properties on .c5-relc):
-     --c5-relc-cols     cards per view from 900 px (3 by default)
+     --c5-relc-cols     cards per view from 900 px (2 by default)
      --c5-relc-gap      gap between the cards
      --c5-relc-peek     how much of the row is left for the next card below
                         600 px (the visible edge = this value minus the gap)
      --c5-relc-mt       distance between the heading row and the cards
+     --c5-relc-bottom   distance from the text to the bottom edge of the card
 
    Without CE-93-karuzela-relacji.js the arrows stay hidden and the row simply
    scrolls natively (touch, trackpad, keyboard on the focused view).
    ========================================================================== */
 
 .c5-relc{
-  --c5-relc-cols:3;
-  --c5-relc-gap:var(--w-space-4);
+  --c5-relc-cols:2;
+  --c5-relc-gap:var(--ch-space-5);
+  --c5-relc-card:var(--ch-surface-warm);       /* card ground: set white on a beige band */
   --c5-relc-peek:3.5rem;
-  --c5-relc-mt:clamp(1.25rem,2.5vw,2rem);
+  --c5-relc-mt:clamp(2rem,3.9vw,var(--ch-space-14));
+  --c5-relc-bottom:34px;
   /* cards per view and the share of the row kept free for the next card */
   --c5-relc-n:1;
   --c5-relc-free:var(--c5-relc-peek);
@@ -70,14 +79,34 @@
 .c5-relc__view:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:2px;}
 .c5-relc__track{display:flex;gap:var(--c5-relc-gap);margin:0;padding:0;list-style:none;}
 
-/* --- the card ---------------------------------------------------------------- */
-.c5-relc__card{flex:none;display:flex;flex-direction:column;min-width:0;
+/* --- the card -----------------------------------------------------------------
+   Figma 870:3153: a wide card (686 x 220 at 1440) on the warm ground, no outline,
+   12 px corners, padding 20; the photo frame (250 x 180, 12 px corners) on the
+   left, the text column on the right, its bottom 34 px above the bottom edge of
+   the card. Below 900 px the card stands: the frame over the text. */
+.c5-relc__card{flex:none;display:flex;flex-direction:column;gap:var(--ch-space-5);min-width:0;
   width:calc((100% - var(--c5-relc-free) - (var(--c5-relc-n) - 1) * var(--c5-relc-gap)) / var(--c5-relc-n));
-  scroll-snap-align:start;
-  border:1px solid var(--w-border-default);background:var(--w-surface-page);}
-.c5-relc__ph{display:grid;place-items:center;width:100%;min-height:0;aspect-ratio:16/9;border-radius:0;}
-.c5-relc__body{display:flex;flex-direction:column;gap:var(--w-space-1);min-width:0;
-  padding:var(--w-space-4);}
-.c5-relc__kind{font-size:0.75rem;letter-spacing:.04em;text-transform:uppercase;color:var(--w-text-secondary);}
-.c5-relc__title{margin:0;font-size:1.0625rem;line-height:1.3;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
-.c5-relc__date{font-size:0.8125rem;color:var(--w-text-secondary);}
+  scroll-snap-align:start;padding:var(--ch-space-5) var(--ch-space-5) var(--c5-relc-bottom);
+  border-radius:var(--ch-radius-md);background:var(--c5-relc-card);}
+/* the frame: a cover photo with the play sign in the middle (Figma: brown .43, 13 px corners) */
+.c5-relc__ph{position:relative;display:grid;place-items:center;flex:none;width:100%;aspect-ratio:16/10;
+  border-radius:var(--ch-radius-md);overflow:hidden;background:var(--ch-surface-warm-strong);isolation:isolate;}
+.c5-relc__img{position:absolute;inset:0;z-index:-1;display:block;width:100%;height:100%;
+  object-fit:cover;object-position:var(--c5-relc-pos,50% 50%);}
+.c5-relc__play{display:grid;place-items:center;width:48px;height:48px;border-radius:13px;background:rgb(53 46 40 / .43);}
+.c5-relc__play::before{content:"";display:block;width:8px;height:9px;transform:translateX(1px);background:var(--ch-text-inverse);
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8.104 8.591'%3E%3Cpath d='M1.153.094C.912-.036.619-.031.382.108.144.246 0 .497 0 .767v7.057c0 .27.146.522.382.66.236.138.53.144.771.013L7.699 4.969c.249-.134.405-.393.405-.673 0-.28-.156-.539-.405-.674z'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8.104 8.591'%3E%3Cpath d='M1.153.094C.912-.036.619-.031.382.108.144.246 0 .497 0 .767v7.057c0 .27.146.522.382.66.236.138.53.144.771.013L7.699 4.969c.249-.134.405-.393.405-.673 0-.28-.156-.539-.405-.674z'/%3E%3C/svg%3E") center / contain no-repeat;}
+.c5-relc__body{flex:1 1 auto;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;gap:var(--ch-space-5);min-width:0;}
+/* the kicker of the card: the date in a fill chip (beige-100, 8 px corners, 13/14 caps) */
+.c5-relc__kicker{display:inline-block;padding:10px;border-radius:var(--ch-radius-sm);background:var(--ch-surface-warm-strong);
+  font-size:var(--ch-type-kicker-size);line-height:var(--ch-type-kicker-lh);letter-spacing:var(--ch-type-kicker-ls);text-transform:uppercase;color:var(--ch-text-secondary);}
+.c5-relc__title{margin:0;font-size:var(--ch-type-title-size);line-height:var(--ch-type-title-lh);font-weight:var(--ch-type-title-weight);letter-spacing:var(--ch-type-title-ls);color:var(--ch-text-primary);}
+
+@media (min-width:900px){
+  .c5-relc__card{flex-direction:row;align-items:stretch;gap:clamp(var(--ch-space-5),2.8vw,var(--ch-space-10));
+    padding-bottom:var(--ch-space-5);}
+  .c5-relc__ph{flex:0 1 250px;width:auto;min-width:130px;aspect-ratio:250/180;}
+  /* the bottom of the text: 34 px over the edge of the card (20 of them are the padding) */
+  .c5-relc__body{flex:1 1 0;padding-bottom:calc(var(--c5-relc-bottom) - var(--ch-space-5));}
+}

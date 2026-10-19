@@ -1,66 +1,99 @@
 /* ===== CE-13 · Przypięta scena produktu (rejestr: ce-rejestr.js) =====
-   One pinned track per product: a 100svh stage, the hero packshot docking into
-   a 110 px bar, a photo frame growing from the bottom edge and one card per
-   term. Base = the N-frame version of carbohumic-doglebowy.css / carbohumic-doglebowy.js, which
-   replaces the two-frame version of the pattern: the number of frames is read
-   from the DOM and every rule here is index-free, so the same file serves 2, 4
-   or 6 frames. CARBOMAT ECO keeps its markup (.c5-use__layer--a/--b and named
-   crops) – the compatibility section near the bottom gives those elements their
-   --ord.
+   One pinned track per product: a 100svh stage, the hero panel of the product
+   retracting into a 120 px strip, a photo frame under it and one card per term.
+   The number of frames is read from the DOM and every rule here is index-free,
+   so the same file serves 2, 4 or 6 frames. CARBOMAT ECO keeps its markup
+   (.c5-use__layer--a/--b and named crops) – the compatibility section near the
+   bottom gives those elements their --ord.
    Variants (class on <article class="c5-use">, at the end of the file):
-     c5-use--dwa-kadry  the track of the two-frame pattern, 5.5 screens a product
+     c5-use--dwa-kadry  two long frames a product (a longer hold)
      c5-use--n-kadrow   term frames with a dose table in the card
    Knob on the root: --use-pos-b – crop of the photo of the second layer
-   (markup with --a/--b), default 50% 55%. ===== */
+   (markup with --a/--b), default 50% 55%.
+
+   design system v0.1 (Figma 925:1439 = hero 414:2445 + pinned 630:2599): the
+   panel is yellow (accent-yellow-soft, 12 px corners) inset 24 px from the sides
+   of a 1600 px container – as tall as the stage in the hero, a 120 px strip when
+   pinned, everything in it centred on one line. The kind of the product is an
+   outlined chip, the packshot and the name stand together in the middle (the
+   name 40 → 24 px), the shop button is the L button of the hero in the dark
+   colour, sized by its content. Under the strip the photo frame (12 px corners)
+   follows with a 12 px gap, 24 px from the sides and the bottom; its lower 83 %
+   carries the wash (black 0 → .4) and a progressive blur. The writing has no
+   card: tabs 40/48 (the others at .5), the description 14/21 under an 18 px
+   label, 482 px wide, 40 px from the edges. In the panel: the sign of the logo
+   (G12) and, in the hero only, „Przewiń w dół”.
+
+   MOTION (round of 18.10.2026, E11–E12): nothing in the pinned scene follows the
+   wheel any more except the parallax of the photo. The scroll position is read
+   as THRESHOLDS – dock (hero → strip + photo + writing), one per change of
+   frame, out (writing and wash go) – and every change is a short, timed CSS
+   transition of transform / opacity, played forwards or backwards when the
+   reader crosses the threshold. Between two thresholds the photo of the current
+   frame drifts down with the page (a few per cent of its height) – the sign that
+   scrolling does something while the description is read. ===== */
 
 /* The base layer below IS the static reading order – no JS, under 900 px or
    with reduced motion: bar, then photo + title + card for every term, one under
-   another, nothing hidden. The pinned choreography is added in the media query
-   at the end of this block. Every single move is a function of the track
-   progress p – there is no transition and no animation in the pinned scene, so
-   whatever the wheel does, the picture does, and it stops the moment the wheel
-   stops. CE-13-scena-produktu.js writes:
-     on <article class="c5-use">
-       --t      0→1     hero packshot shrinks into the 110 px bar       (A)
-       --grow   .5→1    photo scale, origin on its bottom edge          (A)
-       --ui     0→1→0   tabs + card                                   (C, E)
-       --vl     0→1→0   the veil behind them                          (C, E)
-       --ovis, --bvis   visible/hidden – keeps what is invisible out of the tab
-                        order and out of the reach of the mouse (not a move)
-     on every .c5-use__layer      --o    0→1 opacity · --par ±3 parallax in %
-     on every .c5-use__crop       --k    card opacity · --ky card travel in px
-                                  --tabo tab emphasis (.45 … 1)
-                                  --tabi how many tab lines stand below this one
-   The photo box is anchored to the BOTTOM of the stage: 30 px above it in every
-   phase, 30 px from the sides, top at the bar. scale(var(--grow)) with the
-   origin on that bottom edge therefore grows the frame upwards and sideways and
-   never leaves white underneath it. The opaque bar retracts from 100svh to
-   110 px above the photo, so the frame comes out from under it. */
+   another, nothing hidden. The pinned scene is added in the media query of the
+   next block. CE-13-scena-produktu.js writes:
+     on <article class="c5-use">  classes is-docked (the strip), is-ui (tabs,
+       cards and the wash shown), is-instant (one frame without transitions);
+       --use-pk-x, --use-nm-x, --use-pk-s – the geometry of the hero, measured
+     on every .c5-use__layer      class is-on (the current frame), --par (parallax, %)
+     on every .c5-use__crop       class is-on (current) / is-past (above the current) */
 
 .c5-use{
-  --bar-h:110px;
-  --t:0; --grow:.5; --ui:0; --vl:0;
-  --shade:calc(.45 * var(--vl));
-  /* Track constants read by CE-13-scena-produktu.js, in viewport heights:
-     intro (bar docks, photo grows, veil + tabs + first card), hold per frame,
-     switch between two frames, outro; --use-card is where the first card starts
-     inside the intro. A scene whose cards need more reading time overrides
-     them – the variant c5-use--dwa-kadry does, to keep its 5.5-screen track. */
-  --use-intro:1; --use-hold:.75; --use-switch:.35; --use-outro:.5; --use-card:.917;
+  --bar-h:var(--ch-space-30);
+  /* Geometry of the pinned scene. --use-top: 24 px from the top of the window
+     (the site header scrolls away, it is not sticky – 18.10.2026); --use-side: 24 px, or the
+     margin of a 1600 px container on a wide window (percentages resolve against
+     the stage); --use-hero-h: the hero panel fills the rest of the stage down to
+     the 24 px margin (692 px in the 1040 px frame of Figma); --use-pack-hero: the
+     hero packshot, 523 of 692 px; --use-pk-h: the packshot in the strip (89 of
+     120 px in 630:2599); --use-gap: strip to photo. */
+  --use-top:var(--ch-layout-gutter);
+  --use-side:max(var(--ch-layout-gutter), calc((100% - var(--ch-layout-container-max)) / 2));
+  --use-gap:var(--ch-space-3);
+  --use-hero-h:calc(100svh - var(--use-top) - var(--ch-layout-gutter));
+  --use-pack-hero:clamp(240px, calc(var(--use-hero-h) * .756), 523px);
+  --use-pk-h:88px;
+  /* Track constants read by CE-13-scena-produktu.js, in window heights: intro
+     (the hero holds, then docks), hold per frame (the description is read, the
+     photo drifts), outro (the clear photo before the track lets go); --use-dock
+     is how far into the intro the dock is triggered. */
+  --use-intro:.45; --use-hold:.9; --use-outro:.35; --use-dock:.12;
+  /* the timing of the transitions */
+  --use-dock-d:720ms;                                  /* hero ↔ strip */
+  --use-dock-e:cubic-bezier(.65,0,.25,1);
+  --use-swap-d:560ms;                                  /* frame ↔ frame */
   margin-top:clamp(2.5rem,5vw,4rem);
 }
 .c5-use__stage{max-width:1180px;margin-inline:auto;padding-inline:var(--w-space-5);}
 
-/* bar: kind · packshot · name + sprawdź w sklepie */
-.c5-use__bar{display:flex;flex-wrap:wrap;align-items:center;gap:clamp(0.75rem,2.5vw,2rem);background:var(--w-surface-page);}
-.c5-use__kind{font-size:clamp(0.8125rem,1.2vw,1.0625rem);font-weight:var(--w-weight-semibold);letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;}
+/* bar: kind · packshot · name + the shop button */
+.c5-use__bar{display:flex;flex-wrap:wrap;align-items:center;gap:clamp(0.75rem,2.5vw,2rem);padding:var(--ch-space-6) var(--ch-space-8);
+  background:var(--ch-surface-accent-yellow-soft);border-radius:var(--ch-radius-md);}
+/* the kind of the product: an outlined chip (Figma 397:2271) – 38 px, 20 px side
+   padding, 12 px corners, a 1 px dark border, 13/14 caps */
+.c5-use__kind{display:inline-flex;align-items:center;height:var(--ch-size-kicker);padding:0 var(--ch-space-5);border:1px solid var(--ch-border-strong);border-radius:var(--ch-radius-md);
+  font-family:var(--ch-type-kicker-font);font-size:var(--ch-type-kicker-size);line-height:var(--ch-type-kicker-lh);font-weight:var(--ch-type-kicker-weight);letter-spacing:var(--ch-type-kicker-ls);
+  text-transform:uppercase;color:var(--ch-text-primary);white-space:nowrap;}
 .c5-use__pack{height:64px;width:auto;flex:none;object-fit:contain;}
+/* hero-only extras (the scroll hint) and the tab mark belong to the pinned scene;
+   the next product of the scene is not shown (Mateusz 18.10.2026) */
+.c5-use__next,.c5-use__hint,.c5-use__tabico{display:none;}
 .c5-use__barend{flex:1 1 auto;min-width:0;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--w-space-3) var(--w-space-4);}
 /* narrow: kind + packshot on one line, name and the shop button on the next */
 @media (max-width:559px){
   .c5-use__barend{flex-basis:100%;}
 }
-.c5-use__name{font-size:clamp(1rem,1.5vw,1.25rem);font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+.c5-use__name{font-family:var(--ch-font-text);font-size:clamp(1.125rem,1.7vw,1.5rem);font-weight:var(--ch-font-weight-regular);line-height:1.2;letter-spacing:-0.02em;color:var(--ch-text-primary);}
+/* the shop button is the L button of the hero (E11): where the markup still
+   carries the M modifier it is drawn as L here; its width follows its content */
+.c5-use__bar .c5-use__buy.c5-btn--sm{--c5-btn-px:var(--ch-space-6);min-height:var(--ch-size-control-l);
+  padding:calc((var(--ch-size-control-l) - var(--ch-type-button-l-lh)) / 2 - 1px) var(--c5-btn-px);border-radius:var(--ch-radius-control-l);
+  font-size:var(--ch-type-button-l-size);line-height:var(--ch-type-button-l-lh);}
 
 /* photo + the frames; static order: foto 1, tytuł, kartka, foto 2, tytuł, …
    --ord is the frame index × 10 (inline in the markup, or from the
@@ -87,7 +120,7 @@
   background:rgb(255 255 255 / .82);color:var(--w-gray-900);padding:4px 10px;font-size:0.75rem;letter-spacing:.04em;}
 .c5-use__shade{display:none;}
 
-.c5-use__tab{font:inherit;font-size:clamp(1.375rem,3vw,1.75rem);font-weight:var(--w-weight-medium);line-height:1.15;letter-spacing:-0.01em;color:var(--w-text-primary);background:none;border:0;padding:0;text-align:left;cursor:default;}
+.c5-use__tab{font:inherit;font-family:var(--ch-font-text);font-size:clamp(1.375rem,3vw,1.75rem);font-weight:var(--ch-font-weight-regular);line-height:1.15;letter-spacing:-0.02em;color:var(--w-text-primary);background:none;border:0;padding:0;text-align:left;cursor:default;}
 .c5-use__box{background:rgb(20 20 20 / .7);color:var(--w-text-inverse);max-width:var(--w-measure);padding:clamp(20px,3vw,28px);}
 .c5-use__desc{display:flex;flex-direction:column;gap:var(--w-space-4);font-size:0.875rem;line-height:1.55;}
 .c5-use__desc p{margin:0;}
@@ -97,73 +130,156 @@
 
 /* --- przypięta scena: tylko z JS, od 900 px i bez ograniczenia ruchu ------- */
 @media (min-width:900px) and (prefers-reduced-motion:no-preference){
+  /* the lead of the section to the hero panel: 72 px as in 925:1439 (E11) – the
+     first product only, the next one follows its track without a gap */
   .cx-js .c5-use{margin-top:0;}
-  .cx-js .c5-use__track{position:relative;}     /* height: JS, 100svh + runway(N) × okno */
+  .cx-js .c5-use:first-of-type{margin-top:calc(var(--ch-space-8) + var(--ch-space-4));}
+  .cx-js .c5-use__track{position:relative;}     /* height: JS, 100svh + run × window */
   .cx-js .c5-use__stage{position:sticky;top:0;height:100svh;overflow:hidden;max-width:none;margin-inline:0;padding-inline:0;}
 
-  /* hero (t=0, 100svh) and pinned bar (t=1, 110 px) are one and the same grid;
-     the bar is opaque and above the photo, so while it retracts it doubles as
-     the curtain the frame comes out from – bottom edge of the screen first */
-  .cx-js .c5-use__bar{position:absolute;top:0;right:0;left:0;z-index:3;
-    height:calc(100svh + (var(--bar-h) - 100svh) * var(--t));
-    display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;
-    gap:clamp(1rem,2.5vw,2.5rem);padding-inline:clamp(2rem,5vw,4rem);}
-  .cx-js .c5-use__pack{height:calc(46svh + (64px - 46svh) * var(--t));}
-  .cx-js .c5-use__buy{opacity:var(--t);visibility:var(--bvis,hidden);}
+  /* THE PANEL. The bar is a clip box as tall as the hero, laid out as the strip:
+     one 120 px row – kind | packshot | name | shop button – with the packshot
+     and the name together in the middle. The yellow panel and its sign are the
+     two pseudo-elements, as tall as the box: docked, they slide up by the hero
+     height less the strip (a curtain), so what stays is the bottom 120 px of the
+     panel with its rounded corners. Below the strip the box is empty and deaf to
+     the mouse – the photo and the tabs under it stay reachable. */
+  .cx-js .c5-use__bar{position:absolute;top:var(--use-top);right:var(--use-side);left:var(--use-side);z-index:3;
+    height:var(--use-hero-h);margin:0;padding:0 var(--ch-space-8);background:none;border-radius:var(--ch-radius-md);overflow:hidden;
+    display:grid;grid-template-columns:minmax(0,1fr) auto auto minmax(0,1fr);grid-template-rows:var(--bar-h);
+    align-content:start;align-items:center;column-gap:var(--ch-space-10);flex-wrap:nowrap;pointer-events:none;}
+  .cx-js .c5-use__bar::before,
+  .cx-js .c5-use__bar::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;
+    transform:translateY(0);transition:transform var(--use-dock-d) var(--use-dock-e);}
+  .cx-js .c5-use__bar::before{background:var(--ch-surface-accent-yellow-soft);}
+  /* G12 – the sign of the logo in the panel (Figma 414:2445: four filled leaves,
+     motif on yellow, a little taller than the panel, its centre a quarter in
+     from the left edge); it travels with the curtain, so the strip keeps the
+     lower leaves at its left end, as in 630:2599 */
+  .cx-js .c5-use__bar::after{background:var(--ch-motif-on-yellow);
+    -webkit-mask:var(--c5-sygnet-fill) left -2% center / auto 112% no-repeat;mask:var(--c5-sygnet-fill) left -2% center / auto 112% no-repeat;}
+  .cx-js .c5-use.is-docked .c5-use__bar::before,
+  .cx-js .c5-use.is-docked .c5-use__bar::after{transform:translateY(calc(var(--bar-h) - var(--use-hero-h)));}
 
-  /* the frame never moves and never changes size in layout: bar above it,
-     30 px from the left, the right and – the point of the whole rewrite – the
-     bottom. Growth is scale() alone, with the origin on that bottom edge, so
-     the frame opens upwards and sideways and no white can appear under it */
-  .cx-js .c5-use__photo{display:block;position:absolute;top:var(--bar-h);
-    right:var(--c5-gutter);bottom:var(--c5-gutter);left:var(--c5-gutter);margin:0;
-    transform:scale(var(--grow));transform-origin:50% 100%;
-    will-change:transform;}
+  /* the content stands in the strip row; in the hero every piece is moved (and
+     the packshot and the name scaled) to its place in the middle of the panel.
+     The packshot keeps the size of the hero in layout and is scaled DOWN in the
+     strip (crisp in both); negative margins make its box as small as the strip
+     slot. The horizontal shifts are measured by the script (--use-pk-x,
+     --use-nm-x); vertically everything moves from the middle of the strip to the
+     middle of the hero (--use-dy). */
+  .cx-js .c5-use{--use-dy:calc(var(--use-hero-h) / 2 - var(--bar-h) / 2);--use-pk-r:.66;--use-pk-s:.17;}
+  .cx-js .c5-use__barend{display:contents;}
+  .cx-js .c5-use__kind,.cx-js .c5-use__pack,.cx-js .c5-use__name,.cx-js .c5-use__buy,.cx-js .c5-use__hint{
+    transition:transform var(--use-dock-d) var(--use-dock-e),opacity calc(var(--use-dock-d) / 2) var(--ch-motion-ease);}
+  .cx-js .c5-use__kind{grid-column:1;grid-row:1;justify-self:start;transform:translateY(var(--use-dy));}
+  .cx-js .c5-use__pack{grid-column:2;grid-row:1;justify-self:center;max-width:none;
+    height:var(--use-pack-hero);width:calc(var(--use-pack-hero) * var(--use-pk-r));
+    margin:calc((var(--use-pk-h) - var(--use-pack-hero)) / 2) calc((var(--use-pk-h) - var(--use-pack-hero)) * var(--use-pk-r) / 2);
+    transform:translate(calc(var(--use-pk-x, 0) * 1px), var(--use-dy));}
+  /* the name: 24 px in the strip, 40 px in the hero (scale from its left edge) */
+  .cx-js .c5-use__name{grid-column:3;grid-row:1;font-size:24px;line-height:1.2;white-space:nowrap;transform-origin:0 50%;
+    transform:translate(calc(var(--use-nm-x, 0) * 1px), var(--use-dy)) scale(1.6667);}
+  /* the shop button: the L button of the hero, its own width (E11) */
+  .cx-js .c5-use__buy{grid-column:4;grid-row:1;justify-self:end;pointer-events:auto;
+    opacity:0;visibility:hidden;transition:opacity calc(var(--use-dock-d) / 2) var(--ch-motion-ease),visibility 0s linear calc(var(--use-dock-d) / 2);}
+  /* „Przewiń w dół”: 13/14 caps at 25 %, bottom right of the hero panel (Figma 397:2277) */
+  .cx-js .c5-use__hint{display:block;position:absolute;right:var(--ch-space-8);bottom:var(--ch-space-8);font-family:var(--ch-type-kicker-font);
+    font-size:var(--ch-type-kicker-size);line-height:var(--ch-type-kicker-lh);letter-spacing:var(--ch-type-kicker-ls);text-transform:uppercase;
+    color:var(--ch-text-primary);opacity:.25;pointer-events:none;}
+  .cx-js .c5-use.is-docked .c5-use__kind,
+  .cx-js .c5-use.is-docked .c5-use__name{transform:none;}
+  .cx-js .c5-use.is-docked .c5-use__pack{transform:scale(var(--use-pk-s));}
+  .cx-js .c5-use.is-docked .c5-use__hint{opacity:0;transition-duration:calc(var(--use-dock-d) / 4);}
+  .cx-js .c5-use.is-docked .c5-use__buy{opacity:1;visibility:visible;
+    transition:opacity calc(var(--use-dock-d) / 2) var(--ch-motion-ease) calc(var(--use-dock-d) / 2),visibility 0s;}
+
+  /* THE PHOTO FRAME never moves in layout: the strip above it with a 12 px gap,
+     24 px from the left, the right and the bottom (12 px corners, Figma 397:2305).
+     The hero panel stands on the same bottom line and covers it; docking, the
+     curtain lifts and the frame opens from a slightly smaller size (origin on
+     its bottom edge). */
+  .cx-js .c5-use__photo{display:block;position:absolute;top:calc(var(--use-top) + var(--bar-h) + var(--use-gap));
+    right:var(--use-side);bottom:var(--ch-layout-gutter);left:var(--use-side);margin:0;
+    border-radius:var(--ch-radius-md);overflow:hidden;opacity:0;
+    transform:scale(.92);transform-origin:50% 100%;
+    transition:transform var(--use-dock-d) var(--use-dock-e),opacity calc(var(--use-dock-d) / 3) linear;}
+  .cx-js .c5-use.is-docked .c5-use__photo{opacity:1;transform:none;}
+  /* frames: the current one opaque, a change cross-fades */
   .cx-js .c5-use__layer{position:absolute;inset:0;margin:0;aspect-ratio:auto;
-    opacity:var(--o,0);will-change:opacity;}
-  /* overscan, so the parallax shift never uncovers an edge of the frame;
-     an <img> needs the height spelled out – „top + bottom" alone would leave
-     an absolutely positioned replaced box at its intrinsic height */
+    opacity:0;transition:opacity var(--use-swap-d) var(--ch-motion-ease);}
+  .cx-js .c5-use__layer.is-on{opacity:1;}
+  /* overscan, so the parallax never uncovers an edge of the frame; an <img>
+     needs the height spelled out – „top + bottom" alone would leave an
+     absolutely positioned replaced box at its intrinsic height. --par follows the
+     page (the progress sign of E12), so it has no transition. */
   .cx-js .c5-use__fill{inset:-6% 0 auto;height:112%;
     transform:translateY(calc(var(--par,0) * 1%));will-change:transform;}
-  /* the veil rises together with the tabs and goes down after them: the writing
-     is gone by p≈.96, the frame keeps brightening until p=1 */
-  .cx-js .c5-use__shade{display:block;position:absolute;inset:0;z-index:1;background:var(--w-black);opacity:var(--shade);will-change:opacity;}
-  /* the even veil alone is not enough where the tabs stand on a bright frame:
-     add a wash that only touches the lower half and rises and falls with
-     --shade, so phase E still clears it */
-  .cx-js .c5-use__photo::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
-    background:linear-gradient(0deg,rgb(0 0 0 / .55),rgb(0 0 0 / 0) 55%);opacity:var(--shade);}
+  /* the wash of the frame (Figma 630:2561): the lower 83 % of the photo carries a
+     black gradient 0 → .4 and a progressive background blur of 20 (half of it as
+     a CSS blur, 10 px) that begins at 33 % of that area. It comes with the
+     writing and goes after it. */
+  .cx-js .c5-use__shade{display:block;position:absolute;inset:auto 0 0;height:83%;z-index:1;
+    background:linear-gradient(to bottom,rgb(0 0 0 / 0),rgb(0 0 0 / .4));opacity:0;
+    transition:opacity var(--use-swap-d) var(--ch-motion-ease) calc(var(--use-swap-d) / 2);}
+  .cx-js .c5-use__photo::after{content:"";position:absolute;inset:auto 0 0;height:83%;z-index:1;pointer-events:none;
+    -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+    -webkit-mask-image:linear-gradient(to bottom,transparent 32.8%,#000);mask-image:linear-gradient(to bottom,transparent 32.8%,#000);
+    opacity:0;transition:opacity var(--use-swap-d) var(--ch-motion-ease) calc(var(--use-swap-d) / 2);}
+  .cx-js .c5-use.is-ui .c5-use__shade,
+  .cx-js .c5-use.is-ui .c5-use__photo::after{opacity:1;transition-delay:0s;}
 
-  /* --ovis is the only discrete thing here: what is transparent must also be
-     out of the tab order and deaf to the mouse. It is a keyword, not a move. */
-  .cx-js .c5-use__over{display:block;position:absolute;inset:0;z-index:2;pointer-events:none;visibility:var(--ovis,hidden);}
-  /* extra room at the bottom: the fixed dr Jurek dock (60 px, bottom centre)
-     must never sit on the tabs or on the card */
+  /* THE WRITING. Hidden (and out of the tab order) until is-ui. */
+  .cx-js .c5-use__over{display:block;position:absolute;inset:0;z-index:2;pointer-events:none;
+    visibility:hidden;transition:visibility 0s linear var(--use-swap-d);}
+  .cx-js .c5-use.is-ui .c5-use__over{visibility:visible;transition-delay:0s;}
+  /* extra room at the bottom: the dock of the advisor (tucked away, but its edge
+     is there) never sits on the tabs or on the card */
   .cx-js .c5-use__crop{display:grid;position:absolute;inset:0;grid-template-columns:minmax(0,1fr) auto;
     align-items:end;gap:clamp(1.5rem,4vw,4rem);
-    padding:var(--c5-gutter) clamp(2rem,5vw,4rem) calc(var(--c5-gutter) + 60px);}
+    padding:var(--ch-space-10) var(--ch-space-10) calc(var(--ch-space-10) + 24px);}
   .cx-js .c5-use__crop > *{order:0;}
 
-
-
-  /* tabs: all of them fade in with --ui and swap emphasis while the frames
-     cross-fade – active 1, the others .45, interpolated, never timed. Each tab
-     stands one line above the next one: --tabi = how many are below it. */
+  /* tabs: active 1, the others .5 (Figma 630:2581), each one line above the next
+     (--tabi = how many stand below it). 40/48 px at -2 %, white, 16 px between
+     the lines (630:2530). */
   .cx-js .c5-use__tab{grid-column:1;justify-self:start;align-self:end;pointer-events:auto;
-    font-size:clamp(2rem,3.6vw,4rem);line-height:1.05;letter-spacing:-0.02em;white-space:nowrap;
-    color:var(--w-text-inverse);opacity:calc(var(--ui) * var(--tabo,1));will-change:opacity;
-    /* every tab stands one line above the next one: --tabi = how many are below */
-    margin-bottom:calc(var(--tabi,0) * (1.05em + 8px));}
+    font-size:clamp(1.75rem,2.8vw,var(--ch-type-title-xl-size));line-height:1.2;letter-spacing:var(--ch-type-title-xl-ls);white-space:nowrap;
+    color:var(--ch-text-inverse);opacity:0;transform:translateY(16px);
+    transition:opacity var(--use-swap-d) var(--ch-motion-ease),transform var(--use-swap-d) var(--ch-motion-ease);
+    margin-bottom:calc(var(--tabi,0) * (1.2em + var(--ch-space-4)));}
+  .cx-js .c5-use.is-ui .c5-use__tab{opacity:.5;transform:none;}
+  .cx-js .c5-use.is-ui .c5-use__crop.is-on .c5-use__tab{opacity:1;}
+  /* the four-leaf mark beside the active tab (Figma 630:2562), 19 px, turned 45 deg,
+     lime; the symbol #ch-liscie comes from the sprite of chrome.js */
+  .cx-js .c5-use__tabico{display:inline-block;width:19px;height:19px;margin-left:var(--ch-space-4);vertical-align:middle;color:var(--ch-color-lime-300);
+    opacity:0;transform:rotate(0deg) scale(.6);transition:opacity var(--use-swap-d) var(--ch-motion-ease),transform var(--use-swap-d) var(--ch-motion-ease);}
+  .cx-js .c5-use__crop.is-on .c5-use__tabico{opacity:1;transform:rotate(45deg);}
   .cx-js .c5-use__tab:focus-visible{outline-color:var(--w-focus-ring-inverse);}
 
-  /* the card: opacity AND the 40 px travel are interpolated from p as well, so
-     the card rises behind the tabs, leaves upwards when the frame changes, the
-     next one comes from below and scrolling back plays the very same move
-     backwards – nothing to remember */
-  .cx-js .c5-use__box{grid-column:2;align-self:end;width:min(486px,38vw);pointer-events:none;
-    opacity:var(--k,0);transform:translateY(calc(var(--ky,40) * 1px));
-    will-change:opacity,transform;}
+  /* the card: the current one stands, the ones above it left upwards, the ones
+     below wait lower – a change plays out up or down with the direction of the
+     page; the incoming card starts when the outgoing one is halfway out */
+  .cx-js .c5-use__box{grid-column:2;align-self:end;width:min(482px,38vw);pointer-events:none;
+    opacity:0;transform:translateY(40px);
+    transition:opacity calc(var(--use-swap-d) * .6) var(--ch-motion-ease),transform calc(var(--use-swap-d) * .6) var(--ch-motion-ease);}
+  .cx-js .c5-use__crop.is-past .c5-use__box{transform:translateY(-24px);}
+  .cx-js .c5-use.is-ui .c5-use__crop.is-on .c5-use__box{opacity:1;transform:none;
+    transition-duration:var(--use-swap-d);transition-delay:calc(var(--use-swap-d) * .3);}
+  /* No card (Figma 630:2596): the description stands straight on the wash – an
+     18 px label on its own line, 4 px above 14/21 text in white at 80 % (the
+     frame says 64 %, which on a bright photo falls under 4.5 : 1), 32 px between
+     the two groups. The variant n-kadrow puts its card back below. */
+  .cx-js .c5-use__box{background:none;padding:0;}
+  .cx-js .c5-use__desc{gap:var(--ch-space-8);font-size:var(--ch-type-small-size);line-height:1.5;color:var(--ch-text-inverse-muted);}
+  .cx-js .c5-use__desc .c5-label{margin-bottom:var(--ch-space-1);font-size:var(--ch-type-lead-size);line-height:1.17;
+    font-weight:var(--ch-font-weight-regular);letter-spacing:-0.02em;color:var(--ch-text-inverse);}
+
+  /* the first paint (page opened mid-scene, a resize into the scene) lands in
+     place without playing the transitions */
+  .cx-js .c5-use.is-instant *,
+  .cx-js .c5-use.is-instant *::before,
+  .cx-js .c5-use.is-instant *::after{transition:none !important;}
 }
 
 /* --- kompatybilność: dwa kadry z nazwanymi warstwami (CARBOMAT ECO) --------
@@ -179,9 +295,9 @@
 .c5-use__layer--b .c5-use__fill{object-position:var(--use-pos-b,50% 55%);}
 
 /* ===== wariant: dwa-kadry ===== */
-/* The track of the pattern from before the generalisation to N frames: two long
-   frames, 5.5 screens a product. The constants are read by the script. */
-.c5-use--dwa-kadry{--use-intro:1.32;--use-hold:1.76;--use-switch:.33;--use-outro:.33;--use-card:.75;}
+/* Two long frames a product: a longer hold, the descriptions are long. The
+   constants are read by the script. */
+.c5-use--dwa-kadry{--use-intro:.45;--use-hold:1.1;--use-outro:.35;}
 
 /* ===== wariant: n-kadrow ===== */
 /* Term frames with a dose table in the card: term names of up to 44 characters,
@@ -201,6 +317,11 @@
 @media (min-width:900px) and (prefers-reduced-motion:no-preference){
   /* in the pinned scene the card carries its own header */
   .cx-js .c5hu-use__head{display:flex;}
+  /* this variant keeps the dark card of the earlier layout: its dose table and
+     long term names need a ground, the bare wash of the base is not enough */
+  .cx-js .c5-use--n-kadrow .c5-use__box{background:rgb(20 20 20 / .7);padding:clamp(20px,3vw,28px);}
+  .cx-js .c5-use--n-kadrow .c5-use__desc{gap:var(--w-space-3);font-size:0.875rem;line-height:1.55;color:inherit;}
+  .cx-js .c5-use--n-kadrow .c5-use__desc .c5-label{margin-bottom:0;font-size:inherit;line-height:inherit;font-weight:var(--w-weight-semibold);letter-spacing:normal;color:inherit;}
   /* the tabs never wrap, so the size is what keeps the longest name inside the
      left column: 15 px at 900 px (where the column is 371 px wide), 26 px from
      1600 px up; a name that still does not fit ends with an ellipsis */

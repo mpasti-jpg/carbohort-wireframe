@@ -13,14 +13,16 @@
    2. The entry animation. It reads ONE number: how far the top edge of the
       section has climbed through the window (q = 0 when that edge sits on the
       bottom of the window, 1 when it reaches the top, and it keeps growing
-      while the section is pinned). Four properties come out of it:
+      while the section is pinned). Out of it come:
         --pv-g     the crop rises from the bottom, holds its narrow width for a
-                   moment, then widens to the whole section   (q 0.30 -> 0.72)
+                   moment, then widens to the whole frame     (q 0.30 -> 0.72)
         --pv-o     only then does the scrim grow over it       (q 0.72 -> 0.88)
-        --pv-h     then the kicker with the heading            (q 0.86 -> 1.00)
-        --pv-rows  then the rows, one after another            (q 0.98 -> 1.16)
+        is-head    the panel fades in and rises (time-based)   (q >= 0.80)
+        is-rows    the rows fly in one by one (time-based)     (q >= 0.90)
       so the reader watches the picture alone for a moment before the content
-      covers it.
+      covers it. E04 (18.10.2026): the panel and the rows used to be scrubbed
+      by the scroll; they now play on their own once their point is reached,
+      quick and even, like the prototype of September.
 
    The progress never goes back down. A scroll-driven value that did would take
    the table away from under a reader who scrolls up one notch to re-read it –
@@ -30,12 +32,13 @@
 
    A table of more than eight rows: the sheet numbers eight rows by itself, so
    here every row gets its number inline (`--i`), the section gets
-   `data-params-n` with --pv-n (the number of rows) and --pv-d (the step between
-   two rows), and the closing group – link, buttons, source line – still arrives
-   as the last step. Eight rows or fewer: nothing is written, the sheet rules.
+   `data-params-n` with --pv-n (the number of rows) and a shorter step between
+   two rows (--pv-step), and the closing group – link, buttons, source line –
+   still arrives last. Eight rows or fewer: nothing is written, the sheet rules.
 
-   Without CX5.motionOn() the four properties are dropped and `is-anim` comes
-   off the section, which switches every animation rule in the CSS off at once:
+   Without CX5.motionOn() the properties and the classes are dropped and
+   `is-anim` comes off the section, which switches every animation rule in the
+   CSS off at once:
    no JS, a window under 900 px or reduced motion means the end state from the
    first frame. No [data-params] -> no-op. ================================= */
 (function () {
@@ -70,18 +73,17 @@
     rows.forEach(function (r, i) { r.style.setProperty("--i", String(i)); });
     sec.setAttribute("data-params-n", String(rows.length));
     sec.style.setProperty("--pv-n", String(rows.length));
-    /* row i starts i * d into the phase and takes .34 of it; the closing group
-       starts at n * d, so n * d + .34 has to stay within the phase */
-    sec.style.setProperty("--pv-d", (0.64 / rows.length).toFixed(4));
+    /* eight rows at 55 ms take 440 ms – a longer table keeps about that time */
+    sec.style.setProperty("--pv-step", Math.max(22, Math.round(440 / rows.length)) + "ms");
   }
 
   /* --- wejście sterowane przewijaniem -------------------------------------- */
-  /* phase bounds in units of q – waiting for confirmation of the pace */
+  /* phase bounds in units of q */
   var G_A = 0.30, G_B = 0.72;       /* crop: holds narrow to G_A, full width at G_B */
   var O_A = 0.72, O_B = 0.88;       /* scrim */
-  var H_A = 0.86, H_B = 1.00;       /* kicker + heading */
-  var R_A = 0.98, R_B = 1.16;       /* rows, staggered by --i in the CSS */
-  var PROPS = ["--pv-g", "--pv-o", "--pv-h", "--pv-rows"];
+  var H_AT = 0.80;                  /* panel with kicker + heading: fade-in-up */
+  var R_AT = 0.90;                  /* rows, staggered by --i in the CSS */
+  var PROPS = ["--pv-g", "--pv-o"];
 
   var reached = 0;
 
@@ -92,7 +94,7 @@
 
   function update() {
     if (!CX5.motionOn()) {
-      sec.classList.remove("is-anim");
+      sec.classList.remove("is-anim", "is-head", "is-rows");
       for (var i = 0; i < PROPS.length; i++) sec.style.removeProperty(PROPS[i]);
       reached = 0;
       return;
@@ -104,9 +106,8 @@
     q = reached;
     sec.style.setProperty("--pv-g", easeInOut(ramp(q, G_A, G_B)).toFixed(4));
     sec.style.setProperty("--pv-o", easeOut(ramp(q, O_A, O_B)).toFixed(4));
-    sec.style.setProperty("--pv-h", easeOut(ramp(q, H_A, H_B)).toFixed(4));
-    /* linear, so the eight rows keep an even beat; each row eases on its own */
-    sec.style.setProperty("--pv-rows", ramp(q, R_A, R_B).toFixed(4));
+    if (q >= H_AT) sec.classList.add("is-head");
+    if (q >= R_AT) sec.classList.add("is-rows");
   }
 
   /* set the start state before the first paint, then ride the bus */

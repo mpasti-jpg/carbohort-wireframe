@@ -35,29 +35,8 @@
    No packshot here and the cards are not links, so the link affordances of
    that occurrence (the arrow nudge, the packshot zoom) are not carried over. */
 .c5-diff-sec{background:var(--w-surface-page);}
-.c5-diff{list-style:none;margin:clamp(2.5rem,5vw,4rem) 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--w-space-5);}
-.c5-diff__card{position:relative;display:flex;flex-direction:column;gap:var(--w-space-3);padding:var(--w-space-6);border:1px solid var(--w-border-default);background:var(--w-surface-page);transition:border-color var(--w-duration-base) var(--w-ease);}
-.c5-diff__card:hover{border-color:var(--w-gray-900);}
-/* the card number: a quiet index in the top right corner, on the line of the
-   first product tag (same size and line box, so the two share a baseline) */
-.c5-diff__num{position:absolute;top:var(--w-space-6);right:var(--w-space-6);font-size:0.6875rem;letter-spacing:.06em;color:var(--w-text-tertiary);}
-.c5-diff__tag{display:block;font-size:0.6875rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;}
-/* the tag takes the tone of its own sentence: quiet for ECO, strong for HUMIC */
-.c5-diff__from .c5-diff__tag{color:var(--w-text-secondary);}
-.c5-diff__to .c5-diff__tag{color:var(--w-text-primary);}
-.c5-diff__from p{margin:0;font-size:var(--w-font-sm-size);line-height:var(--w-font-sm-lh);color:var(--w-text-secondary);}
-.c5-diff__arrow{width:24px;height:24px;margin-top:auto;color:var(--w-icon-default);}
-/* `balance`: a result of two lines breaks into even lines instead of leaving one word alone */
-.c5-diff__to p{margin:0;font-size:var(--w-font-h4-size);line-height:var(--w-font-h4-lh);font-weight:var(--w-weight-medium);color:var(--w-text-primary);text-wrap:balance;}
-
-/* --- „Dla Ciebie, jeśli": szeroki jasnoszary panel --------------------------
-   Tytuł i przyciski po lewej, sześć punktów w dwóch kolumnach po prawej. */
-.c5-pick{margin-top:clamp(2.5rem,5vw,4rem);background:var(--w-gray-100);padding:clamp(1.75rem,4vw,3rem);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:clamp(2rem,5vw,4rem);align-items:start;}
-.c5-pick__head{display:flex;flex-direction:column;gap:clamp(1.25rem,2.5vw,1.75rem);align-items:flex-start;}
-.c5-pick__title{font-size:clamp(1.5rem,2.6vw,2.125rem);font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
-.c5-pick__list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:14px 24px;}
-.c5-pick__list li{display:flex;gap:12px;align-items:flex-start;font-size:0.9375rem;line-height:1.45;}
-.c5-pick__list .wf-icon{flex:none;margin-top:3px;color:var(--w-gray-900);}
+/* The four cards (CE-34, `przemiana`): ce/CE-34-karty-od-do.css; the panel
+   „Dla Ciebie, jeśli:” (CE-35): ce/CE-35-panel-kryteriow-z-cta.css. */
 
 /* --- Wejście w widok: reveal ze staggerem (wspólne dla sekcji 35 i 40) ------
    `[data-reveal]` wjeżdża raz, gdy pierwszy raz wchodzi w widok (JS dokłada
@@ -69,25 +48,7 @@
     transition:opacity .5s cubic-bezier(.2,.7,.2,1),transform .5s cubic-bezier(.2,.7,.2,1);
     transition-delay:calc(var(--i,0) * 80ms);}
   .cx-js [data-reveal].is-in{opacity:1;transform:none;}
-  /* The reveal rule above owns the transition list of the card, so the hover
-     border joins that list here; the stagger stays on the entry only. */
-  .cx-js .c5-diff__card{transition:opacity .5s cubic-bezier(.2,.7,.2,1) calc(var(--i,0) * 80ms),transform .5s cubic-bezier(.2,.7,.2,1) calc(var(--i,0) * 80ms),border-color var(--w-duration-base) var(--w-ease);}
-}
-
-@media (max-width:899px){
-  .c5-pick{grid-template-columns:1fr;}
-}
-@media (max-width:699px){
-  .c5-pick__list{grid-template-columns:1fr;}
-}
-/* below 640 px: one column of cards and a tighter card */
-@media (max-width:639px){
-  .c5-diff{grid-template-columns:minmax(0,1fr);}
-  .c5-diff__card{padding:var(--w-space-4);}
-  .c5-diff__num{top:var(--w-space-4);right:var(--w-space-4);}
-}
-@media (prefers-reduced-motion: reduce){
-  .c5-diff__card{transition:none;}
+  /* the hover border of the CE-34 cards joins the transition list in the module */
 }
 
 /* --- KTÓRY DLA MNIE: two worlds (rows CE-36, pop-ups CE-37) ------------------
@@ -96,90 +57,13 @@
    a one-sentence teaser, a brief of the three things that matter most (doses,
    frequency, purchase) and one button; the button opens a pop-up with the
    full card. */
-.c5-who{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,6vw,6rem);align-items:center;margin-top:clamp(3rem,6vw,5rem);}
-.c5-who--flip .c5-who__media{order:2;}
-/* The photo frame clips a layer taller than itself, which makes room for the
-   parallax. `--who-par` (-6 -> 0, per cent of the layer height) is set by JS
-   only at `CX5.motionOn()`; without it the crop rests on the default value. */
-.c5-who__media{position:relative;aspect-ratio:4/5;max-height:calc(100svh - 2 * var(--c5-gutter));overflow:hidden;background:var(--w-gray-300);}
-.c5-who__ph{position:absolute;inset:-6% 0 auto;height:118%;transform:translateY(calc(var(--who-par,-6) * 1%));will-change:transform;}
-.c5-who__body{display:flex;flex-direction:column;gap:clamp(1rem,2vw,1.5rem);max-width:520px;}
-.c5-who__name{font-size:clamp(2rem,3.6vw,3rem);font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
-.c5-who__teaser{font-size:1.0625rem;color:var(--w-text-secondary);}
-/* The brief: label | value rows divided by hairlines. `flex-wrap` does the work
-   of a container query – when the column cannot hold the label and 19rem of
-   value side by side, the value drops under its label. */
-.c5-who__brief{margin:0;display:flex;flex-direction:column;border-bottom:1px solid var(--w-border-default);font-size:0.9375rem;}
-.c5-who__fact{display:flex;flex-wrap:wrap;gap:var(--w-space-1) var(--w-space-4);padding:var(--w-space-3) 0;border-top:1px solid var(--w-border-default);}
-.c5-who__fact > dt{flex:0 0 7.5rem;margin:0;font-weight:var(--w-weight-semibold);color:var(--w-text-primary);}
-.c5-who__fact > dd{flex:1 1 19rem;min-width:0;margin:0;color:var(--w-text-secondary);}
-.c5-who__list{margin:0;padding:0;display:flex;flex-direction:column;gap:var(--w-space-2);}
-.c5-who__body .c5-btn{align-self:flex-start;}
+/* The rows (`c5-who*`) are styled in ce/CE-36-wiersz-zdjecie-opis.css. */
 
 /* Nota o odczynie: treść bezpieczeństwa, więc wąski pas widoczny bez klikania */
-.c5-who__note{margin-top:clamp(3rem,6vw,5rem);border-top:1px solid var(--w-border-default);border-bottom:1px solid var(--w-border-default);padding:clamp(1.25rem,2.5vw,1.75rem) 0;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:clamp(1rem,3vw,2rem);align-items:center;}
-.c5-who__note .wf-icon{width:24px;height:24px;color:var(--w-gray-900);}
-.c5-who__note p{margin:0;}
-.c5-who__note .c5-btn{white-space:nowrap;}
+/* look of the band: ce/CE-23-pas-cta.css (`c5-ctabar`); only the page's own distance stays here */
+.c5-who__note{margin-top:clamp(3rem,6vw,5rem);}
 
-/* --- Pop-up with the full card ----------------------------------------------
-   Pattern: the lightbox of the maize page. Without JS the pop-up is a plain
-   block in the flow of the page under its row – the whole content visible, the
-   opening button and the X hidden. With JS: an overlay, the panel in the
-   centre, the X, Escape, a focus trap, `inert` on the background, the page
-   scroll locked. Both layers stand above the advisor dock (the overlay on
-   --w-z-popover, the dialog on --w-z-toast). */
-html:not(.cx-js) [data-pop-open],
-html:not(.cx-js) .c5-pop .c5-iconbtn{display:none;}
-html:not(.cx-js) .c5-pop{margin-top:1.5rem;border:1px solid var(--w-border-default);padding:clamp(1.25rem,3vw,2rem);}
-.c5-pop__panel{display:flex;flex-direction:column;min-height:0;}
-.c5-pop__head{display:flex;flex-direction:column;gap:var(--w-space-2);padding-bottom:var(--w-space-5);border-bottom:1px solid var(--w-border-subtle);margin-bottom:var(--w-space-5);}
-.c5-pop__title{font-size:clamp(1.5rem,2.6vw,2.125rem);font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
-.c5-pop__body{display:flex;flex-direction:column;gap:var(--w-space-5);font-size:1rem;}
-.c5-pop__body ul{padding-left:1.35rem;gap:var(--w-space-1);color:var(--w-text-secondary);}
-.c5-pop__body .c5-btnrow{margin-top:var(--w-space-3);}
-
-html.cx-js .c5-pop{position:fixed;inset:0;z-index:var(--w-z-toast);display:grid;place-items:center;padding:var(--c5-gutter);opacity:0;visibility:hidden;transition:opacity .22s var(--w-ease),visibility 0s linear .22s;}
-html.cx-js .c5-pop[data-open="true"]{opacity:1;visibility:visible;transition:opacity .22s var(--w-ease),visibility 0s;}
-html.cx-js .c5-pop__panel{position:relative;width:100%;max-width:760px;max-height:calc(100svh - 2 * var(--c5-gutter));background:var(--w-surface-page);border:1px solid var(--w-border-default);transform:translateY(16px);transition:transform .26s cubic-bezier(.2,.8,.2,1);}
-html.cx-js .c5-pop[data-open="true"] .c5-pop__panel{transform:none;}
-html.cx-js .c5-pop .c5-iconbtn{display:grid;position:absolute;top:14px;right:14px;z-index:1;}
-html.cx-js .c5-pop__scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:clamp(1.5rem,4vw,2.75rem);}
-html.cx-js .c5-pop__head{padding-right:56px;}
-
-.c5-pop-overlay{position:fixed;inset:0;background:var(--w-gray-900);opacity:0;z-index:var(--w-z-popover);transition:opacity .22s var(--w-ease);}
-.c5-pop-overlay[data-open="true"]{opacity:.55;}
-/* an open pop-up stops the page under it (Lenis gets `stop()` in JS) */
-html.c5-pop-lock{overflow:hidden;}
-
-@media (min-width:900px) and (max-width:1099px){
-  /* two narrow columns: the copy may outgrow a 4:5 frame, so the frame follows
-     the height of its row instead of standing short beside the text; the
-     spacer keeps 4:5 as the floor */
-  .c5-who__media{align-self:stretch;aspect-ratio:auto;}
-  .c5-who__media::before{content:"";display:block;padding-top:125%;}
-}
-@media (max-width:899px){
-  /* one column: the photo above the copy, the same in both rows */
-  .c5-who{grid-template-columns:1fr;}
-  .c5-who--flip .c5-who__media{order:0;}
-  .c5-who__media{aspect-ratio:16/10;max-height:none;}
-  .c5-who__body{max-width:none;}
-}
-@media (max-width:699px){
-  .c5-who__note{grid-template-columns:1fr;}
-  .c5-who__note .c5-btn{justify-self:start;}
-}
-@media (max-width:599px){
-  /* the panel takes the whole screen – as the lightbox of the maize page does */
-  html.cx-js .c5-pop{padding:0;}
-  html.cx-js .c5-pop__panel{max-width:none;max-height:none;height:100%;border:0;}
-}
-@media (prefers-reduced-motion: reduce){
-  /* no transitions: the pop-up shows and hides at once, the photo crop stands still */
-  html.cx-js .c5-pop,html.cx-js .c5-pop[data-open="true"],
-  .c5-pop__panel,.c5-pop-overlay{transition:none;}
-}
+/* The pop-up with the full card (CE-37, variant `c5-pop`): ce/CE-37-pop-up-karty.css */
 
 /* --- CE-12 „Scena faktów” (#czym-jest) – nine steps ---------------------------
    Nothing of this scene lives in this sheet. Layout, mechanics and look come from
@@ -201,44 +85,7 @@ html.c5-pop-lock{overflow:hidden;}
 /* 11.10.2026: the PRO band no longer closes this section (the comparison
    #roznice-eco-humic stands between them), so the section keeps the bottom
    padding of .c5-sec – the rule `.c5-when-sec{padding-bottom:0}` is gone. */
-/* panele od 30 px do 30 px szerokości ekranu – ten sam kadr co w Parametrach */
-.c5-when{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:clamp(2.5rem,5vw,4rem) var(--c5-gutter) 0;}
-.c5-when__panel{position:relative;min-height:clamp(460px,80svh,760px);overflow:hidden;background:var(--w-gray-700);color:var(--w-text-inverse);display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(1.5rem,3.5vw,3rem);}
-.c5-when__media{position:absolute;inset:0;}
-/* Warstwa zdjęcia jest wyższa od kadru (118 %) i wystaje poza obie krawędzie,
-   więc przesunięcie i przybliżenie nie odsłaniają tła panelu. */
-.c5-when__ph{position:absolute;inset:-6% 0 auto;height:118%;
-  transform:translateY(calc(var(--when-par,-6) * 1%)) scale(var(--when-zoom,1));transform-origin:50% 50%;
-  transition:transform .6s cubic-bezier(.2,.7,.2,1);will-change:transform;}
-/* bez gradientów – jednolity scrim (.4), bo tekst leży NA kadrze */
-.c5-when__media::after{content:"";position:absolute;inset:0;background:rgb(0 0 0 / .4);}
-/* Etykieta placeholdera siedzi na kadrze, nie na przesuwanej warstwie (inaczej
-   parallax wywiózłby ją z narożnika) – i nad scrimem, żeby została czytelna. */
-.c5-when__media > .c5-ph__label{z-index:1;color:rgb(255 255 255 / .55);}
-.c5-when__body{position:relative;z-index:1;display:flex;flex-direction:column;gap:var(--w-space-4);max-width:486px;}
-.c5-when__title{font-size:clamp(2rem,3.6vw,3rem);line-height:1.05;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
-.c5-when__body p{font-size:1rem;color:var(--w-text-inverse);opacity:.85;}
-.c5-when__body .wf-link{color:var(--w-text-inverse);}
-.c5-when__body .c5-btn{align-self:flex-start;margin-top:var(--w-space-2);}
-/* na ciemnym kadrze pierścień fokusu musi być jasny (i ostry jak reszta V5) */
-.c5-when a:focus-visible{outline-color:var(--w-focus-ring-inverse);border-radius:0;}
-
-/* Przybliżenie tylko tam, gdzie jest kursor i gdzie ruch jest dozwolony. */
-@media (hover:hover) and (prefers-reduced-motion: no-preference){
-  .c5-when__panel:hover{--when-zoom:1.04;}
-}
-/* Jedna kolumna: panele niższe, margines boczny jak na wąskich ekranach. */
-@media (max-width:899px){
-  .c5-when{grid-template-columns:1fr;margin-inline:16px;}
-  .c5-when__panel{min-height:clamp(420px,70svh,560px);}
-}
-
-
-/* Ograniczony ruch: żadnych przejść (parallax i zoom są już wyłączone – JS nie
-   ustawia --when-par, a hover żyje tylko w bloku no-preference). */
-@media (prefers-reduced-motion: reduce){
-  .c5-when__ph{transition:none;}
-}
+/* The panels (CE-38): ce/CE-38-dwa-panele-fotograficzne.css */
 
 /* The knobs of the CE-12 scene (the step of the track, the height of the
    illustration box) stand in the „Scena faktów" block above – one declaration on

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Strefa wiedzy o żyzności gleby | Centrum wiedzy Carbohort</title>
+<title>Strefa wiedzy o żyzności gleby | Strefa wiedzy Carbohort</title>
 <meta name="description" content="Artykuły o żyzności gleb, próchnicy, węglu brunatnym i kwasach humusowych oraz praktyczne porady o produktach CarboHort. Indeks wszystkich tekstów, kategorie, poradniki i karty produktów do pobrania.">
 <link rel="stylesheet" href="tokens.css">
 <link rel="stylesheet" href="wireframe.css">
@@ -12,6 +12,12 @@
   <link rel="stylesheet" href="ce/00-reveal.css">
   <link rel="stylesheet" href="ce/CE-07-nawigacja-kropkowa.css">
   <link rel="stylesheet" href="ce/CE-08-hero.css">
+  <link rel="stylesheet" href="ce/CE-48-karty-biogramow.css">
+  <link rel="stylesheet" href="ce/CE-53-lista-wierszy.css">
+  <link rel="stylesheet" href="ce/CE-50-formularz.css">
+  <link rel="stylesheet" href="ce/CE-58-karty-najnowszych.css">
+  <link rel="stylesheet" href="ce/CE-59-nawigacja-kategorii.css">
+  <link rel="stylesheet" href="ce/CE-57-indeks-artykulow.css">
   <link rel="stylesheet" href="centrum-wiedzy.css">
 <script src="../status.js"></script>
 <script src="../ce-rejestr.js"></script>
@@ -26,9 +32,9 @@
 
 
 
-<nav id="nawigacja-kropki" class="c5-dots" aria-label="Rozdziały strony Centrum wiedzy" data-dots data-ce="CE-07">
+<nav id="nawigacja-kropki" class="c5-dots" aria-label="Rozdziały strony Strefy wiedzy" data-dots data-ce="CE-07">
   <ol>
-    <li><a class="c5-dots__link" href="#hero" data-dot="hero"><span class="c5-dots__label">Start</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#hero" data-dot="hero"><span class="c5-dots__label">Początek</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
     <li><a class="c5-dots__link" href="#najnowsze" data-dot="najnowsze"><span class="c5-dots__label">Najnowsze</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
     <li><a class="c5-dots__link" href="#kategorie" data-dot="kategorie"><span class="c5-dots__label">Kategorie</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
     <li><a class="c5-dots__link" href="#artykuly" data-dot="artykuly"><span class="c5-dots__label">Wszystkie artykuły</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
@@ -52,11 +58,11 @@
             <ol class="wf-cluster wf-items-center">
               <li><a class="wf-link--quiet" href="home.html">Strona główna</a></li>
               <li><span class="wf-breadcrumb__sep" aria-hidden="true">/</span></li>
-              <li aria-current="page">Centrum wiedzy</li>
+              <li aria-current="page">Strefa wiedzy</li>
             </ol>
           </nav>
           <div class="c5-hero__copyin">
-            <span class="c5-kicker">Centrum wiedzy</span>
+            <span class="c5-kicker">Strefa wiedzy</span>
             <h1 class="c5-h1">Strefa wiedzy o żyzności gleby</h1>
             <div class="c5-hero__lead">
               <p>To miejsce stworzyliśmy dla tych, którzy chcą naprawdę zrozumieć glebę i zachodzące w niej procesy. Dzielimy się tu rzetelną wiedzą o żyzności gleb, próchnicy, rolnictwie regeneracyjnym, węglu brunatnym oraz kwasach humusowych, ale też praktykami w kontekście stosowania – bez uproszczeń, bez marketingowych skrótów, za to w oparciu o obecną naukę, doświadczenie i praktykę polową.</p>
@@ -68,8 +74,8 @@
                 <input class="wf-input" type="search" id="szukaj-hero" name="szukaj-hero" placeholder="np. torf, retencja, pH" aria-label="Szukaj w artykułach" data-cw-search>
                 <button type="button" class="cw-k-findbox__go" data-cw-go aria-label="Pokaż wyniki w indeksie artykułów"><svg class="wf-icon" aria-hidden="true"><use href="#ti-search"></use></svg></button>
               </div>
-              <a class="c5-btn c5-btn--light" href="#artykuly" data-nojs-only>zobacz wszystkie artykuły</a>
-              <button type="button" class="c5-btn c5-btn--light" data-jurek-open>zapytaj przewodnika</button>
+              <a class="c5-btn c5-btn--light" href="#artykuly" data-nojs-only>Zobacz wszystkie artykuły</a>
+              <button type="button" class="c5-btn c5-btn--light c5-btn--ico-liscie" data-jurek-open>Zapytaj przewodnika</button>
             </div>
           </div>
         </div>
@@ -87,25 +93,25 @@
       <div class="c5-head">
         <h2 class="c5-h2">Trzy ostatnie artykuły</h2>
       </div>
-      <div class="cw-k-latest" data-reveal>
-        <article class="cw-k-card cw-k-card--lead">
-          <span class="wf-ph cw-k-card__fig" aria-hidden="true"><svg class="wf-icon wf-icon--lg"><use href="#ti-photo"></use></svg></span>
+      <div class="c5-ln" data-reveal>
+        <article class="c5-ln__card c5-ln__card--lead">
+          <span class="wf-ph c5-ln__fig" aria-hidden="true"><svg class="wf-icon wf-icon--lg"><use href="#ti-photo"></use></svg></span>
           <span class="c5-chip">Kwasy i substancje humusowe</span>
-          <h3 class="c5-h3 c5-h3--lg cw-k-card__title"><a href="artykul.html">10 najczęściej powtarzanych mitów na temat kwasów humusowych</a></h3>
-          <p class="cw-k-card__lead">Pomimo tego, że preparaty zawierające substancje humusowe, zwłaszcza kwasy, są obecne na rynku od kilku dekad, wokół ich działania wciąż gromadzi się wiele krzywdzących mitów, nieporozumień i niedopowiedzeń.</p>
-          <p class="c5-src cw-k-metasep cw-k-card__meta"><span>Dariusz Dziadkowski</span><span>wrzesień 2026</span><span>15 min czytania</span></p>
+          <h3 class="c5-h3 c5-h3--lg c5-ln__t"><a href="artykul.html">10 najczęściej powtarzanych mitów na temat kwasów humusowych</a></h3>
+          <p class="c5-ln__lead">Pomimo tego, że preparaty zawierające substancje humusowe, zwłaszcza kwasy, są obecne na rynku od kilku dekad, wokół ich działania wciąż gromadzi się wiele krzywdzących mitów, nieporozumień i niedopowiedzeń.</p>
+          <p class="c5-src cw-k-metasep c5-ln__meta"><span>Dariusz Dziadkowski</span><span>wrzesień 2026</span><span>15 min czytania</span></p>
         </article>
-        <article class="cw-k-card">
+        <article class="c5-ln__card">
           <span class="c5-chip">Kwasy i substancje humusowe</span>
-          <h3 class="c5-h3 c5-h3--md cw-k-card__title"><a href="artykul.html">Chelatacja kationów przez substancje humusowe – niedoceniany mechanizm odżywiania roślin</a></h3>
-          <p class="cw-k-card__lead">Współczesne rolnictwo intensywne w stopniu bezprecedensowym opiera się na stosowaniu mineralnych nawozów syntetycznych, które odpowiadają za globalny poziom plonowania roślin uprawnych.</p>
-          <p class="c5-src cw-k-metasep cw-k-card__meta"><span>Dariusz Dziadkowski</span><span>sierpień 2026</span><span>8 min czytania</span></p>
+          <h3 class="c5-h3 c5-h3--md c5-ln__t"><a href="artykul.html">Chelatacja kationów przez substancje humusowe – niedoceniany mechanizm odżywiania roślin</a></h3>
+          <p class="c5-ln__lead">Współczesne rolnictwo intensywne w stopniu bezprecedensowym opiera się na stosowaniu mineralnych nawozów syntetycznych, które odpowiadają za globalny poziom plonowania roślin uprawnych.</p>
+          <p class="c5-src cw-k-metasep c5-ln__meta"><span>Dariusz Dziadkowski</span><span>sierpień 2026</span><span>8 min czytania</span></p>
         </article>
-        <article class="cw-k-card">
+        <article class="c5-ln__card">
           <span class="c5-chip">Próchnica i nawożenie</span>
-          <h3 class="c5-h3 c5-h3--md cw-k-card__title"><a href="artykul.html">Jaka jest różnica między humifikacją, a mineralizacją? Jak znaleźć równowagę?</a></h3>
-          <p class="cw-k-card__lead">Ogólna ocena kondycji gleby opiera się na analizie jej wskaźników fizycznych, takich jak tekstura, porowatość, gęstość objętościowa czy agregacja cząstek, a także parametrów chemicznych obejmujących: odczyn pH, potencjał wymiany kationowej (PWK, *En.</p>
-          <p class="c5-src cw-k-metasep cw-k-card__meta"><span>Dariusz Dziadkowski</span><span>lipiec 2026</span><span>11 min czytania</span></p>
+          <h3 class="c5-h3 c5-h3--md c5-ln__t"><a href="artykul.html">Jaka jest różnica między humifikacją, a mineralizacją? Jak znaleźć równowagę?</a></h3>
+          <p class="c5-ln__lead">Ogólna ocena kondycji gleby opiera się na analizie jej wskaźników fizycznych, takich jak tekstura, porowatość, gęstość objętościowa czy agregacja cząstek, a także parametrów chemicznych obejmujących: odczyn pH, potencjał wymiany kationowej (PWK, *En.</p>
+          <p class="c5-src cw-k-metasep c5-ln__meta"><span>Dariusz Dziadkowski</span><span>lipiec 2026</span><span>11 min czytania</span></p>
         </article>
       </div>
       <p class="c5-note c5-note--soft cw-k-next"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-calendar"></use></svg> <span><span class="wf-w-semibold">Następny artykuł</span> – „Czy substancje humusowe mogą ograniczyć zużycie nawozów mineralnych” – październik 2026.</span></p>
@@ -122,33 +128,33 @@
       <div class="c5-head">
         <h2 class="c5-h2">Dwie półki: zrozumieć glebę i&nbsp;zastosować produkty</h2>
       </div>
-      <div class="cw-k-cats">
+      <div class="c5-kc">
 
-        <div class="cw-k-cat">
-          <div class="cw-k-cat__head">
-            <h3 class="c5-h3 c5-h3--lg cw-k-cat__name"><a href="centrum-wiedzy-kategoria.html">O żyzności gleb</a></h3>
-            <span class="c5-src cw-k-cat__n">10 <span class="wf-sr-only">artykułów</span></span>
+        <div class="c5-kc__cat">
+          <div class="c5-kc__head">
+            <h3 class="c5-h3 c5-h3--lg c5-kc__name"><a href="centrum-wiedzy-kategoria.html">O żyzności gleb</a></h3>
+            <span class="c5-src c5-kc__n">10 <span class="wf-sr-only">artykułów</span></span>
           </div>
-          <p class="cw-k-cat__desc">Jak działa gleba, próchnica i węgiel – żeby wiedzieć dlaczego, a nie tylko ile.</p>
-          <ul class="cw-k-cat__subs">
-            <li><a class="cw-k-cat__sub" href="centrum-wiedzy.html?kat=kwasy-i-substancje-humusowe#artykuly">Kwasy i substancje humusowe <span class="cw-k-cat__n">(3)</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></li>
-            <li><a class="cw-k-cat__sub" href="centrum-wiedzy.html?kat=wegiel-brunatny-i-lignit#artykuly">Węgiel brunatny i lignit <span class="cw-k-cat__n">(2)</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></li>
-            <li><a class="cw-k-cat__sub" href="centrum-wiedzy.html?kat=prochnica-i-nawozenie#artykuly">Próchnica i nawożenie <span class="cw-k-cat__n">(2) +1 wkrótce</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></li>
-            <li><a class="cw-k-cat__sub" href="centrum-wiedzy.html?kat=woda-i-susza#artykuly">Woda i susza <span class="cw-k-cat__n">(2)</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></li>
+          <p class="c5-kc__desc">Jak działa gleba, próchnica i węgiel – żeby wiedzieć dlaczego, a nie tylko ile.</p>
+          <ul class="c5-kc__subs">
+            <li><a class="c5-kc__sub" href="centrum-wiedzy.html?kat=kwasy-i-substancje-humusowe#artykuly">Kwasy i substancje humusowe <span class="c5-kc__n">(3)</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></li>
+            <li><a class="c5-kc__sub" href="centrum-wiedzy.html?kat=wegiel-brunatny-i-lignit#artykuly">Węgiel brunatny i lignit <span class="c5-kc__n">(2)</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></li>
+            <li><a class="c5-kc__sub" href="centrum-wiedzy.html?kat=prochnica-i-nawozenie#artykuly">Próchnica i nawożenie <span class="c5-kc__n">(2) +1 wkrótce</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></li>
+            <li><a class="c5-kc__sub" href="centrum-wiedzy.html?kat=woda-i-susza#artykuly">Woda i susza <span class="c5-kc__n">(2)</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></li>
           </ul>
         </div>
 
-        <div class="cw-k-cat">
-          <div class="cw-k-cat__head">
-            <h3 class="c5-h3 c5-h3--lg cw-k-cat__name"><a href="centrum-wiedzy-kategoria.html">Praktyczne porady o produktach CarboHort</a></h3>
-            <span class="c5-src cw-k-cat__n">4 <span class="wf-sr-only">artykułów</span></span>
+        <div class="c5-kc__cat">
+          <div class="c5-kc__head">
+            <h3 class="c5-h3 c5-h3--lg c5-kc__name"><a href="centrum-wiedzy-kategoria.html">Praktyczne porady o produktach CarboHort</a></h3>
+            <span class="c5-src c5-kc__n">4 <span class="wf-sr-only">artykułów</span></span>
           </div>
-          <p class="cw-k-cat__desc">Ile, jak często, w jakiej formie i z czym łączyć – konkret do zastosowania.</p>
-          <ul class="cw-k-cat__subs">
-            <li><a class="cw-k-cat__sub" href="centrum-wiedzy.html?kat=do-gleby-czy-na-lisc#artykuly">Do gleby czy na liść <span class="cw-k-cat__n">(1)</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></li>
-            <li><a class="cw-k-cat__sub" href="centrum-wiedzy.html?kat=mieszanie-i-kompatybilnosc#artykuly">Mieszanie i kompatybilność <span class="cw-k-cat__n">(1)</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></li>
-            <li><a class="cw-k-cat__sub" href="centrum-wiedzy.html?kat=podloza-i-zamienniki-torfu#artykuly">Podłoża i zamienniki torfu <span class="cw-k-cat__n">(2)</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></li>
-            <li><a class="cw-k-cat__sub" href="#poradniki">Poradniki upraw i karty produktów <span class="cw-k-cat__n">(PDF)</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></li>
+          <p class="c5-kc__desc">Ile, jak często, w jakiej formie i z czym łączyć – konkret do zastosowania.</p>
+          <ul class="c5-kc__subs">
+            <li><a class="c5-kc__sub" href="centrum-wiedzy.html?kat=do-gleby-czy-na-lisc#artykuly">Do gleby czy na liść <span class="c5-kc__n">(1)</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></li>
+            <li><a class="c5-kc__sub" href="centrum-wiedzy.html?kat=mieszanie-i-kompatybilnosc#artykuly">Mieszanie i kompatybilność <span class="c5-kc__n">(1)</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></li>
+            <li><a class="c5-kc__sub" href="centrum-wiedzy.html?kat=podloza-i-zamienniki-torfu#artykuly">Podłoża i zamienniki torfu <span class="c5-kc__n">(2)</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></li>
+            <li><a class="c5-kc__sub" href="#poradniki">Poradniki upraw i karty produktów <span class="c5-kc__n">(PDF)</span><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></li>
           </ul>
         </div>
 
@@ -260,9 +266,9 @@
               <p class="c5-src cw-k-metasep cw-k-row__meta"><span class="c5-chip">Woda i susza</span><span>Dariusz Dziadkowski</span><span>styczeń 2026</span><span>9 min czytania</span></p>
             </article>
           </li>
-          <li class="cw-k-list__item" data-kat="podloza-i-zamienniki-torfu" data-date="2025-12" data-title="Podłoże popieczarkowe i Carbomat ECO, a kondycjonowanie gleby. Od nawożenia do trwałej żyzności." data-search="podloze popieczarkowe i carbomat eco, a kondycjonowanie gleby. od nawozenia do trwalej zyznosci. gleba jest podstawowym kapitalem produkcyjnym rolnictwa, a jej stan decyduje nie tylko o wysokosci plonow, lecz takze o stabilnosci systemu upraw w warunkach zmian klimatu.">
+          <li class="cw-k-list__item" data-kat="podloza-i-zamienniki-torfu" data-date="2025-12" data-title="Podłoże popieczarkowe i Carbomat Eco, a kondycjonowanie gleby. Od nawożenia do trwałej żyzności." data-search="podloze popieczarkowe i carbomat eco, a kondycjonowanie gleby. od nawozenia do trwalej zyznosci. gleba jest podstawowym kapitalem produkcyjnym rolnictwa, a jej stan decyduje nie tylko o wysokosci plonow, lecz takze o stabilnosci systemu upraw w warunkach zmian klimatu.">
             <article class="cw-k-row">
-              <h3 class="c5-h3 c5-h3--md cw-k-row__title"><a href="artykul.html">Podłoże popieczarkowe i Carbomat ECO, a kondycjonowanie gleby. Od nawożenia do trwałej żyzności.</a></h3>
+              <h3 class="c5-h3 c5-h3--md cw-k-row__title"><a href="artykul.html">Podłoże popieczarkowe i Carbomat Eco, a kondycjonowanie gleby. Od nawożenia do trwałej żyzności.</a></h3>
               <p class="cw-k-row__lead">Gleba jest podstawowym kapitałem produkcyjnym rolnictwa, a jej stan decyduje nie tylko o wysokości plonów, lecz także o stabilności systemu upraw w warunkach zmian klimatu.</p>
               <p class="c5-src cw-k-metasep cw-k-row__meta"><span class="c5-chip">Podłoża i zamienniki torfu</span><span>Dariusz Dziadkowski</span><span>grudzień 2025</span><span>4 min czytania</span></p>
             </article>
@@ -290,7 +296,7 @@
           </li>
       </ul>
 
-      <p class="c5-note c5-note--soft cw-k-empty" data-cw-empty hidden><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-filter"></use></svg> <span>Nic nie pasuje do filtra – zobacz wszystkie.</span> <button type="button" class="c5-btn c5-btn--light c5-btn--sm" data-cw-clear>wyczyść filtry</button></p>
+      <p class="c5-note c5-note--soft cw-k-empty" data-cw-empty hidden><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-filter"></use></svg> <span>Nic nie pasuje do filtra – zobacz wszystkie.</span> <button type="button" class="c5-btn c5-btn--light c5-btn--sm" data-cw-clear>Wyczyść filtry</button></p>
 
       <nav class="cw-k-pager" aria-label="Stronicowanie" data-js-only data-cw-pager>
         <button type="button" class="c5-btn c5-btn--light c5-btn--sm" data-cw-page="prev"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-left"></use></svg> Poprzednia</button>
@@ -314,72 +320,72 @@
       <div class="cw-k-docs">
         <div class="cw-k-docgroup">
           <h3 class="c5-h3 c5-h3--lg">Poradniki upraw</h3>
-          <ul class="cw-k-doclist">
-            <li><div class="cw-k-docrow">
-              <h4 class="cw-k-docrow__name">Poradnik sadowniczy</h4>
-              <p class="c5-src cw-k-docrow__meta">PDF · CarboHort</p>
-              <a class="c5-btn c5-btn--light c5-btn--sm" href="#"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-download"></use></svg> Pobierz PDF</a>
+          <ul class="c5-rows__list c5-rows__list--stack cw-k-doclist">
+            <li><div class="c5-rows__row">
+              <h4 class="c5-rows__name">Poradnik sadowniczy</h4>
+              <p class="c5-rows__meta">PDF · CarboHort</p>
+              <a class="c5-btn c5-btn--light c5-btn--sm c5-rows__act" href="#"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-download"></use></svg> Pobierz PDF</a>
             </div></li>
-            <li><div class="cw-k-docrow">
-              <h4 class="cw-k-docrow__name">Poradnik borówkowy</h4>
-              <p class="c5-src cw-k-docrow__meta">PDF · CarboHort</p>
-              <a class="c5-btn c5-btn--light c5-btn--sm" href="#"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-download"></use></svg> Pobierz PDF</a>
+            <li><div class="c5-rows__row">
+              <h4 class="c5-rows__name">Poradnik borówkowy</h4>
+              <p class="c5-rows__meta">PDF · CarboHort</p>
+              <a class="c5-btn c5-btn--light c5-btn--sm c5-rows__act" href="#"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-download"></use></svg> Pobierz PDF</a>
             </div></li>
-            <li><div class="cw-k-docrow">
-              <h4 class="cw-k-docrow__name">Poradnik malinowy</h4>
-              <p class="c5-src cw-k-docrow__meta">PDF · CarboHort</p>
-              <a class="c5-btn c5-btn--light c5-btn--sm" href="#"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-download"></use></svg> Pobierz PDF</a>
+            <li><div class="c5-rows__row">
+              <h4 class="c5-rows__name">Poradnik malinowy</h4>
+              <p class="c5-rows__meta">PDF · CarboHort</p>
+              <a class="c5-btn c5-btn--light c5-btn--sm c5-rows__act" href="#"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-download"></use></svg> Pobierz PDF</a>
             </div></li>
-            <li><div class="cw-k-docrow">
-              <h4 class="cw-k-docrow__name">Poradnik truskawkowy</h4>
-              <p class="c5-src cw-k-docrow__meta">PDF · CarboHort</p>
-              <a class="c5-btn c5-btn--light c5-btn--sm" href="#"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-download"></use></svg> Pobierz PDF</a>
+            <li><div class="c5-rows__row">
+              <h4 class="c5-rows__name">Poradnik truskawkowy</h4>
+              <p class="c5-rows__meta">PDF · CarboHort</p>
+              <a class="c5-btn c5-btn--light c5-btn--sm c5-rows__act" href="#"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-download"></use></svg> Pobierz PDF</a>
             </div></li>
-            <li><div class="cw-k-docrow">
-              <h4 class="cw-k-docrow__name">Poradnik szkółkarski</h4>
-              <p class="c5-src cw-k-docrow__meta">PDF · CarboHort</p>
-              <a class="c5-btn c5-btn--light c5-btn--sm" href="#"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-download"></use></svg> Pobierz PDF</a>
+            <li><div class="c5-rows__row">
+              <h4 class="c5-rows__name">Poradnik szkółkarski</h4>
+              <p class="c5-rows__meta">PDF · CarboHort</p>
+              <a class="c5-btn c5-btn--light c5-btn--sm c5-rows__act" href="#"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-download"></use></svg> Pobierz PDF</a>
             </div></li>
           </ul>
         </div>
 
         <div class="cw-k-docgroup">
           <h3 class="c5-h3 c5-h3--lg">Karty produktów i analizy</h3>
-          <ul class="cw-k-doclist">
-            <li><div class="cw-k-docrow">
-              <h4 class="cw-k-docrow__name">CARBOMAT ECO – karta produktu</h4>
-              <p class="c5-src cw-k-docrow__meta">PDF · CarboHort</p>
-              <a class="c5-btn c5-btn--light c5-btn--sm" href="#"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-download"></use></svg> Pobierz PDF</a>
+          <ul class="c5-rows__list c5-rows__list--stack cw-k-doclist">
+            <li><div class="c5-rows__row">
+              <h4 class="c5-rows__name">Carbomat Eco – karta produktu</h4>
+              <p class="c5-rows__meta">PDF · CarboHort</p>
+              <a class="c5-btn c5-btn--light c5-btn--sm c5-rows__act" href="#"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-download"></use></svg> Pobierz PDF</a>
             </div></li>
-            <li><div class="cw-k-docrow">
-              <h4 class="cw-k-docrow__name">CARBOHUMIC filtrowany – karta produktu</h4>
-              <p class="c5-src cw-k-docrow__meta">PDF · CarboHort</p>
-              <a class="c5-btn c5-btn--light c5-btn--sm" href="#"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-download"></use></svg> Pobierz PDF</a>
+            <li><div class="c5-rows__row">
+              <h4 class="c5-rows__name">Carbohumic filtrowany – karta produktu</h4>
+              <p class="c5-rows__meta">PDF · CarboHort</p>
+              <a class="c5-btn c5-btn--light c5-btn--sm c5-rows__act" href="#"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-download"></use></svg> Pobierz PDF</a>
             </div></li>
-            <li><div class="cw-k-docrow">
-              <h4 class="cw-k-docrow__name">CARBOHUMIC niefiltrowany – karta produktu</h4>
-              <p class="c5-src cw-k-docrow__meta">PDF · CarboHort</p>
-              <a class="c5-btn c5-btn--light c5-btn--sm" href="#"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-download"></use></svg> Pobierz PDF</a>
+            <li><div class="c5-rows__row">
+              <h4 class="c5-rows__name">Carbohumic niefiltrowany – karta produktu</h4>
+              <p class="c5-rows__meta">PDF · CarboHort</p>
+              <a class="c5-btn c5-btn--light c5-btn--sm c5-rows__act" href="#"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-download"></use></svg> Pobierz PDF</a>
             </div></li>
-            <li><div class="cw-k-docrow">
-              <h4 class="cw-k-docrow__name">CARBOMAT HUMIC – karta produktu</h4>
-              <p class="c5-src cw-k-docrow__meta">PDF · CarboHort</p>
-              <a class="c5-btn c5-btn--light c5-btn--sm" href="#"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-download"></use></svg> Pobierz PDF</a>
+            <li><div class="c5-rows__row">
+              <h4 class="c5-rows__name">Carbomat Humic – karta produktu</h4>
+              <p class="c5-rows__meta">PDF · CarboHort</p>
+              <a class="c5-btn c5-btn--light c5-btn--sm c5-rows__act" href="#"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-download"></use></svg> Pobierz PDF</a>
             </div></li>
-            <li><div class="cw-k-docrow">
-              <h4 class="cw-k-docrow__name">Analiza laboratoryjna PCBC (2022)</h4>
-              <p class="c5-src cw-k-docrow__meta">PDF · CarboHort</p>
-              <a class="c5-btn c5-btn--light c5-btn--sm" href="#"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-download"></use></svg> Pobierz PDF</a>
+            <li><div class="c5-rows__row">
+              <h4 class="c5-rows__name">Analiza laboratoryjna PCBC (2022)</h4>
+              <p class="c5-rows__meta">PDF · CarboHort</p>
+              <a class="c5-btn c5-btn--light c5-btn--sm c5-rows__act" href="#"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-download"></use></svg> Pobierz PDF</a>
             </div></li>
-            <li><div class="cw-k-docrow">
-              <h4 class="cw-k-docrow__name">Analiza Fitosoil (2026)</h4>
-              <p class="c5-src cw-k-docrow__meta">PDF · CarboHort</p>
-              <a class="c5-btn c5-btn--light c5-btn--sm" href="#"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-download"></use></svg> Pobierz PDF</a>
+            <li><div class="c5-rows__row">
+              <h4 class="c5-rows__name">Analiza Fitosoil (2026)</h4>
+              <p class="c5-rows__meta">PDF · CarboHort</p>
+              <a class="c5-btn c5-btn--light c5-btn--sm c5-rows__act" href="#"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-download"></use></svg> Pobierz PDF</a>
             </div></li>
-            <li><div class="cw-k-docrow">
-              <h4 class="cw-k-docrow__name">Analiza WZO Pleszew (2024)</h4>
-              <p class="c5-src cw-k-docrow__meta">PDF · CarboHort</p>
-              <a class="c5-btn c5-btn--light c5-btn--sm" href="#"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-download"></use></svg> Pobierz PDF</a>
+            <li><div class="c5-rows__row">
+              <h4 class="c5-rows__name">Analiza WZO Pleszew (2024)</h4>
+              <p class="c5-rows__meta">PDF · CarboHort</p>
+              <a class="c5-btn c5-btn--light c5-btn--sm c5-rows__act" href="#"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-download"></use></svg> Pobierz PDF</a>
             </div></li>
           </ul>
         </div>
@@ -395,30 +401,38 @@
 
 
   <section class="c5-sec" id="autorzy" data-ce="CE-48" data-ce-wariant="kompakt">
-    <div class="c5-wrap">
+    <div class="c5-wrap pp-bio pp-bio--kompakt">
       <span class="c5-kicker">Kto pisze</span>
       <div class="c5-head">
         <h2 class="c5-h2">Autorzy i konsultanci</h2>
       </div>
-      <ul class="cw-k-authors">
-        <li><div class="cw-k-author">
-          <span class="wf-ph cw-k-author__ph" aria-hidden="true"><svg class="wf-icon wf-icon--lg"><use href="#ti-user"></use></svg></span>
-          <h3 class="c5-h3 c5-h3--md cw-k-author__name">Dariusz Dziadkowski</h3>
-          <p class="c5-src cw-k-author__role">Autor artykułów Strefy wiedzy, CarboHort</p>
-          <p class="cw-k-author__bio"><span class="c5-chip c5-chip--dashed">bio do uzupełnienia</span></p>
+      <ul class="pp-team pp-team--kompakt">
+        <li><div class="pp-person">
+          <span class="wf-ph pp-person__ph" aria-hidden="true"><svg class="wf-icon wf-icon--lg"><use href="#ti-user"></use></svg></span>
+          <h3 class="pp-person__name">Dariusz Dziadkowski</h3>
+          <div class="pp-person__body">
+          <p class="pp-person__role">Autor artykułów Strefy wiedzy, CarboHort</p>
+          <p class="pp-person__chip"><span class="c5-chip c5-chip--dashed">bio do uzupełnienia</span></p>
+          </div>
         </div></li>
-        <li><div class="cw-k-author">
-          <span class="wf-ph cw-k-author__ph" aria-hidden="true"><svg class="wf-icon wf-icon--lg"><use href="#ti-user"></use></svg></span>
-          <h3 class="c5-h3 c5-h3--md cw-k-author__name">Dr inż. Radosław Łaźny</h3>
-          <p class="c5-src cw-k-author__role">Doradca uprawowy, Plon Expert</p>
-          <p class="cw-k-author__bio">Ekspert w dziedzinie międzynarodowej produkcji roślin warzywnych i jagodowych. Naukowiec, praktyk i doradca w dziedzinie upraw roślin warzywnych i jagodowych metodą hydroponiczną z wykorzystaniem podłoża stałego oraz produkcji warzyw w polu metodą konwencjonalną i ekologiczną.</p>
+        <li><div class="pp-person">
+          <span class="wf-ph pp-person__ph" aria-hidden="true"><svg class="wf-icon wf-icon--lg"><use href="#ti-user"></use></svg></span>
+          <h3 class="pp-person__name">Dr inż. Radosław Łaźny</h3>
+          <div class="pp-person__body">
+          <p class="pp-person__role">Doradca uprawowy, Plon Expert</p>
+          <p>Ekspert w dziedzinie międzynarodowej produkcji roślin warzywnych i jagodowych. Naukowiec, praktyk i doradca w dziedzinie upraw roślin warzywnych i jagodowych metodą hydroponiczną z wykorzystaniem podłoża stałego oraz produkcji warzyw w polu metodą konwencjonalną i ekologiczną.</p>
+          </div>
         </div></li>
-        <li><div class="cw-k-author">
-          <span class="wf-ph cw-k-author__ph" aria-hidden="true"><svg class="wf-icon wf-icon--lg"><use href="#ti-user"></use></svg></span>
-          <h3 class="c5-h3 c5-h3--md cw-k-author__name">Dr inż. Jerzy Próchnicki</h3>
-          <p class="c5-src cw-k-author__role">Niezależny ekspert rolniczy</p>
-          <p class="cw-k-author__bio">Doktor nauk rolniczych, absolwent Akademii Rolniczej we Wrocławiu, z 45-letnim stażem pracy bezpośrednio w rolnictwie jak i w korporacjach pracujących na rzecz rolnictwa w Polsce, Europie oraz globalnie, gdzie zajmował się rozwojem produktów i nowych technologii rolniczych oraz bezpieczeństwem środowiska.</p>
-          <p class="c5-note c5-note--strong c5-note--sm"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-info-circle"></use></svg> <span>Ekspert niezależny – wspiera program merytorycznie, nie prowadzi sprzedaży produktów Carbohort.</span></p>
+        <li><div class="pp-person">
+          <span class="wf-ph pp-person__ph" aria-hidden="true"><svg class="wf-icon wf-icon--lg"><use href="#ti-user"></use></svg></span>
+          <h3 class="pp-person__name">Dr inż. Jerzy Próchnicki</h3>
+          <div class="pp-person__body">
+          <p class="pp-person__role">Niezależny ekspert rolniczy</p>
+          <p>Doktor nauk rolniczych, absolwent Akademii Rolniczej we Wrocławiu, z 45-letnim stażem pracy bezpośrednio w rolnictwie jak i w korporacjach pracujących na rzecz rolnictwa w Polsce, Europie oraz globalnie, gdzie zajmował się rozwojem produktów i nowych technologii rolniczych oraz bezpieczeństwem środowiska.</p>
+          <div class="pp-person__act">
+          <p class="c5-note pp-person__indep"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-info-circle"></use></svg> <span>Ekspert niezależny – wspiera program merytorycznie, nie prowadzi sprzedaży produktów Carbohort.</span></p>
+          </div>
+          </div>
         </div></li>
       </ul>
     </div>
@@ -437,7 +451,7 @@
           <h2 class="c5-h2">Masz pytanie, na które chcesz obszernej odpowiedzi?</h2>
           <p class="c5-lead">Masz swoje pytania, na które chciałbyś, żebyśmy udzielili obszernej odpowiedzi? Daj nam znać w mailu!</p>
           <div class="cw-k-topic__form">
-            <form novalidate data-demo-form>
+            <form class="c5-form" novalidate data-demo-form>
               <div class="wf-field">
                 <label class="wf-label" for="temat-pytanie">Twoje pytanie <span class="wf-req" aria-hidden="true">*</span> <span class="wf-sr-only">(pole wymagane)</span></label>
                 <textarea class="wf-textarea" id="temat-pytanie" name="temat-pytanie" rows="4" required aria-required="true"></textarea>
@@ -447,7 +461,7 @@
                 <input class="wf-input" type="email" id="temat-mail" name="temat-mail" autocomplete="email" aria-describedby="temat-mail-hint">
                 <p class="c5-src cw-k-topic__hint" id="temat-mail-hint">Jeśli chcesz dostać odpowiedź na skrzynkę.</p>
               </div>
-              <button type="submit" class="c5-btn c5-btn--dark"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-send"></use></svg> wyślij pytanie</button>
+              <button type="submit" class="c5-btn c5-btn--dark"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-send"></use></svg> Wyślij pytanie</button>
               <p class="c5-note c5-note--strong c5-note--sm cw-k-topic__msg" data-demo-msg role="status" hidden><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-info-circle"></use></svg> <span>Makieta – formularz demonstracyjny. Nic nie zostało wysłane.</span></p>
             </form>
           </div>
@@ -460,7 +474,7 @@
               <span class="cw-k-ask__name">Nie znalazłeś odpowiedzi na swoje pytanie? Zapytaj naszego przewodnika.</span>
               <p>Przewodnik przeszuka wszystkie artykuły, karty produktów i poradniki i wskaże właściwy materiał.</p>
             </div>
-            <button type="button" class="c5-btn c5-btn--light" data-jurek-open>zapytaj przewodnika</button>
+            <button type="button" class="c5-btn c5-btn--light c5-btn--ico-liscie" data-jurek-open>Zapytaj przewodnika</button>
           </div>
         </div>
 

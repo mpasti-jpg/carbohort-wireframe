@@ -1,0 +1,30 @@
+/* ===== CE-27 · Blok materiału – module (design system v0.1, stage D 18.10.2026) =====
+   No Figma frame: the look is carried over from the finished CEs (EL-15 card,
+   EL-24 icon frame, EL-01 M button), the layout and the content are v7's.
+   Prefix: c5-mt-media. A narrow block that points to a material (a film, a
+   report): an icon frame on the left; a title, one sentence and a small button
+   on the right. No photo – the icon stands in for the frame. One column below
+   700 px.
+
+   Markup (root `.c5-mt-media`; variant `dokument` differs in content only):
+     span.c5-mt-media__ico > svg.wf-icon       icon frame (aria-hidden)
+     .c5-mt-media__body
+       span.c5-mt-media__title                 title
+       span.c5-mt-card__txt                    one sentence (class of the page's cards)
+       a.c5-btn.c5-btn--light.c5-btn--sm       the action
+   The block stands in a section and inside a window (CE-25): the card is white
+   with a grey-200 outline on both, so it reads on a page and in a panel alike. ===== */
+
+.c5-mt-media{display:grid;grid-template-columns:var(--ch-size-icon-frame) minmax(0,1fr);gap:clamp(1.25rem,2.4vw,var(--ch-space-6));align-items:center;margin-top:clamp(1.5rem,3vw,2.5rem);
+  padding:var(--ch-space-5) var(--ch-space-6);background:var(--ch-surface-raised);border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-md);color:var(--ch-text-primary);}
+/* icon frame (EL-24): filled circle 56 px with a 28 px icon */
+.c5-mt-media__ico{display:grid;place-items:center;width:var(--ch-size-icon-frame);height:var(--ch-size-icon-frame);border-radius:var(--w-radius-circle);background:var(--ch-icon-frame-light);color:var(--ch-text-primary);}
+.c5-mt-media__ico .wf-icon{width:var(--ch-size-icon-xl);height:var(--ch-size-icon-xl);color:inherit;}
+.c5-mt-media__body{display:flex;flex-direction:column;gap:var(--ch-space-2);align-items:flex-start;min-width:0;}
+.c5-mt-media__title{font-size:var(--ch-type-title-s-size);line-height:var(--ch-type-title-s-lh);letter-spacing:var(--ch-type-title-s-ls);font-weight:var(--ch-type-title-s-weight);color:var(--ch-text-primary);}
+.c5-mt-media__body .c5-mt-card__txt{font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary);}
+.c5-mt-media__body .c5-btn{margin-top:var(--ch-space-2);}
+
+@media (max-width:699px){
+  .c5-mt-media{grid-template-columns:1fr;padding:var(--ch-space-4);}
+}

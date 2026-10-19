@@ -13,8 +13,10 @@
    frame moves to the top with `order`, the card keeps its place after the text,
    so the reading order never leaves the axis before the programme.
 
-   Pattern rules: grey scale and --w-* / --c5- tokens, sharp corners, no
-   gradients, no shadows on cards. The block lives in the shared layer, so a
+   Look (design system, stage D 18.10.2026): --ch-* tokens only; the frame is
+   a 20 px picture field, the card a 12 px card with a grey-200 outline, the
+   nodes are round, the plate of the current point is the lime badge colour,
+   no shadows. The block lives in the shared layer, so a
    change here shows on every page that links it. A change wanted in one place
    only is a new variant or a new CE with the next number, never an edit of the
    shared rules. Comments in English, never the em dash.
@@ -50,13 +52,13 @@
    says the programme is running now. The marker is a square, like every node
    in V7, and it breathes instead of blinking. */
 .c5-pg__state{display:flex;align-items:flex-start;gap:12px;margin:0;
-  padding-block:10px;border-block:1px solid var(--w-border-subtle);
+  padding:var(--ch-space-3) var(--ch-space-4);background:var(--ch-surface-warm);border-radius:var(--ch-radius-md);
   align-self:stretch;
-  font-size:var(--w-font-sm-size);line-height:1.45;color:var(--w-text-secondary);}
+  font-size:var(--ch-type-small-size);line-height:1.45;color:var(--ch-text-secondary);}
 .c5-pg__live{position:relative;flex:none;width:8px;height:8px;margin-top:.45em;
-  background:var(--w-gray-900);}
+  border-radius:50%;background:var(--ch-color-green-300);}
 .c5-pg__live::after{content:"";position:absolute;inset:-4px;
-  border:1px solid var(--w-gray-900);
+  border:1px solid var(--ch-color-green-300);border-radius:50%;
   animation:c5-pg-pulse 2.4s cubic-bezier(.16,1,.3,1) infinite;}
 @keyframes c5-pg-pulse{
   0%{transform:scale(.6);opacity:.55;}
@@ -66,10 +68,10 @@
 
 /* --- the sentence that carries the whole programme ------------------------ */
 .c5-pg__rule{margin:0;padding-left:clamp(1rem,1.6vw,1.375rem);
-  border-left:3px solid var(--w-gray-900);
-  font-size:clamp(1.0625rem,1.5vw,1.25rem);line-height:1.4;
-  font-weight:var(--w-weight-medium);letter-spacing:-0.01em;
-  color:var(--w-text-primary);}
+  border-left:3px solid var(--ch-color-green-300);
+  font-size:clamp(1.0625rem,1.5vw,var(--ch-type-title-s-size));line-height:1.4;
+  font-weight:var(--ch-font-weight-regular);letter-spacing:var(--ch-type-title-s-ls);
+  color:var(--ch-text-primary);}
 
 /* --- the two numbers ------------------------------------------------------ */
 /* Neither number is big enough for EL-31 (`c5-aff` lifts a unit to the top of
@@ -77,25 +79,25 @@
 .c5-pg__nums{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
   gap:clamp(1.25rem,2.5vw,2.5rem);align-self:stretch;}
 .c5-pg__num{display:flex;flex-direction:column;gap:6px;min-width:0;}
-.c5-pg__numv{display:flex;align-items:baseline;gap:.35em;margin:0;
+.c5-pg__numv{display:flex;align-items:baseline;gap:.35em;margin:0;font-family:var(--ch-font-display);
   font-size:clamp(2.25rem,3.4vw,3rem);line-height:1;
-  font-weight:var(--w-weight-medium);letter-spacing:-0.02em;
+  font-weight:var(--ch-font-weight-regular);letter-spacing:-0.02em;
   font-variant-numeric:tabular-nums;}
-.c5-pg__numu{font-size:.42em;font-weight:var(--w-weight-regular);letter-spacing:0;}
-.c5-pg__numl{margin:0;font-size:var(--w-font-sm-size);line-height:1.45;
-  color:var(--w-text-secondary);}
+.c5-pg__numu{font-size:.42em;font-weight:var(--ch-font-weight-regular);letter-spacing:0;}
+.c5-pg__numl{margin:0;font-size:var(--ch-type-small-size);line-height:1.45;
+  color:var(--ch-text-secondary);}
 
 /* --- scientific coordination --------------------------------------------- */
 /* The note belongs to the first of the two names; the dotted underline is what
    ties them together, because on the home page both names stand in one line. */
 .c5-pg__sci{display:flex;flex-direction:column;gap:10px;align-self:stretch;
   padding-top:clamp(.5rem,1vw,1rem);}
-.c5-pg__scil{margin:0;font-size:var(--w-font-sm-size);line-height:1.5;
-  color:var(--w-text-secondary);}
-.c5-pg__sciname{color:var(--w-text-primary);
-  border-bottom:1px dotted var(--w-border-strong);}
+.c5-pg__scil{margin:0;font-size:var(--ch-type-small-size);line-height:1.5;
+  color:var(--ch-text-secondary);}
+.c5-pg__sciname{color:var(--ch-text-primary);
+  border-bottom:1px dotted var(--ch-border-strong);}
 .c5-pg__indep{display:flex;gap:8px;align-items:flex-start;margin:0;}
-.c5-pg__indep > .wf-icon{flex:none;margin-top:1px;color:var(--w-icon-muted);}
+.c5-pg__indep > .wf-icon{flex:none;margin-top:1px;color:var(--ch-text-secondary);}
 
 .c5-pg__go{margin-top:clamp(.25rem,1vw,.75rem);}
 
@@ -105,48 +107,48 @@
    frame travels through the window. The module removes the property when the
    bus has no motion, and the picture stands still. */
 .c5-pg__fig{position:relative;order:-1;margin:0;overflow:hidden;
-  width:100%;aspect-ratio:4 / 3;background:var(--w-gray-200);}
+  width:100%;aspect-ratio:4 / 3;background:var(--ch-surface-warm-strong);border-radius:var(--ch-radius-control-l);}
 .c5-pg__img{position:absolute;inset:-6% 0 auto;width:100%;height:118%;
   object-fit:cover;
   transform:translateY(calc(var(--c5-pg-par,-6) * 1%));will-change:transform;}
 
 /* --- the card with the axis ----------------------------------------------- */
 .c5-pg__card{position:relative;z-index:1;
-  background:var(--w-surface-page);border:1px solid var(--w-border-default);
+  background:var(--ch-surface-page);border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-md);
   padding:clamp(1.25rem,2.2vw,1.875rem);}
 
 .c5-pg__axis{position:relative;list-style:none;margin:0;padding:0;}
 .c5-pg__ms{position:relative;min-width:0;}
-.c5-pg__when{margin:0;font-size:0.8125rem;line-height:1.3;
-  font-weight:var(--w-weight-medium);letter-spacing:-0.01em;
-  font-variant-numeric:tabular-nums;color:var(--w-text-primary);}
-.c5-pg__what{margin:0;font-size:0.75rem;line-height:1.4;color:var(--w-text-secondary);}
+.c5-pg__when{margin:0;font-size:var(--ch-type-small-size);line-height:1.3;
+  font-weight:var(--ch-font-weight-regular);letter-spacing:-0.01em;
+  font-variant-numeric:tabular-nums;color:var(--ch-text-primary);}
+.c5-pg__what{margin:0;font-size:var(--ch-type-caption-size);line-height:1.4;color:var(--ch-text-secondary);}
 
 /* the node: a square, like every numbered marker of V7. Done is filled, what
    is still ahead of us is an outline. */
 .c5-pg__node{position:relative;flex:none;width:var(--c5-pg-node);
-  height:var(--c5-pg-node);background:var(--w-surface-page);
-  border:1px solid var(--w-border-strong);}
-.c5-pg__ms--done .c5-pg__node{background:var(--w-gray-900);border-color:var(--w-gray-900);}
+  height:var(--c5-pg-node);background:var(--ch-surface-page);border-radius:50%;
+  border:1px solid var(--ch-border-strong);}
+.c5-pg__ms--done .c5-pg__node{background:var(--ch-surface-inverse);border-color:var(--ch-border-strong);}
 .c5-pg__ms--now .c5-pg__node{width:var(--c5-pg-nodenow);height:var(--c5-pg-nodenow);
-  background:var(--w-gray-900);border-color:var(--w-gray-900);}
-.c5-pg__ms--now .c5-pg__node::after{content:"";position:absolute;inset:-5px;
-  border:1px solid var(--w-gray-900);
+  background:var(--ch-badge-active);border-color:var(--ch-border-strong);}
+.c5-pg__ms--now .c5-pg__node::after{content:"";position:absolute;inset:-5px;border-radius:50%;
+  border:1px solid var(--ch-border-strong);
   animation:c5-pg-pulse 2.4s cubic-bezier(.16,1,.3,1) infinite;}
 
 /* the plate that names the point we are standing on. `block` + `fit-content`
    keeps it on a line of its own in both layouts: inline-block would let the
    description of the milestone run alongside it in the column layout. */
 .c5-pg__here{display:block;width:fit-content;margin-bottom:6px;padding:3px 8px;
-  background:var(--w-gray-900);color:var(--w-text-inverse);
-  font-size:0.6875rem;line-height:1.3;font-weight:var(--w-weight-medium);
+  border-radius:var(--ch-radius-xs);background:var(--ch-badge-active);color:var(--ch-text-primary);
+  font-size:var(--ch-type-caption-size);line-height:1.3;font-weight:var(--ch-font-weight-regular);
   letter-spacing:.04em;text-transform:uppercase;}
 
 /* --- the axis in a column (phone and narrow window) ----------------------- */
 /* The line stands on the left and every milestone draws the segment UNDER its
    own node: solid and dark for what is behind us, dashed for what is ahead. */
 .c5-pg__ms{display:grid;grid-template-columns:var(--c5-pg-nodenow) minmax(0,1fr);
-  column-gap:14px;padding-bottom:var(--w-space-5);}
+  column-gap:14px;padding-bottom:var(--ch-space-5);}
 .c5-pg__ms:last-child{padding-bottom:0;}
 .c5-pg__when{grid-column:2;}
 .c5-pg__what{grid-column:2;margin-top:4px;}
@@ -154,11 +156,11 @@
   margin-top:3px;}
 .c5-pg__ms:not(:last-child)::before{content:"";position:absolute;
   left:calc(var(--c5-pg-nodenow) / 2);top:22px;bottom:4px;width:0;
-  border-left:1px dashed var(--w-border-strong);}
+  border-left:1px dashed var(--ch-border-strong);}
 /* what is behind us is drawn solid and dark; the specificity has to match the
    rule above, or the dashed style of the future would win */
 .c5-pg__ms--done:not(:last-child)::before{border-left-style:solid;
-  border-left-color:var(--w-gray-900);}
+  border-left-color:var(--ch-border-strong);}
 
 @media (min-width:900px){
   /* Two rows: row 1 is exactly as high as the frame, row 2 takes whatever the
@@ -198,8 +200,8 @@
   .c5-pg__axis::before,.c5-pg__axis::after{content:"";position:absolute;
     left:10%;top:calc(var(--c5-pg-when) + var(--c5-pg-noderow) / 2);}
   .c5-pg__axis::before{right:10%;height:0;
-    border-top:1px dashed var(--w-border-strong);}
-  .c5-pg__axis::after{right:70%;height:1px;background:var(--w-gray-900);
+    border-top:1px dashed var(--ch-border-strong);}
+  .c5-pg__axis::after{right:70%;height:1px;background:var(--ch-surface-inverse);
     transform-origin:left center;}
 
   .c5-pg__ms{display:grid;grid-template-columns:none;

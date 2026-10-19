@@ -21,45 +21,13 @@
    ========================================================================= */
 
 /* --- 00 · Page tokens ------------------------------------------------------
-   The greens are the two values of the designer's frames used across V7
-   (kicker ink, primary button of the closing band). The earth colours belong
-   to the proportion bars only. */
-:root{
-  --b-ink:#0c2b1c;
-  --b-green:#86d574;
-  --b-green-h:#77c169;
-  --b-peat:#96795c;      /* peat in the proportion bars */
-  --b-saw:#d8c49a;       /* sawdust */
-  --b-soil:#ddd6c9;      /* native soil */
-  --b-lig:#1d1a17;       /* lignite */
-}
+   None: the raw colours of the first prototype (`--b-ink`, `--b-green`,
+   `--b-peat` …) were unused or belong to the proportion bars, which moved to
+   ce/CE-87-porownanie-trwalosci.css and now use palette tokens. */
 
 /* 27 · Key numbers → ce/CE-24-pas-liczb.css */
 
-/* --- 45 · Lignite and peat (CE-87) ----------------------------------------
-   One fact drawn to scale (how long each material lasts in the soil) and four
-   advantages as tiles. The bars are decoration: the numbers stand in text. */
-.b-peat__grid{display:grid;gap:clamp(2rem,4vw,4rem);}
-.b-dur{display:grid;gap:var(--w-space-5);margin:0;}
-.b-dur__row{display:grid;gap:var(--w-space-2);}
-.b-dur__lab{display:flex;justify-content:space-between;align-items:baseline;gap:var(--w-space-4);}
-.b-dur__name{font-size:.9375rem;font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
-.b-dur__val{font-size:clamp(1.5rem,2.6vw,2.25rem);line-height:1;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;color:var(--w-text-primary);white-space:nowrap;}
-.b-dur__track{position:relative;height:14px;background:var(--w-surface-page);border:1px solid var(--w-border-default);}
-.b-dur__fill{position:absolute;inset:0 auto 0 0;width:var(--p);background:var(--b-peat);}
-.b-dur__fill--lig{background:var(--b-lig);}
-.b-dur__fill--open{-webkit-mask-image:linear-gradient(90deg,#000 70%,transparent);mask-image:linear-gradient(90deg,#000 70%,transparent);}
-.b-dur__src{max-width:60ch;}
-.b-tiles{list-style:none;margin:0;padding:0;display:grid;gap:var(--w-space-3);grid-template-columns:minmax(0,1fr);}
-.b-tile{display:flex;flex-direction:column;gap:var(--w-space-3);padding:var(--w-space-5);background:var(--w-surface-page);border:1px solid var(--w-border-default);}
-.b-tile__t{font-size:1.0625rem;line-height:1.3;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;color:var(--w-text-primary);}
-.b-tile p{margin:0;font-size:.9375rem;line-height:1.55;color:var(--w-text-secondary);}
-@media (min-width:640px){.b-tiles{grid-template-columns:repeat(2,minmax(0,1fr));}}
-@media (min-width:1000px){
-  .b-peat__grid{grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:start;}
-}
-
-
+/* --- 45 · Lignite and peat → ce/CE-87-porownanie-trwalosci.css --- */
 
 /* --- 47 · Products of a stage (stages 1–4, iteration 4 of 15.10.2026) -------
    Under the head of each stage section: a small label and the products the
@@ -72,18 +40,18 @@
    the packshot, no arrow, and it links to the shop. Group template of the
    berry crops: the next berry page fills the same list with its products. */
 .b-stage{display:flex;flex-direction:column;gap:var(--w-space-3);margin-top:clamp(1.5rem,3vw,2.25rem);}
-.b-stage__lab{margin:0;font-size:.75rem;line-height:1.4;letter-spacing:.06em;text-transform:uppercase;color:var(--w-text-tertiary);}
+.b-stage__lab{margin:0;font-size:var(--ch-type-overline-size);line-height:var(--ch-type-overline-lh);letter-spacing:var(--ch-type-overline-ls);text-transform:uppercase;color:var(--ch-text-secondary);}
 .b-prods{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:var(--w-space-2);}
 .b-prods > li{display:flex;max-width:100%;}
 .b-prodbox{display:inline-grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;
-  min-height:60px;max-width:100%;padding:7px 12px 7px 9px;background:var(--w-surface-page);
-  border:1px solid var(--w-border-default);border-radius:0;font:inherit;font-size:var(--w-font-sm-size);
-  line-height:1.35;font-weight:var(--w-weight-medium);color:var(--w-text-primary);text-align:left;
+  min-height:60px;max-width:100%;padding:7px 12px 7px 9px;background:var(--ch-surface-raised);
+  border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-md);font:inherit;font-size:var(--ch-type-small-size);
+  line-height:1.35;font-weight:var(--ch-font-weight-medium);color:var(--ch-text-primary);text-align:left;
   text-decoration:none;cursor:pointer;transition:border-color var(--w-duration-base) var(--w-ease);}
-.b-prodbox:hover,.b-prodbox:focus-visible{border-color:var(--w-gray-900);}
+.b-prodbox:hover,.b-prodbox:focus-visible{border-color:var(--ch-border-control);}
 .b-prodbox:focus-visible{outline:2px solid var(--w-focus-ring);outline-offset:2px;}
-.b-prodbox--plain{grid-template-columns:auto minmax(0,1fr);border-style:dashed;color:var(--w-text-secondary);}
-.b-prodbox__pack{display:flex;align-items:center;justify-content:center;width:40px;height:44px;background:var(--w-gray-100);}
+.b-prodbox--plain{grid-template-columns:auto minmax(0,1fr);border-style:dashed;border-color:var(--ch-border-control);color:var(--ch-text-secondary);}
+.b-prodbox__pack{display:flex;align-items:center;justify-content:center;width:40px;height:44px;border-radius:var(--ch-radius-sm);background:var(--ch-surface-warm);}
 .b-prodbox__pack img{width:100%;height:100%;object-fit:contain;}
 .b-prodbox__pack .wf-icon{color:var(--w-text-tertiary);}
 .b-prodbox__name{min-width:0;}

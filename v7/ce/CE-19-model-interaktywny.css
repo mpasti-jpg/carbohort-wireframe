@@ -1,0 +1,82 @@
+/* ===== CE-19 · Model interaktywny – module (design system v0.1, stage D 18.10.2026) =====
+   No Figma frame: the look is carried over from the finished CEs (EL-15 card,
+   EL-18 tab rail, display heading), the layout and the mechanics are v7's.
+   Prefix: c5-mt-model. An SVG drawing in a frame on the left, a description
+   panel on the right and a row of switches under the pair; one part of the
+   model is lit at a time. Mechanics: a group of radio inputs and `:checked`
+   selectors – no script. The first radio is the part shown at the start.
+
+   Markup contract (fieldset root, DIRECT children in this order):
+     input.c5-mt-model__radio ×N      the state, N = number of parts
+     .c5-mt-model__stage              the frame with the SVG; parts carry
+                                      [data-part="1…N"], the base layer
+                                      `.c5-mt-model__base` is always lit
+     .c5-mt-model__panels             one `.c5-mt-model__panel[data-panel="1…N"]`
+                                      per part (value + description)
+     .c5-mt-model__tabs               N × label.c5-mt-model__tab[for=radio-i], in order
+   Selectors use the position of the radio (`input:nth-of-type`), not an id, so
+   any instance with up to five parts works; more parts need more lines below.
+   Per-instance tuning (style on the root): --c5-model-panel-w (description column). ===== */
+
+.c5-mt-model{position:relative;border:0;margin:clamp(2rem,4vw,3.5rem) 0 0;padding:0;min-width:0;display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,var(--c5-model-panel-w,20rem));
+  column-gap:clamp(1.5rem,4vw,3.5rem);row-gap:var(--ch-space-5);align-items:start;color:var(--ch-text-primary);}
+.c5-mt-model__radio{position:absolute;width:1px;height:1px;opacity:0;}
+
+/* frame: EL-15 card (white, grey-200 outline, 12 px) */
+.c5-mt-model__stage{grid-column:1;grid-row:1;background:var(--ch-surface-raised);border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-md);padding:clamp(1rem,2.5vw,1.75rem);}
+.c5-mt-model__stage svg{display:block;width:100%;height:auto;color:var(--ch-text-primary);}
+.c5-mt-model__base{opacity:.45;}
+.c5-mt-model__part{opacity:.28;transition:opacity var(--ch-motion-duration-base) var(--ch-motion-ease);}
+
+/* description: display figure + body text */
+.c5-mt-model__panels{grid-column:2;grid-row:1;display:flex;flex-direction:column;gap:var(--ch-space-4);padding-top:var(--ch-space-2);}
+.c5-mt-model__panel{display:none;flex-direction:column;gap:var(--ch-space-3);}
+.c5-mt-model__val{font-family:var(--ch-type-h3-display-font);font-size:clamp(1.5rem,2.6vw,var(--ch-type-display-sm-size));line-height:1.25;font-weight:var(--ch-type-h3-display-weight);letter-spacing:var(--ch-type-h3-display-ls);color:var(--ch-text-primary);text-wrap:balance;}
+.c5-mt-model__desc{font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary);}
+
+/* switches: EL-19 tab rail (white, 12 px corners, padding 6) with EL-18 tabs */
+.c5-mt-model__tabs{grid-column:1 / -1;grid-row:2;justify-self:start;display:flex;flex-wrap:wrap;gap:var(--ch-space-1);max-width:100%;
+  padding:6px;background:var(--c5-tabrail-bg,var(--ch-surface-warm));border-radius:var(--ch-radius-md);}
+.c5-mt-model__tab{display:inline-flex;align-items:center;padding:10px var(--ch-space-5);border-radius:var(--ch-radius-tab);
+  font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);letter-spacing:var(--ch-type-tab-ls);color:var(--ch-text-primary);opacity:.6;cursor:pointer;white-space:nowrap;
+  transition:background var(--ch-motion-duration-base) var(--ch-motion-ease),opacity var(--ch-motion-duration-base) var(--ch-motion-ease);}
+.c5-mt-model__tab:hover{opacity:1;}
+
+/* state: part n lit, panel n shown, tab n selected */
+.c5-mt-model__radio:nth-of-type(1):checked ~ .c5-mt-model__panels [data-panel="1"],
+.c5-mt-model__radio:nth-of-type(2):checked ~ .c5-mt-model__panels [data-panel="2"],
+.c5-mt-model__radio:nth-of-type(3):checked ~ .c5-mt-model__panels [data-panel="3"],
+.c5-mt-model__radio:nth-of-type(4):checked ~ .c5-mt-model__panels [data-panel="4"],
+.c5-mt-model__radio:nth-of-type(5):checked ~ .c5-mt-model__panels [data-panel="5"]{display:flex;}
+.c5-mt-model__radio:nth-of-type(1):checked ~ .c5-mt-model__stage [data-part="1"],
+.c5-mt-model__radio:nth-of-type(2):checked ~ .c5-mt-model__stage [data-part="2"],
+.c5-mt-model__radio:nth-of-type(3):checked ~ .c5-mt-model__stage [data-part="3"],
+.c5-mt-model__radio:nth-of-type(4):checked ~ .c5-mt-model__stage [data-part="4"],
+.c5-mt-model__radio:nth-of-type(5):checked ~ .c5-mt-model__stage [data-part="5"]{opacity:1;}
+.c5-mt-model__radio:nth-of-type(1):checked ~ .c5-mt-model__tabs .c5-mt-model__tab:nth-of-type(1),
+.c5-mt-model__radio:nth-of-type(2):checked ~ .c5-mt-model__tabs .c5-mt-model__tab:nth-of-type(2),
+.c5-mt-model__radio:nth-of-type(3):checked ~ .c5-mt-model__tabs .c5-mt-model__tab:nth-of-type(3),
+.c5-mt-model__radio:nth-of-type(4):checked ~ .c5-mt-model__tabs .c5-mt-model__tab:nth-of-type(4),
+.c5-mt-model__radio:nth-of-type(5):checked ~ .c5-mt-model__tabs .c5-mt-model__tab:nth-of-type(5){background:var(--c5-tab-on,var(--ch-tab-active));opacity:1;}
+.c5-mt-model__radio:nth-of-type(1):focus-visible ~ .c5-mt-model__tabs .c5-mt-model__tab:nth-of-type(1),
+.c5-mt-model__radio:nth-of-type(2):focus-visible ~ .c5-mt-model__tabs .c5-mt-model__tab:nth-of-type(2),
+.c5-mt-model__radio:nth-of-type(3):focus-visible ~ .c5-mt-model__tabs .c5-mt-model__tab:nth-of-type(3),
+.c5-mt-model__radio:nth-of-type(4):focus-visible ~ .c5-mt-model__tabs .c5-mt-model__tab:nth-of-type(4),
+.c5-mt-model__radio:nth-of-type(5):focus-visible ~ .c5-mt-model__tabs .c5-mt-model__tab:nth-of-type(5){outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:2px;}
+
+@media (max-width:899px){
+  /* one column, order stage -> switches -> panel: the control sits right under
+     the drawing it drives, the description reads last */
+  .c5-mt-model{grid-template-columns:1fr;}
+  .c5-mt-model__stage,.c5-mt-model__panels,.c5-mt-model__tabs{grid-column:1;}
+  .c5-mt-model__stage{grid-row:1;padding:clamp(0.75rem,3vw,1.25rem);}
+  .c5-mt-model__tabs{grid-row:2;justify-self:stretch;}
+  .c5-mt-model__panels{grid-row:3;padding-top:0;}
+  /* Dimension labels are drawn in viewBox units (660 wide): on a 375 px screen
+     they fall to ~6 px. 20 units gives ~9 px and still fits the viewBox. */
+  .c5-mt-model__stage svg text{font-size:20px;}
+}
+@media (prefers-reduced-motion: reduce){
+  .c5-mt-model__part,.c5-mt-model__tab{transition:none;}
+}

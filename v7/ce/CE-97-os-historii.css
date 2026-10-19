@@ -56,7 +56,8 @@
      --c5-hist-panel-ink   text colour on the panel
      --c5-hist-muted       background of the panel of an inactive card
      --c5-hist-muted-ink   text colour on that panel
-     --c5-hist-radius      corner radius of a card (0 by default)
+     --c5-hist-radius      corner radius of a card (20 px = large photo of the
+                           foundation, stage D 18.10.2026)
    ========================================================================== */
 
 .c5-hist{
@@ -64,16 +65,16 @@
   --c5-hist-share:.7;
   --c5-hist-card-max:52.5rem;
   --c5-hist-card-h:clamp(22rem,34cqi,29.5rem);
-  --c5-hist-gap:clamp(1rem,2.8vw,2.5rem);
+  --c5-hist-gap:clamp(var(--ch-space-4),2.8vw,var(--ch-space-10));
   --c5-hist-peek:2.75rem;
   --c5-hist-mt:clamp(2rem,4vw,3rem);
-  --c5-hist-panel:var(--w-gray-900);
-  --c5-hist-panel-ink:var(--w-white);
-  --c5-hist-muted:var(--w-gray-200);
-  --c5-hist-muted-ink:var(--w-gray-900);
-  --c5-hist-radius:0px;
+  --c5-hist-panel:var(--ch-surface-inverse);
+  --c5-hist-panel-ink:var(--ch-text-inverse);
+  --c5-hist-muted:var(--ch-surface-warm-strong);
+  --c5-hist-muted-ink:var(--ch-text-primary);
+  --c5-hist-radius:var(--ch-radius-control-l);
   /* left edge of the page container, measured from the edge of the window */
-  --c5-hist-inset:calc(max((100cqi - var(--c5-hist-wrap)) / 2, 0px) + var(--w-space-5));
+  --c5-hist-inset:calc(max((100cqi - var(--c5-hist-wrap)) / 2, 0px) + var(--ch-space-5));
   container-type:inline-size;
 }
 
@@ -85,24 +86,26 @@
 .c5-hist__card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
   min-height:var(--c5-hist-card-h);overflow:hidden;border-radius:var(--c5-hist-radius);
   background:var(--c5-hist-panel);}
-.c5-hist__media{position:relative;min-height:0;overflow:hidden;background:var(--w-gray-100);}
+.c5-hist__media{position:relative;min-height:0;overflow:hidden;background:var(--ch-surface-warm-strong);}
 .c5-hist__media img,
 .c5-hist__media .wf-ph{position:absolute;inset:0;width:100%;height:100%;max-width:none;
   object-fit:cover;border:0;border-radius:0;}
 .c5-hist__media .wf-ph{display:grid;place-items:center;}
-.c5-hist__cap{position:absolute;left:var(--w-space-3);bottom:var(--w-space-3);
-  padding:.25rem .5rem;font-size:.6875rem;line-height:1.2;letter-spacing:.02em;
-  color:var(--w-gray-700);background:rgba(255,255,255,.86);}
+.c5-hist__cap{position:absolute;left:var(--ch-space-3);bottom:var(--ch-space-3);
+  padding:var(--ch-space-1) var(--ch-space-2);border-radius:var(--ch-radius-xs);
+  font-size:var(--ch-type-caption-size);line-height:1.2;letter-spacing:.02em;
+  color:var(--ch-text-primary);background:var(--ch-surface-page);}
 
 .c5-hist__panel{display:flex;flex-direction:column;min-width:0;
-  padding:clamp(1.5rem,2.6vw,2.25rem) clamp(1.5rem,2.8vw,2.5rem);
+  padding:clamp(var(--ch-space-6),2.6vw,var(--ch-space-8)) clamp(var(--ch-space-6),2.8vw,var(--ch-space-10));
   background:var(--c5-hist-panel);color:var(--c5-hist-panel-ink);
-  transition:background-color var(--w-duration-base) var(--w-ease),color var(--w-duration-base) var(--w-ease);}
-.c5-hist__year{display:block;margin:0;font-size:clamp(3rem,6.4cqi,5rem);line-height:1;
-  font-weight:300;letter-spacing:.01em;font-variant-numeric:tabular-nums;}
-.c5-hist__title{margin:auto 0 0;padding-top:var(--w-space-6);color:inherit;
-  font-size:clamp(1.25rem,2.1cqi,1.75rem);line-height:1.25;font-weight:var(--w-weight-regular);letter-spacing:-0.005em;}
-.c5-hist__text{margin:var(--w-space-4) 0 0;max-width:34em;font-size:.9375rem;line-height:1.55;color:inherit;opacity:.82;}
+  transition:background-color var(--ch-motion-duration-base) var(--ch-motion-ease),color var(--ch-motion-duration-base) var(--ch-motion-ease);}
+.c5-hist__year{display:block;margin:0;font-family:var(--ch-type-display-num-font);font-size:clamp(3rem,6.4cqi,5rem);line-height:1;
+  font-weight:var(--ch-type-display-num-weight);letter-spacing:var(--ch-type-display-num-ls);font-variant-numeric:tabular-nums;}
+.c5-hist__title{margin:auto 0 0;padding-top:var(--ch-space-6);color:inherit;
+  font-family:var(--ch-type-title-font);font-size:clamp(1.25rem,2.1cqi,var(--ch-type-title-size));line-height:1.25;
+  font-weight:var(--ch-type-title-weight);letter-spacing:var(--ch-type-title-ls);}
+.c5-hist__text{margin:var(--ch-space-4) 0 0;max-width:34em;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:inherit;opacity:.82;}
 
 /* --- the axis of years (shown by the script) ---------------------------------- */
 .c5-hist__axis{margin-top:clamp(1.75rem,3.5vw,2.75rem);}
@@ -112,19 +115,19 @@
 .c5-hist__yr:last-child{flex:none;min-width:0;}
 /* the line between two dots, kept clear of both dots */
 .c5-hist__yr:not(:last-child)::after{content:"";position:absolute;
-  top:calc(1.25rem * 1.2 + var(--w-space-3) + 5px);left:calc(2.25rem + .9rem);right:calc(-2.25rem + .9rem);
-  height:1px;background:var(--w-border-strong);pointer-events:none;}
-.c5-hist__go{display:inline-flex;flex-direction:column;align-items:center;gap:var(--w-space-3);
-  width:4.5rem;padding:0 0 var(--w-space-2);color:var(--w-text-tertiary);text-decoration:none;
-  transition:color var(--w-duration-base) var(--w-ease);}
+  top:calc(1.25rem * 1.2 + var(--ch-space-3) + 5px);left:calc(2.25rem + .9rem);right:calc(-2.25rem + .9rem);
+  height:1px;background:var(--ch-border-control);pointer-events:none;}
+.c5-hist__go{display:inline-flex;flex-direction:column;align-items:center;gap:var(--ch-space-3);
+  width:4.5rem;padding:0 0 var(--ch-space-2);color:var(--ch-text-secondary);text-decoration:none;
+  transition:color var(--ch-motion-duration-base) var(--ch-motion-ease);}
 .c5-hist__go:hover,
-.c5-hist__go[aria-current="true"]{color:var(--w-text-primary);}
+.c5-hist__go[aria-current="true"]{color:var(--ch-text-primary);}
 .c5-hist__go:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:var(--w-focus-ring-offset);}
 .c5-hist__yrnum{font-size:1.25rem;line-height:1.2;font-variant-numeric:tabular-nums;}
-.c5-hist__dot{width:10px;height:10px;border-radius:2px;background:var(--w-gray-400);
-  transition:background-color var(--w-duration-base) var(--w-ease),transform var(--w-duration-base) var(--w-ease);}
-.c5-hist__go:hover .c5-hist__dot{background:var(--w-gray-600);}
-.c5-hist__go[aria-current="true"] .c5-hist__dot{background:var(--w-gray-900);transform:scale(1.2);}
+.c5-hist__dot{width:10px;height:10px;border-radius:var(--ch-radius-xs);background:var(--ch-color-grey-400);
+  transition:background-color var(--ch-motion-duration-base) var(--ch-motion-ease),transform var(--ch-motion-duration-base) var(--ch-motion-ease);}
+.c5-hist__go:hover .c5-hist__dot{background:var(--ch-color-grey-600);}
+.c5-hist__go[aria-current="true"] .c5-hist__dot{background:var(--ch-text-primary);transform:scale(1.2);}
 
 /* --- the script runs: one row that scrolls sideways ----------------------------- */
 .c5-hist.is-ready .c5-hist__view{position:relative;overflow-x:auto;overflow-y:hidden;
@@ -146,18 +149,18 @@
 
 /* --- phones: the card stands upright, the axis scrolls on its own --------------- */
 @media (max-width:767px){
-  .c5-hist{--c5-hist-gap:var(--w-space-4);}
+  .c5-hist{--c5-hist-gap:var(--ch-space-4);}
   .c5-hist__card{grid-template-columns:minmax(0,1fr);grid-template-rows:auto 1fr;min-height:0;}
   .c5-hist__media{aspect-ratio:4/3;}
   .c5-hist__year{font-size:clamp(2.5rem,12cqi,3.25rem);}
-  .c5-hist__title{margin-top:0;padding-top:var(--w-space-4);font-size:1.25rem;}
+  .c5-hist__title{margin-top:0;padding-top:var(--ch-space-4);font-size:1.25rem;}
   .c5-hist{--c5-hist-card-w:calc(100cqi - 2 * var(--c5-hist-inset) - var(--c5-hist-peek));}
   /* the axis runs past the container edge and scrolls without a scrollbar */
   .c5-hist__years{overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;
-    margin-inline:calc(-1 * var(--w-space-5));padding-inline:var(--w-space-5);}
+    margin-inline:calc(-1 * var(--ch-space-5));padding-inline:var(--ch-space-5);}
   .c5-hist__years::-webkit-scrollbar{display:none;}
   .c5-hist__yr{flex:none;width:6.5rem;min-width:0;}
-  .c5-hist__yr:last-child{width:auto;padding-right:var(--w-space-5);}
+  .c5-hist__yr:last-child{width:auto;padding-right:var(--ch-space-5);}
 }
 
 @media (prefers-reduced-motion: reduce){

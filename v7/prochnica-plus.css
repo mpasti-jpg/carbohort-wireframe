@@ -63,18 +63,20 @@
    in the wireframe – the stage panel is transparent here.
    The H1 has the pattern size of CE-08 again (the size exception of 11.10 is
    gone). Root modifier `pp-intro`; module CE-08 unchanged. ================ */
-#hero.pp-intro{position:relative;z-index:2;background:var(--w-surface-sunken);
+/* stage C (18.10.2026): the tint is the beige of frame 916:3338 (beige-50);
+   the look of the poster and the play button lives in CE-08, variant player.
+   No arc motif until the designer draws this hero (decision 18.10, p. 4). */
+#hero.pp-intro{position:relative;z-index:2;background:var(--ch-surface-warm);
   transition:background-color .6s var(--w-ease);}
-#hero.pp-intro.is-light{background:var(--w-surface-page);}
-#hero.pp-intro .c5-hero__stage{overflow:visible;background:transparent;display:block;place-items:normal;padding:0;}
+#hero.pp-intro.is-light{background:var(--ch-surface-page);}
+/* G12 (18.10.2026): the sygnet fades out together with the beige when the section turns white */
+#hero.pp-intro.is-light{--c5-sygnet-o:0;}
+#hero.pp-intro .c5-hero__stage{overflow:visible;display:block;place-items:normal;}
+/* P01 (18.10.2026): the film button carries the drawn „circle-play” of Figma
+   803:1696 (ring + rounded triangle in one inline SVG), so the CSS ring CE-08
+   puts around the bare sprite triangle is switched off for it */
+#hero .c5-hero__filmbtn .wf-icon.pp-ico-cplay{padding:0;border:0;border-radius:0;stroke-width:1.5;}
 .pp-intro .pp-film{max-width:none;}
-/* the poster of the film: the proportion of the frame in the design (781 × 553);
-   the whole poster is the play button */
-.pp-intro .pp-film .pp-film__play{width:100%;aspect-ratio:781/553;display:grid;place-items:center;
-  padding:0;border:1px solid var(--w-border-default);border-radius:0;
-  background:var(--w-placeholder-fill);color:var(--w-text-secondary);cursor:pointer;
-  transition:background-color var(--w-duration-base) var(--w-ease);}
-.pp-intro .pp-film .pp-film__play:hover{background:var(--w-gray-200);}
 @media (min-width:900px){
   .pp-intro__rail{position:absolute;top:0;left:0;right:0;height:var(--pp-rail-h,100%);}
   .pp-intro__pin{position:sticky;top:calc(var(--cx-navbar-h,0px) / 2 + var(--c5-gutter));
@@ -87,27 +89,42 @@
 
 /* --- film window (annotation of the player in frame 916:1427) ---------------
    Play opens the film in a window as wide as the film, over a darkened page
-   that does not scroll (`html.pp-lock`, block 52). The window is built by the
-   script from the poster; in the live site the YouTube player goes here. */
-.pp-filmdlg{position:fixed;inset:0;margin:auto;padding:0;max-width:none;
-  width:min(1280px, 100% - 2 * var(--c5-gutter), (100svh - 2 * var(--c5-gutter) - 88px) * 16 / 9);
-  border:0;border-radius:0;background:transparent;color:var(--w-text-inverse);overflow:visible;}
-.pp-filmdlg[open]{display:flex;flex-direction:column;gap:var(--w-space-3);}
-.pp-filmdlg::backdrop{background:rgb(0 0 0 / .78);}
-.pp-filmdlg .wf-ph{width:100%;aspect-ratio:16/9;display:grid;place-items:center;
-  border:0;border-radius:0;background:var(--w-gray-800);color:var(--w-gray-300);}
-.pp-filmdlg .wf-ph .wf-icon{width:56px;height:56px;}
-.pp-filmdlg .wf-caption{color:var(--w-gray-300);}
-.pp-filmdlg__close{align-self:flex-end;display:grid;place-items:center;width:44px;height:44px;
-  padding:0;border:1px solid rgb(255 255 255 / .5);border-radius:0;background:transparent;
-  color:var(--w-text-inverse);cursor:pointer;}
-.pp-filmdlg__close:hover{border-color:var(--w-white);}
-@media (prefers-reduced-motion: no-preference){
-  .pp-filmdlg[open]{animation:ppFilmGrow .35s var(--w-ease) both;}
-  .pp-filmdlg[open]::backdrop{animation:ppFilmFade .35s var(--w-ease) both;}
-}
-@keyframes ppFilmGrow{from{opacity:0;transform:scale(.62);}to{opacity:1;transform:none;}}
-@keyframes ppFilmFade{from{opacity:0;}to{opacity:1;}}
+   that does not scroll (`html.pp-lock`, CE-37 module). The window is built by
+   the script (block 20 of prochnica-plus.js).
+   Stage E (18.10.2026): the screen grows out of the film frame on the page
+   (FLIP – the script sets `--pp-flip` and `.is-anim`; only transform and
+   opacity move) and shrinks back into it on close; with motion off
+   (< 900 px, reduced motion) the window simply appears. Overlay as the shell
+   of CE-25: overlay-modal + blur-modal. The screen carries the poster and the
+   glass play mark until a YouTube id is set (`data-yt` on #film) – then the
+   click swaps in a youtube-nocookie iframe; nothing of YouTube loads before. */
+.pp-filmdlg{position:fixed;inset:0;margin:auto;padding:0;max-width:none;max-height:none;
+  width:min(1280px, 100% - 2 * var(--c5-gutter), (100svh - 2 * var(--c5-gutter) - 2 * var(--ch-size-control-m) - 2 * var(--ch-space-3)) * 16 / 9);
+  height:fit-content;border:0;border-radius:0;background:transparent;color:var(--ch-text-inverse);overflow:visible;}
+.pp-filmdlg[open]{display:flex;flex-direction:column;gap:var(--ch-space-3);}
+.pp-filmdlg::backdrop{background:var(--ch-color-overlay-modal);
+  -webkit-backdrop-filter:blur(var(--ch-effect-blur-modal));backdrop-filter:blur(var(--ch-effect-blur-modal));}
+.pp-filmdlg__screen{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;isolation:isolate;
+  display:grid;place-items:center;border-radius:var(--ch-radius-control-l);background:var(--ch-surface-inverse);
+  transform-origin:0 0;}
+.pp-filmdlg__screen > img{position:absolute;inset:0;z-index:-1;width:100%;height:100%;object-fit:cover;object-position:50% 100%;}
+.pp-filmdlg__screen > iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+.pp-filmdlg__screen .pp-film__btn{display:grid;place-items:center;width:88px;height:88px;border-radius:var(--ch-radius-xl);}
+.pp-filmdlg__screen .pp-film__btn .wf-icon{display:none;}
+.pp-filmdlg .wf-caption{color:var(--ch-text-inverse-muted);}
+/* close: a bare 32 px icon as in the shell of CE-25, 44 px hit area */
+.pp-filmdlg__close{align-self:flex-end;display:grid;place-items:center;width:var(--ch-size-control-m);height:var(--ch-size-control-m);
+  padding:0;border:0;background:transparent;color:var(--ch-text-inverse);cursor:pointer;}
+.pp-filmdlg__close .wf-icon{width:32px;height:32px;}
+.pp-filmdlg__close:focus-visible{outline:2px solid var(--ch-text-inverse);outline-offset:2px;}
+/* FLIP: start / end state; the script toggles `.is-flip` (screen sits on the
+   film frame, chrome hidden) and `.is-anim` (transitions on) */
+.pp-filmdlg.is-anim .pp-filmdlg__screen{transition:transform .5s var(--ch-motion-ease);}
+.pp-filmdlg.is-anim .pp-filmdlg__close,.pp-filmdlg.is-anim .wf-caption{transition:opacity .3s var(--ch-motion-ease);}
+.pp-filmdlg.is-anim::backdrop{transition:opacity .5s var(--ch-motion-ease);}
+.pp-filmdlg.is-flip .pp-filmdlg__screen{transform:var(--pp-flip,none);}
+.pp-filmdlg.is-flip .pp-filmdlg__close,.pp-filmdlg.is-flip .wf-caption{opacity:0;}
+.pp-filmdlg.is-flip::backdrop{opacity:0;}
 
 /* ===== 30 · O PROGRAMIE – CE-69, page exception of the layout (15.10.2026) ==
    Figma frame 916:3487. The section stands on CE-69 (`ce/CE-69-wstep-z-
@@ -117,37 +134,15 @@
    empty – the sticky player of the hero (block 20) runs through it. Tiles,
    photo frame and the bottom band of the module are not used here.
    Box after the frame: name on top, list of features with the packshot on its
-   right, two buttons of equal width. Module CE-69 unchanged. ============== */
-.pp-opis__left{display:flex;flex-direction:column;gap:clamp(2.5rem,12.6vw,11.375rem);min-width:0;max-width:555px;}
-.pp-opis__txt{display:flex;flex-direction:column;gap:var(--w-space-4);max-width:31rem;}
-.pp-opis__txt p,.pp-opis__label{margin:0;font-size:1.125rem;line-height:1.55;color:var(--w-text-secondary);}
-.pp-opis__prodwrap{display:flex;flex-direction:column;gap:clamp(1.5rem,2.8vw,2.5625rem);}
-.pp-opis__prodwrap{transition-delay:.08s;}
-.pp-opis__prod{min-height:0;gap:clamp(1.75rem,3.5vw,3.125rem);}
-.pp-opis__prod .c5-opener__prodname{font-size:1.125rem;font-weight:var(--w-weight-regular, 400);color:var(--w-text-secondary);}
-.pp-opis__prodtop{grid-template-columns:minmax(0,1fr) auto;align-items:center;}
-.pp-opis__prodtop .c5-opener__feats{margin-top:0;}
-.pp-opis__prodtop .c5-opener__pack{background:none;padding:0;}
-.pp-opis__prodtop .c5-opener__pack img{height:clamp(150px,16vw,228px);}
-.pp-opis__btns{grid-template-columns:repeat(2,minmax(0,1fr));}
-@media (max-width:899px){
-  .pp-opis__left{max-width:none;}
-}
-@media (max-width:599px){
-  .pp-opis__prodtop{grid-template-columns:minmax(0,1fr);}
-  .pp-opis__prodtop .c5-opener__pack{justify-self:start;}
-  .pp-opis__btns{grid-template-columns:minmax(0,1fr);}
-}
-@media (prefers-reduced-motion: reduce){
-  .pp-opis__prodwrap{transition-delay:0s;}
-}
+   right, two buttons of equal width.
+   Stage C (18.10.2026): all of it moved to the module as the variant
+   `c5-opener--z-playerem`; nothing of CE-69 is left on this sheet
+   (`pp-opis__prod` stays in the HTML only as the hook of block 20 of
+   prochnica-plus.js). ===================================================== */
 
-/* ===== 35 · ZAŁOŻENIA – CE-70, slide 03: three areas (11.10.2026) ===========
-   Page exception: the plot shows three areas in one line (test 200 l/ha,
-   test 500 l/ha, one control), each marked with ONE square instead of three
-   row marks. The module keeps its two-column field for other pages. ====== */
-#zalozenia .c5-vs__field{grid-template-columns:repeat(3,minmax(0,1fr));}
-#zalozenia .c5-vs__rows i{width:28px;height:28px;}
+/* ===== 35 · ZAŁOŻENIA – CE-70 =============================================
+   No exception left here: the three areas of slide 03 (11.10.2026) are the
+   modifier `c5-vs__plot--trzy` of the module (stage E, 18.10.2026). ====== */
 
 /* ===== 40 · Boksy ilustracji sceny „Metodologia" ============================
    (pp-sviz, pp-layout, pp-lband, pp-dots, pp-cal2, pp-stack)
@@ -232,82 +227,7 @@
   .pp-sviz .pp-cal2{grid-template-columns:minmax(0,1fr);}
 }
 
-/* ===== 45 · Oczekiwane długofalowe korzyści – CE-44 wariant `tlo-foto` (§18.4)
-   Port bloku 55 z Kukurydzy (`u-fk*` → `pp-kor*`, klasy strony zostają).
-   Domyślnie (mobile / ograniczony ruch / bez JS): scena jako blok (kadr tła
-   + napis, min. 70 svh), pod nią kafle w jednej kolumnie (dwie od 700 px),
-   bez przesunięć – cały tekst korzyści zawsze widoczny.
-   Scena (≥ 900 px, no-preference, .cx-js): kadr przyklejony na `top:0` na cały
-   ekran przez cały tor, a nad nim osiem nieprzezroczystych kafli w trzech
-   rozłącznych pasach – `--i` to miejsce w torze, `--lane` środek pasa,
-   `--a` profil prędkości, `--par` (liczy JS) przesunięcie. ================= */
-/* tor idzie od krawędzi do krawędzi (zdjęcie sceny nie ma marginesów);
-   marginesy kolumny treści bierze na siebie siatka kafli. Sekcja bez górnego
-   paddingu – scena zaczyna się tam, gdzie kończy się poprzednia sekcja. */
-.pp-kor{padding-block:0 clamp(3.5rem,7vw,6.25rem);}
-.pp-kor__track{position:relative;}
-.pp-kor__stage{position:relative;z-index:0;display:grid;place-items:center;overflow:hidden;
-  min-height:70svh;padding:clamp(2.5rem,7vw,5rem) var(--w-space-5);}
-.pp-kor__bg{position:absolute;inset:0;}
-/* kadr tła: jedno zdjęcie na pełny ekran, kadrowane ze środka. Bez
-   `loading="lazy"` – zdjęcie jest tłem sceny, która przykleja się na `top:0`,
-   więc musi stać w kadrze w chwili przyklejenia, a nie dojeżdżać po nim. */
-.pp-kor__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;}
-/* Jednolity scrim (bez gradientów). Kadr jest jaśniejszy niż na Kukurydzy
-   (średnia luminancja .31 wobec .04), więc tamte .25 tutaj nie wystarczają.
-   Przy .58 biały napis trzyma 6,95 : 1 na p95 i 5,69 : 1 NA NAJJAŚNIEJSZYM
-   pikselu pod napisem – zmierzone na zrzuconym kadrze przy ukrytym napisie
-   w 1440 × 900 i 1920 × 1080 (19.09, `qa/C/qa-korzysci.py`). */
-.pp-kor__bg::after{content:"";position:absolute;inset:0;background:rgb(0 0 0 / .58);}
-.pp-kor__title{position:relative;z-index:1;color:var(--w-text-inverse);
-  font-size:clamp(2.5rem,6vw,5.5rem);line-height:1.04;font-weight:var(--w-weight-medium);
-  letter-spacing:-0.02em;text-align:center;margin-inline:auto;margin-block:0;max-width:min(100%,16ch);}
-/* maska wyrazu: `overflow:hidden` z zapasem na dolne wydłużenia (y, j),
-   skasowanym ujemnym marginesem, żeby wiersze stały tam gdzie stały */
-.pp-kor__w{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.14em;margin-bottom:-.14em;}
-.pp-kor__w > span{display:inline-block;}
-.pp-kor__tiles{display:grid;gap:clamp(1rem,2.5vw,1.5rem);list-style:none;
-  max-width:1180px;margin:clamp(2rem,5vw,3rem) auto 0;padding-inline:var(--w-space-5);}
-.pp-kslot{display:flex;}
-.pp-kcard{display:flex;flex-direction:column;gap:var(--w-space-3);width:100%;
-  border:1px solid var(--w-border-default);background:var(--w-surface-page);
-  padding:clamp(1.1rem,2.2vw,1.5rem);}
-.pp-kcard__h{margin:0;font-size:1rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;line-height:1.3;}
-.pp-kcard__body{display:flex;flex-direction:column;gap:var(--w-space-3);}
-.pp-kcard__body p{margin:0;font-size:0.9375rem;line-height:1.55;color:var(--w-text-secondary);}
-
-@media (min-width:700px){
-  .pp-kor__tiles{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;}
-}
-
-/* wejście napisu: każdy wyraz wyjeżdża spod dolnej krawędzi swojego wiersza,
-   kaskadą co 70 ms (`--wi` w znaczniku). Stan wyjściowy tylko z JS i bez
-   ograniczenia ruchu – inaczej napis jest po prostu widoczny. Bez animacji
-   wyjścia: klasę `.is-in` JS nadaje raz i już jej nie zdejmuje. */
-@media (prefers-reduced-motion: no-preference){
-  html.cx-js .pp-kor__w > span{transform:translateY(110%);
-    transition:transform 520ms cubic-bezier(.2,.8,.2,1) calc(var(--wi,0) * 70ms);}
-  html.cx-js .pp-kor__title.is-in .pp-kor__w > span{transform:none;}
-}
-
-/* --- Scena: kadr przyklejony na cały ekran, kafle nad nim ------------------ */
-@media (min-width:900px) and (prefers-reduced-motion: no-preference){
-  /* tor = scena (100 svh) + wjazd pierwszego kafla + siedem kroków między
-     kaflami + ogon: ostatni kafel schodzi z ekranu, a potem napis stoi sam
-     jeszcze ok. 30 vh, zanim scena odjedzie ze stroną. Krok 32 vh daje 2–3
-     kafle naraz w oknie. */
-  .cx-js .pp-kor{--pp-kor-lead:125vh;--pp-kor-step:32vh;--pp-kor-tail:80vh;}
-  .cx-js .pp-kor__track{height:calc(100svh + var(--pp-kor-lead) + 7 * var(--pp-kor-step) + var(--pp-kor-tail));}
-  .cx-js .pp-kor__stage{position:sticky;top:0;height:100svh;min-height:0;}
-  .cx-js .pp-kor__tiles{display:block;max-width:none;margin:0;padding:0;}
-  /* trzy rozłączne pasy (18 %, 50 %, 82 % szerokości toru = okna) w kolejności
-     L, P, Ś, L, P, Ś, L, P – sąsiednie kafle nigdy nie są w tym samym pasie */
-  .cx-js .pp-kslot{position:absolute;z-index:1;display:block;width:clamp(16rem,24vw,22rem);
-    top:calc(var(--pp-kor-lead) + var(--i,0) * var(--pp-kor-step));
-    left:var(--lane,50%);
-    transform:translate(-50%,var(--par,0px));will-change:transform;}
-  .cx-js .pp-kcard{border-color:var(--w-border-subtle);box-shadow:0 24px 60px rgb(0 0 0 / .18);}
-}
+/* 45 · Oczekiwane długofalowe korzyści (CE-44 `tlo-foto`: scena, napis, kafle, tor) → ce/CE-44-napis-z-kaflami.css */
 
 /* ===== 50 · Uczestnicy programu – siatka kart poziomych (spec §18.5) ========
    Karuzela ze strzałkami i licznikiem znika: wszystkie gospodarstwa (od
@@ -325,48 +245,26 @@
    poziomych 700–999 px (wąska kolumna dusiłaby dwa przyciski w jednym
    wierszu), poniżej 700 px kadr nad treścią.
    Tokeny --w-*, ostre narożniki, skala szarości; cele dotykowe 44 px. ====== */
-.pp-farms{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--w-space-5);
-  margin:clamp(1.5rem,3vw,2.25rem) 0 0;padding:0;list-style:none;}
-@media (max-width:999px){ .pp-farms{grid-template-columns:minmax(0,1fr);} }
-
-.pp-farm{display:grid;grid-template-columns:minmax(0,40fr) minmax(0,60fr);
-  align-items:stretch;
-  border:1px solid var(--w-border-default);background:var(--w-surface-page);
-  transition:border-color var(--w-duration-base) var(--w-ease);}
-.pp-farm:hover{border-color:var(--w-gray-900);}
-/* Kadr wypełnia całą wysokość karty – proporcja jest wynikiem treści obok,
-   dlatego bez `aspect-ratio`; minimum trzyma karty wizualnie równe. Z obrysu
-   placeholdera zostaje tylko prawa krawędź: jest linią między kadrem a
-   treścią, a na pozostałych bokach pokrywałaby się z obrysem karty. */
-.pp-farm__ph{width:100%;align-self:stretch;min-height:230px;border-radius:0;
-  border-block:0;border-inline-start:0;}
+/* Wygląd kart (CE-20 `z-przyciskami`, odmiana `poziome`) żyje w
+   ce/CE-20-siatka-kart.css; tu zostaje odstęp nad siatką i etykieta
+   placeholdera zdjęcia. */
+.c5-cards--poziome{margin:clamp(1.5rem,3vw,2.25rem) 0 0;}
+/* P04 (18.10.2026): sample photos from Figma 859:2542 in the photo field. The
+   image must not set the row height by its own proportions (a portrait frame
+   would stretch the card): `contain:size` takes its intrinsic size away, so the
+   field keeps the height of the card (min. 300 px) and the photo is cropped to it.
+   The row of buttons gets a little more air below it (Figma: ~26 px to the edge
+   of the card; here 20 + 8). ⚠️ to move into CE-20 `--poziome` (module owner). */
+#uczestnicy-programu img.c5-cards__photo{display:block;object-fit:cover;contain:size;aspect-ratio:auto;}
+#uczestnicy-programu .c5-cards--poziome .c5-cards__acts{margin-bottom:var(--ch-space-2);}
+@media (max-width:699px){
+  #uczestnicy-programu img.c5-cards__photo{contain:none;aspect-ratio:4 / 3;}
+}
 /* 00-base.css chowa .wf-ph__label (placeholdery wzorca są nieopisane), a tutaj
    etykieta jest potrzebna – klient wie, jakie zdjęcie ma dostarczyć (§11). */
 .pp-ph__label{position:absolute;left:10px;bottom:8px;z-index:1;max-width:calc(100% - 20px);
   font-size:0.6875rem;line-height:1.2;letter-spacing:.04em;text-transform:uppercase;
   color:var(--w-placeholder-ink);pointer-events:none;}
-.pp-farm__body{display:flex;flex-direction:column;gap:var(--w-space-2);
-  min-width:0;padding:clamp(1.1rem,2.2vw,1.5rem);}
-/* chip zwęża się do treści – reszta kolumny idzie na pełną szerokość */
-.pp-farm__crop{display:inline-flex;align-self:flex-start;align-items:center;gap:6px;
-  border:1px solid var(--w-gray-900);
-  padding:3px 10px;font-size:0.75rem;letter-spacing:.04em;text-transform:uppercase;}
-.pp-farm__name{font-size:1.0625rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;margin:0;}
-.pp-farm__who{margin:0;font-size:0.9375rem;}
-.pp-farm__meta{margin:0;font-size:0.875rem;color:var(--w-text-secondary);}
-.pp-farm__btns{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:var(--w-space-4);}
-
-/* Poniżej 700 px: jedna kolumna, kadr nad treścią – linią podziału jest wtedy
-   dolna krawędź kadru, a nie prawa. */
-@media (max-width:699px){
-  .pp-farm{grid-template-columns:minmax(0,1fr);}
-  .pp-farm__ph{aspect-ratio:4/3;min-height:0;
-    border-inline:0;border-block-end:1px solid var(--w-placeholder-stroke);}
-}
-
-@media (prefers-reduced-motion: reduce){
-  .pp-farm{transition:none;}
-}
 
 /* ===== 52 · Profile gospodarstw: źródło treści i pop-up (spec §8) ==========
    Sekcja #profile stoi w DOM-ie zawsze – bez JS jest normalną częścią strony
@@ -392,101 +290,9 @@
    niesie już tylko odstęp i miarę wiersza. */
 .pp-note{margin-top:clamp(1.5rem,3vw,2.25rem);max-width:900px;}
 
-/* --- pop-up --------------------------------------------------------------- */
-.pp-profile{position:fixed;inset:0;margin:auto;
-  width:min(920px, 100% - 2 * var(--c5-gutter));max-width:none;
-  max-height:85svh;padding:0;overflow:hidden;
-  border:1px solid var(--w-border-default);border-radius:0;
-  background:var(--w-surface-page);color:var(--w-text-primary);}
-/* display tylko przy [open] – bez tego zamknięty dialog przestałby się chować */
-.pp-profile[open]{display:flex;flex-direction:column;}
-.pp-profile::backdrop{background:rgb(0 0 0 / .55);}
-.pp-profile__close{position:absolute;top:14px;right:14px;z-index:2;
-  display:grid;place-items:center;width:44px;height:44px;padding:0;
-  border:1px solid var(--w-border-default);border-radius:0;
-  background:var(--w-surface-page);color:var(--w-text-primary);cursor:pointer;
-  transition:background var(--w-duration-base) var(--w-ease);}
-.pp-profile__close:hover{background:var(--w-gray-100);}
-.pp-profile__scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;
-  padding:clamp(1.5rem,4vw,2.75rem);padding-right:calc(clamp(1.5rem,4vw,2.75rem) + 44px);}
-/* Klon bloku profilu: bez lepkiego zdjęcia (lepkość liczyła się względem
-   dawnej subnawigacji) i w mniejszym stopniu nagłówka – nazwy są wersalikami. */
-.pp-profile .c5-variant__grid{margin-top:var(--w-space-5);}
-/* relative, nie static: etykieta placeholdera jest pozycjonowana absolutnie
-   i bez bloku odniesienia uciekłaby na dół dialogu */
-.pp-profile .c5-variant__grid > .wf-ph{position:relative;top:auto;border-radius:0;}
-.pp-profile .c5-variant__name{font-size:clamp(1.35rem,2.6vw,1.875rem);}
-.pp-profile .c5-variant + .c5-variant{margin-top:0;}
-/* nota o rozbieżnościach – w każdym pop-upie, małym drukiem na dole */
-.pp-profile .pp-note{font-size:0.8125rem;margin-top:clamp(1.5rem,3vw,2.25rem);max-width:none;}
-/* strona pod pop-upem stoi (Lenis dostaje stop() w JS) */
-html.pp-lock{overflow:hidden;}
+/* --- pop-up: moved to ce/CE-37-pop-up-karty.css (design system v0.1, stage C 18.10.2026) --- */
 
-@media (max-width:599px){
-  /* panel na cały ekran – tak samo jak lightbox kukurydzy */
-  .pp-profile{width:100%;max-height:100svh;height:100%;border:0;}
-  .pp-profile__scroll{padding:var(--w-space-5);padding-right:var(--w-space-5);padding-top:64px;}
-  .pp-profile__close{top:10px;right:10px;}
-}
-@media (prefers-reduced-motion: reduce){
-  .pp-profile__close{transition:none;}
-}
-
-/* ===== 55 · KOORDYNATORZY: dwie karty biogramów z „czytaj dalej" ===========
-   Treść i mechanika jak od 14.09 (spec §9); 19.09 zmienia się sam układ –
-   §18.6, opis przy siatce niżej. Razem z kartami uniwersalna szuflada
-   `pp-disc` (klon mechaniki `.c5-fact__panel` z c5.css) – wysokość animuje
-   skrypt, CSS trzyma tylko przejście i wygaszenie. ====================== */
-/* Bez JS szuflada stoi otwarta – cały biogram jest do przeczytania w kolejności
-   czytania, a nieczynny przycisk „czytaj dalej" znika. Z JS (klasa `cx-js` od
-   00-base.js) moduł 55 zwija ją na starcie przez `panelSet` i od tej pory
-   prowadzi wysokość stylem inline – dlatego stan zwinięty wisi na `.cx-js`,
-   a nie na samym `.pp-disc`. */
-.pp-disc{overflow:hidden;
-  transition:height var(--c5-acc) var(--w-ease),opacity var(--c5-acc-fade) var(--w-ease);}
-html.cx-js .pp-disc{height:0;opacity:0;}
-html.cx-js .pp-disc[data-open="true"]{opacity:1;}
-html:not(.cx-js) #koordynatorzy .pp-more{display:none;}
-.pp-discin{overflow:hidden;min-height:0;display:flex;flex-direction:column;gap:var(--w-space-3);}
-.pp-discin p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
-
-/* 19.09 (§18.6): jedna kolumna, dwie karty jedna pod drugą w zwykłym
-   kontenerze 1180 px; karta pozioma – mniejszy kadr 200 px w proporcji 4 : 5
-   po lewej, treść po prawej. Poniżej 700 px kadr nad treścią. */
-.pp-team{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--w-space-5);
-  margin:clamp(1.5rem,3vw,2.25rem) 0 0;padding:0;list-style:none;}
-.pp-person{display:grid;grid-template-columns:200px minmax(0,1fr);gap:clamp(1.25rem,2.6vw,2rem);
-  align-items:start;border:1px solid var(--w-border-default);
-  background:var(--w-surface-page);padding:clamp(1.25rem,2.2vw,1.75rem);
-  transition:border-color var(--w-duration-base) var(--w-ease);}
-.pp-person:hover{border-color:var(--w-gray-900);}
-.pp-person__ph{width:200px;aspect-ratio:4/5;min-height:0;border-radius:0;}
-/* Miara wiersza: w kontenerze 1180 px kolumna treści miałaby ponad 800 px,
-   czyli ok. 110 znaków w wierszu – za dużo, żeby biogram czytało się wygodnie.
-   Kolumna zostaje przy lewej krawędzi, a nadmiar idzie w prawy margines. */
-.pp-person__body{display:flex;flex-direction:column;gap:var(--w-space-3);
-  min-width:0;max-width:60ch;}
-.pp-person p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
-/* Nota „ekspert niezależny”: element c5-note --strong (EL-17) w ciaśniejszym
-   padding'u 12/16 – EL-17 nie ma wariantu ciasnego. */
-.pp-person__indep{padding:var(--w-space-3) var(--w-space-4);}
-.pp-more{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;min-height:44px;
-  font:inherit;font-size:0.875rem;font-weight:var(--w-weight-medium);color:var(--w-text-primary);
-  border-bottom:1px solid var(--w-gray-900);padding:2px 0;}
-.pp-more .wf-icon{transition:transform var(--w-duration-base) var(--w-ease);color:var(--w-icon-default);}
-.pp-more[aria-expanded="true"] .wf-icon{transform:rotate(180deg);}
-
-/* Stopniowanie wejścia kart (80 ms). */
-.pp-team > li:nth-child(2){transition-delay:.08s;}
-
-@media (max-width:699px){
-  .pp-person{grid-template-columns:minmax(0,1fr);gap:var(--w-space-4);}
-}
-
-@media (prefers-reduced-motion: reduce){
-  .pp-disc,.pp-more .wf-icon,.pp-person{transition:none;}
-  .pp-team > li{transition-delay:0s;}
-}
+/* 55 · Koordynatorzy (karty biogramów, szuflada `pp-disc`) → ce/CE-48-karty-biogramow.css */
 
 /* 60 · Program w liczbach → ce/CE-24-pas-liczb.css */
 
@@ -496,72 +302,52 @@ html:not(.cx-js) #koordynatorzy .pp-more{display:none;}
    (`ce/CE-90-os-programu.css`). Blok zostaje jako ślad po numeracji.
    ===================================================================== */
 
-/* ===== 70 · RZETELNOŚĆ: zdjęcie w tle + trzy karty ze szkła (spec §18.9) ====
-   Iteracja 2, uwaga z przeglądu `7bf3730a`. Sekcja bierze zdjęcie na całą
-   szerokość okna, kładzie na nie jednolity scrim i stawia na nim nagłówek,
-   cytat i trzy karty zasad (CE-20 wariant `szklane`). Cudzysłowy cytatu
-   dokłada CSS, więc tekst w HTML zostaje co do znaku.
-   SCRIM: czerń .65 – zmierzone na pikselach zrzutu (QA agenta A, skrypt
-   `qa/A/kontrast.py`) biel ma nad zdjęciem 6,2–7,6 : 1, a przez szkło karty
-   (biel .12) nie mniej niż 5,3 : 1 w najjaśniejszym punkcie. =========== */
+/* ===== 70 · RZETELNOŚĆ: zdjęcie w tle + cytat + trzy karty ze szkła ========
+   Układ z Figmy (867:2937, 18.10.2026): zdjęcie na całą szerokość okna ze
+   scrimem czerni .2, nagłówek do lewej, cytat (CE-33 `c5-quote--split`) w
+   prawej kolumnie, niżej etykieta i trzy karty szkła (CE-20 `szklane`). Wygląd
+   cytatu i kart żyje w modułach ce/CE-33-cytat-zasada.css i
+   ce/CE-20-siatka-kart.css; tu zostaje tło, scrim, siatka głowy sekcji i
+   etykieta.
+   SCRIM: czerń .2 z Figmy (wcześniej .65). Kontrast bieli nad zdjęciem
+   zmierzony 18.10.2026 na zrzucie – wynik w raporcie agenta `c-karty`; decyzja
+   o scrimie należy do grafika. ============================================ */
 .pp-rz{position:relative;isolation:isolate;overflow:clip;
-  background:var(--w-gray-900);color:var(--w-text-inverse);}
+  background:var(--ch-surface-inverse);color:var(--w-text-inverse);
+  padding-bottom:var(--ch-space-8);}
 /* Kadr w tle: obraz wyższy od sekcji o zapas parallaksu (2 × 60 px), więc
    przesunięcie nigdy nie odsłania krawędzi. */
 .pp-rz__bg{position:absolute;inset:0;z-index:-1;overflow:hidden;}
 .pp-rz__bg img{position:absolute;left:0;top:-60px;width:100%;height:calc(100% + 120px);
   object-fit:cover;transform:translate3d(0,var(--pp-rz-y,0px),0);}
 .pp-rz__bg.is-parallax img{will-change:transform;}
-.pp-rz__bg::after{content:"";position:absolute;inset:0;background:rgb(0 0 0 / .65);}
+.pp-rz__bg::after{content:"";position:absolute;inset:0;background:rgb(0 0 0 / .2);}
 .pp-rz__in{position:relative;}
-.pp-rz .c5-h2,.pp-rz .c5-band__title{color:var(--w-text-inverse);}
-/* Podtytuł na jednej osi z nagłówkiem i cytatem (w szerokim kontenerze
-   wersja do lewej odrywała się od reszty sekcji). */
-.pp-rz__sub{margin-top:clamp(2.5rem,5vw,4rem);text-align:center;}
-.pp-rz__src{position:absolute;right:var(--c5-gutter);bottom:var(--w-space-5);margin:0;}
+.pp-rz .c5-h2{color:var(--w-text-inverse);}
+/* Głowa sekcji: nagłówek w lewej kolumnie (600 px), cytat poniżej w prawej
+   kolumnie 453 px. Pod 900 px jedna kolumna. */
+.pp-rz__top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,453px);
+  row-gap:var(--ch-space-14);align-items:start;}
+/* P07 (18.10.2026): the kicker and the heading form one head in the left column */
+.pp-rz__head{grid-column:1;max-width:600px;}
+.pp-rz__h{margin-bottom:0;}
+/* Kicker on a photo (Figma 867:2937, 853:1963: a light grey outline, white text):
+   the ghost outline of the design system reads like the frame on any photo. */
+.pp-kicker--foto{border-color:var(--ch-border-ghost-on-image);}
+.pp-rz__top .c5-quote{grid-column:2;grid-row:2;justify-self:end;}
+/* Etykieta nad kartami: do lewej, 16/28, 80 px pod głową. */
+.pp-rz__sub{margin:var(--ch-space-20) 0 var(--ch-space-6);font-size:var(--ch-type-body-size);line-height:28px;font-weight:var(--ch-type-body-weight);color:var(--w-text-inverse);}
+/* Podpis „zdjęcie poglądowe” w prawym górnym rogu (dół sekcji zajmują karty). */
+.pp-rz__src{position:absolute;right:var(--c5-gutter);top:var(--w-space-5);margin:0;}
 .pp-rz :focus-visible{outline-color:var(--w-focus-ring-inverse);}
 
-.pp-quote{margin:clamp(1.5rem,3vw,2.25rem) 0 0;max-width:900px;
-  border-left:2px solid var(--w-gray-900);padding-left:clamp(1rem,3vw,2rem);}
-.pp-quote p{margin:0;font-size:clamp(1.25rem,2.4vw,1.75rem);line-height:1.35;
-  font-weight:var(--w-weight-medium);letter-spacing:-0.01em;color:var(--w-text-primary);}
-.pp-quote p::before{content:"\201E";}
-.pp-quote p::after{content:"\201D";}
-/* Cytat na zdjęciu: wyśrodkowany blok, kreska i tekst w bieli. */
-.pp-rz .pp-quote{margin-inline:auto;border-left-color:rgb(255 255 255 / .7);}
-.pp-rz .pp-quote p{color:var(--w-text-inverse);}
-
-.pp-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:var(--w-space-5);margin:clamp(1.5rem,3vw,2.25rem) 0 0;padding:0;list-style:none;}
-.pp-tile-rule{display:flex;flex-direction:column;gap:var(--w-space-3);height:100%;
-  border:1px solid var(--w-border-default);background:var(--w-surface-page);
-  padding:clamp(1.25rem,2.2vw,1.75rem);
-  transition:border-color var(--w-duration-base) var(--w-ease);}
-.pp-tile-rule:hover{border-color:var(--w-gray-900);}
-.pp-tile-rule p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
-
-/* CE-20 wariant `szklane`: karta na zdjęciu. Bez obsługi `backdrop-filter`
-   zostaje czerń .5 – ten sam kontrast, tylko bez rozmycia tła. */
-.pp-tiles--glass .pp-tile-rule{background:rgb(0 0 0 / .5);
-  border-color:rgb(255 255 255 / .28);color:var(--w-text-inverse);}
-.pp-tiles--glass .pp-tile-rule:hover{border-color:rgb(255 255 255 / .6);}
-.pp-tiles--glass .pp-tile-rule p{color:var(--w-text-inverse);}
-.pp-tiles--glass .cw-feat-icon{border-color:rgb(255 255 255 / .45);color:var(--w-text-inverse);}
-@supports (backdrop-filter: blur(14px)) or (-webkit-backdrop-filter: blur(14px)){
-  .pp-tiles--glass .pp-tile-rule{background:rgb(255 255 255 / .12);
-    -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);}
-}
-
-/* Stopniowanie wejścia kafelków (80 ms). */
-.pp-tiles > li:nth-child(2){transition-delay:.08s;}
-.pp-tiles > li:nth-child(3){transition-delay:.16s;}
-
 @media (max-width:899px){
-  .pp-rz__src{right:var(--w-space-5);bottom:var(--w-space-4);}
+  .pp-rz__top{grid-template-columns:minmax(0,1fr);row-gap:var(--ch-space-6);}
+  .pp-rz__top .c5-quote{grid-column:1;grid-row:auto;justify-self:start;}
+  .pp-rz__sub{margin-top:var(--ch-space-14);}
+  .pp-rz__src{right:var(--w-space-5);top:var(--w-space-4);}
 }
 @media (prefers-reduced-motion: reduce){
-  .pp-tile-rule{transition:none;}
-  .pp-tiles > li{transition-delay:0s;}
   .pp-rz__bg img{transform:none;}
 }
 
@@ -578,6 +364,11 @@ html:not(.cx-js) #koordynatorzy .pp-more{display:none;}
 /* Lead pod h2 w bloku nad torem – dwa akapity jeden pod drugim (klasa `c5-lead`
    z kitu jest jednym boksem tekstu). */
 .pp-fxlead{display:flex;flex-direction:column;gap:var(--w-space-3);margin-top:var(--w-space-5);}
+
+/* Section „Etapy prac" (Figma 870:3051 / 884:3367): white ground, a 1 px rule
+   along the bottom edge; the gap between CE-93 and CE-90 is 104 px. */
+.pp-etapy{border-bottom:1px solid var(--ch-border-subtle);}
+.pp-etapy #etapy-os{margin-top:clamp(4rem,7.2vw,var(--ch-space-26));}
 
 /* ===== 85 · Etapy prac – styl klocka mieszka w ce/CE-90-os-programu.css ====
    Od 02.10.2026 (spec §19.5) jedna oś programu z punktami zdarzeń (CE-90)
@@ -642,6 +433,14 @@ html:not(.cx-js) #koordynatorzy .pp-more{display:none;}
   .pp-ms{transition:none;}
 }
 
+/* ===== 88 · Before the section „Czy chcesz jeszcze o coś zapytać?” (CE-05) ===
+   P12 (18.10.2026, Mateusz: smaller top margin): #wyniki is the last section
+   before the landing of the dock; its 120 px bottom padding plus the 100 px top
+   padding of the landing made a 220 px gap. The section ends after 20 px, so
+   the heading of the landing stands ~120 px under the last report row (one
+   section rhythm). The module CE-05 stays untouched. */
+#wyniki.c5-sec{padding-bottom:var(--ch-space-5);}
+
 /* ===== 90 · WYNIKI: taby lat, tabele, wiersze raportów =====================
    Iteration 3 (spec §19.2): the rules of the filter frame, the chart
    placeholders and the empty state left together with those parts.
@@ -649,28 +448,21 @@ html:not(.cx-js) #koordynatorzy .pp-more{display:none;}
    prochnica-plus.js, hook `data-pp-tabs`) instead of scrolling to blocks that
    are all visible, so the bar no longer sticks to the top edge and the scroll
    margin of the blocks and the select bar rules are gone.
-   ⚠️ `.pp-ways` i `.pp-varname` przyjechały z bloku 12/11 warstwy 99 – używa
-   ich także sekcja „Etapy prac" (C), dlatego stoją tu, a nie w 99. ======= */
+   18.10.2026: the tabs (CE-11 `c5-variants--lata`), the table (EL-21
+   `c5-table--cards`) and the report rows (CE-53) live in their modules; here
+   stays the rhythm of the section and the scroller. `.pp-varname` is used by
+   the „Etapy prac" farm blocks (C). ======= */
 
-/* --- pasek tabów lat --------------------------------------------------------
-   c5-ways jest siatką 1fr 1fr; tutaj jeden rząd kompaktowych pigułek. Tony
-   zostają z c5.css (ciemna = wybrana). */
-/* Tabs that switch panels stay in the flow – the sticky bar of c5.css belongs
-   to the scroll-spy pattern. */
-.pp-ways[data-pp-tabs]{position:static;}
-/* An unselected panel is hidden by the module; a panel that follows a hidden
-   one must not keep the gap meant for two blocks standing one under another
-   (that gap stays for the version without JS). */
-#wyniki [role="tabpanel"][hidden]{display:none;}
-#wyniki .c5-variant[hidden] + .c5-variant{margin-top:0;}
-.pp-ways{display:flex;flex-wrap:nowrap;gap:8px;overflow-x:auto;scrollbar-width:none;}
-.pp-ways::-webkit-scrollbar{display:none;}
-.pp-ways .c5-way{flex:0 0 auto;min-height:44px;gap:var(--w-space-3);padding:10px 16px;font-size:0.9375rem;}
-.pp-ways .c5-way__ico{width:32px;height:32px;}
-.pp-ways .c5-way .wf-icon{width:18px;height:18px;}
-.pp-ways__sub{display:block;font-size:0.75rem;letter-spacing:.04em;text-transform:uppercase;opacity:.7;margin-top:2px;}
-/* page-specific: pasmo z tabami sposobów – tło z warstwy wspólnej. */
-.c5-band .c5-ways{background:var(--w-surface-subtle);}
+/* --- section rhythm (page exception) -------------------------------------------
+   Figma 888:6233: head -> content 56 px, the two blocks 80 px apart with a rule
+   between them, a block's head 32 px above its tabs. The year tabs, the table
+   of row cards and the report rows are the modules CE-11 (`c5-variants--lata`),
+   EL-21 and CE-53. The sub-titles are H3 of the page copy (30/36). */
+.pp-wyniki{display:flex;flex-direction:column;gap:clamp(3rem,5.6vw,var(--ch-space-20));margin-top:clamp(2rem,3.9vw,var(--ch-space-14));}
+.pp-wyniki__blok{display:flex;flex-direction:column;gap:var(--ch-space-8);min-width:0;}
+.pp-wyniki__head{display:flex;flex-direction:column;gap:var(--ch-space-2);}
+.pp-wyniki__h{margin:0 0 var(--ch-space-2);font-size:clamp(1.5rem,2.1vw,var(--ch-type-title-l-size));line-height:var(--ch-type-title-l-lh);letter-spacing:var(--ch-type-title-l-ls);font-weight:var(--ch-type-title-l-weight);color:var(--ch-text-primary);}
+.pp-wyniki .c5-lead{margin:0;}
 
 /* Nazwy gospodarstw i lat są długie – skala c5-variant__name (do 3 rem) jest
    dla nich za duża, więc bloki poza profilami dostają mniejszy stopień. */
@@ -682,20 +474,11 @@ html:not(.cx-js) #koordynatorzy .pp-more{display:none;}
    uciekały one do .c5-variants{position:relative} i na 375 px rozpychały
    stronę do 682 px, choć sama tabela przewijała się poprawnie. */
 .pp-scroll{position:relative;overflow-x:auto;}
-.pp-scroll .wf-table{min-width:680px;}
+.pp-scroll .c5-table--cards{min-width:900px;}
 /* Value placeholders in measurement cells: the kit's .wf-textline is an inline
    span here, so without a box it collapsed to 0 × 0 and the tables looked empty. */
 .pp-scroll .wf-textline{display:block;width:2.25rem;}
 .pp-scroll:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:2px;}
-.pp-reports{display:flex;flex-direction:column;margin:clamp(1.25rem,2.5vw,2rem) 0 0;padding:0;list-style:none;}
-.pp-report{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:var(--w-space-4);
-  align-items:center;padding-block:var(--w-space-4);border-top:1px solid var(--w-border-default);}
-.pp-reports > li:last-child .pp-report{border-bottom:1px solid var(--w-border-default);}
-.pp-report__name{font-size:1rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;margin:0;}
-.pp-report__meta{margin:0;font-size:0.875rem;color:var(--w-text-secondary);}
-@media (max-width:899px){
-  .pp-report{grid-template-columns:minmax(0,1fr);align-items:start;gap:var(--w-space-2);}
-}
 /* page-specific: stan „niedostępne" przycisku z ce/00-base.css – osłabiony ton
    + obrys + atrybut disabled (nigdy sam ton). */
 .c5-btn[disabled]{background:var(--w-surface-subtle);color:var(--w-text-disabled);

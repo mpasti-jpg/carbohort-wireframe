@@ -1,0 +1,152 @@
+/* ===== CE-41 · Bloki wiedzy (para) – module (design system v0.1, stage C 18.10.2026) =====
+   Look from the Figma frames 778:1995 and 778:2009, content from the v7 markup. Styles of
+   this CE live here; the page sheet keeps only exceptions of one page.
+   Variant `jeden-pod-drugim`: root `.c5pr-two.c5pr-two--stack` (a column of blocks, 104 px
+   apart; `--sep` adds a 1 px rule in the middle of every gap), block `.c5pr-block`
+   (`--plain` = no frame; `--lit` = list | tiles in two columns; `--danych` = the certificate
+   table of CE-22, its look lives in ce/CE-22-tabela.css).
+   Parts: the materials / certificates table is EL-21 as row cards (`c5-table--cards`, in
+   00-base.css), the soil scale `.c5pr-mix`, the retention chart `.c5-barchart--karty`
+   (the plain `.c5-bar*` is owned by CE-12), the literature list `.c5pr-lit`, the number
+   tiles `.c5pr-stat`. Home has its own proof block (`c5h-block`, home.css) – not this one. ===== */
+
+/* ----- root and blocks ----- */
+.c5pr-two,.c5pr-block--danych{--c5pr-gap:clamp(3.5rem,7.2vw,var(--ch-space-26));}
+/* blocks split by a rule (`--sep`, the certificates): 104 px ABOVE and 104 px BELOW the rule, as in
+   Figma 778:2009 (R10, 18.10.2026 – the gap used to be 104 in total, 52 on each side) */
+.c5pr-two--sep,.c5pr-two--sep ~ .c5pr-block--danych{--c5pr-gap:clamp(5.5rem,14.4vw,calc(2 * var(--ch-space-26)));}
+.c5pr-two{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--c5pr-gap);margin-top:clamp(2.5rem,4vw,3.5rem);}
+/* the first block of a section (no head above it, e.g. #co-daja-wiedza on its light band, Figma
+   778:1995) starts at the section's own top padding */
+.c5-wrap > .c5pr-two:first-child{margin-top:0;}
+.c5pr-block{display:flex;flex-direction:column;gap:var(--ch-space-8);min-width:0;}
+.c5pr-block__h{margin:0;font-family:var(--ch-type-title-font);font-size:var(--ch-type-title-size);line-height:var(--ch-type-title-lh);letter-spacing:var(--ch-type-title-ls);font-weight:var(--ch-type-title-weight);color:var(--ch-text-primary);}
+/* source lines one step lighter than the body grey (R08, R10: „minimalnie jaśniejszy”) –
+   ~#8F8F8A on white, still readable at 14 px */
+.c5pr-two,.c5pr-block--danych{--c5pr-src-ink:color-mix(in srgb,var(--ch-text-secondary) 82%,var(--ch-color-white));}
+.c5pr-block--plain > .c5-src{max-width:803px;margin:0;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--c5pr-src-ink);}
+/* a link inside a source line: the line's colour, a much lighter underline that darkens on hover */
+.c5pr-src-link{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.22em;text-decoration-color:color-mix(in srgb,currentColor 30%,transparent);transition:text-decoration-color var(--ch-motion-duration-base) var(--ch-motion-ease),color var(--ch-motion-duration-base) var(--ch-motion-ease);}
+.c5pr-src-link:hover{color:var(--ch-text-primary);text-decoration-color:currentColor;}
+.c5pr-src-link:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:2px;border-radius:2px;}
+
+/* rule in the middle of the gap between two blocks (Figma: separator #E8E8E8, 104 px each side) */
+.c5pr-two--sep > .c5pr-block + .c5pr-block,.c5pr-block--danych{position:relative;}
+.c5pr-two--sep > .c5pr-block + .c5pr-block::before,.c5pr-block--danych::before{content:"";position:absolute;left:0;right:0;top:calc(var(--c5pr-gap) / -2);height:1px;background:var(--ch-border-subtle);}
+.c5pr-block--danych{margin-top:var(--c5pr-gap);}
+
+/* ----- materials table (EL-21 as row cards, 18/28 cells, the highlighted row is darker, not bolder) ----- */
+.c5pr-block--plain .c5-table--cards{table-layout:fixed;min-width:560px;}
+.c5pr-block--plain .c5-table--cards td{padding-block:var(--ch-space-5);vertical-align:middle;font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);color:var(--ch-text-secondary);overflow-wrap:anywhere;}
+.c5pr-block--plain .c5-table--cards td strong{font-weight:inherit;color:var(--ch-text-primary);}
+.c5pr-mat th:nth-child(1){width:39%;}
+.c5pr-mat th:nth-child(2){width:26%;}
+/* the asterisk after „CarboHort” and its footnote (R08): the note sits at half the block gap
+   under the last row card; on a pointer device from 900 px it waits for the row (or the table,
+   from the keyboard) and fades in – opacity only, the line keeps its place, so nothing jumps */
+.c5pr-mat__ast{margin-left:1px;}
+.c5pr-block--plain > .c5pr-mat__fn{margin-top:calc(var(--ch-space-4) - var(--ch-space-8));}
+@media (hover:hover) and (pointer:fine) and (min-width:900px) and (prefers-reduced-motion:no-preference){
+  .cx-js .c5pr-mat__fn{opacity:0;transition:opacity var(--ch-motion-duration-base) var(--ch-motion-ease);}
+  .cx-js .c5pr-block:has(.c5pr-mat__fnrow:hover,.cw-scrollx:focus-visible,.cw-scrollx:focus-within) .c5pr-mat__fn{opacity:1;}
+}
+
+/* ----- soil optimum: one 100 % scale of three shares, labels in the same grid ----- */
+.c5pr-mix{display:flex;flex-direction:column;gap:7px;}
+.c5pr-mix__bar,.c5pr-mix__names{display:grid;grid-template-columns:50fr 25fr 25fr;gap:5px;}
+.c5pr-mix__bar{height:clamp(64px,6vw,85px);}
+.c5pr-mix__seg{display:grid;place-items:center;border-radius:var(--ch-radius-sm);}
+.c5pr-mix__seg span{padding:5px var(--ch-space-2);border-radius:var(--ch-radius-xs);background:rgb(12 43 28 / .1);font-size:var(--ch-type-lead-size);line-height:24px;color:var(--ch-text-primary);}
+.c5pr-mix__seg--a{background:var(--ch-color-green-300);}
+.c5pr-mix__seg--b{background:var(--ch-color-blue-200);}
+/* air: hatching as in Figma 778:1995 – 1 px green-950 lines falling to the right („\\”), one every
+   8 px along the row (5.66 px across the lines), with a solid chip on it */
+.c5pr-mix__seg--c{background:repeating-linear-gradient(45deg,rgb(12 43 28 / .7) 0 1px,transparent 1px 5.66px);}
+.c5pr-mix__seg--c span{background:var(--ch-color-white);}
+.c5pr-mix__names{padding-top:2px;font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);color:var(--ch-text-primary);}
+.c5pr-mix__names span{text-align:center;}
+
+/* ----- retention chart: rows as cards, 14 px hatched track, green fill ----- */
+.c5-barchart--karty{gap:6px;}
+.c5-barchart--karty .c5-bar{grid-template-columns:minmax(0,1fr) minmax(0,min(565px,42%)) 80px;gap:var(--ch-space-5);align-items:center;min-height:68px;padding:var(--ch-space-5);border-radius:var(--ch-radius-md);background:var(--ch-surface-warm);font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);color:var(--ch-text-primary);}
+.c5-barchart--karty .c5-bar__track{height:14px;border:0;border-radius:var(--ch-radius-sm);overflow:hidden;background:repeating-linear-gradient(45deg,rgb(12 43 28 / .78) 0 1px,transparent 1px 4.95px);}
+.c5-barchart--karty .c5-bar__fill{border-radius:var(--ch-radius-sm);background:var(--ch-color-green-300);}
+/* values in one column, left-aligned, 20 px after the end of the track (Figma 788:2237, R10) */
+.c5-barchart--karty .c5-bar .c5-muted{text-align:left;white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--ch-text-secondary);}
+@media (max-width:899px){
+  .c5-barchart--karty .c5-bar{grid-template-columns:minmax(0,1fr) auto;gap:var(--ch-space-2) var(--ch-space-3);padding:var(--ch-space-4);}
+  .c5-barchart--karty .c5-bar > :first-child{grid-column:1 / -1;}
+}
+
+/* Bars grow once their block enters – behind the same gates as the reveal (00-base), so with
+   reduced motion, on a phone and without JS the bars simply stand at full length. The fill
+   keeps its width (--bw); only a scale runs, 60 ms apart per bar. */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  .cx-js [data-reveal] .c5-barchart .c5-bar__fill{transform:scaleX(0);transform-origin:left center;}
+  .cx-js [data-reveal].is-in .c5-barchart .c5-bar__fill{transform:none;transition:transform .7s var(--w-ease) .2s;}
+  .cx-js [data-reveal].is-in .c5-barchart .c5-bar:nth-child(2) .c5-bar__fill{transition-delay:.26s;}
+  .cx-js [data-reveal].is-in .c5-barchart .c5-bar:nth-child(3) .c5-bar__fill{transition-delay:.32s;}
+  .cx-js [data-reveal].is-in .c5-barchart .c5-bar:nth-child(4) .c5-bar__fill{transition-delay:.38s;}
+  .cx-js [data-reveal].is-in .c5-barchart .c5-bar:nth-child(5) .c5-bar__fill{transition-delay:.44s;}
+  .cx-js [data-reveal].is-in .c5-barchart .c5-bar:nth-child(n+6) .c5-bar__fill{transition-delay:.5s;}
+  /* R10 (18.10.2026): a chart that carries its own `data-reveal` draws its bars when IT enters the
+     window, not when the block above it does (the block's trigger fired while the bars were still
+     below the fold, so they had finished growing before anyone saw them). Its rows stay put – only
+     the fills grow, a little slower, 90 ms apart. */
+  .cx-js .c5-barchart[data-reveal] > *{opacity:1;transform:none;transition:none;}
+  .cx-js .c5-barchart[data-reveal]:not(.is-in) .c5-bar__fill{transform:scaleX(0);transition:none;}
+  .cx-js .c5-barchart[data-reveal].is-in .c5-bar__fill{transform:none;transition:transform .9s cubic-bezier(.2,.7,.2,1) .15s;}
+  .cx-js .c5-barchart[data-reveal].is-in .c5-bar:nth-child(2) .c5-bar__fill{transition-delay:.24s;}
+  .cx-js .c5-barchart[data-reveal].is-in .c5-bar:nth-child(3) .c5-bar__fill{transition-delay:.33s;}
+  .cx-js .c5-barchart[data-reveal].is-in .c5-bar:nth-child(4) .c5-bar__fill{transition-delay:.42s;}
+  .cx-js .c5-barchart[data-reveal].is-in .c5-bar:nth-child(n+5) .c5-bar__fill{transition-delay:.51s;}
+
+  /* R08: the soil scale builds itself once it enters – the three shares grow from the left one
+     after another (scaleX from their left edge), then their value chips and the names under them
+     fade in. Same gates as above: static on a phone, with reduced motion and without JS. */
+  .cx-js .c5pr-mix[data-reveal] > *{opacity:1;transform:none;transition:none;}
+  .cx-js .c5pr-mix[data-reveal] .c5pr-mix__seg{transform:scaleX(0);transform-origin:left center;}
+  .cx-js .c5pr-mix[data-reveal] .c5pr-mix__seg span,.cx-js .c5pr-mix[data-reveal] .c5pr-mix__names span{opacity:0;}
+  .cx-js .c5pr-mix[data-reveal].is-in .c5pr-mix__seg{transform:none;transition:transform .8s cubic-bezier(.2,.7,.2,1) .1s;}
+  .cx-js .c5pr-mix[data-reveal].is-in .c5pr-mix__seg--b{transition-delay:.45s;}
+  .cx-js .c5pr-mix[data-reveal].is-in .c5pr-mix__seg--c{transition-delay:.7s;}
+  .cx-js .c5pr-mix[data-reveal].is-in .c5pr-mix__seg span,.cx-js .c5pr-mix[data-reveal].is-in .c5pr-mix__names span{opacity:1;transition:opacity .45s var(--ch-motion-ease) .75s;}
+  .cx-js .c5pr-mix[data-reveal].is-in .c5pr-mix__seg--b span,.cx-js .c5pr-mix[data-reveal].is-in .c5pr-mix__names span:nth-child(2){transition-delay:1.05s;}
+  .cx-js .c5pr-mix[data-reveal].is-in .c5pr-mix__seg--c span,.cx-js .c5pr-mix[data-reveal].is-in .c5pr-mix__names span:nth-child(3){transition-delay:1.3s;}
+}
+
+/* ----- literature | number tiles ----- */
+.c5pr-lit{display:flex;flex-direction:column;gap:17px;margin:0;padding:0;list-style:none;}
+.c5pr-lit li{display:flex;align-items:flex-start;gap:var(--ch-space-5);font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);color:var(--ch-text-secondary);}
+/* bullet as G15: 3 px square, radius 1 px */
+.c5pr-lit li::before{content:"";flex:none;width:3px;height:3px;margin-top:calc(.5lh - 1.5px);border-radius:1px;background:var(--ch-text-secondary);}
+.c5pr-stats{display:flex;flex-direction:column;gap:var(--ch-space-3);}
+.c5pr-stat{display:flex;flex-direction:column;gap:var(--ch-space-8);padding:var(--ch-space-8);border-radius:var(--ch-radius-md);color:var(--ch-text-primary);}
+.c5pr-stat--blue{background:var(--ch-surface-data-blue);--c5pr-stat-ico:var(--ch-color-blue-300);}
+.c5pr-stat--green{background:var(--ch-surface-accent-green);--c5pr-stat-ico:var(--ch-color-green-400);}
+.c5pr-stat__head{display:flex;align-items:center;gap:var(--ch-space-4);}
+.c5pr-stat__ico{flex:none;display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:var(--c5pr-stat-ico);}
+.c5pr-stat__ico .wf-icon{width:28px;height:28px;}
+.c5pr-stat__num{display:inline-flex;align-items:baseline;gap:var(--ch-space-2);font-family:var(--ch-type-display-num-font);font-size:clamp(2.75rem,4.4vw,var(--ch-type-display-num-size));line-height:var(--ch-type-display-num-lh);font-weight:var(--ch-type-display-num-weight);letter-spacing:var(--ch-type-display-num-ls);}
+.c5pr-stat__unit{font-family:var(--ch-font-text);font-size:var(--ch-type-title-s-size);line-height:28px;}
+.c5pr-stat p{margin:0;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-primary);}
+@media (min-width:900px){
+  .c5pr-block--lit{display:grid;grid-template-columns:minmax(0,588px) minmax(0,683px);justify-content:space-between;grid-template-rows:auto minmax(0,1fr) auto;column-gap:var(--ch-space-8);}
+  .c5pr-block--lit > .c5pr-block__h,.c5pr-block--lit > .c5pr-lit{grid-column:1;}
+  .c5pr-block--lit > .c5pr-stats{grid-column:2;grid-row:1 / 3;}
+  /* the source line of the tiles stands under the green tile in the right column, at the block's
+     own 32 px (R10, Figma 778:2009) */
+  .c5pr-block--lit > .c5-src{grid-column:2;grid-row:3;}
+}
+@media (max-width:899px){
+  .c5pr-stat{padding:var(--ch-space-6);gap:var(--ch-space-5);}
+}
+
+/* phone: the three columns fit the window (no sideways scroll inside the block) */
+@media (max-width:599px){
+  .c5pr-block--plain .c5-table--cards,.c5pr-cert{min-width:0;}
+  .c5pr-block--plain .c5-table--cards th{padding-inline:var(--ch-space-3);font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);}
+  .c5pr-block--plain .c5-table--cards td{padding:var(--ch-space-3);font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);overflow-wrap:break-word;hyphens:auto;}
+  .c5pr-ok{margin-right:4px;}
+  .c5pr-mix__names{font-size:var(--ch-type-small-size);}
+}

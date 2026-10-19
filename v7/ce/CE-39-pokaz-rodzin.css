@@ -1,0 +1,142 @@
+/* ===== CE-39 · Pokaz rodzin na tabach – module (design system v0.1, stage C 18.10.2026) =====
+   Look from the Figma frames 650:202 (head) and 658:890 (show), content from the v7 markup.
+   Styles of this CE live here; the page sheet keeps only exceptions of one page.
+
+   Anatomy
+     section.c5pr-studio            white ground (no section background in Figma)
+       .c5pr-show[data-gama]
+         .c5pr-show__bar            tab rail (EL-19 `c5-seg--rail`, tabs EL-18 `c5-tab`); sticky from 1120 px
+         .c5pr-show__panels
+           .c5pr-fam                one family: panel + four parameter columns
+             .c5pr-fam__panel       beige panel (r 12, leaf motif behind), 760 px at 1440
+               .c5pr-stage          packshot, centred (Figma: 420 × 502, y 150)
+               .c5pr-fam__cap       name + promise on the left, buttons on the right
+             dl.c5pr-specs          four columns: label, 1 px rule, text
+         a.c5pr-show__full          „Pełna tabela porównawcza” (outlined, sliders icon)
+
+   Round of 18.10.2026 (R02, Mateusz's comments in the Produkty artefact):
+   · less air above the section (80 px instead of 120 at 1440);
+   · the „Porównaj” link beside the tabs is gone (markup and rules) – the comparison opens
+     from „Pełna tabela porównawcza”, which gets a little more air above it (56 px);
+   · the overline above the family name (`.c5pr-fam__form`) is gone;
+   · the packshot is 15 % smaller (`--c5pr-shot-k`);
+   · the panel takes its height from the window, so the panel and the four columns under it
+     read as one screen (`--c5pr-panel-h`, 520…760 px) – switching the family shows at once
+     that the columns change too;
+   · from 1120 px the tab rail is sticky (16 px under the top of the window) down to about the
+     middle of the panel: the bar is an absolute strip as tall as half the panel and the rail
+     sticks inside it, so it scrolls away with the packshot after that.
+
+   Mechanics (tabs ARIA, thumb, panel animation, deep links) are in produkty.js – unchanged.
+   The tab marker (`.c5pr-seg__thumb`) is the selected-tab tone of the rail (`--c5-tab-on`);
+   there is no blend mode any more. From 1120 px the rail sits inside the panel (absolute over
+   its top edge); below that the rail stands above the panel and the panel is a flow block.
+   Without JS there are no tabs: the four families stand one below another. ===== */
+
+.c5pr-studio{position:relative;background:var(--ch-surface-page);
+  /* R02: the packshot at 85 % of the field; the panel height follows the window */
+  --c5pr-shot-k:.85;--c5pr-panel-h:clamp(520px,min(52.8vw,100svh - 300px),760px);}
+.c5-sec.c5pr-studio{padding-top:clamp(3.5rem,5.6vw,5rem);}
+.c5pr-show{position:relative;margin-top:clamp(2rem,4vw,3.5rem);}
+
+/* --- Bar: tab rail in the middle --------------------------------------------------------- */
+.c5pr-show__bar{position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;gap:var(--ch-space-4);margin-bottom:var(--ch-space-4);}
+.c5pr-show .c5pr-seg.c5-seg--rail{display:none;}
+.c5pr-js .c5pr-show .c5pr-seg.c5-seg--rail{display:inline-flex;position:relative;overflow:visible;max-width:100%;}
+.c5pr-seg__thumb{position:absolute;left:0;top:0;z-index:0;width:0;height:0;background:var(--c5-tab-on,var(--ch-tab-active));border-radius:var(--ch-radius-tab);pointer-events:none;transition:transform .5s var(--w-ease),width .5s var(--w-ease),height .5s var(--w-ease);}
+.c5pr-seg .c5pr-seg__tab{position:relative;z-index:1;}
+/* the marker carries the tone once the script has placed it; before that the tab has its own */
+.c5pr-seg[data-ready] .c5pr-seg__tab[aria-selected="true"]{background:transparent;}
+.c5pr-seg__tab[aria-selected="false"]:hover{background:var(--ch-surface-warm);}
+.c5pr-seg__tab[aria-selected="true"]{cursor:default;}
+.c5pr-seg__tab:focus-visible{outline:2px solid var(--ch-text-primary);outline-offset:3px;}
+.c5pr-seg__lbl{position:relative;}
+
+/* --- Panels: the active one in flow, the leaving one over it during the animation -------- */
+.c5pr-show__panels{position:relative;display:flow-root;}
+.c5pr-js .c5pr-fam:not([data-on]):not([data-leaving]){display:none;}
+.c5pr-fam[data-leaving]{position:absolute;top:0;left:0;right:0;pointer-events:none;}
+.c5pr-fam + .c5pr-fam{margin-top:clamp(3.5rem,7vw,6rem);}
+.c5pr-js .c5pr-fam + .c5pr-fam{margin-top:0;}
+.c5pr-fam:focus-visible{outline:2px solid var(--ch-text-primary);outline-offset:8px;border-radius:0;}
+
+/* --- Beige panel with the leaf motif ------------------------------------------------------ */
+.c5pr-fam__panel{position:relative;isolation:isolate;overflow:hidden;border-radius:var(--ch-radius-md);background:var(--ch-surface-warm);padding:var(--ch-space-5) var(--ch-space-5) var(--ch-space-6);}
+.c5pr-fam__panel::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:var(--ch-motif-on-warm);-webkit-mask:url(../img/motyw-cta-lisci.svg) no-repeat center / cover;mask:url(../img/motyw-cta-lisci.svg) no-repeat center / cover;}
+
+/* Packshot (no floor shadow – the design has no shadows) */
+.c5pr-stage{position:relative;display:flex;align-items:flex-end;justify-content:center;height:clamp(240px,64vw,380px);touch-action:pan-y;}
+.c5pr-shot{position:relative;z-index:0;display:flex;align-items:flex-end;justify-content:center;height:calc(100% * var(--c5pr-shot-k,1));max-width:100%;}
+.c5pr-shot[data-shape="kanister"]{height:calc(92% * var(--c5pr-shot-k,1));}
+.c5pr-shot[data-shape="rekaw"]{height:auto;width:calc(min(72%,560px) * var(--c5pr-shot-k,1));}
+.c5pr-shot__img{display:block;width:auto;height:100%;max-width:100%;object-fit:contain;}
+.c5pr-shot[data-shape="rekaw"] .c5pr-shot__img{width:100%;height:auto;}
+.c5pr-shot__floor{display:none;}
+
+/* Caption: family name + promise, buttons */
+.c5pr-fam__cap{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--ch-space-5) clamp(2rem,5vw,4.5rem);align-items:end;margin-top:var(--ch-space-6);}
+.c5pr-fam__intro{display:flex;flex-direction:column;gap:var(--ch-space-2);min-width:0;}
+.c5pr-fam__name{margin:0;font-family:var(--ch-font-text);font-size:clamp(1.75rem,2.8vw,2.5rem);font-weight:var(--ch-font-weight-regular);line-height:1.1;letter-spacing:-0.02em;color:var(--ch-text-primary);}
+.c5pr-fam__promise{margin:0;max-width:36em;font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);color:var(--ch-text-primary);}
+.c5pr-fam__acts{display:flex;flex-direction:column;align-items:flex-start;}
+.c5pr-fam__acts .c5-btnrow{gap:11px;}
+/* outlined button on the beige panel: transparent fill, the Figma stroke tone #C5C2BB (no token) */
+.c5pr-fam__acts .c5-btn--light{background:transparent;border-color:#C5C2BB;}
+.c5pr-fam__acts .c5-btn--light:hover{border-color:var(--ch-text-primary);}
+
+/* --- Four parameter columns: label, 1 px rule, text ----------------------------------------- */
+.c5pr-specs{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--ch-space-8) var(--ch-space-10);margin:calc(var(--ch-space-8) + var(--ch-space-4)) 0 0;padding-inline:0;}
+.c5pr-spec{display:flex;flex-direction:column;min-width:0;}
+.c5pr-spec dt{padding-bottom:18px;border-bottom:1px solid var(--ch-border-subtle);font-size:var(--ch-type-kicker-size);line-height:var(--ch-type-kicker-lh);letter-spacing:var(--ch-type-kicker-ls);text-transform:uppercase;color:var(--ch-text-primary);}
+.c5pr-spec dd{margin:var(--ch-space-6) 0 0;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary);}
+.c5pr-spec__warn{display:flex;gap:var(--ch-space-2);align-items:flex-start;margin-top:var(--ch-space-3);padding-top:var(--ch-space-3);border-top:1px solid var(--ch-border-control);font-size:0.875rem;}
+.c5pr-spec__warn .wf-icon{flex:none;margin-top:2px;}
+@media (min-width:600px){ .c5pr-specs{grid-template-columns:repeat(2,minmax(0,1fr));} }
+@media (min-width:1024px){ .c5pr-specs{grid-template-columns:repeat(4,minmax(0,1fr));padding-inline:var(--ch-space-8);} }
+
+/* --- „Pełna tabela porównawcza” --------------------------------------------------------------- */
+.c5pr-show__full{display:flex;width:fit-content;max-width:100%;margin:var(--ch-space-14) auto 0;text-align:center;}
+
+/* --- Narrow: the rail becomes a 2 × 2 grid ---------------------------------------------------- */
+@media (max-width:859px){
+  .c5pr-js .c5pr-show .c5pr-seg.c5-seg--rail{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;min-height:0;}
+  .c5pr-seg .c5pr-seg__tab{justify-content:center;white-space:normal;text-align:center;padding:12px 10px;font-size:0.9375rem;line-height:1.3;min-height:56px;}
+}
+@media (max-width:899px){
+  .c5pr-fam__acts .c5-btnrow{flex-wrap:wrap;}
+}
+@media (max-width:599px){
+  .c5pr-fam__panel{padding:var(--ch-space-4) var(--ch-space-4) var(--ch-space-5);}
+  .c5pr-shot[data-shape="rekaw"]{width:calc(86% * var(--c5pr-shot-k,1));}
+  .c5pr-fam__acts,.c5pr-fam__acts .c5-btnrow{width:100%;}
+  .c5pr-fam__acts .c5-btn{flex:1 1 100%;}
+  /* full-width buttons: a narrower side padding keeps „poznaj CARBOHUMIC doglebowy”
+     on one line at 375 px; centred text if a label still wraps */
+  .c5pr-fam__acts .c5-btn{padding-inline:var(--ch-space-4);text-align:center;}
+}
+
+/* --- Desktop composition (Figma 658:890): rail inside the panel, packshot centred, caption at the bottom */
+@media (min-width:1120px){
+  /* the bar: a strip over the top half of the panel; the rail sticks inside it (R02) */
+  .c5pr-show__bar{position:absolute;top:0;left:0;right:0;height:calc(var(--c5pr-panel-h) / 2);margin:0;
+    display:flex;flex-direction:row;justify-content:center;align-items:flex-start;padding:var(--ch-space-6) var(--ch-space-8) 0;pointer-events:none;}
+  .c5pr-show__bar > *{pointer-events:auto;}
+  .c5pr-js .c5pr-show .c5pr-seg.c5-seg--rail{position:sticky;top:var(--ch-space-4);}
+  .c5pr-fam__panel{height:var(--c5pr-panel-h);padding:0;}
+  .c5pr-stage{position:absolute;inset:clamp(110px,10.4vw,150px) 0 clamp(80px,7.5vw,108px);height:auto;}
+  .c5pr-fam__cap{position:absolute;left:var(--ch-space-8);right:var(--ch-space-8);bottom:var(--ch-space-8);grid-template-columns:minmax(0,1fr) auto;margin:0;}
+  .c5pr-fam__acts{align-items:flex-end;}
+  .c5pr-fam__acts .c5-btnrow{justify-content:flex-end;flex-wrap:nowrap;}
+}
+
+/* three buttons in one row (Carbohumic, R02) reach the middle of a narrower panel: the
+   packshot stands a little higher there, so it keeps clear air above the buttons */
+@media (min-width:1120px) and (max-width:1359.98px){
+  .c5pr-fam__panel:has(.c5pr-fam__acts .c5-btn:nth-child(3)) .c5pr-stage{bottom:calc(clamp(80px,7.5vw,108px) + var(--ch-space-6));}
+}
+
+@media (forced-colors:active){
+  .c5pr-seg__thumb{forced-color-adjust:none;background:Highlight;}
+  .c5pr-seg__tab[aria-selected="true"] .c5pr-seg__lbl{forced-color-adjust:none;color:HighlightText;}
+}
+@media (prefers-reduced-motion:reduce){ .c5pr-seg__thumb,.c5pr-seg__tab{transition:none;} }

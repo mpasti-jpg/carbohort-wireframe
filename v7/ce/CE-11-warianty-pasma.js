@@ -1,92 +1,137 @@
 /* ===== CE-11 · Warianty – pasma z przełącznikiem (wariant „pasma-z-przelacznikiem") =====
    A shared module since 02.10.2026 (see the CSS half for the layout and for
-   what a page chooses). Any number of bands; the script itself did not change.
+   what a page chooses). Any number of bands.
 
-   What the script adds over the static layout:
+   What the script adds over the static layout (round of 18.10.2026, E08–E09):
 
-     - on wide screens without reduced motion every product band is pinned for
-       the height of the window and its card turns into a window: the content of
-       the card travels 1 px per 1 px of page scroll until its end is reached,
-       then the band lets go and the next product comes up;
-     - the scroll budget of a band (--kdm-extra) is the overflow of its card
-       plus a short hold, measured again on every resize and on load;
-     - a control inside the card that receives focus while it is outside the
-       window is scrolled into it (keyboard users never tab into the dark);
+     - on wide screens without reduced motion it switches the motion layer on
+       ([data-kdm="ruch"]): one sticky left column for the whole CE, the cards
+       of the products one under another on the right – only the right column
+       scrolls;
+     - the current product is a THRESHOLD, not a scrub: when the top of the
+       next card passes the middle of the window, its track gets `is-on` (the
+       ones above it `is-past`) and CSS plays the change – the packshot out,
+       then the next one in, the tone of the CE, the outline of the sign, the
+       tab of the switch. Scrolling back past the line plays it backwards;
+     - the tone layers (.c5-kdm__bgs, one per product, coloured with the
+       --c5-kdm-band of its track) are inserted once and shown only by CSS of
+       the motion layer;
+     - aria-current follows the current product in every switch; the visible
+       switch is the one of the last product (its column paints on top);
+     - in-page links to a band (the switch, links from other pages) land on the
+       top of its card – a dissolved track has no box of its own;
      - while the shop dialog (sklep-wspolne.js) is open, the inertia layer is
        paused, so the wheel does not move the page behind the dialog.
 
-   The switch between the products needs no script: it is a row of in-page
-   links and the hash bus of ce/00-base.js scrolls to the band.
-
-   Without JS, with prefers-reduced-motion and below 900 px the module writes no
-   variables at all and clears the ones it wrote. No [data-kdm] -> no-op. ===== */
+   Without JS, with prefers-reduced-motion and below 900 px the module leaves
+   the static layout alone and restores what it changed (aria-current of every
+   switch on its own band). No [data-kdm] -> no-op. ===== */
 (function () {
   "use strict";
-  var $ = CX5.$, $$ = CX5.$$, clamp = CX5.clamp;
+  var $ = CX5.$, $$ = CX5.$$;
 
   var root = $("[data-kdm]");
   if (!root) return;
 
-  var HOLD = 0.18;      /* share of the window height the band stays after the card has ended */
-  var FADE_PX = 140;    /* the bottom fade goes out over the last pixels of the travel */
+  var LINE = 0.5;       /* share of the window height a card top must pass to become current */
 
   var tracks = $$("[data-kdm-track]", root).map(function (el) {
-    return { el: el, card: $("[data-kdm-card]", el), scroll: $("[data-kdm-scroll]", el), over: 0, y: -1, fade: -1 };
-  }).filter(function (t) { return t.card && t.scroll; });
+    return { el: el, card: $("[data-kdm-card]", el), bg: null };
+  }).filter(function (t) { return t.card; });
   if (!tracks.length) return;
 
-  var motion = false;
+  var motion = false, act = -1, bgs = null;
 
-  function clear() {
+  /* one tone layer per product, coloured with the band tone its track resolves */
+  function buildTones() {
+    if (bgs) return;
+    bgs = document.createElement("span");
+    bgs.className = "c5-kdm__bgs";
+    bgs.setAttribute("aria-hidden", "true");
     tracks.forEach(function (t) {
-      t.el.style.removeProperty("--kdm-extra");
-      t.el.style.removeProperty("--kdm-y");
-      t.el.style.removeProperty("--kdm-fade");
-      t.y = -1; t.fade = -1; t.over = 0;
+      var span = document.createElement("span");
+      span.style.background = window.getComputedStyle(t.el).getPropertyValue("--c5-kdm-band").trim();
+      bgs.appendChild(span);
+      t.bg = span;
+    });
+    root.appendChild(bgs);              /* a <span>: the div:nth-of-type / :last-of-type rules of the tracks never count it */
+  }
+
+  /* aria-current: on the link to `id` in every switch of the CE */
+  function markSwitches(scope, id) {
+    $$(".c5-kdm__opt", scope).forEach(function (a) {
+      if (a.getAttribute("href") === "#" + id) a.setAttribute("aria-current", "true");
+      else a.removeAttribute("aria-current");
+    });
+  }
+
+  function current() {
+    var line = window.innerHeight * LINE, i = 0;
+    for (var k = 1; k < tracks.length; k++) {
+      if (tracks[k].card.getBoundingClientRect().top < line) i = k;
+    }
+    return i;
+  }
+
+  function show(i, instant) {
+    if (i === act) return;
+    act = i;
+    if (instant) root.classList.add("is-instant");
+    tracks.forEach(function (t, k) {
+      t.el.classList.toggle("is-on", k === i);
+      t.el.classList.toggle("is-past", k < i);
+      if (t.bg) t.bg.classList.toggle("is-on", k <= i);
+    });
+    markSwitches(root, tracks[i].el.id);
+    if (instant) {
+      void root.offsetWidth;
+      window.requestAnimationFrame(function () {
+        window.requestAnimationFrame(function () { root.classList.remove("is-instant"); });
+      });
+    }
+  }
+
+  /* back to the static layout: every band its own switch and nothing current */
+  function restore() {
+    act = -1;
+    tracks.forEach(function (t) {
+      t.el.classList.remove("is-on", "is-past");
+      markSwitches(t.el, t.el.id);
     });
   }
 
   function measure() {
     var on = CX5.motionOn();
-    if (on !== motion) {
-      motion = on;
-      root.setAttribute("data-kdm", on ? "ruch" : "stop");
-      if (!on) clear();
+    if (on === motion) return;
+    motion = on;
+    if (on) {
+      buildTones();
+      root.style.setProperty("--kdm-n", String(tracks.length));
+      root.setAttribute("data-kdm", "ruch");
+      act = -1;
+      show(current(), true);
+    } else {
+      root.setAttribute("data-kdm", "stop");
+      root.style.removeProperty("--kdm-n");
+      restore();
     }
-    if (!motion) return;
-    var hold = Math.round(window.innerHeight * HOLD);
-    tracks.forEach(function (t) {
-      t.over = Math.max(0, Math.ceil(t.scroll.offsetHeight - t.card.clientHeight));
-      t.el.style.setProperty("--kdm-extra", (t.over + hold) + "px");
-      t.y = -1; t.fade = -1;      /* force a repaint with the new budget */
-    });
   }
 
   function update() {
-    if (!motion) return;
-    tracks.forEach(function (t) {
-      var y = Math.round(clamp(-t.el.getBoundingClientRect().top, 0, t.over));
-      var fade = t.over > 0 ? clamp((t.over - y) / FADE_PX, 0, 1) : 0;
-      if (y !== t.y) { t.y = y; t.el.style.setProperty("--kdm-y", String(y)); }
-      if (fade !== t.fade) { t.fade = fade; t.el.style.setProperty("--kdm-fade", fade.toFixed(3)); }
-    });
+    if (motion) show(current(), false);
   }
 
-  /* Focus inside the window: bring the control into view by scrolling the PAGE
-     (the card itself never scrolls – it is clipped, not scrollable). */
-  tracks.forEach(function (t) {
-    t.card.addEventListener("focusin", function (e) {
-      if (!motion || !t.over) return;
-      var el = e.target;
-      if (!el || el === t.card) return;
-      var pos = el.getBoundingClientRect().top - t.scroll.getBoundingClientRect().top;   /* inside the content */
-      var view = t.card.clientHeight;
-      var from = t.y, to = t.y + view - el.offsetHeight - 24;
-      if (pos >= from + 16 && pos <= to) return;                                       /* already visible */
-      var wanted = clamp(Math.round(pos - view * 0.35), 0, t.over);
-      var top = t.el.getBoundingClientRect().top + window.scrollY + wanted;
-      CX5.scrollTo(top, "auto");
-    });
+  /* #wariant-… while the tracks are dissolved: land on the top of the card,
+     level with the top of the sticky column */
+  CX5.onHash(function (hash, instant) {
+    if (!motion || !hash) return false;
+    var id = decodeURIComponent(hash.slice(1)), t = null;
+    for (var k = 0; k < tracks.length; k++) if (tracks[k].el.id === id) t = tracks[k];
+    if (!t) return false;
+    var pad = parseFloat(window.getComputedStyle(root).paddingTop) || 0;
+    var top = t.card.getBoundingClientRect().top + window.scrollY - pad;
+    CX5.scrollTo(top, instant || CX5.reducedMQ.matches ? "auto" : "smooth");
+    return true;
   });
 
   /* Shop dialog open -> pause the inertia layer; its panel scrolls natively. */

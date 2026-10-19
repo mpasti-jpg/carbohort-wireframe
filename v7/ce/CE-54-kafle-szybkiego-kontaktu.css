@@ -1,0 +1,88 @@
+/* ===== CE-54 · Kafle szybkiego kontaktu (rejestr: ce-rejestr.js) ============
+   Module (design system v0.1, stage D 18.10.2026): the look comes from the
+   foundation – card EL-15 (r12, 1 px grey-200 outline, no shadow), photo field
+   r8 on beige, dark primary button EL-01, tokens only. Layout and content stay
+   as in v7. Prefix: `kt-quick`.
+
+   Page head plus three equal cards with the person of first contact. The phone
+   number is a `tel:` link that IS a full-width dark button on a phone (tapping
+   the number should start the call) and turns into a large tabular number
+   from 600 px.
+   Parts: photo box 1:1 · name (h2) · phone · e-mail.
+
+   Markup:
+     section.kt-quick-sec[data-ce="CE-54"]
+       .c5-wrap
+         nav.kt-crumbs                        breadcrumb
+         .kt-quick__head                      kicker, H1, lead
+         ul.kt-quick > li.kt-quick__card[data-kt-osoba]
+           .wf-ph.kt-quick__photo
+           h2.c5-h3.c5-h3--lg.kt-quick__name
+           a.c5-btn.c5-btn--dark.kt-quick__tel  (.kt-quick__call + .kt-quick__num)
+           a.wf-link.kt-quick__mail
+
+   States set by kontakt.js: `.is-pick` (the person assigned to the chosen topic)
+   and `.is-dim` (everybody else while a topic is active). ===================== */
+
+.kt-quick-sec{padding-block:clamp(1.5rem,3.5vw,2.75rem) clamp(2rem,4vw,3rem);}
+
+.kt-crumbs{margin-bottom:clamp(1.25rem,2.5vw,2rem);}
+
+.kt-quick__head{display:flex;flex-direction:column;gap:var(--ch-space-4);
+  margin-bottom:clamp(1.75rem,3.5vw,2.75rem);}
+.kt-quick__head .c5-kicker{margin-bottom:0;}
+
+.kt-quick{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--ch-space-5);
+  margin:0;padding:0;list-style:none;}
+
+/* card EL-15 */
+.kt-quick__card{display:flex;flex-direction:column;align-items:flex-start;gap:var(--ch-space-3);
+  min-height:240px;background:var(--ch-surface-raised);border:1px solid var(--ch-border-subtle);
+  border-radius:var(--ch-radius-md);padding:var(--ch-space-6);
+  transition:border-color var(--ch-motion-duration-base) var(--ch-motion-ease),
+    background var(--ch-motion-duration-base) var(--ch-motion-ease),opacity var(--ch-motion-duration-base) var(--ch-motion-ease);}
+.kt-quick__card:hover{border-color:var(--ch-border-control);}
+
+/* photo box: a 96 px square in the corner of the card, r8 */
+.kt-quick__photo{width:96px;min-height:0;aspect-ratio:1/1;border-radius:var(--ch-radius-sm);align-self:flex-start;}
+
+.kt-quick__name{margin:0;font-family:var(--ch-type-title-s-font);font-weight:var(--ch-type-title-s-weight);}
+
+/* phone: the mobile shape is the default (full-width dark button) */
+.kt-quick__tel{margin-top:auto;width:100%;--c5-btn-px:18px;font-variant-numeric:tabular-nums;}
+.kt-quick__call{font-weight:var(--ch-font-weight-medium);}
+/* a phone number that breaks over two lines stops being a number to read */
+.kt-quick__num{white-space:nowrap;}
+
+.kt-quick__mail{display:inline-flex;align-items:center;gap:var(--ch-space-2);
+  font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-secondary);
+  overflow-wrap:anywhere;min-height:44px;}
+.kt-quick__mail .wf-icon{opacity:.55;}
+
+@media (min-width:600px){
+  /* from a tablet up the number is read, not tapped – the button look goes
+     away and the digits become the biggest thing on the card */
+  .kt-quick__tel{width:auto;min-height:0;padding:0;gap:10px;
+    background:none;border:0;color:var(--ch-text-primary);
+    font-size:clamp(1.5rem,3.2vw,2.25rem);line-height:1.15;letter-spacing:-0.01em;}
+  .kt-quick__tel:hover{background:none;color:var(--ch-text-primary);text-decoration:underline;}
+  .kt-quick__tel .wf-icon{width:18px;height:18px;opacity:.55;}
+  .kt-quick__call{display:none;}
+}
+@media (min-width:900px){
+  /* three columns: the card is a third as wide, so the number needs its own,
+     tighter scale – the 600-899 scale would break „+48 506 066 663" in two */
+  .kt-quick__tel{font-size:clamp(1.25rem,2.35vw,1.875rem);}
+}
+@media (max-width:899px){
+  .kt-quick{grid-template-columns:minmax(0,1fr);}
+  .kt-quick__card{min-height:0;}
+}
+
+/* topic chosen in the chip row: the assigned person is lit, the others dim */
+.kt-quick__card.is-pick{border-color:var(--ch-border-strong);background:var(--ch-surface-warm);}
+.kt-quick__card.is-dim{opacity:.4;}
+
+@media (prefers-reduced-motion: reduce){
+  .kt-quick__card{transition:none;}
+}

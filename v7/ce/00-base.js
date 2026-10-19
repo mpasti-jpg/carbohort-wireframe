@@ -60,9 +60,18 @@ window.CX5 = (function () {
   /* --- Wysokość menu serwisu -> --cx-navbar-h --------------------------------
      Menu nie jest przyklejone, ale hero ma zająć dokładnie pierwszy ekran pod
      nim, więc jego wysokość mierzymy i udostępniamy wszystkim sekcjom. */
-  var navbarEl = null;
+  var navbarEl = null, navbarRO = null;
   function measureNavbar() {
-    if (!navbarEl || !navbarEl.isConnected) navbarEl = doc.querySelector(".wf-navbar");
+    if (!navbarEl || !navbarEl.isConnected) {
+      navbarEl = doc.querySelector(".wf-navbar");
+      /* G08 (18.10.2026): the hero reaches up behind the header by this height, so it
+         follows every change of the header (promotion strip closed, mobile menu) */
+      if (navbarEl && window.ResizeObserver) {
+        if (navbarRO) navbarRO.disconnect();
+        navbarRO = new ResizeObserver(function () { measureNavbar(); });
+        navbarRO.observe(navbarEl);
+      }
+    }
     var h = navbarEl ? Math.round(navbarEl.getBoundingClientRect().height) : 0;
     doc.documentElement.style.setProperty("--cx-navbar-h", h + "px");
   }

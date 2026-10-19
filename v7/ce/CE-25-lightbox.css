@@ -1,18 +1,28 @@
 /* ===== CE-25 · Lightbox (rejestr: ce-rejestr.js) ============================
-   Implementation used by the crop pages. Prefixes: u-overlay, u-lightbox,
-   u-prodpop. Opening, focus trap and paging: uprawa.js. Without JS the pages
-   of a lightbox render as plain sections in the flow, hence the `html.cx-js`
-   scope of the overlay geometry. Other pages carry their own implementation
-   (`c5-lb`) in their page sheets. */
+   Window shell of design system v0.1 (Figma 903:2340, stage C 18.10.2026):
+   overlay green-950 at .74 with a 7.4 px background blur, white panel with a
+   12 px radius and no outline, 24 px margins, 84 px from the top, the close
+   control is the bare icon (32 px, no frame; the hit area stays 44 px).
+   Two implementations share the shell values:
+   · `u-lightbox` (+ `u-overlay`) – crop pages (uprawa.js); variants
+     `popup-produktu` and `jednostronicowy`. Without JS the pages of a
+     lightbox render as plain sections in the flow, hence the `html.cx-js`
+     scope of the overlay geometry.
+   · `c5-lb` – Produkty (the CE-40 table inside); opening in produkty.js.
+     carbomat-mata.html uses it too, as the variant `c5-lb--strony` (pages +
+     footer, see the block at the end). Content blocks of a window stay in the
+     CE modules. */
 
 /* --- shared: backdrop, panel, pages, footer --- */
-.u-overlay{position:fixed;inset:0;background:var(--w-gray-900);opacity:0;z-index:var(--w-z-popover);transition:opacity var(--w-duration-base) var(--w-ease);}
-.u-overlay[data-open="true"]{opacity:.5;}
+.u-overlay{position:fixed;inset:0;background:var(--ch-color-overlay-modal);-webkit-backdrop-filter:blur(var(--ch-effect-blur-modal));backdrop-filter:blur(var(--ch-effect-blur-modal));opacity:0;z-index:var(--w-z-popover);transition:opacity var(--w-duration-base) var(--w-ease);}
+.u-overlay[data-open="true"]{opacity:1;}
 .u-chunk{display:flex;flex-direction:column;gap:var(--w-space-3);}
 .u-lightbox{display:block;}
 .u-lightbox__panel{display:flex;flex-direction:column;min-height:0;}
-.u-lightbox__close{display:none;place-items:center;flex:none;width:var(--w-control-h-md);height:var(--w-control-h-md);background:var(--w-surface-page);border:1px solid var(--w-border-default);border-radius:0;color:var(--w-text-primary);cursor:pointer;}
-.u-lightbox__close:hover{background:var(--w-surface-hover);}
+/* bare close icon: 32 px glyph, no frame, 44 px hit area, grey-600 -> green-950 */
+.u-lightbox__close,.c5-lb .c5-iconbtn{display:none;place-items:center;flex:none;width:44px;height:44px;min-width:44px;min-height:44px;padding:0;background:none;border:0;border-radius:var(--ch-radius-md);color:var(--ch-text-secondary);cursor:pointer;transition:color var(--w-duration-base) var(--w-ease);}
+.u-lightbox__close:hover,.c5-lb .c5-iconbtn:hover:not(:disabled){background:none;color:var(--ch-text-primary);}
+.u-lightbox__close .wf-icon,.c5-lb .c5-iconbtn .wf-icon{width:32px;height:32px;}
 .u-lightbox__scroll{display:flex;flex-direction:column;gap:var(--w-space-12);}
 .u-lightbox__page{display:flex;flex-direction:column;gap:var(--w-space-6);opacity:1;transition:opacity var(--w-duration-base) var(--w-ease);}
 .u-lightbox__head{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:var(--w-space-6);align-items:end;padding-bottom:var(--w-space-5);border-bottom:1px solid var(--w-border-subtle);}
@@ -23,14 +33,14 @@
 .u-lightbox__foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--w-space-3);}
 .u-lightbox__steps,.u-lightbox__acts{display:flex;flex-wrap:wrap;gap:var(--w-space-2);}
 .u-lightbox__steps .c5-btn[disabled]{opacity:.4;cursor:default;}
-html.cx-js .u-lightbox{position:fixed;inset:0;z-index:var(--w-z-toast);display:grid;place-items:center;padding:var(--w-space-6);opacity:0;visibility:hidden;transition:opacity 220ms var(--w-ease),visibility 0s linear 220ms;}
+html.cx-js .u-lightbox{position:fixed;inset:0;z-index:var(--w-z-toast);display:grid;place-items:start center;padding:84px var(--ch-space-6) var(--ch-space-6);opacity:0;visibility:hidden;transition:opacity 220ms var(--w-ease),visibility 0s linear 220ms;}
 html.cx-js .u-lightbox[data-open="true"]{opacity:1;visibility:visible;transition:opacity 220ms var(--w-ease),visibility 0s;}
-html.cx-js .u-lightbox__panel{position:relative;width:100%;max-width:1080px;max-height:90vh;background:var(--w-surface-page);border:1px solid var(--w-border-default);transform:scale(.98);transition:transform 220ms var(--w-ease);}
+html.cx-js .u-lightbox__panel{position:relative;width:100%;max-width:1080px;max-height:calc(100svh - 108px);overflow:hidden;background:var(--ch-surface-page);border-radius:var(--ch-radius-md);transform:scale(.98);transition:transform 220ms var(--w-ease);}
 html.cx-js .u-lightbox[data-open="true"] .u-lightbox__panel{transform:none;}
-html.cx-js .u-lightbox__close{display:grid;position:absolute;top:var(--w-space-4);right:var(--w-space-4);z-index:1;}
-html.cx-js .u-lightbox__scroll{flex:1 1 auto;min-height:0;overflow-y:auto;gap:0;padding:clamp(1.25rem,3vw,2.5rem);}
+html.cx-js .u-lightbox__close{display:grid;position:absolute;top:10px;right:10px;z-index:5;}
+html.cx-js .u-lightbox__scroll{flex:1 1 auto;min-height:0;overflow-y:auto;gap:0;padding:clamp(1.25rem,4.5vw,4rem);}
 html.cx-js .u-lightbox__head{padding-right:var(--w-control-h-md);}
-html.cx-js .u-lightbox__foot{padding:var(--w-space-4) var(--w-space-6);border-top:1px solid var(--w-border-subtle);background:var(--w-surface-subtle);}
+html.cx-js .u-lightbox__foot{padding:var(--w-space-4) var(--w-space-6);border-top:1px solid var(--ch-border-subtle);background:var(--ch-surface-warm);}
 @media (prefers-reduced-motion: reduce){
   html.cx-js .u-lightbox__panel{transform:none;}
   .u-overlay,.u-lightbox__page,
@@ -55,14 +65,18 @@ html.cx-js .u-lightbox__foot{padding:var(--w-space-4) var(--w-space-6);border-to
   .u-prodpop__acts{flex:1 1 100%;}
   .u-prodpop__acts>.c5-btn{flex:1 1 0;padding-inline:var(--w-space-3);}
   .u-prodpop__body{grid-template-columns:1fr;gap:var(--w-space-6);}
-  html.cx-js .u-lightbox{padding:0;}
-  html.cx-js .u-lightbox__panel{max-width:none;max-height:none;height:100%;border:0;}
+  html.cx-js .u-lightbox{padding:var(--ch-space-3);}
+  html.cx-js .u-lightbox__panel{max-width:none;max-height:none;height:100%;}
+  html.cx-js .u-lightbox__scroll{padding-top:64px;}
   html.cx-js .u-lightbox__t{font-size:var(--w-font-h3-size);line-height:var(--w-font-h3-lh);}
   html.cx-js .u-lightbox__foot{padding:var(--w-space-3) var(--w-space-4);}
   .u-lightbox__steps,.u-lightbox__acts{flex:1 1 100%;}
   .u-lightbox__steps>.c5-btn,.u-lightbox__acts>.c5-btn{flex:1 1 0;padding-inline:var(--w-space-3);}
 }
-.b-pop__list{list-style:disc;margin:0;padding-left:1.1rem;display:grid;gap:var(--w-space-2);font-size:var(--w-font-sm-size);line-height:var(--w-font-sm-lh);color:var(--w-text-secondary);}
+/* bullets as G15: 3 px square, radius 1 px */
+.b-pop__list{list-style:none;margin:0;padding-left:0;display:grid;gap:var(--w-space-2);font-size:var(--w-font-sm-size);line-height:var(--w-font-sm-lh);color:var(--w-text-secondary);}
+.b-pop__list > li{position:relative;padding-left:var(--ch-space-4,1rem);}
+.b-pop__list > li::before{content:"";position:absolute;left:2px;top:calc(.5lh - 1.5px);width:3px;height:3px;border-radius:1px;background:currentColor;}
 .u-prodpop .u-txt + .u-txt{margin-top:var(--w-space-3);}
 
 /* ===== wariant: jednostronicowy =====
@@ -91,3 +105,73 @@ html.cx-js .u-lightbox--waski .u-lightbox__panel{max-width:760px;}
 .u-steps__i:last-child{padding-bottom:0;}
 .u-steps__i::before{content:"";position:absolute;left:calc((var(--w-space-5) + 5px) * -1);top:6px;width:8px;height:8px;background:var(--w-gray-900);}
 .u-steps__n{font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+
+
+/* ===== wariant c5-lb: okno z tabelą (Produkty, CE-40) =====
+   Without JS `.c5-lb` is a plain block in the flow, exactly where the section
+   stood before it moved into the window: no content disappears. With JS
+   (`is-js`) it is the overlay and its child `.c5-lb__panel` the white panel:
+   1392 px at most, 84 px from the top, 24 px elsewhere; content 98 px below
+   the panel top and 25 px from the sides (Figma 903:2940). The panel scrolls
+   inside; min-width:0 on the panel, the scroller and the page keeps the wide
+   table from stretching the grid item (it scrolls sideways below 900 px). */
+.c5-lb{display:block;max-width:1180px;margin:clamp(2.5rem,5vw,4rem) auto 0;padding-inline:var(--w-space-5);}
+.c5-lb__panel{display:flex;flex-direction:column;min-height:0;}
+.c5-lb__scroll{display:flex;flex-direction:column;}
+.c5-lb__page{display:flex;flex-direction:column;}
+.c5-lb.is-js{display:none;position:fixed;inset:0;z-index:var(--w-z-toast);place-items:start center;padding:84px var(--ch-space-6) var(--ch-space-6);max-width:none;margin:0;background:var(--ch-color-overlay-modal);-webkit-backdrop-filter:blur(var(--ch-effect-blur-modal));backdrop-filter:blur(var(--ch-effect-blur-modal));}
+.c5-lb.is-js[data-open="true"]{display:grid;animation:c5-lb-in 200ms var(--w-ease);}
+.c5-lb.is-js .c5-lb__panel{position:relative;width:100%;min-width:0;max-width:1392px;max-height:calc(100svh - 108px);overflow:hidden;background:var(--ch-surface-page);border-radius:var(--ch-radius-md);}
+.c5-lb.is-js .c5-lb__scroll,.c5-lb.is-js .c5-lb__page{min-width:0;}
+.c5-lb.is-js[data-open="true"] .c5-lb__panel{animation:c5-lb-panel-in 220ms var(--w-ease);}
+.c5-lb.is-js .c5-iconbtn{display:grid;position:absolute;top:10px;right:10px;z-index:5;}
+.c5-lb.is-js .c5-lb__scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:0 25px 25px;}
+/* the 98 px sit on the page, not on the scroller: a sticky header inside then
+   sticks to the very top edge of the panel, not 98 px below it */
+.c5-lb.is-js .c5-lb__page{padding-top:98px;animation:c5-lb-page-in 180ms var(--w-ease);}
+/* the panel carries the measure and the padding, the page wrapper only fills it */
+.c5-lb.is-js .c5-wrap{max-width:none;padding-inline:0;}
+@keyframes c5-lb-in{from{opacity:0;}to{opacity:1;}}
+@keyframes c5-lb-panel-in{from{transform:scale(.98);}to{transform:none;}}
+@keyframes c5-lb-page-in{from{opacity:0;}to{opacity:1;}}
+@media (max-width:899px){
+  .c5-lb.is-js{padding:var(--ch-space-3);}
+  .c5-lb.is-js .c5-lb__panel{max-width:none;max-height:calc(100svh - 24px);}
+  .c5-lb.is-js .c5-lb__scroll{padding:0 20px 24px;}
+  .c5-lb.is-js .c5-lb__page{padding-top:64px;}
+}
+@media (prefers-reduced-motion:reduce){
+  .c5-lb.is-js[data-open="true"],.c5-lb.is-js[data-open="true"] .c5-lb__panel,.c5-lb.is-js .c5-lb__page{animation:none;}
+}
+
+
+/* ===== wariant c5-lb--strony: okna z kilkoma stronami i stopką (carbomat-mata) =====
+   Stage D 18.10.2026: the three boxes of CARBOMAT MATA take the shell above (the
+   same panel, overlay, bare close icon and paddings as the Produkty window); what
+   is added here are the differences of that page: several pages one under another
+   in the flow (without JS the whole content stands on the page, footer hidden),
+   one at a time with JS (the script switches them), a footer with the buttons
+   Poprzednie / Następne and a counter, and the footer of a page with its
+   publications. `c5-lb--solo` is the single-page box: no footer, and in the flow it
+   adds nothing of its own (the table keeps its place inside the section). */
+.c5-lb--strony .c5-lb__scroll{gap:clamp(2.5rem,5vw,4rem);}
+.c5-lb--strony .c5-lb__page{gap:var(--ch-space-5);}
+.c5-lb--strony .c5-lb__src{margin-top:var(--ch-space-3);}
+.c5-lb--strony .c5-lb__pubs{display:flex;flex-direction:column;gap:var(--ch-space-3);align-items:flex-start;border-top:1px solid var(--ch-border-subtle);padding-top:clamp(1.25rem,2.5vw,1.75rem);}
+.c5-lb--strony .c5-lb__pubh{margin:0;font-size:var(--ch-type-title-s-size);line-height:var(--ch-type-title-s-lh);letter-spacing:var(--ch-type-title-s-ls);font-weight:var(--ch-type-title-s-weight);color:var(--ch-text-primary);}
+/* the footer: nothing to switch without JS */
+.c5-lb--strony:not(.is-js) .c5-lb__foot{display:none;}
+.c5-lb--strony .c5-lb__foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--ch-space-3);}
+.c5-lb--strony .c5-lb__steps{display:flex;flex-wrap:wrap;gap:var(--ch-space-2);}
+.c5-lb--strony .c5-lb__steps .c5-btn[disabled]{opacity:.4;cursor:default;}
+.c5-lb--strony .c5-lb__count{font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-secondary);}
+.c5-lb--strony.is-js .c5-lb__scroll{gap:0;}
+.c5-lb--strony.is-js .c5-lb__foot{flex:none;padding:var(--ch-space-4) var(--ch-space-6);border-top:1px solid var(--ch-border-subtle);background:var(--ch-surface-warm);}
+.c5-lb--solo:not(.is-js){max-width:none;margin:0;padding-inline:0;}
+/* no page head to clear: the table starts 64 px under the top edge (the close icon ends at 54) */
+.c5-lb--solo.is-js .c5-lb__page{padding-top:64px;}
+@media (max-width:899px){
+  .c5-lb--strony.is-js .c5-lb__foot{padding:var(--ch-space-3) var(--ch-space-4);}
+  .c5-lb--strony .c5-lb__steps{flex:1 1 100%;}
+  .c5-lb--strony .c5-lb__steps > .c5-btn{flex:1 1 0;--c5-btn-px:var(--ch-space-3);}
+}

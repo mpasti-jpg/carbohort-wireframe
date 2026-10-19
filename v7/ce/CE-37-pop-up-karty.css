@@ -1,0 +1,142 @@
+/* ===== CE-37 · Pop-up karty – module (design system v0.1, stage C 18.10.2026) =====
+   Variant `jeden-dialog` (Próchnica+: profile of a farm). Look from Figma 903:3091
+   (window shell of 903:2340 = CE-25 – same anatomy, values repeated here from the
+   tokens because the dialog is a native <dialog>, not the CE-25 markup), content
+   and mechanics from v7: a native `dialog.pp-profile` filled by prochnica-plus.js
+   with a clone of the farm block (photo | name, facts, about) plus the source note.
+   The content blocks themselves (`.pp-facts`, `.pp-about`, `.pp-note`) also stand
+   on the page without JS and under the stages chart, so their base stays in the
+   page sheet; only their look inside the dialog is set here.
+   Other pages that link this module (carbohumic-dolistny, carbomat-humic) carry
+   CE-37 as `.c5-pop` – the block at the end of this file (stage D), untouched by
+   the `.pp-profile` selectors.
+   Shell: overlay green-950 at .74 + 7.4 px blur, panel 1198 px at most, white,
+   12 px radius, no outline, 84 px from the top, padding 64, bare close icon
+   (32 px glyph, 44 px hit area). ===== */
+.pp-profile{position:fixed;inset:84px 0 auto 0;margin:0 auto;
+  width:min(1198px, 100% - 2 * var(--ch-space-6));max-width:none;
+  max-height:calc(100svh - 108px);padding:0;overflow:hidden;
+  border:0;border-radius:var(--ch-radius-md);
+  background:var(--ch-surface-page);color:var(--ch-text-primary);}
+/* display only with [open] – otherwise a closed dialog would stop hiding */
+.pp-profile[open]{display:flex;flex-direction:column;}
+.pp-profile::backdrop{background:var(--ch-color-overlay-modal);-webkit-backdrop-filter:blur(var(--ch-effect-blur-modal));backdrop-filter:blur(var(--ch-effect-blur-modal));}
+.pp-profile__close{position:absolute;top:10px;right:10px;z-index:5;
+  display:grid;place-items:center;width:44px;height:44px;padding:0;
+  border:0;border-radius:var(--ch-radius-md);background:none;
+  color:var(--ch-text-secondary);cursor:pointer;
+  transition:color var(--w-duration-base) var(--w-ease);}
+.pp-profile__close:hover{color:var(--ch-text-primary);}
+.pp-profile__close:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:2px;}
+.pp-profile__close .wf-icon{width:32px;height:32px;}
+
+/* content: photo 520 | column 475 (gap 75), the note under the right column.
+   The cloned block dissolves into the scroller's grid (`display:contents`), so
+   the note – appended after the block by the script – can sit under the facts. */
+.pp-profile__scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;
+  display:grid;grid-template-columns:minmax(0,520fr) minmax(0,475fr);
+  column-gap:clamp(1.5rem,5.2vw,75px);row-gap:var(--ch-space-6);align-content:start;
+  padding:var(--ch-space-16);}
+.pp-profile .c5-variant,.pp-profile .c5-variant__grid{display:contents;}
+.pp-profile .c5-variant__grid > .wf-ph{position:relative;top:auto;grid-column:1;grid-row:1 / span 2;align-self:start;
+  width:100%;aspect-ratio:520 / 544;border-radius:var(--ch-radius-md);}
+.pp-profile .c5-variant__info{grid-column:2;grid-row:1;display:flex;flex-direction:column;gap:var(--ch-space-8);min-width:0;}
+.pp-profile .pp-note{grid-column:2;grid-row:2;margin:0;max-width:none;
+  padding:var(--ch-space-3) var(--ch-space-4);background:var(--ch-surface-warm);
+  font-size:var(--ch-type-caption-size);line-height:var(--ch-type-caption-lh);color:var(--ch-text-secondary);}
+
+/* title: display face, kept in capitals as in the v7 text */
+.pp-profile .c5-variant__name{margin:0;font-family:var(--ch-type-h3-display-font);font-size:var(--ch-type-h3-display-size);line-height:var(--ch-type-h3-display-lh);font-weight:var(--ch-type-h3-display-weight);letter-spacing:var(--ch-type-h3-display-ls);color:var(--ch-text-primary);text-wrap:balance;}
+.pp-profile .c5-variant + .c5-variant{margin-top:0;}
+
+/* facts (EL-22): one column; label 10/14 capitals over a 16/28 value, the dashed
+   separator (green-950 at .25, dash 3 / gap 7) between the facts */
+.pp-profile .pp-facts{display:flex;flex-direction:column;gap:var(--ch-space-5);}
+.pp-profile .pp-facts > div{gap:0;border-top:0;padding:0 0 var(--ch-space-5);
+  background:repeating-linear-gradient(90deg,var(--ch-border-dashed) 0 3px,transparent 3px 10px) bottom / 100% 1px no-repeat;}
+.pp-profile .pp-facts > div:last-child{padding-bottom:0;background:none;}
+.pp-profile .pp-facts dt{font-size:var(--ch-type-micro-size);line-height:var(--ch-type-micro-lh);letter-spacing:var(--ch-type-micro-ls);color:var(--ch-text-secondary);}
+.pp-profile .pp-facts dd{font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-relaxed-lh);color:var(--ch-text-primary);}
+.pp-profile .pp-about{gap:var(--ch-space-3);}
+.pp-profile .pp-about h4{margin:0;font-size:var(--ch-type-title-size);line-height:var(--ch-type-title-lh);font-weight:var(--ch-type-title-weight);letter-spacing:var(--ch-type-title-ls);color:var(--ch-text-primary);}
+.pp-profile .pp-about p{font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-relaxed-lh);color:var(--ch-text-primary);}
+
+/* the page below the dialog stands still (Lenis gets stop() in JS) */
+html.pp-lock{overflow:hidden;}
+
+@media (max-width:899px){
+  /* narrow: one column, the panel inset 12 px like the CE-25 window */
+  .pp-profile{inset:var(--ch-space-3) 0 auto 0;width:calc(100% - 2 * var(--ch-space-3));max-height:calc(100svh - 2 * var(--ch-space-3));}
+  .pp-profile__scroll{display:flex;flex-direction:column;gap:var(--ch-space-6);padding:64px 20px 24px;}
+  .pp-profile .c5-variant__grid > .wf-ph{aspect-ratio:16 / 10;}
+}
+@media (prefers-reduced-motion: reduce){
+  .pp-profile__close{transition:none;}
+}
+
+
+/* ===== wariant c5-pop: karta w oknie (carbomat-humic, carbohumic-dolistny) =====
+   Stage D 18.10.2026. Same window shell as CE-25 / `.pp-profile` (overlay
+   green-950 at .74 + 7.4 px blur, white panel, 12 px corners, no outline, 84 px
+   from the top, 24 px margins, bare close icon: 32 px glyph, 44 px hit area at
+   10 / 10); the content is the full card of an audience: a display title, a lead
+   sentence, blocks „label + list”, a row of buttons. Mechanics (v7): without JS the
+   card is a plain block in the flow of the page under its row – the whole content
+   visible, the opening button and the X hidden; with JS: an overlay element
+   (`.c5-pop-overlay`, [data-open]), the panel, the X, Escape, a focus trap, `inert`
+   on the background, the page scroll locked (`html.c5-pop-lock`). Both layers stand
+   above the advisor dock (the overlay on --w-z-popover, the dialog on --w-z-toast).
+   Markup: .c5-pop[data-pop] > .c5-pop__panel > (button.c5-iconbtn[data-pop-close],
+   .c5-pop__scroll > (header.c5-pop__head > (h3.c5-pop__title, p), .c5-pop__body)). */
+html:not(.cx-js) button[data-pop-open],
+html:not(.cx-js) .c5-pop .c5-iconbtn{display:none;}
+/* G18 (18.10.2026): inline trigger – one word in a sentence, very light underline,
+   full on hover. Without JS it is a plain anchor to the card (never hidden). */
+.c5-pop-link{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.22em;text-decoration-color:color-mix(in srgb,currentColor 30%,transparent);cursor:pointer;transition:text-decoration-color var(--w-duration-base) var(--w-ease),color var(--w-duration-base) var(--w-ease);}
+.c5-pop-link:hover{color:var(--ch-text-primary);text-decoration-color:currentColor;}
+.c5-pop-link:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:2px;border-radius:2px;}
+html:not(.cx-js) .c5-pop{margin-top:var(--ch-space-6);border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-md);padding:clamp(1.25rem,3vw,2rem);}
+.c5-pop__panel{display:flex;flex-direction:column;min-height:0;}
+.c5-pop__head{display:flex;flex-direction:column;gap:var(--ch-space-3);padding-bottom:var(--ch-space-5);border-bottom:1px solid var(--ch-border-subtle);margin-bottom:var(--ch-space-6);}
+.c5-pop__title{margin:0;font-family:var(--ch-type-h3-display-font);font-size:clamp(1.75rem,2.8vw,var(--ch-type-h3-display-size));line-height:1.15;font-weight:var(--ch-type-h3-display-weight);letter-spacing:var(--ch-type-h3-display-ls);color:var(--ch-text-primary);text-wrap:balance;}
+.c5-pop__head > p{margin:0;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-relaxed-lh);}
+.c5-pop__body{display:flex;flex-direction:column;gap:var(--ch-space-6);font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-relaxed-lh);}
+.c5-pop__body .c5-label{font-size:var(--ch-type-title-s-size);line-height:var(--ch-type-title-s-lh);letter-spacing:var(--ch-type-title-s-ls);font-weight:var(--ch-type-title-s-weight);color:var(--ch-text-primary);}
+.c5-pop__body p{margin:0;}
+/* bullets as G15 (3 px square, radius 1 px – the same as .c5-list) */
+.c5-pop__body ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--ch-space-2);color:var(--ch-text-secondary);}
+.c5-pop__body li{position:relative;padding-left:var(--ch-space-4);}
+.c5-pop__body li::before{content:"";position:absolute;left:2px;top:calc(.5lh - 1.5px);width:3px;height:3px;border-radius:1px;background:currentColor;}
+.c5-pop__body .c5-btnrow{margin-top:var(--ch-space-3);}
+
+html.cx-js .c5-pop{position:fixed;inset:0;z-index:var(--w-z-toast);display:grid;place-items:start center;padding:84px var(--ch-space-6) var(--ch-space-6);opacity:0;visibility:hidden;transition:opacity .22s var(--w-ease),visibility 0s linear .22s;}
+html.cx-js .c5-pop[data-open="true"]{opacity:1;visibility:visible;transition:opacity .22s var(--w-ease),visibility 0s;}
+html.cx-js .c5-pop__panel{position:relative;width:100%;max-width:760px;max-height:calc(100svh - 108px);overflow:hidden;background:var(--ch-surface-page);border-radius:var(--ch-radius-md);transform:translateY(16px);transition:transform .26s cubic-bezier(.2,.8,.2,1);}
+html.cx-js .c5-pop[data-open="true"] .c5-pop__panel{transform:none;}
+/* bare close icon (the CE-25 pattern): no frame, grey-600 -> green-950 */
+html.cx-js .c5-pop .c5-iconbtn{display:grid;position:absolute;top:10px;right:10px;z-index:5;width:44px;height:44px;min-width:44px;min-height:44px;background:none;border:0;border-radius:var(--ch-radius-md);color:var(--ch-text-secondary);transition:color var(--w-duration-base) var(--w-ease);}
+html.cx-js .c5-pop .c5-iconbtn:hover:not(:disabled){background:none;color:var(--ch-text-primary);}
+html.cx-js .c5-pop .c5-iconbtn .wf-icon{width:32px;height:32px;}
+html.cx-js .c5-pop__scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:clamp(3.5rem,5vw,4rem) clamp(1.25rem,4.5vw,4rem) clamp(1.5rem,4.5vw,4rem);}
+html.cx-js .c5-pop__head{padding-right:56px;}
+
+.c5-pop-overlay{position:fixed;inset:0;background:var(--ch-color-overlay-modal);-webkit-backdrop-filter:blur(var(--ch-effect-blur-modal));backdrop-filter:blur(var(--ch-effect-blur-modal));opacity:0;z-index:var(--w-z-popover);transition:opacity .22s var(--w-ease);}
+.c5-pop-overlay[data-open="true"]{opacity:1;}
+/* an open pop-up stops the page under it (Lenis gets `stop()` in JS) */
+html.c5-pop-lock{overflow:hidden;}
+
+@media (max-width:899px){
+  html.cx-js .c5-pop{padding:var(--ch-space-3);}
+  html.cx-js .c5-pop__panel{max-height:calc(100svh - 2 * var(--ch-space-3));}
+  html.cx-js .c5-pop__scroll{padding:64px 20px 24px;}
+}
+@media (max-width:599px){
+  /* the panel takes the whole screen – as the lightbox of the maize page does */
+  html.cx-js .c5-pop{padding:0;}
+  html.cx-js .c5-pop__panel{max-width:none;max-height:none;height:100%;border-radius:0;}
+}
+@media (prefers-reduced-motion: reduce){
+  /* no transitions: the pop-up shows and hides at once */
+  html.cx-js .c5-pop,html.cx-js .c5-pop[data-open="true"],
+  .c5-pop__panel,.c5-pop-overlay,html.cx-js .c5-pop .c5-iconbtn{transition:none;}
+}

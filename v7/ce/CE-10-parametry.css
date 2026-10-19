@@ -1,72 +1,122 @@
 /* ===== CE-10 · Parametry na wideo (rejestr: ce-rejestr.js) =====
-   Full-screen section whose bounds are set by a pinned video/photo layer, with
-   the parameter table scrolling over it. One stylesheet for every layout:
-     · default: the table of separate tiles (Figma frames 140-8369 and 140-8364) –
-       tinted glass background, 15 px corners, 68 px tall, 7 px apart, no rules;
-       a kicker may sit above the heading, the heading runs 46/54 px;
-     · `c5-params--col` on the section: the content stands in a centred column
-       of --c5-params-w (732 px). Without it the body shrinks to its widest child;
+   A framed photo or film (20 px corners, 24 px margin) with a light panel on it;
+   the parameter table scrolls over the pinned media layer. One stylesheet for
+   every layout:
+     · default: the panel with the table in two ruled columns (rows with a
+       hairline underneath, no tiles), a kicker and the heading to the left, a
+       green „analysis" button and an outlined button under the table;
+     · `c5-params--col` on the section: the panel stands as a narrower column of
+       --c5-params-w (732 px) and the table is one column;
      · `c5-params--long` on the section: a long table. Values wrap and start on
-       one line down the table; from 1240 px the tiles run in two columns
+       one line down the table; from 1240 px the rows run in two columns
        (`c5-params__row--wide` spans both); on a phone a short row keeps label
        and value on one line;
-     · `c5-params--tabs` on the section: the ruled table (rows with hairlines
-       instead of tiles) with two parameter sets on tabs above it – the last
-       section of this file.
+     · `c5-params--tabs` on the section: the same panel with two parameter sets
+       on tabs above the table – the last section of this file.
+   design system v0.1 (Figma 397:1730, 17.10.2026): the light panel (the green
+   one, 382:2755, was rejected by the owner). Panel = the `.c5-params__body`
+   element itself, so no page needs a wrapper: beige-50 at .97 with a 10 px
+   backdrop blur, 12 px corners, padding 64 / 56, centred in the frame. The
+   heading is the display face (Season Mix, h2-sm 46/51); the old
+   --c5-params-title-font knob is gone. The film keeps its mechanics: the media
+   layer is pinned, the scroll-driven entry below is unchanged (the panel fills
+   in together with the heading, the scrim is only the .2 image overlay).
    The rules of the two table layouts share their selectors, so each carries a
    zero-specificity guard: `:where(.c5-params:not(.c5-params--tabs))` for the
-   tiles, `:where(.c5-params--tabs)` for the ruled table. Keep the `:where()` –
-   without it the specificity grows and the order against `c5-params--long` and
-   the entry rules changes.
+   panel table, `:where(.c5-params--tabs)` for the tabbed one. Keep the
+   `:where()` – without it the specificity grows and the order against
+   `c5-params--long` and the entry rules changes.
    Knobs on the root (style="--…"):
-     --c5-params-scrim       strength of the dark wash over the media, default .4
+     --c5-params-scrim       strength of the wash over the media, default .2
      --c5-params-clear       bottom clearance for the advisor dock, default 58px
-     --c5-params-title-font  family of the heading (tiles), default inherit
-     --c5-params-title-wrap  text-wrap of the heading (tiles), default wrap
+     --c5-params-title-wrap  text-wrap of the heading, default wrap
+     --c5-params-panel-w     width of the panel, default 1169px
    The media layer is whatever carries `.c5-params__media` – a <video>, an <img>
    or a placeholder block (`c5-ph`).
-   Scripts: CE-10-parametry-kafelki-z-wejsciem.js (video + scroll-driven entry,
-   tiles) or CE-10-parametry.js (video + tabs, `c5-params--tabs`). ===== */
+   Scripts: CE-10-parametry-kafelki-z-wejsciem.js (video + scroll-driven entry)
+   or CE-10-parametry.js (video + tabs, `c5-params--tabs`). ===== */
 
 /* --- PARAMETRY: film wyznacza granice sekcji (spec §13.3, §14.4) ----------
-   Sekcja na pełny ekran; warstwa mediów i treść leżą w tej samej komórce
-   siatki, więc warstwa nie dokłada wysokości – sekcja jest tak wysoka jak treść
-   (min. 100svh). Warstwa jest przyklejona, treść przewija się po niej.
-   §14.4: sekcja nie ma własnego ciemnego tła ani ramki – kadrem jest cała
-   sekcja z 30 px marginesu z lewej i prawej, a `overflow:clip` (nie `hidden`,
-   które zrobiłoby ze sekcji kontener przewijania i zabiło sticky) trzyma
-   przyklejone wideo w jej granicach. --------------------------------------- */
-.c5-params{position:relative;display:grid;grid-template-columns:minmax(0,1fr);min-height:100svh;margin-inline:var(--c5-gutter);overflow:clip;color:var(--w-text-inverse);}
-/* Figma 140-8369 gives no variables and none of these three values sits on a
-   token scale, so they stay raw – as knobs, so one line takes the tiles back. */
-.c5-params{--c5-params-tile-bg:rgb(255 255 255 / .07);--c5-params-tile-radius:15px;--c5-params-tile-gap:7px;}
-/* The scrim is OURS, not the frame's – Figma 140-8369 shows the content only and
-   says nothing about the section background. .4 is the value the section has
-   carried so far; it is a knob because the strength has to be re-measured every
-   time the picture under it changes (§16.2 pkt 4). */
-.c5-params{--c5-params-scrim:.4;}
+   The media layer and the content share one grid cell, so the layer adds no
+   height: the section is as tall as the panel plus its clearance (min. 100svh).
+   The layer is sticky, the panel scrolls over it. The section is the frame of
+   the Figma: 24 px from the sides, 20 px corners, 32 px above and below;
+   `overflow:clip` (not `hidden`, which would make the section a scroll
+   container and kill the sticky layer) keeps the film inside the corners. --- */
+.c5-params{position:relative;display:grid;grid-template-columns:minmax(0,1fr);min-height:100svh;margin-inline:var(--ch-layout-gutter);overflow:clip;color:var(--ch-text-primary);}
+/* Panel: the Figma 397:1734 colour is #F7F2EC at .97; beige-50 at .97 is the
+   nearest token. The scrim is the image overlay of the frame (black .2) – the
+   panel carries the text now, so the wash only evens out the photo around it. */
+/* E03–E05 (18.10.2026): the frame of the media is the height of the window
+   less 24 px above and below (--c5-params-frame-y); the panel keeps at least
+   120 px of air to the frame (--c5-params-air) and stands in its middle; the
+   row rule is the warm #C7BDB2 of the frame 397:1742 (no token carries it). */
+.c5-params{--c5-params-scrim:.2;--c5-params-panel-bg:rgb(246 244 240 / .97);--c5-params-rule:#C7BDB2;--c5-params-panel-w:1169px;
+  --c5-params-frame-y:var(--ch-space-6);--c5-params-air:var(--ch-space-30);}
 .c5-params > *{grid-area:1 / 1;}
-.c5-params__bg{position:sticky;top:0;align-self:start;height:100svh;z-index:0;}
-.c5-params__frame{position:absolute;inset:0;overflow:hidden;}
+/* The media frame (E03): sticky 24 px under the top edge of the window and
+   24 px short of the bottom one, the same 24 px kept against the top and the
+   bottom of the section, so it lets go exactly when the section ends. The
+   20 px corners belong to the frame now, not to the section. */
+.c5-params__bg{position:sticky;top:var(--c5-params-frame-y);align-self:start;height:calc(100svh - 2 * var(--c5-params-frame-y));
+  margin-block:var(--c5-params-frame-y);z-index:0;}
+.c5-params__frame{position:absolute;inset:0;overflow:hidden;border-radius:var(--ch-radius-control-l);}
 /* jedna klasa dla <img> i przyszłego <video> – podmiana to jeden element */
 .c5-params__media{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;}
 /* a placeholder instead of the film: the same media class; `position` is restated,
    because a page-level `.c5-ph` sets `relative` and loads after this file */
 .c5-params__media.c5-ph{position:absolute;background:var(--w-gray-800);}
-/* the label of the placeholder lies under the wash of the frame – more contrast */
 .c5-params__media.c5-ph .c5-ph__label{left:auto;right:16px;bottom:14px;color:rgb(255 255 255 / .75);}
 .c5-params__frame::after{content:"";position:absolute;inset:0;background:rgb(0 0 0 / var(--c5-params-scrim));pointer-events:none;}
-/* Odstępy liczone w vh, żeby treść mieściła się na ekranie i była wyśrodkowana;
-   u dołu dodatkowy prześwit na dok doradcy (--c5-params-clear, domyślnie 58 px). */
-.c5-params__body{position:relative;z-index:1;min-height:100svh;display:grid;align-content:center;padding-block:clamp(1.5rem,5vh,4rem) calc(clamp(1.5rem,5vh,4rem) + var(--c5-params-clear,58px));}
-.c5-params__actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:clamp(1.75rem,3.5vw,2.75rem);}
-.c5-params .c5-btn--ondark{background:var(--w-gray-900);color:var(--w-text-inverse);border-color:rgb(0 0 0 / .2);}
-.c5-params .c5-btn--ondark:hover{background:var(--w-gray-800);}
-/* EL-14: the source line itself is `c5-src c5-src--ondark` from the 00 layer;
-   only its place inside the frame stays here. Figma does not show this line –
-   it shows a fragment of the section – and a fact needs its source, so it stays
-   (§16.4). */
-.c5-params .c5-src{text-align:center;margin-top:var(--w-space-5);}
+/* The panel. `.c5-wrap` on the same element gives it 1600 px and side padding;
+   this block (one class more) takes both back. E04: at least 120 px of air
+   between the panel and the frame above and below (the frame itself stands
+   24 px in), the panel in the middle of the section. A panel taller than the
+   window less that air makes the section taller: the panel scrolls over the
+   pinned frame and the frame lets go when the panel is 120 px above its
+   bottom edge. The advisor dock is tucked away (G10), so the old clearance
+   knob --c5-params-clear is retired and ignored. Phones keep 48 px of air. */
+.c5-params .c5-params__body{position:relative;z-index:1;isolation:isolate;align-self:center;justify-self:center;
+  width:min(calc(100% - 24px),var(--c5-params-panel-w));max-width:none;margin-inline:0;
+  margin-block:calc(var(--c5-params-frame-y) + 48px);
+  padding:var(--ch-space-8) var(--ch-space-5);}
+.c5-params__body::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:var(--ch-radius-md);background:var(--c5-params-panel-bg);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);}
+@media (min-width:900px){
+  /* 64 / 56 as in the frame; the bottom is 30 px – the source line stands
+     30 px above the bottom edge of the panel (E06) */
+  .c5-params .c5-params__body{padding:var(--ch-space-16) var(--ch-space-14) 30px;
+    margin-block:calc(var(--c5-params-frame-y) + var(--c5-params-air));}
+}
+/* the panel table variants: head, table and the closing group are laid out as
+   a wrapping row, so the two buttons (`dl` + `actions`) stand side by side
+   whatever the page markup is */
+:where(.c5-params:not(.c5-params--tabs)) .c5-params__body{display:flex;flex-wrap:wrap;align-items:flex-start;column-gap:var(--ch-space-3);row-gap:var(--ch-space-3);}
+:where(.c5-params:not(.c5-params--tabs)) .c5-params__head,
+:where(.c5-params:not(.c5-params--tabs)) .c5-params__rows,
+:where(.c5-params:not(.c5-params--tabs)) .c5-src{flex:0 0 100%;min-width:0;}
+.c5-params__actions{display:flex;flex-wrap:wrap;gap:var(--ch-space-3);}
+/* EL-14: the source line is the secondary text of the panel. Figma 397:1730
+   does not show it; a fact needs its source, so it stays (§16.4).
+   E06 (18.10.2026): lower – 40 px under the buttons, 30 px over the bottom of
+   the panel – lighter and with a little more letter spacing, so it reads as a
+   note and not as a line of the table. */
+.c5-params .c5-src{margin-top:var(--ch-space-3);color:color-mix(in srgb,var(--ch-text-secondary-on-warm) 78%,transparent);letter-spacing:.02em;}
+@media (min-width:900px){
+  .c5-params .c5-src{margin-top:calc(var(--ch-space-10) - var(--ch-space-3));}
+}
+.c5-params .c5-src a{color:inherit;}
+
+/* Buttons. Figma: size L, 56 px. The page markup of the other pages still
+   says `c5-btn--sm c5-btn--ondark` (the old dark-on-film button), so the section
+   restyles that pair as the outlined L button of the frame; `c5-btn--light`
+   gives the same result without the override. */
+.c5-params .c5-btn--ondark{--c5-btn-px:var(--ch-space-6);gap:var(--ch-space-3);min-height:var(--ch-size-control-l);padding:calc((var(--ch-size-control-l) - var(--ch-type-button-l-lh)) / 2 - 1px) var(--c5-btn-px);font-size:var(--ch-type-button-l-size);line-height:var(--ch-type-button-l-lh);border-radius:var(--ch-radius-control-l);background:transparent;color:var(--ch-text-primary);border-color:var(--ch-text-secondary-on-warm);}
+.c5-params .c5-btn--light{background:transparent;border-color:var(--ch-text-secondary-on-warm);}
+.c5-params .c5-btn--light:hover{border-color:var(--ch-border-strong);}
+.c5-params .c5-btn--ondark:hover{background:transparent;border-color:var(--ch-border-strong);}
+.c5-params .c5-btn--ondark .wf-icon{width:var(--ch-size-icon-m);height:var(--ch-size-icon-m);}
+.c5-params .c5-btn--ondark > .wf-icon:last-child:not(:first-child){margin-left:calc(var(--ch-size-button-icon-gap) - var(--ch-space-3));}
+.c5-params .c5-btn--ondark > .wf-icon:first-child:not(:last-child){order:2;margin-left:calc(var(--ch-size-button-icon-gap) - var(--ch-space-3));}
 
 @media (max-width:899px){
   /* na wąskich ekranach kadr ma 16 px marginesu z boków (§14.4) */
@@ -74,149 +124,152 @@
 }
 
 /* ===== wariant: kafelki-z-wejsciem ===== */
-/* --- kicker i nagłówek (Frame 140-8364) -----------------------------------
-   The kicker is EL-06 `c5-kicker--outline` with the metrics of the frame: no
-   fill, a 1 px white hairline, 10 px corners, 9/12 px of padding, 13/14 px of
-   uppercase text tracked 0,39 px (= .03em), 24 px above the heading. The
-   metrics are overridden HERE, inside the section, so the outline kicker of
-   every other page (CE-65) stays exactly as it is. */
-.c5-params__head{text-align:center;margin-bottom:var(--w-space-12);}
-.c5-params__kicker{margin:0 auto var(--w-space-6);padding:9px 12px;border-color:var(--w-white);border-radius:10px;color:var(--w-text-inverse);font-size:0.8125rem;line-height:14px;letter-spacing:.03em;}
-/* 46/54 px, tracking −1,288 px = −0,028 em; rodzina z carbomat.css */
-:where(.c5-params:not(.c5-params--tabs)) .c5-params__title{font-size:clamp(2rem,3.6vw,2.875rem);line-height:1.174;font-weight:var(--w-weight-regular);letter-spacing:-0.028em;text-align:center;margin:0;font-family:var(--c5-params-title-font,inherit);text-wrap:var(--c5-params-title-wrap,wrap);}
-
-/* --- tabela: osiem kafelków (Frame 140-8369) ------------------------------
-   68 px wysokości wynika z 20 + 28 + 20, więc stoi tu jako `min-height` – dłuższa
-   nazwa parametru ma się zawinąć, a nie wyjść poza kafelek. Boks nazwy 259 px
-   przy lewej krawędzi, boks wartości 270 px dociśnięty do prawej, rozjazd
-   między nimi robi `space-between` (tak jak flex w ramce). */
-:where(.c5-params:not(.c5-params--tabs)) .c5-params__rows{display:flex;flex-direction:column;gap:var(--c5-params-tile-gap);margin:0;}
-:where(.c5-params:not(.c5-params--tabs)) .c5-params__row{display:flex;align-items:center;justify-content:space-between;gap:var(--w-space-4);min-height:68px;padding:var(--w-space-5);border-radius:var(--c5-params-tile-radius);background:var(--c5-params-tile-bg);-webkit-backdrop-filter:blur(6.7px);backdrop-filter:blur(6.7px);}
-:where(.c5-params:not(.c5-params--tabs)) .c5-params__row dt{flex:0 1 259px;min-width:0;font-size:var(--w-font-h5-size);line-height:28px;font-weight:var(--w-weight-regular);}
-/* Value box: 270 px, `white-space:nowrap` and the 8 px gap to the footnote – all
-   three straight from the frame. It is a MINIMUM, not a fixed width, because
-   Inter runs wider than the Instrument Sans of the frame: in row 1 the value and
-   „(dwie odmiany)" together measure ~273 px, and a hard 270 would wrap them and
-   push that one tile to 104 px. The box grows by those few pixels instead, the
-   right edge stays put and all eight tiles keep the 68 px of the frame. */
-:where(.c5-params:not(.c5-params--tabs)) .c5-params__row dd{flex:0 0 auto;min-width:270px;display:flex;flex-wrap:nowrap;white-space:nowrap;gap:var(--w-space-2);margin:0;font-size:var(--w-font-h5-size);line-height:28px;font-weight:var(--w-weight-regular);}
-:where(.c5-params:not(.c5-params--tabs)) .c5-params__row .c5-dim{opacity:.6;}
-
-/* --- „Pobierz aktualną analizę" (Frame 140-8369) ---------------------------
-   Adnotacja projektanta: „Dodaję pod tabelą". 7 px pod tabelą – ten sam odstęp
-   co między kafelkami – do lewej krawędzi tabeli, 16 px, waga średnia, pełna
-   biel, bez podkreślenia i bez ikony. Podkreślenie wraca na hover i na fokusie:
-   ramka nie pokazuje stanów, a link bez żadnego sygnału klikalności to jedyna
-   rzecz, której nie da się odczytać z makiety. */
-:where(.c5-params:not(.c5-params--tabs)) .c5-params__dl{display:flex;align-items:center;justify-content:flex-start;gap:var(--w-space-2);margin-top:var(--c5-params-tile-gap);font-size:var(--w-font-body-size);font-weight:var(--w-weight-medium);color:inherit;text-decoration:none;transition:opacity var(--w-duration-base) var(--w-ease);}
-:where(.c5-params:not(.c5-params--tabs)) .c5-params__dl:hover,:where(.c5-params:not(.c5-params--tabs)) .c5-params__dl:focus-visible{text-decoration:underline;}
-
-@media (max-width:899px){
-  /* 259 + 270 px nie mieści się w wąskiej kolumnie – oba boksy zwalniają
-     szerokość, wartość zostaje dociśnięta do prawej krawędzi kafelka, a przypis
-     może się zawinąć pod wartość, zamiast wypychać kafelek poza ekran */
-  :where(.c5-params:not(.c5-params--tabs)) .c5-params__row dt{flex:1 1 auto;}
-  :where(.c5-params:not(.c5-params--tabs)) .c5-params__row dd{flex:0 1 auto;min-width:0;flex-wrap:wrap;white-space:normal;justify-content:flex-end;}
+/* --- kicker i nagłówek (Figma 397:1738 / 397:1739) -------------------------
+   The kicker is the base `c5-kicker` (13/14 caps, framed, 38 px) pushed to the
+   left; the heading is the display face, 46/51 −1 % at the 1440 frame, scaled
+   down with the window; 24 px kicker → heading, 64 px heading → table. */
+.c5-params__head{text-align:left;margin-bottom:var(--ch-space-8);}
+/* E05: the outline of the kicker is the darker #9F9F9F of the frame 397:1737
+   (between grey-300 and grey-400; no token carries it) */
+.c5-params__kicker{margin:0 0 var(--ch-space-6);border-color:#9F9F9F;color:var(--ch-text-primary);}
+:where(.c5-params:not(.c5-params--tabs)) .c5-params__title{font-family:var(--ch-type-h2-sm-font);font-size:clamp(2rem,3.2vw,var(--ch-type-h2-sm-size));line-height:1.1087;font-weight:var(--ch-type-h2-sm-weight);letter-spacing:var(--ch-type-h2-sm-ls);text-align:left;margin:0;text-wrap:var(--c5-params-title-wrap,wrap);}
+/* E05: 64 px heading -> table as in the frame; the 12 px row gap of the
+   panel is part of it */
+@media (min-width:900px){
+  .c5-params__head{margin-bottom:calc(var(--ch-space-16) - var(--ch-space-3));}
 }
+
+/* --- tabela: wiersze z linią (Figma 397:1746…) ----------------------------
+   Rows are not tiles any more: padding 16 / 0, 1 px rule underneath, label
+   220 px at the left edge, value after it (18/28), the dim note 14/28 at .6.
+   From 1100 px the table runs in two columns of the same width, 57 px apart,
+   filled column-wise (the first half of the rows left, the rest right) – CSS
+   columns balance any number of rows, `break-inside:avoid` keeps a row whole.
+   Below 1100 px one column. */
+:where(.c5-params:not(.c5-params--tabs)) .c5-params__rows{margin:0;}
+:where(.c5-params:not(.c5-params--tabs)) .c5-params__row{display:flex;align-items:baseline;justify-content:flex-start;gap:var(--ch-space-4);min-height:0;padding:var(--ch-space-4) 0;border-bottom:1px solid var(--c5-params-rule);break-inside:avoid;}
+:where(.c5-params:not(.c5-params--tabs)) .c5-params__row dt{flex:0 0 var(--c5-params-dt,220px);min-width:0;margin:0;font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);font-weight:var(--ch-type-lead-weight);}
+/* The value takes the rest of the column and may wrap (the Figma value box is
+   270 px and fits, a longer one has to go on the next line, not out of the row). */
+:where(.c5-params:not(.c5-params--tabs)) .c5-params__row dd{flex:1 1 0;min-width:0;display:flex;flex-wrap:wrap;gap:0 var(--ch-space-2);margin:0;font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);font-weight:var(--ch-type-lead-weight);}
+:where(.c5-params:not(.c5-params--tabs)) .c5-params__row .c5-dim{font-size:var(--ch-type-small-size);line-height:var(--ch-type-lead-lh);opacity:.6;}
+@media (min-width:1100px){
+  :where(.c5-params:not(.c5-params--tabs):not(.c5-params--col):not(.c5-params--long)) .c5-params__rows{column-count:2;column-gap:57px;}
+}
+
+/* --- „Pobierz aktualną analizę" (Figma 397:1746: the green button) ----------
+   The link is the primary button of the panel: green-300, 56 px, 20 px
+   corners, ink text, an optional icon at the right edge (40 px from the text,
+   the base button rule). It stands next to the `actions` group. */
+:where(.c5-params:not(.c5-params--tabs)) .c5-params__dl{display:inline-flex;align-items:center;justify-content:center;gap:var(--ch-space-3);min-height:var(--ch-size-control-l);padding:calc((var(--ch-size-control-l) - var(--ch-type-button-l-lh)) / 2 - 1px) var(--ch-space-6);margin-top:var(--ch-space-8);border:1px solid var(--ch-action-accent-bg);border-radius:var(--ch-radius-control-l);background:var(--ch-action-accent-bg);color:var(--ch-action-accent-fg);font-size:var(--ch-type-button-l-size);line-height:var(--ch-type-button-l-lh);font-weight:var(--ch-type-button-l-weight);text-decoration:none;transition:background var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);}
+:where(.c5-params:not(.c5-params--tabs)) .c5-params__actions{margin-top:var(--ch-space-8);}
+/* E05: 64 px table -> buttons as in the frame (the 12 px row gap included) */
+@media (min-width:900px){
+  :where(.c5-params:not(.c5-params--tabs)) .c5-params__dl,
+  :where(.c5-params:not(.c5-params--tabs)) .c5-params__actions{margin-top:calc(var(--ch-space-16) - var(--ch-space-3));}
+}
+:where(.c5-params:not(.c5-params--tabs)) .c5-params__dl:hover,:where(.c5-params:not(.c5-params--tabs)) .c5-params__dl:focus-visible{background:var(--ch-color-green-350);border-color:var(--ch-color-green-350);}
+:where(.c5-params:not(.c5-params--tabs)) .c5-params__dl .wf-icon{width:var(--ch-size-icon-m);height:var(--ch-size-icon-m);flex:none;}
+:where(.c5-params:not(.c5-params--tabs)) .c5-params__dl > .wf-icon:last-child:not(:first-child){margin-left:calc(var(--ch-size-button-icon-gap) - var(--ch-space-3));}
+
 @media (max-width:599px){
-  /* kafelek zostaje (tło, promień, padding), kolumny idą jedna pod drugą */
+  /* label above value, both from the left edge (a 263 px column does not hold 220 + the value) */
   :where(.c5-params:not(.c5-params--tabs)) .c5-params__row{flex-direction:column;align-items:flex-start;gap:2px;}
   :where(.c5-params:not(.c5-params--tabs)) .c5-params__row dt,:where(.c5-params:not(.c5-params--tabs)) .c5-params__row dd{flex:0 0 auto;width:100%;}
-  :where(.c5-params:not(.c5-params--tabs)) .c5-params__row dd{justify-content:flex-start;}
+  :where(.c5-params:not(.c5-params--tabs)) .c5-params__row dt,:where(.c5-params:not(.c5-params--tabs)) .c5-params__row dd{font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);}
 }
 @media (prefers-reduced-motion: reduce){
   :where(.c5-params:not(.c5-params--tabs)) .c5-params__dl{transition:none;}
 }
 
 /* ===== wariant: col ===== */
-/* --- shared module: the content column (`c5-params--col`, `c5-params--long`) ----
-   The body is a centred wrap, and auto margins turn the stretch of a grid item
-   into fit-content sizing: the table is then as wide as the widest child (a
-   heading on one line, a long source line). A page with other copy would get a
-   table of another width, so here the body takes its column and the content
-   stands in ONE track of a known width. */
-.c5-params--col,.c5-params--long{--c5-params-w:732px;--c5-params-dt:259px;}
-.c5-params--col .c5-params__body,
-.c5-params--long .c5-params__body{width:100%;grid-template-columns:minmax(0,var(--c5-params-w));
-  justify-content:center;}
-/* a link inside a row, and the focus ring on a dark section (the ring of the
-   kit is dark and would vanish on the film) */
+/* --- shared module: the narrower panel (`c5-params--col`, `c5-params--long`) ----
+   The panel takes a column of its own width: the content width (--c5-params-w,
+   732 px) plus the 56 px padding on both sides – one known track, so a page with
+   other copy gets a panel of the same width. The table is one column. */
+.c5-params--col,.c5-params--long{--c5-params-w:732px;--c5-params-dt:220px;}
+.c5-params--col,.c5-params--long{--c5-params-panel-w:calc(var(--c5-params-w) + 2 * var(--ch-space-14));}
+/* a link inside a row */
 .c5-params--col .c5-params__row a,
 .c5-params--long .c5-params__row a{color:inherit;text-decoration:underline;text-underline-offset:3px;}
-.c5-params--col a:focus-visible,
-.c5-params--long a:focus-visible{outline-color:var(--w-focus-ring-inverse);}
-/* a row that has to stand out (a counterpoint, a restriction): a hairline frame */
-.c5-params__row--mark{box-shadow:inset 0 0 0 1px rgb(255 255 255 / .35);}
+/* a row that has to stand out (a counterpoint, a restriction): the warm ground
+   with a ruled frame, not a shadow */
+.c5-params__row--mark{padding-inline:var(--ch-space-4);border:1px solid var(--ch-border-strong);border-radius:var(--ch-radius-md);background:var(--ch-surface-warm-strong);}
 /* scope pill in the head of the section (optional): outline and text take
-   currentColor – the white of the section; sentence case on purpose */
-.c5hu-scope{display:block;width:max-content;max-width:100%;margin:var(--w-space-5) auto 0;border:1px solid currentColor;padding:6px 14px;font-size:0.75rem;letter-spacing:.02em;text-align:center;}
+   currentColor – the ink of the panel; sentence case on purpose */
+.c5hu-scope{display:block;width:max-content;max-width:100%;margin:var(--w-space-5) 0 0;border:1px solid currentColor;padding:6px 14px;font-size:0.75rem;letter-spacing:.02em;text-align:left;}
 
 /* ===== wariant: long ===== */
 /* --- shared module: a long table (`c5-params--long`) -------------------------
-   The frame draws eight short values. A table that also carries sentences
-   needs three things: values that wrap, one left edge for all of them, and a
-   way not to be three screens tall.
+   A table that carries sentences needs three things: values that wrap, one left
+   edge for all of them, and a way not to be three screens tall.
    · the label box keeps a fixed width (--c5-params-dt), the value takes the
      rest and reads as running text – so a link, a bold phrase or a note in
      `.c5-dim` flows inside the sentence instead of becoming a flex item;
-   · from 1240 px the tiles stand in two columns in the wide column of the page
-     container; a row marked `c5-params__row--wide` (prose, or a value that
-     would break in half a column) spans both. Reading order stays the DOM
-     order: left to right, then down. */
+   · from 1240 px the rows stand in two grid columns in the wide panel; a row
+     marked `c5-params__row--wide` (prose, or a value that would break in half
+     a column) spans both. Reading order stays the DOM order: left to right,
+     then down. */
 .c5-params--long{--c5-params-dt:200px;}
 .c5-params--long .c5-params__row{align-items:flex-start;}
 .c5-params--long .c5-params__row dt{flex:0 0 var(--c5-params-dt);}
 .c5-params--long .c5-params__row dd{flex:1 1 0;min-width:0;display:block;white-space:normal;}
 @media (min-width:1240px){
   .c5-params--long{--c5-params-w:1140px;}
-  .c5-params--long .c5-params__rows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));}
+  .c5-params--long .c5-params__rows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:57px;}
   .c5-params--long .c5-params__row--wide{grid-column:1 / -1;}
 }
 @media (max-width:899px){
-  /* the frame boxes give their width back, as in the base rule */
   .c5-params--long .c5-params__row dt{flex:0 1 auto;}
   .c5-params--long .c5-params__row dd{flex:0 1 auto;}
 }
 @media (max-width:599px){
   /* a short row keeps label and value on one line (the value at the right
      edge); a value that does not fit goes under its label, from the left edge.
-     The base rule stacks every row – with eight rows that is fine, with
-     eighteen it is a screen of height for nothing. */
+     Eighteen stacked rows would be a screen of height for nothing. */
   .c5-params--long .c5-params__row{flex-direction:row;flex-wrap:wrap;align-items:baseline;
-    justify-content:space-between;gap:2px var(--w-space-4);}
+    justify-content:space-between;gap:2px var(--ch-space-4);}
   .c5-params--long .c5-params__row dt,
   .c5-params--long .c5-params__row dd{flex:0 1 auto;width:auto;max-width:100%;}
-  /* values one step down: a sentence in a 263 px column is a third shorter */
-  .c5-params--long .c5-params__row dd{font-size:var(--w-font-body-size);line-height:1.5;}
 }
 
 /* ===== wariant: wejscie ===== */
-/* --- wejście sterowane przewijaniem (spec §16.4) ----------------------------
-   Four steps off ONE progress value written by the module, so the reader gets a
-   moment of nothing but the video before the content covers it:
-     --pv-g     the crop rises from the bottom and widens to the full section,
-     --pv-o     only then does the dark scrim grow over it,
-     --pv-h     then the kicker with the heading,
-     --pv-rows  then the rows, one after another (--i sets each row's delay).
-   The module adds `is-anim` only while CX5.motionOn() is true, so NO class –
-   no JS, a script error, reduced motion, a window under 900 px – switches every
-   rule below off at once and the section stands in its end state from the first
-   frame. Only clip-path, opacity and transform move; nothing here triggers
-   layout, and the video is never scaled (a crop opens, the picture does not
-   stretch). */
+/* --- wejście (spec §16.4, E04 18.10.2026) -----------------------------------
+   The module writes ONE scroll-driven value for the picture and switches two
+   classes for the content, so the reader first watches the film alone:
+     --pv-g     the crop rises from the bottom and widens to the full frame
+                (scroll-driven, as before),
+     --pv-o     then the scrim grows over it (scroll-driven),
+     is-head    then the panel with the kicker and the heading fades in and
+                rises 32 px (fade-in-up, time-based, .7 s),
+     is-rows    then the rows fly in one after another, quickly – 55 ms apart,
+                .45 s each, 18 px up – and the closing group (buttons, source
+                line) comes last.
+   The two classes are only ever added: scrolling back up does not take the
+   table away from under the reader. The module adds `is-anim` only while
+   CX5.motionOn() is true, so NO class – no JS, a script error, reduced motion,
+   a window under 900 px – switches every rule below off at once and the
+   section stands in its end state from the first frame. Only clip-path,
+   opacity and transform move; the video is never scaled. */
 @media (min-width:900px) and (prefers-reduced-motion: no-preference){
   /* 21 % z każdej strony = kadr startowy szerokości 58 %; 18 % od góry trzyma go
      przy dolnej krawędzi, więc wjeżdża od dołu jako wąski pas, a nie od razu
-     całą powierzchnią */
-  .c5-params.is-anim .c5-params__frame{clip-path:inset(calc((1 - var(--pv-g,1)) * 18%) calc((1 - var(--pv-g,1)) * 21%) 0 calc((1 - var(--pv-g,1)) * 21%));}
+     całą powierzchnią; narożniki kadru zostają zaokrąglone przez cały ruch */
+  .c5-params.is-anim .c5-params__frame{clip-path:inset(calc((1 - var(--pv-g,1)) * 18%) calc((1 - var(--pv-g,1)) * 21%) 0 calc((1 - var(--pv-g,1)) * 21%) round var(--ch-radius-control-l));}
   .c5-params.is-anim .c5-params__frame::after{opacity:var(--pv-o,0);}
-  .c5-params.is-anim .c5-params__head{opacity:var(--pv-h,0);transform:translateY(calc((1 - var(--pv-h,0)) * 20px));}
-  /* row i starts .08 of the phase after row i-1 and takes .34 to arrive; the
-     link, the buttons and the source line ride in as the last step (--i: 8) */
+  .c5-params.is-anim .c5-params__body{opacity:0;transform:translateY(32px);
+    transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1);}
+  .c5-params.is-anim.is-head .c5-params__body{opacity:1;transform:none;}
   .c5-params.is-anim .c5-params__row,
   .c5-params.is-anim .c5-params__dl,
   .c5-params.is-anim .c5-params__actions,
-  .c5-params.is-anim .c5-src{--t:clamp(0,calc((var(--pv-rows,0) - var(--i,0) * .08) / .34),1);opacity:var(--t);transform:translateY(calc((1 - var(--t)) * 14px));}
+  .c5-params.is-anim .c5-src{opacity:0;transform:translateY(18px);
+    transition:opacity .45s cubic-bezier(.22,.61,.36,1),transform .45s cubic-bezier(.22,.61,.36,1);
+    transition-delay:calc(var(--i,0) * var(--pv-step,55ms));}
+  .c5-params.is-anim.is-rows .c5-params__row,
+  .c5-params.is-anim.is-rows .c5-params__dl,
+  .c5-params.is-anim.is-rows .c5-params__actions,
+  .c5-params.is-anim.is-rows .c5-src{opacity:1;transform:none;}
   .c5-params.is-anim .c5-params__row:nth-child(1){--i:0;}
   .c5-params.is-anim .c5-params__row:nth-child(2){--i:1;}
   .c5-params.is-anim .c5-params__row:nth-child(3){--i:2;}
@@ -226,41 +279,37 @@
   .c5-params.is-anim .c5-params__row:nth-child(7){--i:6;}
   .c5-params.is-anim .c5-params__row:nth-child(8){--i:7;}
   .c5-params.is-anim .c5-params__dl,
-  .c5-params.is-anim .c5-params__actions,
-  .c5-params.is-anim .c5-src{--i:8;}
+  .c5-params.is-anim .c5-params__actions{--i:8;}
+  .c5-params.is-anim .c5-src{--i:9;}
 }
 
 /* ===== wariant: wejscie-dlugie ===== */
-/* --- shared module: the intro with any number of rows -----------------------
+/* --- shared module: the entry with any number of rows -----------------------
    The eight nth-child rules above are the frame. For a longer table the script
    numbers every row itself (`--i` inline), writes the number of rows on the
-   section (`data-params-n`, --pv-n) and the step between two rows (--pv-d), so
-   the last row and the closing group still arrive before the phase ends:
-   8 rows keep the .08 of the frame, 18 rows take about .036 each. */
+   section (`data-params-n`, --pv-n) and a shorter step (--pv-step), so the
+   whole table still lands in about the same time as eight rows. */
 @media (min-width:900px) and (prefers-reduced-motion: no-preference){
-  .c5-params.is-anim[data-params-n] .c5-params__row,
   .c5-params.is-anim[data-params-n] .c5-params__dl,
-  .c5-params.is-anim[data-params-n] .c5-params__actions,
-  .c5-params.is-anim[data-params-n] .c5-src{--t:clamp(0,calc((var(--pv-rows,0) - var(--i,0) * var(--pv-d,.08)) / .34),1);}
-  .c5-params.is-anim[data-params-n] .c5-params__dl,
-  .c5-params.is-anim[data-params-n] .c5-params__actions,
-  .c5-params.is-anim[data-params-n] .c5-src{--i:var(--pv-n,8);}
+  .c5-params.is-anim[data-params-n] .c5-params__actions{--i:var(--pv-n,8);}
+  .c5-params.is-anim[data-params-n] .c5-src{--i:calc(var(--pv-n,8) + 1);}
 }
 
 /* ===== wariant: z-tabami ===== */
-/* The ruled table: rows with hairlines and a value column of 46 %, a smaller
-   heading with a tighter gap, a discreet underlined link with an icon. Two
-   parameter sets stand on tabs above the table. */
-:where(.c5-params--tabs) .c5-params__title{font-size:clamp(1.4rem,2.4vw,1.875rem);font-weight:var(--w-weight-medium);letter-spacing:-0.01em;text-align:center;margin-bottom:clamp(1.75rem,3.5vw,2.75rem);}
+/* The same panel with two parameter sets on tabs above a ruled table (value
+   column of 46 %). Heading in the display face, a discreet underlined link
+   with an icon under the table. */
+:where(.c5-params--tabs) .c5-params__title{font-family:var(--ch-type-h2-sm-font);font-size:clamp(1.75rem,3.2vw,var(--ch-type-h2-sm-size));line-height:1.1087;font-weight:var(--ch-type-h2-sm-weight);letter-spacing:var(--ch-type-h2-sm-ls);text-align:left;margin:0 0 var(--ch-space-8);}
 :where(.c5-params--tabs) .c5-params__rows{display:flex;flex-direction:column;}
-:where(.c5-params--tabs) .c5-params__row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,46%);gap:var(--w-space-4);padding-block:14px;border-bottom:1px solid rgb(255 255 255 / .35);}
-:where(.c5-params--tabs) .c5-params__row dt{font-weight:var(--w-weight-medium);font-size:1rem;}
-:where(.c5-params--tabs) .c5-params__row dd{margin:0;font-size:1rem;font-weight:var(--w-weight-regular);}
-:where(.c5-params--tabs) .c5-params__row .c5-dim{opacity:.65;}
-/* dyskretny link do analizy – nad przyciskami */
-:where(.c5-params--tabs) .c5-params__dl{display:flex;align-items:center;justify-content:center;gap:8px;font-size:0.8125rem;color:inherit;text-decoration:underline;opacity:.75;margin-top:var(--w-space-6);transition:opacity var(--w-duration-base) var(--w-ease);}
+:where(.c5-params--tabs) .c5-params__row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,46%);gap:var(--w-space-4);padding-block:var(--ch-space-4);border-bottom:1px solid var(--c5-params-rule);}
+:where(.c5-params--tabs) .c5-params__row dt{font-weight:var(--ch-font-weight-regular);font-size:var(--ch-type-body-size);}
+:where(.c5-params--tabs) .c5-params__row dd{margin:0;font-size:var(--ch-type-body-size);font-weight:var(--ch-font-weight-regular);}
+:where(.c5-params--tabs) .c5-params__row .c5-dim{opacity:.6;}
+/* discreet link to the analysis – above the buttons */
+:where(.c5-params--tabs) .c5-params__dl{display:flex;align-items:center;justify-content:flex-start;gap:8px;font-size:0.8125rem;color:inherit;text-decoration:underline;opacity:.75;margin-top:var(--w-space-6);transition:opacity var(--w-duration-base) var(--w-ease);}
 :where(.c5-params--tabs) .c5-params__dl:hover{opacity:1;}
 :where(.c5-params--tabs) .c5-params__dl .wf-icon{width:16px;height:16px;}
+:where(.c5-params--tabs) .c5-params__actions{margin-top:var(--ch-space-6);}
 @media (max-width:599px){
   :where(.c5-params--tabs) .c5-params__row{grid-template-columns:1fr;gap:2px;}
 }
@@ -268,16 +317,17 @@
   :where(.c5-params--tabs) .c5-params__dl{transition:none;}
 }
 
-/* --- tab pills (CARBOMAT MATA UPRAWOWA, spec §6.2) -------------------------
-   Pigułki `.c5-way` wzorca w wersji na ciemnym tle: obrys w bieli z alfą,
-   aktywna biała z tekstem `--w-gray-900`. Wysokość ≤ 56 px, wyśrodkowane,
-   NAD tabelą. Bez JS nie mają czego przełączać – wtedy znikają, a oba panele
-   stoją jeden pod drugim. */
-.c5-params__tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:clamp(1.75rem,3.5vw,2.75rem);}
-.c5-params__tab{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 28px;font:inherit;font-size:1rem;letter-spacing:-0.01em;color:var(--w-text-inverse);background:transparent;border:1px solid rgb(255 255 255 / .35);border-radius:0;cursor:pointer;transition:background var(--w-duration-base) var(--w-ease),color var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);}
-.c5-params__tab:hover{border-color:var(--w-white);}
-.c5-params__tab[aria-selected="true"],.c5-params__tab.is-on{background:var(--w-white);color:var(--w-gray-900);border-color:var(--w-white);}
-.c5-params__tab:focus-visible{outline:2px solid #fff;outline-offset:2px;}
+/* --- tabs (CARBOMAT MATA UPRAWOWA, spec §6.2) ------------------------------
+   The Figma tab rail: a white rail (60 px, padding 6, 12 px corners, 4 px
+   between tabs) with the EL-18 tab geometry (18/28 −2 %, padding 10/20, 10 px
+   corners); the selected tab is one tone darker than the rail. Left-aligned
+   above the table. Without JS the tabs have nothing to switch – they vanish
+   and both panels stand one under the other. */
+.c5-params__tabs{display:inline-flex;flex-wrap:wrap;align-items:center;gap:var(--ch-space-1);max-width:100%;padding:6px;margin-bottom:var(--ch-space-8);border-radius:var(--ch-radius-md);background:var(--ch-tab-rail);}
+.c5-params__tab{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:10px var(--ch-space-5);font:inherit;font-size:var(--ch-type-tab-size);line-height:var(--ch-type-tab-lh);letter-spacing:var(--ch-type-tab-ls);color:var(--ch-text-primary);background:transparent;border:0;border-radius:var(--ch-radius-tab);cursor:pointer;transition:background var(--w-duration-base) var(--w-ease);}
+.c5-params__tab:hover{background:var(--ch-surface-warm);}
+.c5-params__tab[aria-selected="true"],.c5-params__tab.is-on{background:var(--ch-tab-active);}
+.c5-params__tab:focus-visible{outline:2px solid var(--ch-text-primary);outline-offset:2px;}
 html:not(.cx-js) .c5-params__tabs{display:none;}
 
 /* Panels: stacked in a single grid cell. Both panels sit in cell 1/1, so the

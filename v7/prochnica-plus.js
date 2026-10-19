@@ -16,7 +16,12 @@
    (3) Okno filmu. Klik w player albo w „obejrzyj film otwarcia” otwiera
    natywny <dialog> na szerokość filmu: przyciemnione tło, strona pod spodem
    stoi (`html.pp-lock` z bloku 52, Lenis stop). Treść okna to klon plakatu
-   i podpisu playera – w wersji live trafi tu player YouTube. */
+   i podpisu playera – w wersji live trafi tu player YouTube.
+   Stage E (18.10.2026): the screen grows out of the film frame (FLIP: one
+   measurement per open/close, then only transform and opacity) and shrinks
+   back into it on close, Esc included; with CX5.motionOn() false it just
+   appears. `data-yt="<id>"` on #film turns the screen into a youtube-nocookie
+   iframe, created only after the click; empty = the poster placeholder. */
 (function () {
   "use strict";
   var doc = document;
@@ -55,33 +60,96 @@
   close.className = "pp-filmdlg__close";
   close.setAttribute("aria-label", "zamknij");
   close.innerHTML = '<svg class="wf-icon" aria-hidden="true"><use href="#ti-x"></use></svg>';
+  // the screen: a copy of the poster and its glass play mark (placeholder)
+  var poster = $(".pp-film__play", film);
   var screen = doc.createElement("div");
-  screen.className = "wf-ph";
-  screen.innerHTML = '<svg class="wf-icon" aria-hidden="true"><use href="#ti-player-play"></use></svg>';
+  screen.className = "pp-filmdlg__screen";
+  var pimg = poster && $("img", poster);
+  if (pimg) screen.appendChild(pimg.cloneNode(false));
+  var mark = poster && $(".pp-film__btn", poster);
+  if (mark) { mark = mark.cloneNode(true); mark.setAttribute("aria-hidden", "true"); screen.appendChild(mark); }
   dlg.appendChild(close);
   dlg.appendChild(screen);
   var cap = $("figcaption", film);
   if (cap) dlg.appendChild(cap.cloneNode(true));
   doc.body.appendChild(dlg);
 
-  var opener = null;
+  var DUR = 520; // = transition of .pp-filmdlg.is-anim (prochnica-plus.css, block 20)
+  var opener = null, busy = false, timer = 0;
+
+  // transform that lays the screen exactly over the film frame on the page
+  // (transform-origin 0 0); read once per open / close, never in a loop
+  function flip() {
+    var a = poster.getBoundingClientRect(), b = screen.getBoundingClientRect();
+    if (!a.width || !b.width) return "none";
+    return "translate(" + (a.left - b.left) + "px," + (a.top - b.top) + "px) scale(" +
+      (a.width / b.width) + "," + (a.height / b.height) + ")";
+  }
+  function animate() { return !!poster && CX5.motionOn(); }
+
+  // YouTube only after the click, and only when #film carries an id
+  function play() {
+    var id = (film.getAttribute("data-yt") || "").trim();
+    if (!id || $("iframe", screen)) return;
+    var f = doc.createElement("iframe");
+    f.src = "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(id) + "?autoplay=1&rel=0&playsinline=1";
+    f.title = dlg.getAttribute("aria-label");
+    f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+    f.allowFullscreen = true;
+    screen.appendChild(f);
+  }
+
   function open(btn) {
-    if (dlg.open) return;
+    if (dlg.open || busy) return;
     opener = btn || null;
     dlg.showModal();
     doc.documentElement.classList.add("pp-lock");
     if (CX5.lenis) CX5.lenis.stop();
     close.focus();
+    if (!animate()) { play(); return; }
+    busy = true;
+    dlg.classList.remove("is-anim");
+    dlg.style.setProperty("--pp-flip", flip());
+    dlg.classList.add("is-flip");
+    void screen.offsetWidth; // commit the start state before the transition
+    dlg.classList.add("is-anim");
+    dlg.classList.remove("is-flip");
+    timer = setTimeout(function () { dlg.classList.remove("is-anim"); busy = false; play(); }, DUR);
   }
+  function finish() {
+    clearTimeout(timer);
+    busy = false;
+    dlg.classList.remove("is-anim", "is-flip");
+    if (dlg.open) dlg.close();
+  }
+  function shut() {
+    if (!dlg.open || busy) return;
+    var f = $("iframe", screen);
+    if (f) f.remove(); // stops the film
+    if (!animate()) { finish(); return; }
+    busy = true;
+    dlg.classList.add("is-anim");
+    dlg.style.setProperty("--pp-flip", flip());
+    dlg.classList.add("is-flip");
+    timer = setTimeout(finish, DUR);
+  }
+
   $$("[data-pp-film-open]", hero).forEach(function (el) {
     el.addEventListener("click", function (e) { e.preventDefault(); open(el); });
   });
-  close.addEventListener("click", function () { dlg.close(); });
-  dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); });
+  close.addEventListener("click", shut);
+  dlg.addEventListener("click", function (e) { if (e.target === dlg) shut(); });
+  // Esc: run the closing move instead of the instant native close
+  dlg.addEventListener("cancel", function (e) { e.preventDefault(); shut(); });
   dlg.addEventListener("close", function () {
+    clearTimeout(timer);
+    busy = false;
+    dlg.classList.remove("is-anim", "is-flip");
+    var f = $("iframe", screen);
+    if (f) f.remove();
     doc.documentElement.classList.remove("pp-lock");
     if (CX5.lenis) CX5.lenis.start();
-    if (opener && opener.focus) opener.focus();
+    if (opener && opener.focus) opener.focus({ preventScroll: true });
     opener = null;
   });
 })();
@@ -115,6 +183,9 @@
   if (!sec) return;
   var track = CX5.$("[data-ppkor-track]", sec);
   var title = CX5.$("[data-ppkor-title]", sec);
+  var kicker = CX5.$("[data-ppkor-kicker]", sec);
+  var stage = CX5.$(".pp-kor__stage", sec);
+  var PAR = 48; /* P03: photo parallax ±48 px over the track (CSS block of CE-44) */
   var tiles = CX5.$$("[data-ppkor-tile]", sec);
   if (!track || !tiles.length) return;
   /* profil prędkości siedzi w atrybucie `style` znacznika – czytamy go raz */
@@ -133,12 +204,28 @@
   function update() {
     var h = window.innerHeight;
     var r = track.getBoundingClientRect();
-    if (!shown && title && r.top <= 0.35 * h) { title.classList.add("is-in"); shown = true; }
+    if (!shown && title && r.top <= 0.35 * h) {
+      title.classList.add("is-in");
+      if (kicker) kicker.classList.add("is-in");
+      shown = true;
+    }
     if (!CX5.motionOn()) {
-      if (!off) { tiles.forEach(function (t) { t.style.removeProperty("--par"); }); off = true; }
+      if (!off) {
+        tiles.forEach(function (t) { t.style.removeProperty("--par"); });
+        if (stage) stage.style.removeProperty("--pp-kor-y");
+        off = true;
+      }
       return;
     }
     off = false;
+    /* (3) Photo parallax (P03, 18.10.2026): progress of the track through the
+       window, 0 = top of the track at the bottom edge, 1 = bottom of the track at
+       the top edge; the photo goes from +PAR to −PAR px. Only while the track is
+       on screen – outside it the last value stays and nothing is written. */
+    if (stage && r.bottom > 0 && r.top < h) {
+      var p = CX5.clamp((h - r.top) / (r.height + h), 0, 1);
+      stage.style.setProperty("--pp-kor-y", (PAR * (1 - 2 * p)).toFixed(1) + "px");
+    }
     for (var i = 0; i < tiles.length; i++) {
       var span = h + hts[i];
       var q = span > 0 ? (h - (r.top + tops[i])) / span : 0;
@@ -307,6 +394,25 @@
       if (lbl && txt) lbl.textContent = txt;
     });
   });
+
+  /* P05 (18.10.2026): both „Czytaj dalej” at one height – the first paragraph
+     of every biography in the row gets the height of the tallest one
+     (`--pp-bio-p`, CE-48). Only while the cards stand side by side (from 700 px);
+     measured with the variable lifted, on start and on resize. */
+  var team = $("#koordynatorzy .pp-team");
+  if (!team) return;
+  var firsts = $$(".pp-person__body > p:first-child", team);
+  var two = window.matchMedia("(min-width: 700px)");
+  function level() {
+    team.style.removeProperty("--pp-bio-p");
+    if (!two.matches || firsts.length < 2) return;
+    var h = 0;
+    firsts.forEach(function (p) { h = Math.max(h, p.offsetHeight); });
+    if (h) team.style.setProperty("--pp-bio-p", h + "px");
+  }
+  CX5.register({ resize: level });
+  level();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(level);
 })();
 
 /* ===== 60 · Program w liczbach: kołowrotek cyfr (spec §10) =================

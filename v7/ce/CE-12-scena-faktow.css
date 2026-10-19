@@ -26,7 +26,7 @@
    style="--name: value" on the root of the scene.
 
    Variants (modifier classes, sections at the end of this sheet):
-     on the root   c5-fx--glass, c5-fx--glass-v1, c5-fx--naglowek-ramka,
+     on the root   c5-fx--glass, c5-fx--glass-v1, c5-fx--naglowek-ramka, c5-fx--warm,
                    c5-fx--szeroki, c5-fx--viz-auto, c5-fx--viz-min-kafel,
                    c5-fx--skala-opis-dlugi, c5-fx--skala-osiem-krokow,
                    c5-fx--skala-waskie-okno
@@ -55,7 +55,21 @@
                              (Figma frame 870-2992); no declaration in this
                              sheet, the two values are var() fallbacks
    Only values WITHOUT a media step belong in style="…": an inline value beats
-   every rule of a sheet, the steps of the variants included. ================= */
+   every rule of a sheet, the steps of the variants included.
+
+   design system v0.1 (Figma 397:1798, 17.10.2026): the geometry of the scene
+   follows the frame. Container 1392 px (1600 max) with 24 px side margins; the
+   text column and the photo panel share it 612 : 651 with 129 px between them
+   (layout.scene-col-*), written as shares of the container so the scene scales:
+   --c5-fx-panel-w is the panel (.4677 of the inner width), --c5-fx-gap the gap.
+   The panel keeps equal top and bottom inset --c5-fx-pad-y (120 px in the frame,
+   clamped so the floating header and the advisor dock stay clear), has 20 px
+   corners and a 20 % black wash (overlay-image). The illustration box is the
+   frame's glass at .71 of the panel. The fact card: title 20/27, 16/25 grey
+   description, 29 px around the 1 px grey line, a 44 px lime badge at the end of
+   the title row. New root modifier c5-fx--warm: the beige scene background of the
+   frame (--c5-fx-bg, which the pinned head repeats so a long title never shows
+   a white patch). ================= */
 
 /* --- What a page may retune -------------------------------------------------
    Five knobs with their defaults, so a page that sets nothing gets the layout
@@ -73,14 +87,9 @@
    gives both branches the same colour. Greyscale only, as the pattern says.
    The two static knobs sit OUTSIDE the scene media query on purpose: they also
    rule the layout below 900 px, with reduced motion and without JS. --------- */
-.c5-fx{--c5-fx-viz-h:clamp(340px,62svh,760px);
-  /* Safe range of the width: the box is centred in the photo panel (from 50 % of
-     the container to --c5-fx-edge from its right edge), so every px of width takes
-     half a px of clearance from EACH side. Up to calc(50% - 56px) the text column
-     keeps its full --c5-fx-gap and a dot rail standing 10 px from the right edge of
-     the window (28 px wide, EL-29) stays clear; the default below keeps 16 px more
-     than that. Above calc(50% - --c5-fx-edge) the box stops fitting the panel. */
-  --c5-fx-viz-w:min(clamp(330px,26%,520px),calc(50% - 88px));
+.c5-fx{/* The defaults of --c5-fx-viz-h and --c5-fx-viz-w live in the scene block below,
+     where the geometry they depend on (panel width, inset) is defined; a variant
+     or a style="" on the root still beats them. */
   --c5-fx-static-max:1180px;--c5-fx-static-pad:var(--w-space-5);}
 
 /* --- Static layout --------------------------------------------------------- */
@@ -96,6 +105,13 @@
 /* the heading above the track stands in an ordinary page container; 784px is the
    measure of .c5-h2 (ce/00-base.css) – keep the two in step */
 .c5-fx__above .c5-h2{max-width:var(--c5-fx-above-h2-max,784px);}
+/* P08 (18.10.2026): the head above the track, centred – kicker, heading and
+   lead on the axis of the page (the lead on a 843 px measure, as the lead of
+   the CTA in the Figma 397:1615) */
+.c5-fx__above--center{text-align:center;}
+.c5-fx__above--center .c5-kicker{margin-inline:auto;}
+.c5-fx__above--center .c5-h2{margin-inline:auto;text-wrap:balance;}
+.c5-fx__above--center .c5-lead{max-width:843px;margin-inline:auto;}
 
 /* Photo panel – five layers, one per topic. Outside the scene the panel is not a
    box (`display:contents`), so the layers enter the flow and every topic gets its
@@ -161,33 +177,53 @@
 /* --- Scene: sticky 100svh in a tall track (JS sets the track height) --------- */
 @media (min-width:900px) and (prefers-reduced-motion: no-preference){
   .cx-js .c5-fx{
-    /* the scene container: the whole window, never wider than 1800 px */
-    --c5-fx-max:1800px;
-    /* margin of the photo panel – 20 px on three sides (Frame 206) */
-    --c5-fx-edge:20px;
-    /* distance between the left column and the photo – clearly bigger than the
-       40 px left margin (spec §21.8.5) */
-    --c5-fx-gap:clamp(3rem,6vw,7.5rem);
-    /* Clearance for the advisor dock floating over the bottom edge of the window.
-       The dock is 60 px tall and sits 20 px above the bottom edge, so its top is
-       80 px up – measured in Chrome at 1024, 1280, 1440 and 1920 px; 88 px keeps
-       a line of the description from touching it. */
-    --c5-fx-dock:88px;
+    /* the scene container: the whole window, never wider than the content
+       container plus its two gutters (1600 + 2 x 24, Figma 397:1798) */
+    --c5-fx-max:calc(var(--ch-layout-container-max) + 2 * var(--ch-layout-gutter));
+    /* side margin of the scene – the same 24 px for the text column and the photo */
+    --c5-fx-side:var(--ch-layout-gutter);
+    /* inset of the photo panel, the text block and the box from the top and the
+       bottom of the stage: 120 px in the frame, never under the floating header
+       (80 px) and, below, never under the advisor dock (60 px tall, 20 px above
+       the bottom edge – its top is 80 px up, measured in Chrome at 1024, 1280,
+       1440 and 1920 px; 88 px keeps a line of the description clear of it) */
+    --c5-fx-pad-y:clamp(88px,10.7svh,120px);
+    /* E10 (18.10.2026): the distance between the text column and the photo is
+       a constant 130 px (129 in the frame 397:1798) at every window width */
+    --c5-fx-gap:130px;
+    /* the text column is 612 px of the frame (scene-col-text) and never wider;
+       below 1440 px it keeps the frame's share of what the gap leaves
+       (612 of 1262 = .4846). The photo panel takes the rest, so on a wide
+       window the right column grows instead of the text one – 651 px at 1440,
+       858 px at 1920 (percentages resolve against the stage, see .c5-fx__panel) */
+    --c5-fx-text-w:min(var(--ch-layout-scene-col-text),calc((100% - 2 * var(--c5-fx-side) - var(--c5-fx-gap)) * .4846));
+    --c5-fx-panel-w:calc(100% - 2 * var(--c5-fx-side) - var(--c5-fx-gap) - var(--c5-fx-text-w));
+    /* measure of the fact block (Figma 397:1857) */
+    --c5-fx-fact-w:568px;
+    /* the bottom of the text block stands on the inset of the panel */
+    --c5-fx-dock:var(--c5-fx-pad-y);
     /* title -> line and line -> description */
     --c5-fx-line-top:14px;
     --c5-fx-line-bottom:16px;
-    /* left margin of the text column inside the container (spec §21.8.5) */
-    --c5-fx-side:40px;
+    /* default size of the illustration box: .71 of the panel wide (462 of 651),
+       .74 of its height (519 of 800 in the frame, a little taller here because
+       the box carries the same content in a shorter window) */
+    --c5-fx-viz-w:min(max(330px,calc(var(--c5-fx-panel-w) * .71)),calc(var(--c5-fx-panel-w) - 40px));
+    --c5-fx-viz-h:clamp(340px,calc((100svh - 2 * var(--c5-fx-pad-y)) * .74),760px);
     padding-block:0;
   }
+  /* P08 (18.10.2026): the scene drops the padding of the section, so a head
+     standing ABOVE the track (`c5-fx__above`) takes the top padding of a
+     section itself – without it the kicker touched the section above */
+  .cx-js .c5-fx > .c5-fx__above{padding-top:clamp(4rem,8.334vw,var(--ch-layout-section-y));}
   /* the container of the scene: everything below is placed against it */
   .cx-js .c5-fx__stage{position:sticky;top:0;height:100svh;display:block;
     width:100%;max-width:var(--c5-fx-max);margin-inline:auto;padding:0;}
 
   /* variant A: the header is pinned with the scene; its own background keeps a
      long title from running into it */
-  .cx-js .c5-fx__head{position:absolute;left:var(--c5-fx-side);right:calc(50% + var(--c5-fx-gap));top:var(--c5-gutter);
-    z-index:2;background:var(--w-surface-page);padding-bottom:var(--w-space-4);gap:var(--c5-fx-head-gap,clamp(0.75rem,1.4vw,1rem));}
+  .cx-js .c5-fx__head{position:absolute;left:var(--c5-fx-side);right:calc(var(--c5-fx-side) + var(--c5-fx-panel-w) + var(--c5-fx-gap));top:var(--c5-fx-pad-y);
+    z-index:2;background:var(--c5-fx-bg,var(--w-surface-page));padding-bottom:var(--w-space-4);gap:var(--c5-fx-head-gap,clamp(0.75rem,1.4vw,1rem));}
   /* in the scene the heading stands a step smaller than a section heading – the
      longest description has to fit under it on an 800 px window */
   .cx-js .c5-fx__head .c5-h2{font-size:var(--c5-fx-h2-size,clamp(1.5rem,2.6vw,2.125rem));
@@ -196,10 +232,13 @@
   /* the flow covers the whole stage – every layer is placed against it */
   .cx-js .c5-fx__flow{position:absolute;inset:0;display:block;gap:0;}
 
-  /* the photo panel: right half of the window, 20 px margins, NO dimming –
-     what darkens the illustration is the box itself (spec §21.3) */
-  .cx-js .c5-fx__panel{display:block;position:absolute;left:50%;right:var(--c5-fx-edge);top:var(--c5-fx-edge);bottom:var(--c5-fx-edge);
-    background:var(--w-gray-700);overflow:hidden;}
+  /* the photo panel (Figma 397:1799): 651 of 1392 px, right-aligned to the 24 px
+     margin, the same inset top and bottom, 20 px corners, and a 20 % black wash
+     over the photo (overlay-image) – the frame dims every photo of the scene,
+     which supersedes "no dimming" of the earlier frame 206 (spec §21.3) */
+  .cx-js .c5-fx__panel{display:block;position:absolute;right:var(--c5-fx-side);width:var(--c5-fx-panel-w);top:var(--c5-fx-pad-y);bottom:var(--c5-fx-pad-y);
+    border-radius:var(--ch-radius-control-l);background:var(--w-gray-700);overflow:hidden;}
+  .cx-js .c5-fx__panel::after{content:"";position:absolute;inset:0;background:var(--ch-color-overlay-image);pointer-events:none;}
   .cx-js .c5-fx__img,.cx-js .c5-fx__ph{position:absolute;inset:0;width:100%;height:100%;max-width:none;max-height:none;aspect-ratio:auto;
     opacity:0;transition:opacity .45s var(--w-ease);will-change:opacity;}
   .cx-js .c5-fx__img[data-on="true"],.cx-js .c5-fx__ph[data-on="true"]{opacity:1;}
@@ -218,9 +257,9 @@
      edge of the line, it is centred on the title, and the title wraps before it.
      The block ends where the dock clearance begins, so the bottom edge of the
      description is the same on every step whatever its length. */
-  .cx-js .c5-fx__fact{position:absolute;left:var(--c5-fx-side);right:calc(50% + var(--c5-fx-gap));bottom:var(--c5-fx-dock);
-    display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto auto;gap:0 clamp(1.5rem,3vw,4rem);
-    max-width:none;opacity:0;visibility:hidden;transform:translateY(12px);
+  .cx-js .c5-fx__fact{position:absolute;left:var(--c5-fx-side);right:calc(var(--c5-fx-side) + var(--c5-fx-panel-w) + var(--c5-fx-gap));bottom:var(--c5-fx-dock);
+    display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto auto;gap:0 clamp(1.5rem,4.4vw,4rem);
+    max-width:var(--c5-fx-fact-w);opacity:0;visibility:hidden;transform:translateY(12px);
     transition:opacity .18s var(--w-ease),transform .18s var(--w-ease),visibility 0s linear .18s;}
   .cx-js .c5-fx__fact.is-on{opacity:1;visibility:visible;transform:none;
     transition:opacity .26s var(--w-ease),transform .26s var(--w-ease);}
@@ -231,17 +270,19 @@
      measure – on 1920+ the column is much wider than the frame's */
   .cx-js .c5-fx__body{grid-row:3;grid-column:1 / -1;max-width:34rem;gap:var(--c5-fx-body-gap,var(--w-space-3));}
   .cx-js .c5-fx__body ul{gap:var(--c5-fx-list-gap,var(--w-space-2));}
-  /* the number badge (Figma frame 870-2992): 43 px square at one digit, the same
-     in every variant of the scene */
-  .cx-js .c5-fx__count{display:block;grid-row:1;grid-column:2;align-self:center;box-sizing:border-box;min-width:43px;
-    padding:12px 15px;border-radius:11px;background:var(--c5-fx-badge-bg,#f2ec7d);color:var(--c5-fx-badge-ink,#0c2b1c);
-    font-size:16px;line-height:normal;font-weight:var(--w-weight-regular);letter-spacing:normal;text-align:center;
+  /* the number badge (Figma frames 397:1860 / 870-2992): a 44 px square at one
+     digit (badge size token; the frame draws 43), the same in every variant */
+  .cx-js .c5-fx__count{display:grid;place-items:center;grid-row:1;grid-column:2;align-self:center;box-sizing:border-box;
+    min-width:var(--ch-size-badge);height:var(--ch-size-badge);padding:0 var(--ch-space-3);border-radius:var(--ch-radius-md);
+    background:var(--c5-fx-badge-bg,var(--ch-badge-active));color:var(--c5-fx-badge-ink,var(--ch-text-primary));
+    font-size:var(--ch-type-body-size);line-height:1;font-weight:var(--ch-font-weight-regular);letter-spacing:normal;
     font-variant-numeric:tabular-nums;}
 
-  /* the illustration box floats in the middle of the photo panel: the same rect,
-     a fixed size and auto margins centre it on both axes */
-  .cx-js .c5-fx__flow > .c5-viz{position:absolute;left:50%;right:var(--c5-fx-edge);top:var(--c5-fx-edge);bottom:var(--c5-fx-edge);
-    width:var(--c5-fx-viz-w,min(clamp(330px,26%,520px),calc(50% - 88px)));height:var(--c5-fx-viz-h,clamp(340px,62svh,760px));margin:auto;
+  /* the illustration box floats in the middle of the photo panel: the same
+     vertical rect and auto vertical margins centre it, horizontally it is offset
+     from the right margin by half of the free width of the panel */
+  .cx-js .c5-fx__flow > .c5-viz{position:absolute;left:auto;right:calc(var(--c5-fx-side) + (var(--c5-fx-panel-w) - var(--c5-fx-viz-w)) / 2);top:var(--c5-fx-pad-y);bottom:var(--c5-fx-pad-y);
+    width:var(--c5-fx-viz-w);height:var(--c5-fx-viz-h);margin:auto 0;
     max-width:none;max-height:none;aspect-ratio:auto;
     background:var(--c5-fx-viz-bg,rgb(20 20 20 / .78));
     opacity:0;visibility:hidden;transition:opacity .22s var(--w-ease),visibility 0s linear .22s;}
@@ -320,9 +361,14 @@
 .c5-fx__seg{-webkit-appearance:none;appearance:none;position:relative;flex:1 1 0;min-width:0;height:1px;margin:0;padding:0;border:0;border-radius:0;
   background:var(--w-gray-300);color:inherit;font:inherit;cursor:pointer;}
 .c5-fx__seg::before{content:"";position:absolute;inset:-12px -5px;}
-.c5-fx__seg:hover{box-shadow:0 0 0 1px var(--w-gray-300);}
+.c5-fx__seg:hover{outline:1px solid var(--w-gray-300);outline-offset:0;}
 .c5-fx__seg:focus-visible{outline:2px solid var(--w-focus-ring,currentColor);outline-offset:5px;}
 .c5-fx__fill{position:absolute;inset:0;background:var(--w-gray-900);transform:scaleX(0);transform-origin:left center;pointer-events:none;}
+/* E10 (18.10.2026, comment of the owner): the fill is back – a darker, but not
+   black, line shows on which step of the scene the reader is and how much of
+   it is left before the next one (the decision of the morning of 18.10 to show
+   plain lines only is withdrawn). The colour is --c5-fx-green of the glass
+   layer below. */
 .c5-fx__seg.is-done .c5-fx__fill{transform:none;}
 .c5-fx__seg.is-now .c5-fx__fill{transform:scaleX(var(--fx-f,0));will-change:transform;}
 
@@ -363,7 +409,11 @@
 .c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1){
   /* Frame 256-1419 – the accent green of the progress fill. One variable, so a
      single line takes the colour back out of a greyscale kit. */
-  --c5-fx-green:#71C35F;
+  /* design system v0.1: the frame 397:1798 draws the hairline with no fill at
+     all; the fill of the progress stays (it is the mechanic of the scene).
+     E10 (18.10.2026): a mid grey – darker than the line, not black. One
+     variable, so a page that wants an accent back sets it on the root. */
+  --c5-fx-green:var(--ch-text-secondary);
   /* Frame 140-8542 – warm brown wash of the illustration box at 43 %. The knob
      rules BOTH branches of the scene, the one with backdrop-filter and the one
      without. It does NOT reach the static layout, which is deliberate – see the
@@ -372,14 +422,14 @@
      carries elsewhere; over a bright photo the caption and the tag of the box
      fall under 4.5 : 1. A page with bright photos either accepts that with the
      frame or puts the darker wash back with this one knob. */
-  --c5-fx-viz-bg:rgb(53 46 40 / .43);
+  --c5-fx-viz-bg:var(--ch-effect-glass-background);
 }
 .c5-fx[data-fx].c5-fx--glass{
   /* Frame 256-1419 – title to hairline and hairline to description. Declared
      on the root, so it also replaces the 10/12 px of the low-window step of the
      layout; the 2 px difference is smaller than the step it would keep. */
-  --c5-fx-line-top:11px;
-  --c5-fx-line-bottom:13px;
+  --c5-fx-line-top:clamp(14px,3.2svh,29px);
+  --c5-fx-line-bottom:clamp(14px,3.2svh,29px);
 }
 
 /* --- Fact card (Frame 256-1419) ----------------------------------------------
@@ -387,12 +437,21 @@
    left to the clamp of the layout: its top is 1.5rem, i.e. the 24 px of the
    frame at 1440 px, and the clamp is what keeps the title readable on a low
    window. */
-.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-fx__title{font-weight:var(--w-weight-regular);line-height:1.2;
-  letter-spacing:normal;color:#000;}
-.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-fx__body{font-size:14px;line-height:1.3;color:#777771;}
-/* the hairline: black at 10 % (about #e6e6e6 on white), the fill: the green above */
-.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-fx__seg{background:rgb(0 0 0 / .1);}
-.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-fx__seg:hover{box-shadow:0 0 0 1px rgb(0 0 0 / .1);}
+/* design system v0.1 (Figma 397:1859 / 397:1864): title Suisse 20/27 at -2 % in
+   the dark ink (title-s), description 16/25 in the secondary grey (body). Both
+   are clamps whose top is the frame's value, reached at 1440 px, so a narrow or a
+   low window steps down (the scale ladders below still have the last word). */
+.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-fx__title{font-weight:var(--ch-type-title-s-weight);
+  font-size:clamp(1.0625rem,1.4vw,var(--ch-type-title-s-size));line-height:1.35;
+  letter-spacing:var(--ch-type-title-s-ls);color:var(--ch-text-primary);}
+.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-fx__body{font-size:clamp(0.875rem,1.12vw,var(--ch-type-body-size));line-height:1.5625;color:var(--ch-text-secondary);}
+@media (max-height:780px){
+  .c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-fx__body{font-size:0.875rem;line-height:1.5;}
+}
+/* the hairline: E10 – a step more visible than the subtle grey of the frame
+   (border-control), the fill: the mid grey above (text-secondary) */
+.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-fx__seg{background:var(--ch-border-control);}
+.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-fx__seg:hover{outline:1px solid var(--ch-border-control);outline-offset:0;}
 .c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-fx__fill{background:var(--c5-fx-green);}
 
 /* --- Illustration box (Frames 140-8542 root / 140-8543 content) ---------------
@@ -400,23 +459,29 @@
    motion and without JS the box keeps the rgb(20 20 20 / .78) of .c5-viz
    itself: there it does not float over a photo but stands on the white page,
    where the 43 % of the frame would leave white text at 2.45 : 1.
-   GLASS. The Figma panel reads: Light -45 deg at 0 %, Refraction 47, Depth 80,
+   GLASS (decision 9, tokens --ch-effect-glass-*, the same material as the base
+   class .c5-glass of 00-base.css: glass-base fill, 18 px blur, a light 1 px inner
+   edge). The Figma panel reads: Light -45 deg at 0 %, Refraction 47, Depth 80,
    Dispersion 25, Frost 60, Splay 34. What CSS can carry, and what it cannot:
      * Frost 60      -> backdrop blur, 18px on this scale.
      * Refraction 47
        + Depth 80    -> a real material bends the backdrop at the edge. CSS has
-                        no refraction, so the thickness is suggested by an inset
-                        hairline: light on the top edge, dark on the bottom.
+                        no refraction, so the thickness is suggested by the
+                        light inner edge of the material.
      * Light 0 %     -> intensity is zero, so NO specular sheen is added.
      * Dispersion 25
        + Splay 34    -> chromatic fringing along the edge. No CSS equivalent
                         without an SVG filter chain; left out rather than faked.
    The layout also carries saturate(.9) in its backdrop-filter; the frame gives
    no basis for it, so this layer sets the blur alone. */
-.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-viz{border-radius:24px;padding:24px;
-  -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
-  box-shadow:inset 0 1px 0 rgb(255 255 255 / .10),
-             inset 0 -1px 0 rgb(0 0 0 / .12);}
+/* E10 / G14 (18.10.2026): no light outline around the box. The edge is the
+   one of the prototype before 17.10 – a barely visible light hairline on the
+   top edge and a dark one on the bottom edge, which reads as the thickness of
+   frosted glass, not as a frame. `border:0` takes back the 1 px frame that
+   the older c5.css gives every .c5-viz (Próchnica+ links that sheet). */
+.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-viz{border:0;border-radius:var(--ch-radius-xl);padding:var(--ch-space-6);
+  -webkit-backdrop-filter:blur(var(--ch-effect-glass-blur));backdrop-filter:blur(var(--ch-effect-glass-blur));
+  box-shadow:inset 0 1px 0 rgb(255 255 255 / .10),inset 0 -1px 0 rgb(0 0 0 / .12);}
 /* Where backdrop-filter does not work the box has no photo to frost, so it keeps
    the flat fill alone – the inset edge would read as a border with nothing
    behind it. */
@@ -425,9 +490,9 @@
 }
 
 /* the number badge: 16 px, no case change, full white on a black wash at 20 % */
-.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-viz__tag{align-self:flex-start;padding:12px 15px;border-radius:11px;
-  background:rgb(0 0 0 / .2);font-size:16px;line-height:normal;letter-spacing:normal;
-  text-transform:none;color:#fff;}
+.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-viz__tag{align-self:flex-start;padding:12px 15px;border-radius:var(--ch-radius-md);
+  background:rgb(0 0 0 / .2);font-size:var(--ch-type-body-size);line-height:normal;font-weight:var(--ch-font-weight-book);letter-spacing:normal;
+  text-transform:none;color:var(--ch-text-inverse);}
 
 /* Bars – closed in .c5-viz, never on the bare .c5-bar*: the same classes carry
    charts outside the scene, on a light background.
@@ -442,8 +507,19 @@
 .c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-viz .c5-bar__track{height:6px;border:0;border-radius:2px;
   background:rgb(255 255 255 / .12);}
 .c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-viz .c5-bar__fill{border-radius:2px;background:rgb(255 255 255 / .7);}
-/* The value label keeps its place BESIDE the bar; only its type comes from the
-   frame. */
+/* The value label (Figma 397:1812) stands UNDER the bar, right-aligned, 9/14 px
+   caps: the row is a two-column grid – label, then a bar column of 61 % (253 of
+   414 px) – with a 14 px row for the value under the bar and 4 px between rows.
+   The shared-grid chart (c5-barchart--siatka) keeps its three columns and the
+   value beside the bar; only the type comes from the frame there. */
+.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-viz .c5-barchart:not(.c5-barchart--siatka){gap:4px;}
+.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-viz .c5-barchart:not(.c5-barchart--siatka) .c5-bar{
+  grid-template-columns:minmax(0,1fr) minmax(0,61%);grid-template-rows:auto 14px;gap:0 var(--ch-space-3);}
+.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-viz .c5-barchart:not(.c5-barchart--siatka) .c5-bar > :first-child{grid-column:1;grid-row:1;}
+.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-viz .c5-barchart:not(.c5-barchart--siatka) .c5-bar__track{grid-column:2;grid-row:1;}
+.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-viz .c5-barchart:not(.c5-barchart--siatka) .c5-bar > .c5-muted{grid-column:2;grid-row:2;justify-self:end;text-align:right;}
+/* the frame sets every label in the regular weight */
+.c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-viz .c5-bar .wf-w-semibold{font-weight:var(--ch-font-weight-regular);}
 .c5-fx[data-fx]:is(.c5-fx--glass,.c5-fx--glass-v1) .c5-viz .c5-muted{font-size:9px;line-height:14px;letter-spacing:.03em;
   text-transform:uppercase;color:#fff;}
 /* The caption under the illustration: 14/22 px = a ratio of 1.571, again as a
@@ -452,12 +528,14 @@
   line-height:1.571;color:rgb(255 255 255 / .5);}
 
 /* ===== wariant: naglowek-ramka ===== */
-/* Head of the scene after the Figma frame 140-8475: the outlined kicker badge
-   (EL-06, the markup carries c5-kicker--outline), 24 px under it the heading in
-   P22 Mackinac Pro Book, 46/51 px on a 661 px measure, the dark green ink of
-   the frame. The page has to load the face itself (@font-face in its sheet);
-   `font-weight:400` is not decoration – only the Book cut is loaded, so any
-   heavier weight would have the browser synthesise a fake bold.
+/* Head of the scene after the Figma frame 397:1798 (design system v0.1): the
+   framed kicker is the base EL-06 as drawn there (38 px, 12 px corners, 1 px
+   border-control grey, 13/14 caps), 24 px under it the heading in the display
+   face, h2-sm 46/51 px at -1 % in the dark ink, on a 612 px measure (the text
+   column of the frame). The page has to be able to resolve the display face (the
+   token --ch-font-display); `font-weight:400` is not decoration – only the
+   regular cut exists, so any heavier weight would have the browser synthesise a
+   fake bold.
    The size is a clamp whose TOP is the 46 px of the frame, reached from 1440 px
    up. A flat 46 px had to go: at 375 px a long word ran out of its box, and in
    the scene at 1280x720 and 1024x768 the heading ran INTO the fact block. For
@@ -465,13 +543,16 @@
    scene rules `.cx-js .c5-fx__head .c5-h2`, which read the three size knobs set
    here and keep the steps for a narrow and for a low window working. Do not add
    .c5-fx__head to its selector. */
-.c5-fx.c5-fx--naglowek-ramka{--c5-fx-head-gap:24px;--c5-fx-h2-max:661px;
-  --c5-fx-h2-size:clamp(1.7rem,3.2vw,2.875rem);--c5-fx-h2-size-narrow:clamp(1.5rem,2.6vw,2.125rem);}
-.c5-fx--naglowek-ramka .c5-h2{font-family:"P22 Mackinac Pro",var(--w-font-sans);font-weight:400;
-  font-size:var(--c5-fx-h2-size);line-height:1.109;letter-spacing:-0.01em;color:#0c2b1c;}
-/* the badge keeps the geometry of EL-06; padding, size and ink come from the frame */
-.c5-fx--naglowek-ramka .c5-kicker--outline{padding:9px;border-color:#0c2b1c;border-radius:8px;
-  font-size:13px;line-height:14px;letter-spacing:.03em;color:#0c2b1c;}
+.c5-fx.c5-fx--naglowek-ramka{--c5-fx-head-gap:var(--ch-space-6);--c5-fx-h2-max:var(--ch-layout-scene-col-text);
+  --c5-fx-h2-size:clamp(1.7rem,3.2vw,var(--ch-type-h2-sm-size));--c5-fx-h2-size-narrow:clamp(1.5rem,2.6vw,2.125rem);}
+.c5-fx--naglowek-ramka .c5-h2{font-family:var(--ch-type-h2-sm-font);font-weight:var(--ch-type-h2-sm-weight);
+  font-size:var(--c5-fx-h2-size);line-height:1.109;letter-spacing:var(--ch-type-h2-sm-ls);color:var(--ch-text-primary);}
+
+/* ===== wariant: warm ===== */
+/* The beige background of the scene (Figma 397:1798, surface-warm). The pinned
+   head of the scene repeats it through --c5-fx-bg, so a heading that grows never
+   shows a white patch over the track. */
+.c5-fx.c5-fx--warm{--c5-fx-bg:var(--ch-surface-warm);background:var(--ch-surface-warm);}
 
 /* ===== wariant: szeroki ===== */
 /* Static layout on a wide window (reduced motion or no JS): the column of the

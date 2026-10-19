@@ -6,6 +6,13 @@
    air above the track (--c5-marq-head) and the colour of the empty thumbnail
    field (--c5-marq-ph) through style="--…", and how many items the
    reduced-motion layout keeps through c5-marq--keep-3 / --keep-4 / --keep-5.
+   design system v0.1 (Figma 397:1717, 17.10.2026): a light strip – text in the
+   title-l role (Suisse 30/36, Regular, -2 %), a 64 px thumbnail with an r18
+   corner standing BEFORE the text (the markup keeps the text first; `order`
+   moves the thumbnail), 24 px thumbnail-to-text and 48 px item-to-item
+   spacing, 88 px of air above and below. The scroll itself is unchanged.
+   18.10.2026 (E02): no pause on hover; with a mouse the optional script
+   CE-09-marquee.js steers the direction and the pace (see below).
    Variant „z-ikona" lives at the bottom of this file and switches itself on
    through the icon inside the label. ===== */
 
@@ -17,22 +24,28 @@
    the splice is identical to the spacing inside the set. Half the track has to
    stay wider than the viewport even on a 2560 px screen – otherwise the end of
    the cycle would leave empty space at the right edge. ------------------- */
-.c5-marq{--c5-marq-gap:clamp(1.5rem,3vw,3rem);--c5-marq-thumb:clamp(56px,6vw,96px);--c5-marq-dur:42s;--c5-marq-head:0px;--c5-marq-ph:var(--w-gray-200);padding-block:calc(130px + var(--c5-marq-head)) 130px;overflow:hidden;}
+.c5-marq{--c5-marq-gap:var(--ch-space-6);--c5-marq-space:clamp(2rem,3.3vw,3rem);--c5-marq-thumb:clamp(48px,4.45vw,64px);--c5-marq-dur:42s;--c5-marq-head:0px;--c5-marq-ph:var(--ch-color-beige-200);padding-block:calc(88px + var(--c5-marq-head)) 88px;overflow:hidden;}
 /* 56 s, nie 28 s ze spec: blok jest dwa razy dłuższy (trzy zalety ×2), więc
    podwojony czas daje dokładnie to tempo w pikselach, które spec zakładała. */
 .c5-marq__track{display:flex;align-items:center;width:max-content;margin:0;padding:0;list-style:none;animation:c5-marq var(--c5-marq-dur) linear infinite;will-change:transform;}
-.c5-marq__item{display:flex;align-items:center;gap:var(--c5-marq-gap);padding-right:var(--c5-marq-gap);}
-.c5-marq__txt{font-size:clamp(2rem,4.4vw,3.5rem);line-height:1.1;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;white-space:nowrap;color:var(--w-text-primary);}
-/* 12 px zaokrąglenia – jedyny wyjątek od ostrych narożników w tej sekcji (§14.3) */
-.c5-marq__thumb{flex:none;width:var(--c5-marq-thumb);height:var(--c5-marq-thumb);object-fit:cover;border-radius:12px;background:var(--w-gray-200);}
+.c5-marq__item{display:flex;align-items:center;gap:var(--c5-marq-gap);padding-right:var(--c5-marq-space);}
+.c5-marq__txt{font-family:var(--ch-type-title-l-font);font-size:clamp(1.375rem,2.1vw,var(--ch-type-title-l-size));line-height:var(--ch-type-title-l-lh);font-weight:var(--ch-type-title-l-weight);letter-spacing:var(--ch-type-title-l-ls);white-space:nowrap;color:var(--ch-text-primary);}
+/* r18 thumbnail in front of the text (the text comes first in the markup) */
+.c5-marq__thumb{flex:none;order:-1;width:var(--c5-marq-thumb);height:var(--c5-marq-thumb);object-fit:cover;border-radius:18px;background:var(--ch-color-beige-200);}
 /* thumbnail as an empty field (a <span>) until the photo exists */
 .c5-marq__thumb--ph{display:block;background:var(--c5-marq-ph);}
 /* packshot instead of a photo: the inset is a length derived from the square's own size,
    NOT a percentage (percentage padding resolves against the whole flex item) */
-.c5-marq__thumb--pack{object-fit:contain;padding:calc(var(--c5-marq-thumb) * .1);background:var(--w-gray-100);}
+.c5-marq__thumb--pack{object-fit:contain;padding:calc(var(--c5-marq-thumb) * .1);background:var(--ch-surface-warm);}
 @keyframes c5-marq{to{transform:translateX(-50%);}}
-/* kursor na sekcji zatrzymuje tor */
-.c5-marq:hover .c5-marq__track{animation-play-state:paused;}
+/* E02 (18.10.2026): the track never stops under the pointer. With a mouse the
+   module ce/CE-09-marquee.js takes over the motion (`is-steer` on the root):
+   the CSS loop goes off and the script moves the track itself – the pointer on
+   the left half speeds it up to the left, on the right half it turns it to the
+   right, up to 2.5x at the edge; after the pointer leaves, the track keeps the
+   last direction at the normal pace. Touch, reduced motion and no JS keep the
+   CSS loop (or the static row) above. */
+.c5-marq.is-steer .c5-marq__track{animation:none;}
 @media (prefers-reduced-motion: reduce){
   /* bez ruchu: tor stoi, widoczny pierwszy zestaw, na dotyku przewijany palcem.
      Ile pozycji zostaje widocznych, mówi modyfikator --keep-N na korzeniu –
@@ -46,11 +59,11 @@
 }
 /* phones: 130 px of air around a two-line strip is too much – tighten (orchestrator, it. 4) */
 @media (max-width:899px){
-  .c5-marq{padding-block:calc(80px + var(--c5-marq-head)) 80px;}
+  .c5-marq{padding-block:calc(56px + var(--c5-marq-head)) 56px;}
 }
 
 /* ===== wariant: z-ikona ===== */
 /* Each item carries a 24 px icon before the text (the home page uses it).
    It switches itself on through the icon inside the label – no extra hook. */
-.c5-marq__ico{flex:none;width:24px;height:24px;color:var(--w-icon-default);}
+.c5-marq__ico{flex:none;width:24px;height:24px;color:var(--ch-text-primary);}
 .c5-marq__txt:has(> .c5-marq__ico){display:inline-flex;align-items:center;gap:var(--w-space-4);}

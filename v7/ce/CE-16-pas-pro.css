@@ -1,30 +1,56 @@
 /* ===== CE-16 · Pas PRO (rejestr: ce-rejestr.js) =====
-   Dark band for the professional audience: a media frame that scales while the
-   band scrolls in, heading on the left, paragraph and two buttons on the right.
-   One file for every page that links the band; nothing about it lives in
-   <strona>.css. A page picks its look with modifier classes on the root and
-   fits its content with custom properties in style="…" on the root:
+   Dark band for the professional audience: a media frame, heading on the left,
+   paragraph and buttons on the right. One file for every page that links the
+   band (13 pages); nothing about it lives in <strona>.css. A page picks its look
+   with modifier classes on the root and fits its content with custom properties
+   in style="…" on the root.
 
-   modifiers  c5-pro--ramka          static frame inset by the gutter, 3:2
-              c5-pro--kadr-3-2       as above, and in motion the frame keeps 3:2
-              c5-pro--zielen         heading and buttons of „Frame 186-253”
-              c5-pro--scrim-ukosny   ground #777771, 21 px paragraph, diagonal wash
-              c5-pro--h-mackinac     heading in P22 Mackinac Pro
-              c5-pro--zamykajacy     closing band: stacked buttons on the photo
-   knobs      --pro-mt        air above the band (default 0)
-              --pro-img-pos   object-position of the photo (default 50% 45%, in motion 50% 20%)
-              --pro-scrim     alpha of the flat scrim in motion (default .25)
-              --pro-side-max  width of the button column in „zamykajacy” (default none / 240px)
+   design system v0.1 (Figma 801:496 / 801:497, 17.10.2026): ground `--pro-bg`
+   (earth #2C231D – decision 12c: CE-16 is the brown band 801:497), the leaf motif
+   (`--pro-motif`, img/motyw-pro-lisci.svg through a mask), the frame with 12 px
+   corners, heading Season Mix 46/51 (display token), paragraph 18/28, main
+   button green `c5-btn--accent` on the dark ground (decision 8; the white
+   `c5-btn--inv` of older markup is drawn green here too).
 
-   The variant „kadr-z-prawej” (sklep, pdp, pdp-kwasny) is a separate
-   implementation in c5.css and does not link this file. Pages that load c5.css
-   next to this file (kukurydza, borowka) get its `.c5-pro*` rules first; this
-   file comes later in the cascade and settles every property they touch. ===== */
+   Motion – stage E, 18.10.2026: the fluid.glass „showroom” pattern of the
+   annotation on 637:155 / 801:504 (research u5 §3). With CX5.motionOn() (≥ 900 px,
+   no reduced motion) and JS the band is 200svh tall and its four layers – motif
+   (::before), frame, text grid, wash (::after) – share one grid cell, each one
+   sticky at the top for 100svh: the scene is pinned while the reader scrolls
+   100svh. CE-16-pas-pro.js writes one progress value `--pro-p` 0 -> 1 (linear,
+   top of band at top of window -> bottom of band at bottom of window) and CSS
+   derives from it:
+     · frame scale  --pro-s0 (.617 = 888/1440, Figma) -> 1 (the full band),
+     · scrim        --pro-scrim (Figma start alpha) -> --pro-scrim-end,
+     · the two text columns start 65 px × (window / 1600) inward and slide out
+       to their place (left column +, right column −),
+     · a 1 px rule (white .2) across the band grows scaleX 0 -> 1.
+   Only transform and opacity move. Static (below 900 px, reduced motion, no JS):
+   the frame stands above the text, no pinning, no extra height.
+
+   modifiers  c5-pro--braz           earth ground + brown motif (= the base; kept for the markup)
+              c5-pro--ramka          static frame inset by the gutter, 3:2
+              c5-pro--kadr-3-2       static frame 3:2 (in motion the same scene as the base)
+              c5-pro--zielen         20 px button radius knob (the look of the base otherwise)
+              c5-pro--scrim-ukosny   no-op since stage E (one look of the CE: flat scrim)
+              c5-pro--h-mackinac     no-op (display face is the base)
+              c5-pro--zamykajacy     closing band: stacked buttons in the right column
+   knobs      --pro-mt         air above the band (default 0)
+              --pro-img-pos    object-position of the photo (default 50% 45%, in motion 50% 20%)
+              --pro-scrim      scrim alpha at the start of the scene (default .17, Figma 801:497)
+              --pro-scrim-end  scrim alpha at the end of the scene (default .5)
+              --pro-s0         start scale of the frame (default .617)
+              --pro-side-max   width of the right column (default 460px, Figma)
+   Pages that load c5.css next to this file (kukurydza, borowka, pdp, pdp-kwasny,
+   sklep) get its `.c5-pro*` rules first; this file comes later in the cascade
+   and settles every property they touch. ===== */
 
 /* ===== baza ===== */
-.c5-pro{position:relative;background:var(--w-gray-600);color:var(--w-text-inverse);overflow:hidden;margin-top:var(--pro-mt,0);}
-/* 30 px corners – the only exception to the sharp corners of V5 (§13.8) */
-.c5-pro__media{position:relative;width:100%;aspect-ratio:var(--pro-ratio,16/10);border-radius:30px;overflow:hidden;}
+.c5-pro{--pro-bg:var(--ch-surface-earth);--pro-motif:var(--ch-motif-on-brown);--pro-scrim-rgb:12 9 7;position:relative;background:var(--pro-bg);color:var(--ch-text-inverse);overflow:hidden;margin-top:var(--pro-mt,0);}
+/* leaf motif (Figma „Frame 270”): 1039×800 outlines, 157 px from the left of the 1440 frame */
+.c5-pro::before{content:"";position:absolute;inset:0;pointer-events:none;background:var(--pro-motif);-webkit-mask:url(../img/motyw-pro-lisci.svg) no-repeat 10.9% 0 / auto 100%;mask:url(../img/motyw-pro-lisci.svg) no-repeat 10.9% 0 / auto 100%;}
+/* frame corners 12 px (Figma 12.845, drift -> 12) */
+.c5-pro__media{position:relative;width:100%;aspect-ratio:var(--pro-ratio,16/10);border-radius:var(--ch-radius-md);overflow:hidden;background:var(--ch-color-grey-650);}
 .c5-pro__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--pro-img-pos,50% 45%);}
 /* placeholder until the photo arrives – two classes, so the page's `.c5-ph` does not win */
 .c5-pro__media .c5-pro__ph{position:absolute;inset:0;width:100%;height:100%;background:var(--w-gray-500);}
@@ -32,113 +58,107 @@
 .c5-pro__ph .c5-ph__label{color:rgb(255 255 255 / .6);}
 .c5-pro__ph--obrys{display:grid;place-items:start center;padding-top:clamp(1.25rem,4vh,2.5rem);border:1px solid rgb(255 255 255 / .35);}
 .c5-pro__phlabel{font-size:var(--w-font-caption-size);font-weight:var(--w-weight-medium);color:rgb(255 255 255 / .75);}
+/* `max-width` takes back the 486 px c5.css gives the grid on pages that load it */
 .c5-pro__grid{position:relative;z-index:1;padding-block:clamp(2.5rem,6vw,5rem);display:flex;flex-direction:column;gap:clamp(1.5rem,4vw,2.5rem);}
-.c5-pro__grid h2{font-size:clamp(1.75rem,3vw,2.5rem);line-height:1.15;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;max-width:486px;}
-.c5-pro__side{display:flex;flex-direction:column;gap:clamp(1.5rem,3vw,2rem);max-width:486px;}
-.c5-pro__side p{color:var(--w-text-inverse);opacity:.75;}
+.c5-pro__grid:not(.c5-wrap--wide){max-width:calc(var(--ch-layout-container-max) + 2 * var(--ch-layout-gutter));}
+.c5-pro__grid h2{margin:0;font-family:var(--ch-type-h2-sm-font);font-size:clamp(1.875rem,3.2vw,var(--ch-type-h2-sm-size));line-height:1.109;font-weight:var(--ch-type-h2-sm-weight);letter-spacing:var(--ch-type-h2-sm-ls);max-width:500px;}
+.c5-pro__side{display:flex;flex-direction:column;gap:clamp(1.5rem,3vw,1.75rem);max-width:var(--pro-side-max,460px);}
+.c5-pro__side p{margin:0;font-size:var(--ch-type-lead-size);line-height:1.556;color:var(--ch-text-inverse);opacity:1;}
 /* `margin-top:0` takes back the margin c5.css gives the row on pages that load it */
-.c5-pro__grid .c5-btnrow{gap:var(--w-space-2);margin-top:0;}
+.c5-pro__grid .c5-btnrow{gap:11px;margin-top:0;}
 /* EL-01: the narrow button of the PRO band – set the token, do not override `padding-inline` */
-.c5-pro__grid .c5-btn{--c5-btn-px:clamp(18px,2.2vw,32px);}
-.c5-pro__login{background:transparent;color:var(--w-text-inverse);border-color:rgb(255 255 255 / .6);}
-.c5-pro__login:hover{background:rgb(255 255 255 / .12);border-color:var(--w-text-inverse);}
-/* third action of the band: a quiet link under the two buttons */
-.c5-pro__signup{align-self:flex-start;margin-top:calc(var(--w-space-3) - clamp(1.5rem,3vw,2rem));padding:6px 12px;border-radius:999px;background:rgb(0 0 0 / .38);font-size:0.875rem;line-height:1.4;color:var(--w-text-inverse);text-decoration:underline;text-underline-offset:3px;}
-.c5-pro__signup:hover{background:rgb(0 0 0 / .55);}
+.c5-pro__grid .c5-btn{--c5-btn-px:clamp(18px,2.2vw,var(--ch-space-6));}
+/* main action on the dark ground: green with dark ink (decision 8); `--inv` of older markup is drawn the same */
+.c5-pro .c5-btn--inv,.c5-pro .c5-btn--accent{background:var(--ch-action-accent-bg);color:var(--ch-action-accent-fg);border-color:var(--ch-action-accent-bg);}
+.c5-pro .c5-btn--inv:hover,.c5-pro .c5-btn--accent:hover{background:var(--ch-color-green-350);border-color:var(--ch-color-green-350);}
+.c5-pro__login{background:transparent;color:var(--ch-text-inverse);border-color:var(--ch-border-ghost-on-image);}
+.c5-pro__login:hover{background:rgb(255 255 255 / .1);border-color:var(--ch-text-inverse);}
+/* text links next to the main button (shop, product cards) */
+.c5-pro__links{display:flex;flex-wrap:wrap;align-items:center;column-gap:var(--ch-space-5);flex-basis:100%;}
+.c5-pro__grid .c5-btnrow:has(.c5-pro__links){flex-wrap:wrap;row-gap:var(--ch-space-2);}
+.c5-pro__link{color:var(--ch-text-inverse);text-decoration:underline;text-underline-offset:3px;font-weight:var(--w-weight-medium);padding:8px 0;white-space:nowrap;}
 .c5-pro a:focus-visible{outline-color:var(--w-focus-ring-inverse);border-radius:0;}
+/* the rule of the scene exists only in motion */
+.c5-pro__grid::after{content:none;}
 
+@media (max-width:899px){
+  /* static: the frame stands above the content, inset by the gutter */
+  .c5-pro__media{margin:var(--c5-gutter,20px) var(--c5-gutter,20px) 0;width:auto;}
+  .c5-pro__grid .c5-btnrow{flex-wrap:wrap;}
+}
 @media (min-width:900px){
   /* static (reduced motion / no JS): the frame above the text does not eat the screen */
-  .c5-pro__media{max-height:min(56vh,520px);}
-  .c5-pro__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,486px);gap:clamp(2rem,6vw,6rem);align-items:center;}
+  .c5-pro__media{margin:var(--c5-gutter,24px) auto 0;width:auto;max-width:calc(100% - 2 * var(--c5-gutter,24px));max-height:min(56vh,520px);}
+  .c5-pro__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,var(--pro-side-max,460px));gap:clamp(2rem,6vw,6rem);align-items:center;}
   .c5-pro__grid .c5-btnrow{flex-wrap:nowrap;}
   .c5-pro__grid .c5-btn{white-space:nowrap;}
 }
-@media (min-width:900px) and (prefers-reduced-motion: no-preference){
-  .cx-js .c5-pro{min-height:90svh;display:grid;align-items:center;}
-  /* the frame lies under the text and scales with --pro-s (CE-16-pas-pro*.js) */
-  .cx-js .c5-pro__media{position:absolute;inset:0;width:auto;aspect-ratio:auto;max-height:none;transform:scale(var(--pro-s,1));transform-origin:center;will-change:transform;}
-  .cx-js .c5-pro__img{object-position:var(--pro-img-pos,50% 20%);}
-  /* flat scrim; --pro-o (0 -> 1) comes from CE-16-pas-pro-pozny-wzrost.js, fallback 1 */
-  .cx-js .c5-pro__media::after{content:"";position:absolute;inset:0;background:rgb(0 0 0 / var(--pro-scrim,.25));}
-  .cx-js .c5-pro__media::after{opacity:var(--pro-o,1);}
-}
-
-/* ===== wariant: ramka ===== (o-firmie, produkty; kadr-3-2 shares the static part) */
-.c5-pro--ramka,.c5-pro--kadr-3-2{--pro-ratio:3/2;}
-.c5-pro--ramka .c5-pro__media{background:var(--w-gray-500);}
-@media (max-width:899px){
-  .c5-pro--ramka .c5-pro__media,.c5-pro--kadr-3-2 .c5-pro__media{margin:var(--c5-gutter) var(--c5-gutter) 0;width:auto;}
-}
 @media (prefers-reduced-motion: reduce){
-  .c5-pro--ramka .c5-pro__media,.c5-pro--kadr-3-2 .c5-pro__media{margin-inline:auto;max-width:calc(100% - 2 * var(--c5-gutter));}
-}
-@media (min-width:900px){
-  .c5-pro--ramka .c5-pro__media,.c5-pro--kadr-3-2 .c5-pro__media{margin:var(--c5-gutter) auto 0;width:auto;max-width:calc(100% - 2 * var(--c5-gutter));}
-}
-@media (min-width:900px) and (prefers-reduced-motion: no-preference){
-  .cx-js .c5-pro--ramka .c5-pro__media{margin:0;max-width:none;}
+  .c5-pro__media{margin-inline:auto;max-width:calc(100% - 2 * var(--c5-gutter,20px));}
 }
 
-/* ===== wariant: kadr-3-2 ===== (carbohumic) */
+/* ===== scena (fluid.glass „showroom”) ===== */
 @media (min-width:900px) and (prefers-reduced-motion: no-preference){
-  /* in motion the frame keeps 3:2, stands in the middle of the band and at scale 1
-     reaches its top and bottom edge; max-width stays from the static rule above */
-  .cx-js .c5-pro--kadr-3-2 .c5-pro__media{inset:50% auto auto 50%;margin:0;height:100%;aspect-ratio:var(--pro-ratio);transform:translate(-50%,-50%) scale(var(--pro-s,1));}
+  /* `clip`, not `hidden`: a hidden overflow is a scroll container and would stop the sticky layers */
+  .cx-js .c5-pro{--pro-s0:.617;--pro-scrim:.17;--pro-scrim-end:.5;
+    --pro-dx:calc((1 - var(--pro-p,1)) * 4.0625vw);   /* 65 px × (window / 1600) */
+    height:200svh;overflow:clip;display:grid;grid-template:100% / 100%;align-items:start;}
+  /* one row as tall as the band: the grid area is the containing block that bounds the sticky layers */
+  .cx-js .c5-pro::before,
+  .cx-js .c5-pro__media,
+  .cx-js .c5-pro__grid{grid-area:1 / 1;position:sticky;top:0;height:100svh;}
+  .cx-js .c5-pro::before{inset:auto;width:100%;}
+  /* the frame is the whole stage at scale 1 and stands centred at --pro-s0;
+     the corner radius is divided by the start scale so it reads 12 px in the Figma state */
+  .cx-js .c5-pro__media{z-index:0;margin:0;width:100%;max-width:none;max-height:none;aspect-ratio:auto;
+    border-radius:calc(var(--ch-radius-md) / var(--pro-s0));
+    transform:scale(calc(var(--pro-s0) + (1 - var(--pro-s0)) * var(--pro-p,1)));transform-origin:50% 50%;will-change:transform;}
+  .cx-js .c5-pro__img{object-position:var(--pro-img-pos,50% 20%);}
+  /* scrim: its colour carries the end alpha, its opacity runs from the start alpha up */
+  .cx-js .c5-pro__media::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background:rgb(var(--pro-scrim-rgb) / var(--pro-scrim-end));
+    opacity:calc((var(--pro-scrim) + (var(--pro-scrim-end) - var(--pro-scrim)) * var(--pro-p,1)) / var(--pro-scrim-end));}
+  /* Figma: heading on the left (x 37, w 500), paragraph and buttons on the right (w 460),
+     both on the middle of the frame */
+  /* side margins 24 / 48 (Figma 37 / 48, drift -> gutter); the wider right one keeps the column off the dot rail */
+  .cx-js .c5-pro__grid{z-index:1;width:100%;padding-block:clamp(2rem,6vh,4rem);padding-inline:var(--ch-layout-gutter) calc(2 * var(--ch-layout-gutter));
+    grid-template-columns:minmax(0,500px) minmax(0,var(--pro-side-max,460px));justify-content:space-between;align-content:center;align-items:center;}
+  .cx-js .c5-pro__grid > h2{transform:translateX(var(--pro-dx));}
+  .cx-js .c5-pro__side{transform:translateX(calc(-1 * var(--pro-dx)));}
+  /* the rule: 1 px, white .2, across the whole band, below the text */
+  .cx-js .c5-pro__grid::after{content:"";position:absolute;left:50%;bottom:clamp(1.5rem,6vh,3.5rem);width:100vw;height:1px;
+    background:rgb(255 255 255 / .2);pointer-events:none;
+    transform:translateX(-50%) scaleX(var(--pro-p,1));transform-origin:50% 50%;}
 }
 
-/* ===== wariant: zielen ===== (carbomat, produkty, kukurydza, borowka – „Frame 186-253”) */
-.c5-pro--zielen{--pro-btn:#86D574;--pro-btn-ink:#0C2B1C;--pro-btn-hover:#77C169;--pro-line:rgb(255 255 255 / .5);--pro-r:20px;}
-.c5-pro--zielen .c5-pro__grid h2{font-size:clamp(var(--pro-h2-min,2rem),3.6vw,3.25rem);line-height:1.02;}
-.c5-pro--zielen .c5-pro__grid .c5-btnrow{gap:11px;}
-.c5-pro--zielen .c5-pro__grid .c5-btn{min-height:56px;line-height:1.25;border-radius:var(--pro-r);--c5-btn-px:24px;}
-.c5-pro--zielen .c5-btn--inv{background:var(--pro-btn);color:var(--pro-btn-ink);border:0;padding:18px 24px;}
-.c5-pro--zielen .c5-btn--inv:hover{background:var(--pro-btn-hover);}
-.c5-pro--zielen .c5-pro__login{border-color:var(--pro-line);padding:15px 24px;}
-/* restore the hover border – the rule above outranks `.c5-pro__login:hover` */
-.c5-pro--zielen .c5-pro__login:hover{border-color:var(--w-text-inverse);}
+/* ===== wariant: ramka / kadr-3-2 ===== (o-firmie, produkty / carbohumic) – static frame 3:2 */
+.c5-pro--ramka,.c5-pro--kadr-3-2{--pro-ratio:3/2;}
+
+/* ===== wariant: braz ===== (carbomat, pdp, pdp-kwasny, sklep – Figma 801:497) */
+.c5-pro--braz{--pro-bg:var(--ch-surface-earth);--pro-motif:var(--ch-motif-on-brown);}
+
+/* ===== wariant: zielen ===== (produkty, kukurydza, borowka)
+   The look of „Frame 186-253” is the base; what is left is the knob of the button radius. */
+.c5-pro--zielen{--pro-r:var(--ch-radius-control-l);}
+.c5-pro--zielen .c5-pro__grid .c5-btn{min-height:var(--ch-size-control-l);line-height:1.25;border-radius:var(--pro-r);--c5-btn-px:24px;}
+.c5-pro--zielen .c5-pro__login{padding:15px 24px;}
 .c5-pro--zielen a:focus-visible{border-radius:var(--pro-r);}
 
-/* ===== wariant: scrim-ukosny ===== (carbomat, produkty) */
-.c5-pro--scrim-ukosny{--pro-bg:#777771;background:var(--pro-bg);}
-.c5-pro--scrim-ukosny .c5-pro__side p{font-size:1.3125rem;line-height:1.24;opacity:1;}
-@media (max-width:899px){
-  .c5-pro--scrim-ukosny .c5-pro__side p{font-size:1.0625rem;}
-}
-@media (min-width:900px) and (prefers-reduced-motion: no-preference){
-  html.cx-js .c5-pro--scrim-ukosny{--pro-wash-a:.30;--pro-wash-b:.10;--pro-wash-floor:.55;}
-  /* the flat scrim of the base gives way to a wash over the whole band */
-  html.cx-js .c5-pro--scrim-ukosny .c5-pro__media::after{content:none;}
-  html.cx-js .c5-pro--scrim-ukosny::after{content:"";position:absolute;inset:0;pointer-events:none;
-    background:linear-gradient(-65.66deg,
-      rgb(26 36 5 / var(--pro-wash-a)) 37.09%,
-      rgb(26 36 5 / var(--pro-wash-b)) 52.41%,
-      rgb(26 36 5 / var(--pro-wash-b)) 60.07%,
-      rgb(26 36 5 / var(--pro-wash-a)) 75.39%);
-    opacity:calc(var(--pro-wash-floor) + (1 - var(--pro-wash-floor)) * var(--pro-o, 1));}
-}
+/* ===== wariant: scrim-ukosny / h-mackinac ===== (produkty, kukurydza, borowka) – no-ops, kept for the markup */
 
-/* ===== wariant: h-mackinac ===== (produkty, kukurydza, borowka) */
-.c5-pro--h-mackinac .c5-pro__grid h2{font-family:"P22 Mackinac Pro",var(--w-font-sans);font-weight:400;}
-
-/* ===== wariant: zamykajacy ===== (kukurydza, borowka) */
-.c5-pro--zamykajacy{--pro-h2-min:1.875rem;}
+/* ===== wariant: zamykajacy ===== (kukurydza, borowka)
+   Long button labels: the right column stacks the two buttons. */
 /* dark backing: the secondary button lies on the photo */
 .c5-pro--zamykajacy .c5-pro__login{background:rgb(0 0 0 / .3);}
-.c5-pro--zamykajacy .c5-pro__login:hover{background:rgb(0 0 0 / .45);border-color:var(--w-text-inverse);}
+.c5-pro--zamykajacy .c5-pro__login:hover{background:rgb(0 0 0 / .45);border-color:var(--ch-text-inverse);}
 /* optional paragraph above the buttons (borowka) */
-.c5-pro--zamykajacy .c5-pro__side p{margin:0;max-width:21rem;font-size:var(--w-font-sm-size);line-height:var(--w-font-sm-lh);opacity:.85;}
+.c5-pro--zamykajacy .c5-pro__side p{max-width:21rem;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);opacity:.85;}
 @media (min-width:900px){
-  .c5-pro--zamykajacy .c5-pro__grid{grid-template-columns:minmax(0,1fr) minmax(0,max-content);}
-  .c5-pro--zamykajacy .c5-pro__grid h2{max-width:min(420px,34vw);}
-  .c5-pro--zamykajacy .c5-pro__side{max-width:var(--pro-side-max,none);}
+  .c5-pro--zamykajacy{--pro-side-max:max-content;}
   .c5-pro--zamykajacy .c5-pro__grid .c5-btnrow{flex-direction:column;flex-wrap:nowrap;align-items:stretch;}
 }
-@media (min-width:900px) and (prefers-reduced-motion: no-preference){
-  .cx-js .c5-pro--zamykajacy .c5-pro__grid{width:100%;}
-}
-/* narrow desktop: the button column stays clear of the dot rail and of the subject of the photo */
+/* narrow desktop: the button labels may wrap */
 @media (min-width:900px) and (max-width:1219px){
+  .c5-pro--zamykajacy{--pro-side-max:240px;}
   .c5-pro--zamykajacy .c5-pro__grid .c5-btn{white-space:normal;text-align:center;}
-  .c5-pro--zamykajacy .c5-pro__side{max-width:var(--pro-side-max,240px);}
 }

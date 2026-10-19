@@ -9,21 +9,26 @@
    heading (`c5-note__title`) and a paragraph. ===== */
 
 /* Icon | text; the button takes the second row of the text column. */
-.c5-note--akcja{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:start;gap:var(--w-space-3);}
+.c5-note--akcja{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:start;gap:var(--ch-space-2);}
 .c5-note--akcja > .wf-icon{grid-column:1;grid-row:1;}
 .c5-note--akcja > p,
 .c5-note--akcja > .c5-note__body{grid-column:2;min-width:0;}
 .c5-note--akcja > .c5-note__body{display:flex;flex-direction:column;gap:2px;}
-.c5-note--akcja .c5-note__title{margin:0;font-size:inherit;line-height:inherit;font-weight:var(--w-weight-semibold);letter-spacing:0;}
+.c5-note--akcja .c5-note__title{margin:0;font-size:inherit;line-height:inherit;font-weight:var(--ch-font-weight-medium);letter-spacing:0;color:var(--ch-text-primary);}
 .c5-note--akcja > .c5-btn{grid-column:2;justify-self:start;}
 
 /* From 900 px: icon | text | button, the button centred on the text block. */
 @media (min-width:900px){
-  .c5-note--akcja{grid-template-columns:auto minmax(0,1fr) auto;column-gap:var(--w-space-4);}
+  .c5-note--akcja{grid-template-columns:auto minmax(0,1fr) auto;column-gap:var(--ch-space-4);}
   .c5-note--akcja > .c5-btn{grid-column:3;grid-row:1;align-self:center;justify-self:end;}
 }
 
 /* Narrow screens: the button fills the text column. */
 @media (max-width:599px){
   .c5-note--akcja > .c5-btn{justify-self:stretch;}
+}
+
+/* Narrow note: a 36 rem measure from 900 px (the growing-crop pages). */
+@media (min-width:900px){
+  .c5-note--waska{max-width:36rem;}
 }

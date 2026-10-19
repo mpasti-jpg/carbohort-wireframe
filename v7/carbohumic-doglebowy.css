@@ -30,17 +30,8 @@
    block that stands under the bands: the warning. (The list of packs is gone –
    a pack is chosen in the quick view of the shop.) */
 
-/* --- Ostrzeżenie aplikacyjne z przyciskiem po prawej -----------------------
-   Anatomię noty niesie `c5-note c5-note--strong` z ce/00-base.css; tutaj tylko
-   wariant układu z akcją: treść po lewej, przycisk po prawej. */
-.c5hu-warn--action{align-items:center;gap:var(--w-space-4);}
-.c5hu-warn--action p{flex:1 1 auto;}
-.c5hu-warn--action .c5-btn{flex:none;}
-
-@media (max-width:899px){
-  .c5hu-warn--action{flex-wrap:wrap;}
-  .c5hu-warn--action .c5-btn{width:100%;}
-}
+/* The application warning with a button on the right is the CE-31 variant
+   `c5-note--akcja` (ce/CE-31-nota.css). */
 
 /* ===== 45 · Dobierz produkt – pas CTA w środku strony (bez zmian mechaniki) ===== */
 
@@ -80,35 +71,22 @@ Why those values:
    indent. */
 ul.c5hu-sq{list-style:none;padding-left:0;}
 .c5hu-sq li{position:relative;padding-left:1.1rem;}
-.c5hu-sq li::before{content:"";position:absolute;left:0;top:.52em;width:6px;height:6px;background:var(--w-gray-900);}
+.c5hu-sq li::before{content:"";position:absolute;left:2px;top:calc(.5lh - 1.5px);width:3px;height:3px;border-radius:1px;background:var(--w-gray-900);}
 
 
 /* --- bloki statyczne sekcji (bieg normalny, poza scenami) ------------------ */
 .c5hu-use__aside{margin-top:clamp(2rem,4vw,3rem);}
-.c5hu-extra{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,300px);gap:clamp(1.5rem,3vw,2.5rem);align-items:start;border:1px solid var(--w-border-default);background:var(--w-surface-page);padding:clamp(1.25rem,2.2vw,1.75rem);}
-.c5hu-extra__body{display:flex;flex-direction:column;gap:var(--w-space-2);}
-.c5hu-extra__body p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
-.c5hu-extra__name{font-size:1.0625rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
-.c5hu-extra .c5hu-dose{margin-top:0;padding-top:0;}
-@media (max-width:899px){ .c5hu-extra{grid-template-columns:minmax(0,1fr);} }
+.c5-box .c5hu-dose{margin-top:0;padding-top:0;}
 .c5hu-recipe__lead{margin-top:var(--w-space-4);color:var(--w-text-secondary);max-width:710px;}
-.c5hu-extra + .c5hu-recipe__lead{margin-top:clamp(1.5rem,3vw,2.25rem);}
-.c5hu-rule{display:flex;gap:var(--w-space-4);align-items:baseline;flex-wrap:wrap;border-top:2px solid var(--w-gray-900);padding-top:var(--w-space-3);margin-top:var(--w-space-5);}
-.c5hu-rule__label{font-size:0.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--w-text-tertiary);}
-.c5hu-rule__txt{font-size:1.125rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
+.c5-box + .c5hu-recipe__lead{margin-top:clamp(1.5rem,3vw,2.25rem);}
 
 /* ===== 72 · Z czym łączyć ===== */
 
 /* --- Lista z podglądem → ce/CE-30-lista-z-panelem.css (c5hu-mixlist*) ---------- */
 
 /* --- Siatka „czego unikamy" ------------------------------------------------
-   Klasy `c5hu-mix*` zostają przy dwóch kartach ostrzeżenia. */
-.c5hu-mix{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--w-space-5);margin-top:clamp(1.5rem,3vw,2.5rem);}
-.c5hu-mix__card{display:flex;flex-direction:column;gap:var(--w-space-2);border:1px solid var(--w-border-default);padding:clamp(1.25rem,2.2vw,1.75rem);}
-.c5hu-mix__card--avoid{background:var(--w-surface-subtle);border-color:var(--w-gray-900);}
-.c5hu-mix__name{display:flex;gap:var(--w-space-3);align-items:flex-start;font-size:1.125rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
-.c5hu-mix__name .wf-icon{flex:none;margin-top:3px;}
-.c5hu-mix__card p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
+   The two warning cards (`c5hu-mix*`, CE-20 variant `ostrzegawcze`) are styled
+   in ce/CE-20-siatka-kart.css. */
 
 /* The stack of the four mixing steps (#z-czym-laczyc-kroki) stands on the shared
    block ce/CE-26-stos-kart.css/.js with its default layout: nothing of it is
@@ -128,34 +106,4 @@ ul.c5hu-sq{list-style:none;padding-left:0;}
    the classes of this page. The table rows enter through `data-reveal` on
    `tbody` (shared module in ce/00-base.js); the transform runs on the table
    row, so the column layout stays untouched. */
-.c5hu-cmp{margin-top:clamp(1.5rem,3vw,2.5rem);}
-/* a row still sliding in (translateY) must not add a vertical scrollbar to the scroll box */
-.c5hu-cmp.cw-scrollx{overflow-y:hidden;}
-.c5hu-cmp .wf-table{min-width:640px;}
-.c5hu-cmp .wf-table th,.c5hu-cmp .wf-table td{width:50%;vertical-align:top;}
-
-/* --- Frames above the column labels -------------------------------------------
-   A square field on the centre of each column (up to 220 px, 140 px below
-   900 px) filled with a photo of the WAY OF APPLICATION: it shows what the
-   treatment looks like before anyone reads the rows (the foliar products
-   themselves are shown on their own page). The label under the square is
-   centred with it – the only change to the look of the table itself.
-   The image lies absolutely, so its own proportions never push the square. */
-.c5hu-cmp thead th{text-align:center;}
-.c5hu-cmp__shot{position:relative;display:block;width:100%;max-width:220px;aspect-ratio:1;
-  margin:0 auto var(--w-space-3);background:var(--w-gray-100);}
-.c5hu-cmp__shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
-@media (max-width:899px){
-  .c5hu-cmp__shot{max-width:140px;}
-}
-
-/* --- Link to the foliar page under the label of the foliar column ------------
-   A quiet text link on its own line under the label: the same size as the
-   label's small print, underlined on hover and focus, with the arrow of the
-   kit. It points the reader of the last section to the other page. */
-.c5hu-cmp__go{display:inline-flex;align-items:center;gap:var(--w-space-1);margin-top:var(--w-space-2);
-  font-size:0.875rem;font-weight:var(--w-weight-medium);color:var(--w-text-primary);text-decoration:none;
-  border-bottom:1px solid var(--w-border-strong);padding-bottom:1px;}
-.c5hu-cmp__go:hover{border-bottom-color:var(--w-gray-900);}
-.c5hu-cmp__go:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:var(--w-focus-ring-offset);}
-.c5hu-cmp thead th .c5hu-cmp__go{display:flex;width:fit-content;margin-inline:auto;}
+/* The comparison table is CE-22 `z-packshotami` (ce/CE-22-tabela.css). */

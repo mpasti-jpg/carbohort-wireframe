@@ -1,70 +1,176 @@
 /* ===== CE-07 · Nawigacja kropkowa (rejestr: ce-rejestr.js) =====
-   Fixed dot column at the right edge: one dot per chapter, labels sliding in on
-   hover or focus of the whole nav. Merged from carbomat.css 10 – the copies of
-   the six other pages differed only in how far the label stagger ran (one rule
-   per chapter), so this file carries the stagger up to eleven positions; a page
-   with fewer chapters simply has no such <li>. No variants; one option – the
-   tag over a label (span.c5-dots__stage, e.g. „Etap 1”).
-   Markup: .c5-dots with [data-dot] links, chapters marked [data-chapter].
+   Kreski na łuku przy prawej krawędzi (Figma 959:1632 / 959:1607 / 959:1608,
+   18.10.2026): jedna kreska na dział strony, ułożone po łuku wygiętym w lewo –
+   środkowa pozioma i najbardziej wysunięta, skrajne skośne i bliżej krawędzi.
+   Łuk (Mateusz 18.10, runda 2): skrajne kreski rozstawione na 35 % wysokości
+   okna, wychylenie w poziomie jak w Figmie (łuk okręgu R 337 px w zakresie
+   ±21,2° – 9 kresek co 31,2 px – rozciągnięty tylko w pionie); kreski po równo
+   na tym łuku, więc przy mniejszej liczbie działów odstępy rosną. Kąt każdej
+   kreski i opisu = normalna rozciągniętego łuku. Położenie liczy
+   CE-07-nawigacja-kropkowa.js (także przy zmianie rozmiaru okna) i zapisuje
+   w zmiennych --x, --y, --a na <li>; bez JS zostaje zwykła kolumna kresek.
+   Markup bez zmian względem kropek: .c5-dots > ol > li > a.c5-dots__link[data-dot]
+   > span.c5-dots__label + span.c5-dots__dot (bez JS: kwadrat; z JS ukryty – kwadraty
+   rysuje warstwa .c5-dots__marks). Opcja: span.c5-dots__stage
+   na początku etykiety (np. „Etap 1”) – od 18.10 w jednej linii przed nazwą,
+   bo równy krok po łuku nie zostawia miejsca na dopisek nad nazwą.
 
-   Fixed, pionowo na środku ekranu. Etykiety wjeżdżają po najechaniu na cały
-   nav (albo po fokusie w jego wnętrzu). Nic nie klei się do górnej krawędzi.
-   Kropki są okrągłe celowo: to znaczniki, nie boksy układu (jak .c5-way__ico).
+   Runda 3 (Mateusz 18.10): zamiast kresek kwadraty 5 × 5 px, zaokrąglenie 2 px,
+   biel 30 % w trybie difference, na tym samym łuku (środek kwadratu tam, gdzie
+   był środek kreski w spoczynku; kwadraty nieobrócone). Opisy na jasnych,
+   rozmytych tłach (Figma 959:1681, kolor wg 959:1698; od 19.10 paski wg 969:1447 / 959:1698 – niżej): rozmycie tła, promień 5 px,
+   padding 8 / 9 px, Instrument Sans 14 px / 120 %, kolor #0C2B1C – bez blendu.
+   Warstwy (wszystkie trzy tworzy / ustawia JS z tą samą geometrią):
+   .c5-dots__marks – szare kwadraty, mix-blend-mode difference (biel z alfą .3
+   czyta się jako jasna szarość na bieli i ciemna szarość na ciemnym tle);
+   .c5-dots__accent – zielony kwadrat aktywnego / najechanego działu, bez blendu;
+   .c5-dots – sama nawigacja (linki, opisy na tłach, strefa), bez blendu, bo
+   backdrop-filter pod blendem rodzica nie widziałby strony.
 
-   Widoczność na jasnych i ciemnych sekcjach: cały nav ma mix-blend-mode
-   difference, a kolory zapisujemy „w bieli”. Difference: result = |backdrop –
-   source|, więc biel (255) na białym tle daje czerń, a na ciemnym – biel.
-   Stąd: aktywna kropka = #fff (czytana jako gray-900 na białym), nieaktywna =
-   biel z alfą .55 (czytana jako ~gray-400). ------------------------------- */
-.c5-dots{position:fixed;right:var(--c5-gutter);top:50%;transform:translateY(-50%);z-index:90;mix-blend-mode:difference;}
-.c5-dots ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;align-items:flex-end;}
-/* Pole klikalne 28×28 px (bez odstępu między pozycjami = 28 px środek–środek).
-   Etykieta leży absolutnie POZA tym polem, więc nav zajmuje tylko wąską kolumnę
-   przy krawędzi i nie przechwytuje kliknięć w treść pod spodem. */
-.c5-dots__link{position:relative;display:flex;align-items:center;justify-content:flex-end;width:28px;min-height:28px;padding-right:2px;text-decoration:none;}
-.c5-dots__dot{flex:none;display:block;width:6px;height:6px;border-radius:var(--w-radius-circle);background:rgb(255 255 255 / .55);transition:width .2s var(--w-ease),height .2s var(--w-ease),background-color .2s var(--w-ease);}
-.c5-dots__link[aria-current="true"] .c5-dots__dot{width:10px;height:10px;background:#fff;}
-/* Etykiety: ukryte, wjeżdżają razem (lekki stagger) po najechaniu na nav.
-   Widoczna etykieta łapie wskaźnik (`pointer-events:auto`) i zachodzi 6 px na
-   pole linku, więc między kropką a etykietą nie ma „dziury": przejście myszą na
-   etykietę nie gasi etykiet, a klik w nią przewija do rozdziału (spec §13.4). */
-.c5-dots__label{position:absolute;right:calc(100% - 6px);top:50%;padding:6px 6px 6px 10px;font-size:0.8125rem;line-height:1.2;text-align:right;white-space:nowrap;color:rgb(255 255 255 / .6);opacity:0;transform:translate(6px,-50%);pointer-events:none;transition:opacity .2s var(--w-ease),transform .2s var(--w-ease);transition-delay:0s;}
-.c5-dots__link[aria-current="true"] .c5-dots__label{color:#fff;}
-.c5-dots:hover .c5-dots__label,
-.c5-dots:focus-within .c5-dots__label{opacity:1;transform:translateY(-50%);pointer-events:auto;}
-.c5-dots:hover li:nth-child(2) .c5-dots__label,.c5-dots:focus-within li:nth-child(2) .c5-dots__label{transition-delay:.02s;}
-.c5-dots:hover li:nth-child(3) .c5-dots__label,.c5-dots:focus-within li:nth-child(3) .c5-dots__label{transition-delay:.04s;}
-.c5-dots:hover li:nth-child(4) .c5-dots__label,.c5-dots:focus-within li:nth-child(4) .c5-dots__label{transition-delay:.06s;}
-.c5-dots:hover li:nth-child(5) .c5-dots__label,.c5-dots:focus-within li:nth-child(5) .c5-dots__label{transition-delay:.08s;}
-.c5-dots:hover li:nth-child(6) .c5-dots__label,.c5-dots:focus-within li:nth-child(6) .c5-dots__label{transition-delay:.10s;}
-.c5-dots:hover li:nth-child(7) .c5-dots__label,.c5-dots:focus-within li:nth-child(7) .c5-dots__label{transition-delay:.12s;}
-.c5-dots:hover li:nth-child(8) .c5-dots__label,.c5-dots:focus-within li:nth-child(8) .c5-dots__label{transition-delay:.14s;}
-/* Strony z dziewięcioma, dziesięcioma i jedenastoma rozdziałami (Produkty,
-   CARBOHUMIC, CARBOMAT MATA UPRAWOWA) ciągną ten sam stagger dalej. */
-.c5-dots:hover li:nth-child(9) .c5-dots__label,.c5-dots:focus-within li:nth-child(9) .c5-dots__label{transition-delay:.16s;}
-.c5-dots:hover li:nth-child(10) .c5-dots__label,.c5-dots:focus-within li:nth-child(10) .c5-dots__label{transition-delay:.18s;}
-.c5-dots:hover li:nth-child(11) .c5-dots__label,.c5-dots:focus-within li:nth-child(11) .c5-dots__label{transition-delay:.20s;}
-/* Option: a tag over the name (e.g. „Etap 1”) – span.c5-dots__stage at the start
-   of the label, then a space and the name. The tag stands absolutely above the
-   name, so the name stays level with the dot as in every other item; an item
-   with a tag gets 38 px instead of 28, so the tag never reaches its neighbour.
-   Pages without this element are unchanged. */
-.c5-dots__link:has(.c5-dots__stage){min-height:38px;}
-.c5-dots__stage{position:absolute;right:6px;bottom:calc(100% - 5px);font-size:10px;line-height:11px;
-  letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;}
-/* fokus klawiatury: obrys też „w bieli", żeby był widoczny po obu stronach blendu */
-.c5-dots__link:focus-visible{outline:2px solid #fff;outline-offset:2px;}
+   Rozwijanie (runda 2): JS śledzi wskaźnik na całym dokumencie i rozwija
+   wachlarz, gdy wskaźnik wejdzie w niewidoczny pas wzdłuż łuku (64 px w lewo od
+   kresek do prawej krawędzi ekranu, na wysokość łuku + 24 px zapasu). Pas to
+   sama geometria, nie element, a pola kresek łapią wskaźnik dopiero po
+   rozwinięciu – zwinięta nawigacja nie zasłania strony. Rozwinięty wachlarz trzyma jedna
+   ciągła strefa .c5-dots__zone; zwija się 250 ms po wyjechaniu ponad 24 px
+   poza nią.
 
-/* Rail offset from the window edge: the gutter (30 px) by default; a page with a wide
-   container moves the rail into the margin with style="--c5-dots-right:10px" on the root. */
-@media (min-width:900px){
-  .c5-dots{right:var(--c5-dots-right,var(--c5-gutter));}
+   Runda 5 (Mateusz 19.10) – dwa stany, żeby nawigacja nie przeszkadzała
+   strzałkom i przyciskom przy prawej krawędzi:
+   – spoczynek: kwadraty w prostej kolumnie co 35 px (Figma 966:1440), 10 px od
+     prawej krawędzi ekranu, czyli w 25-pikselowym marginesie kontenera treści;
+     zielony zostaje przy aktywnym dziale;
+   – rozwinięcie: wachlarz otwiera tylko pas 25 px od krawędzi wzdłuż kolumny
+     (+ 12 px); kwadraty rozjeżdżają się z kolumny na łuk (od środka na
+     zewnątrz), a dopiero po ich dojeździe (.is-ready) pokazują się opisy:
+     aktywnego działu i pozycji pod wskaźnikiem. Strefa wyboru obejmuje same
+     kwadraty łuku (+ 16 px), nie opisy; pokazany opis też trzyma wachlarz.
+   – opisy odsłaniają się od prawej do lewej (clip-path) i tak samo chowają –
+     bardzo szybko, więc przy przejeździe w pionie rozwijają się po kolei.
+   ---------------------------------------------------------------------- */
+.c5-dots{
+  --c5-dots-edge:15px;                 /* odstęp skrzynki od prawej krawędzi ekranu (Mateusz 18.10) */
+  --c5-dots-mark:5px;                  /* kwadrat (Figma 959:1689…1692) */
+  --c5-dots-mark-r:2px;
+  --c5-dots-gap:16.5px;                /* od kwadratu do prawego brzegu tła opisu */
+  --c5-dots-step:31.2px;               /* wysokość pola klikalnego przy kwadracie */
+  /* Paski opisów (Mateusz 19.10, Figma 969:1447 i 959:1698). Hover: biel w trybie
+     Darken (nic nie zmienia) + #EEECEC 70 % w trybie Screen = to samo co biel
+     o kryciu 0,7 × #EEECEC ≈ 65 % (różnica najwyżej 1 / 255 na kanał), na tle
+     rozmytym jak w Figmie (BACKGROUND_BLUR 12 = blur 6 px w CSS). */
+  --c5-dots-chip-bg:rgba(255,255,255,.65);
+  --c5-dots-chip-bg-solid:rgba(255,255,255,.85);   /* gdy przeglądarka nie zna backdrop-filter */
+  --c5-dots-chip-active:var(--ch-color-green-300);  /* aktywny dział: #A7D781, pełne krycie (969:1447) */
+  position:fixed;right:var(--c5-dots-edge);top:50%;z-index:92;
+  width:var(--c5-dots-w,40px);height:var(--c5-dots-h,auto);
+  transform:translateY(-50%);pointer-events:none;
+  transition:transform .38s var(--w-ease),visibility 0s linear 0s;
 }
+.c5-dots ol{list-style:none;margin:0;padding:0;position:relative;width:100%;height:100%;}
+/* bez JS: kolumna kwadratów przy prawej krawędzi */
+.c5-dots li{position:relative;height:var(--c5-dots-step);}
+.c5-dots[data-arc] li{position:absolute;left:0;top:0;height:0;width:0;
+  transform:translate(var(--x),var(--y)) rotate(var(--a));}
+/* Pole klikalne w układzie punktu łuku: punkt w (16 px, połowa wysokości); oś x
+   biegnie wzdłuż normalnej łuku do środka okręgu, czyli w prawo. */
+.c5-dots__link{position:absolute;left:-16px;top:calc(var(--c5-dots-step) / -2);width:36px;height:var(--c5-dots-step);
+  display:block;text-decoration:none;pointer-events:auto;outline:none;}
+.c5-dots:not([data-arc]) .c5-dots__link{left:auto;right:0;top:0;}
+/* Zwinięty wachlarz (z JS) nie łapie wskaźnika wcale – rozwija go pas liczony
+   w JS, więc kwadraty nie zasłaniają przycisków strony przy prawej krawędzi. */
+.c5-dots[data-arc]:not(.is-open) .c5-dots__link{pointer-events:none;}
+.c5-dots__dot{position:absolute;left:16px;top:calc(50% - var(--c5-dots-mark) / 2);
+  width:var(--c5-dots-mark);height:var(--c5-dots-mark);border-radius:var(--c5-dots-mark-r);
+  background:var(--ch-color-grey-400);}
+.c5-dots[data-arc] .c5-dots__dot{display:none;}
+.c5-dots:not([data-arc]) .c5-dots__link[aria-current="true"] .c5-dots__dot{background:var(--c5-dots-accent,#80B960);}
+
+/* Opisy na paskach: prawy brzeg paska styka się z polem klikalnym (16,5 px przed
+   kwadratem), pasek wyśrodkowany na kwadracie i obrócony razem z punktem łuku.
+   Pasek (19.10): padding 9 px góra i dół, 8 px boki, promień 5 px, tekst
+   Instrument Sans 14 px / 120 % #0C2B1C – wysokość 35 px; aktywny dział na
+   zielonym #A7D781, pozycja pod wskaźnikiem na białym 65 % z rozmyciem.
+   Ukryte w spoczynku. Gdy wachlarz się rozwija (.is-open – stawia ją JS, gdy
+   wskaźnik wejdzie w pas przy łuku), pokazują się tylko dwa opisy: aktywnego
+   działu i pozycji pod wskaźnikiem (.is-hot na <li>); fokus klawiatury pokazuje
+   opis aktywnego i opis pozycji z fokusem (Mateusz 18.10, runda 4 – wcześniej
+   wjeżdżały wszystkie po kolei). Tekst zawsze 100 %. Bez JS działa zwykłe :hover. */
+.c5-dots__label{position:absolute;right:100%;top:50%;transform:translateY(-50%);
+  padding:9px 8px;border-radius:5px;background:var(--c5-dots-chip-bg-solid);
+  font-family:var(--ch-type-small-font);font-size:var(--ch-type-small-size);font-weight:var(--ch-type-small-weight);
+  line-height:1.2;letter-spacing:var(--ch-type-small-ls);text-align:right;white-space:nowrap;
+  color:var(--ch-text-primary);
+  clip-path:inset(0 0 0 100% round 5px);pointer-events:none;     /* zwinięty do prawego brzegu (runda 5) */
+  transition:clip-path .1s cubic-bezier(.4,0,1,1);transition-delay:0s;}
+@supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .c5-dots__label{background:var(--c5-dots-chip-bg);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);}
+}
+/* aktywny dział: pełne zielone tło (rozmycie pod nim nic nie zmienia, więc wyłączone) */
+.c5-dots .c5-dots__link[aria-current="true"] .c5-dots__label{background:var(--c5-dots-chip-active);
+  -webkit-backdrop-filter:none;backdrop-filter:none;}
+.c5-dots:not([data-arc]) .c5-dots__label{right:calc(100% - 16px + var(--c5-dots-gap));}
+.c5-dots.is-open.is-ready .c5-dots__link[aria-current="true"] .c5-dots__label,
+.c5-dots.is-open.is-ready li.is-hot .c5-dots__label,
+.c5-dots:not([data-arc]):hover .c5-dots__link[aria-current="true"] .c5-dots__label,
+.c5-dots:not([data-arc]) .c5-dots__link:hover .c5-dots__label,
+.c5-dots:has(.c5-dots__link:focus-visible) .c5-dots__link[aria-current="true"] .c5-dots__label,
+.c5-dots .c5-dots__link:focus-visible .c5-dots__label{clip-path:inset(0 0 0 0 round 5px);pointer-events:auto;
+  transition-duration:.16s;transition-timing-function:cubic-bezier(.2,.7,.2,1);}
+/* Strefa rozwiniętego wachlarza (tworzy ją JS): jeden prostokąt od lewego końca
+   najdłuższego opisu do prawej krawędzi ekranu, od górnej do dolnej pozycji
+   z zapasem. Łapie wskaźnik tylko przy rozwiniętym wachlarzu – wtedy przejazd
+   w pionie po nazwach i między nimi nie trafia w „dziury”, a klik w pas nazwy
+   przewija do działu (JS: najbliższa pozycja w pionie). Zwinięta nie zasłania
+   strony. Położenie i wymiary: --zx, --zy, --zw, --zh (układ skrzynki nav). */
+.c5-dots__zone{position:absolute;left:var(--zx,0);top:var(--zy,0);width:var(--zw,0);height:var(--zh,0);
+  pointer-events:none;cursor:pointer;}
+.c5-dots.is-open .c5-dots__zone{pointer-events:auto;}
+/* fokus klawiatury: obrys na tle (wewnątrz jego krawędzi, więc widoczny też na zdjęciu) */
+.c5-dots__link:focus-visible .c5-dots__label{outline:2px solid var(--ch-text-primary);outline-offset:-2px;}
+/* Opcja: dopisek przed nazwą (np. „Etap 1”) – drobny, wersalikami, w tej samej linii. */
+.c5-dots__stage{display:inline-block;margin-right:6px;font-family:var(--ch-type-micro-font);font-size:var(--ch-type-micro-size);
+  line-height:1;letter-spacing:.06em;text-transform:uppercase;vertical-align:1px;opacity:.75;}
+
+/* Warstwy kwadratów (tworzy je JS): ta sama skrzynka co nav, punkty bez obrotu.
+   .c5-dots__marks – biel 30 % w trybie difference; kwadrat aktywnego / najechanego
+   działu znika tu i pojawia się na .c5-dots__accent – zielony, bez blendu. */
+.c5-dots__marks,.c5-dots__accent{position:fixed;right:var(--c5-dots-edge,15px);top:50%;
+  width:var(--c5-dots-w,40px);height:var(--c5-dots-h,auto);transform:translateY(-50%);
+  pointer-events:none;margin:0;padding:0;list-style:none;
+  transition:transform .38s var(--w-ease),visibility 0s linear 0s;}
+.c5-dots__marks{z-index:90;mix-blend-mode:difference;}
+.c5-dots__accent{z-index:91;}
+/* runda 5: w spoczynku kolumna (--lx, --ly), po rozwinięciu łuk (--x, --y);
+   rozjazd od środka na zewnątrz (--k = odległość od środkowej pozycji) */
+.c5-dots__marks li,.c5-dots__accent li{position:absolute;left:0;top:0;width:0;height:0;
+  transform:translate(var(--lx,var(--x)),var(--ly,var(--y)));
+  transition:transform .2s cubic-bezier(.4,0,.2,1);}
+.c5-dots__marks.is-open li,.c5-dots__accent.is-open li{transform:translate(var(--x),var(--y));
+  transition:transform .26s cubic-bezier(.2,.8,.2,1) calc(var(--k,0) * 8ms);}
+.c5-dots__marks i,.c5-dots__accent i{position:absolute;
+  left:calc(var(--c5-dots-mark,5px) / -2);top:calc(var(--c5-dots-mark,5px) / -2);
+  width:var(--c5-dots-mark,5px);height:var(--c5-dots-mark,5px);border-radius:var(--c5-dots-mark-r,2px);}
+.c5-dots__marks i{background:var(--ch-color-white);opacity:.3;transition:opacity .12s var(--w-ease);}
+.c5-dots__marks li.is-on i{opacity:0;}
+.c5-dots__accent i{background:var(--c5-dots-accent,#80B960);       /* zielony z Figmy 959:1632 – w tokenach nie ma dokładnie tego odcienia */
+  opacity:0;transform:scale(.6);
+  transition:opacity .12s var(--w-ease),transform .18s cubic-bezier(.2,.7,.2,1);}
+.c5-dots__accent li.is-on i{opacity:1;transform:scale(1);}
+
+/* Stopka: wszystkie trzy warstwy wyjeżdżają w prawą krawędź (transform), po
+   zjechaniu ze stopki wracają; ukryte nie łapią fokusu (visibility po wyjeździe). */
+.c5-dots.is-away,.c5-dots__marks.is-away,.c5-dots__accent.is-away{transform:translate(calc(100% + var(--c5-dots-edge,15px) + 8px),-50%);visibility:hidden;
+  transition:transform .32s var(--w-ease),visibility 0s linear .32s;}
+
 @media (max-width:899px){
   /* dotyk nie ma najechania – zostaje zwykłe przewijanie strony */
-  .c5-dots{display:none;}
+  .c5-dots,.c5-dots__marks,.c5-dots__accent{display:none;}
 }
 @media (prefers-reduced-motion: reduce){
-  .c5-dots__dot,.c5-dots__label{transition:none;}
+  .c5-dots,.c5-dots__marks,.c5-dots__accent,.c5-dots__label,.c5-dots__marks i,.c5-dots__accent i,
+  .c5-dots__marks li,.c5-dots__accent li,.c5-dots__marks.is-open li,.c5-dots__accent.is-open li,
+  .c5-dots.is-open.is-ready .c5-dots__label,
+  .c5-dots.is-open .c5-dots__label,.c5-dots:not([data-arc]):hover .c5-dots__label,.c5-dots .c5-dots__link:hover .c5-dots__label,
+  .c5-dots:has(.c5-dots__link:focus-visible) .c5-dots__label,.c5-dots .c5-dots__link:focus-visible .c5-dots__label,
+  .c5-dots.is-away,.c5-dots__marks.is-away,.c5-dots__accent.is-away{transition:none;transition-delay:0s;}
 }
-

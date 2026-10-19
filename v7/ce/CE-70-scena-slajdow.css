@@ -14,16 +14,24 @@
      fills it, a flat scrim sits over it and ONE piece at a time floats in the
      middle. The first piece is the heading: it stands centred when the stage
      pins, then leaves upward while card 1 rides in from below; after that
-     card i parks and leaves upward while card i + 1 rides in behind it. The
-     slide index at the left edge is hidden while the heading stands. The
-     module writes only custom properties – per piece `--vs-t` (-1 above …
-     0 centre … 1 below) and `--vs-travel` (how far that is in pixels), on the
-     index `--vs-idx` (its opacity) – so a scroll pass never touches layout.
+     card i parks and leaves upward while card i + 1 rides in behind it – one
+     feed after usealia (stage E): the neighbour waits one card + 40 px away,
+     shrunk to .75 and faded out, and the feed fades into the stage at the top
+     and bottom (mask). The tab row under the card (EL-18 text tabs) is
+     hidden while the heading stands. The module writes only custom
+     properties – per piece `--vs-t` (-1 above … 0 centre … 1 below),
+     `--vs-travel` (how far that is in pixels), `--vs-s` / `--vs-o` (scale,
+     opacity), on the tab row `--vs-idx` (its opacity) – so a scroll pass
+     never touches layout.
 
-   The card itself is the pattern's light box (--w-gray-50, 10 px padding,
-   sharp corners): a square dark illustration on the left, the title and the
-   description of the step on the right. Every illustration part carries its
-   own c5-vs class, so the block does not depend on the page sheet.
+   The card (Figma 847:855, stage C 18.10.2026): white, r12, padding 32; a
+   square dark illustration (r8) on the left, on the right the step number
+   over a hairline at the top and the title (title-m) with the description
+   (body, secondary) at the bottom. Every illustration part carries its own
+   c5-vs class, so the block does not depend on the page sheet.
+   Variant `c5-vs--zielen` (Figma 853:2059 / 847:855): the stage is flat
+   green-200 with the four-leaf motif instead of the video; the video and the
+   poster stay in the HTML, hidden by the modifier.
    ========================================================================= */
 
 .c5-vs{
@@ -50,7 +58,7 @@
 .c5-vs__shot{position:absolute;left:0;width:0;height:0;overflow:hidden;pointer-events:none;
   top:calc((var(--vs-head-seg,1) + .65) * max(var(--vs-step-min,620px), var(--vs-step-vh,1.1) * 100svh));}
 /* two rows: the frame (picture and heading share one cell), then the cards */
-.c5-vs__stage{position:relative;background:var(--w-gray-900);color:#fff;
+.c5-vs__stage{--c5-heading-ink:currentColor;position:relative;background:var(--w-gray-900);color:var(--ch-color-white);
   display:grid;grid-template-columns:minmax(0,1fr);}
 .c5-vs__bg{grid-area:1 / 1;position:relative;display:block;min-height:60svh;overflow:hidden;}
 /* outside the scene the video never runs – the poster stands in for it */
@@ -62,24 +70,33 @@
 
 /* --- Heading on the picture ------------------------------------------------- */
 .c5-vs__head{grid-area:1 / 1;position:relative;z-index:1;align-self:center;justify-self:center;
-  width:min(1100px,84vw);padding-block:var(--c5-vs-pad);text-align:center;color:#fff;}
+  width:min(1100px,84vw);padding-block:var(--c5-vs-pad);text-align:center;color:var(--ch-color-white);}
 .c5-vs__head .c5-kicker{margin-bottom:clamp(1rem,2vw,1.5rem);}
 .c5-vs__head .c5-h2{max-width:none;margin:0;text-wrap:balance;
   font-size:clamp(1.7rem,3.3vw,3.5rem);line-height:1.12;}
 
 /* --- Card ------------------------------------------------------------------ */
-.c5-vs__card{background:var(--w-gray-50);color:var(--w-text-primary);padding:10px;border-radius:0;
-  display:grid;grid-template-columns:minmax(0,1fr);gap:0;align-items:center;
+.c5-vs__card{background:var(--ch-surface-raised);color:var(--ch-text-primary);padding:var(--ch-space-8);border-radius:var(--ch-radius-md);
+  display:grid;grid-template-columns:minmax(0,1fr);gap:var(--ch-space-8);align-items:stretch;
   /* the card is the query container of the illustration: 1 cqw = 1 % of the
      card's content box, so the square of the box is written once, exactly,
      and holds in the scene and in the static stack alike */
   container-type:inline-size;}
 @media (min-width:600px){
-  .c5-vs__card{grid-template-columns:minmax(0,1fr) minmax(0,1fr);}
+  /* 352 | 51 | 464 of the frame */
+  .c5-vs__card{grid-template-columns:minmax(0,352fr) minmax(0,464fr);column-gap:51px;}
 }
-.c5-vs__txt{padding:clamp(1.25rem,3vw,2.5rem);display:flex;flex-direction:column;gap:var(--w-space-4);}
-.c5-vs__title{font-size:clamp(1.125rem,1.6vw,1.5rem);line-height:1.22;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
-.c5-vs__body{display:flex;flex-direction:column;gap:var(--w-space-3);font-size:0.9375rem;line-height:1.55;color:var(--w-text-secondary);}
+@media (max-width:599px){
+  .c5-vs__card{padding:var(--ch-space-5);gap:var(--ch-space-5);}
+}
+.c5-vs__txt{padding:0;display:flex;flex-direction:column;gap:var(--ch-space-5);}
+/* step number over a hairline at the top of the text column */
+.c5-vs__num{display:block;padding-top:var(--ch-space-4);margin-bottom:var(--ch-space-6);border-top:1px solid var(--ch-border-subtle);
+  font-family:var(--ch-type-kicker-font);font-size:var(--ch-type-kicker-size);line-height:var(--ch-type-kicker-lh);letter-spacing:var(--ch-type-kicker-ls);
+  text-transform:uppercase;color:var(--ch-text-primary);opacity:.5;}
+.c5-vs__title{margin-top:auto;font-family:var(--ch-type-title-m-font);font-size:clamp(1.25rem,1.8vw,var(--ch-type-title-m-size));line-height:1.385;
+  font-weight:var(--ch-type-title-m-weight);letter-spacing:var(--ch-type-title-m-ls);}
+.c5-vs__body{display:flex;flex-direction:column;gap:var(--ch-space-3);font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary);}
 .c5-vs__body p{margin:0;}
 .c5-vs__body ul{margin:0;}
 .c5-vs__body .wf-list{padding-left:0;}
@@ -96,10 +113,10 @@
    needs it, instead of squeezing the caption. On the windows the frame was
    drawn for (1440–1920 px) every step fits the square exactly. */
 .c5-vs__viz{position:relative;margin:0;min-height:100cqw;align-self:center;
-  background:var(--w-gray-800);color:#fff;
+  background:var(--ch-surface-inverse);color:var(--ch-color-white);border-radius:var(--ch-radius-sm);
   display:flex;flex-direction:column;gap:var(--w-space-4);padding:clamp(1rem,2.2vw,1.75rem);}
 @media (min-width:600px){
-  .c5-vs__viz{min-height:50cqw;}
+  .c5-vs__viz{min-height:calc((100cqw - 51px) * 352 / 816);}
 }
 .c5-vs__viz .c5-viz__tag{color:rgb(255 255 255 / .6);}
 .c5-vs__viz .c5-viz__body{flex:1;}
@@ -113,13 +130,17 @@
 .c5-vs__plot{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--w-space-2);}
 .c5-vs__field{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;
   border:1px solid rgb(255 255 255 / .45);background:rgb(255 255 255 / .45);}
-.c5-vs__band{display:flex;flex-direction:column;gap:6px;background:var(--w-gray-800);padding:var(--w-space-2);}
+.c5-vs__band{display:flex;flex-direction:column;gap:6px;background:var(--ch-surface-inverse);padding:var(--w-space-2);}
 .c5-vs__rows{display:flex;gap:3px;}
 .c5-vs__rows i{display:block;width:10px;height:16px;border:1px solid rgb(255 255 255 / .5);background:transparent;}
 .c5-vs__band--t200 .c5-vs__rows i{background:rgb(255 255 255 / .35);border-color:rgb(255 255 255 / .6);}
 .c5-vs__band--t500 .c5-vs__rows i{background:rgb(255 255 255 / .7);border-color:rgb(255 255 255 / .8);}
 .c5-vs__bname{font-size:0.8125rem;font-weight:var(--w-weight-medium);line-height:1.3;}
 .c5-vs__bsub{font-size:0.75rem;line-height:1.4;color:rgb(255 255 255 / .6);}
+/* modifier `--trzy` (Próchnica+ slide 03, 11.10.2026): three areas in one
+   line, each marked with ONE square instead of three row marks */
+.c5-vs__plot--trzy .c5-vs__field{grid-template-columns:repeat(3,minmax(0,1fr));}
+.c5-vs__plot--trzy .c5-vs__rows i{width:28px;height:28px;}
 .c5-vs__ref{display:flex;flex-direction:column;gap:4px;border:1px dashed rgb(255 255 255 / .5);padding:var(--w-space-2);}
 
 /* rhythm of the year – three nodes on one line */
@@ -129,26 +150,30 @@
   border:1px solid rgb(255 255 255 / .6);font-size:0.75rem;font-variant-numeric:tabular-nums;}
 .c5-vs__join{display:block;width:1px;height:var(--w-space-4);margin-left:13px;background:rgb(255 255 255 / .35);}
 
-/* --- Slide index (scene only, styles kept here so the scene block owns them) - */
-.c5-vs__index ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px;}
-.c5-vs__idx{display:flex;align-items:center;gap:12px;min-height:44px;padding:4px 8px 4px 0;
-  font:inherit;text-align:left;color:#fff;opacity:.6;background:none;border:0;border-radius:0;cursor:pointer;
-  transition:opacity var(--w-duration-base) var(--w-ease);}
-.c5-vs__idx:hover{opacity:.85;}
+/* --- Tab row (scene only; usealia "tabs below", Figma 847:855) -----------
+   EL-18 text tabs in one centred line 32 px above the bottom of the stage,
+   56 px apart; the current one is opaque and carries the four-leaf sign
+   (16 px), the others stay at .5 (EL-18). The two-digit numbers of the old
+   vertical index stay in the markup (aria-hidden) but are not drawn – the
+   card shows the number. Hidden in the static layout. */
+.c5-vs__index ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;column-gap:var(--c5-vs-tabgap,var(--ch-space-14));row-gap:var(--ch-space-2);}
+.c5-vs__idx{min-height:44px;color:var(--ch-text-primary);}
+.c5-vs__idx:hover{opacity:.8;}
 .c5-vs__idx[aria-current="true"]{opacity:1;}
-.c5-vs__idx:focus-visible{opacity:1;outline:2px solid var(--w-focus-ring-inverse);outline-offset:2px;}
-.c5-vs__idxnum{flex:none;width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;
-  border:1px solid rgb(255 255 255 / .5);font-size:0.6875rem;letter-spacing:.04em;font-variant-numeric:tabular-nums;}
-.c5-vs__idx[aria-current="true"] .c5-vs__idxnum{border-color:#fff;}
-.c5-vs__idxtxt{font-size:0.875rem;line-height:1.3;max-width:150px;}
+.c5-vs__idx:focus-visible{opacity:1;outline:2px solid currentColor;outline-offset:4px;}
+.c5-vs__idx .wf-icon{display:none;flex:none;}
+.c5-vs__idx[aria-current="true"] .wf-icon{display:inline-block;}
+.c5-vs__idxnum{display:none;}
 
 /* --- Scene: sticky stage in a tall track (JS sets the track height) --------- */
 @media (min-width:900px) and (prefers-reduced-motion: no-preference){
   .cx-js .c5-vs{
     /* the card of the frame: 800 px on a wide window, never more than 60 % of it */
-    --c5-vs-card-w:min(800px,60vw);
-    /* the index keeps the left edge of the window (28–40 px, spec §18.3) */
-    --c5-vs-side:clamp(28px,2.6vw,40px);
+    --c5-vs-card-w:min(931px,64vw);
+    /* side margin of the tab row */
+    --c5-vs-side:clamp(24px,2.6vw,40px);
+    /* gap of the feed: the next card waits this far under the current one */
+    --vs-feed-gap:40;
     /* length of ONE slide on the track – the module reads both (spec §18.3:
        ~110 svh of scrolling per segment above the pinned stage) */
     --vs-step-vh:1.1;
@@ -158,7 +183,9 @@
        the module and the screenshot hook both read it */
     --vs-head-seg:1;
   }
-  .cx-js .c5-vs__stage{position:sticky;top:0;height:100svh;overflow:hidden;
+  /* overflow: clip, not hidden – a hidden box is a scroll container, and a
+     fragment jump to a card (#retencja …) would scroll the stage itself */
+  .cx-js .c5-vs__stage{position:sticky;top:0;height:100svh;overflow:hidden;overflow:clip;
     display:block;background:var(--w-gray-900);}
 
   .cx-js .c5-vs__bg{position:absolute;inset:0;min-height:0;}
@@ -168,37 +195,227 @@
   /* The index waits out the heading: the module fades it in (--vs-idx) while
      card 1 rides in and marks it data-off while the heading stands, which
      takes its buttons out of sight, of the tab order and of the reading order. */
-  .cx-js .c5-vs__index{display:block;position:absolute;left:var(--c5-vs-side);top:50%;transform:translateY(-50%);z-index:3;
+  .cx-js .c5-vs__index{display:block;position:absolute;left:50%;bottom:var(--c5-vs-tabs-bottom,32px);z-index:3;
+    width:max-content;max-width:calc(100% - 2 * var(--c5-vs-side));transform:translateX(-50%);
     opacity:var(--vs-idx,0);}
   .cx-js .c5-vs__index[data-off="true"]{visibility:hidden;}
 
   /* the heading and every card sit in the same place – the middle of the
      stage; only the transform tells them apart. Before the module's first pass
      the heading stands (t = 0) and the cards wait below the stage (t = 1). */
-  .cx-js .c5-vs__head{position:absolute;left:50%;top:50%;padding:0;z-index:2;
+  /* both stand a little above the middle: the tab row takes the bottom band
+     (Figma 847:855 – card centre at 46 % of the frame) */
+  .cx-js .c5-vs__head{position:absolute;left:50%;top:calc(50% - var(--c5-vs-lift,30px));padding:0;z-index:2;
     transform:translate3d(-50%,-50%,0) translate3d(0,calc(var(--vs-t,0) * var(--vs-travel,100svh)),0);
     will-change:transform;}
-  .cx-js .c5-vs__cards{position:absolute;inset:0;width:auto;display:block;gap:0;padding:0;}
-  .cx-js .c5-vs__card{position:absolute;left:50%;top:50%;width:var(--c5-vs-card-w);z-index:2;
-    transform:translate3d(-50%,-50%,0) translate3d(0,calc(var(--vs-t,1) * var(--vs-travel,100svh)),0);
-    will-change:transform;}
+  /* the feed fades out towards the top and the bottom of the stage (usealia
+     feed-fade): a mask, not a painted band, so the leaf motif behind stays */
+  .cx-js .c5-vs__cards{position:absolute;inset:0;width:auto;justify-self:stretch;display:block;gap:0;padding:0;
+    -webkit-mask:linear-gradient(to bottom,transparent 0,#000 var(--c5-vs-fade,20%),#000 calc(100% - var(--c5-vs-fade,20%)),transparent 100%);
+    mask:linear-gradient(to bottom,transparent 0,#000 var(--c5-vs-fade,20%),#000 calc(100% - var(--c5-vs-fade,20%)),transparent 100%);}
+  /* one feed: the card in the middle full, a neighbour (|t| -> 1) one card
+     height + 40 px away, shrunk towards .75 and faded (--vs-s, --vs-o) */
+  .cx-js .c5-vs__card{position:absolute;left:50%;top:calc(50% - var(--c5-vs-lift,30px));width:var(--c5-vs-card-w);z-index:2;
+    transform:translate3d(-50%,-50%,0) translate3d(0,calc(var(--vs-t,1) * var(--vs-travel,100svh)),0) scale(var(--vs-s,1));
+    opacity:var(--vs-o,0);will-change:transform,opacity;}
   .cx-js .c5-vs__card[data-off="true"]{visibility:hidden;}
 }
 
-/* The index shows its titles only where the card leaves room for them: the card
-   is centred and 60 vw wide, so below ~1300 px the two would collide – there the
-   numbers alone mark the place in the scene (spec §18.3). */
-@media (min-width:900px) and (max-width:1299.98px) and (prefers-reduced-motion: no-preference){
-  .cx-js .c5-vs__idxtxt{display:none;}
-  .cx-js .c5-vs__idx{padding-right:0;}
+/* Narrower windows: the tab row keeps one line with a tighter gap. */
+@media (min-width:900px) and (max-width:1199.98px) and (prefers-reduced-motion: no-preference){
+  .cx-js .c5-vs{--c5-vs-tabgap:var(--ch-space-6);}
 }
 
 /* Low windows: the card must not touch the top and bottom edges of the stage. */
 @media (min-width:900px) and (prefers-reduced-motion: no-preference) and (max-height:760px){
   .cx-js .c5-vs{--c5-vs-card-w:min(720px,56vw);}
-  .cx-js .c5-vs__txt{padding:clamp(1rem,2.4vw,1.75rem);}
+  .cx-js .c5-vs__card{padding:var(--ch-space-6);}
   /* the illustration takes the tightest step so the square still holds it */
   .cx-js .c5-vs__viz{padding:clamp(0.875rem,1.6vw,1.25rem);gap:var(--w-space-3);}
   .cx-js .c5-vs__band,.cx-js .c5-vs__ref{padding:var(--w-space-2);}
   .cx-js .c5-vs__rows i{height:14px;}
+}
+
+/* ===== variant: zielen – green stage with the four-leaf motif ==============
+   Figma 853:2059 (heading screen) and 847:855 (slide screen): flat green-200,
+   the motif of CE-18 (`img/motyw-cta-lisci.svg`, filled quarter-leaves)
+   painted green-250 at 50 %, a dark outlined kicker and a dark heading. The
+   video layer (`.c5-vs__bg`) is hidden – its markup and file stay, so the
+   video variant can come back by dropping the modifier. Stands after the scene
+   block on purpose: same specificity, later wins. */
+.c5-vs--zielen .c5-vs__stage{--c5-heading-ink:var(--ch-text-primary);isolation:isolate;
+  background:var(--ch-surface-accent-green-soft);color:var(--ch-text-primary);}
+.c5-vs--zielen .c5-vs__stage::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:color-mix(in srgb,var(--ch-color-green-250) 50%,transparent);
+  -webkit-mask:url(../img/motyw-cta-lisci.svg) no-repeat center / cover;mask:url(../img/motyw-cta-lisci.svg) no-repeat center / cover;}
+.c5-vs--zielen .c5-vs__bg{display:none;}
+.c5-vs--zielen .c5-vs__head{color:var(--ch-text-primary);}
+.c5-vs--zielen .c5-vs__head .c5-kicker{margin-inline:auto;}
+.c5-vs--zielen .c5-vs__head .c5-h2{font-size:clamp(1.75rem,3.75vw,var(--ch-type-h2-size));line-height:var(--ch-type-h2-lh);}
+@media (max-width:899px){
+  .c5-vs--zielen .c5-vs__head .c5-h2{line-height:1.17;}
+}
+/* static layout: without the picture the heading needs its own room */
+:where(.c5-vs--zielen) .c5-vs__head{padding-block:clamp(4rem,10vw,7.5rem) var(--c5-vs-pad);}
+/* tab row on green: dark ink (the default) */
+
+/* ===== variant: stos – a stack of cards with one in focus =================
+   Figma 772:1079 (Produkty, "Wg potrzeby"), motion after usealia.com
+   "ProblemScroll": the stage pins on a flat yellow field; the h2 is split in
+   two halves on both sides of a 543 px column (left half right-aligned, right
+   half left-aligned – subgrid), the kicker and the lead stand with the left
+   half, the hint with the right one. In the column a stack of white cards
+   (r12): the card in focus is open – photo 166 r12, text 16/24, a hairline,
+   the path links as grey overlines – the others are rows (icon 24 + title
+   22, padding 24/32). The focus glides with the scroll; a fade of the field
+   (.8 → 0, 47 px) lies over both ends of the stack window; the tab row
+   (EL-18 text tabs) sits 32 px above the bottom of the stage.
+   Every card keeps the layout of the OPEN card; the module only writes
+   --vs-y (translateY from the focus line), --vs-e (0 row … 1 open), --vs-k
+   (scaleY of the white sheet) and --vs-o (opacity), so nothing but transform
+   and opacity moves. Static (below 900 px, reduced motion, no JS): the same
+   DOM as a grid of open cards under a centred heading.
+   Markup: .c5-vs.c5-vs--stos[data-vs="stos"] > .c5-vs__track > .c5-vs__stage >
+   .c5-vs__sides (h2.c5-vs__split > .c5-vs__half × 2) + ul.c5-vs__stack > li.c5-vs__goal[data-vs-card] (> .c5-vs__ghead,
+   .c5-vs__gbody > .c5-vs__gmedia + .c5-vs__gtxt > .c5-vs__gdesc + .c5-vs__ggo)
+   + nav.c5-vs__index.
+   Round of 18.10.2026 (R03, Mateusz's comments in the Produkty artefact):
+   · the heading stands alone (no kicker, lead or hint) – the two halves sit on the middle
+     line of the stage;
+   · the path links of a card keep ONE line; when they do not fit, the module turns the line
+     into a marquee that stops under the pointer (`.c5-vs__ggo.is-marquee`, transform only);
+   · the photo rolls up to its top edge and down from it (a wipe: the frame scales on Y from
+     the top, the picture scales back by the inverse, so it never squashes), it no longer
+     fades; only the text fades;
+   · the open card is ~20 % taller (photo column 210 px, the photo as tall as the text);
+   · the neighbours fade out on a MASK of the stack window, not under painted bands of the
+     field colour: the list is a real box as tall as the window (--vs-win, measured once per
+     resize) and its mask goes transparent over 47 px (--c5-vs-fade-h) at both ends.
+   ========================================================================================== */
+
+/* --- Static layout ---------------------------------------------------------- */
+.c5-vs--stos{margin-bottom:clamp(3rem,6vw,5rem);}
+.c5-vs--stos .c5-vs__stage{--c5-heading-ink:var(--ch-text-primary);display:block;
+  background:var(--ch-surface-accent-yellow);color:var(--ch-text-primary);
+  padding:clamp(4rem,8vw,7.5rem) max(var(--ch-space-6),calc((100% - 1600px) / 2)) clamp(3rem,6vw,5rem);}
+.c5-vs--stos .c5-vs__split{font-family:var(--ch-type-h2-sm-font);font-size:clamp(1.875rem,3.2vw,var(--ch-type-h2-sm-size));
+  line-height:var(--ch-type-h2-sm-lh);letter-spacing:var(--ch-type-h2-sm-ls);text-wrap:balance;margin-bottom:var(--ch-space-5);}
+@media (max-width:899px){
+  .c5-vs--stos .c5-vs__split{line-height:1.15;}
+}
+.c5-vs--stos .c5-vs__split{margin-bottom:clamp(2.5rem,5vw,3.5rem);}
+
+.c5-vs__stack{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:minmax(0,1fr);gap:var(--ch-space-6);}
+@media (min-width:700px){ .c5-vs__stack{grid-template-columns:repeat(2,minmax(0,1fr));} }
+@media (min-width:1100px){ .c5-vs__stack{grid-template-columns:repeat(3,minmax(0,1fr));} }
+
+/* the card: white r12; a row (icon + title) on top, the open part under it */
+.c5-vs__goal{position:relative;min-width:0;background:var(--ch-surface-raised);border-radius:var(--ch-radius-md);
+  container-type:inline-size;scroll-margin-top:var(--ch-space-6);}
+.c5-vs__goal:target{outline:2px solid var(--ch-text-primary);outline-offset:3px;}
+.c5-vs__ghead{display:flex;align-items:center;gap:var(--ch-space-6);padding:var(--ch-space-6) var(--ch-space-8);border-radius:var(--ch-radius-md);}
+.c5-vs__ghead .wf-icon{flex:none;width:var(--ch-size-icon-l);height:var(--ch-size-icon-l);color:var(--ch-text-primary);}
+.c5-vs__gname{font-family:var(--ch-type-title-font);font-size:var(--ch-type-title-size);line-height:var(--ch-type-title-lh);
+  letter-spacing:var(--ch-type-title-ls);font-weight:var(--ch-type-title-weight);color:var(--ch-text-primary);}
+.c5-vs__gbody{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--ch-space-6);padding:0 var(--ch-space-8) var(--ch-space-8);}
+.c5-vs__gmedia{margin:0;aspect-ratio:4 / 3;overflow:hidden;border-radius:var(--ch-radius-md);background:var(--ch-color-grey-200);}
+.c5-vs__gmedia img{display:block;width:100%;height:100%;object-fit:cover;}
+.c5-vs__gtxt{display:flex;flex-direction:column;min-width:0;}
+.c5-vs__gdesc{margin:0;font-size:var(--ch-type-body-size);line-height:24px;color:var(--ch-text-secondary);}
+/* the path links: grey overlines under a hairline (Figma "chips", group at .5) */
+/* the links keep a ~34 px tap height (padding 10); the margins give the
+   padding back, so the text stands 24 px under the hairline and 32 px above
+   the bottom of the card, as in the frame */
+.c5-vs__ggo{display:flex;flex-wrap:wrap;align-items:center;column-gap:var(--ch-space-2);margin:var(--ch-space-6) 0 -10px;
+  border-top:1px solid var(--ch-border-subtle);padding-top:14px;
+  font-size:var(--ch-type-kicker-size);line-height:var(--ch-type-kicker-lh);letter-spacing:var(--ch-type-kicker-ls);
+  text-transform:uppercase;color:var(--ch-text-secondary);}
+/* R03: one line. The module wraps the links in `.c5-vs__run`; when the run is wider than the
+   card it doubles it and the line becomes a marquee (paused under the pointer and while a link
+   has the focus). Without the module, or with reduced motion, the links simply wrap. */
+.c5-vs__run{display:inline-flex;flex:none;align-items:center;column-gap:var(--ch-space-2);white-space:nowrap;}
+.c5-vs__ggo.is-run{flex-wrap:nowrap;overflow:hidden;}
+.c5-vs__ggo.is-marquee{-webkit-mask:linear-gradient(90deg,#000 calc(100% - 32px),transparent);mask:linear-gradient(90deg,#000 calc(100% - 32px),transparent);}
+.c5-vs__ggo.is-marquee .c5-vs__run{padding-right:var(--ch-space-8);animation:c5VsRun var(--c5-vs-run-t,12s) linear infinite;}
+.c5-vs__ggo.is-marquee:hover .c5-vs__run,.c5-vs__ggo.is-marquee:focus-within .c5-vs__run{animation-play-state:paused;}
+@keyframes c5VsRun{from{transform:translate3d(0,0,0);}to{transform:translate3d(-100%,0,0);}}
+@media (prefers-reduced-motion:reduce){
+  .c5-vs__ggo.is-run{overflow:visible;}
+  .c5-vs__ggo.is-marquee{-webkit-mask:none;mask:none;}
+  .c5-vs__run{flex:1 1 auto;min-width:0;flex-wrap:wrap;white-space:normal;animation:none;}
+  .c5-vs__run[aria-hidden="true"]{display:none;}
+}
+.c5-vs__ggo .wf-link{padding-block:10px;color:inherit;opacity:.5;text-decoration:none;}
+.c5-vs__ggo .wf-link:hover{opacity:1;text-decoration:underline;}
+.c5-vs__ggo .wf-link:focus-visible{opacity:1;}
+/* photo beside the text once the card is wide enough (Figma: 166 | 36 | text) */
+@container (min-width:360px){
+  .c5-vs__gbody{grid-template-columns:clamp(110px,31cqw,166px) minmax(0,1fr);column-gap:clamp(20px,6.6cqw,36px);align-items:start;}
+  .c5-vs__gmedia{aspect-ratio:1;}
+}
+/* the wide card of the scene: photo column 210 px (R03, +20 % to the open card), the photo
+   at least square and as tall as the text beside it */
+@container (min-width:500px){
+  .c5-vs--stos .c5-vs__gbody{grid-template-columns:210px minmax(0,1fr);align-items:stretch;padding-bottom:var(--ch-space-10);}
+  .c5-vs--stos .c5-vs__gmedia{aspect-ratio:auto;min-height:210px;}
+}
+@media (max-width:599px){
+  .c5-vs__ghead{padding:var(--ch-space-5);}
+  .c5-vs__gbody{padding:0 var(--ch-space-5) var(--ch-space-5);}
+}
+
+/* --- Scene ------------------------------------------------------------------ */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  .cx-js .c5-vs--stos{
+    /* one goal = ~60 svh of scrolling; the module reads both */
+    --vs-step-vh:.6;
+    --vs-step-min:420px;
+    --vs-stack-gap:24;
+    --c5-vs-stack-w:clamp(380px,37.7vw,543px);
+    --c5-vs-colgap:clamp(24px,5vw,72px);
+    /* band of the tab row at the bottom of the stage (32 px under it) */
+    --c5-vs-tabs-band:104px;
+    --c5-vs-fade-h:47px;
+  }
+  .cx-js .c5-vs--stos .c5-vs__stage{padding:0;
+    background:var(--ch-surface-accent-yellow);}
+
+  /* the two halves of the heading on both sides of the stack column */
+  .cx-js .c5-vs--stos .c5-vs__sides{position:absolute;left:0;right:0;top:0;bottom:var(--c5-vs-tabs-band);
+    max-width:calc(1600px + 2 * var(--ch-space-6));margin-inline:auto;padding-inline:var(--ch-space-6);
+    display:grid;grid-template-columns:minmax(0,1fr) var(--c5-vs-stack-w) minmax(0,1fr);
+    grid-template-rows:minmax(0,1fr) auto minmax(0,1fr);column-gap:var(--c5-vs-colgap);}
+  .cx-js .c5-vs--stos .c5-vs__split{grid-column:1 / -1;grid-row:2;display:grid;grid-template-columns:subgrid;
+    max-width:none;margin:0;text-align:start;font-size:clamp(1.75rem,3.2vw,var(--ch-type-h2-sm-size));line-height:1.11;}
+  .cx-js .c5-vs--stos .c5-vs__half:first-child{grid-column:1;text-align:right;}
+  .cx-js .c5-vs--stos .c5-vs__half:last-child{grid-column:3;text-align:left;}
+
+  /* the stack: the window of the stack centred on the focus line (--vs-win = half of it,
+     set by the module on resize); the cards hang from its middle line. The window carries
+     the mask that fades the neighbours out at both ends (R03 – a mask, not painted bands). */
+  .cx-js .c5-vs--stos .c5-vs__stack{position:absolute;left:50%;top:calc((100% - var(--c5-vs-tabs-band)) / 2 - var(--vs-win,240px));z-index:2;
+    display:block;width:var(--c5-vs-stack-w);height:calc(2 * var(--vs-win,240px));margin:0 0 0 calc(var(--c5-vs-stack-w) / -2);
+    -webkit-mask:linear-gradient(to bottom,transparent 0,#000 var(--c5-vs-fade-h),#000 calc(100% - var(--c5-vs-fade-h)),transparent 100%);
+    mask:linear-gradient(to bottom,transparent 0,#000 var(--c5-vs-fade-h),#000 calc(100% - var(--c5-vs-fade-h)),transparent 100%);}
+  .cx-js .c5-vs--stos .c5-vs__goal{position:absolute;left:0;right:0;top:var(--vs-win,240px);background:none;isolation:isolate;
+    transform:translate3d(0,var(--vs-y,0px),0);opacity:var(--vs-o,1);will-change:transform,opacity;}
+  .cx-js .c5-vs--stos .c5-vs__goal[data-off="true"]{visibility:hidden;}
+  .cx-js .c5-vs--stos .c5-vs__goal:target{outline:0;}
+  /* the white sheet of the card grows from the row to the open card (scaleY,
+     drawn behind the row); the content fades in over the last 40 % */
+  .cx-js .c5-vs--stos .c5-vs__goal::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:var(--ch-radius-md);
+    background:var(--ch-surface-raised);transform-origin:50% 0;transform:scaleY(var(--vs-k,1));}
+  .cx-js .c5-vs--stos .c5-vs__ghead{background:var(--ch-surface-raised);}
+  /* the open part: the text fades over the last 40 % of the opening; the photo rolls down
+     from the top edge of its frame and back up to it (R03) – the frame scales on Y from the
+     top by --vs-e, the picture inside by the inverse, so the visible part is cut, not
+     squashed. Below 2 % the frame is simply hidden (no 50× inverse scale). */
+  .cx-js .c5-vs--stos .c5-vs__gtxt{opacity:calc((var(--vs-e,1) - .6) / .4);}
+  .cx-js .c5-vs--stos .c5-vs__goal[data-open="false"] .c5-vs__gtxt{visibility:hidden;}
+  .cx-js .c5-vs--stos .c5-vs__gmedia{transform-origin:50% 0;transform:scaleY(max(var(--vs-e,1),.02));}
+  .cx-js .c5-vs--stos .c5-vs__gmedia img{transform-origin:50% 0;transform:scaleY(calc(1 / max(var(--vs-e,1),.02)));}
+  .cx-js .c5-vs--stos .c5-vs__goal[data-shut="true"] .c5-vs__gmedia{visibility:hidden;}
+
+  /* the tab row: always shown (no heading screen in this variant) */
+  .cx-js .c5-vs--stos .c5-vs__index{opacity:1;}
 }

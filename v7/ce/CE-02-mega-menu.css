@@ -12,7 +12,13 @@
    The other CE-02 variants (szerokie, waskie) and the item styles shared
    with the mobile navigation (.cw-crops__list, .cw-crop, .cw-crops__split,
    .cw-crops__season-name) still live in cw.css.
-   Greyscale and kit tokens only.
+   Look (design system, stage D, 18.10.2026): there is no open mega menu in Figma, so
+   the look comes from the foundation and matches the floating header (CE-01): a
+   white 16 px panel 8 px under the bar with a grey-200 outline, no shadow, group
+   heads in overline, items in nav/body, product cards EL-15, buttons EL-01 M,
+   chips for the needs. Only --ch-* tokens; this sheet also overrides the shared
+   rules of cw.css (it is attached later), so the panels, cards and buttons of
+   the three variants live here.
 
    Position (16.10.2026): the panel does not span the whole content
    container. Its left edge stands under the left edge of the "Rodzaje
@@ -29,46 +35,132 @@
    back to the full container width.
    ===================================================================== */
 
-.cw-mega--wide.cw-mega--crop-switch { left: var(--cw-mega-left, var(--w-page-padding-lg)); }
+/* ===== the panels (all three variants) ===== */
+.cw-mega{
+  top:calc(100% + var(--ch-space-2));width:min(var(--cw-mega-w),92vw);padding:var(--ch-space-6);
+  background:var(--ch-surface-raised);border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-lg);box-shadow:none;
+  font-family:var(--ch-type-small-font);color:var(--ch-text-primary);
+}
+/* the wide panels stand exactly under the bar (the bar is the container, 8 px in from the window) */
+.cw-mega--wide{left:0;right:0;width:auto;}
+.cw-mega--narrow{width:auto;min-width:14rem;padding:var(--ch-space-2);}
+/* the narrow panel hangs under the bar like the wide ones (not under its trigger, which stands inside the bar):
+   the group is static, so `top` counts from the bar and `left: auto` keeps the panel under the trigger */
+.cw-haspopup:has(> .cw-mega--narrow){position:static;}
+.cw-mega--narrow{left:auto;}
+.cw-mega .wf-overline{
+  font-family:var(--ch-type-overline-font);font-size:var(--ch-type-overline-size);line-height:var(--ch-type-overline-lh);
+  letter-spacing:var(--ch-type-overline-ls);font-weight:var(--ch-type-overline-weight);text-transform:uppercase;color:var(--ch-text-secondary);
+}
+
+/* ===== buttons in the panels: EL-01 size M (primary dark, secondary outlined) ===== */
+.cw-mega .wf-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:var(--ch-size-control-m);padding:var(--ch-space-3) var(--ch-space-4);
+  border:1px solid transparent;border-radius:var(--ch-radius-control-m);box-shadow:none;
+  font-family:var(--ch-type-button-m-font);font-size:var(--ch-type-button-m-size);line-height:var(--ch-type-button-m-lh);font-weight:var(--ch-type-button-m-weight);
+  text-decoration:none;transition:background var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);
+}
+.cw-mega .wf-btn .wf-icon{width:var(--ch-size-icon-s);height:var(--ch-size-icon-s);}
+.cw-mega .wf-btn--primary{background:var(--ch-action-primary-bg);border-color:var(--ch-action-primary-bg);color:var(--ch-action-primary-fg);}
+.cw-mega .wf-btn--primary:hover{background:var(--ch-color-green-900);border-color:var(--ch-color-green-900);}
+.cw-mega .wf-btn--secondary{background:var(--ch-surface-page);border-color:var(--ch-action-secondary-border);color:var(--ch-action-secondary-fg);}
+.cw-mega .wf-btn--secondary:hover{background:var(--ch-surface-page);border-color:var(--ch-action-secondary-fg);}
+
+/* ===== variant "szerokie" – Produkty Carbohort ===== */
+.cw-mega__head{padding-bottom:var(--ch-space-4);margin-bottom:var(--ch-space-5);border-bottom:1px solid var(--ch-border-subtle);}
+.cw-mega__foot,.cw-mega__needs{margin-top:var(--ch-space-5);padding-top:var(--ch-space-4);border-top:1px solid var(--ch-border-subtle);}
+.cw-mega__layout{gap:var(--ch-space-4);}
+/* product card = EL-15: white, 1 px grey-200, 12 px, padding 20; the hovered card turns beige without an outline
+   (the active state of EL-15) and its well turns white */
+.cw-prodbox{
+  gap:var(--ch-space-2);padding:var(--ch-space-5);border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-md);
+  background:var(--ch-surface-raised);color:var(--ch-text-primary);
+}
+.cw-prodbox:hover,.cw-prodbox:focus-visible{background:var(--ch-surface-warm);border-color:var(--ch-surface-warm);}
+.cw-prodbox:hover .cw-prodbox__media:not(.cw-prodbox__media--pair),
+.cw-prodbox:focus-visible .cw-prodbox__media:not(.cw-prodbox__media--pair){background:var(--ch-surface-raised);}
+.cw-prodbox__name{
+  font-family:var(--ch-type-title-s-font);font-size:var(--ch-type-title-s-size);line-height:var(--ch-type-title-s-lh);
+  letter-spacing:var(--ch-type-title-s-ls);font-weight:var(--ch-type-title-s-weight);text-transform:none;color:var(--ch-text-primary);
+}
+/* packshot well: beige-50, 8 px (a small photo in a card), the floor line 40 px above the bottom edge as before */
+.cw-prodbox__media{padding:var(--ch-space-10);background:var(--ch-surface-warm);border-radius:var(--ch-radius-sm);}
+.cw-prodbox__media.cw-prodbox__media--pair{padding:0;background:none;border-radius:0;gap:var(--ch-space-2);}
+.cw-prodbox__variant{padding:var(--ch-space-10) var(--ch-space-2);background:var(--ch-surface-warm);border-radius:var(--ch-radius-sm);}
+.cw-prodbox--split{color:var(--ch-text-primary);}
+.cw-prodbox--split:hover{background:var(--ch-surface-raised);border-color:var(--ch-border-subtle);}
+.cw-prodbox--split .cw-prodbox__variant:hover,
+.cw-prodbox--split .cw-prodbox__variant:focus-visible{background:var(--ch-surface-warm-strong);}
+.cw-prodbox__tag{
+  font-family:var(--ch-type-overline-font);font-size:var(--ch-type-overline-size);line-height:var(--ch-type-overline-lh);
+  letter-spacing:var(--ch-type-overline-ls);font-weight:var(--ch-font-weight-medium);color:var(--ch-text-primary);
+}
+.cw-prodbox__desc{font-size:var(--ch-type-caption-size);line-height:var(--ch-type-caption-lh);color:var(--ch-text-secondary);}
+.cw-prodbox:hover .cw-prodbox__desc{color:var(--ch-text-secondary-on-warm);}
+@media (min-width:981px) and (max-width:1199px){
+  .cw-prodbox{padding:var(--ch-space-4);}
+  .cw-prodbox__media{padding-inline:var(--ch-space-5);}
+  .cw-prodbox__tag{font-size:var(--ch-type-micro-size);letter-spacing:var(--ch-type-micro-ls);}
+}
+/* "Wg potrzeby": the links as EL-16 chips */
+.cw-mega__needs{align-items:center;gap:var(--ch-space-3) var(--ch-space-6);}
+.cw-mega__needs .cw-mega__list{gap:var(--ch-space-2);}
+.cw-mega__needs .cw-mega__list a{
+  display:inline-flex;align-items:center;padding:var(--ch-space-1-5) var(--ch-space-3);border-radius:var(--ch-radius-md);background:var(--ch-surface-warm);
+  font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-primary);text-decoration:none;
+  transition:background var(--w-duration-base) var(--w-ease);
+}
+.cw-mega__needs .cw-mega__list a:hover{background:var(--ch-surface-warm-strong);text-decoration:none;}
+
+/* ===== variant "waskie" – Programy i badania ===== */
+.cw-mega--narrow .cw-mega__list{margin-top:0;gap:var(--ch-space-1);}
+.cw-mega--narrow .cw-mega__list a{
+  display:block;padding:10px var(--ch-space-3);border-radius:var(--ch-radius-tab);white-space:nowrap;
+  font-family:var(--ch-type-small-font);font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-primary);text-decoration:none;
+  transition:background var(--w-duration-base) var(--w-ease);
+}
+.cw-mega--narrow .cw-mega__list a:hover{background:var(--ch-surface-warm);text-decoration:none;}
+
+/* ===== variant "grupy-ze-zdjeciem" – Rodzaje upraw ===== */
+.cw-mega--wide.cw-mega--crop-switch { left: var(--cw-mega-left, var(--ch-layout-gutter)); }
 
 .cw-cropsw {
   container: cw-cropsw / inline-size;
   display: grid; align-items: stretch;
   grid-template-columns: minmax(12rem, 15rem) minmax(0, 1fr);
-  gap: var(--w-space-6);
+  gap: var(--ch-space-6);
 }
 
-/* --- left column: the groups -------------------------------------------- */
+/* --- left column: the groups – a vertical rail, the active one a step darker (EL-19 logic) --- */
 .cw-cropsw__groups {
-  display: flex; flex-direction: column; gap: var(--w-space-1);
-  padding-right: var(--w-space-6);
-  border-right: 1px solid var(--w-border-subtle);
+  display: flex; flex-direction: column; gap: var(--ch-space-1);
+  padding-right: var(--ch-space-6);
+  border-right: 1px solid var(--ch-border-subtle);
 }
 /* the group column sits right under the trigger: it takes back most of the
    panel's left padding (the foot strip below keeps the full padding) */
 .cw-mega--crop-switch .cw-cropsw__groups {
-  margin-left: calc(var(--w-space-1) - var(--w-space-6));
+  margin-left: calc(var(--ch-space-1) - var(--ch-space-6));
 }
 .cw-cropsw__group {
-  display: flex; align-items: center; justify-content: space-between; gap: var(--w-space-3);
-  width: 100%; min-height: 44px; padding: var(--w-space-2) var(--w-space-3);
-  font: inherit; font-size: 1rem; line-height: 1.35; text-align: left;
-  color: var(--w-text-secondary); background: none;
-  border: 0; border-radius: var(--w-radius-sm, 8px); cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between; gap: var(--ch-space-3);
+  width: 100%; min-height: var(--ch-size-control-m); padding: var(--ch-space-2) var(--ch-space-3);
+  font-family: var(--ch-type-body-font); font-size: var(--ch-type-body-size); line-height: var(--ch-type-body-lh); text-align: left;
+  color: var(--ch-text-secondary); background: none;
+  border: 0; border-radius: var(--ch-radius-tab); cursor: pointer;
   transition: background-color var(--w-duration-base) var(--w-ease),
               color var(--w-duration-base) var(--w-ease);
 }
-.cw-cropsw__group:hover { color: var(--w-text-primary); background: var(--w-surface-subtle); }
+.cw-cropsw__group:hover { color: var(--ch-text-primary); background: var(--ch-surface-warm-row); }
 .cw-cropsw__group[aria-selected="true"] {
-  color: var(--w-text-primary); background: var(--w-surface-sunken);
-  font-weight: var(--w-weight-semibold);
+  color: var(--ch-text-primary); background: var(--ch-surface-warm);
 }
 .cw-cropsw__group:focus-visible {
   outline: var(--w-focus-ring-width) solid var(--w-focus-ring);
   outline-offset: calc(-1 * var(--w-focus-ring-width));
 }
 /* the chevron says "the list opens to the right" – shown on the active group only */
-.cw-cropsw__chev { flex: none; color: var(--w-icon-muted); opacity: 0;
+.cw-cropsw__chev { flex: none; color: var(--ch-text-primary); opacity: 0;
   transition: opacity var(--w-duration-base) var(--w-ease); }
 .cw-cropsw__group[aria-selected="true"] .cw-cropsw__chev { opacity: 1; }
 
@@ -79,23 +171,33 @@
      the same floor for all five panels (Rolnicze, two columns, needs ~248 px),
      so switching groups never moves the photo */
   grid-template-columns: minmax(16rem, 0.8fr) minmax(0, 1.2fr);
-  gap: var(--w-space-6);
+  gap: var(--ch-space-6);
 }
 .cw-cropsw__panel[hidden] { display: none; }
 .cw-cropsw__panel:focus-visible {
   outline: var(--w-focus-ring-width) solid var(--w-focus-ring);
-  outline-offset: var(--w-focus-ring-offset); border-radius: var(--w-radius-xs);
+  outline-offset: var(--w-focus-ring-offset); border-radius: var(--ch-radius-xs);
 }
-.cw-cropsw__list { min-width: 0; padding-top: var(--w-space-1); }
+.cw-cropsw__list { min-width: 0; padding-top: var(--ch-space-1); }
 /* Rolnicze: Ozime and Jare side by side as before (grid from cw.css) */
-.cw-cropsw__list .cw-crops__split { gap: var(--w-space-6); }
+.cw-cropsw__list .cw-crops__split { gap: var(--ch-space-6); }
+
+/* The list items are shared with the mobile navigation (rules of cw.css);
+   the look comes from the tokens here. */
+.cw-crop{padding:6px 0;font-family:var(--ch-type-small-font);font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-primary);}
+.cw-crop--soon{color:var(--ch-text-secondary);}
+.cw-crops__season-name{
+  font-family:var(--ch-type-overline-font);font-size:var(--ch-type-overline-size);line-height:var(--ch-type-overline-lh);
+  letter-spacing:var(--ch-type-overline-ls);font-weight:var(--ch-type-overline-weight);color:var(--ch-text-secondary);
+}
 
 /* The same frame for all five photos, so switching groups never moves the
-   panel; the frame is wide, the photo is cropped to it. */
+   panel; the frame is wide, the photo is cropped to it. 12 px: a medium photo
+   in a panel (cards 12, large photos 20, small ones 8). */
 .cw-cropsw__photo {
   display: block; width: 100%; height: auto; aspect-ratio: 3 / 2;
-  object-fit: cover; border-radius: var(--w-radius-md);
-  background: var(--w-surface-sunken);
+  object-fit: cover; border-radius: var(--ch-radius-md);
+  background: var(--ch-surface-warm);
 }
 
 /* Narrow panel (windows up to 1199 px, where the panel starts under its
@@ -105,6 +207,11 @@
   .cw-cropsw__photo { display: none; }
 }
 
+/* ===== the mobile navigation (CE-03, shares the item rules with this panel): type from the tokens ===== */
+.cw-mobilenav .wf-navitem{font-family:var(--ch-type-body-font);font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);border-radius:var(--ch-radius-tab);}
+.cw-mobilenav .cw-crop{font-size:var(--ch-type-small-size);}
+.cw-mobilenav__sub{font-size:var(--ch-type-small-size);}
+
 @media (prefers-reduced-motion: reduce) {
-  .cw-cropsw__group, .cw-cropsw__chev { transition: none; }
+  .cw-cropsw__group, .cw-cropsw__chev, .cw-mega .wf-btn, .cw-prodbox, .cw-mega__needs .cw-mega__list a, .cw-mega--narrow .cw-mega__list a { transition: none; }
 }

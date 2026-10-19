@@ -17,29 +17,33 @@
 
 .kf-tiles { display: flex; flex-direction: column; gap: var(--w-space-5); }
 .kf-tiles__group { display: flex; flex-direction: column; gap: var(--w-space-3); }
-.kf-tiles__name { font-size: var(--w-font-sm-size); font-weight: var(--w-weight-semibold);
-  letter-spacing: .04em; text-transform: uppercase; color: var(--w-text-secondary); }
+.kf-tiles__name { font-size: var(--ch-type-overline-size); line-height: var(--ch-type-overline-lh); font-weight: var(--ch-font-weight-regular);
+  letter-spacing: var(--ch-type-overline-ls); text-transform: uppercase; color: var(--ch-text-secondary); }
 .kf-grid { display: grid; gap: var(--w-space-3); grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
 
 .kf-tile { display: flex; flex-direction: column; align-items: flex-start; gap: var(--w-space-1);
   width: 100%; min-height: var(--w-tap-min); padding: var(--w-space-4);
   font: inherit; text-align: left; color: var(--w-text-primary);
-  background: var(--w-surface-raised); border: 1px solid var(--w-border-default);
-  border-radius: var(--w-radius-md); cursor: pointer; overflow-wrap: anywhere;
+  background: var(--ch-surface-raised); border: 1px solid var(--ch-border-subtle);
+  border-radius: var(--ch-radius-md); cursor: pointer; overflow-wrap: anywhere;
   transition: border-color var(--w-duration-fast) var(--w-ease); }
-.kf-tile:hover { border-color: var(--w-border-strong); }
+.kf-tile:hover { border-color: var(--ch-border-control); }
 .kf-tile:focus-visible { outline: 2px solid var(--w-border-strong); outline-offset: 2px; }
 .kf-tile[aria-pressed="true"] { background: var(--w-surface-inverse); color: var(--w-text-inverse);
   border-color: var(--w-surface-inverse); }
 .kf-tile[aria-pressed="true"] .kf-tile__sub { color: var(--w-text-inverse); opacity: .8; }
-.kf-tile__name { font-weight: var(--w-weight-semibold); }
+.kf-tile__name { font-weight: var(--ch-font-weight-medium); }
 .kf-tile__sub { font-size: var(--w-font-sm-size); line-height: 1.4; color: var(--w-text-secondary); }
+
+/* a purchase button is always the green one with dark text (design system rule) */
+.kf-buy, .kf-buy:hover:not(:disabled) { background: var(--ch-action-accent-bg); border-color: var(--ch-action-accent-bg); color: var(--ch-action-accent-fg); }
+.kf-buy:hover:not(:disabled) { background: var(--ch-color-green-350); border-color: var(--ch-color-green-350); }
 
 .kf-chips { display: flex; flex-wrap: wrap; gap: var(--w-space-2); }
 .kf-chip { font: inherit; font-size: var(--w-font-sm-size); padding: 8px 18px; min-height: var(--w-tap-min);
   background: var(--w-surface-raised); color: var(--w-text-primary);
-  border: 1px solid var(--w-border-default); border-radius: var(--w-radius-pill); cursor: pointer; }
-.kf-chip:hover { border-color: var(--w-border-strong); }
+  border: 1px solid var(--ch-border-control); border-radius: var(--ch-radius-md); cursor: pointer; }
+.kf-chip:hover { border-color: var(--ch-border-strong); }
 .kf-chip:focus-visible { outline: 2px solid var(--w-border-strong); outline-offset: 2px; }
 .kf-chip[aria-pressed="true"] { background: var(--w-surface-inverse); color: var(--w-text-inverse);
   border-color: var(--w-surface-inverse); }
@@ -51,8 +55,8 @@
 
 .kf-equip { display: grid; gap: var(--w-space-2); grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
 .kf-equip__item { display: flex; align-items: flex-start; gap: var(--w-space-3);
-  padding: var(--w-space-3) var(--w-space-4); border: 1px solid var(--w-border-default);
-  border-radius: var(--w-radius-md); background: var(--w-surface-raised); cursor: pointer; }
+  padding: var(--w-space-3) var(--w-space-4); border: 1px solid var(--ch-border-subtle);
+  border-radius: var(--ch-radius-md); background: var(--ch-surface-raised); cursor: pointer; }
 .kf-equip__item:hover { border-color: var(--w-border-strong); }
 .kf-equip__item input { margin-top: 3px; }
 
@@ -60,9 +64,9 @@
 .kf-res__head { display: flex; flex-direction: column; gap: var(--w-space-1); }
 .kf-cards { display: grid; gap: var(--w-space-4); grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr)); }
 .kf-card { display: flex; flex-direction: column; gap: var(--w-space-3); padding: var(--w-space-5);
-  border: 1px solid var(--w-border-default); border-radius: var(--w-radius-lg);
-  background: var(--w-surface-raised); overflow-wrap: anywhere; }
-.kf-card--hero { border-color: var(--w-border-strong); border-width: 2px; }
+  border: 1px solid var(--ch-border-subtle); border-radius: var(--ch-radius-md);
+  background: var(--ch-surface-raised); overflow-wrap: anywhere; }
+.kf-card--hero { border-color: var(--ch-border-strong); border-width: 2px; }
 .kf-card--off { opacity: .62; }
 .kf-card--blocked { opacity: .55; background: var(--w-surface-subtle); }
 .kf-card__top { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--w-space-3); }
@@ -80,12 +84,12 @@
   padding-top: var(--w-space-2); border-top: 1px solid var(--w-border-subtle); }
 
 .kf-sum { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+  gap: var(--w-space-3); padding: var(--ch-space-4) var(--ch-space-5);
+  border: 1px solid var(--ch-border-strong); border-radius: var(--ch-radius-md); }
 .kf-sum__buy { display: flex; flex-wrap: wrap; align-items: center; gap: var(--w-space-3); }
 .kf-sum__alt { margin: 0; max-width: 26rem; }
 .kf-sum__alt a { color: inherit; text-decoration: underline; }
-  gap: var(--w-space-3); padding: var(--w-space-4) var(--w-space-5);
-  border: 1px solid var(--w-border-strong); border-radius: var(--w-radius-lg); }
-.kf-sum__val { font-size: var(--w-font-h4-size); font-weight: var(--w-weight-bold); }
+.kf-sum__val { font-size: var(--ch-type-title-s-size); line-height: var(--ch-type-title-s-lh); letter-spacing: var(--ch-type-title-s-ls); font-weight: var(--ch-font-weight-medium); }
 
 .kf-when { display: flex; flex-direction: column; gap: var(--w-space-4); }
 .kf-when__item { display: flex; flex-direction: column; gap: var(--w-space-2);
@@ -225,7 +229,7 @@
               <input type="checkbox" class="wf-checkbox" data-kf-acid-input>
               <span class="wf-stack wf-stack--1">
                 <span class="wf-w-semibold">Rośliny kwasolubne</span>
-                <span class="wf-small wf-t-secondary">Podłoże pod borówkę, różaneczniki, azalie i wrzosy – zmieniamy CARBOMAT ECO na odmianę kwaśną.</span>
+                <span class="wf-small wf-t-secondary">Podłoże pod borówkę, różaneczniki, azalie i wrzosy – zmieniamy Carbomat Eco na odmianę kwaśną.</span>
               </span>
             </label>
             <div><button type="button" class="wf-btn wf-btn--primary" data-kf-submit>Pokaż mój zestaw</button></div>
@@ -260,7 +264,7 @@
         </div>
         <button type="button" class="wf-btn wf-btn--secondary" data-jurek-open>Zapytaj wirtualnego doradcę</button>
       </div>
-      <p class="wf-small wf-t-secondary">Uprawa w matach? Zobacz <a class="wf-link--quiet" href="carbomat-mata.html">CARBOMAT Mata Uprawowa</a> – sprzedaż od palety, dobór z doradcą.</p>
+      <p class="wf-small wf-t-secondary">Uprawa w matach? Zobacz <a class="wf-link--quiet" href="carbomat-mata.html">Carbomat Mata Uprawowa</a> – sprzedaż od palety, dobór z doradcą.</p>
     </div>
   </section>
 
@@ -362,7 +366,7 @@ var KF = (function () {
       "Z-26": "karta produktu: oprysk gleby 10–20 l/ha w ok. 400 l wody, min. 2 zabiegi w roku = 40 l/ha; poradnik sadowniczy: 40–80 l/ha na rok; fertygacja 0,1 % codziennie lub 1 % co 10–14 dni – poradnik sadowniczy",
       "Z-27": "karta produktu: 2 × 20 l/ha (10–20 l/ha, min. 2 zabiegi w roku); poradnik borówkowy: 20–60 l/ha na rok",
       "Z-28": "poradniki malinowy i truskawkowy: 40–80 l/ha na rok – dolna granica; karta produktu: 2 × 20 l/ha",
-      "Z-29": "karta produktu: 10–20 l/ha w ok. 400 l wody – górna granica; dokument Darka 29.07.2026: min. 20 l/ha; rozsada 0,5 % i dołki 3 % – instrukcja stosowania MRiRW dla CARBOHUMIC",
+      "Z-29": "karta produktu: 10–20 l/ha w ok. 400 l wody – górna granica; dokument Darka 29.07.2026: min. 20 l/ha; rozsada 0,5 % i dołki 3 % – instrukcja stosowania MRiRW dla Carbohumic",
       "Z-30": "dokument Darka 29.07.2026: min. 5 l/ha na zabieg, min. 5 zabiegów w sezonie co 10–14 dni, stężenie 1 % = min. 25 l/ha na sezon; 0,1 % przy podawaniu codziennym – poradniki",
       "Z-31": "karta produktu: 2–3 opryski nalistne po 2–3 l/ha, 0,1–0,5 %, co 10–14 dni od fazy 2–3 liścia – bierzemy 2 × 2 l/ha ⚠️ zapis karty można też czytać jako 2–3 l/ha na rok",
       "Z-32": "karta produktu: 10–20 l/ha w ok. 400 l wody po sezonie; dokument Darka 29.07.2026: min. 20 l/ha na resztki; program kukurydzy 2026-08: 20 l/ha po zbiorze",
@@ -379,13 +383,13 @@ var KF = (function () {
       "Z-43": "poradnik sadowniczy: 3–5 l/ha na rok, 3–5 aplikacji po 1 l/ha co 7–10 dni w owocowaniu, 0,1–0,5 %, min. 500 l wody – bierzemy dolną granicę; nie w kwitnieniu: dokument Darka 29.07.2026",
       "Z-44": "poradnik borówkowy: 3–5 l/ha na rok, 3–5 aplikacji po 1 l/ha co 7–10 dni w owocowaniu, 0,1–0,5 %, min. 500 l wody – bierzemy dolną granicę",
       "Z-45": "poradniki malinowy i truskawkowy: 3–5 l/ha na rok, 3–5 aplikacji po 1 l/ha co 7–10 dni w owocowaniu, 0,1–0,5 %, min. 500 l wody – bierzemy dolną granicę",
-      "Z-46": "karta produktu CARBOMAT HUMIC i dokument Darka 16.07.2026: przed siewem co najmniej 250 kg/ha, wymieszać do 10 cm – potwierdzone przez Darka 21.07 (AC #30867)",
+      "Z-46": "karta produktu Carbomat Humic i dokument Darka 16.07.2026: przed siewem co najmniej 250 kg/ha, wymieszać do 10 cm – potwierdzone przez Darka 21.07 (AC #30867)",
       "Z-47": "dokument Darka 16.07.2026, potwierdzone 21.07 (AC #30867): pasowo min. 150 kg/ha, całopowierzchniowo min. 250 kg/ha; strip-till 100–120 kg/ha – karta produktu ⚠️ karta podaje pasowo 100 kg/ha",
       "Z-48": "poradnik szkółkarski: 3–10 % objętości podłoża, z mikoryzą 2–5 %; wybór 5 % i przeliczenie na 30 kg/m³ przy 0,6 kg/l (karta) to założenie crear",
-      "Z-49": "karta CARBOHUMIC niefiltrowanego (blok „dla ogrodnika”): podlewanie roztworem 1 % co 10–14 dni, 3 % do dołka, 5 % wiosną i jesienią ⚠️ ilość na m² to założenie crear: 5 l roztworu na m², 8 podlewań w sezonie",
-      "Z-50": "karta CARBOHUMIC niefiltrowanego: 150 ml na roślinę (blok „dla sadownika”); 3 % do dołka i 1 % po posadzeniu (blok „dla ogrodnika”)",
-      "Z-51": "karta CARBOHUMIC niefiltrowanego (blok „dla ogrodnika”): podlewanie 1 % co 10–14 dni ⚠️ ilość na roślinę to założenie crear: ok. 10 l roztworu pod krzew, 8 podlewań w sezonie",
-      "Z-52": "karta CARBOHUMIC niefiltrowanego (blok „dla ogrodnika”): podlewanie 1 % co 10–14 dni ⚠️ ilość na donicę to założenie crear: 2 l roztworu na podlewanie, 8 podlewań w sezonie",
+      "Z-49": "karta Carbohumic niefiltrowanego (blok „dla ogrodnika”): podlewanie roztworem 1 % co 10–14 dni, 3 % do dołka, 5 % wiosną i jesienią ⚠️ ilość na m² to założenie crear: 5 l roztworu na m², 8 podlewań w sezonie",
+      "Z-50": "karta Carbohumic niefiltrowanego: 150 ml na roślinę (blok „dla sadownika”); 3 % do dołka i 1 % po posadzeniu (blok „dla ogrodnika”)",
+      "Z-51": "karta Carbohumic niefiltrowanego (blok „dla ogrodnika”): podlewanie 1 % co 10–14 dni ⚠️ ilość na roślinę to założenie crear: ok. 10 l roztworu pod krzew, 8 podlewań w sezonie",
+      "Z-52": "karta Carbohumic niefiltrowanego (blok „dla ogrodnika”): podlewanie 1 % co 10–14 dni ⚠️ ilość na donicę to założenie crear: 2 l roztworu na podlewanie, 8 podlewań w sezonie",
       "Z-53": "dokument Darka 16.07.2026: 500 g na 10 m² (= 50 g/m²), raz w roku, na glebie kwaśnej lub jałowej dawka podwójna; decyzja MRiRW G-1528/24: do 500 g na 10 m²",
       "Z-54": "⚠️ brak źródła dla trawnika – dawka przeniesiona z ogrodu (500 g na 10 m²); decyzja MRiRW G-1528/24 wymienia warzywa i rośliny ozdobne w ogrodach, nie trawnik – do potwierdzenia u Darka",
       "Z-55": "dokument Darka 16.07.2026 i decyzja MRiRW G-1528/24: 20–30 g na 10 l podłoża przy przesadzaniu; 20 g na donicę posypowo to dolna granica tego zakresu (założenie crear)"
@@ -401,40 +405,40 @@ var KF = (function () {
              "kg"   = dry, dosed in kg (rounded to full 10 kg);
              "liq"  = liquid (full litre, hobby 0,5 l). */
     products: {
-      eco_uni: { name: "CARBOMAT ECO · odmiana uniwersalna pH 6,0–6,5", unit: "l", form: "bulk", page: "carbomat.html",
+      eco_uni: { name: "Carbomat Eco · odmiana uniwersalna pH 6,0–6,5", unit: "l", form: "bulk", page: "carbomat.html",
         why: "Surowy lignit: raz wymieszany z glebą pracuje latami – magazyn wody i trwała materia organiczna.",
         packs: [{ size: 20, label: "worek 20 l", price: 42 }, { size: 1000, label: "big bag 1000 l", price: 650 }, { size: 1500, label: "big bag 1500 l", price: 850 }] },
-      eco_kw: { name: "CARBOMAT ECO · odmiana kwaśna pH 4,5–5,0", unit: "l", form: "bulk", page: "carbomat.html",
+      eco_kw: { name: "Carbomat Eco · odmiana kwaśna pH 4,5–5,0", unit: "l", form: "bulk", page: "carbomat.html",
         why: "Surowy lignit: raz wymieszany z glebą pracuje latami – magazyn wody i trwała materia organiczna.",
         packs: [{ size: 20, label: "worek 20 l", price: 42 }, { size: 1000, label: "big bag 1000 l", price: 600 }, { size: 1500, label: "big bag 1500 l", price: 800 }] },
-      sciolka: { name: "CARBOMAT ECO Ściółka pH 4,5–5,0", unit: "l", form: "bulk", page: "carbomat.html",
+      sciolka: { name: "Carbomat Eco Ściółka pH 4,5–5,0", unit: "l", form: "bulk", page: "carbomat.html",
         why: "Grubsza frakcja lignitu rozsypana warstwą 4–5 cm: zatrzymuje wilgoć, nie zabiera azotu jak kora, zakwasza.",
         packs: [{ size: 20, label: "worek 20 l", price: 42 }, { size: 1000, label: "big bag 1000 l", price: 600 }, { size: 1500, label: "big bag 1500 l", price: 800 }] },
-      humic_h: { name: "CARBOMAT HUMIC", unit: "l", form: "liq", page: "carbomat-humic.html",
+      humic_h: { name: "Carbomat Humic", unit: "l", form: "liq", page: "carbomat-humic.html",
         why: "Kondycjoner, potas i biostymulator w jednym – działa od pierwszych tygodni, podnosi odczyn zakwaszonej gleby.",
         packs: [{ size: 1, label: "1 l", price: 30 }, { size: 2, label: "2 l", price: 40 }] },
-      humic_pole: { name: "CARBOMAT HUMIC · opakowanie polowe", unit: "kg", form: "kg", page: "carbomat-humic.html", quote: true,
+      humic_pole: { name: "Carbomat Humic · opakowanie polowe", unit: "kg", form: "kg", page: "carbomat-humic.html", quote: true,
         why: "Sypki koncentrat kwasów humusowych z potasem do rozsiewacza lub siewnika – szybki i długi efekt w glebie.",
         packs: [], packNote: "Opakowanie polowe (worek 20 kg, big bag) nie jest jeszcze w sklepie – cenę podamy na zapytanie." },
       /* 16.10.2026, CARBOHUMIC split: soil variants link to their anchors on
          carbohumic-doglebowy.html, MAXI PLUS and CALBOR to carbohumic-dolistny.html. */
-      nief: { name: "CARBOHUMIC niefiltrowany", unit: "l", form: "liq", page: "carbohumic-doglebowy.html#wariant-niefiltrowany",
+      nief: { name: "Carbohumic niefiltrowany", unit: "l", form: "liq", page: "carbohumic-doglebowy.html#wariant-niefiltrowany",
         why: "Próchnica w płynie: gęsty ekstrakt do polewania z beczki, najwięcej materii organicznej za litr.",
         packs: [{ size: 20, label: "20 l", price: 170 }, { size: 200, label: "200 l", price: 1400 }, { size: 1000, label: "mauzer 1000 l", price: 6000 }] },
-      filtr: { name: "CARBOHUMIC filtrowany", unit: "l", form: "liq", page: "carbohumic-doglebowy.html#wariant-filtrowany",
+      filtr: { name: "Carbohumic filtrowany", unit: "l", form: "liq", page: "carbohumic-doglebowy.html#wariant-filtrowany",
         why: "Ten sam ekstrakt humusowy, przefiltrowany: przechodzi przez dysze, filtry i linie kroplujące.",
         packs: [{ size: 1, label: "1 l", price: 25 }, { size: 5, label: "5 l", price: 80 }, { size: 20, label: "20 l", price: 260 }, { size: 200, label: "200 l", price: 2200 }, { size: 1000, label: "mauzer 1000 l", price: 9200 }] },
-      ogrod: { name: "CARBOHUMIC OGRÓD", unit: "l", form: "liq", page: "carbohumic-doglebowy.html#wariant-ogrod",
+      ogrod: { name: "Carbohumic Ogród", unit: "l", form: "liq", page: "carbohumic-doglebowy.html#wariant-ogrod",
         why: "Próchnica w płynie w wersji na konewkę: rozcieńczasz z wodą i podlewasz.",
         packs: [{ size: 5, label: "5 l", price: 70 }, { size: 20, label: "20 l", price: 164 }] },
-      maxi: { name: "CARBOHUMIC MAXI PLUS", unit: "l", form: "liq", page: "carbohumic-dolistny.html#maxi-plus",
+      maxi: { name: "Carbohumic Maxi Plus", unit: "l", form: "liq", page: "carbohumic-dolistny.html#maxi-plus",
         why: "Biostymulator na liść: wigor, powierzchnia liści, regeneracja po chłodach, gradzie czy herbicydzie.",
         packs: [{ size: 1, label: "1 l", price: 119 }, { size: 5, label: "5 l", price: 295 }, { size: 20, label: "20 l", price: 850 }] },
-      calbor: { name: "CARBOHUMIC CALBOR", unit: "l", form: "liq", page: "carbohumic-dolistny.html#calbor",
+      calbor: { name: "Carbohumic Calbor", unit: "l", form: "liq", page: "carbohumic-dolistny.html#calbor",
         why: "Wapń i bor w chelacie kwasów humusowych na liść: jędrność, kaliber i trwałość owocu po zbiorze.",
         packs: [{ size: 1, label: "1 l", price: 138 }, { size: 5, label: "5 l", price: 380 }, { size: 20, label: "20 l", price: 999 }] },
-      zestaw: { name: "Zestaw: CARBOMAT ECO 20 l + CARBOHUMIC OGRÓD 5 l", unit: "komplet", form: "set", page: "sklep.html?oferta=zestawy",
-        why: "Worek CARBOMAT ECO 20 l i kanister CARBOHUMIC OGRÓD 5 l razem za 100 zł – o 12 zł taniej niż osobno.",
+      zestaw: { name: "Zestaw: Carbomat Eco 20 l + Carbohumic Ogród 5 l", unit: "komplet", form: "set", page: "sklep.html?oferta=zestawy",
+        why: "Worek Carbomat Eco 20 l i kanister Carbohumic Ogród 5 l razem za 100 zł – o 12 zł taniej niż osobno.",
         packs: [{ size: 1, label: "komplet", price: 100 }] }
     },
 
@@ -483,8 +487,8 @@ var KF = (function () {
       heavy: "Na ciężkiej glebie dajemy więcej lignitu, bo ma ją rozluźnić.",
       trial: "Tak radzimy każdemu nowemu klientowi: mały areał, pas kontrolny obok, ocena po sezonie.",
       blocked: "Do części produktów nie masz zaznaczonego sprzętu – zostawiamy je na liście wyszarzone, z informacją, czego wymagają.",
-      r3nief: "Masz beczkowóz, więc proponujemy CARBOHUMIC niefiltrowany. Do opryskiwacza albo fertygacji wybralibyśmy filtrowany.",
-      r3filtr: "Masz opryskiwacz albo fertygację, więc proponujemy CARBOHUMIC filtrowany. Do beczkowozu albo polewania ręcznie wybralibyśmy niefiltrowany.",
+      r3nief: "Masz beczkowóz, więc proponujemy Carbohumic niefiltrowany. Do opryskiwacza albo fertygacji wybralibyśmy filtrowany.",
+      r3filtr: "Masz opryskiwacz albo fertygację, więc proponujemy Carbohumic filtrowany. Do beczkowozu albo polewania ręcznie wybralibyśmy niefiltrowany.",
       footer: "Dobór poglądowy na podstawie kart produktów i programów CarboHort. Ostateczną dawkę do Twojej gleby potwierdza doradca. Ceny brutto według katalogu sklepu z 10.08.2026.",
       b2b_alt: 'lub, jeśli prowadzisz uprawę komercyjną, <a class="wf-link" href="logowanie.html?tryb=b2b">złóż zamówienie przez platformę B2B</a>',
       quote_add: "+ pozycje na zapytanie"
@@ -525,7 +529,7 @@ var KF = (function () {
       ] },
 
       { id: "borowka", label: "Borówka", sub: "plantacja towarowa", reg: "pro", section: "A", acid: true,
-        checks: ["Borówka lubi pH 4–5, więc proponujemy odmianę kwaśną CARBOMAT ECO. CARBOMAT HUMIC pomijamy, bo podnosi odczyn."], actions: [
+        checks: ["Borówka lubi pH 4–5, więc proponujemy odmianę kwaśną Carbomat Eco. Carbomat Humic pomijamy, bo podnosi odczyn."], actions: [
         { id: "zakladam", label: "Zakładam plantację lub dosadzam", sub: "sadzenie to jedyny moment, żeby dać glebie lignit do korzeni", unit: "krzewow", items: [
           { p: "eco_kw", rate: 16, dose: "16 l/krzew", role: "hero",
             when: "przy sadzeniu (wiosna luty–maj lub jesień)",
@@ -599,12 +603,12 @@ var KF = (function () {
       ] },
 
       { id: "warzywa", label: "Warzywa", sub: "grunt i tunele", reg: "pro", section: "A",
-        checks: ["CARBOHUMIC CALBOR jest zarejestrowany dla upraw sadowniczych, więc w warzywach go nie proponujemy.",
+        checks: ["Carbohumic Calbor jest zarejestrowany dla upraw sadowniczych, więc w warzywach go nie proponujemy.",
                  "Jeśli pH gleby jest poniżej 5,5, najpierw wapnowanie, dopiero potem program – żaden biostymulator tego nie zastąpi."], actions: [
         { id: "przed", label: "Przed siewem lub sadzeniem", unit: "ha", items: [
           { p: "nief", rate: 60, dose: "60 l/ha", role: "hero", pair: "soil", need: ["beczkowoz", "recznie"], needLabel: "beczkowozu",
             when: "przed siewem lub sadzeniem, na wilgotną glebę",
-            how: "Rozcieńcz w beczce do 1–5 % i polej glebę przed siewem lub sadzeniem, najlepiej na wilgotno, potem płytko wymieszaj. Pod rozsadę możesz dodatkowo dać 100–200 ml CARBOMAT ECO do dołka. Nie podawaj przez dysze i filtry.",
+            how: "Rozcieńcz w beczce do 1–5 % i polej glebę przed siewem lub sadzeniem, najlepiej na wilgotno, potem płytko wymieszaj. Pod rozsadę możesz dodatkowo dać 100–200 ml Carbomat Eco do dołka. Nie podawaj przez dysze i filtry.",
             zr: "Z-22" },
           { p: "filtr", rate: 20, dose: "20 l/ha", role: "hero", pair: "soil", need: ["opryskiwacz", "fertygacja"], needLabel: "opryskiwacza lub fertygacji",
             when: "przed siewem lub sadzeniem",
@@ -622,7 +626,7 @@ var KF = (function () {
             how: "Podawaj przez linie kroplujące co 10–14 dni, w stresie co 7–10 dni: ok. 5 l/ha na zabieg w stężeniu 1 %, minimum pięć zabiegów w sezonie, czyli ok. 25 l/ha; przy podawaniu codziennym obniż stężenie do 0,1 %. Możesz łączyć z nawozami mineralnymi, ale produkt dodaj do zbiornika na końcu, wstępnie rozcieńczony wodą. Po każdym zabiegu przepłucz instalację.",
             zr: "Z-30" },
           { p: "filtr", rate: 4, dose: "4 l/ha (2 × 2 l/ha)", role: "opt", need: ["opryskiwacz"], needLabel: "opryskiwacza",
-            sub: "gdy nie ma CARBOHUMIC MAXI PLUS w programie",
+            sub: "gdy nie ma Carbohumic Maxi Plus w programie",
             when: "w sezonie, 2–3 zabiegi co 10–14 dni",
             how: "Oprysk nalistny 2 l/ha w stężeniu 0,1–0,5 %, dwa zabiegi co 10–14 dni od fazy 2–3 liścia. Można łączyć z dokarmianiem dolistnym, np. mikroelementami; produkt dodaj do zbiornika jako ostatni. Przed nowym zestawieniem zrób próbę mieszalności w małym naczyniu.",
             zr: "Z-31" }
@@ -640,12 +644,12 @@ var KF = (function () {
       ] },
 
       { id: "pole", label: "Pole", sub: "zboża, rzepak, kukurydza, ziemniak, słonecznik", reg: "pro", section: "A",
-        checks: ["Na polu na liść proponujemy CARBOHUMIC filtrowany. CARBOHUMIC MAXI PLUS zostawiamy jako próbę na 1 ha – tak ustalił CarboHort ze względu na koszt litra na hektar.",
-                 "CARBOHUMIC CALBOR jest zarejestrowany dla upraw sadowniczych, więc na polu go nie proponujemy.",
+        checks: ["Na polu na liść proponujemy Carbohumic filtrowany. Carbohumic Maxi Plus zostawiamy jako próbę na 1 ha – tak ustalił CarboHort ze względu na koszt litra na hektar.",
+                 "Carbohumic Calbor jest zarejestrowany dla upraw sadowniczych, więc na polu go nie proponujemy.",
                  "Jeśli pH gleby jest poniżej 5,5, najpierw wapnowanie, dopiero potem program – żaden biostymulator tego nie zastąpi."], actions: [
         { id: "przed", label: "Przed siewem: przygotowanie stanowiska", unit: "ha",
           notes: ["Przed siewem robimy jeden zabieg doglebowy – nie łączymy kilku produktów w tym samym miejscu i sezonie.",
-                  "CARBOMAT ECO na polu to inwestycja stanowiskowa na gleby lekkie i ubogie w próchnicę; proponujemy dawkę orientacyjną pasowo, a dokładną dawkę w tonach na hektar potwierdź z naszym doradcą przed zastosowaniem."], items: [
+                  "Carbomat Eco na polu to inwestycja stanowiskowa na gleby lekkie i ubogie w próchnicę; proponujemy dawkę orientacyjną pasowo, a dokładną dawkę w tonach na hektar potwierdź z naszym doradcą przed zastosowaniem."], items: [
           { p: "humic_pole", rate: 150, dose: "pasowo min. 150 kg/ha (podsiewacz), strip-till 100–120 kg/ha, całopowierzchniowo 250 kg/ha – domyślnie 150 kg/ha", role: "hero", pair: "soil", need: ["rozsiewacz"], needLabel: "rozsiewacza",
             when: "przed siewem, wczesna wiosna lub jesień",
             how: "Na sucho: pasowo 150 kg/ha do podsiewacza (w strip-till 100–120 kg/ha, w sąsiedztwie nasion) albo 250 kg/ha rozsiewaczem na całą powierzchnię z płytkim wymieszaniem do 10 cm. Nie stosuj do opryskiwacza ani fertygacji, bo nierozpuszczalne huminy zapychają dysze. Wapnowanie zrób w osobnym zabiegu, z odstępem czasowym – tak zaleca program kukurydzy po recenzji.",
@@ -793,11 +797,11 @@ var KF = (function () {
       ] },
 
       { id: "kwasolubne", label: "Rośliny kwasolubne", sub: "borówka w ogrodzie, różaneczniki, azalie, wrzosy, hortensje", reg: "hobby", section: "B", acid: true,
-        checks: ["Rośliny kwasolubne dostają odmianę kwaśną pH 4,5–5,0. CARBOMAT HUMIC pomijamy, bo podnosi odczyn."], actions: [
+        checks: ["Rośliny kwasolubne dostają odmianę kwaśną pH 4,5–5,0. Carbomat Humic pomijamy, bo podnosi odczyn."], actions: [
         { id: "sadze", label: "Sadzę", unit: "roslin", items: [
           { p: "eco_kw", rate: 3, dose: "3 l/roślinę", role: "hero",
             when: "przy sadzeniu (wiosna luty–maj lub jesień)",
-            how: "Wsyp 3 l odmiany kwaśnej do dołka i wymieszaj z torfem kwaśnym; pod borówkę w ogrodzie daj więcej, nawet 16 l w dołku na 80 l podłoża. Wymieszane podłoże namocz przed sadzeniem. Nie dodawaj wapna ani CARBOMAT HUMIC.",
+            how: "Wsyp 3 l odmiany kwaśnej do dołka i wymieszaj z torfem kwaśnym; pod borówkę w ogrodzie daj więcej, nawet 16 l w dołku na 80 l podłoża. Wymieszane podłoże namocz przed sadzeniem. Nie dodawaj wapna ani Carbomat Humic.",
             zr: "Z-10" },
           { p: "sciolka", rate: 4, dose: "4 l/roślinę", role: "add",
             when: "zaraz po posadzeniu",
@@ -1143,7 +1147,7 @@ var KF = (function () {
   /* Benefit texts shown next to optional products - what the product gives the crop (sources: product cards,
      guides, persona review 2026-08-06). Context overrides first, then per product. */
   var GAIN = {
-    nief: "Najwięcej materii organicznej za litr i najtańszy litr w rodzinie CARBOHUMIC: gęsta próchnica w płynie do polewania z beczki. Najmocniejsza odbudowa gleby, jeśli masz czym ją rozlać.",
+    nief: "Najwięcej materii organicznej za litr i najtańszy litr w rodzinie Carbohumic: gęsta próchnica w płynie do polewania z beczki. Najmocniejsza odbudowa gleby, jeśli masz czym ją rozlać.",
     filtr: "Ten sam ekstrakt humusowy, ale przefiltrowany, więc podasz go opryskiwaczem albo przez linie kroplujące i możesz dołożyć w sezonie przez fertygację. Poprawia warunki w strefie korzeni i pracę mikroorganizmów bez beczkowozu.",
     maxi: "Więcej zdrowych liści w okresie wzrostu i szybsza regeneracja po chłodach, gradzie czy suszy; efekt przez liść widać szybciej niż po produktach doglebowych. Wspiera też pracę korzeni w czasie stresu.",
     calbor: "Jędrniejszy, równiejszy owoc i lepsza trwałość po zbiorze, bo wapń i bor trafiają prosto na liść w czasie, gdy owoc rośnie. To argument o klasę handlową plonu, nie o jego ilość.",
@@ -1519,7 +1523,7 @@ var KF = (function () {
     h += '<div class="kf-sum">' +
       '<div class="kf-sum__buy"><span class="kf-sum__val">Razem ' + KF.fmtPrice(RES.total) + ' zł brutto</span>' +
       (RES.hasQuote ? '<span class="wf-small wf-t-secondary">' + esc(K.texts.quote_add) + '</span>' : "") +
-      '<button type="button" class="wf-btn wf-btn--primary" data-kf-checkout>Kup w sklepie</button></div>' +
+      '<button type="button" class="wf-btn wf-btn--primary kf-buy" data-kf-checkout>Kup teraz</button></div>' +
       '<p class="kf-sum__alt wf-small wf-t-secondary">' + K.texts.b2b_alt + '</p></div>';
 
     /* B - when and how */
@@ -1555,7 +1559,7 @@ var KF = (function () {
     /* E - CTA */
     var priceTxt = KF.fmtPrice(RES.total) + " zł";
     h += '<div class="wf-divider"></div><div class="kf-cta">';
-    h += '<button type="button" class="wf-btn wf-btn--primary wf-btn--lg wf-btn--block" data-kf-checkout>Kup w sklepie · ' + priceTxt + '</button>' +
+    h += '<button type="button" class="wf-btn wf-btn--primary wf-btn--lg wf-btn--block kf-buy" data-kf-checkout>Kup teraz · ' + priceTxt + '</button>' +
       '<p class="wf-small wf-t-secondary">' + K.texts.b2b_alt + '</p>';
     h += '<div class="kf-quiet">' +
       '<a class="wf-btn wf-btn--ghost wf-inline" href="kontakt.html"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-message-2"></use></svg> Skonsultuj zestaw z naszym doradcą</a>' +

@@ -1,18 +1,22 @@
 /* ===== CE-34 · Karty „od – do” (rejestr: ce-rejestr.js) =====================
-   Variant used by the crop pages. Prefix: u-rl.
-   Other pages carry their own implementations of CE-34 in their page sheets. */
+   Two variants: `regula-z-packshotem` (prefix u-rl, the crop pages) and
+   `przemiana` (prefix c5-diff, CARBOMAT HUMIC). Same card in both (design
+   system v0.1, stage D 18.10.2026 – no Figma frame, carried over from the
+   finished CEs): EL-15 card (white, 1 px grey-200 outline, 12 px corners,
+   padding 24), the condition in the body text (grey), an arrow, the answer in
+   the title size, hover = outline one step darker. No shadows. */
 
 /* ===== wariant: regula-z-packshotem =====
    A 2 x 2 grid of rule cards: condition on top, an arrow, the answer at the
    bottom, the packshot of the product the answer leads to. The whole card is
    a link. Up to 1099 px the packshot is a row under a hairline; from 1100 px
    it is the right column of the card. */
-.u-rl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--w-space-5);}
+.u-rl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ch-space-5);}
 .u-rl__card{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:1fr auto;
-  gap:var(--w-space-4);border:1px solid var(--w-border-default);border-radius:0;
-  padding:var(--w-space-6);color:inherit;text-decoration:none;
+  gap:var(--ch-space-4);background:var(--ch-surface-raised);border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-md);
+  padding:var(--ch-space-6);color:inherit;text-decoration:none;
   transition:border-color var(--w-duration-base) var(--w-ease);}
-.u-rl__card:hover,.u-rl__card:focus-visible{border-color:var(--w-gray-900);}
+.u-rl__card:hover,.u-rl__card:focus-visible{border-color:var(--ch-border-control);}
 /* `u-reveal` (uprawa.css) has its own transition list on this element, so
    the border colour and the 80 ms stagger are added to it here. */
 html.cx-js .u-rl__card{--u-rl-delay:0ms;
@@ -22,34 +26,75 @@ html.cx-js .u-rl__card{--u-rl-delay:0ms;
 .u-rl__card:nth-child(2){--u-rl-delay:80ms;}
 .u-rl__card:nth-child(3){--u-rl-delay:160ms;}
 .u-rl__card:nth-child(4){--u-rl-delay:240ms;}
-.u-rl__rule{display:flex;flex-direction:column;gap:var(--w-space-3);}
-.u-rl__cond{font-size:var(--w-font-sm-size);line-height:var(--w-font-sm-lh);color:var(--w-text-secondary);}
-.u-rl__down{width:24px;height:24px;margin-top:auto;color:var(--w-icon-default);
+.u-rl__rule{display:flex;flex-direction:column;gap:var(--ch-space-3);}
+.u-rl__cond{font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary);}
+.u-rl__down{width:var(--ch-size-icon-m);height:var(--ch-size-icon-m);margin-top:auto;color:var(--ch-text-primary);
   transition:transform var(--w-duration-base) var(--w-ease);}
 .u-rl__card:hover .u-rl__down,.u-rl__card:focus-visible .u-rl__down{transform:translateY(3px);}
-.u-rl__ans{font-size:var(--w-font-h4-size);line-height:var(--w-font-h4-lh);
-  font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
-.u-rl__prod{display:flex;padding-top:var(--w-space-4);
-  border-top:1px solid var(--w-border-subtle);}
+.u-rl__ans{font-size:var(--ch-type-title-size);line-height:var(--ch-type-title-lh);letter-spacing:var(--ch-type-title-ls);
+  font-weight:var(--ch-type-title-weight);color:var(--ch-text-primary);}
+.u-rl__prod{display:flex;padding-top:var(--ch-space-4);
+  border-top:1px solid var(--ch-border-subtle);}
 .u-rl__ph{display:grid;place-items:center;width:88px;aspect-ratio:4/3;
-  background:var(--w-gray-100);padding:8px;overflow:clip;}
+  border-radius:var(--ch-radius-sm);background:var(--ch-surface-warm-strong);padding:8px;overflow:clip;}
 .u-rl__img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;
   transition:transform var(--w-duration-base) var(--w-ease);}
 .u-rl__card:hover .u-rl__img,.u-rl__card:focus-visible .u-rl__img{transform:scale(1.04);}
 /* The fixed column width keeps the `auto` track from pushing the sentence. */
 @media (min-width:1100px) and (max-width:1439px){
-  .u-rl__card{grid-template-columns:minmax(0,1fr) auto;gap:var(--w-space-6);}
+  .u-rl__card{grid-template-columns:minmax(0,1fr) auto;gap:var(--ch-space-6);}
   .u-rl__prod{justify-content:center;align-self:center;width:132px;
     padding-top:0;border-top:0;}
   .u-rl__ph{width:120px;}
 }
 @media (max-width:639px){
   .u-rl{grid-template-columns:minmax(0,1fr);}
-  .u-rl__card{padding:var(--w-space-4);}
+  .u-rl__card{padding:var(--ch-space-4);}
 }
 @media (prefers-reduced-motion: reduce){
   html.cx-js .u-rl__card{--u-rl-delay:0ms;transition:none;}
   .u-rl__down,.u-rl__img{transition:none;}
   .u-rl__card:hover .u-rl__down,.u-rl__card:focus-visible .u-rl__down{transform:none;}
   .u-rl__card:hover .u-rl__img,.u-rl__card:focus-visible .u-rl__img{transform:none;}
+}
+
+/* ===== wariant: przemiana =====
+   Four rule cards „ECO -> HUMIC” (carbomat-humic): the difference between the
+   two products is the outcome of one process (extraction and activation), so
+   each of the four differences is a card read top-down on three levels: the
+   first statement as the small condition text, an arrow, the second statement as
+   the large result sentence. Block: c5-diff (an `ol`), card: `li.c5-diff__card`
+   with `__num` (index, top right), `__from` / `__to` (each a `__tag` + `p`) and
+   `__arrow` between them. A 2 x 2 grid, one column below 640 px. Cards of one row
+   are equally tall and `margin-top:auto` on the arrow keeps the result at the
+   bottom edge, so the results of a row end on one line. The cards are not links,
+   so the link affordances of the first variant (arrow nudge, packshot zoom) are
+   not carried over. The entrance (`data-reveal`, 80 ms stagger) is the page's
+   reveal rule; the border transition is added to its list below. */
+.c5-diff{list-style:none;margin:clamp(2.5rem,5vw,4rem) 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ch-space-5);}
+.c5-diff__card{position:relative;display:flex;flex-direction:column;gap:var(--ch-space-3);padding:var(--ch-space-6);background:var(--ch-surface-raised);border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-md);transition:border-color var(--w-duration-base) var(--w-ease);}
+.c5-diff__card:hover{border-color:var(--ch-border-control);}
+/* the card number: a quiet index in the top right corner, on the line of the
+   first tag (same line box, so the two share a baseline) */
+.c5-diff__num{position:absolute;top:var(--ch-space-6);right:var(--ch-space-6);font-size:var(--ch-type-overline-size);line-height:var(--ch-type-overline-lh);letter-spacing:var(--ch-type-overline-ls);color:var(--ch-text-secondary);}
+/* the tag (EL-16 spirit): caps overline; the tone follows its own sentence */
+.c5-diff__tag{display:block;font-size:var(--ch-type-overline-size);line-height:var(--ch-type-overline-lh);letter-spacing:var(--ch-type-overline-ls);text-transform:uppercase;margin-bottom:var(--ch-space-2);}
+.c5-diff__from .c5-diff__tag{color:var(--ch-text-secondary);}
+.c5-diff__to .c5-diff__tag{color:var(--ch-text-primary);}
+.c5-diff__from p{margin:0;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary);}
+.c5-diff__arrow{width:var(--ch-size-icon-m);height:var(--ch-size-icon-m);margin-top:auto;color:var(--ch-text-primary);}
+/* `balance`: a result of two lines breaks into even lines instead of leaving one word alone */
+.c5-diff__to p{margin:0;font-size:var(--ch-type-title-size);line-height:var(--ch-type-title-lh);letter-spacing:var(--ch-type-title-ls);font-weight:var(--ch-type-title-weight);color:var(--ch-text-primary);text-wrap:balance;}
+/* the reveal rule of the page owns the transition list of the card; the
+   hover border joins that list here (the stagger stays on the entry only) */
+@media (prefers-reduced-motion: no-preference){
+  html.cx-js .c5-diff__card{transition:opacity .5s cubic-bezier(.2,.7,.2,1) calc(var(--i,0) * 80ms),transform .5s cubic-bezier(.2,.7,.2,1) calc(var(--i,0) * 80ms),border-color var(--w-duration-base) var(--w-ease);}
+}
+@media (max-width:639px){
+  .c5-diff{grid-template-columns:minmax(0,1fr);}
+  .c5-diff__card{padding:var(--ch-space-4);}
+  .c5-diff__num{top:var(--ch-space-4);right:var(--ch-space-4);}
+}
+@media (prefers-reduced-motion: reduce){
+  .c5-diff__card{transition:none;}
 }

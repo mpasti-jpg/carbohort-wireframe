@@ -52,19 +52,10 @@
   font-display:swap;
 }
 
-/* --- wash strength under the text (a measurement, not a taste call) --------
-   --c5-params-scrim is .5 on this page (default .4).
-   Under the still (headless Chrome 1440 x 900, only the <dt>/<dd> rectangles,
-   16 boxes, glyphs made transparent for the measurement):
-     wash .40 – mean 6.90:1, 95th pct 3.91:1, worst pixel 3.50:1
-     wash .50 – mean 8.32:1, 95th pct 5.09:1, worst pixel 4.55:1
-   Under the film (four frames sampled, worst pixel across all of them, because
-   highlights sweep across a moving picture):
-     wash .40 – 2.93:1   wash .45 – 3.45:1   wash .50 – 4.08:1
-   The median over the table sits at 8.17:1 and the 5th percentile at 6.98:1, so
-   only a small travelling highlight reaches 4.08. Going darker would buy that
-   one pixel at the cost of the film itself, so .50 stands.
-   Rule of section 16.7: measure after every swap of the media layer. */
+/* --- wash strength (design system v0.1, 17.10.2026) -----------------------
+   The text now sits on the light panel, not on the film, so the old contrast
+   measurements (scrim .50 under white text) no longer apply; the section uses
+   the default image overlay of the module (.2). */
 
 /* --- czym-jest --- */
 /* CE-12: see the note at the top of this sheet. The heading of the scene is set

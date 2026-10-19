@@ -1,0 +1,119 @@
+/* ===== CE-23 · Pas CTA – module (design system v0.1, stage C 18.10.2026) =====
+   Look from the Figma frames 778:1460 (green band with a thumbnail) and 801:1096 (yellow band,
+   a note), content from the v7 markup. Styles of this CE live here; the page sheets keep only
+   exceptions of one page.
+
+   Anatomy (`c5-ctabar`, one class on the root of the CE next to the page's own hook class)
+     [.wf-icon | .c5-ctabar__media]   optional: small icon (alerts) or the 186 px photo
+     p | h2                           text: a lead sentence (display face, 40/40) and a sentence
+                                      under it (18/28, text colour)
+     a.c5-btn | .c5-btnrow            the action, on the right, dark (the green stays for purchase)
+   Modifiers
+     --zielony   (default) green ground #A7D781, motif #9ECF77 – an invitation / next step
+     --zolty     yellow ground #FBFF99, motif #F6FB8E – a note, a restriction, a warning
+     --z-foto    leaves room for the photo (`__media`, 186 × 186, r 20) and moves the text right
+     --sm        a lead sentence of 28/35 for bands inside a text section (cross-sell, notes)
+   The ground colour is a modifier of the occurrence (neighbouring sections decide), never of the
+   base. The motif is the sign of the logo split to both sides of the band (G12, see below), painted
+   with the motif token.
+   Variants without a Figma frame (stage D, 18.10.2026), same language: `--ciemny` (home, the
+   configurator band: forest ground, text, a way in on the right), `--cichy` (shop, a slim
+   one-line strip with a close button, no motif) and `--z-naglowkiem` (CARBOMAT Mata, a heading
+   on the left and a text with the action on the right). ===== */
+
+.c5-ctabar{--ctabar-bg:var(--ch-surface-accent-green);--ctabar-motif:var(--ch-motif-on-green);position:relative;isolation:isolate;overflow:hidden;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--ch-space-6) clamp(1.5rem,3vw,2.5rem);margin-top:clamp(2.5rem,5vw,4rem);padding:clamp(1.5rem,3vw,2.5rem) clamp(1.5rem,4.5vw,4rem) clamp(1.5rem,3vw,2.5rem) clamp(1.5rem,2.8vw,2.5rem);border:0;border-radius:var(--ch-radius-md);background:var(--ctabar-bg);color:var(--ch-text-primary);}
+/* Motif (G12 / R05, 18.10.2026 – Figma 778:1460 and 801:1096): the sign of the logo pulled apart –
+   its two left leaves at the left edge (38 px in, behind the photo), its two right leaves running
+   off the right edge (109 px out), both 530 px tall and centred on the band. Two mask layers, so
+   the leaves keep their shape at any band width (one stretched picture would distort them). */
+.c5-ctabar{--ctabar-sign-l:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 530'%3E%3Cpath d='M13.8244 256.414C10.2797 256.414 6.73499 256.414 3.19026 256.059C-0.354473 255.705 0.708946 254.996 0.708946 253.578C0 249.679 0 246.134 0 242.589C0 108.953 108.469 0.484375 242.105 0.484375C375.741 0.484375 249.195 0.484375 252.739 0.838848C256.284 1.19332 255.221 1.90227 255.221 3.32016C255.221 6.86489 255.575 10.4096 255.575 13.9543C255.575 147.591 147.106 256.059 13.47 256.059L13.8244 256.414Z'/%3E%3Cpath d='M241.757 529.191C245.296 529.191 248.836 529.191 252.375 528.837C255.915 528.483 254.853 527.775 254.853 526.359C254.853 522.82 255.207 519.28 255.207 515.74C255.207 382.296 146.895 273.984 13.4506 273.984C9.91096 273.984 6.37133 273.984 2.8317 274.338C-0.707925 274.692 0.353963 275.4 0.353963 276.816C0 280.355 0 283.895 0 287.434C0 420.878 108.313 529.191 241.757 529.191Z'/%3E%3C/svg%3E");--ctabar-sign-r:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='1088 0 372 530'%3E%3Cpath d='M1459.64 526.898C1452.9 384.773 1291.99 270.647 1092.45 267.812C1090.68 267.812 1089.97 270.293 1091.74 271.001C1200.55 326.292 1276.75 426.95 1285.97 527.607C1285.97 529.025 1287.39 530.088 1288.8 530.088H1457.16C1458.57 530.088 1459.99 528.67 1459.99 527.253L1459.64 526.898Z'/%3E%3Cpath d='M1459.99 2.83815C1453.25 145.1 1292.19 259.336 1092.45 262.174C1090.68 262.174 1089.97 259.69 1091.74 258.981C1200.66 203.637 1276.93 102.883 1286.16 2.48338C1286.16 1.0643 1287.22 0 1288.64 0H1457.15C1458.57 0 1459.99 1.41907 1459.99 2.83815Z'/%3E%3C/svg%3E");}
+.c5-ctabar::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:var(--ctabar-motif);
+  -webkit-mask:var(--ctabar-sign-l) left 38px center / auto 530px no-repeat,var(--ctabar-sign-r) right -109px center / auto 530px no-repeat;
+  mask:var(--ctabar-sign-l) left 38px center / auto 530px no-repeat,var(--ctabar-sign-r) right -109px center / auto 530px no-repeat;}
+.c5-ctabar--zolty{--ctabar-bg:var(--ch-surface-accent-yellow-soft);--ctabar-motif:var(--ch-motif-on-yellow);}
+
+/* text: lead sentence in the display face, the sentence under it in the text colour */
+.c5-ctabar > p,.c5-ctabar > h2,.c5-ctabar > h3{flex:1 1 24rem;min-width:0;max-width:56rem;margin:0 auto 0 0;font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);color:var(--ch-text-primary);}
+.c5-ctabar br{display:none;}
+.c5-ctabar > p > :first-child,.c5-ctabar > h2,.c5-ctabar > h3{display:block;font-family:var(--ch-font-display);font-size:clamp(1.75rem,2.8vw,2.5rem);font-weight:400;line-height:1;letter-spacing:-0.01em;color:var(--ch-text-primary);text-wrap:balance;}
+.c5-ctabar > p > .c5-muted{display:block;margin-top:var(--ch-space-5);font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);color:var(--ch-text-primary);}
+.c5-ctabar--sm > p > :first-child,.c5-ctabar--sm > h2,.c5-ctabar--sm > h3{font-size:clamp(1.375rem,2.2vw,1.75rem);line-height:1.25;}
+.c5-ctabar--sm > p > .c5-muted{margin-top:var(--ch-space-3);font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);}
+
+/* the action: a button or a row of buttons, never wrapped inside the label */
+.c5-ctabar .c5-btn{flex:none;white-space:nowrap;}
+.c5-ctabar > .c5-btnrow{flex:none;gap:11px;}
+
+/* alert icon (the band of a note): 24 px, on the text baseline side */
+.c5-ctabar > .wf-icon{flex:none;width:var(--ch-size-icon-m);height:var(--ch-size-icon-m);align-self:flex-start;margin-top:4px;color:var(--ch-text-primary);}
+
+/* photo (Figma 778:1767): 186 × 186, r 20, 20 px from the top-left corner */
+.c5-ctabar--z-foto{padding-block:var(--ch-space-5);padding-left:var(--ch-space-5);column-gap:clamp(1.5rem,8vw,7.5rem);}
+.c5-ctabar__media{flex:none;width:186px;height:186px;margin:0;overflow:hidden;border-radius:var(--ch-radius-control-l);background:var(--ch-surface-warm);}
+.c5-ctabar__media img{display:block;width:100%;height:100%;object-fit:cover;}
+.c5-ctabar--z-foto > p{flex-basis:20rem;}
+
+/* narrower than 900 px: the action goes under the text, the photo above it */
+@media (max-width:899px){
+  .c5-ctabar{align-items:flex-start;}
+  .c5-ctabar > .c5-btn,.c5-ctabar > .c5-btnrow{flex:0 0 auto;}
+  .c5-ctabar--z-foto{padding:var(--ch-space-4);}
+  .c5-ctabar__media{width:100%;height:clamp(140px,40vw,200px);}
+}
+@media (max-width:599px){
+  .c5-ctabar .c5-btn{white-space:normal;text-align:center;}
+  .c5-ctabar > .c5-btn,.c5-ctabar > .c5-btnrow{width:100%;}
+  .c5-ctabar > .c5-btnrow .c5-btn{flex:1 1 100%;}
+}
+
+/* ===== --ciemny: the configurator band of the home page =========================================
+   Forest ground with the dark leaf motif, a text block on the left (outline kicker, display
+   heading, a sentence), the way in on the right (the four-field step motif, the action – green on
+   a dark ground – and one quiet link). 7 / 5 from 900 px, stacked below. */
+.c5-ctabar--ciemny{--ctabar-bg:var(--ch-surface-forest);--ctabar-motif:var(--ch-motif-on-forest);display:grid;grid-template-columns:minmax(0,1fr);justify-content:stretch;gap:clamp(1.75rem,3vw,2.5rem);padding:clamp(1.75rem,3.2vw,3rem);color:var(--ch-text-inverse);}
+.c5-ctabar--ciemny :focus-visible{outline-color:var(--ch-text-inverse);}
+.c5-ctabar--ciemny .c5-ctabar__body{display:flex;flex-direction:column;align-items:flex-start;gap:clamp(.875rem,1.4vw,1.25rem);min-width:0;}
+.c5-ctabar--ciemny .c5-kicker{margin-bottom:0;}
+.c5-ctabar--ciemny .c5-ctabar__h{margin:0;font-family:var(--ch-font-display);font-size:clamp(1.75rem,2.8vw,2.5rem);font-weight:400;line-height:1.1;letter-spacing:-0.01em;color:var(--ch-text-inverse);text-wrap:balance;}
+.c5-ctabar--ciemny .c5-ctabar__p{margin:0;max-width:60ch;font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);color:var(--ch-text-inverse-muted);}
+.c5-ctabar--ciemny .c5-ctabar__side{display:flex;flex-direction:column;align-items:flex-start;gap:clamp(1.25rem,2vw,1.75rem);}
+/* the step motif: four empty fields on a line, no captions – the shape of the three or four
+   questions the lead promises */
+.c5-ctabar__steps{display:flex;align-items:center;}
+.c5-ctabar__steps > span{flex:none;width:26px;height:26px;border-radius:var(--ch-radius-sm);background:var(--ch-icon-frame-dark);}
+.c5-ctabar__steps > span + span{position:relative;margin-left:34px;}
+.c5-ctabar__steps > span + span::before{content:"";position:absolute;right:100%;top:50%;width:34px;height:1px;background:var(--ch-border-on-dark);}
+.c5-ctabar__quiet{display:inline-flex;align-items:center;gap:8px;font-size:var(--ch-type-small-size);color:var(--ch-text-inverse-muted);text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--ch-border-on-dark);transition:color var(--ch-motion-duration-base) var(--ch-motion-ease);}
+.c5-ctabar__quiet .wf-icon{width:14px;height:14px;transition:transform var(--ch-motion-duration-base) var(--ch-motion-ease);}
+.c5-ctabar__quiet:hover{color:var(--ch-text-inverse);text-decoration-color:var(--ch-text-inverse-muted);}
+.c5-ctabar__quiet:hover .wf-icon{transform:translateX(3px);}
+@media (max-width:899px){.c5-ctabar__quiet{min-height:44px;}}
+@media (min-width:900px){
+  .c5-ctabar--ciemny{grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:40px;align-items:center;}
+  .c5-ctabar--ciemny .c5-ctabar__side{align-items:flex-end;text-align:right;}
+}
+@media (prefers-reduced-motion:reduce){.c5-ctabar__quiet,.c5-ctabar__quiet .wf-icon{transition:none;}}
+
+/* ===== --cichy: the slim strip of the shop ========================================================
+   One line of text and a close button on a beige ground between two pages of the list: no motif,
+   no radius (it is a strip across the page, not a card), type 14/22. */
+.c5-ctabar--cichy{display:block;margin:0;padding:0;border-radius:0;background:var(--ch-surface-warm);border-bottom:1px solid var(--ch-border-subtle);}
+.c5-ctabar--cichy::before{display:none;}
+.c5-ctabar--cichy[hidden]{display:none;}
+.c5-ctabar--cichy .c5-ctabar__in{display:flex;align-items:center;gap:var(--ch-space-3);padding-block:4px;min-height:44px;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-secondary-on-warm);}
+.c5-ctabar--cichy .c5-ctabar__in > span{flex:1 1 auto;min-width:0;padding-block:3px;}
+.c5-ctabar--cichy .c5-ctabar__x{flex:none;display:grid;place-items:center;width:32px;height:32px;margin-right:-6px;padding:0;border:0;border-radius:var(--ch-radius-sm);background:none;color:var(--ch-text-secondary-on-warm);cursor:pointer;}
+.c5-ctabar--cichy .c5-ctabar__x:hover{color:var(--ch-text-primary);}
+.c5-ctabar--cichy .c5-ctabar__x:focus-visible{outline:2px solid var(--ch-border-strong);outline-offset:-2px;}
+.c5-ctabar--cichy .c5-ctabar__x .wf-icon{width:18px;height:18px;}
+
+/* ===== --z-naglowkiem: a heading on the left, text and action on the right =========================
+   CARBOMAT Mata, under the cards of the evidence: the same green band as the other bands of that
+   page, the lead sentence in the display face (the `--sm` size), the copy beside it. */
+.c5-ctabar--z-naglowkiem{display:grid;grid-template-columns:minmax(0,1fr);justify-content:stretch;gap:clamp(1rem,3vw,2.5rem);}
+.c5-ctabar--z-naglowkiem .c5-ctabar__h{margin:0;font-family:var(--ch-font-display);font-size:clamp(1.375rem,2.2vw,1.75rem);font-weight:400;line-height:1.25;letter-spacing:-0.01em;color:var(--ch-text-primary);text-wrap:balance;}
+.c5-ctabar--z-naglowkiem .c5-ctabar__body > p{margin:0;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-primary);}
+.c5-ctabar--z-naglowkiem .c5-ctabar__body{display:flex;flex-direction:column;gap:var(--ch-space-3);align-items:flex-start;max-width:64ch;min-width:0;}
+@media (min-width:900px){
+  .c5-ctabar--z-naglowkiem{grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);align-items:start;}
+}

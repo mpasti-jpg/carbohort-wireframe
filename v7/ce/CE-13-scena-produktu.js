@@ -1,18 +1,29 @@
 /* ===== CE-13 · Przypięta scena produktu (rejestr: ce-rejestr.js) =============
-   One track per product: 100svh of sticky stage + runway(N) screens, where N is
-   the number of frames read from the DOM. Base = carbohumic-doglebowy.js 60 (the N-frame
-   generalisation of the two-frame pattern module of carbomat.js 60): the
-   per-frame numbers are written on the frame elements, so neither this module
-   nor CE-13-scena-produktu.css knows how many frames a product has.
-   The scroll loop reads a single getBoundingClientRect() of the track, turns it
-   into p ∈ [0,1] and writes custom properties; CSS does every interpolation.
-   NOTHING here is timed: the bar, the photo, the veil, the tabs and every card
-   are pure functions of p, so the whole choreography scrubs with the wheel,
-   holds when the wheel holds and reverses when the reader scrolls back. The only
-   discrete writes are keyword properties (--ovis, --bvis) and aria-pressed.
-   The track constants come from CSS (--use-intro / --use-hold / --use-switch /
-   --use-outro / --use-card on .c5-use), so a page whose cards need more reading
-   time keeps its own track length without touching this file.
+   One track per product: 100svh of sticky stage + run screens, where run =
+   intro + hold × N + outro and N is the number of frames read from the DOM. The
+   per-frame state is written on the frame elements, so neither this module nor
+   CE-13-scena-produktu.css knows how many frames a product has.
+
+   Round of 18.10.2026 (E12, Mateusz): the scene no longer follows the wheel.
+   The scroll loop reads one getBoundingClientRect() of the track, turns it into
+   s – screens scrolled into the track – and compares it with THRESHOLDS:
+     s ≥ dock                     → is-docked: the hero panel retracts into the
+                                    strip, the photo opens; a moment later is-ui:
+                                    wash, tabs, first card
+     s ≥ intro + hold × k         → frame k is current (is-on on its layer and
+                                    crop, is-past on the crops above it)
+     s ≥ intro + hold × N         → is-ui off: the writing and the wash go, the
+                                    clear photo stays until the track lets go
+   Crossing a threshold back plays the same CSS transition backwards; between two
+   thresholds nothing changes but the parallax of the photos (--par), which
+   follows the page – the progress sign asked for in E12. Discrete writes only:
+   classes, aria-pressed and a handful of custom properties.
+   The track constants come from CSS (--use-intro / --use-hold / --use-outro /
+   --use-dock on .c5-use), so a page whose cards need more reading time keeps
+   its own track length without touching this file.
+   The geometry of the hero (where the packshot and the name stand in the middle
+   of the panel) is measured on every resize and written as --use-pk-x,
+   --use-nm-x and --use-pk-s; CSS moves the pieces between the two layouts.
    No markup -> no-op. ======================================================= */
 (function () {
   "use strict";
@@ -20,145 +31,173 @@
   var arts = $$(".c5-use");
   if (!arts.length) return;
 
-  /* the intro keeps the pattern's proportions (A 0–.14, C .14–.24 of a 5.5
-     track = .583 / .417 of the intro): bar docks at A_END, the photo starts
-     growing at GROW_A, veil + tabs run UI_A…UI_B, the first card --use-card…1 */
-  var A_END = .583, GROW_A = .208, UI_A = .583, UI_B = .792;
-  var LIFT = 40;                    /* px a card travels in and out             */
-  var EXIT = 24;                    /* px the last card drifts up while leaving */
-  var PAR = 3;                      /* parallax of a photo layer, in %          */
+  var PAR = 4;              /* parallax of a photo over its frame, ± % of the layer height */
+  var UI_DELAY = 360;       /* ms after docking before the writing comes in            */
+  var NAME_HERO = 40 / 24;  /* the name in the hero against the strip (Figma 40 / 24 px) */
 
-  function ease(t) { return t * t * (3 - 2 * t); }                       /* smoothstep inside a phase */
-  function seg(p, a, b) { return ease(clamp((p - a) / (b - a), 0, 1)); } /* eased progress of phase a…b */
-  /* write a custom property only when it really changes – the cache lives on
-     the element, so a frame that moved nothing costs no style invalidation */
+  function cvar(cs, name, dflt) {
+    var v = parseFloat(cs.getPropertyValue(name));
+    return isNaN(v) ? dflt : v;
+  }
+  /* write a custom property only when it really changes */
   function put(el, name, val) {
     var k = "_cx" + name;
     if (el[k] === val) return;
     el[k] = val;
     el.style.setProperty(name, val);
   }
-  /* per-product track constants, in viewport heights: intro (bar docks, photo
-     grows, veil + tabs + first card), hold per frame, switch between two frames
-     and outro; --use-card is where the first card starts inside the intro. */
-  function cvar(cs, name, dflt) {
-    var v = parseFloat(cs.getPropertyValue(name));
-    return isNaN(v) ? dflt : v;
-  }
 
   var items = arts.map(function (art) {
-    var cs = window.getComputedStyle(art),
-        INTRO = cvar(cs, "--use-intro", 1),
-        HOLD = cvar(cs, "--use-hold", .75),
-        SWITCH = cvar(cs, "--use-switch", .35),
-        OUTRO = cvar(cs, "--use-outro", .5),
-        K_A = cvar(cs, "--use-card", .917);
+    var cs = window.getComputedStyle(art);
     var crops = $$("[data-use-crop]", art),
-        layers = $$("[data-use-layer]", art),
         n = crops.length,
-        run = INTRO + HOLD * n + SWITCH * (n - 1) + OUTRO,
-        holds = [], mids = {}, i, start;
-    for (i = 0; i < n; i++) {
-      start = INTRO + i * (HOLD + SWITCH);
-      holds.push({ start: start / run, end: (start + HOLD) / run });
-      mids[crops[i].getAttribute("data-use-crop")] = (start + HOLD / 2) / run;
+        it = {
+          art: art, track: $("[data-use-track]", art), stage: $(".c5-use__stage", art),
+          bar: $(".c5-use__bar", art), pack: $(".c5-use__pack", art), name: $(".c5-use__name", art),
+          crops: crops, layers: $$("[data-use-layer]", art), n: n,
+          INTRO: cvar(cs, "--use-intro", .45), HOLD: cvar(cs, "--use-hold", .9),
+          OUTRO: cvar(cs, "--use-outro", .35), DOCK: cvar(cs, "--use-dock", .12),
+          stageH: 0, docked: null, ui: null, act: -1, uiTimer: 0, mids: {}
+        };
+    it.run = it.INTRO + it.HOLD * n + it.OUTRO;
+    crops.forEach(function (c, i) {
       /* how many tab lines stand below this one – the tabs are a single column
          growing upwards from the bottom edge of the scene */
-      crops[i].style.setProperty("--tabi", String(n - 1 - i));
-    }
-    return {
-      art: art, track: $("[data-use-track]", art), stage: $(".c5-use__stage", art),
-      crops: crops, layers: layers, n: n, run: run, holds: holds, mids: mids,
-      barEnd: A_END * INTRO / run,
-      growIn: GROW_A * INTRO / run,
-      uiIn: UI_A * INTRO / run, uiSet: UI_B * INTRO / run,
-      k1In: K_A * INTRO / run, k1Set: INTRO / run,
-      eIn: (run - OUTRO) / run, eTxt: (run - OUTRO / 2) / run,
-      stageH: 0, p: -1, act: -1
-    };
+      c.style.setProperty("--tabi", String(n - 1 - i));
+      it.mids[c.getAttribute("data-use-crop")] = it.INTRO + it.HOLD * (i + .5);
+    });
+    return it;
   }).filter(function (it) { return it.n > 0 && it.track && it.stage; });
 
-  function layout() {
-    items.forEach(function (it) {
-      it.p = -1;
-      if (!CX5.motionOn()) { it.track.style.height = ""; it.stageH = 0; return; }
-      it.track.style.height = "calc(100svh + " + Math.round(window.innerHeight * it.run) + "px)";
-      it.stageH = it.stage.offsetHeight;
+  /* the hero layout of the panel: the packshot (as tall as the hero allows) and
+     the name (40 px) side by side in the middle of the panel, 40 px apart – the
+     same gap as the strip; returned as shifts from their places in the strip */
+  function heroGeometry(it) {
+    if (!it.bar || !it.pack || !it.name) return;
+    var img = it.pack;
+    var r = (img.naturalWidth && img.naturalHeight) ? img.naturalWidth / img.naturalHeight
+          : (parseFloat(img.getAttribute("width")) / parseFloat(img.getAttribute("height"))) || .66;
+    put(it.art, "--use-pk-r", r.toFixed(4));
+    var bcs = window.getComputedStyle(it.bar);
+    var barW = it.bar.clientWidth,
+        padL = parseFloat(bcs.paddingLeft) || 0,
+        padR = parseFloat(bcs.paddingRight) || 0,
+        gap = parseFloat(bcs.columnGap) || 40,
+        stripH = parseFloat(window.getComputedStyle(it.art).getPropertyValue("--use-pk-h")) || 88,
+        heroH = img.offsetHeight || 1,                  /* the layout height is the hero height */
+        slotW = stripH * r,
+        nameW = it.name.offsetWidth,
+        content = barW - padL - padR,
+        side = (content - slotW - nameW - 3 * gap) / 2,
+        slotL = padL + side + gap,                      /* strip: 1fr | slot | name | 1fr */
+        nameL = slotL + slotW + gap,
+        packW = heroH * r,
+        heroNameW = nameW * NAME_HERO,
+        groupL = barW / 2 - (packW + gap + heroNameW) / 2;
+    put(it.art, "--use-pk-s", (stripH / heroH).toFixed(4));
+    put(it.art, "--use-pk-x", String(Math.round(groupL + packW / 2 - (slotL + slotW / 2))));
+    put(it.art, "--use-nm-x", String(Math.round(groupL + packW + gap - nameL)));
+  }
+
+  function instant(it) {
+    it.art.classList.add("is-instant");
+    void it.art.offsetWidth;
+    window.requestAnimationFrame(function () {
+      window.requestAnimationFrame(function () { it.art.classList.remove("is-instant"); });
     });
   }
 
-  /* Continuous frame position f ∈ [0, n-1]: every switch contributes its own
-     eased 0→1 and the switches never overlap, so the sum is the frame the scene
-     is on (integer = a hold, fraction = a switch in progress). */
-  function frameAt(it, p) {
-    var f = 0;
-    for (var k = 1; k < it.n; k++) f += seg(p, it.holds[k - 1].end, it.holds[k].start);
-    return f;
+  /* is-ui on: after UI_DELAY when it follows the dock (the panel first, then the
+     writing), at once otherwise; off: at once. A pending „on" is kept while the
+     reader goes on scrolling and dropped when the target changes. */
+  function setUi(it, on, now) {
+    if (on && it.uiTimer && !now) return;
+    window.clearTimeout(it.uiTimer);
+    it.uiTimer = 0;
+    if (on === it.ui) return;
+    if (on && !now) {
+      it.uiTimer = window.setTimeout(function () {
+        it.uiTimer = 0; it.ui = true; it.art.classList.add("is-ui");
+      }, UI_DELAY);
+      return;
+    }
+    it.ui = on;
+    it.art.classList.toggle("is-ui", on);
   }
 
-  function apply(it, p) {
-    var t  = seg(p, 0, it.barEnd),               /* A – packshot into the bar, bar retracts */
-        gr = seg(p, it.growIn, it.barEnd),       /* A – photo grows from the bottom edge    */
-        et = seg(p, it.eIn, it.eTxt),            /* E – writing goes first                  */
-        ev = seg(p, it.eIn, 1),                  /* E – and only then the veil              */
-        ui = seg(p, it.uiIn, it.uiSet) * (1 - et),   /* tabs + note + cards presence        */
-        vl = seg(p, it.uiIn, it.uiSet) * (1 - ev),   /* veil: rises with the tabs (C),
-                                                        falls on its own to p=1 (E)         */
-        f  = frameAt(it, p), i, d, inp, out, layer, crop;
-    put(it.art, "--t", t.toFixed(4));
-    put(it.art, "--grow", (.5 + .5 * gr).toFixed(4));
-    put(it.art, "--ui", ui.toFixed(4));
-    put(it.art, "--vl", vl.toFixed(4));
+  function setFrame(it, act) {
+    if (act === it.act) return;
+    it.act = act;
+    it.crops.forEach(function (c, k) {
+      c.classList.toggle("is-on", k === act);
+      c.classList.toggle("is-past", k < act);
+      var tab = $("[data-use-tab]", c);
+      if (tab) tab.setAttribute("aria-pressed", k === act ? "true" : "false");
+    });
+    it.layers.forEach(function (l, k) { l.classList.toggle("is-on", k === act); });
+  }
 
-    for (i = 0; i < it.n; i++) {
-      d = f - i;                                  /* distance from this frame, in frames */
-      layer = it.layers[i];
-      /* cross-fade: the frame being left and the frame arriving share the move */
-      put(layer, "--o", clamp(1 - Math.abs(d), 0, 1).toFixed(4));
-      /* the frame left behind drifts up, the one still to come waits below */
-      put(layer, "--par", clamp(-PAR * d, -PAR, PAR).toFixed(3));
-
-      crop = it.crops[i];
-      /* card i: first one rises at the end of the intro, every other one in the
-         second half of the switch that brings its frame in */
-      inp = i === 0 ? seg(p, it.k1In, it.k1Set)
-                    : seg(p, (it.holds[i - 1].end + it.holds[i].start) / 2, it.holds[i].start);
-      /* card i leaves upwards in the first half of the next switch; the last
-         card leaves in phase E instead, drifting a little less */
-      out = i === it.n - 1 ? et
-                           : seg(p, it.holds[i].end, (it.holds[i].end + it.holds[i + 1].start) / 2);
-      put(crop, "--k", (inp * (1 - out)).toFixed(4));
-      put(crop, "--ky", (LIFT * (1 - inp) - (i === it.n - 1 ? EXIT : LIFT) * out).toFixed(2));
-      /* the active tab is fully lit, the others sit at .45 – interpolated */
-      put(crop, "--tabo", (.45 + .55 * clamp(1 - Math.abs(d), 0, 1)).toFixed(4));
+  /* s = screens scrolled into the track; first = the first paint after a layout */
+  function apply(it, s, first) {
+    var docked = s >= it.DOCK,
+        end = it.INTRO + it.HOLD * it.n,
+        act = clamp(Math.floor((s - it.INTRO) / it.HOLD), 0, it.n - 1),
+        ui = docked && s < end;
+    if (first) instant(it);
+    if (docked !== it.docked) {
+      it.docked = docked;
+      it.art.classList.toggle("is-docked", docked);
+      if (!docked) setUi(it, false, true);
     }
-
-    /* keywords and labels – touched only when they really change */
-    var act = clamp(Math.round(f), 0, it.n - 1);
-    if (act !== it.act) {
-      it.act = act;
-      it.crops.forEach(function (g, k) {
-        var tab = $("[data-use-tab]", g);
-        if (tab) tab.setAttribute("aria-pressed", k === act ? "true" : "false");
-      });
+    setFrame(it, act);
+    /* the writing waits for the panel only right after a dock; coming back from
+       the outro it returns at once */
+    setUi(it, ui, first || !ui || s > it.DOCK + it.INTRO);
+    /* parallax: each photo drifts from -PAR to +PAR over its own stretch of the
+       track (the first one from the dock on), so the current one always moves */
+    for (var i = 0; i < it.layers.length; i++) {
+      var a = i === 0 ? it.DOCK : it.INTRO + it.HOLD * i,
+          b = it.INTRO + it.HOLD * (i + 1) + (i === it.n - 1 ? it.OUTRO : 0),
+          q = clamp((s - a) / (b - a), 0, 1);
+      put(it.layers[i], "--par", (PAR * (2 * q - 1)).toFixed(2));
     }
-    put(it.art, "--ovis", ui > .02 ? "visible" : "hidden");   /* overlay out of the a11y tree while invisible */
-    put(it.art, "--bvis", t > .5 ? "visible" : "hidden");     /* same for the shop button before it fades in */
+  }
+
+  function layout() {
+    items.forEach(function (it) {
+      if (!CX5.motionOn()) {
+        it.track.style.height = ""; it.stageH = 0;
+        window.clearTimeout(it.uiTimer); it.uiTimer = 0;
+        it.art.classList.remove("is-docked", "is-ui");
+        it.docked = null; it.ui = null; it.act = -1;
+        it.crops.forEach(function (c) { c.classList.remove("is-on", "is-past"); });
+        it.layers.forEach(function (l) { l.classList.remove("is-on"); l.style.removeProperty("--par"); l["_cx--par"] = undefined; });
+        return;
+      }
+      it.track.style.height = "calc(100svh + " + Math.round(window.innerHeight * it.run) + "px)";
+      it.stageH = it.stage.offsetHeight;
+      heroGeometry(it);
+      it.fresh = true;
+    });
   }
 
   function frame() {
     for (var i = 0; i < items.length; i++) {
       var it = items[i];
       if (!it.stageH) continue;
-      var r = it.track.getBoundingClientRect();
-      var span = r.height - it.stageH;
-      if (span <= 0) continue;
-      var p = clamp(-r.top / span, 0, 1);
-      if (Math.abs(p - it.p) < 0.0004) continue;    /* nothing moved – skip the writes */
-      it.p = p;
-      apply(it, p);
+      var s = -it.track.getBoundingClientRect().top / window.innerHeight;
+      apply(it, s, it.fresh || it.docked === null);
+      it.fresh = false;
     }
   }
+
+  /* the packshot and the type may arrive after the first layout: measure again */
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function () { items.forEach(function (it) { if (it.stageH) heroGeometry(it); }); });
+  }
+  items.forEach(function (it) {
+    if (it.pack && !it.pack.complete) it.pack.addEventListener("load", function () { if (it.stageH) heroGeometry(it); }, { once: true });
+  });
 
   /* Tabs stay clickable: a click scrolls to the middle of the matching hold
      (static layout: to the matching frame). Nothing is trapped, no wheel. */
@@ -172,9 +211,7 @@
           if (layer) layer.scrollIntoView({ behavior: soft, block: "start" });
           return;
         }
-        var r = it.track.getBoundingClientRect();
-        var span = r.height - it.stageH;
-        var top = r.top + window.scrollY + (it.mids[key] || 0) * span;
+        var top = it.track.getBoundingClientRect().top + window.scrollY + (it.mids[key] || 0) * window.innerHeight;
         CX5.scrollTo(Math.round(top), soft);
       });
     });

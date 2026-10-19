@@ -1,0 +1,53 @@
+/* ===== CE-21 · Dwie kolumny przewag – module (design system v0.1, stage D 18.10.2026) =====
+   No Figma frame: the look is carried over from the finished CEs (display
+   heading, EL-16 chip, EL-32 number node, EL-22-style dashed separators, 20 px
+   photo corners), the layout and the content are v7's.
+   Prefix: c5-cmp2. An overline above two equal columns; a column is a photo,
+   a chip saying what is being replaced, a heading, a numbered list of points
+   (number | label + sentence) and a link. Two columns from 900 px, one below
+   in the same order.
+
+   Markup (root `.c5-cmp2`, the overline `.c5-cmp2__label` stands in front of it):
+     p.c5-cmp2__label                  overline of the pair (outside the root)
+     .c5-cmp2                          root, grid of the columns
+       .c5-cmp2__col                   column
+         .c5-cmp2__ph                  photo frame (or the page's placeholder on it)
+         p.c5-cmp2__from               chip: icon + what the reader replaces
+         h3.c5-variant__name           heading of the column
+         ol.c5-cmp2__points            points
+           li.c5-cmp2__point           .c5-cmp2__no (number) + .c5-cmp2__block
+                                       (.c5-label title + p text)
+         p > a.wf-link                 link under the list
+   Per-instance tuning (style on the root): --c5-cmp2-ph-ratio (photo, default 3/2). ===== */
+
+/* --- Overline above the pair of columns ------------------------------------ */
+.c5-cmp2__label{margin-top:clamp(2.5rem,5vw,4rem);font-size:var(--ch-type-overline-size);line-height:var(--ch-type-overline-lh);letter-spacing:var(--ch-type-overline-ls);text-transform:uppercase;font-weight:var(--ch-type-overline-weight);color:var(--ch-text-secondary);}
+
+/* --- Two advantage columns ------------------------------------------------- */
+.c5-cmp2{display:grid;gap:clamp(2.5rem,4vw,3.5rem) clamp(1.5rem,4vw,3.5rem);margin-top:clamp(1.25rem,2.5vw,1.75rem);}
+.c5-cmp2__col{display:flex;flex-direction:column;gap:var(--ch-space-5);align-items:flex-start;min-width:0;}
+/* photo: 20 px corners (large photos); the page's placeholder dialect rides on the same element */
+.c5-cmp2__col .c5-cmp2__ph{width:100%;aspect-ratio:var(--c5-cmp2-ph-ratio,3/2);border-radius:var(--ch-radius-control-l);background:var(--ch-surface-warm-strong);overflow:hidden;}
+.c5-cmp2__col .c5-cmp2__ph::after{color:var(--ch-text-secondary);}
+/* chip (EL-16): what the reader replaces */
+.c5-cmp2__from{display:inline-flex;align-items:center;gap:var(--ch-space-2);margin:0;padding:6px var(--ch-space-2);border:1px solid var(--ch-border-control);border-radius:var(--ch-radius-sm);font-size:var(--ch-type-overline-size);line-height:var(--ch-type-overline-lh);letter-spacing:var(--ch-type-overline-ls);text-transform:uppercase;color:var(--ch-text-secondary);}
+.c5-cmp2__from .wf-icon{flex:none;width:12px;height:12px;}
+/* heading: the display face of h3-display */
+.c5-cmp2__col .c5-variant__name{margin:0;font-family:var(--ch-type-h3-display-font);font-size:clamp(1.75rem,2.8vw,var(--ch-type-h3-display-size));line-height:1.15;font-weight:var(--ch-type-h3-display-weight);letter-spacing:var(--ch-type-h3-display-ls);color:var(--ch-text-primary);text-wrap:balance;}
+/* points: dashed rule between them, a number node on the left */
+.c5-cmp2__points{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;width:100%;}
+.c5-cmp2__point{display:grid;grid-template-columns:var(--ch-size-badge) minmax(0,1fr);gap:var(--ch-space-4);align-items:start;padding-block:var(--ch-space-5);
+  background:repeating-linear-gradient(90deg,var(--ch-border-dashed) 0 3px,transparent 3px 10px) top / 100% 1px no-repeat;}
+.c5-cmp2__point:first-child{padding-top:0;background:none;}
+.c5-cmp2__point:last-child{padding-bottom:0;}
+.c5-cmp2__no{display:grid;place-items:center;width:var(--ch-size-badge);height:var(--ch-size-badge);border-radius:var(--ch-radius-md);background:var(--ch-badge-idle);font-size:var(--ch-type-body-size);line-height:1;font-variant-numeric:tabular-nums;color:var(--ch-text-primary);}
+.c5-cmp2__block{display:flex;flex-direction:column;gap:var(--ch-space-1);min-width:0;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);}
+.c5-cmp2__block .c5-label{font-size:var(--ch-type-title-s-size);line-height:var(--ch-type-title-s-lh);letter-spacing:var(--ch-type-title-s-ls);font-weight:var(--ch-type-title-s-weight);color:var(--ch-text-primary);}
+.c5-cmp2__block p{margin:0;color:var(--ch-text-secondary);}
+.c5-cmp2__col > p:last-child{margin:0;}
+
+@media (min-width:900px){
+  /* wool on the left, coco on the right; below this width they stack in the
+     same order, so the DOM order is already the reading order */
+  .c5-cmp2{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;}
+}

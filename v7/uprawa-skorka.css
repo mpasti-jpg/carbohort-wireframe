@@ -4,9 +4,8 @@
    The helpers `u-*` live in uprawa.css, which loads before the modules. */
 
 /* --- type: the scale of the product pages instead of the kit one --- */
-.u-h3{font-size:clamp(1.125rem,1.8vw,1.5rem);line-height:1.22;letter-spacing:-0.01em;}
-.u-h4{font-size:1.125rem;line-height:1.3;letter-spacing:-0.01em;}
-.u-lab,.u-defs dt{letter-spacing:.06em;}
+.u-h3{font-size:clamp(1.125rem,1.8vw,var(--ch-type-title-size));line-height:1.25;letter-spacing:var(--ch-type-title-ls);font-weight:var(--ch-font-weight-regular);}
+.u-h4{font-size:1.125rem;line-height:1.3;letter-spacing:var(--ch-type-title-ls);font-weight:var(--ch-font-weight-regular);}
 /* Book is the only cut available, hence weight 400. */
 @font-face{
   font-family:"P22 Mackinac Pro";
@@ -15,11 +14,8 @@
   font-style:normal;
   font-display:swap;
 }
-.c5-h1,.c5-h2{font-family:"P22 Mackinac Pro",var(--w-font-sans);font-weight:400;}
-/* EL-06 outline kicker: 9 px padding, 8 px radius, 13/14 px, dark green ink. */
-.c5-kicker--outline{padding:9px;border-color:#0c2b1c;border-radius:8px;
-  font-size:13px;line-height:14px;letter-spacing:.03em;color:#0c2b1c;}
-.c5-kicker--outline.c5-kicker--center{display:block;width:fit-content;margin-inline:auto;}
+.c5-h1,.c5-h2{font-family:var(--ch-font-display);font-weight:400;}
+/* EL-06: the framed kicker comes from ce/00-base.css (design system v0.1, 18.10.2026). */
 
 /* --- section head for sections without a head of their own --- */
 .b-head{display:flex;flex-direction:column;}
@@ -35,5 +31,4 @@
 /* --- modifiers --- */
 /* lead held at about 70 characters a line on the wide container */
 @media (min-width:900px){.c5-lead--60{max-width:60ch;}}
-/* narrow note */
-@media (min-width:900px){.u-callout--waska{max-width:36rem;}}
+/* the narrow note is `c5-note--waska` in ce/CE-31-nota.css */

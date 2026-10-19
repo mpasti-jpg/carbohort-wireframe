@@ -9,7 +9,7 @@
    Spec: 40-strona-www/koncepcja/sklep-v7-spec.md §3 and §12.2.
 
    Product config lives on an element, as JSON in data-cw-product:
-     { "id": "carbomat-eco-6", "name": "CARBOMAT ECO pH 6,0–6,5",
+     { "id": "carbomat-eco-6", "name": "Carbomat Eco pH 6,0–6,5",
        "meta": "sypki · doglebowy", "img": "img/opakowania/worek_20l.png",
        "url": "pdp.html", "short": "One or two sentences for the quick view.",
        "variants": [ { "id": "carbomat-eco-4", "label": "pH 4,5–5,0",
@@ -380,7 +380,7 @@
     html += '<div class="cws-dlg__sum"><span>Razem</span><b data-cws-total></b></div>' +
       '<p class="cws-dlg__note" data-cws-ship></p>' +
       '<div class="cws-dlg__actions">' +
-        '<button type="button" class="cws-btn cws-btn--dark" data-cws-add>Dodaj do koszyka</button>' +
+        '<button type="button" class="cws-btn cws-btn--dark" data-cws-add>Kup teraz</button>' +
         '<button type="button" class="cws-btn cws-btn--light" data-cws-close>Anuluj</button>' +
       "</div>" +
       "</div></div>";

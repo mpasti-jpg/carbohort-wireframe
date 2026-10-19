@@ -22,51 +22,8 @@
    Card anatomy from c5hu-tiles (carbohumic-doglebowy.css): a framed card, title, body
    text. The steps add an ordinal and, on wide screens, a thin arrow drawn in
    the gap between cards. The families are plain tiles of the same anatomy. */
-.on-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:var(--w-space-5);
-  margin:clamp(2rem,4vw,3rem) 0 0;padding:0;list-style:none;}
-.on-step{position:relative;display:flex;flex-direction:column;gap:var(--w-space-3);
-  background:var(--w-surface-page);border:1px solid var(--w-border-default);
-  padding:clamp(1.25rem,2.2vw,1.75rem);
-  transition:border-color var(--w-duration-base) var(--w-ease);}
-.on-step:hover{border-color:var(--w-gray-900);}
-.on-step__no{font-size:0.75rem;letter-spacing:.06em;color:var(--w-text-tertiary);}
-.on-step p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
-
-@media (min-width:900px){
-  /* the arrow lives in the gap, so it never moves the cards */
-  .on-steps{position:relative;grid-template-columns:repeat(3,minmax(0,1fr));}
-  .on-step:not(:last-child)::after{content:"";position:absolute;top:50%;
-    left:calc(100% + var(--w-space-2));width:calc(var(--w-space-5) - 2 * var(--w-space-2));
-    height:1px;background:var(--w-border-strong);}
-}
-
-.on-fams{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:var(--w-space-5);
-  margin-top:clamp(2rem,4vw,3rem);}
-.on-fam{display:flex;flex-direction:column;gap:var(--w-space-3);
-  background:var(--w-surface-page);border:1px solid var(--w-border-default);
-  padding:clamp(1.25rem,2.2vw,1.75rem);
-  transition:border-color var(--w-duration-base) var(--w-ease);}
-.on-fam:hover{border-color:var(--w-gray-900);}
-/* The packshot gets an explicit box inside the frame and is letterboxed by
-   `object-fit`. Both dimensions are written out on purpose: `max-height:100%`
-   (and an over-constrained `inset`) does not cap a replaced element inside an
-   aspect-ratio box in Chrome, and the tall bags overflowed the frame. */
-.on-fam__stage{--on-fam-pad:var(--w-space-4);position:relative;background:var(--w-gray-100);aspect-ratio:4/3;overflow:hidden;}
-.on-fam__pack{position:absolute;top:var(--on-fam-pad);left:var(--on-fam-pad);
-  width:calc(100% - 2 * var(--on-fam-pad));height:calc(100% - 2 * var(--on-fam-pad));
-  max-width:none;object-fit:contain;}
-.on-fam p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
-.on-fam__go{margin-top:auto;padding-top:var(--w-space-2);display:inline-flex;align-items:center;gap:8px;
-  min-height:44px;font-size:0.875rem;font-weight:var(--w-weight-medium);}
-.on-fam__go .wf-icon{flex:none;}
-/* CARBOHUMIC has two entry links; side by side, stacked on a narrow card. */
-.on-fam__gos{margin-top:auto;display:flex;flex-wrap:wrap;column-gap:var(--w-space-4);}
-.on-fam__gos .on-fam__go{margin-top:0;padding-top:var(--w-space-2);}
-.on-fams__more{margin-top:clamp(1.5rem,3vw,2.25rem);}
-
-@media (prefers-reduced-motion: reduce){
-  .on-step,.on-fam{transition:none;}
-}
+/* The step and family cards (`on-step*`, `on-fam*`) are styled in
+   ce/CE-20-siatka-kart.css. */
 
 /* ===== 30 · NAJSTARSZA NOWOŚĆ – wiersz zdjęcie | opis (CE-36) ==============
    Ported from carbomat-humic.css (c5-who): two equal columns centred on each
@@ -74,70 +31,16 @@
    taller than the frame, so the parallax never uncovers an edge; `--on-par`
    runs from -6 to 0 (per cent of the layer height) and is set by the module in
    o-firmie.js only while CX5.motionOn(). */
-.on-who{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,6vw,6rem);
-  align-items:center;}
-.on-who__media{position:relative;aspect-ratio:4/5;max-height:calc(100svh - 2 * var(--c5-gutter));
-  overflow:hidden;background:var(--w-gray-300);}
-.on-who__ph{position:absolute;inset:-6% 0 auto;height:118%;width:100%;border-radius:0;border:0;
-  transform:translateY(calc(var(--on-par,-6) * 1%));will-change:transform;}
-.on-who__ph .wf-icon{width:40px;height:40px;color:var(--w-gray-500);}
-.on-who__body{display:flex;flex-direction:column;gap:clamp(1rem,2vw,1.5rem);max-width:520px;}
-.on-who__kicker{margin-bottom:0;}
-.on-who__name{font-size:clamp(2rem,3.6vw,3rem);line-height:1.12;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
-.on-who__body p{margin:0;color:var(--w-text-secondary);}
-
-@media (max-width:899px){
-  .on-who{grid-template-columns:1fr;gap:clamp(1.5rem,4vw,2.5rem);}
-  .on-who__media{aspect-ratio:16/10;max-height:none;}
-  .on-who__body{max-width:none;}
-}
-@media (prefers-reduced-motion: reduce){
-  .on-who__ph{transform:none;}
-}
+/* The row (`on-who*`) is styled in ce/CE-36-wiersz-zdjecie-opis.css. */
 
 /* 40 · WARTOŚCI → ce/CE-30-lista-z-panelem.css */
 /* page-specific: the note stands under the CE root, so its spacing is page layout */
 .on-val__note{margin-top:clamp(2rem,4vw,3rem);}
 
 /* ===== 50 · LUDZIE – karty biogramów (CE-48 „siatka") =====================
-   Ported from prochnica-plus.css 55 (pp-team / pp-person / pp-disc / pp-more).
-   Four columns from 1100 px, two from 600 px, one below. The „czytaj dalej"
-   drawer animates its height through CX5.panelSet; without JS the whole bio is
-   visible. */
-.on-disc{overflow:hidden;height:0;opacity:0;
-  transition:height var(--c5-acc) var(--w-ease),opacity var(--c5-acc-fade) var(--w-ease);}
-.on-disc[data-open="true"]{opacity:1;}
-.on-discin{overflow:hidden;min-height:0;display:flex;flex-direction:column;gap:var(--w-space-3);}
-.on-discin p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
-
-.on-team{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(255px,100%),1fr));gap:var(--w-space-5);
-  margin:clamp(1.5rem,3vw,2.25rem) 0 0;padding:0;list-style:none;}
-.on-person{height:100%;display:flex;flex-direction:column;gap:var(--w-space-3);
-  border:1px solid var(--w-border-default);background:var(--w-surface-page);padding:clamp(1.25rem,2.2vw,1.75rem);
-  transition:border-color var(--w-duration-base) var(--w-ease);}
-.on-person:hover{border-color:var(--w-gray-900);}
-.on-person__ph{width:100%;aspect-ratio:1/1;border-radius:0;}
-.on-person__ph .wf-icon{width:32px;height:32px;color:var(--w-gray-500);}
-.on-person__name{font-size:1.0625rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;margin:0;}
-.on-person__role{margin:0;font-size:0.875rem;color:var(--w-text-primary);}
-.on-person p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
-/* the chip and the note sit at the bottom edge, so the cards line up */
-.on-person > .c5-chip{align-self:flex-start;margin-top:auto;}
-/* „ekspert niezależny" note: c5-note --strong (EL-17) in a tighter 12/16 padding */
-.on-person__indep{padding:var(--w-space-3) var(--w-space-4);}
-.on-more{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;min-height:44px;
-  font:inherit;font-size:0.875rem;font-weight:var(--w-weight-medium);color:var(--w-text-primary);
-  background:none;border:0;border-bottom:1px solid var(--w-gray-900);border-radius:0;padding:2px 0;cursor:pointer;}
-.on-more .wf-icon{transition:transform var(--w-duration-base) var(--w-ease);color:var(--w-icon-default);}
-.on-more[aria-expanded="true"] .wf-icon{transform:rotate(180deg);}
+   Cards, drawer and grid: ce/CE-48-karty-biogramow.css (`pp-*`, variant
+   `pp-team--siatka`). Only the gap above the button under the grid stays here. */
 .on-team__more{margin-top:clamp(1.5rem,3vw,2.25rem);}
-
-@media (min-width:1100px){
-  .on-team{grid-template-columns:repeat(4,minmax(0,1fr));}
-}
-@media (prefers-reduced-motion: reduce){
-  .on-disc,.on-more .wf-icon,.on-person{transition:none;}
-}
 
 /* ===== 60 · DOWODY – listy wierszy z akcją (CE-53 „dokumenty") ============
    Ported from prochnica-plus.css 90 (pp-reports): rows separated by thin lines,
@@ -147,16 +50,11 @@
 .on-docs{margin-top:clamp(2rem,4vw,3rem);}
 .on-docs__h{margin-top:clamp(2rem,4vw,3rem);}
 .on-docs__h:first-child{margin-top:0;}
-.on-docs__list{display:flex;flex-direction:column;margin:clamp(1.25rem,2.5vw,2rem) 0 0;padding:0;list-style:none;}
-.on-doc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:var(--w-space-4);
-  align-items:center;padding-block:var(--w-space-4);border-top:1px solid var(--w-border-default);}
-.on-docs__list > li:last-child .on-doc{border-bottom:1px solid var(--w-border-default);}
-.on-doc__name{font-size:1rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;margin:0;}
-.on-doc__meta{margin:0;font-size:0.875rem;color:var(--w-text-secondary);}
-
+/* Rows: module ce/CE-53-lista-wierszy.css; only the gap above the list stays here. */
+.on-docs .c5-rows__list{margin-top:clamp(1.25rem,2.5vw,2rem);}
 @media (max-width:899px){
-  .on-doc{grid-template-columns:minmax(0,1fr);align-items:start;gap:var(--w-space-2);}
-  .on-doc .c5-btn{justify-self:start;}
+  .on-docs .c5-rows__row{grid-template-columns:minmax(0,1fr);justify-items:start;}
+  .on-docs .c5-rows__act{grid-column:1;grid-row:auto;justify-self:start;margin-top:var(--ch-space-2);}
 }
 
 /* ===== 70 · GDZIE JESTEŚMY – mapa Europy z łukami i lista krajów (CE-96 łuki)
@@ -166,10 +64,10 @@
    the address after it. */
 .on-map{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,2fr);gap:clamp(2rem,5vw,4rem);
   margin-top:clamp(1.5rem,3vw,2.25rem);align-items:start;}
-.on-map__side{display:flex;flex-direction:column;gap:var(--w-space-5);}
-.on-map__addr{font-style:normal;font-size:1rem;line-height:1.6;color:var(--w-text-secondary);}
-.on-map__co{display:block;font-size:1.125rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;
-  color:var(--w-text-primary);margin-bottom:var(--w-space-2);}
+.on-map__side{display:flex;flex-direction:column;gap:var(--ch-space-5);}
+.on-map__addr{font-style:normal;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary);}
+.on-map__co{display:block;font-size:var(--ch-type-tab-size);line-height:var(--ch-type-tab-lh);font-weight:var(--ch-font-weight-medium);letter-spacing:var(--ch-type-tab-ls);
+  color:var(--ch-text-primary);margin-bottom:var(--ch-space-2);}
 
 @media (max-width:899px){
   .on-map{grid-template-columns:1fr;gap:clamp(1.5rem,4vw,2.5rem);}
@@ -180,12 +78,4 @@
 
 
 /* ===== 90 · MOTTO – ciemny boks (CE-33 „ciemny-boks") ====================
-   Ported from uprawa.css (u-quote): label in caps, one large sentence, no
-   buttons. Static. */
-.on-quote{margin:0;display:flex;flex-direction:column;gap:var(--w-space-4);
-  background:var(--w-surface-inverse);color:var(--w-text-inverse);border-radius:0;
-  padding:clamp(1.5rem,4vw,3rem);}
-.on-quote__t{font-size:var(--w-font-overline-size);line-height:var(--w-font-overline-lh);
-  letter-spacing:var(--w-tracking-wide);text-transform:uppercase;color:var(--w-gray-400);}
-.on-quote p{margin:0;font-size:clamp(1.25rem,2.6vw,1.875rem);line-height:1.3;
-  font-weight:var(--w-weight-medium);max-width:var(--w-measure);}
+   Module ce/CE-33-cytat-zasada.css (`c5-quote--ciemny`); nothing page-specific. */

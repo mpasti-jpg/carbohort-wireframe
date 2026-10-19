@@ -22,13 +22,9 @@
 /* Book is the only cut in the vault, so the weight comes down to 400 – anything heavier
    would have the browser synthesise a fake bold. `font-display:swap` keeps the heading
    readable in Inter from the first frame. */
-.c5-h1,.c5-h2{font-family:"P22 Mackinac Pro",var(--w-font-sans);font-weight:400;}
-/* EL-06 with the metrics of the frame: 9 px padding, 8 px radius, 13/14 px, the very dark
-   green ink of the design, not the black of the kit. The base class is inline-block with
-   width:fit-content, so a centred head needs the block box and auto margins back. */
-.c5-kicker--outline{padding:9px;border-color:#0c2b1c;border-radius:8px;
-  font-size:13px;line-height:14px;letter-spacing:.03em;color:#0c2b1c;}
-.c5-kicker--outline.c5-kicker--center{display:block;width:fit-content;margin-inline:auto;}
+.c5-h1,.c5-h2{font-family:var(--ch-font-display);font-weight:400;}
+/* EL-06: the framed kicker comes from ce/00-base.css (design system v0.1, 18.10.2026) –
+   the page override of 20.09 (9 px padding, 8 px radius) is gone. */
 
 /* ===== 00+ · Produkty Carbohort – additions to the pattern base (spec §3) ===== */
 /* The placeholder layer (.c5-ph, .c5-marq__thumb--ph, .c5-fx__ph) is gone: this page
@@ -39,281 +35,42 @@
 /* Brak danych po stronie producenta – widoczny, nieudawany (wzorzec z maty). */
 .c5pr-gap{color:var(--w-text-tertiary);}
 .c5pr-dim{opacity:.8;}
-.c5pr-lead-note{margin-top:clamp(1.5rem,3vw,2.25rem);font-size:0.9375rem;color:var(--w-text-secondary);max-width:784px;}
+/* R12 (18.10.2026): the paragraph about Maxi Plus and Calbor stands right under the two product
+   cards (it used to be a small note under the lead of „Doglebowo czy nalistnie”) – lead size,
+   secondary ink, the measure of the source lines (803 px). */
+.c5pr-cards-note{max-width:803px;margin:clamp(2rem,4vw,var(--ch-space-14)) 0 0;font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);color:var(--ch-text-secondary);}
 
-/* strip replacing .c5-alert with a placeholder (pattern: .c5-who__note in carbomat-humic.css) */
-.c5pr-bar{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:clamp(1rem,3vw,2rem);align-items:center;border-top:1px solid var(--w-border-default);border-bottom:1px solid var(--w-border-default);padding:clamp(1.25rem,2.5vw,1.75rem) 0;margin-top:clamp(2.5rem,5vw,4rem);}
-.c5pr-bar > .wf-icon{width:24px;height:24px;color:var(--w-gray-900);}
-.c5pr-bar p{margin:0;}
-/* below 900 px the button drops under the text; the icon stays beside the text */
-@media (max-width:899px){.c5pr-bar{grid-template-columns:auto minmax(0,1fr);}.c5pr-bar > .c5-btn{grid-column:2;justify-self:start;}}
+/* the .c5pr-bar strips (CE-23) are styled by ce/CE-23-pas-cta.css (`c5-ctabar`) */
 /* anchors without a sticky bar: land 30 px below the top edge */
-.c5pr-goal[id],#certyfikaty{scroll-margin-top:var(--c5-gutter);}
+#certyfikaty{scroll-margin-top:var(--c5-gutter);}
 
-/* ===== 30 · Gama – pokaz czterech rodzin =====
-   Pattern: version picker on rivian.com/r1s (reference screen of 11.09.2026). Family tabs above
-   a "studio" with the packshot; under it the name, the promise and the links; below that four
-   columns with the same rows as the former tiles (Postać · Sposób aplikacji · Dla kogo ·
-   Warianty).
-   14.09.2026 (spec §6): packshots from img/opakowania/ instead of placeholders; the studio glow
-   behind the product is removed; the section no longer touches the technical table – the
-   „Porównaj" link only scrolls to #porownanie (the shared anchor handler) and module 30 moves
-   focus to the table. Nothing here highlights a table column any more.
-   The .c5pr-js class (one-line script in <head>) turns on the tab mode before the first paint;
-   without JS there are no tabs and the families stand one below another.
-   Corners per the V5 language (0). A pill like on the screen = one change:
-   --c5pr-seg-r: var(--w-radius-pill). */
-.c5pr-studio{--c5pr-seg-r:0;position:relative;overflow:hidden;background:linear-gradient(180deg,var(--w-gray-150) 0%,var(--w-gray-100) 42%,var(--w-gray-150) 100%);}
-/* no scroll-margin: nothing is pinned to the top edge (spec §3) */
-.c5pr-show{margin-top:clamp(2rem,4vw,3.5rem);}
-
-/* Bar: segmented switch in the middle, „Porównaj" on the right; its own layer above the panels */
-.c5pr-show__bar{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:var(--w-space-4);}
-.c5pr-seg{display:none;position:relative;grid-auto-flow:column;padding:4px;background:var(--w-surface-page);border:1px solid var(--w-border-subtle);border-radius:var(--c5pr-seg-r);box-shadow:var(--w-shadow-xs);}
-.c5pr-js .c5pr-seg{display:grid;}
-.c5pr-seg__thumb{position:absolute;left:0;top:0;width:0;height:0;background:var(--w-gray-900);border-radius:var(--c5pr-seg-r);pointer-events:none;transition:transform .5s var(--w-ease),width .5s var(--w-ease),height .5s var(--w-ease);}
-.c5pr-seg__tab{padding:13px clamp(1.1rem,2vw,1.75rem);font:inherit;font-size:1rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;line-height:1.2;white-space:nowrap;color:var(--w-text-primary);background:none;border:0;border-radius:var(--c5pr-seg-r);cursor:pointer;transition:background-color .2s var(--w-ease);}
-/* Etykieta odwraca kolor dokładnie pod znacznikiem, także w trakcie przesuwania:
-   biel w trybie „difference” daje czerń na białym torze i biel na czarnym znaczniku.
-   Przycisk nie jest pozycjonowany, więc etykieta (później w DOM) leży nad znacznikiem. */
-.c5pr-seg__lbl{position:relative;color:var(--w-text-inverse);mix-blend-mode:difference;}
-.c5pr-seg__tab[aria-selected="false"]:hover{background:var(--w-surface-hover);}
-.c5pr-seg__tab[aria-selected="true"]{cursor:default;}
-/* zanim skrypt ustawi znacznik, aktywna zakładka ma własne tło */
-.c5pr-seg:not([data-ready]) .c5pr-seg__tab[aria-selected="true"]{background:var(--w-gray-900);}
-.c5pr-seg__tab:focus-visible{outline:2px solid var(--w-gray-900);outline-offset:3px;}
-/* text link, but a 44 px tall target (spec §0.8) */
-.c5pr-show__compare{display:inline-flex;align-items:center;min-height:44px;font-size:1rem;color:var(--w-text-secondary);text-decoration:underline;text-underline-offset:4px;white-space:nowrap;}
-.c5pr-show__compare:hover{color:var(--w-text-primary);}
-@media (min-width:1120px){
-  .c5pr-js .c5pr-show__bar{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:clamp(1.5rem,2.5vw,2.25rem);}
-  .c5pr-js .c5pr-seg{grid-column:2;}
-  .c5pr-js .c5pr-show__compare{grid-column:3;justify-self:start;}
-}
-/* Jeden rząd tabów ma ok. 770 px – poniżej 860 px przełącznik przechodzi w siatkę 2×2 */
-@media (max-width:859px){
-  .c5pr-seg{width:100%;grid-auto-flow:row;grid-template-columns:repeat(2,minmax(0,1fr));}
-  .c5pr-seg__tab{white-space:normal;padding:12px 10px;font-size:0.875rem;min-height:56px;}
-}
-
-/* Panele: aktywny w biegu dokumentu; wychodzący na czas animacji leży nad nim.
-   flow-root: margines studia zostaje w panelu – inaczej wypływa przez rodziców
-   i wychodzący (absolutny) panel opadałby o jego wysokość. */
-.c5pr-show__panels{position:relative;display:flow-root;}
-/* the wide button under the show (review of 2026-09-20) – the second, unmissable way into
-   the comparison overlay; the quiet „Porównaj" link stays up in the tab bar. Full width of
-   the content column, 56 px tall, so it reads as a band rather than as a button in a row. */
-.c5pr-show__full{display:flex;justify-content:center;width:100%;margin-top:clamp(2rem,4vw,3rem);min-height:56px;}
-.c5pr-js .c5pr-fam:not([data-on]):not([data-leaving]){display:none;}
-.c5pr-fam[data-leaving]{position:absolute;top:0;left:0;right:0;pointer-events:none;}
-.c5pr-fam + .c5pr-fam{margin-top:clamp(3.5rem,7vw,6rem);}
-.c5pr-js .c5pr-fam + .c5pr-fam{margin-top:0;}
-.c5pr-fam:focus-visible{outline:2px solid var(--w-gray-900);outline-offset:8px;border-radius:0;}
-
-/* Studio: the packshot stands on the floor line with a soft shadow under it.
-   The glow behind the product (.c5pr-stage::before, a radial white gradient) was removed on
-   14.09 – white mock-ups on the light gradient do not need it (spec §6.2, §19.2). If it has to
-   come back, it is a single rule in the inline <style> of the archived page
-   zasoby/kod/archiwum-wersji/produkty-gama-taby-2026-09-12.html. */
-.c5pr-stage{position:relative;display:flex;align-items:flex-end;justify-content:center;height:clamp(220px,34vh,420px);margin-top:clamp(1rem,2.5vw,2rem);padding-bottom:22px;touch-action:pan-y;}
-/* data-shape sizes each packshot: standing packs get a height (share of the stage) and take
-   their width from the image, the lying sleeve gets a width – nothing is stretched. The HUMIC
-   stand-in is the same 20 l bag as CARBOMAT ECO, so it keeps the same scale. */
-.c5pr-shot{position:relative;z-index:0;display:flex;align-items:flex-end;justify-content:center;height:82%;max-width:100%;}
-.c5pr-shot[data-shape="kanister"]{height:74%;}
-.c5pr-shot[data-shape="rekaw"]{height:auto;width:min(72%,560px);}
-.c5pr-shot__img{display:block;width:auto;height:100%;max-width:100%;object-fit:contain;}
-.c5pr-shot[data-shape="rekaw"] .c5pr-shot__img{width:100%;height:auto;}
-.c5pr-shot__floor{position:absolute;left:50%;bottom:-18px;z-index:-1;width:135%;height:36px;transform:translateX(-50%);background:radial-gradient(closest-side,rgb(0 0 0 / .22),rgb(0 0 0 / 0));pointer-events:none;}
-.c5pr-shot[data-shape="rekaw"] .c5pr-shot__floor{width:112%;}
-
-/* Pod zdjęciem: nazwa i obietnica z lewej, przejścia z prawej */
-.c5pr-fam__cap{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--w-space-5) clamp(2rem,5vw,4.5rem);align-items:end;margin-top:clamp(1.5rem,3vw,2.5rem);}
-.c5pr-fam__intro{display:flex;flex-direction:column;gap:var(--w-space-2);min-width:0;}
-.c5pr-fam__form{font-size:0.75rem;font-weight:var(--w-weight-medium);letter-spacing:.06em;text-transform:uppercase;color:var(--w-text-secondary);}
-.c5pr-fam__name{color:var(--w-text-primary);font-size:clamp(1.625rem,2.8vw,2.25rem);font-weight:var(--w-weight-medium);line-height:1.1;letter-spacing:-0.015em;}
-.c5pr-fam__promise{margin:0;max-width:36em;font-size:clamp(1.0625rem,1.5vw,1.25rem);line-height:1.35;color:var(--w-text-secondary);}
-.c5pr-fam__acts{display:flex;flex-direction:column;align-items:flex-end;gap:var(--w-space-3);}
-.c5pr-fam__acts .c5-btnrow{justify-content:flex-end;flex-wrap:nowrap;}
-
-/* Cztery kolumny parametrów – ten sam zestaw wierszy dla każdej rodziny */
-.c5pr-specs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--w-space-5) clamp(1.25rem,2.6vw,2.5rem);margin:clamp(1.75rem,3.5vw,2.75rem) 0 0;}
-.c5pr-spec{display:flex;flex-direction:column;gap:var(--w-space-2);padding-top:var(--w-space-4);border-top:1px solid var(--w-border-strong);}
-.c5pr-spec dt{font-size:0.75rem;font-weight:var(--w-weight-medium);letter-spacing:.06em;text-transform:uppercase;color:var(--w-text-secondary);}
-.c5pr-spec dd{margin:0;font-size:0.9375rem;line-height:1.55;color:var(--w-text-primary);}
-.c5pr-spec__warn{display:flex;gap:var(--w-space-2);align-items:flex-start;margin-top:var(--w-space-3);padding-top:var(--w-space-3);border-top:1px solid var(--w-border-default);font-size:0.875rem;}
-.c5pr-spec__warn .wf-icon{flex:none;margin-top:2px;}
-@media (max-width:1023px){ .c5pr-specs{grid-template-columns:repeat(2,minmax(0,1fr));} }
+/* ===== 10 · Hero (CE-08 `linia-produktow`) – R01, 18.10.2026 =====
+   Page exception, to be folded into the variant by the owner of ce/CE-08-hero.css: the packs
+   are now part of the background photo (Figma 800:333, img/foto/produkty-hero-gama-pole.jpg,
+   mirrored as in the frame), so `.c5pr-line` is an empty band that only keeps their room
+   between the headline and the lead. The photo is anchored by its top edge – on a 16:10
+   window the bag tops then clear the headline as in the frame. */
+.c5pr-hero .c5-hero__bgimg{object-position:50% 0%;}
 @media (max-width:899px){
-  .c5pr-fam__cap{grid-template-columns:minmax(0,1fr);align-items:start;}
-  .c5pr-fam__acts{align-items:flex-start;}
-  .c5pr-fam__acts .c5-btnrow{justify-content:flex-start;flex-wrap:wrap;}
-}
-@media (max-width:599px){
-  .c5pr-stage{height:clamp(190px,58vw,260px);}
-  .c5pr-shot[data-shape="rekaw"]{width:86%;}
-  .c5pr-specs{grid-template-columns:minmax(0,1fr);}
-  .c5pr-fam__acts,.c5pr-fam__acts .c5-btnrow{width:100%;}
-  .c5pr-fam__acts .c5-btn{flex:1 1 100%;}
-  /* full-width buttons: a narrower side padding keeps „poznaj CARBOHUMIC doglebowy”
-     (16.10.2026) on one line at 375 px; centred text if a label still wraps */
-  .c5pr-fam__acts .c5-btn{padding-inline:var(--w-space-4);text-align:center;}
+  /* phone: the first screen again, the band between the headline and the lead shows the
+     middle of the line (big bag, barrel, sleeve, bag); the photo darkens at the top and the
+     bottom only, so the packs stay readable and the white copy keeps its contrast */
+  .c5pr-hero .c5-hero--linia-produktow{min-height:calc(100svh - var(--cx-navbar-h, 0px));}
+  .c5pr-hero .c5pr-line{flex:1 1 auto;min-height:clamp(11rem,52vw,18rem);}
+  /* the photo box reaches 12 % above the section, so the line of packs (37–66 % of the
+     picture) rises into the band instead of standing behind the lead */
+  .c5pr-hero .c5-hero__bgimg{top:-12%;height:112%;object-position:50% 50%;}
+  #hero.c5pr-hero > .c5-hero__bg::after{background:linear-gradient(180deg,rgb(10 10 10 / .55) 0,rgb(10 10 10 / .2) 34%,rgb(10 10 10 / .08) 48%,rgb(10 10 10 / .5) 66%,rgb(10 10 10 / .62) 100%);}
 }
 
-/* Tryb wymuszonych kolorów (np. wysoki kontrast w Windows): mieszanie „difference”
-   dałoby biel na bieli – etykiety w kolorach systemu, znacznik w kolorze zaznaczenia. */
-@media (forced-colors:active){
-  .c5pr-seg__lbl{mix-blend-mode:normal;color:inherit;}
-  .c5pr-seg__thumb{forced-color-adjust:none;background:Highlight;}
-  .c5pr-seg__tab[aria-selected="true"] .c5pr-seg__lbl{forced-color-adjust:none;color:HighlightText;}
-}
-@media (prefers-reduced-motion:reduce){ .c5pr-seg__thumb,.c5pr-seg__tab{transition:none;} }
+/* ===== 30 · Gama – pokaz czterech rodzin → ce/CE-39-pokaz-rodzin.css =====
+   The whole look of CE-39 (rail, panel, packshot, caption, parameter columns, comparison button)
+   lives in the module; this sheet keeps no exception of this page here. */
 
-/* ===== 40 · Porównanie – technikalia czterech rodzin: own content element (spec §7) =====
-   Since 14.09.2026 (artifact review, comment on the section title) the section has no video and
-   is no longer a port of the „Parametry on video" CE (CARBOMAT ECO 30) – changes to that CE on
-   the product pages do not reach it, and vice versa. A light datasheet of its own:
-   · ≥ 900 px – the table fills the content width (fixed layout, no scroll container), and the
-     header row with the four family names sticks to the top edge while the rows scroll;
-   · < 900 px – the table scrolls sideways inside `.cw-scrollx`, the parameter column sticks to
-     the left edge and each family column snaps next to it.
-   Only one thing sticks at a time (pattern rule): the header row or the first column.
-   `border-collapse:separate` keeps the cell borders on the sticky cells (collapsed borders stay
-   behind with the table). Data gaps are drawn as dashed chips, so a gap never reads as a value. */
-.c5pr-techsheet{background:var(--w-surface-page);color:var(--w-text-primary);}
-/* the section is a plain block with a block content wrapper: nothing may size it to the table's
-   intrinsic width (the phone table is ~1050 px wide and scrolls inside .cw-scrollx) */
-.c5pr-techsheet{display:block;}
-.c5pr-techsheet > .c5-wrap{width:100%;min-width:0;}
-.c5pr-techsheet .c5-h2{text-wrap:balance;}
-
-.c5pr-tabwrap{margin-top:clamp(2.5rem,5vw,4rem);}
-.c5pr-tabwrap:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:6px;}
-.c5pr-tab{width:100%;table-layout:fixed;border-collapse:separate;border-spacing:0;font-size:0.9375rem;line-height:1.5;color:var(--w-text-primary);font-variant-numeric:tabular-nums;}
-.c5pr-tab col:first-child{width:17%;}
-.c5pr-tab th,.c5pr-tab td{text-align:left;vertical-align:top;padding:16px 18px;border-bottom:1px solid var(--w-border-subtle);overflow-wrap:break-word;}
-.c5pr-tab thead th{position:sticky;top:0;z-index:2;padding-block:20px 14px;background:var(--w-surface-page);font-size:0.9375rem;font-weight:var(--w-weight-semibold);line-height:1.3;letter-spacing:-0.005em;vertical-align:bottom;border-bottom:1px solid var(--w-gray-900);}
-.c5pr-tab thead th:first-child{font-size:0.75rem;font-weight:var(--w-weight-medium);letter-spacing:.04em;text-transform:uppercase;color:var(--w-text-tertiary);}
-.c5pr-tab tbody th{font-weight:var(--w-weight-medium);color:var(--w-text-secondary);}
-/* EL-14: the footnote under a value – anatomy in ce/00-base.css (.c5-src), only its
-   place in the cell stays here. EL-16: „brak danych” is a dashed chip (.c5-chip--dashed). */
-.c5pr-tab .c5-src{display:block;margin-top:4px;}
-/* reading across a row on a pointer device */
-@media (hover:hover){
-  .c5pr-tab tbody tr:hover > *{background:color-mix(in srgb,var(--w-gray-900) 3%,transparent);}
-  /* the pinned parameter cell (< 900 px) must stay opaque, or the scrolled cells show through it */
-  .c5pr-tab tbody tr:hover > :first-child{background:color-mix(in srgb,var(--w-gray-900) 3%,var(--w-surface-page));}
-}
-.c5pr-tab tfoot th,.c5pr-tab tfoot td{border-bottom:0;padding-top:18px;}
-.c5pr-tab tfoot th{font-weight:var(--w-weight-medium);color:var(--w-text-secondary);padding-top:30px;}
-.c5pr-tab__acts{display:flex;flex-direction:column;align-items:flex-start;gap:0;}
-.c5pr-tab__acts .c5-chip{margin-top:12px;}
-.c5pr-doc{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-size:0.875rem;font-weight:var(--w-weight-medium);line-height:1.3;color:var(--w-text-primary);text-decoration:underline;text-decoration-color:var(--w-border-default);text-underline-offset:4px;}
-.c5pr-doc:hover{text-decoration-color:currentColor;}
-.c5pr-doc:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:2px;}
-.c5pr-doc .wf-icon{flex:none;width:16px;height:16px;opacity:.6;}
-/* Column(s) picked with „pokaż w tabeli" (module 40): a quiet wash down the column and a heavy
-   rule on its header – the sticky header cell needs the wash on itself. */
-.c5pr-tab col.is-pick,.c5pr-tab thead th.is-pick{background:var(--w-surface-sunken);}
-.c5pr-tab thead th.is-pick{box-shadow:inset 0 3px 0 var(--w-gray-900);}
-
-/* type from EL-14 (.c5-src); measure and spacing stay with the page */
-.c5pr-techsheet__src{max-width:88ch;margin-top:var(--w-space-5);}
-
-/* Jak czytać tabelę: zasada ogólna szeroko + trzy uwagi kolumnowe. Each note hangs under a black
-   rule (the language of the table header, not a card); the buttons line up at the bottom. */
-.c5pr-read{margin-top:clamp(3.5rem,7vw,5.5rem);}
-.c5pr-read__lead{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.7fr);gap:clamp(1rem,3vw,2.5rem);align-items:start;}
-.c5pr-read__h{font-size:clamp(1.25rem,2vw,1.5rem);font-weight:var(--w-weight-medium);line-height:1.3;letter-spacing:-0.01em;text-wrap:balance;}
-.c5pr-read__lead p{margin:0;max-width:68ch;font-size:1rem;line-height:1.6;color:var(--w-text-secondary);}
-.c5pr-read__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(1.5rem,3vw,2.5rem);margin-top:clamp(2rem,4vw,3rem);}
-/* EL-17 note, variant --rule (rule on top + 20 px above): anatomy in ce/00-base.css.
-   This one stacks (heading, paragraph, button) instead of standing beside an icon,
-   and its children keep the full column width. */
-.c5pr-note{flex-direction:column;align-items:stretch;gap:var(--w-space-3);}
-.c5pr-note__h{font-size:1rem;font-weight:var(--w-weight-semibold);line-height:1.35;text-wrap:balance;}
-.c5pr-note p{margin:0;font-size:0.875rem;line-height:1.6;color:var(--w-text-secondary);}
-.c5pr-note .c5-btn{align-self:flex-start;margin-top:auto;}
-/* the note has no leading icon – the 2 px of .c5-note .wf-icon must not reach the button */
-.c5pr-note .c5-btn .wf-icon{margin-top:0;}
-.c5pr-note .c5-btn[aria-pressed="true"]{background:var(--w-gray-900);color:var(--w-text-inverse);border-color:var(--w-gray-900);}
-.c5pr-note .c5-btn[aria-pressed="true"] .wf-icon{opacity:.8;}
-.c5pr-techsheet__actions{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:clamp(2.5rem,5vw,4rem);}
-
-/* wide screens: no scroll container, so the header row can stick to the viewport */
-@media (min-width:900px){
-  .c5pr-techsheet .c5pr-tabwrap{overflow:visible;}
-}
-/* 900–1239 px: the chapter dots (fixed, 30 px from the right edge) would sit on the last family
-   column – the content keeps clear of them on both sides, so the head stays centred */
-@media (min-width:900px) and (max-width:1239px){
-  .c5pr-techsheet > .c5-wrap{padding-inline:64px;}
-}
-@media (max-width:1023px){
-  .c5pr-read__lead,.c5pr-read__grid{grid-template-columns:minmax(0,1fr);}
-}
-/* narrow screens: sideways scroll with the parameter column pinned; one family column fits next to
-   it in full (at most 15rem) and the next one peeks in by 24 px, so the table reads as scrollable */
-@media (max-width:899px){
-  .c5pr-techsheet{--c5pr-param-w:124px;--c5pr-fam-w:min(15rem,calc(100vw - 40px - var(--c5pr-param-w) - 24px));}
-  .c5pr-tab{width:calc(var(--c5pr-param-w) + 4 * var(--c5pr-fam-w));}
-  .c5pr-tab col:first-child{width:var(--c5pr-param-w);}
-  .c5pr-tab col[data-col]{width:var(--c5pr-fam-w);}
-  .c5pr-techsheet .c5pr-tabwrap{scroll-snap-type:x proximity;scroll-padding-left:var(--c5pr-param-w);overscroll-behavior-x:contain;}
-  .c5pr-tab th,.c5pr-tab td{padding:14px;}
-  .c5pr-tab thead th{position:static;}
-  .c5pr-tab thead th[data-col]{scroll-snap-align:start;}
-  .c5pr-tab tr > :first-child{position:sticky;left:0;z-index:1;background:var(--w-surface-page);box-shadow:inset -1px 0 0 var(--w-border-subtle);}
-}
-
-/* ===== 45 · Lightbox porównania – CE-25 przeniesiony z CARBOMAT MATA (20.09.2026) =====
-   Komentarze z przeglądu artefaktu 20.09: cała sekcja z tabelą (razem z blokami „jak czytać
-   tabelę") mieszka od teraz w nakładce, którą otwiera „Porównaj" przy tabach i nowy szeroki
-   przycisk pod pokazem. Klasy i mechanika 1:1 z `carbomat-mata.css ===== 55` – jedyne różnice
-   biorą się stąd, że strona ma JEDNĄ stronę treści i szeroką tabelę:
-   · stopka z licznikiem i krokami nie istnieje (jedna strona), więc nie ma jej w markupie;
-   · panel jest szerszy (1280 px zamiast 1040), bo tabela ma pięć kolumn;
-   · kontener treści (`.c5-wrap`) gubi w nakładce swoją szerokość i gutter – panel ma własne.
-   Bez `is-js` (czyli bez JS) `.c5-lb` jest zwykłym blokiem w biegu strony, dokładnie tam, gdzie
-   sekcja stała do 19.09: żadna treść nie znika. ================================= */
-.c5-lb{display:block;max-width:1180px;margin:clamp(2.5rem,5vw,4rem) auto 0;padding-inline:var(--w-space-5);}
-.c5-lb__panel{display:flex;flex-direction:column;min-height:0;}
-.c5-lb .c5-iconbtn{display:none;}
-.c5-lb__scroll{display:flex;flex-direction:column;}
-.c5-lb__page{display:flex;flex-direction:column;}
-
-/* --- the overlay itself (only with JS) ------------------------------------- */
-.c5-lb.is-js{display:none;position:fixed;inset:0;z-index:var(--w-z-toast);place-items:center;padding:var(--c5-gutter);max-width:none;margin:0;background:rgb(0 0 0 / .55);}
-.c5-lb.is-js[data-open="true"]{display:grid;animation:c5-lb-in 200ms var(--w-ease);}
-/* min-width:0 on the panel, the scroller and the page – without it the 1050 px wide table
-   sets the min-content width of the grid item and the panel grows past the window on a
-   phone (measured: 914 px inside a 375 px window). The table scrolls inside .cw-scrollx,
-   so the panel may shrink below it. */
-.c5-lb.is-js .c5-lb__panel{position:relative;width:100%;min-width:0;max-width:1280px;max-height:calc(100svh - 2 * var(--c5-gutter));background:var(--w-surface-page);border:1px solid var(--w-border-default);}
-.c5-lb.is-js .c5-lb__scroll,.c5-lb.is-js .c5-lb__page{min-width:0;}
-.c5-lb.is-js[data-open="true"] .c5-lb__panel{animation:c5-lb-panel-in 220ms var(--w-ease);}
-.c5-lb.is-js .c5-iconbtn{display:grid;position:absolute;top:var(--w-space-4);right:var(--w-space-4);z-index:2;}
-.c5-lb.is-js .c5-lb__scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:clamp(1.25rem,3vw,2.5rem);}
-.c5-lb.is-js .c5-lb__page{animation:c5-lb-page-in 180ms var(--w-ease);}
-/* the content wrapper of the page inside the panel: the panel already carries the measure
-   and the padding, so the wrapper only fills it */
-.c5-lb.is-js .c5-wrap{max-width:none;padding-inline:0;}
-/* the close button sits over the top right corner. On a wide panel the centred head
-   passes well clear of it; on a narrow one the kicker runs straight under the button,
-   so the scroller opens a strip as tall as the button plus its margin. */
-@media (max-width:899px){
-  .c5-lb.is-js .c5-lb__scroll{padding-top:calc(var(--w-space-4) + var(--w-control-h-md) + 8px);}
-}
-@keyframes c5-lb-in{from{opacity:0;}to{opacity:1;}}
-@keyframes c5-lb-panel-in{from{transform:scale(.98);}to{transform:none;}}
-@keyframes c5-lb-page-in{from{opacity:0;}to{opacity:1;}}
-@media (max-width:899px){
-  .c5-lb.is-js{padding:16px;}
-  .c5-lb.is-js .c5-lb__panel{max-width:none;max-height:calc(100svh - 32px);}
-}
-@media (prefers-reduced-motion:reduce){
-  .c5-lb.is-js[data-open="true"],.c5-lb.is-js[data-open="true"] .c5-lb__panel,.c5-lb.is-js .c5-lb__page{animation:none;}
-}
+/* ===== 40 + 45 · Porównanie i okno porównania =====
+   Moved to the modules ce/CE-40-tabela-technikaliow.css (table, notes, source line)
+   and ce/CE-25-lightbox.css (window shell `c5-lb`) on 18.10.2026 (design system v0.1,
+   stage C). The page keeps no exceptions here. ===== */
 
 /* ===== 50 · Wg potrzeby – goal index with photos + paths as two columns (spec §8) =====
    8.1 six goal cards: 4:3 photo on top, :target outlines the whole card (mega-menu anchors);
@@ -323,133 +80,29 @@
    Anchor offsets (.c5pr-goal[id]) stand in the "00+ · additions" block at the top of
    this sheet; .c5pr-paths__panel disappeared with the layout of iteration 3. */
 
-/* --- 8.1 Goal index ------------------------------------------------------------------- */
-.c5pr-goals{margin-top:clamp(2.5rem,5vw,4rem);}
-.c5pr-goals__lead{margin:0 0 var(--w-space-5);font-size:0.8125rem;letter-spacing:.06em;text-transform:uppercase;color:var(--w-text-tertiary);}
-.c5pr-goals__list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:minmax(0,1fr);gap:var(--w-space-5);}
-@media (min-width:700px){.c5pr-goals__list{grid-template-columns:repeat(2,minmax(0,1fr));}}
-@media (min-width:1100px){.c5pr-goals__list{grid-template-columns:repeat(3,minmax(0,1fr));}}
-.c5pr-goal{--c5pr-goal-pad:clamp(1rem,2vw,1.5rem);display:flex;flex-direction:column;gap:var(--w-space-2);min-width:0;border:1px solid var(--w-border-default);background:var(--w-surface-page);padding:0 0 var(--c5pr-goal-pad);}
-.c5pr-goal__media{flex:none;aspect-ratio:4/3;overflow:hidden;background:var(--w-gray-200);margin-bottom:var(--w-space-3);}
-.c5pr-goal__media img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s var(--w-ease);}
-@media (hover:hover){.c5pr-goal:hover .c5pr-goal__media img{transform:scale(1.04);}}
-.c5pr-goal__name,.c5pr-goal__txt,.c5pr-goal__go{padding-inline:var(--c5pr-goal-pad);}
-.c5pr-goal__name{font-size:1.0625rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
-.c5pr-goal__txt{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
-.c5pr-goal__go{margin-top:auto;padding-top:var(--w-space-2);font-size:0.875rem;color:var(--w-text-tertiary);}
-/* inline links: vertical padding widens the tap area to ~44 px without moving the text */
-.c5pr-goal__go .wf-link{padding-block:14px;}
-/* goal reached from the mega-menu (no JS needed) */
-.c5pr-goal:target{outline:2px solid var(--w-gray-900);outline-offset:2px;}
+/* --- 8.1 Goal index → ce/CE-70-scena-slajdow.css, variant `c5-vs--stos` (stage E,
+   18.10.2026: Figma 772:1079 – the six goals as a pinned stack scene). No rule here. */
 
 /* 8.2 Paths → ce/CE-30-lista-z-panelem.css */
 
 /* --- 8.3 "Żadna ścieżka nie pasuje?" – shared strip --------------------------------------- */
-#wg-potrzeby .c5pr-bar .c5-btn{white-space:nowrap;}
-@media (max-width:699px){#wg-potrzeby .c5pr-bar .c5-btn{justify-self:start;white-space:normal;}}
 
-@media (prefers-reduced-motion: reduce){
-  .c5pr-goal__media img{transition:none;}
-}
 
 /* --- 60 · CE-12 „Scena faktów” (#jak-dzialaja) --------------------------------
    No rule of the scene lives in this sheet. Layout, mechanics and look come from
    ce/CE-12-scena-faktow.css; this page picks them in produkty.html on the root
-   of the scene – the class c5-fx--glass-v1 and, as style="--…", the photo crops
-   (--c5-fx-pos-N), the scale of the scene heading (--c5-fx-h2-*), the gap under
-   the badge (--c5-fx-head-gap) and the gaps of the description
-   (--c5-fx-body-gap, --c5-fx-list-gap). */
-/* --- Knowledge blocks (former inline layer): table of materials + soil optimum ---------- */
-.c5pr-two{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(1.5rem,3vw,3rem);align-items:start;margin-top:clamp(2.5rem,5vw,4rem);}
-@media (max-width:899px){ .c5pr-two{grid-template-columns:minmax(0,1fr);} }
-/* stacked variant: one under the other, each block full width (reviews of 12.09 and 14.09) */
-.c5pr-two--stack{grid-template-columns:minmax(0,1fr);}
-/* after the cascade (CE-15 trial, spec §22.2) the blocks get a longer run-up – the same air
-   the pinned rows used to leave behind them, now measured from the new root */
-.c5-casc + .c5-wrap > .c5pr-two{margin-top:clamp(3.5rem,7vw,6rem);}
-/* Soil optimum: one 100 % scale of three shares; labels in the same grid. */
-.c5pr-mix{margin-top:var(--w-space-2);}
-.c5pr-mix__bar{display:grid;grid-template-columns:50fr 25fr 25fr;height:clamp(56px,6.5vw,84px);border:1px solid var(--w-gray-900);}
-.c5pr-mix__seg{display:grid;place-items:center;font-size:clamp(0.875rem,1.2vw,1.0625rem);font-weight:var(--w-weight-semibold);letter-spacing:-0.01em;}
-.c5pr-mix__seg + .c5pr-mix__seg{border-left:1px solid var(--w-gray-900);}
-.c5pr-mix__seg--a{background:var(--w-gray-900);color:var(--w-text-inverse);}
-.c5pr-mix__seg--b{background:var(--w-gray-400);color:var(--w-text-primary);}
-.c5pr-mix__seg--c{background:var(--w-gray-200);color:var(--w-text-primary);}
-.c5pr-mix__names{display:grid;grid-template-columns:50fr 25fr 25fr;margin-top:var(--w-space-2);font-size:0.875rem;color:var(--w-text-secondary);}
-.c5pr-mix__names span{text-align:center;}
-/* block – shared by #co-daja and #dowod */
-.c5pr-block{display:flex;flex-direction:column;gap:var(--w-space-4);border:1px solid var(--w-border-default);background:var(--w-surface-page);padding:clamp(1.25rem,2.2vw,1.75rem);}
-.c5pr-block__h{font-size:1.0625rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
-.c5pr-block .wf-table{font-size:var(--w-font-sm-size);}
-
-/* ===== 70 · Dowód – two proof blocks stacked at full width + certificates (spec §11) =====
-   Blocks come from 65 (.c5pr-two, .c5pr-block), the bar chart (.c5-barchart) from ce/CE-12-scena-faktow.css. */
-.c5pr-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--w-space-5);margin-top:clamp(1.5rem,3vw,2.25rem);}
-.c5pr-stat{display:flex;flex-direction:column;gap:var(--w-space-2);border-top:1px solid var(--w-border-default);padding-top:var(--w-space-4);}
-.c5pr-stat__num{font-size:clamp(1.75rem,3.4vw,2.5rem);font-weight:var(--w-weight-bold);line-height:1;letter-spacing:-0.02em;}
-.c5pr-stat p{margin:0;font-size:0.875rem;color:var(--w-text-secondary);}
-
-/* Bars grow once their block enters – behind the same gates as the reveal (00-base), so with
-   reduced motion, on a phone and without JS the bars simply stand at full length. The fill
-   keeps its width (--bw); only a scale runs, 60 ms apart per bar. */
-@media (min-width:900px) and (prefers-reduced-motion: no-preference){
-  .cx-js [data-reveal] .c5-barchart .c5-bar__fill{transform:scaleX(0);transform-origin:left center;}
-  .cx-js [data-reveal].is-in .c5-barchart .c5-bar__fill{transform:none;transition:transform .7s var(--w-ease) .2s;}
-  .cx-js [data-reveal].is-in .c5-barchart .c5-bar:nth-child(2) .c5-bar__fill{transition-delay:.26s;}
-  .cx-js [data-reveal].is-in .c5-barchart .c5-bar:nth-child(3) .c5-bar__fill{transition-delay:.32s;}
-  .cx-js [data-reveal].is-in .c5-barchart .c5-bar:nth-child(4) .c5-bar__fill{transition-delay:.38s;}
-  .cx-js [data-reveal].is-in .c5-barchart .c5-bar:nth-child(5) .c5-bar__fill{transition-delay:.44s;}
-  .cx-js [data-reveal].is-in .c5-barchart .c5-bar:nth-child(n+6) .c5-bar__fill{transition-delay:.5s;}
-}
-
-/* ===== 75 · Doglebowo czy nalistnie (spec §12, layout as carbohumic-doglebowy.css 76) =====
-   Comparison of the two application routes + the two foliar products. The table rows enter
-   through `data-reveal` on `tbody` (js/72-reveal.js); the transform runs on the table row,
-   so the column layout stays untouched. */
-.c5pr-cmp{margin-top:clamp(1.5rem,3vw,2.5rem);}
-/* a row still sliding in (translateY) must not add a vertical scrollbar to the scroll box */
-.c5pr-cmp.cw-scrollx{overflow-y:hidden;}
-.c5pr-cmp .wf-table{min-width:640px;}
-.c5pr-cmp .wf-table th,.c5pr-cmp .wf-table td{width:50%;vertical-align:top;}
-/* Packshoty nad etykietami kolumn – wariant CE-22 „z-packshotami", metryki 1:1 z
-   `carbohumic-doglebowy.css` (.c5hu-cmp__shot): kwadratowe pole --w-gray-100 na całą szerokość
-   kolumny do 220 px, produkt wpisany w 72 % jego wysokości. Packshot leży absolutnie,
-   bo bez tego jego własne proporcje rozpychają kwadrat (butelka 321 × 812 robiła
-   z pola 220 px pole 220 × 456). Nazwa produktu pod etykietą kolumny – na stronie
-   o całej gamie sam kształt opakowania nie mówi, o co chodzi. */
-.c5pr-cmp thead th{text-align:center;}
-.c5pr-cmp__shot{position:relative;display:block;width:100%;max-width:220px;aspect-ratio:1;
-  margin:0 auto var(--w-space-3);background:var(--w-gray-100);}
-.c5pr-cmp__shot img{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-  height:72%;width:auto;max-width:82%;object-fit:contain;}
-/* wariant z kadrem sposobu aplikacji (od 20.09.2026): zdjęcie wypełnia kwadrat,
-   inaczej niż packshot, który stoi w nim ze światłem dookoła */
-.c5pr-cmp__shot--foto img{position:absolute;inset:0;width:100%;height:100%;max-width:none;
-  transform:none;object-fit:cover;}
-@media (max-width:899px){
-  .c5pr-cmp__shot{max-width:140px;}
-}
-/* Entry links under the column labels (16.10.2026, CARBOHUMIC split into a soil-applied
-   and a foliar page) – metrics 1:1 with .c5hu-cmp__go in carbohumic-doglebowy.css. */
-.c5pr-cmp__go{display:flex;align-items:center;gap:var(--w-space-1);width:fit-content;margin:var(--w-space-2) auto 0;
-  font-size:0.875rem;font-weight:var(--w-weight-medium);color:var(--w-text-primary);text-decoration:none;
-  border-bottom:1px solid var(--w-border-strong);padding-bottom:1px;}
-.c5pr-cmp__go:hover{border-bottom-color:var(--w-gray-900);}
-.c5pr-cmp__go:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:var(--w-focus-ring-offset);}
-.c5pr-foliar{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:var(--w-space-5);margin-top:clamp(2rem,4vw,3rem);}
-.c5pr-foliar__card{display:flex;flex-direction:column;gap:var(--w-space-3);border:1px solid var(--w-border-default);padding:clamp(1.25rem,2.2vw,1.75rem);}
-/* Karta produktu nalistnego pokazuje PRODUKT (przegląd 20.09), więc zamiast
-   kadru 16:10 stoi w niej pole z packshotem – te same metryki co pola nad kolumnami
-   tabeli wyżej: jasne pole i produkt wpisany w 72 % jego wysokości. */
-.c5pr-foliar__shot{position:relative;display:block;width:100%;aspect-ratio:16/10;background:var(--w-gray-100);}
-.c5pr-foliar__shot img{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-  height:72%;width:auto;max-width:82%;object-fit:contain;}
-.c5pr-foliar__name{font-size:1.25rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
-.c5pr-foliar__card p{margin:0;font-size:0.9375rem;color:var(--w-text-secondary);}
-.c5pr-foliar__rows{display:flex;flex-direction:column;margin:0;}
-.c5pr-foliar__row{display:flex;flex-direction:column;gap:2px;padding-block:9px;border-top:1px solid var(--w-border-subtle);font-size:0.875rem;}
-.c5pr-foliar__row dt{color:var(--w-text-tertiary);}
-.c5pr-foliar__row dd{margin:0;}
-.c5pr-foliar__card .c5-btnrow{margin-top:auto;padding-top:var(--w-space-2);}
+   of the scene – the classes c5-fx--glass and c5-fx--naglowek-ramka (the look of
+   Figma 778:1463, the same as CARBOMAT ECO, without the beige ground) and, as
+   style="--…", the photo crops (--c5-fx-pos-N). */
+/* CE-41 `jeden-pod-drugim` (the knowledge blocks of #co-daja and #dowod) and the CE-22
+   variants `z-packshotami` (#doglebowo-tabela) and `danych` (#certyfikaty) live in
+   ce/CE-41-bloki-wiedzy.css and ce/CE-22-tabela.css; nothing of them is left in this sheet. */
+/* CE-20 `z-przyciskami` (karty produktów nalistnych): wygląd i anatomia karty
+   żyją w ce/CE-20-siatka-kart.css; tu zostaje tylko odstęp nad siatką. */
+/* R12: Figma 801:567 – 80 px from the head of the section to the cards; the packshot field carries
+   the outline of the sign (G12, classes c5-sygnet c5-sygnet--obrys in the markup), drawn larger
+   than the field and running off its edges as in 801:1008 */
+#doglebowo-nalistne{margin-top:clamp(2.5rem,5.6vw,var(--ch-space-20));--c5-cards-shot-bg:var(--ch-surface-warm-strong);}
+#doglebowo-nalistne .c5-cards__shot{--c5-sygnet-size:auto 154%;--c5-sygnet-x:38%;--c5-sygnet-y:9%;}
 
 

@@ -1,0 +1,112 @@
+/* ===== CE-40 · Tabela technikaliów z podświetlaniem kolumn – module (design system v0.1, stage C 18.10.2026) =====
+   Variant `w-lightboxie` (Produkty). Look from Figma 903:2340 (table of row
+   cards, EL-21 anatomy), content and mechanics from the v7 markup. The window
+   shell itself is CE-25 (ce/CE-25-lightbox.css). Styles of this CE live here;
+   the page sheet keeps only exceptions of one page.
+   · >= 900 px – the table fills the content width (fixed layout, no scroll
+     container) and the header row with the four family names sticks to the top
+     edge of the window while the rows scroll;
+   · < 900 px – the table scrolls sideways inside `.cw-scrollx`, the parameter
+     column sticks to the left edge and each family column snaps next to it.
+   Only one thing sticks at a time: the header row or the first column.
+   `border-collapse:separate` keeps the sticky cells' backgrounds with them.
+   Data gaps are chips, so a gap never reads as a value.
+   Column pick („pokaż w tabeli", produkty.js) toggles `.is-pick` on `<col>` and
+   `<th>`; with the row cards the column is drawn through the cells
+   (`:has()` on the `<col>`), because a column background does not paint
+   between separated cards. ===== */
+.c5pr-techsheet{display:block;background:var(--ch-surface-page);color:var(--ch-text-primary);}
+/* nothing may size the section to the table's intrinsic width (the phone table is
+   ~1050 px wide and scrolls inside .cw-scrollx) */
+.c5pr-techsheet > .c5-wrap{width:100%;min-width:0;}
+.c5pr-techsheet .c5-h2{text-wrap:balance;}
+
+.c5pr-tabwrap{margin-top:clamp(2.5rem,5vw,4rem);}
+.c5pr-tabwrap:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:6px;}
+
+/* --- table of row cards (EL-21 anatomy) --------------------------------- */
+.c5pr-tab{width:100%;table-layout:fixed;border-collapse:separate;border-spacing:0 6px;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-relaxed-lh);color:var(--ch-text-primary);font-variant-numeric:tabular-nums;}
+.c5pr-tab col:first-child{width:15%;}
+.c5pr-tab th,.c5pr-tab td{text-align:left;vertical-align:middle;padding:var(--ch-space-4) var(--ch-space-5);border:0;overflow-wrap:break-word;font-weight:var(--ch-font-weight-regular);}
+/* column heads: no card, light grey (grey-600 at 60 %), white so the rows slide under them */
+.c5pr-tab thead th{position:sticky;top:0;z-index:2;padding-block:0 var(--ch-space-3);background:var(--ch-surface-page);font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:color-mix(in srgb,var(--ch-text-secondary) 60%,transparent);vertical-align:bottom;text-transform:none;letter-spacing:0;}
+.c5pr-tab thead th .c5pr-dim{opacity:1;}
+/* the cards: beige-50 at .6, 12 px corners at both ends of a row */
+.c5pr-tab tbody th,.c5pr-tab tbody td,.c5pr-tab tfoot th,.c5pr-tab tfoot td{background:var(--ch-surface-warm-row);}
+.c5pr-tab tbody tr > :first-child,.c5pr-tab tfoot tr > :first-child{border-radius:var(--ch-radius-md) 0 0 var(--ch-radius-md);}
+.c5pr-tab tbody tr > :last-child,.c5pr-tab tfoot tr > :last-child{border-radius:0 var(--ch-radius-md) var(--ch-radius-md) 0;}
+.c5pr-tab tfoot th{vertical-align:middle;}
+/* EL-14: the footnote under a value – 14/22 grey; anatomy of the type in ce/00-base.css (.c5-src) */
+.c5pr-tab .c5-src{display:block;margin-top:var(--ch-space-1);font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);}
+/* EL-16: no data – a filled beige chip (no outline), 13/14 capitals */
+.c5pr-tab .c5-chip{border:0;border-radius:var(--ch-radius-xs);padding:6px 10px;background:var(--ch-surface-warm-strong);font-size:var(--ch-type-kicker-size);line-height:var(--ch-type-kicker-lh);letter-spacing:var(--ch-type-kicker-ls);color:var(--ch-text-primary);}
+/* reading across a row on a pointer device */
+@media (hover:hover){
+  .c5pr-tab tbody tr:hover > *{background:var(--ch-surface-warm-strong);}
+}
+
+/* --- documents row: two buttons stacked, icon after the label -------------- */
+.c5pr-tab__acts{display:flex;flex-direction:column;align-items:flex-start;gap:var(--ch-space-1-5);}
+.c5pr-doc,.c5pr-tab__acts .c5-chip{display:inline-flex;align-items:center;gap:10px;min-height:var(--ch-size-control-m);padding:var(--ch-space-3) var(--ch-space-4);border-radius:var(--ch-radius-control-m);font-size:var(--ch-type-button-m-size);font-weight:var(--ch-type-button-m-weight);line-height:var(--ch-type-button-m-lh);letter-spacing:0;text-transform:none;color:var(--ch-text-primary);text-decoration:none;}
+.c5pr-doc{flex-direction:row-reverse;border:1px solid var(--ch-border-control);background:transparent;transition:background var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);}
+.c5pr-doc:hover{background:var(--ch-surface-page);border-color:var(--ch-border-strong);}
+.c5pr-doc:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:2px;}
+.c5pr-doc .wf-icon{flex:none;width:var(--ch-size-icon-s);height:var(--ch-size-icon-s);opacity:1;}
+/* „karta w przygotowaniu": the same button without the outline, on beige (inactive look) */
+.c5pr-tab__acts .c5-chip{background:var(--ch-surface-warm-strong);}
+
+/* --- column picked with „pokaż w tabeli" (cells + header, columns 2-5) ------ */
+.c5pr-tab thead th.is-pick{background:var(--ch-surface-accent-green-soft);border-radius:var(--ch-radius-md) var(--ch-radius-md) 0 0;color:var(--ch-text-primary);}
+.c5pr-tab:has(col:nth-child(2).is-pick) :is(tbody,tfoot) td:nth-child(2),
+.c5pr-tab:has(col:nth-child(3).is-pick) :is(tbody,tfoot) td:nth-child(3),
+.c5pr-tab:has(col:nth-child(4).is-pick) :is(tbody,tfoot) td:nth-child(4),
+.c5pr-tab:has(col:nth-child(5).is-pick) :is(tbody,tfoot) td:nth-child(5){background:var(--ch-color-green-50);}
+
+/* source line under the table: type from EL-14 (.c5-src); measure and spacing here */
+.c5pr-techsheet__src{max-width:88ch;margin-top:var(--ch-space-5);}
+
+/* --- „Jak czytać tabelę": a general rule wide + three column notes ------------ */
+.c5pr-read{margin-top:clamp(3.5rem,7vw,5.5rem);}
+.c5pr-read__lead{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.7fr);gap:clamp(1rem,3vw,2.5rem);align-items:start;}
+.c5pr-read__h{font-size:var(--ch-type-title-size);line-height:var(--ch-type-title-lh);font-weight:var(--ch-font-weight-regular);letter-spacing:var(--ch-type-title-ls);text-wrap:balance;}
+.c5pr-read__lead p{margin:0;max-width:68ch;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-relaxed-lh);color:var(--ch-text-secondary);}
+.c5pr-read__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(1.5rem,3vw,2.5rem);margin-top:clamp(2rem,4vw,3rem);}
+/* EL-17 note, variant --rule: anatomy in ce/00-base.css. This one stacks (heading, paragraph,
+   button) instead of standing beside an icon, and its children keep the full column width. */
+.c5pr-note{flex-direction:column;align-items:stretch;gap:var(--ch-space-3);}
+.c5pr-note__h{font-size:var(--ch-type-body-size);font-weight:var(--ch-font-weight-medium);line-height:var(--ch-type-body-lh);text-wrap:balance;}
+.c5pr-note p{margin:0;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-secondary);}
+.c5pr-note .c5-btn{align-self:flex-start;margin-top:auto;}
+/* the note has no leading icon – the 2 px of .c5-note .wf-icon must not reach the button */
+.c5pr-note .c5-btn .wf-icon{margin-top:0;}
+.c5pr-note .c5-btn[aria-pressed="true"]{background:var(--ch-surface-inverse);color:var(--ch-text-inverse);border-color:var(--ch-surface-inverse);}
+.c5pr-note .c5-btn[aria-pressed="true"] .wf-icon{opacity:.8;}
+.c5pr-techsheet__actions{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:clamp(2.5rem,5vw,4rem);}
+
+/* wide screens: no scroll container, so the header row can stick to the window's top edge */
+@media (min-width:900px){
+  .c5pr-techsheet .c5pr-tabwrap{overflow:visible;}
+}
+/* 900-1239 px: the chapter dots (fixed, 30 px from the right edge) would sit on the last family
+   column – the content keeps clear of them on both sides, so the head stays centred */
+@media (min-width:900px) and (max-width:1239px){
+  .c5pr-techsheet > .c5-wrap{padding-inline:64px;}
+}
+@media (max-width:1023px){
+  .c5pr-read__lead,.c5pr-read__grid{grid-template-columns:minmax(0,1fr);}
+}
+/* narrow screens: sideways scroll with the parameter column pinned; one family column fits next to
+   it in full (at most 15rem) and the next one peeks in by 24 px, so the table reads as scrollable */
+@media (max-width:899px){
+  .c5pr-techsheet{--c5pr-param-w:124px;--c5pr-fam-w:min(15rem,calc(100vw - 40px - var(--c5pr-param-w) - 24px));}
+  .c5pr-tab{width:calc(var(--c5pr-param-w) + 4 * var(--c5pr-fam-w));}
+  .c5pr-tab col:first-child{width:var(--c5pr-param-w);}
+  .c5pr-tab col[data-col]{width:var(--c5pr-fam-w);}
+  .c5pr-techsheet .c5pr-tabwrap{scroll-snap-type:x proximity;scroll-padding-left:var(--c5pr-param-w);overscroll-behavior-x:contain;}
+  .c5pr-tab th,.c5pr-tab td{padding:var(--ch-space-3);}
+  .c5pr-tab thead th{position:static;}
+  .c5pr-tab thead th[data-col]{scroll-snap-align:start;}
+  /* the pinned parameter cell stays opaque (white under the card tint), or the scrolled cells show through it */
+  .c5pr-tab tr > :first-child{position:sticky;left:0;z-index:1;background:linear-gradient(var(--ch-surface-warm-row),var(--ch-surface-warm-row)),var(--ch-surface-page);}
+  .c5pr-tab thead tr > :first-child{background:var(--ch-surface-page);}
+}

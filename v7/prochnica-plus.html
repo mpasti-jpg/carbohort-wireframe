@@ -13,12 +13,19 @@
   <link rel="stylesheet" href="ce/CE-07-nawigacja-kropkowa.css">
   <link rel="stylesheet" href="ce/CE-08-hero.css">
   <link rel="stylesheet" href="ce/CE-09-marquee.css">
+  <link rel="stylesheet" href="ce/CE-11-warianty-pasma.css">
   <link rel="stylesheet" href="ce/CE-12-scena-faktow.css">
+  <link rel="stylesheet" href="ce/CE-20-siatka-kart.css">
   <link rel="stylesheet" href="ce/CE-24-pas-liczb.css">
+  <link rel="stylesheet" href="ce/CE-33-cytat-zasada.css">
   <link rel="stylesheet" href="ce/CE-69-wstep-z-kadrem.css">
   <link rel="stylesheet" href="ce/CE-70-scena-slajdow.css">
   <link rel="stylesheet" href="ce/CE-90-os-programu.css">
   <link rel="stylesheet" href="ce/CE-93-karuzela-relacji.css">
+  <link rel="stylesheet" href="ce/CE-37-pop-up-karty.css">
+  <link rel="stylesheet" href="ce/CE-44-napis-z-kaflami.css">
+  <link rel="stylesheet" href="ce/CE-48-karty-biogramow.css">
+  <link rel="stylesheet" href="ce/CE-53-lista-wierszy.css">
   <link rel="stylesheet" href="prochnica-plus.css">
 <script src="../status.js"></script>
 <script src="../ce-rejestr.js"></script>
@@ -32,9 +39,9 @@
 <cw-navbar data-current="prochnica-plus"></cw-navbar>
 
 
-<nav id="nawigacja-kropki" class="c5-dots" style="--c5-dots-right:10px" aria-label="Rozdziały strony programu Próchnica+" data-dots data-ce="CE-07">
+<nav id="nawigacja-kropki" class="c5-dots" aria-label="Rozdziały strony programu Próchnica+" data-dots data-ce="CE-07">
   <ol>
-    <li><a class="c5-dots__link" href="#hero" data-dot="hero"><span class="c5-dots__label">Start</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#hero" data-dot="hero"><span class="c5-dots__label">Początek</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
     <li><a class="c5-dots__link" href="#o-programie" data-dot="o-programie"><span class="c5-dots__label">O programie</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
     <li><a class="c5-dots__link" href="#zalozenia" data-dot="zalozenia"><span class="c5-dots__label">Założenia</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
     <li><a class="c5-dots__link" href="#uczestnicy-programu" data-dot="uczestnicy"><span class="c5-dots__label">Uczestnicy</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
@@ -73,7 +80,9 @@
 
 
 
-    <section id="hero" class="pp-intro" data-chapter="hero" data-ce="CE-08" data-ce-wariant="player" data-pp-intro>
+    
+
+    <section id="hero" class="pp-intro c5-sygnet" data-chapter="hero" data-ce="CE-08" data-ce-wariant="player" data-pp-intro>
       <div class="c5-wrap c5-wrap--wide">
         <div class="c5-hero c5-hero--player">
           <div class="c5-hero__copy">
@@ -81,8 +90,22 @@
               <span class="c5-kicker c5-kicker--outline">Program Próchnica+</span>
               <h1 class="c5-h1">Wspólnie wracamy do korzeni</h1>
               <div class="c5-btnrow">
-                <a class="c5-btn c5-btn--dark" href="#uczestnicy-programu">poznaj gospodarstwa</a>
-                <a class="c5-btn c5-btn--light" href="#film" data-pp-film-open><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-player-play"></use></svg> obejrzyj film otwarcia</a>
+                <a class="c5-btn c5-btn--dark" href="#uczestnicy-programu">Poznaj gospodarstwa</a>
+                
+
+                <a class="c5-btn c5-btn--light c5-hero__filmbtn" href="#film" data-pp-film-open>Obejrzyj film otwarcia <svg class="wf-icon pp-ico-cplay" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 9.003a1 1 0 0 1 1.517-.859l4.997 2.997a1 1 0 0 1 0 1.718l-4.997 2.997A1 1 0 0 1 9 14.996z"/><circle cx="12" cy="12" r="10"/></svg></a>
+              </div>
+            </div>
+          </div>
+          <div class="c5-hero__stage">
+            <div class="pp-intro__rail" data-pp-rail>
+              <div class="pp-intro__pin">
+                
+
+                <figure class="pp-film" id="film" data-yt="">
+                  <button type="button" class="pp-film__play" aria-label="Odtwórz film otwarcia programu" data-pp-film-open><img class="pp-film__poster" src="img/foto/prochnica-01-rows-of-crops-sunset.jpg" alt="" width="1400" height="1049" decoding="async"><span class="pp-film__btn c5-glass"><svg class="wf-icon" aria-hidden="true"><use href="#ti-player-play"></use></svg></span></button>
+                  <figcaption class="wf-caption">Player YouTube – film otwarcia programu.</figcaption>
+                </figure>
               </div>
             </div>
             <nav class="wf-breadcrumb c5-hero__crumbs" aria-label="Okruszki">
@@ -94,16 +117,6 @@
                 <li aria-current="page">Program Próchnica+</li>
               </ol>
             </nav>
-          </div>
-          <div class="c5-hero__stage">
-            <div class="pp-intro__rail" data-pp-rail>
-              <div class="pp-intro__pin">
-                <figure class="pp-film" id="film">
-                  <button type="button" class="wf-ph pp-film__play" aria-label="Odtwórz film otwarcia programu" data-pp-film-open><svg class="wf-icon" aria-hidden="true"><use href="#ti-player-play"></use></svg></button>
-                  <figcaption class="wf-caption">Player YouTube – film otwarcia programu.</figcaption>
-                </figure>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -131,34 +144,37 @@
 
 
 
-    <section class="c5-sec c5-opener pp-opis" id="o-programie" data-chapter="o-programie" data-ce="CE-69">
+
+
+
+    <section class="c5-sec c5-opener c5-opener--z-playerem pp-opis" id="o-programie" data-chapter="o-programie" data-ce="CE-69">
       <div class="c5-wrap c5-wrap--wide">
 
         <div class="c5-opener__top">
-          <div class="c5-opener__copy pp-opis__left">
+          <div class="c5-opener__copy">
 
-            <div class="pp-opis__txt" data-reveal>
+            <div class="c5-opener__txt" data-reveal>
               <p>Program Próchnica+ to innowacyjny projekt badawczo-rozwojowy, który stanowi pomost między światem nauki, wiedzą ekspercką a praktyką producentów żywności.</p>
               <p>Jego głównym celem jest wnikliwa analiza, jak produkty Carbohort – bazujące na młodym węglu brunatnym – oddziałują na poprawę żyzności i struktury gleby, ogólną kondycję roślin, a także jakość i ilość uzyskanego plonu. Próchnica+ ma charakter praktyczny i edukacyjny. Oczekujemy, że uzyskane w naszych doświadczeniach wyniki będą stanowić przekonujący dowód na skuteczność naturalnych metod poprawy jakości gleby i zachęcą innych producentów żywności do większej troski o glebę.</p>
             </div>
 
-            <div class="pp-opis__prodwrap" data-reveal>
-              <p class="pp-opis__label">Produkt badany w programie:</p>
+            <div class="c5-opener__prodwrap" data-reveal>
+              <p class="c5-opener__label">Produkt badany w programie:</p>
               <div class="c5-opener__prod pp-opis__prod">
-                <p class="c5-opener__prodname">CARBOHUMIC niefiltrowany</p>
-                <div class="c5-opener__prodtop pp-opis__prodtop">
+                <p class="c5-opener__prodname">Carbohumic niefiltrowany</p>
+                <div class="c5-opener__prodtop">
                   <ul class="c5-opener__feats">
                     <li><svg class="wf-icon" aria-hidden="true"><use href="#ti-check"></use></svg><span>Lignit i leonardyt</span></li>
                     <li><svg class="wf-icon" aria-hidden="true"><use href="#ti-check"></use></svg><span>Ponad 80 makro- i mikroelementów oraz aminokwasy</span></li>
                     <li><svg class="wf-icon" aria-hidden="true"><use href="#ti-check"></use></svg><span>Certyfikaty ekologiczne: IUNG · FiBL · SKAAL</span></li>
                     <li><svg class="wf-icon" aria-hidden="true"><use href="#ti-check"></use></svg><span>W programie: dawki 200 i 500 l/ha</span></li>
                   </ul>
-                  <span class="c5-opener__pack"><img src="img/opakowania/kanister_20l.png" alt="CARBOHUMIC niefiltrowany – kanister 20 l" loading="lazy" decoding="async"></span>
+                  <span class="c5-opener__pack"><img src="img/opakowania/kanister_20l.png" alt="Carbohumic niefiltrowany – kanister 20 l" loading="lazy" decoding="async"></span>
                 </div>
-                <div class="c5-opener__btns pp-opis__btns">
+                <div class="c5-opener__btns">
                   
-                  <a class="c5-btn c5-btn--dark" href="sklep.html?f=linia:carbohumic">kup w sklepie</a>
-                  <a class="c5-btn c5-btn--light" href="carbohumic-doglebowy.html#wariant-niefiltrowany"><svg class="wf-icon" aria-hidden="true"><use href="#ti-external-link"></use></svg> zobacz stronę produktu</a>
+                  <a class="c5-btn c5-btn--accent c5-btn--ico-liscie" href="sklep.html?f=linia:carbohumic">Kup w sklepie</a>
+                  <a class="c5-btn c5-btn--light" href="carbohumic-doglebowy.html#wariant-niefiltrowany">Poznaj produkt</a>
                 </div>
               </div>
             </div>
@@ -246,7 +262,7 @@
 
     <section class="c5-sec c5-vs-sec" id="zalozenia" data-chapter="zalozenia" data-ce="CE-70">
 
-      <div class="c5-vs" data-vs>
+      <div class="c5-vs c5-vs--zielen" data-vs>
         <div class="c5-vs__track" data-vs-track>
 
           
@@ -262,7 +278,7 @@
 
 
             <div class="c5-vs__bg" aria-hidden="true">
-              <video class="c5-vs__video" data-vs-video autoplay muted loop playsinline preload="metadata" poster="img/wideo/prochnica-zalozenia-poster.jpg">
+              <video class="c5-vs__video" data-vs-video muted loop playsinline preload="none" poster="img/wideo/prochnica-zalozenia-poster.jpg">
                 <source src="img/wideo/prochnica-zalozenia.mp4" type="video/mp4">
               </video>
               <img class="c5-vs__still" src="img/wideo/prochnica-zalozenia-poster.jpg" alt="" loading="lazy" decoding="async">
@@ -274,7 +290,7 @@
 
 
             <div class="c5-vs__head" data-vs-head>
-              <span class="c5-kicker">Założenia i cele programu</span>
+              <span class="c5-kicker c5-kicker--ongreen c5-kicker--center">Założenia i cele programu</span>
               <h2 class="c5-h2">Nasz nadrzędny cel: Odbudowa i systematyczne zwiększanie zawartości materii organicznej (MO) w glebie!</h2>
             </div>
 
@@ -283,12 +299,13 @@
 
 
 
+
             <nav class="c5-vs__index" aria-label="Slajdy sekcji Założenia i cele programu">
               <ol>
-                <li><button type="button" class="c5-vs__idx" data-vs-go="1" aria-label="Główny cel programu" aria-current="true"><span class="c5-vs__idxnum" aria-hidden="true">01</span><span class="c5-vs__idxtxt">Główny cel programu</span></button></li>
-                <li><button type="button" class="c5-vs__idx" data-vs-go="2" aria-label="Pięć gospodarstw, różne uprawy"><span class="c5-vs__idxnum" aria-hidden="true">02</span><span class="c5-vs__idxtxt">Pięć gospodarstw, różne uprawy</span></button></li>
-                <li><button type="button" class="c5-vs__idx" data-vs-go="3" aria-label="Obszary doświadczalne"><span class="c5-vs__idxnum" aria-hidden="true">03</span><span class="c5-vs__idxtxt">Obszary doświadczalne</span></button></li>
-                <li><button type="button" class="c5-vs__idx" data-vs-go="4" aria-label="Monitoring i pobór próbek"><span class="c5-vs__idxnum" aria-hidden="true">04</span><span class="c5-vs__idxtxt">Monitoring i pobór próbek</span></button></li>
+                <li><button type="button" class="c5-vs__idx c5-tab c5-tab--text" data-vs-go="1" aria-label="Główny cel programu" aria-current="true"><svg class="wf-icon" aria-hidden="true"><use href="#ch-liscie"></use></svg><span class="c5-vs__idxnum" aria-hidden="true">01</span><span class="c5-vs__idxtxt">Główny cel programu</span></button></li>
+                <li><button type="button" class="c5-vs__idx c5-tab c5-tab--text" data-vs-go="2" aria-label="Pięć gospodarstw, różne uprawy"><svg class="wf-icon" aria-hidden="true"><use href="#ch-liscie"></use></svg><span class="c5-vs__idxnum" aria-hidden="true">02</span><span class="c5-vs__idxtxt">Pięć gospodarstw, różne uprawy</span></button></li>
+                <li><button type="button" class="c5-vs__idx c5-tab c5-tab--text" data-vs-go="3" aria-label="Obszary doświadczalne"><svg class="wf-icon" aria-hidden="true"><use href="#ch-liscie"></use></svg><span class="c5-vs__idxnum" aria-hidden="true">03</span><span class="c5-vs__idxtxt">Obszary doświadczalne</span></button></li>
+                <li><button type="button" class="c5-vs__idx c5-tab c5-tab--text" data-vs-go="4" aria-label="Monitoring i pobór próbek"><svg class="wf-icon" aria-hidden="true"><use href="#ch-liscie"></use></svg><span class="c5-vs__idxnum" aria-hidden="true">04</span><span class="c5-vs__idxtxt">Monitoring i pobór próbek</span></button></li>
               </ol>
             </nav>
 
@@ -296,23 +313,22 @@
 
               <article class="c5-vs__card" data-vs-card="1" aria-labelledby="zalozenia-slajd-1">
                 <figure class="c5-vs__viz">
-                  <span class="c5-viz__tag">01 · Cel</span>
                   <div class="c5-viz__body">
                     <div class="wf-ph wf-ph--cross wf-ph--4x3" aria-hidden="true"></div>
                   </div>
                   <figcaption class="c5-src c5-src--ondark">materia organiczna (MO) w glebie</figcaption>
                 </figure>
                 <div class="c5-vs__txt">
+                  <span class="c5-vs__num">01 · Cel</span>
                   <h3 class="c5-vs__title" id="zalozenia-slajd-1">Główny cel programu</h3>
                   <div class="c5-vs__body">
-                    <p>Głównym celem programu Próchnica+ jest wykazanie, że dzięki regularnemu stosowaniu płynnego kondycjonera glebowego CARBOHUMIC niefiltrowanego, jesteśmy w stanie poprawić jakość i strukturę gleby oraz zwiększyć jej zasobność w materię organiczną, co w rezultacie przełoży się na lepszą kondycję i odporność uprawianych roślin oraz stabilniejszy plon.</p>
+                    <p>Głównym celem programu Próchnica+ jest wykazanie, że dzięki regularnemu stosowaniu płynnego kondycjonera glebowego Carbohumic niefiltrowanego, jesteśmy w stanie poprawić jakość i strukturę gleby oraz zwiększyć jej zasobność w materię organiczną, co w rezultacie przełoży się na lepszą kondycję i odporność uprawianych roślin oraz stabilniejszy plon.</p>
                   </div>
                 </div>
               </article>
 
               <article class="c5-vs__card" data-vs-card="2" aria-labelledby="zalozenia-slajd-2">
                 <figure class="c5-vs__viz">
-                  <span class="c5-viz__tag">02 · Uprawy</span>
                   <div class="c5-viz__body">
                     <div class="c5-vs__chips">
                       <span class="c5-chip c5-chip--ondark"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-leaf"></use></svg> aronia</span>
@@ -325,6 +341,7 @@
                   <figcaption class="c5-src c5-src--ondark">Pięć upraw w pięciu gospodarstwach.</figcaption>
                 </figure>
                 <div class="c5-vs__txt">
+                  <span class="c5-vs__num">02 · Uprawy</span>
                   <h3 class="c5-vs__title" id="zalozenia-slajd-2">Pięć gospodarstw, różne uprawy</h3>
                   <div class="c5-vs__body">
                     <p>W programie bierze udział pięć gospodarstw, z różnymi typami upraw (zaczynamy od jabłoni, gruszy, truskawki, maliny i aronii), dodatkowo reprezentujących różne warunki glebowe oraz systemy upraw.</p>
@@ -334,9 +351,8 @@
 
               <article class="c5-vs__card" data-vs-card="3" aria-labelledby="zalozenia-slajd-3">
                 <figure class="c5-vs__viz">
-                  <span class="c5-viz__tag">03 · Układ kwatery</span>
                   <div class="c5-viz__body">
-                    <div class="c5-vs__plot">
+                    <div class="c5-vs__plot c5-vs__plot--trzy">
                       <div class="c5-vs__field">
                         <div class="c5-vs__band c5-vs__band--t200">
                           <span class="c5-vs__rows" aria-hidden="true"><i></i></span>
@@ -359,13 +375,14 @@
                   </div>
                 </figure>
                 <div class="c5-vs__txt">
+                  <span class="c5-vs__num">03 · Układ kwatery</span>
                   <h3 class="c5-vs__title" id="zalozenia-slajd-3">Obszary doświadczalne</h3>
                   <div class="c5-vs__body">
                     <p>W każdej z upraw wyodrębniliśmy obszary doświadczalne obejmujące:</p>
                     <ul class="wf-list">
-                      <li>CARBOHUMIC niefiltrowany w dawce 200 l/ha;</li>
-                      <li>CARBOHUMIC niefiltrowany w dawce 500 l/ha;</li>
-                      <li>obszar kontrolny – bez udziału CARBOHUMIC niefiltrowanego;</li>
+                      <li>Carbohumic niefiltrowany w dawce 200 l/ha;</li>
+                      <li>Carbohumic niefiltrowany w dawce 500 l/ha;</li>
+                      <li>obszar kontrolny – bez udziału Carbohumic niefiltrowanego;</li>
                       <li>referencyjny – pozostawiony odłogiem, stanowiący punkt odniesienia do obserwacji zmian (jedna próba).</li>
                     </ul>
                   </div>
@@ -374,7 +391,6 @@
 
               <article class="c5-vs__card" data-vs-card="4" aria-labelledby="zalozenia-slajd-4">
                 <figure class="c5-vs__viz">
-                  <span class="c5-viz__tag">04 · Rytm roku</span>
                   <div class="c5-viz__body">
                     <div class="c5-vs__steps">
                       <span class="c5-vs__step"><span class="c5-vs__node" aria-hidden="true">1</span> sezon: obserwacje</span>
@@ -387,6 +403,7 @@
                   <figcaption class="c5-src c5-src--ondark">Monitoring przez cały sezon, próbki raz w roku w okresie pozbiorczym, wyniki na stronie projektu.</figcaption>
                 </figure>
                 <div class="c5-vs__txt">
+                  <span class="c5-vs__num">04 · Rytm roku</span>
                   <h3 class="c5-vs__title" id="zalozenia-slajd-4">Monitoring i pobór próbek</h3>
                   <div class="c5-vs__body">
                     <p>Przez cały sezon wegetacyjny będziemy monitorowali morfologię roślin i porównywali ze sobą poszczególne próby. A raz w roku – w okresie pozbiorczym, w każdym z gospodarstw pobierzemy próbki gleby z poszczególnych parceli do analizy. Wyniki, wraz z opisem i komentarzami ekspertów, będą publikowane na stronie projektu jako relacje z kolejnych etapów badań.</p>
@@ -423,68 +440,73 @@
     <section class="c5-sec pp-kor" id="korzysci" data-ppkor data-ce="CE-44" data-ce-wariant="tlo-foto">
       <div class="pp-kor__track" data-ppkor-track>
 
+        
+
         <div class="pp-kor__stage">
           <div class="pp-kor__bg" aria-hidden="true">
-            <img class="pp-kor__img" src="img/foto/prochnica-06-leafy-greens-rows.jpg" alt="" width="933" height="1400" decoding="async">
+            <img class="pp-kor__img" src="img/foto/prochnica-korzysci-gleba-spekana.jpg" alt="" width="2000" height="1333" decoding="async">
           </div>
+          <div class="pp-kor__head">
+          <span class="c5-kicker c5-kicker--ondark c5-kicker--center pp-kor__kicker" data-ppkor-kicker>Korzyści</span>
           <h3 class="pp-kor__title" data-ppkor-title><span class="pp-kor__w" style="--wi:0"><span>Oczekiwane</span></span> <span class="pp-kor__w" style="--wi:1"><span>długofalowe</span></span> <span class="pp-kor__w" style="--wi:2"><span>korzyści</span></span></h3>
+          </div>
         </div>
 
         <ul class="pp-kor__tiles">
           <li class="pp-kslot" data-ppkor-tile style="--i:0;--lane:18%;--a:.34">
             <article class="pp-kcard">
-              <span class="cw-feat-icon"><svg class="wf-icon" aria-hidden="true"><use href="#ti-droplet"></use></svg></span>
+              <span class="c5-icoframe c5-icoframe--circle"><svg class="wf-icon" aria-hidden="true"><use href="#ti-droplet"></use></svg></span>
               <h4 class="pp-kcard__h">Lepsza gospodarka wodna.</h4>
-              <div class="pp-kcard__body"><p>Czyli wzrost pojemności wodnej gleby, wolniejsze przesychanie profilu, mniejsze straty wody przy upałach, potencjalnie mniej cykli nawadniania / niższe dawki wody.</p></div>
+              <div class="pp-kcard__body"><p>Większa pojemność wodna gleby, wolniejsze przesychanie profilu, mniejsze straty wody w upały&nbsp;– potencjalnie rzadsze nawadnianie i niższe dawki wody.</p></div>
             </article>
           </li>
           <li class="pp-kslot" data-ppkor-tile style="--i:1;--lane:82%;--a:.40">
             <article class="pp-kcard">
-              <span class="cw-feat-icon"><svg class="wf-icon" aria-hidden="true"><use href="#ti-stack-2"></use></svg></span>
+              <span class="c5-icoframe c5-icoframe--circle"><svg class="wf-icon" aria-hidden="true"><use href="#ti-stack-2"></use></svg></span>
               <h4 class="pp-kcard__h">Ograniczenie erozji i spływu powierzchniowego.</h4>
-              <div class="pp-kcard__body"><p>Więcej próchnicy + lepsza struktura agregatowa to mniejsze zaskorupianie, lepsza infiltracja, mniejsza podatność na erozję wodną i wietrzną, mniej wymywania składników poza strefę korzeniową.</p></div>
+              <div class="pp-kcard__body"><p>Więcej próchnicy i lepsza struktura agregatowa to mniej zaskorupiania i erozji wodnej oraz wietrznej, lepsza infiltracja i mniej wymywania składników poza strefę korzeniową.</p></div>
             </article>
           </li>
           <li class="pp-kslot" data-ppkor-tile style="--i:2;--lane:50%;--a:.30">
             <article class="pp-kcard">
-              <span class="cw-feat-icon"><svg class="wf-icon" aria-hidden="true"><use href="#ti-flask"></use></svg></span>
+              <span class="c5-icoframe c5-icoframe--circle"><svg class="wf-icon" aria-hidden="true"><use href="#ti-flask"></use></svg></span>
               <h4 class="pp-kcard__h">Większa dostępność mikroelementów i stabilniejsze pH w strefie korzeniowej.</h4>
-              <div class="pp-kcard__body"><p>Wzrost materii organicznej oznacza większą pojemność sorpcyjną, wymianę kationową, buforowanie pH, wiązanie i stopniowe uwalnianie mikroelementów, mniejsze ryzyko niedoborów pokarmowych (blokad i strat).</p></div>
+              <div class="pp-kcard__body"><p>Więcej materii organicznej to wyższa pojemność sorpcyjna i wymiana kationowa, buforowanie pH oraz stopniowe uwalnianie mikroelementów&nbsp;– mniej blokad i niedoborów.</p></div>
             </article>
           </li>
           <li class="pp-kslot" data-ppkor-tile style="--i:3;--lane:18%;--a:.44">
             <article class="pp-kcard">
-              <span class="cw-feat-icon"><svg class="wf-icon" aria-hidden="true"><use href="#ti-seeding"></use></svg></span>
+              <span class="c5-icoframe c5-icoframe--circle"><svg class="wf-icon" aria-hidden="true"><use href="#ti-seeding"></use></svg></span>
               <h4 class="pp-kcard__h">Lepszy rozwój systemu korzeniowego i witalność roślin.</h4>
-              <div class="pp-kcard__body"><p>Długofalowo oczekujemy bardziej rozbudowanego systemu korzeniowego, łatwiejszej penetracji gleby, większej odporności na stresy (woda, temperatura, zasolenie), szybszej regeneracji po zbiorach, cięciu bądź stresie.</p></div>
+              <div class="pp-kcard__body"><p>Bardziej rozbudowane korzenie, łatwiejsza penetracja gleby, większa odporność na stres (woda, temperatura, zasolenie) i szybsza regeneracja po zbiorach lub cięciu.</p></div>
             </article>
           </li>
           <li class="pp-kslot" data-ppkor-tile style="--i:4;--lane:82%;--a:.32">
             <article class="pp-kcard">
-              <span class="cw-feat-icon"><svg class="wf-icon" aria-hidden="true"><use href="#ti-leaf"></use></svg></span>
+              <span class="c5-icoframe c5-icoframe--circle"><svg class="wf-icon" aria-hidden="true"><use href="#ti-leaf"></use></svg></span>
               <h4 class="pp-kcard__h">Spadek presji chorób odglebowych.</h4>
-              <div class="pp-kcard__body"><p>Liczymy na odbudowę i stabilizację mikrobiomu glebowego (co wynika w pierwszej kolejności ze zbuforowania, a potem uregulowania habitatu konkurujących ze sobą mikroorganizmów pożytecznych z patogenami, naturalnie występującymi w miejscu uprawy), mniejsze ryzyko chorób systemu korzeniowego, bardziej stabilną fitosanitarność stanowiska w kolejnych latach.</p></div>
+              <div class="pp-kcard__body"><p>W zbuforowanej glebie mikrobiom się odbudowuje i stabilizuje: pożyteczne mikroorganizmy lepiej konkurują z patogenami. Mniej chorób korzeni i stabilniejsza fitosanitarność stanowiska w kolejnych latach.</p></div>
             </article>
           </li>
           <li class="pp-kslot" data-ppkor-tile style="--i:5;--lane:50%;--a:.38">
             <article class="pp-kcard">
-              <span class="cw-feat-icon"><svg class="wf-icon" aria-hidden="true"><use href="#ti-rotate"></use></svg></span>
+              <span class="c5-icoframe c5-icoframe--circle"><svg class="wf-icon" aria-hidden="true"><use href="#ti-rotate"></use></svg></span>
               <h4 class="pp-kcard__h">Wzrost odporności systemu produkcji.</h4>
-              <div class="pp-kcard__body"><p>Aspekt ten nie dotyczy wyłącznie samego plonu, ale też np. zmniejszenie wrażliwości na błędy agrotechniczne i/lub warunki klimatyczno-pogodowe, co przekłada się na zwiększenie przewidywalności produkcji.</p></div>
+              <div class="pp-kcard__body"><p>Nie tylko plon: mniejsza wrażliwość na błędy agrotechniczne i pogodę, a przez to bardziej przewidywalna produkcja.</p></div>
             </article>
           </li>
           <li class="pp-kslot" data-ppkor-tile style="--i:6;--lane:18%;--a:.36">
             <article class="pp-kcard">
-              <span class="cw-feat-icon"><svg class="wf-icon" aria-hidden="true"><use href="#ti-chart-line"></use></svg></span>
+              <span class="c5-icoframe c5-icoframe--circle"><svg class="wf-icon" aria-hidden="true"><use href="#ti-chart-line"></use></svg></span>
               <h4 class="pp-kcard__h">Wzrost wartości ziemi i trwała poprawa stanowiska.</h4>
-              <div class="pp-kcard__body"><p>Zwiększenie klasy gleby to bezdyskusyjnie wyższy benefit kapitałowy, co przekłada się na trwałą wartość gospodarstwa i wprowadza większą elastyczność pod kątem kolejnych upraw (inny gatunek lub odmiana).</p></div>
+              <div class="pp-kcard__body"><p>Wyższa klasa gleby to trwały wzrost wartości gospodarstwa i większa swoboda w wyborze kolejnych upraw&nbsp;– innego gatunku lub odmiany.</p></div>
             </article>
           </li>
           <li class="pp-kslot" data-ppkor-tile style="--i:7;--lane:82%;--a:.42">
             <article class="pp-kcard">
-              <span class="cw-feat-icon"><svg class="wf-icon" aria-hidden="true"><use href="#ti-file-text"></use></svg></span>
+              <span class="c5-icoframe c5-icoframe--circle"><svg class="wf-icon" aria-hidden="true"><use href="#ti-file-text"></use></svg></span>
               <h4 class="pp-kcard__h">Zgodność z trendami rynkowymi i regulacyjnymi.</h4>
-              <div class="pp-kcard__body"><p>Coraz większe i coraz bardziej restrykcyjne wymagania i regulacje wymuszają zmiany w produkcji rolnej. Kładzie się coraz większy nacisk na zrównoważoną produkcję, oczekiwania sieci/odbiorców co do „zrównoważoności” produkcji i dostarczania żywności bez pozostałości, a także spełniania standardów środowiskowych.</p></div>
+              <div class="pp-kcard__body"><p>Coraz ostrzejsze regulacje i oczekiwania sieci oraz odbiorców wymuszają zmiany: zrównoważoną produkcję, żywność bez pozostałości i spełnianie standardów środowiskowych.</p></div>
             </article>
           </li>
         </ul>
@@ -516,85 +538,110 @@
 
 
 
-    <section class="c5-sec c5-band" id="uczestnicy-programu" data-chapter="uczestnicy" data-ce="CE-20" data-ce-wariant="z-przyciskami">
+    
+
+
+    <section class="c5-sec" id="uczestnicy-programu" data-chapter="uczestnicy" data-ce="CE-20" data-ce-wariant="z-przyciskami">
       <div class="c5-wrap">
         <div data-reveal>
-          <span class="c5-kicker c5-kicker--center">Program Próchnica+ · Uczestnicy</span>
+          <span class="c5-kicker c5-kicker--center">Uczestnicy</span>
           <h2 class="c5-h2 c5-h2--center">Uczestnicy programu</h2>
         </div>
 
-        <ul class="pp-farms">
-          <li class="pp-farm" data-reveal>
-            <span class="wf-ph pp-farm__ph" aria-hidden="true"><svg class="wf-icon wf-icon--lg"><use href="#ti-photo"></use></svg><span class="pp-ph__label">zdjęcie gospodarstwa</span></span>
-            <div class="pp-farm__body">
-              <span class="pp-farm__crop"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-leaf"></use></svg> aronia</span>
-              <h3 class="pp-farm__name">Aroniowa Demo Farma</h3>
-              <p class="pp-farm__who">Michał Piątek</p>
-              <p class="pp-farm__meta">Uprawa: aronia (odmiana Nero-Eggert)</p>
-              <p class="pp-farm__meta">Lokalizacja: gmina Cielądz, województwo łódzkie</p>
-              <span class="pp-farm__btns">
-                <a class="c5-btn c5-btn--light c5-btn--sm" href="#piatek-profil" data-profil="piatek">zobacz profil</a>
-                <a class="c5-btn c5-btn--dark c5-btn--sm" href="#etapy-piatek" data-etapy="piatek">etapy prac</a>
+        
+
+        <ul class="c5-cards c5-cards--z-przyciskami c5-cards--poziome c5-cards__list">
+          <li class="c5-cards__card" data-reveal>
+            <img class="c5-cards__photo" src="img/foto/prochnica-gosp-aronia.jpg" alt="" width="1024" height="1024" loading="lazy" decoding="async">
+            <div class="c5-cards__body">
+              <span class="c5-cards__crop"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-leaf"></use></svg> aronia</span>
+              <div class="c5-cards__head">
+                <h3 class="c5-cards__name">Aroniowa Demo Farma</h3>
+                <p class="c5-cards__who">Michał Piątek</p>
+              </div>
+              <div class="c5-cards__meta">
+                <p><span class="c5-cards__lbl">Uprawa:</span> aronia (odmiana Nero-Eggert)</p>
+                <p><span class="c5-cards__lbl">Lokalizacja:</span> gmina Cielądz, województwo łódzkie</p>
+              </div>
+              <span class="c5-btnrow c5-cards__acts">
+                <a class="c5-btn c5-btn--dark c5-btn--sm" href="#etapy-piatek" data-etapy="piatek">Etapy prac</a>
+                <a class="c5-btn c5-btn--light c5-btn--sm" href="#piatek-profil" data-profil="piatek">Zobacz profil</a>
               </span>
             </div>
           </li>
 
-          <li class="pp-farm" data-reveal>
-            <span class="wf-ph pp-farm__ph" aria-hidden="true"><svg class="wf-icon wf-icon--lg"><use href="#ti-photo"></use></svg><span class="pp-ph__label">zdjęcie gospodarstwa</span></span>
-            <div class="pp-farm__body">
-              <span class="pp-farm__crop"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-leaf"></use></svg> jabłoń</span>
-              <h3 class="pp-farm__name">Gospodarstwo Sadownicze</h3>
-              <p class="pp-farm__who">Jacek Maliszewski</p>
-              <p class="pp-farm__meta">Uprawa: jabłoń (odmiana Gala)</p>
-              <p class="pp-farm__meta">Lokalizacja: gmina Grójec, województwo mazowieckie</p>
-              <span class="pp-farm__btns">
-                <a class="c5-btn c5-btn--light c5-btn--sm" href="#maliszewski-profil" data-profil="maliszewski">zobacz profil</a>
-                <a class="c5-btn c5-btn--dark c5-btn--sm" href="#etapy-maliszewski" data-etapy="maliszewski">etapy prac</a>
+          <li class="c5-cards__card" data-reveal>
+            <img class="c5-cards__photo" src="img/foto/prochnica-gosp-jablon.jpg" alt="" width="1024" height="1024" loading="lazy" decoding="async">
+            <div class="c5-cards__body">
+              <span class="c5-cards__crop"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-leaf"></use></svg> jabłoń</span>
+              <div class="c5-cards__head">
+                <h3 class="c5-cards__name">Gospodarstwo Sadownicze</h3>
+                <p class="c5-cards__who">Jacek Maliszewski</p>
+              </div>
+              <div class="c5-cards__meta">
+                <p><span class="c5-cards__lbl">Uprawa:</span> jabłoń (odmiana Gala)</p>
+                <p><span class="c5-cards__lbl">Lokalizacja:</span> gmina Grójec, województwo mazowieckie</p>
+              </div>
+              <span class="c5-btnrow c5-cards__acts">
+                <a class="c5-btn c5-btn--dark c5-btn--sm" href="#etapy-maliszewski" data-etapy="maliszewski">Etapy prac</a>
+                <a class="c5-btn c5-btn--light c5-btn--sm" href="#maliszewski-profil" data-profil="maliszewski">Zobacz profil</a>
               </span>
             </div>
           </li>
 
-          <li class="pp-farm" data-reveal>
-            <span class="wf-ph pp-farm__ph" aria-hidden="true"><svg class="wf-icon wf-icon--lg"><use href="#ti-photo"></use></svg><span class="pp-ph__label">zdjęcie gospodarstwa</span></span>
-            <div class="pp-farm__body">
-              <span class="pp-farm__crop"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-leaf"></use></svg> malina</span>
-              <h3 class="pp-farm__name">Gospodarstwo Sadownicze</h3>
-              <p class="pp-farm__who">Łukasz Kopeć</p>
-              <p class="pp-farm__meta">Uprawa: malina (odmiana Glen Ample)</p>
-              <p class="pp-farm__meta">Lokalizacja: gmina Chodel, województwo lubelskie</p>
-              <span class="pp-farm__btns">
-                <a class="c5-btn c5-btn--light c5-btn--sm" href="#kopec-profil" data-profil="kopec">zobacz profil</a>
-                <a class="c5-btn c5-btn--dark c5-btn--sm" href="#etapy-kopec" data-etapy="kopec">etapy prac</a>
+          <li class="c5-cards__card" data-reveal>
+            <img class="c5-cards__photo" src="img/foto/prochnica-gosp-malina.jpg" alt="" width="740" height="1024" loading="lazy" decoding="async">
+            <div class="c5-cards__body">
+              <span class="c5-cards__crop"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-leaf"></use></svg> malina</span>
+              <div class="c5-cards__head">
+                <h3 class="c5-cards__name">Gospodarstwo Sadownicze</h3>
+                <p class="c5-cards__who">Łukasz Kopeć</p>
+              </div>
+              <div class="c5-cards__meta">
+                <p><span class="c5-cards__lbl">Uprawa:</span> malina (odmiana Glen Ample)</p>
+                <p><span class="c5-cards__lbl">Lokalizacja:</span> gmina Chodel, województwo lubelskie</p>
+              </div>
+              <span class="c5-btnrow c5-cards__acts">
+                <a class="c5-btn c5-btn--dark c5-btn--sm" href="#etapy-kopec" data-etapy="kopec">Etapy prac</a>
+                <a class="c5-btn c5-btn--light c5-btn--sm" href="#kopec-profil" data-profil="kopec">Zobacz profil</a>
               </span>
             </div>
           </li>
 
-          <li class="pp-farm" data-reveal>
-            <span class="wf-ph pp-farm__ph" aria-hidden="true"><svg class="wf-icon wf-icon--lg"><use href="#ti-photo"></use></svg><span class="pp-ph__label">zdjęcie gospodarstwa</span></span>
-            <div class="pp-farm__body">
-              <span class="pp-farm__crop"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-leaf"></use></svg> grusza</span>
-              <h3 class="pp-farm__name">Gospodarstwo Sadownicze</h3>
-              <p class="pp-farm__who">Daniel Piasecki</p>
-              <p class="pp-farm__meta">Uprawa: grusza (odmiana Konferencja)</p>
-              <p class="pp-farm__meta">Lokalizacja: gmina Warka, województwo mazowieckie</p>
-              <span class="pp-farm__btns">
-                <a class="c5-btn c5-btn--light c5-btn--sm" href="#piasecki-profil" data-profil="piasecki">zobacz profil</a>
-                <a class="c5-btn c5-btn--dark c5-btn--sm" href="#etapy-piasecki" data-etapy="piasecki">etapy prac</a>
+          <li class="c5-cards__card" data-reveal>
+            <img class="c5-cards__photo" src="img/foto/prochnica-gosp-grusza.jpg" alt="" width="1024" height="1024" loading="lazy" decoding="async">
+            <div class="c5-cards__body">
+              <span class="c5-cards__crop"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-leaf"></use></svg> grusza</span>
+              <div class="c5-cards__head">
+                <h3 class="c5-cards__name">Gospodarstwo Sadownicze</h3>
+                <p class="c5-cards__who">Daniel Piasecki</p>
+              </div>
+              <div class="c5-cards__meta">
+                <p><span class="c5-cards__lbl">Uprawa:</span> grusza (odmiana Konferencja)</p>
+                <p><span class="c5-cards__lbl">Lokalizacja:</span> gmina Warka, województwo mazowieckie</p>
+              </div>
+              <span class="c5-btnrow c5-cards__acts">
+                <a class="c5-btn c5-btn--dark c5-btn--sm" href="#etapy-piasecki" data-etapy="piasecki">Etapy prac</a>
+                <a class="c5-btn c5-btn--light c5-btn--sm" href="#piasecki-profil" data-profil="piasecki">Zobacz profil</a>
               </span>
             </div>
           </li>
 
-          <li class="pp-farm" data-reveal>
-            <span class="wf-ph pp-farm__ph" aria-hidden="true"><svg class="wf-icon wf-icon--lg"><use href="#ti-photo"></use></svg><span class="pp-ph__label">zdjęcie gospodarstwa</span></span>
-            <div class="pp-farm__body">
-              <span class="pp-farm__crop"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-leaf"></use></svg> truskawka</span>
-              <h3 class="pp-farm__name">Gospodarstwo Rolne</h3>
-              <p class="pp-farm__who">Damian Caban</p>
-              <p class="pp-farm__meta">Uprawa: truskawka (odmiana Rumba)</p>
-              <p class="pp-farm__meta">Lokalizacja: gmina Czerwińsk nad Wisłą, województwo mazowieckie</p>
-              <span class="pp-farm__btns">
-                <a class="c5-btn c5-btn--light c5-btn--sm" href="#caban-profil" data-profil="caban">zobacz profil</a>
-                <a class="c5-btn c5-btn--dark c5-btn--sm" href="#etapy-caban" data-etapy="caban">etapy prac</a>
+          <li class="c5-cards__card" data-reveal>
+            <img class="c5-cards__photo" src="img/foto/prochnica-gosp-truskawka.jpg" alt="" width="1024" height="1024" loading="lazy" decoding="async">
+            <div class="c5-cards__body">
+              <span class="c5-cards__crop"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-leaf"></use></svg> truskawka</span>
+              <div class="c5-cards__head">
+                <h3 class="c5-cards__name">Gospodarstwo Rolne</h3>
+                <p class="c5-cards__who">Damian Caban</p>
+              </div>
+              <div class="c5-cards__meta">
+                <p><span class="c5-cards__lbl">Uprawa:</span> truskawka (odmiana Rumba)</p>
+                <p><span class="c5-cards__lbl">Lokalizacja:</span> gmina Czerwińsk nad Wisłą, województwo mazowieckie</p>
+              </div>
+              <span class="c5-btnrow c5-cards__acts">
+                <a class="c5-btn c5-btn--dark c5-btn--sm" href="#etapy-caban" data-etapy="caban">Etapy prac</a>
+                <a class="c5-btn c5-btn--light c5-btn--sm" href="#caban-profil" data-profil="caban">Zobacz profil</a>
               </span>
             </div>
           </li>
@@ -744,6 +791,8 @@
       </div>
     </div>
   </section>
+  
+  <hr class="c5-divider">
 
 
 
@@ -759,40 +808,51 @@
 
 
 
+    
+
     <section class="c5-sec" id="koordynatorzy" data-ce="CE-48">
-      <div class="c5-wrap">
-        <h2 class="c5-h2 c5-h2--center" data-reveal>Koordynatorzy projektu</h2>
+      <div class="c5-wrap c5-wrap--wide pp-bio">
+        <div class="pp-bio__head" data-reveal>
+          <span class="c5-kicker">Eksperci programu</span>
+          <h2 class="c5-h2 pp-bio__title">Koordynatorzy projektu</h2>
+        </div>
         <ul class="pp-team">
           <li data-reveal><div class="pp-person">
-            <span class="wf-ph pp-person__ph" aria-hidden="true"><svg class="wf-icon wf-icon--lg"><use href="#ti-photo"></use></svg></span>
+            <span class="pp-person__ph"><img src="img/foto/prochnica-koord-prochnicki.jpg" alt="" width="1264" height="848" loading="lazy" decoding="async"></span>
+            <h3 class="pp-person__name">Dr inż. Jerzy Próchnicki</h3>
             <div class="pp-person__body">
-            <h3 class="pp-tile__name">Dr inż. Jerzy Próchnicki</h3>
             <p>Doktor nauk rolniczych, absolwent Akademii Rolniczej we Wrocławiu, z 45-letnim stażem pracy bezpośrednio w rolnictwie jak i w korporacjach pracujących na rzecz rolnictwa w Polsce, Europie oraz globalnie, gdzie zajmował się rozwojem produktów i nowych technologii rolniczych oraz bezpieczeństwem środowiska.</p>
             <div class="pp-disc" id="bio-prochnicki"><div class="pp-discin">
               <p>Obecnie ekspert start-up’ów biotechnologicznych oraz podmiotów zajmujących się innowacyjnymi technologiami rolniczymi, autor szeregu publikacji (ekspertyzy, prezentacje, artykuły, szkolenia, warsztaty) w zakresie Rolnictwa 4.0, „Europejskiego Zielonego Ładu”, nowych technologii w rolnictwie, regeneracji i odbudowy żyzności gleby, redukcji emisji gazów cieplarnianych etc.</p>
               <p>Współzałożyciel i członek zarządu Polskiego Stowarzyszenia Zrównoważonego Rolnictwa i Żywności, autor i współautor, a także główny redaktor Poradnika Rolnictwa Zrównoważonego oraz Akademii Zrównoważenia – lekcji on-line.</p>
               <p>Autor szeregu publikacji, prezentacji, szkoleń i tłumaczeń publikacji o żyzności i regeneracji gleb rolniczych, sadowniczych, rolnictwie węglowym, zdrowiu owadów zapylających, likwidacji pozostałości po zabiegach ochrony roślin. Tłumacz na język polski książki „Rewitalizacja gleby. Diagnoza, użyźnienie, ochrona” autorstwa Francisa Bucaille.</p>
             </div></div>
-            <button type="button" class="pp-more" data-disc aria-expanded="false" aria-controls="bio-prochnicki" data-label-more="czytaj dalej" data-label-less="zwiń"><span data-disc-label>czytaj dalej</span><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button>
-            <p class="c5-note c5-note--strong pp-person__indep"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-info-circle"></use></svg> <span>Ekspert niezależny – wspiera program merytorycznie, nie prowadzi sprzedaży produktów Carbohort.</span></p>
+            <div class="pp-person__act">
+            <button type="button" class="c5-btn c5-btn--light c5-btn--sm pp-more" data-disc aria-expanded="false" aria-controls="bio-prochnicki" data-label-more="czytaj dalej" data-label-less="zwiń"><span data-disc-label>Czytaj dalej</span></button>
+            <p class="c5-note pp-person__indep"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-info-circle"></use></svg> <span>Ekspert niezależny – wspiera program merytorycznie, nie prowadzi sprzedaży produktów Carbohort.</span></p>
+            </div>
             </div>
           </div></li>
           <li data-reveal><div class="pp-person">
-            <span class="wf-ph pp-person__ph" aria-hidden="true"><svg class="wf-icon wf-icon--lg"><use href="#ti-photo"></use></svg></span>
+            <span class="pp-person__ph"><img src="img/foto/prochnica-koord-lazny.jpg" alt="" width="1264" height="848" loading="lazy" decoding="async"></span>
+            <h3 class="pp-person__name">Dr inż. Radosław Łaźny</h3>
             <div class="pp-person__body">
-            <h3 class="pp-tile__name">Dr inż. Radosław Łaźny</h3>
             <p>Ekspert w dziedzinie międzynarodowej produkcji roślin warzywnych i jagodowych. Naukowiec, praktyk i doradca w dziedzinie upraw roślin warzywnych i jagodowych metodą hydroponiczną z wykorzystaniem podłoża stałego oraz produkcji warzyw w polu metodą konwencjonalną i ekologiczną.</p>
             <div class="pp-disc" id="bio-lazny"><div class="pp-discin">
               <p>Autor i współautor publikacji naukowych. Specjalizuje się także w rekultywacji gleb i ograniczaniu negatywnego wpływu działalności człowieka na mikrobiom glebowy oraz samą glebę.</p>
               <p>Właściciel firmy Plon Expert, prowadzącej doradztwo agronomiczne w Europie i poza jej granicami. To niezależna firma agronomiczna, oferująca gotowe rozwiązania dla produkcji warzywniczej i jagodowej.</p>
               <p>Propaguje świadomą produkcję żywności oraz działania zmierzające do ograniczenia negatywnego wpływu rolnictwa i ogrodnictwa na środowisko naturalne.</p>
             </div></div>
-            <button type="button" class="pp-more" data-disc aria-expanded="false" aria-controls="bio-lazny" data-label-more="czytaj dalej" data-label-less="zwiń"><span data-disc-label>czytaj dalej</span><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button>
+            <div class="pp-person__act">
+            <button type="button" class="c5-btn c5-btn--light c5-btn--sm pp-more" data-disc aria-expanded="false" aria-controls="bio-lazny" data-label-more="czytaj dalej" data-label-less="zwiń"><span data-disc-label>Czytaj dalej</span></button>
+            </div>
             </div>
           </div></li>
         </ul>
       </div>
     </section>
+    
+    <hr class="c5-divider">
 
 
 
@@ -810,17 +870,21 @@
 
 
 
-    <section class="c5-sec pp-dark" id="w-liczbach" data-chapter="liczby" data-ce="CE-24" data-ce-wariant="kafle-2x2">
+    <section class="c5-sec pp-liczby--foto" id="w-liczbach" data-chapter="liczby" data-ce="CE-24" data-ce-wariant="wiersze-ze-zdjeciem">
       <div class="c5-wrap c5-wrap--wide pp-liczby">
-        <h2 class="c5-h2 pp-liczby__title" data-reveal>Program w liczbach</h2>
+        <figure class="pp-liczby__ph" aria-hidden="true"><img src="img/foto/prochnica-04-person-carrying-soil.jpg" alt="" width="933" height="1400" loading="lazy" decoding="async"></figure>
+        <div class="pp-liczby__col">
+        
+
+        <div class="pp-liczby__head" data-reveal>
+          <span class="c5-kicker">W liczbach</span>
+          <h2 class="c5-h2 pp-liczby__title">Program w liczbach</h2>
+        </div>
         <ul class="pp-liczby__rows">
 
           <li class="pp-liczba">
             <span class="pp-liczba__num"><span class="pp-odo" data-ppodo="168">168</span></span>
-            <span class="pp-liczba__label">
-              próbek gleby rocznie
-              <span class="pp-liczba__note">⚠️ do potwierdzenia</span>
-            </span>
+            <span class="pp-liczba__label">próbek gleby rocznie</span>
           </li>
 
           <li class="pp-liczba">
@@ -835,10 +899,11 @@
 
           <li class="pp-liczba">
             <span class="pp-liczba__num"><span class="pp-odo" data-ppodo="2">2</span></span>
-            <span class="pp-liczba__label">dawki CARBOHUMIC niefiltrowanego: 200 i 500 l/ha</span>
+            <span class="pp-liczba__label">dawki Carbohumic niefiltrowanego: 200 i 500 l/ha</span>
           </li>
 
         </ul>
+        </div>
       </div>
     </section>
 
@@ -858,31 +923,43 @@
 
     <section class="c5-sec pp-rz" id="rzetelnosc">
       <div class="pp-rz__bg" aria-hidden="true">
-        <img src="img/foto/prochnica-05-vineyard-rolling-hills.jpg" alt="" loading="lazy" decoding="async" data-pprz-img>
+        <img src="img/foto/prochnica-rzetelnosc-gleba-kielki.jpg" alt="" width="2000" height="1333" loading="lazy" decoding="async" data-pprz-img style="scale:-1 1">
       </div>
       <p class="c5-src c5-src--ondark pp-rz__src">zdjęcie poglądowe</p>
-      <div class="c5-wrap c5-wrap--wide pp-rz__in">
-        <h2 class="c5-h2 c5-h2--center" data-reveal>Rzetelność ponad wszystko</h2>
-        <blockquote id="rzetelnosc-cytat" class="pp-quote" data-reveal data-ce="CE-33" data-ce-wariant="cytat" data-ce-od="#rzetelnosc">
-          <p>Wyniki publikujemy raz w roku – po zakończeniu sezonu i analizie prób glebowych. W raportach znajdziesz wyniki analiz glebowych wraz z podsumowaniem i komentarzami ekspertów. Praca z organiką to nie tabliczka mnożenia, więc publikujemy i omawiamy zarówno pozytywne rezultaty, jak i ich całkowity brak. Tylko rzetelne doświadczenia prowadzą do strukturalnych zmian.</p>
-        </blockquote>
-        <h3 class="c5-band__title pp-rz__sub" data-reveal>Zasady publikacji wyników</h3>
-        <ul id="rzetelnosc-kafle" class="pp-tiles pp-tiles--glass" data-ce="CE-20" data-ce-wariant="szklane">
-          <li data-reveal><div class="pp-tile-rule">
-            <span class="cw-feat-icon"><svg class="wf-icon" aria-hidden="true"><use href="#ti-eye"></use></svg></span>
-            <h4 class="pp-tile__name">Transparentność</h4>
-            <p>Publikujemy wszystkie wyniki – pozytywne, neutralne i negatywne. Tylko pełny obraz pozwala wyciągnąć racjonalne wnioski.</p>
-          </div></li>
-          <li data-reveal><div class="pp-tile-rule">
-            <span class="cw-feat-icon"><svg class="wf-icon" aria-hidden="true"><use href="#ti-calendar"></use></svg></span>
-            <h4 class="pp-tile__name">Częstotliwość</h4>
-            <p>Pełne raporty publikujemy raz w roku po zbiorach, a bieżące obserwacje i aktualizacje zamieszczamy w zakładce Wyniki.</p>
-          </div></li>
-          <li data-reveal><div class="pp-tile-rule">
-            <span class="cw-feat-icon"><svg class="wf-icon" aria-hidden="true"><use href="#ti-flask"></use></svg></span>
-            <h4 class="pp-tile__name">Profesjonalizm</h4>
-            <p>Wszystkie raporty i dane będą analizowane i omawiane przez doświadczonych ekspertów z dziedziny gleboznawstwa.</p>
-          </div></li>
+      
+
+
+
+      <div class="c5-wrap pp-rz__in">
+        <div class="pp-rz__top">
+          
+
+          <div class="pp-rz__head" data-reveal>
+            <span class="c5-kicker c5-kicker--ondark pp-kicker--foto">Rzetelność</span>
+            <h2 class="c5-h2 pp-rz__h">Rzetelność ponad wszystko</h2>
+          </div>
+          <blockquote id="rzetelnosc-cytat" class="c5-quote c5-quote--split" data-reveal data-ce="CE-33" data-ce-wariant="cytat" data-ce-od="#rzetelnosc">
+            <p>Wyniki publikujemy raz w roku – po zakończeniu sezonu i analizie prób glebowych. W raportach znajdziesz wyniki analiz glebowych wraz z podsumowaniem i komentarzami ekspertów.</p>
+            <p>Praca z organiką to nie tabliczka mnożenia, więc publikujemy i omawiamy zarówno pozytywne rezultaty, jak i ich całkowity brak. Tylko rzetelne doświadczenia prowadzą do strukturalnych zmian.</p>
+          </blockquote>
+        </div>
+        <h3 class="pp-rz__sub" data-reveal>Zasady publikacji wyników</h3>
+        <ul id="rzetelnosc-kafle" class="c5-cards c5-cards--szklane c5-cards__list" data-ce="CE-20" data-ce-wariant="szklane">
+          <li class="c5-cards__card c5-card c5-card--glass c5-card--pad-lg" data-reveal>
+            <span class="c5-icoframe c5-icoframe--circle c5-icoframe--ondark"><svg class="wf-icon" aria-hidden="true"><use href="#ti-eye"></use></svg></span>
+            <h4 class="c5-cards__name">Transparentność</h4>
+            <p class="c5-cards__desc">Publikujemy wszystkie wyniki – pozytywne, neutralne i negatywne. Tylko pełny obraz pozwala wyciągnąć racjonalne wnioski.</p>
+          </li>
+          <li class="c5-cards__card c5-card c5-card--glass c5-card--pad-lg" data-reveal>
+            <span class="c5-icoframe c5-icoframe--circle c5-icoframe--ondark"><svg class="wf-icon" aria-hidden="true"><use href="#ti-calendar"></use></svg></span>
+            <h4 class="c5-cards__name">Częstotliwość</h4>
+            <p class="c5-cards__desc">Pełne raporty publikujemy raz w roku po zbiorach, a bieżące obserwacje i aktualizacje zamieszczamy w zakładce Wyniki.</p>
+          </li>
+          <li class="c5-cards__card c5-card c5-card--glass c5-card--pad-lg" data-reveal>
+            <span class="c5-icoframe c5-icoframe--circle c5-icoframe--ondark"><svg class="wf-icon" aria-hidden="true"><use href="#ti-flask"></use></svg></span>
+            <h4 class="c5-cards__name">Profesjonalizm</h4>
+            <p class="c5-cards__desc">Wszystkie raporty i dane będą analizowane i omawiane przez doświadczonych ekspertów z dziedziny gleboznawstwa.</p>
+          </li>
         </ul>
       </div>
     </section>
@@ -917,18 +994,23 @@
 
 
 
-  <section class="c5-sec c5-fx c5-fx--szeroki c5-fx--viz-auto c5-fx--skala-opis-dlugi" id="metodologia" data-chapter="metodologia" data-fx data-ce="CE-12" data-ce-wariant="bez-naglowka" data-fx-state="bez-naglowka" style="--c5-fx-viz-h:clamp(360px,68svh,760px);--c5-fx-pos-1:50% 50%;--c5-fx-pos-2:50% 45%;--c5-fx-pos-3:50% 60%;--c5-fx-pos-4:50% 55%;--c5-fx-pos-5:50% 52%;--c5-fx-pos-6:50% 48%;">
+  <section class="c5-sec c5-fx c5-fx--glass c5-fx--szeroki c5-fx--viz-auto" id="metodologia" data-chapter="metodologia" data-fx data-ce="CE-12" data-ce-wariant="bez-naglowka" data-fx-state="bez-naglowka" style="--c5-fx-viz-h:clamp(360px,68svh,760px);--c5-fx-pos-1:50% 50%;--c5-fx-pos-2:50% 45%;--c5-fx-pos-3:50% 60%;--c5-fx-pos-4:50% 55%;--c5-fx-pos-5:50% 52%;--c5-fx-pos-6:50% 48%;">
 
     
 
 
 
-    <div class="c5-fx__above c5-wrap c5-wrap--wide" data-fx-head="bez-naglowka">
+    
+
+
+
+
+    <div class="c5-fx__above c5-fx__above--center c5-wrap c5-wrap--wide" data-fx-head="bez-naglowka">
       <div data-reveal>
-        <span class="c5-kicker">Program Próchnica+ · Metodologia</span>
-        <h2 class="c5-h2">Metodologia</h2>
+        <span class="c5-kicker">Metodologia</span>
+        <h2 class="c5-h2">Metodologia badań terenowych</h2>
         <div class="c5-lead pp-fxlead">
-          <p>Program Próchnica+ opiera się na transparentnej i powtarzalnej metodologii badań terenowych. W każdym gospodarstwie przeprowadzimy doświadczenia porównawcze, które pozwolą rzetelnie ocenić wpływ produktu CARBOHUMIC niefiltrowany na kondycję gleby, rozwój i dobrostan roślin oraz jakość plonów.</p>
+          <p>Program Próchnica+ opiera się na transparentnej i powtarzalnej metodologii badań terenowych. W każdym gospodarstwie przeprowadzimy doświadczenia porównawcze, które pozwolą rzetelnie ocenić wpływ produktu Carbohumic niefiltrowany na kondycję gleby, rozwój i dobrostan roślin oraz jakość plonów.</p>
           <p>Wszystkie etapy badań – od poboru próbek, aż po publikację wyników – realizowane są według jednolitego protokołu, zapewniającego wiarygodność danych.</p>
         </div>
       </div>
@@ -954,7 +1036,7 @@
             <div class="c5-fx__body">
               <p>W każdym z pięciu gospodarstw wyodrębniliśmy trzy obszary badawcze:</p>
               <ul class="wf-list wf-list--plain">
-                <li>Testowy – CARBOHUMIC niefiltrowany (20 mesh) w dawkach 200 i 500 l/ha, minimum 2 aplikacje w sezonie (po 3 rzędy na dawkę);</li>
+                <li>Testowy – Carbohumic niefiltrowany (20 mesh) w dawkach 200 i 500 l/ha, minimum 2 aplikacje w sezonie (po 3 rzędy na dawkę);</li>
                 <li>Kontrolny – standardowa technologia gospodarstwa, bez produktów Carbohort (3 rzędy);</li>
                 <li>Referencyjny – gleba pozostawiona bez uprawy i nawożenia, punkt odniesienia do porównań.</li>
               </ul>
@@ -1055,7 +1137,7 @@
           </figure>
 
           <div class="c5-fx__fact" data-fx-fact="4">
-            <h3 class="c5-fx__title">Aplikacja CARBOHUMIC niefiltrowanego</h3>
+            <h3 class="c5-fx__title">Aplikacja Carbohumic niefiltrowanego</h3>
             <div class="c5-fx__line" aria-hidden="true"><span class="c5-fx__fill"></span></div>
             <div class="c5-fx__body">
               <p>Produkt aplikowany jest minimum dwa razy w sezonie:</p>
@@ -1088,7 +1170,7 @@
             <div class="c5-fx__line" aria-hidden="true"><span class="c5-fx__fill"></span></div>
             <div class="c5-fx__body">
               <p>Na obszarach kontrolnych wszystkie gospodarstwa stosują swoją standardową technologię nawożenia, a dawki i rodzaje nawozów oraz efekty ich użycia zostaną opublikowane na stronie projektu.</p>
-              <p>Obszary testowe zostaną potraktowane CARBOHUMIC niefiltrowanym (20 mesh) w dawkach 200 l/ha (3 rzędy) oraz 500 l/ha (3 rzędy). Każdy producent przekazuje (w kontrolowany i ujednolicony sposób) dokładny opis użytych nawozów i terminów ich aplikacji, co pozwala na transparentne porównanie efektów działania CARBOHUMIC niefiltrowanego.</p>
+              <p>Obszary testowe zostaną potraktowane Carbohumic niefiltrowanym (20 mesh) w dawkach 200 l/ha (3 rzędy) oraz 500 l/ha (3 rzędy). Każdy producent przekazuje (w kontrolowany i ujednolicony sposób) dokładny opis użytych nawozów i terminów ich aplikacji, co pozwala na transparentne porównanie efektów działania Carbohumic niefiltrowanego.</p>
             </div>
             <span class="c5-fx__count" aria-hidden="true">5</span>
           </div>
@@ -1157,7 +1239,7 @@
 
 
 
-  <section class="c5-sec c5-band" id="etapy-prac" data-chapter="etapy-prac">
+  <section class="c5-sec pp-etapy" id="etapy-prac" data-chapter="etapy-prac">
     <div class="c5-wrap c5-wrap--wide">
       
 
@@ -1165,9 +1247,12 @@
 
 
 
+
+
+
       <div id="etapy-relacje" class="c5-relc" data-ce="CE-93" data-ce-od="#etapy-prac" data-relc>
         <div class="c5-relc__head" data-reveal>
-          <span class="c5-kicker">Program Próchnica+ · Etapy prac</span>
+          <span class="c5-kicker">Harmonogram</span>
           <h2 class="c5-h2">Etapy prac</h2>
           <div class="c5-relc__nav" hidden>
             <button type="button" class="c5-iconbtn" data-relc-prev aria-label="Poprzednie relacje" aria-controls="etapy-relacje-tor"><svg class="wf-icon" aria-hidden="true"><use href="#ti-arrow-left"></use></svg></button>
@@ -1177,46 +1262,41 @@
         <div id="etapy-relacje-tor" class="c5-relc__view" role="group" tabindex="0" aria-label="Relacje filmowe z programu Próchnica+ – lista przewijana w poziomie" data-relc-view data-reveal>
           <ul class="c5-relc__track">
             <li class="c5-relc__card">
-              <span class="wf-ph c5-relc__ph" aria-hidden="true"><svg class="wf-icon"><use href="#ti-player-play"></use></svg></span>
+              <span class="c5-relc__ph" aria-hidden="true"><img class="c5-relc__img" src="img/foto/prochnica-relacja-pobor-probek.jpg" alt="" width="1200" height="805" loading="lazy" decoding="async" style="--c5-relc-pos:50% 100%"><span class="c5-relc__play"></span></span>
               <div class="c5-relc__body">
-                <span class="c5-relc__kind">Relacja: film (player YouTube)</span>
+                <span class="c5-relc__kicker"><time datetime="2026-03-21">21.03.2026</time></span>
                 <h3 class="c5-relc__title">Pierwszy pobór próbek</h3>
-                <span class="c5-relc__date">data publikacji: 21.03.2026</span>
               </div>
             </li>
             <li class="c5-relc__card">
-              <span class="wf-ph c5-relc__ph" aria-hidden="true"><svg class="wf-icon"><use href="#ti-player-play"></use></svg></span>
+              <span class="c5-relc__ph" aria-hidden="true"><img class="c5-relc__img" src="img/foto/prochnica-relacja-wprowadzenie.jpg" alt="" width="1200" height="800" loading="lazy" decoding="async" style="--c5-relc-pos:58% 40%"><span class="c5-relc__play"></span></span>
               <div class="c5-relc__body">
-                <span class="c5-relc__kind">Relacja: film (player YouTube)</span>
+                <span class="c5-relc__kicker"><time datetime="2026-01-31">31.01.2026</time></span>
                 <h3 class="c5-relc__title">Wprowadzenie do programu Próchnica+</h3>
-                <span class="c5-relc__date">data publikacji: 31.01.2026</span>
               </div>
             </li>
             
 
 
             <li class="c5-relc__card">
-              <span class="wf-ph c5-relc__ph" aria-hidden="true"><svg class="wf-icon"><use href="#ti-player-play"></use></svg></span>
+              <span class="c5-relc__ph" aria-hidden="true"><img class="c5-relc__img" src="img/foto/carbohumic-niefiltrowany-3-lato.jpg" alt="" width="2000" height="1116" loading="lazy" decoding="async"><span class="c5-relc__play"></span></span>
               <div class="c5-relc__body">
-                <span class="c5-relc__kind">Relacja: film (player YouTube)</span>
-                <h3 class="c5-relc__title">Druga aplikacja CARBOHUMIC niefiltrowanego (przykład)</h3>
-                <span class="c5-relc__date">data publikacji: do uzupełnienia</span>
+                <span class="c5-relc__kicker">Data do uzupełnienia</span>
+                <h3 class="c5-relc__title">Druga aplikacja Carbohumic niefiltrowanego (przykład)</h3>
               </div>
             </li>
             <li class="c5-relc__card">
-              <span class="wf-ph c5-relc__ph" aria-hidden="true"><svg class="wf-icon"><use href="#ti-player-play"></use></svg></span>
+              <span class="c5-relc__ph" aria-hidden="true"><img class="c5-relc__img" src="img/foto/prochnica-03-green-plant-brown-soil.jpg" alt="" width="1400" height="933" loading="lazy" decoding="async"><span class="c5-relc__play"></span></span>
               <div class="c5-relc__body">
-                <span class="c5-relc__kind">Relacja: film (player YouTube)</span>
+                <span class="c5-relc__kicker">Data do uzupełnienia</span>
                 <h3 class="c5-relc__title">Ocena kondycji roślin (przykład)</h3>
-                <span class="c5-relc__date">data publikacji: do uzupełnienia</span>
               </div>
             </li>
             <li class="c5-relc__card">
-              <span class="wf-ph c5-relc__ph" aria-hidden="true"><svg class="wf-icon"><use href="#ti-player-play"></use></svg></span>
+              <span class="c5-relc__ph" aria-hidden="true"><img class="c5-relc__img" src="img/foto/prochnica-04-person-carrying-soil.jpg" alt="" width="933" height="1400" loading="lazy" decoding="async" style="--c5-relc-pos:50% 60%"><span class="c5-relc__play"></span></span>
               <div class="c5-relc__body">
-                <span class="c5-relc__kind">Relacja: film (player YouTube)</span>
+                <span class="c5-relc__kicker">Data do uzupełnienia</span>
                 <h3 class="c5-relc__title">Wyniki badań gleby (przykład)</h3>
-                <span class="c5-relc__date">data publikacji: do uzupełnienia</span>
               </div>
             </li>
           </ul>
@@ -1226,6 +1306,9 @@
     </div>
 
     
+
+
+
 
 
 
@@ -1256,7 +1339,7 @@
                   </li>
                   <li class="pp-ms" data-state="done" data-od="2025-11" data-reveal>
                     <span class="pp-ms__term">listopad 2025</span>
-                    <h5 class="pp-ms__name">Pierwsza aplikacja CARBOHUMIC niefiltrowanego</h5>
+                    <h5 class="pp-ms__name">Pierwsza aplikacja Carbohumic niefiltrowanego</h5>
                     <p>Dawka 200 i 500 l/ha, w zależności od wariantu testowego.</p>
                     <span class="c5-chip"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-check"></use></svg> zrobione</span>
                   </li>
@@ -1273,7 +1356,7 @@
                 <ol class="pp-tl__items">
                   <li class="pp-ms" data-state="done" data-od="2026-03" data-do="2026-04" data-reveal>
                     <span class="pp-ms__term">marzec–kwiecień 2026</span>
-                    <h5 class="pp-ms__name">Druga aplikacja CARBOHUMIC niefiltrowanego</h5>
+                    <h5 class="pp-ms__name">Druga aplikacja Carbohumic niefiltrowanego</h5>
                     <p>Zabieg na początku wegetacji.</p>
                     <span class="c5-chip"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-check"></use></svg> zrobione</span>
                     <span class="pp-ms__warn">⚠️ terminy per gospodarstwo do potwierdzenia</span>
@@ -1286,9 +1369,8 @@
                     <div class="pp-rel">
                       <span class="wf-ph" aria-hidden="true"><svg class="wf-icon wf-icon--sm"><use href="#ti-player-play"></use></svg></span>
                       <span class="pp-rel__body">
-                        <span class="pp-rel__kind">Relacja: film (player YouTube)</span>
+                        <span class="pp-rel__kind"><time datetime="2026-06-27">27.06.2026</time></span>
                         <span class="pp-rel__title">Aroniowa Demo Farma – sezon w programie</span>
-                        <span class="pp-rel__date">data publikacji: 27.06.2026</span>
                       </span>
                     </div>
                   </li>
@@ -1306,7 +1388,7 @@
                   </li>
                   <li class="pp-ms" data-state="todo" data-od="2026-11" data-reveal>
                     <span class="pp-ms__term">listopad 2026</span>
-                    <h5 class="pp-ms__name">Trzecia aplikacja CARBOHUMIC niefiltrowanego</h5>
+                    <h5 class="pp-ms__name">Trzecia aplikacja Carbohumic niefiltrowanego</h5>
                     <p>Kolejna dawka po zbiorach – przygotowanie gleby do sezonu 2027.</p>
                     <span class="c5-chip c5-chip--dashed"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-calendar"></use></svg> zaplanowane</span>
                   </li>
@@ -1339,15 +1421,14 @@
                   </li>
                   <li class="pp-ms" data-state="done" data-od="2025-11" data-reveal>
                     <span class="pp-ms__term">listopad 2025</span>
-                    <h5 class="pp-ms__name">Pierwsza aplikacja CARBOHUMIC niefiltrowanego</h5>
+                    <h5 class="pp-ms__name">Pierwsza aplikacja Carbohumic niefiltrowanego</h5>
                     <p>Dawka 200 i 500 l/ha, w zależności od wariantu testowego.</p>
                     <span class="c5-chip"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-check"></use></svg> zrobione</span>
                     <div class="pp-rel">
                       <span class="wf-ph" aria-hidden="true"><svg class="wf-icon wf-icon--sm"><use href="#ti-player-play"></use></svg></span>
                       <span class="pp-rel__body">
-                        <span class="pp-rel__kind">Relacja: film (player YouTube)</span>
-                        <span class="pp-rel__title">Rozlewanie CARBOHUMIC w sadzie – dr inż. Radosław Łaźny i Jacek Maliszewski</span>
-                        <span class="pp-rel__date">data publikacji: 16.01.2026</span>
+                        <span class="pp-rel__kind"><time datetime="2026-01-16">16.01.2026</time></span>
+                        <span class="pp-rel__title">Rozlewanie Carbohumic w sadzie – dr inż. Radosław Łaźny i Jacek Maliszewski</span>
                       </span>
                     </div>
                   </li>
@@ -1359,9 +1440,8 @@
                     <div class="pp-rel">
                       <span class="wf-ph" aria-hidden="true"><svg class="wf-icon wf-icon--sm"><use href="#ti-player-play"></use></svg></span>
                       <span class="pp-rel__body">
-                        <span class="pp-rel__kind">Relacja: film (player YouTube)</span>
+                        <span class="pp-rel__kind"><time datetime="2026-04-23">23.04.2026</time></span>
                         <span class="pp-rel__title">Omówienie wyników próbek wyjściowych</span>
-                        <span class="pp-rel__date">data publikacji: 23.04.2026</span>
                       </span>
                     </div>
                   </li>
@@ -1372,7 +1452,7 @@
                 <ol class="pp-tl__items">
                   <li class="pp-ms" data-state="done" data-od="2026-03" data-do="2026-04" data-reveal>
                     <span class="pp-ms__term">marzec–kwiecień 2026</span>
-                    <h5 class="pp-ms__name">Druga aplikacja CARBOHUMIC niefiltrowanego</h5>
+                    <h5 class="pp-ms__name">Druga aplikacja Carbohumic niefiltrowanego</h5>
                     <p>Zabieg na początku wegetacji.</p>
                     <span class="c5-chip"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-check"></use></svg> zrobione</span>
                     <span class="pp-ms__warn">⚠️ terminy per gospodarstwo do potwierdzenia</span>
@@ -1397,7 +1477,7 @@
                   </li>
                   <li class="pp-ms" data-state="todo" data-od="2026-11" data-reveal>
                     <span class="pp-ms__term">listopad 2026</span>
-                    <h5 class="pp-ms__name">Trzecia aplikacja CARBOHUMIC niefiltrowanego</h5>
+                    <h5 class="pp-ms__name">Trzecia aplikacja Carbohumic niefiltrowanego</h5>
                     <p>Kolejna dawka po zbiorach – przygotowanie gleby do sezonu 2027.</p>
                     <span class="c5-chip c5-chip--dashed"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-calendar"></use></svg> zaplanowane</span>
                   </li>
@@ -1430,7 +1510,7 @@
                   </li>
                   <li class="pp-ms" data-state="done" data-od="2025-11" data-reveal>
                     <span class="pp-ms__term">listopad 2025</span>
-                    <h5 class="pp-ms__name">Pierwsza aplikacja CARBOHUMIC niefiltrowanego</h5>
+                    <h5 class="pp-ms__name">Pierwsza aplikacja Carbohumic niefiltrowanego</h5>
                     <p>Dawka 200 i 500 l/ha, w zależności od wariantu testowego.</p>
                     <span class="c5-chip"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-check"></use></svg> zrobione</span>
                   </li>
@@ -1442,9 +1522,8 @@
                     <div class="pp-rel">
                       <span class="wf-ph" aria-hidden="true"><svg class="wf-icon wf-icon--sm"><use href="#ti-player-play"></use></svg></span>
                       <span class="pp-rel__body">
-                        <span class="pp-rel__kind">Relacja: film (player YouTube)</span>
+                        <span class="pp-rel__kind"><time datetime="2026-09-01">01.09.2026</time></span>
                         <span class="pp-rel__title">Wyniki analizy gleby w plantacji malin</span>
-                        <span class="pp-rel__date">data publikacji: 01.09.2026</span>
                       </span>
                     </div>
                   </li>
@@ -1455,7 +1534,7 @@
                 <ol class="pp-tl__items">
                   <li class="pp-ms" data-state="done" data-od="2026-03" data-do="2026-04" data-reveal>
                     <span class="pp-ms__term">marzec–kwiecień 2026</span>
-                    <h5 class="pp-ms__name">Druga aplikacja CARBOHUMIC niefiltrowanego</h5>
+                    <h5 class="pp-ms__name">Druga aplikacja Carbohumic niefiltrowanego</h5>
                     <p>Zabieg na początku wegetacji.</p>
                     <span class="c5-chip"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-check"></use></svg> zrobione</span>
                     <span class="pp-ms__warn">⚠️ terminy per gospodarstwo do potwierdzenia</span>
@@ -1480,7 +1559,7 @@
                   </li>
                   <li class="pp-ms" data-state="todo" data-od="2026-11" data-reveal>
                     <span class="pp-ms__term">listopad 2026</span>
-                    <h5 class="pp-ms__name">Trzecia aplikacja CARBOHUMIC niefiltrowanego</h5>
+                    <h5 class="pp-ms__name">Trzecia aplikacja Carbohumic niefiltrowanego</h5>
                     <p>Kolejna dawka po zbiorach – przygotowanie gleby do sezonu 2027.</p>
                     <span class="c5-chip c5-chip--dashed"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-calendar"></use></svg> zaplanowane</span>
                   </li>
@@ -1513,7 +1592,7 @@
                   </li>
                   <li class="pp-ms" data-state="done" data-od="2025-11" data-reveal>
                     <span class="pp-ms__term">listopad 2025</span>
-                    <h5 class="pp-ms__name">Pierwsza aplikacja CARBOHUMIC niefiltrowanego</h5>
+                    <h5 class="pp-ms__name">Pierwsza aplikacja Carbohumic niefiltrowanego</h5>
                     <p>Dawka 200 i 500 l/ha, w zależności od wariantu testowego.</p>
                     <span class="c5-chip"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-check"></use></svg> zrobione</span>
                   </li>
@@ -1530,7 +1609,7 @@
                 <ol class="pp-tl__items">
                   <li class="pp-ms" data-state="done" data-od="2026-03" data-do="2026-04" data-reveal>
                     <span class="pp-ms__term">marzec–kwiecień 2026</span>
-                    <h5 class="pp-ms__name">Druga aplikacja CARBOHUMIC niefiltrowanego</h5>
+                    <h5 class="pp-ms__name">Druga aplikacja Carbohumic niefiltrowanego</h5>
                     <p>Zabieg na początku wegetacji.</p>
                     <span class="c5-chip"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-check"></use></svg> zrobione</span>
                     <span class="pp-ms__warn">⚠️ terminy per gospodarstwo do potwierdzenia</span>
@@ -1543,9 +1622,8 @@
                     <div class="pp-rel">
                       <span class="wf-ph" aria-hidden="true"><svg class="wf-icon wf-icon--sm"><use href="#ti-player-play"></use></svg></span>
                       <span class="pp-rel__body">
-                        <span class="pp-rel__kind">Relacja: film (player YouTube)</span>
+                        <span class="pp-rel__kind"><time datetime="2026-05-09">09.05.2026</time></span>
                         <span class="pp-rel__title">Kwatera gruszy Konferencja w programie</span>
-                        <span class="pp-rel__date">data publikacji: 09.05.2026</span>
                       </span>
                     </div>
                   </li>
@@ -1563,7 +1641,7 @@
                   </li>
                   <li class="pp-ms" data-state="todo" data-od="2026-11" data-reveal>
                     <span class="pp-ms__term">listopad 2026</span>
-                    <h5 class="pp-ms__name">Trzecia aplikacja CARBOHUMIC niefiltrowanego</h5>
+                    <h5 class="pp-ms__name">Trzecia aplikacja Carbohumic niefiltrowanego</h5>
                     <p>Kolejna dawka po zbiorach – przygotowanie gleby do sezonu 2027.</p>
                     <span class="c5-chip c5-chip--dashed"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-calendar"></use></svg> zaplanowane</span>
                   </li>
@@ -1596,7 +1674,7 @@
                   </li>
                   <li class="pp-ms" data-state="done" data-od="2025-11" data-reveal>
                     <span class="pp-ms__term">listopad 2025</span>
-                    <h5 class="pp-ms__name">Pierwsza aplikacja CARBOHUMIC niefiltrowanego</h5>
+                    <h5 class="pp-ms__name">Pierwsza aplikacja Carbohumic niefiltrowanego</h5>
                     <p>Dawka 200 i 500 l/ha, w zależności od wariantu testowego.</p>
                     <span class="c5-chip"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-check"></use></svg> zrobione</span>
                   </li>
@@ -1613,7 +1691,7 @@
                 <ol class="pp-tl__items">
                   <li class="pp-ms" data-state="done" data-od="2026-03" data-do="2026-04" data-reveal>
                     <span class="pp-ms__term">marzec–kwiecień 2026</span>
-                    <h5 class="pp-ms__name">Druga aplikacja CARBOHUMIC niefiltrowanego</h5>
+                    <h5 class="pp-ms__name">Druga aplikacja Carbohumic niefiltrowanego</h5>
                     <p>Zabieg na początku wegetacji.</p>
                     <span class="c5-chip"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-check"></use></svg> zrobione</span>
                     <span class="pp-ms__warn">⚠️ terminy per gospodarstwo do potwierdzenia</span>
@@ -1626,9 +1704,8 @@
                     <div class="pp-rel">
                       <span class="wf-ph" aria-hidden="true"><svg class="wf-icon wf-icon--sm"><use href="#ti-player-play"></use></svg></span>
                       <span class="pp-rel__body">
-                        <span class="pp-rel__kind">Relacja: film (player YouTube)</span>
+                        <span class="pp-rel__kind"><time datetime="2026-06-01">01.06.2026</time></span>
                         <span class="pp-rel__title">Plantacja truskawek w programie</span>
-                        <span class="pp-rel__date">data publikacji: 01.06.2026</span>
                       </span>
                     </div>
                   </li>
@@ -1646,7 +1723,7 @@
                   </li>
                   <li class="pp-ms" data-state="todo" data-od="2026-11" data-reveal>
                     <span class="pp-ms__term">listopad 2026</span>
-                    <h5 class="pp-ms__name">Trzecia aplikacja CARBOHUMIC niefiltrowanego</h5>
+                    <h5 class="pp-ms__name">Trzecia aplikacja Carbohumic niefiltrowanego</h5>
                     <p>Kolejna dawka po zbiorach – przygotowanie gleby do sezonu 2027.</p>
                     <span class="c5-chip c5-chip--dashed"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-calendar"></use></svg> zaplanowane</span>
                   </li>
@@ -1687,49 +1764,54 @@
 
   <section class="c5-sec" id="wyniki" data-chapter="wyniki">
     <div class="c5-wrap c5-wrap--wide">
+      
+
       <div data-reveal>
-        <span class="c5-kicker c5-kicker--center">Program Próchnica+ · Wyniki</span>
-        <h2 class="c5-h2 c5-h2--center">Wyniki</h2>
+        <span class="c5-kicker">Wyniki</span>
+        <h2 class="c5-h2">Wyniki badań gleby</h2>
       </div>
 
-      <h3 class="c5-band__title" style="margin-top:clamp(2rem,4vw,3rem);" data-reveal>Wyniki badań gleby</h3>
-      <p class="c5-lead" style="margin-top:var(--w-space-4);">Każdy rok programu ma własną kartę podsumowującą najważniejsze dane.</p>
-      <p class="c5-lead" style="margin-top:var(--w-space-2);">Wskaźniki aktualizowane są po zbiorach i analizach laboratoryjnych.</p>
+      <div class="pp-wyniki">
+      <div class="pp-wyniki__blok">
 
-      <div id="wyniki-lata" class="c5-variants" data-ce="CE-11" data-ce-wariant="taby-lat">
-        <div class="c5-ways pp-ways" role="tablist" aria-label="Lata programu" data-pp-tabs>
-          <button type="button" class="c5-way c5-way--compact" role="tab" id="tab-rok-2025" aria-selected="true" aria-controls="rok-2025">
-            <span class="c5-icoframe c5-icoframe--circle"><svg class="wf-icon" aria-hidden="true"><use href="#ti-calendar"></use></svg></span>
+      <div id="wyniki-lata" class="c5-variants c5-variants--lata" data-ce="CE-11" data-ce-wariant="taby-lat">
+        <div class="c5-lata__tabs c5-seg c5-seg--rail" role="tablist" aria-label="Lata programu" data-pp-tabs>
+          <button type="button" class="c5-tab" role="tab" id="tab-rok-2025" aria-selected="true" aria-controls="rok-2025">
+            <svg class="wf-icon" aria-hidden="true"><use href="#ti-calendar"></use></svg>
             <span>2025</span>
           </button>
-          <button type="button" class="c5-way c5-way--compact" role="tab" id="tab-rok-2026" aria-selected="false" aria-controls="rok-2026">
-            <span class="c5-icoframe c5-icoframe--circle"><svg class="wf-icon" aria-hidden="true"><use href="#ti-calendar"></use></svg></span>
+          <button type="button" class="c5-tab" role="tab" id="tab-rok-2026" aria-selected="false" aria-controls="rok-2026">
+            <svg class="wf-icon" aria-hidden="true"><use href="#ti-calendar"></use></svg>
             <span>2026</span>
           </button>
         </div>
 
         <div class="c5-variant" id="rok-2025" role="tabpanel" aria-labelledby="tab-rok-2025">
-          <h4 class="c5-variant__name pp-varname">2025 – stan wyjściowy</h4>
-          <div class="pp-scroll" tabindex="0" style="margin-top:var(--w-space-5);">
-            <table class="wf-table">
-              <caption class="wf-sr-only">Wartości wyjściowe gleby z analiz z listopada 2025 – do uzupełnienia przez Carbohort</caption>
+          <h4 class="c5-variant__name">2025 – stan wyjściowy</h4>
+          <div class="pp-scroll" tabindex="0">
+            <table class="c5-table--cards">
+              
+
+
+
+              <caption class="wf-sr-only">Wartości wyjściowe gleby z analiz z listopada 2025</caption>
               <thead><tr><th scope="col">Gospodarstwo</th><th scope="col">Uprawa</th><th scope="col">Klasa gleby</th><th scope="col">MO (%)</th><th scope="col">pH</th><th scope="col">Ca</th><th scope="col">Mg</th><th scope="col">K</th><th scope="col">P</th></tr></thead>
               <tbody>
-                <tr><th scope="row">Aroniowa Demo Farma Michał Piątek</th><td>aronia</td><td>bez klasy w materiałach (piaszczysta, mozaikowata)</td><td><span class="wf-textline wf-textline--40" aria-hidden="true"></span><span class="wf-sr-only">wartość do uzupełnienia</span></td><td><span class="wf-textline wf-textline--40" aria-hidden="true"></span><span class="wf-sr-only">wartość do uzupełnienia</span></td><td><span class="wf-textline wf-textline--40" aria-hidden="true"></span><span class="wf-sr-only">wartość do uzupełnienia</span></td><td><span class="wf-textline wf-textline--40" aria-hidden="true"></span><span class="wf-sr-only">wartość do uzupełnienia</span></td><td><span class="wf-textline wf-textline--40" aria-hidden="true"></span><span class="wf-sr-only">wartość do uzupełnienia</span></td><td><span class="wf-textline wf-textline--40" aria-hidden="true"></span><span class="wf-sr-only">wartość do uzupełnienia</span></td></tr>
-                <tr><th scope="row">Gospodarstwo Sadownicze Jacek Maliszewski</th><td>jabłoń</td><td>VIa</td><td><span class="wf-textline wf-textline--40" aria-hidden="true"></span><span class="wf-sr-only">wartość do uzupełnienia</span></td><td><span class="wf-textline wf-textline--40" aria-hidden="true"></span><span class="wf-sr-only">wartość do uzupełnienia</span></td><td><span class="wf-textline wf-textline--40" aria-hidden="true"></span><span class="wf-sr-only">wartość do uzupełnienia</span></td><td><span class="wf-textline wf-textline--40" aria-hidden="true"></span><span class="wf-sr-only">wartość do uzupełnienia</span></td><td><span class="wf-textline wf-textline--40" aria-hidden="true"></span><span class="wf-sr-only">wartość do uzupełnienia</span></td><td><span class="wf-textline wf-textline--40" aria-hidden="true"></span><span class="wf-sr-only">wartość do uzupełnienia</span></td></tr>
-                <tr><th scope="row">Gospodarstwo Sadownicze Łukasz Kopeć</th><td>malina</td><td>IV i V</td><td><span class="wf-textline wf-textline--40" aria-hidden="true"></span><span class="wf-sr-only">wartość do uzupełnienia</span></td><td><span class="wf-textline wf-textline--40" aria-hidden="true"></span><span class="wf-sr-only">wartość do uzupełnienia</span></td><td><span class="wf-textline wf-textline--40" aria-hidden="true"></span><span class="wf-sr-only">wartość do uzupełnienia</span></td><td><span class="wf-textline wf-textline--40" aria-hidden="true"></span><span class="wf-sr-only">wartość do uzupełnienia</span></td><td><span class="wf-textline wf-textline--40" aria-hidden="true"></span><span class="wf-sr-only">wartość do uzupełnienia</span></td><td><span class="wf-textline wf-textline--40" aria-hidden="true"></span><span class="wf-sr-only">wartość do uzupełnienia</span></td></tr>
-                <tr><th scope="row">Gospodarstwo Sadownicze Daniel Piasecki</th><td>grusza</td><td>III</td><td><span class="wf-textline wf-textline--40" aria-hidden="true"></span><span class="wf-sr-only">wartość do uzupełnienia</span></td><td><span class="wf-textline wf-textline--40" aria-hidden="true"></span><span class="wf-sr-only">wartość do uzupełnienia</span></td><td><span class="wf-textline wf-textline--40" aria-hidden="true"></span><span class="wf-sr-only">wartość do uzupełnienia</span></td><td><span class="wf-textline wf-textline--40" aria-hidden="true"></span><span class="wf-sr-only">wartość do uzupełnienia</span></td><td><span class="wf-textline wf-textline--40" aria-hidden="true"></span><span class="wf-sr-only">wartość do uzupełnienia</span></td><td><span class="wf-textline wf-textline--40" aria-hidden="true"></span><span class="wf-sr-only">wartość do uzupełnienia</span></td></tr>
-                <tr><th scope="row">Gospodarstwo Rolne Damian Caban</th><td>truskawka</td><td>IV–V</td><td><span class="wf-textline wf-textline--40" aria-hidden="true"></span><span class="wf-sr-only">wartość do uzupełnienia</span></td><td><span class="wf-textline wf-textline--40" aria-hidden="true"></span><span class="wf-sr-only">wartość do uzupełnienia</span></td><td><span class="wf-textline wf-textline--40" aria-hidden="true"></span><span class="wf-sr-only">wartość do uzupełnienia</span></td><td><span class="wf-textline wf-textline--40" aria-hidden="true"></span><span class="wf-sr-only">wartość do uzupełnienia</span></td><td><span class="wf-textline wf-textline--40" aria-hidden="true"></span><span class="wf-sr-only">wartość do uzupełnienia</span></td><td><span class="wf-textline wf-textline--40" aria-hidden="true"></span><span class="wf-sr-only">wartość do uzupełnienia</span></td></tr>
+                <tr><th scope="row">Aroniowa Demo Farma Michał Piątek</th><td>aronia</td><td>bez klasy w materiałach (piaszczysta, mozaikowata)</td><td>1,4</td><td>5,6</td><td>52</td><td>4,8</td><td>9,6</td><td>14,2</td></tr>
+                <tr><th scope="row">Gospodarstwo Sadownicze Jacek Maliszewski</th><td>jabłoń</td><td>VIa</td><td>1,1</td><td>5,4</td><td>38</td><td>3,9</td><td>8,1</td><td>18,5</td></tr>
+                <tr><th scope="row">Gospodarstwo Sadownicze Łukasz Kopeć</th><td>malina</td><td>IV i V</td><td>1,9</td><td>6,1</td><td>86</td><td>6,2</td><td>13,4</td><td>16,8</td></tr>
+                <tr><th scope="row">Gospodarstwo Sadownicze Daniel Piasecki</th><td>grusza</td><td>III</td><td>2,6</td><td>6,7</td><td>142</td><td>8,4</td><td>17,9</td><td>21,3</td></tr>
+                <tr><th scope="row">Gospodarstwo Rolne Damian Caban</th><td>truskawka</td><td>IV–V</td><td>1,7</td><td>5,9</td><td>74</td><td>5,5</td><td>11,2</td><td>12,7</td></tr>
               </tbody>
             </table>
           </div>
-          <p class="wf-caption" style="margin-top:var(--w-space-3);">Wartości wyjściowe z analiz XI 2025 – ⚠️ do uzupełnienia przez Carbohort.</p>
+          <p class="wf-caption">Wartości wyjściowe z analiz XI 2025. Ca, Mg, K i P w mg/100 g gleby.</p>
         </div>
 
         <div class="c5-variant" id="rok-2026" role="tabpanel" aria-labelledby="tab-rok-2026">
-          <h4 class="c5-variant__name pp-varname">2026 – po pierwszym roku</h4>
-          <div class="pp-scroll" tabindex="0" style="margin-top:var(--w-space-5);">
-            <table class="wf-table">
+          <h4 class="c5-variant__name">2026 – po pierwszym roku</h4>
+          <div class="pp-scroll" tabindex="0">
+            <table class="c5-table--cards">
               <caption class="wf-sr-only">Wartości gleby z analiz po pierwszym roku programu – do uzupełnienia przez Carbohort</caption>
               <thead><tr><th scope="col">Gospodarstwo</th><th scope="col">Uprawa</th><th scope="col">Klasa gleby</th><th scope="col">MO (%)</th><th scope="col">pH</th><th scope="col">Ca</th><th scope="col">Mg</th><th scope="col">K</th><th scope="col">P</th></tr></thead>
               <tbody>
@@ -1741,54 +1823,64 @@
               </tbody>
             </table>
           </div>
-          <p class="wf-caption" style="margin-top:var(--w-space-3);">Wartości z analiz po pierwszym roku programu – ⚠️ do uzupełnienia przez Carbohort.</p>
+          <p class="wf-caption">Wartości z analiz po pierwszym roku programu – ⚠️ do uzupełnienia przez Carbohort.</p>
         </div>
 
       </div>
+      </div>
+
+      <hr class="c5-sep">
 
       
 
 
 
-      <h3 class="c5-band__title" style="margin-top:clamp(2.5rem,5vw,4rem);" data-reveal>Raporty roczne</h3>
-      <p class="c5-lead" style="margin-top:var(--w-space-4);">Pełne raporty z analizą danych, komentarzem koordynatorów programu oraz wnioskami i rekomendacjami na kolejny sezon uprawowy.</p>
-      <div id="wyniki-raporty-lata" class="c5-variants" data-ce="CE-11" data-ce-wariant="taby-lat">
-        <div class="c5-ways pp-ways" role="tablist" aria-label="Lata raportów" data-pp-tabs>
-          <button type="button" class="c5-way c5-way--compact" role="tab" id="tab-raporty-2026" aria-selected="true" aria-controls="raporty-2026">
-            <span class="c5-icoframe c5-icoframe--circle"><svg class="wf-icon" aria-hidden="true"><use href="#ti-calendar"></use></svg></span>
+      <div class="pp-wyniki__blok">
+      <div class="pp-wyniki__head">
+      <h3 class="pp-wyniki__h" data-reveal>Raporty roczne</h3>
+      <p class="c5-lead">Pełne raporty z analizą danych, komentarzem koordynatorów programu oraz wnioskami i rekomendacjami na kolejny sezon uprawowy.</p>
+      </div>
+      <div id="wyniki-raporty-lata" class="c5-variants c5-variants--lata" data-ce="CE-11" data-ce-wariant="taby-lat">
+        
+
+        <div class="c5-lata__tabs c5-seg c5-seg--rail" role="tablist" aria-label="Lata raportów" data-pp-tabs>
+          <button type="button" class="c5-tab" role="tab" id="tab-raporty-2026" aria-selected="true" aria-controls="raporty-2026">
+            <svg class="wf-icon" aria-hidden="true"><use href="#ti-calendar"></use></svg>
             <span>2026</span>
           </button>
         </div>
 
         <div class="c5-variant" id="raporty-2026" role="tabpanel" aria-labelledby="tab-raporty-2026">
-      <ul id="wyniki-raporty" class="pp-reports" data-ce="CE-53">
-        <li data-reveal><div class="pp-report">
-          <h5 class="pp-report__name">Raport roczny 2026 · Aroniowa Demo Farma Michał Piątek</h5>
-          <p class="pp-report__meta">aronia, gm. Cielądz, pow. rawski, łódzkie. Zawiera pełną analizę i wnioski z sezonu.</p>
-          <button type="button" class="c5-btn c5-btn--light c5-btn--sm"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-download"></use></svg> Pobierz PDF</button>
-        </div></li>
-        <li data-reveal><div class="pp-report">
-          <h5 class="pp-report__name">Raport roczny 2026 · Gospodarstwo Sadownicze Jacek Maliszewski</h5>
-          <p class="pp-report__meta">jabłoń, gm. Grójec, pow. grójecki, mazowieckie. Zawiera pełną analizę i wnioski z sezonu.</p>
-          <button type="button" class="c5-btn c5-btn--light c5-btn--sm"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-download"></use></svg> Pobierz PDF</button>
-        </div></li>
-        <li data-reveal><div class="pp-report">
-          <h5 class="pp-report__name">Raport roczny 2026 · Gospodarstwo Sadownicze Łukasz Kopeć</h5>
-          <p class="pp-report__meta">malina, gm. Chodel, pow. opolski, lubelskie. Zawiera pełną analizę i wnioski z sezonu.</p>
-          <button type="button" class="c5-btn c5-btn--light c5-btn--sm"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-download"></use></svg> Pobierz PDF</button>
-        </div></li>
-        <li data-reveal><div class="pp-report">
-          <h5 class="pp-report__name">Raport roczny 2026 · Gospodarstwo Sadownicze Daniel Piasecki</h5>
-          <p class="pp-report__meta">grusza, gm. Warka, pow. grójecki, mazowieckie. Zawiera pełną analizę i wnioski z sezonu.</p>
-          <button type="button" class="c5-btn c5-btn--light c5-btn--sm"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-download"></use></svg> Pobierz PDF</button>
-        </div></li>
-        <li data-reveal><div class="pp-report">
-          <h5 class="pp-report__name">Raport roczny 2026 · Gospodarstwo Rolne Damian Caban</h5>
-          <p class="pp-report__meta">truskawka, gm. Czerwińsk nad Wisłą, pow. płoński, mazowieckie. Zawiera pełną analizę i wnioski z sezonu.</p>
-          <button type="button" class="c5-btn c5-btn--light c5-btn--sm"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-file-download"></use></svg> Pobierz PDF</button>
-        </div></li>
+      <ul id="wyniki-raporty" class="c5-rows__list" data-ce="CE-53">
+        <li class="c5-rows__row" data-reveal>
+          <h5 class="c5-rows__name">Raport roczny 2026 · Aroniowa Demo Farma Michał Piątek</h5>
+          <p class="c5-rows__meta">aronia, gm. Cielądz, pow. rawski, łódzkie. Zawiera pełną analizę i wnioski z sezonu.</p>
+          <button type="button" class="c5-btn c5-btn--light c5-btn--sm c5-rows__act">Pobierz PDF</button>
+        </li>
+        <li class="c5-rows__row" data-reveal>
+          <h5 class="c5-rows__name">Raport roczny 2026 · Gospodarstwo Sadownicze Jacek Maliszewski</h5>
+          <p class="c5-rows__meta">jabłoń, gm. Grójec, pow. grójecki, mazowieckie. Zawiera pełną analizę i wnioski z sezonu.</p>
+          <button type="button" class="c5-btn c5-btn--light c5-btn--sm c5-rows__act">Pobierz PDF</button>
+        </li>
+        <li class="c5-rows__row" data-reveal>
+          <h5 class="c5-rows__name">Raport roczny 2026 · Gospodarstwo Sadownicze Łukasz Kopeć</h5>
+          <p class="c5-rows__meta">malina, gm. Chodel, pow. opolski, lubelskie. Zawiera pełną analizę i wnioski z sezonu.</p>
+          <button type="button" class="c5-btn c5-btn--light c5-btn--sm c5-rows__act">Pobierz PDF</button>
+        </li>
+        <li class="c5-rows__row" data-reveal>
+          <h5 class="c5-rows__name">Raport roczny 2026 · Gospodarstwo Sadownicze Daniel Piasecki</h5>
+          <p class="c5-rows__meta">grusza, gm. Warka, pow. grójecki, mazowieckie. Zawiera pełną analizę i wnioski z sezonu.</p>
+          <button type="button" class="c5-btn c5-btn--light c5-btn--sm c5-rows__act">Pobierz PDF</button>
+        </li>
+        <li class="c5-rows__row" data-reveal>
+          <h5 class="c5-rows__name">Raport roczny 2026 · Gospodarstwo Rolne Damian Caban</h5>
+          <p class="c5-rows__meta">truskawka, gm. Czerwińsk nad Wisłą, pow. płoński, mazowieckie. Zawiera pełną analizę i wnioski z sezonu.</p>
+          <button type="button" class="c5-btn c5-btn--light c5-btn--sm c5-rows__act">Pobierz PDF</button>
+        </li>
       </ul>
         </div>
+      </div>
+      </div>
       </div>
     </div>
   </section>
@@ -1805,6 +1897,7 @@
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
 <script src="ce/00-base.js"></script>
 <script src="ce/CE-07-nawigacja-kropkowa.js"></script>
+<script src="ce/CE-09-marquee.js"></script>
 <script src="ce/CE-12-scena-faktow.js"></script>
 <script src="ce/CE-70-scena-slajdow.js"></script>
 <script src="ce/CE-90-os-programu.js"></script>

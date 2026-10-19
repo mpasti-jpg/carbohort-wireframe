@@ -1,0 +1,69 @@
+/* ===== CE-64 · Produkty wspomniane w artykule (rejestr: ce-rejestr.js) =======
+   Module (design system v0.1, stage D 18.10.2026): a band of the products the
+   article names, between thin grey-200 lines, no fill; the packshot field is a
+   beige square r8; the buy button is always green with dark text, the link to
+   the product page a quiet grey link. Layout and copy stay as in v7. Prefix:
+   `cw-a-mprod`.
+
+   A band above the key takeaways with the products the article names, and
+   nothing else: a packshot field, the name, „Kup produkt” and a quiet link to
+   the product page. No sentences about the products – the article is the
+   argument, the band is only the shortcut (spec section 5.3 point 2).
+
+   Mobile first: the row scrolls horizontally with scroll-snap, 176 px per item,
+   so nothing is hidden behind a „more” control. From 900 px the three items
+   share the 720 px text column (about 240 px each) and the scrolling stops.
+   Thin rules between the items.
+
+   Markup:
+     aside.cw-a-mprod[data-ce="CE-64"] > h2.cw-a-mprod__h[data-toc-skip]
+       + ul.cw-a-mprod__list > li.cw-a-mprod__item
+         span.cw-a-mprod__shot > img · h3.cw-a-mprod__name
+         · .c5-btnrow.cw-a-mprod__act > a.c5-btn--accent.c5-btn--sm + a.wf-link.cw-a-mprod__more
+   ============================================================================ */
+
+.cw-a-mprod{max-width:var(--cw-a-col,720px);
+  border-block:1px solid var(--ch-border-subtle);
+  padding-block:clamp(1rem,2.4vw,1.35rem);}
+.cw-a-mprod__h{margin:0 0 clamp(0.75rem,1.8vw,1rem);color:var(--ch-text-secondary);}
+.cw-a-mprod__list{display:flex;margin:0;padding:0;list-style:none;
+  overflow-x:auto;scroll-snap-type:x mandatory;
+  overscroll-behavior-x:contain;scrollbar-width:thin;}
+.cw-a-mprod__item{
+  /* 176 px is the floor, never the ceiling: the items grow into the free space
+     of a tablet and stop shrinking on a phone, where the row scrolls instead */
+  flex:1 0 176px;min-width:0;scroll-snap-align:start;
+  display:flex;flex-direction:column;gap:var(--ch-space-3);
+  padding-inline:clamp(0.85rem,2.5vw,1.25rem);}
+.cw-a-mprod__item:first-child{padding-inline-start:0;}
+.cw-a-mprod__item:last-child{padding-inline-end:0;}
+.cw-a-mprod__item + .cw-a-mprod__item{border-left:1px solid var(--ch-border-subtle);}
+
+/* packshot field 112 × 112 px: the image FILLS the field and `object-fit: contain`
+   does the letterboxing (`max-height: 100%` on an auto-sized row is circular, so
+   a tall bottle would burst out of the field) */
+.cw-a-mprod__shot{display:block;flex:none;width:112px;height:112px;padding:var(--ch-space-2);
+  background:var(--ch-surface-warm);border-radius:var(--ch-radius-sm);}
+.cw-a-mprod__shot img{display:block;width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply;}
+/* name: two lines at most, no sentence next to it */
+.cw-a-mprod__name{margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+/* actions one under the other – in a 176 px item the button and the link do not
+   fit side by side; `margin-top: auto` aligns them in an even row */
+.cw-a-mprod__act{flex-direction:column;align-items:flex-start;gap:var(--ch-space-2);margin-top:auto;}
+.cw-a-mprod__more{font-size:var(--ch-type-small-size);color:var(--ch-text-secondary);}
+.cw-a-mprod__more:hover{color:var(--ch-text-primary);}
+
+/* Phone: narrower items so the third product peeks in from the right edge and
+   the fade on that edge says „there is more” – a row that ends exactly on an
+   item looks complete and hides the rest. (The mask only uses the alpha.) */
+@media (max-width:599px){
+  .cw-a-mprod__item{flex-basis:150px;}
+  .cw-a-mprod__shot{width:96px;height:96px;}
+  .cw-a-mprod__list{
+    -webkit-mask-image:linear-gradient(to right,var(--ch-color-green-950) calc(100% - 36px),transparent);
+    mask-image:linear-gradient(to right,var(--ch-color-green-950) calc(100% - 36px),transparent);}
+}
+@media (min-width:900px){
+  .cw-a-mprod__list{overflow-x:visible;scroll-snap-type:none;}
+  .cw-a-mprod__item{flex:1 1 0;scroll-snap-align:none;}
+}

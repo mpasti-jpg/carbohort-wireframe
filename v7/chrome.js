@@ -117,6 +117,17 @@
   };
 
   var ICONS =`<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true" id="wf-icon-sprite">
+  <!-- ch-liscie: the four-leaf sign of the logo (Figma 397:1685, button icon in the footer).
+       Two mirrored halves exported from Figma 17.10.2026; filled, not stroked. -->
+  <!-- ch-suwaki: the "settings-2" icon of the Figma buttons (Konfigurator, dawki); no Tabler match. -->
+  <symbol id="ch-suwaki" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></symbol>
+  <symbol id="ch-liscie" viewBox="0 0 19 19"><g fill="currentColor" stroke="none"><g transform="translate(1.117 2.352)"><path d="M6.40047 5.58824C6.47878 5.58824 6.55709 5.58824 6.6354 5.5805C6.71371 5.57276 6.69022 5.55728 6.69022 5.52632C6.70588 5.44118 6.70588 5.36378 6.70588 5.28638C6.70588 2.36842 4.30958 0 1.35727 0C-1.59504 0 1.20065 0 1.12233 0.00773994C1.04402 0.0154799 1.06752 0.0309598 1.06752 0.0619195C1.06752 0.139319 1.05969 0.216718 1.05969 0.294118C1.05969 3.21207 3.45599 5.5805 6.4083 5.5805L6.40047 5.58824Z"/><path d="M1.41234 14.4115C1.33484 14.4115 1.25733 14.4115 1.17982 14.4037C1.10232 14.396 1.12557 14.3805 1.12557 14.3495C1.12557 14.272 1.11782 14.1945 1.11782 14.117C1.11782 11.1949 3.48953 8.82324 6.41153 8.82324C6.48904 8.82324 6.56654 8.82324 6.64405 8.83099C6.72156 8.83874 6.6983 8.85425 6.6983 8.88525C6.70605 8.96275 6.70605 9.04026 6.70605 9.11777C6.70605 12.0398 4.33435 14.4115 1.41234 14.4115Z"/></g><g transform="translate(17.765 2.352) scale(-1 1)"><path d="M6.40047 5.58824C6.47878 5.58824 6.55709 5.58824 6.6354 5.5805C6.71371 5.57276 6.69022 5.55728 6.69022 5.52632C6.70588 5.44118 6.70588 5.36378 6.70588 5.28638C6.70588 2.36842 4.30958 0 1.35727 0C-1.59504 0 1.20065 0 1.12233 0.00773994C1.04402 0.0154799 1.06752 0.0309598 1.06752 0.0619195C1.06752 0.139319 1.05969 0.216718 1.05969 0.294118C1.05969 3.21207 3.45599 5.5805 6.4083 5.5805L6.40047 5.58824Z"/><path d="M1.41234 14.4115C1.33484 14.4115 1.25733 14.4115 1.17982 14.4037C1.10232 14.396 1.12557 14.3805 1.12557 14.3495C1.12557 14.272 1.11782 14.1945 1.11782 14.117C1.11782 11.1949 3.48953 8.82324 6.41153 8.82324C6.48904 8.82324 6.56654 8.82324 6.64405 8.83099C6.72156 8.83874 6.6983 8.85425 6.6983 8.88525C6.70605 8.96275 6.70605 9.04026 6.70605 9.11777C6.70605 12.0398 4.33435 14.4115 1.41234 14.4115Z"/></g></g></symbol>
+  <!-- ch-sygnet: the sign of the logo as a background motif (G12, 18.10.2026), Figma 803:1629,
+       four filled leaves; in CSS the same shape is the mask of .c5-sygnet (ce/00-base.css). -->
+  <symbol id="ch-sygnet" viewBox="0 0 980 980"><g fill="currentColor" stroke="none"><path d="M25.5 472.8C19 472.8 12.4 472.8 5.9 472.2C-0.7 471.5 1.3 470.2 1.3 467.6C0 460.4 0 453.9 0 447.3C0 200.9 200 0.9 446.4 0.9C692.9 0.9 459.5 0.9 466.1 1.5C472.6 2.2 470.6 3.5 470.6 6.1C470.6 12.6 471.3 19.2 471.3 25.7C471.3 272.1 271.3 472.2 24.8 472.2L25.5 472.8Z"/><path d="M454.1 977.5C460.6 977.5 467.1 977.5 473.7 976.8C480.2 976.2 478.2 974.9 478.2 972.3C478.2 965.7 478.9 959.2 478.9 952.7C478.9 706.6 279.2 506.9 33.1 506.9C26.6 506.9 20 506.9 13.5 507.5C7 508.2 8.9 509.5 8.9 512.1C8.3 518.6 8.3 525.2 8.3 531.7C8.3 777.8 208 977.5 454.1 977.5Z"/><path d="M978.6 973.3C966.2 711.2 669.5 500.7 301.5 495.5C298.2 495.5 296.9 500.1 300.2 501.4C500.9 603.3 641.4 788.9 658.4 974.6C658.4 977.2 661 979.1 663.6 979.1H974C976.7 979.1 979.3 976.5 979.3 973.9L978.6 973.3Z"/><path d="M967.3 5.2C954.9 267.6 657.8 478.2 289.5 483.5C286.3 483.5 285 478.9 288.2 477.6C489.1 375.5 629.7 189.7 646.7 4.6C646.7 2 648.7 0 651.3 0H962C964.7 0 967.3 2.6 967.3 5.2Z"/></g></symbol>
+  <!-- ch-sadzonka, ch-organiczny: icons of the CE-11 product switch (Figma 397:2187, "seeding" / "organic"; stroke, 20 px). -->
+  <symbol id="ch-sadzonka" viewBox="0 0 20 20"><g transform="translate(0.032 0.963)" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"><path d="M17.625 9.50953H16.0153C15.2751 9.50953 14.6852 10.0419 14.4888 10.7557C13.9431 12.7396 12.1261 14.197 9.96875 14.197C7.81137 14.197 5.99441 12.7396 5.44867 10.7557C5.25234 10.0419 4.66242 9.50953 3.92219 9.50953H2.3125C1.44957 9.50953 0.75 10.2091 0.75 11.072V15.7595C0.75 16.6225 1.44957 17.322 2.3125 17.322H17.625C18.4879 17.322 19.1875 16.6225 19.1875 15.7595V11.072C19.1875 10.2091 18.4879 9.50953 17.625 9.50953Z"/><path d="M11.0733 9.83312C10.1581 10.7484 8.3112 10.3855 8.3112 10.3855C8.3112 10.3855 7.94835 8.53871 8.86362 7.6234C9.77889 6.70809 11.6258 7.07098 11.6258 7.07098C11.6258 7.07098 11.9887 8.91781 11.0733 9.83312Z"/><path d="M14.1983 3.58312C13.2831 4.4984 11.4362 4.13555 11.4362 4.13555C11.4362 4.13555 11.0733 2.28871 11.9886 1.3734C12.9039 0.458086 14.7508 0.820976 14.7508 0.820976C14.7508 0.820976 15.1137 2.66781 14.1983 3.58312Z"/><path d="M4.17613 5.14563C5.09141 6.0609 6.93828 5.69805 6.93828 5.69805C6.93828 5.69805 7.30113 3.85121 6.38586 2.9359C5.47059 2.02059 3.62371 2.38348 3.62371 2.38348C3.62371 2.38348 3.26082 4.23031 4.17613 5.14563Z"/></g></symbol>
+  <symbol id="ch-organiczny" viewBox="0 0 20 20"><g transform="translate(0.032 0.346)" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="square"><path d="M5.75005 9.81066C5.75005 5.43566 10.1251 1.06066 10.1251 1.06066C10.1251 1.06066 14.5001 5.43566 14.5001 9.81066C14.5001 12.9357 12.5413 15.4357 10.1251 15.4357C7.7088 15.4357 5.75005 12.9357 5.75005 9.81066Z"/><path d="M15.7501 4.40504C16.5239 3.91709 17.3318 3.48536 18.1676 3.11316C18.1676 3.11316 20.5713 8.81441 18.9219 12.8663C17.8307 15.5488 15.3838 17.1 13.2501 16.5888"/><path d="M4.50005 4.40504C3.72619 3.91709 2.91828 3.48536 2.08255 3.11316C2.08255 3.11316 -0.321196 8.81441 1.32818 12.8663C2.41943 15.5488 4.8663 17.1 7.00005 16.5888"/><path d="M10.1251 19.1857V9.18566"/></g></symbol>
   <symbol id="ti-alert-triangle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4" /><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0" /><path d="M12 16h.01" /></symbol>
   <symbol id="ti-arrow-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5l0 14" />
   <path d="M18 13l-6 6" />
@@ -218,9 +229,9 @@
 
   var NAVBAR = `<header class="wf-navbar" id="serwis-naglowek" data-ce="CE-01">
   <div class="wf-navbar__inner wf-container">
-    <a class="cw-brand" href="home.html">Carbohort</a>
+    <a class="cw-brand" href="home.html"><img src="img/carbohort-logo.svg" width="169" height="33" alt="Carbohort"></a>
     <nav class="cw-nav" aria-label="Główna">
-      <div class="cw-haspopup">
+      <div class="cw-haspopup" data-nav-grupa="produkty">
         <button class="cw-nav-trigger" data-mega-trigger aria-haspopup="true" aria-expanded="false" aria-controls="mega-produkty">Produkty Carbohort <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button>
         <div class="cw-mega cw-mega--wide" id="mega-produkty" data-ce="CE-02" data-ce-wariant="szerokie" data-open="false" role="region" aria-label="Produkty Carbohort">
           <div class="cw-mega__head">
@@ -241,13 +252,13 @@
                  application, black for foliar application. -->
             <a class="cw-prodbox" href="carbomat.html">
               <span class="wf-overline wf-t-tertiary">Sypkie · doglebowe</span>
-              <span class="wf-h5 cw-prodbox__name">CARBOMAT ECO</span>
+              <span class="wf-h5 cw-prodbox__name">Carbomat Eco</span>
               <span class="cw-prodbox__media"><img class="cw-prodbox__img" src="img/opakowania/worek_20l.png" alt="" width="578" height="875" decoding="async" fetchpriority="low"></span>
               <span class="cw-prodbox__desc">Surowy lignit, który na lata przebudowuje strukturę i retencję gleby.</span>
             </a>
             <a class="cw-prodbox" href="carbomat-mata.html">
               <span class="wf-overline wf-t-tertiary">Sypkie · uprawa bezglebowa</span>
-              <span class="wf-h5 cw-prodbox__name">CARBOMAT Mata Uprawowa</span>
+              <span class="wf-h5 cw-prodbox__name">Carbomat Mata Uprawowa</span>
               <span class="cw-prodbox__media"><img class="cw-prodbox__img" src="img/opakowania/mata_uprawowa.png" alt="" width="1000" height="313" decoding="async" fetchpriority="low"></span>
               <span class="cw-prodbox__desc">Naturalne podłoże nowej generacji do upraw bezglebowych – wieloletnia alternatywa dla wełny mineralnej i maty kokosowej.</span>
             </a>
@@ -258,16 +269,16 @@
                  to the foliar page. -->
             <div class="cw-prodbox cw-prodbox--split">
               <span class="wf-overline wf-t-tertiary">Płynne · doglebowe i nalistne</span>
-              <span class="wf-h5 cw-prodbox__name">CARBOHUMIC</span>
+              <span class="wf-h5 cw-prodbox__name">Carbohumic</span>
               <span class="cw-prodbox__media cw-prodbox__media--pair">
-                <a class="cw-prodbox__variant" data-nav="carbohumic" data-nav-parent="produkty" href="carbohumic-doglebowy.html" aria-label="CARBOHUMIC doglebowy"><img class="cw-prodbox__img" src="img/opakowania/butelka_1l_biala.webp" alt="" width="391" height="1000" decoding="async" fetchpriority="low"><span class="cw-prodbox__tag">Doglebowe</span></a>
-                <a class="cw-prodbox__variant" data-nav="carbohumic-dolistny" data-nav-parent="produkty" href="carbohumic-dolistny.html" aria-label="CARBOHUMIC dolistny"><img class="cw-prodbox__img" src="img/opakowania/butelka_1l_czarna.webp" alt="" width="391" height="1000" decoding="async" fetchpriority="low"><span class="cw-prodbox__tag">Dolistne</span></a>
+                <a class="cw-prodbox__variant" data-nav="carbohumic" data-nav-parent="produkty" href="carbohumic-doglebowy.html" aria-label="Carbohumic doglebowy"><img class="cw-prodbox__img" src="img/opakowania/butelka_1l_biala.webp" alt="" width="391" height="1000" decoding="async" fetchpriority="low"><span class="cw-prodbox__tag">Doglebowe</span></a>
+                <a class="cw-prodbox__variant" data-nav="carbohumic-dolistny" data-nav-parent="produkty" href="carbohumic-dolistny.html" aria-label="Carbohumic dolistny"><img class="cw-prodbox__img" src="img/opakowania/butelka_1l_czarna.webp" alt="" width="391" height="1000" decoding="async" fetchpriority="low"><span class="cw-prodbox__tag">Dolistne</span></a>
               </span>
               <span class="cw-prodbox__desc">„Próchnica w płynie" – kondycjonuje glebę i biostymuluje roślinę.</span>
             </div>
             <a class="cw-prodbox" href="carbomat-humic.html">
               <span class="wf-overline wf-t-tertiary">Sypkie · doglebowe</span>
-              <span class="wf-h5 cw-prodbox__name">CARBOMAT HUMIC</span>
+              <span class="wf-h5 cw-prodbox__name">Carbomat Humic</span>
               <span class="cw-prodbox__media"><img class="cw-prodbox__img" src="img/opakowania/worek_20l.png" alt="" width="578" height="875" decoding="async" fetchpriority="low"></span>
               <span class="cw-prodbox__desc">Kondycjoner + potas + biostymulator; podnosi pH zakwaszonej gleby – na pole i do ogrodu.</span>
             </a>
@@ -285,7 +296,7 @@
           </div>
         </div>
       </div>
-      <div class="cw-haspopup">
+      <div class="cw-haspopup" data-nav-grupa="uprawy">
         <button class="cw-nav-trigger" data-mega-trigger aria-haspopup="true" aria-expanded="false" aria-controls="mega-uprawy">Rodzaje upraw <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button>
         <div class="cw-mega cw-mega--wide cw-mega--crop-switch" id="mega-uprawy" data-ce="CE-02" data-ce-wariant="grupy-ze-zdjeciem" data-open="false" role="region" aria-label="Rodzaje upraw">
           <!-- Wariant „grupy ze zdjęciem” (15.10.2026): po lewej pięć grup jako zakładki,
@@ -384,7 +395,7 @@
           </div>
         </div>
       </div>
-      <div class="cw-haspopup">
+      <div class="cw-haspopup" data-nav-grupa="prochnica-plus">
         <button class="cw-nav-trigger" data-mega-trigger aria-haspopup="true" aria-expanded="false" aria-controls="mega-programy">Programy i badania <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button>
         <div class="cw-mega cw-mega--narrow" id="mega-programy" data-ce="CE-02" data-ce-wariant="waskie" data-open="false" role="region" aria-label="Programy i badania">
           <div class="cw-mega__list">
@@ -392,14 +403,14 @@
           </div>
         </div>
       </div>
-      <a class="wf-navbar__link" data-nav="centrum-wiedzy" href="centrum-wiedzy.html">Centrum wiedzy</a>
+      <a class="wf-navbar__link" data-nav="centrum-wiedzy" href="centrum-wiedzy.html">Strefa wiedzy</a>
       <a class="wf-navbar__link" data-nav="o-firmie" href="o-firmie.html">O nas</a>
       <a class="wf-navbar__link" data-nav="kontakt" href="kontakt.html">Kontakt</a>
     </nav>
     <div class="wf-cluster wf-gap-2">
       <!-- No "Zaloguj" to the B2B platform here since 28.09.2026: the top bar serves
            visitors who do not know the site yet; the platform keeps its link in the footer. -->
-      <a class="wf-btn wf-btn--primary wf-btn--sm" data-nav="konfigurator" href="konfigurator.html">Konfigurator</a>
+      <a class="wf-btn wf-btn--primary wf-btn--sm" data-nav="konfigurator" href="konfigurator.html">Konfigurator<svg class="wf-icon cw-btn-ico" aria-hidden="true"><use href="#ch-suwaki"></use></svg></a>
       <a class="wf-btn wf-btn--ghost wf-btn--sm" data-nav="sklep" href="sklep.html">Sklep</a>
       <a class="wf-btn wf-btn--ghost wf-btn--icon wf-badge--count cw-cart" href="koszyk.html" aria-label="Koszyk, 0 produktów"><svg class="wf-icon" aria-hidden="true"><use href="#ti-shopping-cart"></use></svg><span class="wf-count" data-cart-count>0</span></a>
       <button class="wf-btn wf-btn--ghost wf-btn--icon cw-navtoggle" data-navtoggle aria-controls="mobilenav" aria-expanded="false" aria-label="Otwórz menu"><svg class="wf-icon" aria-hidden="true"><use href="#ti-menu-2"></use></svg></button>
@@ -413,8 +424,8 @@
     <a class="wf-navitem" data-nav="produkty" href="produkty.html">Produkty Carbohort</a>
     <!-- The two CARBOHUMIC pages (15.10.2026) – the second level under the
          products, indented like the crop groups. -->
-    <a class="wf-navitem cw-mobilenav__sub" data-nav="carbohumic" data-nav-parent="produkty" href="carbohumic-doglebowy.html">CARBOHUMIC doglebowy</a>
-    <a class="wf-navitem cw-mobilenav__sub" data-nav="carbohumic-dolistny" data-nav-parent="produkty" href="carbohumic-dolistny.html">CARBOHUMIC dolistny</a>
+    <a class="wf-navitem cw-mobilenav__sub" data-nav="carbohumic" data-nav-parent="produkty" href="carbohumic-doglebowy.html">Carbohumic doglebowy</a>
+    <a class="wf-navitem cw-mobilenav__sub" data-nav="carbohumic-dolistny" data-nav-parent="produkty" href="carbohumic-dolistny.html">Carbohumic dolistny</a>
     <p class="wf-navitem cw-mobilenav__label" data-nav="uprawy">Rodzaje upraw</p>
     <!-- Ta sama treść co w #mega-uprawy: pięć grup, 31 pozycji, te same stany.
          Obie listy trzyma w zgodzie regresja _narzedzia/qa-menu.py. -->
@@ -485,7 +496,7 @@
       </ul>
     </details>
     <a class="wf-navitem" data-nav="prochnica-plus" href="prochnica-plus.html">Programy i badania</a>
-    <a class="wf-navitem" data-nav="centrum-wiedzy" href="centrum-wiedzy.html">Centrum wiedzy</a>
+    <a class="wf-navitem" data-nav="centrum-wiedzy" href="centrum-wiedzy.html">Strefa wiedzy</a>
     <a class="wf-navitem" data-nav="o-firmie" href="o-firmie.html">O nas</a>
     <a class="wf-navitem" data-nav="kontakt" href="kontakt.html">Kontakt</a>
     <a class="wf-navitem" data-nav="sklep" href="sklep.html">Sklep</a>
@@ -494,38 +505,51 @@
 
   var SCRIM = '<div class="cw-scrim" data-cw-scrim data-open="false" aria-hidden="true"></div>';
 
-  var FOOTER = `<footer class="wf-footer wf-section" id="serwis-stopka" data-ce="CE-04">
-  <div class="wf-container">
-    <div class="wf-footer__cols">
-      <div class="wf-stack wf-stack--3">
-        <span class="wf-h4 wf-w-bold">Carbohort</span>
-        <p class="wf-small wf-t-secondary">Polski, rodzinny producent poprawiaczy gleby z lignitu i leonardytu. Dbając o glebę, inwestujemy w przyszłe pokolenia.</p>
+  /* CE-04 – site footer, design system v0.1 (Figma 397:1668, decision 3 of
+     17.10.2026): a dark panel with 32 px bottom corners (claim, contact button,
+     three link columns) over a photo strip with the white logo and the small
+     print. Links and texts are those of the v7 footer; the claim is the v7
+     brand line split as in Figma. Styles: ce/CE-04-stopka.css. The photo comes
+     from the Figma file – licence unconfirmed, local only (backlog). */
+  var FOOTER = `<footer class="cw-foot" id="serwis-stopka" data-ce="CE-04">
+  <div class="cw-foot__panel">
+    <div class="cw-foot__in cw-foot__grid">
+      <div class="cw-foot__brand">
+        <p class="cw-foot__claim">Polski, rodzinny producent poprawiaczy gleby z lignitu i leonardytu.</p>
+        <p class="cw-foot__sub">Dbając o glebę, inwestujemy w przyszłe pokolenia.</p>
+        <a class="cw-foot__btn" href="kontakt.html">Kontakt z nami<svg class="wf-icon" aria-hidden="true"><use href="#ch-liscie"></use></svg></a>
       </div>
-      <nav class="wf-stack wf-stack--2" aria-label="Produkty"><p class="wf-overline">Produkty</p>
-        <a class="wf-link--quiet" href="produkty.html">Produkty Carbohort</a>
-        <a class="wf-link--quiet" href="carbomat.html">CARBOMAT ECO</a>
-        <a class="wf-link--quiet" href="carbomat-mata.html">CARBOMAT Mata Uprawowa</a>
-        <a class="wf-link--quiet" href="carbohumic-doglebowy.html">CARBOHUMIC doglebowy</a>
-        <a class="wf-link--quiet" href="carbohumic-dolistny.html">CARBOHUMIC dolistny</a>
-        <a class="wf-link--quiet" href="carbomat-humic.html">CARBOMAT HUMIC</a>
-        <a class="wf-link--quiet" href="sklep.html">Sklep</a>
-      </nav>
-      <nav class="wf-stack wf-stack--2" aria-label="Wiedza i programy"><p class="wf-overline">Wiedza i programy</p>
-        <a class="wf-link--quiet" href="centrum-wiedzy.html">Centrum wiedzy</a>
-        <a class="wf-link--quiet" href="prochnica-plus.html">Program Próchnica+</a>
-        <a class="wf-link--quiet" href="uprawy.html">Rodzaje upraw</a>
-        <a class="wf-link--quiet" href="konfigurator.html">Konfigurator</a>
-      </nav>
-      <nav class="wf-stack wf-stack--2" aria-label="Firma i współpraca"><p class="wf-overline">Firma i współpraca</p>
-        <a class="wf-link--quiet" href="o-firmie.html">O nas</a>
-        <a class="wf-link--quiet" href="kontakt.html">Kontakt</a>
-        <a class="wf-link--quiet" href="kontakt.html#partner">Zostań partnerem</a>
-        <a class="wf-link--quiet" href="logowanie.html?tryb=b2b">Panel / Zaloguj</a>
-      </nav>
+      <div class="cw-foot__cols">
+        <nav class="cw-foot__col" aria-label="Produkty"><p class="cw-foot__head">Produkty</p>
+          <a href="produkty.html">Produkty Carbohort</a>
+          <a href="carbomat.html">Carbomat Eco</a>
+          <a href="carbomat-mata.html">Carbomat Mata Uprawowa</a>
+          <a href="carbohumic-doglebowy.html">Carbohumic doglebowy</a>
+          <a href="carbohumic-dolistny.html">Carbohumic dolistny</a>
+          <a href="carbomat-humic.html">Carbomat Humic</a>
+          <a href="sklep.html">Sklep</a>
+        </nav>
+        <nav class="cw-foot__col" aria-label="Wiedza i programy"><p class="cw-foot__head">Wiedza i programy</p>
+          <a href="centrum-wiedzy.html">Strefa wiedzy</a>
+          <a href="prochnica-plus.html">Program Próchnica+</a>
+          <a href="uprawy.html">Rodzaje upraw</a>
+          <a href="konfigurator.html">Konfigurator</a>
+        </nav>
+        <nav class="cw-foot__col" aria-label="Firma i współpraca"><p class="cw-foot__head">Firma i współpraca</p>
+          <a href="o-firmie.html">O nas</a>
+          <a href="kontakt.html">Kontakt</a>
+          <a href="kontakt.html#partner">Zostań partnerem</a>
+          <a href="logowanie.html?tryb=b2b">Panel / Zaloguj</a>
+        </nav>
+      </div>
     </div>
-    <div class="wf-footer__bottom wf-cluster wf-cluster--between">
-      <span class="wf-caption wf-t-secondary">© Carbohort – makieta. Treść i dane do akceptacji.</span>
-      <span class="wf-caption wf-t-secondary">PL · poprawa gleby z lignitu</span>
+  </div>
+  <div class="cw-foot__strip">
+    <img class="cw-foot__photo" src="img/foto/stopka-mikroskop.jpg" alt="" loading="lazy" decoding="async">
+    <div class="cw-foot__in cw-foot__base">
+      <img class="cw-foot__logo" src="img/carbohort-logo-biale.svg" width="559" height="110" alt="Carbohort">
+      <p class="cw-foot__note">© Carbohort – makieta. Treść i dane do akceptacji.</p>
+      <p class="cw-foot__note">PL · poprawa gleby z lignitu</p>
     </div>
   </div>
 </footer>`;
@@ -1056,8 +1080,13 @@
     function measure() {
       raf = 0;
       if (window.innerWidth !== vw) sizeBar();
-      var stick = parseFloat(getComputedStyle(dock).bottom) || 0;
-      var gap = window.innerHeight - stick - dock.getBoundingClientRect().bottom;
+      var cs = getComputedStyle(dock);
+      var stick = parseFloat(cs.bottom) || 0;
+      /* the tucked dock (G10) is moved down by a transform; the slot is the box
+         without it, so the shift is taken off before comparing */
+      var ty = 0;
+      if (cs.transform && cs.transform !== "none" && window.DOMMatrixReadOnly) ty = new DOMMatrixReadOnly(cs.transform).m42;
+      var gap = window.innerHeight - stick - (dock.getBoundingClientRect().bottom - ty);
       apply(landed ? gap > 0.5 : gap > 1.5);
       if (dock.getAttribute("data-open") === "true") place();
     }
@@ -1066,9 +1095,80 @@
     window.addEventListener("resize", ask);
     window.addEventListener("load", function () { vw = 0; ask(); });
     if (window.ResizeObserver) new ResizeObserver(ask).observe(document.body);
+
+    /* G10 (Mateusz 18.10.2026): until the dock gets a better form, the floating
+       dock waits tucked under the bottom edge – a 15 px strip at 25 % – and
+       slides up to its full form under the pointer or the keyboard focus
+       (ce/CE-05-dok-doradcy.css). A touch screen has no hover: the first tap on
+       the strip only lifts the dock (is-peek, the tap does not reach the field),
+       a tap elsewhere tucks it again. */
+    function tucked() {
+      return !landed && dock.getAttribute("data-open") !== "true" &&
+        !dock.classList.contains("is-peek") && !dock.contains(document.activeElement);
+    }
+    dock.addEventListener("touchstart", function (e) {
+      if (!tucked()) return;
+      e.preventDefault();
+      dock.classList.add("is-peek");
+    }, { passive: false });
+    document.addEventListener("touchstart", function (e) {
+      if (dock.classList.contains("is-peek") && !dock.contains(e.target) && dock.getAttribute("data-open") !== "true") {
+        dock.classList.remove("is-peek");
+      }
+    }, { passive: true });
     sizeBar();
     ask();
   }
+
+  /* ===== EL-01 – motion of the buttons (G04, Mateusz 18.10.2026) =============
+     Hover of an L button: the label moves 4 px to the right and the icon at its
+     end moves in its own way (Figma 938:1629 – the four leaves of the sign draw
+     closer; the sliders – the two knobs run in opposite directions). CSS
+     (ce/00-base.css, c5.css) can move only elements, so this block:
+     - wraps every non-empty text node that is a direct child of .c5-btn in
+       <span class="c5-btn__t">;
+     - gives a button with `c5-btn--ico-liscie` / `c5-btn--ico-suwaki` an inline
+       copy of its icon (.c5-btn__ico, parts with classes), which replaces the
+       CSS mask icon (::after) while it is there.
+     Runs once the document is parsed and again lazily when the pointer enters a
+     button, so buttons built later by page scripts (or relabelled with
+     textContent) get it too. Without this file the buttons keep the static look. */
+  var ICO_LEAVES = '<svg class="c5-btn__ico" viewBox="0 0 19 19" aria-hidden="true" focusable="false"><g fill="currentColor">' +
+    '<g transform="translate(1.117 2.352)"><path class="c5-ico-tl" d="M6.40047 5.58824C6.47878 5.58824 6.55709 5.58824 6.6354 5.5805C6.71371 5.57276 6.69022 5.55728 6.69022 5.52632C6.70588 5.44118 6.70588 5.36378 6.70588 5.28638C6.70588 2.36842 4.30958 0 1.35727 0C-1.59504 0 1.20065 0 1.12233 0.00773994C1.04402 0.0154799 1.06752 0.0309598 1.06752 0.0619195C1.06752 0.139319 1.05969 0.216718 1.05969 0.294118C1.05969 3.21207 3.45599 5.5805 6.4083 5.5805L6.40047 5.58824Z"/>' +
+    '<path class="c5-ico-bl" d="M1.41234 14.4115C1.33484 14.4115 1.25733 14.4115 1.17982 14.4037C1.10232 14.396 1.12557 14.3805 1.12557 14.3495C1.12557 14.272 1.11782 14.1945 1.11782 14.117C1.11782 11.1949 3.48953 8.82324 6.41153 8.82324C6.48904 8.82324 6.56654 8.82324 6.64405 8.83099C6.72156 8.83874 6.6983 8.85425 6.6983 8.88525C6.70605 8.96275 6.70605 9.04026 6.70605 9.11777C6.70605 12.0398 4.33435 14.4115 1.41234 14.4115Z"/></g>' +
+    '<g transform="translate(17.765 2.352) scale(-1 1)"><path class="c5-ico-tl" d="M6.40047 5.58824C6.47878 5.58824 6.55709 5.58824 6.6354 5.5805C6.71371 5.57276 6.69022 5.55728 6.69022 5.52632C6.70588 5.44118 6.70588 5.36378 6.70588 5.28638C6.70588 2.36842 4.30958 0 1.35727 0C-1.59504 0 1.20065 0 1.12233 0.00773994C1.04402 0.0154799 1.06752 0.0309598 1.06752 0.0619195C1.06752 0.139319 1.05969 0.216718 1.05969 0.294118C1.05969 3.21207 3.45599 5.5805 6.4083 5.5805L6.40047 5.58824Z"/>' +
+    '<path class="c5-ico-bl" d="M1.41234 14.4115C1.33484 14.4115 1.25733 14.4115 1.17982 14.4037C1.10232 14.396 1.12557 14.3805 1.12557 14.3495C1.12557 14.272 1.11782 14.1945 1.11782 14.117C1.11782 11.1949 3.48953 8.82324 6.41153 8.82324C6.48904 8.82324 6.56654 8.82324 6.64405 8.83099C6.72156 8.83874 6.6983 8.85425 6.6983 8.88525C6.70605 8.96275 6.70605 9.04026 6.70605 9.11777C6.70605 12.0398 4.33435 14.4115 1.41234 14.4115Z"/></g>' +
+    "</g></svg>";
+  /* the leaf paths are those of the ch-liscie symbol above (both halves alike) */
+  var ICO_SLIDERS = '<svg class="c5-btn__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' +
+    '<path class="c5-ico-s1" d="M20 7h-9"/><path class="c5-ico-s2" d="M14 17H5"/><circle class="c5-ico-k1" cx="7" cy="7" r="3"/><circle class="c5-ico-k2" cx="17" cy="17" r="3"/></svg>';
+  function btnMotion(b) {
+    var n = b.firstChild, next;
+    while (n) {
+      next = n.nextSibling;
+      if (n.nodeType === 3 && /\S/.test(n.nodeValue)) {
+        var t = document.createElement("span");
+        t.className = "c5-btn__t";
+        b.insertBefore(t, n);
+        t.appendChild(n);
+      }
+      n = next;
+    }
+    if (!b.querySelector(":scope > .c5-btn__ico")) {
+      var ico = b.classList.contains("c5-btn--ico-liscie") ? ICO_LEAVES :
+        b.classList.contains("c5-btn--ico-suwaki") ? ICO_SLIDERS : "";
+      if (ico) b.insertAdjacentHTML("beforeend", ico);
+    }
+  }
+  function btnMotionAll() {
+    Array.prototype.forEach.call(document.querySelectorAll(".c5-btn"), btnMotion);
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", btnMotionAll);
+  else btnMotionAll();
+  document.addEventListener("pointerover", function (e) {
+    var b = e.target && e.target.closest && e.target.closest(".c5-btn");
+    if (b) btnMotion(b);
+  }, true);
 
   function define(tag, render) {
     if (window.customElements && !customElements.get(tag)) {
@@ -1209,6 +1309,7 @@
       return;
     }
     el.innerHTML = (HERE ? NAVBAR.replace(/src="img\//g, 'src="' + HERE + "img/") : NAVBAR) + SCRIM;
+    ceSheet("CE-01-naglowek.css");
     ceSheet("CE-02-mega-menu.css");
     markCurrent(el, el.getAttribute("data-current"));
     bindCropSwitch(el);
@@ -1220,7 +1321,9 @@
   });
   define("cw-footer", function (el) {
     var bar = document.querySelector("cw-navbar[data-uklad]");
-    el.innerHTML = bar ? footerPanel(bar.getAttribute("data-uklad") === "handlowiec") : FOOTER;
+    if (bar) { el.innerHTML = footerPanel(bar.getAttribute("data-uklad") === "handlowiec"); return; }
+    el.innerHTML = HERE ? FOOTER.replace(/src="img\//g, 'src="' + HERE + "img/") : FOOTER;
+    ceSheet("CE-04-stopka.css");
   });
   define("cw-dock",   function (el) {
     el.innerHTML = DOCK;

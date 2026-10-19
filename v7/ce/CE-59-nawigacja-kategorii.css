@@ -1,0 +1,52 @@
+/* ===== CE-59 · Nawigacja kategorii – module (design system v0.1, stage D 18.10.2026) =====
+   No Figma frame: the shared card language (EL-15 – 12 px corners, grey-200 outline, white ground,
+   no shadow; the hover darkens the outline) and the list rows of the knowledge pages, content and
+   layout from v7. Used on the knowledge centre (base) and on the home page (`kompakt`).
+
+   Base (`.c5-kc`): auto-fit boxes of a main category – head (name as a link + counter), one
+   sentence, a list of subgroups parted by hairlines, each a 44 px link row with an arrow.
+   `kompakt` (`.c5-kc.c5-kc--kompakt`): a category is ONE line (the name and an arrow, the whole
+   line is the link), two lines side by side from 900 px; next to it `.c5-kc__side` with two rows
+   (an icon, a sentence, a way on). `.c5-kc__band` is the 7 / 5 grid that holds both. ===== */
+
+.c5-kc{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(1.25rem,2.5vw,2rem);margin-top:clamp(1.5rem,3vw,2.25rem);}
+.c5-kc:not(.c5-kc--kompakt) > .c5-kc__cat{display:flex;flex-direction:column;gap:var(--ch-space-3);padding:clamp(1.25rem,2.4vw,var(--ch-space-6));border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-md);background:var(--ch-surface-raised);transition:border-color var(--ch-motion-duration-base) var(--ch-motion-ease);}
+.c5-kc:not(.c5-kc--kompakt) > .c5-kc__cat:hover{border-color:var(--ch-border-strong);}
+.c5-kc__head{display:flex;align-items:baseline;justify-content:space-between;gap:var(--ch-space-3);}
+.c5-kc__name{margin:0;}
+.c5-kc__name a{color:inherit;text-decoration:none;}
+.c5-kc__cat:hover .c5-kc__name a,.c5-kc__name a:focus-visible{text-decoration:underline;text-underline-offset:3px;}
+.c5-kc__desc{margin:0;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary);}
+.c5-kc__subs{list-style:none;margin:var(--ch-space-2) 0 0;padding:0;display:flex;flex-direction:column;}
+.c5-kc__subs > li{border-top:1px solid var(--ch-border-subtle);}
+.c5-kc__subs > li:last-child{border-bottom:1px solid var(--ch-border-subtle);}
+.c5-kc__sub{display:flex;align-items:center;gap:var(--ch-space-3);min-height:44px;padding-block:var(--ch-space-2);color:var(--ch-text-primary);text-decoration:none;font-size:var(--ch-type-body-size);}
+.c5-kc__sub:hover{text-decoration:underline;text-underline-offset:3px;}
+.c5-kc__sub .wf-icon{flex:none;margin-left:auto;width:var(--ch-size-icon-s);height:var(--ch-size-icon-s);color:var(--ch-text-secondary);}
+.c5-kc__n{flex:none;color:var(--ch-text-secondary);font-size:var(--ch-type-small-size);}
+
+/* ----- kompakt ----- */
+.c5-kc__band{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(1rem,2vw,1.5rem);margin-top:clamp(1rem,2vw,1.5rem);}
+.c5-kc--kompakt{grid-template-columns:minmax(0,1fr);gap:clamp(1rem,2vw,1.5rem);margin-top:0;}
+.c5-kc--kompakt > .c5-kc__cat{margin:0;}
+.c5-kc--kompakt > .c5-kc__cat > a{display:flex;align-items:center;justify-content:space-between;gap:var(--ch-space-4);min-height:76px;height:100%;padding:var(--ch-space-4) clamp(1.125rem,1.9vw,1.75rem);border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-md);background:var(--ch-surface-raised);color:inherit;text-decoration:none;transition:border-color var(--ch-motion-duration-base) var(--ch-motion-ease);}
+.c5-kc--kompakt > .c5-kc__cat > a:hover,.c5-kc--kompakt > .c5-kc__cat > a:focus-visible{border-color:var(--ch-border-strong);}
+.c5-kc__arrow{flex:none;color:var(--ch-text-secondary);transition:transform var(--ch-motion-duration-base) var(--ch-motion-ease),color var(--ch-motion-duration-base) var(--ch-motion-ease);}
+.c5-kc__cat > a:hover .c5-kc__arrow{transform:translateX(4px);color:var(--ch-text-primary);}
+.c5-kc__side{display:flex;flex-direction:column;gap:clamp(1rem,2vw,1.5rem);}
+/* icon, sentence, way out – one row, wrapping to two lines on a narrow screen */
+.c5-kc__row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ch-space-3) var(--ch-space-4);flex:1 1 auto;padding:var(--ch-space-4) clamp(1.125rem,1.9vw,1.75rem);border-radius:var(--ch-radius-md);background:var(--ch-surface-warm);}
+.c5-kc__ico{flex:none;color:var(--ch-text-primary);}
+.c5-kc__rowt{flex:1 1 14rem;min-width:0;margin:0;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-secondary-on-warm);}
+.c5-kc__quiet{display:inline-flex;align-items:center;gap:8px;flex:none;font-size:var(--ch-type-small-size);font-weight:var(--ch-font-weight-regular);color:var(--ch-text-primary);text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--ch-border-strong);transition:text-decoration-color var(--ch-motion-duration-base) var(--ch-motion-ease);}
+.c5-kc__quiet .wf-icon{width:14px;height:14px;transition:transform var(--ch-motion-duration-base) var(--ch-motion-ease);}
+.c5-kc__quiet:hover .wf-icon{transform:translateX(3px);}
+/* a quiet link is still a finger target on a phone: the box grows, not the type */
+@media (max-width:899px){.c5-kc__quiet{min-height:44px;}}
+@media (min-width:900px){
+  .c5-kc__band{grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:40px;}
+  .c5-kc--kompakt{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media (prefers-reduced-motion:reduce){
+  .c5-kc__cat,.c5-kc--kompakt > .c5-kc__cat > a,.c5-kc__arrow,.c5-kc__quiet,.c5-kc__quiet .wf-icon{transition:none;}
+}

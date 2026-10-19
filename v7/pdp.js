@@ -1,5 +1,5 @@
 /* =====================================================================
-   pdp.js – shop product card V7 (28.09.2026): CARBOMAT ECO pH 6,0–6,5
+   pdp.js – shop product card V7 (28.09.2026): Carbomat Eco pH 6,0–6,5
    (pdp.html) and pH 4,5–5,0 (pdp-kwasny.html). One script, two pages.
    Spec: 40-strona-www/koncepcja/sklep-v7-spec.md §6, §12.9 and §12.14.
 

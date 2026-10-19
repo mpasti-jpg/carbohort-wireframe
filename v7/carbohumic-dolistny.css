@@ -16,93 +16,116 @@
 .c5-label{display:block;font-weight:var(--w-weight-semibold);color:var(--w-text-primary);}
 .c5-variant__block{display:flex;flex-direction:column;gap:var(--w-space-1);}
 .c5-variant__block ul{margin:var(--w-space-1) 0 0;padding-left:1.35rem;display:flex;flex-direction:column;gap:var(--w-space-1);}
-.c5-who{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,6vw,6rem);align-items:center;margin-top:clamp(3rem,6vw,5rem);}
-.c5-who--flip .c5-who__media{order:2;}
-/* The photo frame clips a layer taller than itself, which makes room for the
-   parallax. `--who-par` (-6 -> 0, per cent of the layer height) is set by JS
-   only at `CX5.motionOn()`; without it the crop rests on the default value. */
-.c5-who__media{position:relative;aspect-ratio:4/5;max-height:calc(100svh - 2 * var(--c5-gutter));overflow:hidden;background:var(--w-gray-300);}
-.c5-who__ph{position:absolute;inset:-6% 0 auto;height:118%;transform:translateY(calc(var(--who-par,-6) * 1%));will-change:transform;}
-.c5-who__body{display:flex;flex-direction:column;gap:clamp(1rem,2vw,1.5rem);max-width:520px;}
-.c5-who__name{font-size:clamp(2rem,3.6vw,3rem);font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
-.c5-who__teaser{font-size:1.0625rem;color:var(--w-text-secondary);}
-/* The brief: label | value rows divided by hairlines. `flex-wrap` does the work
-   of a container query – when the column cannot hold the label and 19rem of
-   value side by side, the value drops under its label. */
-.c5-who__brief{margin:0;display:flex;flex-direction:column;border-bottom:1px solid var(--w-border-default);font-size:0.9375rem;}
-.c5-who__fact{display:flex;flex-wrap:wrap;gap:var(--w-space-1) var(--w-space-4);padding:var(--w-space-3) 0;border-top:1px solid var(--w-border-default);}
-.c5-who__fact > dt{flex:0 0 7.5rem;margin:0;font-weight:var(--w-weight-semibold);color:var(--w-text-primary);}
-.c5-who__fact > dd{flex:1 1 19rem;min-width:0;margin:0;color:var(--w-text-secondary);}
-.c5-who__list{margin:0;padding:0;display:flex;flex-direction:column;gap:var(--w-space-2);}
-.c5-who__body .c5-btn{align-self:flex-start;}
-
-/* the photo layer as an image: it fills the taller parallax layer */
-img.c5-who__ph{display:block;width:100%;object-fit:cover;}
-/* packshot on the photo: stands on the bottom edge of the frame, on the side
-   that faces the copy, outside the parallax layer (it does not move with it) */
-.c5-who__pack{position:absolute;z-index:1;bottom:clamp(12px,4%,32px);right:clamp(16px,8%,64px);
-  width:auto;height:clamp(100px,44%,360px);max-width:calc(100% - 32px);object-fit:contain;
-  filter:drop-shadow(0 14px 18px rgb(0 0 0 / .32)) drop-shadow(0 2px 4px rgb(0 0 0 / .25));pointer-events:none;}
-.c5-who--flip .c5-who__pack{right:auto;left:clamp(16px,8%,64px);}
+/* The rows (`c5-who*`, packshot included) are styled in ce/CE-36-wiersz-zdjecie-opis.css. */
 /* a value of the brief that is still missing in the sources */
 .c5hd-gap{opacity:.6;}
 
-/* --- Pop-up with the full card ----------------------------------------------
-   Pattern: the lightbox of the maize page. Without JS the pop-up is a plain
-   block in the flow of the page under its row – the whole content visible, the
-   opening button and the X hidden. With JS: an overlay, the panel in the
-   centre, the X, Escape, a focus trap, `inert` on the background, the page
-   scroll locked. Both layers stand above the advisor dock (the overlay on
-   --w-z-popover, the dialog on --w-z-toast). */
-html:not(.cx-js) [data-pop-open],
-html:not(.cx-js) .c5-pop .c5-iconbtn{display:none;}
-html:not(.cx-js) .c5-pop{margin-top:1.5rem;border:1px solid var(--w-border-default);padding:clamp(1.25rem,3vw,2rem);}
-.c5-pop__panel{display:flex;flex-direction:column;min-height:0;}
-.c5-pop__head{display:flex;flex-direction:column;gap:var(--w-space-2);padding-bottom:var(--w-space-5);border-bottom:1px solid var(--w-border-subtle);margin-bottom:var(--w-space-5);}
-.c5-pop__title{font-size:clamp(1.5rem,2.6vw,2.125rem);font-weight:var(--w-weight-medium);letter-spacing:-0.01em;}
-.c5-pop__body{display:flex;flex-direction:column;gap:var(--w-space-5);font-size:1rem;}
-.c5-pop__body ul{padding-left:1.35rem;gap:var(--w-space-1);color:var(--w-text-secondary);}
-.c5-pop__body .c5-btnrow{margin-top:var(--w-space-3);}
-
-html.cx-js .c5-pop{position:fixed;inset:0;z-index:var(--w-z-toast);display:grid;place-items:center;padding:var(--c5-gutter);opacity:0;visibility:hidden;transition:opacity .22s var(--w-ease),visibility 0s linear .22s;}
-html.cx-js .c5-pop[data-open="true"]{opacity:1;visibility:visible;transition:opacity .22s var(--w-ease),visibility 0s;}
-html.cx-js .c5-pop__panel{position:relative;width:100%;max-width:760px;max-height:calc(100svh - 2 * var(--c5-gutter));background:var(--w-surface-page);border:1px solid var(--w-border-default);transform:translateY(16px);transition:transform .26s cubic-bezier(.2,.8,.2,1);}
-html.cx-js .c5-pop[data-open="true"] .c5-pop__panel{transform:none;}
-html.cx-js .c5-pop .c5-iconbtn{display:grid;position:absolute;top:14px;right:14px;z-index:1;}
-html.cx-js .c5-pop__scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:clamp(1.5rem,4vw,2.75rem);}
-html.cx-js .c5-pop__head{padding-right:56px;}
-
-.c5-pop-overlay{position:fixed;inset:0;background:var(--w-gray-900);opacity:0;z-index:var(--w-z-popover);transition:opacity .22s var(--w-ease);}
-.c5-pop-overlay[data-open="true"]{opacity:.55;}
-/* an open pop-up stops the page under it (Lenis gets `stop()` in JS) */
-html.c5-pop-lock{overflow:hidden;}
-
-@media (min-width:900px) and (max-width:1099px){
-  /* two narrow columns: the copy may outgrow a 4:5 frame, so the frame follows
-     the height of its row instead of standing short beside the text; the
-     spacer keeps 4:5 as the floor */
-  .c5-who__media{align-self:stretch;aspect-ratio:auto;}
-  .c5-who__media::before{content:"";display:block;padding-top:125%;}
-}
-@media (max-width:899px){
-  /* one column: the photo above the copy, the same in both rows */
-  .c5-who{grid-template-columns:1fr;}
-  .c5-who--flip .c5-who__media{order:0;}
-  .c5-who__media{aspect-ratio:16/10;max-height:none;}
-  .c5-who__body{max-width:none;}
-}
-@media (max-width:599px){
-  /* the panel takes the whole screen – as the lightbox of the maize page does */
-  html.cx-js .c5-pop{padding:0;}
-  html.cx-js .c5-pop__panel{max-width:none;max-height:none;height:100%;border:0;}
-}
-@media (prefers-reduced-motion: reduce){
-  /* no transitions: the pop-up shows and hides at once, the photo crop stands still */
-  html.cx-js .c5-pop,html.cx-js .c5-pop[data-open="true"],
-  .c5-pop__panel,.c5-pop-overlay{transition:none;}
-}
+/* The pop-up with the full card (CE-37, variant `c5-pop`): ce/CE-37-pop-up-karty.css */
 
 /* the closing line of the section „Przewaga”: a pointer to the comparison on the soil page */
 .c5hd-more{margin-top:var(--w-space-6);font-size:0.875rem;}
 /* the number of the decision would break after its hyphen in a narrow column – keep it whole */
 .c5hd-nobr{white-space:nowrap;}
+
+/* ===== PARAMETRY: CE-10 variant `porownanie` (D03, D04, 18.10.2026) ========
+   One comparison table instead of two sets on tabs: the row name, Carbohumic
+   Maxi Plus, Carbohumic Calbor. The panel, the pinned film, the kicker and the
+   heading are the default CE-10 panel (as on Carbomat Eco); only the table is
+   new. It is a real <table>: a head row with the two product names, a row
+   header per parameter. Rules and type follow the rows of the default panel
+   (lead 18/28, the warm rule #C7BDB2, .c5-dim smaller and at .6). Below 600 px
+   the head row leaves the screen (it stays for screen readers) and each value
+   carries the short product name above it, two values side by side.
+   ⚠ Used on this page only – to be moved into ce/CE-10-parametry.css as the
+   variant `porownanie` (moduleRequests of round 18.10.2026). */
+.c5-params--porownanie{--c5-params-dt:220px;}
+.c5-params__cmp{flex:0 0 100%;width:100%;min-width:0;margin:0;border-collapse:collapse;table-layout:fixed;}
+.c5-params__cmp th,
+.c5-params__cmp td{padding:var(--ch-space-4) var(--ch-space-6) var(--ch-space-4) 0;border-bottom:1px solid var(--c5-params-rule);
+  text-align:left;vertical-align:top;font-family:var(--ch-type-lead-font);font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);
+  font-weight:var(--ch-type-lead-weight);color:var(--ch-text-primary);}
+.c5-params__cmp tr > :last-child{padding-right:0;}
+.c5-params__cmp tbody th{width:var(--c5-params-dt);}
+.c5-params__cmp .c5-params__corner{width:var(--c5-params-dt);}
+/* the head row: the product names over a dark rule, in the weight of the buttons */
+.c5-params__cmp thead th{padding-top:0;border-bottom-color:var(--ch-border-strong);font-weight:var(--ch-font-weight-book);}
+.c5-params__cmp thead .c5-params__corner{padding-top:0;border-bottom-color:var(--ch-border-strong);}
+.c5-params__cmp .c5-dim{font-size:var(--ch-type-small-size);opacity:.6;}
+@media (min-width:600px) and (max-width:899px){
+  .c5-params--porownanie{--c5-params-dt:150px;}
+  .c5-params__cmp th,.c5-params__cmp td{padding-right:var(--ch-space-4);font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);}
+}
+@media (max-width:599px){
+  .c5-params__cmp,.c5-params__cmp tbody{display:block;}
+  .c5-params__cmp thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;}
+  .c5-params__cmp tr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--ch-space-4);
+    padding-block:var(--ch-space-4);border-bottom:1px solid var(--c5-params-rule);}
+  .c5-params__cmp tbody th,
+  .c5-params__cmp td{display:block;width:auto;padding:0;border:0;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);}
+  .c5-params__cmp tbody th{grid-column:1 / -1;margin-bottom:var(--ch-space-2);font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);font-weight:var(--ch-font-weight-book);}
+  .c5-params__cmp td::before{content:attr(data-th);display:block;margin-bottom:2px;
+    font-family:var(--ch-type-overline-font);font-size:var(--ch-type-overline-size);line-height:var(--ch-type-overline-lh);
+    letter-spacing:var(--ch-type-overline-ls);text-transform:uppercase;color:var(--ch-text-secondary-on-warm);}
+}
+
+/* ===== PRZEWAGA: CE-70 variant zielen with a photo in the card (D02) ========
+   Figma 847:855: the square of the card holds a photograph (r8) instead of a
+   dark illustration. The modifier takes the padding and the dark field off the
+   box and lets the picture cover it; the square stays a floor, as in the
+   module. The lead stands under the heading on the first screen.
+   ⚠ `c5-vs__viz--foto` is used on this page only – to be moved into
+   ce/CE-70-scena-slajdow.css (moduleRequests of round 18.10.2026). */
+.c5-vs__viz--foto{padding:0;overflow:hidden;background:var(--ch-color-grey-200);}
+.c5-vs__viz--foto > img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;}
+.c5-vs__head .c5-lead{max-width:40rem;margin-top:var(--ch-space-6);margin-bottom:0;}
+/* on the green stage the secondary grey falls under 4.5 : 1 – the ink of the heading at .8 */
+.c5-vs--zielen .c5-vs__head .c5-lead{color:color-mix(in srgb,var(--ch-text-primary) 80%,transparent);}
+/* the pointer to the comparison on the soil page, under the scene */
+#przewaga .c5hd-more{margin-top:var(--ch-space-8);}
+
+/* ===== EFEKTY: CE-13 variant `lista` (D01, 18.10.2026, Figma 948:1437) ======
+   The photo scene of „Jak stosować” (Carbomat Eco) without the product strip:
+   one photo frame the height of the window less the 24 px margins, five terms.
+   From the annotations of the frame:
+   · the names roll upwards – the term before the open one stands above it,
+     the next one below it (both at .5), the others are gone; scrolling down
+     the whole list moves up one place per term;
+   · beside the open name four leaves come in one by one while the page is
+     scrolled (besides the parallax of the photo) – the sign of how far the
+     reader is in this term; after the fourth the next term opens, scrolling
+     back the leaves go one by one.
+   CE-13-scena-produktu.js keeps doing what it does (thresholds, is-on /
+   is-past, parallax); carbohumic-dolistny.js section 50 adds the place of each
+   name (--use-y, data-dist) and the number of leaves (data-leaves).
+   Static (no JS, below 900 px, reduced motion): the module's stacked order –
+   photo, name, description per term; the leaves are not drawn.
+   ⚠ Used on this page only – to be moved into ce/CE-13-scena-produktu.css and
+   CE-13-scena-produktu.js as the variant `lista` (moduleRequests). */
+.c5-use--lista{--use-intro:.1;--use-hold:.8;--use-outro:.3;--use-dock:-.5;--use-list-gap:20px;}
+/* the shapes of the leaves (the defs of the marks); never drawn themselves */
+.c5hd-defs{position:absolute;width:0;height:0;overflow:hidden;}
+@media (min-width:900px) and (prefers-reduced-motion:no-preference){
+  /* no strip: the frame takes the whole stage less the margins and is there
+     from the start (nothing to dock from) */
+  .cx-js .c5-use--lista .c5-use__photo{top:var(--use-top);opacity:1;transform:none;}
+  /* the names: one rolling list. Every name stands on the bottom line of its
+     crop and is moved by the script (--use-y, px) to its place in the list;
+     long names wrap instead of running into the description. */
+  .cx-js .c5-use--lista .c5-use__tab{max-width:100%;margin-bottom:0;white-space:normal;text-wrap:balance;
+    font-size:clamp(1.75rem,2.78vw,var(--ch-type-title-xl-size));
+    opacity:0;visibility:hidden;transform:translateY(calc(var(--use-y,0) * 1px + 16px));
+    transition:opacity var(--use-swap-d) var(--ch-motion-ease),transform var(--use-swap-d) var(--ch-motion-ease),visibility 0s linear var(--use-swap-d);}
+  .cx-js .c5-use--lista.is-ui .c5-use__tab{opacity:0;transform:translateY(calc(var(--use-y,0) * 1px));}
+  .cx-js .c5-use--lista.is-ui .c5-use__crop:is(.is-on,[data-dist="1"]) .c5-use__tab{visibility:visible;transition-delay:0s;}
+  .cx-js .c5-use--lista.is-ui .c5-use__crop[data-dist="1"] .c5-use__tab{opacity:.5;}
+  .cx-js .c5-use--lista.is-ui .c5-use__crop.is-on .c5-use__tab{opacity:1;}
+  /* the four leaves: the mark of the module turns 45 deg on the open name;
+     the leaves inside it come one by one (data-leaves = how many) */
+  .cx-js .c5-use--lista .c5hd-lf > use{opacity:0;transform:scale(.4);transform-box:fill-box;transform-origin:50% 50%;
+    transition:opacity 280ms var(--ch-motion-ease),transform 280ms var(--ch-motion-ease);}
+  .cx-js .c5-use--lista .c5-use__crop[data-leaves="1"] .c5hd-lf:nth-child(-n+1) > use,
+  .cx-js .c5-use--lista .c5-use__crop[data-leaves="2"] .c5hd-lf:nth-child(-n+2) > use,
+  .cx-js .c5-use--lista .c5-use__crop[data-leaves="3"] .c5hd-lf:nth-child(-n+3) > use,
+  .cx-js .c5-use--lista .c5-use__crop[data-leaves="4"] .c5hd-lf > use{opacity:1;transform:none;}
+  .cx-js .c5-use--lista .c5-use__tabico{width:19px;height:19px;}
+}

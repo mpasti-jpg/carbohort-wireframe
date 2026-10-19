@@ -105,3 +105,264 @@ html.cx-js .u-prod__card{--u-prod-delay:0ms;
   .u-prod__card--partner .u-prod__ph{grid-column:1;grid-row:1 / -1;}
   .u-prod__card--partner .u-prod__go{align-self:end;}
 }
+
+/* ===== wariant: z-przyciskami (Figma 801:567 and 859:2542) =====
+   Block: c5-cards, modifier: c5-cards--z-przyciskami; the root also carries
+   `c5-cards__list` (grid, shared with `z-rozpiska`). Cards pin their button row
+   (`c5-btnrow c5-cards__acts`) to the bottom edge, so a row of cards shares one
+   line of buttons whatever the bodies do. Two looks:
+   - default (Produkty): a packshot field, a body with the name, a lead, a boxed
+     definition list, then L buttons. The card has no chrome of its own; two
+     columns from 900 px, one column below.
+   - `c5-cards--poziome` (Próchnica+ participants): a white card with an outline,
+     the photo on the left (287 px), a crop chip, name, host, two label/value
+     pairs and M buttons on the right. Two columns from 1100 px. The hover is a
+     warm fill without the outline (Figma shows one card of the grid that way).
+   The root adds no spacing of its own; the page sets the gap above it. */
+.c5-cards.c5-cards--z-przyciskami{gap:var(--ch-space-14) var(--ch-space-5);}
+@media (min-width:900px){
+  .c5-cards.c5-cards--z-przyciskami:not(.c5-cards--poziome){grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+.c5-cards--z-przyciskami .c5-cards__card{display:flex;flex-direction:column;gap:var(--ch-space-10);min-width:0;}
+/* Packshot field: warm surface (an instance on a warm band sets
+   `--c5-cards-shot-bg` to the stronger beige), 687 : 543, the product on 80 % of the height. */
+.c5-cards__shot{position:relative;aspect-ratio:687 / 543;overflow:hidden;border-radius:var(--ch-radius-md);background:var(--c5-cards-shot-bg,var(--ch-surface-warm));}
+.c5-cards__shot img{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);height:80%;width:auto;max-width:76%;object-fit:contain;}
+.c5-cards--z-przyciskami .c5-cards__body{display:flex;flex-direction:column;gap:var(--ch-space-4);min-width:0;}
+.c5-cards--z-przyciskami .c5-cards__name{margin:0;font-family:var(--ch-type-title-l-font);font-size:var(--ch-type-title-l-size);line-height:var(--ch-type-title-l-lh);letter-spacing:var(--ch-type-title-l-ls);font-weight:var(--ch-type-title-l-weight);color:var(--ch-text-primary);}
+.c5-cards--z-przyciskami .c5-cards__name .wf-link{color:inherit;font:inherit;letter-spacing:inherit;text-decoration:none;}
+.c5-cards--z-przyciskami .c5-cards__name .wf-link:hover{text-decoration:underline;text-underline-offset:0.18em;}
+.c5-cards--z-przyciskami .c5-cards__desc{margin:0;font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);color:var(--ch-text-secondary);}
+/* Boxed definition list: an outline, 12 px corners, rows split by a hairline. */
+.c5-cards__rows{display:flex;flex-direction:column;margin:var(--ch-space-6) 0 0;padding:var(--ch-space-5) var(--ch-space-6);border:1px solid var(--ch-border-control);border-radius:var(--ch-radius-md);}
+.c5-cards__row{display:flex;flex-direction:column;gap:var(--ch-space-1);min-width:0;}
+.c5-cards__row + .c5-cards__row{margin-top:var(--ch-space-4);padding-top:var(--ch-space-4);border-top:1px solid var(--ch-border-subtle);}
+.c5-cards__row dt{font-size:var(--ch-type-kicker-size);line-height:var(--ch-type-kicker-lh);letter-spacing:var(--ch-type-kicker-ls);text-transform:uppercase;color:var(--ch-text-secondary);}
+.c5-cards__row dd{margin:0;font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);color:var(--ch-text-primary);}
+.c5-cards--z-przyciskami .c5-cards__acts{margin-top:auto;}
+
+/* ----- c5-cards--poziome ----- */
+.c5-cards.c5-cards--poziome{gap:var(--ch-space-5);}
+@media (min-width:1100px){
+  .c5-cards.c5-cards--poziome{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+.c5-cards--poziome .c5-cards__card{display:grid;grid-template-columns:minmax(0,min(287px,44.4%)) minmax(0,1fr);
+  column-gap:clamp(1rem,3.9vw,3.5rem);align-items:stretch;padding:var(--ch-space-5);
+  border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-md);background:var(--ch-surface-page);
+  transition:background var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);}
+.c5-cards--poziome .c5-cards__card:hover{background:var(--ch-surface-warm);border-color:transparent;}
+/* The photo field fills the height of the card (300 px at the Figma content). */
+.c5-cards--poziome .c5-cards__photo{width:100%;height:100%;min-height:300px;align-self:stretch;border-radius:var(--ch-radius-sm);border:0;}
+.c5-cards--poziome .c5-cards__body{gap:var(--ch-space-5);}
+.c5-cards__crop{display:inline-flex;align-self:flex-start;align-items:center;gap:var(--ch-space-2);padding:var(--ch-space-2) 10px;
+  border-radius:var(--ch-radius-sm);background:var(--ch-surface-warm);
+  font-size:var(--ch-type-overline-size);line-height:var(--ch-type-overline-lh);letter-spacing:var(--ch-type-overline-ls);text-transform:uppercase;color:var(--ch-text-secondary);
+  transition:background var(--w-duration-base) var(--w-ease);}
+.c5-cards__crop .wf-icon{width:12px;height:12px;}
+.c5-cards--poziome .c5-cards__card:hover .c5-cards__crop{background:var(--ch-surface-warm-strong);}
+.c5-cards__head{display:flex;flex-direction:column;gap:var(--ch-space-1);}
+.c5-cards--poziome .c5-cards__name{margin:0;font-family:var(--ch-type-title-font);font-size:var(--ch-type-title-size);line-height:var(--ch-type-title-lh);letter-spacing:var(--ch-type-title-ls);font-weight:var(--ch-type-title-weight);color:var(--ch-text-primary);}
+.c5-cards__who{margin:0;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary);}
+.c5-cards__meta{display:flex;flex-direction:column;gap:var(--ch-space-3);}
+.c5-cards__meta p{margin:0;font-size:var(--ch-type-body-size);line-height:28px;color:var(--ch-text-primary);}
+.c5-cards__lbl{display:block;font-size:var(--ch-type-micro-size);line-height:var(--ch-type-micro-lh);letter-spacing:var(--ch-type-micro-ls);text-transform:uppercase;color:var(--ch-text-secondary);}
+.c5-cards--poziome .c5-cards__acts{gap:var(--ch-space-2);}
+@media (max-width:699px){
+  .c5-cards--poziome .c5-cards__card{grid-template-columns:minmax(0,1fr);row-gap:var(--ch-space-5);}
+  .c5-cards--poziome .c5-cards__photo{height:auto;min-height:0;aspect-ratio:4 / 3;}
+}
+@media (prefers-reduced-motion: reduce){
+  .c5-cards--poziome .c5-cards__card,.c5-cards__crop{transition:none;}
+}
+
+/* ===== wariant: szklane (Figma 867:2937) =====
+   Three glass cards on a photo (`c5-card c5-card--glass c5-card--pad-lg` from
+   00-base.css supplies the surface, 24 px corners and 32 px padding): a round
+   icon frame, a name and a text, 40 px between the frame and the text, 20 px
+   between name and text. Three columns from 900 px, one below. Without
+   `backdrop-filter` the card falls back to a darker fill. */
+.c5-cards.c5-cards--szklane{gap:var(--ch-space-5);}
+@media (min-width:900px){
+  .c5-cards.c5-cards--szklane{grid-template-columns:repeat(3,minmax(0,1fr));}
+}
+.c5-cards--szklane .c5-cards__card{display:flex;flex-direction:column;gap:var(--ch-space-10);min-width:0;height:100%;}
+.c5-cards--szklane .c5-cards__name{margin:0;font-family:var(--ch-type-title-font);font-size:var(--ch-type-title-size);line-height:var(--ch-type-title-lh);letter-spacing:var(--ch-type-title-ls);font-weight:var(--ch-type-title-weight);color:var(--ch-text-inverse);}
+.c5-cards--szklane .c5-cards__desc{margin:calc(var(--ch-space-5) - var(--ch-space-10)) 0 0;font-size:var(--ch-type-body-size);line-height:24px;color:var(--ch-text-inverse-subtle);}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))){
+  .c5-cards--szklane .c5-card--glass{background:rgb(0 0 0 / .5);}
+}
+/* Entrance stagger (80 ms), the same as the other card grids. */
+.c5-cards--szklane > li:nth-child(2){transition-delay:.08s;}
+.c5-cards--szklane > li:nth-child(3){transition-delay:.16s;}
+@media (prefers-reduced-motion: reduce){
+  .c5-cards--szklane > li{transition-delay:0s;}
+}
+
+/* ===== Etap D: karta EL-15 na stronach bez własnego projektu ================
+   One card language for every CE-20 instance that has no Figma frame: a white
+   card with a grey-200 outline and 12 px corners (or a warm card without an
+   outline), 20 px padding that grows to 32 px from 900 px, the title in the
+   `title` style, the body in `body` grey, no shadows. The element classes of
+   each instance (`cw-a-next*`, `c5hu-mix*`, `kt-way*`, `c5-mt-*`, `c5-proof*`,
+   `on-step*`, `on-fam*`, `c5h-buy*`, `c5pd-pair*`, `c5pd-also*`, `c5ks-rec*`)
+   stay in the HTML; the look of all of them is defined once, here. The
+   column layout of each instance stays as it was in v7. */
+
+/* --- shared anatomy --- */
+:is(.cw-a-next__card,.c5hu-mix__card,.kt-way,.c5-mt-card,.c5-proof,.c5-mt-delta__item,.on-step,.on-fam,.c5h-buy__tile,.c5pd-pair,.c5pd-also__card,.c5ks-rec){
+  box-sizing:border-box;min-width:0;background:var(--ch-surface-raised);border:1px solid var(--ch-border-subtle);
+  border-radius:var(--ch-radius-md);color:var(--ch-text-primary);
+  transition:border-color var(--ch-motion-duration-base) var(--ch-motion-ease),background var(--ch-motion-duration-base) var(--ch-motion-ease);}
+:is(.cw-a-next__card,.c5hu-mix__card,.kt-way,.c5-mt-card,.c5-proof,.c5-mt-delta__item,.on-step,.on-fam,.c5h-buy__tile){
+  display:flex;flex-direction:column;gap:var(--ch-space-3);padding:var(--ch-space-5);}
+@media (min-width:900px){
+  :is(.cw-a-next__card,.c5hu-mix__card,.kt-way,.c5-mt-card,.c5-proof,.c5-mt-delta__item,.on-step,.on-fam,.c5h-buy__tile){padding:var(--ch-space-8);}
+}
+/* warm variant: a beige card without an outline (an emphasised card) */
+:is(.cw-a-next__card--prod,.c5hu-mix__card--avoid){background:var(--c5-cards-warm,var(--ch-surface-warm-strong));border-color:transparent;}
+/* hover of a static card: only the outline darkens (EL-15 `--hover`) */
+:is(.cw-a-next__card,.kt-way,.c5-mt-card,.c5-proof,.on-step,.on-fam,.c5-mt-delta__item,.c5pd-pair,.c5pd-also__card,.c5ks-rec):not(.cw-a-next__card--prod):hover{border-color:var(--ch-border-control);}
+
+/* title */
+:is(.cw-a-next__card .c5-h3,.c5hu-mix__name,.kt-way h3,.c5-mt-card__title,.on-step__h,.on-fam__name,.c5h-buy__name,.c5-proof .c5-mt-proof__title){
+  margin:0;padding:0;border:0;width:auto;font-family:var(--ch-type-title-font);font-size:var(--ch-type-title-size);line-height:var(--ch-type-title-lh);
+  letter-spacing:var(--ch-type-title-ls);font-weight:var(--ch-type-title-weight);color:var(--ch-text-primary);}
+/* body */
+:is(.cw-a-next__lead,.c5hu-mix__card p,.kt-way p,.c5-mt-card__txt,.on-step p,.on-fam p,.c5h-buy__txt,.c5-proof__list){
+  margin:0;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);letter-spacing:var(--ch-type-body-ls);color:var(--ch-text-secondary);}
+:is(.cw-a-next__card--prod,.c5hu-mix__card--avoid) :is(.cw-a-next__lead,p){color:var(--ch-text-secondary-on-warm);}
+.c5-mt-card__txt + .c5-mt-card__txt{margin-top:calc(-1 * var(--ch-space-1));}
+.c5-mt-card ul{margin:0;padding-left:1.2rem;display:flex;flex-direction:column;gap:var(--ch-space-1);font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary);}
+/* ordinal and tag lines */
+:is(.on-step__no,.c5-mt-card__no,.c5-proof .c5-mt-proof__tag){
+  font-family:var(--ch-type-overline-font);font-size:var(--ch-type-overline-size);line-height:var(--ch-type-overline-lh);
+  letter-spacing:var(--ch-type-overline-ls);text-transform:uppercase;color:var(--ch-text-secondary);}
+/* the push-down of buttons and links to the bottom edge */
+.cw-a-next__card .c5-btnrow{margin-top:auto;}
+.kt-way p{flex:1 1 auto;}
+.kt-way{align-items:flex-start;}
+
+/* --- czytaj-dalej (artykul): three cards, the title alone is the link --- */
+.cw-a-next{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--ch-space-5);margin:clamp(1.5rem,3vw,2.25rem) 0 0;padding:0;list-style:none;}
+.cw-a-next__card{height:100%;align-items:flex-start;}
+.cw-a-next__card > :not(.c5-chip){align-self:stretch;}
+.cw-a-next__link{color:inherit;text-decoration:none;}
+.cw-a-next__link:hover{text-decoration:underline;text-underline-offset:2px;}
+.cw-a-next__card .c5-src{margin:0;}
+
+/* --- ostrzegawcze (carbohumic-doglebowy): two warnings, a warm card each --- */
+.c5hu-mix{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--ch-space-5);margin-top:clamp(1.5rem,3vw,2.5rem);}
+.c5hu-mix__name{display:flex;gap:var(--ch-space-3);align-items:flex-start;}
+.c5hu-mix__name .wf-icon{flex:none;margin-top:6px;}
+
+/* --- szerokie (home): two wide link tiles, icon | text | arrow --- */
+.c5h-buy{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ch-space-5);margin:0;padding:0;list-style:none;}
+.c5h-buy > li{display:flex;}
+.c5h-buy__tile{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:start;gap:var(--ch-space-5);width:100%;text-decoration:none;}
+.c5h-buy__tile:hover,.c5h-buy__tile:focus-visible{background:var(--ch-surface-warm);border-color:transparent;}
+.c5h-buy__ico{background:var(--ch-surface-warm);}
+.c5h-buy__tile:hover .c5h-buy__ico,.c5h-buy__tile:focus-visible .c5h-buy__ico{background:var(--ch-surface-raised);}
+.c5h-buy__body{display:flex;flex-direction:column;gap:var(--ch-space-2);}
+.c5h-buy__arrow{margin-top:var(--ch-space-3);color:var(--ch-text-primary);transition:transform var(--ch-motion-duration-base) var(--ch-motion-ease);}
+.c5h-buy__tile:hover .c5h-buy__arrow,.c5h-buy__tile:focus-visible .c5h-buy__arrow{transform:translateX(4px);}
+@media (max-width:899px){.c5h-buy{grid-template-columns:minmax(0,1fr);}}
+
+/* --- z-przyciskami (kontakt): three ways out, a title, a line, one button --- */
+.kt-ways{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:var(--ch-space-5);margin:clamp(1.5rem,3vw,2.5rem) 0 0;padding:0;list-style:none;}
+
+/* --- numerowane / kafle-danych / szerokie (carbomat-mata) --- */
+.c5-mt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:var(--ch-space-5);margin-top:clamp(2rem,4vw,3.5rem);}
+.c5-mt-grid--wide{grid-template-columns:repeat(auto-fit,minmax(min(100%,24rem),1fr));}
+.c5-mt-delta{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:var(--ch-space-5);margin-top:clamp(2rem,4vw,3rem);}
+.c5-mt-delta__name{font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);font-weight:var(--ch-font-weight-medium);color:var(--ch-text-secondary);}
+/* The value reserves two lines because some readings wrap and some do not;
+   the chip pushed to the bottom completes the alignment. */
+.c5-mt-delta__val{font-family:var(--ch-type-display-sm-font);font-size:var(--ch-type-display-sm-size);line-height:var(--ch-type-display-sm-lh);
+  letter-spacing:var(--ch-type-display-sm-ls);font-weight:var(--ch-type-display-sm-weight);color:var(--ch-text-primary);min-height:2.3em;}
+.c5-mt-delta__note{font-size:var(--ch-type-caption-size);color:var(--ch-text-secondary);}
+.c5-mt-delta .c5-bar{grid-template-columns:minmax(4.5rem,32%) 1fr minmax(3.5rem,auto);gap:var(--ch-space-2);font-size:var(--ch-type-caption-size);}
+.c5-mt-delta__item .c5-chip{margin-top:auto;align-self:flex-start;white-space:nowrap;}
+
+/* --- z-przyciskami (carbomat-mata): three evidence cards with a photo --- */
+.c5-proofs{display:grid;grid-template-columns:1fr;gap:var(--ch-space-5);margin-top:clamp(2.5rem,5vw,4rem);}
+.c5-proof{align-items:flex-start;}
+.c5-proof__ph{width:100%;aspect-ratio:3/2;margin-bottom:var(--ch-space-2);border-radius:var(--ch-radius-sm);}
+.c5-proof .c5-mt-proof__title{width:100%;}
+.c5-proof__list{padding:0;list-style:none;display:flex;flex-direction:column;width:100%;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);}
+.c5-proof__list li{padding-block:var(--ch-space-2);border-bottom:1px solid var(--ch-border-subtle);}
+.c5-proof__list li:last-child{border-bottom:0;}
+.c5-proof .c5-barchart{width:100%;}
+.c5-proof__btn{margin-top:auto;}
+@media (min-width:700px) and (max-width:999px){.c5-proofs{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (min-width:1000px){.c5-proofs{grid-template-columns:repeat(3,minmax(0,1fr));}}
+
+/* --- numerowane (o-firmie): three steps; z-przyciskami: four families --- */
+.on-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:var(--ch-space-5);margin:clamp(2rem,4vw,3rem) 0 0;padding:0;list-style:none;}
+.on-step{position:relative;}
+@media (min-width:900px){
+  /* the arrow lives in the gap, so it never moves the cards */
+  .on-steps{position:relative;grid-template-columns:repeat(3,minmax(0,1fr));}
+  .on-step:not(:last-child)::after{content:"";position:absolute;top:50%;left:calc(100% + var(--ch-space-2));
+    width:calc(var(--ch-space-5) - 2 * var(--ch-space-2));height:1px;background:var(--ch-border-control);}
+}
+.on-fams{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:var(--ch-space-5);margin-top:clamp(2rem,4vw,3rem);}
+/* The packshot gets an explicit box inside the field and is letterboxed by
+   `object-fit`; both dimensions are written out because `max-height:100%`
+   does not cap a replaced element inside an aspect-ratio box in Chrome. */
+.on-fam__stage{--on-fam-pad:var(--ch-space-4);position:relative;background:var(--ch-surface-warm);border-radius:var(--ch-radius-sm);aspect-ratio:4/3;overflow:hidden;}
+.on-fam__pack{position:absolute;top:var(--on-fam-pad);left:var(--on-fam-pad);width:calc(100% - 2 * var(--on-fam-pad));height:calc(100% - 2 * var(--on-fam-pad));max-width:none;object-fit:contain;}
+.on-fam__go{margin-top:auto;padding-top:var(--ch-space-2);display:inline-flex;align-items:center;gap:var(--ch-space-2);min-height:44px;
+  font-size:var(--ch-type-small-size);font-weight:var(--ch-font-weight-medium);}
+.on-fam__go .wf-icon{flex:none;}
+/* CARBOHUMIC has two entry links; side by side, stacked on a narrow card. */
+.on-fam__gos{margin-top:auto;display:flex;flex-wrap:wrap;column-gap:var(--ch-space-4);}
+.on-fam__gos .on-fam__go{margin-top:0;padding-top:var(--ch-space-2);}
+.on-fams__more{margin-top:clamp(1.5rem,3vw,2.25rem);}
+
+/* --- shop cards (pdp, pdp-kwasny, koszyk): a packshot field on top, name,
+   price and one button; the card clips the field, the body carries the padding --- */
+:is(.c5pd-pair,.c5pd-also__card,.c5ks-rec){display:flex;flex-direction:column;overflow:hidden;scroll-snap-align:start;}
+:is(.c5pd-pair__thumb,.c5pd-also__shot,.c5ks-rec__shot){background:var(--ch-surface-warm);}
+:is(.c5pd-pair__body,.c5pd-also__body,.c5ks-rec__body){display:flex;flex:1;flex-direction:column;gap:var(--ch-space-1);padding:var(--ch-space-4);}
+:is(.c5pd-also__name,.c5ks-rec__name,.c5pd-pair__name){
+  font-family:var(--ch-type-title-s-font);font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);letter-spacing:var(--ch-type-title-s-ls);
+  font-weight:var(--ch-font-weight-medium);color:var(--ch-text-primary);}
+@media (min-width:600px){
+  :is(.c5pd-also__name,.c5ks-rec__name){font-size:var(--ch-type-title-s-size);line-height:var(--ch-type-title-s-lh);font-weight:var(--ch-type-title-s-weight);}
+}
+:is(.c5pd-also__name a,.c5ks-rec__name a){color:inherit;text-decoration:none;}
+:is(.c5pd-also__name a,.c5ks-rec__name a):hover{text-decoration:underline;text-underline-offset:3px;}
+.c5ks-rec__name a:focus-visible{outline:2px solid var(--ch-text-primary);outline-offset:2px;}
+.c5pd-pair__txt{font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-secondary);}
+:is(.c5pd-pair__price,.c5pd-also__price,.c5ks-rec__price){display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--ch-space-1) var(--ch-space-1-5);margin-top:auto;padding-top:var(--ch-space-2);
+  font-size:var(--ch-type-body-size);font-variant-numeric:tabular-nums;color:var(--ch-text-primary);}
+.c5ks-rec__price .cws-price{display:contents;}
+.c5ks-rec__from{font-weight:var(--ch-font-weight-medium);color:var(--ch-text-secondary);}
+.c5ks-rec__low{font-size:var(--ch-type-caption-size);line-height:var(--ch-type-caption-lh);color:var(--ch-text-secondary);}
+/* "Dodaj do koszyka" in a card is always the green button with dark text */
+:is(.c5pd-also__add,.c5ks-rec__add){width:100%;margin-top:var(--ch-space-3);padding-inline:var(--ch-space-3);
+  background:var(--ch-action-accent-bg);color:var(--ch-action-accent-fg);border-color:var(--ch-action-accent-bg);border-radius:var(--ch-radius-control-m);}
+:is(.c5pd-also__add,.c5ks-rec__add):hover{background:var(--ch-color-green-350);border-color:var(--ch-color-green-350);color:var(--ch-action-accent-fg);}
+.c5pd-pair .cws-btn{gap:var(--ch-space-1-5);width:100%;min-height:36px;margin-top:var(--ch-space-2);padding:6px var(--ch-space-3);font-size:var(--ch-type-small-size);}
+@media (pointer:coarse){.c5pd-pair .cws-btn{min-height:44px;}}
+/* the row of pairs and of "see also" cards (swipeable below 900 px) */
+.c5pd-pairs{position:relative;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(10rem,1fr);gap:var(--ch-space-3);margin-top:var(--ch-space-2);overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none;}
+.c5pd-pairs::-webkit-scrollbar{display:none;}
+.c5pd-pair__thumb{display:block;height:132px;}
+.c5pd-pair__thumb img{display:block;width:100%;height:100%;padding:14px;object-fit:contain;}
+.c5pd-also__list{position:relative;display:grid;grid-auto-flow:column;grid-auto-columns:min(72%,17rem);gap:var(--ch-space-3);margin-inline:calc(-1 * var(--ch-space-5));padding-inline:var(--ch-space-5);overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:var(--ch-space-5);scrollbar-width:none;}
+.c5pd-also__list::-webkit-scrollbar{display:none;}
+.c5pd-also__shot{position:relative;display:block;aspect-ratio:1;overflow:hidden;}
+.c5pd-also__shot img{position:absolute;inset:0;width:100%;height:100%;padding:12%;object-fit:contain;}
+@media (min-width:900px){
+  .c5pd-also__list{grid-auto-flow:row;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--ch-space-5);margin-inline:0;padding-inline:0;overflow:visible;}
+}
+.c5ks-more__list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ch-space-3);}
+@media (min-width:900px){.c5ks-more__list{grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--ch-space-5);}}
+.c5ks-rec__shot{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr);place-items:center;aspect-ratio:1;padding:12%;overflow:hidden;}
+.c5ks-rec__shot img{display:block;width:100%;height:100%;min-height:0;object-fit:contain;}
+.c5ks-rec__shot.wf-ph{padding:0;min-height:0;border:0;border-radius:0;}
+@media (prefers-reduced-motion: reduce){
+  :is(.cw-a-next__card,.c5hu-mix__card,.kt-way,.c5-mt-card,.c5-proof,.c5-mt-delta__item,.on-step,.on-fam,.c5h-buy__tile,.c5pd-pair,.c5pd-also__card,.c5ks-rec),.c5h-buy__arrow{transition:none;}
+  .c5h-buy__tile:hover .c5h-buy__arrow,.c5h-buy__tile:focus-visible .c5h-buy__arrow{transform:none;}
+}

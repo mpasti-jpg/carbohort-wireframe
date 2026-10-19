@@ -1,0 +1,43 @@
+/* ===== CE-62 · Boks produktowy w treści (rejestr: ce-rejestr.js) =============
+   Module (design system v0.1, stage D 18.10.2026): a warm card EL-15 (r12,
+   beige-50, no outline, no shadow) with the packshot, the name, one sentence
+   from the product page and two buttons. The buy button is always green with
+   dark text; the second button is the light outline. Layout and copy stay as in
+   v7. Two variants:
+     · base (`cw-a-prod`)    one box per article, standing inside the text
+                              column where the copy names the product: packshot
+                              on the left, copy and buttons on the right; one
+                              column on a phone (artykul.html)
+     · `boczny` (`cw-k-prod`) the side column of a category page: packshot over
+                              the name, one sentence and two buttons in a row
+                              (centrum-wiedzy-kategoria.html)
+
+   Markup (base):
+     aside.cw-a-prod[data-ce="CE-62"] > span.c5-kicker.cw-a-prod__kicker
+       + .cw-a-prod__in > img.cw-a-prod__pack + .cw-a-prod__copy
+         (h3 · p.cw-a-prod__lead · .c5-btnrow > a.c5-btn--light + a.c5-btn--accent)
+   Markup (boczny):
+     .cw-k-prod[data-ce="CE-62"][data-ce-wariant="boczny"] > h2 + span.cw-k-prod__shot > img
+       + h3.cw-k-prod__name + p.cw-k-prod__txt + .c5-btnrow
+   ============================================================================ */
+
+/* --- base: box in the text ---------------------------------------------------- */
+.cw-a-prod{margin:clamp(1.75rem,4vw,2.5rem) 0;background:var(--ch-surface-warm);border-radius:var(--ch-radius-md);
+  padding:clamp(var(--ch-space-5),2.6vw,var(--ch-space-8));}
+.cw-a-prod__kicker{margin-bottom:var(--ch-space-3);background:var(--ch-surface-page);}
+.cw-a-prod__in{display:flex;flex-wrap:wrap;align-items:center;gap:clamp(1rem,3vw,1.75rem);}
+.cw-a-prod__pack{flex:none;width:clamp(96px,22vw,132px);height:auto;object-fit:contain;mix-blend-mode:multiply;}
+.cw-a-prod__copy{flex:1 1 15rem;min-width:0;display:flex;flex-direction:column;gap:var(--ch-space-3);}
+.cw-a-prod__copy h3{margin:0;font-family:var(--ch-type-tab-font);font-size:var(--ch-type-title-s-size);line-height:var(--ch-type-title-s-lh);
+  font-weight:var(--ch-type-title-s-weight);letter-spacing:var(--ch-type-title-s-ls);}
+.cw-a-prod__lead{margin:0;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary-on-warm);}
+
+/* --- boczny: box in the side column ------------------------------------------- */
+.cw-k-prod{display:flex;flex-direction:column;gap:var(--ch-space-3);align-items:flex-start;
+  background:var(--ch-surface-warm);border-radius:var(--ch-radius-md);padding:var(--ch-space-6);}
+.cw-k-prod__shot{width:100%;display:grid;place-items:center;background:var(--ch-surface-page);border-radius:var(--ch-radius-sm);padding:var(--ch-space-4);}
+.cw-k-prod__shot img{max-width:100%;height:auto;max-height:200px;width:auto;mix-blend-mode:multiply;}
+.cw-k-prod__name{margin:0;}
+.cw-k-prod__txt{margin:0;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary-on-warm);}
+.cw-k-prod .c5-btnrow{width:100%;}
+.cw-k-prod .c5-btn{flex:1 1 auto;--c5-btn-px:18px;}

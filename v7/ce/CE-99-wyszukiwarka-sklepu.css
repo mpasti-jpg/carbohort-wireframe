@@ -8,8 +8,8 @@
    and categories / filter values. Enter or "Szukaj" turns the query into
    filters of the list (CE-78); the script is ce/CE-99-wyszukiwarka-sklepu.js.
 
-   Tokens --w-* only, sharp corners (the shop has no rounded controls
-   except the chips of CE-78). Elements with display:flex/grid would beat
+   Tokens --ch-* (stage D, 18.10.2026): field r14 with a grey-300 outline (EL-28),
+   r12 panel without a shadow, green "Do koszyka". Elements with display:flex/grid would beat
    the default [hidden]{display:none}, so the guard below is scoped here.
    ===================================================================== */
 
@@ -19,20 +19,20 @@
 .c5-find { position: relative; min-width: 0; scroll-margin-top: 64px; }
 
 /* --- field ---------------------------------------------------------- */
-.c5-find__form { display: flex; align-items: stretch; min-width: 0; }
-.c5-find__field { display: flex; align-items: center; gap: var(--w-space-3); flex: 1 1 auto; min-width: 0; height: 52px; padding-inline: 16px; border: 1px solid var(--w-gray-900); border-right: 0; background: var(--w-surface-page); cursor: text; }
+.c5-find__form { display: flex; align-items: stretch; gap: var(--ch-space-2); min-width: 0; }
+.c5-find__field { display: flex; align-items: center; gap: var(--w-space-3); flex: 1 1 auto; min-width: 0; height: 52px; padding-inline: 16px; border: 1px solid var(--ch-border-control); border-radius: var(--ch-radius-control-m); background: var(--ch-surface-page); cursor: text; }
 /* The focus ring sits on the whole frame: outline:none on the input alone
    would remove the only visible focus indicator of the control. */
-.c5-find__field:focus-within { outline: 2px solid var(--w-gray-900); outline-offset: -3px; }
+.c5-find__field:focus-within { border-color: var(--ch-border-strong); outline: 2px solid var(--ch-border-strong); outline-offset: -3px; }
 .c5-find__field > .wf-icon { flex: none; width: 20px; height: 20px; opacity: .55; }
 .c5-find__box { position: relative; display: flex; align-items: center; flex: 1; min-width: 0; height: 100%; }
 .c5-find input { width: 100%; min-width: 0; height: 100%; padding: 0; border: 0; outline: none; font: inherit; font-size: 1rem; background: transparent; color: var(--w-text-primary); }
 .c5-find input::placeholder { color: var(--w-text-tertiary); opacity: 1; }
 .c5-find input::-webkit-search-cancel-button { cursor: pointer; }
-.c5-find__go { flex: none; height: 52px; padding: 0 22px; font: inherit; font-size: 0.9375rem; font-weight: var(--w-weight-semibold); background: var(--w-gray-900); color: var(--w-text-inverse); border: 1px solid var(--w-gray-900); border-radius: 0; cursor: pointer; }
+.c5-find__go { flex: none; height: 52px; padding: 0 22px; font: inherit; font-size: 0.9375rem; font-weight: var(--w-weight-semibold); background: var(--ch-action-primary-bg); color: var(--ch-action-primary-fg); border: 1px solid var(--ch-action-primary-bg); border-radius: var(--ch-radius-control-m); cursor: pointer; }
 .c5-find__go { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
 .c5-find__go .wf-icon { display: none; width: 20px; height: 20px; }
-.c5-find__go:hover { background: var(--w-gray-800); }
+.c5-find__go:hover { background: var(--ch-color-green-900); border-color: var(--ch-color-green-900); }
 .c5-find__go:focus-visible { outline: 2px solid var(--w-focus-ring); outline-offset: 2px; }
 
 /* Animated placeholder: the script types example queries into this overlay
@@ -44,7 +44,7 @@
 @keyframes c5-find-caret { 50% { opacity: 0; } }
 
 /* --- suggestions panel ------------------------------------------------ */
-.c5-find__panel { position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 110; background: var(--w-surface-page); border: 1px solid var(--w-gray-900); box-shadow: var(--w-shadow-lg); max-height: min(72vh, 40rem); overflow-y: auto; overscroll-behavior: contain; }
+.c5-find__panel { position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 110; background: var(--ch-surface-page); border: 1px solid var(--ch-border-control); border-radius: var(--ch-radius-md); max-height: min(72vh, 40rem); overflow-y: auto; overscroll-behavior: contain; }
 /* From 900 px the two parts stand side by side: products wider on the left. */
 @media (min-width: 900px) {
   .c5-find__panel { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); align-items: start; }
@@ -60,7 +60,7 @@
 .c5-find__link { flex: 1 1 auto; min-width: 0; display: grid; grid-template-columns: 52px minmax(0, 1fr); align-items: center; gap: 12px; padding: 6px 8px 6px 12px; color: var(--w-text-primary); text-decoration: none; }
 .c5-find__link:hover { background: var(--w-gray-100); }
 .c5-find__link:focus-visible { outline: 2px solid var(--w-focus-ring); outline-offset: -2px; background: var(--w-gray-100); }
-.c5-find__thumb { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); place-items: center; gap: 2px; width: 52px; height: 52px; padding: 6px; background: var(--w-gray-100); }
+.c5-find__thumb { border-radius: var(--ch-radius-xs); display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); place-items: center; gap: 2px; width: 52px; height: 52px; padding: 6px; background: var(--w-gray-100); }
 .c5-find__thumb img { display: block; width: 100%; height: 100%; min-height: 0; object-fit: contain; }
 .c5-find__thumb.wf-ph { padding: 0; min-height: 0; border-radius: 0; }
 .c5-find__txt { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
@@ -69,11 +69,12 @@
 .c5-find__meta { font-size: 0.75rem; line-height: 1.3; color: var(--w-text-tertiary); }
 .c5-find__price { font-size: 0.8125rem; font-weight: var(--w-weight-semibold); font-variant-numeric: tabular-nums; }
 .c5-find__price s { font-weight: var(--w-weight-regular, 400); color: var(--w-text-tertiary); }
-.c5-find__add { flex: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 36px; padding: 0 12px; font: inherit; font-size: 0.8125rem; font-weight: var(--w-weight-semibold); white-space: nowrap; background: var(--w-surface-page); color: var(--w-text-primary); border: 1px solid var(--w-gray-900); border-radius: 0; text-decoration: none; cursor: pointer; }
-.c5-find__add:hover { background: var(--w-gray-900); color: var(--w-text-inverse); }
+.c5-find__add { flex: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 36px; padding: 0 12px; font: inherit; font-size: 0.8125rem; font-weight: var(--w-weight-semibold); white-space: nowrap; background: var(--ch-action-accent-bg); color: var(--ch-action-accent-fg); border: 1px solid var(--ch-action-accent-bg); border-radius: var(--ch-radius-sm); text-decoration: none; cursor: pointer; }
+.c5-find__add:hover { background: var(--ch-color-green-350); border-color: var(--ch-color-green-350); }
 .c5-find__add:focus-visible { outline: 2px solid var(--w-focus-ring); outline-offset: 2px; }
 .c5-find__add .wf-icon { width: 16px; height: 16px; }
-.c5-find__add--quiet { border-color: rgb(0 0 0 / .35); font-weight: var(--w-weight-medium); }
+.c5-find__add--quiet { background: var(--ch-surface-page); color: var(--ch-action-secondary-fg); border-color: var(--ch-border-control); font-weight: var(--w-weight-medium); }
+.c5-find__add--quiet:hover { background: var(--ch-surface-page); border-color: var(--ch-border-strong); }
 
 /* category / filter value row: one button, group name above the value */
 .c5-find__cat { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; width: 100%; padding: 8px 14px; font: inherit; text-align: left; background: none; color: var(--w-text-primary); border: 0; border-radius: 0; cursor: pointer; }
@@ -105,6 +106,7 @@
 @media (max-width: 899px) { .c5-find { scroll-margin-top: 84px; } }
 @media (max-width: 599px) {
   .c5-find__field { height: 48px; padding-inline: 12px; gap: 10px; }
+  .c5-find__form { gap: var(--ch-space-1-5); }
   /* the button keeps only its icon, the field gets the width */
   .c5-find__field > .wf-icon { display: none; }
   .c5-find__go { width: 52px; height: 48px; padding: 0; }

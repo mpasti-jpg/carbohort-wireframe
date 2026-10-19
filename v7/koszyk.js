@@ -32,7 +32,7 @@
   ];
   var PRODUCTS = {
     "carbomat-eco-4": {
-      id: "carbomat-eco-4", name: "CARBOMAT ECO pH 4,5–5,0", meta: "odmiana kwaśna · sypki · doglebowy",
+      id: "carbomat-eco-4", name: "Carbomat Eco pH 4,5–5,0", meta: "odmiana kwaśna · sypki · doglebowy",
       img: "img/opakowania/worek_20l.png", url: "pdp-kwasny.html",
       short: "Surowy lignit o niskim odczynie – pod borówkę, żurawinę, wrzosowate, różaneczniki i azalie. Zakładasz raz, pracuje kolejne sezony.",
       variants: ECO_VARIANTS,
@@ -45,7 +45,7 @@
       ]
     },
     "carbomat-eco-6": {
-      id: "carbomat-eco-6", name: "CARBOMAT ECO pH 6,0–6,5", meta: "odmiana uniwersalna · sypki · doglebowy",
+      id: "carbomat-eco-6", name: "Carbomat Eco pH 6,0–6,5", meta: "odmiana uniwersalna · sypki · doglebowy",
       img: "img/opakowania/worek_20l.png", url: "pdp.html",
       short: "Surowy lignit do wymieszania z glebą lub podłożem. Odczyn dla większości grup roślin – buduje strukturę i magazyn na wodę.",
       variants: ECO_VARIANTS,
@@ -58,7 +58,7 @@
       ]
     },
     "carbomat-eco-sciolka": {
-      id: "carbomat-eco-sciolka", name: "CARBOMAT ECO Ściółka pH 4,5–5,0", meta: "sypki · ściółka · frakcja 8–20 mm",
+      id: "carbomat-eco-sciolka", name: "Carbomat Eco Ściółka pH 4,5–5,0", meta: "sypki · ściółka · frakcja 8–20 mm",
       img: "img/opakowania/worek_20l.png", url: "pdp.html",
       short: "Grubsza frakcja do rozsypania warstwą 3–5 cm, bez mieszania. W przeciwieństwie do kory nie powoduje głodu azotowego.",
       packs: [
@@ -68,7 +68,7 @@
       ]
     },
     "carbohumic-20mesh": {
-      id: "carbohumic-20mesh", name: "CARBOHUMIC niefiltrowany (20 mesh)", meta: "płynny · doglebowy",
+      id: "carbohumic-20mesh", name: "Carbohumic niefiltrowany (20 mesh)", meta: "płynny · doglebowy",
       img: "img/opakowania/kanister_20l.png", url: "pdp.html",
       short: "„Intensywna odbudowa gleby i budowanie trwałej próchnicy”. Podajesz polewaniem z beczki lub mauzera.",
       packs: [
@@ -78,7 +78,7 @@
       ]
     },
     "carbohumic-187mesh": {
-      id: "carbohumic-187mesh", name: "CARBOHUMIC filtrowany (187 mesh)", meta: "płynny · doglebowy · przez dysze",
+      id: "carbohumic-187mesh", name: "Carbohumic filtrowany (187 mesh)", meta: "płynny · doglebowy · przez dysze",
       img: "img/opakowania/kanister_5l.png", url: "pdp.html",
       short: "Przechodzi przez opryskiwacze, belki herbicydowe, zraszacze i linie kroplujące. Bieżąca biostymulacja gleby i roślin.",
       packs: [
@@ -90,7 +90,7 @@
       ]
     },
     "maxi-plus": {
-      id: "maxi-plus", name: "CARBOHUMIC MAXI PLUS", meta: "płynny · dolistny",
+      id: "maxi-plus", name: "Carbohumic Maxi Plus", meta: "płynny · dolistny",
       img: "img/opakowania/butelka_1l.png", url: "pdp.html",
       short: "Dolistna biostymulacja w fazie wzrostu – kwasy huminowe i fulwowe pracują na masę liściową. Program podstawowy to minimum trzy zabiegi.",
       packs: [
@@ -100,7 +100,7 @@
       ]
     },
     "calbor": {
-      id: "calbor", name: "CARBOHUMIC CALBOR", meta: "płynny · dolistny · tylko sady",
+      id: "calbor", name: "Carbohumic Calbor", meta: "płynny · dolistny · tylko sady",
       img: "img/opakowania/butelka_1l.png", url: "pdp.html",
       short: "Wapń i bor w chelacie kwasów humusowych – jakość, kaliber i trwałość owocu po zbiorze. Rejestracja obejmuje wyłącznie uprawy sadownicze.",
       packs: [
@@ -110,9 +110,9 @@
       ]
     },
     "pure-one": {
-      id: "pure-one", name: "PURE ONE biostymulator mineralny", meta: "płynny · dolistny",
+      id: "pure-one", name: "Pure One biostymulator mineralny", meta: "płynny · dolistny",
       url: "pdp.html",
-      short: "Biostymulator mineralny zewnętrznego producenta, stosowany w zestawach z CARBOHUMIC MAXI PLUS. ⚠️ Kanon bez danych.",
+      short: "Biostymulator mineralny zewnętrznego producenta, stosowany w zestawach z Carbohumic Maxi Plus. ⚠️ Kanon bez danych.",
       packs: [
         { id: "b1", label: "1 l", short: "1 l", price: 160, ship: "parcel", kg: 1.2 },
         { id: "k5", label: "5 l", short: "5 l", price: 800, ship: "parcel", kg: 6 }
@@ -529,7 +529,7 @@
         '<h3 class="c5ks-rec__name"><a></a></h3>' +
         '<p class="c5ks-rec__price">' + ((p.packs || []).length > 1 ? '<span class="c5ks-rec__from">od</span> ' : "") + S.priceHTML(pack) + "</p>" +
         (low ? '<p class="c5ks-rec__low"></p>' : "") +
-        '<button type="button" class="cws-btn cws-btn--light c5ks-rec__add" data-cw-open aria-haspopup="dialog">Dodaj do koszyka<span class="wf-sr-only"></span></button>' +
+        '<button type="button" class="cws-btn cws-btn--light c5ks-rec__add" data-cw-open aria-haspopup="dialog">Kup teraz<span class="wf-sr-only"></span></button>' +
       "</div>";
     li.querySelector(".c5ks-rec__shot").href = p.url;
     if (p.img) li.querySelector("img").src = p.img;

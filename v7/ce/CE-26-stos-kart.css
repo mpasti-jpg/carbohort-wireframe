@@ -62,9 +62,9 @@
   --c5-stack-body-w:1fr;
   --c5-stack-media-min:clamp(240px,24vw,340px);
   --c5-stack-pad:clamp(1.5rem,3vw,2.5rem);
-  --c5-stack-bg:var(--w-gray-100);
-  --c5-stack-line:var(--w-border-default);
-  --c5-stack-media-bg:var(--w-gray-200);
+  --c5-stack-bg:var(--ch-surface-warm);
+  --c5-stack-line:transparent;
+  --c5-stack-media-bg:var(--ch-surface-warm-strong);
   --c5-stack-shrink:.04;
   --c5-stack-dim:.12;
   display:flex;flex-direction:column;gap:var(--c5-stack-gap);
@@ -75,50 +75,51 @@
 /* No `overflow:hidden` on the card: its height always follows the copy
    (min-height, never height), so there is nothing to cut – and nothing may be. */
 .c5-stack__card{position:relative;display:grid;grid-template-columns:minmax(0,1fr);
-  margin:0;background:var(--c5-stack-bg);border:1px solid var(--c5-stack-line);
-  color:var(--w-text-primary);}
+  margin:0;padding:var(--ch-space-5);background:var(--c5-stack-bg);border:1px solid var(--c5-stack-line);
+  border-radius:var(--ch-radius-md);color:var(--ch-text-primary);}
 
 /* The frame. Two classes on purpose: a page may put its own placeholder class
    on the same element (kit `wf-ph`, page `c5-ph`), and those bring a border, a
    radius, a height floor or a fill of their own – here the block decides. */
 .c5-stack .c5-stack__media{position:relative;display:block;min-width:0;min-height:0;margin:0;
-  border:0;border-radius:0;aspect-ratio:4 / 3;overflow:hidden;
+  border:0;border-radius:var(--ch-radius-md);aspect-ratio:4 / 3;overflow:hidden;
   background:var(--c5-stack-media-bg);}
 .c5-stack__media > img,
 .c5-stack__media > picture > img,
 .c5-stack__media > video{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;}
 /* caption of an empty frame – bottom left, where the page placeholders put theirs */
 .c5-stack__label{position:absolute;left:10px;bottom:8px;margin:0;padding:0;background:none;
-  font-size:var(--w-font-caption-size);font-weight:var(--w-weight-regular);line-height:1.2;
-  text-align:left;color:var(--w-gray-600);}
+  font-size:var(--ch-type-caption-size);font-weight:var(--ch-type-caption-weight);line-height:1.2;
+  text-align:left;color:var(--ch-text-secondary);}
 
 /* The copy. It is centred with auto margins instead of `justify-content`, so a
    block taller than its card starts at the top edge and grows downwards – it
    never runs out above the card, where nothing could bring it back. */
-.c5-stack__body{display:flex;flex-direction:column;gap:var(--w-space-4);min-width:0;
+.c5-stack__body{display:flex;flex-direction:column;gap:var(--ch-space-4);min-width:0;
   padding:var(--c5-stack-pad);}
 .c5-stack__body > *{flex:none;margin:0;}
 .c5-stack__body > :first-child{margin-top:auto;}
 .c5-stack__body > :last-child{margin-bottom:auto;}
 
-.c5-stack__tag{font-size:0.8125rem;line-height:1.3;letter-spacing:.06em;text-transform:uppercase;
-  color:var(--w-text-secondary);}
+.c5-stack__tag{align-self:flex-start;padding:6px var(--ch-space-2);border:1px solid var(--ch-border-control);border-radius:var(--ch-radius-sm);
+  font-size:var(--ch-type-overline-size);line-height:var(--ch-type-overline-lh);letter-spacing:var(--ch-type-overline-ls);text-transform:uppercase;
+  color:var(--ch-text-secondary);}
 /* The title is a column: the number (if any) above the words. A title without
    a number is just its text – one sentence reads as well as two words. */
-.c5-stack__title{display:flex;flex-direction:column;gap:var(--w-space-2);
-  font-size:clamp(1.25rem,2vw,1.625rem);font-weight:var(--w-weight-medium);
-  line-height:1.25;letter-spacing:-0.01em;color:var(--w-text-primary);text-wrap:balance;}
-.c5-stack__no{font-size:clamp(2.5rem,4.4vw,3.75rem);font-weight:var(--w-weight-regular);
-  line-height:1;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;
-  color:var(--w-text-tertiary);}
+.c5-stack__title{display:flex;flex-direction:column;gap:var(--ch-space-2);
+  font-family:var(--ch-type-h3-display-font);font-size:clamp(1.5rem,2.4vw,var(--ch-type-h3-display-size));font-weight:var(--ch-type-h3-display-weight);
+  line-height:1.15;letter-spacing:var(--ch-type-h3-display-ls);color:var(--ch-text-primary);text-wrap:balance;}
+.c5-stack__no{font-family:var(--ch-type-display-num-font);font-size:clamp(2.5rem,4.4vw,var(--ch-type-display-num-size));font-weight:var(--ch-type-display-num-weight);
+  line-height:1;letter-spacing:var(--ch-type-display-num-ls);font-variant-numeric:tabular-nums;
+  color:var(--ch-text-secondary);}
 /* a separator kept in the markup for the full reading of the title („01 · …”) */
 .c5-stack__sep{display:none;}
 .c5-stack__name{display:block;}
-.c5-stack__txt{display:flex;flex-direction:column;gap:var(--w-space-3);
-  font-size:var(--w-font-sm-size);line-height:1.55;color:var(--w-text-secondary);}
+.c5-stack__txt{display:flex;flex-direction:column;gap:var(--ch-space-3);
+  font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-relaxed-lh);color:var(--ch-text-secondary);}
 .c5-stack__txt p{margin:0;}
 /* a lead-in word inside a paragraph („Pamiętaj:”) stays in the line */
-.c5-stack__txt .c5-label{display:inline;}
+.c5-stack__txt .c5-label{display:inline;color:var(--ch-text-primary);}
 
 /* --- From 900 px: frame and copy side by side --------------------------------- */
 @media (min-width:900px){

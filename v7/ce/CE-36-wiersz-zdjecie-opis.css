@@ -6,11 +6,11 @@
    Other pages carry their own implementations of CE-36 in their page sheets. */
 
 /* --- brief: label | value rows inside the copy column --- */
-.b-brief{display:grid;margin:0;border-top:1px solid var(--w-border-subtle);}
-.b-brief > div{display:grid;grid-template-columns:9.5rem minmax(0,1fr);gap:var(--w-space-3);
-  padding:10px 0;border-bottom:1px solid var(--w-border-subtle);}
-.b-brief dt{padding-top:3px;font-size:.75rem;line-height:1.4;letter-spacing:.06em;text-transform:uppercase;color:var(--w-text-tertiary);}
-.b-brief dd{margin:0;font-size:.9375rem;line-height:1.5;color:var(--w-text-primary);}
+.b-brief{display:grid;margin:0;border-top:1px solid var(--ch-border-subtle);}
+.b-brief > div{display:grid;grid-template-columns:9.5rem minmax(0,1fr);gap:var(--ch-space-3);
+  padding:10px 0;border-bottom:1px solid var(--ch-border-subtle);}
+.b-brief dt{padding-top:3px;font-size:var(--ch-type-overline-size);line-height:var(--ch-type-overline-lh);letter-spacing:var(--ch-type-overline-ls);text-transform:uppercase;color:var(--ch-text-secondary);}
+.b-brief dd{margin:0;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-primary);}
 .b-row__body{container-type:inline-size;}
 @container (max-width:420px){.b-brief > div{grid-template-columns:minmax(0,1fr);gap:2px;}}
 @media (max-width:479px){.b-brief > div{grid-template-columns:minmax(0,1fr);gap:2px;}}
@@ -18,23 +18,23 @@
 /* --- rows: from 900 px each row fills one screen – the photo from the outer
    edge to the middle, the copy on the other side; one column below. Nothing
    is pinned or driven by scroll. --- */
-.b-rows{display:grid;gap:clamp(2.5rem,7vw,4rem);margin-top:clamp(2rem,4vw,3.5rem);padding-inline:var(--w-space-5);}
-.b-row{display:grid;gap:var(--w-space-6);}
-.b-row__fig{position:relative;margin:0;display:flex;flex-direction:column;background:var(--w-gray-700);}
+.b-rows{display:grid;gap:clamp(2.5rem,7vw,4rem);margin-top:clamp(2rem,4vw,3.5rem);padding-inline:var(--ch-space-5);}
+.b-row{display:grid;gap:var(--ch-space-6);}
+.b-row__fig{position:relative;margin:0;display:flex;flex-direction:column;background:var(--ch-surface-warm-strong);overflow:hidden;border-radius:var(--ch-radius-control-l);}
 .b-row__fig > img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:var(--b-pos,50% 50%);}
-.b-row__body{display:flex;flex-direction:column;gap:var(--w-space-5);min-width:0;}
-.b-row__body > p{max-width:56ch;color:var(--w-text-secondary);}
-.b-row__no{font-family:var(--w-font-mono);font-size:.75rem;line-height:1;color:var(--w-text-tertiary);}
+.b-row__body{display:flex;flex-direction:column;gap:var(--ch-space-5);min-width:0;}
+.b-row__body > p{max-width:56ch;color:var(--ch-text-secondary);}
+.b-row__no{font-family:var(--ch-type-overline-font);font-size:var(--ch-type-overline-size);line-height:1;color:var(--ch-text-secondary);}
 .b-row__t{margin:0;}
-.b-row__acts{display:flex;flex-wrap:wrap;align-items:center;gap:var(--w-space-3) var(--w-space-5);}
+.b-row__acts{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ch-space-3) var(--ch-space-5);}
 @media (min-width:900px){
   .b-rows{--b-row-edge:20px;--b-row-side:40px;--b-row-gap:clamp(3rem,6vw,7.5rem);
     max-width:1800px;margin-inline:auto;padding-inline:0;gap:0;}
   .b-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0;min-height:100svh;}
-  .b-row__fig{margin:var(--b-row-edge) 0 var(--b-row-edge) var(--b-row-edge);
+  .b-row__fig{margin:var(--b-row-edge) 0 var(--b-row-edge) var(--b-row-edge);border-radius:var(--ch-radius-control-l);
     min-height:calc(100svh - 2 * var(--b-row-edge));align-items:center;justify-content:center;overflow:hidden;}
   .b-row__fig > img{position:absolute;inset:0;height:100%;aspect-ratio:auto;}
-  .b-row__body{align-self:center;padding-block:var(--w-space-8);padding-inline:var(--b-row-gap) var(--b-row-side);}
+  .b-row__body{align-self:center;padding-block:var(--ch-space-8);padding-inline:var(--b-row-gap) var(--b-row-side);}
   .b-row__body > *{max-width:34rem;}
 }
 
@@ -47,35 +47,108 @@
 
 /* --- infographic box on the photo: a glass panel from 900 px, a solid dark
    ground under the photo below. --- */
-.b-info{position:relative;z-index:1;display:flex;flex-direction:column;gap:var(--w-space-5);margin:0;
-  padding:24px;background:var(--b-lig,#1d1a17);color:#fff;}
-.b-info__tag{align-self:flex-start;padding:12px 15px;border-radius:11px;background:rgb(0 0 0 / .2);
-  font-size:16px;line-height:normal;color:#fff;}
-.b-info__body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:var(--w-space-6);}
-.b-info__bars{display:grid;gap:var(--w-space-3);}
+.b-info{position:relative;z-index:1;display:flex;flex-direction:column;gap:var(--ch-space-5);margin:0;
+  padding:var(--ch-space-6);background:var(--b-lig,var(--ch-surface-earth));color:var(--ch-text-inverse);}
+.b-info__tag{align-self:flex-start;padding:var(--ch-space-3) var(--ch-space-4);border-radius:var(--ch-radius-sm);background:color-mix(in srgb,var(--ch-surface-inverse) 20%,transparent);
+  font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-inverse);}
+.b-info__body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:var(--ch-space-6);}
+.b-info__bars{display:grid;gap:var(--ch-space-3);}
 .b-info__bar{display:grid;grid-template-columns:minmax(0,max-content) minmax(3rem,1fr) minmax(2.25rem,auto);
-  gap:var(--w-space-3);align-items:center;font-size:clamp(0.8125rem,1.12vw,1rem);line-height:1.75;letter-spacing:-0.02em;}
-.b-info__track{display:block;height:6px;border-radius:2px;background:rgb(255 255 255 / .12);overflow:hidden;}
-.b-info__track > span{display:block;height:100%;width:var(--p);border-radius:2px;background:rgb(255 255 255 / .7);}
-.b-info__val{justify-self:end;font-size:9px;line-height:14px;letter-spacing:.03em;text-transform:uppercase;color:#fff;}
-.b-info__fact{margin:0;display:grid;gap:var(--w-space-2);}
-.b-info__num{font-size:clamp(1.75rem,3.4vw,2.5rem);font-weight:var(--w-weight-bold);line-height:1;letter-spacing:-0.02em;}
-.b-info__small{font-size:var(--w-font-sm-size);line-height:var(--w-font-sm-lh);color:rgb(255 255 255 / .85);}
-.b-info__cap{margin:0;font-size:clamp(0.75rem,0.98vw,0.875rem);line-height:1.571;color:rgb(255 255 255 / .8);}
-.b-info__mixes{list-style:none;margin:0;padding:0;display:grid;gap:var(--w-space-5);}
+  gap:var(--ch-space-3);align-items:center;font-size:clamp(0.8125rem,1.12vw,1rem);line-height:1.75;letter-spacing:-0.02em;}
+.b-info__track{display:block;height:6px;border-radius:var(--ch-radius-xs);background:color-mix(in srgb,var(--ch-text-inverse) 12%,transparent);overflow:hidden;}
+.b-info__track > span{display:block;height:100%;width:var(--p);border-radius:var(--ch-radius-xs);background:color-mix(in srgb,var(--ch-text-inverse) 70%,transparent);}
+.b-info__val{justify-self:end;font-size:var(--ch-type-micro-size);line-height:var(--ch-type-micro-lh);letter-spacing:var(--ch-type-micro-ls);text-transform:uppercase;color:var(--ch-text-inverse);}
+.b-info__fact{margin:0;display:grid;gap:var(--ch-space-2);}
+.b-info__num{font-size:clamp(1.75rem,3.4vw,2.5rem);font-weight:var(--ch-font-weight-medium);line-height:1;letter-spacing:-0.02em;}
+.b-info__small{font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-inverse-muted);}
+.b-info__cap{margin:0;font-size:clamp(0.75rem,0.98vw,0.875rem);line-height:1.571;color:var(--ch-text-inverse-muted);}
+.b-info__mixes{list-style:none;margin:0;padding:0;display:grid;gap:var(--ch-space-5);}
 .b-info__mixes li{display:grid;gap:8px;font-size:clamp(0.8125rem,1.12vw,1rem);line-height:1.4;letter-spacing:-0.02em;}
 .b-info__mix{display:flex;gap:2px;height:6px;}
-.b-info__mix > span{flex:0 1 var(--p);border-radius:2px;background:rgb(255 255 255 / .28);}
-.b-info__mix > .b-info__seg--lig{background:#fff;}
-.b-info__mix > .b-info__seg--torf{background:rgb(255 255 255 / .5);}
-.b-info__mix > .b-info__seg--soil{background:rgb(255 255 255 / .34);}
-.b-info__mix > .b-info__seg--saw{background:rgb(255 255 255 / .2);}
+.b-info__mix > span{flex:0 1 var(--p);border-radius:var(--ch-radius-xs);background:color-mix(in srgb,var(--ch-text-inverse) 28%,transparent);}
+.b-info__mix > .b-info__seg--lig{background:var(--ch-text-inverse);}
+.b-info__mix > .b-info__seg--torf{background:color-mix(in srgb,var(--ch-text-inverse) 50%,transparent);}
+.b-info__mix > .b-info__seg--soil{background:color-mix(in srgb,var(--ch-text-inverse) 34%,transparent);}
+.b-info__mix > .b-info__seg--saw{background:color-mix(in srgb,var(--ch-text-inverse) 20%,transparent);}
 @media (min-width:900px){
   .b-info{width:min(clamp(330px,52%,520px),calc(100% - 68px));min-height:clamp(340px,62svh,760px);
-    border-radius:24px;background:var(--b-info-bg,rgb(20 20 20 / .78));}
+    border-radius:var(--ch-radius-xl);background:var(--b-info-bg,color-mix(in srgb,var(--ch-surface-inverse) 78%,transparent));}
   @supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
-    .b-info{background:var(--b-info-bg,rgb(53 46 40 / .72));
-      -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
-      box-shadow:inset 0 1px 0 rgb(255 255 255 / .10),inset 0 -1px 0 rgb(0 0 0 / .12);}
+    .b-info{background:var(--b-info-bg,var(--ch-effect-glass-background));
+      -webkit-backdrop-filter:blur(var(--ch-effect-glass-blur));backdrop-filter:blur(var(--ch-effect-glass-blur));
+      box-shadow:inset 0 0 0 1px var(--ch-effect-glass-edge);}
   }
 }
+
+/* ===== Stage D: one look for every photo | copy row without a Figma frame =====
+   Instances: `c5-who*` (CARBOMAT HUMIC, CARBOHUMIC foliar), `on-who*` (About
+   us), `c5h-about*` (Home, appearance only; its grid stays in home.css).
+   The photo frame is a 4:5 crop with 20 px corners (a large photo), the title
+   is the `h3-display` style, the first paragraph the `lead` (18 / 28), the
+   brief a list of label | value rows on grey-200 hairlines, the buttons EL-01.
+   The photo layer is taller than its frame, which makes room for the parallax;
+   `--who-par` / `--on-par` (-6 -> 0, per cent of the layer) is set by JS only
+   at `CX5.motionOn()`, without it the crop rests on the default value. */
+:is(.c5-who,.on-who){display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,6vw,6rem);align-items:center;}
+.c5-who{margin-top:clamp(3rem,6vw,5rem);}
+.c5-who--flip .c5-who__media{order:2;}
+:is(.c5-who__media,.on-who__media){position:relative;aspect-ratio:4/5;max-height:calc(100svh - 2 * var(--c5-gutter));overflow:hidden;
+  border-radius:var(--ch-radius-control-l);background:var(--ch-surface-warm-strong);}
+.c5-who__ph{position:absolute;inset:-6% 0 auto;height:118%;transform:translateY(calc(var(--who-par,-6) * 1%));will-change:transform;}
+img.c5-who__ph{display:block;width:100%;object-fit:cover;}
+.on-who__ph{position:absolute;inset:-6% 0 auto;height:118%;width:100%;border-radius:0;border:0;
+  transform:translateY(calc(var(--on-par,-6) * 1%));will-change:transform;}
+.on-who__ph .wf-icon{width:var(--ch-size-icon-xl);height:var(--ch-size-icon-xl);color:var(--ch-text-secondary);}
+/* packshot on the photo: stands on the bottom edge of the frame, on the side
+   that faces the copy, outside the parallax layer (it does not move with it) */
+.c5-who__pack{position:absolute;z-index:1;bottom:clamp(12px,4%,32px);right:clamp(16px,8%,64px);
+  width:auto;height:clamp(100px,44%,360px);max-width:calc(100% - 32px);object-fit:contain;pointer-events:none;}
+.c5-who--flip .c5-who__pack{right:auto;left:clamp(16px,8%,64px);}
+:is(.c5-who__body,.on-who__body){display:flex;flex-direction:column;gap:clamp(1rem,2vw,1.5rem);max-width:520px;}
+.on-who__kicker{margin-bottom:0;}
+:is(.c5-who__name,.on-who__name){margin:0;font-family:var(--ch-type-h3-display-font);font-size:clamp(1.875rem,3.4vw,var(--ch-type-h3-display-size));
+  line-height:1.15;letter-spacing:var(--ch-type-h3-display-ls);font-weight:var(--ch-type-h3-display-weight);color:var(--ch-text-primary);}
+:is(.c5-who__teaser,.on-who__body > p:first-of-type){margin:0;font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);color:var(--ch-text-secondary);}
+.on-who__body > p{margin:0;color:var(--ch-text-secondary);}
+/* The brief: label | value rows divided by hairlines. `flex-wrap` does the work
+   of a container query: when the column cannot hold the label and 19rem of
+   value side by side, the value drops under its label. */
+.c5-who__brief{margin:0;display:flex;flex-direction:column;border-bottom:1px solid var(--ch-border-subtle);font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);}
+.c5-who__fact{display:flex;flex-wrap:wrap;gap:var(--ch-space-1) var(--ch-space-4);padding:var(--ch-space-3) 0;border-top:1px solid var(--ch-border-subtle);}
+.c5-who__fact > dt{flex:0 0 7.5rem;margin:0;font-weight:var(--ch-font-weight-medium);color:var(--ch-text-primary);}
+.c5-who__fact > dd{flex:1 1 19rem;min-width:0;margin:0;color:var(--ch-text-secondary);}
+.c5-who__list{margin:0;padding:0;display:flex;flex-direction:column;gap:var(--ch-space-2);}
+.c5-who__body .c5-btn{align-self:flex-start;}
+@media (min-width:900px) and (max-width:1099px){
+  /* two narrow columns: the copy may outgrow a 4:5 frame, so the frame follows
+     the height of its row; the spacer keeps 4:5 as the floor */
+  .c5-who__media{align-self:stretch;aspect-ratio:auto;}
+  .c5-who__media::before{content:"";display:block;padding-top:125%;}
+}
+@media (max-width:899px){
+  /* one column: the photo above the copy, the same in every row */
+  :is(.c5-who,.on-who){grid-template-columns:1fr;}
+  .on-who{gap:clamp(1.5rem,4vw,2.5rem);}
+  .c5-who--flip .c5-who__media{order:0;}
+  :is(.c5-who__media,.on-who__media){aspect-ratio:16/10;max-height:none;border-radius:var(--ch-radius-md);}
+  :is(.c5-who__body,.on-who__body){max-width:none;}
+}
+@media (prefers-reduced-motion: reduce){.on-who__ph{transform:none;}}
+
+/* --- Home, `z-wartosciami`: the look of the frame, the copy and the values --- */
+.c5h-about__frame{border-radius:var(--ch-radius-control-l);overflow:hidden;}
+.c5h-about__ico{width:var(--ch-size-icon-xl);height:var(--ch-size-icon-xl);color:var(--ch-text-secondary);}
+.c5h-about__intro{margin:0;font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);color:var(--ch-text-secondary);}
+/* The sentence about continuity answers an objection of its own, so it leaves
+   the body copy: a rule on the left, a size up and the primary ink. */
+.c5h-about__cont{margin:0;border-left:2px solid var(--ch-border-strong);padding-left:clamp(1rem,2vw,1.5rem);
+  font-family:var(--ch-type-title-s-font);font-size:var(--ch-type-title-s-size);line-height:var(--ch-type-title-s-lh);letter-spacing:var(--ch-type-title-s-ls);
+  font-weight:var(--ch-type-title-s-weight);color:var(--ch-text-primary);}
+.c5h-vals{list-style:none;margin:0;padding:0;width:100%;}
+.c5h-val{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(1rem,2vw,1.5rem);align-items:start;
+  border-top:1px solid var(--ch-border-subtle);padding-block:clamp(1rem,2vw,1.375rem);}
+.c5h-val:last-child{border-bottom:1px solid var(--ch-border-subtle);}
+.c5h-val__ico{color:var(--ch-text-primary);}
+.c5h-val__body{display:flex;flex-direction:column;gap:var(--ch-space-1-5);}
+.c5h-val__name{margin:0;}
+.c5h-val__txt{margin:0;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary);}

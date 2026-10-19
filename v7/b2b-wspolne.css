@@ -11,7 +11,8 @@
    3. the inactive state of EL-01 (aria-disabled), to be moved to
       ce/00-base.css in wave 2a.
    Rules of the content elements themselves live in ce/CE-NN-*.css.
-   Tokens --w-* only, greyscale, sharp corners.
+   Look from the design system v0.1 (stage D, 18.10.2026): tokens --ch-* (kit --w-*
+   only for spacing and focus), rounded corners, no shadows.
    ===================================================================== */
 
 /* =====================================================================
@@ -29,17 +30,16 @@
    or a group of buttons with aria-pressed (button.c5-seg__tab). The chosen
    option is filled; there is no floating thumb and no script here.
    Total height 44 px – the same as fields and buttons next to it. */
-.c5-seg{display:inline-flex;align-items:stretch;max-width:100%;vertical-align:middle;background:var(--w-surface-page);border:1px solid var(--w-border-strong);border-radius:0;}
-.c5-seg__tab{position:relative;flex:0 1 auto;display:inline-flex;align-items:center;justify-content:center;min-height:44px;margin:0;padding:8px var(--w-space-5);font:inherit;font-size:0.9375rem;font-weight:var(--w-weight-medium);line-height:1.2;letter-spacing:-0.01em;white-space:nowrap;color:var(--w-text-primary);background:none;border:0;border-radius:0;cursor:pointer;transition:background-color var(--w-duration-base) var(--w-ease),color var(--w-duration-base) var(--w-ease);}
-.c5-seg__tab + .c5-seg__tab{border-left:1px solid var(--w-border-strong);}
+.c5-seg{display:inline-flex;align-items:stretch;gap:var(--ch-space-1);max-width:100%;vertical-align:middle;padding:3px;background:var(--ch-surface-page);border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-md);}
+.c5-seg__tab{position:relative;flex:0 1 auto;display:inline-flex;align-items:center;justify-content:center;min-height:36px;margin:0;padding:6px var(--ch-space-4);font:inherit;font-size:var(--ch-type-small-size);font-weight:var(--ch-font-weight-regular);line-height:var(--ch-type-small-lh);letter-spacing:0;white-space:nowrap;color:var(--ch-text-secondary);background:none;border:0;border-radius:var(--ch-radius-tab);cursor:pointer;transition:background-color var(--ch-motion-duration-base) var(--ch-motion-ease),color var(--ch-motion-duration-base) var(--ch-motion-ease);}
 .c5-seg__lbl{display:block;}
-.c5-seg__tab:hover{background:var(--w-surface-hover);}
+.c5-seg__tab:hover{background:var(--ch-surface-warm);color:var(--ch-text-primary);}
 .c5-seg__tab[aria-pressed="true"],
-.c5-seg__tab:has(input:checked){background:var(--w-gray-900);color:var(--w-text-inverse);cursor:default;}
+.c5-seg__tab:has(input:checked){background:var(--ch-tab-active);color:var(--ch-text-primary);font-weight:var(--ch-font-weight-medium);cursor:default;}
 .c5-seg__tab:focus-visible,
 .c5-seg__tab:has(input:focus-visible){z-index:1;outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:var(--w-focus-ring-offset);}
 @media (max-width:420px){
-  .c5-seg__tab{padding-inline:var(--w-space-3);font-size:0.875rem;}
+  .c5-seg__tab{padding-inline:var(--ch-space-3);}
 }
 @media (forced-colors:active){
   .c5-seg__tab[aria-pressed="true"],
@@ -48,24 +48,25 @@
 @media (prefers-reduced-motion:reduce){ .c5-seg__tab{transition:none;} }
 
 /* --- EL-21 Table (c5-table) --------------------------------------------
-   Data table: 0.875 rem, padding 12/16, column headers on the subtle
-   surface, hairline under every row, hovered row tinted.
+   Data table: small text (14/22), padding 12/16, column heads in the
+   secondary colour without a fill, hairline under every row, hovered row
+   tinted; the rounded 12 px frame belongs to the CE container.
    --num: tabular figures; cells marked c5-table__num (th and td) are
    right-aligned and never wrap. The scroll container, the sticky first
    column and the controls column belong to the CE module, not to this
    element. */
-.c5-table{width:100%;border-collapse:collapse;font-size:0.875rem;line-height:1.45;color:var(--w-text-primary);}
+.c5-table{width:100%;border-collapse:collapse;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-primary);}
 .c5-table th,
-.c5-table td{padding:var(--w-space-3) var(--w-space-4);text-align:left;vertical-align:middle;border-bottom:1px solid var(--w-border-subtle);}
-.c5-table th{font-weight:var(--w-weight-semibold);}
-.c5-table thead th{background:var(--w-surface-subtle);border-bottom-color:var(--w-border-default);white-space:nowrap;}
-.c5-table tbody th{font-weight:var(--w-weight-medium);}
-.c5-table tbody tr:hover{background:var(--w-surface-hover);}
+.c5-table td{padding:var(--ch-space-3) var(--ch-space-4);text-align:left;vertical-align:middle;border-bottom:1px solid var(--ch-border-subtle);}
+.c5-table th{font-weight:var(--ch-font-weight-regular);}
+.c5-table thead th{font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-secondary);background:transparent;white-space:nowrap;}
+.c5-table tbody th{font-weight:var(--ch-font-weight-medium);color:var(--ch-text-primary);}
+.c5-table tbody tr:hover{background:var(--ch-surface-warm);}
 .c5-table tfoot th,
-.c5-table tfoot td{font-weight:var(--w-weight-semibold);border-bottom:0;}
+.c5-table tfoot td{font-weight:var(--ch-font-weight-medium);border-bottom:0;}
 /* the dark rule above the footer is drawn by the last body row: with collapsed
    borders the hairline of that row would win over a footer border of the same width */
-.c5-table:has(tfoot) tbody tr:last-child > *{border-bottom-color:var(--w-gray-900);}
+.c5-table:has(tfoot) tbody tr:last-child > *{border-bottom-color:var(--ch-border-strong);}
 .c5-table--num{font-variant-numeric:tabular-nums;}
 .c5-table--num .c5-table__num{text-align:right;white-space:nowrap;}
 
@@ -80,16 +81,16 @@
            when it is the only row.
    In --rows without --grid a row is a two-column grid: a long name wraps in
    its own column and the value stays on the first line, at the right edge. */
-.c5-dl{display:flex;flex-direction:column;gap:var(--w-space-2);margin:0;font-size:0.9375rem;line-height:1.45;}
-.c5-dl__row{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:2px var(--w-space-4);}
-.c5-dl dt{min-width:0;color:var(--w-text-secondary);font-weight:var(--w-weight-regular);}
-.c5-dl dd{min-width:0;margin:0 0 0 auto;text-align:right;color:var(--w-text-primary);font-variant-numeric:tabular-nums;}
+.c5-dl{display:flex;flex-direction:column;gap:var(--ch-space-2);margin:0;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);}
+.c5-dl__row{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:2px var(--ch-space-4);}
+.c5-dl dt{min-width:0;color:var(--ch-text-secondary);font-weight:var(--ch-font-weight-regular);}
+.c5-dl dd{min-width:0;margin:0 0 0 auto;text-align:right;color:var(--ch-text-primary);font-variant-numeric:tabular-nums;}
 .c5-dl--rows{gap:0;}
-.c5-dl--rows .c5-dl__row{padding-block:10px;border-bottom:1px solid var(--w-border-subtle);}
+.c5-dl--rows .c5-dl__row{padding-block:10px;border-bottom:1px solid var(--ch-border-subtle);}
 .c5-dl--rows .c5-dl__row:last-child{border-bottom:0;}
 .c5-dl__row--sum dt,
-.c5-dl__row--sum dd{color:var(--w-text-primary);font-weight:var(--w-weight-semibold);}
-.c5-dl__row--sum{margin-top:var(--w-space-1);padding-top:var(--w-space-3);border-top:1px solid var(--w-gray-900);}
+.c5-dl__row--sum dd{color:var(--ch-text-primary);font-weight:var(--ch-font-weight-medium);}
+.c5-dl__row--sum{margin-top:var(--ch-space-1);padding-top:var(--ch-space-3);border-top:1px solid var(--ch-border-strong);}
 .c5-dl--rows .c5-dl__row--sum{margin-top:-1px;padding-top:10px;}
 .c5-dl .c5-dl__row--sum:first-child{margin-top:0;padding-top:0;border-top:0;}
 .c5-dl--rows:not(.c5-dl--grid) .c5-dl__row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;}
@@ -135,7 +136,6 @@ body:has(> .c5b-main) > :is(cw-navbar,cw-footer){display:contents;}
 .c5b-main > :first-child:not(.c5-note):not(.c5-box){padding-top:calc(var(--c5b-top) + var(--w-space-4));}
 .c5b-main > .c5-note,
 .c5b-main > .c5-box{margin-top:var(--c5b-gap);}
-.c5b-main > .c5-note{padding-top:22px;}
 .c5b-main:focus{outline:none;}  /* programmatic target of the skip link */
 @media (min-width:900px){
   .c5b-main{--c5b-gutter:40px;}
@@ -159,7 +159,7 @@ body:has(> .c5b-main) > :is(cw-navbar,cw-footer){display:contents;}
    its label): weaker tone plus a quiet frame, never the tone alone. One
    definition for every CE of the platform. */
 .c5-btn[aria-disabled="true"],
-.c5-btn[aria-disabled="true"]:hover{background:var(--w-surface-subtle);color:var(--w-text-tertiary);border-color:var(--w-border-subtle);cursor:not-allowed;}
+.c5-btn[aria-disabled="true"]:hover{background:var(--ch-action-disabled-bg);color:var(--ch-text-secondary-on-warm);border-color:var(--ch-action-disabled-bg);cursor:not-allowed;}
 
 
 /* --- Mock-up state bar (c5b-stan) --------------------------------------

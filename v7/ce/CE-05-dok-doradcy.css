@@ -22,6 +22,11 @@
    by chrome.js on every page with the dock); it applies to the floating
    dock.
    The landed dock is part of the page, so it stays visible.
+   Look (design system, stage D, 18.10.2026): Figma has no design of the dock, so
+   the look comes from the foundation – white bar with a grey-300 outline, EL-02
+   icon button (44, 14 px), panel with a grey-200 outline and 16 px corners, a
+   beige field for the messages; there are no shadows anywhere (an outline
+   separates the floating bar from the page). Only --ch-* tokens.
    This sheet is attached by chrome.js; no page links it by hand.
    ===================================================================== */
 
@@ -34,11 +39,11 @@
 
 /* --- the section --------------------------------------------------------- */
 .cw-dockland {
-  padding: clamp(3.5rem, 7vw, 6rem) var(--w-page-padding, 1rem) 0;
+  padding: clamp(var(--ch-space-14), 7vw, var(--ch-space-26)) var(--w-page-padding, 1rem) 0;
   /* room for the growth of the landed field plus air above it */
-  padding-bottom: calc(var(--cw-dock-grow) + var(--w-space-6));
+  padding-bottom: calc(var(--cw-dock-grow) + var(--ch-space-6));
   text-align: center;
-  background: var(--w-surface-page);
+  background: var(--ch-surface-page);
 }
 .cw-dockland__in {
   max-width: 44rem; margin-inline: auto;
@@ -47,38 +52,54 @@
 }
 .cw-dockland.is-on .cw-dockland__in { opacity: 1; transform: none; }
 .cw-dockland__title {
-  margin: 0; font-size: clamp(1.7rem, 3.2vw, 2.5rem); line-height: 1.15;
-  font-weight: var(--w-weight-medium); letter-spacing: -0.01em;
-  color: var(--w-text-primary); text-wrap: balance;
+  margin: 0; font-family: var(--ch-type-h3-display-font);
+  font-size: clamp(var(--ch-type-display-sm-size), 3.2vw, var(--ch-type-h3-display-size));
+  line-height: 1.15; font-weight: var(--ch-type-h3-display-weight);
+  letter-spacing: var(--ch-type-h3-display-ls);
+  color: var(--ch-text-primary); text-wrap: balance;
 }
 .cw-dockland__lead {
-  margin: var(--w-space-3) 0 0; font-size: 1rem; line-height: 1.5;
-  color: var(--w-text-secondary); text-wrap: pretty;
+  margin: var(--ch-space-3) 0 0; font-family: var(--ch-type-lead-font);
+  font-size: var(--ch-type-lead-size); line-height: var(--ch-type-lead-lh);
+  color: var(--ch-text-secondary); text-wrap: pretty;
 }
 
 /* --- the dock in the page flow ------------------------------------------- */
 .cw-jurek.cw-jurek--land {
   position: sticky; left: auto; transform: none;
-  bottom: var(--w-space-5);
+  bottom: var(--ch-space-5);
   display: block;
   width: min(var(--cw-dock-w), 92vw);
   margin: 0 auto clamp(2.5rem, 5vw, 4rem);
-  transition: opacity .3s ease, visibility .3s ease,
+  transition: opacity .3s ease, visibility .3s ease, transform var(--cw-dock-ease),
               width var(--cw-dock-ease), margin-top var(--cw-dock-ease);
 }
+
+/* --- tucked (G10, Mateusz 18.10.2026) --------------------------------------
+   Until the dock gets a better form it does not cover the bottom of the
+   sections: the floating dock waits under the bottom edge, only a 15 px strip
+   of it shows, at 25 % opacity. Under the pointer (or with the keyboard focus
+   inside) it slides up to its full form; on a touch screen the first tap on the
+   strip lifts it (.is-peek, chrome.js). An open, a landed or a lifted dock is
+   never tucked. The shift is a transform only, so the sticky slot of the dock
+   and the page height do not move (chrome.js measures the slot without it). */
+.cw-jurek--land:not(.is-landed):not([data-open="true"]):not(.is-peek):not(:hover):not(:focus-within) {
+  --cw-dock-peek: 15px;
+  transform: translateY(calc(100% + var(--ch-space-5) - var(--cw-dock-peek)));
+  opacity: .25;
+}
 .cw-jurek--land .cw-jurek__panel {
-  position: absolute; left: 0; right: 0; bottom: calc(100% + var(--w-space-3));
+  position: absolute; left: 0; right: 0; bottom: calc(100% + var(--ch-space-3));
 }
 /* not enough room above the landed bar (chrome.js decides): open below it */
 .cw-jurek--land.is-drop .cw-jurek__panel {
-  bottom: auto; top: calc(100% + var(--w-space-3));
+  bottom: auto; top: calc(100% + var(--ch-space-3));
 }
 .cw-jurek--land .cw-jurek__bar {
   height: var(--cw-dock-h0, auto);
   /* half of the height = the pill of cw.css, but animatable */
   border-radius: calc(var(--cw-dock-h0, 60px) / 2);
-  transition: height var(--cw-dock-ease), border-radius var(--cw-dock-ease),
-              box-shadow var(--cw-dock-ease);
+  transition: height var(--cw-dock-ease), border-radius var(--cw-dock-ease);
 }
 
 /* --- landed: a larger field with a strip of buttons ----------------------- */
@@ -88,11 +109,10 @@
 }
 .cw-jurek--land.is-landed .cw-jurek__bar {
   height: calc(var(--cw-dock-h0, 60px) + var(--cw-dock-grow));
-  border-radius: var(--w-radius-lg);
-  box-shadow: var(--w-shadow-lg);
+  border-radius: var(--ch-radius-lg);
   display: grid; grid-template-columns: auto minmax(0, 1fr) auto;
   grid-template-rows: minmax(0, 1fr) auto; align-items: start;
-  padding: var(--w-space-3) var(--w-space-3) var(--w-space-3) var(--w-space-4);
+  padding: var(--ch-space-3) var(--ch-space-3) var(--ch-space-3) var(--ch-space-4);
 }
 .cw-jurek--land.is-landed .cw-jurek__bar .wf-input {
   grid-column: 1 / -1; grid-row: 1; padding-inline: 0;
@@ -107,15 +127,61 @@
   opacity: 1; visibility: visible; pointer-events: auto;
 }
 
+/* --- look (all states): the bar, the chat panel and the bubbles --------------
+   cw.css has the base rules with kit tokens and shadows; this sheet is attached
+   later and replaces them. */
+.cw-jurek-backdrop{background:color-mix(in srgb,var(--ch-color-green-950) 20%,transparent);}
+.cw-jurek{gap:var(--ch-space-3);font-family:var(--ch-type-body-font);}
+.cw-jurek__bar{
+  align-items:center;gap:var(--ch-space-2);padding:var(--ch-space-2) var(--ch-space-2) var(--ch-space-2) var(--ch-space-4);
+  background:var(--ch-surface-raised);border:1px solid var(--ch-border-control);border-radius:var(--ch-radius-xl);box-shadow:none;
+}
+.cw-jurek__bar > .wf-icon{width:var(--ch-size-icon-m);height:var(--ch-size-icon-m);color:var(--ch-text-secondary);}
+.cw-jurek__bar .wf-input{
+  font-family:var(--ch-type-body-font);font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-primary);
+}
+.cw-jurek__bar .wf-input::placeholder{color:var(--ch-text-secondary);opacity:1;}
+/* the send button = EL-02 icon button: 44 x 44, 14 px, dark */
+.cw-jurek__bar > .wf-btn,.cw-jurek__head .wf-btn{
+  flex:none;display:inline-grid;place-items:center;width:var(--ch-size-control-m);height:var(--ch-size-control-m);min-height:0;padding:0;
+  border:1px solid transparent;border-radius:var(--ch-radius-control-m);box-shadow:none;
+  transition:background var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);
+}
+.cw-jurek__bar > .wf-btn .wf-icon,.cw-jurek__head .wf-btn .wf-icon{width:var(--ch-size-icon-m);height:var(--ch-size-icon-m);}
+.cw-jurek__bar > .wf-btn{background:var(--ch-action-primary-bg);border-color:var(--ch-action-primary-bg);color:var(--ch-action-primary-fg);}
+.cw-jurek__bar > .wf-btn:hover{background:var(--ch-color-green-900);border-color:var(--ch-color-green-900);}
+.cw-jurek__head .wf-btn{background:var(--ch-surface-raised);border-color:var(--ch-border-control);color:var(--ch-text-primary);}
+.cw-jurek__head .wf-btn:hover{border-color:var(--ch-border-strong);}
+
+.cw-jurek__panel{
+  background:var(--ch-surface-raised);border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-lg);box-shadow:none;
+}
+.cw-jurek__head{gap:var(--ch-space-3);padding:var(--ch-space-4);border-bottom:1px solid var(--ch-border-subtle);}
+.cw-jurek__head > .wf-stack > span:first-child{
+  font-family:var(--ch-type-body-font);font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);font-weight:var(--ch-font-weight-medium);color:var(--ch-text-primary);
+}
+.cw-jurek__head .wf-small{font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-secondary);}
+.cw-jurek__head .wf-ph--avatar{background:var(--ch-color-beige-300);border:0;}
+.cw-jurek__msgs{padding:var(--ch-space-4);gap:var(--ch-space-3);background:var(--ch-surface-warm);}
+.cw-jurek__panel .wf-caption{font-size:var(--ch-type-caption-size);line-height:var(--ch-type-caption-lh);color:var(--ch-text-secondary);}
+/* bubbles (the demo reply and the visitor's question) */
+.cw-msg{
+  padding:var(--ch-space-3) var(--ch-space-4);border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-md);
+  background:var(--ch-surface-raised);color:var(--ch-text-primary);
+  font-family:var(--ch-type-small-font);font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);
+}
+.cw-msg--user{background:var(--ch-action-primary-bg);border-color:var(--ch-action-primary-bg);color:var(--ch-action-primary-fg);}
+
 @media (max-width: 640px) {
   .cw-dockland, .cw-jurek.cw-jurek--land { --cw-dock-grow: 56px; }
-  .cw-dockland { padding-top: var(--w-space-10, 2.5rem); }
-  .cw-dockland__title { font-size: 1.5rem; }
-  .cw-dockland__lead { font-size: .9375rem; }
+  .cw-dockland { padding-top: var(--ch-space-10); }
+  .cw-dockland__title { font-size: var(--ch-type-display-sm-size); }
+  .cw-dockland__lead { font-size: var(--ch-type-body-size); line-height: var(--ch-type-body-lh); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .cw-jurek.cw-jurek--land, .cw-jurek--land .cw-jurek__bar, .cw-dockland__in { transition: none; }
+  /* the tucked dock stays tucked; it switches to its full form without sliding */
   .cw-jurek--land.is-landed .cw-jurek__bar .wf-input { animation: none; }
 }
 

@@ -1,54 +1,59 @@
 /* ===== CE-17 · FAQ (rejestr: ce-rejestr.js) =====
-   Accordion with the question on the left and the answer on the right from
-   900 px up; one question open at a time. Merged from carbomat.css FAQ. The
+   Accordion of question cards, the answer opening inside the card (Figma 397:1544);
+   one question open at a time. Merged from carbomat.css FAQ. The
    container rule `.c5-faq` lives here too; the gap above the accordion is
    --c5-faq-mt, which an occurrence can set on its root. Variants (blocks at the
-   bottom of this file): plain, z-nota, dla-dociekliwych, grupy. ===== */
+   bottom of this file): split (layout), plain, z-nota, dla-dociekliwych, grupy. ===== */
 
-/* --- FAQ: pytanie z lewej, odpowiedź z prawej ------------------------------- */
-/* container: a column; the gap heading -> first accordion is the pattern's ~164 px
+/* --- FAQ: karty z plusem -------------------------------------------------- */
+/* design system v0.1 (Figma 397:1544, 17.10.2026): every question is a card – white,
+   1 px --ch-border-subtle frame, 20 px corners, padding 20 – 8 px apart; the question is
+   Suisse Intl Regular 18/28 (-2 %), the plus (16 px, 1.5 px strokes) sits at the right
+   edge and turns into a minus when the card is open. The answer grows INSIDE the
+   card, under the question (the Figma frame has no open state; the answer column
+   of v7 is gone). Every page that links this file gets the cards, the two-column
+   arrangement (heading left, list right) is the opt-in `c5-faq-split` below.
+   Container: a column; the gap heading -> first card is the pattern's ~164 px
    on desktop (64 px plus ~100 px), unless the occurrence sets --c5-faq-mt on the CE root */
-.c5-faq{display:flex;flex-direction:column;margin-top:var(--c5-faq-mt,clamp(8rem,12vw,10.25rem));}
-.c5-faq__item{border-top:1px solid var(--w-border-default);position:relative;}
-.c5-faq__item:last-child{border-bottom:1px solid var(--w-border-default);}
-.c5-faq__q{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--w-space-4);width:100%;padding:26px 0;background:none;border:0;font:inherit;font-size:1.125rem;font-weight:var(--w-weight-medium);letter-spacing:-0.01em;text-align:left;color:var(--w-text-primary);cursor:pointer;}
-.c5-faq__q .wf-icon{flex:none;margin-top:4px;transition:transform var(--w-duration-base) var(--w-ease);}
-.c5-faq__q[aria-expanded="true"] .wf-icon{transform:rotate(180deg);}
+.c5-faq{display:flex;flex-direction:column;gap:var(--ch-space-2);margin-top:var(--c5-faq-mt,clamp(8rem,12vw,10.25rem));}
+.c5-faq__item{position:relative;background:var(--ch-surface-raised);border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-control-l);}
+.c5-faq__q{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--ch-space-4);width:100%;padding:var(--ch-space-5);background:none;border:0;border-radius:var(--ch-radius-control-l);font:inherit;font-family:var(--ch-type-tab-font);font-size:var(--ch-type-tab-size);line-height:var(--ch-type-tab-lh);font-weight:var(--ch-type-tab-weight);letter-spacing:var(--ch-type-tab-ls);text-align:left;color:var(--ch-text-primary);cursor:pointer;}
+/* the chevron of the markup is replaced by a plus drawn on the button: two 13 px strokes in a 16 px box */
+.c5-faq__q .wf-icon{display:none;}
+.c5-faq__q::after{content:"";flex:none;width:var(--ch-size-icon-s);height:var(--ch-size-icon-s);margin-top:6px;background:linear-gradient(currentColor,currentColor) center / 13px 1.5px no-repeat,linear-gradient(currentColor,currentColor) center / 1.5px 13px no-repeat;transition:background-size var(--c5-acc) var(--w-ease);}
+.c5-faq__q[aria-expanded="true"]::after{background-size:13px 1.5px,1.5px 0;}
+.c5-faq__q:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:-2px;}
 .c5-faq__a{overflow:hidden;height:0;opacity:0;transition:height var(--c5-acc) var(--w-ease),opacity var(--c5-acc-fade) var(--w-ease);}
 .c5-faq__item[data-open] .c5-faq__a{opacity:1;}
-.c5-faq__ain{overflow:hidden;min-height:0;padding-bottom:26px;font-size:1rem;color:var(--w-text-secondary);}
+.c5-faq__ain{overflow:hidden;min-height:0;padding:0 calc(var(--ch-space-5) + var(--ch-size-icon-s) + var(--ch-space-4)) var(--ch-space-5) var(--ch-space-5);font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary);}
 /* bez JS nie ma czym rozwijać paneli – odpowiedzi zostają otwarte (§0) */
 html:not(.cx-js) .c5-faq__a{height:auto;opacity:1;}
 /* an item that is an anchor target lands one gutter below the top edge */
 .c5-faq__item[id]{scroll-margin-top:var(--c5-gutter);}
 /* optional wrapper for answers made of several paragraphs: one gap instead of paragraph margins */
 .c5-faq__answer{display:flex;flex-direction:column;gap:var(--w-space-3);}
-@media (min-width:900px){
-  /* stały układ dwukolumnowy – bez skoku przy otwieraniu (kolumna odpowiedzi
-     jest zawsze, tylko zwinięta do zera) */
-  .c5-faq__item{display:grid;grid-template-columns:minmax(0,1fr) 515px;gap:var(--w-space-10);align-items:start;}
-  .c5-faq__q{grid-column:1;}
-  .c5-faq__a{grid-column:2;}
-  /* strzałka przy prawej krawędzi wiersza; tekst odpowiedzi z odstępem od niej */
-  .c5-faq__q .wf-icon{position:absolute;right:0;top:30px;}
-  .c5-faq__ain{padding-top:26px;padding-right:60px;}
-}
 @media (prefers-reduced-motion: reduce){
-  .c5-faq__q .wf-icon{transition:none;}
+  .c5-faq__q::after{transition:none;}
   .c5-faq__a{transition:none;}
 }
 
-/* ===== wariant: plain ===== */
-/* pytanie nad odpowiedzią, pełna szerokość
-   EL-20: the same accordion – same type, same 26 px rhythm, same rule between
-   items – but without the two-column split above 900 px. Used where the block
-   is not a FAQ column but a full-width list („Dla dociekliwych” on Produkty),
-   so the answer simply sits under its question, exactly as on a phone. */
+/* ===== układ: split (heading left, list right) ===== (carbomat – Figma 397:1544) */
+/* Markup: the kicker above, then `.c5-faq-split` holding the h2 and the `.c5-faq`.
+   From 900 px: columns 451 | 803 at the 1440 frame, pushed to the two edges;
+   below, the heading stands over the list. */
+.c5-faq-split{display:flex;flex-direction:column;gap:var(--ch-space-8);margin-top:var(--ch-space-2);}
+.c5-faq-split .c5-h2{font-size:clamp(1.875rem,3.2vw,var(--ch-type-h2-sm-size));line-height:1.109;}
+.c5-faq-split .c5-faq,.c5-faq-split .b-faq{--c5-faq-mt:0px;margin-top:0;}
+/* a page whose list column carries a note over the cards (z-nota): `.c5-faq-split__list` is that column */
+.c5-faq-split__list{display:flex;flex-direction:column;gap:var(--ch-space-4);min-width:0;}
+.c5-faq-split .c5-faq--z-nota,.c5-faq-split .c5-note:has(+ .c5-faq--z-nota){margin-top:0;}
 @media (min-width:900px){
-  .c5-faq--plain .c5-faq__item{display:block;}
-  .c5-faq--plain .c5-faq__q .wf-icon{position:static;margin-top:4px;}
-  .c5-faq--plain .c5-faq__ain{padding-top:0;padding-right:0;}
+  .c5-faq-split{display:grid;grid-template-columns:minmax(0,451px) minmax(0,803px);justify-content:space-between;align-items:start;}
 }
+
+/* ===== wariant: plain ===== */
+/* question above the answer, full width – since 17.10 every FAQ is this (cards with
+   the answer inside), so the class adds nothing; kept for the markup of „Dla dociekliwych”. */
 
 /* ===== wariant: z-nota ===== */
 /* A status note (CE-31) stands between the heading and the accordion, so the
@@ -57,8 +62,22 @@ html:not(.cx-js) .c5-faq__a{height:auto;opacity:1;}
 .c5-note:has(+ .c5-faq--z-nota){margin-top:clamp(2.5rem,5vw,4rem);}
 
 /* ===== wariant: dla-dociekliwych ===== */
-/* The accordion sits inside a content block under its own h3; used with c5-faq--plain. */
-.c5pr-more{--c5-faq-mt:0px;margin-top:clamp(2rem,4vw,3rem);display:flex;flex-direction:column;gap:var(--w-space-3);}
+/* The accordion sits inside a content block under its own h3; used with c5-faq--plain.
+   Figma 637:295 (18.10.2026): from 900 px two columns 451 | 803 pushed to the edges – the heading
+   (display h2-sm, 46/51) on top of the left column, the button at its foot (level L, no icon),
+   the three cards on the right; below 900 px the three stand one under another. The cards are
+   the cards of every CE-17 (`c5-faq__item`). The "FAQ" kicker of the frame has no copy in v7. */
+.c5pr-more{--c5-faq-mt:0px;margin-top:clamp(2rem,4vw,3rem);display:flex;flex-direction:column;gap:var(--ch-space-6);}
+/* standing alone in its own section (Produkty #co-daja-dociekliwi-sec, Figma 637:298) it starts at the
+   section's top padding */
+.c5-wrap > .c5pr-more:first-child{margin-top:0;}
+.c5pr-more > .c5-h3{margin:0;font-family:var(--ch-type-h2-sm-font);font-size:clamp(1.875rem,3.2vw,var(--ch-type-h2-sm-size));line-height:1.109;font-weight:var(--ch-type-h2-sm-weight);letter-spacing:var(--ch-type-h2-sm-ls);color:var(--ch-text-primary);}
+@media (min-width:900px){
+  .c5pr-more{display:grid;grid-template-columns:minmax(0,451px) minmax(0,803px);grid-template-rows:auto 1fr;grid-template-areas:"head list" "foot list";justify-content:space-between;column-gap:var(--ch-space-6);row-gap:var(--ch-space-8);align-items:start;}
+  .c5pr-more > .c5-h3{grid-area:head;}
+  .c5pr-more > .c5-faq{grid-area:list;}
+  .c5pr-more > :last-child:not(.c5-faq){grid-area:foot;align-self:end;}
+}
 
 /* ===== wariant: grupy ===== */
 /* Several accordions, each under a small group heading; an optional row of links below. */
@@ -66,3 +85,26 @@ html:not(.cx-js) .c5-faq__a{height:auto;opacity:1;}
 .b-faq__group{display:grid;gap:var(--w-space-4);}
 .b-faq__t{margin:0;font-size:.75rem;line-height:1.4;letter-spacing:.06em;text-transform:uppercase;color:var(--w-text-tertiary);font-weight:var(--w-weight-regular);}
 .b-films{display:flex;flex-wrap:wrap;gap:var(--w-space-3) var(--w-space-6);margin-top:clamp(1.5rem,3vw,2.5rem);}
+
+
+/* ===== wariant: karty szczegółów (`c5-infoacc`) – stage D, 18.10.2026 =====
+   The product page's information blocks (parameters, shipping, documents) are
+   native <details> elements, not FAQ questions, but they wear the FAQ card:
+   white, 1 px grey-200 frame, r20, 8 px apart, title 18/28, plus turning into a
+   minus. Markup: `.c5-infoacc > details.c5-infoacc__item > summary >
+   (h2.c5-infoacc__title + svg.c5-infoacc__plus + svg.c5-infoacc__minus)`, then
+   `.c5-infoacc__body`. Mechanics are the browser's (no script). */
+.c5-infoacc{display:flex;flex-direction:column;gap:var(--ch-space-2);}
+.c5-infoacc__item{background:var(--ch-surface-raised);border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-control-l);interpolate-size:allow-keywords;}
+.c5-infoacc__item > summary{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--ch-space-4);padding:var(--ch-space-5);list-style:none;cursor:pointer;color:var(--ch-text-primary);border-radius:var(--ch-radius-control-l);}
+.c5-infoacc__item > summary::-webkit-details-marker{display:none;}
+.c5-infoacc__item > summary:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:-2px;}
+.c5-infoacc__title{margin:0;font-family:var(--ch-type-tab-font);font-size:var(--ch-type-tab-size);line-height:var(--ch-type-tab-lh);font-weight:var(--ch-type-tab-weight);letter-spacing:var(--ch-type-tab-ls);color:inherit;}
+@media (hover:hover){.c5-infoacc__item > summary:hover .c5-infoacc__title{text-decoration:underline;text-underline-offset:4px;}}
+.c5-infoacc__item > summary .wf-icon{flex:none;width:var(--ch-size-icon-s);height:var(--ch-size-icon-s);margin-top:6px;}
+.c5-infoacc__item[open] .c5-infoacc__plus,.c5-infoacc__item:not([open]) .c5-infoacc__minus{display:none;}
+.c5-infoacc__item::details-content{block-size:0;overflow:clip;transition:block-size var(--w-duration-base) var(--w-ease),content-visibility var(--w-duration-base) allow-discrete;}
+.c5-infoacc__item[open]::details-content{block-size:auto;}
+.c5-infoacc__body{display:flex;flex-direction:column;align-items:flex-start;gap:var(--ch-space-4);padding:0 var(--ch-space-5) var(--ch-space-5);font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary);}
+.c5-infoacc__body > p{max-width:70ch;}
+@media (prefers-reduced-motion:reduce){.c5-infoacc__item::details-content{transition:none;}}

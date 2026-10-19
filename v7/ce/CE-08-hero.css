@@ -14,9 +14,29 @@
      --c5-hero-pack-dx       left shift centring a PAIR 0%
      --c5-hero-sm-scale      scale of the smaller pack  .55
      --c5-hero-sm-x / -sm-y  offset of the smaller pack 0% / 0%
-     --c5-hero-btn-px        button side padding        45px
+     --c5-hero-btn-px        button side padding        24px (Figma 925:1437, since 18.10)
      --c5-hero-scrim         scrim of the photo         rgb(0 0 0 / .4)
      --c5-hero-scrim-narrow  scrim up to 1099 px        = --c5-hero-scrim
+   design system v0.1 (Figma 925:1437, 17.10.2026): the base is the Figma ECO
+   hero – copy column on white, a beige panel (r20) on the right half of the
+   page with the arc motif (`img/hero-arcs.svg`, the 1 px beige-300 outline
+   curves of Figma 397:1359, drawn as the panel background so no HTML changes),
+   copy rhythm 56 px (kicker, headline block, buttons) with 40 px between the
+   headline and the lead, panel 16 px under the service header and 24 px from
+   the sides and the bottom. Variants keep their own layout; the photo variant
+   `--bg` takes a green main button and an outlined kicker on the photo.
+   Round of 18.10.2026 (Mateusz, G08 / G12 / G17):
+   - G08: where the hero has a background of its own (photo: `--bg`,
+     `--linia-produktow`; tint: `--player`) that background reaches up behind
+     the floating header by the measured header height (--cx-navbar-h,
+     00-base.js) – no line, no band of page white between the menu and the hero.
+     Only the background moves up; the layout of the hero does not change.
+   - G12: the panel of the product heroes carries the outlined sign of the logo
+     (`.c5-sygnet.c5-sygnet--obrys` on `.c5-hero__stage`, ce/00-base.css) instead
+     of the arc file; the player hero carries the filled sign on the section.
+   - G17: the breadcrumb sits by page type – on the packshot panel bottom left
+     (product pages, markup inside `.c5-hero__stage`), under the film (player),
+     at the top under the menu (`--bg`).
    ORDER MATTERS: variants with a single-class selector win over the base only
    because they stand after it and after its phone block; that is also why
    each of them repeats its own phone block. ===== */
@@ -28,19 +48,35 @@
    zdjęcia – jednolita jasna szarość, a to, co na nim stoi, wnosi strona. --- */
 #hero{display:flex;min-height:calc(100svh - var(--cx-navbar-h, 0px));}
 #hero > .c5-wrap{flex:1 1 auto;display:flex;}
-.c5-hero{flex:1 1 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,5vw,5rem);align-items:stretch;}
-.c5-hero__copy{display:flex;flex-direction:column;max-width:585px;}
-.c5-hero__copyin{display:flex;flex-direction:column;gap:clamp(1.25rem,2.4vw,2rem);margin-block:auto;padding-block:clamp(2rem,4vw,3rem);}
+.c5-hero{--c5-hero-gap:clamp(1.5rem,3.9vw,3.5rem);flex:1 1 auto;display:grid;grid-template-columns:minmax(0,684fr) minmax(0,708fr);gap:0;align-items:stretch;}
+.c5-hero__copy{display:flex;flex-direction:column;max-width:none;padding-right:clamp(1rem,3vw,3rem);}
+.c5-hero__copyin{display:flex;flex-direction:column;gap:var(--c5-hero-gap);margin-block:auto;padding-block:clamp(2rem,4vw,3rem);max-width:585px;}
+/* headline and lead are one block 40 px apart (56 px between the blocks) */
+.c5-hero__copyin > .c5-h1{margin:0 0 calc(var(--c5-hero-gap) * -.286);color:var(--ch-text-primary);}
 .c5-hero__copy .c5-kicker{margin-bottom:0;}
 .c5-hero__lead{display:flex;flex-direction:column;gap:var(--w-space-3);font-size:1.125rem;color:var(--w-text-secondary);max-width:486px;}
 /* breadcrumb: dyskretny, przy dolnej krawędzi ekranu; §14.2 – jeszcze jaśniejszy */
-.c5-hero__crumbs{font-size:0.75rem;color:var(--w-gray-400);padding-bottom:var(--c5-gutter);}
+/* Breadcrumbs (decision 4, 17.10.2026): where v7 has them – low in the first
+   screen – in the Figma small text role and the secondary colour. */
+.c5-hero__crumbs{font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-secondary);padding-bottom:var(--c5-gutter);}
 .c5-hero__crumbs a,.c5-hero__crumbs .wf-breadcrumb__sep{color:inherit;}
-.c5-hero__crumbs a:hover{color:var(--w-gray-600);}
+.c5-hero__crumbs a:hover{color:var(--ch-text-primary);}
 
 /* Panel: 30 px od góry, dołu i prawej krawędzi ekranu; §14.2 – bez zdjęcia
    w tle i bez pasa gradientu, jednolita jasna szarość. */
-.c5-hero__stage{position:relative;overflow:hidden;margin-block:var(--c5-gutter);min-height:calc(100svh - var(--cx-navbar-h, 0px) - 2 * var(--c5-gutter));background:var(--w-gray-100);}
+.c5-hero__stage{position:relative;overflow:hidden;isolation:isolate;margin-block:var(--ch-space-4) var(--ch-layout-gutter);min-height:calc(100svh - var(--cx-navbar-h, 0px) - var(--ch-space-4) - var(--ch-layout-gutter));background:var(--ch-surface-warm);border-radius:var(--ch-radius-control-l);}
+/* G12: the outlined sign on the panel (Figma 397:1359 – 1 px beige-300, the sign a
+   little larger than the panel, so its leaves run off the edges); the class
+   pair `c5-sygnet c5-sygnet--obrys` stands on the stage in the markup */
+.c5-hero__stage.c5-sygnet{--c5-sygnet-size:auto 106%;--c5-sygnet-x:54%;}
+/* G17: on the product pages the breadcrumb lies on the panel, bottom left (30 / 10 px),
+   smaller and fainter; it darkens under the pointer */
+.c5-hero__stage > .c5-hero__crumbs{position:absolute;left:30px;bottom:10px;z-index:1;max-width:calc(100% - 60px);padding:0;
+  font-size:var(--ch-type-caption-size);line-height:var(--ch-type-caption-lh);color:var(--ch-text-secondary);opacity:.6;
+  transition:opacity var(--ch-motion-duration-base) var(--ch-motion-ease);}
+.c5-hero__stage > .c5-hero__crumbs:hover,.c5-hero__stage > .c5-hero__crumbs:focus-within{opacity:1;}
+.c5-hero__stage > .c5-hero__crumbs a:hover{color:var(--ch-text-primary);}
+@media (prefers-reduced-motion: reduce){.c5-hero__stage > .c5-hero__crumbs{transition:none;}}
 
 /* Packshot on the panel (default layout of the product pages): one or two
    images pinned to the panel centre and moved by a percentage of their OWN
@@ -51,7 +87,7 @@
 .c5-hero__pack--sm{height:calc(var(--c5-hero-pack-h,clamp(260px,46%,520px)) * var(--c5-hero-sm-scale,.55));transform:translate(var(--c5-hero-sm-x,0%),var(--c5-hero-sm-y,0%));}
 /* side padding of the buttons in the copy column – 45 px repeats the token
    default of `.c5-btn` in 00-base.css; change both together */
-.c5-hero__copyin .c5-btn{--c5-btn-px:var(--c5-hero-btn-px,45px);}
+.c5-hero__copyin .c5-btn{--c5-btn-px:var(--c5-hero-btn-px,var(--ch-space-6));}
 
 @media (max-width:899px){
   /* jedna kolumna: copy → panel → breadcrumb pod spodem */
@@ -137,11 +173,10 @@
    full column. The copy itself never changes; below 900 px wide the phone
    rules take over. */
 @media (min-width:900px) and (max-height:920px){
-  .c5-hero--niskie-okno .c5-hero__copyin{gap:clamp(0.75rem,2vh,2rem);padding-block:clamp(0.75rem,2.5vh,3rem);}
+  .c5-hero--niskie-okno .c5-hero__copyin{--c5-hero-gap:clamp(0.75rem,2vh,2rem);padding-block:clamp(0.75rem,2.5vh,3rem);}
   .c5-hero--niskie-okno .c5-hero__copy .c5-h1{font-size:min(3.125rem,6vh);}
   .c5-hero--niskie-okno .c5-hero__lead{font-size:1.0625rem;gap:var(--w-space-2);max-width:none;}
   .c5-hero--niskie-okno .c5-hero__copyin .c5-btn{--c5-btn-px:28px;}
-  .c5-hero--niskie-okno .c5-hero__crumbs{padding-bottom:calc(var(--c5-gutter) * .6);}
 }
 @media (min-width:900px) and (max-height:760px){
   .c5-hero--niskie-okno .c5-hero__lead{font-size:1rem;}
@@ -158,24 +193,66 @@
    pages without c5.css they would change the computed min-height. */
 .c5-hero--player{padding-block:0;min-height:0;}
 .c5-hero--player .c5-hero__copy{gap:0;}
-.c5-hero--player .c5-hero__stage{display:grid;place-items:center;padding:var(--c5-gutter);}
-/* the player: a 16:9 placeholder with a caption under it */
+/* Figma 916:3338 (stage C, 18.10.2026): no panel – the film frame stands right
+   on the section background; copy column 515 | gap 88 | film 781 of 1384. */
+.c5-hero.c5-hero--player{grid-template-columns:minmax(0,603fr) minmax(0,781fr);}
+.c5-hero--player .c5-hero__stage{display:grid;place-items:center;padding:0;background:transparent;border-radius:0;}
+/* no lead in this variant: kicker, headline and buttons are 56 px apart */
+.c5-hero--player .c5-hero__copyin > .c5-h1{margin-bottom:0;}
+/* second button: outlined on the section tint, the play icon at its end in a
+   24 px ring (Figma „circle-play”; the sprite has only the bare triangle) */
+.c5-hero--player .c5-hero__filmbtn{background:transparent;gap:var(--ch-size-button-icon-gap);}
+.c5-hero--player .c5-hero__filmbtn > .c5-btn__t + .wf-icon{margin-left:0;}
+.c5-hero--player .c5-hero__filmbtn .wf-icon{flex:none;width:var(--ch-size-icon-l);height:var(--ch-size-icon-l);padding:6px 5px 6px 7px;border:1.5px solid currentColor;border-radius:50%;}
+/* the player: the poster as a 781 × 553 frame (r20) with a glass play button
+   (88 × 88, r24) in its centre; the caption is for the film window only */
 .pp-film{display:flex;flex-direction:column;gap:var(--w-space-3);margin:0;width:100%;max-width:34rem;}
-.pp-film .wf-ph{width:100%;aspect-ratio:16/9;border-radius:0;display:grid;place-items:center;}
-.pp-film .wf-icon{width:44px;height:44px;color:var(--w-text-secondary);}
+.pp-film .pp-film__play{position:relative;display:grid;place-items:center;width:100%;aspect-ratio:781/553;padding:0;border:0;border-radius:var(--ch-radius-control-l);overflow:hidden;isolation:isolate;background:var(--ch-color-beige-100);cursor:pointer;}
+.pp-film .pp-film__poster{position:absolute;inset:0;z-index:-1;display:block;width:100%;height:100%;object-fit:cover;object-position:50% 100%;transition:transform var(--ch-motion-duration-reveal) var(--ch-motion-ease);}
+.pp-film .pp-film__play:hover .pp-film__poster{transform:scale(1.02);}
+.pp-film .pp-film__btn{display:grid;place-items:center;width:88px;height:88px;border-radius:var(--ch-radius-xl);}
+.pp-film .pp-film__btn .wf-icon{display:none;}
+/* filled play triangle (16 × 18), drawn with a mask so its colour is the text colour */
+/* (unscoped: the film window of the page clones the mark – stage E) */
+.pp-film__btn::before{content:"";width:16px;height:18px;margin-left:3px;background:currentColor;-webkit-mask:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 18'%3E%3Cpath d='M1 1.6v14.8c0 .8.9 1.3 1.6.9l12.3-7.4c.6-.4.6-1.3 0-1.7L2.6.7C1.9.3 1 .8 1 1.6z'/%3E%3C/svg%3E") center / contain no-repeat;mask:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 18'%3E%3Cpath d='M1 1.6v14.8c0 .8.9 1.3 1.6.9l12.3-7.4c.6-.4.6-1.3 0-1.7L2.6.7C1.9.3 1 .8 1 1.6z'/%3E%3C/svg%3E") center / contain no-repeat;}
+.pp-film .pp-film__play:focus-visible{outline:2px solid var(--ch-border-strong);outline-offset:3px;}
+/* G08: the tint of the section continues behind the header (the colour is the
+   section's own, so a page that changes it – Próchnica+ turns it white on scroll –
+   takes this strip along) */
+#hero:has(.c5-hero--player){position:relative;isolation:isolate;}
+#hero:has(.c5-hero--player)::after{content:"";position:absolute;left:0;right:0;bottom:100%;z-index:-2;
+  height:var(--cx-navbar-h,0px);background-color:inherit;pointer-events:none;}
+/* G12: the filled sign of Figma 803:1629 – 68 % of the width, its left edge at 40 %,
+   21 px above the top of the frame (i.e. behind the header), running off the right
+   and the bottom edge; `c5-sygnet` on section#hero */
+#hero.c5-sygnet:has(.c5-hero--player){--c5-sygnet-top:calc(-1 * var(--cx-navbar-h, 0px));
+  --c5-sygnet-size:67.9% auto;--c5-sygnet-x:124.3%;--c5-sygnet-y:-21px;}
+/* G17: the breadcrumb under the film – bottom left of the right column, under the
+   film frame (it stands before the film in the stacking order, so the sticky film
+   passes over it); below 900 px it simply follows the film */
+.c5-hero--player .c5-hero__stage > .c5-hero__crumbs{position:absolute;left:0;bottom:var(--ch-space-6);z-index:-1;
+  font-size:var(--ch-type-caption-size);line-height:var(--ch-type-caption-lh);padding:0;opacity:.75;}
+.c5-hero--player .c5-hero__stage > .c5-hero__crumbs:hover,.c5-hero--player .c5-hero__stage > .c5-hero__crumbs:focus-within{opacity:1;}
+.c5-hero--player .pp-film > figcaption{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+@media (prefers-reduced-motion: reduce){
+  .pp-film .pp-film__poster{transition:none;}
+  .pp-film .pp-film__play:hover .pp-film__poster{transform:none;}
+}
 @media (max-width:899px){
+  .c5-hero--player .c5-hero__stage > .c5-hero__crumbs{position:static;z-index:auto;margin-top:var(--ch-space-3);}
   .c5-hero--player{padding-block:clamp(2rem,6vw,3rem);}
-  .c5-hero--player .c5-hero__stage{padding:var(--w-space-5);aspect-ratio:auto;max-height:none;}
+  .c5-hero--player .c5-hero__stage{padding:0;aspect-ratio:auto;max-height:none;}
   .pp-film{max-width:none;}
+  .pp-film .pp-film__btn{width:64px;height:64px;border-radius:var(--ch-radius-control-l);}
 }
 
 /* ===== wariant: foto =====
    The stage of the pattern is an empty light-grey panel; here it carries the
    field for a photo: a centred icon and a dashed chip in the corner. */
 .on-hero__stage{display:grid;place-items:center;}
-.on-hero__ico{width:40px;height:40px;color:var(--w-gray-400);}
-.on-hero__chip{position:absolute;left:var(--w-space-4);bottom:var(--w-space-4);
-  max-width:calc(100% - 2 * var(--w-space-4));background:var(--w-surface-page);}
+.on-hero__ico{width:40px;height:40px;color:var(--ch-color-grey-400);}
+.on-hero__chip{position:absolute;left:var(--ch-space-4);bottom:var(--ch-space-4);
+  max-width:calc(100% - 2 * var(--ch-space-4));background:var(--ch-surface-page);}
 
 /* ===== wariant: dzial =====
    Section and category pages have no panel: one column two thirds wide, the
@@ -184,11 +261,21 @@
 #hero:has(.c5-hero--dzial) > .c5-wrap{display:block;}
 .c5-hero--dzial{display:flex;flex-direction:column;gap:0;padding-block:clamp(2.25rem,5vw,4rem) clamp(1.5rem,3vw,2.5rem);}
 .c5-hero--dzial .c5-hero__copy{display:flex;flex-direction:column;gap:clamp(1.25rem,2.4vw,2rem);max-width:min(100%,745px);}
-.c5-hero--dzial .c5-hero__copyin{margin-block:0;padding-block:0;max-width:none;}
+.c5-hero--dzial .c5-hero__copyin{margin-block:0;padding-block:0;max-width:none;--c5-hero-gap:clamp(1.25rem,2.4vw,2rem);}
 .c5-hero--dzial .c5-hero__lead{max-width:none;}
 .c5-hero--dzial .c5-hero__crumbs{padding-bottom:0;order:0;}
-/* Search in the hero: the search box (`.cw-k-findbox`, an element shared with
-   the article index, styled by the page stylesheet) next to the guide button.
+/* Search box: the field and the icon button in one frame (r14 like every field
+   of the foundation). An element shared with the article index (CE-57 tools
+   row), so it lives here. */
+.cw-k-findbox{display:flex;align-items:stretch;border:1px solid var(--ch-border-control);border-radius:var(--ch-radius-control-m);overflow:hidden;
+  background:var(--ch-surface-page);flex:1 1 320px;max-width:420px;
+  transition:border-color var(--ch-motion-duration-base) var(--ch-motion-ease);}
+.cw-k-findbox:focus-within{border-color:var(--ch-border-strong);}
+.cw-k-findbox .wf-input{border:0;min-height:44px;flex:1 1 auto;min-width:0;}
+.cw-k-findbox .wf-input:hover{border-color:transparent;}
+.cw-k-findbox__go{flex:none;display:grid;place-items:center;width:46px;background:none;border:0;border-left:1px solid var(--ch-border-subtle);color:var(--ch-text-primary);cursor:pointer;}
+.cw-k-findbox__go:hover{background:var(--ch-surface-warm);}
+/* Search in the hero: the search box next to the guide button.
    Below 640 px everything drops into one column. */
 .cw-k-find{display:flex;flex-wrap:wrap;gap:var(--w-space-3);align-items:stretch;}
 .cw-k-find .c5-btn{flex:0 0 auto;}
@@ -202,195 +289,278 @@
 /* subgroup chips in the hero of a category: filters of the list below */
 .cw-k-herochips{display:flex;flex-wrap:wrap;gap:var(--w-space-2);}
 
-/* ===== wariant: linia-produktow =====
-   Copy on the left, lead and buttons in the right column, and under both a
-   line of packs running to the window edges (40 px margins), outside the
-   content container. The section keeps the height of the screen: the copy
-   takes what it needs, the line of packs fills the rest and scales down on a
-   low window (`object-fit:contain`) instead of pushing the hero past the fold. */
-/* Fixed height, not just a floor: with `min-height` alone the row of the photo is
-   sized by the photo's own height, so at 1280x720 the hero grew 144 px past the
-   screen. A definite height lets the photo row take exactly what is left and the
-   image scale down inside it (`height:100%` + `object-fit:contain`). */
-#hero:has(.c5-hero--linia-produktow){display:flex;flex-direction:column;height:calc(100svh - var(--cx-navbar-h, 0px));}
-#hero:has(.c5-hero--linia-produktow) > .c5-wrap{display:block;flex:0 0 auto;}
-.c5-hero--linia-produktow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
-  gap:clamp(2rem,5vw,5rem);align-items:start;padding-top:clamp(2rem,5vw,4rem);}
-/* the copy column may use its half of 1800 px – the 585 px of the pattern were cut
-   to the narrow column of the base layout */
-.c5-hero--linia-produktow .c5-hero__copy{max-width:none;}
-.c5-hero--linia-produktow .c5-hero__copyin{margin-block:0;padding-block:0;gap:clamp(1rem,2vw,1.5rem);}
-/* the breadcrumb leaves the bottom edge of the screen: in this layout the bottom of
-   the section belongs to the line of packs, so it sits under the heading instead */
-.c5-hero--linia-produktow .c5-hero__crumbs{padding-block:clamp(1.5rem,3vw,2.5rem) 0;}
-/* right column: the lead where the packshot panel stands in the base, buttons under it */
-.c5-hero--linia-produktow .c5-hero__side{display:flex;flex-direction:column;gap:clamp(1.5rem,3vw,2.25rem);
-  padding-top:clamp(0.5rem,1.6vw,1.25rem);}
-.c5-hero--linia-produktow .c5-hero__lead{max-width:640px;}
-
-/* the line of packs: full window width minus 40 px, always sitting on the bottom
-   edge of the section; `contain` keeps the mock-up whole on every window */
-.c5pr-line{flex:1 1 auto;display:flex;align-items:flex-end;justify-content:center;min-height:0;
-  padding:clamp(1.5rem,3vw,2.5rem) 40px clamp(1.5rem,3vw,2.5rem);}
-.c5pr-line__img{display:block;width:100%;height:100%;object-fit:contain;object-position:center bottom;}
-
-/* Low window: the copy row eats the screen and leaves the line of packs a strip.
-   Two tightening steps – the heading comes down, the air around it comes down,
-   the photo gets its room back. */
+/* ===== wariant: linia-produktow ===== (Figma 800:333, decision 17.10.2026)
+   Everything centred on a full-window photo of a field: kicker, headline,
+   the line of packs, the lead and the buttons, one under the other; the
+   breadcrumb goes back to the bottom-left corner of the first screen.
+   Markup: section#hero › `.c5-hero__bg[aria-hidden]` (photo, outside the
+   container so it runs edge to edge) + `.c5-wrap` › `.c5-hero--linia-produktow`
+   › `.c5-hero__copy` (`__copyin` with kicker and H1, `__crumbs`), `.c5pr-line`
+   (the packs: a transparent WebP) and `.c5-hero__side` (lead, buttons). The two
+   wrappers of the copy go `display:contents`, so the flex column of the hero
+   orders its parts: copyin, packs, side, breadcrumb.
+   The window keeps the height of the screen: the packs take what the text
+   leaves and scale down (`object-fit:contain`) on a low window; a very low or
+   very narrow one lets the section grow instead of cropping text.
+   Only the top of the photo is darkened (gradient of the frame 800:333), white
+   copy, no shadows. `--c5-hero-scrim` (a flat darkening, none by default) is set
+   on section#hero by a page whose photo is brighter than the dusk field of the frame. */
+#hero:has(.c5-hero--linia-produktow){position:relative;isolation:isolate;color:var(--ch-text-inverse);}
+#hero:has(.c5-hero--linia-produktow) > .c5-wrap{position:relative;z-index:1;}
+/* G08: the photo reaches up behind the header */
+#hero:has(.c5-hero--linia-produktow) > .c5-hero__bg{top:calc(-1 * var(--cx-navbar-h, 0px));}
+.c5-hero--linia-produktow{display:flex;flex-direction:column;align-items:center;text-align:center;gap:0;
+  padding-top:clamp(1.5rem,4.5vw,3.5rem);--c5-hero-gap:var(--ch-space-4);--c5-heading-ink:currentColor;}
+.c5-hero--linia-produktow .c5-hero__copy{display:contents;}
+.c5-hero--linia-produktow .c5-hero__copyin{order:1;position:relative;z-index:1;align-items:center;max-width:835px;margin:0;padding:0;}
+.c5-hero--linia-produktow .c5-hero__copyin > .c5-h1{margin:0;max-width:12.5em;color:currentColor;
+  font-family:var(--ch-type-h1-kadr-font);font-size:clamp(2.125rem,4.03vw,var(--ch-type-h1-kadr-size));
+  line-height:1.017;/* 59 / 58 of the h1-kadr role, unitless so it follows the fluid size */letter-spacing:var(--ch-type-h1-kadr-ls);font-weight:var(--ch-type-h1-kadr-weight);}
+.c5-hero--linia-produktow .c5-kicker{margin-bottom:0;}
+/* the packs: a flexible band between the headline and the lead; the image fills it
+   absolutely, so the band's height comes from the flex row, never from the file */
+.c5pr-line{order:2;position:relative;align-self:stretch;flex:1 1 clamp(11rem,30vh,21rem);min-height:clamp(9rem,22vh,14rem);margin-top:calc(var(--ch-space-6) * -1);}
+.c5pr-line__img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:contain;object-position:center;}
+.c5-hero--linia-produktow .c5-hero__side{order:3;display:flex;flex-direction:column;align-items:center;gap:var(--ch-space-8, 2rem);padding-top:var(--ch-space-4);max-width:700px;}
+.c5-hero--linia-produktow .c5-hero__lead{display:flex;flex-direction:column;gap:var(--ch-space-3);max-width:none;
+  font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);color:var(--ch-text-inverse-muted);}
+.c5-hero--linia-produktow .c5-btnrow{justify-content:center;}
+/* breadcrumb: the bottom-left corner, light (decision 4, 17.10.2026) */
+.c5-hero--linia-produktow .c5-hero__crumbs{order:4;align-self:flex-start;padding:var(--ch-space-6) 0 0;color:var(--ch-text-inverse-muted);}
+.c5-hero--linia-produktow .c5-hero__crumbs a:hover{color:var(--ch-text-inverse);}
+.c5-hero--linia-produktow :focus-visible{outline-color:var(--w-focus-ring-inverse);}
+/* top of the photo: the gradient of the frame (black .3 at 13.7 %, clear at 66.8 %) */
+#hero:has(.c5-hero--linia-produktow) > .c5-hero__bg::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(179.3deg,rgb(0 0 0 / .3) 13.68%,rgb(0 0 0 / 0) 66.78%),
+    linear-gradient(var(--c5-hero-scrim,rgb(0 0 0 / 0)),var(--c5-hero-scrim,rgb(0 0 0 / 0)));}
+/* low window: the headline comes down so the packs keep a usable band */
 @media (min-width:900px) and (max-height:820px){
-  .c5-hero--linia-produktow{padding-top:clamp(1rem,2.5vw,2rem);gap:clamp(1.5rem,3.5vw,3rem);}
-  .c5-hero--linia-produktow .c5-h1{font-size:clamp(1.75rem,3vw,2.5rem);}
-  .c5-hero--linia-produktow .c5-hero__lead{font-size:1rem;}
-  .c5-hero--linia-produktow .c5-hero__crumbs{padding-block:clamp(0.75rem,1.6vw,1.25rem) 0;}
-  .c5pr-line{padding-block:clamp(0.75rem,1.6vw,1.25rem);}
+  .c5-hero--linia-produktow{padding-top:clamp(1rem,2.5vw,2rem);}
+  .c5-hero--linia-produktow .c5-hero__copyin > .c5-h1{font-size:clamp(1.75rem,3vw,2.5rem);line-height:1.05;}
+  .c5-hero--linia-produktow .c5-hero__lead{font-size:1rem;line-height:1.5;}
+  .c5-hero--linia-produktow .c5-hero__side{gap:var(--ch-space-5);padding-top:0;}
+  .c5-hero--linia-produktow .c5-hero__crumbs{padding-top:var(--ch-space-4);}
 }
 @media (min-width:900px) and (max-width:1279px){
-  .c5-hero--linia-produktow .c5-h1{font-size:clamp(1.75rem,3vw,2.25rem);}
+  .c5-hero--linia-produktow .c5-hero__copyin > .c5-h1{font-size:clamp(1.75rem,3.6vw,2.5rem);}
 }
-
 @media (max-width:899px){
-  /* one column: copy -> lead and buttons -> line of packs; no full-screen height */
-  #hero:has(.c5-hero--linia-produktow){display:block;height:auto;}
-  .c5-hero--linia-produktow{display:flex;flex-direction:column;gap:clamp(1.5rem,4vw,2.5rem);
-    padding-block:clamp(2rem,6vw,3rem) 0;}
-  .c5-hero--linia-produktow .c5-hero__copy{display:flex;flex-direction:column;}
-  .c5-hero--linia-produktow .c5-hero__crumbs{order:3;padding-block:var(--w-space-4) 0;}
-  .c5-hero--linia-produktow .c5-hero__side{padding-top:0;}
-  .c5pr-line{padding:clamp(1.5rem,5vw,2.5rem) 20px;}
+  /* one column on the photo with an even dark scrim: the long two-paragraph
+     lead has to read on any crop of the field */
+  #hero:has(.c5-hero--linia-produktow){display:block;}
+  #hero:has(.c5-hero--linia-produktow) > .c5-wrap{display:block;}
+  #hero:has(.c5-hero--linia-produktow) > .c5-hero__bg::after{background:rgb(10 10 10 / .5);}
+  .c5-hero--linia-produktow{padding-block:clamp(2rem,6vw,3rem);gap:clamp(1.25rem,4vw,2rem);}
+  .c5pr-line{position:static;flex:none;min-height:0;margin-top:0;align-self:stretch;}
+  .c5pr-line__img{position:static;height:auto;width:100%;}
+  .c5-hero--linia-produktow .c5-hero__side{padding-top:0;gap:var(--ch-space-5);}
+  .c5-hero--linia-produktow .c5-hero__crumbs{padding-top:0;}
 }
 
-/* ===== wariant: kadr-w-tle ===== (podstrony upraw; spec §14.2)
-   Hero podstrony uprawy nie ma osobnego panelu ze zdjęciem: kadr leży w tle
-   całej sekcji od krawędzi do krawędzi okna, a treść stoi na nim w bieli.
-   Kickera nie ma (na żadnej stronie uprawy), zostają
-   okruszki, H1, lead i dwa przyciski. Układ od 900 px: okruszki u góry po
-   lewej, u dołu dwie kolumny wyrównane do dolnej linii – wielki H1 po lewej
-   (ok. 12 znaków w wierszu), kolumna leadu z przyciskami po prawej. Dół
-   treści trzyma się `--c5-hero-dock` (96 px) nad krawędzią okna, bo w pasie
-   20–80 px nad dołem siedzi dok doradcy (`.cw-jurek`, 560 px, wyśrodkowany).
-   Przyciemnienie kadru to jednolity scrim `--c5-hero-scrim` (bez gradientów)
-   – po wejściu prawdziwego zdjęcia wartość do dostrojenia na stronie.
-   WSZYSTKIE reguły wiszą pod `.c5-hero--bg`, więc pozostałe strony linkujące
-   ten plik zostają bez zmiany. Znacznik: sekcja `#hero` › `.c5-hero.c5-hero--bg`
-   › `.c5-hero__bg[aria-hidden]` + `.c5-wrap.c5-wrap--wide.c5-hero__inner`
-   (okruszki, H1, `.c5-hero__side` z leadem i przyciskami). --------------- */
-/* Z kitowego `.c5-hero` (c5.css) trzeba tu zdjąć trzy rzeczy: `padding-block`
-   i `min-height` (odstępy odmierza siatka treści, wysokość ekranu daje
-   `#hero`) oraz `align-items:center` – w kolumnie flex centrowałoby kontener
-   treści w poprzek, a ten ma trzymać pełną szerokość okna i sam liczyć swoje
-   `max-width:1800px`. */
-.c5-hero--bg{--c5-hero-dock:96px;
-  /* soft shadows under the copy on the photo: legibility without dimming the
-     frame – no gradients, nothing visible as a shape. The small copy (crumbs,
-     lead) takes the tighter, denser one; the big headline a wide, light one.
-     Both were retuned on 19.09 for a bright, sunlit photo (glossy leaf
-     highlights under the text), where the frame itself must stay untouched. */
-  --c5-hero-shadow:0 0 2px rgb(0 0 0 / .7),0 0 10px rgb(0 0 0 / .7),0 0 24px rgb(0 0 0 / .6),0 0 48px rgb(0 0 0 / .45);
-  --c5-hero-shadow-h1:0 0 3px rgb(0 0 0 / .35),0 0 24px rgb(0 0 0 / .45),0 0 60px rgb(0 0 0 / .4);
-  position:relative;display:flex;flex-direction:column;align-items:stretch;
+/* ===== wariant: kadr-w-tle ===== (podstrony upraw; Figma 800:419, 18.10.2026)
+   The photo lies behind the whole section edge to edge; the copy stands in a
+   block at the bottom, in white: breadcrumb, headline, an ornamented separator
+   and one row with the lead on the left and the buttons on the right (aligned
+   to the right edge of the content). No shadows under the text: the legibility
+   comes from the darkening of the lower part of the photo and a progressive
+   blur (Figma BACKGROUND_BLUR, 10 px, growing from 37 % of the height down).
+   Markup: section#hero › `.c5-hero.c5-hero--bg` › `.c5-hero__bg[aria-hidden]`
+   (photo) + `.c5-wrap.c5-wrap--wide.c5-hero__inner` (breadcrumb, `__title`,
+   `.c5-hero__orn`, `.c5-hero__side` with `__lead` and the button row).
+   From 900 px `__side` goes `display:contents`, so the lead and the buttons are
+   cells of the grid of `__inner`: rows = spacer (takes the height), breadcrumb,
+   headline, separator, lead | buttons. A page that has more blocks (the home
+   page: the kicker, the A/B pill, a third action) places its own cells in the
+   same grid. Numbers: --c5-hero-dock (distance of the block from the bottom edge,
+   96 px: the advisor dock stands at 20-80 px), --c5-hero-scrim (an optional flat
+   darkening, none by default), --c5-hero-blur (10 px).
+   Below 900 px: the photo (min. 62 svh) carries the breadcrumb on top and the
+   headline with the separator at the bottom; the lead and the buttons stand
+   under it on the page background. */
+.c5-hero--bg{--c5-hero-dock:96px;position:relative;display:flex;flex-direction:column;align-items:stretch;
   padding-block:0;min-height:0;}
 
-/* Kadr w tle: wypełnia sekcję, przycina powiększenie z animacji wejścia.
-   `> *` obsługuje i placeholder, i docelowy `img.c5-hero__bgimg`. */
-.c5-hero--bg .c5-hero__bg{position:absolute;inset:0;overflow:hidden;background:var(--w-gray-900);}
-.c5-hero--bg .c5-hero__bg > *{position:absolute;inset:0;width:100%;height:100%;}
-.c5-hero--bg .c5-hero__bgimg{display:block;object-fit:cover;object-position:50% 50%;border:0;}
-/* płaski scrim – rysowany po dzieciach, więc leży na kadrze */
-.c5-hero--bg .c5-hero__bg::after{content:"";position:absolute;inset:0;background:var(--c5-hero-scrim,rgb(0 0 0 / .4));}
-/* the scrim is set per page on section#hero; a page whose photo needs more
-   dimming under the narrow lead column sets --c5-hero-scrim-narrow as well */
-@media (max-width:1099px){
-  .c5-hero--bg .c5-hero__bg::after{background:var(--c5-hero-scrim-narrow,var(--c5-hero-scrim,rgb(0 0 0 / .4)));}
-}
-/* Placeholder do czasu zdjęcia: ciemny, bez ramki i zaokrągleń. Etykieta
-   (opis kadru dla grafika) siada pod okruszkami po lewej – środek i dół kadru
-   zajmuje treść hero, a prawa strona kolumna leadu. */
+/* The photo: fills the section, crops the settling zoom of the entrance. */
+.c5-hero__bg{position:absolute;inset:0;z-index:0;overflow:hidden;background:var(--w-gray-900);}
+.c5-hero__bg > *{position:absolute;inset:0;width:100%;height:100%;}
+.c5-hero__bgimg{display:block;object-fit:cover;object-position:50% 50%;border:0;}
+/* G08: in `--bg` the photo reaches up behind the header (below 900 px see the phone block) */
+@media (min-width:900px){.c5-hero--bg .c5-hero__bg{top:calc(-1 * var(--cx-navbar-h, 0px));}}
+/* progressive blur: the backdrop filter fades in with a mask, from 37 % down */
+.c5-hero--bg .c5-hero__bg::before{content:"";position:absolute;inset:0;z-index:1;
+  -webkit-backdrop-filter:blur(var(--c5-hero-blur,10px));backdrop-filter:blur(var(--c5-hero-blur,10px));
+  -webkit-mask-image:linear-gradient(180deg,transparent 36.8%,#000 100%);mask-image:linear-gradient(180deg,transparent 36.8%,#000 100%);}
+/* darkening: the gradient of the frame, over the blur; an optional flat scrim under it */
+.c5-hero--bg .c5-hero__bg::after{content:"";position:absolute;inset:0;z-index:2;
+  background:linear-gradient(183.5deg,rgb(10 10 10 / 0) 27%,rgb(10 10 10 / .6) 89.5%),
+    linear-gradient(var(--c5-hero-scrim,rgb(0 0 0 / 0)),var(--c5-hero-scrim,rgb(0 0 0 / 0)));}
+/* placeholder until a photo exists: dark, no frame, no rounding */
 .c5-hero--bg .c5-hero__bg .wf-ph{--w-placeholder-fill:var(--w-gray-800);
   --w-placeholder-stroke:var(--w-gray-700);--w-placeholder-ink:var(--w-gray-400);
   border:0;border-radius:0;min-height:0;
   place-items:start;padding:clamp(6rem,18vh,10rem) 40px 0;text-align:left;}
 
-/* Treść: okruszki w pierwszym wierszu, pusty wiersz rozpycha siatkę, dwie
-   kolumny siadają w trzecim wierszu na wspólnej dolnej linii. Prawa kolumna
-   rośnie z oknem do 34 rem (spec) – przy 1280 px stała szerokość zjadłaby
-   lewej tyle, że H1 łamałby się na trzy wiersze zamiast na dwa. `width:100%`
-   jest konieczne: `.c5-wrap` ma `margin-inline:auto`, a automatyczny margines
-   w poprzek kolumny flex blokuje rozciągnięcie – kontener zwijałby się do
-   szerokości treści zamiast trzymać swoje 1800 px. */
+/* The copy block. `width:100%` is needed: `.c5-wrap` has `margin-inline:auto`
+   and an auto margin across a flex column blocks the stretch. */
 .c5-hero--bg .c5-hero__inner{position:relative;z-index:1;flex:1 1 auto;width:100%;
-  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,clamp(20rem,30vw,34rem));
-  grid-template-rows:auto minmax(0,1fr) auto;
-  column-gap:clamp(2rem,4vw,4rem);
+  display:grid;grid-template-columns:minmax(0,1fr) auto;
+  grid-template-rows:minmax(0,1fr) auto auto auto auto;
+  column-gap:var(--ch-space-10);
   padding-block:clamp(1.25rem,2.2vw,1.75rem) var(--c5-hero-dock);
-  color:var(--w-text-inverse);}
-.c5-hero--bg .c5-hero__crumbs{grid-column:1 / -1;grid-row:1;align-self:start;
-  padding-bottom:0;color:var(--w-white);text-shadow:var(--c5-hero-shadow);}
-.c5-hero--bg .c5-hero__crumbs a:hover{color:var(--w-white);}
-/* H1: ok. 12 znaków w wierszu („Program uprawy / kukurydzy”) */
-.c5-hero--bg .c5-hero__title{grid-column:1;grid-row:3;align-self:end;
-  max-width:8.6em;margin:0;text-shadow:var(--c5-hero-shadow-h1);
-  font-size:clamp(3rem,6.4vw,6.5rem);line-height:1.02;letter-spacing:-0.025em;}
-.c5-hero--bg .c5-hero__side{grid-column:2;grid-row:3;align-self:end;
-  display:flex;flex-direction:column;gap:clamp(1.5rem,2.4vw,2rem);max-width:34rem;}
-.c5-hero--bg .c5-hero__lead{font-size:1.0625rem;line-height:1.55;
-  color:var(--w-white);text-shadow:var(--c5-hero-shadow);max-width:none;}
+  color:var(--ch-text-inverse);--c5-heading-ink:currentColor;}
+/* G17: the breadcrumb at the top, right under the header (the spacer row shrinks under it) */
+.c5-hero--bg .c5-hero__crumbs{grid-column:1 / -1;grid-row:1;align-self:start;padding-bottom:0;color:var(--ch-text-inverse-muted);}
+/* Optional kicker over the headline (B01, Figma 800:419 – 16 px above the H1): the pair
+   stands in `.c5-hero__lockup` (kicker + `.c5-hero__title`), which takes the row
+   of the headline; a page without a kicker keeps the bare title. */
+.c5-hero--bg .c5-hero__lockup{grid-column:1 / -1;grid-row:3;display:flex;flex-direction:column;align-items:flex-start;gap:var(--ch-space-4);}
+.c5-hero--bg .c5-hero__lockup .c5-kicker{margin:0;}
+.c5-hero--bg .c5-hero__crumbs a:hover{color:var(--ch-text-inverse);}
+/* headline: the one-line size of the frame (58/59) */
+.c5-hero--bg .c5-hero__title{grid-column:1 / -1;grid-row:3;margin:0;
+  font-family:var(--ch-type-h1-kadr-font);font-size:clamp(2.5rem,4.03vw,var(--ch-type-h1-kadr-size));
+  line-height:1.017;/* 59 / 58 of the h1-kadr role, unitless so it follows the fluid size */letter-spacing:var(--ch-type-h1-kadr-ls);font-weight:var(--ch-type-h1-kadr-weight);}
+/* separator with an ornament: two 1 px lines and the four-leaf sign turned 45 degrees
+   (Figma 800:443: sign 25.94 px in a 36.7 px field) */
+.c5-hero__orn{grid-column:1 / -1;grid-row:4;display:flex;align-items:center;margin-block:var(--ch-space-8);color:var(--ch-text-inverse);}
+.c5-hero__orn::before,.c5-hero__orn::after{content:"";flex:1 1 0;height:1px;background:var(--ch-border-on-dark);}
+/* B02 (Figma 800:443): the turned sign takes a 36.7 px field and stands 14 px from
+   each line – 5.4 px of the turn plus 14 px of air on both sides */
+.c5-hero__orn .wf-icon{flex:none;width:26px;height:26px;margin:5px 19px;transform:rotate(45deg);}
+.c5-hero--bg .c5-hero__lead{grid-column:1;grid-row:5;align-self:end;max-width:46rem;margin:0;
+  font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);color:var(--ch-text-inverse-muted);}
+.c5-hero--bg .c5-hero__lead p{margin:0;}
+.c5-hero--bg .c5-hero__lead p + p{margin-top:var(--ch-space-3);}
+.c5-hero--bg .c5-btnrow{grid-column:2;grid-row:5;align-self:end;justify-self:end;flex-wrap:nowrap;}
+@media (min-width:900px){
+  .c5-hero--bg .c5-hero__side{display:contents;}
+}
+/* 900-1199 px: the lead and the buttons do not fit one row, the buttons go under the lead */
+@media (max-width:1199px){
+  .c5-hero--bg .c5-hero__inner{grid-template-columns:minmax(0,1fr);}
+  .c5-hero--bg .c5-btnrow{grid-column:1;grid-row:6;justify-self:start;flex-wrap:wrap;margin-top:var(--ch-space-6);}
+}
 
-/* Przyciski na kadrze: pierwszy jasny (`--inv`), drugi konturowy na ciemnym
-   – klasa lokalna wariantu, nie globalny przycisk. Fokus jasny. Para etykiet
-   nie mieści się w jednym rzędzie w kolumnie 34 rem, więc gdy rząd się łamie,
-   każdy przycisk bierze pełną szerokość kolumny (równe bloki, nie schodki). */
-.c5-hero--bg .c5-btnrow{gap:8px;}
-.c5-hero--bg .c5-btnrow > .c5-btn{flex:1 1 auto;--c5-btn-px:clamp(18px,2.6vw,45px);}
-.c5-hero--bg .c5-btn--ghost{background:rgb(0 0 0 / .3);color:var(--w-text-inverse);
-  border-color:rgb(255 255 255 / .7);}
-.c5-hero--bg .c5-btn--ghost:hover{background:rgb(0 0 0 / .15);border-color:var(--w-white);}
+/* Buttons on the photo: the main one green (class `c5-btn--accent`), the second
+   an outline (`c5-btn--ghost`); the green one has dark text from the element. */
 .c5-hero--bg .c5-hero__inner :focus-visible{outline-color:var(--w-focus-ring-inverse);border-radius:0;}
 
-/* Wejście: kadr osiada ze skali 1,06, treść wchodzi krótką kaskadą. Tylko
-   przy JS i bez prośby o ograniczenie ruchu; stan spoczynkowy = widoczny. */
+/* Entrance: the photo settles from scale 1.06, the copy comes in a short
+   cascade. Only with JS and without a reduced-motion request; the resting
+   state is visible. */
 @media (prefers-reduced-motion: no-preference){
   html.cx-js .c5-hero--bg .c5-hero__bg > *{animation:c5HeroBgSettle 1.2s var(--w-ease) both;}
   html.cx-js .c5-hero--bg .c5-hero__crumbs{animation:c5HeroRise .7s var(--w-ease) .05s both;}
-  html.cx-js .c5-hero--bg .c5-hero__title{animation:c5HeroRise .7s var(--w-ease) .15s both;}
-  html.cx-js .c5-hero--bg .c5-hero__side{animation:c5HeroRise .7s var(--w-ease) .28s both;}
+  html.cx-js .c5-hero--bg .c5-hero__title,
+  html.cx-js .c5-hero--bg .c5-hero__lockup .c5-kicker{animation:c5HeroRise .7s var(--w-ease) .15s both;}
+  html.cx-js .c5-hero--bg .c5-hero__orn{animation:c5HeroRise .7s var(--w-ease) .22s both;}
+  html.cx-js .c5-hero--bg .c5-hero__lead,
+  html.cx-js .c5-hero--bg .c5-btnrow{animation:c5HeroRise .7s var(--w-ease) .28s both;}
 }
 @keyframes c5HeroBgSettle{from{transform:scale(1.06);}to{transform:scale(1);}}
 @keyframes c5HeroRise{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}
 
-/* Poniżej 900 px: kadr (min. 62 svh) z okruszkami u góry i H1 u dołu NA
-   kadrze, a lead i przyciski pod kadrem na zwykłym tle strony – długi cytat
-   nie leży na zdjęciu. Siatkę przejmuje `.c5-hero--bg`, bo kadr i treść mają
-   dzielić te same komórki; `.c5-hero__inner` oddaje swoje pudełko
-   (`display:contents`), więc boczne wcięcie wraca na dzieci. */
+/* Below 900 px: the photo (min. 62 svh) with the breadcrumb on top and the
+   headline plus the separator at the bottom ON the photo; the lead and the
+   buttons under it on the page background, so the long lead does not lie on
+   the photo. The grid is taken over by `.c5-hero--bg`, because the photo and the
+   copy share the same cells; `.c5-hero__inner` gives up its box
+   (`display:contents`), so the side padding goes back to the children. */
 @media (max-width:899px){
   .c5-hero--bg{display:grid;grid-template-columns:minmax(0,1fr);
     grid-template-rows:minmax(62svh,auto) auto;}
   .c5-hero--bg .c5-hero__inner{display:contents;}
-  .c5-hero--bg .c5-hero__bg{position:relative;grid-area:1 / 1;}
+  .c5-hero--bg .c5-hero__bg{position:relative;grid-area:1 / 1;margin-top:calc(-1 * var(--cx-navbar-h, 0px));}
   .c5-hero--bg .c5-hero__bg .wf-ph{padding-inline:var(--w-space-5);}
   .c5-hero--bg .c5-hero__crumbs,
   .c5-hero--bg .c5-hero__title,
+  .c5-hero--bg .c5-hero__lockup,
+  .c5-hero--bg .c5-hero__orn,
   .c5-hero--bg .c5-hero__side{padding-inline:var(--w-space-5);}
-  /* The breadcrumbs and the title share a grid cell with the frame, which is
-     positioned; with `display:contents` on their parent its z-index is gone.
-     The entrance animation used to lift them by accident – with reduced motion
-     there is none and the frame covered both (02.10.2026). */
+  /* the breadcrumb, the title and the separator share a cell with the photo, which is
+     positioned; with `display:contents` on their parent the z-index is gone, so they take it back */
   .c5-hero--bg .c5-hero__crumbs,
-  .c5-hero--bg .c5-hero__title{position:relative;z-index:1;}
-  .c5-hero--bg .c5-hero__crumbs{grid-area:1 / 1;align-self:start;
-    padding-top:clamp(1rem,4vw,1.5rem);}
+  .c5-hero--bg .c5-hero__title,
+  .c5-hero--bg .c5-hero__lockup,
+  .c5-hero--bg .c5-hero__orn{position:relative;z-index:1;}
+  .c5-hero--bg .c5-hero__crumbs{grid-area:1 / 1;align-self:start;padding-top:clamp(1rem,4vw,1.5rem);padding-bottom:0;}
+  /* the breadcrumb stands at the top of the photo here (the frame has no breadcrumb):
+     a short top fade keeps it readable on a light sky (stage C check, 18.10.2026) */
+  .c5-hero--bg .c5-hero__bg::after{background:linear-gradient(180deg,rgb(10 10 10 / .45) 0,rgb(10 10 10 / 0) 22%),
+    linear-gradient(183.5deg,rgb(10 10 10 / 0) 27%,rgb(10 10 10 / .6) 89.5%),
+    linear-gradient(var(--c5-hero-scrim,rgb(0 0 0 / 0)),var(--c5-hero-scrim,rgb(0 0 0 / 0)));}
   .c5-hero--bg .c5-hero__title{grid-area:1 / 1;align-self:end;max-width:none;
-    padding-bottom:clamp(1.5rem,5vw,2rem);
-    font-size:clamp(2.5rem,10vw,3.75rem);line-height:1.04;}
-  .c5-hero--bg .c5-hero__side{grid-area:2 / 1;max-width:none;
-    padding-top:clamp(1.5rem,5vw,2rem);color:var(--w-text-primary);}
-  /* pod kadrem wraca ciemny tekst i para przycisków --dark / --light */
-  .c5-hero--bg .c5-hero__lead{font-size:1rem;color:var(--w-text-secondary);text-shadow:none;}
-  .c5-hero--bg .c5-btn--inv{background:var(--w-gray-900);color:var(--w-text-inverse);
-    border-color:var(--w-gray-900);}
-  .c5-hero--bg .c5-btn--inv:hover{background:var(--w-gray-700);border-color:var(--w-gray-700);}
-  .c5-hero--bg .c5-btn--ghost{background:var(--w-surface-page);color:var(--w-text-primary);
-    border-color:rgb(0 0 0 / .2);}
-  .c5-hero--bg .c5-btn--ghost:hover{background:var(--w-surface-page);border-color:var(--w-border-strong);}
+    padding-bottom:clamp(3.25rem,10vw,4rem);
+    font-size:clamp(2.25rem,9vw,3.625rem);line-height:1.04;}
+  .c5-hero--bg .c5-hero__lockup{grid-area:1 / 1;align-self:end;gap:var(--ch-space-3);padding-bottom:clamp(3.25rem,10vw,4rem);}
+  .c5-hero--bg .c5-hero__lockup .c5-hero__title{padding:0;}
+  .c5-hero--bg .c5-hero__orn{grid-area:1 / 1;align-self:end;margin-block:0 clamp(1rem,4vw,1.5rem);}
+  .c5-hero--bg .c5-hero__side{grid-area:2 / 1;display:flex;flex-direction:column;gap:var(--ch-space-5);
+    max-width:none;padding-top:clamp(1.5rem,5vw,2rem);color:var(--ch-text-primary);}
+  /* under the photo: dark text, the main button dark, the second a light outline */
+  .c5-hero--bg .c5-hero__lead{font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary);max-width:none;}
+  .c5-hero--bg .c5-btnrow{flex-wrap:wrap;justify-self:auto;}
+  .c5-hero--bg .c5-btn--accent{background:var(--ch-action-primary-bg);color:var(--ch-action-primary-fg);border-color:var(--ch-action-primary-bg);}
+  .c5-hero--bg .c5-btn--accent:hover{background:var(--ch-color-green-900);border-color:var(--ch-color-green-900);}
+  .c5-hero--bg .c5-btn--ghost{background:var(--ch-surface-page);color:var(--ch-action-secondary-fg);border-color:var(--ch-action-secondary-border);}
+  .c5-hero--bg .c5-btn--ghost:hover{background:var(--ch-surface-page);border-color:var(--ch-action-secondary-fg);}
   .c5-hero--bg .c5-hero__side :focus-visible{outline-color:var(--w-focus-ring);}
 }
+
+/* ===== wariant: artykul · Nagłówek artykułu (stage D, 18.10.2026) =====
+   Not the product hero: no 100svh, no panel, no packshot. Breadcrumb at the
+   top (the reader has to know where they are before they start reading), then
+   chips, the title (display face, H1 scale) and the author metric with the two
+   icon buttons; under the header a cover (r20) as wide as the whole reading
+   layout. The header is its own section (`section.cw-a-head#naglowek`), not
+   `#hero`, so none of the product-hero rules above touch it.
+   Markup:
+     section.cw-a-head[data-ce="CE-08"] > .c5-wrap
+       nav.cw-a-crumbs
+       .cw-a-head__in > p.cw-a-head__chips (c5-chip) · h1.c5-h1.cw-a-h1
+         · .cw-a-meta (.cw-a-meta__ph, .cw-a-meta__txt, .cw-a-tools c5-iconbtn)
+       p.cw-a-msg[role=status]
+     figure.cw-a-cover > .cw-a-cover__ph + figcaption.cw-a-cover__cap
+   The reading grid (260 px | gap | 720 px) is set by the page sheet through
+   `--cw-a-side`, `--cw-a-gap` and `--cw-a-col`; the defaults below match it. */
+.cw-a-head{padding-block:clamp(1rem,2.5vw,1.75rem) 0;}
+/* From 1100 px the header content takes the box of the reading grid, so the
+   breadcrumb, the title, the rule under the metric, the cover and the contents
+   column share one left edge. */
+@media (min-width:1100px){
+  .cw-a-head .c5-wrap > *{
+    max-width:calc(var(--cw-a-side,260px) + var(--cw-a-gap,4.5rem) + var(--cw-a-col,720px));
+    margin-inline:auto;
+  }
+}
+.cw-a-crumbs{padding-block:0 clamp(1.25rem,3vw,2rem);font-size:var(--ch-type-caption-size);line-height:var(--ch-type-caption-lh);
+  color:var(--ch-text-secondary);}
+.cw-a-head__in{display:flex;flex-direction:column;gap:clamp(1rem,2.4vw,1.5rem);max-width:900px;}
+.cw-a-head__chips{display:flex;flex-wrap:wrap;gap:var(--ch-space-2);margin:0;}
+.cw-a-h1{max-width:900px;}
+
+/* author metric: field for the photo 48 px, two lines of text, buttons on the right */
+.cw-a-meta{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ch-space-4);
+  padding-block:clamp(0.75rem,2vw,1.25rem);
+  border-block:1px solid var(--ch-border-subtle);}
+.cw-a-meta__ph{width:48px;height:48px;min-height:0;flex:none;color:var(--ch-color-grey-400);}
+.cw-a-meta__txt{flex:1 1 16rem;min-width:0;display:flex;flex-direction:column;gap:2px;}
+.cw-a-meta__txt p{margin:0;}
+.cw-a-meta__who{font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);}
+.cw-a-meta__name{font-weight:var(--ch-font-weight-medium);}
+.cw-a-meta__cons{font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-secondary);}
+.cw-a-tools{display:flex;gap:var(--ch-space-2);flex:none;margin-left:auto;}
+
+/* „copied” message – lives next to both rows of buttons (header and side column) */
+.cw-a-msg{margin:0;color:var(--ch-text-primary);}
+
+/* Cover: the first illustration of the article promoted out of the text flow,
+   as wide as both columns of the reading layout (so the sticky column starts
+   below it). 21:9 from 900 px, 16:10 on a phone. Nothing moves here. */
+.cw-a-cover{max-width:calc(var(--cw-a-side,260px) + var(--cw-a-gap,4.5rem) + var(--cw-a-col,720px));
+  margin:clamp(1.5rem,3.5vw,2.25rem) auto 0;}
+.cw-a-cover__ph{display:block;width:100%;aspect-ratio:16 / 10;min-height:0;border-radius:var(--ch-radius-control-l);}
+@media (min-width:900px){
+  .cw-a-cover__ph{aspect-ratio:21 / 9;}
+}
+.cw-a-cover__cap{margin-top:var(--ch-space-2);font-size:var(--ch-type-caption-size);line-height:1.45;color:var(--ch-text-secondary);}

@@ -149,41 +149,56 @@
 }
 
 
-/* ===== wariant: kafle-2x2 – implementacja Próchnicy+ (pp-*) =====
-   The soil programme page builds the variant under its own classes: a dark frame
-   with a gutter margin at screen height; the title gets a large gap from the top
-   edge and the four rows become a 2 x 2 grid of tiles a shade lighter than the
-   frame – the big number at the top edge on the right, the label at the bottom
-   edge on the left. The digits are vertical strips 0–9 built by JS (module 60), so
-   without JS and with reduced motion a plain number stands in the markup. */
-.pp-dark{position:relative;min-height:100svh;margin-inline:var(--c5-gutter);overflow:clip;
-  background:var(--w-gray-900);color:var(--w-text-inverse);padding-block:var(--c5-gutter);}
-/* focus ring on the dark background */
-.pp-dark :focus-visible{outline-color:var(--w-focus-ring-inverse);}
-.pp-liczby{display:flex;flex-direction:column;gap:clamp(1.5rem,3vw,2.5rem);
-  min-height:calc(100svh - 2 * var(--c5-gutter));
-  padding-block:clamp(4rem,8vw,7.5rem) clamp(1.5rem,3vw,2.5rem);}
-.pp-liczby__title{font-size:clamp(2rem,4vw,3.25rem);max-width:none;}
-/* The 2 x 2 grid fills the rest of the frame height (the tiles grow with it). */
-.pp-liczby__rows{flex:1 1 auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:16px;margin:0;padding:0;list-style:none;}
+/* ===== wariant: wiersze-ze-zdjeciem (pp-*, Próchnica+) =====
+   Figma 859:2603 (stage C, 18.10.2026). A light section: the photo on the left
+   (651 : 747 in the frame, r 12, mirrored the way the frame has it), on the right
+   a column with the heading and rows „number | label" separated by a dashed
+   line (Dark @ 25 %, 3 / 7). The number is the `display-num` token; an affix
+   („lata”) stands on its bottom line. The digits are vertical strips 0–9 built
+   by JS (prochnica-plus.js, module 60), so without JS and with reduced motion
+   a plain number stands in the markup. Root modifier: `pp-liczby--foto`. */
+.pp-liczby--foto{background:var(--ch-surface-page);color:var(--ch-text-primary);}
+.pp-liczby{display:grid;grid-template-columns:minmax(0,651fr) minmax(0,612fr);
+  gap:clamp(2rem,9vw,129px);align-items:stretch;}
+.pp-liczby__ph{margin:0;border-radius:var(--ch-radius-lg);overflow:hidden;
+  aspect-ratio:651 / 747;background:var(--ch-surface-warm-strong);}
+.pp-liczby__ph img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 50%;transform:scaleX(-1);}
+/* P06 (18.10.2026): the column is as tall as the photo – the head (kicker + H2)
+   stands on its top edge, the rows sit on the bottom, so the dashed line under
+   the last number runs level with the bottom of the photo (Figma 859:2603). The
+   gap stays the minimum between head and rows; a taller column makes the photo
+   taller instead (the grid row stretches both). */
+.pp-liczby__col{display:flex;flex-direction:column;gap:clamp(2rem,7.2vw,var(--ch-space-26));min-width:0;}
+.pp-liczby__head{display:flex;flex-direction:column;align-items:flex-start;}
+.pp-liczby__title{font-family:var(--ch-type-h2-sm-font);font-size:clamp(1.75rem,3.2vw,var(--ch-type-h2-sm-size));
+  line-height:1.109;font-weight:var(--ch-type-h2-sm-weight);letter-spacing:var(--ch-type-h2-sm-ls);
+  max-width:none;margin:0;}
+.pp-liczby__rows{display:flex;flex-direction:column;gap:var(--ch-space-8);margin:auto 0 0;padding:0;list-style:none;}
 
-/* Tile: the number at the top edge on the right, the label at the bottom edge
-   on the left; the middle stays empty. */
-.pp-liczba{display:flex;flex-direction:column;justify-content:space-between;
-  gap:var(--w-space-6);min-height:280px;background:rgb(255 255 255 / .05);
-  padding:clamp(1.5rem,2.4vw,2rem);}
-.pp-liczba__label{font-size:1.25rem;line-height:1.35;color:var(--w-gray-200);max-width:38ch;}
-.pp-liczba__note{display:block;margin-top:var(--w-space-3);font-size:0.8125rem;color:var(--w-gray-400);}
-/* Affix host (EL-31 `c5-aff`): aligned to the TOP, a gap only before the
-   suffix – the „+" prefix stands at the size of the number right next to the
-   digit, so the shared `gap` must not push it away. The suffix offset is the
-   default from `ce/00-base.css`; the rest is up to the `line-height` of the
-   digit reel below. */
-.pp-liczba__num{display:flex;align-items:flex-start;justify-content:flex-end;
-  font-size:clamp(3.5rem,7vw,8.5rem);line-height:1;font-weight:var(--w-weight-medium);
-  letter-spacing:-0.03em;font-variant-numeric:tabular-nums;}
-.pp-odo + .c5-aff{margin-left:.12em;}
+/* Row: the number on the left, the label on the right (right-aligned), both on
+   the bottom line; the dashed separator under the row. */
+.pp-liczba{display:flex;align-items:flex-end;justify-content:space-between;
+  gap:var(--ch-space-6);padding-bottom:var(--ch-space-8);
+  background:linear-gradient(90deg,var(--ch-border-dashed) 30%,transparent 0) bottom left / 10px 1px repeat-x;}
+.pp-liczba__label{font-family:var(--ch-type-body-font);font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);
+  color:var(--ch-text-primary);text-align:right;max-width:30ch;}
+.pp-liczba__note{display:block;margin-top:var(--ch-space-2);font-size:var(--ch-type-small-size);
+  line-height:var(--ch-type-small-lh);color:var(--ch-text-secondary);}
+/* Affix host (EL-31 `c5-aff`): on this layout the suffix stands on the BOTTOM
+   line of the digits (Figma 859:2717), Suisse 24 / 28, an 8 px gap before it (no gap after a „+” prefix). */
+.pp-liczba__num{--pp-num-fs:clamp(3rem,4.5vw,var(--ch-type-display-num-size));
+  display:flex;align-items:flex-end;flex:none;
+  font-family:var(--ch-type-display-num-font);font-size:var(--pp-num-fs);
+  line-height:.984;font-weight:var(--ch-type-display-num-weight);letter-spacing:var(--ch-type-display-num-ls);
+  font-variant-numeric:tabular-nums;}
+.pp-liczba__num .c5-aff{font-family:var(--ch-font-text);font-size:clamp(1.25rem,1.7vw,1.5rem);
+  line-height:1.17;padding-top:0;align-self:flex-end;
+  /* P06 (18.10.2026): the baseline of „lata” on the baseline of the digits, i.e.
+     the bottom of the word level with the bottom of the „3”. Both boxes end on
+     the bottom line of the row; the digit baseline sits .14 of the digit size
+     above it (display face, line-height .984), the affix baseline .253 of its
+     own size (text face, 1.17) – measured 18.10.2026 at 64 / 24 px. */
+  margin:0 0 calc(var(--pp-num-fs) * .14 - .253em) var(--ch-space-2);}
 
 /* --- Digit reel -------------------------------------------------------------
    Every digit is a window one digit high, holding a strip of values (the target
@@ -193,19 +208,22 @@
 /* `line-height` equal to the window height: without JS and with reduced motion a
    plain text stands here and it must sit exactly where the digit in the strip
    does – otherwise the suffix would aim at two different edges. */
-.pp-odo{--pp-odo-h:1.06em;display:inline-flex;line-height:var(--pp-odo-h);}
+.pp-odo{--pp-odo-h:.984em;display:inline-flex;line-height:var(--pp-odo-h);}
 .pp-odo__wrap{display:inline-flex;}
 .pp-odo__d{display:block;height:var(--pp-odo-h);overflow:hidden;}
 .pp-odo__strip{display:block;transform:translateY(calc(var(--pp-i,0) * var(--pp-odo-h) * -1));will-change:transform;}
 .pp-odo__strip > span{display:block;height:var(--pp-odo-h);line-height:var(--pp-odo-h);}
 .pp-odo.is-roll .pp-odo__strip{transition:transform 1.1s cubic-bezier(.2,.7,.2,1);transition-delay:var(--pp-delay,0ms);}
 
+@media (max-width:899px){
+  /* photo above the column, rows full width */
+  .pp-liczby{grid-template-columns:minmax(0,1fr);gap:var(--ch-space-10);align-items:stretch;}
+  .pp-liczby__ph{aspect-ratio:4 / 3;}
+}
 @media (max-width:699px){
-  /* one column of tiles */
-  .pp-liczby__rows{grid-template-columns:minmax(0,1fr);}
-  .pp-liczba{min-height:0;gap:var(--w-space-5);}
-  .pp-liczba__num{font-size:clamp(3.25rem,15vw,6rem);}
-  .pp-liczba__label{font-size:1.0625rem;max-width:none;}
+  .pp-liczby__col{gap:var(--ch-space-10);}
+  .pp-liczba{gap:var(--ch-space-4);padding-bottom:var(--ch-space-6);}
+  .pp-liczba__label{max-width:20ch;}
 }
 @media (prefers-reduced-motion: reduce){
   .pp-odo.is-roll .pp-odo__strip{transition:none;}
@@ -354,4 +372,70 @@
   .b-nb__col + .b-nb__col{border-left:0;border-top:1px solid var(--w-border-default);}
   .b-nb__gap{display:none;}
   .b-nb__val{font-size:clamp(3.25rem,17vw,6rem);}
+}
+
+/* ===== wariant: rzad (c5h-nums*, Home) =====
+   A dark frame the width of the container: a small title top left, under it
+   five columns parted by hairlines, each one number, label and source. Stage D:
+   the frame is the inverse surface with 20 px corners, the number is the
+   `display-num` style (64 / 63, the display face through its token), the label
+   is `body` in the muted inverse ink, the source is the caption. The variant
+   differs from the base (one number per row, screen height) by standing the
+   numbers side by side in ONE row, so the band stays a strip. */
+.c5h-nums{background:var(--ch-surface-inverse);color:var(--ch-text-inverse);border-radius:var(--ch-radius-control-l);
+  padding:clamp(1.75rem,3.2vw,var(--ch-space-10)) clamp(1.25rem,2.4vw,var(--ch-space-10));}
+.c5h-nums__title{margin:0 0 clamp(1.75rem,3.4vw,3rem);font-family:var(--ch-type-kicker-font);font-size:var(--ch-type-kicker-size);line-height:var(--ch-type-kicker-lh);
+  font-weight:var(--ch-type-kicker-weight);letter-spacing:var(--ch-type-kicker-ls);text-transform:var(--ch-type-kicker-tt);color:var(--ch-text-inverse-muted);}
+.c5h-nums__row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));margin:0;padding:0;list-style:none;}
+.c5h-num{display:flex;flex-direction:column;gap:var(--ch-space-3);min-width:0;padding-inline:clamp(1rem,1.6vw,1.75rem);}
+.c5h-num + .c5h-num{border-left:1px solid var(--ch-border-on-dark);}
+.c5h-num:first-child{padding-left:0;}
+.c5h-num:last-child{padding-right:0;}
+.c5h-num__val{display:flex;align-items:flex-start;gap:.12em;font-family:var(--ch-type-display-num-font);font-size:var(--ch-type-display-num-size);
+  line-height:var(--ch-type-display-num-lh);font-weight:var(--ch-type-display-num-weight);letter-spacing:var(--ch-type-display-num-ls);font-variant-numeric:tabular-nums;}
+.c5h-num__lbl{font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-inverse-muted);}
+.c5h-num__src{margin-top:auto;padding-top:var(--ch-space-2);font-size:var(--ch-type-caption-size);line-height:var(--ch-type-caption-lh);}
+
+/* Digit reel: every digit is a window one digit high holding a strip of
+   values, the target at the bottom and the way to it above. The strip starts
+   pushed up by its own length (so a 0 stands in the window) and the animation
+   brings it back to 0. The script builds the strips; without JS and with
+   reduced motion the plain number of the markup stands there. Transform only. */
+.c5h-odo{--c5h-odo-h:1.06em;display:inline-flex;}
+.c5h-odo__wrap{display:inline-flex;}
+.c5h-odo__d{display:block;height:var(--c5h-odo-h);overflow:hidden;}
+.c5h-odo__strip{display:block;will-change:transform;transform:translateY(calc(var(--c5h-i,0) * var(--c5h-odo-h) * -1));}
+.c5h-odo__strip > span{display:block;height:var(--c5h-odo-h);line-height:var(--c5h-odo-h);}
+.c5h-odo.is-roll .c5h-odo__strip{transition:transform 1.1s var(--ch-motion-ease);transition-delay:var(--c5h-delay,0ms);}
+
+/* 1100-1279 px: the five columns stay, one step smaller (3 + 2 would leave an
+   empty cell). The number steps down by `clamp`, the only place where the
+   token size is not used as it is. */
+@media (min-width:1100px) and (max-width:1279px){
+  .c5h-num{padding-inline:clamp(.75rem,1.2vw,1.25rem);}
+  .c5h-num__val{font-size:clamp(2.5rem,4.2vw,3.5rem);line-height:1;}
+}
+/* Under 1100 px a column is too narrow for a big number and a four-line
+   label: the band turns into rows, the number on the left and the label with
+   its source on the right, on one track (subgrid) for all the numbers. */
+@media (max-width:1099px){
+  .c5h-nums__row{grid-template-columns:minmax(4.5rem,auto) minmax(0,1fr);}
+  .c5h-num{display:grid;grid-template-columns:subgrid;grid-column:1 / -1;align-items:baseline;gap:var(--ch-space-2) var(--ch-space-5);padding:var(--ch-space-5) 0 0;border-left:0;}
+  .c5h-num:first-child{padding-top:0;}
+  .c5h-num + .c5h-num{border-top:1px solid var(--ch-border-on-dark);}
+  .c5h-num__val{grid-column:1;font-size:clamp(2rem,5vw,3.25rem);line-height:1;}
+  .c5h-num__lbl{grid-column:2;}
+  .c5h-num__src{grid-column:2;margin-top:0;padding-top:var(--ch-space-1);}
+}
+@media (max-width:899px){
+  .c5h-nums{padding-inline:var(--ch-space-4);}
+  .c5h-num{gap:var(--ch-space-2) var(--ch-space-4);}
+  .c5h-num__lbl{font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);}
+}
+/* No subgrid (older engines): a plain two-track row per item. */
+@supports not (grid-template-columns:subgrid){
+  @media (max-width:1099px){
+    .c5h-nums__row{grid-template-columns:minmax(0,1fr);}
+    .c5h-num{grid-template-columns:minmax(4.5rem,auto) minmax(0,1fr);grid-column:auto;}
+  }
 }

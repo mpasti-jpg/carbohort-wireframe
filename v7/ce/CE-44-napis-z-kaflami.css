@@ -1,0 +1,122 @@
+/* ===== CE-44 · Napis przyklejony z płynącymi kaflami – module (design system v0.1, stage C 18.10.2026) =====
+   Look from the Figma frames, content from the v7 markup. Styles of this CE
+   live here; the page sheet keeps only exceptions of one page.
+
+   Variant `tlo-foto` (root classes `pp-kor*`, Próchnica+), Figma 853:1963: a photo
+   as the background of the scene with a flat scrim (black @ .57), a centred white
+   heading (`h2` token, display font) and tiles a shade warmer than the page
+   (`surface-warm`, r 12, p 32, no outline, no shadow): the icon in a 56 px circle
+   on top, the title (`title` token) and the text (`body`, secondary) at the
+   bottom. The tile height follows its content; from 900 px a minimum height of
+   340 px (the frame) keeps short tiles square-ish. A kicker stands over the
+   heading (P03, 18.10.2026).
+
+   Mechanics (unchanged from v7): the scene is pinned for the whole track, the
+   heading enters word by word from a mask, eight tiles ride in three disjoint
+   lanes with a speed profile (`--a`, `--par` set by JS in prochnica-plus.js,
+   module 45). Default (mobile / reduced motion / no JS): the scene as a block,
+   the tiles below it in one column (two from 700 px), no offsets – all text is
+   always visible.
+
+   Track and scene (>= 900 px, no-preference, .cx-js): the frame is pinned at
+   `top:0` for the whole screen height through the whole track, above it eight
+   opaque tiles in three disjoint lanes – `--i` is the place in the track,
+   `--lane` the lane centre, `--a` the speed profile, `--par` (JS) the offset.
+   ======================================================================== */
+
+/* The track goes edge to edge (the scene photo has no margins); the side margins
+   of the content column are taken by the tile grid. The section has no top
+   padding – the scene starts where the previous section ends. */
+.pp-kor{padding-block:0 clamp(3.5rem,7vw,6.25rem);}
+/* P04 (18.10.2026, Mateusz: „usuń ten margines”): from 900 px the pinned scene
+   ends the section – the next section starts with its own top padding, as in
+   the frames (853:1963 is followed directly by 859:2542). Below 900 px the tiles
+   stand under the scene and keep the bottom padding. */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  .cx-js .pp-kor{padding-bottom:0;}
+}
+.pp-kor__track{position:relative;}
+.pp-kor__stage{position:relative;z-index:0;display:grid;place-items:center;overflow:hidden;
+  min-height:70svh;padding:clamp(2.5rem,7vw,5rem) var(--ch-space-5);}
+.pp-kor__bg{position:absolute;inset:0;}
+/* The background frame: one photo at full screen, cropped from the centre. No
+   `loading="lazy"` – the photo is the background of a scene that pins at
+   `top:0`, so it has to stand in the frame at the moment of pinning. */
+.pp-kor__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;}
+/* Flat scrim (no gradients): .57 as in the frame. */
+.pp-kor__bg::after{content:"";position:absolute;inset:0;background:rgb(0 0 0 / .57);}
+/* Head of the scene: the kicker (P03, Figma 853:1965: outline kicker in white,
+   light grey frame) and, 24 px below, the heading – centred together. */
+.pp-kor__head{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;}
+.pp-kor__kicker{border-color:var(--ch-border-ghost-on-image);}
+.pp-kor__title{position:relative;z-index:1;color:var(--ch-text-inverse);
+  font-family:var(--ch-type-h2-font);font-size:clamp(2.25rem,3.75vw,var(--ch-type-h2-size));
+  line-height:1.167;font-weight:var(--ch-type-h2-weight);letter-spacing:var(--ch-type-h2-ls);
+  text-align:center;margin-inline:auto;margin-block:0;max-width:min(100%,10em);}
+/* The word mask: `overflow:hidden` with room for the descenders (y, j), cancelled
+   by a negative margin so the lines stay where they stood. */
+.pp-kor__w{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.14em;margin-bottom:-.14em;}
+.pp-kor__w > span{display:inline-block;}
+
+/* --- Tiles ------------------------------------------------------------------------ */
+.pp-kor__tiles{display:grid;gap:clamp(1rem,2.5vw,1.5rem);list-style:none;
+  max-width:1180px;margin:clamp(2rem,5vw,3rem) auto 0;padding-inline:var(--ch-space-5);}
+.pp-kslot{display:flex;}
+.pp-kcard{display:flex;flex-direction:column;gap:var(--ch-space-5);width:100%;
+  background:var(--ch-surface-warm);border-radius:var(--ch-radius-md);
+  padding:var(--ch-space-8);}
+/* P03 (18.10.2026): the circle under the icon is the Ellipse 10 of the frame,
+   #EBE6DA – a step lighter than the icon-frame token (beige-300 #E9E2D4).
+   ⚠️ literal until the token exists (request: icon-frame-warm). */
+.pp-kcard .c5-icoframe{margin-bottom:var(--ch-space-6);background:var(--pp-kor-ico,#EBE6DA);}
+.pp-kcard__h{margin:auto 0 0;font-family:var(--ch-type-title-font);font-size:var(--ch-type-title-size);
+  line-height:var(--ch-type-title-lh);font-weight:var(--ch-type-title-weight);
+  letter-spacing:var(--ch-type-title-ls);color:var(--ch-text-primary);}
+.pp-kcard__body{display:flex;flex-direction:column;gap:var(--ch-space-3);}
+.pp-kcard__body p{margin:0;font-family:var(--ch-type-body-font);font-size:var(--ch-type-body-size);
+  line-height:1.5;color:var(--ch-text-secondary);}
+
+@media (min-width:700px){
+  .pp-kor__tiles{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;}
+}
+
+/* Entrance of the heading: every word leaves the bottom edge of its line, in a
+   cascade of 70 ms (`--wi` in the markup). The initial state only with JS and
+   without reduced motion – otherwise the heading is simply visible. No exit
+   animation: JS adds `.is-in` once and never takes it off. From 18.10.2026
+   only from 900 px – below it the head of the scene is static and visible. */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  html.cx-js .pp-kor__w > span{transform:translateY(110%);
+    transition:transform 520ms cubic-bezier(.2,.8,.2,1) calc(var(--wi,0) * 70ms);}
+  html.cx-js .pp-kor__title.is-in .pp-kor__w > span{transform:none;}
+  /* the kicker fades up just before the first word (same `.is-in`, JS module 45) */
+  html.cx-js .pp-kor__kicker{opacity:0;transform:translateY(12px);
+    transition:opacity 480ms var(--ch-motion-ease),transform 480ms var(--ch-motion-ease);}
+  html.cx-js .pp-kor__kicker.is-in{opacity:1;transform:none;}
+}
+
+/* --- Scene: the frame pinned to the screen, the tiles above it ------------------- */
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  /* the track = scene (100 svh) + entry of the first tile + seven steps between
+     tiles + a tail: the last tile leaves the screen, then the heading stands
+     alone for ~30 vh before the scene rides away. A step of 32 vh gives 2–3
+     tiles at once in the window. */
+  .cx-js .pp-kor{--pp-kor-lead:125vh;--pp-kor-step:32vh;--pp-kor-tail:80vh;}
+  .cx-js .pp-kor__track{height:calc(100svh + var(--pp-kor-lead) + 7 * var(--pp-kor-step) + var(--pp-kor-tail));}
+  .cx-js .pp-kor__stage{position:sticky;top:0;height:100svh;min-height:0;}
+  /* P03: a slight parallax of the photo while the track runs – the frame is
+     taller than the scene by 2 × 48 px and JS (module 45) moves it from +48 to
+     −48 px over the whole track (`--pp-kor-y`); transform only. */
+  .cx-js .pp-kor__img{top:-48px;height:calc(100% + 96px);inset-inline:0;bottom:auto;
+    transform:translate3d(0,var(--pp-kor-y,0px),0);will-change:transform;}
+  .cx-js .pp-kor__tiles{display:block;max-width:none;margin:0;padding:0;}
+  /* three disjoint lanes (18 %, 50 %, 82 % of the track = window) in the order
+     L, R, C, L, R, C, L, R – neighbouring tiles are never in the same lane */
+  .cx-js .pp-kslot{position:absolute;z-index:1;display:block;width:clamp(16rem,24vw,22rem);
+    top:calc(var(--pp-kor-lead) + var(--i,0) * var(--pp-kor-step));
+    left:var(--lane,50%);
+    transform:translate(-50%,var(--par,0px));will-change:transform;}
+  /* Figma: the tile 340 high at least, the icon on top and the text at the bottom;
+     longer texts (v7) grow the tile. */
+  .cx-js .pp-kcard{min-height:340px;}
+}

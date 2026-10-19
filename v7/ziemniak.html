@@ -13,30 +13,30 @@
 <link rel="stylesheet" href="c5.css">
 <style>
 /* ===== Warstwa własna strony uprawy (c5up-*) – tylko to, czego nie ma w c5.css.
-       Wyłącznie tokeny --w-*, ostre narożniki zgodnie z językiem V5. ===== */
-.c5up-chips{display:flex;flex-wrap:wrap;gap:var(--w-space-2);margin:0;}
-.c5up-chip{display:flex;flex-direction:column;gap:2px;border:1px solid var(--w-border-default);padding:var(--w-space-2) var(--w-space-3);min-width:8.5rem;}
-.c5up-chip dt{font-size:var(--w-font-overline-size);line-height:var(--w-font-overline-lh);letter-spacing:var(--w-tracking-wide);text-transform:uppercase;color:var(--w-text-tertiary);}
-.c5up-chip dd{margin:0;font-size:var(--w-font-sm-size);font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
-.c5up-node{border:1px solid var(--w-border-subtle);border-bottom:0;}
-.c5up-node:last-of-type{border-bottom:1px solid var(--w-border-subtle);}
+       Design system v0.1 (stage D, 18.10.2026): tokens --ch-*, 12 px corners (EL-15 card). ===== */
+.c5up-chips{display:flex;flex-wrap:wrap;gap:var(--ch-space-2);margin:0;}
+.c5up-chip{display:flex;flex-direction:column;gap:2px;border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-md);padding:var(--ch-space-2) var(--ch-space-3);min-width:8.5rem;}
+.c5up-chip dt{font-size:var(--ch-type-overline-size);line-height:var(--ch-type-overline-lh);letter-spacing:var(--ch-type-overline-ls);text-transform:uppercase;color:var(--ch-text-secondary);}
+.c5up-chip dd{margin:0;font-size:var(--ch-type-small-size);font-weight:var(--ch-font-weight-medium);color:var(--ch-text-primary);}
+.c5up-node{background:var(--ch-surface-raised);border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-md);overflow:hidden;margin-bottom:6px;}
+.c5up-node:last-of-type{margin-bottom:0;}
 .c5up-node>summary{cursor:pointer;list-style:none;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:var(--w-space-3);align-items:center;padding:var(--w-space-4);}
 .c5up-node>summary::-webkit-details-marker{display:none;}
 .c5up-node>summary:hover{background:var(--w-surface-hover);}
-.c5up-node[open]>summary{background:var(--w-surface-subtle);}
+.c5up-node[open]>summary{background:var(--ch-surface-warm);}
 .c5up-node>summary:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:calc(var(--w-focus-ring-offset) * -1);}
 .c5up-node__ico{transition:transform var(--w-duration-fast) var(--w-ease);}
 .c5up-node[open] .c5up-node__ico{transform:rotate(180deg);}
 .c5up-node__body{padding:0 var(--w-space-4) var(--w-space-5);}
-.c5up-code{font-family:var(--w-font-mono);font-size:var(--w-font-sm-size);color:var(--w-text-secondary);border:1px solid var(--w-border-default);padding:2px var(--w-space-2);white-space:nowrap;}
-.c5up-note{border:1px solid var(--w-border-default);padding:var(--w-space-4);background:var(--w-surface-subtle);}
-.c5up-note--strong{border-color:var(--w-border-strong);background:var(--w-surface-page);}
-.c5up-tag{display:inline-block;font-size:var(--w-font-caption-size);line-height:var(--w-font-caption-lh);border:1px dashed var(--w-border-strong);padding:1px var(--w-space-2);color:var(--w-text-secondary);white-space:nowrap;}
+.c5up-code{font-size:var(--ch-type-small-size);font-variant-numeric:tabular-nums;color:var(--ch-text-secondary);border:1px solid var(--ch-border-control);border-radius:var(--ch-radius-xs);padding:2px var(--ch-space-2);white-space:nowrap;}
+.c5up-note{border:1px solid transparent;border-radius:var(--ch-radius-md);padding:var(--ch-space-4);background:var(--ch-surface-warm-strong);}
+.c5up-note--strong{border-color:var(--ch-border-strong);background:var(--ch-surface-raised);}
+.c5up-tag{display:inline-block;font-size:var(--ch-type-caption-size);line-height:var(--ch-type-caption-lh);border:1px dashed var(--ch-border-control);border-radius:var(--ch-radius-xs);padding:1px var(--ch-space-2);color:var(--ch-text-secondary);white-space:nowrap;}
 .c5up-legend{display:flex;flex-wrap:wrap;gap:var(--w-space-3) var(--w-space-5);}
 .c5up-calc{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:var(--w-space-4);align-items:end;}
-.c5up-out{border:1px solid var(--w-border-default);padding:var(--w-space-4);display:flex;flex-direction:column;gap:2px;}
-.c5up-out b{font-size:var(--w-font-h4-size);line-height:var(--w-font-h4-lh);font-weight:var(--w-weight-medium);}
-.c5up-empty{border:1px dashed var(--w-border-strong);padding:var(--w-space-5);text-align:center;}
+.c5up-out{background:var(--ch-surface-raised);border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-md);padding:var(--ch-space-5);display:flex;flex-direction:column;gap:2px;}
+.c5up-out b{font-size:var(--ch-type-title-s-size);line-height:var(--ch-type-title-s-lh);letter-spacing:var(--ch-type-title-s-ls);font-weight:var(--ch-font-weight-regular);}
+.c5up-empty{border:1px dashed var(--ch-border-control);border-radius:var(--ch-radius-md);padding:var(--w-space-5);text-align:center;}
 .c5up-two{display:grid;grid-template-columns:1fr;gap:var(--w-space-6);}
 @media (min-width:900px){.c5up-two{grid-template-columns:1fr 1fr;}}
 </style>
@@ -80,8 +80,8 @@
           <p>Sześć momentów zabiegowych w skali BBCH, cztery produkty, jeden zabieg nalistny powtarzany przez cały sezon.</p>
         </div>
         <div class="c5-btnrow">
-          <a class="c5-btn c5-btn--dark" href="konfigurator.html?crop=ziemniak">dobierz program dla swojego pola</a>
-          <a class="c5-btn c5-btn--light" href="#u-skala">policz ilość na hektary</a>
+          <a class="c5-btn c5-btn--dark c5-btn--ico-suwaki" href="konfigurator.html?crop=ziemniak">Dobierz program dla swojego pola</a>
+          <a class="c5-btn c5-btn--light" href="#u-skala">Policz ilość na hektary</a>
         </div>
       </div>
       <div class="c5-hero__visual">
@@ -172,7 +172,7 @@
         <summary><span class="c5up-code">przed sadzeniem</span><span class="wf-w-medium">Przygotowanie gleby</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
         <div class="c5up-node__body wf-stack wf-stack--3">
           <p class="wf-body wf-t-secondary">Cel: poprawa struktury gleby, zwiększenie pojemności wodnej i sorpcyjnej przed założeniem plantacji, zbilansowanie składników i aktywacja mikroflory.</p>
-          <p class="wf-body">Cztery warianty produktowe podane jako <strong>alternatywy, nie zestaw</strong>: kondycjoner sypki (CARBOMAT ECO albo CARBOMAT HUMIC) lub płynny ekstrakt (CARBOHUMIC niefiltrowany albo filtrowany). Po aplikacji wymieszać z glebą na 5–10 cm agregatem uprawowym lub glebogryzarką.</p>
+          <p class="wf-body">Cztery warianty produktowe podane jako <strong>alternatywy, nie zestaw</strong>: kondycjoner sypki (Carbomat Eco albo Carbomat Humic) lub płynny ekstrakt (Carbohumic niefiltrowany albo filtrowany). Po aplikacji wymieszać z glebą na 5–10 cm agregatem uprawowym lub glebogryzarką.</p>
           <p class="wf-small wf-t-secondary">Pełna kompatybilność z przedsiewnym NPK (sól potasowa, siarczan potasu, polifoska) i z wapnowaniem doglebowym.</p>
         </div>
       </details>
@@ -180,7 +180,7 @@
         <summary><span class="c5up-code">BBCH 00–09</span><span class="wf-w-medium">Sadzenie i kiełkowanie</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
         <div class="c5up-node__body wf-stack wf-stack--3">
           <p class="wf-body wf-t-secondary">Cel: biostymulacja kiełkowania, wyrównane wschody, rozwój korzeni głównych i włośnikowych, osłona fitosanitarna w okresie, gdy bulwa jest bez ochrony.</p>
-          <p class="wf-body">CARBOHUMIC filtrowany 187 mesh aplikowany <strong>bezpośrednio do bruzdy w trakcie sadzenia</strong> – instalacją natryskową zamontowaną na sadzarce. Warstwa kwasów humusowych wokół bulwy działa też jako naturalny chelator potasu i mikroelementów.</p>
+          <p class="wf-body">Carbohumic filtrowany 187 mesh aplikowany <strong>bezpośrednio do bruzdy w trakcie sadzenia</strong> – instalacją natryskową zamontowaną na sadzarce. Warstwa kwasów humusowych wokół bulwy działa też jako naturalny chelator potasu i mikroelementów.</p>
           <p class="wf-small wf-t-secondary">Można łączyć z preparatami biologicznymi zawierającymi <em>Bacillus subtilis</em> lub <em>Pseudomonas fluorescens</em>.</p>
         </div>
       </details>
@@ -188,14 +188,14 @@
         <summary><span class="c5up-code">BBCH 10–19</span><span class="wf-w-medium">Wschody i wczesny rozwój</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
         <div class="c5up-node__body wf-stack wf-stack--3">
           <p class="wf-body wf-t-secondary">Cel: budowa powierzchni asymilacyjnej, intensyfikacja fotosyntezy, łagodzenie chłodów i posuchy, regeneracja po herbicydach.</p>
-          <p class="wf-body">Pierwszy zabieg nalistny CARBOHUMIC MAXI PLUS w fazie <strong>od 2 do 6 liści</strong>, po rozcieńczeniu w 200–300 l wody. Równolegle lub łącznie: mocznik 1–2%, siedmiowodny siarczan magnezu 2–3%, mikroelementy (bor, cynk, mangan).</p>
+          <p class="wf-body">Pierwszy zabieg nalistny Carbohumic Maxi Plus w fazie <strong>od 2 do 6 liści</strong>, po rozcieńczeniu w 200–300 l wody. Równolegle lub łącznie: mocznik 1–2%, siedmiowodny siarczan magnezu 2–3%, mikroelementy (bor, cynk, mangan).</p>
         </div>
       </details>
       <details class="c5up-node" id="faza-2039">
         <summary><span class="c5up-code">BBCH 20–39</span><span class="wf-w-medium">Wzrost pędów i stolonizacja</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
         <div class="c5up-node__body wf-stack wf-stack--3">
           <p class="wf-body wf-t-secondary">Cel: utrzymanie przyrostu zielonej masy, prawidłowa stolonizacja, wyrównana liczba bulw, lepsze wykorzystanie nawozów.</p>
-          <p class="wf-body">Drugi zabieg nalistny w <strong>BBCH 31–35, w czasie zwierania międzyrzędzi</strong>. Na plantacjach z nawadnianiem dodatkowo CARBOHUMIC filtrowany przez fertygację.</p>
+          <p class="wf-body">Drugi zabieg nalistny w <strong>BBCH 31–35, w czasie zwierania międzyrzędzi</strong>. Na plantacjach z nawadnianiem dodatkowo Carbohumic filtrowany przez fertygację.</p>
           <p class="wf-small wf-t-secondary">To także moment pierwszych zabiegów zapobiegawczych przeciwko alternariozie i zarazie ziemniaka.</p>
         </div>
       </details>
@@ -217,8 +217,8 @@
         <summary><span class="c5up-code">BBCH &gt;99</span><span class="wf-w-medium">Okres pozbiorowy</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
         <div class="c5up-node__body wf-stack wf-stack--3">
           <p class="wf-body wf-t-secondary">Cel: humifikacja łętów i resztek, higienizacja stanowiska, zatrzymanie składników w glebie, wzrost próchnicy przed kolejną uprawą w płodozmianie.</p>
-          <p class="wf-body">Oprysk doglebowy płynnym CARBOHUMIC na resztki roślinne i glebę. Mechanizm: stymulacja grzybów saprofitycznych z rodzaju <em>Trichoderma</em> przekierowuje rozkład z mineralizacji na humifikację. Zabieg wieńczy płytka uprawa broną talerzową lub agregatem, do 10 cm.</p>
-          <p class="wf-body">Na stanowiskach mocno wyeksploatowanych, zwłaszcza piaszczystych – dodatkowo CARBOMAT ECO posypowo.</p>
+          <p class="wf-body">Oprysk doglebowy płynnym Carbohumic na resztki roślinne i glebę. Mechanizm: stymulacja grzybów saprofitycznych z rodzaju <em>Trichoderma</em> przekierowuje rozkład z mineralizacji na humifikację. Zabieg wieńczy płytka uprawa broną talerzową lub agregatem, do 10 cm.</p>
+          <p class="wf-body">Na stanowiskach mocno wyeksploatowanych, zwłaszcza piaszczystych – dodatkowo Carbomat Eco posypowo.</p>
           <div class="c5up-note c5up-note--strong wf-stack wf-stack--2">
             <span class="wf-w-semibold wf-inline"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-alert-triangle"></use></svg> Dodatek azotu na resztki – do rozstrzygnięcia</span>
             <span class="wf-small wf-t-secondary">Materiały CarboHort podają dziś trzy różne stanowiska w tej sprawie. Do czasu jednoznacznej decyzji nie podajemy tu żadnej dawki azotu.</span>
@@ -245,70 +245,70 @@
           <tr>
             <th scope="row">Przed sadzeniem</th>
             <td>Struktura, pojemność wodna i sorpcyjna, aktywacja mikroflory</td>
-            <td>CARBOMAT ECO<br><span class="wf-caption wf-t-tertiary">odmiana pH 6,0–6,5</span></td>
+            <td>Carbomat Eco<br><span class="wf-caption wf-t-tertiary">odmiana pH 6,0–6,5</span></td>
             <td>min. 2000 kg/ha całopowierzchniowo<br>200–250 kg/ha pasowo i strip-till<br>100–150 kg/ha do bruzdy</td>
             <td>Wymieszać na 5–10 cm. Pierwsze dawki polowe tego produktu w materiałach CarboHort. <span class="c5up-tag">do potwierdzenia</span></td>
           </tr>
           <tr>
             <th scope="row">Przed sadzeniem</th>
             <td>Rewitalizacja gleb zdegradowanych, potas, buforowanie odczynu</td>
-            <td>CARBOMAT HUMIC</td>
+            <td>Carbomat Humic</td>
             <td>250–500 kg/ha całopowierzchniowo<br>100–150 kg/ha pasowo i strip-till</td>
-            <td>Wariant alternatywny wobec CARBOMAT ECO. Odczyn produktu 9,0–11,0 – na glebach węglanowych ostrożnie. <span class="c5up-tag">do potwierdzenia</span></td>
+            <td>Wariant alternatywny wobec Carbomat Eco. Odczyn produktu 9,0–11,0 – na glebach węglanowych ostrożnie. <span class="c5up-tag">do potwierdzenia</span></td>
           </tr>
           <tr>
             <th scope="row">Przed sadzeniem</th>
             <td>Żyzność, mikrobiom, materia organiczna</td>
-            <td>CARBOHUMIC niefiltrowany</td>
+            <td>Carbohumic niefiltrowany</td>
             <td>min. 50 l/ha, dwukrotnie w roku<br><span class="wf-caption wf-t-tertiary">stężenie robocze 1–10%</span></td>
             <td>Wskazany na stanowiskach o niskim poziomie materii organicznej. Aplikacja rozlewowa, nie przez dysze. <span class="c5up-tag">do potwierdzenia</span></td>
           </tr>
           <tr>
             <th scope="row">BBCH 00–09</th>
             <td>Biostymulacja kiełkowania, osłona sadzeniaka</td>
-            <td>CARBOHUMIC filtrowany 187 mesh</td>
+            <td>Carbohumic filtrowany 187 mesh</td>
             <td>20–40 l/ha w 400 l wody</td>
             <td>Do bruzdy w trakcie sadzenia, instalacją natryskową na sadzarce. <span class="c5up-tag">do potwierdzenia</span></td>
           </tr>
           <tr>
             <th scope="row">BBCH 10–19</th>
             <td>Powierzchnia asymilacyjna, odporność na chłody i posuchę</td>
-            <td>CARBOHUMIC MAXI PLUS</td>
+            <td>Carbohumic Maxi Plus</td>
             <td>dawka nalistna <span class="c5up-tag">do potwierdzenia</span><br><span class="wf-caption wf-t-tertiary">w 200–300 l wody, faza 2–6 liści</span></td>
             <td>Łączyć z mocznikiem 1–2%, siarczanem magnezu 2–3%, mikroelementami</td>
           </tr>
           <tr>
             <th scope="row">BBCH 20–39</th>
             <td>Stolonizacja, wyrównana liczba bulw</td>
-            <td>CARBOHUMIC MAXI PLUS</td>
+            <td>Carbohumic Maxi Plus</td>
             <td>dawka nalistna <span class="c5up-tag">do potwierdzenia</span><br><span class="wf-caption wf-t-tertiary">BBCH 31–35, zwieranie międzyrzędzi</span></td>
-            <td>Na plantacjach nawadnianych dodatkowo CARBOHUMIC filtrowany 5–10 l/ha przez fertygację</td>
+            <td>Na plantacjach nawadnianych dodatkowo Carbohumic filtrowany 5–10 l/ha przez fertygację</td>
           </tr>
           <tr>
             <th scope="row">BBCH 40–69</th>
             <td>Wypełnianie bulw, ochrona przed stresem cieplnym</td>
-            <td>CARBOHUMIC MAXI PLUS</td>
+            <td>Carbohumic Maxi Plus</td>
             <td>dawka nalistna <span class="c5up-tag">do potwierdzenia</span><br><span class="wf-caption wf-t-tertiary">w okresach wystąpienia stresów</span></td>
             <td>Jedyny zabieg programu bez stałego terminu – wyzwalany zdarzeniem</td>
           </tr>
           <tr>
             <th scope="row">BBCH 70–89</th>
             <td>Utwardzenie skórki, jakość przechowalnicza</td>
-            <td>CARBOHUMIC MAXI PLUS</td>
+            <td>Carbohumic Maxi Plus</td>
             <td>dawka nalistna <span class="c5up-tag">do potwierdzenia</span><br><span class="wf-caption wf-t-tertiary">BBCH 71–75</span></td>
             <td>Ostatni zabieg nalistny w sezonie</td>
           </tr>
           <tr>
             <th scope="row">BBCH &gt;99</th>
             <td>Humifikacja resztek, higienizacja stanowiska</td>
-            <td>CARBOHUMIC filtrowany<br>lub CARBOHUMIC niefiltrowany</td>
+            <td>Carbohumic filtrowany<br>lub Carbohumic niefiltrowany</td>
             <td>20–40 l/ha<br>lub min. 50 l/ha</td>
             <td>Na resztki i glebę, potem płytka uprawa do 10 cm. Dodatek azotu – <span class="c5up-tag">do rozstrzygnięcia</span></td>
           </tr>
           <tr>
             <th scope="row">BBCH &gt;99</th>
             <td>Odbudowa próchnicy na stanowiskach wyeksploatowanych</td>
-            <td>CARBOMAT ECO</td>
+            <td>Carbomat Eco</td>
             <td>min. 1000 kg/ha posypowo</td>
             <td>Zwłaszcza gleby piaszczyste. <span class="c5up-tag">do potwierdzenia</span></td>
           </tr>
@@ -320,7 +320,7 @@
     </div>
     <div class="c5up-note wf-stack wf-stack--2">
       <span class="wf-w-semibold">Czego w tej tabeli świadomie nie ma</span>
-      <p class="wf-small wf-t-secondary">Nazw środków ochrony roślin i partnerów zabiegu tu nie podajemy – dobór ŚOR należy do Twojego programu ochrony i wymaga potwierdzenia etykietą preparatu. Nie ma też CARBOHUMIC CALBOR: opracowanie ziemniaka nie wymienia go ani razu, a decyzja rejestrowa obejmuje uprawy sadownicze.</p>
+      <p class="wf-small wf-t-secondary">Nazw środków ochrony roślin i partnerów zabiegu tu nie podajemy – dobór ŚOR należy do Twojego programu ochrony i wymaga potwierdzenia etykietą preparatu. Nie ma też Carbohumic Calbor: opracowanie ziemniaka nie wymienia go ani razu, a decyzja rejestrowa obejmuje uprawy sadownicze.</p>
     </div>
   </div>
 </section>
@@ -335,25 +335,25 @@
     <div class="wf-grid wf-grid--2" style="--wf-grid-min: 18rem;">
       <div class="wf-card"><div class="wf-card__body wf-stack wf-stack--3">
         <span class="wf-overline wf-t-tertiary">Baza doglebowa · sypka</span>
-        <span class="wf-h4">CARBOMAT ECO</span>
+        <span class="wf-h4">Carbomat Eco</span>
         <p class="wf-small wf-t-secondary">Granulat z kondycjonowanego lignitu, frakcje 0,1–2, 2–4 i 4–8 mm. Długoterminowa odbudowa próchnicy, retencja wody i składników, napowietrzenie gleby. W ziemniaku wskazana odmiana o pH 6,0–6,5.</p>
         <a class="wf-link" href="carbomat.html">Strona produktu</a>
       </div></div>
       <div class="wf-card"><div class="wf-card__body wf-stack wf-stack--3">
         <span class="wf-overline wf-t-tertiary">Baza doglebowa · szybkie działanie</span>
-        <span class="wf-h4">CARBOMAT HUMIC</span>
+        <span class="wf-h4">Carbomat Humic</span>
         <p class="wf-small wf-t-secondary">Granulat drobny z chemicznie aktywowanego lignitu. Rewitalizacja gleb zdegradowanych, źródło potasu, buforowanie odczynu, rozwój korzeni wiosną. Odczyn produktu 9,0–11,0.</p>
         <a class="wf-link" href="carbomat-humic.html">Strona produktu</a>
       </div></div>
       <div class="wf-card"><div class="wf-card__body wf-stack wf-stack--3">
         <span class="wf-overline wf-t-tertiary">Uzupełnienie płynne · doglebowo</span>
-        <span class="wf-h4">CARBOHUMIC</span>
+        <span class="wf-h4">Carbohumic</span>
         <p class="wf-small wf-t-secondary">Dwa warianty o różnym przeznaczeniu: niefiltrowany (20 mesh) do aplikacji rozlewowej i wzbogacania nawozów naturalnych, filtrowany (187 mesh) do bruzdy przy sadzeniu, fertygacji i oprysku gleby.</p>
         <a class="wf-link" href="carbohumic-doglebowy.html">Strona produktu</a>
       </div></div>
       <div class="wf-card"><div class="wf-card__body wf-stack wf-stack--3">
         <span class="wf-overline wf-t-tertiary">Nalistne · przez cały sezon</span>
-        <span class="wf-h4">CARBOHUMIC MAXI PLUS</span>
+        <span class="wf-h4">Carbohumic Maxi Plus</span>
         <p class="wf-small wf-t-secondary">Płynny ekstrakt biostymulacyjny, wyłącznie oprysk nalistny. Cztery zabiegi w sezonie ziemniaka. Do zbiornika wchodzi jako ostatni składnik, wstępnie rozcieńczony wodą 1:4.</p>
         <p class="wf-caption wf-t-tertiary">Nie jest argumentem retencyjnym – retencję buduje warstwa doglebowa.</p>
         
@@ -394,9 +394,9 @@
           <span class="wf-w-semibold">Sprzęt i sposób aplikacji</span>
           <ul class="wf-list wf-small wf-t-secondary">
             <li>Do bruzdy przy sadzeniu – instalacja natryskowa zamontowana na sadzarce.</li>
-            <li>CARBOHUMIC niefiltrowany – rozlewacze, aplikacja polewowa i rozbryzgowa, wzbogacanie gnojówki, gnojowicy i obornika. Nie przez dokładne filtry.</li>
-            <li>CARBOHUMIC filtrowany – oprysk gleby, fertygacja, aplikacja na sadzeniaki.</li>
-            <li>CARBOHUMIC MAXI PLUS – wyłącznie oprysk nalistny.</li>
+            <li>Carbohumic niefiltrowany – rozlewacze, aplikacja polewowa i rozbryzgowa, wzbogacanie gnojówki, gnojowicy i obornika. Nie przez dokładne filtry.</li>
+            <li>Carbohumic filtrowany – oprysk gleby, fertygacja, aplikacja na sadzeniaki.</li>
+            <li>Carbohumic Maxi Plus – wyłącznie oprysk nalistny.</li>
             <li>Po aplikacji doglebowej wymieszanie z glebą: 5–10 cm przed sadzeniem, do 10 cm po zbiorze.</li>
           </ul>
         </div></div>
@@ -453,10 +453,10 @@
             <span class="wf-addon">ha</span>
           </div>
         </div>
-        <div class="c5up-out" data-calc-out data-lo="2000" data-hi="2000" data-unit="kg"><span class="wf-caption wf-t-tertiary">CARBOMAT ECO całopowierzchniowo</span><b>–</b></div>
-        <div class="c5up-out" data-calc-out data-lo="250" data-hi="500" data-unit="kg"><span class="wf-caption wf-t-tertiary">CARBOMAT HUMIC całopowierzchniowo</span><b>–</b></div>
-        <div class="c5up-out" data-calc-out data-lo="20" data-hi="40" data-unit="l"><span class="wf-caption wf-t-tertiary">CARBOHUMIC filtrowany do bruzdy</span><b>–</b></div>
-        <div class="c5up-out" data-calc-out data-lo="50" data-hi="50" data-unit="l"><span class="wf-caption wf-t-tertiary">CARBOHUMIC niefiltrowany, jeden zabieg</span><b>–</b></div>
+        <div class="c5up-out" data-calc-out data-lo="2000" data-hi="2000" data-unit="kg"><span class="wf-caption wf-t-tertiary">Carbomat Eco całopowierzchniowo</span><b>–</b></div>
+        <div class="c5up-out" data-calc-out data-lo="250" data-hi="500" data-unit="kg"><span class="wf-caption wf-t-tertiary">Carbomat Humic całopowierzchniowo</span><b>–</b></div>
+        <div class="c5up-out" data-calc-out data-lo="20" data-hi="40" data-unit="l"><span class="wf-caption wf-t-tertiary">Carbohumic filtrowany do bruzdy</span><b>–</b></div>
+        <div class="c5up-out" data-calc-out data-lo="50" data-hi="50" data-unit="l"><span class="wf-caption wf-t-tertiary">Carbohumic niefiltrowany, jeden zabieg</span><b>–</b></div>
       </div>
       <div class="wf-cluster wf-gap-3 wf-items-center">
         <div class="wf-skeleton" style="width:12rem;height:var(--w-control-h-md);"></div>
@@ -502,16 +502,16 @@
       <h2 class="c5-h2">Pytania, które padają najczęściej</h2>
     </div>
     <div>
-      <details class="c5up-node"><summary><span class="c5up-code">01</span><span class="wf-w-medium">Czy muszę stosować wszystkie produkty naraz?</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary><div class="c5up-node__body"><p class="wf-body wf-t-secondary">Nie. Warianty doglebowe w fazie przygotowania gleby są podane jako alternatywy, nie jako zestaw – wybierasz jeden, zależnie od tego, czym dysponujesz i jak przygotowujesz stanowisko. Nalistny CARBOHUMIC MAXI PLUS jest osobną osią programu i można go prowadzić niezależnie.</p></div></details>
-      <details class="c5up-node"><summary><span class="c5up-code">02</span><span class="wf-w-medium">Mam nawadnianie. Zmienia to program?</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary><div class="c5up-node__body"><p class="wf-body wf-t-secondary">Tak, dochodzi jedna pozycja: w fazie BBCH 20–39 na plantacjach z nawadnianiem podaje się CARBOHUMIC filtrowany przez fertygację, 5–10 l/ha. To jedyne zastosowanie fertygacyjne w tym programie.</p></div></details>
+      <details class="c5up-node"><summary><span class="c5up-code">01</span><span class="wf-w-medium">Czy muszę stosować wszystkie produkty naraz?</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary><div class="c5up-node__body"><p class="wf-body wf-t-secondary">Nie. Warianty doglebowe w fazie przygotowania gleby są podane jako alternatywy, nie jako zestaw – wybierasz jeden, zależnie od tego, czym dysponujesz i jak przygotowujesz stanowisko. Nalistny Carbohumic Maxi Plus jest osobną osią programu i można go prowadzić niezależnie.</p></div></details>
+      <details class="c5up-node"><summary><span class="c5up-code">02</span><span class="wf-w-medium">Mam nawadnianie. Zmienia to program?</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary><div class="c5up-node__body"><p class="wf-body wf-t-secondary">Tak, dochodzi jedna pozycja: w fazie BBCH 20–39 na plantacjach z nawadnianiem podaje się Carbohumic filtrowany przez fertygację, 5–10 l/ha. To jedyne zastosowanie fertygacyjne w tym programie.</p></div></details>
       <details class="c5up-node"><summary><span class="c5up-code">03</span><span class="wf-w-medium">Czy mogę wrzucić to do zbiornika razem z fungicydem?</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary><div class="c5up-node__body"><p class="wf-body wf-t-secondary">Odpowiedź brzmi: nie bez sprawdzenia. Kwasy humusowe mogą kompleksować substancje czynne i obniżyć skuteczność ochrony, a brak osadu czy piany w zbiorniku niczego nie dowodzi. Jedyne wiarygodne sprawdzenie to test polowy na małym fragmencie.</p></div></details>
       <details class="c5up-node"><summary><span class="c5up-code">04</span><span class="wf-w-medium">Kiedy zobaczę efekt?</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary><div class="c5up-node__body"><p class="wf-body wf-t-secondary">To zależy od tego, o którym efekcie mowa. Retencja, struktura i regeneracja po stresie to pierwszy sezon. Wzrost zawartości próchnicy i trwała poprawa kompleksu sorpcyjnego to horyzont 2–5 lat. Działanie takich produktów jest szczególnie widoczne w latach trudnych – chodzi o minimalizowanie dolnych ekstremów.</p></div></details>
       <details class="c5up-node"><summary><span class="c5up-code">05</span><span class="wf-w-medium">Czy to zastąpi mi nawożenie?</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary><div class="c5up-node__body"><p class="wf-body wf-t-secondary">Nie. Program uzupełnia Twoją technologię, nie zastępuje bilansu składników ani prawidłowego odczynu. Jeśli gleba jest zakwaszona poniżej 5,5, pierwszym zabiegiem jest wapnowanie.</p></div></details>
       <details class="c5up-node"><summary><span class="c5up-code">06</span><span class="wf-w-medium">Jak sprawdzić, czy u mnie zadziałało?</span><svg class="wf-icon c5up-node__ico" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary><div class="c5up-node__body"><p class="wf-body wf-t-secondary">Zostaw pas kontrolny – fragment pola prowadzony bez programu, w tej samej technologii. Skuteczność różni się między glebą lekką, czarnoziemem i stanowiskiem po monokulturze, więc jedyny wiarygodny punkt odniesienia jest na Twoim polu.</p></div></details>
     </div>
     <div class="c5-btnrow">
-      <a class="c5-btn c5-btn--dark" href="konfigurator.html?crop=ziemniak">dobierz program dla swojego pola</a>
-      <a class="c5-btn c5-btn--light" href="kontakt.html">zapytaj doradcę</a>
+      <a class="c5-btn c5-btn--dark c5-btn--ico-suwaki" href="konfigurator.html?crop=ziemniak">Dobierz program dla swojego pola</a>
+      <a class="c5-btn c5-btn--light c5-btn--ico-liscie" href="kontakt.html">Zapytaj doradcę</a>
     </div>
   </div>
 </section>

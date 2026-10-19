@@ -25,42 +25,45 @@
 .wf-navbar:has(> .c5-promo) .cw-mega--crops { max-height: calc(100dvh - 7rem - var(--c5-promo-h, 0px)); }
 
 .c5-promo {
-  /* dark green: white text on it is 6.6 : 1 (WCAG AA for small text) */
-  --c5-promo-bg: #2d6a22;
+  /* green-950 (the footer's colour): white text on it is 15 : 1; the badge is the green accent with dark text */
+  --c5-promo-bg: var(--ch-surface-inverse);
   background: var(--c5-promo-bg);
-  color: #fff;
-  font-family: var(--w-font-sans);
-  font-size: 0.8125rem;
-  line-height: 1.35;
+  color: var(--ch-text-inverse);
+  font-family: var(--ch-type-small-font);
+  font-size: var(--ch-type-small-size);
+  line-height: var(--ch-type-small-lh);
 }
 .c5-promo__in {
-  display: flex; align-items: center; gap: 4px var(--w-space-3);
-  min-height: 36px;
+  display: flex; align-items: center; gap: var(--ch-space-1) var(--ch-space-3);
+  padding-block: 0;
 }
-.c5-promo__txt { flex: 1 1 auto; min-width: 0; margin: 0; padding-block: 6px; text-align: center; }
+.c5-promo__txt { flex: 1 1 auto; min-width: 0; margin: 0; padding-block: var(--ch-space-1-5); text-align: center; }
 .c5-promo__badge {
-  display: inline-block; margin-right: 8px; padding: 1px 6px;
-  border: 1px solid rgb(255 255 255 / .7);
-  font-size: 0.6875rem; font-weight: var(--w-weight-semibold);
-  letter-spacing: .06em; text-transform: uppercase; vertical-align: 1px;
+  display: inline-block; margin-right: var(--ch-space-2); padding: 1px var(--ch-space-2);
+  border-radius: var(--ch-radius-xs);
+  background: var(--ch-action-accent-bg); color: var(--ch-action-accent-fg);
+  font-family: var(--ch-type-overline-font); font-size: var(--ch-type-overline-size); line-height: var(--ch-type-overline-lh);
+  font-weight: var(--ch-font-weight-medium);
+  letter-spacing: var(--ch-type-overline-ls); text-transform: uppercase; vertical-align: 1px;
 }
-.c5-promo__t { font-weight: var(--w-weight-semibold); }
+.c5-promo__t { font-weight: var(--ch-font-weight-medium); }
 .c5-promo__link {
-  margin-left: 6px; color: #fff; white-space: nowrap;
+  margin-left: var(--ch-space-1-5); color: var(--ch-text-inverse); white-space: nowrap;
   text-decoration: underline; text-underline-offset: 2px; text-decoration-thickness: 1px;
 }
 .c5-promo__link:hover { text-decoration-thickness: 2px; }
 .c5-promo__link:focus-visible,
-.c5-promo__x:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.c5-promo__x:focus-visible { outline: 2px solid var(--ch-text-inverse); outline-offset: 2px; }
 .c5-promo__x {
   flex: none; display: grid; place-items: center;
-  width: 32px; height: 32px; margin-right: -6px; padding: 0;
-  border: 0; background: none; color: #fff; cursor: pointer; opacity: .85;
+  width: calc(var(--ch-size-icon-m) + 2 * var(--ch-space-2)); height: calc(var(--ch-size-icon-m) + 2 * var(--ch-space-2));
+  margin-right: calc(-1 * var(--ch-space-2)); padding: 0;
+  border: 0; border-radius: var(--ch-radius-sm); background: none; color: var(--ch-text-inverse); cursor: pointer; opacity: .8;
 }
-.c5-promo__x:hover { opacity: 1; }
-.c5-promo__x .wf-icon { width: 18px; height: 18px; }
+.c5-promo__x:hover { opacity: 1; background: var(--ch-surface-glass-light); }
+.c5-promo__x .wf-icon { width: var(--ch-size-icon-m); height: var(--ch-size-icon-m); }
 /* An empty cell of the close button's width keeps the sentence centred. */
-.c5-promo__in::before { content: ""; flex: none; width: 26px; }
+.c5-promo__in::before { content: ""; flex: none; width: calc(var(--ch-size-icon-m) + var(--ch-space-2)); }
 
 @media (max-width: 640px) {
   .c5-promo__in::before { display: none; }

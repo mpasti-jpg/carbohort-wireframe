@@ -1,0 +1,28 @@
+/* ===== CE-35 · Panel kryteriów z CTA – module (design system v0.1, stage D 18.10.2026) =====
+   No Figma frame: the look is carried over from the finished CEs (EL-15 warm
+   card, EL-01 buttons, EL-24 icon frame, display heading), the layout and the
+   content are v7's.
+   Prefix: c5-pick. A wide warm panel: a title and a row of two buttons on the
+   left, a list of points with a tick on the right (two columns of points).
+   One column below 900 px, the points in one column below 700 px.
+
+   Markup (root `.c5-pick`; the entrance `data-reveal` is the page's rule):
+     .c5-pick__head                  h3.c5-pick__title + .c5-btnrow
+     ul.c5-pick__list > li           svg.wf-icon (tick) + span (the point)
+   Buttons: the main one dark with the sliders icon (`c5-btn--dark c5-btn--ico-suwaki`),
+   the second one light (rule 5 of stage D: on a light surface the main button is dark). ===== */
+
+.c5-pick{margin-top:clamp(2.5rem,5vw,4rem);background:var(--ch-surface-warm);border-radius:var(--ch-radius-md);padding:clamp(1.75rem,4vw,3rem);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:clamp(2rem,5vw,4rem);align-items:start;}
+.c5-pick__head{display:flex;flex-direction:column;gap:clamp(1.25rem,2.5vw,var(--ch-space-8));align-items:flex-start;}
+.c5-pick__title{margin:0;font-family:var(--ch-type-h3-display-font);font-size:clamp(1.75rem,2.8vw,var(--ch-type-h3-display-size));line-height:1.15;font-weight:var(--ch-type-h3-display-weight);letter-spacing:var(--ch-type-h3-display-ls);color:var(--ch-text-primary);text-wrap:balance;}
+.c5-pick__list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:var(--ch-space-5) var(--ch-space-6);}
+.c5-pick__list li{display:flex;gap:var(--ch-space-3);align-items:flex-start;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-primary);}
+/* the tick sits in an EL-24 frame: 28 px circle, beige-300 */
+.c5-pick__list .wf-icon{flex:none;box-sizing:border-box;width:28px;height:28px;padding:6px;border-radius:var(--w-radius-circle);background:var(--ch-icon-frame-light);color:var(--ch-text-primary);}
+
+@media (max-width:899px){
+  .c5-pick{grid-template-columns:1fr;}
+}
+@media (max-width:699px){
+  .c5-pick__list{grid-template-columns:1fr;}
+}

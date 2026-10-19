@@ -751,8 +751,8 @@ window.CW_CE = {
           "uniwersalny"
         ]
       },
-      "opis": "Pionowa lista kropek przyklejona przy prawej krawędzi ekranu, jedna kropka na rozdział strony; etykiety rozdziałów wysuwają się po najechaniu na całą nawigację.",
-      "mechanika": "Scrollspy po sekcjach z data-chapter (kropka aktywna większa), klik przewija płynnie do rozdziału (przez Lenis, gdy aktywny); mix-blend-mode difference na ciemnym tle; ukryta poniżej 900 px. Opcja (15.10.2026, Borówka): span.c5-dots__stage w etykiecie – mały dopisek „Etap N” nad nazwą rozdziału; pozycja z dopiskiem ma 38 px wysokości zamiast 28; strony bez tego elementu bez zmian.",
+      "opis": "Małe kwadraty (5 × 5 px, zaokrąglone) w prostej kolumnie przy prawej krawędzi ekranu, na wysokości środka ekranu, jeden na dział strony; kwadrat aktywnego działu zielony. Po najechaniu na wąski pas przy krawędzi kolumna rozwija się w łuk wygięty w lewo, a przy kwadracie aktywnego działu i przy kwadracie pod kursorem odsłaniają się opisy na jasnych, rozmytych tłach (Figma 966:1440, 959:1632, 959:1607, 959:1608, 959:1681, 959:1698).",
+      "mechanika": "Od 19.10.2026 (runda 5, paski opisów z 19.10): dwa stany. Spoczynek – kwadraty 5 × 5 px w prostej kolumnie co 35 px (Figma 966:1440), 10 px od prawej krawędzi ekranu, czyli w 25-pikselowym marginesie kontenera treści; kwadrat aktywnego działu zielony. Rozwijanie otwiera tylko pas 25 px od prawej krawędzi wzdłuż kolumny (+ 12 px); JS śledzi wskaźnik na całym dokumencie, zwinięta nawigacja nie łapie wskaźnika. Po otwarciu kwadraty rozjeżdżają się z kolumny na łuk (od środka na zewnątrz, ok. 0,26 s): łuk z Figmy (okrąg R 337 px w zakresie ±21,2°) rozciągnięty w pionie tak, że skrajne punkty stoją na 35 % wysokości okna; najdalszy kwadrat 15 px od krawędzi; reguła odstępów – tła opisów (ok. 33 px) nie schodzą bliżej niż 4 px, wtedy łuk rośnie ponad 35 %, a wszystko zostaje ok. 10 px w oknie. Kropka wskazana w kolumnie zostaje wyróżniona po otwarciu, dopóki wskaźnik nie przesunie się o 8 px. Po dojeździe kwadratów widać dwa opisy: aktywnego działu i pozycji pod wskaźnikiem; opisy odsłaniają się od prawej do lewej (clip-path, 0,16 s) i tak samo chowają (0,1 s), więc przy przejeździe w pionie rozwijają się po kolei. Paski opisów (19.10, Figma 969:1447 i 959:1698): padding 9 px góra i dół, 8 px boki, promień 5 px, Instrument Sans 14 px / 120 %, tekst #0C2B1C 100 %, wysokość 35 px; aktywny dział – tło #A7D781 (--ch-color-green-300) w pełni; pozycja pod wskaźnikiem – biel 65 % z backdrop-filter blur(6px) (odpowiednik warstw Figmy: biel Darken + #EEECEC 70 % Screen; bez wsparcia rozmycia biel 85 %). Szare kwadraty – biel 30 % z mix-blend-mode difference (.c5-dots__marks), zielony #80B960 bez blendu (.c5-dots__accent). Strefa wyboru .c5-dots__zone obejmuje same kwadraty łuku (+ 16 px) do krawędzi ekranu: pozycja pod wskaźnikiem = najbliższa w pionie, klik przewija do niej; pokazany opis też trzyma wachlarz; zwinięcie 250 ms po wyjechaniu ponad 24 px poza strefę. Fokus klawiatury otwiera wachlarz, obrys na tle opisu. Scrollspy po sekcjach z data-chapter, klik przewija płynnie (przez Lenis, gdy aktywny); pierwsza pozycja nazywa się „Początek” i przewija na samą górę strony, z menu (19.10). Przy stopce wszystkie warstwy wyjeżdżają w prawą krawędź. prefers-reduced-motion: bez animacji. Ukryta poniżej 900 px (widok mobilny do analizy). Opcja (15.10.2026, Borówka): span.c5-dots__stage – dopisek „Etap N” w jednej linii przed nazwą działu.",
       "baza": {
         "plik": "v7/carbomat.html",
         "kotwica": "nawigacja-kropki"
@@ -762,12 +762,21 @@ window.CW_CE = {
         "js": "ce/CE-07-nawigacja-kropkowa.js"
       },
       "czesci": [
-        "lista kropek",
-        "etykiety"
+        "kwadraty na łuku",
+        "zielony kwadrat aktywnego działu",
+        "opisy działów na tłach po łuku"
       ],
       "warianty": {},
       "zrzut": {
-        "maxh": 500
+        "maxh": 500,
+        "mysz": [
+          -12,
+          "50%"
+        ],
+        "poszerz": [
+          320,
+          40
+        ]
       }
     },
     "CE-08": {
@@ -1039,7 +1048,7 @@ window.CW_CE = {
           "plik": "v7/carbomat.html",
           "kotwica": "ktory-dla-mnie",
           "ruch": true,
-          "przewin": "#wariant-eco",
+          "przewin": "#ktory-dla-mnie",
           "czekaj": 900
         }
       },
@@ -1371,7 +1380,7 @@ window.CW_CE = {
       },
       "kod": {
         "css": "ce/CE-16-pas-pro.css – jeden moduł dla wszystkich stron poza sklepem: baza i sekcje wariantów wybieranych klasami na korzeniu (c5-pro--ramka, c5-pro--kadr-3-2, c5-pro--zielen, c5-pro--scrim-ukosny, c5-pro--h-mackinac, c5-pro--zamykajacy; na placeholderze c5-pro__ph--obrys), dopasowania pod treść przez własności --pro-mt, --pro-img-pos, --pro-scrim i --pro-side-max w atrybucie style korzenia; arkusze stron nie niosą reguł pasa, poza dodatkami strony głównej w home.css (c5h-kontakt); wariant kadr-z-prawej: kit c5.css (c5-pro, c5-pro__photo, c5-pro__grid) + nadpisania strony – sklep.html <style> blok „PAS PRO” (c5sk-pro) i pdp.css (c5pd-pro)",
-        "js": "ce/CE-16-pas-pro.js (Kukurydza, Borówka, O nas, strona główna); wariant pozny-wzrost: ce/CE-16-pas-pro-pozny-wzrost.js (Produkty, CARBOMAT ECO, CARBOMAT MATA, CARBOHUMIC, CARBOMAT HUMIC); wariant kadr-z-prawej: brak (statyczny)"
+        "js": "ce/CE-16-pas-pro.js – jeden skrypt na wszystkich 13 stronach: ruch „showroom” wg adnotacji fluid.glass (etap E, 18.10.2026); poniżej 900 px i przy reduced-motion statycznie"
       },
       "czesci": [
         "kadr",
@@ -4313,7 +4322,10 @@ window.CW_CE = {
         "spis slajdów",
         "N kart slajdów: boks ilustracji, tytuł, opis"
       ],
-      "warianty": {},
+      "warianty": {
+        "zielen": "tło jednolita zieleń green-200 z motywem liści zamiast wideo (Figma 853:2059, 847:855; etap C 18.10.2026); wideo ukryte, bez autoplay",
+        "stos": "scena „stos z fokusem” wg Figmy 772:1079 i adnotacji usealia (etap E 18.10.2026, Produkty #wg-potrzeby – zastąpiła siatkę 6 kart CE-20 ze-zdjeciem): nagłówek rozcięty na dwie strony, w środku stos kart celów, karta w środku rozwinięta (zdjęcie, opis, linki ścieżek), wygaszacze u góry i u dołu, pod sceną rząd zakładek celów; kotwice mega-menu lądują na właściwej karcie; poniżej 900 px, przy reduced-motion i bez JS karty jedna pod drugą rozwinięte"
+      },
       "zrzut": {
         "maxh": 900,
         "ruch": true,
@@ -5932,10 +5944,13 @@ window.CW_CE = {
         "c5-btn--ondark": "ciemny przycisk na ciemnym pasie – działa tylko w kontekście .c5-params (CE-10)",
         "c5-btn--sm": "mały, 0.8125 rem, nadal 44 px wysokości",
         "c5-btn--tight": "wąski boczny padding, gdy przyciski stoją ciasno",
+        "c5-btn--kup": "przycisk zakupu: zielony #86D574 (token --ch-color-green-buy), hover #79CB66; używany tylko jako „Kup teraz” w hero produktów (CE-08)",
+        "c5-btn--ico-liscie": "z ikoną liści za etykietą (maska CSS); przy najechaniu cztery liście zbliżają się o 1 jednostkę do środka",
+        "c5-btn--ico-suwaki": "z ikoną suwaków za etykietą (maska CSS); przy najechaniu gałki suwaków rozjeżdżają się w przeciwne strony, a tory się skracają",
         "c5-btn--ghost": "konturowy na zdjęciu: biały obrys, tło rgb(0 0 0 / .3) – działa tylko w kontekście .c5-hero--bg (CE-08, wariant kadr-w-tle); bliźniak c5-pro__login z pasa PRO, do scalenia w fali 2b"
       },
-      "opis": "Podstawowa akcja: ostre narożniki, obrys 1 px, etykieta małymi literami, ikona po lewej. Cel dotykowy 44 px siedzi w bazie – nie łata się go już punktowo, a boczny padding ustawia token --c5-btn-px zamiast ośmiu kontekstowych nadpisań.",
-      "przyklad": "<div class=\"c5-btnrow\"><a class=\"c5-btn c5-btn--dark\" href=\"#\">kup teraz</a><a class=\"c5-btn c5-btn--light\" href=\"#\">dobierz dawki</a><a class=\"c5-btn c5-btn--light c5-btn--sm\" href=\"#\"><svg class=\"wf-icon\" aria-hidden=\"true\"><use href=\"#ti-file-text\"></use></svg> karta produktu</a><a class=\"c5-btn c5-btn--light c5-btn--sm c5-btn--tight\" href=\"#\">zaloguj się</a></div><div class=\"sg-ondark\"><a class=\"c5-btn c5-btn--inv\" href=\"#\">zamów próbkę</a></div>",
+      "opis": "Podstawowa akcja: ostre narożniki, obrys 1 px, etykieta małymi literami, ikona po lewej. Ruch przy najechaniu (G04, 18.10.2026, tylko transform, tylko przy hover:hover i bez prefers-reduced-motion): etykieta przesuwa się o 4 px w prawo (poza wariantem --sm), a ikony liści i suwaków mają własną animację; chrome.js owija etykietę w .c5-btn__t i podmienia ikonę maskowaną na wbudowaną kopię, bez skryptu przycisk zostaje statyczny. Cel dotykowy 44 px siedzi w bazie – nie łata się go już punktowo, a boczny padding ustawia token --c5-btn-px zamiast ośmiu kontekstowych nadpisań.",
+      "przyklad": "<div class=\"c5-btnrow\"><a class=\"c5-btn c5-btn--dark\" href=\"#\">kup teraz</a><a class=\"c5-btn c5-btn--kup c5-btn--ico-liscie\" href=\"#\">Kup teraz</a><a class=\"c5-btn c5-btn--light c5-btn--ico-suwaki\" href=\"#\">Dobierz dawkowanie</a><a class=\"c5-btn c5-btn--light\" href=\"#\">dobierz dawki</a><a class=\"c5-btn c5-btn--light c5-btn--sm\" href=\"#\"><svg class=\"wf-icon\" aria-hidden=\"true\"><use href=\"#ti-file-text\"></use></svg> karta produktu</a><a class=\"c5-btn c5-btn--light c5-btn--sm c5-btn--tight\" href=\"#\">zaloguj się</a></div><div class=\"sg-ondark\"><a class=\"c5-btn c5-btn--inv\" href=\"#\">zamów próbkę</a></div>",
       "przyklad_tlo": "jasne",
       "kod": "ce/00-base.css – Przyciski nowego języka",
       "uzywany_w": [
@@ -6094,10 +6109,11 @@ window.CW_CE = {
       "warianty": {
         "c5-kicker--center": "wyśrodkowany",
         "c5-kicker--flush": "bez odstępu pod spodem",
+        "c5-kicker--sm": "mały: niższa plakietka, padding 9 px / 14 px, rozmiar z tokenów --ch-type-kicker-sm-*; używany z --outline w głowach FAQ i podobnych sekcji (CE-17, CE-18)",
         "c5-kicker--outline": "w ramce: obrys 1 px, narożniki 8 px, 0.75 rem – wyjątek Mateusza od ostrych narożników (18.09.2026, wzór: ramki Figma Mateusza); na Kukurydzy w CE-66, CE-67 i CE-68 (CE-65 na stronie demonstracyjnej). Od 20.09.2026 plakietka stoi na KAŻDEJ głowie sekcji Kukurydzy (siedem uwag Mateusza „popraw kicker”), w metrykach ramki – padding 9 px, promień 8 px, 13/14 px, tusz #0c2b1c – regułą strony w kukurydza.css, tak jak wcześniej na Produktach (produkty.css blok 05) i na CARBOMAT ECO; jedna strona nie niesie dwóch stylów kickera naraz"
       },
       "opis": "Nadtytuł sekcji: 0.875 rem, wersaliki, tracking .03em i duży odstęp do treści pod spodem. Dwanaście lokalnych nadpisań margin-bottom:0 czeka na wariant --flush.",
-      "przyklad": "<span class=\"c5-kicker\">Czym jest CARBOMAT ECO</span><span class=\"c5-kicker c5-kicker--center\">Dla dociekliwych</span>",
+      "przyklad": "<span class=\"c5-kicker\">Czym jest CARBOMAT ECO</span><span class=\"c5-kicker c5-kicker--center\">Dla dociekliwych</span><span class=\"c5-kicker c5-kicker--sm c5-kicker--outline\">FAQ</span>",
       "przyklad_tlo": "jasne",
       "kod": "ce/00-base.css – Wspólne CE nowego layoutu",
       "uzywany_w": [
@@ -7065,6 +7081,71 @@ window.CW_CE = {
         "c5-cb__prod",
         "c5-fa__prod"
       ]
+    },
+    "EL-34": {
+      "nazwa": "Sygnet marki",
+      "grupa": "ikony",
+      "klasa": "c5-sygnet",
+      "warianty": {
+        "c5-sygnet--obrys": "kontur 1 px o stałej grubości przy każdym rozmiarze (zamiast wypełnienia)",
+        "c5-sygnet--onwhite": "ton na białym tle (można łączyć z --obrys)",
+        "c5-sygnet--ongreen": "ton na zieleni",
+        "c5-sygnet--onyellow": "ton na żółci (limonce)",
+        "c5-sygnet--onforest": "ton na ciemnej zieleni",
+        "c5-sygnet--onbrown": "ton na brązie"
+      },
+      "opis": "Sygnet marki (cztery liście) jako warstwa tła sekcji: maska SVG rysowana pseudoelementem ::before pod treścią, bez dodatkowego znacznika. Domyślnie wypełniony tonem na ciepłym beżu; ton wybiera modyfikator, a dopasowanie pod jedno wystąpienie ustawiają własności --c5-sygnet-size, -x, -y, -top, -ink i -o na korzeniu CE. Przy prefers-reduced-motion bez przejścia przezroczystości.",
+      "przyklad": "<div class=\"sg-rzad\" style=\"display:flex;gap:16px;flex-wrap:wrap\"><div class=\"c5-sygnet\" style=\"width:120px;height:120px\"></div><div class=\"c5-sygnet c5-sygnet--obrys c5-sygnet--onwhite\" style=\"width:120px;height:120px\"></div><div class=\"c5-sygnet c5-sygnet--onforest\" style=\"width:120px;height:120px;background:var(--ch-color-green-900)\"></div></div>",
+      "przyklad_tlo": "jasne",
+      "kod": "ce/00-base.css – Sygnet (c5-sygnet) i v7/c5.css",
+      "uzywany_w": [
+        "CE-08",
+        "CE-20"
+      ],
+      "zastepuje": []
+    },
+    "EL-35": {
+      "nazwa": "Separator",
+      "grupa": "pojemniki",
+      "klasa": "c5-divider",
+      "warianty": {},
+      "opis": "Pozioma kreska 1 px w kolorze --ch-border-subtle, wyśrodkowana w kontenerze (szerokość strony minus marginesy, na desktopie minus odstępy siatki). Stawiana jako <hr> po zamknięciu górnej sekcji, gdy dwie sąsiednie sekcje mają to samo tło i potrzebują cienkiej granicy.",
+      "przyklad": "<hr class=\"c5-divider\">",
+      "przyklad_tlo": "jasne",
+      "kod": "ce/00-base.css – c5-divider",
+      "uzywany_w": [
+        "CE-17",
+        "CE-37",
+        "CE-48"
+      ],
+      "zastepuje": []
+    },
+    "EL-36": {
+      "nazwa": "Lista ze znacznikami",
+      "grupa": "typografia",
+      "klasa": "c5-list",
+      "warianty": {},
+      "opis": "Lista punktowana wersji r1: bez znaczników przeglądarki, pozycje w kolumnie z odstępem --ch-space-2, a znacznik to kwadrat 3 × 3 px z promieniem 1 px w kolorze tekstu, wyśrodkowany na pierwszej linii. Stosować do <ul> zamiast domyślnych kropek.",
+      "przyklad": "<ul class=\"c5-list\"><li>Poprawia strukturę gleby</li><li>Zatrzymuje wodę i składniki pokarmowe</li><li>Wspiera rozwój życia glebowego</li></ul>",
+      "przyklad_tlo": "jasne",
+      "kod": "ce/00-base.css – c5-list",
+      "uzywany_w": [],
+      "zastepuje": []
+    },
+    "EL-37": {
+      "nazwa": "Link do pop-upu",
+      "grupa": "akcje",
+      "klasa": "c5-pop-link",
+      "warianty": {},
+      "opis": "Odnośnik w treści akapitu, który otwiera pop-up karty (CE-37): kolor dziedziczony, podkreślenie 1 px (odsunięte o .22 em, w 30% koloru tekstu), po najechaniu podkreślenie i tekst nabierają pełnego koloru. Ma widoczny pierścień fokusu z klawiatury. Atrybuty data-pop-open, aria-haspopup i aria-controls wskazują pop-up.",
+      "przyklad": "<p>Lignit zawiera dojrzały humus o trwałej strukturze i <a class=\"c5-pop-link\" href=\"#\" aria-haspopup=\"dialog\">działa dłużej niż kompost</a>.</p>",
+      "przyklad_tlo": "jasne",
+      "kod": "ce/CE-37-pop-up-karty.css – c5-pop-link",
+      "uzywany_w": [
+        "CE-12",
+        "CE-37"
+      ],
+      "zastepuje": []
     }
   }
 };
