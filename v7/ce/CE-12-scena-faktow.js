@@ -53,7 +53,7 @@
     var btns = $$("[data-fx-var]", sec);
     if (!track || !stage || !facts.length) return;
     var panel = $(".c5-fx__panel", sec);
-    var STEPS = facts.length, stageH = 0, idx = -1, parMax = 28;
+    var STEPS = facts.length, stageH = 0, idx = -1, parMax = 80;
     var segs = null;   /* segs[i][k] – segment k in the line of fact i */
     /* the number badge of every fact and its number as shipped in the markup */
     var counts = facts.map(function (f) { return $(".c5-fx__count", f); });
@@ -191,7 +191,7 @@
       facts.forEach(function (f) { factH = Math.max(factH, Math.ceil(f.getBoundingClientRect().height)); });
       sec.style.removeProperty("--fx-row1-h");
       if (factH) sec.style.setProperty("--fx-fact-h", factH + "px");
-      parMax = cssNum("--c5-fx-par-max", 28);
+      parMax = cssNum("--c5-fx-par-max", 80);
       /* the stage is the sticky 100svh box – the part of the track that stands
          still while the facts swap inside it */
       stageH = stage.offsetHeight;

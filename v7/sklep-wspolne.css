@@ -7,9 +7,11 @@
 
 /* --- Wide container (EL-29 copy) ------------------------------------------
    The shop pages do not load ce/00-base.css, so the wide variant of c5-wrap
-   is repeated here with the same values: from 900 px at most 1800 px wide,
-   40 px of air on the sides (spec §12.3, round 3, 28.09.2026). */
-@media (min-width: 900px) { .c5-wrap--wide { max-width: 1800px; padding-inline: 40px; } }
+   is repeated here with the values of EL-29: content 1600 px at most, the
+   24 px layout gutter on the sides. Until 20.10.2026 it was 1800 / 40 px
+   (spec §12.3, round 3); Mateusz 20.10.2026: one content width for the whole
+   site – 1600 px – until there is a good reason to change it. */
+@media (min-width: 900px) { .c5-wrap--wide { max-width: calc(var(--ch-layout-container-max) + 2 * var(--ch-layout-gutter)); padding-inline: var(--ch-layout-gutter); } }
 
 /* --- Price (regular or promotional) ------------------------------------- */
 .cws-price { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; font-variant-numeric: tabular-nums; }

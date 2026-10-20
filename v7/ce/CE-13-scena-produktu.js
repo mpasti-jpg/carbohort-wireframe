@@ -31,7 +31,7 @@
   var arts = $$(".c5-use");
   if (!arts.length) return;
 
-  var PAR = 4;              /* parallax of a photo over its frame, ± % of the layer height */
+  var PAR = 4;              /* parallax of a photo over its frame, ± % of the layer height (+PAR at the start of its stretch, -PAR at the end) */
   var UI_DELAY = 360;       /* ms after docking before the writing comes in            */
   var NAME_HERO = 40 / 24;  /* the name in the hero against the strip (Figma 40 / 24 px) */
 
@@ -153,13 +153,15 @@
     /* the writing waits for the panel only right after a dock; coming back from
        the outro it returns at once */
     setUi(it, ui, first || !ui || s > it.DOCK + it.INTRO);
-    /* parallax: each photo drifts from -PAR to +PAR over its own stretch of the
-       track (the first one from the dock on), so the current one always moves */
+    /* parallax: each photo drifts from +PAR to -PAR over its own stretch of the
+       track (the first one from the dock on), so the current one always moves.
+       20.10.2026 (owner): the direction is reversed – the photo travels up the
+       frame while the page scrolls down, and back down when it scrolls up. */
     for (var i = 0; i < it.layers.length; i++) {
       var a = i === 0 ? it.DOCK : it.INTRO + it.HOLD * i,
           b = it.INTRO + it.HOLD * (i + 1) + (i === it.n - 1 ? it.OUTRO : 0),
           q = clamp((s - a) / (b - a), 0, 1);
-      put(it.layers[i], "--par", (PAR * (2 * q - 1)).toFixed(2));
+      put(it.layers[i], "--par", (PAR * (1 - 2 * q)).toFixed(2));
     }
   }
 

@@ -12,8 +12,9 @@
      · 40 lista wartości       <- produkty.js 50 (c5pr-paths)
      · 50 szuflada biogramu    <- prochnica-plus.js 55 (pp-disc)
      · 30 parallax kadru       <- carbomat-humic.js 40, część 2 (c5-who)
-   Section 70 (map of Europe and country list) is CE-96 variant łuki since 15.10.2026
-   and runs from ce/CE-96-glob-dystrybutorow.js – nothing here.
+   Section 70 (globe and partner cards) is CE-96 variant kraje since 20.10.2026
+   (variant łuki 15–20.10.2026) and runs from ce/CE-96-glob-dystrybutorow.js –
+   nothing here.
    ===================================================================== */
 
 /* ===== 10 · W liczbach: kołowrotek cyfr (spec §4) ==========================

@@ -35,18 +35,18 @@
    the note – appended after the block by the script – can sit under the facts. */
 .pp-profile__scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;
   display:grid;grid-template-columns:minmax(0,520fr) minmax(0,475fr);
-  column-gap:clamp(1.5rem,5.2vw,75px);row-gap:var(--ch-space-6);align-content:start;
+  column-gap:clamp(1.5rem,5.2vw,75px);row-gap:48px;align-content:start;
   padding:var(--ch-space-16);}
 .pp-profile .c5-variant,.pp-profile .c5-variant__grid{display:contents;}
-.pp-profile .c5-variant__grid > .wf-ph{position:relative;top:auto;grid-column:1;grid-row:1 / span 2;align-self:start;
-  width:100%;aspect-ratio:520 / 544;border-radius:var(--ch-radius-md);}
-.pp-profile .c5-variant__info{grid-column:2;grid-row:1;display:flex;flex-direction:column;gap:var(--ch-space-8);min-width:0;}
+.pp-profile .c5-variant__grid > .pp-profile__ph{display:block;position:relative;top:auto;grid-column:1;grid-row:1 / span 2;align-self:start;
+  width:100%;height:auto;aspect-ratio:520 / 544;object-fit:cover;border-radius:var(--ch-radius-md);}
+.pp-profile .c5-variant__info{grid-column:2;grid-row:1;display:flex;flex-direction:column;gap:48px;min-width:0;}
 .pp-profile .pp-note{grid-column:2;grid-row:2;margin:0;max-width:none;
   padding:var(--ch-space-3) var(--ch-space-4);background:var(--ch-surface-warm);
   font-size:var(--ch-type-caption-size);line-height:var(--ch-type-caption-lh);color:var(--ch-text-secondary);}
 
-/* title: display face, kept in capitals as in the v7 text */
-.pp-profile .c5-variant__name{margin:0;font-family:var(--ch-type-h3-display-font);font-size:var(--ch-type-h3-display-size);line-height:var(--ch-type-h3-display-lh);font-weight:var(--ch-type-h3-display-weight);letter-spacing:var(--ch-type-h3-display-ls);color:var(--ch-text-primary);text-wrap:balance;}
+/* title: display face, sentence case as in Figma 903:3471 */
+.pp-profile .c5-variant__name{margin:0;font-family:var(--ch-type-h3-display-font);font-size:46px;line-height:51px;font-weight:var(--ch-type-h3-display-weight);letter-spacing:var(--ch-type-h3-display-ls);color:var(--ch-text-primary);text-wrap:balance;}
 .pp-profile .c5-variant + .c5-variant{margin-top:0;}
 
 /* facts (EL-22): one column; label 10/14 capitals over a 16/28 value, the dashed
@@ -56,6 +56,7 @@
   background:repeating-linear-gradient(90deg,var(--ch-border-dashed) 0 3px,transparent 3px 10px) bottom / 100% 1px no-repeat;}
 .pp-profile .pp-facts > div:last-child{padding-bottom:0;background:none;}
 .pp-profile .pp-facts dt{font-size:var(--ch-type-micro-size);line-height:var(--ch-type-micro-lh);letter-spacing:var(--ch-type-micro-ls);color:var(--ch-text-secondary);}
+.pp-profile .pp-facts dt::after{content:":";}
 .pp-profile .pp-facts dd{font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-relaxed-lh);color:var(--ch-text-primary);}
 .pp-profile .pp-about{gap:var(--ch-space-3);}
 .pp-profile .pp-about h4{margin:0;font-size:var(--ch-type-title-size);line-height:var(--ch-type-title-lh);font-weight:var(--ch-type-title-weight);letter-spacing:var(--ch-type-title-ls);color:var(--ch-text-primary);}
@@ -68,7 +69,9 @@ html.pp-lock{overflow:hidden;}
   /* narrow: one column, the panel inset 12 px like the CE-25 window */
   .pp-profile{inset:var(--ch-space-3) 0 auto 0;width:calc(100% - 2 * var(--ch-space-3));max-height:calc(100svh - 2 * var(--ch-space-3));}
   .pp-profile__scroll{display:flex;flex-direction:column;gap:var(--ch-space-6);padding:64px 20px 24px;}
-  .pp-profile .c5-variant__grid > .wf-ph{aspect-ratio:16 / 10;}
+  .pp-profile .c5-variant__grid > .pp-profile__ph{aspect-ratio:16 / 10;}
+  .pp-profile .c5-variant__name{font-size:32px;line-height:38px;}
+  .pp-profile .c5-variant__info{gap:var(--ch-space-8);}
 }
 @media (prefers-reduced-motion: reduce){
   .pp-profile__close{transition:none;}

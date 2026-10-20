@@ -29,7 +29,9 @@
 .b-row__acts{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ch-space-3) var(--ch-space-5);}
 @media (min-width:900px){
   .b-rows{--b-row-edge:20px;--b-row-side:40px;--b-row-gap:clamp(3rem,6vw,7.5rem);
-    max-width:1800px;margin-inline:auto;padding-inline:0;gap:0;}
+    max-width:calc(var(--ch-layout-container-max) + 2 * var(--b-row-edge));margin-inline:auto;padding-inline:0;gap:0;}
+  /* photo and text stay within the site-wide 1600 px content width (EL-29,
+     20.10.2026; was 1800 px) */
   .b-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0;min-height:100svh;}
   .b-row__fig{margin:var(--b-row-edge) 0 var(--b-row-edge) var(--b-row-edge);border-radius:var(--ch-radius-control-l);
     min-height:calc(100svh - 2 * var(--b-row-edge));align-items:center;justify-content:center;overflow:hidden;}

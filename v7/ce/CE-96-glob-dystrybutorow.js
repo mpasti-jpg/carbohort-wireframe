@@ -1,6 +1,12 @@
 /* ===== CE-96 · Glob dystrybutorów (rejestr: ce-rejestr.js) =================
-   Draws a dotted globe (variant łuki: a flat dotted map of Europe) and pairs
-   its points with the partner cards.
+   Since 20.10.2026 both pages (kontakt.html#dystrybutorzy and
+   o-firmie.html#gdzie-jestesmy) use variant kraje (c5-glob--kraje) – its own
+   widget, the second IIFE at the end of this file (filled countries on a
+   still globe, accordion of cards, arcs on hover / open). The first IIFE
+   below draws the older variants pol-kuli, srodek and łuki; no page uses
+   them any more – the code stays for the CE index and as a reference.
+   Older variants: draws a dotted globe (variant łuki: a flat dotted map of
+   Europe) and pairs its points with the partner cards.
      · Content lives in the cards only. Each `.c5-glob__item` carries its point:
        data-glob-lon / data-glob-lat (degrees, approximate centre of the
        country), data-glob-label (country label on the globe) and optionally
@@ -72,7 +78,8 @@
   "use strict";
   if (!window.CX5) return;
   var $ = CX5.$, $$ = CX5.$$;
-  var roots = $$("[data-glob]");
+  /* variant kraje has its own widget at the end of this file */
+  var roots = $$("[data-glob]").filter(function (r) { return !r.classList.contains("c5-glob--kraje"); });
   if (!roots.length) return;
   var d3 = window.d3, topojson = window.topojson;
   if (!d3 || !topojson || !d3.geoEquirectangular) return;
@@ -1301,6 +1308,764 @@
         mask = m; L.step = 0; layout(); root.classList.add("has-land"); redraw();
       }, function (err) {
         if (window.console) window.console.warn("CE-96: land data not loaded (" + url + ")", err && err.message);
+      });
+    }
+  });
+})();
+
+/* ===== CE-96 · variant kraje (c5-glob--kraje) – the one both pages use ======
+   Since 20.10.2026 pm laid out after Mateusz's simplified frame (Figma
+   528:184): a large still globe (orthographic d3-geo, drawn on canvas) across
+   the whole section behind the centred head, cut off under the row of cards;
+   countries as filled shapes (ocean and land colours from the CSS), the
+   picked or pointed partner country a step darker. An SVG overlay carries
+   the head office (an outlined diamond), one numbered vertical stem per
+   partner (number = card number; the lower end on the country; lengths are
+   picked so numbers and stems do not run into each other) and the arcs.
+   Under the globe: the hint, the arrows ([data-glob-prev] / [data-glob-next])
+   and the cards as a row scrolled sideways; a card opens downwards into a
+   strip kept for the tallest open card (measured: --c5-glob-k-row-h on the
+   root, --c5-glob-k-mh on each card's details). A pick on the globe scrolls
+   the row to the card and opens it. The script also sets on the root
+   --c5-glob-k-out (how far the row runs out past the content to the right
+   edge of the section) and the stage height (top of the section to the
+   bottom of the row). The legend goes under the lead.
+   (Before: a rounded stage, partner countries in green, the accordion in a
+   panel under the globe – 20.10.2026 am.)
+     · Content lives in the cards only. Each `.c5-glob__item` carries:
+       data-glob-lon / data-glob-lat (the point, approximate centre of the
+       country), data-glob-label (country name for the point's label) and
+       data-glob-kraje – the countries to fill, ISO 3166-1 alpha-2 codes
+       (table ISO below) or numeric codes, space separated ("LT LV EE").
+       The head office: data-glob-hq="lon,lat" and data-glob-hq-label on the
+       root (optional data-glob-hq-strona = r | l | t | b, label side).
+     · Countries: the TopoJSON named by data-glob-land (world-atlas@2.0.2
+       countries-110m.json, saved locally – see v7/data/ZRODLA.txt); object
+       "countries", feature id = ISO numeric code. Load failure -> the sphere
+       without land; the cards still work.
+     · The sphere (20.10.2026 evening, after Mateusz's Google Maps screenshot,
+       Figma 549:320): one sphere, one scale – the outline is the real limb
+       and the land is never zoomed apart from it. The projection is a
+       vertical perspective (a camera --c5-glob-k-p earth radii from the
+       centre, looking straight down), the projection of Google Maps' globe
+       view: fitted on the screenshot (P = 9.216) it puts nine cities within
+       half a pixel. Central scale = --c5-glob-k-k × the section width (up to
+       --c5-glob-k-w-max), at least --c5-glob-k-k-min px; the disc is centred.
+     · At rest the globe stands still, turned as in the screenshot:
+       data-glob-widok="lon,lat" on the root is the centre of the view (for
+       Europe 22.43,8.22 – the disc centred, the partners within 2 px of the
+       frame). When the partners would not fit across the section (phones)
+       the view turns about the axis so that they sit in the middle. The rim
+       of the sphere just under the heading (or lower, so that the highest
+       partner stays clear of the legend); the bar with the hint level with
+       the lowest partner (phones: under it) – the script sets the field
+       (--c5-glob-k-field) from that. Nothing turns the globe by itself and
+       it cannot be dragged. Opening a card (or a click on a point or a
+       partner country, or a `#dyst-…` hash) turns it gently about its axis
+       (easeCubicInOut, about 1.2 s) so the country and the head office sit
+       together in the middle of the section, and an arc draws from the head
+       office to the country; the country gets the stronger fill. The arc
+       stays while the card is open; closing the card leaves the globe where
+       it is. Pointing at (or focusing) a card, a point or a partner country
+       draws its arc too (`is-hot`).
+     · The turn waits until the stage is in view (a hash on load); with
+       prefers-reduced-motion it happens at once and the arc is not animated.
+     · data-glob-center="lon,lat" on the root mirrors the focus (for tests).
+     · Libraries from CDN: d3@7.9.0 and topojson-client@3.1.0; missing either
+       -> no-op, no `is-ready`: the cards stay a plain grid with all details.
+   ========================================================================== */
+(function () {
+  "use strict";
+  if (!window.CX5) return;
+  var $ = CX5.$, $$ = CX5.$$;
+  var roots = $$("[data-glob].c5-glob--kraje");
+  if (!roots.length) return;
+  var d3 = window.d3, topojson = window.topojson;
+  if (!d3 || !topojson || !d3.geoProjection) return;
+
+  var RAD = Math.PI / 180;
+  var SVGNS = "http://www.w3.org/2000/svg";
+  var TURN_MS = 1200;           /* the gentle turn after a pick */
+  /* ISO 3166-1 alpha-2 -> numeric (world-atlas ids) – Europe and neighbours */
+  var ISO = { AL: "008", AT: "040", BA: "070", BE: "056", BG: "100", BY: "112", CH: "756", CY: "196",
+    CZ: "203", DE: "276", DK: "208", EE: "233", ES: "724", FI: "246", FR: "250", GB: "826", GR: "300",
+    HR: "191", HU: "348", IE: "372", IS: "352", IT: "380", LT: "440", LU: "442", LV: "428", MD: "498",
+    ME: "499", MK: "807", NL: "528", NO: "578", PL: "616", PT: "620", RO: "642", RS: "688", RU: "643",
+    SE: "752", SI: "705", SK: "703", TR: "792", UA: "804", US: "840", CA: "124", BR: "076", CN: "156",
+    IN: "356", AU: "036", ZA: "710", MA: "504", EG: "818" };
+  var reduced = CX5.reducedMQ;
+
+  var cache = {};
+  function loadWorld(url) {
+    if (cache[url]) return cache[url];
+    cache[url] = window.fetch(url)
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (topo) {
+        var obj = topo.objects.countries || topo.objects[Object.keys(topo.objects)[0]];
+        var fc = topojson.feature(topo, obj);
+        var byId = {};
+        fc.features.forEach(function (f) { if (f.id != null) byId[String(f.id)] = f; });
+        return { all: fc, byId: byId, borders: topojson.mesh(topo, obj, function (a, b) { return a !== b; }) };
+      });
+    return cache[url];
+  }
+
+  function svg(tag, attrs, parent) {
+    var el = document.createElementNS(SVGNS, tag);
+    for (var k in attrs) el.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(el);
+    return el;
+  }
+  function norm180(a) { return ((a + 180) % 360 + 360) % 360 - 180; }
+
+  /* vertical perspective: the view from a point P earth radii from the
+     centre (the "satellite" projection without tilt, as d3-geo-projection
+     has it); unit scale = the scale in the centre of the view */
+  function perspRaw(P) {
+    function f(x, y) {
+      var cy = Math.cos(y), k = (P - 1) / (P - cy * Math.cos(x));
+      return [k * cy * Math.sin(x), k * Math.sin(y)];
+    }
+    f.invert = function (x, y) {
+      var r2 = x * x + y * y, r = Math.sqrt(r2);
+      var sc = (P - Math.sqrt(Math.max(0, 1 - r2 * (P + 1) / (P - 1)))) / ((P - 1) / r + r / (P - 1));
+      return [Math.atan2(x * sc, r * Math.sqrt(1 - sc * sc)), r ? Math.asin(y * sc / r) : 0];
+    };
+    return f;
+  }
+
+  roots.forEach(function (root) {
+    var stage = $("[data-glob-stage]", root);
+    var list = $("[data-glob-list]", root) || $(".c5-glob__list", root);
+    var side = $(".c5-glob__side", root) || list;
+    if (!stage || !list) return;
+    var wrap = $(".c5-wrap", root);
+    var head = $(".c5-glob__head", root);
+    var body = $(".c5-glob__body", root);
+    var prevBtn = $("[data-glob-prev]", root), nextBtn = $("[data-glob-next]", root);
+
+    /* --- partners from the cards ------------------------------------------ */
+    var items = [], byId = {};
+    $$(".c5-glob__item", list).forEach(function (li, i) {
+      var lon = parseFloat(li.getAttribute("data-glob-lon"));
+      var lat = parseFloat(li.getAttribute("data-glob-lat"));
+      if (isNaN(lon) || isNaN(lat)) return;
+      if (!li.id) li.id = "glob-" + i;
+      var codes = (li.getAttribute("data-glob-kraje") || "").split(/[\s,]+/).filter(Boolean).map(function (c) {
+        return /^\d+$/.test(c) ? ("00" + c).slice(-3) : ISO[c.toUpperCase()] || "";
+      }).filter(Boolean);
+      var it = { el: li, id: li.id, lon: lon, lat: lat, codes: codes,
+        label: li.getAttribute("data-glob-label") || "", feats: [], no: items.length + 1, len: 0 };
+      items.push(it); byId[it.id] = it;
+    });
+    if (!items.length) return;
+
+    var hq = null;
+    var hqAttr = (root.getAttribute("data-glob-hq") || "").split(",");
+    if (hqAttr.length === 2 && !isNaN(parseFloat(hqAttr[0]))) hq = { lon: parseFloat(hqAttr[0]), lat: parseFloat(hqAttr[1]) };
+    var marks = items.concat(hq ? [hq] : []);
+    /* the middle of the box of all points and the head office */
+    var box = (function () {
+      var lo = Infinity, hi = -Infinity, la = Infinity, lb = -Infinity;
+      marks.forEach(function (p) { lo = Math.min(lo, p.lon); hi = Math.max(hi, p.lon); la = Math.min(la, p.lat); lb = Math.max(lb, p.lat); });
+      return [(lo + hi) / 2, (la + lb) / 2];
+    })();
+    /* the centre of the view at rest (as in the frame); without the attribute:
+       under the partners, as far south as in the frame (49.8°N -> 8.2°N) */
+    var restRef = (function () {
+      var a = (root.getAttribute("data-glob-widok") || "").split(",");
+      if (a.length === 2 && !isNaN(parseFloat(a[0])) && !isNaN(parseFloat(a[1]))) return [parseFloat(a[0]), parseFloat(a[1])];
+      return [box[0], box[1] - 41.6];
+    })();
+    var rest = restRef.slice();     /* the view at rest for this width (layout) */
+
+    /* --- card headings become accordion buttons ----------------------------- */
+    items.forEach(function (it) {
+      var h = $(".c5-glob__name", it.el);
+      var more = $(".c5-glob__more", it.el);
+      if (!h || !more) return;
+      /* the card number (the same as on the stem) at the start of the chip */
+      var chip = $(".c5-chip", h);
+      if (chip) {
+        var nr = document.createElement("span");
+        nr.className = "c5-glob__nr";
+        nr.setAttribute("aria-hidden", "true");
+        nr.textContent = String(it.no);
+        chip.insertBefore(nr, chip.firstChild);
+      }
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "c5-glob__pick";
+      var txt = document.createElement("span");
+      txt.className = "c5-glob__pick-txt";
+      while (h.firstChild) {
+        var node = h.firstChild;
+        if (node.nodeType === 3 && node.textContent.trim()) {
+          var span = document.createElement("span");
+          span.className = "c5-glob__pick-n";
+          span.textContent = node.textContent.trim();
+          h.removeChild(node);
+          txt.appendChild(span);
+        } else if (node.nodeType === 3) {
+          h.removeChild(node);
+        } else {
+          txt.appendChild(node);
+        }
+      }
+      btn.appendChild(txt);
+      h.appendChild(btn);
+      if (!more.id) more.id = it.id + "-dane";
+      btn.setAttribute("aria-expanded", "false");
+      btn.setAttribute("aria-controls", more.id);
+      it.btn = btn; it.more = more;
+      btn.addEventListener("click", function () {
+        if (active === it) deselect(); else select(it, "card");
+      });
+      it.el.addEventListener("mouseenter", function () { hot(it, true, "card"); });
+      it.el.addEventListener("mouseleave", function () { hot(it, false, "card"); });
+      it.el.addEventListener("focusin", function () { hot(it, true, "focus"); });
+      it.el.addEventListener("focusout", function (e) { if (!it.el.contains(e.relatedTarget)) hot(it, false, "focus"); });
+    });
+
+    /* --- stage: canvas for the globe, SVG for the head office, points, arcs - */
+    stage.innerHTML = "";
+    var canvas = document.createElement("canvas");
+    canvas.className = "c5-glob__canvas";
+    stage.appendChild(canvas);
+    var ctx = canvas.getContext("2d");
+    var over = svg("svg", { "class": "c5-glob__svg", "aria-hidden": "true", focusable: "false" }, stage);
+    var arcG = svg("g", { "class": "c5-glob__k-arcs" }, over);
+    var ptG = svg("g", { "class": "c5-glob__k-pts" }, over);
+    items.forEach(function (it) {
+      it.arc = svg("path", { "class": "c5-glob__k-arc", pathLength: 1 }, arcG);
+      var g = svg("g", { "class": "c5-glob__k-pt", "data-glob-pt": it.id }, ptG);
+      var t = svg("title", {}, g);
+      var name = $(".c5-glob__pick-n", it.el);
+      t.textContent = it.no + ". " + it.label + (name ? " – " + name.textContent : "");
+      /* geometry (stem length, number box) is set in placeStems() */
+      it.hit = svg("rect", { "class": "c5-glob__k-hit" }, g);
+      it.stem = svg("line", { "class": "c5-glob__k-stem", x1: 0.5, x2: 0.5, y1: 0, y2: 0 }, g);
+      svg("rect", { "class": "c5-glob__k-tip", x: -2.5, y: -2.5, width: 6, height: 6 }, g);
+      it.bg = svg("rect", { "class": "c5-glob__k-bg", rx: 3, ry: 3 }, g);
+      it.tag = svg("text", { "class": "c5-glob__k-no" }, g);
+      it.tag.textContent = it.no + ".";
+      it.pt = g;
+      g.addEventListener("click", function () { select(it, "globe"); });
+      g.addEventListener("mouseenter", function () { hot(it, true, "pt"); });
+      g.addEventListener("mouseleave", function () { hot(it, false, "pt"); });
+    });
+    var hqG = null;
+    if (hq) {
+      hqG = svg("g", { "class": "c5-glob__k-hq" }, over);
+      svg("rect", { "class": "c5-glob__k-hq-dot", x: -4.5, y: -4.5, width: 9, height: 9, transform: "rotate(45)" }, hqG);
+    }
+
+    /* the legend goes under the lead (or the heading) */
+    var legend = document.createElement("ul");
+    legend.className = "c5-glob__legend";
+    legend.setAttribute("aria-hidden", "true");
+    legend.innerHTML = '<li><span class="c5-glob__key"></span>dystrybutor</li>' +
+      (hq ? '<li><span class="c5-glob__key c5-glob__key--hq"></span>siedziba CarboHort' +
+        (root.getAttribute("data-glob-hq-label") ? " – " + root.getAttribute("data-glob-hq-label") : "") + "</li>" : "");
+    (head || stage).appendChild(legend);
+
+    /* --- state ------------------------------------------------------------ */
+    var L = { w: 0, h: 0, K: 0, R: 0, P: 0, vis: Math.PI / 2, cx: 0, cy: 0, dpr: 1, top: 0, stem: 94 };
+    var colors = {};
+    var world = null;
+    var proj = null, path = null;
+    function makeProj(P) {
+      L.P = P;
+      L.vis = Math.acos(1 / P);   /* the visible cap (angular radius) */
+      proj = d3.geoProjection(perspRaw(P)).clipAngle(L.vis / RAD).precision(0.4);
+      path = d3.geoPath(proj, ctx);
+    }
+    makeProj(9.216);
+    var active = null, hotSet = [];
+    var shown = rest.slice();       /* the centre of the view on screen now */
+    var atRest = true;              /* no pick has turned the globe yet */
+    var anim = null;                /* { from, to, t0 } */
+    var pending = null;             /* a turn waiting for the stage to come into view */
+    var inView = false;
+    var raf = 0;
+
+    function readColors() {
+      var cs = window.getComputedStyle(root);
+      function v(n, d) { return cs.getPropertyValue(n).trim() || d; }
+      colors.ocean = v("--c5-glob-k-ocean", "#fcfcfb");
+      colors.edge = v("--c5-glob-k-edge", "transparent");
+      colors.land = v("--c5-glob-k-land", "#f1ede6");
+      colors.border = v("--c5-glob-k-border", "#fcfcfb");
+      colors.kraj = v("--c5-glob-k-kraj", "#f1ede6");
+      colors.on = v("--c5-glob-k-kraj-on", "#e5e1d8");
+      L.kRatio = parseFloat(v("--c5-glob-k-k", "0.7565")) || 0.7565;
+      L.wMax = parseFloat(v("--c5-glob-k-w-max", "1440")) || 1440;
+      L.kMin = parseFloat(v("--c5-glob-k-k-min", "773")) || 773;
+      var P = parseFloat(v("--c5-glob-k-p", "9.216"));
+      if (P > 1.05 && P !== L.P) makeProj(P);
+      L.stem = parseFloat(v("--c5-glob-k-stem", "94")) || 94;
+    }
+
+    /* the row: how far it runs past the content to the right edge of the
+       section, and the strip it keeps for the tallest open card */
+    function measureRow() {
+      var sr = root.getBoundingClientRect();
+      var wr = (wrap || list).getBoundingClientRect();
+      var pad = wrap ? parseFloat(window.getComputedStyle(wrap).paddingRight) || 0 : 0;
+      root.style.setProperty("--c5-glob-k-out", Math.max(0, Math.round(sr.right - (wr.right - pad))) + "px");
+      root.classList.add("is-measuring");
+      var rowH = 0;
+      items.forEach(function (it) {
+        if (!it.more) return;
+        var was = it.el.classList.contains("is-open");
+        it.el.classList.add("is-open");
+        it.more.style.removeProperty("--c5-glob-k-mh");
+        it.more.style.maxHeight = "none";
+        var mh = it.more.scrollHeight;
+        it.more.style.maxHeight = "";
+        it.more.style.setProperty("--c5-glob-k-mh", Math.ceil(mh) + "px");
+        rowH = Math.max(rowH, it.el.offsetHeight);
+        if (!was) it.el.classList.remove("is-open");
+      });
+      void root.offsetHeight;
+      root.classList.remove("is-measuring");
+      if (rowH) root.style.setProperty("--c5-glob-k-row-h", Math.ceil(rowH) + "px");
+      syncArrows();
+    }
+
+    function setView(f) {
+      proj.rotate([-f[0], -f[1], 0]);
+    }
+    /* the box of the points and the head office on screen for a view */
+    function marksBox(f) {
+      setView(f);
+      var b = { x0: Infinity, x1: -Infinity, y0: Infinity, y1: -Infinity };
+      marks.forEach(function (p) {
+        var q = proj([p.lon, p.lat]);
+        if (!q || isNaN(q[0])) return;
+        b.x0 = Math.min(b.x0, q[0]); b.x1 = Math.max(b.x1, q[0]);
+        b.y0 = Math.min(b.y0, q[1]); b.y1 = Math.max(b.y1, q[1]);
+      });
+      return b;
+    }
+
+    /* the globe: one sphere, one scale (see the top of this part). The
+       disc is centred; its rim just under the heading, or lower if the
+       highest partner would come too close to the legend. The field above
+       the cards follows from the lowest partner. The stage runs from the
+       top of the section to the bottom of the row of cards. */
+    function layout() {
+      readColors();
+      measureRow();
+      /* only while the stage lies out of the flow (module CSS loaded) –
+         otherwise its height would feed the section's height */
+      if (window.getComputedStyle(stage).position !== "absolute") return false;
+      var w = stage.clientWidth;
+      if (!w) return false;
+      var small = w < 900;
+      var sr = root.getBoundingClientRect();
+      L.K = Math.max(L.kRatio * Math.min(w, L.wMax), L.kMin);
+      L.R = L.K * Math.sqrt((L.P - 1) / (L.P + 1));
+      var s = L.K / (L.kRatio * L.wMax);
+      L.cx = w / 2;
+      /* first with the rim at y = 0 */
+      proj.scale(L.K).translate([L.cx, L.R]);
+      rest = restRef.slice();
+      var b = marksBox(rest);
+      var m = small ? 28 : 48;
+      if (b.x0 < m || b.x1 > w - m) {
+        /* the partners do not fit across: turn about the axis until the
+           middle of their box sits in the middle */
+        var lon = box[0];
+        for (var i = 0; i < 8; i++) {
+          b = marksBox([lon, rest[1]]);
+          var d = (b.x0 + b.x1) / 2 - L.cx;
+          if (Math.abs(d) < 0.5) break;
+          lon += d / (L.K * Math.cos(box[1] * RAD)) / RAD;
+        }
+        rest = [lon, restRef[1]];
+        b = marksBox(rest);
+      }
+      var h2 = head ? $(".c5-h2", head) : null;
+      var hb = (h2 || head || stage).getBoundingClientRect();
+      var lb = legend.getBoundingClientRect();
+      var headBot = hb.bottom - sr.top;
+      L.fieldTop = (lb.height ? lb.bottom : hb.bottom) - sr.top;
+      /* desktop: 40 px from the legend to the highest partner (as in the
+         frame); phones: room for a short stem and its number */
+      var clear = small ? Math.min(L.stem, 54) * 0.62 + 22 : 40;
+      L.top = Math.max(h2 ? headBot + Math.max(10, 15 * s) : 0, L.fieldTop + clear - b.y0);
+      L.cy = L.top + L.R;
+      proj.translate([L.cx, L.cy]);
+      /* the bar with the hint: level with the lowest partner (as in the
+         frame – the hint on the left, the arrows on the right), on phones
+         under it */
+      var pick = L.top + b.y1 + (small ? 24 : -10 * s);
+      var bodyTop = (body || side).getBoundingClientRect().top - sr.top;
+      root.style.setProperty("--c5-glob-k-field", Math.max(0, Math.round(pick - bodyTop)) + "px");
+      sr = root.getBoundingClientRect();
+      var br = (body || side).getBoundingClientRect();
+      var cut = body && body.nextElementSibling ? Math.round(br.bottom - sr.top + 24) : Math.round(sr.height);
+      stage.style.height = cut + "px";
+      if (!cut) return false;
+      L.w = w; L.h = cut;
+      L.fieldBot = side.getBoundingClientRect().top - sr.top;
+      L.dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(w * L.dpr); canvas.height = Math.round(cut * L.dpr);
+      return true;
+    }
+
+    function inRim(x, y) {
+      var dx = x - L.cx, dy = y - L.cy;
+      return dx * dx + dy * dy <= L.R * L.R;
+    }
+    /* the view for a pick: the same tilt, turned about the axis so that the
+       country and the head office (the middle of the great circle between
+       them) sit in the middle of the section */
+    function viewFor(it) {
+      if (!it) return rest.slice();
+      var t = hq ? d3.geoInterpolate([hq.lon, hq.lat], [it.lon, it.lat])(0.5) : [it.lon, it.lat];
+      var lon = rest[0], lat = rest[1];
+      for (var i = 0; i < 10; i++) {
+        setView([lon, lat]);
+        var x = proj(t)[0] - L.cx;
+        if (Math.abs(x) < 0.5) break;
+        setView([lon + 0.5, lat]);
+        var dx = (proj(t)[0] - L.cx - x) / 0.5;
+        if (!dx) break;
+        lon -= x / dx;
+      }
+      /* not so far that a partner leaves the section: back towards the view
+         at rest (where all of them fit) as much as needed */
+      var m = L.w < 900 ? 44 : 48, d = norm180(lon - rest[0]);
+      for (var t = 1; t > 0; t -= 0.1) {
+        var bx = marksBox([rest[0] + d * t, lat]);
+        if (bx.x0 >= m && bx.x1 <= L.w - m) break;
+      }
+      lon = rest[0] + d * Math.max(0, t);
+      setView(shown);
+      return [lon, lat];
+    }
+
+    /* numbered stems: each partner gets a stem length from a short list so
+       that no number box overlaps another number or stem, no stem runs
+       through another partner's point or the head office, and the numbers
+       stay below the legend. Lengths are kept during a turn (no flicker). */
+    /* a negative length hangs the stem downwards (the number under it) –
+       for a point right under another one */
+    var NO_W = 20, NO_H = 16;
+    function noBox(it, len) {
+      return len >= 0 ? [it.sx - 6, it.sy - len - NO_H - 2, it.sx - 6 + NO_W, it.sy - len - 2]
+        : [it.sx - 6, it.sy - len + 2, it.sx - 6 + NO_W, it.sy - len + NO_H + 2];
+    }
+    function stemBox(it, len) { return len >= 0 ? [it.sx - 5, it.sy - len, it.sx + 5, it.sy - 4] : [it.sx - 5, it.sy + 4, it.sx + 5, it.sy - len]; }
+    function hit(a, b) {
+      var x = Math.min(a[2], b[2]) - Math.max(a[0], b[0]), y = Math.min(a[3], b[3]) - Math.max(a[1], b[1]);
+      return x > 0 && y > 0 ? x * y : 0;
+    }
+    function placeStems(h0) {
+      if (!(anim && !anim.done)) {
+        var S = L.w < 900 ? Math.min(L.stem, 54) : L.stem;
+        var lens = [S, S * 0.62, S * 1.38, S * 0.4, S * 1.75, -S * 0.5, -S * 0.8, S * 2.1];
+        var vis = items.filter(function (it) { return it.visible !== false; });
+        var others = vis.map(function (it) { return [it.sx, it.sy]; });
+        if (h0) others.push([h0[0], h0[1]]);
+        var placed = [];
+        var order = vis.slice().sort(function (a, b) { return b.sy - a.sy; });
+        order.forEach(function (it) {
+          var best = null, bestC = Infinity;
+          lens.forEach(function (len, n) {
+            var box = noBox(it, len), c = n * 4 + (len < 0 ? 40 : 0);
+            var stem = stemBox(it, len);
+            /* above the legend or into the bar: the further, the worse */
+            if (box[1] < L.fieldTop + 4) c += 3000 + (L.fieldTop + 4 - box[1]) * 20;
+            if (box[3] > L.fieldBot - 8) c += 3000 + (box[3] - L.fieldBot + 8) * 20;
+            others.forEach(function (o) {
+              if (o[0] === it.sx && o[1] === it.sy) return;
+              var p = [o[0] - 5, o[1] - 5, o[0] + 5, o[1] + 5];
+              if (hit(stem, p)) c += 900;
+              if (hit(box, p)) c += 600;
+            });
+            placed.forEach(function (q) {
+              c += hit(box, q.box) * 40;
+              c += hit(box, q.stem) * 30;
+              c += hit(stem, q.box) * 30;
+            });
+            if (c < bestC) { bestC = c; best = { len: len, box: box, stem: stem }; }
+          });
+          it.len = Math.round(best.len);
+          placed.push({ box: noBox(it, it.len), stem: stemBox(it, it.len) });
+        });
+      }
+      items.forEach(function (it) {
+        var len = it.len || L.stem, up = len >= 0, a = Math.abs(len);
+        /* the number's baseline: over the top of the stem, or under its end */
+        var base = up ? -a - 6 : a + NO_H - 2;
+        it.stem.setAttribute("y1", (up ? -a : a).toFixed(1));
+        it.tag.setAttribute("x", -3);
+        it.tag.setAttribute("y", base.toFixed(1));
+        it.bg.setAttribute("x", -7); it.bg.setAttribute("y", (base - 13).toFixed(1));
+        it.bg.setAttribute("width", NO_W); it.bg.setAttribute("height", NO_H + 2);
+        it.hit.setAttribute("x", -10); it.hit.setAttribute("y", (up ? -a - NO_H - 6 : -8).toFixed(1));
+        it.hit.setAttribute("width", 30); it.hit.setAttribute("height", (a + NO_H + 14).toFixed(1));
+      });
+    }
+
+    function draw(f) {
+      shown = [f[0], f[1]];
+      root.setAttribute("data-glob-center", norm180(f[0]).toFixed(2) + "," + f[1].toFixed(2));
+      if (!L.w) return;
+      setView(f);
+      ctx.setTransform(L.dpr, 0, 0, L.dpr, 0, 0);
+      ctx.clearRect(0, 0, L.w, L.h);
+      ctx.save();
+      ctx.beginPath(); ctx.arc(L.cx, L.cy, L.R, 0, Math.PI * 2);
+      ctx.fillStyle = colors.ocean; ctx.fill();
+      if (colors.edge !== "transparent") { ctx.lineWidth = 1; ctx.strokeStyle = colors.edge; ctx.stroke(); }
+      ctx.clip();
+      if (world) {
+        ctx.beginPath(); path(world.all);
+        ctx.fillStyle = colors.land; ctx.fill();
+        items.forEach(function (it) {
+          if (!it.feats.length) return;
+          var strong = it === active || hotSet.indexOf(it) >= 0;
+          if (!strong && colors.kraj === colors.land) return;
+          ctx.beginPath();
+          it.feats.forEach(function (ft) { path(ft); });
+          ctx.fillStyle = strong ? colors.on : colors.kraj; ctx.fill();
+        });
+        ctx.beginPath(); path(world.borders);
+        ctx.lineWidth = 0.8; ctx.strokeStyle = colors.border; ctx.stroke();
+      }
+      ctx.restore();
+      /* overlay: only what lies inside the outline */
+      var h0 = hq ? proj([hq.lon, hq.lat]) : null;
+      if (h0 && !inRim(h0[0], h0[1])) h0 = null;
+      if (hqG) {
+        hqG.style.display = h0 ? "" : "none";
+        if (h0) hqG.setAttribute("transform", "translate(" + h0[0].toFixed(1) + "," + h0[1].toFixed(1) + ")");
+      }
+      items.forEach(function (it) {
+        var q = proj([it.lon, it.lat]);
+        it.sx = q[0]; it.sy = q[1];
+        it.visible = d3.geoDistance([it.lon, it.lat], shown) < L.vis && inRim(q[0], q[1]);
+        it.pt.style.display = it.visible ? "" : "none";
+      });
+      placeStems(h0);
+      items.forEach(function (it) {
+        var q = [it.sx, it.sy];
+        it.pt.setAttribute("transform", "translate(" + q[0].toFixed(1) + "," + q[1].toFixed(1) + ")");
+        if (!h0 || !it.visible) { it.arc.setAttribute("d", ""); return; }
+        /* the arc: the straight line from the head office, bowed upwards by a
+           quarter of its length */
+        var dx = q[0] - h0[0], dy = q[1] - h0[1], len = Math.sqrt(dx * dx + dy * dy) || 1;
+        var nx = dy / len, ny = -dx / len;
+        if (ny > 0) { nx = -nx; ny = -ny; }
+        var k = Math.max(10, len * 0.26);
+        var mx = (h0[0] + q[0]) / 2 + nx * k, my = (h0[1] + q[1]) / 2 + ny * k;
+        it.arc.setAttribute("d", "M" + h0[0].toFixed(1) + "," + h0[1].toFixed(1) + "Q" + mx.toFixed(1) + "," + my.toFixed(1) + " " + q[0].toFixed(1) + "," + q[1].toFixed(1));
+      });
+    }
+
+    /* --- the turn --------------------------------------------------------- */
+    function frame(now) {
+      raf = 0;
+      if (!anim) return;
+      var k = Math.min(1, (now - anim.t0) / TURN_MS);
+      var e = d3.easeCubicInOut(k);
+      anim.done = k >= 1;
+      draw([anim.from[0] + anim.dlon * e, anim.from[1] + (anim.to[1] - anim.from[1]) * e]);
+      if (k >= 1) { anim = null; return; }
+      raf = window.requestAnimationFrame(frame);
+    }
+    function turnTo(f) {
+      if (!inView && window.IntersectionObserver) { pending = f; return; }
+      pending = null;
+      if (reduced.matches || !L.w) { anim = null; draw(f); return; }
+      var dlon = norm180(f[0] - shown[0]);
+      if (Math.abs(dlon) < 0.01 && Math.abs(f[1] - shown[1]) < 0.01) { draw(f); return; }
+      anim = { from: shown.slice(), to: f, dlon: dlon, t0: window.performance.now() };
+      if (!raf) raf = window.requestAnimationFrame(frame);
+    }
+
+    /* --- arcs, points, cards ----------------------------------------------- */
+    function syncMarks() {
+      items.forEach(function (it) {
+        var on = it === active, h = hotSet.indexOf(it) >= 0;
+        /* an arc is drawn in only while the stage is in view */
+        it.arc.classList.toggle("is-on", (on || h) && (inView || !window.IntersectionObserver));
+        it.pt.classList.toggle("is-active", on);
+        it.pt.classList.toggle("is-hot", h);
+      });
+      root.classList.toggle("has-pick", !!active || hotSet.length > 0);
+      if (active) ptG.appendChild(active.pt);
+      if (!anim) draw(shown);
+    }
+    var hotWho = {};
+    function hot(it, on, who) {
+      var key = it.id + ":" + who;
+      if (on) hotWho[key] = true; else delete hotWho[key];
+      var still = Object.keys(hotWho).some(function (k) { return k.indexOf(it.id + ":") === 0; });
+      var i = hotSet.indexOf(it);
+      if (still && i < 0) hotSet.push(it);
+      if (!still && i >= 0) hotSet.splice(i, 1);
+      syncMarks();
+    }
+    function syncCards() {
+      items.forEach(function (it) {
+        var on = it === active;
+        it.el.classList.toggle("is-open", on);
+        if (it.btn) it.btn.setAttribute("aria-expanded", on ? "true" : "false");
+      });
+    }
+    /* the row: scroll a card into view (its left edge to the start of the
+       row) unless it is already in full view */
+    function rowView() {
+      var lr = list.getBoundingClientRect();
+      return [lr.left, Math.min(lr.right, document.documentElement.clientWidth)];
+    }
+    function revealCard(it, instant) {
+      var v = rowView(), r = it.el.getBoundingClientRect();
+      if (r.left >= v[0] - 1 && r.right <= v[1] + 1) return;
+      var max = list.scrollWidth - list.clientWidth;
+      var x = Math.max(0, Math.min(max, it.el.offsetLeft));
+      list.scrollTo({ left: x, behavior: instant || reduced.matches ? "auto" : "smooth" });
+    }
+    function syncArrows() {
+      if (!prevBtn || !nextBtn) return;
+      var max = list.scrollWidth - list.clientWidth;
+      prevBtn.disabled = list.scrollLeft <= 2;
+      nextBtn.disabled = list.scrollLeft >= max - 2;
+    }
+    function stepRow(dir) {
+      var first = items[0] && items[0].el;
+      var w = first ? first.getBoundingClientRect().width + 10 : 350;
+      list.scrollBy({ left: dir * w, behavior: reduced.matches ? "auto" : "smooth" });
+    }
+    if (prevBtn) prevBtn.addEventListener("click", function () { stepRow(-1); });
+    if (nextBtn) nextBtn.addEventListener("click", function () { stepRow(1); });
+    list.addEventListener("scroll", syncArrows, { passive: true });
+
+    function select(it, from, instant) {
+      revealCard(it, instant);
+      if (from === "globe") {
+        /* the row with the open card in view */
+        var sb = side.getBoundingClientRect();
+        if (sb.bottom > window.innerHeight - 8) {
+          CX5.scrollTo(Math.max(0, sb.bottom + window.scrollY - window.innerHeight + 24), reduced.matches ? "auto" : "smooth");
+        }
+      }
+      if (active === it) return;
+      active = it;
+      syncCards();
+      syncMarks();
+      atRest = false;
+      turnTo(viewFor(it));
+    }
+    function deselect() {
+      active = null;
+      pending = null;
+      syncCards();
+      syncMarks();
+    }
+
+    /* a partner country on the globe is a target too */
+    function itemAt(e) {
+      if (!world) return null;
+      var r = stage.getBoundingClientRect();
+      var p = proj.invert([e.clientX - r.left, e.clientY - r.top]);
+      if (!p || isNaN(p[0])) return null;
+      if (!inRim(e.clientX - r.left, e.clientY - r.top) || d3.geoDistance(p, shown) > L.vis) return null;
+      for (var i = 0; i < items.length; i++) {
+        for (var j = 0; j < items[i].feats.length; j++) if (d3.geoContains(items[i].feats[j], p)) return items[i];
+      }
+      return null;
+    }
+    var overIt = null;
+    stage.addEventListener("pointermove", function (e) {
+      if (e.pointerType !== "mouse" || e.target.closest(".c5-glob__k-pt")) return;
+      var it = itemAt(e);
+      if (it === overIt) return;
+      if (overIt) hot(overIt, false, "land");
+      overIt = it;
+      if (it) hot(it, true, "land");
+      stage.style.cursor = it ? "pointer" : "";
+    });
+    stage.addEventListener("pointerleave", function () {
+      if (overIt) hot(overIt, false, "land");
+      overIt = null; stage.style.cursor = "";
+    });
+    /* a press that moved (an attempt to drag) is not a click */
+    var downAt = null;
+    stage.addEventListener("pointerdown", function (e) { downAt = [e.clientX, e.clientY]; });
+    stage.addEventListener("click", function (e) {
+      var moved = downAt && Math.abs(e.clientX - downAt[0]) + Math.abs(e.clientY - downAt[1]) > 6;
+      downAt = null;
+      if (moved || e.target.closest(".c5-glob__k-pt")) return;
+      var it = itemAt(e);
+      if (it) select(it, "globe");
+    });
+
+    /* --- size changes keep the current focus ------------------------------- */
+    var lastSize = "";
+    function sizeKey() { return root.clientWidth + "x" + root.clientHeight + "x" + (head ? head.offsetHeight : 0); }
+    function relayout() {
+      var size = sizeKey();
+      if (size === lastSize) return;
+      if (!layout()) return;
+      lastSize = sizeKey();
+      draw(anim ? shown : (active ? viewFor(active) : (atRest ? rest : shown)));
+    }
+    CX5.register({ resize: function () { lastSize = ""; relayout(); } });
+    if (window.ResizeObserver) new ResizeObserver(function () { relayout(); }).observe(root);
+    /* web fonts change the height of the head and the cards */
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { lastSize = ""; relayout(); });
+
+    if (window.IntersectionObserver) {
+      new IntersectionObserver(function (es) {
+        inView = es[es.length - 1].isIntersecting;
+        if (!inView) return;
+        if (pending) turnTo(pending);
+        syncMarks();
+      }, { threshold: 0.2 }).observe(stage);
+    }
+
+    /* links like kontakt.html#dyst-rumunia open the card; the scroll keeps
+       the globe and the open card in view together */
+    CX5.onHash(function (hash, instant) {
+      if (!hash || hash.length < 2) return false;
+      var id;
+      try { id = decodeURIComponent(hash.slice(1)); } catch (e) { return false; }
+      var it = byId[id];
+      if (!it) return false;
+      select(it, "hash", instant);
+      var sTop = root.getBoundingClientRect().top + window.scrollY + L.top;
+      var cBot = side.getBoundingClientRect().bottom + window.scrollY;
+      /* the globe from its rim when the row of cards fits under it, else
+         the row in full with as much of the globe as fits */
+      var y = Math.max(sTop - 40, cBot - window.innerHeight + 24);
+      CX5.scrollTo(Math.max(0, y), instant || reduced.matches ? "auto" : "smooth");
+      return true;
+    });
+
+    /* --- start ------------------------------------------------------------ */
+    root.classList.add("is-ready");
+    layout();
+    draw(rest);
+    lastSize = sizeKey();
+    try { root.dispatchEvent(new CustomEvent("c5-glob:ready", { bubbles: true })); } catch (e) { /* old browsers */ }
+
+    var url = root.getAttribute("data-glob-land");
+    if (url) {
+      loadWorld(url).then(function (wd) {
+        world = wd;
+        items.forEach(function (it) {
+          it.feats = it.codes.map(function (c) { return wd.byId[c]; }).filter(Boolean);
+        });
+        root.classList.add("has-land");
+        if (!anim) draw(shown);
+      }, function (err) {
+        if (window.console) window.console.warn("CE-96: country data not loaded (" + url + ")", err && err.message);
       });
     }
   });

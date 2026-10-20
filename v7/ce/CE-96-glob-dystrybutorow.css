@@ -8,9 +8,21 @@
    sideways – the stage keeps vertical panning for the page); it never moves by
    itself – only a pick or a drag turns it.
 
+   Since 20.10.2026 both pages (kontakt.html#dystrybutorzy,
+   o-firmie.html#gdzie-jestesmy) use variant kraje – the same section, only
+   the heading and the lead differ; it is described in its own block at the
+   end of this file (data/countries-110m.json, data-glob-kraje on the cards).
+   The variants listed below (pol-kuli, srodek, łuki) have no page any more;
+   their code stays for the CE index and as a reference.
+
    Root: <section class="c5-sec c5-glob c5-glob--<variant>" data-glob
                   data-glob-land="data/land-110m.json">
    Variants (modifier class on the root):
+     · c5-glob--kraje     (in use; Figma 528:184 since 20.10.2026 pm) a large
+                          still globe with filled countries behind the centred
+                          head, numbered stems for the partners, an arc from
+                          the head office on hover / open, a row of cards
+                          scrolled sideways under the globe; no drag.
      · c5-glob--pol-kuli  the top half of a large globe rises from the bottom
                           edge of the stage, turned to Europe; below it a row
                           of cards scrolled sideways to the chosen partner, plus
@@ -337,4 +349,162 @@
   .c5-glob--srodek.is-ready .c5-glob__pick::after{transition:none;}
   .c5-glob__arc,.c5-glob__row,.c5-glob__go{transition:none;}
   .c5-glob__arc{stroke-dashoffset:0;}
+}
+
+/* --- variant kraje · c5-glob--kraje (20.10.2026, both pages) ----------------
+   Layout after Mateusz's simplified frame (Figma 528:184, 20.10.2026 pm):
+   kicker, heading, lead and legend centred; a large still globe across the
+   whole section, centred, its top just under the heading and its lower part
+   cut off under the row of cards (the stage is absolute: from the top of the
+   section to the bottom of the cards' row). From 20.10.2026 evening the
+   sphere is drawn as in Mateusz's Google Maps screenshot (Figma 549:320):
+   one sphere, one scale, the vertical perspective of Google's globe view
+   (see the script) – no land zoomed apart from the outline. Ocean #FCFCFB, land #F1EDE6 with
+   borders in the ocean colour; the picked or pointed partner country a step
+   darker. Partners: numbered vertical stems (number = card number, the lower
+   end on the country), the head office: an outlined diamond. Below the
+   globe "Wybierz dystrybutora", the arrows and a row of cards scrolled
+   sideways, from the left edge of the content out to the right edge of the
+   section (340 × 182, gap 10). A card opens downwards into a strip the row
+   keeps for the tallest open card, so nothing below moves. Up to 899 px: a
+   smaller globe, the row swiped by finger, no arrows. The globe never moves
+   by itself and takes no drag – the script turns it after a pick.
+   Without JS: the cards in the plain grid of the base layer, all details. */
+.c5-glob--kraje{
+  --c5-glob-k-ocean:#FCFCFB;                     /* Figma 528:184 (no token yet) */
+  --c5-glob-k-land:#F1EDE6;                      /* Figma 528:184 (no token yet) */
+  --c5-glob-k-border:#FCFCFB;
+  --c5-glob-k-edge:transparent;
+  --c5-glob-k-kraj:var(--ch-color-green-300);    /* partner countries at rest (#A7D781) */
+  --c5-glob-k-kraj-on:var(--ch-color-green-logo); /* picked / pointed country */
+  --c5-glob-k-ink:var(--ch-text-primary);
+  --c5-glob-k-k:0.7565;                          /* central scale / section width (1089 px at 1440; Figma 549:320) */
+  --c5-glob-k-w-max:1440;                        /* px – wider sections keep the 1440 globe */
+  --c5-glob-k-k-min:773;                         /* px – smallest central scale (phones, tablets) */
+  --c5-glob-k-p:9.216;                           /* camera distance in earth radii (fitted on Google's globe view) */
+  --c5-glob-k-field:clamp(320px,36vw,560px);     /* free field above the cards – the script sets it from the globe */
+  --c5-glob-k-stem:64;                           /* px (94 in frame 528:184, where Europe was drawn 1.5× larger) */
+  --c5-glob-k-card-w:340px;
+  --c5-glob-k-card-h:182px;
+}
+/* centred head – with or without JS */
+.c5-glob--kraje > .c5-wrap > .c5-kicker{margin-inline:auto;}
+.c5-glob--kraje .c5-glob__head{align-items:center;text-align:center;gap:clamp(1rem,2.2vw,2rem);}
+.c5-glob--kraje .c5-glob__head .c5-h2,.c5-glob--kraje .c5-glob__head .c5-lead{margin-inline:auto;}
+.c5-glob--kraje .c5-glob__bar{display:none;}
+
+.c5-glob--kraje.is-ready{position:relative;overflow:hidden;overflow:clip;}
+.c5-glob--kraje.is-ready .c5-glob__stage{position:absolute;left:0;top:0;width:100%;height:100%;z-index:0;
+  touch-action:auto;cursor:default;}
+.c5-glob--kraje.is-ready > .c5-wrap{position:relative;z-index:1;pointer-events:none;}
+.c5-glob--kraje.is-ready > .c5-wrap > :not(.c5-glob__body),
+.c5-glob--kraje.is-ready .c5-glob__side{pointer-events:auto;}
+.c5-glob--kraje .c5-glob__svg{pointer-events:none;}
+.c5-glob--kraje.is-ready .c5-glob__head{margin-bottom:0;}
+
+/* legend under the lead, on the globe */
+.c5-glob--kraje .c5-glob__head .c5-glob__legend{position:static;justify-content:center;
+  margin:clamp(0px,0.4vw,6px) auto 0;padding:7px 16px;gap:4px 16px;
+  background:var(--ch-color-white);border-radius:var(--ch-radius-sm);
+  font-size:var(--ch-type-caption-size);line-height:var(--ch-type-caption-lh);color:var(--ch-text-secondary);}
+.c5-glob--kraje .c5-glob__key{width:8px;height:8px;background:var(--c5-glob-k-ink);border-radius:0;}
+.c5-glob--kraje .c5-glob__key--hq{background:var(--ch-color-white);border:1.5px solid var(--c5-glob-k-ink);transform:rotate(45deg);}
+
+/* numbered stem: the number over a 1 px line whose lower end (a small
+   square) sits on the country; pointed or picked: thicker line, the number
+   on the yellow of the card chips */
+.c5-glob__k-pt{pointer-events:auto;cursor:pointer;}
+.c5-glob__k-hit{fill:transparent;}
+.c5-glob__k-stem{stroke:var(--c5-glob-k-ink);stroke-width:1px;shape-rendering:crispEdges;
+  transition:stroke-width var(--w-duration-base) var(--w-ease);}
+.c5-glob__k-tip{fill:var(--c5-glob-k-ink);}
+.c5-glob__k-no{font-family:var(--w-font-sans);font-size:12px;font-weight:var(--w-weight-medium);
+  fill:var(--c5-glob-k-ink);font-variant-numeric:tabular-nums;
+  paint-order:stroke;stroke:var(--c5-glob-k-ocean);stroke-width:3px;stroke-linejoin:round;}
+.c5-glob__k-bg{fill:var(--ch-surface-accent-yellow);opacity:0;transition:opacity var(--w-duration-base) var(--w-ease);}
+.c5-glob__k-pt:hover .c5-glob__k-stem,.c5-glob__k-pt.is-hot .c5-glob__k-stem,
+.c5-glob__k-pt.is-active .c5-glob__k-stem{stroke-width:2px;}
+.c5-glob__k-pt:hover .c5-glob__k-bg,.c5-glob__k-pt.is-hot .c5-glob__k-bg,
+.c5-glob__k-pt.is-active .c5-glob__k-bg{opacity:1;}
+.c5-glob__k-pt:hover .c5-glob__k-no,.c5-glob__k-pt.is-hot .c5-glob__k-no,
+.c5-glob__k-pt.is-active .c5-glob__k-no{font-weight:var(--w-weight-semibold);stroke:none;}
+.c5-glob__k-hq{pointer-events:none;}
+.c5-glob__k-hq-dot{fill:var(--ch-color-white);stroke:var(--c5-glob-k-ink);stroke-width:1.5px;}
+
+/* arc: drawn in when shown (pathLength = 1, so the dash is the arc); hidden
+   at once */
+.c5-glob__k-arc{fill:none;stroke:var(--c5-glob-k-ink);stroke-width:1.5px;stroke-linecap:round;
+  stroke-dasharray:1 1;stroke-dashoffset:1;opacity:0;}
+.c5-glob__k-arc.is-on{stroke-dashoffset:0;opacity:1;
+  transition:stroke-dashoffset 750ms var(--w-ease),opacity 120ms linear;}
+
+/* the field above the cards, the bar with the hint and the arrows */
+.c5-glob--kraje.is-ready .c5-glob__body{padding-top:var(--c5-glob-k-field);pointer-events:none;}
+/* the strip kept for an open card already gives room under the closed row –
+   the section's own bottom padding shrinks by the same order */
+.c5-glob--kraje.is-ready .c5-glob__body:last-child{margin-bottom:calc(clamp(4rem,8.334vw,var(--ch-layout-section-y)) * -0.6);}
+.c5-glob--kraje.is-ready .c5-glob__bar{display:flex;align-items:center;justify-content:space-between;gap:var(--ch-space-4);
+  margin-bottom:clamp(16px,2.4vw,32px);pointer-events:none;}
+.c5-glob__hint{margin:0;font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);color:var(--ch-text-secondary);}
+.c5-glob--kraje.is-ready .c5-glob__nav{display:flex;gap:var(--ch-space-2);pointer-events:auto;}
+.c5-glob__arrow{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;
+  border:1px solid var(--ch-border-control);border-radius:50%;background:var(--ch-color-white);color:var(--ch-text-primary);
+  cursor:pointer;transition:background var(--w-duration-base) var(--w-ease),opacity var(--w-duration-base) var(--w-ease);}
+.c5-glob__arrow:hover:not(:disabled){background:var(--ch-surface-warm);}
+.c5-glob__arrow:disabled{opacity:.35;cursor:default;}
+.c5-glob__arrow:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:var(--w-focus-ring-offset);}
+
+/* the row of cards (scrolled sideways; min-height = the tallest open card) */
+.c5-glob--kraje.is-ready .c5-glob__list{display:flex;align-items:flex-start;gap:10px;
+  margin-right:calc(var(--c5-glob-k-out,0px) * -1);padding:0 var(--c5-glob-k-out,0px) 0 0;
+  min-height:var(--c5-glob-k-row-h,auto);overflow-x:auto;overflow-y:hidden;
+  scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;}
+.c5-glob--kraje.is-ready .c5-glob__list::-webkit-scrollbar{display:none;}
+.c5-glob--kraje.is-ready .c5-glob__item{flex:0 0 var(--c5-glob-k-card-w);gap:0;padding:0;border:0;
+  border-radius:var(--ch-radius-md);background:var(--ch-surface-warm);scroll-snap-align:start;}
+.c5-glob--kraje.is-ready .c5-glob__item:hover{border-color:transparent;background:var(--ch-surface-warm-strong);}
+.c5-glob--kraje.is-ready .c5-glob__item.is-open{background:var(--ch-surface-warm);
+  outline:1px solid var(--ch-border-strong);outline-offset:-1px;}
+.c5-glob--kraje.is-ready .c5-glob__name{display:block;align-self:stretch;}
+.c5-glob--kraje.is-ready .c5-glob__pick{position:relative;justify-content:flex-start;
+  min-height:var(--c5-glob-k-card-h);padding:32px 64px 32px 32px;border-radius:var(--ch-radius-md);color:var(--ch-text-primary);}
+.c5-glob--kraje.is-ready .c5-glob__item.is-open .c5-glob__pick{min-height:0;padding-bottom:20px;}
+.c5-glob--kraje.is-ready .c5-glob__pick:focus-visible{outline-offset:-3px;}
+.c5-glob--kraje.is-ready .c5-glob__pick-txt{gap:clamp(16px,2vw,28px);}
+.c5-glob--kraje.is-ready .c5-glob__pick .c5-chip{padding:8px 14px;border:0;border-radius:var(--ch-radius-sm);
+  background:var(--ch-surface-accent-yellow);color:var(--ch-text-primary);font-size:0.8125rem;line-height:18px;}
+.c5-glob__nr{font-variant-numeric:tabular-nums;}
+.c5-glob__nr::after{content:"·";margin:0 7px;}
+.c5-glob--kraje.is-ready .c5-glob__pick-n{font-size:clamp(1.125rem,1.5vw,1.375rem);line-height:1.25;
+  font-weight:var(--ch-font-weight-regular);}
+.c5-glob--kraje.is-ready .c5-glob__pick::after{content:"";position:absolute;right:32px;top:44px;
+  width:8px;height:8px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;
+  transform:rotate(45deg);transition:transform var(--w-duration-base) var(--w-ease);}
+.c5-glob--kraje.is-ready .c5-glob__pick[aria-expanded="true"]::after{transform:rotate(-135deg);top:48px;}
+/* closed: hidden (also from the tab order); open: max-height from the script */
+.c5-glob--kraje.is-ready .c5-glob__more{padding:0 32px;max-height:0;overflow:hidden;visibility:hidden;
+  transition:max-height 320ms var(--w-ease),padding-bottom 320ms var(--w-ease),visibility 0s linear 320ms;}
+.c5-glob--kraje.is-ready .c5-glob__item.is-open .c5-glob__more{max-height:var(--c5-glob-k-mh,480px);
+  padding-bottom:28px;visibility:visible;
+  transition:max-height 320ms var(--w-ease),padding-bottom 320ms var(--w-ease),visibility 0s;}
+.c5-glob--kraje.is-measuring .c5-glob__more,.c5-glob--kraje.is-measuring .c5-glob__pick{transition:none !important;}
+
+/* up to 899 px: a smaller globe, the row swiped by finger, no arrows */
+@media (max-width:899px){
+  .c5-glob--kraje{--c5-glob-k-field:clamp(250px,78vw,400px);--c5-glob-k-stem:44;
+    --c5-glob-k-card-w:min(300px,80vw);--c5-glob-k-card-h:150px;}
+  .c5-glob--kraje.is-ready .c5-glob__nav{display:none;}
+  .c5-glob--kraje.is-ready .c5-glob__hint{font-size:var(--ch-type-body-size);}
+  .c5-glob--kraje.is-ready .c5-glob__pick{padding:24px 52px 24px 24px;}
+  .c5-glob--kraje.is-ready .c5-glob__pick::after{right:24px;top:36px;}
+  .c5-glob--kraje.is-ready .c5-glob__pick[aria-expanded="true"]::after{top:40px;}
+  .c5-glob--kraje.is-ready .c5-glob__more{padding-inline:24px;}
+  .c5-glob--kraje .c5-glob__head .c5-glob__legend{font-size:0.6875rem;padding:5px 12px;}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .c5-glob__k-arc.is-on,.c5-glob__k-stem,.c5-glob__k-bg,.c5-glob__arrow,
+  .c5-glob--kraje.is-ready .c5-glob__pick::after,
+  .c5-glob--kraje.is-ready .c5-glob__more,
+  .c5-glob--kraje.is-ready .c5-glob__item.is-open .c5-glob__more{transition:none;}
 }

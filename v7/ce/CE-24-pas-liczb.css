@@ -319,12 +319,13 @@
 
 /* the whole page runs on the wide container, so the
    panel lines up with it instead of keeping its own 30 px gutter – 40 px from
-   the window edges, capped at 1720 px (the 1800 px container minus its two
+   the window edges, capped at 1600 px (the site-wide content width of EL-29
+   since 20.10.2026; until then 1720 px, the 1800 px container minus its two
    40 px paddings) and centred above that. The panel is a section, not a
    `c5-wrap`, so the geometry is written by hand: `width` gives the 40 px
    margins, `max-width` the cap, `margin-inline:auto` the centring. */
 @media (min-width:900px){
-  .u-nb{margin-inline:auto;width:calc(100% - 80px);max-width:1720px;}
+  .u-nb{margin-inline:auto;width:calc(100% - 80px);max-width:var(--ch-layout-container-max);}
   /* Three 530 px columns: the caption may take a little more than the 22 rem
      it needs at 1180 px without breaking the column's two-line rhythm. */
   .u-nb__cap{max-width:26rem;}
@@ -363,7 +364,7 @@
   letter-spacing:-0.03em;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--w-text-primary);}
 .b-nb__cap{max-width:24rem;margin-top:var(--w-space-3);}
 @media (min-width:900px){
-  .b-nb{margin-inline:auto;width:calc(100% - 80px);max-width:1720px;}
+  .b-nb{margin-inline:auto;width:calc(100% - 80px);max-width:var(--ch-layout-container-max);}
 }
 @media (max-width:899px){
   .b-nb{margin-inline:0;min-height:0;}

@@ -42,15 +42,21 @@
 
   var motion = false, act = -1, bgs = null;
 
-  /* one tone layer per product, coloured with the band tone its track resolves */
+  /* one tone layer per product. 20.10.2026 (owner): a change of the product must
+     NOT change the background of the CE, so every layer carries the tone of the
+     FIRST product's band (the outline of the sign keeps the first tone too – see
+     --c5-kdm-syg-fix in the CSS half). The layers stay one per product so the
+     markup of the motion layer is unchanged. */
   function buildTones() {
     if (bgs) return;
     bgs = document.createElement("span");
     bgs.className = "c5-kdm__bgs";
     bgs.setAttribute("aria-hidden", "true");
+    var first = window.getComputedStyle(tracks[0].el);
+    root.style.setProperty("--c5-kdm-syg-fix", first.getPropertyValue("--c5-kdm-syg").trim());
     tracks.forEach(function (t) {
       var span = document.createElement("span");
-      span.style.background = window.getComputedStyle(t.el).getPropertyValue("--c5-kdm-band").trim();
+      span.style.background = first.getPropertyValue("--c5-kdm-band").trim();
       bgs.appendChild(span);
       t.bg = span;
     });

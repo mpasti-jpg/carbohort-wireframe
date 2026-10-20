@@ -11,8 +11,8 @@
      · CE-30 `on-val*`                       <- produkty.css 8.2 (c5pr-paths)
      · CE-48 `on-team` / `on-person` / `on-disc` / `on-more` <- prochnica-plus.css 55
      · CE-53 `on-docs` / `on-doc`            <- prochnica-plus.css 90 (pp-reports)
-     · CE-96 wariant łuki (ce/CE-96-glob-dystrybutorow.css) – map and list;
-       only the address column next to the list (`on-map*`) stays here
+     · CE-96 wariant kraje (ce/CE-96-glob-dystrybutorow.css) – globe and cards;
+       only the address row under the cards (`on-map*`) stays here
      · CE-33 `on-quote`                      <- uprawa.css (u-quote, wariant ciemny-boks)
    ===================================================================== */
 
@@ -57,23 +57,18 @@
   .on-docs .c5-rows__act{grid-column:1;grid-row:auto;justify-self:start;margin-top:var(--ch-space-2);}
 }
 
-/* ===== 70 · GDZIE JESTEŚMY – mapa Europy z łukami i lista krajów (CE-96 łuki)
-   The map and the list rows live in ce/CE-96-glob-dystrybutorow.css. This
-   page only sets the row under the map: the address and buttons on the left,
-   the list on the right; up to 767 px the list comes right under the map and
-   the address after it. */
-.on-map{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,2fr);gap:clamp(2rem,5vw,4rem);
-  margin-top:clamp(1.5rem,3vw,2.25rem);align-items:start;}
-.on-map__side{display:flex;flex-direction:column;gap:var(--ch-space-5);}
+/* ===== 70 · GDZIE JESTEŚMY – glob dystrybutorów (CE-96 kraje) i adres
+   The globe and the partner cards live in ce/CE-96-glob-dystrybutorow.css
+   (the same section as on kontakt.html). This page only adds the row under
+   the cards: the address on the left, the buttons on the right; up to 767 px
+   one under the other. */
+.on-map{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:var(--ch-space-5) clamp(2rem,5vw,4rem);
+  margin-top:clamp(1.5rem,3vw,2.25rem);padding-top:clamp(1.25rem,2.5vw,1.75rem);border-top:1px solid var(--ch-border-subtle);}
 .on-map__addr{font-style:normal;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary);}
 .on-map__co{display:block;font-size:var(--ch-type-tab-size);line-height:var(--ch-type-tab-lh);font-weight:var(--ch-font-weight-medium);letter-spacing:var(--ch-type-tab-ls);
   color:var(--ch-text-primary);margin-bottom:var(--ch-space-2);}
-
-@media (max-width:899px){
-  .on-map{grid-template-columns:1fr;gap:clamp(1.5rem,4vw,2.5rem);}
-}
 @media (max-width:767px){
-  .on-map__side{order:2;}
+  .on-map{flex-direction:column;align-items:flex-start;}
 }
 
 

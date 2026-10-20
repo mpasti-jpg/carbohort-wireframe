@@ -5,8 +5,9 @@
      10 – demo form (CE-50, variant „kontakt")
      20 – chips „Wybierz sprawę" -> highlight of a department row (CE-55)
      25 – chips „Wybierz sprawę" -> highlight of the people
-   The distributor globe (CE-96, variant B, since 15.10.2026 instead of the
-   CE-56 map) lives entirely in ce/CE-96-glob-dystrybutorow.js; the former
+   The distributor globe (CE-96, since 15.10.2026 instead of the CE-56 map;
+   variant kraje since 20.10.2026, the same as on o-firmie.html) lives
+   entirely in ce/CE-96-glob-dystrybutorow.js; the former
    block 40 (prototype switch between variants A and B) is gone.
    Everything here is an ADDITION: without JS the chips are plain anchors, the
    rows and the cards are readable, and the form simply does not pretend to

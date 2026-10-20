@@ -13,7 +13,9 @@
 .c5sk-refine[hidden], .c5sk-facet__body[hidden],
 .c5sk-restore[hidden] { display: none !important; }
 
-.c5sk-needsbar { border-bottom: 1px solid var(--w-border-subtle); }
+/* Warm surface (#F6F4F0, Mateusz 20.10.2026): the groups row continues the
+   title bar (CE-77 sklep) and the bulk strip; only the work bar below is white. */
+.c5sk-needsbar { background: var(--ch-surface-warm); border-bottom: 1px solid var(--w-border-subtle); }
 .c5sk-needsbar__in { display: flex; flex-wrap: wrap; align-items: center; gap: 10px var(--w-space-6); padding-block: 12px 14px; }
 /* Round 3b: a short heading over the groups; the groups act as one more filter,
    shown as a chip under the bar once chosen (no "all products" pill). */
@@ -130,6 +132,21 @@
   .c5sk-list.is-folded { grid-template-columns: minmax(0,1fr); }
   .c5sk-list.is-folded > .c5sk-list__side { display: none; }
 }
+/* Filter column as a band (Mateusz 20.10.2026): #F1EDE6 (no token – between
+   beige-50 and beige-100) from the white work bar down to the end of the list
+   section. The column grows by its inner padding, so the filters keep their
+   280 px; negative block margins cancel the top air of the section and the
+   list and the bottom air of the section. Folded, the band goes with it;
+   below 1000 px (drawer) the panel keeps the page surface. */
+@media (min-width: 1000px) {
+  .c5sk-listsec { --c5sk-side-pad: var(--w-space-5); --c5sk-sec-pb: clamp(2.5rem,5vw,4rem); }
+  .c5sk-list { grid-template-columns: calc(280px + 2 * var(--c5sk-side-pad)) minmax(0,1fr); }
+  .c5sk-list > .c5sk-list__side {
+    align-self: stretch; background: #F1EDE6;
+    margin-block: calc(-1 * (var(--w-space-4) + var(--w-space-5))) calc(-1 * var(--c5sk-sec-pb));
+    padding: calc(var(--w-space-4) + var(--w-space-5)) var(--c5sk-side-pad) var(--c5sk-sec-pb);
+  }
+}
 /* Poniżej 1000 px kolumna filtrów jest szufladą (position:fixed), więc jej pusta
    komórka w gridzie zostawiała 24 px martwej przerwy nad pierwszą kartą. */
 @media (max-width: 999px) { .c5sk-list { display: block; margin-top: var(--w-space-3); } }
@@ -167,6 +184,8 @@
      czytnikiem ekranu, a na desktopie kolumna filtrów ma być dostępna zawsze. */
   .c5sk-facets { display: none; position: fixed; inset: 0; z-index: 130; background: var(--w-surface-page); padding: var(--w-space-5); overflow-y: auto; gap: var(--w-space-4); padding-bottom: 96px; }
   .c5sk-facets.is-open { display: flex; }
+  /* the drawer keeps the tone of the filter column (#F1EDE6, 20.10.2026) */
+  .c5sk-facets, .c5sk-facets .c5sk-drawerfoot { background: #F1EDE6; }
   .c5sk-facets:not(.is-open) .c5sk-drawerfoot { display: none; }
   .c5sk-drawerhead { display: flex; align-items: center; justify-content: space-between; gap: var(--w-space-3); }
   .c5sk-drawerfoot { position: fixed; left: 0; right: 0; bottom: 0; z-index: 131; padding: var(--w-space-3) var(--w-space-5) var(--w-space-4); background: var(--w-surface-page); border-top: 1px solid var(--w-border-default); }

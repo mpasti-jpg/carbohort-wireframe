@@ -86,6 +86,14 @@
    #roznice-eco-humic stands between them), so the section keeps the bottom
    padding of .c5-sec – the rule `.c5-when-sec{padding-bottom:0}` is gone. */
 /* The panels (CE-38): ce/CE-38-dwa-panele-fotograficzne.css */
+/* 20.10.2026: the photo layer is an <img> (3:4 files in a 4:5-ish frame) – crop,
+   never stretch; the module sizes the layer but sets no object-fit. */
+img.c5-when__ph{object-fit:cover;object-position:50% 50%;}
+/* One column: the copy of the "Pole" panel covers the tractor and the bright sky
+   of the photo – the same flat scrim as in the module, a notch darker. */
+@media (max-width:899px){
+  #sezon-panele .c5-when__panel:first-child .c5-when__media::after{background:rgb(0 0 0 / .56);}
+}
 
 /* The knobs of the CE-12 scene (the step of the track, the height of the
    illustration box) stand in the „Scena faktów" block above – one declaration on

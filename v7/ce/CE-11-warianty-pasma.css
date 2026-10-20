@@ -80,8 +80,9 @@
 .c5-kdm__band{background:var(--c5-kdm-band);overflow:clip;}
 .c5-kdm__in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,var(--c5-kdm-card-w));
   column-gap:clamp(24px,6vw,87px);align-items:start;
-  max-width:1800px;margin-inline:auto;
+  max-width:calc(var(--ch-layout-container-max) + 2 * var(--c5-kdm-gutter));margin-inline:auto;
   padding:var(--c5-kdm-pad) var(--c5-kdm-gutter);}
+/* content 1600 px at most – the site-wide width of EL-29 (20.10.2026; was 1800 px) */
 
 /* --- Left column: packshot + switch ------------------------------------------ */
 .c5-kdm__left{position:sticky;top:var(--c5-kdm-pad);isolation:isolate;
@@ -263,7 +264,7 @@
    rules of the tracks never count it – and every change of the current
    product (class is-on on its track, is-past on the ones above it) is a timed
    transition of opacity / transform. */
-[data-kdm="ruch"]{--c5-kdm-side:max(var(--c5-kdm-gutter),calc((100% - 1800px) / 2 + var(--c5-kdm-gutter)));
+[data-kdm="ruch"]{--c5-kdm-side:max(var(--c5-kdm-gutter),calc((100% - var(--ch-layout-container-max)) / 2));
   position:relative;isolation:isolate;overflow-x:clip;
   display:grid;grid-template-columns:minmax(0,1fr) minmax(0,var(--c5-kdm-card-w));
   grid-template-rows:repeat(var(--kdm-n,1),auto);
@@ -287,7 +288,7 @@
 [data-kdm="ruch"] .c5-kdm__bgs > span.is-on{opacity:1;}
 /* the outline of the sign: drawn in the tone of each product, shown from its
    product on (the later outline covers the earlier one line for line) */
-[data-kdm="ruch"] .c5-kdm__left::before{opacity:0;transition:opacity var(--c5-kdm-tone) var(--ch-motion-ease);}
+[data-kdm="ruch"] .c5-kdm__left::before{background:var(--c5-kdm-syg-fix,var(--c5-kdm-syg));opacity:0;transition:opacity var(--c5-kdm-tone) var(--ch-motion-ease);}
 [data-kdm="ruch"] .c5-kdm__track:is(.is-on,.is-past) .c5-kdm__left::before{opacity:1;}
 /* the packshot: out first (OUT), the next one in only after it (IN, delayed by
    OUT) – a hint of scale, no travel */

@@ -225,7 +225,9 @@
     --c5-fx-viz-w:min(var(--c5-fx-viz-w-fix,462px),calc(var(--c5-fx-panel-w) - 40px));
     --c5-fx-viz-h:min(var(--c5-fx-viz-h-fix,520px),calc(100svh - 2 * var(--c5-fx-pad-y) - 24px));
     /* parallax of the photo: how far it travels either way over the whole scene */
-    --c5-fx-par-max:28px;
+    /* 20.10.2026 (owner: "stronger, now barely visible"): 28 -> 80 px each way, so
+       the photo travels 160 px over the scene instead of 56 */
+    --c5-fx-par-max:80px;
     padding-block:0;
   }
   /* P08 (18.10.2026): the scene drops the padding of the section, so a head
@@ -262,7 +264,10 @@
      back while it scrolls up. Every layer reads the same --fx-par (written by the
      module script on the panel), so a change of slide never makes it jump; the
      layer is taller than the panel by the travel at either end, so no edge shows. */
-  .cx-js .c5-fx__img{top:calc(-1 * var(--c5-fx-par-max));bottom:calc(-1 * var(--c5-fx-par-max));height:auto;
+  /* 20.10.2026: the height is spelled out (panel + the travel at either end) –
+     an <img> with „height:auto" ignored top / bottom and kept its intrinsic
+     ratio, which left a gap at the edge on a photo of another proportion */
+  .cx-js .c5-fx__img{top:calc(-1 * var(--c5-fx-par-max));bottom:auto;height:calc(100% + 2 * var(--c5-fx-par-max));
     transform:translate3d(0,var(--fx-par,0px),0);will-change:opacity,transform;}
   /* the dock floats over the bottom edge of the window, right where the placeholder
      label sits – in the scene the label goes to the top-left corner of the panel.
@@ -630,7 +635,8 @@
    .c5-fx__stage – such a rule would tie with the scene and push its layers
    40 px inwards. */
 @media (min-width:900px){
-  .c5-fx.c5-fx--szeroki{--c5-fx-static-max:1800px;--c5-fx-static-pad:40px;}
+  /* EL-29 numbers since 20.10.2026 (content 1600 px, 24 px gutter; was 1800 / 40 px) */
+  .c5-fx.c5-fx--szeroki{--c5-fx-static-max:calc(var(--ch-layout-container-max) + 2 * var(--ch-layout-gutter));--c5-fx-static-pad:var(--ch-layout-gutter);}
 }
 
 /* ===== wariant: viz-auto ===== */

@@ -139,7 +139,8 @@ html.cx-js .c5-tl__item[data-open] .c5-tl__fig{opacity:1;}
      and the two columns stand far apart. `.c5-wrap` keeps its own numbers
      below 900 px and on every other section. */
   .c5-tl__wrap{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);
-    gap:clamp(3rem,8vw,10rem);max-width:1800px;padding-inline:40px;}
+    gap:clamp(3rem,8vw,10rem);max-width:calc(var(--ch-layout-container-max) + 2 * var(--ch-layout-gutter));padding-inline:var(--ch-layout-gutter);}
+  /* 20.10.2026: capped at the site-wide 1600 px content width (EL-29; was 1800 / 40 px) */
   /* Uwaga 4 (19.09): the head is all that is left in the left column, so it
      travels with the list instead of standing alone at the top. It is some
      200 px tall and sits at the top of the window, far from the advisor dock
