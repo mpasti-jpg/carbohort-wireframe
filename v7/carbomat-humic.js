@@ -86,7 +86,13 @@
       overlay.addEventListener("click", function () { closePop(); });
     }
     $$("[data-pop-open]").forEach(function (btn) {
-      btn.addEventListener("click", function () {
+      btn.addEventListener("click", function (e) {
+        /* an inline a.c5-pop-link: a plain left click opens the card without
+           changing the hash; modified clicks keep the browser default */
+        if (btn.tagName === "A") {
+          if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+          e.preventDefault();
+        }
         openPop(doc.getElementById(btn.getAttribute("data-pop-open")), btn);
       });
     });

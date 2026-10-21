@@ -93,6 +93,11 @@
    header) gets the strip as its first child, and this file attaches
    ce/CE-95-pasek-promocji.css. Closing is remembered in localStorage under
    "cw-promo-zamknieta:<id>", so a promotion with a new id shows again.
+
+   Comments on the mock-up (21.10.2026): ?uwagi=1 in the address turns on the
+   Agentation toolbar for the reader; every comment is saved at once through
+   the worker _narzedzia/uwagi-worker.js. Configuration (UWAGI) and the full
+   description sit next to the code, below the page-state badge.
    ===================================================================== */
 (function () {
   "use strict";
@@ -1304,6 +1309,311 @@
     document.addEventListener("DOMContentLoaded", renderStatus);
   } else {
     renderStatus();
+  }
+
+  /* ===== Comments on the mock-up (Agentation, 21.10.2026) ==================
+     Off by default: a page opened without ?uwagi=1 loads nothing of this.
+     ?uwagi=1 switches it on for this browser (remembered, so it stays on while
+     the reader moves between pages); ?uwagi=0 switches it off and forgets the
+     name. When on, a browser with a mouse gets:
+     - a one-time question for the reader's name (remembered),
+     - the Agentation toolbar (React component loaded on demand from esm.sh,
+       versions pinned in UWAGI): click an element, type, Enter saves,
+     - one POST per added, edited or removed comment to UWAGI.adres – the
+       Cloudflare Worker _narzedzia/uwagi-worker.js, which appends a line to
+       <projekt>.md in a private GitHub repository,
+     - a short confirmation after every save. A comment that could not be sent
+       waits in localStorage and goes out with the next one or on the next
+       page load; one the worker rejects (4xx) is dropped with a message,
+     - the comments already made on this page, by anyone, read back from the
+       worker before the toolbar mounts and shown as markers, each placed at
+       its element again (the layout may have changed since). Other people's
+       comments carry the author's name in front; editing or removing them
+       is not sent – only the author can change a comment.
+     Touch screens get a one-line note instead: Agentation is desktop only.
+     For a local test, localStorage "cw-uwagi-adres" overrides UWAGI.adres
+     (node _narzedzia/uwagi-worker-test.mjs --serwer 8740). */
+  var UWAGI = {
+    projekt: "carbohort",
+    adres: "https://uwagi.arbohort.workers.dev",
+    react: "https://esm.sh/react@18.3.1",
+    reactDom: "https://esm.sh/react-dom@18.3.1/client",
+    agentation: "https://esm.sh/agentation@3.1.2?deps=react@18.3.1,react-dom@18.3.1"
+  };
+  var UWAGI_ON = "cw-uwagi", UWAGI_WHO = "cw-uwagi-kto", UWAGI_QUEUE = "cw-uwagi-kolejka";
+  var UWAGI_CSS = `
+.cw-uwagi,.cw-uwagi-toast{position:fixed;right:24px;bottom:84px;z-index:2147483000;
+  box-sizing:border-box;max-width:calc(100vw - 32px);
+  font-family:var(--w-font-sans,system-ui,sans-serif);box-shadow:0 12px 40px rgba(0,0,0,.18)}
+.cw-uwagi{display:grid;gap:10px;width:340px;padding:18px 18px 16px;border-radius:12px;
+  background:#fff;color:#1a1a1a;font-size:14px;line-height:1.45}
+.cw-uwagi__tytul{margin:0;font-size:15px;font-weight:600}
+.cw-uwagi__opis{color:#555}
+.cw-uwagi__pole{font:inherit;padding:8px 10px;border:1px solid #c8c8c8;border-radius:8px}
+.cw-uwagi__ok{justify-self:start;font:inherit;font-weight:600;padding:8px 14px;border:0;
+  border-radius:8px;background:#1a1a1a;color:#fff;cursor:pointer}
+.cw-uwagi-toast{width:max-content;padding:10px 14px;border-radius:10px;background:#1a1a1a;
+  color:#fff;font-size:13px;line-height:1.4;opacity:0;transform:translateY(6px);
+  transition:opacity .2s ease,transform .2s ease;pointer-events:none}
+.cw-uwagi-toast.is-on{opacity:1;transform:none}
+.cw-uwagi-toast--blad{background:#b91c1c}
+@media (max-width:640px){.cw-uwagi,.cw-uwagi-toast{right:16px;bottom:16px}}
+@media print{.cw-uwagi,.cw-uwagi-toast,#cw-uwagi-pasek{display:none}}`;
+
+  function lsGet(key) {
+    try { return window.localStorage.getItem(key); } catch (e) { return null; }
+  }
+  function lsSet(key, value) {
+    try {
+      if (value === null) window.localStorage.removeItem(key);
+      else window.localStorage.setItem(key, value);
+    } catch (e) {}
+  }
+
+  function commentsWanted() {
+    var m = /[?&]uwagi=([01])(?:&|$)/.exec(location.search || "");
+    if (m && m[1] === "1") lsSet(UWAGI_ON, "1");
+    if (m && m[1] === "0") { lsSet(UWAGI_ON, null); lsSet(UWAGI_WHO, null); }
+    return lsGet(UWAGI_ON) === "1";
+  }
+
+  var toastTimer;
+  function toast(text, bad, ms) {
+    var t = document.querySelector(".cw-uwagi-toast");
+    if (!t) {
+      t = document.createElement("div");
+      t.className = "cw-uwagi-toast";
+      t.setAttribute("role", "status");
+      document.body.appendChild(t);
+    }
+    t.textContent = text;
+    t.classList.toggle("cw-uwagi-toast--blad", !!bad);
+    t.classList.add("is-on");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { t.classList.remove("is-on"); }, ms || 2200);
+  }
+
+  function readQueue() {
+    try { return JSON.parse(lsGet(UWAGI_QUEUE) || "[]"); } catch (e) { return []; }
+  }
+  function dropFromQueue(k) {
+    var q = readQueue().filter(function (x) { return x.k !== k; });
+    lsSet(UWAGI_QUEUE, q.length ? JSON.stringify(q) : null);
+  }
+
+  var SAVED = { nowa: "Zapisano uwagę", poprawka: "Zapisano poprawkę", usunieta: "Usunięto uwagę" };
+  var flushing = false;
+  function flush() {
+    var adres = lsGet("cw-uwagi-adres") || UWAGI.adres;
+    var q = readQueue();
+    if (flushing || !q.length) return;
+    if (!adres) {
+      toast("Uwaga została tylko w tej przeglądarce: zapis na serwerze nie jest jeszcze ustawiony.", true, 5000);
+      return;
+    }
+    var item = q[0];
+    flushing = true;
+    fetch(adres, {
+      method: "POST",
+      /* text/plain keeps it a simple request: no CORS preflight */
+      headers: { "Content-Type": "text/plain;charset=UTF-8" },
+      body: JSON.stringify(item.d),
+      keepalive: true
+    }).then(function (r) {
+      flushing = false;
+      if (r.ok) {
+        dropFromQueue(item.k);
+        toast(SAVED[item.d.typ]);
+        flush();
+      } else if (r.status >= 400 && r.status < 500 && r.status !== 429) {
+        dropFromQueue(item.k);
+        toast("Serwer nie przyjął uwagi (" + r.status + "). Napisz ją jeszcze raz albo daj znać.", true, 6000);
+        flush();
+      } else {
+        throw new Error(r.status);
+      }
+    }).catch(function () {
+      flushing = false;
+      toast("Nie udało się zapisać uwagi. Spróbujemy ponownie przy następnej.", true, 5000);
+    });
+  }
+
+  function sendComment(kto, typ, a) {
+    var q = readQueue();
+    q.push({
+      k: String(Date.now()) + Math.random().toString(36).slice(2, 6),
+      d: {
+        projekt: UWAGI.projekt, typ: typ, id: a.id, kto: kto,
+        strona: location.pathname, element: a.element, sciezka: a.elementPath,
+        zaznaczenie: a.selectedText || "", komentarz: a.comment, szer: window.innerWidth,
+        x: a.x, y: a.y, fixed: !!a.isFixed
+      }
+    });
+    lsSet(UWAGI_QUEUE, JSON.stringify(q));
+    flush();
+  }
+
+  function askName(done) {
+    var box = document.createElement("form");
+    box.className = "cw-uwagi";
+    box.setAttribute("role", "dialog");
+    box.setAttribute("aria-labelledby", "cw-uwagi-tytul");
+    box.innerHTML =
+      '<p class="cw-uwagi__tytul" id="cw-uwagi-tytul">Uwagi do makiety</p>' +
+      '<label class="cw-uwagi__opis" for="cw-uwagi-kto">Jak masz na imię? Podpiszemy nim Twoje uwagi.</label>' +
+      '<input class="cw-uwagi__pole" id="cw-uwagi-kto" name="kto" maxlength="60" autocomplete="given-name" required>' +
+      '<button class="cw-uwagi__ok" type="submit">Zaczynam</button>';
+    box.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var kto = box.elements.kto.value.trim();
+      if (!kto) return;
+      lsSet(UWAGI_WHO, kto);
+      box.remove();
+      done(kto);
+      toast("Kliknij ikonę w prawym dolnym rogu, potem element strony. Wpisz uwagę i wciśnij Enter – zapisze się od razu.", false, 9000);
+    });
+    document.body.appendChild(box);
+    box.elements.kto.focus();
+  }
+
+  /* The element of a comment: Agentation's path when it matches exactly one
+     element (it is a readable path, not always a strict selector), else the
+     last #id in the path, else the one element whose text starts with the
+     quoted text of Agentation's label (h1 "Program…", button "Dodaj"). */
+  var TEXT_TAGS = "a,button,h1,h2,h3,h4,h5,h6,p,li,label,summary,figcaption,th,td,dt,dd";
+  function findElement(path, label) {
+    var all, id, t;
+    if (path) {
+      try {
+        all = document.querySelectorAll(path);
+        if (all.length === 1) return all[0];
+      } catch (e) {}
+      id = /#([A-Za-z][\w-]*)\s*$/.exec(path);
+      if (id && document.getElementById(id[1])) return document.getElementById(id[1]);
+    }
+    t = /"(.{3,})"\s*$/.exec(label || "");
+    if (!t) return null;
+    var cut = /\.\.\.$/.test(t[1]), want = t[1].replace(/\.\.\.$/, "").trim();
+    var hits = [].filter.call(document.querySelectorAll(TEXT_TAGS), function (el) {
+      if (el.closest("[data-feedback-toolbar], .cw-uwagi, .cw-uwagi-toast")) return false;
+      var s = (el.textContent || "").replace(/\s+/g, " ").trim();
+      return cut ? s.indexOf(want) === 0 : s === want;
+    });
+    /* the innermost of nested matches (a link inside a list item, say) */
+    hits = hits.filter(function (el) {
+      return !hits.some(function (o) { return o !== el && el.contains(o); });
+    });
+    return hits.length === 1 ? hits[0] : null;
+  }
+
+  /* Marker at the element of the comment when it is still found, otherwise
+     where it was saved. */
+  function placeAt(a) {
+    var el = findElement(a.elementPath, a.element);
+    var r = el && el.getBoundingClientRect();
+    if (!r || (!r.width && !r.height)) return a;
+    var top = r.top + (a.isFixed ? 0 : window.scrollY);
+    a.x = Math.min(98, (r.left + Math.min(16, r.width / 2)) / window.innerWidth * 100);
+    a.y = top + Math.min(12, r.height / 2);
+    a.boundingBox = { x: r.left, y: top, width: r.width, height: r.height };
+    return a;
+  }
+
+  /* Replaces Agentation's stored annotations of this page with the worker's
+     list (plus this reader's comments still waiting to be sent). Returns the
+     ids of other people's comments; null when the list could not be read,
+     and then the stored annotations stay as they are. */
+  function loadEarlier(A, kto) {
+    var adres = lsGet("cw-uwagi-adres") || UWAGI.adres;
+    if (!adres || !window.fetch) return Promise.resolve(null);
+    var ctl = window.AbortController ? new AbortController() : null;
+    var timer = ctl && setTimeout(function () { ctl.abort(); }, 6000);
+    return fetch(adres + "?projekt=" + encodeURIComponent(UWAGI.projekt) +
+      "&strona=" + encodeURIComponent(location.pathname), ctl ? { signal: ctl.signal } : {})
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (res) {
+        clearTimeout(timer);
+        if (!res || !res.uwagi) return null;
+        var path = location.pathname, local = {}, waiting = {}, foreign = {};
+        A.loadAnnotations(path).forEach(function (a) { local[a.id] = a; });
+        readQueue().forEach(function (x) { waiting[x.d.id] = true; });
+        var list = res.uwagi.map(function (u) {
+          if (waiting[u.id] && local[u.id]) return local[u.id];
+          var own = u.kto === kto;
+          if (!own) foreign[u.id] = u.kto;
+          return placeAt({
+            id: u.id, comment: own ? u.komentarz : u.kto + ": " + u.komentarz,
+            element: u.element, elementPath: u.sciezka, selectedText: u.zaznaczenie || undefined,
+            x: u.x == null ? 50 : u.x, y: u.y == null ? 0 : u.y, isFixed: !!u.fixed,
+            timestamp: Date.now()
+          });
+        });
+        var seen = {};
+        list.forEach(function (a) { seen[a.id] = true; });
+        Object.keys(local).forEach(function (id) {
+          if (waiting[id] && !seen[id]) list.push(local[id]);
+        });
+        A.saveAnnotations(path, list);
+        return foreign;
+      })
+      .catch(function () { clearTimeout(timer); return null; });
+  }
+
+  /* Markers are placed from element positions, so wait for images and fonts. */
+  function pageLoaded() {
+    return new Promise(function (ok) {
+      if (document.readyState === "complete") ok();
+      else window.addEventListener("load", function () { ok(); }, { once: true });
+    });
+  }
+
+  function mountToolbar(kto) {
+    Promise.all([import(UWAGI.react), import(UWAGI.reactDom), import(UWAGI.agentation), pageLoaded()]).then(function (m) {
+      return loadEarlier(m[2], kto).then(function (foreign) {
+        foreign = foreign || {};
+        function change(typ) {
+          return function (a) {
+            if (foreign[a.id]) {
+              toast("To uwaga od: " + foreign[a.id] + ". Zmienić albo usunąć może ją tylko autor – po odświeżeniu strony wróci.", true, 7000);
+              return;
+            }
+            sendComment(kto, typ, a);
+          };
+        }
+        var host = document.createElement("div");
+        host.id = "cw-uwagi-pasek";
+        document.body.appendChild(host);
+        m[1].createRoot(host).render(m[0].createElement(m[2].Agentation, {
+          onAnnotationAdd: change("nowa"),
+          onAnnotationUpdate: change("poprawka"),
+          onAnnotationDelete: change("usunieta")
+        }));
+        flush();
+      });
+    }).catch(function () {
+      toast("Nie udało się wczytać paska uwag. Odśwież stronę.", true, 6000);
+    });
+  }
+
+  function startComments() {
+    if (!commentsWanted()) return;
+    var st = document.createElement("style");
+    st.id = "cw-uwagi-css";
+    st.textContent = UWAGI_CSS;
+    document.head.appendChild(st);
+    if (!(window.matchMedia && window.matchMedia("(pointer: fine)").matches)) {
+      toast("Uwagi do makiety dodasz na komputerze.", false, 4000);
+      return;
+    }
+    var kto = lsGet(UWAGI_WHO);
+    if (kto) mountToolbar(kto);
+    else askName(mountToolbar);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", startComments);
+  } else {
+    startComments();
   }
 
   define("cw-icons",  function (el) { el.innerHTML = ICONS; });

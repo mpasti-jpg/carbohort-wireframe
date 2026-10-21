@@ -1,11 +1,11 @@
 window.CE_DANE = {
  "meta": {
-  "wygenerowano": "20.10.2026",
+  "wygenerowano": "21.10.2026",
   "wersja": "0.1.0",
   "projekt": "CarboHort",
   "aktywnych": 85,
   "wycofanych": 14,
-  "wystapien": 319,
+  "wystapien": 331,
   "stron": 34,
   "bazaStron": "v7/"
  },
@@ -4820,6 +4820,48 @@ window.CE_DANE = {
      "wariant": null
     },
     {
+     "plik": "carbomat-humic.html",
+     "strona": "CARBOMAT HUMIC",
+     "id": "czym-jest-wiecej-1",
+     "naglowek": "Pochodzenie produktu",
+     "wariant": null
+    },
+    {
+     "plik": "carbomat-humic.html",
+     "strona": "CARBOMAT HUMIC",
+     "id": "czym-jest-wiecej-7",
+     "naglowek": "Bogaty kompleks związków organicznych",
+     "wariant": null
+    },
+    {
+     "plik": "carbomat-humic.html",
+     "strona": "CARBOMAT HUMIC",
+     "id": "czym-jest-wiecej-8",
+     "naglowek": "Czysty i bezpieczny dla gleby",
+     "wariant": null
+    },
+    {
+     "plik": "carbomat-humic.html",
+     "strona": "CARBOMAT HUMIC",
+     "id": "czym-jest-wiecej-9",
+     "naglowek": "Częściowa rozpuszczalność",
+     "wariant": null
+    },
+    {
+     "plik": "carbohumic-doglebowy.html",
+     "strona": "CARBOHUMIC doglebowy",
+     "id": "czym-jest-wiecej-3",
+     "naglowek": "Co zawiera?",
+     "wariant": null
+    },
+    {
+     "plik": "carbohumic-doglebowy.html",
+     "strona": "CARBOHUMIC doglebowy",
+     "id": "czym-jest-wiecej-4",
+     "naglowek": "Dlaczego wersja płynna a nie sypka?",
+     "wariant": null
+    },
+    {
      "plik": "carbohumic-dolistny.html",
      "strona": "CARBOHUMIC dolistny",
      "id": "pop-maxi",
@@ -4831,6 +4873,20 @@ window.CE_DANE = {
      "strona": "CARBOHUMIC dolistny",
      "id": "pop-calbor",
      "naglowek": "Carbohumic Calbor",
+     "wariant": null
+    },
+    {
+     "plik": "carbomat-mata.html",
+     "strona": "CARBOMAT Mata Uprawowa",
+     "id": "czym-jest-wiecej-2",
+     "naglowek": "Bogactwo naturalnych substancji aktywnych",
+     "wariant": null
+    },
+    {
+     "plik": "carbomat-mata.html",
+     "strona": "CARBOMAT Mata Uprawowa",
+     "id": "czym-jest-wiecej-5",
+     "naglowek": "Podłoże, które wybacza błędy",
      "wariant": null
     },
     {
@@ -4860,6 +4916,34 @@ window.CE_DANE = {
      "id": "profile",
      "naglowek": "Aroniowa demo farma Michał Piątek",
      "wariant": "jeden-dialog"
+    },
+    {
+     "plik": "prochnica-plus.html",
+     "strona": "Próchnica+",
+     "id": "metodologia-wiecej-1",
+     "naglowek": "Oznaczenia obszarów",
+     "wariant": null
+    },
+    {
+     "plik": "prochnica-plus.html",
+     "strona": "Próchnica+",
+     "id": "metodologia-wiecej-2",
+     "naglowek": "Pobór próbek i badania",
+     "wariant": null
+    },
+    {
+     "plik": "prochnica-plus.html",
+     "strona": "Próchnica+",
+     "id": "metodologia-wiecej-3",
+     "naglowek": "Zakres badań",
+     "wariant": null
+    },
+    {
+     "plik": "prochnica-plus.html",
+     "strona": "Próchnica+",
+     "id": "metodologia-wiecej-6",
+     "naglowek": "Wyniki",
+     "wariant": null
     },
     {
      "plik": "produkty.html",
