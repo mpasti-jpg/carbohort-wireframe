@@ -1768,7 +1768,7 @@
     }
     var s = cardSurface, cur = s.__cwShift || [0, 0];
     var p = propsWith(cardNode, "editorProps"), m = p && p.annotation && points[p.annotation.id];
-    labelCard(s, p && p.annotation && p.annotation.id);
+    labelCard(s, p && p.annotation && p.annotation.id, !!(p && p.editing));
     if (!m) {
       if (cur[0] || cur[1]) { s.__cwShift = [0, 0]; s.style.translate = ""; }
       return;
@@ -1781,20 +1781,24 @@
     s.__cwShift = [dx, dy];
     s.style.translate = dx.toFixed(1) + "px " + dy.toFixed(1) + "px";
   }
-  /* The number of the comment, small and pale in the top right corner of
+  /* The number of the comment, small and pale in the bottom right corner of
      its card: "U-12" – the same number as in the file, in Claude Code's list
-     and in a link to the comment. */
-  function labelCard(surface, id) {
+     and in a link to the comment. White with mix-blend-mode: difference reads
+     on the dark and on the light card alike; hidden while the card is the
+     edit form, whose buttons sit in that corner. */
+  function labelCard(surface, id, editing) {
     var nr = id && numbers[id], tag = surface.querySelector(".cw-uwagi-nr");
     if (!nr) { if (tag) tag.remove(); return; }
     if (!tag) {
       tag = document.createElement("span");
       tag.className = "cw-uwagi-nr";
-      tag.style.cssText = "position:absolute;top:5px;right:9px;font:500 9px/1 system-ui,sans-serif;" +
-        "letter-spacing:.03em;opacity:.5;pointer-events:none";
+      tag.style.cssText = "position:absolute;right:10px;bottom:7px;font:500 9px/1 system-ui,sans-serif;" +
+        "letter-spacing:.03em;color:#fff;mix-blend-mode:difference;opacity:.6;pointer-events:none";
       surface.appendChild(tag);
     }
     if (tag.textContent !== "U-" + nr) tag.textContent = "U-" + nr;
+    var show = editing ? "none" : "";
+    if (tag.style.display !== show) tag.style.display = show;
   }
   function showMarker(node, on) {
     node.style.visibility = on ? "" : "hidden";
