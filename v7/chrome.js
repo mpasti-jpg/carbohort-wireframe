@@ -1329,7 +1329,13 @@
        worker before the toolbar mounts and shown as markers, each placed at
        its element again (the layout may have changed since). Other people's
        comments carry the author's name in front; editing or removing them
-       is not sent – only the author can change a comment.
+       is not sent – only the author can change a comment,
+     - markers that follow their elements through pinned and switching scenes
+       and hide with them (block "Markers follow their elements" below),
+     - the same with the CE overlay (ce-overlay.js) on or off: in comment
+       mode its labels let clicks through to the page element under them,
+       and its "CE: wł./wył." switch still switches (it is marked as toolbar
+       UI, which Agentation ignores) – a comment never belongs to the overlay.
      Touch screens get a one-line note instead: Agentation is desktop only.
      For a local test, localStorage "cw-uwagi-adres" overrides UWAGI.adres
      (node _narzedzia/uwagi-worker-test.mjs --serwer 8740). */
@@ -1357,6 +1363,10 @@
   transition:opacity .2s ease,transform .2s ease;pointer-events:none}
 .cw-uwagi-toast.is-on{opacity:1;transform:none}
 .cw-uwagi-toast--blad{background:#b91c1c}
+/* While the toolbar is in comment mode the labels of the CE overlay
+   (ce-overlay.js) let the click through to the page element under them:
+   the comment belongs to the page, which a reader without the overlay sees. */
+[data-cw-uwagi-tryb] .cw-ce-tag{pointer-events:none!important}
 @media (max-width:640px){.cw-uwagi,.cw-uwagi-toast{right:16px;bottom:16px}}
 @media print{.cw-uwagi,.cw-uwagi-toast,#cw-uwagi-pasek{display:none}}`;
 
@@ -1440,11 +1450,15 @@
 
   function sendComment(kto, typ, a) {
     var q = readQueue();
+    /* the exact selector of the element clicked, so other readers find it;
+       Agentation's own path is a readable one and often matches many */
+    var an = anchors[a.id], saved = readAnchors()[a.id];
+    var sciezka = an && an.el && an.el.isConnected ? selectorOf(an.el) : saved ? saved.s : a.elementPath;
     q.push({
       k: String(Date.now()) + Math.random().toString(36).slice(2, 6),
       d: {
         projekt: UWAGI.projekt, typ: typ, id: a.id, kto: kto,
-        strona: location.pathname, element: a.element, sciezka: a.elementPath,
+        strona: location.pathname, element: a.element, sciezka: sciezka,
         zaznaczenie: a.selectedText || "", komentarz: a.comment, szer: window.innerWidth,
         x: a.x, y: a.y, fixed: !!a.isFixed
       }
@@ -1493,12 +1507,16 @@
     }
     t = /"(.{3,})"\s*$/.exec(label || "");
     if (!t) return null;
-    var cut = /\.\.\.$/.test(t[1]), want = t[1].replace(/\.\.\.$/, "").trim();
+    /* Agentation cuts the text of buttons and links at 25 characters and of
+       headings at 35 without marking it, and of paragraphs at 40 with "...":
+       a match is a text that starts with the label; a whole match wins. */
+    var want = t[1].replace(/\.\.\.$/, "").trim();
     var hits = [].filter.call(document.querySelectorAll(TEXT_TAGS), function (el) {
-      if (el.closest("[data-feedback-toolbar], .cw-uwagi, .cw-uwagi-toast")) return false;
-      var s = (el.textContent || "").replace(/\s+/g, " ").trim();
-      return cut ? s.indexOf(want) === 0 : s === want;
+      if (el.closest(OUR_UI)) return false;
+      return (el.textContent || "").replace(/\s+/g, " ").trim().indexOf(want) === 0;
     });
+    var whole = hits.filter(function (el) { return (el.textContent || "").replace(/\s+/g, " ").trim() === want; });
+    if (whole.length) hits = whole;
     /* the innermost of nested matches (a link inside a list item, say) */
     hits = hits.filter(function (el) {
       return !hits.some(function (o) { return o !== el && el.contains(o); });
@@ -1517,6 +1535,274 @@
     a.y = top + Math.min(12, r.height / 2);
     a.boundingBox = { x: r.left, y: top, width: r.width, height: r.height };
     return a;
+  }
+
+  /* ===== Markers follow their elements (21.10.2026) =========================
+     Agentation places a marker once, at the point clicked: in page
+     coordinates, or – when any ancestor of the element is position: fixed or
+     sticky, as in every pinned scene of the site – in window coordinates, so
+     the marker then stays put on the screen while the page scrolls and the
+     scene switches. Here every marker is moved onto its element on each frame
+     of scrolling or resizing and every 120 ms in between (scenes that switch
+     on their own), with the CSS "translate" property, which React leaves
+     alone. A marker is hidden while its element cannot be seen: outside the
+     window, display none, visibility hidden, opacity (with its parents')
+     below .15, clipped by a parent with overflow, or under a fixed or sticky
+     layer it does not belong to (the site header, the dock). The element of
+     a comment is the one clicked, remembered per comment id as a selector
+     (localStorage "cw-uwagi-kotwice"), else findElement(). A marker whose
+     element is not found stays where Agentation put it when it scrolls with
+     the page, and is hidden when it is pinned to the window. */
+  var UWAGI_ANCHORS = "cw-uwagi-kotwice";
+  var OUR_UI = "agentation-toolbar, [data-feedback-toolbar], #cw-uwagi-pasek, .cw-uwagi, .cw-uwagi-toast, .cw-ce-layer, .cw-ce-fx, .cw-ce-switch";
+  var anchors = {}, savedAnchors = null;
+
+  function readAnchors() {
+    if (!savedAnchors) {
+      try { savedAnchors = JSON.parse(lsGet(UWAGI_ANCHORS) || "{}") || {}; } catch (e) { savedAnchors = {}; }
+    }
+    return savedAnchors;
+  }
+  function writeAnchors() {
+    var ids = Object.keys(savedAnchors || {});
+    /* the newest 300 are plenty for one browser */
+    ids.slice(0, Math.max(0, ids.length - 300)).forEach(function (id) { delete savedAnchors[id]; });
+    lsSet(UWAGI_ANCHORS, ids.length ? JSON.stringify(savedAnchors) : null);
+  }
+
+  /* A selector that finds exactly this element: from the nearest ancestor
+     with a unique id down, tag and position among siblings of the same tag. */
+  function selectorOf(el) {
+    var parts = [], n = el, i, s;
+    for (; n && n.nodeType === 1 && n !== document.body && parts.length < 14; n = n.parentElement) {
+      if (n.id && document.querySelectorAll("#" + CSS.escape(n.id)).length === 1) {
+        parts.unshift("#" + CSS.escape(n.id));
+        return parts.join(" > ");
+      }
+      for (i = 1, s = n; (s = s.previousElementSibling);) if (s.tagName === n.tagName) i++;
+      parts.unshift(n.tagName.toLowerCase() + ":nth-of-type(" + i + ")");
+    }
+    return (n === document.body ? "body > " : "") + parts.join(" > ");
+  }
+
+  function pageElementsAt(x, y) {
+    return (document.elementsFromPoint ? document.elementsFromPoint(x, y) : []).filter(function (el) {
+      return el !== document.documentElement && el !== document.body && !el.closest(OUR_UI);
+    });
+  }
+
+  function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+
+  /* Called when a comment is added: finds the element under the point
+     clicked (the one whose box Agentation recorded) and remembers it. */
+  function rememberAnchor(a) {
+    var cx = a.x / 100 * window.innerWidth;
+    var cy = a.isFixed ? a.y : a.y - window.scrollY;
+    var bb = a.boundingBox, hits = pageElementsAt(cx, cy), el = null;
+    if (bb) {
+      var top = a.isFixed ? bb.y : bb.y - window.scrollY;
+      hits.some(function (h) {
+        var r = h.getBoundingClientRect();
+        if (Math.abs(r.left - bb.x) < 3 && Math.abs(r.top - top) < 3 &&
+            Math.abs(r.width - bb.width) < 3 && Math.abs(r.height - bb.height) < 3) { el = h; return true; }
+        return false;
+      });
+    }
+    el = el || findElement(a.elementPath, a.element) || hits[0];
+    if (!el) return;
+    var r = el.getBoundingClientRect();
+    var an = { el: el, fx: r.width ? clamp01((cx - r.left) / r.width) : .5, fy: r.height ? clamp01((cy - r.top) / r.height) : .5 };
+    anchors[a.id] = an;
+    readAnchors()[a.id] = { s: selectorOf(el), fx: an.fx, fy: an.fy };
+    writeAnchors();
+  }
+  function forgetAnchor(id) {
+    delete anchors[id];
+    if (readAnchors()[id]) { delete savedAnchors[id]; writeAnchors(); }
+  }
+
+  /* The element of a marker and the point inside it (fractions of its box;
+     null = 12 px in from the top left corner). A miss is retried every 2 s –
+     content built by a script may come later. */
+  function anchorFor(a) {
+    var an = anchors[a.id], now = Date.now();
+    if (an && (an.el ? an.el.isConnected : now - an.t < 2000)) return an.el ? an : null;
+    var saved = readAnchors()[a.id], el = null, all, fx = null, fy = null;
+    if (saved) {
+      try { all = document.querySelectorAll(saved.s); if (all.length === 1) el = all[0]; } catch (e) {}
+      if (el) { fx = saved.fx; fy = saved.fy; }
+    }
+    el = el || findElement(a.elementPath, a.element);
+    if (!el) { anchors[a.id] = { el: null, t: now }; return null; }
+    var bb = a.boundingBox;
+    if (fx == null && bb && bb.width > 0 && bb.height > 0) {
+      fx = clamp01((a.x / 100 * window.innerWidth - bb.x) / bb.width);
+      fy = clamp01((a.y - bb.y) / bb.height);
+    }
+    return (anchors[a.id] = { el: el, fx: fx, fy: fy });
+  }
+
+  /* opacity of the element with its parents, from the last hiddenByStyle() */
+  var lastOpacity = 1;
+  function hiddenByStyle(n) {
+    var op = 1, s;
+    for (; n && n !== document.body; n = n.parentElement) {
+      s = window.getComputedStyle(n);
+      if (s.display === "none" || s.visibility === "hidden" || s.visibility === "collapse") { lastOpacity = 0; return true; }
+      op *= parseFloat(s.opacity) || 0;
+      if (op < 0.15) { lastOpacity = op; return true; }
+    }
+    lastOpacity = op;
+    return false;
+  }
+  function pinnedAncestor(n) {
+    for (; n && n !== document.body; n = n.parentElement) {
+      var p = window.getComputedStyle(n).position;
+      if (p === "fixed" || p === "sticky") return n;
+    }
+    return null;
+  }
+
+  /* opacity of the element seen by the last canSee(), -1 = not measured */
+  var seenOpacity = -1;
+  function canSee(el, r, x, y) {
+    seenOpacity = -1;
+    if (!el.isConnected || r.width < 1 || r.height < 1) return false;
+    if (x < 0 || y < 0 || x > window.innerWidth || y > window.innerHeight) return false;
+    var hidden = hiddenByStyle(el);
+    seenOpacity = lastOpacity;
+    if (hidden) return false;
+    for (var n = el.parentElement; n && n !== document.body; n = n.parentElement) {
+      var s = window.getComputedStyle(n);
+      if (s.overflowX !== "visible" || s.overflowY !== "visible") {
+        var pr = n.getBoundingClientRect();
+        if (x < pr.left || x > pr.right || y < pr.top || y > pr.bottom) return false;
+      }
+    }
+    var hits = pageElementsAt(x, y);
+    for (var i = 0; i < hits.length; i++) {
+      var h = hits[i];
+      if (h === el || el.contains(h) || h.contains(el)) return true;
+      if (hiddenByStyle(h)) continue;
+      var pin = pinnedAncestor(h);
+      if (pin && !pin.contains(el)) return false;
+    }
+    return true;
+  }
+
+  /* The annotation a marker shows, read from React's props on its node. */
+  function annotationOf(node) {
+    var keys = Object.keys(node);
+    for (var i = 0; i < keys.length; i++) {
+      if (keys[i].indexOf("__reactFiber$") !== 0) continue;
+      for (var f = node[keys[i]], d = 0; f && d < 6; f = f.return, d++) {
+        if (f.memoizedProps && f.memoizedProps.annotation) return f.memoizedProps.annotation;
+      }
+    }
+    return null;
+  }
+
+  /* true when the marker had to move (its element is still on the way) */
+  function moveMarker(node, x, y) {
+    var t = node.__cwShift || [0, 0], b = node.getBoundingClientRect();
+    var dx = x - (b.left + b.width / 2 - t[0]), dy = y - (b.top + b.height / 2 - t[1]);
+    if (Math.abs(dx - t[0]) < 0.5 && Math.abs(dy - t[1]) < 0.5) return false;
+    node.__cwShift = [dx, dy];
+    node.style.translate = dx.toFixed(1) + "px " + dy.toFixed(1) + "px";
+    return true;
+  }
+
+  /* The card Agentation shows at a marker (hover preview, edit form) is
+     placed from the saved point too, and clamped to the window: it is moved
+     next to the marker where it stands now – below it, or above it when
+     there is no room below. */
+  var cardNode = null, cardSurface = null;
+  function propsWith(node, key) {
+    var keys = Object.keys(node);
+    for (var i = 0; i < keys.length; i++) {
+      if (keys[i].indexOf("__reactFiber$") !== 0) continue;
+      for (var f = node[keys[i]], d = 0; f && d < 5; f = f.return, d++) {
+        if (f.memoizedProps && key in f.memoizedProps) return f.memoizedProps;
+      }
+    }
+    return null;
+  }
+  function moveCard(root, points) {
+    if (!cardNode || !cardNode.isConnected) {
+      cardNode = cardSurface = null;
+      var all = root.querySelectorAll("*");
+      for (var i = 0; i < all.length && !cardNode; i++) if (propsWith(all[i], "editorProps")) cardNode = all[i];
+      if (!cardNode) return;
+    }
+    /* the surface is the fixed box Agentation gives left and top */
+    if (!cardSurface || !cardNode.contains(cardSurface)) {
+      cardSurface = [cardNode].concat([].slice.call(cardNode.querySelectorAll("*"))).filter(function (e) {
+        return e.style.left && e.style.top && window.getComputedStyle(e).position === "fixed";
+      })[0] || null;
+      if (!cardSurface) return;
+    }
+    var s = cardSurface, cur = s.__cwShift || [0, 0];
+    var p = propsWith(cardNode, "editorProps"), m = p && p.annotation && points[p.annotation.id];
+    if (!m) {
+      if (cur[0] || cur[1]) { s.__cwShift = [0, 0]; s.style.translate = ""; }
+      return;
+    }
+    var r = s.getBoundingClientRect(), gap = 21;
+    var left = Math.max(12, Math.min(window.innerWidth - r.width - 12, m[0] - r.width / 2));
+    var top = m[1] + gap + r.height < window.innerHeight - 12 ? m[1] + gap : Math.max(12, m[1] - gap - r.height);
+    var dx = left - (r.left - cur[0]), dy = top - (r.top - cur[1]);
+    if (Math.abs(dx - cur[0]) < 0.5 && Math.abs(dy - cur[1]) < 0.5) return;
+    s.__cwShift = [dx, dy];
+    s.style.translate = dx.toFixed(1) + "px " + dy.toFixed(1) + "px";
+  }
+  function showMarker(node, on) {
+    node.style.visibility = on ? "" : "hidden";
+    node.style.pointerEvents = on ? "" : "none";
+  }
+
+  var followFrame = 0;
+  function followMarkers() {
+    followFrame = 0;
+    /* Agentation renders into the open shadow root of <agentation-toolbar> */
+    var host = document.querySelector("agentation-toolbar"), root = host && host.shadowRoot;
+    if (!root) return;
+    /* comment mode on = the toolbar is expanded; the CE overlay switch is
+       marked as toolbar UI, so Agentation lets a click on it switch the
+       overlay instead of commenting on the switch */
+    var on = !!root.querySelector('[class*="toolbarContainer"][class*="expanded"]');
+    if (document.documentElement.hasAttribute("data-cw-uwagi-tryb") !== on) {
+      document.documentElement.toggleAttribute("data-cw-uwagi-tryb", on);
+    }
+    var sw = document.querySelector(".cw-ce-switch");
+    if (sw && !sw.hasAttribute("data-feedback-toolbar")) sw.setAttribute("data-feedback-toolbar", "");
+    var nodes = root.querySelectorAll("[data-annotation-marker]"), points = {}, moving = false;
+    for (var i = 0; i < nodes.length; i++) {
+      var node = nodes[i], a = annotationOf(node);
+      if (!a) continue;
+      var an = anchorFor(a);
+      if (!an) {
+        showMarker(node, window.getComputedStyle(node.parentElement).position !== "fixed");
+        continue;
+      }
+      var r = an.el.getBoundingClientRect();
+      var x = r.left + (an.fx == null ? Math.min(12, r.width / 2) : an.fx * r.width);
+      var y = r.top + (an.fy == null ? Math.min(12, r.height / 2) : an.fy * r.height);
+      if (moveMarker(node, x, y)) moving = true;
+      points[a.id] = [x, y];
+      showMarker(node, canSee(an.el, r, x, y));
+      if (seenOpacity >= 0 && node.__cwOpacity != null && Math.abs(seenOpacity - node.__cwOpacity) > 0.01) moving = true;
+      node.__cwOpacity = seenOpacity;
+    }
+    moveCard(root, points);
+    /* an element in the middle of a transition (moving or fading): follow
+       it frame by frame */
+    if (moving) askFollow();
+  }
+  function askFollow() { if (!followFrame) followFrame = window.requestAnimationFrame(followMarkers); }
+  function startFollowing() {
+    window.addEventListener("scroll", askFollow, { passive: true, capture: true });
+    window.addEventListener("resize", askFollow);
+    window.setInterval(askFollow, 120);
   }
 
   /* Replaces Agentation's stored annotations of this page with the worker's
@@ -1577,6 +1863,8 @@
               toast("To uwaga od: " + foreign[a.id] + ". Zmienić albo usunąć może ją tylko autor – po odświeżeniu strony wróci.", true, 7000);
               return;
             }
+            if (typ === "nowa") rememberAnchor(a);
+            if (typ === "usunieta") forgetAnchor(a.id);
             sendComment(kto, typ, a);
           };
         }
@@ -1588,6 +1876,7 @@
           onAnnotationUpdate: change("poprawka"),
           onAnnotationDelete: change("usunieta")
         }));
+        startFollowing();
         flush();
       });
     }).catch(function () {
