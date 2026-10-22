@@ -1312,11 +1312,15 @@
   }
 
   /* ===== Comments on the mock-up (Agentation, 21.10.2026) ==================
-     Off by default: a page opened without ?uwagi=1 loads nothing of this.
-     ?uwagi=1 switches it on for this browser (remembered, so it stays on while
-     the reader moves between pages); ?uwagi=0 switches it off and forgets the
-     name. When on, a browser with a mouse gets:
-     - a one-time question for the reader's name (remembered),
+     On by default (22.10.2026) on the pages of a version folder (v7/*.html,
+     not v7/lab/) served from GitHub Pages or the local preview. Off in
+     claude.ai artifacts (esm.sh is not an allowed host there), on tool pages
+     (style guide, CE index) and under automation (navigator.webdriver: QA
+     runs, CE index screenshots), so none of them changes. ?uwagi=0 switches
+     it off for this browser and forgets the name, ?uwagi=1 switches it on
+     anywhere (both remembered). When on, a browser with a mouse gets:
+     - a question for the reader's name the first time the toolbar is opened
+       (remembered),
      - the Agentation toolbar (React component loaded on demand from esm.sh,
        versions pinned in UWAGI): click an element, type, Enter saves,
      - one POST per added, edited or removed comment to UWAGI.adres – the
@@ -1336,7 +1340,8 @@
        mode its labels let clicks through to the page element under them,
        and its "CE: wł./wył." switch still switches (it is marked as toolbar
        UI, which Agentation ignores) – a comment never belongs to the overlay.
-     Touch screens get a one-line note instead: Agentation is desktop only.
+     Touch screens get a one-line note instead, once per visit: Agentation is
+     desktop only.
      For a local test, localStorage "cw-uwagi-adres" overrides UWAGI.adres
      (node _narzedzia/uwagi-worker-test.mjs --serwer 8740). */
   var UWAGI = {
@@ -1382,10 +1387,16 @@
 
   function commentsWanted() {
     var m = /[?&]uwagi=([01])(?:&|$)/.exec(location.search || "");
-    if (m && m[1] === "1") lsSet(UWAGI_ON, "1");
-    if (m && m[1] === "0") { lsSet(UWAGI_ON, null); lsSet(UWAGI_WHO, null); }
-    return lsGet(UWAGI_ON) === "1";
+    if (m) lsSet(UWAGI_ON, m[1]);
+    if (m && m[1] === "0") lsSet(UWAGI_WHO, null);
+    var v = lsGet(UWAGI_ON);
+    if (v === "1") return true;
+    if (v === "0") return false;
+    return !navigator.webdriver &&
+      /(^|\.)github\.io$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) &&
+      /\/v\d+\/(?:[\w-]+\.html)?$/.test(location.pathname);
   }
+  function readerName() { return lsGet(UWAGI_WHO) || ""; }
 
   var toastTimer;
   function toast(text, bad, ms) {
@@ -1394,6 +1405,8 @@
       t = document.createElement("div");
       t.className = "cw-uwagi-toast";
       t.setAttribute("role", "status");
+      /* toolbar UI for Agentation: never a target of a comment */
+      t.setAttribute("data-feedback-toolbar", "");
       document.body.appendChild(t);
     }
     t.textContent = text;
@@ -1433,8 +1446,12 @@
       flushing = false;
       if (r.ok) {
         dropFromQueue(item.k);
-        toast(SAVED[item.d.typ]);
-        flush();
+        /* the worker answers with the number of the comment (U-N) */
+        r.json().catch(function () { return {}; }).then(function (res) {
+          if (res && res.nr) numbers[item.d.id] = res.nr;
+          toast(SAVED[item.d.typ] + (res && res.nr ? " U-" + res.nr : ""));
+          flush();
+        });
       } else if (r.status >= 400 && r.status < 500 && r.status !== 429) {
         dropFromQueue(item.k);
         toast("Serwer nie przyjął uwagi (" + r.status + "). Napisz ją jeszcze raz albo daj znać.", true, 6000);
@@ -1460,18 +1477,24 @@
         projekt: UWAGI.projekt, typ: typ, id: a.id, kto: kto,
         strona: location.pathname, element: a.element, sciezka: sciezka,
         zaznaczenie: a.selectedText || "", komentarz: a.comment, szer: window.innerWidth,
-        x: a.x, y: a.y, fixed: !!a.isFixed
+        x: a.x, y: a.y, fixed: !!a.isFixed,
+        /* where the page stood: a link to the comment (#U-N) starts there */
+        przewiniecie: Math.round(window.scrollY)
       }
     });
     lsSet(UWAGI_QUEUE, JSON.stringify(q));
     flush();
   }
 
-  function askName(done) {
+  /* Asked the first time the toolbar is opened (followMarkers), not on load:
+     the toolbar is there for every reader from the start. */
+  function askName() {
     var box = document.createElement("form");
     box.className = "cw-uwagi";
     box.setAttribute("role", "dialog");
     box.setAttribute("aria-labelledby", "cw-uwagi-tytul");
+    /* Agentation leaves the form alone, so it can be clicked in comment mode */
+    box.setAttribute("data-feedback-toolbar", "");
     box.innerHTML =
       '<p class="cw-uwagi__tytul" id="cw-uwagi-tytul">Uwagi do makiety</p>' +
       '<label class="cw-uwagi__opis" for="cw-uwagi-kto">Jak masz na imię? Podpiszemy nim Twoje uwagi.</label>' +
@@ -1483,8 +1506,7 @@
       if (!kto) return;
       lsSet(UWAGI_WHO, kto);
       box.remove();
-      done(kto);
-      toast("Kliknij ikonę w prawym dolnym rogu, potem element strony. Wpisz uwagę i wciśnij Enter – zapisze się od razu.", false, 9000);
+      toast("Kliknij element strony, wpisz uwagę i wciśnij Enter – zapisze się od razu.", false, 8000);
     });
     document.body.appendChild(box);
     box.elements.kto.focus();
@@ -1556,6 +1578,9 @@
   var UWAGI_ANCHORS = "cw-uwagi-kotwice";
   var OUR_UI = "agentation-toolbar, [data-feedback-toolbar], #cw-uwagi-pasek, .cw-uwagi, .cw-uwagi-toast, .cw-ce-layer, .cw-ce-fx, .cw-ce-switch";
   var anchors = {}, savedAnchors = null;
+  /* comment id → its number (U-N); every comment of the page from the
+     worker, done ones included (links to a done comment still find it) */
+  var numbers = {}, pageComments = [];
 
   function readAnchors() {
     if (!savedAnchors) {
@@ -1743,6 +1768,7 @@
     }
     var s = cardSurface, cur = s.__cwShift || [0, 0];
     var p = propsWith(cardNode, "editorProps"), m = p && p.annotation && points[p.annotation.id];
+    labelCard(s, p && p.annotation && p.annotation.id);
     if (!m) {
       if (cur[0] || cur[1]) { s.__cwShift = [0, 0]; s.style.translate = ""; }
       return;
@@ -1754,6 +1780,21 @@
     if (Math.abs(dx - cur[0]) < 0.5 && Math.abs(dy - cur[1]) < 0.5) return;
     s.__cwShift = [dx, dy];
     s.style.translate = dx.toFixed(1) + "px " + dy.toFixed(1) + "px";
+  }
+  /* The number of the comment, small and pale in the top right corner of
+     its card: "U-12" – the same number as in the file, in Claude Code's list
+     and in a link to the comment. */
+  function labelCard(surface, id) {
+    var nr = id && numbers[id], tag = surface.querySelector(".cw-uwagi-nr");
+    if (!nr) { if (tag) tag.remove(); return; }
+    if (!tag) {
+      tag = document.createElement("span");
+      tag.className = "cw-uwagi-nr";
+      tag.style.cssText = "position:absolute;top:5px;right:9px;font:500 9px/1 system-ui,sans-serif;" +
+        "letter-spacing:.03em;opacity:.5;pointer-events:none";
+      surface.appendChild(tag);
+    }
+    if (tag.textContent !== "U-" + nr) tag.textContent = "U-" + nr;
   }
   function showMarker(node, on) {
     node.style.visibility = on ? "" : "hidden";
@@ -1773,6 +1814,7 @@
     if (document.documentElement.hasAttribute("data-cw-uwagi-tryb") !== on) {
       document.documentElement.toggleAttribute("data-cw-uwagi-tryb", on);
     }
+    if (on && !readerName() && !document.querySelector(".cw-uwagi")) askName();
     var sw = document.querySelector(".cw-ce-switch");
     if (sw && !sw.hasAttribute("data-feedback-toolbar")) sw.setAttribute("data-feedback-toolbar", "");
     var nodes = root.querySelectorAll("[data-annotation-marker]"), points = {}, moving = false;
@@ -1806,9 +1848,10 @@
   }
 
   /* Replaces Agentation's stored annotations of this page with the worker's
-     list (plus this reader's comments still waiting to be sent). Returns the
-     ids of other people's comments; null when the list could not be read,
-     and then the stored annotations stay as they are. */
+     open comments (plus this reader's comments still waiting to be sent);
+     comments marked done (_narzedzia/uwagi.py zrobione) get no marker.
+     Returns the ids of other people's comments; null when the list could not
+     be read, and then the stored annotations stay as they are. */
   function loadEarlier(A, kto) {
     var adres = lsGet("cw-uwagi-adres") || UWAGI.adres;
     if (!adres || !window.fetch) return Promise.resolve(null);
@@ -1823,7 +1866,9 @@
         var path = location.pathname, local = {}, waiting = {}, foreign = {};
         A.loadAnnotations(path).forEach(function (a) { local[a.id] = a; });
         readQueue().forEach(function (x) { waiting[x.d.id] = true; });
-        var list = res.uwagi.map(function (u) {
+        pageComments = res.uwagi;
+        res.uwagi.forEach(function (u) { if (u.nr) numbers[u.id] = u.nr; });
+        var list = res.uwagi.filter(function (u) { return !u.zrobiona; }).map(function (u) {
           if (waiting[u.id] && local[u.id]) return local[u.id];
           var own = u.kto === kto;
           if (!own) foreign[u.id] = u.kto;
@@ -1845,6 +1890,98 @@
       .catch(function () { clearTimeout(timer); return null; });
   }
 
+  /* ===== A link to a comment: …/v7/kukurydza.html#U-12 (22.10.2026) =========
+     Claude Code lists comments with such links (_narzedzia/uwagi.py lista).
+     The page opens the toolbar, scrolls to where the comment was made – the
+     saved scroll position when the window is about as wide as it was, else
+     the element – and, in a pinned or switching scene, steps up and down
+     from there until the element can be seen; then it circles the element
+     for 4 s and opens the comment's card. A done comment gets the circle and
+     a note, no marker. */
+  function openFromHash() {
+    var m = /^#U-?(\d+)$/i.exec(location.hash || "");
+    if (!m) return;
+    var nr = +m[1], u = pageComments.filter(function (c) { return c.nr === nr; })[0];
+    if (!u) { toast("Na tej stronie nie ma uwagi U-" + nr + ".", true, 6000); return; }
+    var host = document.querySelector("agentation-toolbar"), root = host && host.shadowRoot;
+    var start = root && root.querySelector('[aria-label="Start feedback mode"]');
+    if (start && !u.zrobiona) start.click();
+    var el = (anchors[u.id] && anchors[u.id].el) || findElement(u.sciezka, u.element);
+    var from = u.przewiniecie != null && Math.abs(window.innerWidth - (u.szer || 0)) < 80 ? u.przewiniecie :
+      el ? el.getBoundingClientRect().top + window.scrollY - window.innerHeight / 3 : u.przewiniecie;
+    var note = "U-" + nr + (u.zrobiona ? " (zrobiona)" : "") + " · " + u.kto + ": " + u.komentarz;
+    if (!el) {
+      if (from != null) window.scrollTo({ top: Math.max(0, from), behavior: "instant" });
+      toast(note + " – tego elementu już nie ma na stronie, pokazuję zapisane miejsce.", true, 9000);
+      return;
+    }
+    seekElement(el, from, function (found) {
+      ringAround(el);
+      if (!u.zrobiona) window.setTimeout(function () { openCard(u.id); }, 350);
+      toast(found ? note : note + " – element jest teraz niewidoczny w tym miejscu.", !found, 9000);
+    });
+  }
+
+  function seekElement(el, from, done) {
+    /* ±3200 px, or the whole track of the pinned scene the element sits in
+       (the parent of its sticky box), whichever is longer */
+    var lo = from - 3200, hi = from + 3200, pin = pinnedAncestor(el), steps = [0], k = 0, i;
+    if (pin && pin.parentElement && pin.parentElement !== document.body) {
+      var tr = pin.parentElement.getBoundingClientRect();
+      lo = Math.min(lo, tr.top + window.scrollY - window.innerHeight);
+      hi = Math.max(hi, tr.bottom + window.scrollY);
+    }
+    for (i = 1; i <= 300 && (from - i * 80 >= lo || from + i * 80 <= hi); i++) {
+      if (from + i * 80 <= hi) steps.push(i * 80);
+      if (from - i * 80 >= lo) steps.push(-i * 80);
+    }
+    function visible() {
+      var r = el.getBoundingClientRect();
+      return canSee(el, r, r.left + Math.min(12, r.width / 2), r.top + Math.min(12, r.height / 2));
+    }
+    (function next() {
+      if (k >= steps.length) { window.scrollTo({ top: Math.max(0, from), behavior: "instant" }); done(false); return; }
+      window.scrollTo({ top: Math.max(0, from + steps[k]), behavior: "instant" });
+      k++;
+      window.setTimeout(function () {
+        if (!visible()) { next(); return; }
+        /* a scene may still be fading in or out: look again a moment later */
+        window.setTimeout(function () { if (visible()) done(true); else next(); }, 450);
+      }, k === 1 ? 500 : 90);
+    })();
+  }
+
+  function ringAround(el) {
+    var d = document.createElement("div"), t0 = Date.now();
+    d.setAttribute("data-feedback-toolbar", "");
+    d.style.cssText = "position:fixed;z-index:2147482999;pointer-events:none;border:2px solid #2563eb;" +
+      "border-radius:6px;box-shadow:0 0 0 4px rgba(37,99,235,.25);transition:opacity .4s ease";
+    document.body.appendChild(d);
+    (function place() {
+      var r = el.getBoundingClientRect();
+      d.style.left = (r.left - 5) + "px";
+      d.style.top = (r.top - 5) + "px";
+      d.style.width = (r.width + 10) + "px";
+      d.style.height = (r.height + 10) + "px";
+      if (Date.now() - t0 < 4000) { window.requestAnimationFrame(place); return; }
+      d.style.opacity = "0";
+      window.setTimeout(function () { d.remove(); }, 450);
+    })();
+  }
+
+  /* hovering the marker is what opens Agentation's card */
+  function openCard(id) {
+    var host = document.querySelector("agentation-toolbar"), root = host && host.shadowRoot;
+    var nodes = root ? root.querySelectorAll("[data-annotation-marker]") : [];
+    for (var i = 0; i < nodes.length; i++) {
+      var a = annotationOf(nodes[i]);
+      if (a && a.id === id) {
+        nodes[i].dispatchEvent(new MouseEvent("mouseover", { bubbles: true, composed: true }));
+        return;
+      }
+    }
+  }
+
   /* Markers are placed from element positions, so wait for images and fonts. */
   function pageLoaded() {
     return new Promise(function (ok) {
@@ -1853,9 +1990,9 @@
     });
   }
 
-  function mountToolbar(kto) {
+  function mountToolbar() {
     Promise.all([import(UWAGI.react), import(UWAGI.reactDom), import(UWAGI.agentation), pageLoaded()]).then(function (m) {
-      return loadEarlier(m[2], kto).then(function (foreign) {
+      return loadEarlier(m[2], readerName()).then(function (foreign) {
         foreign = foreign || {};
         function change(typ) {
           return function (a) {
@@ -1865,7 +2002,7 @@
             }
             if (typ === "nowa") rememberAnchor(a);
             if (typ === "usunieta") forgetAnchor(a.id);
-            sendComment(kto, typ, a);
+            sendComment(readerName() || "bez imienia", typ, a);
           };
         }
         var host = document.createElement("div");
@@ -1878,6 +2015,8 @@
         }));
         startFollowing();
         flush();
+        window.setTimeout(openFromHash, 600);
+        window.addEventListener("hashchange", openFromHash);
       });
     }).catch(function () {
       toast("Nie udało się wczytać paska uwag. Odśwież stronę.", true, 6000);
@@ -1891,12 +2030,19 @@
     st.textContent = UWAGI_CSS;
     document.head.appendChild(st);
     if (!(window.matchMedia && window.matchMedia("(pointer: fine)").matches)) {
-      toast("Uwagi do makiety dodasz na komputerze.", false, 4000);
+      var seen = false;
+      try { seen = window.sessionStorage.getItem("cw-uwagi-dotyk") === "1"; window.sessionStorage.setItem("cw-uwagi-dotyk", "1"); } catch (e) {}
+      if (!seen) toast("Uwagi do makiety dodasz na komputerze.", false, 4000);
       return;
     }
-    var kto = lsGet(UWAGI_WHO);
-    if (kto) mountToolbar(kto);
-    else askName(mountToolbar);
+    /* a first-time reader gets one pointer to the toolbar */
+    if (!readerName() && lsGet("cw-uwagi-podpowiedz") !== "1") {
+      lsSet("cw-uwagi-podpowiedz", "1");
+      window.setTimeout(function () {
+        toast("Uwagi do makiety: kliknij ikonę w prawym dolnym rogu.", false, 7000);
+      }, 2500);
+    }
+    mountToolbar();
   }
 
   if (document.readyState === "loading") {
