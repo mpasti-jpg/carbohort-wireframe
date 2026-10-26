@@ -28,6 +28,14 @@
 /* position: relative keeps the screen-reader-only spans (absolute) inside
    the scrolling rows, so they cannot widen the page. */
 /* The pair cards (`c5pd-pair*`) are styled in ce/CE-20-siatka-kart.css. */
+/* 26.10.2026 (AC #31865): any number of cards. No card – no block (the
+   script sets [hidden]; :has covers the case without the script). The
+   heading row carries the previous / next arrows (the slider buttons of
+   CE-82); pdp.js (7) shows them only when the row overflows. */
+.c5pd-connect[hidden], .c5pd-connect:not(:has(.c5pd-pair)) { display: none; }
+.c5pd-connect__top { display: flex; align-items: center; justify-content: space-between; gap: var(--w-space-3); min-height: 44px; }
+.c5pd-connect__nav { display: flex; gap: 2px; margin-right: -12px; }
+.c5pd-connect__nav[hidden] { display: none; }
 /* 30-day lowest price under an "od … zł" with a reduction. */
 .c5pd-from__low { flex-basis: 100%; font-size: 0.75rem; font-weight: var(--ch-font-weight-regular); color: var(--w-text-tertiary); }
 
@@ -46,6 +54,11 @@
 .c5pd-src { max-width: 784px; font-size: 0.75rem; line-height: 1.5; color: var(--w-text-tertiary); }
 
 /* "O produkcie" (facts, chips, sections): ce/CE-83-opis-w-sekcjach-z-faktami.css */
+/* 26.10.2026 (AC #31865): "Pełny opis działania i badania" moved from the
+   end of the block to a button right under the key facts – the gap of the
+   facts goes under the button. Final look – graphic design. */
+.c5pd-about__more { margin: 0 0 clamp(1.5rem, 3vw, 2.5rem); }
+.c5pd-facts:has(+ .c5pd-about__more) { margin-bottom: var(--w-space-5); }
 
 /* --- PRO band (§6.7): CE-16 with a photo and three actions -------------- */
 /* Layout, look and motion: ce/CE-16-pas-pro.css / .js (since stage E the

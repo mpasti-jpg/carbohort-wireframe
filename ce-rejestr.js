@@ -1307,8 +1307,8 @@ window.CW_CE = {
       "opis": "Nagłówek (kicker, H2, lead) przyklejony na czas cyklu; blok wierszy wchodzi w biegu z pierwszym wierszem otwartym i przykleja się dolną krawędzią; wiersz = tytuł | kwadratowa scena z packshotem | nazwa, opis, przycisk.",
       "mechanika": "Dalsze przewijanie otwiera kolejne wiersze (kwadrat rozwija się od dołu, potem wjeżdża packshot), po ostatnim całość odjeżdża; bez ruchu akordeon na klik z pierwszym otwartym; bez JS wszystkie otwarte. Moduł 80.",
       "baza": {
-        "plik": "v7/carbomat.html",
-        "kotwica": "sezon-wiersze"
+        "plik": "v7/carbomat-mata.html",
+        "kotwica": "sezon-kaskada"
       },
       "kod": {
         "css": "ce/CE-15-wiersze-packshot.css – wariant kaskada-z-pinem (od 02.10.2026 moduł wspólny: CARBOMAT ECO, CARBOHUMIC, CARBOMAT Mata, Produkty)",
@@ -1324,10 +1324,10 @@ window.CW_CE = {
       },
       "zrzuty_wariantow": {
         "kaskada-z-pinem": {
-          "plik": "v7/carbomat.html",
-          "kotwica": "sezon-wiersze",
+          "plik": "v7/carbomat-mata.html",
+          "kotwica": "sezon-kaskada",
           "ruch": true,
-          "przewin": "#sezon-wiersze [data-casc-pin]",
+          "przewin": "#sezon-kaskada [data-casc-pin]",
           "czekaj": 900
         }
       },
@@ -2187,8 +2187,8 @@ window.CW_CE = {
       "opis": "Obramowany boks (1 px) z tytułem i akapitem; wnętrze w jednej lub dwóch kolumnach, opcjonalnie rozpiska dl, lista opakowań, przypis i przyciski.",
       "mechanika": "Statyczne; poniżej 900 px jedna kolumna. W module c5-box proporcje dwóch kolumn ustawia pokrętło --c5-box-cols wpisane w style na korzeniu wystąpienia (domyślnie dwie równe kolumny).",
       "baza": {
-        "plik": "v7/carbomat-mata.html",
-        "kotwica": "analiza-nota"
+        "plik": "v7/carbohumic-doglebowy.html",
+        "kotwica": "jak-stosowac-zaprawianie"
       },
       "kod": {
         "css": "per strona: c5-mt-note (Mata), c5hu-extra/c5hu-foliar (Carbohumic) + panel: ce/CE-28-boks-w-ramce.css (c5-box, c5-box--z-rozpiska)",

@@ -96,7 +96,7 @@
     /* phonetic spellings ("karbomat", "eko", "humik") resolve here, before the
        generic "carbomat" and "eko" (certificate) rules below can take them */
     ["(?:carbomat|karbomat) (?:eco|eko) sciolk\\w*|(?:eco|eko) sciolk\\w*", { f: { linia: ["carbomat-eco-sciolka"] } }],
-    ["(?:carbomat|karbomat) mat\\w*|mat[aey] uprawow\\w*|(?:carbomat|karbomat) rekaw\\w*", { f: { linia: ["carbomat-mata"] } }],
+    ["(?:carbomat|karbomat) mat\\w*|mat[aey] uprawow\\w*|(?:carbomat|karbomat) rekaw\\w*", { f: { linia: ["carbomat-mata"], zast: ["podloze"] } }],
     ["(?:carbomat|karbomat) humi[ck]\\w*", { f: { linia: ["carbomat-humic"] } }],
     ["(?:carbomat|karbomat) (?:eco|eko)", { f: { linia: ["carbomat-eco"] } }],
     ["carbohumic ogrod\\w*", { q: "carbohumic ogrod" }],
@@ -114,8 +114,16 @@
     ["pure one|pureone|pure", { f: { linia: ["pure-one"] } }],
     ["bio algeen|bioalgeen|algeen|s90", { f: { linia: ["bio-algeen"] } }],
     ["eco", { f: { linia: ["carbomat-eco"] } }],
-    ["mata|maty|mate|rekaw\\w*", { f: { linia: ["carbomat-mata"] } }],
-    ["sciolk\\w*|zamiast kory|kor[aeyz]|mulcz\\w*", { f: { linia: ["carbomat-eco-sciolka"] } }],
+    ["mata|maty|mate|rekaw\\w*", { f: { linia: ["carbomat-mata"], zast: ["podloze"] } }],
+    ["sciolk\\w*|zamiast kory|kor[aeyz]|mulcz\\w*", { f: { linia: ["carbomat-eco-sciolka"], kat: ["sciolka"] } }],
+    /* shop categories (26.10.2026, EcoGarden menu – filter "Kategoria", data-kat on the cards);
+       before "humic" and the pH rules, so "kwasy humusowe" never reads as acid */
+    ["kwas\\w* humus\\w*|kwas\\w* humin\\w*|humus\\w*|huminow\\w*", { f: { kat: ["kwasy-humusowe"] } }],
+    ["nawoz\\w* organiczn\\w*|organiczn\\w*", { f: { kat: ["nawozy-organiczne"] } }],
+    ["mikoryz\\w*", { f: { kat: ["mikoryza"] } }],
+    ["biostymul\\w*|stymulator\\w* wzrostu", { f: { kat: ["biostymulatory"] } }],
+    ["efektywn\\w* mikroorganizm\\w*|mikroorganizm\\w*|mikrob\\w*", { f: { kat: ["efektywne-mikroorganizmy"] } }],
+    ["biologiczn\\w* ochron\\w*|ochron\\w* biologiczn\\w*|ochron\\w* upraw\\w*|ochron\\w* roslin\\w*", { f: { kat: ["ochrona-biologiczna"] } }],
     /* price and pack size: see PRICE below, they run here */
     "@price",
     ["big bag\\w*|bigbag\\w*", { fn: function (o) { if (!has(o, "poj", "1000") && !has(o, "poj", "1500")) add(o, "poj", ["1000", "1500"]); } }],
@@ -158,7 +166,7 @@
     /* "torf" in any wording ("bez torfu", "nie z torfu", "zamiast torfu")
        asks for a peat-free substrate: keep = a negation never flips it */
     ["bez torfu|zamiast torfu|torf\\w*|peat free", { keep: true, f: { linia: ["carbomat-eco", "carbomat-mata"], zast: ["doglebowe", "podloze"] } }],
-    ["podloz\\w*|substrat\\w*", { f: { linia: ["carbomat-eco", "carbomat-mata"], zast: ["doglebowe", "podloze"] } }],
+    ["podloz\\w*|substrat\\w*", { f: { linia: ["carbomat-eco", "carbomat-mata"], zast: ["doglebowe", "podloze"], kat: ["podloza"] } }],
     /* equipment and use */
     ["opryskiwacz\\w*|kroplow\\w*|kroplownik\\w*|linia kroplujac\\w*|linii kroplujacej|fertygac\\w*|dysz\\w*|zraszacz\\w*|belk\\w*|przez filtr\\w*", { f: { filtry: ["tak"] } }],
     ["oprysk\\w*|dolistn\\w*|nalistn\\w*|na lisc\\w*|przez lisc\\w*|lisci\\w*|lisc|listow\\w*", { f: { zast: ["dolistne"] } }],
@@ -393,10 +401,11 @@
     "kukurydza zboza pszenica jeczmien rzepak buraki rolnicze ogrod ogrodu dzialka " +
     "domowe doniczkowe doniczka balkon taras parapet kwiaty pokojowe ozdobne iglaki tuje rabaty ziola zywoplot byliny storczyki " +
     "rododendron rozanecznik azalia wrzos hortensja szkolka sadzonki szklarnia tunel hydroponika " +
-    "oprysk opryskiwacz dolistnie dolistny nalistny liscie gleba glebowy doglebowy podlewanie konewka kroplowanie fertygacja " +
+    "oprysk opryskiwacz dolistnie dolistny nalistny nalistnie nalistne liscie gleba glebowy doglebowy podlewanie konewka kroplowanie fertygacja " +
     "plynny koncentrat sypki granulat proszek kwasna kwasny odczyn zasadowy uniwersalny " +
     "susza suszy wilgoc retencja woda podloze substrat torf torfu sciolka mulcz kora " +
-    "mauzer beczka worek hektar tanie najtansze"
+    "mauzer beczka worek hektar tanie najtansze " +
+    "mata maty humusowe kwasy organiczne mikoryza biostymulator biostymulatory mikroorganizmy ochrona"
   ).split(" ");
   var vocab = null;
   function vocabulary() {

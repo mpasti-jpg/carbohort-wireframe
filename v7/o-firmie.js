@@ -10,7 +10,6 @@
    Modules ported from other pages, renamed to the `on-` prefix:
      · 10 kołowrotek cyfr      <- prochnica-plus.js 60 (pp-odo)
      · 40 lista wartości       <- produkty.js 50 (c5pr-paths)
-     · 50 szuflada biogramu    <- prochnica-plus.js 55 (pp-disc)
      · 30 parallax kadru       <- carbomat-humic.js 40, część 2 (c5-who)
    Section 70 (globe and partner cards) is CE-96 variant kraje since 20.10.2026
    (variant łuki 15–20.10.2026) and runs from ce/CE-96-glob-dystrybutorow.js –
@@ -354,27 +353,5 @@
   }
 })();
 
-/* ===== 50 · Ludzie: szuflada „czytaj dalej" (spec §8) ======================
-   Ported from prochnica-plus.js 55 without changing the mechanics; the height
-   is animated by CX5.panelSet. Without JS the whole bio is visible, because the
-   drawer is only collapsed once the module has run. */
-(function () {
-  "use strict";
-  var doc = document, $ = CX5.$, $$ = CX5.$$;
-  $$("[data-on-disc]").forEach(function (btn) {
-    var panel = doc.getElementById(btn.getAttribute("aria-controls"));
-    if (!panel) return;
-    var open0 = btn.getAttribute("aria-expanded") === "true";
-    panel.setAttribute("data-open", open0 ? "true" : "false");
-    CX5.panelSet(panel, open0, true);
-    btn.addEventListener("click", function () {
-      var open = btn.getAttribute("aria-expanded") !== "true";
-      btn.setAttribute("aria-expanded", open ? "true" : "false");
-      panel.setAttribute("data-open", open ? "true" : "false");
-      CX5.panelSet(panel, open);
-      var lbl = $("[data-on-disc-label]", btn);
-      var txt = btn.getAttribute(open ? "data-label-less" : "data-label-more");
-      if (lbl && txt) lbl.textContent = txt;
-    });
-  });
-})();
+/* 50 · Ludzie (bio drawer) – removed 26.10.2026 with the team section
+   (AC #31863); the module is in archiwum-wersji/o-firmie-v7-przed-zmianami-2026-10-26.html. */

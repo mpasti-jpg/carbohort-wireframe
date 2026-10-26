@@ -199,7 +199,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31223,
-      "data": "11.10"
+      "data": "26.10"
     },
     "carbomat-mata.html": {
       "sekcja": "2. Produkty Carbohort",
@@ -213,13 +213,13 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31563,
-      "data": "15.10"
+      "data": "26.10"
     },
     "carbohumic-doglebowy.html": {
       "sekcja": "2. Produkty Carbohort",
       "nazwa": "CARBOHUMIC doglebowy",
       "stan": {
-        "makieta": "do-akceptacji",
+        "makieta": "zaakceptowany",
         "tresc": null,
         "projekt": null,
         "media": null,
@@ -227,13 +227,13 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31564,
-      "data": "15.10"
+      "data": "26.10"
     },
     "carbohumic-dolistny.html": {
       "sekcja": "2. Produkty Carbohort",
       "nazwa": "CARBOHUMIC dolistny",
       "stan": {
-        "makieta": "do-akceptacji",
+        "makieta": "zaakceptowany",
         "tresc": null,
         "projekt": null,
         "media": null,
@@ -241,7 +241,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31564,
-      "data": "16.10"
+      "data": "26.10"
     },
     "carbomat-humic.html": {
       "sekcja": "2. Produkty Carbohort",
@@ -256,21 +256,6 @@ window.CW_STATUS = {
       },
       "ac": 31565,
       "data": "16.10"
-    },
-    "uprawy.html": {
-      "sekcja": "Poza tabelą",
-      "nazwa": "Hub upraw",
-      "stan": {
-        "makieta": null,
-        "tresc": null,
-        "projekt": null,
-        "media": null,
-        "infografiki": null,
-        "wdrozenie": null
-      },
-      "ac": 30722,
-      "data": "05.10",
-      "wTabeli": false
     },
     "kukurydza.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -509,13 +494,13 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31863,
-      "data": "16.10"
+      "data": "26.10"
     },
     "kontakt.html": {
       "sekcja": "7. Kontakt",
       "nazwa": "Kontakt",
       "stan": {
-        "makieta": "w-przygotowaniu",
+        "makieta": "zaakceptowany",
         "tresc": null,
         "projekt": null,
         "media": null,
@@ -523,7 +508,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31570,
-      "data": "15.10"
+      "data": "26.10"
     },
     "konfigurator.html": {
       "sekcja": "8. Konfigurator",
@@ -551,7 +536,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31864,
-      "data": "16.10"
+      "data": "26.10"
     },
     "pdp.html": {
       "sekcja": "9. Sklep",
@@ -565,7 +550,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31512,
-      "data": "28.09"
+      "data": "26.10"
     },
     "pdp-kwasny.html": {
       "sekcja": "9. Sklep",
@@ -579,7 +564,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31865,
-      "data": "16.10"
+      "data": "26.10"
     },
     "koszyk.html": {
       "sekcja": "9. Sklep",

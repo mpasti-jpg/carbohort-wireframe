@@ -20,6 +20,8 @@
       heading.
    5. "O produkcie" – accordions below 900 px, open sections above.
    6. Photo slider – arrows, counter "2 / 6", scroll-snap.
+   7. "Połącz z" – any number of cards: hidden with none, previous / next
+      arrows only when the row overflows.
 
    Needs sklep-wspolne.js (window.CWSklep) loaded before this file.
    ===================================================================== */
@@ -429,10 +431,55 @@
     sync();
   }
 
+  /* ----- 7. "Połącz z" row (26.10.2026, AC #31865) ---------------------
+     No limit on the number of cards. With none the block is hidden; when
+     the cards do not fit the column the row scrolls sideways (scroll-snap,
+     finger swipe) and the two arrows appear – each moves by the number of
+     cards in view and is marked aria-disabled at its end. Cards added or
+     removed later and size changes re-check the row. */
+  function initPairs() {
+    $$("[data-c5pd-pairs]").forEach(function (track) {
+      var box = track.closest(".c5pd-connect");
+      var nav = box && $("[data-c5pd-pairs-nav]", box);
+      var prev = nav && $("[data-c5pd-pairs-prev]", nav);
+      var next = nav && $("[data-c5pd-pairs-next]", nav);
+      var RM = window.matchMedia("(prefers-reduced-motion: reduce)");
+      var frame = 0;
+      function cards() { return $$(".c5pd-pair", track); }
+      function sync() {
+        frame = 0;
+        var n = cards().length;
+        if (box) box.hidden = n === 0;
+        if (!nav || !prev || !next) return;
+        var max = track.scrollWidth - track.clientWidth;
+        nav.hidden = !(n > 0 && max > 1);
+        prev.setAttribute("aria-disabled", track.scrollLeft <= 1 ? "true" : "false");
+        next.setAttribute("aria-disabled", track.scrollLeft >= max - 1 ? "true" : "false");
+      }
+      function later() { if (!frame) frame = window.requestAnimationFrame(sync); }
+      function move(dir) {
+        var c = cards();
+        if (!c.length) return;
+        var w = c.length > 1 ? c[1].offsetLeft - c[0].offsetLeft : c[0].offsetWidth;
+        if (w <= 0) return;
+        var per = Math.max(1, Math.floor((track.clientWidth + 2) / w));
+        track.scrollBy({ left: dir * per * w, behavior: RM.matches ? "auto" : "smooth" });
+      }
+      if (prev) prev.addEventListener("click", function () { if (prev.getAttribute("aria-disabled") !== "true") move(-1); });
+      if (next) next.addEventListener("click", function () { if (next.getAttribute("aria-disabled") !== "true") move(1); });
+      track.addEventListener("scroll", later, { passive: true });
+      window.addEventListener("resize", later);
+      if (window.ResizeObserver) new ResizeObserver(later).observe(track);
+      if (window.MutationObserver) new MutationObserver(later).observe(track, { childList: true });
+      sync();
+    });
+  }
+
   initBuy();
   initFrom();
   initSticky();
   initMore();
   initSections();
   initSlider();
+  initPairs();
 })();

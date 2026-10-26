@@ -1,11 +1,11 @@
 window.CE_DANE = {
  "meta": {
-  "wygenerowano": "21.10.2026",
+  "wygenerowano": "26.10.2026",
   "wersja": "0.1.0",
   "projekt": "CarboHort",
   "aktywnych": 85,
   "wycofanych": 14,
-  "wystapien": 331,
+  "wystapien": 325,
   "stron": 34,
   "bazaStron": "v7/"
  },
@@ -806,7 +806,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-07.webp",
     "pelny": "ce-indeks/img/p/CE-07.webp",
     "w": 382,
-    "h": 372
+    "h": 360
    },
    "warianty": [],
    "wystapienia": [
@@ -1247,7 +1247,7 @@ window.CE_DANE = {
     {
      "plik": "carbomat-mata.html",
      "strona": "CARBOMAT Mata Uprawowa",
-     "id": "uprawy",
+     "id": "zalety",
      "naglowek": "",
      "wariant": null
     },
@@ -1376,8 +1376,8 @@ window.CE_DANE = {
      "plik": "carbomat-mata.html",
      "strona": "CARBOMAT Mata Uprawowa",
      "id": "parametry",
-     "naglowek": "Standardowe parametry maty",
-     "wariant": "z-tabami"
+     "naglowek": "Parametry podłoża",
+     "wariant": "kafelki-z-wejsciem"
     }
    ],
    "wspolny": null,
@@ -1813,6 +1813,13 @@ window.CE_DANE = {
      "wariant": "n-kadrow"
     },
     {
+     "plik": "carbohumic-doglebowy.html",
+     "strona": "CARBOHUMIC doglebowy",
+     "id": "jak-stosowac-ogrod",
+     "naglowek": "",
+     "wariant": "n-kadrow"
+    },
+    {
      "plik": "carbohumic-dolistny.html",
      "strona": "CARBOHUMIC dolistny",
      "id": "efekty-scena",
@@ -1893,13 +1900,6 @@ window.CE_DANE = {
      "id": "dawka",
      "naglowek": "Dokładną dawkę dla swojej uprawy dobierzesz w konfiguratorze.",
      "wariant": null
-    },
-    {
-     "plik": "carbohumic-doglebowy.html",
-     "strona": "CARBOHUMIC doglebowy",
-     "id": "dawki-domowe",
-     "naglowek": "Dawki domowe – ogród, działka i pojedyncze rośliny (wg karty produktu)",
-     "wariant": null
     }
    ],
    "wspolny": null,
@@ -1961,7 +1961,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-15.webp",
     "pelny": "ce-indeks/img/p/CE-15.webp",
     "w": 1280,
-    "h": 800
+    "h": 799
    },
    "warianty": [
     {
@@ -1984,10 +1984,10 @@ window.CE_DANE = {
    ],
    "wystapienia": [
     {
-     "plik": "carbomat.html",
-     "strona": "CARBOMAT ECO",
-     "id": "sezon-wiersze",
-     "naglowek": "Produkty w rytmie sezonu.",
+     "plik": "carbomat-mata.html",
+     "strona": "CARBOMAT Mata Uprawowa",
+     "id": "sezon-kaskada",
+     "naglowek": "Nasze podłoże zarabia na siebie przez kilka lat.",
      "wariant": "kaskada-z-pinem"
     },
     {
@@ -1995,13 +1995,6 @@ window.CE_DANE = {
      "strona": "CARBOHUMIC doglebowy",
      "id": "czas-prochnicy-kaskada",
      "naglowek": "Ile trwa powstawanie stabilnej próchnicy",
-     "wariant": "kaskada-z-pinem"
-    },
-    {
-     "plik": "carbomat-mata.html",
-     "strona": "CARBOMAT Mata Uprawowa",
-     "id": "sezon-kaskada",
-     "naglowek": "Nasze podłoże zarabia na siebie przez kilka lat.",
      "wariant": "kaskada-z-pinem"
     },
     {
@@ -2014,8 +2007,8 @@ window.CE_DANE = {
    ],
    "wspolny": null,
    "baza": {
-    "plik": "v7/carbomat.html",
-    "kotwica": "sezon-wiersze"
+    "plik": "v7/carbomat-mata.html",
+    "kotwica": "sezon-kaskada"
    },
    "opis": "Nagłówek (kicker, H2, lead) przyklejony na czas cyklu; blok wierszy wchodzi w biegu z pierwszym wierszem otwartym i przykleja się dolną krawędzią; wiersz = tytuł | kwadratowa scena z packshotem | nazwa, opis, przycisk.",
    "mechanika": "Dalsze przewijanie otwiera kolejne wiersze (kwadrat rozwija się od dołu, potem wjeżdża packshot), po ostatnim całość odjeżdża; bez ruchu akordeon na klik z pierwszym otwartym; bez JS wszystkie otwarte. Moduł 80.",
@@ -2065,7 +2058,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-16.webp",
     "pelny": "ce-indeks/img/p/CE-16.webp",
     "w": 1280,
-    "h": 800
+    "h": 799
    },
    "warianty": [
     {
@@ -2317,7 +2310,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-17--wariant-informacje.webp",
       "pelny": "ce-indeks/img/p/CE-17--wariant-informacje.webp",
       "w": 1280,
-      "h": 345
+      "h": 344
      }
     }
    ],
@@ -2354,7 +2347,7 @@ window.CE_DANE = {
      "plik": "carbohumic-dolistny.html",
      "strona": "CARBOHUMIC dolistny",
      "id": "faq",
-     "naglowek": "Najczęstsze pytania o Carbohumic dolistny",
+     "naglowek": "Najczęstsze pytania o Carbohumic nalistny",
      "wariant": "z-nota"
     },
     {
@@ -2733,7 +2726,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-20--wariant-sklepowe.webp",
       "pelny": "ce-indeks/img/p/CE-20--wariant-sklepowe.webp",
       "w": 1280,
-      "h": 699
+      "h": 707
      }
     },
     {
@@ -2744,7 +2737,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-20--wariant-dorzuc.webp",
       "pelny": "ce-indeks/img/p/CE-20--wariant-dorzuc.webp",
       "w": 1280,
-      "h": 713
+      "h": 721
      }
     },
     {
@@ -2755,7 +2748,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-20--wariant-polacz-z.webp",
       "pelny": "ce-indeks/img/p/CE-20--wariant-polacz-z.webp",
       "w": 1280,
-      "h": 522
+      "h": 589
      }
     },
     {
@@ -2812,6 +2805,13 @@ window.CE_DANE = {
      "id": "analiza-kafle",
      "naglowek": "",
      "wariant": "kafle-danych"
+    },
+    {
+     "plik": "carbomat-mata.html",
+     "strona": "CARBOMAT Mata Uprawowa",
+     "id": "analiza-po-uprawie-kafle",
+     "naglowek": "",
+     "wariant": "numerowane"
     },
     {
      "plik": "artykul.html",
@@ -3341,20 +3341,13 @@ window.CE_DANE = {
      "strona": "CARBOMAT Mata Uprawowa",
      "id": "co-zastepujesz-cta",
      "naglowek": "",
-     "wariant": "dwa-przyciski"
-    },
-    {
-     "plik": "carbomat-mata.html",
-     "strona": "CARBOMAT Mata Uprawowa",
-     "id": "czym-jest-cross",
-     "naglowek": "",
      "wariant": "kreski-gora-dol"
     },
     {
      "plik": "carbomat-mata.html",
      "strona": "CARBOMAT Mata Uprawowa",
      "id": "dowod-cta",
-     "naglowek": "",
+     "naglowek": "Publikacje naukowe",
      "wariant": "z-naglowkiem"
     },
     {
@@ -3452,7 +3445,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-24.webp",
     "pelny": "ce-indeks/img/p/CE-24.webp",
     "w": 1280,
-    "h": 800
+    "h": 799
    },
    "warianty": [
     {
@@ -3730,7 +3723,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-26.webp",
     "pelny": "ce-indeks/img/p/CE-26.webp",
     "w": 1280,
-    "h": 799
+    "h": 800
    },
    "warianty": [],
    "wystapienia": [
@@ -3883,7 +3876,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-28.webp",
     "pelny": "ce-indeks/img/p/CE-28.webp",
     "w": 1280,
-    "h": 199
+    "h": 152
    },
    "warianty": [
     {
@@ -3913,18 +3906,11 @@ window.CE_DANE = {
    ],
    "wystapienia": [
     {
-     "plik": "carbomat-mata.html",
-     "strona": "CARBOMAT Mata Uprawowa",
-     "id": "analiza-nota",
+     "plik": "carbohumic-doglebowy.html",
+     "strona": "CARBOHUMIC doglebowy",
+     "id": "jak-stosowac-zaprawianie",
      "naglowek": "",
-     "wariant": "z-przyciskiem"
-    },
-    {
-     "plik": "carbomat-mata.html",
-     "strona": "CARBOMAT Mata Uprawowa",
-     "id": "ekonomia-nota",
-     "naglowek": "",
-     "wariant": "z-przyciskiem"
+     "wariant": "z-rozpiska"
     },
     {
      "plik": "b2b-oferta.html",
@@ -3948,20 +3934,6 @@ window.CE_DANE = {
      "wariant": "z-rozpiska"
     },
     {
-     "plik": "carbohumic-doglebowy.html",
-     "strona": "CARBOHUMIC doglebowy",
-     "id": "jak-stosowac-zaprawianie",
-     "naglowek": "",
-     "wariant": "z-rozpiska"
-    },
-    {
-     "plik": "carbohumic-doglebowy.html",
-     "strona": "CARBOHUMIC doglebowy",
-     "id": "jak-stosowac-dodatkowe",
-     "naglowek": "",
-     "wariant": "z-rozpiska"
-    },
-    {
      "plik": "handlowiec-uzgodnienie.html",
      "strona": "Handlowiec – Odpowiedź na prośbę",
      "id": "rozmowa",
@@ -3978,8 +3950,8 @@ window.CE_DANE = {
    ],
    "wspolny": null,
    "baza": {
-    "plik": "v7/carbomat-mata.html",
-    "kotwica": "analiza-nota"
+    "plik": "v7/carbohumic-doglebowy.html",
+    "kotwica": "jak-stosowac-zaprawianie"
    },
    "opis": "Obramowany boks (1 px) z tytułem i akapitem; wnętrze w jednej lub dwóch kolumnach, opcjonalnie rozpiska dl, lista opakowań, przypis i przyciski.",
    "mechanika": "Statyczne; poniżej 900 px jedna kolumna. W module c5-box proporcje dwóch kolumn ustawia pokrętło --c5-box-cols wpisane w style na korzeniu wystąpienia (domyślnie dwie równe kolumny).",
@@ -4588,7 +4560,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-35.webp",
     "pelny": "ce-indeks/img/p/CE-35.webp",
     "w": 1280,
-    "h": 360
+    "h": 361
    },
    "warianty": [],
    "wystapienia": [
@@ -5031,7 +5003,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-38.webp",
     "pelny": "ce-indeks/img/p/CE-38.webp",
     "w": 1280,
-    "h": 799
+    "h": 800
    },
    "warianty": [],
    "wystapienia": [
@@ -5669,13 +5641,6 @@ window.CE_DANE = {
      "id": "autorzy",
      "naglowek": "Autorzy i konsultanci",
      "wariant": "kompakt"
-    },
-    {
-     "plik": "o-firmie.html",
-     "strona": "O nas",
-     "id": "ludzie",
-     "naglowek": "Za marką stoją konkretni ludzie",
-     "wariant": "siatka"
     }
    ],
    "wspolny": null,
@@ -5998,7 +5963,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-53.webp",
     "pelny": "ce-indeks/img/p/CE-53.webp",
     "w": 1280,
-    "h": 455
+    "h": 454
    },
    "warianty": [
     {
@@ -6056,13 +6021,6 @@ window.CE_DANE = {
      "strona": "Strona główna",
      "id": "dowod-dokumenty",
      "naglowek": "Dokumenty zamiast deklaracji",
-     "wariant": "dokumenty"
-    },
-    {
-     "plik": "o-firmie.html",
-     "strona": "O nas",
-     "id": "dowody-listy",
-     "naglowek": "Certyfikaty i decyzje",
      "wariant": "dokumenty"
     }
    ],
@@ -8073,7 +8031,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-79.webp",
     "pelny": "ce-indeks/img/p/CE-79.webp",
     "w": 1280,
-    "h": 306
+    "h": 307
    },
    "warianty": [
     {
@@ -8101,7 +8059,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-79--wariant-dwie-kolumny.webp",
       "pelny": "ce-indeks/img/p/CE-79--wariant-dwie-kolumny.webp",
       "w": 1280,
-      "h": 463
+      "h": 460
      }
     },
     {
@@ -8112,7 +8070,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-79--wariant-w-miejscu-produktu.webp",
       "pelny": "ce-indeks/img/p/CE-79--wariant-w-miejscu-produktu.webp",
       "w": 1280,
-      "h": 489
+      "h": 486
      }
     }
    ],
@@ -8438,7 +8396,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-83.webp",
     "pelny": "ce-indeks/img/p/CE-83.webp",
     "w": 1280,
-    "h": 799
+    "h": 800
    },
    "warianty": [],
    "wystapienia": [
@@ -8774,7 +8732,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-90.webp",
     "pelny": "ce-indeks/img/p/CE-90.webp",
     "w": 1280,
-    "h": 678
+    "h": 679
    },
    "warianty": [],
    "wystapienia": [

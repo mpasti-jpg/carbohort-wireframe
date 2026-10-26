@@ -9,8 +9,6 @@
      · CE-20 `on-steps`                      <- carbohumic-doglebowy.css (c5hu-tiles), own layout
      · CE-36 `on-who`                        <- carbomat-humic.css (c5-who)
      · CE-30 `on-val*`                       <- produkty.css 8.2 (c5pr-paths)
-     · CE-48 `on-team` / `on-person` / `on-disc` / `on-more` <- prochnica-plus.css 55
-     · CE-53 `on-docs` / `on-doc`            <- prochnica-plus.css 90 (pp-reports)
      · CE-96 wariant kraje (ce/CE-96-glob-dystrybutorow.css) – globe and cards;
        only the address row under the cards (`on-map*`) stays here
      · CE-33 `on-quote`                      <- uprawa.css (u-quote, wariant ciemny-boks)
@@ -37,25 +35,9 @@
 /* page-specific: the note stands under the CE root, so its spacing is page layout */
 .on-val__note{margin-top:clamp(2rem,4vw,3rem);}
 
-/* ===== 50 · LUDZIE – karty biogramów (CE-48 „siatka") =====================
-   Cards, drawer and grid: ce/CE-48-karty-biogramow.css (`pp-*`, variant
-   `pp-team--siatka`). Only the gap above the button under the grid stays here. */
-.on-team__more{margin-top:clamp(1.5rem,3vw,2.25rem);}
-
-/* ===== 60 · DOWODY – listy wierszy z akcją (CE-53 „dokumenty") ============
-   Ported from prochnica-plus.css 90 (pp-reports): rows separated by thin lines,
-   name | metric | button. Since 15.10.2026 every button is active, as in the
-   CE-53 base (no disabled state since 02.10.2026); in the mockup nothing
-   downloads. */
-.on-docs{margin-top:clamp(2rem,4vw,3rem);}
-.on-docs__h{margin-top:clamp(2rem,4vw,3rem);}
-.on-docs__h:first-child{margin-top:0;}
-/* Rows: module ce/CE-53-lista-wierszy.css; only the gap above the list stays here. */
-.on-docs .c5-rows__list{margin-top:clamp(1.25rem,2.5vw,2rem);}
-@media (max-width:899px){
-  .on-docs .c5-rows__row{grid-template-columns:minmax(0,1fr);justify-items:start;}
-  .on-docs .c5-rows__act{grid-column:1;grid-row:auto;justify-self:start;margin-top:var(--ch-space-2);}
-}
+/* 50 · LUDZIE (CE-48) and 60 · DOWODY (CE-53) – removed 26.10.2026 together
+   with their sections (AC #31863); the rules are in
+   archiwum-wersji/o-firmie-v7-przed-zmianami-2026-10-26.html. */
 
 /* ===== 70 · GDZIE JESTEŚMY – glob dystrybutorów (CE-96 kraje) i adres
    The globe and the partner cards live in ce/CE-96-glob-dystrybutorow.css

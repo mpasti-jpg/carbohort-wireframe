@@ -73,8 +73,8 @@
    track, and in the scene the fact stands at the BOTTOM edge of the left column
    carrying a progress line and a counter „0N/05” of its own.
    ⚠️ The root of the block is `#czym-jest-scena` (a container INSIDE the section),
-   because the section `#czym-jest` also holds the CE-23 cross-sell band – see
-   spec §22.2. The whole machinery of the scene lives in the module, including
+   because the section `#czym-jest` held the CE-23 cross-sell band (removed
+   26.10.2026, spec §25) – see spec §22.2. The whole machinery of the scene lives in the module, including
    the colour of the placeholder label, the order of the static layout, the
    lightening of the SVG fills and the scale of the description on a low window. */
 
@@ -87,9 +87,6 @@
    keep taller windows as they are, and `min(…,86svh)` keeps the floor from
    pushing the box out of the photo panel in a short window. */
 
-/* pas „Ta sama organika…” domyka rozdział – odstęp od dołu niesie już padding
-   sekcji, więc pas potrzebuje tylko marginesu górnego */
-#czym-jest .c5-mt-cross{margin-top:clamp(3rem,6vw,5rem);}
 
 /* ===== 55 · Dowód – liczby, karty-zajawki i lightbox (spec §10, §21.5, §23) =====
    Dwa stany tej samej treści: bez JS lightbox renderuje się jako zwykły blok
@@ -114,7 +111,7 @@
 /* --- Siatka trzech kart-zajawek (spec §21.5 pkt 2) -------------------------- */
 /* The three cards (`c5-proofs`, `c5-proof*`) are styled in ce/CE-20-siatka-kart.css. */
 
-/* --- Rząd CTA pod kartami: doświadczenia w gospodarstwach (spec §21.5 pkt 4) */
+/* --- Pas „Publikacje naukowe” pod nagłówkiem sekcji (spec §21.5 pkt 4, §25) */
 /* The band is CE-23 `--z-naglowkiem`: ce/CE-23-pas-cta.css. */
 
 /* --- Lightbox windows (CE-25): the window shell, the pages and the footer of
@@ -137,6 +134,13 @@
 /* The full table of 15 parameters lives in a single-page lightbox (block 55,
    `c5-lb--solo`); this top margin counts only in the flow, without JS. */
 .c5-mt-tblwrap{margin-top:clamp(2rem,4vw,3rem);}
+
+/* Banner „Po kilku latach uprawy możesz wykorzystać matę do:” (26.10.2026,
+   spec §25): a heading over three CE-20 `numerowane` cards (grid and cards in
+   ce/CE-20-siatka-kart.css). Only the air of this one occurrence lives here:
+   the heading closes the chapter after the tiles, the grid hugs the heading. */
+.c5-mt-reuse__h{margin-top:clamp(3rem,6vw,5rem);font-family:var(--ch-font-display);font-size:clamp(1.375rem,2.2vw,1.75rem);line-height:1.25;letter-spacing:-0.01em;}
+.c5-mt-reuse__h + .c5-mt-reuse{margin-top:var(--ch-space-6);}
 
 /* ===== 80 · Sezon po sezonie – cascade with a pin (spec §23) + Ekonomia =====
    The chapter is the shared CE-15 module, variant `kaskada-z-pinem`

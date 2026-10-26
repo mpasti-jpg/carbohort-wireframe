@@ -116,7 +116,7 @@
     id: "dolistne-30-2026-11",
     wlaczona: true,
     etykieta: "Promocja",
-    tekst: "Superpromocja: wszystkie produkty dolistne –30% do końca listopada",
+    tekst: "Superpromocja: wszystkie produkty nalistne –30% do końca listopada",
     link: "Zobacz w sklepie",
     adres: "sklep.html?f=linia:carbohumic-dolistny"
   };
@@ -286,7 +286,7 @@
               <span class="wf-h5 cw-prodbox__name">Carbohumic</span>
               <span class="cw-prodbox__media cw-prodbox__media--pair">
                 <a class="cw-prodbox__variant" data-nav="carbohumic" data-nav-parent="produkty" href="carbohumic-doglebowy.html" aria-label="Carbohumic doglebowy"><img class="cw-prodbox__img" src="img/opakowania/butelka_1l_biala.webp" alt="" width="391" height="1000" decoding="async" fetchpriority="low"><span class="cw-prodbox__tag">Doglebowe</span></a>
-                <a class="cw-prodbox__variant" data-nav="carbohumic-dolistny" data-nav-parent="produkty" href="carbohumic-dolistny.html" aria-label="Carbohumic dolistny"><img class="cw-prodbox__img" src="img/opakowania/butelka_1l_czarna.webp" alt="" width="391" height="1000" decoding="async" fetchpriority="low"><span class="cw-prodbox__tag">Dolistne</span></a>
+                <a class="cw-prodbox__variant" data-nav="carbohumic-dolistny" data-nav-parent="produkty" href="carbohumic-dolistny.html" aria-label="Carbohumic nalistny"><img class="cw-prodbox__img" src="img/opakowania/butelka_1l_czarna.webp" alt="" width="391" height="1000" decoding="async" fetchpriority="low"><span class="cw-prodbox__tag">Nalistne</span></a>
               </span>
               <span class="cw-prodbox__desc">„Próchnica w płynie" – kondycjonuje glebę i biostymuluje roślinę.</span>
             </div>
@@ -439,7 +439,7 @@
     <!-- The two CARBOHUMIC pages (15.10.2026) – the second level under the
          products, indented like the crop groups. -->
     <a class="wf-navitem cw-mobilenav__sub" data-nav="carbohumic" data-nav-parent="produkty" href="carbohumic-doglebowy.html">Carbohumic doglebowy</a>
-    <a class="wf-navitem cw-mobilenav__sub" data-nav="carbohumic-dolistny" data-nav-parent="produkty" href="carbohumic-dolistny.html">Carbohumic dolistny</a>
+    <a class="wf-navitem cw-mobilenav__sub" data-nav="carbohumic-dolistny" data-nav-parent="produkty" href="carbohumic-dolistny.html">Carbohumic nalistny</a>
     <p class="wf-navitem cw-mobilenav__label" data-nav="uprawy">Rodzaje upraw</p>
     <!-- Ta sama treść co w #mega-uprawy: pięć grup, 31 pozycji, te same stany.
          Obie listy trzyma w zgodzie regresja _narzedzia/qa-menu.py. -->
@@ -539,14 +539,13 @@
           <a href="carbomat.html">Carbomat Eco</a>
           <a href="carbomat-mata.html">Carbomat Mata Uprawowa</a>
           <a href="carbohumic-doglebowy.html">Carbohumic doglebowy</a>
-          <a href="carbohumic-dolistny.html">Carbohumic dolistny</a>
+          <a href="carbohumic-dolistny.html">Carbohumic nalistny</a>
           <a href="carbomat-humic.html">Carbomat Humic</a>
           <a href="sklep.html">Sklep</a>
         </nav>
         <nav class="cw-foot__col" aria-label="Wiedza i programy"><p class="cw-foot__head">Wiedza i programy</p>
           <a href="centrum-wiedzy.html">Strefa wiedzy</a>
           <a href="prochnica-plus.html">Program Próchnica+</a>
-          <a href="uprawy.html">Rodzaje upraw</a>
           <a href="konfigurator.html">Konfigurator</a>
         </nav>
         <nav class="cw-foot__col" aria-label="Firma i współpraca"><p class="cw-foot__head">Firma i współpraca</p>
