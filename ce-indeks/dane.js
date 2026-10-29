@@ -1,11 +1,11 @@
 window.CE_DANE = {
  "meta": {
-  "wygenerowano": "26.10.2026",
+  "wygenerowano": "27.10.2026",
   "wersja": "0.1.0",
   "projekt": "CarboHort",
-  "aktywnych": 85,
-  "wycofanych": 14,
-  "wystapien": 325,
+  "aktywnych": 81,
+  "wycofanych": 18,
+  "wystapien": 314,
   "stron": 34,
   "bazaStron": "v7/"
  },
@@ -1007,6 +1007,12 @@ window.CE_DANE = {
      "zrzut": null
     },
     {
+     "slug": "miniatura",
+     "opis": "strona główna od 26.10.2026: układ bazy (kolumna tekstu z leadem, ciepły panel z sygnetem), ale na panelu zamiast packshotów mała miniatura filmu 16:9 (ok. 430 px przy 1440 px, plakat, szklany przycisk odtwarzania jak w wariancie player, widoczny podpis z długością) – film nigdy nie jest tłem, otwiera go strona w oknie po kliknięciu; pod obiema kolumnami pasek czterech rodzin (opakowanie, nazwa, jedno zdanie, strzałka), każda prowadzi do swojej karty na stronie; od 27.10.2026 ramka Carbohumic (c5-hero__fam--dwa) ma dwa opakowania i dwa odnośniki – doglebowy i nalistny; poniżej 900 px tekst, miniatura i rodziny w siatce 2 × 2 (modyfikator c5-hero--miniatura w ce/CE-08-hero.css; home.html#hero)",
+     "skrot": "Panel z małą miniaturą filmu, pod obiema kolumnami pasek czterech rodzin produktów (Carbohumic z dwoma odnośnikami).",
+     "zrzut": null
+    },
+    {
      "slug": "foto",
      "opis": "panel ze zdjęciem zamiast packshotu (o-firmie.html#hero)",
      "skrot": "Panel ze zdjęciem zamiast packshotu.",
@@ -1093,8 +1099,8 @@ window.CE_DANE = {
      "plik": "home.html",
      "strona": "Strona główna",
      "id": "hero",
-     "naglowek": "Więcej próchnicy. Lepsza retencja wody. Silniejsze rośliny.",
-     "wariant": "kadr-w-tle"
+     "naglowek": "Polski producent preparatów z lignitu dla gleby i roślin",
+     "wariant": "miniatura"
     },
     {
      "plik": "kukurydza.html",
@@ -1250,13 +1256,6 @@ window.CE_DANE = {
      "id": "zalety",
      "naglowek": "",
      "wariant": null
-    },
-    {
-     "plik": "home.html",
-     "strona": "Strona główna",
-     "id": "zaufanie",
-     "naglowek": "",
-     "wariant": "z-ikona"
     },
     {
      "plik": "prochnica-plus.html",
@@ -2171,13 +2170,6 @@ window.CE_DANE = {
      "wariant": "pozny-wzrost"
     },
     {
-     "plik": "home.html",
-     "strona": "Strona główna",
-     "id": "kontakt",
-     "naglowek": "Porozmawiajmy o Twojej glebie",
-     "wariant": "kontakt"
-    },
-    {
      "plik": "kukurydza.html",
      "strona": "Kukurydza",
      "id": "u-cta",
@@ -2368,7 +2360,7 @@ window.CE_DANE = {
      "plik": "home.html",
      "strona": "Strona główna",
      "id": "faq",
-     "naglowek": "Najczęstsze pytania o lignit, kwasy humusowe i nasze produkty",
+     "naglowek": "Najczęstsze pytania o produkty i zakup",
      "wariant": null
     },
     {
@@ -2510,6 +2502,13 @@ window.CE_DANE = {
      "id": "cta-koncowe",
      "naglowek": "Rozważasz przejście na matę Carbomat?",
      "wariant": "z-leadem"
+    },
+    {
+     "plik": "home.html",
+     "strona": "Strona główna",
+     "id": "kontakt",
+     "naglowek": "Porozmawiajmy o Twojej uprawie",
+     "wariant": null
     },
     {
      "plik": "produkty.html",
@@ -2844,9 +2843,16 @@ window.CE_DANE = {
     {
      "plik": "home.html",
      "strona": "Strona główna",
-     "id": "kontakt-zakup",
-     "naglowek": "Sklep internetowy",
-     "wariant": "szerokie"
+     "id": "produkty",
+     "naglowek": "Nasze produkty",
+     "wariant": "z-przyciskami"
+    },
+    {
+     "plik": "home.html",
+     "strona": "Strona główna",
+     "id": "uprawy",
+     "naglowek": "Co uprawiasz?",
+     "wariant": "z-przyciskami"
     },
     {
      "plik": "kontakt.html",
@@ -3367,16 +3373,16 @@ window.CE_DANE = {
     {
      "plik": "home.html",
      "strona": "Strona główna",
-     "id": "jak-pomagamy-asystent",
+     "id": "prochnica-plus",
      "naglowek": "",
-     "wariant": "z-ikona"
+     "wariant": "z-foto"
     },
     {
      "plik": "home.html",
      "strona": "Strona główna",
-     "id": "uprawy-konfigurator",
-     "naglowek": "Dobierz produkty do swojej uprawy",
-     "wariant": "ciemny"
+     "id": "o-nas",
+     "naglowek": "O nas",
+     "wariant": "z-naglowkiem"
     },
     {
      "plik": "sklep.html",
@@ -3512,8 +3518,8 @@ window.CE_DANE = {
     {
      "plik": "home.html",
      "strona": "Strona główna",
-     "id": "dowod",
-     "naglowek": "Na własnych danych, nie na obietnicach",
+     "id": "zaufanie",
+     "naglowek": "Dlaczego nam ufają",
      "wariant": "rzad"
     },
     {
@@ -4087,13 +4093,6 @@ window.CE_DANE = {
      "wariant": "akordeon-z-odliczaniem"
     },
     {
-     "plik": "home.html",
-     "strona": "Strona główna",
-     "id": "uprawy",
-     "naglowek": "Wejdź przez swoją uprawę",
-     "wariant": "z-kadrem"
-    },
-    {
      "plik": "o-firmie.html",
      "strona": "O nas",
      "id": "wartosci-lista",
@@ -4398,13 +4397,6 @@ window.CE_DANE = {
      "wariant": "pasek-zasady"
     },
     {
-     "plik": "home.html",
-     "strona": "Strona główna",
-     "id": "motto",
-     "naglowek": "",
-     "wariant": "cytat"
-    },
-    {
      "plik": "kukurydza.html",
      "strona": "Kukurydza",
      "id": "u-fakty-zasada",
@@ -4693,13 +4685,6 @@ window.CE_DANE = {
      "wariant": "odwrocony"
     },
     {
-     "plik": "home.html",
-     "strona": "Strona główna",
-     "id": "o-nas",
-     "naglowek": "Rodzinna firma budująca przyszłość polskiej gleby",
-     "wariant": "z-wartosciami"
-    },
-    {
      "plik": "o-firmie.html",
      "strona": "O nas",
      "id": "najstarsza-nowosc",
@@ -4880,6 +4865,13 @@ window.CE_DANE = {
      "strona": "CARBOMAT ECO",
      "id": "czym-jest-wiecej-5",
      "naglowek": "Każda gruzełka Carbomatu Eco to ogromny mikrokosmos",
+     "wariant": null
+    },
+    {
+     "plik": "home.html",
+     "strona": "Strona główna",
+     "id": "mam-produkt",
+     "naglowek": "Mam już produkt – jak go stosować?",
      "wariant": null
     },
     {
@@ -5235,13 +5227,6 @@ window.CE_DANE = {
      "id": "dowod-bloki",
      "naglowek": "Doświadczenie retencyjne – wilgotność po nasyceniu",
      "wariant": "jeden-pod-drugim"
-    },
-    {
-     "plik": "home.html",
-     "strona": "Strona główna",
-     "id": "dowod-retencja",
-     "naglowek": "Ile wody trzyma gleba po dodaniu lignitu",
-     "wariant": null
     }
    ],
    "wspolny": null,
@@ -6015,13 +6000,6 @@ window.CE_DANE = {
      "id": "poradniki",
      "naglowek": "Konkret w pigułce: ile, jak często, jak aplikować",
      "wariant": "dokumenty"
-    },
-    {
-     "plik": "home.html",
-     "strona": "Strona główna",
-     "id": "dowod-dokumenty",
-     "naglowek": "Dokumenty zamiast deklaracji",
-     "wariant": "dokumenty"
     }
    ],
    "wspolny": null,
@@ -6339,13 +6317,6 @@ window.CE_DANE = {
      "id": "najnowsze",
      "naglowek": "Trzy ostatnie artykuły",
      "wariant": null
-    },
-    {
-     "plik": "home.html",
-     "strona": "Strona główna",
-     "id": "wiedza",
-     "naglowek": "Dla tych, którzy chcą wiedzieć dlaczego",
-     "wariant": null
     }
    ],
    "wspolny": null,
@@ -6423,13 +6394,6 @@ window.CE_DANE = {
      "id": "kategorie",
      "naglowek": "Dwie półki: zrozumieć glebę i zastosować produkty",
      "wariant": null
-    },
-    {
-     "plik": "home.html",
-     "strona": "Strona główna",
-     "id": "wiedza-kategorie",
-     "naglowek": "O żyzności gleb",
-     "wariant": "kompakt"
     }
    ],
    "wspolny": null,
@@ -7278,36 +7242,9 @@ window.CE_DANE = {
    "kod": "CE-71",
    "nazwa": "Pas wejść sytuacyjnych",
    "skrot": "Pas 7 komórek-wejść z numerem, strzałką i etykietą, ostatnia ciemna z telefonem.",
-   "status": "aktywny",
+   "status": "wycofany",
    "projekt": null,
-   "tagi": {
-    "rodzina": [
-     "wspolne"
-    ],
-    "media": [
-     "ikona"
-    ],
-    "tekst": [
-     "krotki"
-    ],
-    "ukryte": [
-     "okno"
-    ],
-    "pozycje": [
-     "5-8"
-    ],
-    "nadaje": [
-     "nawigacja",
-     "cta"
-    ],
-    "mechanika": [
-     "klik",
-     "statyczny"
-    ],
-    "zakres": [
-     "typ-strony"
-    ]
-   },
+   "tagi": {},
    "zrzut": {
     "mini": "ce-indeks/img/m/CE-71.webp",
     "pelny": "ce-indeks/img/p/CE-71.webp",
@@ -7315,15 +7252,7 @@ window.CE_DANE = {
     "h": 144
    },
    "warianty": [],
-   "wystapienia": [
-    {
-     "plik": "home.html",
-     "strona": "Strona główna",
-     "id": "sytuacje",
-     "naglowek": "Co uprawiasz?",
-     "wariant": null
-    }
-   ],
+   "wystapienia": [],
    "wspolny": null,
    "baza": {
     "plik": "v7/home.html",
@@ -7346,36 +7275,9 @@ window.CE_DANE = {
    "kod": "CE-72",
    "nazwa": "Scena profilu gleby",
    "skrot": "Przypięta scena: po lewej indeks problemów i szczegół kroku, po prawej schemat przekroju gleby.",
-   "status": "aktywny",
+   "status": "wycofany",
    "projekt": null,
-   "tagi": {
-    "rodzina": [
-     "sceny"
-    ],
-    "media": [
-     "schemat-wykres"
-    ],
-    "tekst": [
-     "sredni"
-    ],
-    "ukryte": [
-     "przewijanie"
-    ],
-    "pozycje": [
-     "5-8"
-    ],
-    "nadaje": [
-     "kroki-proces",
-     "korzysci-argumenty",
-     "opis-produktu"
-    ],
-    "mechanika": [
-     "przewijanie"
-    ],
-    "zakres": [
-     "jednorazowy"
-    ]
-   },
+   "tagi": {},
    "zrzut": {
     "mini": "ce-indeks/img/m/CE-72.webp",
     "pelny": "ce-indeks/img/p/CE-72.webp",
@@ -7383,15 +7285,7 @@ window.CE_DANE = {
     "h": 799
    },
    "warianty": [],
-   "wystapienia": [
-    {
-     "plik": "home.html",
-     "strona": "Strona główna",
-     "id": "gleba",
-     "naglowek": "Z czym mierzy się Twoja gleba?",
-     "wariant": null
-    }
-   ],
+   "wystapienia": [],
    "wspolny": null,
    "baza": {
     "plik": "v7/home.html",
@@ -7450,7 +7344,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-73.webp",
     "pelny": "ce-indeks/img/p/CE-73.webp",
     "w": 1280,
-    "h": 800
+    "h": 113
    },
    "warianty": [
     {
@@ -7467,13 +7361,6 @@ window.CE_DANE = {
    ],
    "wystapienia": [
     {
-     "plik": "home.html",
-     "strona": "Strona główna",
-     "id": "jak-pomagamy",
-     "naglowek": "Od diagnozy do próchnicy na lata",
-     "wariant": null
-    },
-    {
      "plik": "potwierdzenie-b2b.html",
      "strona": "Panel – Zamówienie",
      "id": "stan",
@@ -7483,8 +7370,8 @@ window.CE_DANE = {
    ],
    "wspolny": null,
    "baza": {
-    "plik": "v7/home.html",
-    "kotwica": "jak-pomagamy"
+    "plik": "v7/potwierdzenie-b2b.html",
+    "kotwica": "stan"
    },
    "opis": "Szeroka sekcja (kontener do 1800 px, marginesy 40 px) złożona z dwóch części pod wspólną głową. U góry oś procesu: cztery kolumny pod jedną poziomą linią 1 px, na linii kwadratowe węzły 30 px z numerami 01–04, pod każdym węzłem tytuł kroku i jedno zdanie. Niżej, oddzielony dużym odstępem, horyzont efektu: nadpis, wspólna oś czasu z dwoma odcinkami w proporcji 1 : 4 (nad paskiem etykieta okresu, pod paskiem znacznik czasu i treść), pierwszy pasek ciemny, drugi w średniej szarości; pod osią dopisek i link. Pasek ma 12 px wysokości i obrys 1 px.",
    "mechanika": "Linia osi wypełnia się od lewej (scaleX) wraz z przejściem sekcji przez okno: postęp 0 przy 80 % wysokości okna, 1 przy 35 %; węzeł zapala się (ciemne wypełnienie, jasna cyfra), gdy wypełnienie do niego dochodzi – moduł mierzy położenie każdego węzła na linii. Kolumny wchodzą kaskadą revealem strony. Odcinki horyzontu wypełniają się od lewej po wejściu w widok (600 ms i 900 ms). Mechanika scrollowa tylko za CX5.motionOn(); bez JS, poniżej 900 px i przy reduced-motion linia jest pełna, wszystkie węzły zapalone, a paski w stanie końcowym. Poniżej 900 px oś staje pionowo: węzły po lewej, linia wypełnia się w pionie, horyzont rozpada się na dwa wiersze z własnymi paskami, których szerokość trzyma proporcję 1 : 4.",
@@ -7504,36 +7391,9 @@ window.CE_DANE = {
    "kod": "CE-74",
    "nazwa": "Taby potrzeb z kartami produktów",
    "skrot": "Przełącznik 3 potrzeb; panel z opisem, zdjęciem i trzema kartami produktów.",
-   "status": "aktywny",
+   "status": "wycofany",
    "projekt": null,
-   "tagi": {
-    "rodzina": [
-     "zwijane"
-    ],
-    "media": [
-     "packshot",
-     "zdjecie"
-    ],
-    "tekst": [
-     "krotki"
-    ],
-    "ukryte": [
-     "taby-przelacznik"
-    ],
-    "pozycje": [
-     "2-4"
-    ],
-    "nadaje": [
-     "porownanie-wybor",
-     "lista-produktow"
-    ],
-    "mechanika": [
-     "klik"
-    ],
-    "zakres": [
-     "uniwersalny"
-    ]
-   },
+   "tagi": {},
    "zrzut": {
     "mini": "ce-indeks/img/m/CE-74.webp",
     "pelny": "ce-indeks/img/p/CE-74.webp",
@@ -7541,15 +7401,7 @@ window.CE_DANE = {
     "h": 800
    },
    "warianty": [],
-   "wystapienia": [
-    {
-     "plik": "home.html",
-     "strona": "Strona główna",
-     "id": "produkty",
-     "naglowek": "Wybierz rozwiązanie dla siebie",
-     "wariant": null
-    }
-   ],
+   "wystapienia": [],
    "wspolny": null,
    "baza": {
     "plik": "v7/home.html",
@@ -7574,39 +7426,9 @@ window.CE_DANE = {
    "kod": "CE-75",
    "nazwa": "Zajawka programu z osią kamieni",
    "skrot": "Zajawka programu: tekst, liczby i przyciski obok zdjęcia z kartą osi pięciu kamieni.",
-   "status": "aktywny",
+   "status": "wycofany",
    "projekt": null,
-   "tagi": {
-    "rodzina": [
-     "obraz-tekst"
-    ],
-    "media": [
-     "zdjecie",
-     "schemat-wykres"
-    ],
-    "tekst": [
-     "sredni"
-    ],
-    "ukryte": [
-     "wszystko-widoczne"
-    ],
-    "pozycje": [
-     "5-8"
-    ],
-    "nadaje": [
-     "otwarcie-strony",
-     "harmonogram-czas",
-     "liczby-dane"
-    ],
-    "mechanika": [
-     "statyczny",
-     "przewijanie",
-     "ruch-wlasny"
-    ],
-    "zakres": [
-     "jednorazowy"
-    ]
-   },
+   "tagi": {},
    "zrzut": {
     "mini": "ce-indeks/img/m/CE-75.webp",
     "pelny": "ce-indeks/img/p/CE-75.webp",
@@ -7614,15 +7436,7 @@ window.CE_DANE = {
     "h": 799
    },
    "warianty": [],
-   "wystapienia": [
-    {
-     "plik": "home.html",
-     "strona": "Strona główna",
-     "id": "prochnica-plus",
-     "naglowek": "Próchnica+ – wspólnie z producentami odbudowujemy polskie gleby",
-     "wariant": null
-    }
-   ],
+   "wystapienia": [],
    "wspolny": null,
    "baza": {
     "plik": "v7/home.html",

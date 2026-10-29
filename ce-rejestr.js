@@ -816,6 +816,7 @@ window.CW_CE = {
         "kadr": "Kadr zdjęcia uprawy na panelu zamiast packshotu.",
         "kadr-w-tle": "Zdjęcie uprawy w tle sekcji, H1 u dołu po lewej, lead i przyciski po prawej.",
         "player": "Panel z odtwarzaczem filmu.",
+        "miniatura": "Panel z małą miniaturą filmu, pod obiema kolumnami pasek czterech rodzin produktów (Carbohumic z dwoma odnośnikami).",
         "foto": "Panel ze zdjęciem zamiast packshotu.",
         "dzial": "Wąska kolumna z nagłówkiem działu, wyszukiwarką i przyciskiem przewodnika.",
         "artykul": "Nagłówek artykułu: okruszki, chipy, H1, metryka autora, przyciski udostępnij i drukuj."
@@ -847,6 +848,7 @@ window.CW_CE = {
         "kadr": "kadr zdjęcia uprawy zamiast packshotu – od 19.09.2026 bez wystąpień, na Kukurydzy zastąpił go wariant kadr-w-tle",
         "kadr-w-tle": "hero podstron upraw (decyzja Mateusza z 19.09.2026): duży kadr uprawy w tle całej sekcji, jednolity scrim, bez kickera; okruszki u góry po lewej, wielki H1 u dołu po lewej, lead i dwa przyciski u dołu po prawej, treść kończy się nad dokiem doradcy; kadr osiada ze skali 1,06, treść wchodzi kaskadą; poniżej 900 px H1 na kadrze, lead i przyciski pod nim (modyfikator c5-hero--bg w ce/CE-08-hero.css; siłę scrimu ustawia strona własnością --c5-hero-scrim w atrybucie style na section#hero, domyślnie .4; --c5-hero-scrim-narrow daje osobną wartość do 1099 px)",
         "player": "player filmu na środku panelu zamiast packshotu; na telefonie wysokość panelu wyznacza film, bez kadru 4:5 (modyfikator c5-hero--player; prochnica-plus.html#hero)",
+        "miniatura": "strona główna od 26.10.2026: układ bazy (kolumna tekstu z leadem, ciepły panel z sygnetem), ale na panelu zamiast packshotów mała miniatura filmu 16:9 (ok. 430 px przy 1440 px, plakat, szklany przycisk odtwarzania jak w wariancie player, widoczny podpis z długością) – film nigdy nie jest tłem, otwiera go strona w oknie po kliknięciu; pod obiema kolumnami pasek czterech rodzin (opakowanie, nazwa, jedno zdanie, strzałka), każda prowadzi do swojej karty na stronie; od 27.10.2026 ramka Carbohumic (c5-hero__fam--dwa) ma dwa opakowania i dwa odnośniki – doglebowy i nalistny; poniżej 900 px tekst, miniatura i rodziny w siatce 2 × 2 (modyfikator c5-hero--miniatura w ce/CE-08-hero.css; home.html#hero)",
         "foto": "panel ze zdjęciem zamiast packshotu (o-firmie.html#hero)",
         "dzial": "jedna kolumna na dwie trzecie szerokości, wysokość wg treści, wyszukiwarka i przycisk przewodnika (centrum-wiedzy.html#hero, centrum-wiedzy-kategoria.html#hero)",
         "artykul": "nagłówek artykułu: okruszki, chipy, h1, metryka autora, przyciski udostępnij/drukuj (artykul.html#naglowek)"
@@ -4334,6 +4336,7 @@ window.CW_CE = {
       }
     },
     "CE-71": {
+      "status": "wycofany",
       "nazwa": "Pas wejść sytuacyjnych",
       "grupa": "karty",
       "rodzina": "wspolne",
@@ -4389,6 +4392,7 @@ window.CW_CE = {
       }
     },
     "CE-72": {
+      "status": "wycofany",
       "nazwa": "Scena profilu gleby",
       "grupa": "sceny",
       "rodzina": "sceny",
@@ -4483,8 +4487,8 @@ window.CW_CE = {
       "opis": "Szeroka sekcja (kontener do 1800 px, marginesy 40 px) złożona z dwóch części pod wspólną głową. U góry oś procesu: cztery kolumny pod jedną poziomą linią 1 px, na linii kwadratowe węzły 30 px z numerami 01–04, pod każdym węzłem tytuł kroku i jedno zdanie. Niżej, oddzielony dużym odstępem, horyzont efektu: nadpis, wspólna oś czasu z dwoma odcinkami w proporcji 1 : 4 (nad paskiem etykieta okresu, pod paskiem znacznik czasu i treść), pierwszy pasek ciemny, drugi w średniej szarości; pod osią dopisek i link. Pasek ma 12 px wysokości i obrys 1 px.",
       "mechanika": "Linia osi wypełnia się od lewej (scaleX) wraz z przejściem sekcji przez okno: postęp 0 przy 80 % wysokości okna, 1 przy 35 %; węzeł zapala się (ciemne wypełnienie, jasna cyfra), gdy wypełnienie do niego dochodzi – moduł mierzy położenie każdego węzła na linii. Kolumny wchodzą kaskadą revealem strony. Odcinki horyzontu wypełniają się od lewej po wejściu w widok (600 ms i 900 ms). Mechanika scrollowa tylko za CX5.motionOn(); bez JS, poniżej 900 px i przy reduced-motion linia jest pełna, wszystkie węzły zapalone, a paski w stanie końcowym. Poniżej 900 px oś staje pionowo: węzły po lewej, linia wypełnia się w pionie, horyzont rozpada się na dwa wiersze z własnymi paskami, których szerokość trzyma proporcję 1 : 4.",
       "baza": {
-        "plik": "v7/home.html",
-        "kotwica": "jak-pomagamy"
+        "plik": "v7/potwierdzenie-b2b.html",
+        "kotwica": "stan"
       },
       "kod": {
         "css": "ce/CE-73-os-krokow.css + wariant sama-os w tym samym pliku (c5-st--sama-os)",
@@ -4501,9 +4505,9 @@ window.CW_CE = {
         "sama-os": "sama oś bez horyzontu (klasa c5-st--sama-os; potwierdzenie-b2b.html#stan): pięć węzłów, linia wypełniona na stałe do bieżącego kroku, pod węzłem nazwa i data; bez sterowania przewijaniem"
       },
       "zrzut": {
-        "strona": "v7/home.html",
-        "kotwica": "jak-pomagamy",
-        "maxh": 900
+        "strona": "v7/potwierdzenie-b2b.html",
+        "kotwica": "stan",
+        "maxh": 300
       },
       "zrzuty_wariantow": {
         "sama-os": {
@@ -4514,6 +4518,7 @@ window.CW_CE = {
       }
     },
     "CE-74": {
+      "status": "wycofany",
       "nazwa": "Taby potrzeb z kartami produktów",
       "grupa": "przelaczniki",
       "rodzina": "zwijane",
@@ -4570,6 +4575,7 @@ window.CW_CE = {
       }
     },
     "CE-75": {
+      "status": "wycofany",
       "nazwa": "Zajawka programu z osią kamieni",
       "grupa": "karty",
       "rodzina": "obraz-tekst",

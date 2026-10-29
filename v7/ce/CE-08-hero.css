@@ -564,3 +564,90 @@
   .cw-a-cover__ph{aspect-ratio:21 / 9;}
 }
 .cw-a-cover__cap{margin-top:var(--ch-space-2);font-size:var(--ch-type-caption-size);line-height:1.45;color:var(--ch-text-secondary);}
+
+/* ===== wariant: miniatura ===== (home.html#hero, 26.10.2026)
+   The base layout (copy column | warm panel with the outlined sign) with two
+   changes: the panel holds a small film thumbnail instead of packshots, and a
+   row of the product families runs under both columns. The film is never a
+   background – a 16:9 poster about 430 px wide at 1440 px with the glass play
+   button of the player variant (`.pp-film` element classes) and a visible
+   caption with the length; the page opens the film in its own window on click.
+   Markup: `.c5-hero.c5-hero--miniatura` › `.c5-hero__copy` (as the base, with
+   the lead) + `.c5-hero__stage` › `figure.pp-film.c5-hero__film` (`a.pp-film__play`
+   › `img.pp-film__poster` + `span.pp-film__btn`; `figcaption`) + `ul.c5-hero__range`
+   › `li` › `a.c5-hero__fam` (`img.c5-hero__fam-img`, `span.c5-hero__fam-txt` with
+   `__fam-name` and `__fam-sub`, arrow icon). A family in two lines (Carbohumic:
+   soil and foliar) is `div.c5-hero__fam.c5-hero__fam--dwa` with `span.c5-hero__fam-imgs`
+   (two packshots) and `span.c5-hero__fam-links` › two `a.c5-hero__fam-link`.
+   The section keeps the height of the first screen: row 1 takes what the row of
+   families leaves. Below 900 px: copy, thumbnail, then the families as a 2 × 2
+   grid. Only this modifier is touched – the base and the other variants stay as
+   they are. */
+.c5-hero.c5-hero--miniatura{grid-template-columns:minmax(0,7fr) minmax(0,5fr);grid-template-rows:minmax(0,1fr) auto;
+  row-gap:var(--ch-space-5);padding-bottom:var(--ch-layout-gutter);}
+.c5-hero--miniatura .c5-hero__stage{display:grid;place-items:center;min-height:0;margin-block:var(--ch-space-4) 0;
+  padding:clamp(1.5rem,3.4vw,3.5rem);}
+/* the thumbnail: width set here, the poster 16:9, a smaller glass button */
+.c5-hero--miniatura .c5-hero__film{position:relative;z-index:1;width:min(100%,clamp(18rem,30vw,27.5rem));max-width:none;}
+.c5-hero--miniatura .pp-film .pp-film__play{aspect-ratio:16 / 9;text-decoration:none;}
+.c5-hero--miniatura .pp-film .pp-film__poster{object-position:50% 50%;}
+.c5-hero--miniatura .pp-film .pp-film__btn{width:64px;height:64px;border-radius:var(--ch-radius-control-l);}
+.c5-hero__film > figcaption{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--ch-space-1) var(--ch-space-3);
+  margin:0;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-secondary);}
+.c5-hero__film-t{font-weight:var(--ch-font-weight-medium);color:var(--ch-text-primary);}
+/* the row of families: four warm tiles, packshot | name and one line | arrow */
+.c5-hero__range{grid-column:1 / -1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--ch-space-4);
+  margin:0;padding:0;list-style:none;}
+.c5-hero__range > li{display:flex;min-width:0;}
+.c5-hero__fam{display:grid;grid-template-columns:72px minmax(0,1fr) auto;align-items:center;gap:var(--ch-space-4);width:100%;
+  padding:var(--ch-space-3) var(--ch-space-5) var(--ch-space-3) var(--ch-space-3);border-radius:var(--ch-radius-md);
+  background:var(--ch-surface-warm);color:var(--ch-text-primary);text-decoration:none;
+  transition:background var(--ch-motion-duration-base) var(--ch-motion-ease);}
+.c5-hero__fam:hover{background:var(--ch-surface-warm-strong);}
+.c5-hero__fam:focus-visible{outline:2px solid var(--ch-border-strong);outline-offset:2px;}
+.c5-hero__fam-img{display:block;width:72px;height:88px;object-fit:contain;}
+.c5-hero__fam-txt{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.c5-hero__fam-name{font-family:var(--ch-type-title-s-font);font-size:var(--ch-type-title-s-size);line-height:var(--ch-type-title-s-lh);
+  letter-spacing:var(--ch-type-title-s-ls);font-weight:var(--ch-type-title-s-weight);}
+.c5-hero__fam-sub{font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-secondary-on-warm,var(--ch-text-secondary));}
+.c5-hero__fam > .wf-icon{flex:none;width:20px;height:20px;transition:transform var(--ch-motion-duration-base) var(--ch-motion-ease);}
+.c5-hero__fam:hover > .wf-icon{transform:translateX(3px);}
+@media (min-width:900px) and (max-width:1279px){
+  .c5-hero__fam{grid-template-columns:56px minmax(0,1fr);padding-right:var(--ch-space-3);}
+  .c5-hero__fam-img{width:56px;height:72px;}
+  .c5-hero__fam > .wf-icon{display:none;}
+}
+@media (prefers-reduced-motion: reduce){
+  .c5-hero__fam,.c5-hero__fam > .wf-icon{transition:none;}
+  .c5-hero__fam:hover > .wf-icon{transform:none;}
+}
+@media (max-width:899px){
+  .c5-hero.c5-hero--miniatura{padding-block:clamp(2rem,6vw,3rem);}
+  .c5-hero--miniatura .c5-hero__stage{margin-block:0;aspect-ratio:auto;max-height:none;padding:var(--ch-space-5);}
+  .c5-hero--miniatura .c5-hero__film{width:100%;}
+  .c5-hero--miniatura .pp-film .pp-film__btn{width:56px;height:56px;}
+  .c5-hero__range{order:3;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ch-space-3);}
+  .c5-hero__fam{grid-template-columns:minmax(0,1fr);justify-items:start;gap:var(--ch-space-2);padding:var(--ch-space-3);}
+  .c5-hero__fam-img{width:56px;height:68px;}
+  .c5-hero__fam > .wf-icon{display:none;}
+}
+/* a family in two lines: two packshots side by side, two links instead of one tile link */
+.c5-hero__fam.c5-hero__fam--dwa{grid-template-columns:96px minmax(0,1fr);}
+.c5-hero__fam-imgs{display:flex;align-items:flex-end;justify-content:center;gap:2px;}
+.c5-hero__fam--dwa .c5-hero__fam-img{width:46px;height:88px;}
+.c5-hero__fam-links{display:flex;flex-wrap:wrap;gap:2px var(--ch-space-3);margin-top:2px;}
+.c5-hero__fam-link{display:inline-flex;align-items:center;gap:4px;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);
+  color:var(--ch-text-primary);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.22em;
+  text-decoration-color:color-mix(in srgb,currentColor 30%,transparent);}
+.c5-hero__fam-link:hover{text-decoration-color:currentColor;}
+.c5-hero__fam-link:focus-visible{outline:2px solid var(--ch-border-strong);outline-offset:2px;border-radius:2px;}
+.c5-hero__fam-link .wf-icon{width:14px;height:14px;}
+@media (min-width:900px) and (max-width:1279px){
+  .c5-hero__fam.c5-hero__fam--dwa{grid-template-columns:80px minmax(0,1fr);}
+  .c5-hero__fam--dwa .c5-hero__fam-img{width:38px;height:72px;}
+}
+@media (max-width:899px){
+  .c5-hero__fam.c5-hero__fam--dwa{grid-template-columns:minmax(0,1fr);}
+  .c5-hero__fam-imgs{justify-content:flex-start;}
+  .c5-hero__fam--dwa .c5-hero__fam-img{width:34px;height:68px;}
+}
