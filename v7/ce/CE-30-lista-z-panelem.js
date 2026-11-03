@@ -80,6 +80,25 @@
         if (home && m.parentNode !== home) home.appendChild(m);
       });
       if (wide) root.setAttribute("data-kadr", ""); else root.removeAttribute("data-kadr");
+      reserve();
+    }
+    /* From 900 px the list stands on the bottom of the frame row (CSS). Left alone it would
+       grow upward whenever a taller row opens: the rows above it move and an anchor such as
+       #sezon-02 lands too high (03.11.2026, found on CARBOMAT Mata). The list therefore keeps
+       one height – that of its tallest open row – and its rows flow from the top of that box,
+       on every occurrence of the variant. Measured at start, after the fonts and on resize. */
+    function reserve() {
+      if (!medias.length) return;
+      list.style.minHeight = "";
+      if (!root.hasAttribute("data-kadr")) return;
+      var open = 0, max = 0;
+      panels.forEach(function (p, j) {
+        var h = $(".c5-acc30__in", p);
+        h = h ? h.offsetHeight : 0;
+        if (j === cur) open = h;
+        if (h > max) max = h;
+      });
+      list.style.minHeight = (list.offsetHeight - open + max) + "px";
     }
     function showMedia() {
       if (!medias.length) return;
@@ -191,10 +210,14 @@
 
     /* --- start ---------------------------------------------------------------------- */
     paint(true);
+    reserve();
     syncAuto();
     if (medias.length) {
       if (CX5.wideMQ.addEventListener) CX5.wideMQ.addEventListener("change", placeMedia);
       else if (CX5.wideMQ.addListener) CX5.wideMQ.addListener(placeMedia);
+      if (doc.fonts && doc.fonts.ready) doc.fonts.ready.then(reserve);
+      var resT = 0;
+      window.addEventListener("resize", function () { clearTimeout(resT); resT = setTimeout(reserve, 250); });
     }
     if (CX5.wideMQ.addEventListener) {
       CX5.wideMQ.addEventListener("change", syncAuto);
@@ -211,8 +234,11 @@
         stopAuto();
         cur = i;
         paint(instant, true);
-        CX5.scrollTo(items[i].getBoundingClientRect().top + window.scrollY - gutter(),
-                     instant || CX5.reducedMQ.matches ? "auto" : "smooth");
+        /* list | frame (from 900 px): land on the row of the whole variant – the frame 20 px
+           under the top of the window and every row of the list in view */
+        var to = root.hasAttribute("data-kadr") ? root.getBoundingClientRect().top - 20
+                                                : items[i].getBoundingClientRect().top - gutter();
+        CX5.scrollTo(to + window.scrollY, instant || CX5.reducedMQ.matches ? "auto" : "smooth");
         if (focusTitle) btns[i].focus({ preventScroll: true });   /* the next Tab continues from this row */
       }
     };

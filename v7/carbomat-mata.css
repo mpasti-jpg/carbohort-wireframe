@@ -35,28 +35,10 @@
 .c5-mt-grid + .c5-cards--uprawy{margin-top:clamp(2.5rem,5vw,4rem);}
 
 /* ===== 40 · Co zastępujesz – two tabs and one table (spec §21.4, §23) =====
-   Round of 02.11.2026 (Figma map 3:415): CE-21 shows one substrate at a time.
-   The rail is EL-19, the tabs EL-18 (ce/00-base.css); the script in
-   carbomat-mata.js shows the rail and hides the other panel, so without JS both
-   panels stand one under another. From 900 px a panel is photo | text. The full
+   Round of 02.11.2026 (Figma map 3:415): CE-21 variant `taby` shows one
+   substrate at a time (ce/CE-21-dwie-kolumny-przewag.css/.js). The full
    three-substrate table lives in a single-page lightbox (block 55); without JS
    it stands in the flow, between the button and the CTA row. ---------------- */
-#co-zastepujesz .c5-cmp2__label{text-align:center;}
-.c5-cmp2.c5-cmp2--taby{grid-template-columns:minmax(0,1fr);justify-items:center;row-gap:clamp(2rem,4vw,3rem);}
-.c5-mt-taby{--c5-tabrail-bg:var(--ch-surface-warm);}
-.c5-mt-taby[hidden],.c5-cmp2--taby .c5-cmp2__col[hidden]{display:none;}
-.c5-cmp2--taby .c5-cmp2__col{width:100%;}
-.c5-mt-taby .c5-tab{white-space:nowrap;}
-@media (min-width:900px){
-  .c5-cmp2--taby .c5-cmp2__col{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);column-gap:clamp(2rem,5vw,4.5rem);row-gap:var(--ch-space-5);align-items:start;}
-  .c5-cmp2--taby .c5-cmp2__ph{grid-column:1;grid-row:1 / span 3;aspect-ratio:4 / 5;}
-  .c5-cmp2--taby .c5-cmp2__col > :not(.c5-cmp2__ph){grid-column:2;}
-}
-@media (max-width:599px){
-  /* two long labels do not fit one line of a phone: the rail stacks them */
-  .c5-seg.c5-seg--rail.c5-mt-taby{flex-direction:column;align-items:stretch;width:100%;}
-  .c5-mt-taby .c5-tab{justify-content:center;}
-}
 
 /* --- Row with the button that opens a table in its lightbox ----------------
    Shared by this chapter and by "Analiza podłoża": centred like the section
@@ -151,26 +133,8 @@
 .c5hd-defs{position:absolute;width:0;height:0;overflow:hidden;}
 
 /* ===== 65 · Analiza podłoża – rows of changes + table (spec §12, §23) =====
-   Round of 02.11.2026 (Figma map 3:478): the page's own version of the
-   „Doświadczenie retencyjne” block of Produkty (CE-41, `c5-barchart--karty`). One
-   warm card per parameter: name, unit and direction chip (EL-16) on the left, a
-   pair of hatched bars on the right. The track and the fill come from CE-41;
-   the cards of that chart are switched off here, the row is the card. */
-.c5-mt-zmiany{display:flex;flex-direction:column;gap:6px;margin-top:clamp(2rem,4vw,3rem);}
-.c5-mt-zmiana{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,8fr);column-gap:clamp(1.5rem,4vw,3.5rem);align-items:center;
-  padding:var(--ch-space-5) var(--ch-space-6);border-radius:var(--ch-radius-md);background:var(--ch-surface-warm);}
-.c5-mt-zmiana__head{display:flex;align-items:center;justify-content:space-between;gap:var(--ch-space-3);min-width:0;}
-.c5-mt-zmiana__name{margin:0;font-family:var(--ch-type-title-s-font);font-size:var(--ch-type-title-s-size);line-height:var(--ch-type-title-s-lh);letter-spacing:var(--ch-type-title-s-ls);font-weight:var(--ch-type-title-s-weight);color:var(--ch-text-primary);}
-.c5-mt-zmiana__unit{font-family:var(--ch-type-body-font);font-size:var(--ch-type-small-size);letter-spacing:0;font-weight:var(--ch-font-weight-regular);color:var(--ch-text-secondary);white-space:nowrap;}
-.c5-mt-zmiana .c5-barchart--karty{gap:var(--ch-space-2);}
-.c5-mt-zmiana .c5-barchart--karty .c5-bar{grid-template-columns:6rem minmax(0,1fr) 3.5rem;gap:var(--ch-space-3);min-height:0;padding:0;background:none;}
-.c5-mt-zmiana .c5-barchart--karty .c5-bar > :first-child{grid-column:auto;}
-.c5-mt-zmiana .c5-barchart--karty .c5-bar .c5-muted{text-align:right;}
-/* the state after 5 years is the one to read: the base value stays in the dark tone */
-.c5-mt-zmiana .c5-barchart--karty .c5-bar:not(.c5-bar--po) .c5-bar__fill{background:color-mix(in srgb,var(--ch-color-green-300) 40%,var(--ch-surface-warm));}
-@media (max-width:699px){
-  .c5-mt-zmiana{grid-template-columns:minmax(0,1fr);row-gap:var(--ch-space-3);padding:var(--ch-space-4);}
-}
+   Round of 02.11.2026 (Figma map 3:478): the rows are CE-41 variant
+   `zmiany-przed-po` (`c5pr-zmiany`, ce/CE-41-bloki-wiedzy.css). */
 
 /* The full table of 15 parameters lives in a single-page lightbox (block 55,
    `c5-lb--solo`); this top margin counts only in the flow, without JS. */
@@ -185,14 +149,8 @@
 
 /* ===== 80 · Sezon po sezonie – accordion with a frame (round of 02.11.2026) =====
    The list is the shared CE-30 module, variant `akordeon-z-kadrem`
-   (ce/CE-30-lista-z-panelem.css/.js), without the countdown. Six rows are shorter
-   than the nine of the base occurrence: the list stands on the TOP of a lower
-   frame, so opening a row never moves the rows above it and the anchor #sezon-02
-   lands where it was measured (a bottom-aligned list grows upward). */
-@media (min-width:900px){
-  #sezon-lista[data-kadr] .c5-acc30__list{align-self:start;margin-bottom:0;}
-  #sezon-lista[data-kadr] .c5-acc30__kadr{height:min(calc(100svh - 40px),640px);min-height:480px;}
-}
+   (ce/CE-30-lista-z-panelem.css/.js), without the countdown. The list keeping
+   its rows in place when one opens (anchor #sezon-02) lives in the module. */
 
 /* ===== 90 · Closing section – CTA + person card (round of 02.11.2026) =====
    CE-18 carries the band; the card is CE-54 (`kt-quick__card`, the same outline,

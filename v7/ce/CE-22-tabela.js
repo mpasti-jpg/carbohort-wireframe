@@ -4,8 +4,7 @@
    (`.c5pr-cmp[data-par]`) and slides vertically against the scroll by at most 4 % of the
    frame height (inside the 5 % overscan, so no edge ever shows). The script only writes
    `--c5pr-par` (px) on frames that are on screen, once per animation frame; the loupe image
-   inside the panel reads `--c5pr-par-in`, a faster run in the same direction (20.10.2026,
-   owner: „efekt dwóch planów”).
+   inside the panel stands still (U-14, 03.11.2026 – the two-plane run of 20.10 is gone).
    Reduced motion or no IntersectionObserver: `data-par` is never set, the photos stand still.
    ====================================================================================== */
 (function () {
@@ -34,8 +33,6 @@
       var p = ((r.top + r.height / 2) - vh / 2) / (vh / 2 + r.height / 2);
       p = Math.max(-1, Math.min(1, p));
       f.style.setProperty("--c5pr-par", (-p * MAX * r.height).toFixed(1) + "px");
-      /* the loupe image as the second plane: same direction, faster (see CE-22-tabela.css) */
-      f.style.setProperty("--c5pr-par-in", (-p * MAX * (CX5.wideMQ.matches ? 2.5 : 1.5) * r.height).toFixed(1) + "px");
     });
   }
   function request() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
@@ -52,6 +49,6 @@
   CX5.reducedMQ.addEventListener && CX5.reducedMQ.addEventListener("change", function () {
     if (!CX5.reducedMQ.matches) return;
     roots.forEach(function (r) { r.removeAttribute("data-par"); });
-    frames.forEach(function (f) { f.style.removeProperty("--c5pr-par"); f.style.removeProperty("--c5pr-par-in"); });
+    frames.forEach(function (f) { f.style.removeProperty("--c5pr-par"); });
   });
 })();

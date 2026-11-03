@@ -3006,7 +3006,7 @@ window.CE_DANE = {
    "warianty": [
     {
      "slug": "taby",
-     "opis": "klasa c5-cmp2--taby i atrybut data-mt-taby na korzeniu: nad kolumnami szyna zakładek (c5-seg--rail, „Zamiast wełny mineralnej” i „Zamiast włókna kokosowego”), aktywna kolumna na pełną szerokość; od 900 px zdjęcie 4:5 po lewej, po prawej tytuł i punkty (podział 5 : 7), niżej jedna kolumna; poniżej 600 px zakładki w pionie, na całą szerokość",
+     "opis": "klasa c5-cmp2--taby na korzeniu: nad kolumnami szyna zakładek (c5-seg--rail c5-cmp2__rail, „Zamiast wełny mineralnej” i „Zamiast włókna kokosowego”), aktywna kolumna na pełną szerokość; od 900 px zdjęcie 4:5 po lewej, po prawej tytuł i punkty (podział 5 : 7), niżej jedna kolumna; poniżej 600 px zakładki w pionie, na całą szerokość",
      "skrot": "Dwie kolumny przewag przełączane zakładkami nad wspólnym nadpisem: naraz widać jedną (zdjęcie 4:5 obok tytułu i punktów).",
      "zrzut": null
     }
@@ -3026,15 +3026,15 @@ window.CE_DANE = {
     "kotwica": "co-zastepujesz-kolumny"
    },
    "opis": "Nadpis nad parą równych kolumn: w każdej zdjęcie, tytuł, cztery punkty i link. Wariant taby (runda 02.11.2026) pokazuje naraz jedną kolumnę, a drugą przełącza zakładkami.",
-   "mechanika": "Statyczne (czysty CSS); w wariancie taby przełączanie zakładek skryptem strony (klik, strzałki, Home i End z roving tabindex), bez JS obie kolumny stoją w przepływie.",
+   "mechanika": "Statyczne (czysty CSS); w wariancie taby przełączanie zakładek skryptem modułu (klik, strzałki, Home i End z roving tabindex), bez JS obie kolumny stoją w przepływie.",
    "czesci": [
     "nadpis",
     "szyna zakładek (wariant taby)",
     "2 kolumny: zdjęcie, tytuł, punkty, link"
    ],
    "kod_zrodlowy": {
-    "css": "ce/CE-21-dwie-kolumny-przewag.css (c5-cmp2); wariant taby: carbomat-mata.css (c5-cmp2--taby, c5-mt-taby)",
-    "js": "wariant taby: carbomat-mata.js (data-mt-taby)"
+    "css": "ce/CE-21-dwie-kolumny-przewag.css (c5-cmp2; wariant taby: c5-cmp2--taby, szyna c5-cmp2__rail)",
+    "js": "ce/CE-21-dwie-kolumny-przewag.js (wariant taby)"
    }
   },
   {
@@ -3239,7 +3239,7 @@ window.CE_DANE = {
     "kotwica": "doglebowo-tabela"
    },
    "opis": "Samodzielna tabela w kontenerze przewijanym w poziomie na wąskich ekranach (cw-scrollx, tabindex), nagłówki kolumn, opcjonalnie packshoty w nagłówkach i przypis pod tabelą.",
-   "mechanika": "Statyczna; wariant z klikalnymi wierszami otwiera lightbox; wiersze mogą wchodzić z reveal. W panelu pierwsza kolumna przyklejona do lewej w przewijanym kontenerze. W module c5-tbl dwa pokrętła wpisywane w style na korzeniu wystąpienia: --c5-tbl-min (najmniejsza szerokość tabeli w przewijanym kontenerze, domyślnie 640 px) i --c5-tbl-first (stała szerokość przyklejonej pierwszej kolumny poniżej 600 px). W wariantach z-packshotami i z-przyciskami (c5pr-cmp) dwa pokrętła kadru: --c5pr-cmp-pos-1 i --c5pr-cmp-pos-2 (object-position zdjęcia pierwszego i drugiego kadru, domyślnie 50% 50%; okno-lupa bierze tę samą wartość). Od 03.11.2026 na CARBOHUMIC doglebowy (#doglebowo-tabela, jak na Produktach) duże zdjęcia kadrów mają lekki parallax z ce/CE-22-tabela.js (obrazy w oknach-lupach stoją w miejscu), a wiersze wchodzą po kolei (data-reveal-stagger na tabeli); bez JS, przy ograniczonym ruchu i bez IntersectionObserver wszystko stoi.",
+   "mechanika": "Statyczna; wariant z klikalnymi wierszami otwiera lightbox; wiersze mogą wchodzić z reveal. W panelu pierwsza kolumna przyklejona do lewej w przewijanym kontenerze. W module c5-tbl dwa pokrętła wpisywane w style na korzeniu wystąpienia: --c5-tbl-min (najmniejsza szerokość tabeli w przewijanym kontenerze, domyślnie 640 px) i --c5-tbl-first (stała szerokość przyklejonej pierwszej kolumny poniżej 600 px). W wariantach z-packshotami i z-przyciskami (c5pr-cmp) dwa pokrętła kadru: --c5pr-cmp-pos-1 i --c5pr-cmp-pos-2 (object-position zdjęcia pierwszego i drugiego kadru, domyślnie 50% 50%; okno-lupa bierze tę samą wartość). Od 03.11.2026 (U-14, U-15) we wszystkich wystąpieniach wariantów z kadrem (z-packshotami, z-przyciskami: Produkty i CARBOHUMIC doglebowy #doglebowo-tabela, CARBOMAT HUMIC #sezon-panele) lekki parallax z ce/CE-22-tabela.js ma tylko duże zdjęcie kadru – obraz w oknie-lupie stoi w miejscu (bez skali i przesunięcia; dawny szybszy „drugi plan” lupy z 20.10 wycofany), a wiersze wchodzą po kolei (data-reveal-stagger na tabeli); bez JS, przy ograniczonym ruchu i bez IntersectionObserver wszystko stoi.",
    "czesci": [
     "thead",
     "tbody",
@@ -4047,7 +4047,7 @@ window.CE_DANE = {
     },
     {
      "slug": "akordeon-z-kadrem",
-     "opis": "akordeon-z-odliczaniem z kadrem ekranu (modyfikator c5-acc30--kadr w ce/CE-30-lista-z-panelem.css/.js; CARBOMAT HUMIC „Czym jest”, #czym-jest-lista, 29.10.2026 – komentarze Mateusza w artefakcie: sekcja nieprzypięta, przewija się normalnie, akordeon wszystkich pozycji, kolejna otwiera się co 5 s, klik wybiera, obok zdjęcie, które się zmienia i powoli przesuwa, 20 px od górnej i dolnej krawędzi okna; zastąpił tam scenę faktów CE-12). Od 900 px korzeń jest siatką lista | kadr na szerokość okna (do 1800 px, 40 px z lewej, 20 px z prawej): kadr przyklejony 20 px pod górą okna, wysokość 100svh − 40 px (najmniej 520 px), zaokrąglenie 20 px; lista wyśrodkowana w pionie obok kadru, wiersze z mniejszym oddechem niż domyślnie, Każda pozycja niesie w panelu .c5-acc30__media: zdjęcie (img.c5-acc30__foto) i opcjonalnie boks ilustracji c5-viz z CE-12 (wygląd bazowy z ce/CE-12-scena-faktow.css, materiał szkła z rozmyciem dopisany w module); bez JS i poniżej 900 px zostaje w panelu (zdjęcie 16 : 10, boks pod nim), od 900 px skrypt przenosi je do pustego .c5-acc30__kadr na końcu korzenia i pokazuje media otwartej pozycji ([data-on]; bez otwartej zostaje ostatnie). Zmiana zdjęcia to przenikanie 0,6 s, pokazane zdjęcie jedzie powoli w górę (skala 1,08, przesuw z 2 % do −2 %) przez czas odliczania plus 1 s; ruch tylko bez reduced-motion. Odliczanie, wstrzymanie pod kursorem i przy fokusie, klik zatrzymujący automat i kotwice pozycji – bez zmian z akordeon-z-odliczaniem. Druga runda (29.10.2026 wieczorem): bez numeracji pozycji, otwarta pozycja bez tła i bez wcięcia (tytuł w linii zamkniętych, linie włosowe zostają), więcej miejsca pod opisem; od 900 px lista stoi na dole wiersza – jej ostatnia linia kończy się 80 px nad dolną krawędzią okna; od 02.11.2026 także CARBOMAT Mata #sezon-lista (sześć etapów cyklu życia podłoża, bez odliczania – data-c5-acc30-auto=„off”, zdjęcie przy otwartej pozycji)",
+     "opis": "akordeon-z-odliczaniem z kadrem ekranu (modyfikator c5-acc30--kadr w ce/CE-30-lista-z-panelem.css/.js; CARBOMAT HUMIC „Czym jest”, #czym-jest-lista, 29.10.2026 – komentarze Mateusza w artefakcie: sekcja nieprzypięta, przewija się normalnie, akordeon wszystkich pozycji, kolejna otwiera się co 5 s, klik wybiera, obok zdjęcie, które się zmienia i powoli przesuwa, 20 px od górnej i dolnej krawędzi okna; zastąpił tam scenę faktów CE-12). Od 900 px korzeń jest siatką lista | kadr na szerokość okna (do 1800 px, 40 px z lewej, 20 px z prawej): kadr przyklejony 20 px pod górą okna, wysokość 100svh − 40 px (najmniej 520 px), zaokrąglenie 20 px; lista wyśrodkowana w pionie obok kadru, wiersze z mniejszym oddechem niż domyślnie, Każda pozycja niesie w panelu .c5-acc30__media: zdjęcie (img.c5-acc30__foto) i opcjonalnie boks ilustracji c5-viz z CE-12 (wygląd bazowy z ce/CE-12-scena-faktow.css, materiał szkła z rozmyciem dopisany w module); bez JS i poniżej 900 px zostaje w panelu (zdjęcie 16 : 10, boks pod nim), od 900 px skrypt przenosi je do pustego .c5-acc30__kadr na końcu korzenia i pokazuje media otwartej pozycji ([data-on]; bez otwartej zostaje ostatnie). Zmiana zdjęcia to przenikanie 0,6 s, pokazane zdjęcie jedzie powoli w górę (skala 1,08, przesuw z 2 % do −2 %) przez czas odliczania plus 1 s; ruch tylko bez reduced-motion. Odliczanie, wstrzymanie pod kursorem i przy fokusie, klik zatrzymujący automat i kotwice pozycji – bez zmian z akordeon-z-odliczaniem. Druga runda (29.10.2026 wieczorem): bez numeracji pozycji, otwarta pozycja bez tła i bez wcięcia (tytuł w linii zamkniętych, linie włosowe zostają), więcej miejsca pod opisem; od 900 px lista stoi na dole wiersza – jej ostatnia linia kończy się 80 px nad dolną krawędzią okna; od 03.11.2026 skrypt trzyma listę na wysokości jej najwyższego stanu otwartego (min-height liczone na starcie, po wczytaniu fontów i przy zmianie okna), więc otwarcie pozycji nie przesuwa wierszy nad nią, a kotwica pozycji (np. #sezon-02) przewija tak, że kadr stoi 20 px pod górą okna i cała lista jest w widoku – na wszystkich wystąpieniach, bez wyjątku w arkuszu strony; od 02.11.2026 także CARBOMAT Mata #sezon-lista (sześć etapów cyklu życia podłoża, bez odliczania – data-c5-acc30-auto=„off”, zdjęcie przy otwartej pozycji)",
      "skrot": "Akordeon z odliczaniem po lewej, po prawej kadr zdjęcia otwartej pozycji na wysokość okna.",
      "zrzut": {
       "mini": "ce-indeks/img/m/CE-30--wariant-akordeon-z-kadrem.webp",
@@ -5155,7 +5155,7 @@ window.CE_DANE = {
     },
     {
      "slug": "zmiany-przed-po",
-     "opis": "CARBOMAT Mata #analiza-kafle (runda 02.11.2026): zamiast dwóch bloków w ramkach cztery ciepłe karty-wiersze jeden pod drugim (odstęp 6 px), każda w dwóch kolumnach 5 : 8 – po lewej nazwa parametru (pH, potas K, wapń Ca, przewodność EC) z jednostką i chipem kierunku zmiany („spada”, „rośnie”, „stabilna”), po prawej wykres dwóch słupków (c5-barchart--karty, klasa c5-bar--po): wartość bazowa i wartość po pięciu latach, ze skalą względem większej z nich i liczbami przy słupkach; paski rosną po wejściu w widok; poniżej 700 px kolumny jedna pod drugą (korzeń c5-mt-zmiany, wiersz c5-mt-zmiana, style w carbomat-mata.css)",
+     "opis": "CARBOMAT Mata #analiza-kafle (runda 02.11.2026): zamiast dwóch bloków w ramkach cztery ciepłe karty-wiersze jeden pod drugim (odstęp 6 px), każda w dwóch kolumnach 5 : 8 – po lewej nazwa parametru (pH, potas K, wapń Ca, przewodność EC) z jednostką i chipem kierunku zmiany („spada”, „rośnie”, „stabilna”), po prawej wykres dwóch słupków (c5-barchart--karty, klasa c5-bar--po): wartość bazowa i wartość po pięciu latach, ze skalą względem większej z nich i liczbami przy słupkach; paski rosną po wejściu w widok; poniżej 700 px kolumny jedna pod drugą (korzeń c5pr-zmiany, wiersz c5pr-zmiana, style w ce/CE-41-bloki-wiedzy.css)",
      "skrot": "Cztery wiersze: nazwa parametru ze znacznikiem kierunku zmiany i dwa słupki – wartość bazowa i po pięciu latach.",
      "zrzut": null
     }
@@ -5194,7 +5194,7 @@ window.CE_DANE = {
     "2 bloki: h3, wizual, przypis"
    ],
    "kod_zrodlowy": {
-    "css": "produkty.css (c5pr-two, c5pr-block)",
+    "css": "ce/CE-41-bloki-wiedzy.css (c5pr-two, c5pr-block; wariant zmiany-przed-po: c5pr-zmiany)",
     "js": "ce/00-base.js ===== 02 (reveal; dawny produkty.js ===== 72 zszedł do warstwy wspólnej 14.09.2026)"
    }
   },

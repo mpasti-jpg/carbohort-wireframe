@@ -18,7 +18,9 @@
            li.c5-cmp2__point           .c5-cmp2__no (number) + .c5-cmp2__block
                                        (.c5-label title + p text)
          p > a.wf-link                 link under the list
-   Per-instance tuning (style on the root): --c5-cmp2-ph-ratio (photo, default 3/2). ===== */
+   Per-instance tuning (style on the root): --c5-cmp2-ph-ratio (photo, default 3/2).
+   Variant `taby` (`.c5-cmp2--taby`, script in CE-21-dwie-kolumny-przewag.js): see the
+   end of this file. ===== */
 
 /* --- Overline above the pair of columns ------------------------------------ */
 .c5-cmp2__label{margin-top:clamp(2.5rem,5vw,4rem);font-size:var(--ch-type-overline-size);line-height:var(--ch-type-overline-lh);letter-spacing:var(--ch-type-overline-ls);text-transform:uppercase;font-weight:var(--ch-type-overline-weight);color:var(--ch-text-secondary);}
@@ -50,4 +52,27 @@
   /* wool on the left, coco on the right; below this width they stack in the
      same order, so the DOM order is already the reading order */
   .c5-cmp2{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;}
+}
+
+/* --- Variant `taby` (round of 02.11.2026, Figma map 3:415) ------------------
+   One column at a time under a centred overline. The rail is EL-19 and the tabs
+   EL-18 (ce/00-base.css); markup: `.c5-seg.c5-seg--rail.c5-cmp2__rail` with
+   role="tablist" and `hidden` as the first child of the root. CE-21's script
+   shows the rail and hides the other panel, so without JS both columns stand
+   one under another. From 900 px a panel is photo 4:5 | text (5 : 7); below
+   600 px the two long labels stack on the rail. */
+.c5-cmp2__label:has(+ .c5-cmp2--taby){text-align:center;}
+.c5-cmp2.c5-cmp2--taby{grid-template-columns:minmax(0,1fr);justify-items:center;row-gap:clamp(2rem,4vw,3rem);}
+.c5-cmp2__rail{--c5-tabrail-bg:var(--ch-surface-warm);}
+.c5-cmp2__rail[hidden],.c5-cmp2--taby .c5-cmp2__col[hidden]{display:none;}
+.c5-cmp2--taby .c5-cmp2__col{width:100%;}
+.c5-cmp2__rail .c5-tab{white-space:nowrap;}
+@media (min-width:900px){
+  .c5-cmp2--taby .c5-cmp2__col{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);column-gap:clamp(2rem,5vw,4.5rem);row-gap:var(--ch-space-5);align-items:start;}
+  .c5-cmp2--taby .c5-cmp2__ph{grid-column:1;grid-row:1 / span 3;aspect-ratio:4 / 5;}
+  .c5-cmp2--taby .c5-cmp2__col > :not(.c5-cmp2__ph){grid-column:2;}
+}
+@media (max-width:599px){
+  .c5-seg.c5-seg--rail.c5-cmp2__rail{flex-direction:column;align-items:stretch;width:100%;}
+  .c5-cmp2__rail .c5-tab{justify-content:center;}
 }
