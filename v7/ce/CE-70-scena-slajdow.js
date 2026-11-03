@@ -44,6 +44,21 @@
    it – mega-menu anchors #retencja … #bez-torfu) lands on that step through
    CX5.onHash.
 
+   Three optional behaviours of the slides (29.10.2026, Mateusz's comments on
+   Carbohumic dolistny #przewaga; Produkty #wg-potrzeby-cele takes the same),
+   each switched on by a class on the root:
+   · c5-vs--slowa – the heading screen is told in steps: the h2 shows word by
+     word over the first part of the heading's segment (--vs-hw: words shown,
+     a float), then the lead rises from below as a whole (--vs-hl, 0 … 1);
+     when the segment ends the whole heading (kicker, h2, lead) moves up a
+     little and fades (--vs-ho) while card 1 rides in. The words are wrapped
+     in span.c5-vs__w (--i = index) once, at start; the text stays the same.
+   · c5-vs--dryf – a parked card is not frozen: it slides slowly the way the
+     page scrolls, from +D to −D px (--vs-d) over its stop (D = --vs-drift).
+   · c5-vs--listki – the four-leaf sign of the current tab grows leaf by leaf
+     with the progress of that step (data-leaves 0 … 4 on the tab; the sign is
+     an inline svg.c5-vs__lf of four groups, as the CE-13 list on the page).
+
    Nothing here listens to `wheel` and nothing intercepts scrolling: the module
    only registers on the CX5 bus. Below 900 px, with reduced motion and without
    JS the section is static (CSS) and this module only clears what it wrote.
@@ -77,6 +92,41 @@
     var video = $("[data-vs-video]", root);
     if (!track || !stage || !cards.length) return;
     var STEPS = cards.length, HEAD = 0, stageH = 0, step = 0, active = -1, inView = true, videoOn = false;
+    /* optional behaviours of the slides (see the header) */
+    var cls = root.classList;
+    var words = !stack && !!head && cls.contains("c5-vs--slowa");
+    var drift = !stack && cls.contains("c5-vs--dryf");
+    var leafy = cls.contains("c5-vs--listki");
+    var lead = words ? $(".c5-lead", head) : null;
+    var wordCount = 0, D = 0, leaves = -1;
+
+    /* c5-vs--slowa: every word of the h2 in its own span, once – text nodes only,
+       so nested spans (the two halves on Produkty) and &nbsp; stay as they are */
+    if (words) {
+      var h2 = $(".c5-h2", head);
+      if (h2) {
+        var walker = document.createTreeWalker(h2, NodeFilter.SHOW_TEXT, null), nodes = [], tn;
+        while ((tn = walker.nextNode())) nodes.push(tn);
+        nodes.forEach(function (node) {
+          var parts = node.nodeValue.split(/(\s+)/);
+          if (parts.length < 2 && !node.nodeValue.trim()) return;
+          var frag = document.createDocumentFragment();
+          parts.forEach(function (p) {
+            if (!p) return;
+            /* a run of white space stays a text node (a no-break space is not \s here,
+               so it holds its words together) */
+            if (/^\s+$/.test(p)) { frag.appendChild(document.createTextNode(p)); return; }
+            var w = document.createElement("span");
+            w.className = "c5-vs__w";
+            w.style.setProperty("--i", String(wordCount++));
+            w.textContent = p;
+            frag.appendChild(w);
+          });
+          node.parentNode.replaceChild(frag, node);
+        });
+      }
+      if (!wordCount) words = false;
+    }
     /* stack geometry, measured on resize: row height, open height, gap */
     var hc = [], he = [], gap = 24, heMax = 0;
 
@@ -105,7 +155,17 @@
       }
     }
 
-    var PROPS = ["--vs-t", "--vs-travel", "--vs-s", "--vs-o", "--vs-e", "--vs-k", "--vs-y"];
+    var PROPS = ["--vs-t", "--vs-travel", "--vs-s", "--vs-o", "--vs-e", "--vs-k", "--vs-y",
+                 "--vs-d", "--vs-hw", "--vs-hl", "--vs-ho"];
+
+    function setLeaves(k) {
+      if (!leafy || k === leaves) return;
+      leaves = k;
+      btns.forEach(function (b, n) {
+        if (k >= 0 && n === active) b.setAttribute("data-leaves", String(k));
+        else b.removeAttribute("data-leaves");
+      });
+    }
 
     /* Path links of a card: since 19.10.2026 (Mateusz: no marquee) every link stands in its
        own row, one under another – pure CSS (.c5-vs__ggo), nothing to measure here. */
@@ -125,6 +185,7 @@
       stageH = 0;
       active = -1;
       setActive(0);
+      setLeaves(-1);
     }
 
     function measure() {
@@ -153,8 +214,12 @@
         list.style.setProperty("--vs-win", Math.ceil(heMax / 2 + gap + hcMax) + "px");
       } else {
         var fg = cssNum("--vs-feed-gap", 40);
-        /* 24 px of slack so the heading is fully clear of the clipped stage */
-        if (head) head.style.setProperty("--vs-travel", Math.ceil((stageH + head.offsetHeight) / 2 + 24) + "px");
+        /* 24 px of slack so the heading is fully clear of the clipped stage;
+           c5-vs--slowa: the heading only moves up a little and fades instead */
+        if (head) head.style.setProperty("--vs-travel", words ? cssNum("--vs-head-lift", 72) + "px"
+                                                             : Math.ceil((stageH + head.offsetHeight) / 2 + 24) + "px");
+        D = drift ? cssNum("--vs-drift", 56) : 0;
+        leaves = -1;
         cards.forEach(function (c) { c.style.setProperty("--vs-travel", Math.ceil(c.offsetHeight + fg) + "px"); });
       }
       syncVideo();
@@ -173,6 +238,15 @@
            tree, the clipped stage alone takes it out of sight */
         var th = u <= 0 ? 0 : u < EXIT ? -ease(u / EXIT) : -1;
         head.style.setProperty("--vs-t", th.toFixed(4));
+        if (words) {
+          /* v: 0 … 1 over the heading's own segment; the words over its first 55 %,
+             the lead over 62–85 %, then the stop until the segment ends */
+          var v = HEAD > 0 ? clamp((u + HEAD) / HEAD, 0, 1) : 1;
+          head.style.setProperty("--vs-hw", (clamp((v - 0.05) / 0.5, 0, 1) * wordCount).toFixed(3));
+          head.style.setProperty("--vs-hl", smooth(0.62, 0.85, v).toFixed(4));
+          /* gone by 60 % of its way up, so it never lies over card 1 riding in */
+          head.style.setProperty("--vs-ho", (1 - smooth(0, 0.6, Math.abs(th))).toFixed(4));
+        }
       }
       if (index) {
         /* second half of the swap: the heading is already above the tab row */
@@ -192,9 +266,18 @@
         c.style.setProperty("--vs-s", (1 - 0.25 * a).toFixed(4));
         c.style.setProperty("--vs-o", (1 - smooth(0.4, 1, a)).toFixed(4));
         c.setAttribute("data-off", a > 0.999 ? "true" : "false");
+        if (drift) {
+          /* +D while it rides in, then a slow glide to −D over its stop, −D while it leaves */
+          var p0 = i + ENTER, p1 = i === STEPS - 1 ? STEPS : i + 1;
+          c.style.setProperty("--vs-d", (D - 2 * D * clamp((u - p0) / (p1 - p0), 0, 1)).toFixed(1) + "px");
+        }
       }
       /* the tab row turns over halfway through the swap */
-      setActive(clamp(Math.floor(u - EXIT / 2), 0, STEPS - 1));
+      var cur = clamp(Math.floor(u - EXIT / 2), 0, STEPS - 1), was = active;
+      setActive(cur);
+      if (active !== was) leaves = -1;    /* the leaves move to the new tab */
+      /* the leaves of the current tab: its span cut in five, the first without a leaf */
+      if (leafy) setLeaves(u < 0 ? 0 : clamp(Math.floor((u - cur - EXIT / 2) * 5), 0, 4));
     }
 
     function updateStack(u) {

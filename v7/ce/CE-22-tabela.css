@@ -217,6 +217,12 @@ a.c5pr-cmp__panel:focus-visible{outline:var(--w-focus-ring-width) solid var(--ch
   a.c5pr-cmp__panel:hover .c5pr-cmp__name{text-decoration:underline;text-underline-offset:.2em;}
 }
 .c5pr-cmp__defs{position:absolute;width:0;height:0;overflow:hidden;}
+/* Crop of the frame photos (29.10.2026, CARBOMAT HUMIC: 3:4 files in a landscape frame): knobs
+   on the root of one occurrence, --c5pr-cmp-pos-1 for the first frame and --c5pr-cmp-pos-2 for
+   the second (object-position, default 50% 50%). The loupe image takes the same value, so it
+   keeps showing the piece of photo under the window. */
+.c5pr-cmp__table th:nth-child(1) :is(.c5pr-cmp__bg,.c5pr-cmp__inner img){object-position:var(--c5pr-cmp-pos-1,50% 50%);}
+.c5pr-cmp__table th:nth-child(2) :is(.c5pr-cmp__bg,.c5pr-cmp__inner img){object-position:var(--c5pr-cmp-pos-2,50% 50%);}
 
 /* Light parallax of the frame photos (19.10.2026, owner; ce/CE-22-tabela.js): the script sets
    `data-par` on the root and writes `--c5pr-par` (px) on every frame while it is on screen. The
@@ -249,6 +255,23 @@ a.c5pr-cmp__panel:focus-visible{outline:var(--w-focus-ring-width) solid var(--ch
   .c5pr-cmp__frame{--c5pr-cmp-x:6cqw;--c5pr-cmp-y:7cqh;--c5pr-cmp-head:calc(var(--ch-space-4) + var(--ch-type-title-lh) + var(--ch-space-4));}
   .c5pr-cmp__panel{width:88%;gap:var(--ch-space-4);padding-top:var(--ch-space-4);}
   .c5pr-cmp__name{font-size:var(--ch-type-title-s-size);}
+}
+
+/* ----- z-przyciskami (CARBOMAT HUMIC „Kiedy stosować”, 29.10.2026): the look of z-packshotami
+   with longer copy and one button per column. The panel on the photo is not a link here (a span,
+   so it does not rise on hover); a row card holds a whole paragraph, so its content sits in one
+   span (inline links stay in the text flow) and the marker stands at the first line; the footer
+   row of the table holds the buttons, one under each column – below 900 px each button closes
+   its own column (the order rules above apply to the footer cells as well). ----- */
+.c5pr-cmp--z-przyciskami .c5pr-cmp__table tbody td{align-items:flex-start;}
+.c5pr-cmp--z-przyciskami .c5pr-cmp__table tbody td::before{margin-top:calc(var(--ch-type-lead-lh) / 2 - 1.5px);}
+.c5pr-cmp--z-przyciskami .c5pr-cmp__table tfoot{display:block;margin-top:var(--ch-space-5);}
+.c5pr-cmp--z-przyciskami .c5pr-cmp__table tfoot tr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--ch-space-6);}
+.c5pr-cmp--z-przyciskami .c5pr-cmp__table tfoot td{display:block;min-height:0;padding:0;background:none;}
+.c5pr-cmp--z-przyciskami .c5pr-cmp__table tfoot td::before{content:none;}
+@media (max-width:899px){
+  .c5pr-cmp--z-przyciskami .c5pr-cmp__table tfoot,.c5pr-cmp--z-przyciskami .c5pr-cmp__table tfoot tr{display:contents;}
+  .c5pr-cmp--z-przyciskami .c5pr-cmp__table tfoot td{margin-top:var(--ch-space-3);}
 }
 
 /* ----- danych (Produkty, certificates): EL-21 as row cards, 18/28 cells in the primary

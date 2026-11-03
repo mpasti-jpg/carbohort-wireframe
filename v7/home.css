@@ -3,12 +3,8 @@
    showcase through the products, spec 40-strona-www/koncepcja/home-spec.md).
    Every section is a shared CE from ce/; this sheet carries ONLY the
    exceptions of this one page and the few page parts that are not CE (the
-   section head, the film window, small link rows). Numbered blocks follow the
-   sections of the page. Comments in English, never the em dash. ===== */
-
-/* --- Section rhythm: two adjacent CTA bands (sections 4 and 5) stand closer
-   together than two full sections; nothing else changes the rhythm. */
-.c5h-sec--tight{padding-block:clamp(2rem,4vw,3.5rem);}
+   section head, small link rows). Numbered blocks follow the sections of the
+   page. Comments in English, never the em dash. ===== */
 
 /* --- Section head (EL-06 kicker + EL-09 heading + EL-12 lead) -------------
      <div class="c5h-head" data-reveal>
@@ -39,21 +35,14 @@
 }
 
 
-/* ===== 0 hero · the film window ==========================================
-   The thumbnail is part of CE-08 (variant `miniatura`); the window it opens
-   is a page component: a native dialog (modal behaviour, backdrop, Escape
-   come from the browser), home.js plays on open and pauses plus rewinds on
-   close. The close button stands above the film, never over the picture. */
-.c5h-film__dlg{width:min(1100px,calc(100vw - 2 * var(--c5-gutter)));max-width:none;
-  max-height:calc(100svh - 2 * var(--c5-gutter));margin:auto;padding:0;overflow:visible;
-  border:0;border-radius:var(--ch-radius-md);background:var(--ch-color-grey-950,#111);color:var(--ch-text-inverse);}
-.c5h-film__dlg::backdrop{background:var(--ch-color-overlay-modal,rgb(0 0 0 / .78));
-  -webkit-backdrop-filter:blur(var(--ch-effect-blur-modal,6px));backdrop-filter:blur(var(--ch-effect-blur-modal,6px));}
-.c5h-film__panel{position:relative;display:block;}
-.c5h-film__video{display:block;width:100%;height:auto;max-height:calc(100svh - 2 * var(--c5-gutter));
-  border-radius:var(--ch-radius-md);background:#000;}
-.c5h-film__x{position:absolute;right:0;top:-56px;background:var(--ch-surface-page);}
-@media (max-width:599px){.c5h-film__x{top:6px;right:6px;z-index:1;}}
+/* ===== 0 hero ============================================================
+   CE-08 grid of the variant `miniatura`, a plain photo instead of the film
+   thumbnail (adnotacja 3:81): it fills the panel, 4:3 below 900 px. */
+.c5-hero--miniatura .c5-hero__stage{padding:0;}
+.c5h-hero__img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:50% 60%;}
+@media (max-width:899px){
+  .c5-hero--miniatura .c5-hero__stage{padding:0;aspect-ratio:4 / 3;}
+}
 
 
 /* ===== 1 produkty =======================================================
@@ -103,32 +92,35 @@
 
 
 /* ===== 3 zaufanie =======================================================
-   CE-24 `rzad` is one row of five columns; this occurrence has six items, so
-   from 1100 px it stands as two rows of three (the hairline between columns
-   restarts in each row). Below 1100 px the module's own row layout applies. */
-@media (min-width:1100px){
-  .c5h-trust .c5h-nums__row{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:clamp(2rem,3.4vw,3rem);}
-  .c5h-trust .c5h-num:nth-child(3n+1){padding-left:0;border-left:0;}
-  .c5h-trust .c5h-num:nth-child(3n){padding-right:0;}
+   CE-24 `wiersze-ze-zdjeciem`: head with a lead, the rows and the links stand
+   in the column beside the photo. This column is taller than the 651 : 747 of
+   the module, and a stretched box with an aspect ratio would grow out of its
+   grid track, so from 900 px the photo simply fills the height of the row. */
+@media (min-width:900px){
+  .c5h-liczby .pp-liczby__ph{position:relative;aspect-ratio:auto;}
+  .c5h-liczby .pp-liczby__ph img{position:absolute;inset:0;}
 }
-/* Below 1100 px the module turns columns into rows, but its `.c5h-num + .c5h-num`
-   hairline on the left outranks the reset of the row layout and draws a stray
-   vertical line; this occurrence takes it off (the rows keep their top rule). */
-@media (max-width:1099px){
-  .c5h-trust .c5h-num + .c5h-num{border-left:0;}
+.c5h-liczby-head{gap:var(--ch-space-4);}
+.c5h-liczby-head .c5-kicker{margin-bottom:0;}
+.c5h-liczby-head .c5-lead{margin:0;}
+.pp-liczby__col > .c5h-more{margin-top:0;}
+
+
+/* ===== 4–5 próchnica+ · o nas ===========================================
+   CE-36: one row per section, so the module's air above the rows goes; below
+   900 px the sections take the air a row would get from its neighbours. */
+.c5h-rows.b-rows{margin-top:0;}
+.c5h-rows .c5-kicker{align-self:flex-start;margin-bottom:0;}
+.c5h-rows .b-row__t{margin:0;}
+@media (max-width:899px){
+  .c5h-rows.b-rows{padding-block:clamp(2.5rem,7vw,4rem);}
 }
+
+
+/* ===== 5a dla profesjonalistów ==========================================
+   CE-16 with three buttons: the row of the module has two, here it wraps. */
+.c5h-pro .c5-btnrow{flex-wrap:wrap;}
 
 
 /* ===== 6 faq ============================================================ */
 .c5h-faq__links{display:flex;flex-wrap:wrap;gap:var(--ch-space-2) var(--ch-space-6);}
-
-
-/* ===== 7 kontakt ========================================================
-   CE-18 closing band: the phone number inside the lead, then the row for
-   professionals under a small label. */
-.c5h-tel{color:var(--ch-text-primary);font-weight:var(--ch-font-weight-medium);white-space:nowrap;}
-.c5h-pro{display:flex;flex-direction:column;align-items:center;gap:var(--ch-space-4);padding-top:var(--ch-space-8);
-  border-top:1px solid var(--ch-border-subtle);}
-.c5h-pro__t{margin:0;font-size:var(--ch-type-kicker-size);line-height:var(--ch-type-kicker-lh);letter-spacing:var(--ch-type-kicker-ls);
-  text-transform:uppercase;color:var(--ch-text-secondary);}
-.c5h-pro .c5-btnrow{justify-content:center;}

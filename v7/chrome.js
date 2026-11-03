@@ -250,11 +250,18 @@
         <div class="cw-mega cw-mega--wide" id="mega-produkty" data-ce="CE-02" data-ce-wariant="szerokie" data-open="false" role="region" aria-label="Produkty Carbohort">
           <div class="cw-mega__head">
             <span class="wf-overline wf-t-tertiary">Produkty Carbohort</span>
-            <!-- The shop button (28.09.2026): whoever opens "Produkty
-                 Carbohort" expecting to buy gets to the shop in one click. -->
-            <div class="cw-mega__actions">
-              <a class="wf-btn wf-btn--secondary wf-btn--sm" href="produkty.html">Poznaj całą gamę produktów</a>
-              <a class="wf-btn wf-btn--primary wf-btn--sm" href="sklep.html"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-shopping-cart"></use></svg>Przejdź do sklepu</a>
+            <!-- R3 (02.11.2026): the need tags stand on the head strip, right-aligned;
+                 the "Wg potrzeby" heading is gone, so the group is named for screen
+                 readers only. -->
+            <div class="cw-mega__needs" role="group" aria-label="Produkty według potrzeby">
+              <div class="cw-mega__list">
+                <a class="wf-link--quiet wf-small" href="produkty.html#retencja">Zatrzymać wodę / susza</a>
+                <a class="wf-link--quiet wf-small" href="produkty.html#prochnica">Odbudować próchnicę</a>
+                <a class="wf-link--quiet wf-small" href="produkty.html#jakosc">Jakość i trwałość owocu</a>
+                <a class="wf-link--quiet wf-small" href="produkty.html#start">Lepszy start i wzrost</a>
+                <a class="wf-link--quiet wf-small" href="produkty.html#ph">Uregulować pH gleby</a>
+                <a class="wf-link--quiet wf-small" href="produkty.html#bez-torfu">Podłoże bez torfu</a>
+              </div>
             </div>
           </div>
           <div class="cw-mega__layout">
@@ -297,15 +304,12 @@
               <span class="cw-prodbox__desc">Kondycjoner + potas + biostymulator; podnosi pH zakwaszonej gleby – na pole i do ogrodu.</span>
             </a>
           </div>
-          <div class="cw-mega__needs">
-            <span class="wf-overline wf-t-tertiary">Wg potrzeby</span>
-            <div class="cw-mega__list">
-              <a class="wf-link--quiet wf-small" href="produkty.html#retencja">Zatrzymać wodę / susza</a>
-              <a class="wf-link--quiet wf-small" href="produkty.html#prochnica">Odbudować próchnicę</a>
-              <a class="wf-link--quiet wf-small" href="produkty.html#jakosc">Jakość i trwałość owocu</a>
-              <a class="wf-link--quiet wf-small" href="produkty.html#start">Lepszy start i wzrost</a>
-              <a class="wf-link--quiet wf-small" href="produkty.html#ph">Uregulować pH gleby</a>
-              <a class="wf-link--quiet wf-small" href="produkty.html#bez-torfu">Podłoże bez torfu</a>
+          <!-- The shop button (28.09.2026): whoever opens "Produkty Carbohort"
+               expecting to buy gets to the shop in one click. -->
+          <div class="cw-mega__foot cw-mega__foot--akcje">
+            <div class="cw-mega__actions">
+              <a class="wf-btn wf-btn--secondary wf-btn--sm" href="produkty.html">Poznaj całą gamę produktów</a>
+              <a class="wf-btn wf-btn--primary wf-btn--sm" href="sklep.html"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-shopping-cart"></use></svg>Przejdź do sklepu</a>
             </div>
           </div>
         </div>

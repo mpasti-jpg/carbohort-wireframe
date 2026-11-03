@@ -111,8 +111,11 @@
 
   /* --- 2. Parallax of the photos --------------------------------------------
      The photo layer is taller than its frame, so it has room for the shift
-     without uncovering an edge. `--who-par` goes from -6 to 0 (per cent of the
-     layer height) while the row travels through the window. */
+     without uncovering an edge. `--who-par` goes from -9 to 3 (per cent of the
+     layer height) while the row travels through the window – twice the travel
+     of the -6 to 0 before 29.10.2026 (Mateusz: „trochę większy efekt parallax”).
+     The layer (inset -6 %, 118 % of the frame, ce/CE-36) covers the frame for
+     any value from about -10 to 5, so both ends stay inside it. */
   function parallax() {
     if (!medias.length) return;
     var on = CX5.motionOn(), h = window.innerHeight;
@@ -121,7 +124,7 @@
       var r = m.getBoundingClientRect();
       var span = h + r.height;
       var p = span > 0 ? CX5.clamp((h - r.top) / span, 0, 1) : 0;
-      m.style.setProperty("--who-par", CX5.lerp(-6, 0, p).toFixed(3));
+      m.style.setProperty("--who-par", CX5.lerp(-9, 3, p).toFixed(3));
     });
   }
   CX5.register({ scroll: parallax, resize: parallax });
@@ -130,38 +133,8 @@
   if (CX5.reveal) CX5.reveal(revealEls);
 })();
 
-/* ===== 80 · Kiedy stosować: dwa panele fotograficzne (spec §16.1) ===========
-   Iteration 2: the pin module of iteration 1 is gone – nothing is pinned and
-   nothing is opened by the scroll any more. What is left here:
-   1. Parallax of the two panel photos – only at `CX5.motionOn()`.
-   2. Reveal of the panels – through `CX5.reveal` (ce/00-base.js).
-   The PRO band (since 11.10.2026 a block of its own after the comparison
-   #roznice-eco-humic) is driven by ce/CE-16-pas-pro.js. ================== */
-(function () {
-  "use strict";
-  var $$ = CX5.$$;
-
-  /* --- 1. Parallax zdjęć w panelach ----------------------------------------
-     Warstwa zdjęcia jest wyższa od kadru (118 %), więc mieści przesunięcie bez
-     odsłaniania krawędzi panelu. `--when-par` idzie od -6 do 0 (procent
-     wysokości warstwy), gdy panel przejeżdża przez ekran; bez ruchu własność
-     znika i kadr stoi na wartości domyślnej. */
-  var whenMedias = $$("[data-when-media]");
-  if (!whenMedias.length) return;
-  function whenParallax() {
-    var on = CX5.motionOn(), h = window.innerHeight;
-    whenMedias.forEach(function (m) {
-      if (!on) { m.style.removeProperty("--when-par"); return; }
-      var r = m.getBoundingClientRect();
-      var span = h + r.height;
-      var p = span > 0 ? CX5.clamp((h - r.top) / span, 0, 1) : 0;
-      m.style.setProperty("--when-par", CX5.lerp(-6, 0, p).toFixed(3));
-    });
-  }
-
-  /* --- 2. Wejście paneli w widok ------------------------------------------- */
-  if (CX5.reveal) CX5.reveal($$("#sezon [data-reveal]"));
-
-  CX5.register({ scroll: whenParallax, resize: whenParallax });
-})();
+/* ===== 80 · Kiedy stosować =================================================
+   29.10.2026: the two photographic panels (CE-38) gave way to CE-22 z-przyciskami;
+   the parallax of its frames lives in ce/CE-22-tabela.js and the entrance of the
+   rows in the stagger tool of ce/00-base.js, so this page has no code here. */
 

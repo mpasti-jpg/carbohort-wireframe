@@ -18,11 +18,10 @@
 
 /* ===== 30 · Parametry – CE-10 variant „kafelki-z-wejsciem”, the long table =====
    The layout, the tiles and the scroll-driven entrance come from the shared
-   block ce/CE-10-parametry.css (`c5-params--long`), with the scope pill
-   (`.c5hu-scope`): the table of this page speaks of ONE version of the product,
-   so the narrowing stands in the head of the section, under the heading, and
-   enters together with it. Sentence case on purpose: `text-transform:uppercase`
-   would turn the micro sign of „µm” into a capital Mu. */
+   block ce/CE-10-parametry.css (`c5-params--long`), with the scope note
+   (`.c5hu-scope`, small print): the table of this page speaks of ONE version of
+   the product, so the narrowing stands in the head of the section, under the
+   heading, and enters together with it. */
 
 /* ===== 40 · Który dla mnie – CE-11 variant „pasma-z-przelacznikiem” ==========
    The bands, the switch and the cards come from the shared block
@@ -74,23 +73,15 @@ ul.c5hu-sq{list-style:none;padding-left:0;}
 .c5hu-sq li::before{content:"";position:absolute;left:2px;top:calc(.5lh - 1.5px);width:3px;height:3px;border-radius:1px;background:var(--w-gray-900);}
 
 
-/* --- bloki statyczne sekcji (bieg normalny, poza scenami) ------------------ */
-.c5hu-use__aside{margin-top:clamp(2rem,4vw,3rem);}
-.c5-box .c5hu-dose{margin-top:0;padding-top:0;}
-.c5hu-recipe__lead{margin-top:var(--w-space-4);color:var(--w-text-secondary);max-width:710px;}
-.c5-box + .c5hu-recipe__lead{margin-top:clamp(1.5rem,3vw,2.25rem);}
-
 /* ===== 72 · Z czym łączyć ===== */
 
-/* --- Lista z podglądem → ce/CE-30-lista-z-panelem.css (c5hu-mixlist*) ---------- */
+/* The list of combinations (#z-czym-laczyc-lista) is a plain CE-30 and the four
+   mixing steps (#mieszanina) are CE-70 `zielen`: nothing of them is set from
+   this sheet. */
 
 /* --- Siatka „czego unikamy" ------------------------------------------------
    The two warning cards (`c5hu-mix*`, CE-20 variant `ostrzegawcze`) are styled
    in ce/CE-20-siatka-kart.css. */
-
-/* The stack of the four mixing steps (#z-czym-laczyc-kroki) stands on the shared
-   block ce/CE-26-stos-kart.css/.js with its default layout: nothing of it is
-   set from this sheet. */
 
 /* ===== 74 · Jaka gleba ===== */
 
@@ -107,3 +98,7 @@ ul.c5hu-sq{list-style:none;padding-left:0;}
    `tbody` (shared module in ce/00-base.js); the transform runs on the table
    row, so the column layout stays untouched. */
 /* The comparison table is CE-22 `z-packshotami` (ce/CE-22-tabela.css). */
+/* U-14 (03.11.2026, owner): the frame photos take the parallax of ce/CE-22-tabela.js, the loupe
+   images inside the white panels stay as they were (no scale, no shift). Exception of this page
+   only; the rows now rise through `data-reveal-stagger` on the table (U-15). */
+.c5pr-cmp[data-par] .c5pr-cmp__inner img{scale:none;translate:none;will-change:auto;}

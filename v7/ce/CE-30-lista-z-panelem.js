@@ -19,7 +19,8 @@
    any arrival through an anchor, stops it until the page is reloaded. The
    countdown never moves the focus and never scrolls.
    `data-c5-acc30-auto="off"` on the root gives a plain accordion with no
-   countdown at all.
+   countdown at all, in every variant of this module (also akordeon-z-kadrem:
+   the frame then changes only when the reader opens a row).
 
    Anchors come through CX5.onHash: a hash that names a row – its <li>, its
    title or its panel, or anything inside them – opens that row, scrolls to it
@@ -62,6 +63,33 @@
 
     root.setAttribute("data-c5-acc30", "on");
 
+    /* --- variant akordeon-z-kadrem (c5-acc30--kadr, 29.10.2026) ---------------------
+       Every row carries its photo and illustration (.c5-acc30__media) in its panel – the
+       layout without JS and below 900 px. From 900 px they move into the frame
+       (.c5-acc30__kadr) next to the list and the one of the open row is shown
+       (data-on); with no row open the frame keeps the last one. */
+    var kadr = $(".c5-acc30__kadr", root);
+    var medias = kadr ? items.map(function (it) { return $(".c5-acc30__media", it); }) : [];
+    if (medias.indexOf(null) !== -1) medias = [];
+    var shown = 0;
+    function placeMedia() {
+      if (!medias.length) return;
+      var wide = CX5.wideMQ.matches;
+      medias.forEach(function (m, j) {
+        var home = wide ? kadr : $(".c5-acc30__in", items[j]);
+        if (home && m.parentNode !== home) home.appendChild(m);
+      });
+      if (wide) root.setAttribute("data-kadr", ""); else root.removeAttribute("data-kadr");
+    }
+    function showMedia() {
+      if (!medias.length) return;
+      if (cur >= 0) shown = cur;
+      medias.forEach(function (m, j) {
+        if (j === shown) m.setAttribute("data-on", ""); else m.removeAttribute("data-on");
+      });
+    }
+    placeMedia();
+
     /* --- open / close ---------------------------------------------------------------
        `instant` skips the height animation (page start); `instantAbove` collapses the
        rows above the one being opened at once, so its final place is known before we
@@ -78,6 +106,7 @@
         CX5.panelSet(panels[j], on, now);
         if (now) { void btns[j].offsetHeight; btns[j].style.transition = ""; }
       });
+      showMedia();
     }
 
     /* --- countdown ------------------------------------------------------------------ */
@@ -163,6 +192,10 @@
     /* --- start ---------------------------------------------------------------------- */
     paint(true);
     syncAuto();
+    if (medias.length) {
+      if (CX5.wideMQ.addEventListener) CX5.wideMQ.addEventListener("change", placeMedia);
+      else if (CX5.wideMQ.addListener) CX5.wideMQ.addListener(placeMedia);
+    }
     if (CX5.wideMQ.addEventListener) {
       CX5.wideMQ.addEventListener("change", syncAuto);
       CX5.reducedMQ.addEventListener("change", syncAuto);

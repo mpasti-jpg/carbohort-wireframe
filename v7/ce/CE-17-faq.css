@@ -49,6 +49,17 @@ html:not(.cx-js) .c5-faq__a{height:auto;opacity:1;}
 .c5-faq-split .c5-faq--z-nota,.c5-faq-split .c5-note:has(+ .c5-faq--z-nota){margin-top:0;}
 @media (min-width:900px){
   .c5-faq-split{display:grid;grid-template-columns:minmax(0,451px) minmax(0,803px);justify-content:space-between;align-items:start;}
+  /* Adnotacja 3:129 (02.11.2026): the accordion starts at the top of the h2, not of
+     the kicker. Pages with the kicker above the split already do; two pages keep it
+     in the left column (Borówka `.b-head`, home `.c5h-head`), so there the kicker and
+     the heading take two rows of the split (subgrid) and the list starts in the
+     second one, whatever the kicker's height. */
+  .c5-faq-split:has(> .b-head),.c5h-split:has(> .c5-faq){grid-template-rows:auto minmax(0,1fr);row-gap:0;}
+  .c5-faq-split > .b-head,.c5h-split:has(> .c5-faq) > .c5h-head{
+    display:grid;grid-row:1 / span 2;grid-template-rows:subgrid;row-gap:0;align-self:stretch;}
+  .c5-faq-split > .b-head > .c5-kicker,.c5h-split:has(> .c5-faq) > .c5h-head > .c5-kicker{justify-self:start;}
+  .c5h-split:has(> .c5-faq) > .c5h-head > .c5-kicker{margin-bottom:clamp(1.25rem,2.4vw,2rem);}
+  .c5-faq-split:has(> .b-head) > .b-faq,.c5h-split > .c5-faq{grid-column:2;grid-row:2;}
 }
 
 /* ===== wariant: plain ===== */

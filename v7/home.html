@@ -12,11 +12,13 @@
 <link rel="stylesheet" href="ce/00-reveal.css">
 <link rel="stylesheet" href="ce/CE-07-nawigacja-kropkowa.css">
 <link rel="stylesheet" href="ce/CE-08-hero.css">
+<link rel="stylesheet" href="ce/CE-16-pas-pro.css">
 <link rel="stylesheet" href="ce/CE-17-faq.css">
 <link rel="stylesheet" href="ce/CE-18-cta.css">
 <link rel="stylesheet" href="ce/CE-20-siatka-kart.css">
-<link rel="stylesheet" href="ce/CE-23-pas-cta.css">
 <link rel="stylesheet" href="ce/CE-24-pas-liczb.css">
+<link rel="stylesheet" href="ce/CE-33-cytat-zasada.css">
+<link rel="stylesheet" href="ce/CE-36-wiersz-zdjecie-opis.css">
 <link rel="stylesheet" href="ce/CE-37-pop-up-karty.css">
 <link rel="stylesheet" href="home.css">
 <script type="application/ld+json">
@@ -67,7 +69,7 @@
     {
       "@type": "Question",
       "name": "Gdzie kupić i co przy większych ilościach?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Mniejsze opakowania kupisz w sklepie internetowym. Przy większych ilościach – big bag, mauzer, paleta mat – zapytaj o ofertę albo zaloguj się do platformy B2B. Jeśli nie wiesz, od czego zacząć, konfigurator dobierze produkty do Twojej uprawy." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Mniejsze opakowania kupisz w sklepie. Przy większych ilościach – big bag, mauzer, paleta mat – zapytaj o ofertę albo zaloguj się do platformy B2B. Jeśli nie wiesz, od czego zacząć, konfigurator dobierze produkty do Twojej uprawy." }
     }
   ]
 }
@@ -89,12 +91,13 @@
 <nav id="nawigacja-kropki" class="c5-dots" aria-label="Rozdziały strony głównej" data-dots data-ce="CE-07">
   <ol>
     <li><a class="c5-dots__link" href="#hero" data-dot="hero"><span class="c5-dots__label">Początek</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#idea" data-dot="idea"><span class="c5-dots__label">Idea</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
     <li><a class="c5-dots__link" href="#produkty" data-dot="produkty"><span class="c5-dots__label">Produkty</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
     <li><a class="c5-dots__link" href="#uprawy" data-dot="uprawy"><span class="c5-dots__label">Uprawy</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
     <li><a class="c5-dots__link" href="#zaufanie" data-dot="zaufanie"><span class="c5-dots__label">Zaufanie</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
     <li><a class="c5-dots__link" href="#prochnica-plus" data-dot="prochnica-plus"><span class="c5-dots__label">Próchnica+</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
     <li><a class="c5-dots__link" href="#o-nas" data-dot="o-nas"><span class="c5-dots__label">O nas</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
-    <li><a class="c5-dots__link" href="#faq" data-dot="faq"><span class="c5-dots__label">Pytania</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
+    <li><a class="c5-dots__link" href="#faq" data-dot="faq"><span class="c5-dots__label">FAQ</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
     <li><a class="c5-dots__link" href="#kontakt" data-dot="kontakt"><span class="c5-dots__label">Kontakt</span><span class="c5-dots__dot" aria-hidden="true"></span></a></li>
   </ol>
 </nav>
@@ -102,7 +105,6 @@
 <main id="main">
 
   
-
 
 
 
@@ -130,16 +132,8 @@
           </div>
         </div>
 
-        <div class="c5-hero__stage c5-sygnet c5-sygnet--obrys">
-          
-
-          <figure class="pp-film c5-hero__film" id="film">
-            <a class="pp-film__play" href="img/wideo/narodziny-lignitu.mp4" data-film-open aria-label="Odtwórz film „Narodziny lignitu”, 54 sekundy">
-              <img class="pp-film__poster" src="img/wideo/narodziny-lignitu-poster.jpg" alt="" width="1280" height="720" decoding="async">
-              <span class="pp-film__btn c5-glass"><svg class="wf-icon" aria-hidden="true"><use href="#ti-player-play"></use></svg></span>
-            </a>
-            <figcaption><span class="c5-hero__film-t">Narodziny lignitu</span><span>film · 54 s</span></figcaption>
-          </figure>
+        <div class="c5-hero__stage">
+          <img class="c5h-hero__img" src="img/foto/prochnica-03-green-plant-brown-soil.jpg" alt="Młode rośliny kukurydzy wyrastające z&nbsp;ciemnej gleby" width="1400" height="933" decoding="async" fetchpriority="high">
         </div>
 
         
@@ -179,15 +173,16 @@
         </ul>
       </div>
     </div>
+  </section>
 
-    
+  
 
-    <dialog class="c5h-film__dlg" id="film-narodziny-lignitu" data-film-dialog aria-label="Narodziny lignitu, film, 54 sekundy">
-      <div class="c5h-film__panel">
-        <button type="button" class="c5-iconbtn c5h-film__x" data-film-close aria-label="Zamknij film"><svg class="wf-icon" aria-hidden="true"><use href="#ti-x"></use></svg></button>
-        <video class="c5h-film__video" data-film-video src="img/wideo/narodziny-lignitu.mp4" poster="img/wideo/narodziny-lignitu-poster.jpg" width="1280" height="720" controls preload="none" playsinline></video>
-      </div>
-    </dialog>
+
+
+  <section class="c5-sec c5-quote c5-quote--slowa" id="idea" data-chapter="idea" data-ce="CE-33" data-ce-wariant="slowa" aria-label="Idea CarboHort">
+    <div class="c5-wrap">
+      <p class="c5-quote__t" data-slowa><span class="c5-quote__zd">Lignit to skondensowana próchnica.</span> <span class="c5-quote__zd">Zamieniamy go w&nbsp;produkty, które odbudowują glebę i&nbsp;wzmacniają rośliny.</span></p>
+    </div>
   </section>
 
   
@@ -312,7 +307,7 @@
 
       <div class="c5h-more">
         <a class="c5-btn c5-btn--dark" href="produkty.html">Cała gama i porównanie</a>
-        <a class="wf-link--quiet wf-inline c5h-alink" href="sklep.html">Sklep internetowy – w&nbsp;sklepie także produkty partnerskie<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+        <a class="wf-link--quiet wf-inline c5h-alink" href="sklep.html">Przejdź do sklepu, znajdziesz tam też produkty partnerskie<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
       </div>
     </div>
   </section>
@@ -370,7 +365,7 @@
           <div class="c5h-crops__acts">
             <a class="c5-btn c5-btn--dark c5-btn--sm" href="ogrod.html">Ogród</a>
             <a class="wf-link c5h-crops__link" href="trawnik.html">Trawnik</a>
-            <a class="wf-link c5h-crops__link" href="sklep.html">Sklep</a>
+            <a class="wf-link c5h-crops__link" href="sklep.html">Przejdź do sklepu</a>
           </div>
         </li>
         <li class="kt-way c5h-crops__own">
@@ -419,86 +414,50 @@
 
 
 
-  <section class="c5-sec" id="zaufanie" data-chapter="zaufanie" data-ce="CE-24" data-ce-wariant="rzad">
-    <div class="c5-wrap">
-      <div class="c5h-head" data-reveal>
-        <span class="c5-kicker c5-kicker--outline">Zaufanie</span>
-        <div class="c5-head">
-          <h2 class="c5-h2">Dlaczego nam ufają</h2>
+
+  <section class="c5-sec pp-liczby--foto" id="zaufanie" data-chapter="zaufanie" data-ce="CE-24" data-ce-wariant="wiersze-ze-zdjeciem">
+    <div class="c5-wrap c5-wrap--wide pp-liczby c5h-liczby">
+      <figure class="pp-liczby__ph" aria-hidden="true"><img src="img/foto/czym-jest-5.jpg" alt="" width="1611" height="2000" loading="lazy" decoding="async"></figure>
+      <div class="pp-liczby__col">
+        <div class="pp-liczby__head c5h-liczby-head" data-reveal>
+          <span class="c5-kicker c5-kicker--outline">Zaufanie</span>
+          <h2 class="c5-h2 pp-liczby__title">Dlaczego nam ufają</h2>
           <p class="c5-lead">Certyfikaty, decyzje, nagroda i&nbsp;publikacje – dokumenty, które możesz sprawdzić.</p>
         </div>
-      </div>
-
-      <div class="c5h-nums c5h-trust" id="zaufanie-liczby">
-        <p class="c5h-nums__title">CarboHort w&nbsp;dokumentach</p>
-        <ul class="c5h-nums__row">
+        <ul class="pp-liczby__rows" id="zaufanie-liczby">
           
 
 
-          <li class="c5h-num">
-            <span class="c5h-num__val">3</span>
-            <span class="c5h-num__lbl">certyfikaty ekologiczne IUNG-PIB: Carbohumic, Carbomat Eco, Carbomat Humic</span>
-            <span class="c5-src c5-src--ondark c5h-num__src">NE/495/2019 · NE/567/2021 · NE/808/2024</span>
+          <li class="pp-liczba">
+            <span class="pp-liczba__num">3</span>
+            <span class="pp-liczba__label">certyfikaty ekologiczne IUNG-PIB: Carbohumic, Carbomat Eco, Carbomat Humic
+              <span class="pp-liczba__note">NE/495/2019 · NE/567/2021 · NE/808/2024</span></span>
           </li>
           
-          <li class="c5h-num">
-            <span class="c5h-num__val">3</span>
-            <span class="c5h-num__lbl">produkty dopuszczone decyzjami MRiRW</span>
-            <span class="c5-src c5-src--ondark c5h-num__src">Carbomat Eco G-971/20 · Carbomat Humic G-1528/24 · Carbohumic Calbor G-1733/25</span>
+          <li class="pp-liczba">
+            <span class="pp-liczba__num">3</span>
+            <span class="pp-liczba__label">produkty dopuszczone decyzjami MRiRW
+              <span class="pp-liczba__note">Carbomat Eco G-971/20 · Carbomat Humic G-1528/24 · Carbohumic Calbor G-1733/25</span></span>
           </li>
           
-          <li class="c5h-num">
-            <span class="c5h-num__val">2020</span>
-            <span class="c5h-num__lbl">nagroda im. prof. Szczepana A. Pieniążka dla Carbohumic</span>
-            <span class="c5-src c5-src--ondark c5h-num__src">za innowacyjny produkt dla polskiego ogrodnictwa</span>
+          <li class="pp-liczba">
+            <span class="pp-liczba__num">2020</span>
+            <span class="pp-liczba__label">nagroda im. prof. Szczepana A. Pieniążka dla Carbohumic
+              <span class="pp-liczba__note">za innowacyjny produkt dla polskiego ogrodnictwa</span></span>
           </li>
           
 
-          <li class="c5h-num">
-            <span class="c5h-num__val">5</span>
-            <span class="c5h-num__lbl">sezonów – co najmniej tyle pracuje Carbomat Mata</span>
-            <span class="c5-src c5-src--ondark c5h-num__src">część producentów prowadzi uprawę dłużej</span>
-          </li>
-          
-
-          <li class="c5h-num">
-            <span class="c5h-num__val">5</span>
-            <span class="c5h-num__lbl">recenzowanych publikacji SGGW o&nbsp;podłożu z&nbsp;lignitu – CarboHort współuczestniczy w&nbsp;badaniu</span>
-            <span class="c5-src c5-src--ondark c5h-num__src">rozprawa doktorska dr. inż. Radosława Łaźnego</span>
-          </li>
-          
-
-
-
-          <li class="c5h-num">
-            <span class="c5h-num__val">8</span>
-            <span class="c5h-num__lbl">rynków zagranicznych z&nbsp;dystrybutorami produktów CarboHort</span>
-            <span class="c5-src c5-src--ondark c5h-num__src">Bułgaria, Francja, Holandia, kraje bałtyckie, Niemcy, Rumunia, Słowacja, Węgry</span>
+          <li class="pp-liczba">
+            <span class="pp-liczba__num">5</span>
+            <span class="pp-liczba__label">recenzowanych publikacji SGGW o&nbsp;podłożu z&nbsp;lignitu – CarboHort współuczestniczy w&nbsp;badaniu
+              <span class="pp-liczba__note">rozprawa doktorska dr. inż. Radosława Łaźnego</span></span>
           </li>
         </ul>
-      </div>
-
-      <div class="c5h-more">
-        <a class="c5-btn c5-btn--light" href="produkty.html#certyfikaty">Certyfikaty i&nbsp;decyzje</a>
-        <a class="wf-link--quiet wf-inline c5h-alink" href="produkty.html#dowod">Co potwierdzają badania<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
-        <a class="wf-link--quiet wf-inline c5h-alink" href="o-firmie.html#historia">Nagroda i&nbsp;publikacje w&nbsp;historii firmy<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
-      </div>
-    </div>
-  </section>
-
-  
-
-
-
-
-
-  <section class="c5-sec c5h-sec--tight" id="prochnica-plus" data-chapter="prochnica-plus" data-ce="CE-23" data-ce-wariant="z-foto">
-    <div class="c5-wrap">
-      <div class="c5-ctabar c5-ctabar--zielony c5-ctabar--z-foto" data-reveal>
-        <figure class="c5-ctabar__media"><img src="img/foto/prochnica-01-rows-of-crops-sunset.jpg" alt="" width="1400" height="1049" loading="lazy" decoding="async"></figure>
-        <p><span>Próchnica+ – sprawdzamy nasze produkty w&nbsp;gospodarstwach</span><br>
-        <span class="c5-muted">Program badawczy na lata 2025–2028: pięć gospodarstw, pięć upraw – aronia, jabłoń, malina, grusza i&nbsp;truskawka. Wyniki publikujemy, także negatywne; pierwsze podsumowanie planujemy na grudzień 2026.</span></p>
-        <a class="c5-btn c5-btn--dark" href="prochnica-plus.html">Poznaj program</a>
+        <div class="c5h-more">
+          <a class="c5-btn c5-btn--light" href="produkty.html#certyfikaty">Certyfikaty i&nbsp;decyzje</a>
+          <a class="wf-link--quiet wf-inline c5h-alink" href="produkty.html#dowod">Co potwierdzają badania<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+          <a class="wf-link--quiet wf-inline c5h-alink" href="o-firmie.html#historia">Nagroda i&nbsp;publikacje w&nbsp;historii firmy<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
+        </div>
       </div>
     </div>
   </section>
@@ -508,22 +467,70 @@
 
 
 
-  <section class="c5-sec c5h-sec--tight" id="o-nas" data-chapter="o-nas" data-ce="CE-23" data-ce-wariant="z-naglowkiem">
-    <div class="c5-wrap">
-      <div class="c5-ctabar c5-ctabar--z-naglowkiem" style="--ctabar-bg:var(--ch-surface-warm);--ctabar-motif:var(--ch-motif-on-warm)" data-reveal>
-        <h2 class="c5-ctabar__h">O nas</h2>
-        <div class="c5-ctabar__body">
+
+
+  <section id="prochnica-plus" data-chapter="prochnica-plus" data-ce="CE-36">
+    <div class="b-rows c5h-rows">
+      <article class="b-row">
+        <figure class="b-row__fig"><img src="img/foto/prochnica-01-rows-of-crops-sunset.jpg" alt="Rzędy upraw na polu o&nbsp;zachodzie słońca" width="1400" height="1049" loading="lazy" decoding="async"></figure>
+        <div class="b-row__body" data-reveal>
+          <span class="c5-kicker c5-kicker--outline">Próchnica+</span>
+          <h2 class="c5-h2 b-row__t">Sprawdzamy nasze produkty w&nbsp;gospodarstwach</h2>
+          <p>Program badawczy na lata 2025–2028: pięć gospodarstw, pięć upraw – aronia, jabłoń, malina, grusza i&nbsp;truskawka. Wyniki publikujemy, także negatywne; pierwsze podsumowanie planujemy na grudzień 2026.</p>
+          <div class="b-row__acts">
+            <a class="c5-btn c5-btn--dark" href="prochnica-plus.html">Poznaj program</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  
+
+
+
+  <section id="o-nas" data-chapter="o-nas" data-ce="CE-36" data-ce-wariant="odwrocony">
+    <div class="b-rows c5h-rows">
+      <article class="b-row b-row--rev">
+        <figure class="b-row__fig"><img src="img/foto/produkty-zaufanie-producent.jpg" alt="Pakowanie produktu do torby w&nbsp;zakładzie" width="800" height="800" loading="lazy" decoding="async"></figure>
+        <div class="b-row__body" data-reveal>
+          <span class="c5-kicker c5-kicker--outline">O nas</span>
+          <h2 class="c5-h2 b-row__t">Rodzinna firma budująca przyszłość polskiej gleby</h2>
           <p>CarboHort to polska, rodzinna firma. Z&nbsp;lignitu – młodego, miękkiego węgla brunatnego – robimy preparaty, które poprawiają glebę i&nbsp;wspierają rośliny w&nbsp;gospodarstwie, sadzie i&nbsp;ogrodzie.</p>
-          <div class="c5-btnrow">
+          <div class="b-row__acts">
             <a class="c5-btn c5-btn--dark" href="o-firmie.html#historia">Poznaj nas</a>
             <a class="c5-btn c5-btn--light" href="centrum-wiedzy.html#poradniki">Strefa wiedzy</a>
           </div>
         </div>
+      </article>
+    </div>
+  </section>
+
+  
+
+
+
+
+  <section class="c5-pro c5-pro--ramka c5-pro--zielen c5-pro--scrim-ukosny c5-pro--h-mackinac c5h-pro" id="dla-profesjonalistow" data-pro data-ce="CE-16" data-ce-wariant="pozny-wzrost">
+    <div class="c5-pro__media" data-pro-media aria-hidden="true">
+      <img class="c5-pro__img" src="img/foto/produkty-pro.jpg" alt="" loading="lazy" decoding="async">
+    </div>
+    <div class="c5-wrap c5-pro__grid">
+      <h2>Prowadzisz uprawę profesjonalną?</h2>
+      <div class="c5-pro__side">
+        <p>Przygotujemy ofertę i&nbsp;Twoją cenę, także na big bag 1,5&nbsp;m³, mauzer 1000&nbsp;l i&nbsp;beczkę 200&nbsp;l. Pierwsze zamówienie złożysz też w&nbsp;sklepie, a&nbsp;po realizacji zakładamy konto i&nbsp;kolejne robisz po swojej cenie.</p>
+        <div class="c5-btnrow">
+          <a class="c5-btn c5-btn--inv c5-btn--ico-liscie" href="kontakt.html#dzialy">Zapytaj o&nbsp;ofertę</a>
+          <a class="c5-btn c5-pro__login" href="logowanie.html?tryb=b2b">Zaloguj się do platformy B2B</a>
+          <a class="c5-btn c5-pro__login" href="rejestracja.html">Załóż konto PRO</a>
+        </div>
       </div>
     </div>
   </section>
 
   
+
+
 
 
 
@@ -531,7 +538,7 @@
     <div class="c5-wrap">
       <div class="c5h-split">
         <div class="c5h-head" data-reveal>
-          <span class="c5-kicker c5-kicker--outline">Pytania</span>
+          <span class="c5-kicker c5-kicker--sm c5-kicker--outline">FAQ</span>
           <div class="c5-head">
             <h2 class="c5-h2">Najczęstsze pytania o&nbsp;produkty i&nbsp;zakup</h2>
           </div>
@@ -584,8 +591,8 @@
             <button type="button" class="c5-faq__q" aria-expanded="false" aria-controls="faq-5">Gdzie kupić i&nbsp;co przy większych ilościach?<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button>
             <div class="c5-faq__a" id="faq-5">
               <div class="c5-faq__ain">
-                <p>Mniejsze opakowania kupisz w&nbsp;sklepie internetowym. Przy większych ilościach – big bag, mauzer, paleta mat – zapytaj o&nbsp;ofertę albo zaloguj się do platformy B2B. Jeśli nie wiesz, od czego zacząć, konfigurator dobierze produkty do Twojej uprawy.</p>
-                <p class="c5h-faq__links"><a class="wf-link--quiet wf-inline c5h-alink" href="sklep.html">Sklep<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a><a class="wf-link--quiet wf-inline c5h-alink" href="konfigurator.html">Konfigurator<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></p>
+                <p>Mniejsze opakowania kupisz w&nbsp;sklepie. Przy większych ilościach – big bag, mauzer, paleta mat – zapytaj o&nbsp;ofertę albo zaloguj się do platformy B2B. Jeśli nie wiesz, od czego zacząć, konfigurator dobierze produkty do Twojej uprawy.</p>
+                <p class="c5h-faq__links"><a class="wf-link--quiet wf-inline c5h-alink" href="sklep.html">Przejdź do sklepu<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a><a class="wf-link--quiet wf-inline c5h-alink" href="konfigurator.html">Konfigurator<svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a></p>
               </div>
             </div>
           </div>
@@ -602,18 +609,9 @@
       <div class="c5-cta">
         <span class="c5-kicker c5-kicker--sm">Kontakt</span>
         <h2 class="c5-h2">Porozmawiajmy o&nbsp;Twojej uprawie</h2>
-        <p class="c5-lead c5-lead--center">Zadzwoń: <a class="c5h-tel" href="tel:+48506066663">+48 506 066 663</a>, od poniedziałku do piątku, 8:00–16:00 – albo kup od razu w&nbsp;sklepie internetowym.</p>
         <div class="c5-btnrow">
-          <a class="c5-btn c5-btn--dark c5-btn--ico-liscie" href="tel:+48506066663">Zadzwoń</a>
-          <a class="c5-btn c5-btn--light" href="sklep.html">Sklep internetowy</a>
-        </div>
-        <div class="c5h-pro" role="group" aria-labelledby="kontakt-pro">
-          <p class="c5h-pro__t" id="kontakt-pro">Dla profesjonalistów</p>
-          <div class="c5-btnrow">
-            <a class="c5-btn c5-btn--light c5-btn--sm" href="kontakt.html#dzialy">Zapytaj o&nbsp;ofertę</a>
-            <a class="c5-btn c5-btn--light c5-btn--sm" href="logowanie.html?tryb=b2b">Zaloguj się do platformy B2B</a>
-            <a class="c5-btn c5-btn--light c5-btn--sm" href="rejestracja.html">Załóż konto PRO</a>
-          </div>
+          <a class="c5-btn c5-btn--dark c5-btn--ico-liscie" href="kontakt.html">Skontaktuj się ze specjalistą</a>
+          <a class="c5-btn c5-btn--light" href="sklep.html">Przejdź do sklepu</a>
         </div>
       </div>
     </div>
@@ -630,7 +628,9 @@
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
 <script src="ce/00-base.js"></script>
 <script src="ce/CE-07-nawigacja-kropkowa.js"></script>
+<script src="ce/CE-16-pas-pro.js"></script>
 <script src="ce/CE-17-faq.js"></script>
+<script src="ce/CE-33-cytat-zasada.js"></script>
 <script src="ce/CE-37-pop-up-karty.js"></script>
 <script src="home.js"></script>
 <script src="ce-overlay.js"></script>

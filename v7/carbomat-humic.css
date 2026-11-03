@@ -65,36 +65,12 @@
 
 /* The pop-up with the full card (CE-37, variant `c5-pop`): ce/CE-37-pop-up-karty.css */
 
-/* --- CE-12 „Scena faktów” (#czym-jest) – nine steps ---------------------------
-   Nothing of this scene lives in this sheet. Layout, mechanics and look come from
-   ce/CE-12-scena-faktow.css; this page picks them in carbomat-humic.html: on the
-   root of the scene the classes c5-fx--glass and c5-fx--skala-osiem-krokow and,
-   as style="--…", the step of the track (--fx-step-min, --fx-step-vh: nine
-   steps, so shorter than the default 480 px / 80 % of the window) and
-   --c5-fx-svg-max; the purity table of step 8 carries c5-viz--rosnie, the bar
-   chart of step 7 c5-viz--luz-mobile. */
+/* --- CZYM JEST (#czym-jest) – akordeon z kadrem ----------------------------
+   29.10.2026: CE-30 akordeon-z-kadrem (ce/CE-30-lista-z-panelem.css/.js). The
+   illustration boxes (.c5-viz, .c5-bar) keep their base look from
+   ce/CE-12-scena-faktow.css, which the page still links for them alone; the
+   CE-12 scene and its script are gone from this page. */
 
-/* --- KIEDY STOSOWAĆ: dwa panele fotograficzne (spec §16.1) ------------------
-   Two application worlds side by side, not a sequence: the pin, the packshot
-   scenes, the rows and the spacer of iteration 1 are gone (review of 14.09 – the
-   row mechanics did not fit this content). Each panel is a full photograph with
-   the copy resting on its bottom edge; the photo layer is 118 % of the frame, so
-   the parallax (--when-par) and the hover zoom (--when-zoom) never uncover the
-   panel edge. Below 900 px the pair becomes one column, and every mechanic is
-   gated by prefers-reduced-motion / hover, so the content never depends on it. */
-/* 11.10.2026: the PRO band no longer closes this section (the comparison
-   #roznice-eco-humic stands between them), so the section keeps the bottom
-   padding of .c5-sec – the rule `.c5-when-sec{padding-bottom:0}` is gone. */
-/* The panels (CE-38): ce/CE-38-dwa-panele-fotograficzne.css */
-/* 20.10.2026: the photo layer is an <img> (3:4 files in a 4:5-ish frame) – crop,
-   never stretch; the module sizes the layer but sets no object-fit. */
-img.c5-when__ph{object-fit:cover;object-position:50% 50%;}
-/* One column: the copy of the "Pole" panel covers the tractor and the bright sky
-   of the photo – the same flat scrim as in the module, a notch darker. */
-@media (max-width:899px){
-  #sezon-panele .c5-when__panel:first-child .c5-when__media::after{background:rgb(0 0 0 / .56);}
-}
-
-/* The knobs of the CE-12 scene (the step of the track, the height of the
-   illustration box) stand in the „Scena faktów" block above – one declaration on
-   the root of the section. */
+/* --- KIEDY STOSOWAĆ --------------------------------------------------------
+   29.10.2026: CE-22 z-przyciskami (ce/CE-22-tabela.css), the crop of the two
+   photos is set on the root of #sezon-panele; nothing page-specific here. */

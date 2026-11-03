@@ -27,59 +27,14 @@
 /* the number of the decision would break after its hyphen in a narrow column – keep it whole */
 .c5hd-nobr{white-space:nowrap;}
 
-/* ===== PARAMETRY: CE-10 variant `porownanie` (D03, D04, 18.10.2026) ========
-   One comparison table instead of two sets on tabs: the row name, Carbohumic
-   Maxi Plus, Carbohumic Calbor. The panel, the pinned film, the kicker and the
-   heading are the default CE-10 panel (as on Carbomat Eco); only the table is
-   new. It is a real <table>: a head row with the two product names, a row
-   header per parameter. Rules and type follow the rows of the default panel
-   (lead 18/28, the warm rule #C7BDB2, .c5-dim smaller and at .6). Below 600 px
-   the head row leaves the screen (it stays for screen readers) and each value
-   carries the short product name above it, two values side by side.
-   ⚠ Used on this page only – to be moved into ce/CE-10-parametry.css as the
-   variant `porownanie` (moduleRequests of round 18.10.2026). */
-.c5-params--porownanie{--c5-params-dt:220px;}
-.c5-params__cmp{flex:0 0 100%;width:100%;min-width:0;margin:0;border-collapse:collapse;table-layout:fixed;}
-.c5-params__cmp th,
-.c5-params__cmp td{padding:var(--ch-space-4) var(--ch-space-6) var(--ch-space-4) 0;border-bottom:1px solid var(--c5-params-rule);
-  text-align:left;vertical-align:top;font-family:var(--ch-type-lead-font);font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);
-  font-weight:var(--ch-type-lead-weight);color:var(--ch-text-primary);}
-.c5-params__cmp tr > :last-child{padding-right:0;}
-.c5-params__cmp tbody th{width:var(--c5-params-dt);}
-.c5-params__cmp .c5-params__corner{width:var(--c5-params-dt);}
-/* the head row: the product names over a dark rule, in the weight of the buttons */
-.c5-params__cmp thead th{padding-top:0;border-bottom-color:var(--ch-border-strong);font-weight:var(--ch-font-weight-book);}
-.c5-params__cmp thead .c5-params__corner{padding-top:0;border-bottom-color:var(--ch-border-strong);}
-.c5-params__cmp .c5-dim{font-size:var(--ch-type-small-size);opacity:.6;}
-@media (min-width:600px) and (max-width:899px){
-  .c5-params--porownanie{--c5-params-dt:150px;}
-  .c5-params__cmp th,.c5-params__cmp td{padding-right:var(--ch-space-4);font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);}
-}
-@media (max-width:599px){
-  .c5-params__cmp,.c5-params__cmp tbody{display:block;}
-  .c5-params__cmp thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;}
-  .c5-params__cmp tr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--ch-space-4);
-    padding-block:var(--ch-space-4);border-bottom:1px solid var(--c5-params-rule);}
-  .c5-params__cmp tbody th,
-  .c5-params__cmp td{display:block;width:auto;padding:0;border:0;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);}
-  .c5-params__cmp tbody th{grid-column:1 / -1;margin-bottom:var(--ch-space-2);font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);font-weight:var(--ch-font-weight-book);}
-  .c5-params__cmp td::before{content:attr(data-th);display:block;margin-bottom:2px;
-    font-family:var(--ch-type-overline-font);font-size:var(--ch-type-overline-size);line-height:var(--ch-type-overline-lh);
-    letter-spacing:var(--ch-type-overline-ls);text-transform:uppercase;color:var(--ch-text-secondary-on-warm);}
-}
-
 /* ===== PRZEWAGA: CE-70 variant zielen with a photo in the card (D02) ========
    Figma 847:855: the square of the card holds a photograph (r8) instead of a
    dark illustration. The modifier takes the padding and the dark field off the
    box and lets the picture cover it; the square stays a floor, as in the
    module. The lead stands under the heading on the first screen.
-   ⚠ `c5-vs__viz--foto` is used on this page only – to be moved into
-   ce/CE-70-scena-slajdow.css (moduleRequests of round 18.10.2026). */
-.c5-vs__viz--foto{padding:0;overflow:hidden;background:var(--ch-color-grey-200);}
-.c5-vs__viz--foto > img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;}
-.c5-vs__head .c5-lead{max-width:40rem;margin-top:var(--ch-space-6);margin-bottom:0;}
-/* on the green stage the secondary grey falls under 4.5 : 1 – the ink of the heading at .8 */
-.c5-vs--zielen .c5-vs__head .c5-lead{color:color-mix(in srgb,var(--ch-text-primary) 80%,transparent);}
+   */
+/* 29.10.2026: `c5-vs__viz--foto` and the lead under the heading moved into
+   ce/CE-70-scena-slajdow.css – Produkty #wg-potrzeby-cele uses them too. */
 /* the pointer to the comparison on the soil page, under the scene */
 #przewaga .c5hd-more{margin-top:var(--ch-space-8);}
 
@@ -94,38 +49,6 @@
      scrolled (besides the parallax of the photo) – the sign of how far the
      reader is in this term; after the fourth the next term opens, scrolling
      back the leaves go one by one.
-   CE-13-scena-produktu.js keeps doing what it does (thresholds, is-on /
-   is-past, parallax); carbohumic-dolistny.js section 50 adds the place of each
-   name (--use-y, data-dist) and the number of leaves (data-leaves).
-   Static (no JS, below 900 px, reduced motion): the module's stacked order –
-   photo, name, description per term; the leaves are not drawn.
-   ⚠ Used on this page only – to be moved into ce/CE-13-scena-produktu.css and
-   CE-13-scena-produktu.js as the variant `lista` (moduleRequests). */
-.c5-use--lista{--use-intro:.1;--use-hold:.8;--use-outro:.3;--use-dock:-.5;--use-list-gap:20px;}
-/* the shapes of the leaves (the defs of the marks); never drawn themselves */
-.c5hd-defs{position:absolute;width:0;height:0;overflow:hidden;}
-@media (min-width:900px) and (prefers-reduced-motion:no-preference){
-  /* no strip: the frame takes the whole stage less the margins and is there
-     from the start (nothing to dock from) */
-  .cx-js .c5-use--lista .c5-use__photo{top:var(--use-top);opacity:1;transform:none;}
-  /* the names: one rolling list. Every name stands on the bottom line of its
-     crop and is moved by the script (--use-y, px) to its place in the list;
-     long names wrap instead of running into the description. */
-  .cx-js .c5-use--lista .c5-use__tab{max-width:100%;margin-bottom:0;white-space:normal;text-wrap:balance;
-    font-size:clamp(1.75rem,2.78vw,var(--ch-type-title-xl-size));
-    opacity:0;visibility:hidden;transform:translateY(calc(var(--use-y,0) * 1px + 16px));
-    transition:opacity var(--use-swap-d) var(--ch-motion-ease),transform var(--use-swap-d) var(--ch-motion-ease),visibility 0s linear var(--use-swap-d);}
-  .cx-js .c5-use--lista.is-ui .c5-use__tab{opacity:0;transform:translateY(calc(var(--use-y,0) * 1px));}
-  .cx-js .c5-use--lista.is-ui .c5-use__crop:is(.is-on,[data-dist="1"]) .c5-use__tab{visibility:visible;transition-delay:0s;}
-  .cx-js .c5-use--lista.is-ui .c5-use__crop[data-dist="1"] .c5-use__tab{opacity:.5;}
-  .cx-js .c5-use--lista.is-ui .c5-use__crop.is-on .c5-use__tab{opacity:1;}
-  /* the four leaves: the mark of the module turns 45 deg on the open name;
-     the leaves inside it come one by one (data-leaves = how many) */
-  .cx-js .c5-use--lista .c5hd-lf > use{opacity:0;transform:scale(.4);transform-box:fill-box;transform-origin:50% 50%;
-    transition:opacity 280ms var(--ch-motion-ease),transform 280ms var(--ch-motion-ease);}
-  .cx-js .c5-use--lista .c5-use__crop[data-leaves="1"] .c5hd-lf:nth-child(-n+1) > use,
-  .cx-js .c5-use--lista .c5-use__crop[data-leaves="2"] .c5hd-lf:nth-child(-n+2) > use,
-  .cx-js .c5-use--lista .c5-use__crop[data-leaves="3"] .c5hd-lf:nth-child(-n+3) > use,
-  .cx-js .c5-use--lista .c5-use__crop[data-leaves="4"] .c5hd-lf > use{opacity:1;transform:none;}
-  .cx-js .c5-use--lista .c5-use__tabico{width:19px;height:19px;}
-}
+   03.11.2026 (U-17): the variant lives in ce/CE-13-scena-produktu.css and .js
+   only – the copy that stood here is gone, so this scene behaves exactly like
+   the ones on Carbomat and Carbohumic doglebowy. */

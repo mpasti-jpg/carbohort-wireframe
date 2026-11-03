@@ -5,23 +5,33 @@
    or a `/* page-specific: … *\/` override of a pattern block.
 
    Blocks ported from other pages, renamed to the `on-` prefix, mechanics kept:
-     · CE-24 `on-dark` / `on-nums` / `on-odo` <- prochnica-plus.css 60 (pp-liczby)
-     · CE-20 `on-steps`                      <- carbohumic-doglebowy.css (c5hu-tiles), own layout
+     · CE-24 `wiersze-ze-zdjeciem` (pp-liczb*) with the `on-odo` digit reel
+     · CE-20 `numerowane` (c5-mt-grid) and `on-fams`
      · CE-36 `on-who`                        <- carbomat-humic.css (c5-who)
-     · CE-30 `on-val*`                       <- produkty.css 8.2 (c5pr-paths)
+     · CE-70 `zielen`                        (#wartosci, since 02.11.2026)
      · CE-96 wariant kraje (ce/CE-96-glob-dystrybutorow.css) – globe and cards;
        only the address row under the cards (`on-map*`) stays here
      · CE-33 `on-quote`                      <- uprawa.css (u-quote, wariant ciemny-boks)
    ===================================================================== */
 
-/* 10 · W LICZBACH → ce/CE-24-pas-liczb.css */
+/* 10 · W LICZBACH → ce/CE-24-pas-liczb.css (`wiersze-ze-zdjeciem`)
+   page-specific: five rows with a source line make the column taller than the
+   frame ratio allows, so the photo fills the row instead of keeping the ratio. */
+@media (min-width:900px){
+  #w-liczbach .pp-liczby__ph{position:relative;aspect-ratio:auto;}
+  #w-liczbach .pp-liczby__ph img{position:absolute;inset:0;}
+}
 
 /* ===== 20 · CO ROBIMY – trzy kroki i rząd czterech rodzin (CE-20) ===
-   Card anatomy from c5hu-tiles (carbohumic-doglebowy.css): a framed card, title, body
-   text. The steps add an ordinal and, on wide screens, a thin arrow drawn in
-   the gap between cards. The families are plain tiles of the same anatomy. */
-/* The step and family cards (`on-step*`, `on-fam*`) are styled in
-   ce/CE-20-siatka-kart.css. */
+   Steps: base `numerowane` grid and cards (`c5-mt-*`), families: `on-fam*`, both
+   styled in ce/CE-20-siatka-kart.css. page-specific: the steps are an ordered
+   list, so the list reset lives here. */
+.on-kroki{padding:0;list-style:none;}
+
+/* ===== 10 · HERO – the family photo on the stage (U-24, 03.11.2026) =====
+   The stage of CE-08 `foto` keeps its size; the photo covers it, the faces
+   (left half of the file, upper third) stay in the crop at every width. */
+.on-hero__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--on-hero-pos,32% 30%);}
 
 /* ===== 30 · NAJSTARSZA NOWOŚĆ – wiersz zdjęcie | opis (CE-36) ==============
    Ported from carbomat-humic.css (c5-who): two equal columns centred on each
@@ -31,7 +41,7 @@
    o-firmie.js only while CX5.motionOn(). */
 /* The row (`on-who*`) is styled in ce/CE-36-wiersz-zdjecie-opis.css. */
 
-/* 40 · WARTOŚCI → ce/CE-30-lista-z-panelem.css */
+/* 40 · WARTOŚCI → ce/CE-70-scena-slajdow.css */
 /* page-specific: the note stands under the CE root, so its spacing is page layout */
 .on-val__note{margin-top:clamp(2rem,4vw,3rem);}
 

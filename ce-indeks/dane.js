@@ -1,11 +1,11 @@
 window.CE_DANE = {
  "meta": {
-  "wygenerowano": "27.10.2026",
+  "wygenerowano": "03.11.2026",
   "wersja": "0.1.0",
   "projekt": "CarboHort",
-  "aktywnych": 81,
-  "wycofanych": 18,
-  "wystapien": 314,
+  "aktywnych": 78,
+  "wycofanych": 21,
+  "wystapien": 307,
   "stron": 34,
   "bazaStron": "v7/"
  },
@@ -512,7 +512,7 @@ window.CE_DANE = {
     "kotwica": "mega-produkty"
    },
    "opis": "Panel rozwijany pod nagłówkiem: nagłówek panelu, kolumny odnośników, boksy produktowe albo grupy upraw, stopka panelu. Cztery warianty układu zależnie od treści działu.",
-   "mechanika": "Otwierany wyzwalaczem z nagłówka (data-open, aria-controls), zamykany klikiem poza panelem albo Escape; tło przyciemnione przez cw-scrim. Obsługa w cw.js.",
+   "mechanika": "Mysz (runda 02.11.2026): panel otwiera się na najechanie wyzwalacza z nagłówka, a zamyka się 250 ms po zjechaniu wskaźnika z wyzwalacza i panelu, więc przejście przez szczelinę go nie zamyka; kliknięcie myszą w wyzwalacz nie zmienia stanu. Dotyk i klawiatura bez zmian: dotknięcie, Enter albo Spacja przełączają panel (data-open, aria-controls), Escape i kliknięcie w cw-scrim go zamykają; tło przyciemnione przez cw-scrim. Obsługa w cw.js.",
    "czesci": [
     "nagłówek panelu (w wariancie szerokim z dwoma przyciskami)",
     "kolumny odnośników albo boksy",
@@ -901,7 +901,7 @@ window.CE_DANE = {
     "kotwica": "nawigacja-kropki"
    },
    "opis": "Małe kwadraty (5 × 5 px, zaokrąglone) w prostej kolumnie przy prawej krawędzi ekranu, na wysokości środka ekranu, jeden na dział strony; kwadrat aktywnego działu zielony. Po najechaniu na wąski pas przy krawędzi kolumna rozwija się w łuk wygięty w lewo, a przy kwadracie aktywnego działu i przy kwadracie pod kursorem odsłaniają się opisy na jasnych, rozmytych tłach (Figma 966:1440, 959:1632, 959:1607, 959:1608, 959:1681, 959:1698).",
-   "mechanika": "Od 19.10.2026 (runda 5, paski opisów z 19.10): dwa stany. Spoczynek – kwadraty 5 × 5 px w prostej kolumnie co 35 px (Figma 966:1440), 10 px od prawej krawędzi ekranu, czyli w 25-pikselowym marginesie kontenera treści; kwadrat aktywnego działu zielony. Rozwijanie otwiera tylko pas 25 px od prawej krawędzi wzdłuż kolumny (+ 12 px); JS śledzi wskaźnik na całym dokumencie, zwinięta nawigacja nie łapie wskaźnika. Po otwarciu kwadraty rozjeżdżają się z kolumny na łuk (od środka na zewnątrz, ok. 0,26 s): łuk z Figmy (okrąg R 337 px w zakresie ±21,2°) rozciągnięty w pionie tak, że skrajne punkty stoją na 35 % wysokości okna; najdalszy kwadrat 15 px od krawędzi; reguła odstępów – tła opisów (ok. 33 px) nie schodzą bliżej niż 4 px, wtedy łuk rośnie ponad 35 %, a wszystko zostaje ok. 10 px w oknie. Kropka wskazana w kolumnie zostaje wyróżniona po otwarciu, dopóki wskaźnik nie przesunie się o 8 px. Po dojeździe kwadratów widać dwa opisy: aktywnego działu i pozycji pod wskaźnikiem; opisy odsłaniają się od prawej do lewej (clip-path, 0,16 s) i tak samo chowają (0,1 s), więc przy przejeździe w pionie rozwijają się po kolei. Paski opisów (19.10, Figma 969:1447 i 959:1698): padding 9 px góra i dół, 8 px boki, promień 5 px, Instrument Sans 14 px / 120 %, tekst #0C2B1C 100 %, wysokość 35 px; aktywny dział – tło #A7D781 (--ch-color-green-300) w pełni; pozycja pod wskaźnikiem – biel 65 % z backdrop-filter blur(6px) (odpowiednik warstw Figmy: biel Darken + #EEECEC 70 % Screen; bez wsparcia rozmycia biel 85 %). Szare kwadraty – biel 30 % z mix-blend-mode difference (.c5-dots__marks), zielony #80B960 bez blendu (.c5-dots__accent). Strefa wyboru .c5-dots__zone obejmuje same kwadraty łuku (+ 16 px) do krawędzi ekranu: pozycja pod wskaźnikiem = najbliższa w pionie, klik przewija do niej; pokazany opis też trzyma wachlarz; zwinięcie 250 ms po wyjechaniu ponad 24 px poza strefę. Fokus klawiatury otwiera wachlarz, obrys na tle opisu. Scrollspy po sekcjach z data-chapter, klik przewija płynnie (przez Lenis, gdy aktywny); pierwsza pozycja nazywa się „Początek” i przewija na samą górę strony, z menu (19.10). Przy stopce wszystkie warstwy wyjeżdżają w prawą krawędź. prefers-reduced-motion: bez animacji. Ukryta poniżej 900 px (widok mobilny do analizy). Opcja (15.10.2026, Borówka): span.c5-dots__stage – dopisek „Etap N” w jednej linii przed nazwą działu.",
+   "mechanika": "Od 19.10.2026 (runda 5, paski opisów z 19.10): dwa stany. Spoczynek – kwadraty 5 × 5 px w prostej kolumnie co 35 px (Figma 966:1440), 10 px od prawej krawędzi ekranu, czyli w 25-pikselowym marginesie kontenera treści; kwadrat aktywnego działu zielony. Rozwijanie otwiera tylko pas 25 px od prawej krawędzi wzdłuż kolumny (+ 12 px); JS śledzi wskaźnik na całym dokumencie, zwinięta nawigacja nie łapie wskaźnika. Po otwarciu kwadraty rozjeżdżają się z kolumny na łuk (od środka na zewnątrz, ok. 0,26 s): łuk z Figmy (okrąg R 337 px w zakresie ±21,2°) rozciągnięty w pionie tak, że skrajne punkty stoją na 35 % wysokości okna; najdalszy kwadrat 15 px od krawędzi; reguła odstępów – tła opisów (ok. 33 px) nie schodzą bliżej niż 4 px, wtedy łuk rośnie ponad 35 %, a wszystko zostaje ok. 10 px w oknie. Kropka wskazana w kolumnie zostaje wyróżniona po otwarciu, dopóki wskaźnik nie przesunie się o 8 px. Po dojeździe kwadratów widać dwa opisy: aktywnego działu i pozycji pod wskaźnikiem; opisy odsłaniają się od prawej do lewej (clip-path, 0,16 s) i tak samo chowają (0,1 s), więc przy przejeździe w pionie rozwijają się po kolei. Paski opisów (19.10, Figma 969:1447 i 959:1698): padding 9 px góra i dół, 8 px boki, promień 5 px, Instrument Sans 14 px / 120 %, tekst #0C2B1C 100 %, wysokość 35 px; aktywny dział – tło #A7D781 (--ch-color-green-300) w pełni; pozycja pod wskaźnikiem – biel 65 % z backdrop-filter blur(6px) (odpowiednik warstw Figmy: biel Darken + #EEECEC 70 % Screen; bez wsparcia rozmycia biel 85 %). Szare kwadraty – biel 30 % z mix-blend-mode difference (.c5-dots__marks), zielony #80B960 bez blendu (.c5-dots__accent). Po otwarciu aktywna jest cała strefa .c5-dots__zone wzdłuż łuku (R1, 02.11.2026): od lewego końca najdłuższego opisu (minus 16 px) do krawędzi ekranu i od pierwszej do ostatniej pozycji (plus 16 px) – jej szerokość wynika z najdłuższego opisu strony (235 px na Produktach, 223 px na CARBOMAT ECO), a nie ze stałej. Pozycja pod wskaźnikiem = najbliższa w pionie, klik w strefie przewija do niej; zwinięcie 250 ms po wyjechaniu ponad 24 px poza strefę. Pas otwierający zostaje wąski (25 px od krawędzi ekranu): w spoczynku reaguje tylko on, więc strzałki przy prawej krawędzi działają. Fokus klawiatury otwiera wachlarz, obrys na tle opisu. Scrollspy po sekcjach z data-chapter, klik przewija płynnie (przez Lenis, gdy aktywny); pierwsza pozycja nazywa się „Początek” i przewija na samą górę strony, z menu (19.10). Przy stopce wszystkie warstwy wyjeżdżają w prawą krawędź. prefers-reduced-motion: bez animacji. Ukryta poniżej 900 px (widok mobilny do analizy). Opcja (15.10.2026, Borówka): span.c5-dots__stage – dopisek „Etap N” w jednej linii przed nazwą działu.",
    "czesci": [
     "kwadraty na łuku",
     "zielony kwadrat aktywnego działu",
@@ -1008,8 +1008,8 @@ window.CE_DANE = {
     },
     {
      "slug": "miniatura",
-     "opis": "strona główna od 26.10.2026: układ bazy (kolumna tekstu z leadem, ciepły panel z sygnetem), ale na panelu zamiast packshotów mała miniatura filmu 16:9 (ok. 430 px przy 1440 px, plakat, szklany przycisk odtwarzania jak w wariancie player, widoczny podpis z długością) – film nigdy nie jest tłem, otwiera go strona w oknie po kliknięciu; pod obiema kolumnami pasek czterech rodzin (opakowanie, nazwa, jedno zdanie, strzałka), każda prowadzi do swojej karty na stronie; od 27.10.2026 ramka Carbohumic (c5-hero__fam--dwa) ma dwa opakowania i dwa odnośniki – doglebowy i nalistny; poniżej 900 px tekst, miniatura i rodziny w siatce 2 × 2 (modyfikator c5-hero--miniatura w ce/CE-08-hero.css; home.html#hero)",
-     "skrot": "Panel z małą miniaturą filmu, pod obiema kolumnami pasek czterech rodzin produktów (Carbohumic z dwoma odnośnikami).",
+     "opis": "strona główna od 26.10.2026: układ bazy (kolumna tekstu z leadem, ciepły panel z sygnetem), ale scena panelu zamiast packshotów niesie jedno duże zdjęcie uprawy (img.c5h-hero__img, object-fit cover, wypełnia całą scenę) – od 02.11.2026 bez filmu i bez okna filmu (adnotacja 3:81: filmu nie ma i na razie nie planujemy; reguły miniatury filmu .c5-hero__film zostały w module, nieużywane); pod obiema kolumnami pasek czterech rodzin (opakowanie, nazwa, jedno zdanie, strzałka), każda prowadzi do swojej karty na stronie; od 27.10.2026 ramka Carbohumic (c5-hero__fam--dwa) ma dwa opakowania i dwa odnośniki – doglebowy i nalistny; poniżej 900 px tekst, zdjęcie i rodziny w siatce 2 × 2 (modyfikator c5-hero--miniatura w ce/CE-08-hero.css; home.html#hero)",
+     "skrot": "Panel z dużym zdjęciem (bez filmu), pod obiema kolumnami pasek czterech rodzin produktów (Carbohumic z dwoma odnośnikami).",
      "zrzut": null
     },
     {
@@ -1057,7 +1057,7 @@ window.CE_DANE = {
      "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "hero",
-     "naglowek": "Próchnica w płynie do regeneracji gleby i biostymulacji roślin",
+     "naglowek": "Próchnica w płynie.",
      "wariant": null
     },
     {
@@ -1071,14 +1071,14 @@ window.CE_DANE = {
      "plik": "carbomat-humic.html",
      "strona": "CARBOMAT HUMIC",
      "id": "hero",
-     "naglowek": "Jeden produkt, trzy zastosowania: kondycjoner, nawóz, biostymulator",
+     "naglowek": "Jeden produkt, trzy zastosowania.",
      "wariant": null
     },
     {
      "plik": "carbomat-mata.html",
      "strona": "CARBOMAT Mata Uprawowa",
      "id": "hero",
-     "naglowek": "Nowa generacja mat uprawowych dla profesjonalistów",
+     "naglowek": "Mata uprawowa nowej generacji.",
      "wariant": null
     },
     {
@@ -1106,7 +1106,7 @@ window.CE_DANE = {
      "plik": "kukurydza.html",
      "strona": "Kukurydza",
      "id": "hero",
-     "naglowek": "Program uprawy kukurydzy",
+     "naglowek": "Kukurydza",
      "wariant": "kadr-w-tle"
     },
     {
@@ -1331,14 +1331,20 @@ window.CE_DANE = {
    "warianty": [
     {
      "slug": "z-tabami",
-     "opis": "tabela z liniami między wierszami zamiast kafelków, mniejszy nagłówek i dwa zestawy parametrów przełączane tabami nad tabelą (klasa c5-params--tabs na korzeniu)",
-     "skrot": "Dwa zestawy parametrów przełączane tabami nad tabelą.",
+     "opis": "tabela z liniami między wierszami zamiast kafelków, mniejszy nagłówek i dwa zestawy parametrów przełączane tabami nad tabelą (klasa c5-params--tabs na korzeniu); bez wystąpień od 02.11.2026 (CARBOHUMIC nalistny przeszedł na wariant porownanie, CARBOMAT Mata na kafelki-z-wejsciem)",
+     "skrot": "Dwa zestawy parametrów przełączane tabami nad tabelą. (bez wystąpień od 02.11.2026)",
      "zrzut": null
     },
     {
      "slug": "kafelki-z-wejsciem",
-     "opis": "układ i wejście wg ramek Figma „Frame 140-8364” (kicker) i „Frame 140-8369” (tabela), uwagi Mateusza z 20.09.2026 (CARBOMAT ECO „Parametry”): kicker to pigułka bez tła z obrysem 1 px w bieli, promień 10 px, wersaliki 13/14 px, 24 px nad nagłówkiem; nagłówek wyśrodkowany na P22 Mackinac Pro Book 46/54 px; tabela to nie wiersze z liniami, tylko osiem osobnych kafelków – tło rgb(255 255 255 / .07) z rozmyciem 6,7 px, promień 15 px na czterech rogach każdego, wysokość 68 px, odstęp 7 px, bez obramowań i bez naprzemiennych teł; link do analizy pod tabelą bez podkreślenia i bez ikony; wejście sterowane przewijaniem w czterech krokach – kadr wjeżdża od dołu i rozszerza się na pełną szerokość, potem narasta ciemna nakładka, potem kicker z nagłówkiem, na końcu wiersze jeden po drugim, żeby przez chwilę było widać samą warstwę mediów; animacja wisi na .c5-params__media, więc powrót ze zdjęcia na wideo to podmiana jednego znacznika; przy reduced-motion, bez JS i poniżej 900 px wszystko stoi w stanie końcowym od pierwszej klatki. Od 02.10.2026 moduł wspólny dla trzech stron (content-elementy-spec §12). Klasa c5-params--col trzyma treść w wyśrodkowanej kolumnie 732 px (CARBOMAT HUMIC: dziewięć wierszy, w warstwie mediów placeholder strony zamiast filmu). Klasa c5-params--long niesie długą tabelę (CARBOHUMIC: 18 wierszy): wartości zawijają się od jednej krawędzi, od 1240 px kafelki stoją w dwóch kolumnach, wiersze-zdania (c5-params__row--wide) biorą całą szerokość, wiersz-kontrapunkt ma cienką ramkę (c5-params__row--mark), a na telefonie krótki wiersz trzyma nazwę i wartość w jednej linii; przy więcej niż ośmiu wierszach krok wejścia skraca się, żeby ostatni wiersz zdążył przed końcem fazy. Krój P22 Mackinac i kicker-plakietka zostają wyłącznie na CARBOMAT ECO (krój przez --c5-params-title-font na korzeniu); na pozostałych stronach nagłówek stoi krojem kitu",
-     "skrot": "Osiem półprzezroczystych kafelków parametrów na zdjęciu, wejście z przewijania.",
+     "opis": "układ i wejście wg ramek Figma „Frame 140-8364” (kicker) i „Frame 140-8369” (tabela), uwagi Mateusza z 20.09.2026 (CARBOMAT ECO „Parametry”): od 17.10.2026 (design system v0.1) tabela stoi na jasnym panelu (beige-50 przy .97, rozmycie 10 px, promień 12 px), a od rundy 02.11.2026 (adnotacje 3:556 i 3:711) panel ma jedną szerokość 992 px (880 px tekstu) na wszystkich stronach; nad nagłówkiem zawsze kicker (c5-kicker--outline, 13/14 wersaliki), nagłówek krojem display (Season Mix, h2-sm 46/51); tabela to wiersze z kreską włosową pod spodem (#C7BDB2), bez kafli; link do analizy pod tabelą; wejście sterowane przewijaniem w czterech krokach – kadr wjeżdża od dołu i rozszerza się na pełną szerokość, potem narasta ciemna nakładka, potem kicker z nagłówkiem, na końcu wiersze jeden po drugim, żeby przez chwilę było widać samą warstwę mediów; animacja wisi na .c5-params__media, więc powrót ze zdjęcia na wideo to podmiana jednego znacznika; przy reduced-motion, bez JS i poniżej 900 px wszystko stoi w stanie końcowym od pierwszej klatki. Od 02.10.2026 moduł wspólny dla trzech stron (content-elementy-spec §12). Klasa c5-params--long niesie długą tabelę (CARBOHUMIC doglebowy, CARBOMAT HUMIC, CARBOMAT Mata): wartości zawijają się od jednej krawędzi, od 1100 px wiersze stoją w dwóch kolumnach, wiersze-zdania (c5-params__row--wide) biorą całą szerokość, a na telefonie krótki wiersz trzyma nazwę i wartość w jednej linii; przy więcej niż ośmiu wierszach krok wejścia skraca się, żeby ostatni wiersz zdążył przed końcem fazy. Opcjonalny przypis zakresu pod nagłówkiem (c5hu-scope) to mały druk bez ramki, pisany zwykłą wielkością liter (CARBOHUMIC doglebowy: wersja filtrowana)",
+     "skrot": "Jasny panel 992 px z tabelą parametrów na zdjęciu lub filmie, kicker nad nagłówkiem, wejście z przewijania.",
+     "zrzut": null
+    },
+    {
+     "slug": "porownanie",
+     "opis": "CARBOHUMIC nalistny (18.10.2026, przeniesiony do modułu 02.11.2026; klasa c5-params--porownanie na sekcji): jedna prawdziwa tabela <table> zamiast dwóch zestawów na tabach – wiersz nagłówkowy z nazwami produktów i po jednej kolumnie na produkt, w wierszach nagłówek parametru; odstęp między kolumnami 48 px (dwukrotnie większy niż dotąd, adnotacja 3:711), kolumny 228 / 326 / 326 px w panelu 992 px (nazwa parametru: 180 px tekstu plus odstęp), od 600 do 899 px węższa kolumna nazw; poniżej 600 px wiersz nagłówkowy zostaje tylko dla czytników ekranu, a każda wartość niesie nad sobą skróconą nazwę produktu, dwie wartości obok siebie",
+     "skrot": "Jedna tabela porównawcza produktów zamiast dwóch zestawów na tabach: kolumna nazw parametrów i po jednej kolumnie na produkt.",
      "zrzut": null
     }
    ],
@@ -1354,7 +1360,7 @@ window.CE_DANE = {
      "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "parametry",
-     "naglowek": "Parametry produktu · wersja filtrowana",
+     "naglowek": "Parametry produktu (wersja filtrowana)",
      "wariant": "kafelki-z-wejsciem"
     },
     {
@@ -1368,7 +1374,7 @@ window.CE_DANE = {
      "plik": "carbomat-humic.html",
      "strona": "CARBOMAT HUMIC",
      "id": "parametry",
-     "naglowek": "Parametry produktu · w suchej masie",
+     "naglowek": "Parametry produktu (w suchej masie)",
      "wariant": "kafelki-z-wejsciem"
     },
     {
@@ -1384,7 +1390,7 @@ window.CE_DANE = {
     "plik": "v7/carbomat.html",
     "kotwica": "parametry"
    },
-   "opis": "Sekcja bez własnego tła, 30 px marginesu z boków, min-height 100svh: wideo w pętli przyklejone na całą wysokość sekcji pod maską, nad nim wyśrodkowana treść (tytuł, tabela dl, dyskretny link do analizy, przyciski karty i certyfikatów, przypis).",
+   "opis": "Sekcja bez własnego tła, 30 px marginesu z boków, min-height 100svh: wideo w pętli przyklejone na całą wysokość sekcji pod maską, nad nim jasny panel o jednej szerokości na wszystkich stronach – 992 px, w tym 880 px tekstu (runda 02.11.2026, adnotacje 3:556 i 3:711) – z kickerem nad nagłówkiem, tabelą dl, dyskretnym linkiem do analizy, przyciskami karty i certyfikatów oraz przypisem.",
    "mechanika": "Wideo sticky na czas sekcji, pauza przy reduced-motion (poster); treść przewija się po wideo, gdy dłuższa niż ekran. Moduł 30.",
    "czesci": [
     "warstwa wideo z maską",
@@ -1395,7 +1401,7 @@ window.CE_DANE = {
     "przypis"
    ],
    "kod_zrodlowy": {
-    "css": "ce/CE-10-parametry.css – jeden plik dla wszystkich układów: kafelki domyślnie, warianty col, long i z-tabami w tym samym pliku; ustawienia wystąpienia na korzeniu: --c5-params-scrim, --c5-params-clear, --c5-params-title-font, --c5-params-title-wrap",
+    "css": "ce/CE-10-parametry.css – jeden plik dla wszystkich układów: panel z tabelą domyślnie, warianty long, porownanie i z-tabami w tym samym pliku; ustawienia wystąpienia na korzeniu: --c5-params-scrim, --c5-params-clear, --c5-params-title-wrap, --c5-params-panel-w (domyślnie 992px)",
     "js": "kafelki z wejściem: ce/CE-10-parametry-kafelki-z-wejsciem.js (CARBOMAT ECO, CARBOHUMIC, CARBOMAT HUMIC); wariant z-tabami: ce/CE-10-parametry.js (CARBOMAT Mata)"
    }
   },
@@ -1462,7 +1468,7 @@ window.CE_DANE = {
     },
     {
      "slug": "pasma-z-przelacznikiem",
-     "opis": "pasmo na produkt na całą szerokość okna, wg ramki Figma „382:1189” (02.10.2026, CARBOMAT ECO „Który dla mnie”): po lewej packshot produktu, pod nim przełącznik produktów (biała pigułka z odnośnikami do pasm, bieżący z aria-current), po prawej biała karta 609 px z nazwą produktu i grupami „Najważniejsze funkcje” (pigułki z ikoną), Aplikacja, Gdzie najlepiej, pH i Frakcja. Wjazd pudełek od dołu i przyklejane taby wariantu karty-w-taby zniknęły. Zakup stoi przy wierszach pH – każde pH to osobny produkt w sklepie: wiersz jest hostem konfiguracji data-cw-product (1:1 jak na kartach sklepu), a przycisk „Dodaj do koszyka” otwiera szybki podgląd CE-76 z sklep-wspolne.js, czyli dodanie do koszyka bez wychodzenia z podstrony; pojemności i cen w sekcji nie ma – wybiera się je w oknie koszyka (decyzja Mateusza z 02.10.2026: lista „Opakowania” zdjęta z kart). Mechanika od 900 px bez reduced-motion ([data-kdm=„ruch”]): pasmo przypięte na wysokość okna, karta jest oknem z wygaszeniem u dołu, a jej treść jedzie 1 px na 1 px przewinięcia strony aż do końca, potem pasmo puszcza i wchodzi następny produkt; budżet przewijania pasma (--kdm-extra) to nadmiar treści karty plus krótki postój, liczony przy każdej zmianie rozmiaru; fokus na kontrolce spod okna wciąga ją w kadr; na czas otwartego okna koszyka warstwa inercji stoi. Przełącznik to zwykłe odnośniki do kotwic pasm – działa bez skryptu przez szynę kotwic z ce/00-base.js. Bez JS i przy reduced-motion: dwie kolumny, lewa przyklejona, karta w pełnej wysokości; poniżej 900 px jedna kolumna. Kolorystyka ramki nie jest przeniesiona – pasma, pigułki i karta stoją w szarościach kitu za zmiennymi --c5-kdm-*; dolny odstęp przypiętego pasma to 104 px zamiast 40 px z ramki, żeby przełącznik i karta nie wchodziły pod dok doradcy (pokrętło --c5-kdm-pad-b). Liczba produktów dowolna: pasma to elementy [data-kdm-track], na CARBOHUMIC wejdą trzy. Od 02.10.2026 moduł wspólny (content-elementy-spec §12). CARBOHUMIC: trzy pasma z packshotami (niefiltrowany, filtrowany, OGRÓD), zakup jako samodzielny, ostatni wiersz karty (c5-kdm__buyrow – host konfiguracji sklepu), pod pasmami zostaje ostrzeżenie CE-31 (blok opakowań CE-28 zdjęty 02.10 na polecenie Mateusza). Moduł umie też kadr zdjęcia albo placeholder 4 : 5 w lewej kolumnie (c5-kdm__photo--frame + c5-kdm__fill), listy (c5-kdm__list), notę (c5-kdm__note) i zwykłe przyciski c5-btn w karcie – dziś bez wystąpień: próba na CARBOMAT HUMIC (pasma „Profesjonalista” i „Hobbysta”) została wycofana 02.10.2026. Przełącznik od trzech pozycji bierze mniejszy stopień pisma i przy wąskiej lewej kolumnie staje w pionie; to samo dla dwóch pozycji daje klasa c5-kdm__switch--auto (od 900 px; CARBOMAT ECO). Klasa c5-kdm--dock na korzeniu kończy przyklejoną lewą kolumnę nad dokiem doradcy w układzie bez ruchu",
+     "opis": "pasmo na produkt na całą szerokość okna, wg ramki Figma „382:1189” (02.10.2026, CARBOMAT ECO „Który dla mnie”): po lewej packshot produktu, pod nim przełącznik produktów (biała pigułka z odnośnikami do pasm, bieżący z aria-current), po prawej biała karta 609 px z nazwą produktu i grupami „Najważniejsze funkcje” (pigułki z ikoną), Aplikacja, Gdzie najlepiej, pH i Frakcja. Wjazd pudełek od dołu i przyklejane taby wariantu karty-w-taby zniknęły. Zakup stoi przy wierszach pH – każde pH to osobny produkt w sklepie: wiersz jest hostem konfiguracji data-cw-product (1:1 jak na kartach sklepu), a przycisk „Dodaj do koszyka” otwiera szybki podgląd CE-76 z sklep-wspolne.js, czyli dodanie do koszyka bez wychodzenia z podstrony; pojemności i cen w sekcji nie ma – wybiera się je w oknie koszyka (decyzja Mateusza z 02.10.2026: lista „Opakowania” zdjęta z kart). Mechanika od 900 px bez reduced-motion ([data-kdm=„ruch”]): pasmo przypięte na wysokość okna, karta jest oknem z wygaszeniem u dołu, a jej treść jedzie 1 px na 1 px przewinięcia strony aż do końca, potem pasmo puszcza i wchodzi następny produkt; budżet przewijania pasma (--kdm-extra) to nadmiar treści karty plus krótki postój, liczony przy każdej zmianie rozmiaru; fokus na kontrolce spod okna wciąga ją w kadr; na czas otwartego okna koszyka warstwa inercji stoi. Przełącznik to zwykłe odnośniki do kotwic pasm – działa bez skryptu przez szynę kotwic z ce/00-base.js. Bez JS i przy reduced-motion: dwie kolumny, lewa przyklejona, karta w pełnej wysokości; poniżej 900 px jedna kolumna. Tło (runda 02.11.2026, adnotacje 3:311 i 3:567): jedno tło dla całego CE, ton nie zmienia się między produktami – beż (beige-100) albo biel z modyfikatorem c5-kdm--biale na korzeniu (Figma 925:1438, CARBOMAT ECO); naprzemiennych tonów pasm (band-alt) nie ma, ton pojedynczego produktu można wyjątkowo ustawić zmiennymi --c5-kdm-band i --c5-kdm-syg w style jego [data-kdm-track] (żadna strona tego nie robi); pigułki i karta stoją w tokenach za zmiennymi --c5-kdm-*; dolny odstęp przypiętego pasma to 104 px zamiast 40 px z ramki, żeby przełącznik i karta nie wchodziły pod dok doradcy (pokrętło --c5-kdm-pad-b). Liczba produktów dowolna: pasma to elementy [data-kdm-track], na CARBOHUMIC wejdą trzy. Od 02.10.2026 moduł wspólny (content-elementy-spec §12). CARBOHUMIC: trzy pasma z packshotami (niefiltrowany, filtrowany, OGRÓD), zakup jako samodzielny, ostatni wiersz karty (c5-kdm__buyrow – host konfiguracji sklepu), pod pasmami zostaje ostrzeżenie CE-31 (blok opakowań CE-28 zdjęty 02.10 na polecenie Mateusza). Moduł umie też kadr zdjęcia albo placeholder 4 : 5 w lewej kolumnie (c5-kdm__photo--frame + c5-kdm__fill), listy (c5-kdm__list), notę (c5-kdm__note) i zwykłe przyciski c5-btn w karcie – dziś bez wystąpień: próba na CARBOMAT HUMIC (pasma „Profesjonalista” i „Hobbysta”) została wycofana 02.10.2026. Przełącznik od trzech pozycji bierze mniejszy stopień pisma i przy wąskiej lewej kolumnie staje w pionie; to samo dla dwóch pozycji daje klasa c5-kdm__switch--auto (od 900 px; CARBOMAT ECO). Klasa c5-kdm--dock na korzeniu kończy przyklejoną lewą kolumnę nad dokiem doradcy w układzie bez ruchu",
      "skrot": "Pasmo z packshotem, pigułką przełącznika produktów i białą kartą opisu z cenami wariantów.",
      "zrzut": {
       "mini": "ce-indeks/img/m/CE-11--wariant-pasma-z-przelacznikiem.webp",
@@ -1610,7 +1616,7 @@ window.CE_DANE = {
     },
     {
      "slug": "glass-i-zielen",
-     "opis": "warstwa wyglądu nałożona na dowolny układ sceny, klasa c5-fx--glass na korzeniu: tytuł faktu wagi 400, opis 14 px w #777771, odcinki paska postępu czerń .1 z wypełnieniem w zieleni #71C35F (--c5-fx-green), boks ilustracji z promieniem i paddingiem 24 px, tłem rgb(53 46 40 / .43) i szkłem (blur 18 px, krawędź inset), plakietka numeru 16 px, słupki 6 px z etykietami 13–16 px, odstępy przy kresce 11/13 px (CARBOMAT ECO, CARBOHUMIC, CARBOMAT HUMIC).",
+     "opis": "warstwa wyglądu nałożona na dowolny układ sceny, klasa c5-fx--glass na korzeniu: tytuł faktu wagi 400, opis 14 px w #777771, odcinki paska postępu czerń .1 z wypełnieniem w zieleni #71C35F (--c5-fx-green), boks ilustracji z promieniem i paddingiem 24 px, tłem rgb(53 46 40 / .43) i szkłem (blur 18 px, krawędź inset), plakietka numeru 16 px, słupki 6 px z etykietami 13–16 px, odstępy przy kresce 11/13 px (CARBOMAT ECO, CARBOHUMIC, CARBOMAT HUMIC; od 03.11.2026 także CARBOMAT Mata, #czym-jest-scena, wariant bez-naglowka).",
      "skrot": "Warstwa wyglądu: szklane karty faktu i wizualizacji na zielonym tonie.",
      "zrzut": null
     },
@@ -1675,21 +1681,14 @@ window.CE_DANE = {
      "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "czym-jest",
-     "naglowek": "Carbohumic to substancja najbardziej zbliżona do trwałej i stabilnej próchnicy glebowej,…",
+     "naglowek": "Najbliżej trwałej próchnicy glebowej.",
      "wariant": "bez-naglowka"
-    },
-    {
-     "plik": "carbomat-humic.html",
-     "strona": "CARBOMAT HUMIC",
-     "id": "czym-jest",
-     "naglowek": "Przetworzony lignit do formy węgla aktywowanego.",
-     "wariant": "z-naglowkiem"
     },
     {
      "plik": "carbomat-mata.html",
      "strona": "CARBOMAT Mata Uprawowa",
      "id": "czym-jest-scena",
-     "naglowek": "Podłoże, które aktywnie wspiera roślinę – nie tylko utrzymuje jej korzenie.",
+     "naglowek": "Podłoże, które aktywnie wspiera roślinę.",
      "wariant": "bez-naglowka"
     },
     {
@@ -1770,15 +1769,15 @@ window.CE_DANE = {
    },
    "warianty": [
     {
-     "slug": "n-kadrow",
-     "opis": "N kadrów = N terminów, tor liczony z liczby kadrów; kartka z nagłówkiem terminu i rozpiską dawek, nazwy terminów w tabach w jednej linii mniejszym stopniem pisma (klasa c5-use--n-kadrow na korzeniu)",
-     "skrot": "Scena z dowolną liczbą kadrów, tor liczony z liczby kadrów.",
+     "slug": "dwa-kadry",
+     "opis": "dwa długie kadry na produkt i dłuższy tor niż w bazie – 5,5 ekranu na produkt, więcej czasu na każdą kartkę (klasa c5-use--dwa-kadry na korzeniu; CARBOMAT ECO i CARBOMAT ECO Ściółka – od 03.11.2026 łączy się z wariantem lista)",
+     "skrot": "Dwa długie kadry na produkt i dłuższy tor niż w bazie.",
      "zrzut": null
     },
     {
-     "slug": "dwa-kadry",
-     "opis": "dwa długie kadry na produkt i dłuższy tor niż w bazie – 5,5 ekranu na produkt, więcej czasu na każdą kartkę (klasa c5-use--dwa-kadry na korzeniu)",
-     "skrot": "",
+     "slug": "lista",
+     "opis": "nazwy kadrów (terminów albo efektów) przewijają się w jednej liście: poprzedni punkt nad otwartym, następny pod nim, a przy otwartym punkcie kolejno rysują się cztery listki – znak postępu (klasa c5-use--lista na korzeniu, z paskiem produktów albo bez niego); CARBOHUMIC doglebowy (trzy artykuły: filtrowany, niefiltrowany, OGRÓD – z paskiem produktów c5-use__switch), CARBOHUMIC nalistny (#efekty-scena, bez paska) i od 03.11.2026 CARBOMAT ECO (#jak-stosowac-eco i #jak-stosowac-sciolka, klasy c5-use--dwa-kadry c5-use--lista)",
+     "skrot": "Nazwy kadrów przewijają się w jednej liście, a znak z czterech listków rysuje się z przewijaniem.",
      "zrzut": null
     }
    ],
@@ -1788,35 +1787,35 @@ window.CE_DANE = {
      "strona": "CARBOMAT ECO",
      "id": "jak-stosowac-eco",
      "naglowek": "",
-     "wariant": null
+     "wariant": "lista"
     },
     {
      "plik": "carbomat.html",
      "strona": "CARBOMAT ECO",
      "id": "jak-stosowac-sciolka",
      "naglowek": "",
-     "wariant": null
+     "wariant": "lista"
     },
     {
      "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "jak-stosowac-filtrowany",
      "naglowek": "",
-     "wariant": "n-kadrow"
+     "wariant": "lista"
     },
     {
      "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "jak-stosowac-niefiltrowany",
      "naglowek": "",
-     "wariant": "n-kadrow"
+     "wariant": "lista"
     },
     {
      "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "jak-stosowac-ogrod",
      "naglowek": "",
-     "wariant": "n-kadrow"
+     "wariant": "lista"
     },
     {
      "plik": "carbohumic-dolistny.html",
@@ -1831,13 +1830,13 @@ window.CE_DANE = {
     "plik": "v7/carbomat.html",
     "kotwica": "jak-stosowac-eco"
    },
-   "opis": "Jeden article na produkt lub wariant: tor 100svh plus kilka ekranów, scena sticky; packshot z nazwą maleje do przyklejonego pasa z przyciskiem, zdjęcie rośnie od dołu, kartka opisu wjeżdża, taby kadrów przełączają zdjęcie i kartkę; napisy gasną na końcu.",
-   "mechanika": "Wszystko interpolowane z pozycji przewijania (bez przejść w czasie), taby klikalne; poniżej 900 px pas jako blok i kadry jeden pod drugim. Moduł 60; wersja N kadrów liczy tor z liczby kadrów.",
+   "opis": "Jeden article na produkt lub wariant: tor 100svh plus kilka ekranów, scena sticky. Od rundy 02.11.2026 (mapa Figma 3:330) na górze stoi wąski pasek zakładek produktów (c5-use__switch, te same zakładki co wszędzie – EL-19 i EL-18) na białym tle strony, z bieżącym produktem zaznaczonym i przyciskiem sklepu; żadnego żółtego panelu ani kurczącego się packshotu. Pod paskiem kadr zdjęcia (narożniki 12 px) z odstępem 12 px, a na nim opis kadru bez karty; zakładki kadrów przełączają zdjęcie i opis, napisy gasną na końcu.",
+   "mechanika": "Pozycja przewijania jest czytana jako progi (runda 18.10.2026, E11–E12): wejście napisów, po jednej zmianie na kadr, wyjście napisów; każda zmiana to krótkie przejście CSS (transform, opacity) odtwarzane w przód i w tył, a między progami zdjęcie dryfuje z przewijaniem. Zakładki produktów w pasku to zwykłe kotwice do torów produktów (bez JS przeskakują, w scenie bez płynnego przejścia), zakładki kadrów klikalne; poniżej 900 px, bez JS i przy reduced-motion pasek, potem kadry z opisami jeden pod drugim. Moduł 60; liczbę kadrów czyta z DOM. Od 03.11.2026 produkty jednej sekcji tworzą jedną przypiętą planszę: każdy ma własny article i tor (id, kotwica i kropka CE-07 wskazują jego początek), ale tor od drugiego produktu zachodzi na poprzedni o jeden ekran, więc plansza nie odpina się między produktami; przewijanie zmienia zakładkę produktu w przyklejonym pasku i treść okna (poprzednia plansza gaśnie pod bieżącą), a plansza odkleja się dopiero po ostatnim produkcie, po jego zdjęciu bez napisów. Zakładki stoją na środku, bez beżowego tła paska. W wariancie lista cała lista pozycji otwiera się po najechaniu kursorem albo po fokusie na nazwie (dotyk jej nie otwiera), a klik w nazwę przewija do tej pozycji; ikonka czterech listków rysuje się listek po listku z przewijaniem.",
    "czesci": [
-    "packshot z nazwą",
-    "pas z przyciskiem",
+    "pasek zakładek produktów (c5-use__switch)",
+    "przycisk sklepu",
     "zdjęcie kadru",
-    "kartka opisu",
+    "opis kadru",
     "taby kadrów"
    ],
    "kod_zrodlowy": {
@@ -1907,7 +1906,7 @@ window.CE_DANE = {
     "kotwica": "dawka"
    },
    "opis": "Sekcja na wysokość ekranu, 30 px góra i dół: lewa kolumna z kickerem i H2 u góry oraz listą ol z numerami w kółkach i przyciskiem u dołu; prawa kolumna to zdjęcie na całą wysokość.",
-   "mechanika": "Lekki parallax zdjęcia z pozycji przewijania (tylko motionOn); poniżej 900 px zdjęcie nad listą. Moduł 70.",
+   "mechanika": "Lekki parallax zdjęcia z pozycji przewijania (tylko motionOn); poniżej 900 px zdjęcie nad listą. Kroki listy (karty .c5-card, co najmniej dwie) wchodzą po jednym, gdy lista przejeżdża przez okno: droga listy biegnie od jej dolnej krawędzi przy dole okna do górnej przy górze okna, a kroki dzielą ją po równo (runda 02.11.2026, węzeł 3:339) – przy oknie 900 px i trzech krokach to ok. 210–220 px przewijania na krok; wcześniej jeden krok na 4 % wysokości okna, więc wszystkie wchodziły w ciągu stu pikseli. Skok o więcej niż jeden krok odtwarzany jest po kolei, co 160 ms. Moduł 70.",
    "czesci": [
     "kicker + h2",
     "lista ol",
@@ -1983,10 +1982,10 @@ window.CE_DANE = {
    ],
    "wystapienia": [
     {
-     "plik": "carbomat-mata.html",
-     "strona": "CARBOMAT Mata Uprawowa",
-     "id": "sezon-kaskada",
-     "naglowek": "Nasze podłoże zarabia na siebie przez kilka lat.",
+     "plik": "produkty.html",
+     "strona": "Produkty Carbohort",
+     "id": "co-daja-wiersze",
+     "naglowek": "Co dają i kiedy to zobaczysz.",
      "wariant": "kaskada-z-pinem"
     },
     {
@@ -1995,19 +1994,12 @@ window.CE_DANE = {
      "id": "czas-prochnicy-kaskada",
      "naglowek": "Ile trwa powstawanie stabilnej próchnicy",
      "wariant": "kaskada-z-pinem"
-    },
-    {
-     "plik": "produkty.html",
-     "strona": "Produkty Carbohort",
-     "id": "co-daja-wiersze",
-     "naglowek": "Co dają – i kiedy to zobaczysz.",
-     "wariant": "kaskada-z-pinem"
     }
    ],
    "wspolny": null,
    "baza": {
-    "plik": "v7/carbomat-mata.html",
-    "kotwica": "sezon-kaskada"
+    "plik": "v7/produkty.html",
+    "kotwica": "co-daja-wiersze"
    },
    "opis": "Nagłówek (kicker, H2, lead) przyklejony na czas cyklu; blok wierszy wchodzi w biegu z pierwszym wierszem otwartym i przykleja się dolną krawędzią; wiersz = tytuł | kwadratowa scena z packshotem | nazwa, opis, przycisk.",
    "mechanika": "Dalsze przewijanie otwiera kolejne wiersze (kwadrat rozwija się od dołu, potem wjeżdża packshot), po ostatnim całość odjeżdża; bez ruchu akordeon na klik z pierwszym otwartym; bez JS wszystkie otwarte. Moduł 80.",
@@ -2016,8 +2008,8 @@ window.CE_DANE = {
     "wiersze: tytuł, scena, packshot, opis, przycisk"
    ],
    "kod_zrodlowy": {
-    "css": "ce/CE-15-wiersze-packshot.css – wariant kaskada-z-pinem (od 02.10.2026 moduł wspólny: CARBOMAT ECO, CARBOHUMIC, CARBOMAT Mata, Produkty)",
-    "js": "ce/CE-15-wiersze-packshot.js – wariant kaskada-z-pinem (od 02.10.2026 moduł wspólny: CARBOMAT ECO, CARBOHUMIC, CARBOMAT Mata, Produkty)"
+    "css": "ce/CE-15-wiersze-packshot.css – wariant kaskada-z-pinem (od 02.10.2026 moduł wspólny; stan 02.11.2026: wystąpienia na Produktach i CARBOHUMIC doglebowy, na CARBOMAT Mata zastąpiła ją lista CE-30)",
+    "js": "ce/CE-15-wiersze-packshot.js – wariant kaskada-z-pinem (od 02.10.2026 moduł wspólny; stan 02.11.2026: wystąpienia na Produktach i CARBOHUMIC doglebowy)"
    }
   },
   {
@@ -2057,7 +2049,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-16.webp",
     "pelny": "ce-indeks/img/p/CE-16.webp",
     "w": 1280,
-    "h": 799
+    "h": 800
    },
    "warianty": [
     {
@@ -2131,7 +2123,7 @@ window.CE_DANE = {
      "plik": "carbomat.html",
      "strona": "CARBOMAT ECO",
      "id": "uprawy-profesjonalne",
-     "naglowek": "Prowadzisz uprawę profesjonalną – sad, plantację, pole lub szkółkę?",
+     "naglowek": "Prowadzisz uprawę profesjonalną?",
      "wariant": "pozny-wzrost"
     },
     {
@@ -2145,21 +2137,21 @@ window.CE_DANE = {
      "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "uprawy-profesjonalne",
-     "naglowek": "Prowadzisz uprawę profesjonalną – pole, sad, plantację lub szkółkę?",
+     "naglowek": "Prowadzisz uprawę profesjonalną?",
      "wariant": "pozny-wzrost"
     },
     {
      "plik": "carbohumic-dolistny.html",
      "strona": "CARBOHUMIC dolistny",
      "id": "uprawy-profesjonalne",
-     "naglowek": "Prowadzisz uprawę profesjonalną – sad, plantację lub szkółkę?",
+     "naglowek": "Prowadzisz uprawę profesjonalną?",
      "wariant": "pozny-wzrost"
     },
     {
      "plik": "carbomat-humic.html",
      "strona": "CARBOMAT HUMIC",
      "id": "kanal-sprzedazy",
-     "naglowek": "Prowadzisz uprawę polową – zboża, warzywa, strip-till?",
+     "naglowek": "Prowadzisz uprawę polową?",
      "wariant": "pozny-wzrost"
     },
     {
@@ -2167,6 +2159,13 @@ window.CE_DANE = {
      "strona": "CARBOMAT Mata Uprawowa",
      "id": "dla-kogo",
      "naglowek": "Uprawy bezglebowe pod osłonami.",
+     "wariant": "pozny-wzrost"
+    },
+    {
+     "plik": "home.html",
+     "strona": "Strona główna",
+     "id": "dla-profesjonalistow",
+     "naglowek": "Prowadzisz uprawę profesjonalną?",
      "wariant": "pozny-wzrost"
     },
     {
@@ -2187,28 +2186,28 @@ window.CE_DANE = {
      "plik": "pdp-kwasny.html",
      "strona": "Karta produktu – CARBOMAT ECO pH 4,5–5,0",
      "id": "dla-profesjonalistow",
-     "naglowek": "Prowadzisz uprawę profesjonalną – sad, plantację, pole lub szkółkę?",
+     "naglowek": "Prowadzisz uprawę profesjonalną?",
      "wariant": "kadr-z-prawej"
     },
     {
      "plik": "pdp.html",
      "strona": "Karta produktu – CARBOMAT ECO pH 6,0–6,5",
      "id": "dla-profesjonalistow",
-     "naglowek": "Prowadzisz uprawę profesjonalną – sad, plantację, pole lub szkółkę?",
+     "naglowek": "Prowadzisz uprawę profesjonalną?",
      "wariant": "kadr-z-prawej"
     },
     {
      "plik": "produkty.html",
      "strona": "Produkty Carbohort",
      "id": "dla-profesjonalistow",
-     "naglowek": "Prowadzisz gospodarstwo, sad, szkółkę albo zamawiasz większe ilości?",
+     "naglowek": "Zamawiasz większe ilości?",
      "wariant": "pozny-wzrost"
     },
     {
      "plik": "sklep.html",
      "strona": "Lista produktów",
      "id": "dla-profesjonalistow",
-     "naglowek": "Prowadzisz uprawę profesjonalną – sad, plantację, pole lub szkółkę?",
+     "naglowek": "Prowadzisz uprawę profesjonalną?",
      "wariant": "kadr-z-prawej"
     }
    ],
@@ -2267,21 +2266,9 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-17.webp",
     "pelny": "ce-indeks/img/p/CE-17.webp",
     "w": 1280,
-    "h": 800
+    "h": 799
    },
    "warianty": [
-    {
-     "slug": "z-nota",
-     "opis": "modyfikator c5-faq--z-nota: nota o statusie odpowiedzi między nagłówkiem a akordeonem, odstęp wzorca podzielony na dwie części (CARBOHUMIC)",
-     "skrot": "Nota o statusie odpowiedzi nad akordeonem.",
-     "zrzut": null
-    },
-    {
-     "slug": "dla-dociekliwych",
-     "opis": "pytanie nad odpowiedzią, pełna szerokość, h4 i przycisk do Centrum wiedzy (klasa c5-faq--plain; Produkty, dawny CE-42)",
-     "skrot": "Pytanie nad odpowiedzią na pełną szerokość, przycisk do Centrum wiedzy.",
-     "zrzut": null
-    },
     {
      "slug": "plain",
      "opis": "trzy pytania pod artykułem, odpowiedzi ze zdań tekstu (artykul.html#faq)",
@@ -2290,8 +2277,8 @@ window.CE_DANE = {
     },
     {
      "slug": "grupy",
-     "opis": "kilka akordeonów w grupach, nad każdą mały nagłówek wersalikami, pod spodem opcjonalny rząd linków do filmów (korzeń b-faq; Borówka)",
-     "skrot": "",
+     "opis": "kilka akordeonów w grupach, nad każdą mały nagłówek wersalikami, pod spodem opcjonalny rząd linków do filmów (korzeń b-faq w kolumnie split; stoi na Borówce – tam sekcja nie ma znacznika data-ce-wariant – oraz na Produktach i CARBOHUMIC doglebowy, gdzie znacznik jest)",
+     "skrot": "Kilka akordeonów w grupach, nad każdą mały nagłówek wersalikami (Borówka, Produkty, CARBOHUMIC doglebowy).",
      "zrzut": null
     },
     {
@@ -2318,29 +2305,29 @@ window.CE_DANE = {
      "plik": "artykul.html",
      "strona": "Centrum wiedzy – artykuł",
      "id": "faq",
-     "naglowek": "Częste pytania",
+     "naglowek": "Najczęstsze pytania o ten temat",
      "wariant": "plain"
     },
     {
      "plik": "borowka.html",
      "strona": "Borówka",
      "id": "b-faq",
-     "naglowek": "Pytania i odpowiedzi",
+     "naglowek": "Najczęstsze pytania o uprawę borówki",
      "wariant": null
     },
     {
      "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "faq",
-     "naglowek": "Najczęstsze pytania o Carbohumic",
-     "wariant": "z-nota"
+     "naglowek": "Najczęstsze pytania o Carbohumic doglebowy",
+     "wariant": "grupy"
     },
     {
      "plik": "carbohumic-dolistny.html",
      "strona": "CARBOHUMIC dolistny",
      "id": "faq",
      "naglowek": "Najczęstsze pytania o Carbohumic nalistny",
-     "wariant": "z-nota"
+     "wariant": null
     },
     {
      "plik": "carbomat-humic.html",
@@ -2380,16 +2367,9 @@ window.CE_DANE = {
     {
      "plik": "produkty.html",
      "strona": "Produkty Carbohort",
-     "id": "co-daja-dociekliwi",
-     "naglowek": "Dla dociekliwych",
-     "wariant": "dla-dociekliwych"
-    },
-    {
-     "plik": "produkty.html",
-     "strona": "Produkty Carbohort",
      "id": "faq",
-     "naglowek": "Najczęstsze pytania o naszą gamę",
-     "wariant": null
+     "naglowek": "Najczęstsze pytania o produkty",
+     "wariant": "grupy"
     }
    ],
    "wspolny": null,
@@ -2397,14 +2377,14 @@ window.CE_DANE = {
     "plik": "v7/carbomat.html",
     "kotwica": "faq"
    },
-   "opis": "Kicker i H2, pod nimi akordeon pytań: pytanie po lewej, odpowiedź po prawej, wszystkie zwinięte na starcie.",
+   "opis": "Kicker i H2, pod nimi akordeon pytań: pytanie po lewej, odpowiedź po prawej, wszystkie zwinięte na starcie. W układzie split (od 900 px kolumny 451 | 803 px) nagłówek stoi po lewej, akordeon po prawej i zaczyna się na górnej krawędzi H2, a nie kickera (adnotacja 3:129, 02.11.2026) – tam, gdzie kicker leży w lewej kolumnie (Borówka, strona główna), kicker i nagłówek zajmują dwa wiersze siatki (subgrid), a lista startuje w drugim.",
    "mechanika": "Jedno pytanie otwarte naraz (panelSet animuje wysokość), otwarcie z kotwicy; bez JS wszystkie odpowiedzi widoczne. Moduł 90.",
    "czesci": [
     "kicker + h2",
     "pozycje: pytanie + odpowiedź"
    ],
    "kod_zrodlowy": {
-    "css": "ce/CE-17-faq.css (baza i warianty plain, z-nota, dla-dociekliwych, grupy); wariant informacje: pdp.css (c5pd-info, c5pd-acc)",
+    "css": "ce/CE-17-faq.css (baza i warianty plain, grupy; reguły dawnych wariantów z-nota i dla-dociekliwych zostały w pliku, nieużywane); wariant informacje: pdp.css (c5pd-info, c5pd-acc)",
     "js": "ce/CE-17-faq.js; wariant informacje: brak (natywne details)"
    }
   },
@@ -2455,8 +2435,14 @@ window.CE_DANE = {
     },
     {
      "slug": "z-leadem",
-     "opis": "z akapitem pod nagłówkiem (Mata; Próchnica+ „Zadaj pytanie” – przyciski „Zapytaj eksperta” i „Kontakt”)",
-     "skrot": "Nagłówek z akapitem pod nim i dwoma przyciskami.",
+     "opis": "z akapitem pod nagłówkiem (Mata; Próchnica+ „Zadaj pytanie” – przyciski „Zapytaj eksperta” i „Kontakt”); bez wystąpień od 02.11.2026 (Mata przeszła na z-karta-osoby)",
+     "skrot": "Nagłówek z akapitem pod nim i dwoma przyciskami. (bez wystąpień od 02.11.2026)",
+     "zrzut": null
+    },
+    {
+     "slug": "z-karta-osoby",
+     "opis": "sekcja końcowa CARBOMAT Mata (runda 02.11.2026, mapa Figma 3:524, audyt 02.11 pkt 6): dawne CTA i dawna sekcja kontaktu z ekspertem (CE-94) mówiły to samo, więc stały się jedną – wyśrodkowany H2, lead, pod nim pojedyncza karta osoby (CE-54, wariant pojedyncza-karta: zdjęcie 96 px, imię i nazwisko, tytuł, przyciski „Zadzwoń” i „Napisz e-mail”) i na końcu przycisk „Kup teraz”; numer telefonu stoi tylko w linku tel:, wszystkie przyciski kontaktowe strony są kotwicami do tej sekcji (#kontakt-ekspert). Układ karty w osobie: arkusz strony carbomat-mata.css (c5-mt-osoba)",
+     "skrot": "Nagłówek, lead, pojedyncza karta osoby kontaktowej (CE-54) z dwoma przyciskami i przycisk sklepu.",
      "zrzut": null
     }
    ],
@@ -2472,7 +2458,7 @@ window.CE_DANE = {
      "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "dobierz-produkt",
-     "naglowek": "Nie wiesz czego potrzebujesz? Skorzystaj z naszego pomocnika produktowego",
+     "naglowek": "Skorzystaj z pomocnika produktowego.",
      "wariant": "na-pasie"
     },
     {
@@ -2486,7 +2472,7 @@ window.CE_DANE = {
      "plik": "carbohumic-dolistny.html",
      "strona": "CARBOHUMIC dolistny",
      "id": "cta-koncowe",
-     "naglowek": "Nie wiesz, czego potrzebujesz? Skorzystaj z naszego pomocnika produktowego.",
+     "naglowek": "Skorzystaj z pomocnika produktowego.",
      "wariant": null
     },
     {
@@ -2499,9 +2485,9 @@ window.CE_DANE = {
     {
      "plik": "carbomat-mata.html",
      "strona": "CARBOMAT Mata Uprawowa",
-     "id": "cta-koncowe",
+     "id": "kontakt-ekspert",
      "naglowek": "Rozważasz przejście na matę Carbomat?",
-     "wariant": "z-leadem"
+     "wariant": "z-karta-osoby"
     },
     {
      "plik": "home.html",
@@ -2514,7 +2500,7 @@ window.CE_DANE = {
      "plik": "produkty.html",
      "strona": "Produkty Carbohort",
      "id": "cta-koncowe",
-     "naglowek": "Wiesz już, która rodzina. Dobierzmy wariant i dawkę.",
+     "naglowek": "Dobierzmy wariant i dawkę.",
      "wariant": null
     }
    ],
@@ -2538,7 +2524,7 @@ window.CE_DANE = {
   {
    "kod": "CE-19",
    "nazwa": "Model interaktywny",
-   "skrot": "Rysunek SVG w ramce po lewej, panel opisu po prawej i rząd przycisków przełączających części modelu.",
+   "skrot": "Duży kadr 21 : 9 ze zdjęciami, pod nim pięć przełączanych pozycji i opis wybranej części.",
    "status": "aktywny",
    "projekt": null,
    "tagi": {
@@ -2546,7 +2532,7 @@ window.CE_DANE = {
      "dane"
     ],
     "media": [
-     "schemat-wykres"
+     "zdjecie"
     ],
     "tekst": [
      "krotki"
@@ -2589,15 +2575,15 @@ window.CE_DANE = {
     "plik": "v7/carbomat-mata.html",
     "kotwica": "inwestycja-model"
    },
-   "opis": "Scena z rysunkiem SVG w cienkiej ramce po lewej, panel opisu po prawej, pod nimi rząd etykiet-przełączników części modelu.",
-   "mechanika": "Czysty CSS: grupa radio + :checked podświetla warstwę SVG, pokazuje panel opisu i wypełnia etykietę; poniżej 900 px jedna kolumna.",
+   "opis": "Duży kadr 21 : 9 na szerokość kolumny treści, w nim zdjęcie wybranej części modelu (fotorealistyczne wizualizacje zamiast rysunku SVG, runda 02.11.2026, mapa Figma 3:401); pod kadrem rząd pięciu przełączanych pozycji (szyna zakładek EL-19 z zakładkami EL-18), a pod nim opis wybranej części – wielka liczba i akapit w dwóch kolumnach.",
+   "mechanika": "Czysty CSS: grupa pól radio + :checked pokazuje jedno zdjęcie naraz (przenikanie), panel opisu wybranej części i zaznacza zakładkę; pierwsza pozycja jest wybrana na starcie; wszystkie opisy dzielą jedną komórkę siatki, więc blok ma wysokość najdłuższego; poniżej 900 px jedna kolumna.",
    "czesci": [
-    "SVG z warstwami",
-    "panele opisu",
-    "etykiety-przełączniki"
+    "kadr 21 : 9 ze zdjęciami części",
+    "etykiety-przełączniki",
+    "panele opisu"
    ],
    "kod_zrodlowy": {
-    "css": "carbomat-mata.css ===== 35 (c5-mt-model)",
+    "css": "ce/CE-19-model-interaktywny.css (c5-mt-model; moduł wspólny)",
     "js": "brak (czysty CSS)"
    }
   },
@@ -2760,6 +2746,12 @@ window.CE_DANE = {
       "w": 1280,
       "h": 416
      }
+    },
+    {
+     "slug": "uprawy",
+     "opis": "kafle upraw (klasa c5-cards--uprawy; carbomat-mata.html#inwestycja-uprawy, od 03.11.2026): opcjonalny tytuł (c5-cards__lede) i lista kafli, w każdym zdjęcie 4 : 3 (img albo placeholder c5-ph) z nazwą uprawy pod spodem; siatka sama dokłada kolumny (co najmniej 15 rem każda), więc kolejny kafel nie wymaga zmiany reguł; na telefonie dwie kolumny; kafle wchodzą po kolei (data-reveal-stagger)",
+     "skrot": "Kafle upraw: zdjęcie 4 : 3 i nazwa, siatka rośnie z liczbą kafli.",
+     "zrzut": null
     }
    ],
    "wystapienia": [
@@ -2769,6 +2761,13 @@ window.CE_DANE = {
      "id": "inwestycja-karty",
      "naglowek": "Minimum 5 sezonów użytkowania",
      "wariant": "numerowane"
+    },
+    {
+     "plik": "carbomat-mata.html",
+     "strona": "CARBOMAT Mata Uprawowa",
+     "id": "inwestycja-uprawy",
+     "naglowek": "Do jakich upraw",
+     "wariant": "uprawy"
     },
     {
      "plik": "carbomat-mata.html",
@@ -2797,13 +2796,6 @@ window.CE_DANE = {
      "id": "dowod-pomidor-karty",
      "naglowek": "",
      "wariant": "numerowane"
-    },
-    {
-     "plik": "carbomat-mata.html",
-     "strona": "CARBOMAT Mata Uprawowa",
-     "id": "analiza-kafle",
-     "naglowek": "",
-     "wariant": "kafle-danych"
     },
     {
      "plik": "carbomat-mata.html",
@@ -3011,14 +3003,21 @@ window.CE_DANE = {
     "w": 1280,
     "h": 800
    },
-   "warianty": [],
+   "warianty": [
+    {
+     "slug": "taby",
+     "opis": "klasa c5-cmp2--taby i atrybut data-mt-taby na korzeniu: nad kolumnami szyna zakładek (c5-seg--rail, „Zamiast wełny mineralnej” i „Zamiast włókna kokosowego”), aktywna kolumna na pełną szerokość; od 900 px zdjęcie 4:5 po lewej, po prawej tytuł i punkty (podział 5 : 7), niżej jedna kolumna; poniżej 600 px zakładki w pionie, na całą szerokość",
+     "skrot": "Dwie kolumny przewag przełączane zakładkami nad wspólnym nadpisem: naraz widać jedną (zdjęcie 4:5 obok tytułu i punktów).",
+     "zrzut": null
+    }
+   ],
    "wystapienia": [
     {
      "plik": "carbomat-mata.html",
      "strona": "CARBOMAT Mata Uprawowa",
      "id": "co-zastepujesz-kolumny",
      "naglowek": "Mata zamiast wełny mineralnej",
-     "wariant": null
+     "wariant": "taby"
     }
    ],
    "wspolny": null,
@@ -3026,15 +3025,16 @@ window.CE_DANE = {
     "plik": "v7/carbomat-mata.html",
     "kotwica": "co-zastepujesz-kolumny"
    },
-   "opis": "Nadpis nad parą równych kolumn: w każdej zdjęcie, tytuł, cztery punkty i link.",
-   "mechanika": "Statyczne (czysty CSS).",
+   "opis": "Nadpis nad parą równych kolumn: w każdej zdjęcie, tytuł, cztery punkty i link. Wariant taby (runda 02.11.2026) pokazuje naraz jedną kolumnę, a drugą przełącza zakładkami.",
+   "mechanika": "Statyczne (czysty CSS); w wariancie taby przełączanie zakładek skryptem strony (klik, strzałki, Home i End z roving tabindex), bez JS obie kolumny stoją w przepływie.",
    "czesci": [
     "nadpis",
+    "szyna zakładek (wariant taby)",
     "2 kolumny: zdjęcie, tytuł, punkty, link"
    ],
    "kod_zrodlowy": {
-    "css": "carbomat-mata.css ===== 40 (c5-cmp2)",
-    "js": "brak"
+    "css": "ce/CE-21-dwie-kolumny-przewag.css (c5-cmp2); wariant taby: carbomat-mata.css (c5-cmp2--taby, c5-mt-taby)",
+    "js": "wariant taby: carbomat-mata.js (data-mt-taby)"
    }
   },
   {
@@ -3076,7 +3076,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-22.webp",
     "pelny": "ce-indeks/img/p/CE-22.webp",
     "w": 1280,
-    "h": 800
+    "h": 799
    },
    "warianty": [
     {
@@ -3112,6 +3112,17 @@ window.CE_DANE = {
       "pelny": "ce-indeks/img/p/CE-22--wariant-z-akcja.webp",
       "w": 1440,
       "h": 296
+     }
+    },
+    {
+     "slug": "z-przyciskami",
+     "opis": "wygląd z-packshotami (duży kadr zdjęcia z białym panelem: ikona, nazwa, okno-lupa z białym celownikiem, lekki parallax z ce/CE-22-tabela.js) przy dłuższej treści: każda karta wiersza niesie cały akapit (treść w jednym span, więc odnośnik zostaje w zdaniu; marker stoi przy pierwszej linii), panel na zdjęciu nie jest odnośnikiem (span), a w stopce tabeli (tfoot) stoi po jednym przycisku pod każdą kolumną; poniżej 900 px przycisk zamyka swoją kolumnę. Klasa c5pr-cmp--z-przyciskami w ce/CE-22-tabela.css. Wystąpienie: CARBOMAT HUMIC „Kiedy stosować” (#sezon-panele, od 29.10.2026 w miejsce CE-38, polecenie Mateusza: „w takim stylu jak na stronie produkty.html w sekcji »Doglebowo czy nalistnie«”) – kolumny Pole | Ogród i dom, zdjęcia 3 : 4 przycięte pokrętłami --c5pr-cmp-pos-1 i --c5pr-cmp-pos-2, sekcja na tle c5-band, żeby białe karty wierszy były widoczne",
+     "skrot": "Kadr z białym panelem nad każdą kolumną, akapity w kartach wierszy, przycisk pod każdą kolumną.",
+     "zrzut": {
+      "mini": "ce-indeks/img/m/CE-22--wariant-z-przyciskami.webp",
+      "pelny": "ce-indeks/img/p/CE-22--wariant-z-przyciskami.webp",
+      "w": 1440,
+      "h": 799
      }
     }
    ],
@@ -3164,6 +3175,13 @@ window.CE_DANE = {
      "id": "doglebowo-tabela",
      "naglowek": "",
      "wariant": "z-packshotami"
+    },
+    {
+     "plik": "carbomat-humic.html",
+     "strona": "CARBOMAT HUMIC",
+     "id": "sezon-panele",
+     "naglowek": "",
+     "wariant": "z-przyciskami"
     },
     {
      "plik": "carbomat-mata.html",
@@ -3221,7 +3239,7 @@ window.CE_DANE = {
     "kotwica": "doglebowo-tabela"
    },
    "opis": "Samodzielna tabela w kontenerze przewijanym w poziomie na wąskich ekranach (cw-scrollx, tabindex), nagłówki kolumn, opcjonalnie packshoty w nagłówkach i przypis pod tabelą.",
-   "mechanika": "Statyczna; wariant z klikalnymi wierszami otwiera lightbox; wiersze mogą wchodzić z reveal. W panelu pierwsza kolumna przyklejona do lewej w przewijanym kontenerze. W module c5-tbl dwa pokrętła wpisywane w style na korzeniu wystąpienia: --c5-tbl-min (najmniejsza szerokość tabeli w przewijanym kontenerze, domyślnie 640 px) i --c5-tbl-first (stała szerokość przyklejonej pierwszej kolumny poniżej 600 px).",
+   "mechanika": "Statyczna; wariant z klikalnymi wierszami otwiera lightbox; wiersze mogą wchodzić z reveal. W panelu pierwsza kolumna przyklejona do lewej w przewijanym kontenerze. W module c5-tbl dwa pokrętła wpisywane w style na korzeniu wystąpienia: --c5-tbl-min (najmniejsza szerokość tabeli w przewijanym kontenerze, domyślnie 640 px) i --c5-tbl-first (stała szerokość przyklejonej pierwszej kolumny poniżej 600 px). W wariantach z-packshotami i z-przyciskami (c5pr-cmp) dwa pokrętła kadru: --c5pr-cmp-pos-1 i --c5pr-cmp-pos-2 (object-position zdjęcia pierwszego i drugiego kadru, domyślnie 50% 50%; okno-lupa bierze tę samą wartość). Od 03.11.2026 na CARBOHUMIC doglebowy (#doglebowo-tabela, jak na Produktach) duże zdjęcia kadrów mają lekki parallax z ce/CE-22-tabela.js (obrazy w oknach-lupach stoją w miejscu), a wiersze wchodzą po kolei (data-reveal-stagger na tabeli); bez JS, przy ograniczonym ruchu i bez IntersectionObserver wszystko stoi.",
    "czesci": [
     "thead",
     "tbody",
@@ -3231,7 +3249,7 @@ window.CE_DANE = {
    ],
    "kod_zrodlowy": {
     "css": "per strona: c5-mt-cmp/c5-mt-tbl, c5hu-cmp, c5pr-cmp/c5pr-cert; strony upraw: ce/CE-22-tabela.css (wariant klikalne-wiersze – u-mt, klasa korzenia u-mtce) + panel: ce/CE-22-tabela.css (c5-tbl, c5-tbl--danych, c5-tbl--z-akcja)",
-    "js": "kukurydza.js ===== 80 (klikalne wiersze)"
+    "js": "kukurydza.js ===== 80 (klikalne wiersze); z-packshotami i z-przyciskami: ce/CE-22-tabela.js (parallax kadrów)"
    }
   },
   {
@@ -3299,7 +3317,7 @@ window.CE_DANE = {
     },
     {
      "slug": "ciemny",
-     "opis": "pas na najciemniejszym tokenie, jasny tekst, na całą szerokość kontenera zamiast kresek: po lewej (7 kolumn) kicker w ramce o jasnym obrysie, h3 i akapit, po prawej (5 kolumn, wyrównanie do prawej krawędzi) dyskretny motyw z linii – cztery puste pola-kroki połączone kreską, bez podpisów – główny przycisk w wersji jasnej (c5-btn--inv) i pod nim cichy link. Jedyna ciemna płaszczyzna swojej sekcji, więc mówi, gdzie zaczyna się wybieranie. Statyczny; poniżej 900 px jedna kolumna, prawa strona schodzi pod tekst i wyrównuje się do lewej. Obrys kickera i pierścienie fokusu przechodzą na wersje jasne.",
+     "opis": "⚠️ bez wystąpień od 02.11.2026 (strona główna nie ma już tego pasa; kod c5h-cfg zdjęty z home.css, a CE-23 nie ma na niej żadnego wystąpienia). Opis historyczny – pas na najciemniejszym tokenie, jasny tekst, na całą szerokość kontenera zamiast kresek: po lewej (7 kolumn) kicker w ramce o jasnym obrysie, h3 i akapit, po prawej (5 kolumn, wyrównanie do prawej krawędzi) dyskretny motyw z linii – cztery puste pola-kroki połączone kreską, bez podpisów – główny przycisk w wersji jasnej (c5-btn--inv) i pod nim cichy link. Jedyna ciemna płaszczyzna swojej sekcji, więc mówi, gdzie zaczyna się wybieranie. Statyczny; poniżej 900 px jedna kolumna, prawa strona schodzi pod tekst i wyrównuje się do lewej. Obrys kickera i pierścienie fokusu przechodzą na wersje jasne.",
      "skrot": "Czarny pas: kicker, h3, akapit, jasny przycisk i motyw czterech połączonych pól.",
      "zrzut": {
       "mini": "ce-indeks/img/m/CE-23--wariant-ciemny.webp",
@@ -3371,20 +3389,6 @@ window.CE_DANE = {
      "wariant": "dwa-przyciski"
     },
     {
-     "plik": "home.html",
-     "strona": "Strona główna",
-     "id": "prochnica-plus",
-     "naglowek": "",
-     "wariant": "z-foto"
-    },
-    {
-     "plik": "home.html",
-     "strona": "Strona główna",
-     "id": "o-nas",
-     "naglowek": "O nas",
-     "wariant": "z-naglowkiem"
-    },
-    {
      "plik": "sklep.html",
      "strona": "Lista produktów",
      "id": "pasek-hurtowy",
@@ -3408,7 +3412,7 @@ window.CE_DANE = {
     "motyw z linii: cztery puste pola-kroki (opcjonalnie)"
    ],
    "kod_zrodlowy": {
-    "css": "per strona: c5-cmp2__cta, c5-mt-cross, c5-proofs__cta, c5pr-bar, c5-who__note; wariant ciemny: c5h-cfg w home.css ===== 60; wariant cichy: sklep.html <style> (c5sk-hurt)",
+    "css": "per strona: c5-cmp2__cta, c5-mt-cross, c5-proofs__cta, c5pr-bar, c5-who__note; wariant ciemny (bez wystąpień): dawniej c5h-cfg w home.css; wariant cichy: sklep.html <style> (c5sk-hurt)",
     "js": "brak"
    }
   },
@@ -3432,7 +3436,8 @@ window.CE_DANE = {
      "wszystko-widoczne"
     ],
     "pozycje": [
-     "2-4"
+     "2-4",
+     "5-8"
     ],
     "nadaje": [
      "liczby-dane",
@@ -3479,8 +3484,8 @@ window.CE_DANE = {
     },
     {
      "slug": "kafle-2x2",
-     "opis": "ciemny kadr, tytuł z dużym odstępem od górnej krawędzi, pod nim siatka 2 × 2 kafli o ton jaśniejszych od tła: wielka liczba przy górnej krawędzi kafla po prawej, etykieta i nota przy dolnej po lewej; cyfry wjeżdżają kołowrotkiem (Próchnica+ od 19.09.2026 – uwaga Mateusza, inspiracja: ramka Figma 306:2941); od 02.10.2026 także CARBOMAT Mata „Dowód” (uwaga Mateusza z 02.10: sekcja jak na Próchnicy+) na module wspólnym ce/CE-24-pas-liczb.* – panel bez nagłówka, cztery kafle, liczba ze znakiem i przecinkiem w kołowrotku, sufiksy EL-31 obok liczby, pod nią opis i wiersz źródła; rozmiar liczby liczony z szerokości kafla",
-     "skrot": "Ciemny panel, tytuł i siatka 2 × 2 kafli z wielką liczbą, etykietą i źródłem.",
+     "opis": "⚠️ bez wystąpień od 02.11.2026 (CARBOMAT Mata i Próchnica+ przeszły na wiersze-ze-zdjeciem; reguły c5-nums i pp-dark zostały w module). Opis historyczny – ciemny kadr, tytuł z dużym odstępem od górnej krawędzi, pod nim siatka 2 × 2 kafli o ton jaśniejszych od tła: wielka liczba przy górnej krawędzi kafla po prawej, etykieta i nota przy dolnej po lewej; cyfry wjeżdżają kołowrotkiem (Próchnica+ od 19.09.2026 – uwaga Mateusza, inspiracja: ramka Figma 306:2941); od 02.10.2026 także CARBOMAT Mata „Dowód” (uwaga Mateusza z 02.10: sekcja jak na Próchnicy+) na module wspólnym ce/CE-24-pas-liczb.* – panel bez nagłówka, cztery kafle, liczba ze znakiem i przecinkiem w kołowrotku, sufiksy EL-31 obok liczby, pod nią opis i wiersz źródła; rozmiar liczby liczony z szerokości kafla",
+     "skrot": "Ciemny panel, tytuł i siatka 2 × 2 kafli z wielką liczbą, etykietą i źródłem. (bez wystąpień od 02.11.2026)",
      "zrzut": {
       "mini": "ce-indeks/img/m/CE-24--wariant-kafle-2x2.webp",
       "pelny": "ce-indeks/img/p/CE-24--wariant-kafle-2x2.webp",
@@ -3490,11 +3495,22 @@ window.CE_DANE = {
     },
     {
      "slug": "rzad",
-     "opis": "ciemny kadr na szerokość kontenera (nie na wysokość ekranu): mały tytuł u góry po lewej, pod nim pięć kolumn rozdzielonych pionowymi liniami włosowymi, w kolumnie wielka liczba, etykieta i drobne źródło przy dolnej krawędzi kadru. Wersja pasowa CE – sekcja pod nią zaczyna się wysoko na stronie, więc liczby są wstępem do dowodu, a nie osobnym ekranem (strona główna od 20.09.2026). Od 1280 px pięć kolumn, między 900 a 1279 px podział 3 + 2, poniżej 900 px wiersze: liczba po lewej, etykieta po prawej, źródło pod nimi na całej szerokości",
-     "skrot": "Ciemny pas z tytułem i pięcioma kolumnami liczb z etykietą i źródłem.",
+     "opis": "⚠️ bez wystąpień od 02.11.2026 (strona główna przeszła na wiersze-ze-zdjeciem). Opis historyczny – ciemny kadr na szerokość kontenera (nie na wysokość ekranu): mały tytuł u góry po lewej, pod nim pięć kolumn rozdzielonych pionowymi liniami włosowymi, w kolumnie wielka liczba, etykieta i drobne źródło przy dolnej krawędzi kadru. Wersja pasowa CE – sekcja pod nią zaczyna się wysoko na stronie, więc liczby są wstępem do dowodu, a nie osobnym ekranem (strona główna od 20.09.2026). Od 1280 px pięć kolumn, między 900 a 1279 px podział 3 + 2, poniżej 900 px wiersze: liczba po lewej, etykieta po prawej, źródło pod nimi na całej szerokości",
+     "skrot": "Ciemny pas z tytułem i pięcioma kolumnami liczb z etykietą i źródłem. (bez wystąpień od 02.11.2026)",
      "zrzut": {
       "mini": "ce-indeks/img/m/CE-24--wariant-rzad.webp",
       "pelny": "ce-indeks/img/p/CE-24--wariant-rzad.webp",
+      "w": 1280,
+      "h": 799
+     }
+    },
+    {
+     "slug": "wiersze-ze-zdjeciem",
+     "opis": "jasna sekcja wg ramki Figma 859:2603 (etap C, 18.10.2026; Próchnica+, od 02.11.2026 także CARBOMAT Mata #dowod-liczby, strona główna #zaufanie i O nas #w-liczbach): po jednej stronie zdjęcie (651 : 747, narożniki 12 px), po drugiej kolumna na wysokość zdjęcia – kicker i nagłówek u góry, wiersze „liczba | podpis” przy dolnej krawędzi, rozdzielone linią kreskowaną; liczba krojem display-num, sufiks (EL-31) na dolnej linii cyfr, podpis wyrównany do prawej, pod nim opcjonalnie drobna nota ze źródłem; od 3 do 6 wierszy (dziś 4–5); cyfry wjeżdżają kołowrotkiem tam, gdzie strona ładuje skrypt (Próchnica+, CARBOMAT Mata, O nas – własny skrypt strony), na stronie głównej, bez JS i przy reduced-motion stoi zwykły tekst; poniżej 900 px zdjęcie nad wierszami (modyfikator pp-liczby--foto na korzeniu, klasy pp-liczby i pp-liczba w ce/CE-24-pas-liczb.css)",
+     "skrot": "Jasna sekcja: zdjęcie po jednej stronie, po drugiej nagłówek i 3–6 wierszy „liczba | podpis” rozdzielonych linią kreskowaną.",
+     "zrzut": {
+      "mini": "ce-indeks/img/m/CE-24--wariant-wiersze-ze-zdjeciem.webp",
+      "pelny": "ce-indeks/img/p/CE-24--wariant-wiersze-ze-zdjeciem.webp",
       "w": 1280,
       "h": 799
      }
@@ -3505,8 +3521,8 @@ window.CE_DANE = {
      "plik": "carbomat-mata.html",
      "strona": "CARBOMAT Mata Uprawowa",
      "id": "dowod-liczby",
-     "naglowek": "",
-     "wariant": "kafle-2x2"
+     "naglowek": "Sprawdzone w badaniach i w uprawie.",
+     "wariant": "wiersze-ze-zdjeciem"
     },
     {
      "plik": "borowka.html",
@@ -3520,7 +3536,7 @@ window.CE_DANE = {
      "strona": "Strona główna",
      "id": "zaufanie",
      "naglowek": "Dlaczego nam ufają",
-     "wariant": "rzad"
+     "wariant": "wiersze-ze-zdjeciem"
     },
     {
      "plik": "kukurydza.html",
@@ -3534,7 +3550,7 @@ window.CE_DANE = {
      "strona": "O nas",
      "id": "w-liczbach",
      "naglowek": "CarboHort w liczbach",
-     "wariant": "kolowrotek"
+     "wariant": "wiersze-ze-zdjeciem"
     },
     {
      "plik": "prochnica-plus.html",
@@ -3557,7 +3573,7 @@ window.CE_DANE = {
     "źródło"
    ],
    "kod_zrodlowy": {
-    "css": "jeden plik ce/CE-24-pas-liczb.css, sekcje wg klas korzenia: c5-nums (kafle-2x2, moduł wspólny, CARBOMAT Mata), pp-dark/pp-liczby (kafle-2x2, własna implementacja Próchnicy+, do osobnej decyzji o przepięciu), on-dark/on-nums (kolowrotek, O firmie), u-nb (kolumny, Kukurydza), b-nb (kolumny, kopia na Borówce); c5h-nums (strona główna, wariant rzad) zostaje w home.css; sufiksy: ce/00-base.css EL-31",
+    "css": "jeden plik ce/CE-24-pas-liczb.css, sekcje wg klas korzenia: c5-nums (kafle-2x2, moduł wspólny, CARBOMAT Mata), pp-dark/pp-liczby (kafle-2x2, własna implementacja Próchnicy+, do osobnej decyzji o przepięciu), on-dark/on-nums (kolowrotek, O firmie), u-nb (kolumny, Kukurydza), b-nb (kolumny, kopia na Borówce); pp-liczby / pp-liczba / pp-odo (wiersze-ze-zdjeciem: Próchnica+, CARBOMAT Mata, strona główna, O nas – od 02.11.2026 jedyny układ liczb na tych stronach); c5h-nums zdjęty z home.css; sufiksy: ce/00-base.css EL-31",
     "js": "ce/CE-24-pas-liczb.js (kołowrotek cyfr data-c5-odo, CARBOMAT Mata) / uprawa.js data-count / prochnica-plus.js ===== 60 / home.js ===== 40 (kołowrotek pod prefiksem c5h-odo)"
    }
   },
@@ -3697,34 +3713,9 @@ window.CE_DANE = {
    "kod": "CE-26",
    "nazwa": "Stos kart",
    "skrot": "Stos kart kroków: każda z kadrem zdjęcia po lewej oraz dopiskiem, numerem, tytułem i opisem po prawej.",
-   "status": "aktywny",
+   "status": "wycofany",
    "projekt": null,
-   "tagi": {
-    "rodzina": [
-     "sceny"
-    ],
-    "media": [
-     "zdjecie"
-    ],
-    "tekst": [
-     "sredni"
-    ],
-    "ukryte": [
-     "przewijanie"
-    ],
-    "pozycje": [
-     "5-8"
-    ],
-    "nadaje": [
-     "kroki-proces"
-    ],
-    "mechanika": [
-     "przewijanie"
-    ],
-    "zakres": [
-     "uniwersalny"
-    ]
-   },
+   "tagi": {},
    "zrzut": {
     "mini": "ce-indeks/img/m/CE-26.webp",
     "pelny": "ce-indeks/img/p/CE-26.webp",
@@ -3732,28 +3723,13 @@ window.CE_DANE = {
     "h": 800
    },
    "warianty": [],
-   "wystapienia": [
-    {
-     "plik": "carbomat-mata.html",
-     "strona": "CARBOMAT Mata Uprawowa",
-     "id": "przygotowanie-protokol",
-     "naglowek": "01 · Zalanie 01 · Zalanie",
-     "wariant": null
-    },
-    {
-     "plik": "carbohumic-doglebowy.html",
-     "strona": "CARBOHUMIC doglebowy",
-     "id": "z-czym-laczyc-kroki",
-     "naglowek": "",
-     "wariant": null
-    }
-   ],
+   "wystapienia": [],
    "wspolny": null,
    "baza": {
     "plik": "v7/carbomat-mata.html",
     "kotwica": "przygotowanie-protokol"
    },
-   "opis": "Karty kroków jedna pod drugą; każda karta: kadr po lewej, obok dopisek (faza albo „Krok 02”), numer, tytuł i opcjonalny opis. Jeden jasny ton kart, bez przemiennych ciemnych.",
+   "opis": "WYCOFANY 02.11.2026 – bez wystąpień: protokół przygotowania na CARBOMAT Mata i kroki mieszaniny na CARBOHUMIC doglebowy zastąpił CE-70 w wariancie zielen (scena slajdów). Opis historyczny – karty kroków jedna pod drugą; każda karta: kadr po lewej, obok dopisek (faza albo „Krok 02”), numer, tytuł i opcjonalny opis. Jeden jasny ton kart, bez przemiennych ciemnych.",
    "mechanika": "Karty przyklejają się kolejno i nakładają na siebie przy przewijaniu; skrypt daje wszystkim wysokość najwyższej, przykryta karta cofa się i ciemnieje, ostatnia stoi chwilę, potem stos odjeżdża z sekcją. Stan przyklejony tylko przy włączonym ruchu (od 900 px) i tylko gdy karta mieści się między swoim przystankiem a dokiem doradcy; w za niskim oknie, bez JS, przy reduced-motion i poniżej 900 px zwykła lista kart. Fokus w przykrytej karcie wyciąga ją na wierzch.",
    "czesci": [
     "karty: kadr (zdjęcie albo placeholder), dopisek, numer, tytuł, opis"
@@ -3882,7 +3858,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-28.webp",
     "pelny": "ce-indeks/img/p/CE-28.webp",
     "w": 1280,
-    "h": 152
+    "h": 177
    },
    "warianty": [
     {
@@ -3893,7 +3869,7 @@ window.CE_DANE = {
     },
     {
      "slug": "z-rozpiska",
-     "opis": "nazwa i akapit | rozpiska dl (Carbohumic)",
+     "opis": "nazwa i akapit | rozpiska dl (dziś jedyny wariant z wystąpieniami: strony platformy B2B – oferta, opiekun, uzgodnienie, potwierdzenie; wcześniej Carbohumic)",
      "skrot": "Nazwa i akapit po lewej, rozpiska parametrów po prawej",
      "zrzut": null
     },
@@ -3911,13 +3887,6 @@ window.CE_DANE = {
     }
    ],
    "wystapienia": [
-    {
-     "plik": "carbohumic-doglebowy.html",
-     "strona": "CARBOHUMIC doglebowy",
-     "id": "jak-stosowac-zaprawianie",
-     "naglowek": "",
-     "wariant": "z-rozpiska"
-    },
     {
      "plik": "b2b-oferta.html",
      "strona": "Panel – Oferta od opiekuna",
@@ -3956,8 +3925,8 @@ window.CE_DANE = {
    ],
    "wspolny": null,
    "baza": {
-    "plik": "v7/carbohumic-doglebowy.html",
-    "kotwica": "jak-stosowac-zaprawianie"
+    "plik": "v7/b2b-oferta.html",
+    "kotwica": "rozmowa"
    },
    "opis": "Obramowany boks (1 px) z tytułem i akapitem; wnętrze w jednej lub dwóch kolumnach, opcjonalnie rozpiska dl, lista opakowań, przypis i przyciski.",
    "mechanika": "Statyczne; poniżej 900 px jedna kolumna. W module c5-box proporcje dwóch kolumn ustawia pokrętło --c5-box-cols wpisane w style na korzeniu wystąpienia (domyślnie dwie równe kolumny).",
@@ -4045,7 +4014,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-30.webp",
     "pelny": "ce-indeks/img/p/CE-30.webp",
     "w": 1280,
-    "h": 614
+    "h": 800
    },
    "warianty": [
     {
@@ -4075,6 +4044,23 @@ window.CE_DANE = {
       "w": 1280,
       "h": 799
      }
+    },
+    {
+     "slug": "akordeon-z-kadrem",
+     "opis": "akordeon-z-odliczaniem z kadrem ekranu (modyfikator c5-acc30--kadr w ce/CE-30-lista-z-panelem.css/.js; CARBOMAT HUMIC „Czym jest”, #czym-jest-lista, 29.10.2026 – komentarze Mateusza w artefakcie: sekcja nieprzypięta, przewija się normalnie, akordeon wszystkich pozycji, kolejna otwiera się co 5 s, klik wybiera, obok zdjęcie, które się zmienia i powoli przesuwa, 20 px od górnej i dolnej krawędzi okna; zastąpił tam scenę faktów CE-12). Od 900 px korzeń jest siatką lista | kadr na szerokość okna (do 1800 px, 40 px z lewej, 20 px z prawej): kadr przyklejony 20 px pod górą okna, wysokość 100svh − 40 px (najmniej 520 px), zaokrąglenie 20 px; lista wyśrodkowana w pionie obok kadru, wiersze z mniejszym oddechem niż domyślnie, Każda pozycja niesie w panelu .c5-acc30__media: zdjęcie (img.c5-acc30__foto) i opcjonalnie boks ilustracji c5-viz z CE-12 (wygląd bazowy z ce/CE-12-scena-faktow.css, materiał szkła z rozmyciem dopisany w module); bez JS i poniżej 900 px zostaje w panelu (zdjęcie 16 : 10, boks pod nim), od 900 px skrypt przenosi je do pustego .c5-acc30__kadr na końcu korzenia i pokazuje media otwartej pozycji ([data-on]; bez otwartej zostaje ostatnie). Zmiana zdjęcia to przenikanie 0,6 s, pokazane zdjęcie jedzie powoli w górę (skala 1,08, przesuw z 2 % do −2 %) przez czas odliczania plus 1 s; ruch tylko bez reduced-motion. Odliczanie, wstrzymanie pod kursorem i przy fokusie, klik zatrzymujący automat i kotwice pozycji – bez zmian z akordeon-z-odliczaniem. Druga runda (29.10.2026 wieczorem): bez numeracji pozycji, otwarta pozycja bez tła i bez wcięcia (tytuł w linii zamkniętych, linie włosowe zostają), więcej miejsca pod opisem; od 900 px lista stoi na dole wiersza – jej ostatnia linia kończy się 80 px nad dolną krawędzią okna; od 02.11.2026 także CARBOMAT Mata #sezon-lista (sześć etapów cyklu życia podłoża, bez odliczania – data-c5-acc30-auto=„off”, zdjęcie przy otwartej pozycji)",
+     "skrot": "Akordeon z odliczaniem po lewej, po prawej kadr zdjęcia otwartej pozycji na wysokość okna.",
+     "zrzut": {
+      "mini": "ce-indeks/img/m/CE-30--wariant-akordeon-z-kadrem.webp",
+      "pelny": "ce-indeks/img/p/CE-30--wariant-akordeon-z-kadrem.webp",
+      "w": 1440,
+      "h": 799
+     }
+    },
+    {
+     "slug": "akordeon-przewijany",
+     "opis": "akordeon ścieżek wg potrzeby na Produktach (R04, 18.10.2026; modyfikator c5pr-acc--przewijany i atrybut data-acc-scroll na korzeniu): wiersze otwiera przewijanie zamiast odliczania. Głowa sekcji (kicker w kolumnie numerów, nagłówek 54/63 w kolumnie tytułów, wg Figma 777:1419) stoi nad sceną; od 900 px, przy włączonym ruchu i oknie co najmniej 640 px skrypt przypina scenę na jeden ekran, a lista jedzie w niej w górę (transform), tak że otwarty wiersz zawsze stoi pod poprzednim – jeden krótki odcinek przewijania (ok. 32 % wysokości okna) na wiersz, w obie strony; klik w tytuł otwiera wiersz i przewija do jego odcinka. Węziej, niżej i przy reduced-motion to zwykły akordeon otwierany klikiem, bez JS wszystkie wiersze otwarte; paski odliczania nie są rysowane",
+     "skrot": "Akordeon ścieżek, w którym pozycje otwiera przewijanie, a nie odliczanie (Produkty).",
+     "zrzut": null
     }
    ],
    "wystapienia": [
@@ -4082,22 +4068,22 @@ window.CE_DANE = {
      "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "z-czym-laczyc-lista",
-     "naglowek": "",
-     "wariant": null
+     "naglowek": "Nawozy azotowe",
+     "wariant": "akordeon-z-odliczaniem"
+    },
+    {
+     "plik": "carbomat-humic.html",
+     "strona": "CARBOMAT HUMIC",
+     "id": "czym-jest-lista",
+     "naglowek": "Pochodzenie produktu",
+     "wariant": "akordeon-z-kadrem"
     },
     {
      "plik": "carbomat-mata.html",
      "strona": "CARBOMAT Mata Uprawowa",
-     "id": "ekonomia-lista",
-     "naglowek": "",
-     "wariant": "akordeon-z-odliczaniem"
-    },
-    {
-     "plik": "o-firmie.html",
-     "strona": "O nas",
-     "id": "wartosci-lista",
-     "naglowek": "Zmiana paradygmatu dotyczącego użytkowania węgla brunatnego",
-     "wariant": null
+     "id": "sezon-lista",
+     "naglowek": "Rok pierwszy: podłoże wchodzi w rytm uprawy",
+     "wariant": "akordeon-z-kadrem"
     },
     {
      "plik": "produkty.html",
@@ -4113,15 +4099,15 @@ window.CE_DANE = {
     "kotwica": "z-czym-laczyc-lista"
    },
    "opis": "Dwie kolumny: po lewej lista dużych tytułów (z numerami), po prawej przyklejony panel z opisem aktywnej pozycji (opcjonalnie przycisk); na telefonie akordeon.",
-   "mechanika": "Najechanie podgląda, klik wybiera, strzałki nawigują, kotwice trafiają w pozycje; bez JS wszystkie opisy otwarte. Moduły 72 (Carbohumic) i 40 (O nas); moduł 80 Maty zszedł 02.10.2026 razem z przejściem „Ekonomii” na wariant akordeon-z-odliczaniem.",
+   "mechanika": "Najechanie podgląda, klik wybiera, strzałki nawigują, kotwice trafiają w pozycje; bez JS wszystkie opisy otwarte. Moduły 72 (Carbohumic) i 40 (O nas); moduł 80 Maty zszedł 02.10.2026 razem z przejściem „Ekonomii” na wariant akordeon-z-odliczaniem. Opcja na korzeniu (moduł ce/CE-30-lista-z-panelem.js): data-c5-acc30-auto=„off” wyłącza odliczanie na stałe – pozycje zmienia wyłącznie klik, bez automatu i bez paska (CARBOHUMIC doglebowy #z-czym-laczyc-lista, CARBOMAT Mata #sezon-lista); bez atrybutu odliczanie chodzi domyślnie (5 s, pokrętło --c5-acc30-time).",
    "czesci": [
     "lista tytułów",
     "panel opisu",
     "przycisk w panelu (opcjonalnie)"
    ],
    "kod_zrodlowy": {
-    "css": "jeden plik ce/CE-30-lista-z-panelem.css, sekcje wg klas korzenia: c5-acc30 (akordeon-z-odliczaniem, moduł wspólny, CARBOMAT Mata), c5pr-acc i c5pr-pcard (akordeon-z-odliczaniem, własna implementacja Produktów), c5hu-mixlist (CARBOHUMIC), on-val (O firmie); wariant z-kadrem: c5h-crops zostaje w home.css ===== 60",
-    "js": "carbohumic-doglebowy.js ===== 72; wariant akordeon-z-odliczaniem: produkty.js ===== 50 oraz moduł wspólny ce/CE-30-lista-z-panelem.js (od 02.10.2026, CARBOMAT Mata); wariant z-kadrem: home.js ===== 60"
+    "css": "jeden plik ce/CE-30-lista-z-panelem.css, sekcje wg klas korzenia: c5-acc30 (akordeon-z-odliczaniem, moduł wspólny, CARBOMAT Mata), c5-acc30--kadr (akordeon-z-kadrem, CARBOMAT HUMIC), c5pr-acc i c5pr-pcard (akordeon-z-odliczaniem, własna implementacja Produktów), c5hu-mixlist (układ podstawowy, bez wystąpień od 02.11.2026 – CARBOHUMIC doglebowy „Z czym łączyć”, #z-czym-laczyc-lista, stoi dziś na c5-acc30 w wariancie akordeon-z-odliczaniem z opcją data-c5-acc30-auto=„off”), on-val (O firmie); wariant z-kadrem: c5h-crops zostaje w home.css ===== 60",
+    "js": "wariant akordeon-z-odliczaniem: produkty.js ===== 50 oraz moduł wspólny ce/CE-30-lista-z-panelem.js (od 02.10.2026, CARBOMAT Mata; od 29.10.2026 także kadr wariantu akordeon-z-kadrem); wariant z-kadrem: home.js ===== 60"
    }
   },
   {
@@ -4199,34 +4185,6 @@ window.CE_DANE = {
      "wariant": null
     },
     {
-     "plik": "carbohumic-doglebowy.html",
-     "strona": "CARBOHUMIC doglebowy",
-     "id": "jak-stosowac-nota-1",
-     "naglowek": "",
-     "wariant": "miekka"
-    },
-    {
-     "plik": "carbohumic-doglebowy.html",
-     "strona": "CARBOHUMIC doglebowy",
-     "id": "jak-stosowac-nota-2",
-     "naglowek": "",
-     "wariant": null
-    },
-    {
-     "plik": "carbohumic-doglebowy.html",
-     "strona": "CARBOHUMIC doglebowy",
-     "id": "z-czym-laczyc-nota",
-     "naglowek": "",
-     "wariant": "miekka"
-    },
-    {
-     "plik": "carbohumic-doglebowy.html",
-     "strona": "CARBOHUMIC doglebowy",
-     "id": "faq-nota",
-     "naglowek": "",
-     "wariant": "miekka"
-    },
-    {
      "plik": "b2b-oferta.html",
      "strona": "Panel – Oferta od opiekuna",
      "id": "rezygnacja",
@@ -4239,13 +4197,6 @@ window.CE_DANE = {
      "id": "b-etapy-wazne",
      "naglowek": "",
      "wariant": null
-    },
-    {
-     "plik": "carbohumic-dolistny.html",
-     "strona": "CARBOHUMIC dolistny",
-     "id": "faq-nota",
-     "naglowek": "",
-     "wariant": "miekka"
     },
     {
      "plik": "kukurydza.html",
@@ -4369,8 +4320,14 @@ window.CE_DANE = {
     },
     {
      "slug": "cytat",
-     "opis": "blockquote z kreską i cudzysłowami; na Próchnicy+ od 19.09.2026 biały, na zdjęciu w tle sekcji; na stronie głównej (#motto, 20.09.2026) wyśrodkowany, bardzo duży (36–84 px, miara ok. 10 em, łamanie balance), bez kreski, pod nim wezwanie i podpis wersalikami",
+     "opis": "blockquote z kreską i cudzysłowami; na Próchnicy+ od 19.09.2026 biały, na zdjęciu w tle sekcji; na stronie głównej dawny wyśrodkowany motyw (#motto) zastąpił 02.11.2026 wariant slowa",
      "skrot": "Blockquote z kreską i cudzysłowami, biały na zdjęciu lub bardzo duży na jasnym",
+     "zrzut": null
+    },
+    {
+     "slug": "slowa",
+     "opis": "ekran z dwoma zdaniami (strona główna, #idea; adnotacja 3:89, 02.11.2026): sekcja na wysokość okna (min-height 100svh), tekst wyśrodkowany, bardzo duży, w kroju dawnego motta, miara do 17 em, każde zdanie od nowego wiersza (span.c5-quote__zd); wyrazy rozjaśniają się kolejno z przewijaniem (idea z c5-vs--slowa z CE-70, ale bez przypiętej sceny). Modyfikator c5-quote--slowa na sekcji, atrybut data-slowa na akapicie c5-quote__t; bez JS i przy reduced-motion wszystkie wyrazy w pełnym kryciu",
+     "skrot": "Ekran z dwoma dużymi zdaniami, których wyrazy rozjaśniają się kolejno z przewijaniem.",
      "zrzut": null
     }
    ],
@@ -4390,11 +4347,11 @@ window.CE_DANE = {
      "wariant": "cytat"
     },
     {
-     "plik": "carbohumic-doglebowy.html",
-     "strona": "CARBOHUMIC doglebowy",
-     "id": "jak-stosowac-zasada",
+     "plik": "home.html",
+     "strona": "Strona główna",
+     "id": "idea",
      "naglowek": "",
-     "wariant": "pasek-zasady"
+     "wariant": "slowa"
     },
     {
      "plik": "kukurydza.html",
@@ -4417,14 +4374,14 @@ window.CE_DANE = {
     "kotwica": "rzetelnosc-cytat"
    },
    "opis": "Wyróżnione jedno zdanie lub akapit: duży cytat z pionową kreską i cudzysłowami z CSS, ciemny boks z etykietą wersalikami, albo pasek pod grubą kreską z etykietą i zdaniem.",
-   "mechanika": "Statyczne (opcjonalnie reveal). W wersji ze strony głównej JS dzieli cytat na wyrazy i podnosi ich krycie z .25 do 1 kolejno, w miarę jak dolna krawędź cytatu przejeżdża od 85 % do 40 % wysokości okna (jedna zmienna na akapicie, rampa liczona w CSS); tylko przy CX5.motionOn(), bez JS i przy ograniczonym ruchu pełne krycie.",
+   "mechanika": "Statyczne (opcjonalnie reveal). W wariancie slowa (strona główna, #idea) ce/CE-33-cytat-zasada.js dzieli tekst na wyrazy (span.c5-quote__w z numerem --i) i podnosi ich krycie z .16 do 1 kolejno, w miarę jak tekst przejeżdża przez okno: od górnej krawędzi na 78 % wysokości okna (żaden wyraz nie świeci) do środka tekstu na 45 % (wszystkie świecą); jedna pętla zapisuje na akapicie liczbę rozjaśnionych wyrazów (--q-w), a krycie liczy CSS, tylko przy prefers-reduced-motion: no-preference; bez JS i przy ograniczonym ruchu pełne krycie. Nic nie jest przypięte, scena działa na każdej szerokości.",
    "czesci": [
     "etykieta (opcjonalnie)",
     "zdanie lub akapit"
    ],
    "kod_zrodlowy": {
-    "css": "per strona: pp-quote, c5hu-rule; strony upraw: ce/CE-33-cytat-zasada.css (wariant ciemny-boks – u-quote; etykieta w osobnej kolumnie od 1100 px: klasa u-quote--obok)",
-    "js": "brak"
+    "css": "per strona: pp-quote, c5hu-rule; strony upraw: ce/CE-33-cytat-zasada.css (wariant ciemny-boks – u-quote; etykieta w osobnej kolumnie od 1100 px: klasa u-quote--obok); wariant slowa: sekcja ===== wariant: slowa w tym samym pliku",
+    "js": "wariant slowa: ce/CE-33-cytat-zasada.js (rozjaśnianie wyrazów, data-slowa); pozostałe warianty bez skryptu"
    }
   },
   {
@@ -4552,7 +4509,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-35.webp",
     "pelny": "ce-indeks/img/p/CE-35.webp",
     "w": 1280,
-    "h": 361
+    "h": 360
    },
    "warianty": [],
    "wystapienia": [
@@ -4625,14 +4582,19 @@ window.CE_DANE = {
    "warianty": [
     {
      "slug": "odwrocony",
-     "opis": "opis po lewej, zdjęcie po prawej (klasa b-row--rev na Borówce, c5-who--flip na CARBOMAT HUMIC)",
+     "opis": "opis po lewej, zdjęcie po prawej (klasa b-row--rev na Borówce i stronie głównej #o-nas, c5-who--flip na CARBOMAT HUMIC i CARBOHUMIC nalistny)",
      "skrot": "Opis po lewej, zdjęcie po prawej",
-     "zrzut": null
+     "zrzut": {
+      "mini": "ce-indeks/img/m/CE-36--wariant-odwrocony.webp",
+      "pelny": "ce-indeks/img/p/CE-36--wariant-odwrocony.webp",
+      "w": 1280,
+      "h": 799
+     }
     },
     {
      "slug": "z-wartosciami",
-     "opis": "siatka 6 / 6 wyrównana do góry: po lewej kadr 4:5 przyklejony na czas prawej kolumny, po prawej kicker i nagłówek sekcji, akapit intro, wyróżniony akapit z kreską po lewej, trzy wartości jako wiersze rozdzielone liniami (ramka ikony, nazwa, zdanie), karta filmu w ramce (kadr 16:9 z plakatem, kwadratowy przycisk odtwarzania, podpis i zdanie) i rząd domykający: przycisk oraz dwa linki ze strzałką; poniżej 900 px kadr 4:3 nad treścią (strona główna #o-nas)",
-     "skrot": "Przyklejone zdjęcie obok nagłówka, akapitów, trzech wartości z ikonami i karty filmu",
+     "opis": "⚠️ bez wystąpień od 02.11.2026 (strona główna przeszła na wiersze bazy i odwrocony, bez filmu i bez wartości; kod c5h-about, c5h-vals i c5h-film zdjęty z home.css). Opis historyczny – siatka 6 / 6 wyrównana do góry: po lewej kadr 4:5 przyklejony na czas prawej kolumny, po prawej kicker i nagłówek sekcji, akapit intro, wyróżniony akapit z kreską po lewej, trzy wartości jako wiersze rozdzielone liniami (ramka ikony, nazwa, zdanie), karta filmu w ramce (kadr 16:9 z plakatem, kwadratowy przycisk odtwarzania, podpis i zdanie) i rząd domykający: przycisk oraz dwa linki ze strzałką; poniżej 900 px kadr 4:3 nad treścią (strona główna #o-nas)",
+     "skrot": "Przyklejone zdjęcie obok nagłówka, akapitów, trzech wartości z ikonami i karty filmu (bez wystąpień od 02.11.2026)",
      "zrzut": {
       "mini": "ce-indeks/img/m/CE-36--wariant-z-wartosciami.webp",
       "pelny": "ce-indeks/img/p/CE-36--wariant-z-wartosciami.webp",
@@ -4685,6 +4647,20 @@ window.CE_DANE = {
      "wariant": "odwrocony"
     },
     {
+     "plik": "home.html",
+     "strona": "Strona główna",
+     "id": "prochnica-plus",
+     "naglowek": "Sprawdzamy nasze produkty w gospodarstwach",
+     "wariant": null
+    },
+    {
+     "plik": "home.html",
+     "strona": "Strona główna",
+     "id": "o-nas",
+     "naglowek": "Rodzinna firma budująca przyszłość polskiej gleby",
+     "wariant": "odwrocony"
+    },
+    {
      "plik": "o-firmie.html",
      "strona": "O nas",
      "id": "najstarsza-nowosc",
@@ -4710,8 +4686,8 @@ window.CE_DANE = {
     "rząd domykający: przycisk i dwa linki ze strzałką"
    ],
    "kod_zrodlowy": {
-    "css": "carbomat-humic.css (c5-who); o-firmie.css (on-who – port tych klas); strony upraw: ce/CE-36-wiersz-zdjecie-opis.css (b-row, b-brief, b-info – wiersz z boksem infografiki na kadrze; wariant odwrocony: klasa b-row--rev); wariant z-wartosciami: home.css blok 90 (c5h-about, c5h-vals, c5h-film)",
-    "js": "carbomat-humic.js ===== 40; o-firmie.js (parallax kadru); wariant z-wartosciami: home.js blok 90 (nakładka filmu)"
+    "css": "carbomat-humic.css (c5-who); o-firmie.css (on-who – port tych klas); strony upraw: ce/CE-36-wiersz-zdjecie-opis.css (b-row, b-brief, b-info – wiersz z boksem infografiki na kadrze; wariant odwrocony: klasa b-row--rev); strona główna (od 02.11.2026): wiersze bazy i odwrocony z ce/CE-36-wiersz-zdjecie-opis.css (b-rows, b-row) plus c5h-rows w home.css; wariant z-wartosciami (bez wystąpień): dawniej home.css blok 90",
+    "js": "carbomat-humic.js ===== 40; o-firmie.js (parallax kadru); wariant z-wartosciami (bez wystąpień): dawniej home.js blok 90 (nakładka filmu)"
    }
   },
   {
@@ -4961,36 +4937,9 @@ window.CE_DANE = {
    "kod": "CE-38",
    "nazwa": "Dwa panele fotograficzne",
    "skrot": "Dwa równe panele fotograficzne obok siebie: zdjęcie w tle, tytuł, dwa akapity, przycisk przy dole.",
-   "status": "aktywny",
+   "status": "wycofany",
    "projekt": null,
-   "tagi": {
-    "rodzina": [
-     "obraz-tekst"
-    ],
-    "media": [
-     "zdjecie"
-    ],
-    "tekst": [
-     "sredni"
-    ],
-    "ukryte": [
-     "wszystko-widoczne"
-    ],
-    "pozycje": [
-     "2-4"
-    ],
-    "nadaje": [
-     "porownanie-wybor",
-     "opis-produktu"
-    ],
-    "mechanika": [
-     "przewijanie",
-     "statyczny"
-    ],
-    "zakres": [
-     "uniwersalny"
-    ]
-   },
+   "tagi": {},
    "zrzut": {
     "mini": "ce-indeks/img/m/CE-38.webp",
     "pelny": "ce-indeks/img/p/CE-38.webp",
@@ -4998,15 +4947,7 @@ window.CE_DANE = {
     "h": 800
    },
    "warianty": [],
-   "wystapienia": [
-    {
-     "plik": "carbomat-humic.html",
-     "strona": "CARBOMAT HUMIC",
-     "id": "sezon-panele",
-     "naglowek": "Pole",
-     "wariant": null
-    }
-   ],
+   "wystapienia": [],
    "wspolny": null,
    "baza": {
     "plik": "v7/carbomat-humic.html",
@@ -5203,13 +5144,19 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-41.webp",
     "pelny": "ce-indeks/img/p/CE-41.webp",
     "w": 1280,
-    "h": 800
+    "h": 799
    },
    "warianty": [
     {
      "slug": "jeden-pod-drugim",
      "opis": "oba bloki na całą szerokość (--stack)",
      "skrot": "Oba bloki na całą szerokość, jeden pod drugim",
+     "zrzut": null
+    },
+    {
+     "slug": "zmiany-przed-po",
+     "opis": "CARBOMAT Mata #analiza-kafle (runda 02.11.2026): zamiast dwóch bloków w ramkach cztery ciepłe karty-wiersze jeden pod drugim (odstęp 6 px), każda w dwóch kolumnach 5 : 8 – po lewej nazwa parametru (pH, potas K, wapń Ca, przewodność EC) z jednostką i chipem kierunku zmiany („spada”, „rośnie”, „stabilna”), po prawej wykres dwóch słupków (c5-barchart--karty, klasa c5-bar--po): wartość bazowa i wartość po pięciu latach, ze skalą względem większej z nich i liczbami przy słupkach; paski rosną po wejściu w widok; poniżej 700 px kolumny jedna pod drugą (korzeń c5-mt-zmiany, wiersz c5-mt-zmiana, style w carbomat-mata.css)",
+     "skrot": "Cztery wiersze: nazwa parametru ze znacznikiem kierunku zmiany i dwa słupki – wartość bazowa i po pięciu latach.",
      "zrzut": null
     }
    ],
@@ -5227,6 +5174,13 @@ window.CE_DANE = {
      "id": "dowod-bloki",
      "naglowek": "Doświadczenie retencyjne – wilgotność po nasyceniu",
      "wariant": "jeden-pod-drugim"
+    },
+    {
+     "plik": "carbomat-mata.html",
+     "strona": "CARBOMAT Mata Uprawowa",
+     "id": "analiza-kafle",
+     "naglowek": "Odczyn (pH)",
+     "wariant": "zmiany-przed-po"
     }
    ],
    "wspolny": null,
@@ -5346,7 +5300,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-44--wariant-tlo-foto.webp",
       "pelny": "ce-indeks/img/p/CE-44--wariant-tlo-foto.webp",
       "w": 1280,
-      "h": 799
+      "h": 800
      }
     }
    ],
@@ -5998,7 +5952,7 @@ window.CE_DANE = {
      "plik": "centrum-wiedzy.html",
      "strona": "Centrum wiedzy",
      "id": "poradniki",
-     "naglowek": "Konkret w pigułce: ile, jak często, jak aplikować",
+     "naglowek": "Ile, jak często i jak aplikować.",
      "wariant": "dokumenty"
     }
    ],
@@ -6060,7 +6014,14 @@ window.CE_DANE = {
     "w": 1280,
     "h": 694
    },
-   "warianty": [],
+   "warianty": [
+    {
+     "slug": "pojedyncza-karta",
+     "opis": "jedna karta kafla (kt-quick__card), bez nagłówka strony i bez rzędu trzech kafli, wstawiona w sekcję końcową CARBOMAT Mata (CE-18 w wariancie z-karta-osoby, #kontakt-ekspert-karta; runda 02.11.2026): od 900 px w jednym wierszu o szerokości do 880 px, wyrównanym do lewej wewnątrz wyśrodkowanego CTA – zdjęcie 96 px, imię i nazwisko z tytułem, przyciski „Zadzwoń” i „Napisz e-mail” (numer i adres stoją tylko w linkach tel: i mailto:, bez osobnych linii); poniżej 900 px kolumna wyrównana do lewej, przyciski mogą się zawijać",
+     "skrot": "Jedna karta osoby kontaktowej wewnątrz innej sekcji: zdjęcie, nazwisko, tytuł i dwa przyciski.",
+     "zrzut": null
+    }
+   ],
    "wystapienia": [
     {
      "plik": "kontakt.html",
@@ -6068,6 +6029,13 @@ window.CE_DANE = {
      "id": "szybki-kontakt",
      "naglowek": "Potrzebujesz szybkiej konsultacji?",
      "wariant": null
+    },
+    {
+     "plik": "carbomat-mata.html",
+     "strona": "CARBOMAT Mata Uprawowa",
+     "id": "kontakt-ekspert-karta",
+     "naglowek": "Dr inż. Radosław Łaźny",
+     "wariant": "pojedyncza-karta"
     }
    ],
    "wspolny": null,
@@ -6082,7 +6050,7 @@ window.CE_DANE = {
     "3 kafle: zdjęcie, nazwisko, rola, telefon, e-mail"
    ],
    "kod_zrodlowy": {
-    "css": "kontakt.css ===== 10 (kt-quick)",
+    "css": "ce/CE-54-kafle-szybkiego-kontaktu.css (kt-quick; moduł wspólny, linkują go kontakt.html i carbomat-mata.html); wariant pojedyncza-karta: układ osoby w carbomat-mata.css (c5-mt-osoba)",
     "js": "00-base.js (reveal)"
    }
   },
@@ -6226,7 +6194,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-57.webp",
     "pelny": "ce-indeks/img/p/CE-57.webp",
     "w": 1280,
-    "h": 799
+    "h": 800
    },
    "warianty": [
     {
@@ -6307,7 +6275,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-58.webp",
     "pelny": "ce-indeks/img/p/CE-58.webp",
     "w": 1280,
-    "h": 800
+    "h": 799
    },
    "warianty": [],
    "wystapienia": [
@@ -6372,12 +6340,12 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-59.webp",
     "pelny": "ce-indeks/img/p/CE-59.webp",
     "w": 1280,
-    "h": 683
+    "h": 682
    },
    "warianty": [
     {
      "slug": "kompakt",
-     "opis": "wariant zajawkowy (strona główna): boksy kategorii bez zdania opisu, bez listy podgrup i bez liczników – zostaje sama nazwa grupy jako link ze strzałką, która dosuwa się o 4 px przy najechaniu i fokusie, a obrys boksu ciemnieje. Strona główna nie podaje liczb, których nie ma w źródłach, dlatego liczniki artykułów wypadają razem z podgrupami. Pas biegnie w rytmie 7 / 5: po lewej dwa boksy kategorii obok siebie, po prawej dwa wiersze wyjścia – poradniki upraw (ikona pliku, zdanie, cichy link do #poradniki) i przewodnik (ikona rozmowy, zdanie, przycisk z data-jurek-open otwierający dok doradcy). Statyczne, wejście kaskadą revealem strony; poniżej 900 px wszystko w jednej kolumnie.",
+     "opis": "⚠️ bez wystąpień od 02.11.2026 (strona główna nie ma już sekcji wiedzy, kod c5h-kn zdjęty z home.css). Opis historyczny – wariant zajawkowy (strona główna): boksy kategorii bez zdania opisu, bez listy podgrup i bez liczników – zostaje sama nazwa grupy jako link ze strzałką, która dosuwa się o 4 px przy najechaniu i fokusie, a obrys boksu ciemnieje. Strona główna nie podaje liczb, których nie ma w źródłach, dlatego liczniki artykułów wypadają razem z podgrupami. Pas biegnie w rytmie 7 / 5: po lewej dwa boksy kategorii obok siebie, po prawej dwa wiersze wyjścia – poradniki upraw (ikona pliku, zdanie, cichy link do #poradniki) i przewodnik (ikona rozmowy, zdanie, przycisk z data-jurek-open otwierający dok doradcy). Statyczne, wejście kaskadą revealem strony; poniżej 900 px wszystko w jednej kolumnie.",
      "skrot": "Boksy z samą nazwą grupy i strzałką oraz dwa wiersze wyjścia z ikoną",
      "zrzut": {
       "mini": "ce-indeks/img/m/CE-59--wariant-kompakt.webp",
@@ -6392,7 +6360,7 @@ window.CE_DANE = {
      "plik": "centrum-wiedzy.html",
      "strona": "Centrum wiedzy",
      "id": "kategorie",
-     "naglowek": "Dwie półki: zrozumieć glebę i zastosować produkty",
+     "naglowek": "Zrozumieć glebę i zastosować produkty.",
      "wariant": null
     }
    ],
@@ -7186,13 +7154,19 @@ window.CE_DANE = {
    "warianty": [
     {
      "slug": "zielen",
-     "opis": "tło jednolita zieleń green-200 z motywem liści zamiast wideo (Figma 853:2059, 847:855; etap C 18.10.2026); wideo ukryte, bez autoplay",
+     "opis": "tło jednolita zieleń green-200 z motywem liści zamiast wideo (Figma 853:2059, 847:855; etap C 18.10.2026); wideo ukryte, bez autoplay; od 02.11.2026 wariant stoi na pięciu stronach: CARBOHUMIC nalistny (#przewaga), CARBOHUMIC doglebowy (#mieszanina), CARBOMAT Mata (#przygotowanie-protokol), O nas (#wartosci) i Produkty (#wg-potrzeby-cele)",
      "skrot": "",
      "zrzut": null
     },
     {
      "slug": "stos",
-     "opis": "scena „stos z fokusem” wg Figmy 772:1079 i adnotacji usealia (etap E 18.10.2026, Produkty #wg-potrzeby – zastąpiła siatkę 6 kart CE-20 ze-zdjeciem): nagłówek rozcięty na dwie strony, w środku stos kart celów, karta w środku rozwinięta (zdjęcie, opis, linki ścieżek), wygaszacze u góry i u dołu, pod sceną rząd zakładek celów; kotwice mega-menu lądują na właściwej karcie; poniżej 900 px, przy reduced-motion i bez JS karty jedna pod drugą rozwinięte",
+     "opis": "scena „stos z fokusem” wg Figmy 772:1079 i adnotacji usealia (etap E 18.10.2026, Produkty #wg-potrzeby – zastąpiła siatkę 6 kart CE-20 ze-zdjeciem): nagłówek rozcięty na dwie strony, w środku stos kart celów, karta w środku rozwinięta (zdjęcie, opis, linki ścieżek), wygaszacze u góry i u dołu, pod sceną rząd zakładek celów; kotwice mega-menu lądują na właściwej karcie; poniżej 900 px, przy reduced-motion i bez JS karty jedna pod drugą rozwinięte. Od 29.10.2026 bez wystąpień: Produkty #wg-potrzeby-cele przeszły na zolty (polecenie Mateusza – działanie jak Carbohumic dolistny #przewaga); markup stosu w archiwum-wersji/produkty-v7-przed-slajdami-celow-2026-10-29.zip, kod wariantu został w module",
+     "skrot": "",
+     "zrzut": null
+    },
+    {
+     "slug": "zolty",
+     "opis": "⚠️ bez wystąpień od 02.11.2026 (Produkty #wg-potrzeby-cele przeszły na zielen, a CSS i skrypt wariantu zostały w module). Opis historyczny – slajdy na żółtym polu (Produkty #wg-potrzeby-cele, 29.10.2026 w miejsce stos – polecenie Mateusza: działanie jak Carbohumic dolistny #przewaga): ekran nagłówka z kickerem „Wg potrzeby”, h2 i leadem, potem jedna karta naraz na środku sceny i rząd zakładek pod nią; karta jak na dolistnym (zdjęcie w kwadracie c5-vs__viz--foto | numer, tytuł, opis z linkami ścieżek c5-vs__ggo), ten sam rozmiar (--c5-vs-card-w na korzeniu); płaskie żółte pole (Figma 772:1079) z wypełnionym znakiem sygnetu (G12, --c5-sygnet-fill) w kolorze motif.on-yellow za treścią; kotwice mega-menu na kartach bez zmian; statycznie nagłówek na żółtym polu i karty jedna pod drugą. Druga runda komentarzy tego samego wieczoru: karta celu z ikoną zastąpiona kartą dolistnego, kicker i lead wróciły (teksty zdjęte w R03 18.10.2026), sygnet w tle",
      "skrot": "",
      "zrzut": null
     }
@@ -7202,8 +7176,15 @@ window.CE_DANE = {
      "plik": "prochnica-plus.html",
      "strona": "Próchnica+",
      "id": "zalozenia",
-     "naglowek": "Nasz nadrzędny cel: Odbudowa i systematyczne zwiększanie zawartości materii organicznej (…",
+     "naglowek": "Odbudowujemy materię organiczną w glebie.",
      "wariant": null
+    },
+    {
+     "plik": "carbohumic-doglebowy.html",
+     "strona": "CARBOHUMIC doglebowy",
+     "id": "mieszanina",
+     "naglowek": "Prosta zasada przygotowania mieszaniny",
+     "wariant": "zielen"
     },
     {
      "plik": "carbohumic-dolistny.html",
@@ -7213,11 +7194,25 @@ window.CE_DANE = {
      "wariant": "zielen"
     },
     {
+     "plik": "carbomat-mata.html",
+     "strona": "CARBOMAT Mata Uprawowa",
+     "id": "przygotowanie-protokol",
+     "naglowek": "Jak prawidłowo przygotować matę pod uprawę.",
+     "wariant": "zielen"
+    },
+    {
+     "plik": "o-firmie.html",
+     "strona": "O nas",
+     "id": "wartosci",
+     "naglowek": "Robimy to, żeby z polskiego lignitu powstawała zdrowa gleba i zdrowa żywność",
+     "wariant": "zielen"
+    },
+    {
      "plik": "produkty.html",
      "strona": "Produkty Carbohort",
      "id": "wg-potrzeby-cele",
-     "naglowek": "Wybierz, co chcesz zrobić lub problem – My dobierzemy produkt oraz procedurę.",
-     "wariant": "stos"
+     "naglowek": "Powiedz, co chcesz zrobić, a dobierzemy produkt.",
+     "wariant": "zielen"
     }
    ],
    "wspolny": null,
@@ -7226,7 +7221,7 @@ window.CE_DANE = {
     "kotwica": "zalozenia"
    },
    "opis": "Scena przyklejona 100svh w wysokim torze: w tle zapętlone wideo na całą szerokość okna z jednolitym scrimem; pierwszy ekran to kicker i nagłówek sekcji wyśrodkowane na wideo; potem przy lewej krawędzi, w połowie wysokości, spis slajdów (numer w węźle i tytuł, bieżący podświetlony), a na środku jasna karta slajdu: kwadratowy ciemny boks ilustracji po lewej, tytuł i opis po prawej.",
-   "mechanika": "Pozycja przewijania steruje sceną: tor = scena + (N + 1) × 110 svh. Nagłówek stoi na środku, przy przewijaniu wyjeżdża do góry równocześnie z wjazdem karty 01 od dołu; dalej karty wymieniają się tym samym ruchem, ostatnia stoi do odpięcia sceny. Spis slajdów jest ukryty i poza fokusem, dopóki stoi nagłówek; klik w pozycję przewija do slajdu, poniżej 1300 px spis pokazuje same numery. Tylko motionOn; poniżej 900 px, przy reduced-motion i bez JS plakat jest kadrem z nagłówkiem, karty stoją pod nim. Wideo: autoplay, muted, loop, playsinline, poster, pauza poza widokiem.",
+   "mechanika": "Pozycja przewijania steruje sceną: tor = scena + (N + 1) × 110 svh. Nagłówek stoi na środku, przy przewijaniu wyjeżdża do góry równocześnie z wjazdem karty 01 od dołu; dalej karty wymieniają się tym samym ruchem, ostatnia stoi do odpięcia sceny. Spis slajdów jest ukryty i poza fokusem, dopóki stoi nagłówek; klik w pozycję przewija do slajdu, poniżej 1300 px spis pokazuje same numery. Tylko motionOn; poniżej 900 px, przy reduced-motion i bez JS plakat jest kadrem z nagłówkiem, karty stoją pod nim. Wideo: autoplay, muted, loop, playsinline, poster, pauza poza widokiem. Trzy zachowania slajdów włączane klasą na korzeniu (29.10.2026, komentarze Mateusza do Carbohumic dolistny; dolistny #przewaga i Produkty #wg-potrzeby-cele): c5-vs--slowa – na ekranie nagłówka h2 pojawia się słowo po słowie (span.c5-vs__w dzielone skryptem raz, przy starcie; --vs-hw), potem lead wjeżdża od dołu w całości (--vs-hl), na końcu segmentu cały nagłówek odjeżdża lekko w górę (--vs-head-lift, 72 px) i gaśnie (--vs-ho), a od dołu wjeżdża karta 1; c5-vs--dryf – zaparkowana karta nie stoi, tylko powoli jedzie w stronę przewijania z +D do −D px przez swój postój (--vs-drift, 56; --vs-d); c5-vs--listki – znak czterech wypełnionych liści bieżącej zakładki (svg.c5-vs__lf ma fill, bo kit daje .wf-icon fill:none i obrys) rośnie listek po listku z postępem kroku (data-leaves 0–4 na zakładce; svg.c5-vs__lf z czterech grup na kształtach liści ze strony, jak lista CE-13 na dolistnym). Wszystko tylko w scenie (od 900 px, bez reduced-motion); statycznie nic się nie zmienia.",
    "czesci": [
     "nagłówek sekcji na wideo (pierwszy ekran)",
     "tło wideo ze scrimem",
@@ -7566,7 +7561,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-77.webp",
     "pelny": "ce-indeks/img/p/CE-77.webp",
     "w": 1280,
-    "h": 108
+    "h": 126
    },
    "warianty": [
     {
@@ -7597,7 +7592,7 @@ window.CE_DANE = {
      "plik": "sklep.html",
      "strona": "Lista produktów",
      "id": "hero",
-     "naglowek": "Sklep",
+     "naglowek": "Od butelki na balkon po big bag na pole.",
      "wariant": null
     },
     {
@@ -7785,12 +7780,13 @@ window.CE_DANE = {
     "plik": "v7/sklep.html",
     "kotwica": "lista"
    },
-   "opis": "Cała powierzchnia wyboru produktów sklepu w szerokim kontenerze. U góry pas grup: nagłówek „Wybierz uprawę lub potrzebę”, pastylki z okrągłym zdjęciem, etykietą i licznikiem oraz link do konfiguratora po prawej; pod nim przyklejony pasek roboczy – przełącznik kolumny filtrów z liczbą aktywnych, licznik „Pokazujemy N z N produktów”, przycisk szuflady filtrów i sortowanie. Niżej od 1000 px kolumna filtrów 280 px (11 grup: pięć rozwiniętych na wierzchu, sześć pod „Pokaż wszystkie filtry”; przy każdej opcji licznik) obok siatki trzech kolumn kart produktu; nad siatką wiersz aktywnych filtrów z chipami i „Resetuj wszystkie filtry”, podpowiedź „Zawęź dalej”, pas przywracania filtrów i zdanie wykluczające, pod siatką pusty stan i rozwijany pas „Poza wynikami”. Karta: kadr 1 : 1 z makietą opakowania na jasnoszarym tle, znacznik „promocja”, pastylki opakowań, linia meta, nazwa, cena „od …” (przy obniżce cena, przekreślona regularna, „−9%” i najniższa cena z 30 dni) i „dodaj do koszyka” na całą szerokość karty. Od 16.10.2026 nad siatką kart, na jej pełnej szerokości, stoi wyszukiwarka CE-99, a pod nią „Zawęź dalej”, chipy aktywnych filtrów i pasek przywracania.",
+   "opis": "Cała powierzchnia wyboru produktów sklepu w szerokim kontenerze. U góry pas grup: nagłówek „Wybierz uprawę lub potrzebę”, pastylki z okrągłym zdjęciem, etykietą i licznikiem oraz link do konfiguratora po prawej; pod nim przyklejony pasek roboczy – przełącznik kolumny filtrów z liczbą aktywnych, licznik „Pokazujemy N z N produktów”, przycisk szuflady filtrów i sortowanie. Niżej od 1000 px kolumna filtrów 280 px (11 grup: pięć rozwiniętych na wierzchu, sześć pod „Pokaż wszystkie filtry”; przy każdej opcji licznik) obok siatki trzech kolumn kart produktu; nad siatką wiersz aktywnych filtrów z chipami i „Resetuj wszystkie filtry”, podpowiedź „Zawęź dalej”, pas przywracania filtrów i zdanie wykluczające, pod siatką pusty stan i rozwijany pas „Poza wynikami”. Karta: kadr 1 : 1 z makietą opakowania na jasnoszarym tle, znacznik „promocja”, pastylki opakowań, linia meta, nazwa, cena „od …” (przy obniżce cena, przekreślona regularna, „−9%” i najniższa cena z 30 dni) i „dodaj do koszyka” na całą szerokość karty. Od 16.10.2026 nad siatką kart, na jej pełnej szerokości, stoi wyszukiwarka CE-99, a pod nią „Zawęź dalej”, chipy aktywnych filtrów i pasek przywracania. Od 02.11.2026 (Figma 4:334, logika C4) bezpośrednio pod wyszukiwarką stoi rząd kapsułek kategorii (nav.c5sk-caps, #kategorie): „Wszystkie”, Kwasy humusowe, Podłoża, Ściółka, Biostymulatory, Nawozy organiczne, Mikoryza, Efektywne mikroorganizmy, Biologiczna ochrona upraw, Zestawy i Promocje – jeden rząd przewijany w poziomie, bieżąca kapsułka z aria-current. Kategoria odpowiada na pytanie „czym to jest”, więc grupa filtru „kategoria” zeszła z lewej kolumny (zostaje w DOM dla wyszukiwarki i adresu); w makiecie kapsułka to odnośnik ?f=kat:… (na produkcji osobny adres /sklep/<kategoria>), a skrypt zmienia widok bez przeładowania. Kolejność i nazwy kategorii czekają na listę od CarboHortu.",
    "mechanika": "Stan listy = grupa (wybór jednokrotny; pastylka to przycisk przełączający z aria-pressed, ponowny klik zdejmuje wybór) + fasety (wybór wielokrotny) + zakres ceny + filtry z zapytania (CE-99, chipy pod etykietą „Z zapytania”) + sortowanie. Każdy aktywny filtr ma chip z „×”, grupa jest pierwszym chipem. Liczniki przy pastylkach i opcjach liczone na żywo; opcja o wyniku 0 jest wygaszona, nigdy ukryta; produkt zdjęty z listy dostaje zdanie w „Poza wynikami”, reguła twarda – zdanie nad siatką. Sortowanie „Polecane”, „Nazwa A–Z”, „Cena rosnąco” i filtr ceny liczą cenę po obniżce. Stan w adresie (polka, f, q, cena_od, cena_do, sort) – świadome akcje przez pushState, Wstecz i Dalej odtwarzają widok. Od 1000 px przycisk „Ukryj filtry / Pokaż filtry” zwija kolumnę (siatka zostaje trzykolumnowa na całej szerokości), stan pamiętany w sesji, domyślny z data-filters-default; kolumna filtrów przyklejona pod paskiem roboczym. Poniżej 1000 px filtry to szuflada na pełny ekran z przyciskiem „Pokaż produkty”, siatka ma dwie kolumny, a poniżej 900 px pas grup przewija się w poziomie (kółka 56 px, scroll-snap). Karta: pastylki opakowań na kadrze po najechaniu albo przy fokusie (wskaźnik z kursorem, od 600 px), w pozostałych przypadkach stale pod kadrem; pastylka prowadzi do karty produktu z kotwicą opakowania; na kartach rodziny CARBOMAT ECO druga klatka z fakturą przenika się ze zdjęciem opakowania po najechaniu; „dodaj do koszyka” otwiera szybki podgląd (CE-76). W widoku bez zawężenia w siatkę wplecione są kafle promocyjne (CE-79).",
    "czesci": [
     "pas grup: nagłówek, pastylki ze zdjęciem i licznikiem, link do konfiguratora",
     "przyklejony pasek roboczy: przełącznik kolumny filtrów, licznik, szuflada, sortowanie",
     "kolumna filtrów: 11 grup z licznikami opcji, filtr ceny z presetami",
+    "kapsułki kategorii pod wyszukiwarką (nav.c5sk-caps)",
     "wiersz aktywnych filtrów, „Zawęź dalej”, pas przywracania, zdanie wykluczające",
     "siatka kart produktu (22 karty)",
     "karta: kadr z makietą, znacznik, pastylki opakowań, meta, nazwa, cena, przycisk",
@@ -7806,7 +7802,7 @@ window.CE_DANE = {
   {
    "kod": "CE-79",
    "nazwa": "Kafel promocyjny w siatce",
-   "skrot": "Kafel promocyjny w siatce produktów: zdjęcie pod gradientem, kicker, nagłówek i przycisk.",
+   "skrot": "Neutralny kafel w siatce produktów: miejsce jednego produktu z etykietą, nagłówkiem, zdaniem i przyciskiem, bez zdjęcia.",
    "status": "aktywny",
    "projekt": null,
    "tagi": {
@@ -7814,9 +7810,7 @@ window.CE_DANE = {
      "karty"
     ],
     "media": [
-     "zdjecie",
-     "wideo",
-     "packshot"
+     "bez-mediow"
     ],
     "tekst": [
      "krotki"
@@ -7845,46 +7839,18 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-79.webp",
     "pelny": "ce-indeks/img/p/CE-79.webp",
     "w": 1280,
-    "h": 307
+    "h": 460
    },
    "warianty": [
     {
-     "slug": "baner",
-     "opis": "zdjęcie na całą szerokość siatki (po 6. produkcie), gradient od lewej, kicker, nagłówek i jasny przycisk po lewej; wysokość 240–360 px",
-     "skrot": "Zdjęcie na całą szerokość siatki z tekstem i jasnym przyciskiem po lewej.",
-     "zrzut": null
-    },
-    {
-     "slug": "wideo",
-     "opis": "film na 2 × 2 komórki od 1000 px (po 8. produkcie; przez dense wizualnie po 9.), niżej 16 : 9 na całą szerokość, poniżej 600 px 1 : 1; nagłówek, zdanie i przycisk na filmie, kwadratowy przycisk odtwarzania i pauzy w prawym górnym rogu",
-     "skrot": "Film na 2 × 2 komórki z tekstem i przyciskiem odtwarzania i pauzy.",
+     "slug": "neutralny",
+     "opis": "Figma 4:334, runda 02.11.2026 (klasa c5sk-tile--neutral): kafel o rozmiarze jednego miejsca produktu, bez zdjęcia i bez filmu – układ wstawek zostawiamy grafikowi, żeby makieta nie podsuwała rozwiązania. Ciepłe tło, cienki obrys, promień md, treść wyśrodkowana: drobna etykieta (np. „Promocja”, „Aplikacja”), nagłówek 18 px, opcjonalnie jedno zdanie lub linia „najniższa cena z 30 dni” i przycisk. Cztery wystąpienia: po 6. produkcie (uprawy kwasolubne, przycisk włącza półkę borówki), po 12. (promocja CARBOMAT ECO, przycisk otwiera szybki podgląd CE-76 z wybranym opakowaniem), po 15. (aplikacja przez opryskiwacz, półka sprzętu) i po 18. (ściółka)",
+     "skrot": "Kafel o rozmiarze karty produktu, bez zdjęcia i filmu: etykieta, nagłówek, zdanie i przycisk.",
      "zrzut": {
-      "mini": "ce-indeks/img/m/CE-79--wariant-wideo.webp",
-      "pelny": "ce-indeks/img/p/CE-79--wariant-wideo.webp",
+      "mini": "ce-indeks/img/m/CE-79--wariant-neutralny.webp",
+      "pelny": "ce-indeks/img/p/CE-79--wariant-neutralny.webp",
       "w": 1280,
-      "h": 799
-     }
-    },
-    {
-     "slug": "dwie-kolumny",
-     "opis": "zdjęcie na dwie prawe kolumny siatki (po 15. produkcie; wizualnie po 16.), nagłówek, zdanie i jasny przycisk u dołu",
-     "skrot": "Zdjęcie na dwie kolumny siatki, tekst i przycisk u dołu.",
-     "zrzut": {
-      "mini": "ce-indeks/img/m/CE-79--wariant-dwie-kolumny.webp",
-      "pelny": "ce-indeks/img/p/CE-79--wariant-dwie-kolumny.webp",
-      "w": 1280,
-      "h": 460
-     }
-    },
-    {
-     "slug": "w-miejscu-produktu",
-     "opis": "kafel o obrysie i rozmiarze karty produktu: kadr 1 : 1 z makietą opakowania na jasnoszarym tle, znacznikiem „promocja” i dużym „−9%” (kafel promocyjny po 12. produkcie, z najniższą ceną z 30 dni pod nagłówkiem) albo ze zdjęciem cover („Ściółka zamiast kory” po 18. produkcie); pod kadrem wyśrodkowany nagłówek, zdanie i przycisk-link wersalikami",
-     "skrot": "Kafel o rozmiarze karty: kadr 1:1, wyśrodkowany nagłówek, zdanie i przycisk-link.",
-     "zrzut": {
-      "mini": "ce-indeks/img/m/CE-79--wariant-w-miejscu-produktu.webp",
-      "pelny": "ce-indeks/img/p/CE-79--wariant-w-miejscu-produktu.webp",
-      "w": 1280,
-      "h": 486
+      "h": 440
      }
     }
    ],
@@ -7894,35 +7860,28 @@ window.CE_DANE = {
      "strona": "Lista produktów",
      "id": "kafel-borowka",
      "naglowek": "Borówka, różaneczniki, azalie i wrzosy potrzebują niskiego odczynu",
-     "wariant": "baner"
-    },
-    {
-     "plik": "sklep.html",
-     "strona": "Lista produktów",
-     "id": "kafel-film",
-     "naglowek": "Narodziny lignitu",
-     "wariant": "wideo"
+     "wariant": "neutralny"
     },
     {
      "plik": "sklep.html",
      "strona": "Lista produktów",
      "id": "kafel-promocja",
-     "naglowek": "Carbomat Eco pH 6,0–6,5, worek 20 l: 39 zł zamiast 43 zł",
-     "wariant": "w-miejscu-produktu"
+     "naglowek": "CARBOMAT ECO pH 6,0–6,5, worek 20 l: 39 zł zamiast 43 zł",
+     "wariant": "neutralny"
     },
     {
      "plik": "sklep.html",
      "strona": "Lista produktów",
      "id": "kafel-oprysk",
      "naglowek": "Podajesz przez opryskiwacz albo linię kroplującą?",
-     "wariant": "dwie-kolumny"
+     "wariant": "neutralny"
     },
     {
      "plik": "sklep.html",
      "strona": "Lista produktów",
      "id": "kafel-sciolka",
      "naglowek": "Ściółka zamiast kory",
-     "wariant": "w-miejscu-produktu"
+     "wariant": "neutralny"
     }
    ],
    "wspolny": null,
@@ -7930,27 +7889,24 @@ window.CE_DANE = {
     "plik": "v7/sklep.html",
     "kotwica": "kafel-borowka"
    },
-   "opis": "Kafel redakcyjny wpleciony w siatkę listy produktów między karty. Dwie rodziny wyglądu: kafle na zdjęciu albo filmie (ciemne tło, obraz cover pod gradientem przyciemniającym, biały tekst: opcjonalny kicker wersalikami, nagłówek, zdanie i jasny przycisk) oraz kafel w miejscu produktu (obrys i rozmiar karty: kadr 1 : 1, pod nim wyśrodkowany nagłówek większy niż nazwa produktu, jedno zdanie i przycisk-link wersalikami z kreską pod spodem). Żaden kafel nie prowadzi poza sklep.",
-   "mechanika": "Skrypt listy wstawia każdy kafel za N-tym produktem bieżącej kolejności (data-tile-after), więc sortowanie zostawia kafle na miejscach, a grid-auto-flow: dense zamyka komórkę, którą zostawia kafel wielokolumnowy. Kafle widać tylko w widoku bez zawężenia (bez grupy, faset, zakresu ceny i frazy); licznik „Pokazujemy N z N” liczy wyłącznie produkty. Przycisk kafla na zdjęciu włącza grupę (data-tile-shelf) i przewija do początku listy, przycisk kafla promocyjnego otwiera szybki podgląd (CE-76) z wybranym opakowaniem (data-cw-pack). Film gra bez dźwięku w pętli tylko w widoku (IntersectionObserver, 35 % kafla) i nigdy sam przy reduced-motion – wtedy plakat; przycisk odtwarzania i pauzy działa zawsze. Na siatce dwukolumnowej (poniżej 1000 px) baner, film i baner dwukolumnowy zajmują całą szerokość.",
+   "opis": "Kafel redakcyjny wpleciony w siatkę listy produktów między karty. Od rundy 02.11.2026 (Figma 4:334) jeden wygląd: neutralny kafel o rozmiarze karty produktu – ciepłe tło, cienki obrys, wyśrodkowana treść (etykieta, nagłówek, opcjonalnie zdanie, przycisk), bez zdjęcia i filmu, żeby układ wstawek zaprojektował grafik; dawne kafle na zdjęciu i filmie (baner, wideo, dwie kolumny) oraz kafel z kadrem 1 : 1 zdjęto. Żaden kafel nie prowadzi poza sklep.",
+   "mechanika": "Skrypt listy wstawia każdy kafel za N-tym produktem bieżącej kolejności (data-tile-after), więc sortowanie zostawia kafle na miejscach, a grid-auto-flow: dense zamyka komórkę, którą zostawia kafel wielokolumnowy. Kafle widać tylko w widoku bez zawężenia (bez grupy, faset, zakresu ceny i frazy); licznik „Pokazujemy N z N” liczy wyłącznie produkty. Przycisk kafla z półką włącza grupę (data-tile-shelf) i przewija do początku listy, przycisk kafla promocyjnego otwiera szybki podgląd (CE-76) z wybranym opakowaniem (data-cw-pack).",
    "czesci": [
-    "obraz albo film pod gradientem",
-    "kicker (opcjonalnie)",
+    "etykieta",
     "nagłówek",
-    "zdanie",
-    "przycisk",
-    "przycisk odtwarzania i pauzy (film)",
-    "kadr 1 : 1 z makietą albo zdjęciem (kafel w miejscu produktu)",
-    "znacznik „promocja”, „−9%” i najniższa cena z 30 dni (kafel promocyjny)"
+    "zdanie (opcjonalnie)",
+    "najniższa cena z 30 dni (kafel promocyjny)",
+    "przycisk"
    ],
    "kod_zrodlowy": {
-    "css": "sklep.html <style> blok „Promo tiles” (c5sk-tile, c5sk-tile--wide / --video / --slot / --half)",
-    "js": "sklep.html <script> (placeTiles, akcje kafli, film)"
+    "css": "sklep.html <style> (c5sk-tile, c5sk-tile--neutral, c5sk-tile__label, __nh, __stxt, __cta)",
+    "js": "sklep.html <script> (placeTiles, akcje kafli)"
    }
   },
   {
    "kod": "CE-80",
    "nazwa": "Wstęp z linią zaufania",
-   "skrot": "Nagłówek H2, lead i linia trzech krótkich sygnałów zaufania w jednym rzędzie.",
+   "skrot": "Nagłówek H2, lead, trzy krótkie bloki i trzy odnośniki; treść zmienia się z wybraną kategorią.",
    "status": "aktywny",
    "projekt": null,
    "tagi": {
@@ -7984,7 +7940,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-80.webp",
     "pelny": "ce-indeks/img/p/CE-80.webp",
     "w": 1280,
-    "h": 420
+    "h": 500
    },
    "warianty": [],
    "wystapienia": [
@@ -8001,16 +7957,17 @@ window.CE_DANE = {
     "plik": "v7/sklep.html",
     "kotwica": "o-sklepie"
    },
-   "opis": "Krótki blok tekstowy w szerokim kontenerze: nagłówek H2, lead na mierze ok. 70 znaków i pod nim linia zaufania – trzy krótkie sygnały drobnym drukiem w jednym rzędzie, rozdzielone cienkimi pionowymi kreskami.",
-   "mechanika": "Statyczny; na wąskim ekranie sygnały zawijają się do kolejnych wierszy.",
+   "opis": "Krótki blok tekstowy w szerokim kontenerze (sekcja #o-sklepie pod listą produktów): nagłówek H2, lead na mierze ok. 70 znaków, pod nim trzy krótkie bloki (tytuł 18 px i akapit 15 px, od 900 px w trzech kolumnach) i rząd trzech odnośników do kategorii. Linii zaufania z sygnałami już nie ma (runda 02.11.2026). Blok ma dwa zestawy treści: ogólny „O sklepie” (Co tu kupisz, Dostawa, Jak wybrać) i osobny dla wybranej kategorii (dziś Kwasy humusowe, oznaczony jako tekst roboczy).",
+   "mechanika": "Skrypt listy pokazuje zestaw treści zgodny z wybraną kategorią (data-about) – gdy kategoria nie ma własnego, wraca ogólny; na wąskim ekranie bloki stoją jeden pod drugim.",
    "czesci": [
     "nagłówek H2",
     "lead",
-    "linia zaufania: trzy sygnały z kreskami"
+    "trzy bloki: tytuł i akapit (c5sk-about__blocks)",
+    "trzy odnośniki do kategorii (c5sk-about__links)"
    ],
    "kod_zrodlowy": {
-    "css": "c5.css (c5-head, c5-h2, c5-lead, c5-trust) + sklep.html <style> (miara leadu c5sk-about)",
-    "js": "brak"
+    "css": "c5.css (c5-head, c5-h2, c5-lead) + sklep.html <style> (c5sk-about, c5sk-about__blocks, __t, __links, __draft)",
+    "js": "sklep.html <script> (wybór zestawu data-about wg kategorii)"
    }
   },
   {
@@ -8050,7 +8007,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-81.webp",
     "pelny": "ce-indeks/img/p/CE-81.webp",
     "w": 1280,
-    "h": 693
+    "h": 692
    },
    "warianty": [],
    "wystapienia": [
@@ -8546,7 +8503,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-90.webp",
     "pelny": "ce-indeks/img/p/CE-90.webp",
     "w": 1280,
-    "h": 679
+    "h": 678
    },
    "warianty": [],
    "wystapienia": [
@@ -8817,36 +8774,9 @@ window.CE_DANE = {
    "kod": "CE-94",
    "nazwa": "Kontakt z ekspertem",
    "skrot": "Jeden ekspert produktu albo uprawy: portret, nagłówek, zdanie, nazwisko, telefon i e-mail oraz przyciski „Zadzwoń” i „Napisz e-mail”.",
-   "status": "aktywny",
+   "status": "wycofany",
    "projekt": null,
-   "tagi": {
-    "rodzina": [
-     "pasy"
-    ],
-    "media": [
-     "zdjecie"
-    ],
-    "tekst": [
-     "krotki"
-    ],
-    "ukryte": [
-     "wszystko-widoczne"
-    ],
-    "pozycje": [
-     "1"
-    ],
-    "nadaje": [
-     "kontakt-formularz",
-     "ludzie",
-     "cta"
-    ],
-    "mechanika": [
-     "statyczny"
-    ],
-    "zakres": [
-     "uniwersalny"
-    ]
-   },
+   "tagi": {},
    "zrzut": {
     "mini": "ce-indeks/img/m/CE-94.webp",
     "pelny": "ce-indeks/img/p/CE-94.webp",
@@ -8854,15 +8784,7 @@ window.CE_DANE = {
     "h": 600
    },
    "warianty": [],
-   "wystapienia": [
-    {
-     "plik": "carbomat-mata.html",
-     "strona": "CARBOMAT Mata Uprawowa",
-     "id": "kontakt-ekspert",
-     "naglowek": "Masz pytania o Carbomat Mata Uprawowa?",
-     "wariant": null
-    }
-   ],
+   "wystapienia": [],
    "wspolny": null,
    "baza": {
     "plik": "v7/carbomat-mata.html",
@@ -9081,7 +9003,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-97.webp",
     "pelny": "ce-indeks/img/p/CE-97.webp",
     "w": 1280,
-    "h": 799
+    "h": 800
    },
    "warianty": [],
    "wystapienia": [

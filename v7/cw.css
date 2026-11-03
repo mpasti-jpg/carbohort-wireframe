@@ -113,9 +113,9 @@ body { font-synthesis-weight: none; }
   display: flex; align-items: center; justify-content: space-between; gap: var(--w-space-4);
 }
 
-/* Mega „Nasze produkty" (V5, 24.07): nagłówek z CTA → 4 boxy-linki na pełną
-   szerokość → pasek „wg potrzeby" na dole. Cały box jest klikalny, więc nie ma
-   już przycisków „Poznaj rodzinę".
+/* Mega „Nasze produkty" (V5, 24.07; strips rebuilt 02.11.2026): head with the
+   need tags → 4 boxy-linki na pełną szerokość → pasek z przyciskami na dole.
+   Cały box jest klikalny, więc nie ma już przycisków „Poznaj rodzinę".
    09.10.2026: the boxes are taller and carry a packshot. Each box has four
    parts – category, name, packshot, description – and the description sits on
    the bottom edge. The boxes share their four rows through subgrid, so the
@@ -127,7 +127,7 @@ body { font-synthesis-weight: none; }
   padding-bottom: var(--w-space-4); margin-bottom: var(--w-space-5);
   border-bottom: 1px solid var(--w-border-subtle);
 }
-/* Two buttons on the right of the head: the whole range and the shop. */
+/* Two buttons on the bottom strip: the whole range and the shop. */
 .cw-mega__actions { display: flex; flex-wrap: wrap; gap: var(--w-space-2); }
 .cw-mega__actions .wf-btn { gap: var(--w-space-2); }
 .cw-mega__layout {
@@ -214,16 +214,12 @@ body { font-synthesis-weight: none; }
   .cw-prodbox__media { padding-inline: var(--w-space-5); }
   .cw-prodbox__tag { font-size: 0.6875rem; letter-spacing: 0.04em; }
 }
-/* „Wg potrzeby" – pasek na dole panelu, etykieta z lewej, pozycje w rzędzie. */
-.cw-mega__needs {
-  margin-top: var(--w-space-5); padding-top: var(--w-space-4);
-  border-top: 1px solid var(--w-border-subtle);
-  display: flex; align-items: baseline; gap: var(--w-space-6) var(--w-space-8); flex-wrap: wrap;
-}
-.cw-mega__needs > .wf-overline { flex: none; }
+/* Need tags on the head strip, right-aligned (R3, 02.11.2026). */
+.cw-mega__head > .wf-overline { flex: none; }
+.cw-mega__needs { min-width: 0; }
 .cw-mega__needs .cw-mega__list {
-  margin-top: 0; flex-direction: row; flex-wrap: wrap;
-  gap: var(--w-space-3) var(--w-space-6); flex: 1;
+  margin-top: 0; flex-direction: row; flex-wrap: wrap; justify-content: flex-end;
+  gap: var(--w-space-3) var(--w-space-6);
 }
 @media (max-width: 900px) {
   .cw-mega__layout { grid-template-columns: 1fr 1fr; }

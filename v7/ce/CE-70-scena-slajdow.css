@@ -409,3 +409,65 @@
   /* the tab row: always shown (no heading screen in this variant) */
   .cx-js .c5-vs--stos .c5-vs__index{opacity:1;}
 }
+
+
+/* ===== variant: zolty – the yellow stage of Produkty =====
+   29.10.2026 (Mateusz: Produkty #wg-potrzeby-cele works like Carbohumic dolistny #przewaga;
+   second round the same evening: card layout and size, kicker and lead as there, the sign
+   of the logo in the background): the slides with the default card of the module (square
+   photo | number, title, description) on the flat yellow field of Figma 772:1079, the filled
+   four-leaf sign of the logo (G12, `--c5-sygnet-fill` of ce/00-base.css) painted in
+   motif.on-yellow behind the content. Same order rule as zielen: after the scene block, so
+   the stage colour wins at equal specificity. */
+.c5-vs--zolty{margin-bottom:clamp(3rem,6vw,5rem);}
+.c5-vs--zolty .c5-vs__stage{--c5-heading-ink:var(--ch-text-primary);isolation:isolate;
+  background:var(--ch-surface-accent-yellow);color:var(--ch-text-primary);}
+.c5-vs--zolty .c5-vs__stage::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:var(--ch-motif-on-yellow);
+  -webkit-mask:var(--c5-sygnet-fill) 50% 50% / auto min(84%,960px) no-repeat;mask:var(--c5-sygnet-fill) 50% 50% / auto min(84%,960px) no-repeat;}
+.c5-vs--zolty .c5-vs__bg{display:none;}
+.c5-vs--zolty .c5-vs__head{color:var(--ch-text-primary);}
+.c5-vs--zolty .c5-vs__head .c5-kicker{margin-inline:auto;}
+.c5-vs--zolty .c5-vs__head .c5-h2{font-size:clamp(1.75rem,3.75vw,var(--ch-type-h2-size));line-height:var(--ch-type-h2-lh);}
+@media (max-width:899px){
+  .c5-vs--zolty .c5-vs__head .c5-h2{line-height:1.17;}
+}
+:where(.c5-vs--zolty) .c5-vs__head{padding-block:clamp(4rem,10vw,7.5rem) var(--c5-vs-pad);}
+
+/* Shared parts of the slides that two pages now use (moved from carbohumic-dolistny.css,
+   29.10.2026): the photo as the illustration of a card, and the lead under the heading. */
+.c5-vs__viz--foto{padding:0;overflow:hidden;background:var(--ch-color-grey-200);}
+.c5-vs__viz--foto > img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;}
+.c5-vs__head .c5-lead{max-width:40rem;margin-top:var(--ch-space-6);margin-bottom:0;}
+/* on the green and the yellow stage the secondary grey falls under 4.5 : 1 – the ink of the heading at .8 */
+:is(.c5-vs--zielen,.c5-vs--zolty) .c5-vs__head .c5-lead{color:color-mix(in srgb,var(--ch-text-primary) 80%,transparent);}
+
+/* ===== behaviours: slowa, dryf, listki (29.10.2026, comments on Carbohumic dolistny) =====
+   Switched on by classes on the root, written by the module (see CE-70-scena-slajdow.js);
+   scene only – the static layout shows everything at once.
+   · slowa – the words of the h2 (span.c5-vs__w, --i) come one by one with --vs-hw (rise
+     .3 em and fade in), the lead rises 40 px with --vs-hl, the heading fades with --vs-ho
+     while it moves up by --vs-head-lift (72 px);
+   · dryf – the card adds --vs-d (px) to its place on the feed;
+   · listki – the sign of the current tab is svg.c5-vs__lf (four groups); its leaves come
+     one by one with data-leaves on the tab (as the CE-13 list on Carbohumic dolistny). */
+.c5-vs__defs{position:absolute;width:0;height:0;overflow:hidden;}
+/* the leaves are filled shapes: the kit gives every .wf-icon fill:none and a stroke */
+.c5-vs__idx .c5-vs__lf{fill:currentColor;stroke:none;}
+@media (min-width:900px) and (prefers-reduced-motion: no-preference){
+  .cx-js .c5-vs--slowa .c5-vs__head{opacity:var(--vs-ho,1);}
+  .cx-js .c5-vs--slowa .c5-vs__w{display:inline-block;
+    opacity:clamp(0,calc(var(--vs-hw,99) - var(--i,0)),1);
+    transform:translate3d(0,calc((1 - clamp(0,calc(var(--vs-hw,99) - var(--i,0)),1)) * .3em),0);}
+  .cx-js .c5-vs--slowa .c5-vs__head .c5-lead{opacity:var(--vs-hl,1);transform:translate3d(0,calc((1 - var(--vs-hl,1)) * 40px),0);}
+
+  .cx-js .c5-vs--dryf .c5-vs__card{
+    transform:translate3d(-50%,-50%,0) translate3d(0,calc(var(--vs-t,1) * var(--vs-travel,100svh) + var(--vs-d,0px)),0) scale(var(--vs-s,1));}
+
+  .cx-js .c5-vs--listki .c5-vs__lf use{opacity:0;transform:scale(.4);transform-box:fill-box;transform-origin:50% 50%;
+    transition:opacity 280ms var(--ch-motion-ease),transform 280ms var(--ch-motion-ease);}
+  .cx-js .c5-vs--listki .c5-vs__idx[data-leaves="1"] .c5-vs__lf > g:nth-child(-n+1) > use,
+  .cx-js .c5-vs--listki .c5-vs__idx[data-leaves="2"] .c5-vs__lf > g:nth-child(-n+2) > use,
+  .cx-js .c5-vs--listki .c5-vs__idx[data-leaves="3"] .c5-vs__lf > g:nth-child(-n+3) > use,
+  .cx-js .c5-vs--listki .c5-vs__idx[data-leaves="4"] .c5-vs__lf > g > use{opacity:1;transform:none;}
+}

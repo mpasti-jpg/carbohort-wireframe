@@ -10,11 +10,14 @@
 
    2. E13 (18.10.2026): the steps of the list (.c5-dose__list > .c5-card, at
       least two) come in one by one while the list rises through the window.
-      The count only grows: 1 when the bottom of the list (where the visible
-      group stands) reaches the bottom edge of the window, then one more every
-      4 % of the window height of scroll. A count that jumps by more than one
-      (a long flick of the wheel) is played step by step, 160 ms apart, so the
-      cards never arrive together. The script writes
+      The count only grows. The way of the list runs from its bottom edge (where
+      the visible group stands) at the bottom of the window to its top edge at
+      the top of the window, and the steps share it equally (02.11.2026, node
+      3:339; it was one step every 4 % of the window height, so all of them
+      passed within a hundred pixels): N steps come at 0, 1/N, … (N-1)/N of that
+      way. A count that jumps by more than one (a long flick of the wheel) is
+      played step by step, 160 ms apart, so the cards never arrive together.
+      The script writes
       two lengths on the list – --dose-shift (how far the visible cards stand
       below their place, so the group sits at the bottom of the list) and
       --dose-next (the same for the card that comes next) – and the classes
@@ -45,7 +48,7 @@
   }
 
   /* --- 2. steps --------------------------------------------------------------- */
-  var P0 = 0, STEP = 0.04;       /* in units of the window height */
+  var MIN_WAY = 0.3;             /* shortest way, in window heights: a list taller than a low window */
   var GAP_MS = 160;              /* between two steps of one jump */
   var shown = 0;                 /* how many steps are in – never goes down */
   var target = 0;                /* how many steps the scroll position asks for */
@@ -87,8 +90,9 @@
     var first = !list.classList.contains("is-steps");
     if (first) { measure(); list.classList.add("is-steps"); }
     var h = window.innerHeight;
-    var p = (h - list.getBoundingClientRect().bottom) / h;
-    var n = p < P0 ? 0 : Math.min(cards.length, 1 + Math.floor((p - P0) / STEP));
+    var way = Math.max(MIN_WAY * h, h - list.offsetHeight);
+    var p = (h - list.getBoundingClientRect().bottom) / way;
+    var n = p < 0 ? 0 : Math.min(cards.length, 1 + Math.floor(p * cards.length));
     if (first) paintSteps();
     if (n > target) { target = n; advance(); }
   }

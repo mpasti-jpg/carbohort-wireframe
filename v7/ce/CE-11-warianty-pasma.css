@@ -12,13 +12,12 @@
             product of its own, or in a row of its own at the end of the card
             when the band is one product.
 
-   design system v0.1, round of 18.10.2026 (E07–E09): colours are tokens. A
-   band is a light tone inside the beige scale (beige-100, the next band
-   beige-200); a product changes the tone of its band by ONE property written in
-   the `style` of its `[data-kdm-track]` (`--c5-kdm-band`), and the outline of
-   the sign follows with `--c5-kdm-syg`. `.c5-kdm--biale` on the root is the
-   white version of 925:1438 (first band white, the next ones beige-100). The
-   switch is the Figma tab rail 397:2187: a warm rail #E9E6DF, the active tab
+   design system v0.1, round of 18.10.2026 (E07–E09): colours are tokens. Round
+   of comments 02.11.2026 (3:311, 3:567): ONE background for the whole CE, the
+   tone does not change between products – beige-100, or white with `.c5-kdm--biale`
+   on the root (Figma 925:1438). A single product can still take a tone of its own
+   through `--c5-kdm-band` / `--c5-kdm-syg` in the `style` of its `[data-kdm-track]`;
+   no page does. The switch is the Figma tab rail 397:2187: a warm rail #E9E6DF, the active tab
    white, every tab as wide as the widest one; the active tab is a layer of its
    own that cross-fades (opacity only).
 
@@ -37,16 +36,15 @@
         follow one another in normal flow. When the top of the next card passes
         the middle of the window, that product becomes current: the packshot
         fades out and only then the next one fades in at the same place (never
-        two, never a scrolled one), the background of the CE changes its tone,
-        the switch marks the product. Fast, timed transitions started by the
+        two, never a scrolled one), the switch marks the product. Fast, timed
+        transitions started by the
         threshold – not driven by the wheel.
    ========================================================================== */
 
 .c5-kdm{
   --c5-kdm-ink:var(--ch-text-primary);       /* headings, labels, switch */
   --c5-kdm-body:var(--ch-text-secondary);    /* running copy of the card */
-  --c5-kdm-band:var(--ch-color-beige-100);   /* band behind the first product */
-  --c5-kdm-band-alt:var(--ch-color-beige-200);/* band behind every other product */
+  --c5-kdm-band:var(--ch-color-beige-100);   /* background behind every product */
   --c5-kdm-syg:var(--ch-motif-line-on-warm); /* outline of the sign on a beige band */
   --c5-kdm-card:var(--ch-surface-raised);    /* the card */
   --c5-kdm-pill:var(--ch-surface-warm);      /* function pills, notes */
@@ -71,10 +69,6 @@
 
 /* --- Band -------------------------------------------------------------------- */
 .c5-kdm__track{scroll-margin-top:0;}
-/* the tone of a band is the custom property of its track: the stylesheet sets it
-   by position (odd / even), a `style="--c5-kdm-band:…"` on the track sets it per
-   product and wins */
-.c5-kdm__track:nth-of-type(even){--c5-kdm-band:var(--c5-kdm-band-alt);}
 /* clip: the outline of the sign is larger than the column (no side scroll on a
    phone); `clip` is no scroll container, so the sticky column still sticks */
 .c5-kdm__band{background:var(--c5-kdm-band);overflow:clip;}
@@ -341,13 +335,10 @@
 }
 
 /* ===== modyfikator: biale (`c5-kdm--biale`) ====================================
-   The white version of Figma 925:1438 (CARBOMAT ECO, E07): the first product on
-   white – the band melts into the white section, the card is told apart by its
-   content – and every next product on beige-100, so the change of product shows
-   in the tone (E09). The outline of the sign takes the tone of the band. */
-.c5-kdm--biale{--c5-kdm-band:var(--ch-surface-raised);--c5-kdm-syg:var(--ch-motif-line-on-white);
-  --c5-kdm-band-alt:var(--ch-color-beige-100);}
-.c5-kdm--biale .c5-kdm__track:not(:first-of-type){--c5-kdm-band:var(--c5-kdm-band-alt);--c5-kdm-syg:var(--ch-motif-line-on-warm);}
+   The white version of Figma 925:1438 (CARBOMAT ECO, E07): every product on white –
+   the bands melt into the white section, a card is told apart by its content. The
+   outline of the sign takes the tone of the background. */
+.c5-kdm--biale{--c5-kdm-band:var(--ch-surface-raised);--c5-kdm-syg:var(--ch-motif-line-on-white);}
 
 /* ===== wariant: glowa-frame ===== */
 /* Section head after the Figma frames 925:1438 / 382:1189: the kicker is the base

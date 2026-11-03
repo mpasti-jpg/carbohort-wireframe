@@ -5,14 +5,16 @@
      · default: the panel with the table in two ruled columns (rows with a
        hairline underneath, no tiles), a kicker and the heading to the left, a
        green „analysis" button and an outlined button under the table;
-     · `c5-params--col` on the section: the panel stands as a narrower column of
-       --c5-params-w (732 px) and the table is one column;
+     · `c5-params--col` on the section: the same panel, the table in one column;
      · `c5-params--long` on the section: a long table. Values wrap and start on
-       one line down the table; from 1240 px the rows run in two columns
+       one line down the table; from 1100 px the rows run in two columns
        (`c5-params__row--wide` spans both); on a phone a short row keeps label
        and value on one line;
+     · `c5-params--porownanie` on the section: a comparison <table> of products;
      · `c5-params--tabs` on the section: the same panel with two parameter sets
        on tabs above the table – the last section of this file.
+   Round of comments 02.11.2026 (3:556, 3:711): ONE panel width on every page,
+   992 px (880 px of text), and a kicker over the heading everywhere.
    design system v0.1 (Figma 397:1730, 17.10.2026): the light panel (the green
    one, 382:2755, was rejected by the owner). Panel = the `.c5-params__body`
    element itself, so no page needs a wrapper: beige-50 at .97 with a 10 px
@@ -30,7 +32,7 @@
      --c5-params-scrim       strength of the wash over the media, default .2
      --c5-params-clear       bottom clearance for the advisor dock, default 58px
      --c5-params-title-wrap  text-wrap of the heading, default wrap
-     --c5-params-panel-w     width of the panel, default 1169px
+     --c5-params-panel-w     width of the panel, default 992px
    The media layer is whatever carries `.c5-params__media` – a <video>, an <img>
    or a placeholder block (`c5-ph`).
    Scripts: CE-10-parametry-kafelki-z-wejsciem.js (video + scroll-driven entry)
@@ -51,7 +53,7 @@
    less 24 px above and below (--c5-params-frame-y); the panel keeps at least
    120 px of air to the frame (--c5-params-air) and stands in its middle; the
    row rule is the warm #C7BDB2 of the frame 397:1742 (no token carries it). */
-.c5-params{--c5-params-scrim:.2;--c5-params-panel-bg:rgb(246 244 240 / .97);--c5-params-rule:#C7BDB2;--c5-params-panel-w:1169px;
+.c5-params{--c5-params-scrim:.2;--c5-params-panel-bg:rgb(246 244 240 / .97);--c5-params-rule:#C7BDB2;--c5-params-panel-w:992px;
   --c5-params-frame-y:var(--ch-space-6);--c5-params-air:var(--ch-space-30);}
 .c5-params > *{grid-area:1 / 1;}
 /* The media frame (E03): sticky 24 px under the top edge of the window and
@@ -183,21 +185,15 @@
 }
 
 /* ===== wariant: col ===== */
-/* --- shared module: the narrower panel (`c5-params--col`, `c5-params--long`) ----
-   The panel takes a column of its own width: the content width (--c5-params-w,
-   732 px) plus the 56 px padding on both sides – one known track, so a page with
-   other copy gets a panel of the same width. The table is one column. */
-.c5-params--col,.c5-params--long{--c5-params-w:732px;--c5-params-dt:220px;}
-.c5-params--col,.c5-params--long{--c5-params-panel-w:calc(var(--c5-params-w) + 2 * var(--ch-space-14));}
+/* --- shared module: one-column and long tables -------------------------------
+   Both stand in the common panel (--c5-params-panel-w); neither sets a width of
+   its own any more (3:711, 02.11.2026). */
 /* a link inside a row */
 .c5-params--col .c5-params__row a,
 .c5-params--long .c5-params__row a{color:inherit;text-decoration:underline;text-underline-offset:3px;}
-/* a row that has to stand out (a counterpoint, a restriction): the warm ground
-   with a ruled frame, not a shadow */
-.c5-params__row--mark{padding-inline:var(--ch-space-4);border:1px solid var(--ch-border-strong);border-radius:var(--ch-radius-md);background:var(--ch-surface-warm-strong);}
-/* scope pill in the head of the section (optional): outline and text take
-   currentColor – the ink of the panel; sentence case on purpose */
-.c5hu-scope{display:block;width:max-content;max-width:100%;margin:var(--w-space-5) 0 0;border:1px solid currentColor;padding:6px 14px;font-size:0.75rem;letter-spacing:.02em;text-align:left;}
+/* scope note under the heading (optional): small print, no frame (3:556);
+   sentence case on purpose – uppercase would turn the „µ" of µm into a capital Mu */
+.c5hu-scope{margin:var(--ch-space-3) 0 0;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-secondary-on-warm);text-align:left;}
 
 /* ===== wariant: long ===== */
 /* --- shared module: a long table (`c5-params--long`) -------------------------
@@ -206,16 +202,15 @@
    · the label box keeps a fixed width (--c5-params-dt), the value takes the
      rest and reads as running text – so a link, a bold phrase or a note in
      `.c5-dim` flows inside the sentence instead of becoming a flex item;
-   · from 1240 px the rows stand in two grid columns in the wide panel; a row
-     marked `c5-params__row--wide` (prose, or a value that would break in half
-     a column) spans both. Reading order stays the DOM order: left to right,
-     then down. */
+   · from 1100 px (the same step as the default table) the rows stand in two
+     grid columns; a row marked `c5-params__row--wide` (prose, or a value that
+     would break in half a column) spans both. Reading order stays the DOM order:
+     left to right, then down. */
 .c5-params--long{--c5-params-dt:200px;}
 .c5-params--long .c5-params__row{align-items:flex-start;}
 .c5-params--long .c5-params__row dt{flex:0 0 var(--c5-params-dt);}
 .c5-params--long .c5-params__row dd{flex:1 1 0;min-width:0;display:block;white-space:normal;}
-@media (min-width:1240px){
-  .c5-params--long{--c5-params-w:1140px;}
+@media (min-width:1100px){
   .c5-params--long .c5-params__rows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:57px;}
   .c5-params--long .c5-params__row--wide{grid-column:1 / -1;}
 }
@@ -231,6 +226,46 @@
     justify-content:space-between;gap:2px var(--ch-space-4);}
   .c5-params--long .c5-params__row dt,
   .c5-params--long .c5-params__row dd{flex:0 1 auto;width:auto;max-width:100%;}
+}
+
+/* ===== wariant: porownanie ===== */
+/* CARBOHUMIC nalistny (D03, D04, 18.10.2026; moved from the page sheet 02.11.2026):
+   one comparison table instead of two sets on tabs – the row name and one column
+   per product. It is a real <table>: a head row with the product names, a row
+   header per parameter. Rules and type follow the rows of the default panel
+   (lead 18/28, the warm rule, .c5-dim smaller and at .6). Below 600 px the head row
+   leaves the screen (it stays for screen readers) and each value carries the short
+   product name above it, two values side by side.
+   3:711 (02.11.2026): the 24 px between the columns doubled to 48 px
+   (--c5-params-cmp-gap); the row-name column keeps 180 px of text on top of it. */
+.c5-params--porownanie{--c5-params-cmp-gap:calc(2 * var(--ch-space-6));--c5-params-dt:calc(180px + var(--c5-params-cmp-gap));}
+.c5-params__cmp{flex:0 0 100%;width:100%;min-width:0;margin:0;border-collapse:collapse;table-layout:fixed;}
+.c5-params__cmp th,
+.c5-params__cmp td{padding:var(--ch-space-4) var(--c5-params-cmp-gap) var(--ch-space-4) 0;border-bottom:1px solid var(--c5-params-rule);
+  text-align:left;vertical-align:top;font-family:var(--ch-type-lead-font);font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);
+  font-weight:var(--ch-type-lead-weight);color:var(--ch-text-primary);}
+.c5-params__cmp tr > :last-child{padding-right:0;}
+.c5-params__cmp tbody th{width:var(--c5-params-dt);}
+.c5-params__cmp .c5-params__corner{width:var(--c5-params-dt);}
+/* the head row: the product names over a dark rule, in the weight of the buttons */
+.c5-params__cmp thead th{padding-top:0;border-bottom-color:var(--ch-border-strong);font-weight:var(--ch-font-weight-book);}
+.c5-params__cmp thead .c5-params__corner{padding-top:0;border-bottom-color:var(--ch-border-strong);}
+.c5-params__cmp .c5-dim{font-size:var(--ch-type-small-size);opacity:.6;}
+@media (min-width:600px) and (max-width:899px){
+  .c5-params--porownanie{--c5-params-cmp-gap:var(--ch-space-8);--c5-params-dt:calc(150px + var(--c5-params-cmp-gap));}
+  .c5-params__cmp th,.c5-params__cmp td{font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);}
+}
+@media (max-width:599px){
+  .c5-params__cmp,.c5-params__cmp tbody{display:block;}
+  .c5-params__cmp thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;}
+  .c5-params__cmp tr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--ch-space-4);
+    padding-block:var(--ch-space-4);border-bottom:1px solid var(--c5-params-rule);}
+  .c5-params__cmp tbody th,
+  .c5-params__cmp td{display:block;width:auto;padding:0;border:0;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);}
+  .c5-params__cmp tbody th{grid-column:1 / -1;margin-bottom:var(--ch-space-2);font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);font-weight:var(--ch-font-weight-book);}
+  .c5-params__cmp td::before{content:attr(data-th);display:block;margin-bottom:2px;
+    font-family:var(--ch-type-overline-font);font-size:var(--ch-type-overline-size);line-height:var(--ch-type-overline-lh);
+    letter-spacing:var(--ch-type-overline-ls);text-transform:uppercase;color:var(--ch-text-secondary-on-warm);}
 }
 
 /* ===== wariant: wejscie ===== */

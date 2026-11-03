@@ -78,6 +78,40 @@
 /* PAS PRO (CE-16): layout, links and motion live in ce/CE-16-pas-pro.css / .js */
 
 /* Empty state: CE-78; "O sklepie": CE-80; help banner: CE-81 (modules in ce/) */
+
+/* ===== 02.11.2026 (Mateusz's notes on the map, analysis C4–C6) =====
+   Page exceptions until the modules take them over (list in the round report). */
+
+/* Title bar (C6): kicker and breadcrumbs share one row, so the list stays high. */
+.c5sk-titletop { display: flex; flex-direction: row-reverse; align-items: center; justify-content: space-between; gap: var(--ch-space-4); width: 100%; }
+@media (max-width: 699px) { .c5sk-titletop { flex-direction: row; } }
+.c5-titlebar--sklep .c5-titlebar__h1 { text-wrap: balance; }
+
+/* Category capsules under the search (C4): links, one row scrolling sideways.
+   Categories answer "what is it"; the filter group stays in the DOM for the
+   search and the address, hidden from the left column. */
+.c5sk-caps { display: flex; gap: 8px; margin-top: var(--w-space-3); padding: 2px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scrollbar-width: thin; }
+.c5sk-cap { flex: none; display: inline-flex; align-items: center; min-height: 36px; padding: 6px 14px; scroll-snap-align: start; border: 1px solid var(--ch-border-subtle); border-radius: 999px; background: var(--ch-surface-page); color: var(--ch-text-primary); font-size: 0.875rem; line-height: 1.2; white-space: nowrap; text-decoration: none; }
+.c5sk-cap:hover { border-color: var(--w-gray-900); }
+.c5sk-cap:focus-visible { outline: 2px solid var(--w-focus-ring); outline-offset: 1px; }
+.c5sk-cap[aria-current] { background: var(--w-gray-900); border-color: var(--w-gray-900); color: var(--w-text-inverse); }
+@media (max-width: 999px) { .c5sk-cap { min-height: 44px; } }
+.c5sk-facet[hidden], .c5sk-opt[hidden], [data-about][hidden] { display: none; }
+
+/* Neutral tile of the grid (4:334): one product slot, no photo or video, so the
+   prototype does not suggest a solution to the designer. */
+.c5sk-tile--neutral { justify-content: center; align-items: center; gap: 8px; padding: var(--w-space-5); border: 1px solid var(--ch-border-subtle); border-radius: var(--ch-radius-md); background: var(--ch-surface-warm); color: var(--ch-text-primary); text-align: center; }
+.c5sk-tile__label { margin: 0; font-size: 0.8125rem; line-height: 1.3; color: var(--ch-text-secondary); }
+.c5sk-tile__nh { margin: 0; font-size: 1.125rem; line-height: 1.3; font-weight: var(--w-weight-medium); }
+.c5sk-tile--neutral .c5sk-tile__stxt { margin: 0; }
+
+/* "O sklepie" (C5): short lead, three short blocks, three links. */
+.c5sk-about__blocks { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--w-space-5); margin: var(--w-space-6) 0 0; padding: 0; list-style: none; }
+@media (min-width: 900px) { .c5sk-about__blocks { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.c5sk-about__t { margin: 0 0 6px; font-size: 1.125rem; line-height: 1.3; font-weight: var(--w-weight-medium); }
+.c5sk-about__blocks p { margin: 0; font-size: 0.9375rem; line-height: 1.5; color: var(--ch-text-secondary); }
+.c5sk-about__links { display: flex; flex-wrap: wrap; gap: var(--w-space-2) var(--w-space-5); margin: var(--w-space-6) 0 0; padding: 0; list-style: none; }
+.c5sk-about__draft { margin: 0 0 var(--w-space-3); font-size: 0.8125rem; line-height: 1.3; color: var(--ch-text-secondary); }
 </style>
 </head>
 <body>
@@ -104,14 +138,17 @@
   <div class="c5-titlebar c5-titlebar--sklep" id="hero" data-ce="CE-77">
     <div class="c5-wrap c5-wrap--wide">
       <div class="c5-titlebar__l">
-        <nav class="wf-breadcrumb" aria-label="Ścieżka">
-          <ol>
-            <li><a class="wf-link--quiet" href="home.html">Strona główna</a></li>
-            <li><span class="wf-breadcrumb__sep" aria-hidden="true"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-right"></use></svg></span></li>
-            <li><span aria-current="page" class="wf-w-semibold">Sklep</span></li>
-          </ol>
-        </nav>
-        <h1 class="c5-titlebar__h1">Sklep</h1>
+        <div class="c5sk-titletop">
+          <nav class="wf-breadcrumb" aria-label="Ścieżka">
+            <ol>
+              <li><a class="wf-link--quiet" href="home.html">Strona główna</a></li>
+              <li><span class="wf-breadcrumb__sep" aria-hidden="true"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-chevron-right"></use></svg></span></li>
+              <li><span aria-current="page" class="wf-w-semibold">Sklep</span></li>
+            </ol>
+          </nav>
+          <span class="c5-kicker c5-kicker--outline c5-kicker--flush">Sklep</span>
+        </div>
+        <h1 class="c5-titlebar__h1">Od butelki na balkon po big bag na pole.</h1>
       </div>
     </div>
   </div>
@@ -235,9 +272,8 @@
             <div class="c5sk-facet__body" id="f-zast">
               <label class="c5sk-opt"><input type="checkbox" data-facet="zast" value="doglebowe"> <span class="c5sk-opt__t">Doglebowe<span class="c5sk-opt__note">wnosisz do gleby albo podłoża</span></span> <span class="c5sk-opt__n"></span></label>
               <label class="c5sk-opt"><input type="checkbox" data-facet="zast" value="dolistne"> <span class="c5sk-opt__t">Nalistne<span class="c5sk-opt__note">podajesz na liście, opryskiwaczem</span></span> <span class="c5sk-opt__n"></span></label>
-              <label class="c5sk-opt"><input type="checkbox" data-facet="zast" value="zestaw"> <span class="c5sk-opt__t">Zestawy<span class="c5sk-opt__note">gotowe pakiety, tańsze niż osobno</span></span> <span class="c5sk-opt__n"></span></label>
-              <label class="c5sk-opt"><input type="checkbox" data-facet="zast" value="podloze"> <span class="c5sk-opt__t">Maty uprawowe</span> <span class="c5sk-opt__n"></span></label>
-              <p class="c5sk-facet__src">Podział jak w kategoriach obecnego sklepu (doglebowe, nalistne, zestawy), z dodanymi matami uprawowymi.</p>
+              <label class="c5sk-opt" hidden><input type="checkbox" data-facet="zast" value="zestaw"> <span class="c5sk-opt__t">Zestawy<span class="c5sk-opt__note">gotowe pakiety, tańsze niż osobno</span></span> <span class="c5sk-opt__n"></span></label>
+              <label class="c5sk-opt" hidden><input type="checkbox" data-facet="zast" value="podloze"> <span class="c5sk-opt__t">Maty uprawowe</span> <span class="c5sk-opt__n"></span></label>
             </div>
           </div>
 
@@ -270,7 +306,7 @@
 
 
 
-          <div class="c5sk-facet">
+          <div class="c5sk-facet" hidden>
             <h3 class="c5sk-facet__h"><button type="button" class="c5sk-facet__title" aria-expanded="true" aria-controls="f-kat">Kategoria <svg class="wf-icon" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button></h3>
             <div class="c5sk-facet__body" id="f-kat">
               <label class="c5sk-opt"><input type="checkbox" data-facet="kat" value="kwasy-humusowe"> <span class="c5sk-opt__t">Kwasy humusowe</span> <span class="c5sk-opt__n"></span></label>
@@ -550,6 +586,24 @@
           
 
 
+
+          <nav class="c5sk-caps" id="kategorie" aria-label="Kategorie produktów">
+            <a class="c5sk-cap" href="sklep.html" data-cap="" aria-current="true">Wszystkie</a>
+            <a class="c5sk-cap" href="sklep.html?f=kat:kwasy-humusowe" data-cap="kat:kwasy-humusowe">Kwasy humusowe</a>
+            <a class="c5sk-cap" href="sklep.html?f=kat:podloza" data-cap="kat:podloza">Podłoża</a>
+            <a class="c5sk-cap" href="sklep.html?f=kat:sciolka" data-cap="kat:sciolka">Ściółka</a>
+            <a class="c5sk-cap" href="sklep.html?f=kat:biostymulatory" data-cap="kat:biostymulatory">Biostymulatory</a>
+            <a class="c5sk-cap" href="sklep.html?f=kat:nawozy-organiczne" data-cap="kat:nawozy-organiczne">Nawozy organiczne</a>
+            <a class="c5sk-cap" href="sklep.html?f=kat:mikoryza" data-cap="kat:mikoryza">Mikoryza</a>
+            <a class="c5sk-cap" href="sklep.html?f=kat:efektywne-mikroorganizmy" data-cap="kat:efektywne-mikroorganizmy">Efektywne mikroorganizmy</a>
+            <a class="c5sk-cap" href="sklep.html?f=kat:ochrona-biologiczna" data-cap="kat:ochrona-biologiczna">Biologiczna ochrona upraw</a>
+            <a class="c5sk-cap" href="sklep.html?f=oferta:zestaw" data-cap="oferta:zestaw">Zestawy</a>
+            <a class="c5sk-cap" href="sklep.html?f=oferta:promocja" data-cap="oferta:promocja">Promocje</a>
+          </nav>
+
+          
+
+
           <div class="c5sk-refine" data-refine hidden></div>
 
           
@@ -720,14 +774,13 @@
 
 
 
-            <div class="c5sk-tile c5sk-tile--wide" id="kafel-borowka" data-tile data-tile-after="6" data-ce="CE-79" data-ce-wariant="baner">
-              <img class="c5sk-tile__bg" src="img/foto/sciolka-gruntowe.jpg" alt="" width="2000" height="1116" loading="lazy" decoding="async">
-              <span class="c5sk-tile__shade" aria-hidden="true"></span>
-              <div class="c5sk-tile__body">
-                <p class="c5sk-tile__kicker">Uprawy kwasolubne</p>
-                <h3 class="c5sk-tile__h">Borówka, różaneczniki, azalie i wrzosy potrzebują niskiego odczynu</h3>
-                <button type="button" class="c5-btn c5-btn--inv c5-btn--sm" data-tile-shelf="borowka">Pokaż produkty pod borówkę</button>
-              </div>
+
+
+
+            <div class="c5sk-tile c5sk-tile--neutral" id="kafel-borowka" data-tile data-tile-after="6" data-ce="CE-79" data-ce-wariant="neutralny">
+              <p class="c5sk-tile__label">Uprawy kwasolubne</p>
+              <h3 class="c5sk-tile__nh">Borówka, różaneczniki, azalie i wrzosy potrzebują niskiego odczynu</h3>
+              <button type="button" class="c5sk-tile__cta" data-tile-shelf="borowka">Pokaż produkty pod borówkę</button>
             </div>
 
             <article class="c5sk-card" data-marka="carbohort" data-kat="kwasy-humusowe" data-sort-nazwa="CARBOHUMIC filtrowany (187 mesh)" data-cena="25" data-cena-max="9200"
@@ -780,19 +833,6 @@
                 <button type="button" class="c5-btn c5-btn--accent c5-btn--sm c5sk-card__add" data-cw-open aria-haspopup="dialog">Kup teraz<span class="wf-sr-only"> – Carbohumic Ogród</span></button>
               </div>
             </article>
-
-            <div class="c5sk-tile c5sk-tile--video" id="kafel-film" data-tile data-tile-after="8" data-video-tile data-ce="CE-79" data-ce-wariant="wideo">
-              <video class="c5sk-tile__bg" muted loop playsinline preload="none" poster="img/wideo/narodziny-lignitu-poster.jpg" aria-hidden="true" data-tile-video>
-                <source src="img/wideo/narodziny-lignitu.mp4" type="video/mp4">
-              </video>
-              <span class="c5sk-tile__shade" aria-hidden="true"></span>
-              <button type="button" class="c5sk-tile__play" data-video-toggle aria-label="Odtwórz film „Narodziny lignitu”"><svg class="wf-icon c5sk-ico-play" aria-hidden="true"><use href="#ti-player-play"></use></svg><svg class="wf-icon c5sk-ico-pause" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" /><path d="M14 6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" /></svg></button>
-              <div class="c5sk-tile__body">
-                <h3 class="c5sk-tile__h">Narodziny lignitu</h3>
-                <p class="c5sk-tile__txt">Carbomat Eco to surowy lignit – zobacz, jak powstawał.</p>
-                <a class="c5-btn c5-btn--inv c5-btn--sm" href="pdp.html">Carbomat Eco w sklepie</a>
-              </div>
-            </div>
 
             <article class="c5sk-card" data-marka="carbohort" data-kat="kwasy-humusowe nawozy-organiczne" data-sort-nazwa="CARBOHUMIC FLORA · do roślin ozdobnych" data-cena="20" data-cena-max="70"
               data-name="CARBOHUMIC FLORA · do roślin ozdobnych carbohumic ozdobne ogrod doglebowe"
@@ -889,10 +929,7 @@
               </div>
             </article>
 
-            
-
-
-            <div class="c5sk-tile c5sk-tile--slot c5sk-tile--promo" id="kafel-promocja" data-tile data-tile-after="12" data-ce="CE-79" data-ce-wariant="w-miejscu-produktu"
+            <div class="c5sk-tile c5sk-tile--neutral" id="kafel-promocja" data-tile data-tile-after="12" data-ce="CE-79" data-ce-wariant="neutralny"
               data-cw-product='{"id": "carbomat-eco-6", "name": "Carbomat Eco pH 6,0–6,5", "meta": "odmiana uniwersalna · sypki · doglebowy",
                   "img": "img/opakowania/worek_20l.png", "url": "pdp.html",
                   "short": "Surowy lignit do wymieszania z glebą lub podłożem. Odczyn dla większości grup roślin – buduje strukturę i magazyn na wodę.",
@@ -903,16 +940,10 @@
                     {"id": "bb1000", "label": "big bag 1000 l", "short": "1000 l", "img": "img/opakowania/worek_1000l_1500l.png", "price": 650, "ship": "pallet"},
                     {"id": "bb1500", "label": "big bag 1500 l", "short": "1500 l", "img": "img/opakowania/worek_1000l_1500l.png", "price": 850, "ship": "pallet"}
                   ]}'>
-              <div class="c5sk-tile__shot">
-                <span class="c5sk-card__flags"><span class="c5sk-flag c5sk-flag--promo">promocja</span></span>
-                <img src="img/opakowania/worek_20l.png" alt="" width="578" height="875" loading="lazy" decoding="async">
-                <span class="c5sk-tile__pct">−9%</span>
-              </div>
-              <div class="c5sk-tile__slotbody">
-                <h3 class="c5sk-tile__sh">Carbomat Eco pH 6,0–6,5, worek 20 l: <b>39&nbsp;zł</b> zamiast 43&nbsp;zł</h3>
-                <p class="c5sk-card__low">Najniższa cena z 30 dni przed obniżką: 43 zł</p>
-                <button type="button" class="c5-btn c5-btn--accent c5-btn--sm c5sk-tile__cta" data-cw-open data-cw-pack="w20" aria-haspopup="dialog">Kup teraz<span class="wf-sr-only"> – Carbomat Eco pH 6,0–6,5, worek 20 l</span></button>
-              </div>
+              <p class="c5sk-tile__label">Promocja</p>
+              <h3 class="c5sk-tile__nh">CARBOMAT ECO pH 6,0–6,5, worek 20 l: 39&nbsp;zł zamiast 43&nbsp;zł</h3>
+              <p class="c5sk-card__low">Najniższa cena z 30 dni przed obniżką: 43 zł</p>
+              <button type="button" class="c5sk-tile__cta" data-cw-open data-cw-pack="w20" aria-haspopup="dialog">Kup teraz<span class="wf-sr-only"> – CARBOMAT ECO pH 6,0–6,5, worek 20 l</span></button>
             </div>
 
             <article class="c5sk-card" data-marka="carbohort" data-kat="kwasy-humusowe biostymulatory" data-sort-nazwa="CARBOHUMIC CALBOR" data-cena="138" data-cena-max="999"
@@ -990,14 +1021,11 @@
               </div>
             </article>
 
-            <div class="c5sk-tile c5sk-tile--half" id="kafel-oprysk" data-tile data-tile-after="15" data-ce="CE-79" data-ce-wariant="dwie-kolumny">
-              <img class="c5sk-tile__bg" src="img/foto/produkty-aplikacja-nalistna.jpg" alt="" width="800" height="800" loading="lazy" decoding="async">
-              <span class="c5sk-tile__shade" aria-hidden="true"></span>
-              <div class="c5sk-tile__body">
-                <h3 class="c5sk-tile__h">Podajesz przez opryskiwacz albo linię kroplującą?</h3>
-                <p class="c5sk-tile__txt">Pokażemy tylko to, co przejdzie przez filtry i dysze.</p>
-                <button type="button" class="c5-btn c5-btn--inv c5-btn--sm" data-tile-shelf="sprzet">Pokaż produkty płynne</button>
-              </div>
+            <div class="c5sk-tile c5sk-tile--neutral" id="kafel-oprysk" data-tile data-tile-after="15" data-ce="CE-79" data-ce-wariant="neutralny">
+              <p class="c5sk-tile__label">Aplikacja</p>
+              <h3 class="c5sk-tile__nh">Podajesz przez opryskiwacz albo linię kroplującą?</h3>
+              <p class="c5sk-tile__stxt">Pokażemy tylko to, co przejdzie przez filtry i dysze.</p>
+              <button type="button" class="c5sk-tile__cta" data-tile-shelf="sprzet">Pokaż produkty płynne</button>
             </div>
 
             <article class="c5sk-card" data-marka="carbohort" data-kat="kwasy-humusowe podloza nawozy-organiczne" data-sort-nazwa="Zestaw: CARBOMAT ECO pH 4,5–5,0 20 l + CARBOHUMIC FLORA 5 l" data-cena="100" data-cena-max="100"
@@ -1077,13 +1105,11 @@
               </div>
             </article>
 
-            <div class="c5sk-tile c5sk-tile--slot" id="kafel-sciolka" data-tile data-tile-after="18" data-ce="CE-79" data-ce-wariant="w-miejscu-produktu">
-              <div class="c5sk-tile__shot c5sk-tile__shot--photo"><img src="img/foto/sciolka-doniczkowe.jpg" alt="" width="2000" height="1116" loading="lazy" decoding="async"></div>
-              <div class="c5sk-tile__slotbody">
-                <h3 class="c5sk-tile__sh">Ściółka zamiast kory</h3>
-                <p class="c5sk-tile__stxt">Warstwa 3–5 cm rozsypana bez mieszania. W przeciwieństwie do kory nie powoduje głodu azotowego.</p>
-                <button type="button" class="c5sk-tile__cta" data-tile-shelf="sciolka">Pokaż produkty do ściółkowania</button>
-              </div>
+            <div class="c5sk-tile c5sk-tile--neutral" id="kafel-sciolka" data-tile data-tile-after="18" data-ce="CE-79" data-ce-wariant="neutralny">
+              <p class="c5sk-tile__label">Ściółkowanie</p>
+              <h3 class="c5sk-tile__nh">Ściółka zamiast kory</h3>
+              <p class="c5sk-tile__stxt">Warstwa 3–5 cm rozsypana bez mieszania.</p>
+              <button type="button" class="c5sk-tile__cta" data-tile-shelf="sciolka">Pokaż produkty do ściółkowania</button>
             </div>
 
             <article class="c5sk-card" data-marka="partner" data-kat="nawozy-organiczne" data-sort-nazwa="VINASSA nawóz organiczny" data-cena="34" data-cena-max="3800"
@@ -1303,17 +1329,48 @@
   </section>
 
   
+
+
+
+
   <section class="c5-sec c5sk-about" id="o-sklepie" data-ce="CE-80">
     <div class="c5-wrap c5-wrap--wide">
-      <div class="c5-head">
-        <h2 class="c5-h2">Wszystko, czym poprawisz swoją&nbsp;glebę</h2>
-        <p class="c5-lead">Produkty z polskiego lignitu – od worka na działkę po big bagi i mauzery na pole. Worki i big bagi kupujesz od razu, z ceną widoczną na karcie. Przy większych ilościach, regularnych dostawach i produktach bez cennika przygotujemy ofertę i Twoją cenę.</p>
+
+      <div data-about="sklep">
+        <div class="c5-head">
+          <h2 class="c5-h2">Wszystko, czym poprawisz swoją&nbsp;glebę</h2>
+          <p class="c5-lead">Produkty z polskiego lignitu, od worka na działkę po big bagi i mauzery na pole. Worki i big bagi kupujesz od razu z ceną na karcie, a przy większych ilościach, regularnych dostawach i produktach bez cennika przygotujemy ofertę i Twoją cenę.</p>
+        </div>
+        <ul class="c5sk-about__blocks">
+          <li><h3 class="c5sk-about__t">Co tu kupisz</h3><p>Własne produkty z lignitu i leonardytu oraz produkty partnerskie: mikoryzę, biostymulatory i efektywne mikroorganizmy.</p></li>
+          <li><h3 class="c5sk-about__t">Dostawa</h3><p>Butelki, kanistry i worki wysyłamy paczką, a big bagi, mauzery i beczki na palecie.</p></li>
+          <li><h3 class="c5sk-about__t">Jak wybrać</h3><p>Zacznij od uprawy albo potrzeby nad listą, a w razie wątpliwości zapytaj asystenta lub skorzystaj z konfiguratora.</p></li>
+        </ul>
+        <ul class="c5sk-about__links">
+          <li><a class="wf-link" href="sklep.html?f=kat:kwasy-humusowe">Kwasy humusowe</a></li>
+          <li><a class="wf-link" href="sklep.html?f=kat:podloza">Podłoża</a></li>
+          <li><a class="wf-link" href="sklep.html?f=kat:sciolka">Ściółka</a></li>
+        </ul>
       </div>
-      <ul class="c5-trust">
-        <li>Polski, rodzinny producent</li>
-        <li>Certyfikaty ekologiczne – zakres per produkt</li>
-        <li>Badania akredytowanego laboratorium</li>
-      </ul>
+
+      <div data-about="kwasy-humusowe" hidden>
+        <div class="c5-head">
+          <p class="c5sk-about__draft">tekst roboczy</p>
+          <h2 class="c5-h2">Kwasy humusowe</h2>
+          <p class="c5-lead">W tej kategorii są produkty z substancjami humusowymi z lignitu i leonardytu: płynny Carbohumic oraz sypkie CARBOMAT ECO i Carbomat Humic. Carbohumic stosowany regularnie przyczynia się do tworzenia naturalnej próchnicy, poprawy struktury gleby i lepszego rozwoju korzeni.</p>
+        </div>
+        <ul class="c5sk-about__blocks">
+          <li><h3 class="c5sk-about__t">Płynne czy sypkie?</h3><p>Carbohumic stosujesz regularnie, a CARBOMAT ECO wprowadzasz do gleby raz, przy sadzeniu lub zakładaniu uprawy.</p></li>
+          <li><h3 class="c5sk-about__t">Filtrowany czy niefiltrowany?</h3><p>Produktu niefiltrowanego nie stosujemy do fertygacji ani urządzeń z filtrami.</p></li>
+          <li><h3 class="c5sk-about__t">Doglebowo czy nalistnie?</h3><p>Gleba buduje potencjał rośliny, a liść pozwala szybko uruchomić wsparcie wtedy, gdy korzeń nie nadąża.</p></li>
+        </ul>
+        <ul class="c5sk-about__links">
+          <li><a class="wf-link" href="carbohumic-doglebowy.html">Carbohumic doglebowy</a></li>
+          <li><a class="wf-link" href="centrum-wiedzy.html">Więcej w Strefie wiedzy</a></li>
+          <li><a class="wf-link" href="borowka.html">Program uprawy borówki</a></li>
+        </ul>
+      </div>
+
     </div>
   </section>
 
@@ -1324,7 +1381,7 @@
   <section class="c5-pro c5-pro--braz c5sk-pro" id="dla-profesjonalistow" data-pro data-ce="CE-16" data-ce-wariant="kadr-z-prawej">
     <div class="c5-pro__media" data-pro-media aria-hidden="true"><img class="c5-pro__img" src="img/foto/pro.jpg" alt="" width="2000" height="1342" loading="lazy" decoding="async"></div>
     <div class="c5-wrap c5-wrap--wide c5-pro__grid">
-      <h2>Prowadzisz uprawę profesjonalną – sad, plantację, pole lub szkółkę?</h2>
+      <h2>Prowadzisz uprawę profesjonalną?</h2>
       <div class="c5-pro__side">
         <p>Przy większych ilościach i stałych dostawach przygotujemy ofertę. Klienci profesjonalni zamawiają na naszej platformie – po swojej cenie.</p>
         <div class="c5-btnrow">
@@ -2044,7 +2101,6 @@
       var ref = seq[parseInt(t.getAttribute("data-tile-after"), 10) - 1];
       if (ref) ref.parentNode.insertBefore(t, ref.nextSibling); else grid.appendChild(t);
     });
-    videoSync();
   }
 
   function syncBoxes() {
@@ -2417,51 +2473,49 @@
     onChange: function (fn) { if (typeof fn === "function") hooks.push(fn); }
   };
 
-  /* --- Tile actions and the video tile (round 3, spec §12.4) -------------
-     Banner buttons switch a situation on and bring the top of the list into
-     view (the tiles go away with the narrowing). The video is a muted loop
-     that plays only while in view and never starts on its own with reduced
-     motion (poster + play button then); the button can always stop it. */
+  /* --- Tile actions (round 3, spec §12.4) ---------------------------------
+     Tile buttons switch a situation on and bring the top of the list into
+     view (the tiles go away with the narrowing). */
   $$("[data-tile-shelf]").forEach(function (b) {
     b.addEventListener("click", function () { setShelf(b.getAttribute("data-tile-shelf"), "push"); toList(); });
   });
-  var vTile = $("[data-video-tile]");
-  var video = vTile ? $("video", vTile) : null;
-  var vBtn  = vTile ? $("[data-video-toggle]", vTile) : null;
-  var vInView = false, vUser = null;
-  function videoRender() {
-    if (!video || !vBtn) return;
-    var on = !video.paused;
-    vBtn.classList.toggle("is-playing", on);
-    vBtn.setAttribute("aria-label", (on ? "Zatrzymaj" : "Odtwórz") + " film „Narodziny lignitu”");
-  }
-  function videoSync() {
-    if (!video) return;
-    var want = vInView && !vTile.hidden && (vUser === "play" || (vUser === null && !reduceMq.matches));
-    if (want && video.paused) {
-      var pr = video.play();
-      if (pr && pr.catch) pr.catch(function () { videoRender(); });
-    } else if (!want && !video.paused) {
-      video.pause();
-    }
-    videoRender();
-  }
-  if (video) {
-    video.addEventListener("play", videoRender);
-    video.addEventListener("pause", videoRender);
-    if (vBtn) vBtn.addEventListener("click", function () {
-      vUser = video.paused ? "play" : "pause";
-      if (vUser === "play") vInView = true;
-      videoSync();
+
+  /* --- Category capsules (02.11.2026, analysis C4) -----------------------
+     One capsule at a time, plain links without JS. The capsule also decides
+     which set of the "O sklepie" copy stands under the list (C5): a single
+     category with its own copy shows it, anything else the shop copy. */
+  var caps = $$("[data-cap]");
+  var aboutSets = $$("[data-about]");
+  function capPair(a) { var v = a.getAttribute("data-cap"); return v ? v.split(":") : null; }
+  function syncCaps() {
+    var on = null;
+    caps.forEach(function (a) {
+      var c = capPair(a);
+      if (!on && c && state.facets[c[0]].indexOf(c[1]) !== -1) on = a;
     });
-    if ("IntersectionObserver" in window) {
-      new IntersectionObserver(function (en) {
-        vInView = en[0].isIntersecting && en[0].intersectionRatio >= 0.35;
-        videoSync();
-      }, { threshold: [0, 0.35, 0.7] }).observe(vTile);
-    }
+    caps.forEach(function (a) {
+      if (a === on || (!on && !capPair(a))) a.setAttribute("aria-current", "true");
+      else a.removeAttribute("aria-current");
+    });
+    var cat = state.facets.kat.length === 1 ? state.facets.kat[0] : "";
+    var own = aboutSets.some(function (b) { return b.getAttribute("data-about") === cat; });
+    aboutSets.forEach(function (b) { b.hidden = b.getAttribute("data-about") !== (own ? cat : "sklep"); });
   }
-  if (reduceMq.addEventListener) reduceMq.addEventListener("change", videoSync);
+  caps.forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      e.preventDefault();
+      caps.forEach(function (o) {
+        var c = capPair(o);
+        if (!c) return;
+        state.facets[c[0]] = state.facets[c[0]].filter(function (v) { return v !== c[1]; });
+        stack = stack.filter(function (it) { return !(it.type === "facet" && it.k === c[0] && it.v === c[1]); });
+      });
+      var pick = capPair(a);
+      if (pick) addFacet(pick[0], pick[1]);
+      else { syncBoxes(); apply("push"); }
+    });
+  });
+  hooks.push(syncCaps);
 
   /* --- Filtr ceny ------------------------------------------------------- */
   var cenaOdEl = $("[data-cena-od]"), cenaDoEl = $("[data-cena-do]");

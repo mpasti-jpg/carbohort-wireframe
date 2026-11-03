@@ -60,3 +60,19 @@
 .c5-quote__cap{display:flex;flex-direction:column;align-items:center;gap:var(--ch-space-4);}
 .c5-quote__call{font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);color:var(--ch-text-secondary);}
 .c5-quote__cap .c5-kicker{margin-bottom:0;}
+
+/* ===== wariant: slowa (home.html#idea, adnotacja 3:89, 02.11.2026) =====
+   A screen-tall section with two sentences, big and centred, in the type of
+   `--motto`; each sentence starts a new line. The words light up with the scroll.
+   Markup: `section.c5-sec.c5-quote.c5-quote--slowa` › `p.c5-quote__t[data-slowa]`
+   › two `span.c5-quote__zd`. CE-33-cytat-zasada.js wraps the words in
+   `span.c5-quote__w` (--i = index) and writes `--q-w` (words lit, a float) on the
+   paragraph. Nothing is pinned. Without JS and with reduced motion no word is
+   dimmed: the rule below only runs under no-preference, and the words of a
+   page without the script have no span to dim. */
+.c5-quote--slowa{display:grid;place-items:center;min-height:100svh;text-align:center;}
+.c5-quote--slowa .c5-quote__t{max-width:min(100%,17em);}
+.c5-quote__zd{display:block;}
+@media (prefers-reduced-motion: no-preference){
+  .c5-quote__w{opacity:calc(.16 + .84 * clamp(0,calc(var(--q-w,99) - var(--i,0)),1));}
+}

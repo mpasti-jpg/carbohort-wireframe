@@ -14,9 +14,15 @@
   function scrim() { return $("[data-cw-scrim]"); }
   function showScrim(on) { var s = scrim(); if (s) s.setAttribute("data-open", on ? "true" : "false"); }
 
-  /* --- Mega-menus (disclosure: button + .cw-mega panel) ---------------- */
-  var openMega = null;
+  /* --- Mega-menus (disclosure: button + .cw-mega panel) ----------------
+     Mouse (R2, 02.11.2026): the panel follows the pointer – it opens on entering
+     the trigger and closes MEGA_CLOSE_MS after the pointer leaves the trigger
+     and the panel, so the way across the gap does not close it; a mouse click
+     on the trigger changes nothing. Touch and keyboard stay as they were: a tap,
+     Enter or Space toggles the panel, the scrim and Escape close it. */
+  var openMega = null, megaCloseTimer = 0, MEGA_CLOSE_MS = 250;
   function closeMega(focusTrigger) {
+    clearTimeout(megaCloseTimer); megaCloseTimer = 0;
     if (!openMega) return;
     var t = openMega.trigger, p = openMega.panel;
     p.setAttribute("data-open", "false");
@@ -28,6 +34,8 @@
   function openMegaFor(trigger) {
     var panel = $("#" + trigger.getAttribute("aria-controls"));
     if (!panel) return;
+    clearTimeout(megaCloseTimer); megaCloseTimer = 0;
+    if (openMega && openMega.trigger === trigger) return;
     if (openMega) closeMega(false);
     panel.setAttribute("data-open", "true");
     trigger.setAttribute("aria-expanded", "true");
@@ -35,8 +43,20 @@
     showScrim(true);
   }
   $$("[data-mega-trigger]").forEach(function (t) {
+    var host = t.closest(".cw-haspopup") || t.parentNode, downType = "";
+    host.addEventListener("pointerenter", function (e) {
+      if (e.pointerType === "mouse") openMegaFor(t);
+    });
+    host.addEventListener("pointerleave", function (e) {
+      if (e.pointerType !== "mouse" || !openMega || openMega.trigger !== t) return;
+      clearTimeout(megaCloseTimer);
+      megaCloseTimer = setTimeout(function () { closeMega(false); }, MEGA_CLOSE_MS);
+    });
+    t.addEventListener("pointerdown", function (e) { downType = e.pointerType; });
     t.addEventListener("click", function (e) {
       e.preventDefault();
+      /* detail 0 = keyboard; a real press carries the pointer type of its pointerdown */
+      if (e.detail > 0 && downType === "mouse") return;
       var isOpen = t.getAttribute("aria-expanded") === "true";
       if (isOpen) closeMega(true); else openMegaFor(t);
     });

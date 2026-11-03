@@ -23,13 +23,15 @@
       along the column plus 12 px. The pointer is tracked on the whole document
       (no element covers the page). Opening (.is-open on all three layers) moves
       the squares from the column onto the arc; the labels are allowed in only
-      once the squares have arrived (.is-ready). While open, a narrow zone
-      (.c5-dots__zone: from the leftmost square minus 16 px to the window edge,
-      from the top to the bottom item plus 16 px) picks the item under the
-      pointer – the nearest one vertically (.is-hot) – and a click in it jumps
-      to that item; the two shown labels (active and hot) also keep the fan
-      open. The fan closes 250 ms after the pointer leaves the zone by more
-      than 24 px. Keyboard focus opens it too.
+      once the squares have arrived (.is-ready). While open, the whole belt
+      along the arc is live (R1, 02.11.2026): .c5-dots__zone runs from the left
+      end of the longest label minus 16 px to the window edge, from the top to
+      the bottom item plus 16 px. It picks the item under the pointer – the
+      nearest one vertically (.is-hot), so a ride along the labels switches
+      items – and a click in it jumps to that item. The fan closes 250 ms after
+      the pointer leaves the zone by more than 24 px. The opening strip stays
+      narrow (25 px): at rest nothing but that strip reacts, so the arrows at
+      the right edge keep working. Keyboard focus opens the fan too.
    4. Scrollspy over [data-chapter] (active = the last chapter whose top edge is
       above 40 % of the viewport) + a smooth jump to the chapter behind a tick.
    5. Footer: once the site footer zone (#serwis-dok-sekcja, else #serwis-stopka)
@@ -174,13 +176,14 @@
 
   /* --- 3. open / close ------------------------------------------------------- */
   var open = false, closeTimer = 0, readyTimer = 0, zoneRect = null, labelY = [];
-  /* round 5: the zone covers the squares of the arc only, not the labels */
+  /* R1 (02.11.2026): the zone covers the squares and the labels; hidden labels
+     are clipped, not removed, so their boxes count too */
   function measureZone() {
     var box = nav.getBoundingClientRect();
     var left = Infinity, top = Infinity, bottom = -Infinity;
-    labelY = ticks.map(function (t) {
+    labelY = ticks.map(function (t, i) {
       var sx = box.left + t.x + MARK * Math.cos(t.ang), sy = box.top + t.y + MARK * Math.sin(t.ang);
-      left = Math.min(left, sx - SIZE / 2);
+      left = Math.min(left, sx - SIZE / 2, links[i].querySelector(".c5-dots__label").getBoundingClientRect().left);
       top = Math.min(top, sy - STEP / 2);
       bottom = Math.max(bottom, sy + STEP / 2);
       return sy;

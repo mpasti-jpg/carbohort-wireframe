@@ -373,6 +373,22 @@ html.cx-js .u-prod__card{--u-prod-delay:0ms;
 .c5ks-rec__shot{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr);place-items:center;aspect-ratio:1;padding:12%;overflow:hidden;}
 .c5ks-rec__shot img{display:block;width:100%;height:100%;min-height:0;object-fit:contain;}
 .c5ks-rec__shot.wf-ph{padding:0;min-height:0;border:0;border-radius:0;}
+/* ===== wariant: uprawy (CARBOMAT Mata „W skrócie”, U-8, 03.11.2026) =====
+   Block: c5-cards, modifier: c5-cards--uprawy; inside: an optional title (`c5-cards__lede`)
+   and a `ul.c5-cards__list` of `li.c5-cards__card`. Crop tiles: a 4 : 3 photo (an
+   <img class="c5-cards__photo"> or a `c5-ph` placeholder with the same class) and the crop
+   name under it. The grid fills itself: as many columns of at least 15 rem as fit, so a
+   fourth, fifth … tile needs no change of the rules – two columns on a phone. The root adds
+   no spacing of its own; the page sets the gap above it. */
+.c5-cards__lede{margin:0 0 var(--ch-space-6);font-family:var(--ch-type-title-font);font-size:var(--ch-type-title-size);line-height:var(--ch-type-title-lh);letter-spacing:var(--ch-type-title-ls);font-weight:var(--ch-type-title-weight);color:var(--ch-text-primary);}
+.c5-cards--uprawy .c5-cards__list{grid-template-columns:repeat(auto-fit,minmax(min(15rem,100%),1fr));gap:var(--ch-space-5);}
+.c5-cards--uprawy .c5-cards__card{display:flex;flex-direction:column;gap:var(--ch-space-4);min-width:0;}
+.c5-cards--uprawy .c5-cards__photo{display:block;width:100%;aspect-ratio:4 / 3;min-height:0;object-fit:cover;border-radius:var(--ch-radius-md);background:var(--ch-surface-warm);}
+.c5-cards--uprawy .c5-cards__name{margin:0;font-family:var(--ch-type-title-font);font-size:var(--ch-type-title-size);line-height:var(--ch-type-title-lh);letter-spacing:var(--ch-type-title-ls);font-weight:var(--ch-type-title-weight);color:var(--ch-text-primary);}
+@media (max-width:599px){
+  .c5-cards--uprawy .c5-cards__list{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ch-space-3);}
+}
+
 @media (prefers-reduced-motion: reduce){
   :is(.cw-a-next__card,.c5hu-mix__card,.kt-way,.c5-mt-card,.c5-proof,.c5-mt-delta__item,.on-step,.on-fam,.c5h-buy__tile,.c5pd-pair,.c5pd-also__card,.c5ks-rec),.c5h-buy__arrow{transition:none;}
   .c5h-buy__tile:hover .c5h-buy__arrow,.c5h-buy__tile:focus-visible .c5h-buy__arrow{transform:none;}

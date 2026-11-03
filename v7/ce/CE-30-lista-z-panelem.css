@@ -41,6 +41,8 @@
      --c5-acc30-copy-minh     least height of a description from 900 px (auto)
      --c5-acc30-ph-w, -ph-ratio, -ph-ratio-sm   photo variant (see below)
      --acc30-open-bg          fill of the open row (default beige; white on a beige band)
+   Attribute on the root: data-c5-acc30-auto="off" – no countdown, the rows change
+   only on a click (any variant; Carbomat Humic keeps its 5 s, Mateusz 29.10.2026).
 
    Without JS (and before the script runs) every panel is open and the titles
    stand in a middle size – a plain list of headings with their descriptions.
@@ -198,6 +200,83 @@
 }
 
 
+/* ===== wariant: akordeon-z-kadrem (modifier c5-acc30--kadr) =====
+   CARBOMAT HUMIC „Czym jest” (29.10.2026, Mateusz: the scene of facts as an accordion that
+   is not pinned). The countdown of akordeon-z-odliczaniem drives a list of short facts; the
+   photo of the open fact fills a frame next to the list, 20 px from the top, right and bottom
+   edge of the window, and drifts slowly while it is shown; an illustration box (.c5-viz of
+   CE-12, base look from ce/CE-12-scena-faktow.css) can float in its middle.
+   Markup: every row carries `.c5-acc30__media` (img.c5-acc30__foto + optional figure.c5-viz)
+   as the second child of `.c5-acc30__in`, and the root ends with an empty
+   `.c5-acc30__kadr`. Without JS and below 900 px the media stays in its panel: photo 16:10,
+   the box under it. From 900 px the script moves every media into the frame and sets
+   [data-kadr] on the root; the media of the open row carries [data-on].
+   Second round of comments (29.10.2026 evening): no numbers; the open row is not a card –
+   no fill, no side padding, its title stays on the line of the closed titles and the
+   hairlines stay; more air under its description; from 900 px the list stands on the
+   bottom of the frame row, so its last line ends 80 px above the bottom edge of the
+   window (60 px above the frame, which keeps 20 px). */
+.c5-acc30--kadr{box-sizing:border-box;width:100%;max-width:calc(var(--ch-layout-container-max) + 2 * var(--ch-layout-gutter));
+  margin-inline:auto;padding-inline:var(--w-page-padding);--acc30-col:56px;--acc30-open-col:calc(43.55px + 16px);}
+.c5-acc30--kadr .c5-acc30__btn,
+.c5-acc30--kadr[data-c5-acc30="on"] .c5-acc30__item[data-open] .c5-acc30__btn{grid-template-columns:minmax(0,1fr);}
+.c5-acc30--kadr .c5-acc30__btn::before{content:none;display:none;}
+.c5-acc30--kadr[data-c5-acc30="on"] .c5-acc30__item[data-open]{background:none;border-radius:0;padding-inline:0;border-top-color:var(--ch-border-subtle);}
+.c5-acc30--kadr[data-c5-acc30="on"] .c5-acc30__item[data-open] + .c5-acc30__item{border-top-color:var(--ch-border-subtle);}
+.c5-acc30--kadr .c5-acc30__in,
+.c5-acc30--kadr[data-c5-acc30="on"] .c5-acc30__item[data-open] .c5-acc30__in{padding:var(--ch-space-2) 0 var(--ch-space-10);}
+.c5-acc30--kadr .c5-acc30__in{grid-template-columns:minmax(0,1fr);row-gap:var(--ch-space-6);}
+.c5-acc30--kadr .c5-acc30__copy{gap:var(--ch-space-3);max-width:var(--c5-acc30-measure-solo);}
+.c5-acc30--kadr .c5-acc30__copy :is(p,ul){font-family:var(--ch-type-body-font);font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary);}
+.c5-acc30--kadr .c5-acc30__copy ul{display:flex;flex-direction:column;gap:var(--ch-space-1);margin:0;padding:0;list-style:none;}
+.c5-acc30--kadr .c5-acc30__copy li{position:relative;padding-left:var(--ch-space-4);}
+.c5-acc30--kadr .c5-acc30__copy li::before{content:"";position:absolute;left:2px;top:calc(.5lh - 1.5px);width:3px;height:3px;border-radius:1px;background:currentColor;}
+/* media in its panel (no JS, narrow window): photo, then the box */
+.c5-acc30--kadr .c5-acc30__media{display:flex;flex-direction:column;gap:var(--ch-space-4);min-width:0;}
+.c5-acc30--kadr .c5-acc30__foto{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;border-radius:var(--ch-radius-control-l);background:var(--ch-color-grey-200);}
+.c5-acc30--kadr .c5-acc30__kadr{display:none;}
+/* the illustration box: the glass material of the CE-12 scene (layer c5-fx--glass) */
+.c5-acc30--kadr .c5-viz{aspect-ratio:auto;max-height:none;border:0;border-radius:var(--ch-radius-xl);padding:var(--ch-space-6);}
+.c5-acc30--kadr .c5-viz__tag{align-self:flex-start;padding:12px 15px;border-radius:var(--ch-radius-md);background:rgb(0 0 0 / .2);
+  font-size:var(--ch-type-body-size);line-height:normal;font-weight:var(--ch-font-weight-book);letter-spacing:normal;text-transform:none;color:var(--ch-text-inverse);}
+.c5-acc30--kadr .c5-viz .c5-bar__track{height:6px;border:0;border-radius:2px;background:rgb(255 255 255 / .12);}
+.c5-acc30--kadr .c5-viz .c5-bar__fill{border-radius:2px;background:rgb(255 255 255 / .7);}
+.c5-acc30--kadr .c5-viz .c5-src--ondark{font-size:var(--ch-type-small-size);line-height:1.571;color:rgb(255 255 255 / .7);}
+/* narrow window: the open title keeps the padding of the closed ones */
+@media (max-width:899px){
+  .c5-acc30--kadr[data-c5-acc30="on"] .c5-acc30__item[data-open] .c5-acc30__btn{min-height:44px;box-sizing:border-box;padding:24px 0 var(--ch-space-2);}
+}
+
+@media (min-width:900px){
+  /* the open row: less air than the default card, so nine rows and one open stand in one window */
+  .c5-acc30--kadr .c5-acc30__btn{padding:18px 0 17px;}
+  .c5-acc30--kadr[data-c5-acc30="on"] .c5-acc30__item[data-open] .c5-acc30__btn{min-height:44px;box-sizing:border-box;padding:18px 0 var(--ch-space-2);}
+  /* list | frame: the root as wide as the window (up to 1800 px), the frame on the right half */
+  .c5-acc30--kadr[data-kadr]{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:clamp(2rem,4.5vw,4.5rem);align-items:center;
+    max-width:1800px;padding:0 20px 0 clamp(20px,2.8vw,40px);}
+  .c5-acc30--kadr[data-kadr] .c5-acc30__list{grid-column:1;grid-row:1;align-self:end;margin-bottom:60px;}
+  .c5-acc30--kadr[data-kadr] .c5-acc30__kadr{display:block;grid-column:2;grid-row:1;align-self:start;position:sticky;top:20px;
+    height:calc(100svh - 40px);min-height:520px;overflow:hidden;border-radius:var(--ch-radius-control-l);background:var(--ch-color-grey-200);}
+  .c5-acc30--kadr[data-kadr] .c5-acc30__kadr .c5-acc30__media{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    opacity:0;visibility:hidden;}
+  .c5-acc30--kadr[data-kadr] .c5-acc30__kadr .c5-acc30__media[data-on]{opacity:1;visibility:visible;}
+  .c5-acc30--kadr[data-kadr] .c5-acc30__kadr .c5-acc30__foto{position:absolute;inset:0;height:100%;aspect-ratio:auto;border-radius:0;}
+  .c5-acc30--kadr[data-kadr] .c5-acc30__kadr .c5-viz{width:min(462px,100% - 64px);aspect-ratio:4/5;max-height:calc(100% - 64px);overflow:auto;
+    background:rgb(20 20 20 / .66);-webkit-backdrop-filter:blur(var(--ch-effect-glass-blur));backdrop-filter:blur(var(--ch-effect-glass-blur));
+    box-shadow:inset 0 1px 0 rgb(255 255 255 / .10),inset 0 -1px 0 rgb(0 0 0 / .12);}
+  .c5-acc30--kadr[data-kadr] .c5-acc30__kadr .c5-viz--rosnie{aspect-ratio:auto;}
+}
+/* the change of photo is a short cross-fade; the shown photo drifts up for the length of the
+   countdown (a little longer, so it never stands still before the next one comes) */
+@media (min-width:900px) and (prefers-reduced-motion:no-preference){
+  .c5-acc30--kadr[data-kadr] .c5-acc30__kadr .c5-acc30__media{transition:opacity .6s var(--w-ease),visibility 0s linear .6s;}
+  .c5-acc30--kadr[data-kadr] .c5-acc30__kadr .c5-acc30__media[data-on]{transition:opacity .6s var(--w-ease),visibility 0s;}
+  .c5-acc30--kadr[data-kadr] .c5-acc30__kadr .c5-acc30__foto{transform:scale(1.08) translate3d(0,-2%,0);}
+  .c5-acc30--kadr[data-kadr] .c5-acc30__kadr .c5-acc30__media[data-on] .c5-acc30__foto{animation:c5-acc30-drift calc(var(--c5-acc30-time) + 1s) linear both;}
+}
+@keyframes c5-acc30-drift{from{transform:scale(1.08) translate3d(0,2%,0);}to{transform:scale(1.08) translate3d(0,-2%,0);}}
+
+
 /* ===== wariant: akordeon-z-odliczaniem – implementacja Produktów (c5pr-acc*, c5pr-pcard*) =====
    Look of Figma frame 777:1420 (Produkty, "Gama"), 18.10.2026. The product overview page builds
    the variant under its own classes (the module above is the generalised copy of this block).
@@ -271,6 +350,12 @@
 .c5pr-acc__links{display:flex;flex-direction:column;margin:0;padding:0;list-style:none;font-size:var(--ch-type-body-size);}
 .c5pr-acc__links .wf-link{display:inline-flex;align-items:center;min-height:44px;font-weight:var(--ch-font-weight-book);color:var(--ch-text-primary);text-decoration:none;}
 .c5pr-acc__links .wf-link:hover{text-decoration:underline;}
+/* 29.10.2026 (Mateusz, paths of Produkty): the links lighter – the regular cut instead of
+   Book and a hairline underline in a very light grey, which darkens on hover. */
+.c5pr-acc--przewijany .c5pr-acc__links .wf-link{font-weight:var(--ch-font-weight-regular);text-decoration:underline;
+  text-decoration-thickness:1px;text-underline-offset:.24em;text-decoration-color:var(--ch-border-subtle);
+  transition:text-decoration-color var(--w-duration-base) var(--w-ease);}
+.c5pr-acc--przewijany .c5pr-acc__links .wf-link:hover{text-decoration-color:currentColor;}
 
 /* right zone: product cards, two columns of 293 px + 12 px gap, flush with the right edge */
 .c5pr-acc__cards{display:grid;grid-template-columns:repeat(2,var(--pc-w));gap:var(--pc-gap);margin:0;padding:0;list-style:none;width:calc(var(--pc-w)*2 + var(--pc-gap));}
@@ -363,6 +448,25 @@
 @media (prefers-reduced-motion: reduce){
   .c5pr-acc--przewijany .c5pr-acc__btn::before,
   .c5pr-acc--przewijany[data-acc="on"] .c5pr-pcard{transition:none;}
+}
+/* 29.10.2026 (Mateusz): the short description of a product card shows on hover only – the
+   packshot field shrinks (195 → 130 px), the name rises (41 → 20 px under it) and the
+   description opens between the name and „Kup teraz”; the card keeps its height, the button
+   its place at the bottom. Keyboard: the same on focus inside the card. Where there is no
+   hover (touch) the description stays visible, so it is never out of reach. */
+@media (hover:hover){
+  .c5pr-acc--przewijany .c5pr-pcard__media{transition:height .35s var(--w-ease);}
+  .c5pr-acc--przewijany .c5pr-pcard__name{transition:margin-top .35s var(--w-ease);}
+  .c5pr-acc--przewijany .c5pr-pcard__txt{max-height:0;margin-block:0;overflow:hidden;opacity:0;
+    transition:max-height .35s var(--w-ease),margin .35s var(--w-ease),opacity .2s var(--w-ease);}
+  .c5pr-acc--przewijany .c5pr-pcard:is(:hover,:focus-within) .c5pr-pcard__media{height:130px;}
+  .c5pr-acc--przewijany .c5pr-pcard:is(:hover,:focus-within) .c5pr-pcard__name{margin-top:var(--ch-space-5);}
+  .c5pr-acc--przewijany .c5pr-pcard:is(:hover,:focus-within) .c5pr-pcard__txt{max-height:8em;margin-block:var(--ch-space-2) var(--ch-space-4);opacity:1;
+    transition:max-height .35s var(--w-ease),margin .35s var(--w-ease),opacity .25s var(--w-ease) .12s;}
+}
+@media (hover:hover) and (prefers-reduced-motion: reduce){
+  .c5pr-acc--przewijany :is(.c5pr-pcard__media,.c5pr-pcard__name,.c5pr-pcard__txt),
+  .c5pr-acc--przewijany .c5pr-pcard:is(:hover,:focus-within) .c5pr-pcard__txt{transition:none;}
 }
 /* notes in the copy column: EL-17 note with the „i” (G16) – the copy column's paragraph size
    must not reach into the note */
