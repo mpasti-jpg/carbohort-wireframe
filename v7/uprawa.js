@@ -213,6 +213,9 @@
       teraz: null
     };
     e.ids.forEach(function (id) { lbMapa[id] = e; });
+    /* Lenis stops while a layer is open and then swallows the wheel – the content
+       of the panel scrolled only by its scrollbar (Mateusz, 03.11.2026) */
+    if (e.scroll) e.scroll.setAttribute("data-lenis-prevent", "");
     return e;
   }).filter(function (e) { return e.ids.length; });
 

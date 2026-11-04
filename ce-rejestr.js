@@ -1523,7 +1523,7 @@ window.CW_CE = {
         "kotwica": "cta-koncowe"
       },
       "kod": {
-        "css": "ce/CE-18-cta.css",
+        "css": "ce/CE-18-cta.css (wariant z-karta-osoby: c5-mt-osoba)",
         "js": "brak"
       },
       "czesci": [
@@ -1534,7 +1534,7 @@ window.CW_CE = {
       "warianty": {
         "na-pasie": "na jasnym pasie c5-band w środku strony (CARBOHUMIC „Dobierz produkt”)",
         "z-leadem": "z akapitem pod nagłówkiem (Mata; Próchnica+ „Zadaj pytanie” – przyciski „Zapytaj eksperta” i „Kontakt”); bez wystąpień od 02.11.2026 (Mata przeszła na z-karta-osoby)",
-        "z-karta-osoby": "sekcja końcowa CARBOMAT Mata (runda 02.11.2026, mapa Figma 3:524, audyt 02.11 pkt 6): dawne CTA i dawna sekcja kontaktu z ekspertem (CE-94) mówiły to samo, więc stały się jedną – wyśrodkowany H2, lead, pod nim pojedyncza karta osoby (CE-54, wariant pojedyncza-karta: zdjęcie 96 px, imię i nazwisko, tytuł, przyciski „Zadzwoń” i „Napisz e-mail”) i na końcu przycisk „Kup teraz”; numer telefonu stoi tylko w linku tel:, wszystkie przyciski kontaktowe strony są kotwicami do tej sekcji (#kontakt-ekspert). Układ karty w osobie: arkusz strony carbomat-mata.css (c5-mt-osoba)"
+        "z-karta-osoby": "sekcja końcowa CARBOMAT Mata (runda 02.11.2026, mapa Figma 3:524, audyt 02.11 pkt 6): dawne CTA i dawna sekcja kontaktu z ekspertem (CE-94) mówiły to samo, więc stały się jedną – wyśrodkowany H2, lead, pod nim pojedyncza karta osoby (CE-54, wariant pojedyncza-karta: zdjęcie 96 px, imię i nazwisko, tytuł, przyciski „Zadzwoń” i „Napisz e-mail”) i na końcu przycisk „Kup teraz”; numer telefonu stoi tylko w linku tel:, wszystkie przyciski kontaktowe strony są kotwicami do tej sekcji (#kontakt-ekspert). Układ karty w jednym wierszu (c5-mt-osoba): od 03.11.2026 moduł ce/CE-18-cta.css. Od 03.11.2026 także Kukurydza #u-doradca – „Zapytaj doradcę CarboHort” w miejsce pasa zamykającego CE-16, karta osoby z działu doradztwa uprawowego, bez przycisku sklepu"
       },
       "zrzut": {
         "maxh": 500
@@ -2030,7 +2030,9 @@ window.CW_CE = {
       },
       "skroty_wariantow": {
         "popup-produktu": "Strona z mapą zastosowań produktu, packshot w nagłówku i własna stopka.",
-        "jednostronicowy": "Jedna strona treści bez licznika i przycisków nawigacji, szerszy panel."
+        "jednostronicowy": "Jedna strona treści bez licznika i przycisków nawigacji, szerszy panel.",
+        "fazy": "Opis fazy programu uprawy: przełącznik pakietów u góry panelu, lead pod tytułem, większy tekst, karty produktów ze zdjęciem, „Oblicz koszt stosowania” na końcu treści.",
+        "metryczka": "Metryczka produktu: fazy stosowania w uprawie, czym jest i co daje, „Kup produkt”, strona produktu, karta do pobrania."
       },
       "opis": "Nakładka na całą stronę z panelem przewijanym: przycisk zamknięcia, N stron treści (każda z nagłówkiem i stopką), licznik „n / N”.",
       "mechanika": "Otwierany linkiem data-lightbox-open albo hashem, fokus-trap, Escape, tło inert i zablokowane przewijanie; bez JS strony renderują się jako zwykłe bloki pod sekcją. Moduł 55 (Mata) / uprawa.js (Kukurydza).",
@@ -2039,8 +2041,8 @@ window.CW_CE = {
         "kotwica": "dowod-lb"
       },
       "kod": {
-        "css": "carbomat-mata.css ===== 55 (c5-lb) / strony upraw: ce/CE-25-lightbox.css (u-overlay, u-lightbox, u-prodpop; wąski panel wariantu jednostronicowy: klasa u-lightbox--waski)",
-        "js": "carbomat-mata.js ===== 55 / uprawa.js lbEgzemplarz"
+        "css": "carbomat-mata.css ===== 55 (c5-lb) / strony upraw: ce/CE-25-lightbox.css (u-overlay, u-lightbox, u-prodpop; wąski panel wariantu jednostronicowy: klasa u-lightbox--waski; warianty fazy i metryczka: u-lightbox--fazy, u-lightbox--metryczka, u-pcard--foto, u-meta)",
+        "js": "carbomat-mata.js ===== 55 / uprawa.js lbEgzemplarz (od 03.11.2026 przewijana treść panelu z data-lenis-prevent – kółko myszy działa przy zatrzymanym Lenisie)"
       },
       "czesci": [
         "nakładka",
@@ -2050,6 +2052,8 @@ window.CW_CE = {
         "licznik"
       ],
       "warianty": {
+        "fazy": "lightbox faz wykresu CE-100 (Kukurydza, 03.11.2026; adnotacja ramki Figma 560:167 i komentarze Mateusza): klasa u-lightbox--fazy; jedna strona na kolumnę wykresu (siedem), fazy zgrupowane na wykresie jako podbloki z własnymi tytułami (u-lbsub); u góry panelu, poza przewijaną treścią, mały przełącznik pakietów (c5-pkbar--sm, data-pk-sat) zgrany z wykresem i przelicznikiem – filtruje karty produktów fazy (u-pcard--foto z packshotem po lewej; zamienne z obrysem przerywanym i chipem); nagłówek w pionie – „Faza N z 7”, tytuł, lead pod tytułem na całą szerokość; tytuły bloków i treść większe, krojem tekstu strony; „Faza N”, BBCH w tytułach w nawiasach; bez paska przewijania faz – na samym dole treści każdej strony przycisk „Oblicz koszt stosowania” (data-we-goto).",
+        "metryczka": "metryczka produktu z wykresu CE-100 (Kukurydza, 03.11.2026; adnotacja ramki Figma 560:167): klasa u-lightbox--metryczka; nagłówek z dużym packshotem, nazwą i zdaniem „czym jest”; „Kiedy stosujemy w kukurydzy” – wiersze faza · dawka · pakiety (tu informacje warunkowe, np. druga dawka po stresie); „Co daje” i „Forma i ograniczenia”; w stopce „Kup produkt” (szybki podgląd sklepu przez data-pkc-buy, CE-47 „etapy”), cichy link do strony produktu i karta produktu do pobrania (do czasu plików – nieaktywna).",
         "popup-produktu": "strona = mapa zastosowań produktu z packshotem w nagłówku i własną stopką (Kukurydza)",
         "jednostronicowy": "jedna strona treści zamiast N, więc stopka, licznik i przyciski poprzednia/następna nie istnieją; panel szerszy (1280 px), bo niesie tabelę pięciu kolumn, a kontener treści gubi w nakładce swoją miarę i gutter. Klasy i moduł 1:1 z bazy; kod strony w produkty.css ===== 45 / produkty.js ===== 45 (Produkty „Technikalia czterech rodzin”, 20.09.2026). Od 02.10.2026 także CARBOMAT Mata: tabela trzech podłoży (#co-zastepujesz-lb) i pełna analiza podłoża (#analiza-lb) w oknach jednostronicowych na silniku lightboksa strony (klasa c5-lb--solo – pasek z przyciskiem zamknięcia nad treścią, bez osobnego tytułu); otwiera je przycisk w sekcji albo hash tabeli, bez JS tabela stoi w biegu strony (klasa c5-lb--solo na CARBOMAT Mata, u-lightbox--waski na Borówce)"
       },
@@ -2516,7 +2520,7 @@ window.CW_CE = {
       },
       "skroty_wariantow": {
         "przemiana": "Siatka 2 × 2 kart: warunek małym tekstem, strzałka, wynik dużym zdaniem, numer w rogu",
-        "regula-z-packshotem": "Karta warunek → odpowiedź z packshotem produktu, cała karta jest linkiem"
+        "regula-z-packshotem": "Karta warunek → odpowiedź z packshotem produktu, cała karta jest linkiem (bez wystąpień od 03.11.2026)"
       },
       "opis": "Siatka kart równej wysokości; karta czyta się jak zdanie na trzech poziomach: stan wyjściowy lub warunek u góry, łącznik ze strzałką, stan docelowy lub odpowiedź u dołu; opcjonalnie tag produktu i packshot obok.",
       "mechanika": "Jednorazowe wejście ze staggerem (reveal); łącznikiem jest sama strzałka (dociągana kreska zeszła 02.10.2026 razem ze starym układem kart przemiany); w wariancie reguł cała karta jest linkiem do lightboxa i ma dwa układy (produkt pod zdaniem albo w prawej kolumnie od 1100 px).",
@@ -2537,7 +2541,7 @@ window.CW_CE = {
       ],
       "warianty": {
         "przemiana": "cztery karty CARBOMAT ECO → CARBOMAT HUMIC; od 02.10.2026 w układzie kart reguł z Kukurydzy (uwaga Mateusza z 02.10): siatka 2 × 2, etykieta produktu i małe zdanie o CARBOMAT ECO jako warunek, strzałka, etykieta i duże zdanie o CARBOMAT HUMIC jako wynik, numer 01–04 w rogu, bez packshotu; karty nie są linkami",
-        "regula-z-packshotem": "warunek → odpowiedź + sam packshot produktu (bez nazwy i wskazówki od 16.09), karta jako link (Kukurydza)"
+        "regula-z-packshotem": "warunek → odpowiedź + sam packshot produktu (bez nazwy i wskazówki od 16.09), karta jako link (Kukurydza; bez wystąpień od 03.11.2026 – sekcja „Zasada wyboru preparatu doglebowego” zeszła ze strony)"
       },
       "zrzut": {
         "maxh": 700
@@ -3076,13 +3080,13 @@ window.CW_CE = {
         ]
       },
       "skroty_wariantow": {
-        "dwa-pakiety": "Dwa pudełka obok siebie z liczbą zabiegów i produktów, w parze z suwakiem powierzchni"
+        "dwa-pakiety": "Dwa pudełka obok siebie z liczbą zabiegów i produktów, w parze z suwakiem powierzchni (bez wystąpień od 03.11.2026)"
       },
       "opis": "Rząd pudełek (tablist) z numerem, nazwą i podpisem pozycji, pod nimi panel treści aktywnej pozycji (tabela wierszy). Od 01.10.2026 jedyne wystąpienie to wariant „dwa-pakiety” na Kukurydzy; układ trzech pudełek z szyną po lewej od 1280 px (sekcja „Trzy warianty technologii”) zszedł ze strony razem z nią.",
       "mechanika": "Tablist ARIA z klawiaturą; klik pokazuje panel; bez JS wszystkie panele widoczne. uprawa.js (pudełka wariantów).",
       "baza": {
-        "plik": "v7/kukurydza.html",
-        "kotwica": "u-pakiety-wybor"
+        "plik": "v7/borowka.html",
+        "kotwica": "b-pakiety-wybor"
       },
       "kod": {
         "css": "ce/CE-45-pudelka-przelaczniki.css (u-vtabs, u-vtab; wariant dwa-pakiety: klasa u-vtabs--2)",
@@ -3155,23 +3159,25 @@ window.CW_CE = {
         ]
       },
       "skroty_wariantow": {
-        "z-pakietami": "Pudełka wyboru pakietu, suwak, wiersze zabiegów i boksy wyników z sumą kosztu"
+        "z-pakietami": "Pudełka wyboru pakietu, suwak, wiersze zabiegów i boksy wyników z sumą kosztu",
+        "etapy": "Linijka powierzchni, kolumny etapów programu z kaflami produktów, suma netto etapu z polem „Licz w sumie”, razem netto, „Dodaj do koszyka” i trzy pakiety"
       },
       "opis": "Nagłówek, suwak powierzchni z wartością, siatka boksów wyników (wartość, jednostka, wiersze pomocnicze). Głowa sekcji – kicker, h2 i lead – stoi NAD paskiem powierzchni, wyrównana do lewej (uwaga Mateusza z 20.09.2026; kolumna głowy obok przelicznika, którą wprowadzał szeroki kontener od 1560 px, zniknęła razem z nim). Boks wyniku może nieść wiersze pomocnicze z własnym `data-calc-out`: woda do zabiegu i koszt produktu brutto (etykieta mówi „brutto” przy każdej liczbie, nie tylko w nocie pod tabelą – decyzja Mateusza z 20.09.2026) – `data-lo`/`data-hi` są tam już w złotówkach na hektar (dawka × cena jednostkowa), więc przelicznik `c5.js` zostaje nietknięty.",
       "mechanika": "Suwak przelicza dawki na bieżąco (data-calc w c5.js, grupowanie tysięcy), bez JS wartości domyślne.",
       "baza": {
-        "plik": "v7/kukurydza.html",
-        "kotwica": "u-pakiety"
+        "plik": "v7/borowka.html",
+        "kotwica": "b-pakiety"
       },
       "kod": {
-        "css": "ce/CE-47-przelicznik.css (u-pk, u-area, u-calc, u-out, u-cost)",
-        "js": "c5.js (przelicznik data-calc) + uprawa.js 13 (suwak) + ce/CE-47-przelicznik.js (modyfikator u-pk--linijka)"
+        "css": "ce/CE-47-przelicznik.css (u-pk, u-area, u-calc, u-out, u-cost; wariant etapy – u-pkc)",
+        "js": "c5.js (przelicznik data-calc) + uprawa.js 13 (suwak) + ce/CE-47-przelicznik.js (modyfikator u-pk--linijka; wariant etapy – część „etapy”, koszyk przez sklep-wspolne.js)"
       },
       "czesci": [
         "suwak",
         "boksy wyników"
       ],
       "warianty": {
+        "etapy": "koszt programu faza po fazie (Kukurydza #u-koszt, Figma 560:205 z adnotacjami; szablon stron upraw rolniczych, runda 03.11.2026 wieczorem): klasa u-pk--etapy obok u-pk--linijka; na białym tle strony (beżowy panel zdjęty – czytelność) – pole powierzchni nad linijką (wartość startowa: przeciętne pole, 10 ha), pod nią siedem kolumn tych samych faz co wykres CE-100, bez kolumny opisów; w kolumnie numer, nazwa i pigułka „Opis fazy” (ten sam lightbox), kafle produktów (packshot, nazwa, JEDNA dawka na hektar – dolna z programu w pakiecie minimalnym, górna w pozostałych; bez zakresów –, ilość na pole, opakowania; kafel partnerski tej samej wielkości na beżowym tle; kafle innych pakietów przerywane, z dopiskiem „poza pakietem”), jedna cena netto fazy i pole „Uwzględnij”; uwzględniona faza ma zielonkawe tło i obrys od numeru po pole. Pod linią po prawej podsumowanie jak w tabeli: „Razem netto za zaznaczone fazy”, pakiet, areał i liczba faz, cena netto, brutto mniejszym pismem, „Dodaj do koszyka” pod ceną. Pod panelem pływający przełącznik pakietów CE-100, noty o cenach 100 px niżej, bez ramki. Koszt = jedna wielkość opakowania na produkt (ta, która na daną ilość kosztuje najmniej; ilość poniżej najmniejszego opakowania = to opakowanie), netto przez CWSklep.vatSplit; do koszyka trafiają dokładnie policzone opakowania; przyciski data-pkc-buy w metryczkach otwierają szybki podgląd sklepu z tego samego JSON. Poniżej 1000 px fazy jedna pod drugą, puste fazy znikają, kafel w wierszu.",
         "z-pakietami": "przelicznik spięty z wyborem pakietu (Kukurydza, 01.10.2026): w górnym rzędzie pudełka-przełączniki CE-45 „dwa-pakiety” i suwak powierzchni, niżej panel wybranego pakietu – wiersze „Etap · Zabieg”, a pod nimi boksy wyników po jednym na produkt (ilość, woda do zabiegu, koszt brutto, przycisk sklepu) i ciemny boks sumy kosztu pakietu; trzy boksy w pakiecie minimum, cztery w optimum; `data-calc` i `data-tabs-group` siedzą na tym samym kontenerze, więc przelicznik wypełnia boksy obu paneli. Na Borówce (02.10.2026) panel ma dwie grupy boksów: „co roku” i „jednorazowo” – każda z ciemnym boksem sumy; boksy jednorazowe (podłoże, „Wodny Stoper”, ściółka) niosą ilość na powierzchnię bez wiersza wody i koszt brutto liczony z największego opakowania (uwaga Mateusza z 02.10: „A tu nie liczysz ceny?”); pod panelami zostaje tylko odnośnik „Jak liczymy pakiety: założenia i ceny”, który otwiera okno CE-25 „jednostronicowy” z notą o roboczej propozycji, założeniami przeliczenia na hektar i cenami; modyfikator u-pk--linijka (Borówka, wzór Figma 466-161; od 15.10.2026 wieczorem w przepływie strony): kolejność – przełącznik pakietów, tuż pod nim linijka powierzchni (gęsta podziałka, etykiety w skali logarytmicznej data-ruler-marks, domyślnie 0,5 · 1 · 2 · 5 · 10 · 20 · 50, uchwyt z kreską i ←→, duża wartość z „ha”; przeciąganie i klik, role=slider, strzałki, PageUp / PageDown, Home, End; kroki data-ruler-steps – 0,5 ha do 10 ha, potem 1 ha; wpisuje do [data-calc-in], liczy dalej c5.js), produkty wybranego pakietu w stałej siatce 4 kolumn od 1000 px (karta = 1/4 wiersza bez względu na liczbę kart; poniżej 2 kolumny, także na telefonie), na końcu zalecenia „Etap · Zabieg”; bez przyklejania i bez wpływu na dok doradcy; bez JS suwak natywny. Wzór dla kolejnych stron upraw (decyzja Mateusza z 16.10.2026 – wdrażać przy poprawianiu ich treści)"
       },
       "zrzut": {
@@ -4128,7 +4134,8 @@ window.CW_CE = {
       "warianty": {},
       "zrzut": {
         "maxh": 1100
-      }
+      },
+      "status": "wycofany"
     },
     "CE-67": {
       "nazwa": "Karty z przyklejonym kadrem",
@@ -4165,8 +4172,8 @@ window.CW_CE = {
       "opis": "Szeroka sekcja o dwóch kolumnach: po lewej głowa (kicker w ramce, h2, krótki lead), nagłówek h3 i siatka sześciu kart 2 × 3, każda z numerem w węźle i jednym zdaniem; po prawej kadr z przyciskiem leżącym u jego dołu. Karty czyta się po kolei, a kadr trzyma temat na oku przez cały czas czytania. Na CARBOHUMIC („Jaka gleba”, od 02.10.2026) cztery karty 2 × 2 z ikoną w ramce i tytułem zamiast numeru w węźle, bez nagłówka h3 nad siatką; w kadrze placeholder i przycisk doradcy. Ten sam układ czterech kart z ikoną na Borówce („Masz już plantację”, od 02.10.2026): w kadrze zdjęcie młodej plantacji ze ściółką, przycisk otwiera kartę zastosowania CARBOMAT ECO Ściółka.",
       "mechanika": "Kadr jest przyklejony 20 px od górnej, dolnej i prawej krawędzi okna (uwaga Mateusza z 19.09.2026; prawa krawędź wychodzi 20 px w margines kontenera, lewa kolumna trzyma 40 px), więc stoi nieruchomo, gdy karty przewijają się obok, a odjeżdża z końcem sekcji; przycisk na kadrze leży w stanie przyklejonym 96 px nad jego dołem, ponad dokiem doradcy; karty wchodzą kaskadą co 60 ms revealem strony. Poniżej 900 px kolumny znikają i porządek jest jeden: głowa, kadr 4 : 3 z przyciskiem, h3, karty (jedna kolumna, dwie od 640 px), bez przyklejania. Bez JS-u.",
       "baza": {
-        "plik": "v7/kukurydza.html",
-        "kotwica": "u-decyzje"
+        "plik": "v7/carbohumic-doglebowy.html",
+        "kotwica": "jaka-gleba"
       },
       "kod": {
         "css": "ce/CE-67-karty-z-kadrem.css",
@@ -4227,8 +4234,8 @@ window.CW_CE = {
       "opis": "Szeroka sekcja (kontener do 1800 px, marginesy 40 px) z jedną linią kolumny w połowie kontenera: w głowie kicker w ramce po lewej i nagłówek od połowy; niżej lista wierszy na całą szerokość – numer w węźle 20 px od lewej krawędzi, tekst wiersza 15 px od połowy kontenera, linia 1 px nad każdym zamkniętym wierszem (72 px). Otwarta pozycja jest jasnym panelem na całą szerokość kontenera: jej wiersz to pierwsza linia panelu, w prawej kolumnie tytuł 24 px, opis, boksy produktów jeden pod drugim (każdy na szerokość swojej treści), szara nota i przycisk na szerokość kolumny; w lewym dolnym rogu panelu kadr pozycji 7 : 5, 20 px od lewej i dolnej krawędzi. Poniżej 900 px jedna kolumna: kadr, tytuł, opis, boksy, nota, przycisk.",
       "mechanika": "Akordeon: jedna pozycja otwarta naraz, domyślnie pierwsza (klik, Enter, spacja; ponowny klik zwija), strzałki oraz Home i End przenoszą fokus między wierszami. Zamknięty wiersz pokazuje tytuł pozycji, otwarty – jej etykietę, a tytuł schodzi do panelu; przełącza to CSS po aria-expanded, nazwa dostępna przycisku jest stała („NN tytuł”). Wysokość panelu .35 s, kadr wchodzi krótkim zanikiem; gdy po zwinięciu pozycji powyżej otwierany wiersz wypada ponad okno, moduł dociąga go pod nagłówek serwisu. Od 900 px przycisk zawsze stoi w dolnej strefie panelu obok kadru (52 px i 20 px nad krawędzią) – także w pozycji bez produktów, gdzie kadr jest wyższy niż tekst. Boksy produktów i przycisk otwierają lightboxy. Bez JS wszystkie panele otwarte z kadrami; reduced-motion bez animacji.",
       "baza": {
-        "plik": "v7/kukurydza.html",
-        "kotwica": "u-fazy"
+        "plik": "v7/borowka.html",
+        "kotwica": "b-etapy"
       },
       "kod": {
         "css": "ce/CE-68-akordeon-faz.css",
@@ -4244,7 +4251,7 @@ window.CW_CE = {
       "warianty": {},
       "zrzut": {
         "maxh": 1100,
-        "przewin": "#u-fazy .c5-fa__list"
+        "przewin": "#b-etapy .c5-fa__list"
       }
     },
     "CE-69": {
@@ -5942,6 +5949,65 @@ window.CW_CE = {
         "maxh": 700,
         "klik": "[data-shop-search]",
         "ukryj": ".c5sk-bar"
+      }
+    },
+    "CE-100": {
+      "nazwa": "Wykres etapów z pakietami",
+      "grupa": "dane",
+      "rodzina": "dane",
+      "skrot": "Oś faz rozwoju z przyciskiem opisu pod każdą fazą (cała kolumna jest linkiem), wiersze produktów CarboHort i partnerskich z paskami stosowania, pływający przełącznik pakietów.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "packshot",
+          "schemat-wykres"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "taby-przelacznik",
+          "okno",
+          "hover"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "harmonogram-czas",
+          "porownanie-wybor",
+          "kroki-proces"
+        ],
+        "mechanika": [
+          "klik"
+        ],
+        "zakres": [
+          "typ-strony"
+        ]
+      },
+      "opis": "Szeroka sekcja wg ramki Figma 560:167 i jej adnotacji (szablon stron upraw rolniczych, Kukurydza od 03.11.2026): głowa – kicker i h2 po lewej, lead i legenda po prawej – wysoko nad wykresem; wykres na ciepłym panelu jako prawdziwa tabela: u góry oś faz rozwoju (numer, nazwa, BBCH nad linią z kreskami na granicach), pod osią w każdej fazie pigułka „Opis fazy” (w ostatniej „Czytaj więcej”), niżej po jednym wierszu na produkt – produkty CarboHort z większym kwadratem packshotu w białej karcie, produkty partnerskie (dostępne w sklepie, mniej promowane) z małym kwadratem i chipem – i paski stosowania z jedną dawką wybranego pakietu (data-txt-min – tekst paska w pakiecie minimalnym); pasek przerywany = produkt zamienny, jaśniejszy = partnerski, długi (colspan) = produkt stosowany przez okres. Pod panelem przełącznik pakietów (c5-pkbar), który pływa przy dolnej krawędzi okna, dopóki sekcja jest na ekranie. Pierwsza kolumna ma szerokość --we-first (240 px, 200 px przy 900–1199 px, 124 px poniżej 900 px) – tę samą co przelicznik CE-47 „etapy”, więc kolumny faz obu sekcji stoją w jednej linii.",
+      "mechanika": "Przełącznik (semantyka radio: klik, strzałki, Home, End) pokazuje paski jednego pakietu: data-pk na pasku wymienia jego pakiety, pasek bez data-pk (zamienny) stoi zawsze; lista produktów stoi zawsze, zmieniają się tylko paski; na start pakiet kompleksowy. Klik w dowolne miejsce kolumny fazy klika jej pigułkę – ta otwiera stronę fazy w lightboxie CE-25 „fazy”; najechanie i fokus podbarwiają kolumnę na biało. Nazwa produktu otwiera metryczkę (CE-25 „metryczka”). Wszystkie przełączniki tej samej grupy (data-pakiety) są zgrane zdarzeniem c5:pakiet na document: przelicznik CE-47 „etapy” i pasek pakietów w lightboxie faz (data-pk-sat – filtruje karty produktów data-pk i pokazuje data-pk-none, gdy w fazie nie ma zabiegu pakietu). Przycisk data-we-goto („Oblicz koszt stosowania”) po zamknięciu lightboxa przewija do przelicznika. Poniżej 900 px tabela przewija się w poziomie w panelu z przypiętą kolumną produktów. Bez JS przełączniki ukryte, wszystkie paski i karty widoczne; przy reduced-motion bez przejść.",
+      "baza": {
+        "plik": "v7/kukurydza.html",
+        "kotwica": "u-etapy"
+      },
+      "kod": {
+        "css": "ce/CE-100-wykres-etapow.css (c5-we)",
+        "js": "ce/CE-100-wykres-etapow.js"
+      },
+      "czesci": [
+        "oś faz z kreskami",
+        "pigułki „Opis fazy”",
+        "kolumna fazy jako link (podbarwienie)",
+        "wiersze produktów CarboHort z packshotem",
+        "wiersze produktów partnerskich",
+        "paski stosowania, zamienne i partnerskie",
+        "legenda",
+        "pływający przełącznik pakietów (c5-pkbar)"
+      ],
+      "warianty": {},
+      "zrzut": {
+        "maxh": 1000
       }
     }
   },

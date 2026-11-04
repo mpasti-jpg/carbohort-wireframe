@@ -175,3 +175,98 @@ html.cx-js .u-lightbox--waski .u-lightbox__panel{max-width:760px;}
   .c5-lb--strony .c5-lb__steps{flex:1 1 100%;}
   .c5-lb--strony .c5-lb__steps > .c5-btn{flex:1 1 0;--c5-btn-px:var(--ch-space-3);}
 }
+
+/* ===== wariant: fazy (template of the arable crop pages, 03.11.2026) =====
+   The phase description of the chart CE-100 (comments of Mateusz on the
+   artifact and the annotation of Figma 560:167): modifier `u-lightbox--fazy` on
+   the lightbox. A package bar (CE-100 `c5-pkbar--sm`) stands on top of the panel,
+   outside the scrolling content, and switches the product cards of every page;
+   the head stacks – „Faza N”, title (BBCH in brackets), the lead UNDER the title over the
+   full width (it was squeezed beside the title); the headings of the blocks and
+   the text are bigger, in the text font of the site; product cards carry the
+   packshot on the left; merged phases show their steps as sub-blocks. At the
+   bottom of every page „Oblicz koszt stosowania” leads to the calculator; no
+   pager between the phases. */
+.u-lightbox--fazy .u-lbpk{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ch-space-3);padding:var(--ch-space-3) clamp(1.25rem,4.5vw,4rem);
+  padding-right:calc(var(--w-control-h-md) + var(--ch-space-6));border-bottom:1px solid var(--ch-border-subtle);background:var(--ch-surface-warm);}
+.u-lightbox--fazy .u-lbpk__l{font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-secondary);}
+.u-lightbox--fazy .u-lightbox__head{display:flex;flex-direction:column;align-items:stretch;gap:var(--ch-space-3);}
+.u-lightbox--fazy .u-lightbox__no{font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-secondary);font-variant-numeric:tabular-nums;}
+.u-lightbox--fazy .u-lightbox__lead{max-width:64ch;margin:0;font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);color:var(--ch-text-secondary);}
+.u-lightbox--fazy .u-lightbox__body{display:flex;flex-direction:column;gap:var(--ch-space-10);padding-top:var(--ch-space-8);}
+.u-lightbox--fazy .u-chunk{gap:var(--ch-space-4);}
+.u-lightbox--fazy .u-chunk > .u-lab,.u-lightbox--fazy .u-chunk > .u-h4,.u-lightbox--fazy .u-cond__t,.u-lightbox--fazy .u-steps__n{font-size:var(--ch-type-title-s-size);line-height:var(--ch-type-title-s-lh);
+  letter-spacing:var(--ch-type-title-s-ls);text-transform:none;font-weight:var(--ch-font-weight-regular);color:var(--ch-text-primary);}
+.u-lightbox--fazy .u-txt,.u-lightbox--fazy .u-defs dd,.u-lightbox--fazy .u-rows dd,.u-lightbox--fazy .wf-list{font-size:var(--ch-type-body-relaxed-size);line-height:var(--ch-type-body-relaxed-lh);color:var(--ch-text-primary);}
+.u-lightbox--fazy .u-defs dt,.u-lightbox--fazy .u-rows dt{font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);letter-spacing:0;text-transform:none;color:var(--ch-text-secondary);}
+.u-lightbox--fazy .u-measure{max-width:72ch;}
+.u-lightbox--fazy .u-lbsub{display:flex;flex-direction:column;gap:var(--ch-space-8);padding-top:var(--ch-space-8);border-top:1px solid var(--ch-border-subtle);}
+.u-lightbox--fazy .u-lbsub__t{margin:0;font-family:var(--ch-type-display-sm-font);font-size:var(--ch-type-display-sm-size);line-height:var(--ch-type-display-sm-lh);
+  letter-spacing:var(--ch-type-display-sm-ls);font-weight:var(--ch-type-display-sm-weight);color:var(--ch-text-primary);}
+.u-lightbox--fazy .u-lbsub__lead{margin:calc(var(--ch-space-5) * -1) 0 0;max-width:64ch;font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);color:var(--ch-text-secondary);}
+.u-lightbox--fazy .u-lbnone{margin:0;padding:var(--ch-space-4) var(--ch-space-5);border-radius:var(--ch-radius-md);background:var(--ch-surface-warm);
+  font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary);}
+.u-lightbox--fazy .u-lbnone[hidden]{display:none;}
+/* product card with the packshot on the left */
+.u-pcard--foto{grid-template-columns:96px minmax(0,1fr);align-items:start;gap:var(--ch-space-5);padding:var(--ch-space-4);
+  border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-lg);background:var(--ch-surface-raised);}
+.u-pcard--foto[hidden]{display:none;}
+.u-pcard--foto + .u-pcard--foto{margin-top:var(--ch-space-3);}
+.u-pcard__pack{display:block;width:96px;height:96px;padding:8px;box-sizing:border-box;border-radius:var(--ch-radius-md);background:var(--ch-surface-warm);}
+.u-pcard__pack img{display:block;width:100%;height:100%;object-fit:contain;}
+.u-pcard--foto .u-pcard__in{gap:var(--ch-space-2);}
+.u-pcard--foto .u-pcard__n{font-size:var(--ch-type-title-s-size);line-height:var(--ch-type-title-s-lh);font-weight:var(--ch-font-weight-regular);}
+.u-pcard--alt{border-style:dashed;border-color:var(--ch-border-control);background:transparent;}
+.u-pcard__chip{align-self:flex-start;padding:2px 10px;border-radius:999px;font-size:12px;line-height:18px;background:var(--ch-surface-warm-strong);color:var(--ch-text-secondary);}
+.u-pcard--foto .u-defs{gap:var(--ch-space-3);}
+.u-pcard--foto .u-more{align-self:flex-start;margin-top:var(--ch-space-1);}
+/* „Oblicz koszt stosowania” at the very end of the content of every page (no fixed pager bar – Mateusz, 03.11.2026) */
+.u-lightbox--fazy .u-lbgo{margin-top:var(--ch-space-10);padding-top:var(--ch-space-8);border-top:1px solid var(--ch-border-subtle);}
+.u-lightbox--fazy .u-lbgo .c5-btn{gap:8px;}
+@media (max-width:599px){
+  .u-pcard--foto{grid-template-columns:64px minmax(0,1fr);gap:var(--ch-space-3);}
+  .u-pcard__pack{width:64px;height:64px;padding:6px;}
+  .u-lightbox--fazy .u-lbpk{padding:var(--ch-space-2) var(--ch-space-3);padding-right:calc(var(--w-control-h-md) + var(--ch-space-3));}
+  .u-lightbox--fazy .u-lbpk__l{display:none;}
+  .u-lightbox--fazy .u-lbpk .c5-pkbar{min-width:0;padding:3px;}
+  .u-lightbox--fazy .u-lbpk .c5-pkbar__tab{min-height:30px;padding:4px 6px;font-size:12px;line-height:15px;white-space:normal;}
+}
+
+/* ===== wariant: metryczka (template of the arable crop pages, 03.11.2026) =====
+   The product pop-up of the chart CE-100 (annotation of Figma 560:167): when the
+   product is used in this crop (phases, dose, packages), what it is and what it
+   gives, form and limits; „Kup produkt” (quick view of the shop, adds to the
+   cart), a quieter link to the product page of the site and the product card to
+   download. Modifier `u-lightbox--metryczka` on the lightbox. Bigger text than
+   the old „Mapa zastosowań” (comment of Mateusz). */
+.u-lightbox--metryczka .u-meta__head{display:grid;grid-template-columns:168px minmax(0,1fr);gap:var(--ch-space-6);align-items:center;padding-bottom:var(--ch-space-6);border-bottom:1px solid var(--ch-border-subtle);}
+html.cx-js .u-lightbox--metryczka .u-meta__head{padding-right:var(--w-control-h-md);}
+.u-meta__pack{display:block;width:168px;height:168px;padding:14px;box-sizing:border-box;border-radius:var(--ch-radius-lg);background:var(--ch-surface-warm);object-fit:contain;}
+.u-meta__tt{display:flex;flex-direction:column;gap:var(--ch-space-3);}
+.u-meta__tt .u-lightbox__t{font-size:var(--ch-type-h3-display-size);line-height:var(--ch-type-h3-display-lh);}
+.u-meta__lead{margin:0;max-width:60ch;font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);color:var(--ch-text-secondary);}
+.u-meta__body{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:var(--ch-space-10);padding-top:var(--ch-space-8);}
+.u-meta__sec{display:flex;flex-direction:column;gap:var(--ch-space-4);}
+.u-meta__sec + .u-meta__sec{margin-top:var(--ch-space-8);}
+.u-meta__h{margin:0;font-size:var(--ch-type-title-s-size);line-height:var(--ch-type-title-s-lh);letter-spacing:var(--ch-type-title-s-ls);font-weight:var(--ch-font-weight-regular);color:var(--ch-text-primary);}
+.u-meta__when{display:flex;flex-direction:column;gap:var(--ch-space-2);margin:0;padding:0;list-style:none;}
+.u-meta__when li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--ch-space-1) var(--ch-space-4);padding:var(--ch-space-3) var(--ch-space-4);border-radius:var(--ch-radius-md);background:var(--ch-surface-warm);}
+.u-meta__ph{font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-primary);}
+.u-meta__dose{font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);font-weight:var(--ch-font-weight-medium);color:var(--ch-text-primary);text-align:right;font-variant-numeric:tabular-nums;}
+.u-meta__pk{grid-column:1 / -1;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-secondary);}
+.u-meta__note{margin:0;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary);}
+.u-lightbox--metryczka .u-txt,.u-lightbox--metryczka .u-defs dd{font-size:var(--ch-type-body-relaxed-size);line-height:var(--ch-type-body-relaxed-lh);color:var(--ch-text-primary);}
+.u-lightbox--metryczka .u-defs dt{font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);letter-spacing:0;text-transform:none;color:var(--ch-text-secondary);}
+.u-meta__foot{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ch-space-3) var(--ch-space-5);margin-top:var(--ch-space-10);padding-top:var(--ch-space-6);border-top:1px solid var(--ch-border-subtle);}
+.u-meta__foot .c5-btn{gap:8px;}
+.u-meta__quiet{display:inline-flex;align-items:center;gap:6px;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-primary);}
+.u-meta__quiet .wf-icon{width:16px;height:16px;}
+.u-meta__quiet[aria-disabled="true"]{color:var(--ch-text-secondary);cursor:default;text-decoration:none;}
+@media (max-width:899px){
+  .u-lightbox--metryczka .u-meta__head{grid-template-columns:96px minmax(0,1fr);gap:var(--ch-space-4);}
+  .u-meta__pack{width:96px;height:96px;padding:8px;}
+  .u-meta__tt .u-lightbox__t{font-size:var(--ch-type-display-sm-size);line-height:var(--ch-type-display-sm-lh);}
+  .u-meta__body{grid-template-columns:minmax(0,1fr);gap:var(--ch-space-8);}
+  .u-meta__foot .c5-btn{flex:1 1 100%;justify-content:center;}
+}
+.u-lightbox--metryczka .u-lightbox__no{font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-secondary);}

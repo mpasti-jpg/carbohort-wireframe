@@ -131,3 +131,105 @@
   .u-ruler__val{left:20px;}
   .u-ruler__val.is-left{right:20px;}
 }
+
+/* ===== wariant: etapy =====
+   Cost of the programme phase by phase – template of the arable crop pages
+   (Figma 560:205 with its annotations and the comments of Mateusz on the
+   artifact, 03.11.2026). Modifier `u-pk--etapy` next to `u-pk--linijka` on the
+   calculator box. One warm panel (the same as the chart CE-100 above it):
+   - the area field centred over the ruler, a starting value that is a sensible,
+     average field, and air under the ruler;
+   - one column per phase (the same phases as the chart; no column of labels –
+     Mateusz): number, name and the pill „Opis fazy” (the same lightbox as the
+     chart), the product tiles of the phase (packshot, name, ONE dose per hectare
+     – no ranges: the lower dose of the programme in the minimal package, the
+     upper in the others –, amount for the field, packs), the net sum of the
+     phase and its box „Uwzględnij”; an included phase is tinted and framed from
+     its number down to the box;
+   - CarboHort tiles are white, partner tiles the same size on a beige ground
+     (annotation: less pronounced, same size); a tile of another package stands
+     dashed and light with „poza pakietem”;
+   - under a line, the summary on the right like the total of a table: „Razem
+     netto” (net – arable crops are bought by professionals; annotation), what it
+     covers (package, area, phases), the gross amount small, „Dodaj do koszyka”
+     under the price;
+   - the package bar of CE-100 (`c5-pkbar`, CE-100-wykres-etapow.css) floats at
+     the bottom of the window while the section is on screen;
+   - the notes on prices stand 100 px lower, without a frame, at normal leading.
+   Below 1000 px the phases stand one under another (empty ones drop out), the
+   tile turns into a row (packshot on the left). Script: CE-47-przelicznik.js,
+   part „etapy”. */
+.u-pk--etapy{--we-line:color-mix(in srgb,var(--ch-text-primary) 12%,transparent);margin-top:clamp(5rem,8vw,6.25rem);}
+@media (min-width:900px) and (max-width:1199px){.u-pk--etapy .c5-we__pill{padding:5px 10px;font-size:12px;}}
+/* no beige panel (comment of Mateusz: it halved the readability) – white ground */
+.u-pkc-panel{padding:0;background:none;}
+.u-pk--etapy .u-area.is-ruler{display:flex;flex-direction:column;align-items:center;gap:var(--w-space-2);}
+.u-pk--etapy .u-area.is-ruler > .wf-label{text-align:center;}
+.u-pk--etapy .u-area.is-ruler > .u-ruler{align-self:stretch;margin-top:var(--w-space-2);}
+.u-pk--etapy .u-area{margin-bottom:clamp(3rem,6vw,4.5rem);}
+.u-pkc{display:grid;grid-template-columns:repeat(var(--pkc-n,7),minmax(0,1fr));gap:var(--ch-space-2);}
+.u-pkc__col{display:flex;flex-direction:column;gap:var(--ch-space-3);min-width:0;padding:var(--ch-space-5) var(--ch-space-2) var(--ch-space-5);
+  border:1px solid transparent;border-radius:var(--ch-radius-lg);transition:background var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);}
+/* a phase with products: framed; an included phase: tinted from the number down to the box (like the column of the chart under the pointer) */
+.u-pkc__col:not(.is-empty){border-color:var(--ch-border-subtle);}
+.u-pkc__col.is-on{background:var(--ch-color-green-50);border-color:var(--ch-color-green-200);}
+.u-pkc__top{display:flex;flex-direction:column;align-items:center;gap:var(--ch-space-2);text-align:center;}
+.u-pkc__no{font-size:12px;line-height:14px;letter-spacing:.06em;color:var(--ch-text-secondary);font-variant-numeric:tabular-nums;}
+.u-pkc__h{margin:0;min-height:2.6em;font-size:16px;line-height:1.3;color:var(--ch-text-primary);text-wrap:balance;}
+.u-pkc__tiles{display:flex;flex-direction:column;gap:var(--ch-space-2);flex:1 1 auto;margin:var(--ch-space-5) 0 0;padding:0;list-style:none;}
+.u-pkc__tile{display:flex;flex-direction:column;align-items:center;gap:3px;padding:var(--ch-space-3) var(--ch-space-2);text-align:center;
+  border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-lg);background:var(--ch-surface-raised);
+  transition:opacity var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease),background var(--w-duration-base) var(--w-ease);}
+.u-pkc__tile--partner{background:var(--ch-surface-warm-strong);}
+.u-pkc__tile.is-out{opacity:.55;background:transparent;border-style:dashed;border-color:var(--ch-border-control);}
+.u-pkc__pack{display:block;width:60px;height:60px;margin-bottom:var(--ch-space-1);padding:6px;box-sizing:border-box;border-radius:var(--ch-radius-md);background:var(--ch-surface-warm);}
+.u-pkc__pack img{display:block;width:100%;height:100%;object-fit:contain;}
+.u-pkc__tile--partner .u-pkc__pack{background:var(--ch-surface-raised);}
+.u-pkc__n{font-size:13px;line-height:1.3;font-weight:var(--ch-font-weight-medium);color:var(--ch-text-primary);}
+.u-pkc__dose,.u-pkc__packs,.u-pkc__tag{font-size:12px;line-height:16px;color:var(--ch-text-secondary);}
+.u-pkc__qty{font-size:16px;line-height:22px;font-weight:var(--ch-font-weight-medium);color:var(--ch-text-primary);font-variant-numeric:tabular-nums;}
+.u-pkc__tag{display:none;}
+.u-pkc__tile.is-out .u-pkc__tag{display:block;}
+.u-pkc__tile.is-out .u-pkc__packs{display:none;}
+.u-pkc__none{margin:auto 0;text-align:center;font-size:13px;color:var(--ch-text-secondary);}
+.u-pkc__foot{display:flex;flex-direction:column;align-items:center;gap:var(--ch-space-5);margin-top:auto;padding-top:var(--ch-space-4);border-top:1px solid var(--we-line);text-align:center;}
+.u-pkc__sum{display:flex;flex-direction:column;margin:0;}
+.u-pkc__sum b{font-size:var(--ch-type-title-s-size);line-height:var(--ch-type-title-s-lh);font-weight:var(--ch-font-weight-medium);font-variant-numeric:tabular-nums;color:var(--ch-text-primary);}
+.u-pkc__col.is-off .u-pkc__sum{opacity:.45;}
+.u-pkc__chk{display:inline-flex;align-items:center;gap:8px;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-primary);cursor:pointer;}
+.u-pkc__chk input{width:20px;height:20px;margin:0;accent-color:var(--ch-text-primary);cursor:pointer;}
+.u-pkc__chk input:disabled{cursor:default;}
+.u-pkc__chk:has(input:disabled){opacity:.45;cursor:default;}
+/* the summary: on the right under a line, like the total of a table */
+.u-pkc__sumrow{display:grid;gap:var(--ch-space-5);margin-top:var(--ch-space-8);padding-top:var(--ch-space-6);border-top:1px solid color-mix(in srgb,var(--ch-text-primary) 25%,transparent);}
+.u-pkc__info{margin:0 0 var(--ch-space-1);font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-secondary);}
+.u-pkc__info b{font-weight:var(--ch-font-weight-medium);color:var(--ch-text-primary);}
+.u-pkc__tot{display:flex;flex-direction:column;align-items:flex-end;gap:var(--ch-space-1);text-align:right;}
+.u-pkc__tot .wf-caption{color:var(--ch-text-secondary);}
+.u-pkc__tot > b{font-size:clamp(1.75rem,3vw,2.5rem);line-height:1.1;font-weight:var(--ch-font-weight-regular);letter-spacing:-0.015em;font-variant-numeric:tabular-nums;color:var(--ch-text-primary);}
+.u-pkc__tot .c5-btn{margin-top:var(--ch-space-4);}
+.u-pkc__status{margin:var(--ch-space-2) 0 0;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-primary);}
+.u-pkc__status:empty{display:none;}
+@media (min-width:1000px){
+  .u-pkc__sumrow{justify-items:end;}
+}
+.u-pkc__notes{margin-top:100px;max-width:80ch;}
+.u-pkc__notes p{margin:0;font-size:13px;line-height:1.5;color:var(--ch-text-secondary);}
+.u-pkc__notes p + p{margin-top:var(--ch-space-2);}
+@media (max-width:999px){
+  .u-pkc{grid-template-columns:minmax(0,1fr);}
+  .u-pkc{gap:var(--ch-space-3);}
+  .u-pkc__col{padding:var(--ch-space-4);}
+  .u-pkc__col.is-empty{display:none;}
+  .u-pkc__top{flex-direction:row;flex-wrap:wrap;align-items:baseline;justify-content:space-between;text-align:left;}
+  .u-pkc__h{min-height:0;font-weight:var(--ch-font-weight-medium);flex:1 1 auto;}
+  .u-pkc__tile{display:grid;grid-template-columns:56px minmax(0,1fr);column-gap:var(--ch-space-3);align-items:start;text-align:left;}
+  .u-pkc__tile > :not(.u-pkc__pack){grid-column:2;}
+  .u-pkc__pack{grid-column:1;grid-row:1 / span 6;width:56px;height:56px;margin:0;}
+  .u-pkc__foot{flex-direction:row;justify-content:space-between;text-align:left;}
+  .u-pkc__sum{flex-direction:row;align-items:baseline;gap:var(--ch-space-2);}
+  .u-pkc__tot{align-items:stretch;text-align:left;}
+  .u-pkc__tot .c5-btn{justify-content:center;}
+  .u-pkc__notes{margin-top:64px;}
+}
+@media (prefers-reduced-motion: reduce){.u-pkc__tile{transition:none;}}
