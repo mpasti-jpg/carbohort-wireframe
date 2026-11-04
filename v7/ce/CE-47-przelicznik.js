@@ -239,16 +239,19 @@
 
 /* ===== CE-47 · Przelicznik – wariant: etapy ================================
    Cost of a crop programme phase by phase (Figma 560:205 and its annotations,
-   03.11.2026). The box `.u-pk--etapy[data-pk-calc]` also carries
-   `u-pk--linijka`, so the ruler writes the area into [data-calc-in]; this part
-   only listens to that field.
+   03.11.2026). Since U-30 (04.11.2026) the box `.u-pk--etapy[data-pk-calc]`
+   has no ruler: the native range ([data-calc-range], uprawa.js) writes the
+   area into [data-calc-in]; this part only listens to that field.
    Markup: one `.u-pkc__col` per phase with tiles `.u-pkc__tile` – data-prod
    (key in the product JSON of `script[data-pkc-products]`: id, name, img, url
    and packs with their volume `l` and gross price, the format of
    sklep-wspolne.js), data-lo / data-hi (dose per hectare), data-pk (packages of
    the tile); a tile without a dose (a partner product whose dose is still to be
-   given) only stands and counts nothing. Per phase the sum [data-pkc-sum] and
-   its box [data-pkc-chk]; the total [data-pkc-total] / [data-pkc-gross], what it
+   given) only stands and counts nothing. Every tile has its checkbox
+   [data-pkc-pick] (U-19, 04.11.2026 – it replaced the box „Uwzględnij” of the
+   phase): ticked = counted, unticked = `is-skip` (greyed, left out); a tile of
+   another package has its checkbox disabled. Per phase the sum [data-pkc-sum];
+   the total [data-pkc-total] / [data-pkc-gross], what it
    covers [data-pkc-info], the cart button [data-pkc-cart], the status line
    [data-pkc-status] and the package switch ([data-pk-switch], the same radio
    semantics and `c5:pakiet` event as CE-100).
@@ -259,9 +262,9 @@
    that costs least for that amount („nie wysyłamy 100 × 10 kg, tylko
    1 × 1000 kg” – annotation; an amount under the smallest pack is that pack –
    Mateusz, 03.11.2026); net = gross minus VAT (CWSklep.vatSplit with the rate of the
-   pack). A phase counts while its box „Uwzględnij” is ticked; an included phase
-   gets `is-on` (tinted column). „Dodaj do koszyka” puts exactly the counted
-   packs into the cart (CWSklep.add).
+   pack). A phase with at least one counted product gets `is-on` (tinted
+   body). „Dodaj wybrane produkty do koszyka” puts exactly the counted packs
+   into the cart (CWSklep.add).
    Buttons `[data-pkc-buy="key"]` anywhere on the page (the product cards of the
    lightbox) open the quick view of that product from the same JSON.
    Without JS the tiles stand with their doses and the sums show „–”. ===== */
@@ -345,13 +348,17 @@
       var ha = area(), tot = { lo: 0, hi: 0, glo: 0, ghi: 0 }, counted = 0;
       plan = [];
       cols.forEach(function (c) {
-        var chk = c.querySelector("[data-pkc-chk]"), sumEl = c.querySelector("[data-pkc-sum]");
+        var sumEl = c.querySelector("[data-pkc-sum]");
         var s = { lo: 0, hi: 0, glo: 0, ghi: 0 }, any = false, mine = [];
         Array.prototype.forEach.call(c.querySelectorAll(".u-pkc__tile"), function (t) {
           var prod = products[t.getAttribute("data-prod")];
           var lo = parseFloat(t.getAttribute("data-lo")), hi = parseFloat(t.getAttribute("data-hi"));
           var unit = t.getAttribute("data-unit") || "l";
           var qty = t.querySelector("[data-pkc-qty]"), packsEl = t.querySelector("[data-pkc-packs]"), doseEl = t.querySelector("[data-pkc-dose]");
+          var pick = t.querySelector("[data-pkc-pick]"), out = t.classList.contains("is-out");
+          if (pick) pick.disabled = out;
+          var skip = !out && !!pick && !pick.checked;
+          t.classList.toggle("is-skip", skip);
           if (!isFinite(lo)) { return; }   /* no dose yet: the tile only stands */
           if (!isFinite(hi)) hi = lo;
           /* ONE dose, no ranges: the lower dose of the programme in the minimal
@@ -359,16 +366,16 @@
           var dose = pk === "min" ? lo : hi;
           if (doseEl) doseEl.textContent = (doseEl.getAttribute("data-prefix") || "") + num(dose) + "\u00a0" + unit + "/ha" + (doseEl.getAttribute("data-suffix") || "");
           if (qty) qty.textContent = ha ? num(dose * ha) + "\u00a0" + unit : "–";
-          if (t.classList.contains("is-out") || !prod || !ha) { if (packsEl) packsEl.textContent = ""; return; }
-          any = true;
+          if (out || !prod || !ha) { if (packsEl) packsEl.textContent = ""; return; }
           var b = cover(dose * ha, prod);
-          s.lo += b.net; s.hi += b.net; s.glo += b.gross; s.ghi += b.gross;
           if (packsEl) packsEl.textContent = b.packs.length ? packText(b.packs) : "";
+          if (skip) return;   /* left out of the price by its checkbox (U-19) */
+          any = true;
+          s.lo += b.net; s.hi += b.net; s.glo += b.gross; s.ghi += b.gross;
           mine.push({ product: prod, packs: b.packs });
         });
-        if (chk) chk.disabled = !any;
         if (sumEl) sumEl.textContent = any ? zl(s.lo, s.hi) : "–";
-        var on = any && (!chk || chk.checked);
+        var on = any;
         c.classList.toggle("is-off", !on);
         c.classList.toggle("is-on", on);
         if (on) { tot.lo += s.lo; tot.hi += s.hi; tot.glo += s.glo; tot.ghi += s.ghi; counted++; plan = plan.concat(mine); }
@@ -420,9 +427,9 @@
       if (d.from !== box && d.group === group) apply(d.pk, true);
     });
     field.addEventListener("input", function () { if (status) status.textContent = ""; run(); });
-    cols.forEach(function (c) {
-      var chk = c.querySelector("[data-pkc-chk]");
-      if (chk) chk.addEventListener("change", function () { if (status) status.textContent = ""; run(); });
+    tiles.forEach(function (t) {
+      var pick = t.querySelector("[data-pkc-pick]");
+      if (pick) pick.addEventListener("change", function () { if (status) status.textContent = ""; run(); });
     });
     if (cartBtn) cartBtn.addEventListener("click", function () {
       if (!shop) return;

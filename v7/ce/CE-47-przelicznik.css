@@ -135,70 +135,74 @@
 /* ===== wariant: etapy =====
    Cost of the programme phase by phase – template of the arable crop pages
    (Figma 560:205 with its annotations and the comments of Mateusz on the
-   artifact, 03.11.2026). Modifier `u-pk--etapy` next to `u-pk--linijka` on the
-   calculator box. One warm panel (the same as the chart CE-100 above it):
-   - the area field centred over the ruler, a starting value that is a sensible,
-     average field, and air under the ruler;
-   - one column per phase (the same phases as the chart; no column of labels –
-     Mateusz): on top the name of the phase in an outline as wide as the column
-     (a button without fill, the faint line of the outline buttons, more air
-     than a button – it opens the description of the phase, the same lightbox
-     as the chart; no number and no pill „Opis fazy” – U-12, 04.11.2026), under
-     it the body: the product tiles of the phase (packshot, name, ONE dose per
-     hectare – no ranges: the lower dose of the programme in the minimal
-     package, the upper in the others –, amount for the field, packs), the net
-     sum of the phase and its box „Uwzględnij”; an included phase tints and
-     frames only the body – the tint starts under the name (U-11);
-   - CarboHort tiles are white, partner tiles the same size on a beige ground
-     (annotation: less pronounced, same size) and counted like the others once
-     they have a dose; a tile of another package stands dashed and light with
-     „poza pakietem”;
-   - under a line, the summary on the right like the total of a table: „Razem
-     netto” (net – arable crops are bought by professionals; annotation), what it
-     covers (package, area, phases), the gross amount small, „Dodaj do koszyka”
-     under the price;
-   - the package bar of CE-100 (`c5-pkbar`, CE-100-wykres-etapow.css) floats at
-     the bottom of the window while the section is on screen;
-   - the notes on prices stand 100 px lower, without a frame, at normal leading.
-   From 1000 px the names and the bodies of all phases line up in two rows
-   (subgrid). Below 1000 px the phases stand one under another (empty ones drop
-   out), the tile turns into a row (packshot on the left). Script: CE-47-przelicznik.js,
-   part „etapy”. */
-.u-pk--etapy{--we-line:color-mix(in srgb,var(--ch-text-primary) 12%,transparent);margin-top:clamp(5rem,8vw,6.25rem);}
-/* no beige panel (comment of Mateusz: it halved the readability) – white ground */
+   artifact, 03.11.2026, and on the live page, 04.11.2026). Modifier
+   `u-pk--etapy` on the calculator box (no ruler since U-30 – the box no
+   longer carries `u-pk--linijka`). White ground, no panel:
+   - the area in one low row – label, the range between its ends, the number
+     field beside it (U-30: no ruler, little height);
+   - under it the package tabs of CE-100 (`c5-pkdock` > `c5-pkbar`,
+     CE-100-wykres-etapow.css), in the flow, over the table (U-29);
+   - from 1000 px seven phase columns with three rows (names, products,
+     prices) shared by all columns (subgrid), so the price lines line up; from
+     1200 px the grid takes the columns of the chart CE-100 above it: the first
+     column `--we-first` wide with the names of the rows – „Fazy”, „Produkty”,
+     „Cena (netto)…” (U-18) –, then the seven phases, inset by the padding of
+     the chart panel, so the phase names stand under the phases of the chart
+     (between 1000 and 1199 px the column of names would leave the tiles too
+     narrow – there the sum says „cena netto” instead);
+   - a phase column: its name in an outline as wide as the column, which opens
+     the description of the phase (U-12); under it the body: the product tiles
+     (packshot, name, ONE dose per hectare – the lower dose of the programme in
+     the minimal package, the upper in the others –, amount for the field,
+     packs) and the net sum of the phase, no „netto” under it (U-20 – the name
+     of the row says it); every tile of the open package has a checkbox in its
+     top-right corner: ticked = counted, unticked = greyed and left out (U-19);
+     a phase with a counted product tints and frames its body (U-11);
+   - CarboHort tiles are white, partner tiles the same size on a beige ground;
+     a tile of another package stands dashed and light with „poza pakietem”,
+     without a checkbox;
+   - under a line that starts with the first phase: the total on the left,
+     „Dodaj wybrane produkty do koszyka” on the right (U-27, U-28);
+   - the notes on prices stand 100 px lower, without a frame.
+   Below 1000 px the phases stand one under another (empty ones drop out, the
+   names of the rows too – the sum then says „cena netto”), the tile turns into
+   a row (packshot on the left). Script: CE-47-przelicznik.js, part „etapy”. */
+.u-pk--etapy{--we-first:240px;--we-line:color-mix(in srgb,var(--ch-text-primary) 12%,transparent);--pkc-inset:var(--ch-space-5);margin-top:clamp(3rem,5vw,4rem);}
 .u-pkc-panel{padding:0;background:none;}
-.u-pk--etapy .u-area.is-ruler{display:flex;flex-direction:column;align-items:center;gap:var(--w-space-2);}
-.u-pk--etapy .u-area.is-ruler > .wf-label{text-align:center;}
-.u-pk--etapy .u-area.is-ruler > .u-ruler{align-self:stretch;margin-top:var(--w-space-2);}
-.u-pk--etapy .u-area{margin-bottom:clamp(3rem,6vw,4.5rem);}
-.u-pkc{display:grid;grid-template-columns:repeat(var(--pkc-n,7),minmax(0,1fr));gap:var(--ch-space-2);}
+/* the area: one low row (U-30) */
+.u-pk--etapy .u-area{flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:center;gap:var(--ch-space-3) var(--ch-space-5);}
+.u-pk--etapy .u-area > .wf-label{margin:0;}
+.u-pk--etapy .u-area__row{flex:0 1 34rem;gap:var(--ch-space-3);}
+.u-pk--etapy .u-area__row > .wf-caption{flex:none;color:var(--ch-text-secondary);white-space:nowrap;}
+.u-pk--etapy .u-area__row .wf-input-group{width:7.5rem;}
+.u-pk--etapy > .u-pkc-panel > .c5-pkdock{margin:var(--ch-space-6) 0 clamp(2.5rem,4vw,3.5rem);}
+/* the grid of the phases */
+.u-pkc{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--ch-space-3);}
+.u-pkc__labs{display:none;}
 .u-pkc__col{display:flex;flex-direction:column;gap:var(--ch-space-2);min-width:0;}
 /* the name of the phase: an outline as wide as the column, no fill, more air than a button; opens the description (U-12) */
-.u-pkc__ph{display:flex;align-items:center;justify-content:center;width:100%;padding:20px var(--ch-space-3);box-sizing:border-box;
+.u-pkc__ph{display:flex;align-items:center;justify-content:center;width:100%;padding:16px var(--ch-space-4);box-sizing:border-box;
   border:1px solid var(--ch-action-secondary-border);border-radius:var(--ch-radius-control-l);background:transparent;
-  font:inherit;font-size:16px;line-height:1.3;color:var(--ch-text-primary);text-align:center;text-wrap:balance;cursor:pointer;
+  font:inherit;font-size:16px;line-height:1.3;font-weight:var(--ch-font-weight-medium);color:var(--ch-text-primary);text-align:center;text-wrap:balance;cursor:pointer;
   transition:border-color var(--w-duration-base) var(--w-ease);}
 .u-pkc__ph:hover{border-color:var(--ch-action-secondary-fg);}
 .u-pkc__ph:focus-visible{outline:2px solid var(--w-focus-ring);outline-offset:2px;}
-/* the body: framed when the phase has products; an included phase tints only the body – the tint starts under the name (U-11) */
-.u-pkc__body{display:flex;flex-direction:column;gap:var(--ch-space-3);flex:1 1 auto;min-width:0;padding:var(--ch-space-3) var(--ch-space-2) var(--ch-space-5);
+/* the body: framed when the phase has products; a phase with a counted product tints only the body (U-11) */
+.u-pkc__body{display:flex;flex-direction:column;gap:var(--ch-space-3);flex:1 1 auto;min-width:0;padding:var(--ch-space-4);
   border:1px solid transparent;border-radius:var(--ch-radius-lg);transition:background var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);}
 .u-pkc__col:not(.is-empty) .u-pkc__body{border-color:var(--ch-border-subtle);}
 .u-pkc__col.is-on .u-pkc__body{background:var(--ch-color-green-50);border-color:var(--ch-color-green-200);}
-@media (min-width:1000px){
-  @supports (grid-template-rows:subgrid){
-    .u-pkc{grid-template-rows:auto auto;}
-    .u-pkc__col{display:grid;grid-row:span 2;grid-template-rows:subgrid;}
-  }
-}
-.u-pkc__tiles{display:flex;flex-direction:column;gap:var(--ch-space-2);flex:1 1 auto;margin:0;padding:0;list-style:none;}
-.u-pkc__tile{display:flex;flex-direction:column;align-items:center;gap:3px;padding:var(--ch-space-3) var(--ch-space-2);text-align:center;
+.u-pkc__col.is-empty{display:none;}
+.u-pkc__tiles{display:flex;flex-direction:column;gap:var(--ch-space-2);margin:0;padding:0;list-style:none;}
+.u-pkc__tile{position:relative;display:grid;grid-template-columns:56px minmax(0,1fr);column-gap:var(--ch-space-3);row-gap:3px;align-items:start;
+  padding:var(--ch-space-3) 40px var(--ch-space-3) var(--ch-space-3);text-align:left;
   border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-lg);background:var(--ch-surface-raised);
   transition:opacity var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease),background var(--w-duration-base) var(--w-ease);}
+.u-pkc__tile > :not(.u-pkc__pack):not(.u-pkc__pick){grid-column:2;}
 .u-pkc__tile--partner{background:var(--ch-surface-warm-strong);}
 .u-pkc__tile.is-out{opacity:.55;background:transparent;border-style:dashed;border-color:var(--ch-border-control);}
-.u-pkc__pack{display:block;width:60px;height:60px;margin-bottom:var(--ch-space-1);padding:6px;box-sizing:border-box;border-radius:var(--ch-radius-md);background:var(--ch-surface-warm);}
-.u-pkc__pack img{display:block;width:100%;height:100%;object-fit:contain;}
+.u-pkc__pack{grid-column:1;grid-row:1 / span 6;display:block;width:56px;height:56px;padding:6px;box-sizing:border-box;border-radius:var(--ch-radius-md);background:var(--ch-surface-warm);}
+.u-pkc__pack img{display:block;width:100%;height:100%;object-fit:contain;transition:filter var(--w-duration-base) var(--w-ease);}
 .u-pkc__tile--partner .u-pkc__pack{background:var(--ch-surface-raised);}
 .u-pkc__n{font-size:13px;line-height:1.3;font-weight:var(--ch-font-weight-medium);color:var(--ch-text-primary);}
 .u-pkc__dose,.u-pkc__packs,.u-pkc__tag{font-size:12px;line-height:16px;color:var(--ch-text-secondary);}
@@ -206,44 +210,66 @@
 .u-pkc__tag{display:none;}
 .u-pkc__tile.is-out .u-pkc__tag{display:block;}
 .u-pkc__tile.is-out .u-pkc__packs{display:none;}
+/* the checkbox of a product: top-right corner; unticked = greyed, left out of the price (U-19) */
+.u-pkc__pick{position:absolute;top:8px;right:8px;z-index:1;display:flex;align-items:center;justify-content:center;width:28px;height:28px;cursor:pointer;}
+.u-pkc__pick input{width:20px;height:20px;margin:0;accent-color:var(--ch-text-primary);cursor:pointer;}
+.u-pkc__tile.is-out .u-pkc__pick{display:none;}
+.u-pkc__tile.is-skip{background:transparent;border-color:var(--ch-border-control);}
+.u-pkc__tile.is-skip > :not(.u-pkc__pick){opacity:.42;}
+.u-pkc__tile.is-skip .u-pkc__pack img{filter:grayscale(1);}
 .u-pkc__none{margin:auto 0;text-align:center;font-size:13px;color:var(--ch-text-secondary);}
-.u-pkc__foot{display:flex;flex-direction:column;align-items:center;gap:var(--ch-space-5);margin-top:auto;padding-top:var(--ch-space-4);border-top:1px solid var(--we-line);text-align:center;}
-.u-pkc__sum{display:flex;flex-direction:column;margin:0;}
+.u-pkc__foot{display:flex;flex-direction:row;justify-content:space-between;align-items:baseline;margin-top:auto;padding-top:var(--ch-space-4);border-top:1px solid var(--we-line);}
+.u-pkc__sum{display:flex;flex-direction:row;align-items:baseline;justify-content:space-between;gap:var(--ch-space-2);width:100%;margin:0;}
 .u-pkc__sum b{font-size:var(--ch-type-title-s-size);line-height:var(--ch-type-title-s-lh);font-weight:var(--ch-font-weight-medium);font-variant-numeric:tabular-nums;color:var(--ch-text-primary);}
+.u-pkc__sumcap{color:var(--ch-text-secondary);}
 .u-pkc__col.is-off .u-pkc__sum{opacity:.45;}
-.u-pkc__chk{display:inline-flex;align-items:center;gap:8px;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-primary);cursor:pointer;}
-.u-pkc__chk input{width:20px;height:20px;margin:0;accent-color:var(--ch-text-primary);cursor:pointer;}
-.u-pkc__chk input:disabled{cursor:default;}
-.u-pkc__chk:has(input:disabled){opacity:.45;cursor:default;}
-/* the summary: on the right under a line, like the total of a table */
-.u-pkc__sumrow{display:grid;gap:var(--ch-space-5);margin-top:var(--ch-space-8);padding-top:var(--ch-space-6);border-top:1px solid color-mix(in srgb,var(--ch-text-primary) 25%,transparent);}
+/* the summary: under a line that starts with the first phase; total left, button right (U-27, U-28) */
+.u-pkc__sumrow{margin-top:var(--ch-space-8);}
+.u-pkc__sumin{display:flex;flex-direction:column;gap:var(--ch-space-5);padding-top:var(--ch-space-6);border-top:1px solid color-mix(in srgb,var(--ch-text-primary) 25%,transparent);}
+.u-pkc__tot{display:flex;flex-direction:column;align-items:flex-start;gap:var(--ch-space-1);text-align:left;}
+.u-pkc__tot .wf-caption{color:var(--ch-text-secondary);}
 .u-pkc__info{margin:0 0 var(--ch-space-1);font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-secondary);}
 .u-pkc__info b{font-weight:var(--ch-font-weight-medium);color:var(--ch-text-primary);}
-.u-pkc__tot{display:flex;flex-direction:column;align-items:flex-end;gap:var(--ch-space-1);text-align:right;}
-.u-pkc__tot .wf-caption{color:var(--ch-text-secondary);}
 .u-pkc__tot > b{font-size:clamp(1.75rem,3vw,2.5rem);line-height:1.1;font-weight:var(--ch-font-weight-regular);letter-spacing:-0.015em;font-variant-numeric:tabular-nums;color:var(--ch-text-primary);}
-.u-pkc__tot .c5-btn{margin-top:var(--ch-space-4);}
-.u-pkc__status{margin:var(--ch-space-2) 0 0;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-primary);}
+.u-pkc__buy{display:flex;flex-direction:column;align-items:stretch;gap:var(--ch-space-2);}
+.u-pkc__buy .c5-btn{justify-content:center;}
+.u-pkc__status{margin:0;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-primary);}
 .u-pkc__status:empty{display:none;}
-@media (min-width:1000px){
-  .u-pkc__sumrow{justify-items:end;}
-}
-.u-pkc__notes{margin-top:100px;max-width:80ch;}
+.u-pkc__notes{margin-top:64px;max-width:80ch;}
 .u-pkc__notes p{margin:0;font-size:13px;line-height:1.5;color:var(--ch-text-secondary);}
 .u-pkc__notes p + p{margin-top:var(--ch-space-2);}
-@media (max-width:999px){
-  .u-pkc{grid-template-columns:minmax(0,1fr);}
-  .u-pkc{gap:var(--ch-space-3);}
-  .u-pkc__body{padding:var(--ch-space-4);}
-  .u-pkc__col.is-empty{display:none;}
-  .u-pkc__ph{padding:16px var(--ch-space-4);font-weight:var(--ch-font-weight-medium);}
-  .u-pkc__tile{display:grid;grid-template-columns:56px minmax(0,1fr);column-gap:var(--ch-space-3);align-items:start;text-align:left;}
-  .u-pkc__tile > :not(.u-pkc__pack){grid-column:2;}
-  .u-pkc__pack{grid-column:1;grid-row:1 / span 6;width:56px;height:56px;margin:0;}
-  .u-pkc__foot{flex-direction:row;justify-content:space-between;text-align:left;}
-  .u-pkc__sum{flex-direction:row;align-items:baseline;gap:var(--ch-space-2);}
-  .u-pkc__tot{align-items:stretch;text-align:left;}
-  .u-pkc__tot .c5-btn{justify-content:center;}
-  .u-pkc__notes{margin-top:64px;}
+@media (max-width:479px){
+  .u-pk--etapy .u-area__row{flex-wrap:nowrap;}
+  .u-pk--etapy .u-area__row > .wf-caption{display:none;}
+  .u-pk--etapy .u-area__row .wf-input-group{width:7rem;}
 }
-@media (prefers-reduced-motion: reduce){.u-pkc__tile,.u-pkc__ph,.u-pkc__body{transition:none;}}
+/* --- from 1000 px: seven phase columns, rows shared by all (subgrid) ------ */
+@media (min-width:1000px){
+  .u-pkc{grid-template-columns:repeat(var(--pkc-n,7),minmax(0,1fr));grid-template-rows:auto auto auto;column-gap:0;row-gap:var(--ch-space-2);}
+  .u-pkc__col{display:grid;grid-row:span 3;grid-template-rows:subgrid;row-gap:var(--ch-space-2);padding-inline:var(--ch-space-1);}
+  .u-pkc__col.is-empty{display:grid;}
+  .u-pkc__body{display:grid;grid-row:2 / span 2;grid-template-rows:subgrid;row-gap:0;padding:var(--ch-space-3) var(--ch-space-2) var(--ch-space-3);}
+  .u-pkc__none{grid-row:1 / -1;align-self:center;}
+  .u-pkc__tiles{align-self:start;padding-bottom:var(--ch-space-3);}
+  .u-pkc__tile{display:flex;flex-direction:column;align-items:center;gap:3px;padding:var(--ch-space-3) var(--ch-space-2);text-align:center;}
+  .u-pkc__pack{width:60px;height:60px;margin-bottom:var(--ch-space-1);}
+  .u-pkc__pick{top:4px;right:4px;}
+  .u-pkc__foot{margin-top:0;justify-content:center;text-align:center;}
+  .u-pkc__sum{flex-direction:column;align-items:center;gap:0;}
+  .u-pkc__sumin{flex-direction:row;justify-content:space-between;align-items:flex-end;gap:var(--ch-space-8);margin-inline:var(--ch-space-1);}
+  .u-pkc__buy{align-items:flex-end;text-align:right;}
+  .u-pkc__notes{margin-top:100px;}
+}
+/* --- from 1200 px: the columns of the chart, with the names of the rows (U-18) */
+@media (min-width:1200px){
+  .u-pkc{grid-template-columns:var(--we-first) repeat(var(--pkc-n,7),minmax(0,1fr));padding-inline:var(--pkc-inset);}
+  .u-pkc__labs{display:grid;grid-row:span 3;grid-template-rows:subgrid;row-gap:var(--ch-space-2);padding-right:var(--ch-space-4);}
+  .u-pkc__lab{margin:0;font-size:13px;line-height:1.4;color:var(--ch-text-secondary);}
+  .u-pkc__lab--ph{align-self:center;}
+  .u-pkc__lab--tiles{padding-top:calc(var(--ch-space-3) + 1px);}
+  .u-pkc__lab--sum{padding-top:calc(var(--ch-space-4) + 1px);}
+  .u-pkc__sumcap{display:none;}
+  .u-pkc__sumrow{display:grid;grid-template-columns:var(--we-first) minmax(0,1fr);padding-inline:var(--pkc-inset);}
+  .u-pkc__sumin{grid-column:2;}
+}
+@media (prefers-reduced-motion: reduce){.u-pkc__tile,.u-pkc__ph,.u-pkc__body,.u-pkc__pack img{transition:none;}}

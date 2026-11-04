@@ -146,18 +146,20 @@
 
 
 
+
+
+
+
+
 <section class="c5-sec c5-we" id="u-etapy" data-chapter="u-etapy" data-ce="CE-100" data-we data-pakiety="kukurydza">
   <div class="c5-wrap c5-wrap--wide">
     <div class="c5-we__head u-reveal">
-      <div>
-        <span class="c5-kicker c5-kicker--outline">Fazy programu</span>
-        <div class="c5-head">
-          <h2 class="c5-h2">Program od ścierniska do zbioru</h2>
-        </div>
+      <span class="c5-kicker c5-kicker--outline c5-kicker--center">Fazy programu</span>
+      <div class="c5-head">
+        <h2 class="c5-h2 c5-h2--center">Program od ścierniska do zbioru</h2>
       </div>
-      <div class="c5-we__side">
-        <p class="c5-lead">Wykres pokazuje, w której fazie rozwoju kukurydzy i w jakiej dawce stosować produkty w wybranym pakiecie. Kliknij fazę, żeby zobaczyć jej pełny opis.</p>
-        <p class="c5-we__legend"><span><i class="c5-we__key" aria-hidden="true"></i>zabieg w pakiecie</span><span><i class="c5-we__key c5-we__key--partner" aria-hidden="true"></i>produkt partnerski</span><span><i class="c5-we__key c5-we__key--alt" aria-hidden="true"></i>zamiennie – dawkę dobierzesz z&nbsp;<a class="wf-link" href="#u-doradca">doradcą</a></span></p>
+      <div class="c5-pkdock">
+        <div class="c5-pkbar" role="radiogroup" aria-label="Pakiet" data-pk-switch hidden><div class="c5-pkbar__tabs"><button class="c5-pkbar__tab" type="button" role="radio" aria-checked="false" data-pk-set="min">Pakiet minimalny</button><button class="c5-pkbar__tab" type="button" role="radio" aria-checked="false" data-pk-set="std">Pakiet standardowy</button><button class="c5-pkbar__tab" type="button" role="radio" aria-checked="true" data-pk-set="kompl">Pakiet kompleksowy</button></div></div>
       </div>
     </div>
     <div class="c5-we__panel u-reveal">
@@ -216,11 +218,18 @@
         </table>
       </div>
     </div>
-    <div class="c5-pkdock">
-      <div class="c5-pkbar" role="radiogroup" aria-label="Pakiet" data-pk-switch hidden><div class="c5-pkbar__tabs"><button class="c5-pkbar__tab" type="button" role="radio" aria-checked="false" data-pk-set="min">Pakiet minimalny</button><button class="c5-pkbar__tab" type="button" role="radio" aria-checked="false" data-pk-set="std">Pakiet standardowy</button><button class="c5-pkbar__tab" type="button" role="radio" aria-checked="true" data-pk-set="kompl">Pakiet kompleksowy</button></div></div>
-    </div>
+    <p class="c5-we__legend"><span><i class="c5-we__key" aria-hidden="true"></i>zabieg w pakiecie</span><span><i class="c5-we__key c5-we__key--partner" aria-hidden="true"></i>produkt partnerski</span><span><i class="c5-we__key c5-we__key--alt" aria-hidden="true"></i>zamiennie – dawkę dobierzesz z&nbsp;<a class="wf-link" href="#u-doradca">doradcą</a></span></p>
   </div>
 </section>
+
+
+
+
+
+
+
+
+
 
 
 
@@ -244,28 +253,37 @@
       <span class="c5-kicker c5-kicker--outline c5-kicker--center">Kalkulator</span>
       <div class="c5-head">
         <h2 class="c5-h2 c5-h2--center">Zainwestuj w glebę, która pracuje na Twój plon</h2>
-        <p class="c5-lead c5-lead--center">Wskaż powierzchnię uprawy i pakiet, a policzymy produkty, opakowania i cenę netto dla Twojego pola.</p>
       </div>
     </div>
-    <div class="u-pk u-pk--linijka u-pk--etapy u-reveal" data-calc data-pk-calc data-pakiety="kukurydza">
+    <div class="u-pk u-pk--etapy u-reveal" data-calc data-pk-calc data-pakiety="kukurydza">
       <div class="u-pkc-panel">
-        <div class="u-area" data-ruler-marks="0.5 1 2 5 10 20 50" data-ruler-steps="0.5 10 1">
+        <div class="u-area">
           <label class="wf-label" id="ha-label" for="ha">Powierzchnia uprawy</label>
           <div class="u-area__row">
-            <input class="u-area__range" type="range" min="0.5" max="50" step="0.5" value="10" data-calc-range aria-label="Powierzchnia uprawy w hektarach">
+            <span class="wf-caption" aria-hidden="true">0,5 ha</span>
+            <input class="u-area__range" type="range" min="0.5" max="50" step="0.5" value="10" data-calc-range aria-label="Powierzchnia uprawy w hektarach – suwak">
+            <span class="wf-caption" aria-hidden="true">50 ha</span>
             <div class="wf-input-group">
               <input class="wf-input" id="ha" type="number" inputmode="decimal" min="0" step="0.5" value="10" data-calc-in>
               <span class="wf-addon">ha</span>
             </div>
           </div>
-          <div class="u-area__scale"><span class="wf-caption">0,5 ha</span><span class="wf-caption">50 ha</span></div>
+        </div>
+        <div class="c5-pkdock">
+          <div class="c5-pkbar" role="radiogroup" aria-label="Pakiet" data-pk-switch hidden><div class="c5-pkbar__tabs"><button class="c5-pkbar__tab" type="button" role="radio" aria-checked="false" data-pk-set="min">Pakiet minimalny</button><button class="c5-pkbar__tab" type="button" role="radio" aria-checked="false" data-pk-set="std">Pakiet standardowy</button><button class="c5-pkbar__tab" type="button" role="radio" aria-checked="true" data-pk-set="kompl">Pakiet kompleksowy</button></div></div>
         </div>
         <div class="u-pkc">
+          <div class="u-pkc__labs">
+            <p class="u-pkc__lab u-pkc__lab--ph">Fazy</p>
+            <p class="u-pkc__lab u-pkc__lab--tiles">Produkty</p>
+            <p class="u-pkc__lab u-pkc__lab--sum">Cena (netto) produktów dla każdej fazy w&nbsp;przeliczeniu na całą powierzchnię uprawy</p>
+          </div>
           <div class="u-pkc__col">
             <button class="u-pkc__ph" type="button" data-lightbox-open="faza-1" aria-label="Opis fazy: Po zbiorze przedplonu">Po zbiorze przedplonu</button>
             <div class="u-pkc__body">
               <ul class="u-pkc__tiles">
                 <li class="u-pkc__tile" data-prod="carbohumic-20mesh" data-pk="kompl" data-lo="50" data-hi="50" data-unit="l">
+                  <label class="u-pkc__pick"><input type="checkbox" checked data-pkc-pick><span class="wf-sr-only">Uwzględnij w wycenie: CARBOHUMIC niefiltrowany</span></label>
                   <span class="u-pkc__pack"><img src="img/opakowania/mauzer_1000l_1500l.png" alt="" loading="lazy" decoding="async"></span>
                   <span class="u-pkc__n">CARBOHUMIC niefiltrowany</span>
                   <span class="u-pkc__dose" data-pkc-dose data-prefix="ok. ">ok. 50 l/ha</span>
@@ -275,8 +293,7 @@
                 </li>
               </ul>
               <div class="u-pkc__foot">
-                <p class="u-pkc__sum"><span class="wf-caption">netto</span><b data-pkc-sum>–</b></p>
-                <label class="u-pkc__chk"><input type="checkbox" checked data-pkc-chk> <span>Uwzględnij</span></label>
+                <p class="u-pkc__sum"><span class="wf-caption u-pkc__sumcap">cena netto</span><b data-pkc-sum>–</b></p>
               </div>
             </div>
           </div>
@@ -285,6 +302,7 @@
             <div class="u-pkc__body">
               <ul class="u-pkc__tiles">
                 <li class="u-pkc__tile" data-prod="carbohumic-187mesh" data-pk="min std kompl" data-lo="20" data-hi="40" data-unit="l">
+                  <label class="u-pkc__pick"><input type="checkbox" checked data-pkc-pick><span class="wf-sr-only">Uwzględnij w wycenie: CARBOHUMIC filtrowany</span></label>
                   <span class="u-pkc__pack"><img src="img/opakowania/kanister_20l.png" alt="" loading="lazy" decoding="async"></span>
                   <span class="u-pkc__n">CARBOHUMIC filtrowany</span>
                   <span class="u-pkc__dose" data-pkc-dose data-suffix=" w ok. 400 l wody">40 l/ha w ok. 400 l wody</span>
@@ -294,15 +312,14 @@
                 </li>
               </ul>
               <div class="u-pkc__foot">
-                <p class="u-pkc__sum"><span class="wf-caption">netto</span><b data-pkc-sum>–</b></p>
-                <label class="u-pkc__chk"><input type="checkbox" checked data-pkc-chk> <span>Uwzględnij</span></label>
+                <p class="u-pkc__sum"><span class="wf-caption u-pkc__sumcap">cena netto</span><b data-pkc-sum>–</b></p>
               </div>
             </div>
           </div>
           <div class="u-pkc__col">
             <button class="u-pkc__ph" type="button" data-lightbox-open="faza-3" aria-label="Opis fazy: Siew i wschody">Siew i wschody</button>
             <div class="u-pkc__body">
-              <p class="u-pkc__none">bez zabiegu</p>
+              <p class="u-pkc__none">bez zabiegu w tej fazie</p>
             </div>
           </div>
           <div class="u-pkc__col">
@@ -310,6 +327,7 @@
             <div class="u-pkc__body">
               <ul class="u-pkc__tiles">
                 <li class="u-pkc__tile" data-prod="maxi-plus" data-pk="min std kompl" data-lo="0.6" data-hi="0.6" data-unit="l">
+                  <label class="u-pkc__pick"><input type="checkbox" checked data-pkc-pick><span class="wf-sr-only">Uwzględnij w wycenie: CARBOHUMIC MAXI PLUS</span></label>
                   <span class="u-pkc__pack"><img src="img/opakowania/kanister_5l.png" alt="" loading="lazy" decoding="async"></span>
                   <span class="u-pkc__n">CARBOHUMIC MAXI PLUS</span>
                   <span class="u-pkc__dose" data-pkc-dose>0,6 l/ha</span>
@@ -318,6 +336,7 @@
                   <span class="u-pkc__tag">poza pakietem</span>
                 </li>
                 <li class="u-pkc__tile u-pkc__tile--partner" data-prod="pure-one" data-pk="kompl" data-lo="0.3" data-hi="0.5" data-unit="l">
+                  <label class="u-pkc__pick"><input type="checkbox" checked data-pkc-pick><span class="wf-sr-only">Uwzględnij w wycenie: PURE ONE</span></label>
                   <span class="u-pkc__pack"><img src="img/opakowania/butelka_1l_biala.webp" alt="" loading="lazy" decoding="async"></span>
                   <span class="u-pkc__n">PURE ONE</span>
                   <span class="u-pkc__dose" data-pkc-dose>0,5 l/ha</span>
@@ -327,21 +346,20 @@
                 </li>
               </ul>
               <div class="u-pkc__foot">
-                <p class="u-pkc__sum"><span class="wf-caption">netto</span><b data-pkc-sum>–</b></p>
-                <label class="u-pkc__chk"><input type="checkbox" checked data-pkc-chk> <span>Uwzględnij</span></label>
+                <p class="u-pkc__sum"><span class="wf-caption u-pkc__sumcap">cena netto</span><b data-pkc-sum>–</b></p>
               </div>
             </div>
           </div>
           <div class="u-pkc__col">
             <button class="u-pkc__ph" type="button" data-lightbox-open="faza-5" aria-label="Opis fazy: Intensywny wzrost">Intensywny wzrost</button>
             <div class="u-pkc__body">
-              <p class="u-pkc__none">bez zabiegu</p>
+              <p class="u-pkc__none">bez zabiegu w tej fazie</p>
             </div>
           </div>
           <div class="u-pkc__col">
             <button class="u-pkc__ph" type="button" data-lightbox-open="faza-6" aria-label="Opis fazy: Wiechowanie do zbioru">Wiechowanie do zbioru</button>
             <div class="u-pkc__body">
-              <p class="u-pkc__none">bez zabiegu</p>
+              <p class="u-pkc__none">bez zabiegu w tej fazie</p>
             </div>
           </div>
           <div class="u-pkc__col">
@@ -349,6 +367,7 @@
             <div class="u-pkc__body">
               <ul class="u-pkc__tiles">
                 <li class="u-pkc__tile" data-prod="carbohumic-187mesh" data-pk="std kompl" data-lo="20" data-hi="40" data-unit="l">
+                  <label class="u-pkc__pick"><input type="checkbox" checked data-pkc-pick><span class="wf-sr-only">Uwzględnij w wycenie: CARBOHUMIC filtrowany</span></label>
                   <span class="u-pkc__pack"><img src="img/opakowania/kanister_20l.png" alt="" loading="lazy" decoding="async"></span>
                   <span class="u-pkc__n">CARBOHUMIC filtrowany</span>
                   <span class="u-pkc__dose" data-pkc-dose data-suffix=" na resztki">40 l/ha na resztki</span>
@@ -358,25 +377,25 @@
                 </li>
               </ul>
               <div class="u-pkc__foot">
-                <p class="u-pkc__sum"><span class="wf-caption">netto</span><b data-pkc-sum>–</b></p>
-                <label class="u-pkc__chk"><input type="checkbox" checked data-pkc-chk> <span>Uwzględnij</span></label>
+                <p class="u-pkc__sum"><span class="wf-caption u-pkc__sumcap">cena netto</span><b data-pkc-sum>–</b></p>
               </div>
             </div>
           </div>
         </div>
         <div class="u-pkc__sumrow">
-          <div class="u-pkc__tot" aria-live="polite">
-            <span class="wf-caption">Razem netto za zaznaczone fazy</span>
-            <p class="u-pkc__info" data-pkc-info></p>
-            <b data-pkc-total>–</b>
-            <span class="wf-caption" data-pkc-gross></span>
-            <button class="c5-btn c5-btn--dark" type="button" data-pkc-cart><svg class="wf-icon" aria-hidden="true"><use href="#ti-shopping-cart"></use></svg> Dodaj do koszyka</button>
-            <p class="u-pkc__status" data-pkc-status></p>
+          <div class="u-pkc__sumin" aria-live="polite">
+            <div class="u-pkc__tot">
+              <span class="wf-caption">Razem netto za zaznaczone produkty</span>
+              <p class="u-pkc__info" data-pkc-info></p>
+              <b data-pkc-total>–</b>
+              <span class="wf-caption" data-pkc-gross></span>
+            </div>
+            <div class="u-pkc__buy">
+              <button class="c5-btn c5-btn--dark" type="button" data-pkc-cart><svg class="wf-icon" aria-hidden="true"><use href="#ti-shopping-cart"></use></svg> Dodaj wybrane produkty do koszyka</button>
+              <p class="u-pkc__status" data-pkc-status></p>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="c5-pkdock">
-        <div class="c5-pkbar" role="radiogroup" aria-label="Pakiet" data-pk-switch hidden><div class="c5-pkbar__tabs"><button class="c5-pkbar__tab" type="button" role="radio" aria-checked="false" data-pk-set="min">Pakiet minimalny</button><button class="c5-pkbar__tab" type="button" role="radio" aria-checked="false" data-pk-set="std">Pakiet standardowy</button><button class="c5-pkbar__tab" type="button" role="radio" aria-checked="true" data-pk-set="kompl">Pakiet kompleksowy</button></div></div>
       </div>
       <div class="u-pkc__notes">
         <p>Ceny netto, poglądowe, ze sklepu carbohort.com (stan na 20 września 2026). Dawka w pakiecie minimalnym to dolna dawka z programu, w standardowym i kompleksowym – górna. Ilość zaokrąglamy do najkorzystniejszej wielkości opakowania i dokładnie te opakowania trafiają do koszyka.</p>
