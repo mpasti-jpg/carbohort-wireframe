@@ -142,14 +142,10 @@
      field beside it (U-30: no ruler, little height);
    - under it the package tabs of CE-100 (`c5-pkdock` > `c5-pkbar`,
      CE-100-wykres-etapow.css), in the flow, over the table (U-29);
-   - from 1000 px seven phase columns with three rows (names, products,
-     prices) shared by all columns (subgrid), so the price lines line up; from
-     1200 px the grid takes the columns of the chart CE-100 above it: the first
-     column `--we-first` wide with the names of the rows – „Fazy”, „Produkty”,
-     „Cena (netto)…” (U-18) –, then the seven phases, inset by the padding of
-     the chart panel, so the phase names stand under the phases of the chart
-     (between 1000 and 1199 px the column of names would leave the tiles too
-     narrow – there the sum says „cena netto” instead);
+   - from 1000 px seven phase columns with rows shared by all columns
+     (subgrid); from 04.11 to 07.11.2026 a first column with the names of the
+     rows (U-18) put the phases under the phases of the chart – since 07.11
+     (Mateusz on the artifact) the phases fill the whole width, without it;
    - a phase column: its name in an outline as wide as the column, which opens
      the description of the phase (U-12); under it the body: the product tiles
      (packshot, name, ONE dose per hectare – the lower dose of the programme in
@@ -166,8 +162,18 @@
    - the notes on prices stand 100 px lower, without a frame.
    Below 1000 px the phases stand one under another (empty ones drop out, the
    names of the rows too – the sum then says „cena netto”), the tile turns into
-   a row (packshot on the left). Script: CE-47-przelicznik.js, part „etapy”. */
-.u-pk--etapy{--we-first:240px;--we-line:color-mix(in srgb,var(--ch-text-primary) 12%,transparent);--pkc-inset:var(--ch-space-5);margin-top:clamp(3rem,5vw,4rem);}
+   a row (packshot on the left). Script: CE-47-przelicznik.js, part „etapy”.
+   Since U-38 (client comment, 06.11.2026) one dose per season: the phase columns show
+   the schedule of the open package (the dose of one treatment and its amount,
+   no price, no checkbox – two rows: names and bodies); under them the list
+   „Produkty na sezon” – a row per product with its checkbox (moved here from
+   the tiles of U-19, because a product can stand in several phases), the
+   dose per season, the number of treatments (a radio group, the default
+   marked „Domyślnie”), the amount for the field, the packs and ONE net price;
+   from 1000 px a table with a head row, from 1200 px under the column of the
+   names of the rows like the phases. The tint of a phase (U-11) follows the
+   counted products of its tiles. */
+.u-pk--etapy{--we-line:color-mix(in srgb,var(--ch-text-primary) 12%,transparent);margin-top:clamp(3rem,5vw,4rem);}
 .u-pkc-panel{padding:0;background:none;}
 /* the area: one low row (U-30) */
 .u-pk--etapy .u-area{flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:center;gap:var(--ch-space-3) var(--ch-space-5);}
@@ -176,29 +182,38 @@
 .u-pk--etapy .u-area__row > .wf-caption{flex:none;color:var(--ch-text-secondary);white-space:nowrap;}
 .u-pk--etapy .u-area__row .wf-input-group{width:7.5rem;}
 .u-pk--etapy > .u-pkc-panel > .c5-pkdock{margin:var(--ch-space-6) 0 clamp(2.5rem,4vw,3.5rem);}
-/* the grid of the phases */
+/* the grid of the phases: the schedule of the open package */
 .u-pkc{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--ch-space-3);}
-.u-pkc__labs{display:none;}
 .u-pkc__col{display:flex;flex-direction:column;gap:var(--ch-space-2);min-width:0;}
-/* the name of the phase: an outline as wide as the column, no fill, more air than a button; opens the description (U-12) */
-.u-pkc__ph{display:flex;align-items:center;justify-content:center;width:100%;padding:16px var(--ch-space-4);box-sizing:border-box;
-  border:1px solid var(--ch-action-secondary-border);border-radius:var(--ch-radius-control-l);background:transparent;
-  font:inherit;font-size:16px;line-height:1.3;font-weight:var(--ch-font-weight-medium);color:var(--ch-text-primary);text-align:center;text-wrap:balance;cursor:pointer;
-  transition:border-color var(--w-duration-base) var(--w-ease);}
-.u-pkc__ph:hover{border-color:var(--ch-action-secondary-fg);}
+/* the head of a phase (Mateusz on the artifact, 07.11.2026 – replaced the capsule of U-12):
+   a small square photo of the phase and its name in the type of the chart (CE-100
+   .c5-we__phn), over an axis like the one of the chart – a line with ticks at the
+   boundaries of the phases; the whole head opens the description of the phase */
+.u-pkc__ph{position:relative;display:flex;align-items:center;gap:var(--ch-space-3);width:100%;margin:0;padding:0 var(--ch-space-2) var(--ch-space-4);box-sizing:border-box;
+  border:0;border-bottom:1px solid color-mix(in srgb,var(--ch-text-primary) 40%,transparent);border-radius:0;background:transparent;
+  font:inherit;font-size:17px;line-height:1.25;font-weight:var(--ch-font-weight-regular);color:var(--ch-text-primary);text-align:left;cursor:pointer;}
+.u-pkc__ph::before,.u-pkc__col:last-child .u-pkc__ph::after{content:"";position:absolute;bottom:-7px;width:1px;height:13px;
+  background:color-mix(in srgb,var(--ch-text-primary) 40%,transparent);}
+.u-pkc__ph::before{left:0;}
+.u-pkc__col:last-child .u-pkc__ph::after{right:0;}
+.u-pkc__phimg{flex:none;display:block;width:56px;height:56px;overflow:hidden;border-radius:var(--ch-radius-md);background:var(--ch-surface-warm);}
+.u-pkc__phimg img{display:block;width:100%;height:100%;object-fit:cover;}
+.u-pkc__phn{min-width:0;text-wrap:balance;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:3px;transition:text-decoration-color var(--w-duration-base) var(--w-ease);}
+.u-pkc__ph:hover .u-pkc__phn{text-decoration-color:currentColor;}
 .u-pkc__ph:focus-visible{outline:2px solid var(--w-focus-ring);outline-offset:2px;}
-/* the body: framed when the phase has products; a phase with a counted product tints only the body (U-11) */
+/* the body: framed when the phase has a treatment; a phase with a counted product tints only the body (U-11) */
 .u-pkc__body{display:flex;flex-direction:column;gap:var(--ch-space-3);flex:1 1 auto;min-width:0;padding:var(--ch-space-4);
   border:1px solid transparent;border-radius:var(--ch-radius-lg);transition:background var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);}
 .u-pkc__col:not(.is-empty) .u-pkc__body{border-color:var(--ch-border-subtle);}
 .u-pkc__col.is-on .u-pkc__body{background:var(--ch-color-green-50);border-color:var(--ch-color-green-200);}
 .u-pkc__col.is-empty{display:none;}
 .u-pkc__tiles{display:flex;flex-direction:column;gap:var(--ch-space-2);margin:0;padding:0;list-style:none;}
+.u-pkc__tiles[hidden],.u-pkc__tile[hidden],.u-pkc__none[hidden]{display:none;}
 .u-pkc__tile{position:relative;display:grid;grid-template-columns:56px minmax(0,1fr);column-gap:var(--ch-space-3);row-gap:3px;align-items:start;
-  padding:var(--ch-space-3) 40px var(--ch-space-3) var(--ch-space-3);text-align:left;
+  padding:var(--ch-space-3);text-align:left;
   border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-lg);background:var(--ch-surface-raised);
   transition:opacity var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease),background var(--w-duration-base) var(--w-ease);}
-.u-pkc__tile > :not(.u-pkc__pack):not(.u-pkc__pick){grid-column:2;}
+.u-pkc__tile > :not(.u-pkc__pack){grid-column:2;}
 .u-pkc__tile--partner{background:var(--ch-surface-warm-strong);}
 .u-pkc__tile.is-out{opacity:.55;background:transparent;border-style:dashed;border-color:var(--ch-border-control);}
 .u-pkc__pack{grid-column:1;grid-row:1 / span 6;display:block;width:56px;height:56px;padding:6px;box-sizing:border-box;border-radius:var(--ch-radius-md);background:var(--ch-surface-warm);}
@@ -208,68 +223,129 @@
 .u-pkc__dose,.u-pkc__packs,.u-pkc__tag{font-size:12px;line-height:16px;color:var(--ch-text-secondary);}
 .u-pkc__qty{font-size:16px;line-height:22px;font-weight:var(--ch-font-weight-medium);color:var(--ch-text-primary);font-variant-numeric:tabular-nums;}
 .u-pkc__tag{display:none;}
-.u-pkc__tile.is-out .u-pkc__tag{display:block;}
-.u-pkc__tile.is-out .u-pkc__packs{display:none;}
-/* the checkbox of a product: top-right corner; unticked = greyed, left out of the price (U-19) */
-.u-pkc__pick{position:absolute;top:8px;right:8px;z-index:1;display:flex;align-items:center;justify-content:center;width:28px;height:28px;cursor:pointer;}
-.u-pkc__pick input{width:20px;height:20px;margin:0;accent-color:var(--ch-text-primary);cursor:pointer;}
-.u-pkc__tile.is-out .u-pkc__pick{display:none;}
-.u-pkc__tile.is-skip{background:transparent;border-color:var(--ch-border-control);}
-.u-pkc__tile.is-skip > :not(.u-pkc__pick){opacity:.42;}
-.u-pkc__tile.is-skip .u-pkc__pack img{filter:grayscale(1);}
+.u-pkc__tile.is-out .u-pkc__tag,.u-pkc__prod.is-out .u-pkc__tag{display:block;}
+/* a product left out by its checkbox: its row and its tiles greyed */
+.u-pkc__tile.is-skip,.u-pkc__prod.is-skip{background:transparent;border-color:var(--ch-border-control);}
+/* phases left out of the price („Wyłącz wybrane fazy z obliczeń”, 07.11.2026): their tiles and the products left with no treatment greyed */
+.u-pkc__tile.is-excl,.u-pkc__prod.is-excl{background:transparent;border-style:dashed;border-color:var(--ch-border-control);}
+.u-pkc__tile.is-excl > *,.u-pkc__prod.is-excl > :not(.u-pkc__pick){opacity:.42;}
+.u-pkc__col.is-excl .u-pkc__ph{opacity:.45;}
+/* in one section with the chart (CE-100 `razem`, 07.11.2026): no air above the box
+   (the heading „Oblicz koszt stosowania” stands over it), area and phases on the left */
+.u-pk--razem{margin-top:0;}
+.u-pk--razem .u-area,.u-pk--razem .u-pkc__excl,.u-pk--razem .u-pkc__exclset{justify-content:flex-start;}
+/* the switch of the phases: quiet – a small label and small toggle chips under the area */
+.u-pkc__excl{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:var(--ch-space-2) var(--ch-space-3);margin-top:var(--ch-space-4);}
+.u-pkc__excll{font-size:13px;line-height:18px;color:var(--ch-text-secondary);}
+.u-pkc__exclset{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;}
+.u-pkc__exclset button{min-height:28px;padding:3px 10px;border:1px solid var(--ch-border-subtle);border-radius:999px;background:var(--ch-surface-raised);
+  font:inherit;font-size:12px;line-height:18px;color:var(--ch-text-primary);cursor:pointer;transition:background var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);}
+.u-pkc__exclset button:hover{border-color:var(--ch-border-strong);}
+.u-pkc__exclset button[aria-pressed="true"]{background:var(--ch-surface-warm);color:var(--ch-text-secondary);text-decoration:line-through;}
+.u-pkc__exclset button:focus-visible{outline:2px solid var(--w-focus-ring);outline-offset:2px;}
+.u-pkc__tile.is-skip > *,.u-pkc__prod.is-skip > :not(.u-pkc__pick){opacity:.42;}
+.u-pkc__tile.is-skip .u-pkc__pack img,.u-pkc__prod.is-skip .u-pkc__pack img{filter:grayscale(1);}
 .u-pkc__none{margin:auto 0;text-align:center;font-size:13px;color:var(--ch-text-secondary);}
-.u-pkc__foot{display:flex;flex-direction:row;justify-content:space-between;align-items:baseline;margin-top:auto;padding-top:var(--ch-space-4);border-top:1px solid var(--we-line);}
-.u-pkc__sum{display:flex;flex-direction:row;align-items:baseline;justify-content:space-between;gap:var(--ch-space-2);width:100%;margin:0;}
-.u-pkc__sum b{font-size:var(--ch-type-title-s-size);line-height:var(--ch-type-title-s-lh);font-weight:var(--ch-font-weight-medium);font-variant-numeric:tabular-nums;color:var(--ch-text-primary);}
-.u-pkc__sumcap{color:var(--ch-text-secondary);}
-.u-pkc__col.is-off .u-pkc__sum{opacity:.45;}
+
+/* --- „Produkty na sezon”: one row per product, one price for the season -- */
+.u-pkc__prods{margin-top:var(--ch-space-8);}
+.u-pkc__plab{margin:0 0 var(--ch-space-3);font-size:13px;line-height:1.4;color:var(--ch-text-secondary);}
+.u-pkc__phead{display:none;}
+.u-pkc__plist{display:flex;flex-direction:column;gap:var(--ch-space-2);margin:0;padding:0;list-style:none;}
+.u-pkc__prod{display:grid;grid-template-columns:28px 56px minmax(0,1fr);column-gap:var(--ch-space-3);row-gap:var(--ch-space-2);align-items:center;
+  padding:var(--ch-space-3) var(--ch-space-4);border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-lg);background:var(--ch-surface-raised);
+  transition:opacity var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease),background var(--w-duration-base) var(--w-ease);}
+/* a partner product in the list looks like ours – only „(produkt partnerski)” after its name (Mateusz on the artifact, 07.11.2026) */
+.u-pkc__pnp{font-size:13px;font-weight:var(--ch-font-weight-regular);color:var(--ch-text-secondary);}
+.u-pkc__prod.is-out{opacity:.55;background:transparent;border-style:dashed;border-color:var(--ch-border-control);}
+.u-pkc__prod .u-pkc__pack{grid-column:auto;grid-row:auto;}
+.u-pkc__pick{display:flex;align-items:center;justify-content:center;width:28px;height:28px;cursor:pointer;}
+.u-pkc__pick input{width:20px;height:20px;margin:0;accent-color:var(--ch-text-primary);cursor:pointer;}
+.u-pkc__prod.is-out .u-pkc__pick{visibility:hidden;}
+.u-pkc__pn{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.u-pkc__pn .u-pkc__n{font-size:15px;}
+.u-pkc__pn .u-pkc__dose{font-size:13px;line-height:18px;}
+.u-pkc__zab,.u-pkc__prod > .u-pkc__qty,.u-pkc__prod > .u-pkc__packs,.u-pkc__prod > .u-pkc__price{grid-column:1 / -1;}
+.u-pkc__zab{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0;}
+.u-pkc__zabset{display:inline-flex;flex-wrap:wrap;gap:4px;padding:4px;border:1px solid var(--ch-border-subtle);border-radius:999px;background:var(--ch-surface-raised);}
+.u-pkc__zabset button{min-height:32px;padding:5px 12px;border:0;border-radius:999px;background:var(--ch-surface-warm);
+  font:inherit;font-size:13px;line-height:18px;color:var(--ch-text-primary);cursor:pointer;white-space:nowrap;transition:background var(--w-duration-base) var(--w-ease);}
+.u-pkc__zabset button:hover{background:var(--ch-surface-warm-strong);}
+.u-pkc__zabset button[aria-checked="true"]{background:var(--ch-action-accent-bg);}
+/* the default variant stays marked after a change (Mateusz, 06.11.2026) */
+.u-pkc__def{margin-left:4px;font-size:11px;line-height:1;color:var(--ch-text-secondary);}
+.u-pkc__zabset button:focus-visible{outline:2px solid var(--w-focus-ring);outline-offset:2px;}
+.u-pkc__prod.is-out .u-pkc__zabset{display:none;}
+.u-pkc__zabtxt{font-size:12px;line-height:17px;color:var(--ch-text-secondary);}
+.u-pkc__how{padding:0;border:0;background:none;font:inherit;color:var(--ch-text-primary);text-decoration:underline;text-underline-offset:2px;cursor:pointer;}
+.u-pkc__how:focus-visible{outline:2px solid var(--w-focus-ring);outline-offset:2px;}
+/* below 1000 px a value is a line: its caption on the left, the value on the right */
+.u-pkc__prod > .u-pkc__qty,.u-pkc__prod > .u-pkc__packs,.u-pkc__prod > .u-pkc__price{display:flex;justify-content:space-between;align-items:baseline;gap:var(--ch-space-3);}
+.u-pkc__cap{font-size:12px;line-height:16px;font-weight:var(--ch-font-weight-regular);color:var(--ch-text-secondary);}
+.u-pkc__prod > .u-pkc__packs{color:var(--ch-text-primary);text-align:right;}
+.u-pkc__price b{font-size:var(--ch-type-title-s-size);line-height:var(--ch-type-title-s-lh);font-weight:var(--ch-font-weight-medium);font-variant-numeric:tabular-nums;color:var(--ch-text-primary);}
+
 /* the summary: under a line that starts with the first phase; total left, button right (U-27, U-28) */
 .u-pkc__sumrow{margin-top:var(--ch-space-8);}
-.u-pkc__sumin{display:flex;flex-direction:column;gap:var(--ch-space-5);padding-top:var(--ch-space-6);border-top:1px solid color-mix(in srgb,var(--ch-text-primary) 25%,transparent);}
-.u-pkc__tot{display:flex;flex-direction:column;align-items:flex-start;gap:var(--ch-space-1);text-align:left;}
+/* the total stands on the right, under the column of prices of the list, the button under it
+   (Mateusz on the artifact, 07.11.2026 – replaced U-27 and U-28) */
+.u-pkc__sumin{display:flex;flex-direction:column;align-items:flex-end;gap:var(--ch-space-5);padding-top:var(--ch-space-6);border-top:1px solid color-mix(in srgb,var(--ch-text-primary) 25%,transparent);}
+.u-pkc__tot{display:flex;flex-direction:column;align-items:flex-end;gap:var(--ch-space-1);padding-right:calc(var(--ch-space-4) + 1px);text-align:right;}
 .u-pkc__tot .wf-caption{color:var(--ch-text-secondary);}
-.u-pkc__info{margin:0 0 var(--ch-space-1);font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-secondary);}
+/* one line under the price (07.11.2026): package, area, „cena netto za N zaznaczone produkty”, the phases left out */
+.u-pkc__info{margin:var(--ch-space-1) 0 0;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-secondary);}
 .u-pkc__info b{font-weight:var(--ch-font-weight-medium);color:var(--ch-text-primary);}
 .u-pkc__tot > b{font-size:clamp(1.75rem,3vw,2.5rem);line-height:1.1;font-weight:var(--ch-font-weight-regular);letter-spacing:-0.015em;font-variant-numeric:tabular-nums;color:var(--ch-text-primary);}
-.u-pkc__buy{display:flex;flex-direction:column;align-items:stretch;gap:var(--ch-space-2);}
+.u-pkc__buy{display:flex;flex-direction:column;align-items:stretch;align-self:stretch;gap:var(--ch-space-2);}
 .u-pkc__buy .c5-btn{justify-content:center;}
 .u-pkc__status{margin:0;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-primary);}
 .u-pkc__status:empty{display:none;}
-.u-pkc__notes{margin-top:64px;max-width:80ch;}
-.u-pkc__notes p{margin:0;font-size:13px;line-height:1.5;color:var(--ch-text-secondary);}
+/* the notes are disclaimers: one point smaller, the whole width of the content (07.11.2026) */
+.u-pkc__notes{margin-top:64px;max-width:none;}
+.u-pkc__notes p{margin:0;font-size:12px;line-height:1.5;color:var(--ch-text-secondary);}
 .u-pkc__notes p + p{margin-top:var(--ch-space-2);}
 @media (max-width:479px){
+  /* the three buttons of the split stay in one row (the „domyślnie” mark made them wider) */
+  .u-pkc__zabset{flex-wrap:nowrap;}
+  .u-pkc__zabset button{padding:5px 9px;font-size:12px;}
   .u-pk--etapy .u-area__row{flex-wrap:nowrap;}
   .u-pk--etapy .u-area__row > .wf-caption{display:none;}
   .u-pk--etapy .u-area__row .wf-input-group{width:7rem;}
 }
-/* --- from 1000 px: seven phase columns, rows shared by all (subgrid) ------ */
+/* --- from 1000 px: seven phase columns, names and bodies in two shared rows (subgrid);
+   the product list as a table with a head row ------------------------------ */
 @media (min-width:1000px){
-  .u-pkc{grid-template-columns:repeat(var(--pkc-n,7),minmax(0,1fr));grid-template-rows:auto auto auto;column-gap:0;row-gap:var(--ch-space-2);}
-  .u-pkc__col{display:grid;grid-row:span 3;grid-template-rows:subgrid;row-gap:var(--ch-space-2);padding-inline:var(--ch-space-1);}
+  .u-pkc{grid-template-columns:repeat(var(--pkc-n,7),minmax(0,1fr));grid-template-rows:auto auto;column-gap:0;row-gap:var(--ch-space-2);}
+  .u-pkc__col{display:grid;grid-row:span 2;grid-template-rows:subgrid;row-gap:var(--ch-space-5);padding-inline:0;}
   .u-pkc__col.is-empty{display:grid;}
-  .u-pkc__body{display:grid;grid-row:2 / span 2;grid-template-rows:subgrid;row-gap:0;padding:var(--ch-space-3) var(--ch-space-2) var(--ch-space-3);}
-  .u-pkc__none{grid-row:1 / -1;align-self:center;}
-  .u-pkc__tiles{align-self:start;padding-bottom:var(--ch-space-3);}
+  /* each body only as tall as its tiles – no long empty tints since the phase sums left (06.11.2026) */
+  .u-pkc__body{align-self:start;margin-inline:var(--ch-space-1);padding:var(--ch-space-3) var(--ch-space-2);}
+  .u-pkc__none{align-self:center;}
   .u-pkc__tile{display:flex;flex-direction:column;align-items:center;gap:3px;padding:var(--ch-space-3) var(--ch-space-2);text-align:center;}
   .u-pkc__pack{width:60px;height:60px;margin-bottom:var(--ch-space-1);}
-  .u-pkc__pick{top:4px;right:4px;}
-  .u-pkc__foot{margin-top:0;justify-content:center;text-align:center;}
-  .u-pkc__sum{flex-direction:column;align-items:center;gap:0;}
-  .u-pkc__sumin{flex-direction:row;justify-content:space-between;align-items:flex-end;gap:var(--ch-space-8);margin-inline:var(--ch-space-1);}
-  .u-pkc__buy{align-items:flex-end;text-align:right;}
+  .u-pkc__prods{margin-inline:var(--ch-space-1);}
+  .u-pkc__phead,.u-pkc__prod{grid-template-columns:28px 56px minmax(10rem,1.15fr) minmax(15rem,1.9fr) minmax(5.5rem,.6fr) minmax(8.5rem,1fr) minmax(6.5rem,.7fr);column-gap:var(--ch-space-4);}
+  .u-pkc__phead{display:grid;padding:0 calc(var(--ch-space-4) + 1px) var(--ch-space-2);font-size:12px;line-height:16px;color:var(--ch-text-secondary);}
+  .u-pkc__phead > :first-child{grid-column:1 / span 3;}
+  .u-pkc__phead > :nth-child(n+3){text-align:right;}
+  .u-pkc__phead > :last-child{text-align:right;}
+  .u-pkc__prod .u-pkc__pack{width:56px;height:56px;margin:0;}
+  .u-pkc__zab,.u-pkc__prod > .u-pkc__qty,.u-pkc__prod > .u-pkc__packs,.u-pkc__prod > .u-pkc__price{grid-column:auto;}
+  .u-pkc__prod > .u-pkc__qty,.u-pkc__prod > .u-pkc__packs,.u-pkc__prod > .u-pkc__price{display:block;text-align:right;}
+  .u-pkc__prod > .u-pkc__packs{font-size:13px;line-height:18px;}
+  .u-pkc__cap{display:none;}
+  /* the right edge of the total = the right edge of the prices in the rows (padding + outline of a row) */
+  .u-pkc__sumin{margin-inline:var(--ch-space-1);padding-right:calc(var(--ch-space-4) + 1px);}
+  .u-pkc__tot{padding-right:0;}
+  .u-pkc__buy{align-self:flex-end;align-items:flex-end;text-align:right;}
   .u-pkc__notes{margin-top:100px;}
 }
-/* --- from 1200 px: the columns of the chart, with the names of the rows (U-18) */
-@media (min-width:1200px){
-  .u-pkc{grid-template-columns:var(--we-first) repeat(var(--pkc-n,7),minmax(0,1fr));padding-inline:var(--pkc-inset);}
-  .u-pkc__labs{display:grid;grid-row:span 3;grid-template-rows:subgrid;row-gap:var(--ch-space-2);padding-right:var(--ch-space-4);}
-  .u-pkc__lab{margin:0;font-size:13px;line-height:1.4;color:var(--ch-text-secondary);}
-  .u-pkc__lab--ph{align-self:center;}
-  .u-pkc__lab--tiles{padding-top:calc(var(--ch-space-3) + 1px);}
-  .u-pkc__lab--sum{padding-top:calc(var(--ch-space-4) + 1px);}
-  .u-pkc__sumcap{display:none;}
-  .u-pkc__sumrow{display:grid;grid-template-columns:var(--we-first) minmax(0,1fr);padding-inline:var(--pkc-inset);}
-  .u-pkc__sumin{grid-column:2;}
+/* --- 1000–1199 px: a smaller photo and name in the narrow columns ----------- */
+@media (min-width:1000px) and (max-width:1199px){
+  .u-pkc__ph{gap:var(--ch-space-2);font-size:15px;}
+  .u-pkc__phimg{width:48px;height:48px;}
 }
-@media (prefers-reduced-motion: reduce){.u-pkc__tile,.u-pkc__ph,.u-pkc__body,.u-pkc__pack img{transition:none;}}
+/* From 1200 px the phases no longer take the column of row names of U-18: they
+   fill the whole width (Mateusz on the artifact, 07.11.2026), so they no longer
+   stand exactly under the phases of the chart above. */
+@media (prefers-reduced-motion: reduce){.u-pkc__tile,.u-pkc__prod,.u-pkc__phn,.u-pkc__body,.u-pkc__pack img,.u-pkc__zabset button{transition:none;}}

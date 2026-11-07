@@ -529,7 +529,7 @@
         '<h3 class="c5ks-rec__name"><a></a></h3>' +
         '<p class="c5ks-rec__price">' + ((p.packs || []).length > 1 ? '<span class="c5ks-rec__from">od</span> ' : "") + S.priceHTML(pack) + "</p>" +
         (low ? '<p class="c5ks-rec__low"></p>' : "") +
-        '<button type="button" class="cws-btn cws-btn--light c5ks-rec__add" data-cw-open aria-haspopup="dialog">Kup teraz<span class="wf-sr-only"></span></button>' +
+        '<button type="button" class="cws-btn cws-btn--light c5ks-rec__add c5-btn--ico-liscie" data-cw-open aria-haspopup="dialog">Kup teraz<span class="wf-sr-only"></span></button>' +
       "</div>";
     li.querySelector(".c5ks-rec__shot").href = p.url;
     if (p.img) li.querySelector("img").src = p.img;

@@ -12,12 +12,15 @@
          .c5-ln__lead             the sentence under the title, clamped to three lines (four on the lead)
          .c5-ln__meta             author / date line (on <a> cards inside `.c5-ln__foot` with the arrow)
          .c5-ln__foot, __arrow    the foot of a link card
-   The two smaller cards carry no picture, so on link cards the arrow sits in the corner. ===== */
+   The two smaller cards carry no picture, so on link cards the arrow sits in the corner.
+   Variant `c5-ln--miniatury` (home page „Gleba”, 07.11.2026): the smaller cards carry a
+   small square picture (.c5-ln__mini) at the left of the title. ===== */
 
 .c5-ln{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(1rem,2vw,1.5rem);margin-top:clamp(1.75rem,3.2vw,2.5rem);}
 .c5-ln__card{display:flex;flex-direction:column;align-items:flex-start;gap:var(--ch-space-3);min-width:0;padding:clamp(1.25rem,2.2vw,var(--ch-space-6));border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-md);background:var(--ch-surface-raised);color:var(--ch-text-primary);text-decoration:none;transition:border-color var(--ch-motion-duration-base) var(--ch-motion-ease);}
 .c5-ln__card:hover,.c5-ln__card:focus-within{border-color:var(--ch-border-strong);}
 .c5-ln__fig{display:block;width:100%;aspect-ratio:16 / 9;border-radius:var(--ch-radius-md);overflow:hidden;background:var(--ch-surface-warm-strong);}
+.c5-ln__fig img{display:block;width:100%;height:100%;object-fit:cover;}
 .c5-ln__t{margin:0;}
 .c5-ln__t a{color:inherit;text-decoration:none;}
 .c5-ln__card:hover .c5-ln__t,.c5-ln__card:focus-visible .c5-ln__t,.c5-ln__t a:focus-visible{text-decoration:underline;text-underline-offset:3px;}
@@ -39,3 +42,9 @@ a.c5-ln__card:not(.c5-ln__card--lead) .c5-ln__arrow{position:absolute;right:clam
   .c5-ln__card--lead{grid-row:1 / span 2;}
 }
 @media (prefers-reduced-motion:reduce){.c5-ln__card,.c5-ln__arrow{transition:none;}}
+
+/* ===== variant: miniatury ===== the smaller link cards: picture left, title right */
+.c5-ln--miniatury a.c5-ln__card:not(.c5-ln__card--lead){display:grid;grid-template-columns:clamp(80px,8vw,112px) minmax(0,1fr);
+  column-gap:clamp(var(--ch-space-4),2vw,var(--ch-space-5));align-items:start;}
+.c5-ln__mini{grid-row:1 / span 2;display:block;width:100%;aspect-ratio:1 / 1;border-radius:var(--ch-radius-sm);overflow:hidden;background:var(--ch-surface-warm-strong);}
+.c5-ln__mini img{display:block;width:100%;height:100%;object-fit:cover;}

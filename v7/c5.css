@@ -1,9 +1,8 @@
 /* =========================================================================
    c5.css - wspolna warstwa layoutu V5 dla stron produktowych CarboHort
    Wyekstrahowana 1:1 z bloku <style> we wzorcowej stronie v5/carbomat.html
-   (2026-08-02). carbomat.html celowo NIE zostal ruszony - jest u grafika
-   i pod publicznym adresem; przy najblizszej okazji warto go przepiac na
-   ten plik, zeby nie doszlo do rozjazdu warstwy.
+   (2026-08-02). carbomat.html keeps its own copy of these rules and does
+   not link this file.
    Kolejnosc wczytywania: tokens.css -> wireframe.css -> cw.css -> c5.css
    Plikow kitu (wireframe.css, tokens.css, tabler-sprite.svg) NIE edytujemy.
    ========================================================================= */
@@ -121,15 +120,23 @@
 .c5-btn > .c5-btn__t + .wf-icon:last-child{margin-left:calc(var(--ch-size-button-icon-gap) - var(--ch-space-3));}
 .c5-btn--sm .wf-icon{width:var(--ch-size-icon-s);height:var(--ch-size-icon-s);}
 .c5-btn--sm > .c5-btn__t + .wf-icon:last-child{margin-left:0;}
-/* EL-01 trailing icon by action (decision 18.10.2026, Figma buttons): `--ico-liscie`
-   the four-leaf sign of the logo on main actions (kup, zapytaj, kontakt),
-   `--ico-suwaki` the sliders on choosing a dose or a product (dobierz,
-   konfigurator). Drawn by CSS (mask in the text colour), 40 px from the label;
-   the button markup carries only the class. */
+/* EL-01 trailing icon by action (rule of Mateusz 06.11.2026, in place of the
+   one of 18.10): `--ico-liscie` the four-leaf sign of the logo on EVERY buying
+   button („Kup teraz”, „Kup w sklepie”, „Kup produkt”) and on no other;
+   `--ico-suwaki` the sliders on every button that chooses a product or a dose
+   (dobierz…, the configurator) and on no other. Other buttons carry no
+   decorative icon; functional icons (phone, e-mail, download, cart of „Dodaj
+   do koszyka”, arrows) stay in the markup. Drawn by CSS (mask in the text
+   colour), 40 px from the label; the button markup carries only the class. */
 .c5-btn--ico-liscie{--c5-btn-ico:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 19 19'%3E%3Cg transform='translate(1.117 2.352)'%3E%3Cpath d='M6.40047 5.58824C6.47878 5.58824 6.55709 5.58824 6.6354 5.5805C6.71371 5.57276 6.69022 5.55728 6.69022 5.52632C6.70588 5.44118 6.70588 5.36378 6.70588 5.28638C6.70588 2.36842 4.30958 0 1.35727 0C-1.59504 0 1.20065 0 1.12233 0.00773994C1.04402 0.0154799 1.06752 0.0309598 1.06752 0.0619195C1.06752 0.139319 1.05969 0.216718 1.05969 0.294118C1.05969 3.21207 3.45599 5.5805 6.4083 5.5805L6.40047 5.58824Z'/%3E%3Cpath d='M1.41234 14.4115C1.33484 14.4115 1.25733 14.4115 1.17982 14.4037C1.10232 14.396 1.12557 14.3805 1.12557 14.3495C1.12557 14.272 1.11782 14.1945 1.11782 14.117C1.11782 11.1949 3.48953 8.82324 6.41153 8.82324C6.48904 8.82324 6.56654 8.82324 6.64405 8.83099C6.72156 8.83874 6.6983 8.85425 6.6983 8.88525C6.70605 8.96275 6.70605 9.04026 6.70605 9.11777C6.70605 12.0398 4.33435 14.4115 1.41234 14.4115Z'/%3E%3C/g%3E%3Cg transform='translate(17.765 2.352) scale(-1 1)'%3E%3Cpath d='M6.40047 5.58824C6.47878 5.58824 6.55709 5.58824 6.6354 5.5805C6.71371 5.57276 6.69022 5.55728 6.69022 5.52632C6.70588 5.44118 6.70588 5.36378 6.70588 5.28638C6.70588 2.36842 4.30958 0 1.35727 0C-1.59504 0 1.20065 0 1.12233 0.00773994C1.04402 0.0154799 1.06752 0.0309598 1.06752 0.0619195C1.06752 0.139319 1.05969 0.216718 1.05969 0.294118C1.05969 3.21207 3.45599 5.5805 6.4083 5.5805L6.40047 5.58824Z'/%3E%3Cpath d='M1.41234 14.4115C1.33484 14.4115 1.25733 14.4115 1.17982 14.4037C1.10232 14.396 1.12557 14.3805 1.12557 14.3495C1.12557 14.272 1.11782 14.1945 1.11782 14.117C1.11782 11.1949 3.48953 8.82324 6.41153 8.82324C6.48904 8.82324 6.56654 8.82324 6.64405 8.83099C6.72156 8.83874 6.6983 8.85425 6.6983 8.88525C6.70605 8.96275 6.70605 9.04026 6.70605 9.11777C6.70605 12.0398 4.33435 14.4115 1.41234 14.4115Z'/%3E%3C/g%3E%3C/svg%3E");}
 .c5-btn--ico-suwaki{--c5-btn-ico:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 7h-9'/%3E%3Cpath d='M14 17H5'/%3E%3Ccircle cx='17' cy='17' r='3'/%3E%3Ccircle cx='7' cy='7' r='3'/%3E%3C/svg%3E");}
 .c5-btn--ico-liscie::after,.c5-btn--ico-suwaki::after{content:"";flex:none;width:var(--ch-size-icon-m);height:var(--ch-size-icon-m);margin-left:calc(var(--ch-size-button-icon-gap) - var(--ch-space-3));background:currentColor;-webkit-mask:var(--c5-btn-ico) center / contain no-repeat;mask:var(--c5-btn-ico) center / contain no-repeat;}
 .c5-btn--sm.c5-btn--ico-liscie::after,.c5-btn--sm.c5-btn--ico-suwaki::after{width:var(--ch-size-icon-s);height:var(--ch-size-icon-s);margin-left:0;}
+/* phone (07.11.2026): a small button with an icon in a narrow card („Kup w sklepie”
+   in CE-47 and CE-64) keeps its label on one line – tighter side padding and gap */
+@media (max-width:479px){
+  .c5-btn--sm.c5-btn--ico-liscie,.c5-btn--sm.c5-btn--ico-suwaki{--c5-btn-px:var(--ch-space-3);gap:6px;}
+}
 /* G04 – hover of the buttons (Mateusz 18.10.2026, Figma 938:1629). The label of an
    L button moves 4 px to the right; the icon has its own motion: the four leaves
    of the sign draw 1 unit (of 19) closer to the centre, the two knobs of the
@@ -364,7 +371,7 @@
 .c5-season-pin__spacer{display:none;}
 @media (min-width:900px) and (prefers-reduced-motion: no-preference){
   .cx-js .c5-season-pin__spacer{display:block;}
-  .cx-js .c5-season-pin > .c5-season{position:sticky;bottom:clamp(1.5rem,5vh,3rem);margin-top:0;z-index:1;}
+  .cx-js .c5-season-pin > .c5-season{position:sticky;bottom:max(var(--ch-layout-dock-safe),clamp(1.5rem,5vh,3rem));margin-top:0;z-index:1;}
   /* Nagłówek trzyma się góry przez cały cykl kroków, a potem – zamiast zniknąć –
      jest WYPYCHANY w górę przez dolną krawędź swojego kontenera, czyli odjeżdża
      naturalnie razem z krokami. Kontener jest absolutny (nie zajmuje miejsca
@@ -410,7 +417,7 @@
 .c5-pro__link{white-space:nowrap;}
 .c5-pro__link{color:var(--w-text-inverse);text-decoration:underline;text-underline-offset:3px;font-weight:var(--w-weight-medium);padding:12px 24px;}
 
-/* moduł „zadaj pytanie dr Jurkowi" */
+/* moduł „zadaj pytanie wirtualnemu doradcy" */
 .c5-ask{max-width:784px;margin-inline:auto;display:flex;flex-direction:column;gap:var(--w-space-5);}
 .c5-ask__lead{font-size:1.125rem;font-weight:var(--w-weight-medium);}
 .c5-ask__box{border:1px solid rgb(0 0 0 / .3);padding:27px;display:flex;flex-direction:column;gap:var(--w-space-8);background:var(--w-surface-page);cursor:pointer;}

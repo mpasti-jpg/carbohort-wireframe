@@ -1,0 +1,43 @@
+/* ===== CE-102 · Rozwiązanie – sekcja strony głównej (rejestr: ce-rejestr.js) =====
+   Prefix: c5-rz. ONE CE for the whole chapter „Rozwiązanie” of the home page
+   „Gleba” (comment of Mateusz 06.11.2026): the thesis and the steps below it
+   are one section, designed as a whole by the designer, not separate CE.
+   This file holds the stand-in layout of the prototype.
+
+   Order: the dark thesis box (the classes of CE-33 „ciemny-boks”) with the
+   full kicker and one sentence in the display size; the head (page class
+   c5h-head); four steps along a vertical line and the horizon of the effect
+   (the classes of CE-73, c5-st*). The borrowed parts carry no CE marker and
+   no script, so the line is full and the nodes are lit; the horizon bars fill
+   once on entering the view (data-reveal, CE-73 CSS). The page links
+   ce/CE-33-cytat-zasada.css and ce/CE-73-os-krokow.css for them.
+
+   The axis (comments 06.11): from 900 px the line runs down the middle of the
+   screen, each step puts its title left of the line (aligned to it), the node
+   on the line and the sentence right of it; below 900 px the axis of CE-73
+   for a phone (line on the left). The heading of the horizon is larger than
+   in CE-73, so it stands out from the copy around it.
+   No motion of its own. Comments in English, never the em dash. ===== */
+
+/* --- thesis --- */
+.c5-rz__thesis{padding:clamp(2.5rem,6vw,5.5rem) clamp(1.5rem,5vw,5rem);gap:clamp(1.25rem,2.4vw,2rem);}
+.c5-rz__thesis > .c5-kicker{margin-bottom:0;}
+.c5-rz__thesis p{font-family:var(--ch-font-display);font-size:clamp(2.25rem,5.5vw,5rem);line-height:1.05;letter-spacing:-0.02em;font-weight:400;max-width:none;}
+
+/* --- steps and horizon under the thesis --- */
+.c5-rz__st{margin-top:clamp(3rem,6vw,5.5rem);}
+
+@media (min-width:900px){
+  .c5-rz .c5-st__steps{grid-template-columns:minmax(0,1fr);gap:clamp(2.5rem,4vw,3.5rem);}
+  .c5-rz .c5-st__line{left:50%;right:auto;top:0;bottom:0;width:1px;height:auto;transform:translateX(-50%);}
+  .c5-rz .c5-st__fill{transform:scaleY(1);transform-origin:top center;}
+  .c5-rz .c5-st__step{display:grid;grid-template-columns:minmax(0,1fr) var(--c5-st-node) minmax(0,1fr);
+    column-gap:clamp(1.5rem,3vw,3rem);align-items:start;padding-left:0;}
+  .c5-rz .c5-st__node{grid-column:2;grid-row:1;position:relative;}
+  .c5-rz .c5-st__t{grid-column:1;grid-row:1;justify-self:end;min-height:0;max-width:22ch;text-align:right;}
+  .c5-rz .c5-st__p{grid-column:3;grid-row:1;max-width:40ch;}
+}
+
+/* the heading of the horizon in the display size of a sub-heading */
+.c5-rz .c5-st__hzh{font-family:var(--ch-type-h3-display-font);font-size:clamp(1.625rem,2.8vw,2.5rem);line-height:1.2;
+  letter-spacing:var(--ch-type-h3-display-ls);font-weight:var(--ch-type-h3-display-weight);color:var(--ch-text-primary);}

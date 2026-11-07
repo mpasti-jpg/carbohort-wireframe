@@ -62,10 +62,22 @@ cw-navbar[data-current="prochnica-plus"] .cw-haspopup[data-nav-grupa="prochnica-
   .wf-navbar__inner > .wf-cluster > .wf-btn:not(.wf-btn--icon){padding-inline:10px;font-size:13px;}
   header .wf-navbar__inner > .wf-cluster > .cw-cart{margin-left:0;}
 }
+/* 981–1059 px: since the login icon (06.11.2026) the bar needs about 25 px
+   more, so the gaps and the text-button padding tighten a step. */
+@media (min-width:981px) and (max-width:1059px){
+  .wf-navbar__inner{gap:var(--ch-space-2);}
+  .wf-navbar .cw-nav{gap:6px;}
+  .wf-navbar__inner > .wf-cluster > .wf-btn:not(.wf-btn--icon){padding-inline:8px;}
+}
 /* 1200–1339 px: Figma sizes, menu gaps 20 instead of 32 */
 @media (min-width:1200px) and (max-width:1339px){
   .wf-navbar .cw-nav{gap:var(--ch-space-5);}
   .wf-navbar .cw-brand img{width:150px;}
+}
+/* 1200–1259 px: with the login icon (06.11.2026) the 20 px menu gaps leave
+   the bar 13 px short, so they are 16 px here (after the rule above). */
+@media (min-width:1200px) and (max-width:1259px){
+  .wf-navbar .cw-nav{gap:var(--ch-space-4);}
 }
 
 /* Buttons M on the right (kit buttons in the template, Figma look) */
@@ -80,9 +92,7 @@ cw-navbar[data-current="prochnica-plus"] .cw-haspopup[data-nav-grupa="prochnica-
 .wf-navbar__inner > .wf-cluster > .wf-btn--ghost{background:var(--ch-surface-raised);border-color:var(--ch-border-control);color:var(--ch-text-primary);}
 .wf-navbar__inner > .wf-cluster > .wf-btn--ghost:hover{background:var(--ch-surface-warm);border-color:var(--ch-border-strong);}
 .wf-navbar__inner > .wf-cluster > .wf-btn--icon{width:var(--ch-size-control-m);padding:0;}
-/* Konfigurator: the Figma sliders icon after the label, 16 px at 10 px – from 1340 px, where the bar has room for it */
-.wf-navbar__inner > .wf-cluster > .wf-btn .cw-btn-ico{width:var(--ch-size-icon-s);height:var(--ch-size-icon-s);margin-left:10px;}
-@media (max-width:1339px){.wf-navbar__inner > .wf-cluster > .wf-btn .cw-btn-ico{display:none;}}
+/* Konfigurator: label only since 06.11.2026 (the sliders icon removed). */
 .wf-navbar__inner > .wf-cluster > .wf-btn--icon .wf-icon{width:var(--ch-size-icon-m);height:var(--ch-size-icon-m);}
 /* the Figma group gap between Sklep and the cart (20 px) */
 .wf-navbar__inner > .wf-cluster > .cw-cart{margin-left:14px;}
@@ -108,8 +118,18 @@ cw-navbar[data-current="prochnica-plus"] .cw-haspopup[data-nav-grupa="prochnica-
   .wf-navbar__inner > .wf-cluster > .wf-btn{height:36px;min-height:36px;padding-inline:10px;font-size:13px;border-radius:var(--ch-radius-md);}
   .wf-navbar__inner > .wf-cluster > .wf-btn--icon{width:36px;padding:0;}
 }
-@media (max-width:419px){
+/* Since the login icon (06.11.2026): „Sklep” leaves the bar below 440 px
+   (it stays the last but one item of the mobile menu), the logo shrinks below
+   420 px, and below 360 px the login icon leaves the bar too – „Zaloguj się”
+   is the last item of the mobile menu at every width. */
+@media (max-width:439px){
   .wf-navbar__inner > .wf-cluster > .wf-btn[data-nav="sklep"]{display:none;}
+}
+@media (max-width:419px){
+  .wf-navbar .cw-brand img{width:100px;}
+}
+@media (max-width:359px){
+  .wf-navbar__inner > .wf-cluster > .cw-login{display:none;}
 }
 
 /* Mobile menu (CE-03, v7 behaviour): a white panel under the bar, same inset and corners */

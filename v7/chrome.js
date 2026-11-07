@@ -23,11 +23,17 @@
    - Plik ładujemy w <head> BEZ defer. Dzięki temu definicje istnieją, zanim
      parser dojdzie do znaczników, elementy podnoszą się w locie, a cw.js
      z końca <body> zastaje kompletny DOM.
-   - The dock hides over the opening block of the page and shows once the
-     reader has scrolled past it – one rule for every page with <cw-dock>,
-     in this file (dockLanding): the opening block is #hero, else
-     [data-dock-hero], else the first section of <main> (16.10.2026; before,
-     c5.js and ce/00-base.js did it on pages with #hero only).
+   - The folded dock (a pill) hides only over a full-height hero (#hero that
+     fills the first screen, see fullHero() in dockLanding) and comes in once
+     100 px of the page below it are on screen and the page has been scrolled
+     at least 110 px. On every other page (shop, product, short title bar)
+     the pill is there from the first screen (Mateusz 07.11.2026, 13:31). The
+     first showing of the bar on the first visit waits for 110 px of scroll;
+     on a full-hero page it hides above that line, elsewhere it grows out of
+     the visible pill (dockLanding). Before: 16.10–06.11.2026 the whole
+     floating dock hid over 60 % of the opening block; 06.11 the pill stood
+     on the hero too; 07.11 (morning) it hid over the opening block of every
+     page.
    - Sprite to suma ikon używanych w całym serwisie. Dokładanie ikony na
      jednej podstronie nie wymaga ruszania pozostałych.
    - The "Rodzaje upraw" mega menu (#mega-uprawy) is CE-02 in the variant
@@ -62,9 +68,13 @@
      the bottom of the window and stops in its slot above the footer instead
      of running over it; once it stands in the slot it gets is-landed – the
      field grows and the heading fades in. Scrolling back up returns it to
-     the floating state. Over the opening block of the page the floating
-     dock hides (cx-dockhide, see above); an open or a landed dock stays
-     visible. Styles:
+     the floating state. While floating the dock is a small pill in the
+     middle of the bottom edge whose shape turns into the message bar (hover:
+     it rises at once and opens after 150 ms; click, keyboard focus); on the
+     first visit the bar comes in after 110 px of scroll, stands for 4 s and
+     folds, remembered in localStorage "cw-dok-poznany"; on a touch screen a
+     tap opens the bar above the keyboard and the chat is a sheet from the
+     bottom (06.11.2026). Styles:
      ce/CE-05-dok-doradcy.css, attached by this file; logic: dockLanding().
 
    data-ce attributes mark content elements (CE) of the site: the registry
@@ -426,11 +436,13 @@
       <a class="wf-navbar__link" data-nav="kontakt" href="kontakt.html">Kontakt</a>
     </nav>
     <div class="wf-cluster wf-gap-2">
-      <!-- No "Zaloguj" to the B2B platform here since 28.09.2026: the top bar serves
-           visitors who do not know the site yet; the platform keeps its link in the footer. -->
-      <a class="wf-btn wf-btn--primary wf-btn--sm" data-nav="konfigurator" href="konfigurator.html">Konfigurator<svg class="wf-icon cw-btn-ico" aria-hidden="true"><use href="#ch-suwaki"></use></svg></a>
+      <!-- 06.11.2026 (Mateusz): Konfigurator without the sliders icon; a login
+           icon button after the cart, at the cluster gap, leading to the shared
+           login page (shop account or B2B panel, logowanie.html). -->
+      <a class="wf-btn wf-btn--primary wf-btn--sm" data-nav="konfigurator" href="konfigurator.html">Konfigurator</a>
       <a class="wf-btn wf-btn--ghost wf-btn--sm" data-nav="sklep" href="sklep.html">Sklep</a>
       <a class="wf-btn wf-btn--ghost wf-btn--icon wf-badge--count cw-cart" href="koszyk.html" aria-label="Koszyk, 0 produktów"><svg class="wf-icon" aria-hidden="true"><use href="#ti-shopping-cart"></use></svg><span class="wf-count" data-cart-count>0</span></a>
+      <a class="wf-btn wf-btn--ghost wf-btn--icon cw-login" data-nav="logowanie" href="logowanie.html" aria-label="Zaloguj się – konto sklepu albo panel B2B" title="Zaloguj się – sklep albo panel B2B"><svg class="wf-icon" aria-hidden="true"><use href="#ti-user"></use></svg></a>
       <button class="wf-btn wf-btn--ghost wf-btn--icon cw-navtoggle" data-navtoggle aria-controls="mobilenav" aria-expanded="false" aria-label="Otwórz menu"><svg class="wf-icon" aria-hidden="true"><use href="#ti-menu-2"></use></svg></button>
     </div>
     <!-- Cart preview (28.09.2026, round 3): cw.js fills it from the shop's cart
@@ -518,6 +530,7 @@
     <a class="wf-navitem" data-nav="o-firmie" href="o-firmie.html">O nas</a>
     <a class="wf-navitem" data-nav="kontakt" href="kontakt.html">Kontakt</a>
     <a class="wf-navitem" data-nav="sklep" href="sklep.html">Sklep</a>
+    <a class="wf-navitem" data-nav="logowanie" href="logowanie.html">Zaloguj się</a>
   </nav>
 </header>`;
 
@@ -528,13 +541,13 @@
      three link columns) over a photo strip with the white logo and the small
      print. Links and texts are those of the v7 footer; the claim is the v7
      brand line split as in Figma. Styles: ce/CE-04-stopka.css. The photo comes
-     from the Figma file – licence unconfirmed, local only (backlog). */
+     from the Figma file. */
   var FOOTER = `<footer class="cw-foot" id="serwis-stopka" data-ce="CE-04">
   <div class="cw-foot__panel">
     <div class="cw-foot__in cw-foot__grid">
       <div class="cw-foot__brand">
         <p class="cw-foot__claim">Polski, rodzinny producent poprawiaczy gleby z lignitu i leonardytu.</p>
-        <p class="cw-foot__sub">Dbając o glebę, inwestujemy w przyszłe pokolenia.</p>
+        <p class="cw-foot__sub">„Nie dziedziczymy Ziemi po naszych przodkach. Pożyczamy ją od naszych dzieci.”<span class="cw-foot__src">Autorstwo nieustalone, popularnie przypisywane tradycji rdzennych mieszkańców Ameryki.</span></p>
         <a class="cw-foot__btn" href="kontakt.html">Kontakt z nami<svg class="wf-icon" aria-hidden="true"><use href="#ch-liscie"></use></svg></a>
       </div>
       <div class="cw-foot__cols">
@@ -809,15 +822,16 @@
     });
   }
 
-  var DOCK = `<!-- ===== dr Jurek – pływający dok (ukryty do przewinięcia) ===== -->
+  var DOCK = `<!-- ===== Wirtualny doradca Carbohort – pływający dok ===== -->
 <div class="cw-jurek-backdrop" data-jurek-backdrop data-open="false" aria-hidden="true"></div>
 <div class="cw-jurek" id="serwis-dok" data-ce="CE-05" data-jurek-dock data-open="false">
-  <div class="cw-jurek__panel" role="dialog" aria-label="Wirtualny dr Jurek">
+  <div class="cw-jurek__panel" role="dialog" aria-label="Wirtualny doradca Carbohort">
+    <span class="cw-jurek__grip" aria-hidden="true"></span>
     <div class="cw-jurek__head">
       <span class="wf-ph wf-ph--avatar" aria-hidden="true"></span>
       <div class="wf-stack wf-stack--1" style="flex:1;">
-        <span class="wf-w-semibold">Wirtualny dr Jurek</span>
-        <span class="wf-small wf-t-secondary">asystent doboru i wiedzy</span>
+        <span class="wf-w-semibold">Wirtualny doradca Carbohort</span>
+        <span class="wf-small wf-t-secondary">Zapytaj o produkty, stosowanie, uprawy, techniki upraw i problemy z glebą</span>
       </div>
       <button class="wf-btn wf-btn--ghost wf-btn--icon" data-jurek-close aria-label="Zamknij"><svg class="wf-icon" aria-hidden="true"><use href="#ti-x"></use></svg></button>
     </div>
@@ -826,9 +840,10 @@
   </div>
   <form class="cw-jurek__bar" data-jurek-form>
     <svg class="wf-icon wf-icon--muted" aria-hidden="true" style="align-self:center;"><use href="#ti-message-2"></use></svg>
-    <input class="wf-input" type="text" data-jurek-input placeholder="Zapytaj o dobór, dawki, uprawę…" aria-label="Zapytaj dr Jurka">
+    <input class="wf-input" type="text" data-jurek-input placeholder="Zapytaj o produkty, stosowanie, uprawy, glebę…" aria-label="Zapytaj wirtualnego doradcę">
     <button class="wf-btn wf-btn--primary wf-btn--icon" type="submit" aria-label="Wyślij"><svg class="wf-icon" aria-hidden="true"><use href="#ti-send"></use></svg></button>
   </form>
+  <button class="cw-jurek__pill" type="button" data-jurek-pill aria-label="Zapytaj wirtualnego doradcę Carbohort"><svg class="cw-jurek__spark" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0.5c.4 3.9 3.6 7.1 7.5 7.5-3.9.4-7.1 3.6-7.5 7.5C7.6 11.6 4.4 8.4.5 8 4.4 7.6 7.6 4.4 8 .5z"/></svg></button>
 </div>`;
 
   /* Znacznik bieżącej sekcji – ustawiany z data-current na <cw-navbar>. */
@@ -989,29 +1004,13 @@
     box.addEventListener("mouseleave", function () { hover = -1; clearTimeout(timer); timer = 0; trail = []; });
   }
 
-  /* ===== CE-05 – hidden over the opening block of the page =================
-     One rule for every page with <cw-dock>: while the opening block is on
-     screen the floating dock hides (cx-dockhide; styles in cw.css) and it shows
-     once the reader has scrolled past 60 % of that block. The opening block is
-     #hero, else the section marked [data-dock-hero], else the first section of
-     <main>. An open dock and a landed dock stay visible (CSS). */
-  function dockHero(host) {
-    /* runs before dockLanding(), which moves the dock out of its host */
-    var dock = host.querySelector(".cw-jurek");
-    var hero = document.getElementById("hero") || document.querySelector("[data-dock-hero]") ||
-      document.querySelector("main > section, main section");
-    if (!dock || !hero) return;
-    var raf = 0;
-    function check() {
-      raf = 0;
-      dock.classList.toggle("cx-dockhide", window.scrollY <= hero.offsetHeight * 0.6);
-    }
-    function ask() { if (!raf) raf = requestAnimationFrame(check); }
-    window.addEventListener("scroll", ask, { passive: true });
-    window.addEventListener("resize", ask);
-    window.addEventListener("load", ask);
-    check();
-  }
+  /* CE-05: until 06.11.2026 dockHero() hid the floating dock over the opening
+     block of every page (60 % of #hero / [data-dock-hero] / the first section).
+     Since then both hiding rules live in dockLanding(): the first showing of the
+     bar waits for DOCK_INTRO_Y of scroll; the pill hides only over a
+     full-height hero (fullHero()) until DOCK_HERO_ROOM of the page below it is
+     on screen, and on every other page it is there from the first screen
+     (Mateusz 06.11 and 07.11.2026). */
 
   /* ===== CE-05 – landing section above the footer ==========================
      Inserted once, right before <cw-footer>; the dock moves right below the
@@ -1097,42 +1096,351 @@
     function measure() {
       raf = 0;
       if (window.innerWidth !== vw) sizeBar();
+      if (window.innerWidth !== fw || window.innerHeight !== fh) fullHero();
       var cs = getComputedStyle(dock);
       var stick = parseFloat(cs.bottom) || 0;
-      /* the tucked dock (G10) is moved down by a transform; the slot is the box
-         without it, so the shift is taken off before comparing */
+      /* the bar typed into on a touch screen is lifted above the keyboard by a
+         transform; the slot is the box without it, so the shift is taken off
+         before comparing */
       var ty = 0;
       if (cs.transform && cs.transform !== "none" && window.DOMMatrixReadOnly) ty = new DOMMatrixReadOnly(cs.transform).m42;
       var gap = window.innerHeight - stick - (dock.getBoundingClientRect().bottom - ty);
-      apply(landed ? gap > 0.5 : gap > 1.5);
+      /* a bar being typed into on a touch screen and the open sheet keep their state */
+      if (!dock.classList.contains("is-compose") && !dock.classList.contains("is-sheet")) {
+        apply(landed ? gap > 0.5 : gap > 1.5);
+      }
       if (dock.getAttribute("data-open") === "true") place();
+      formTick();
     }
     function ask() { if (!raf) raf = requestAnimationFrame(measure); }
     window.addEventListener("scroll", ask, { passive: true });
     window.addEventListener("resize", ask);
-    window.addEventListener("load", function () { vw = 0; ask(); });
+    window.addEventListener("load", function () { vw = 0; fw = -1; ask(); });
     if (window.ResizeObserver) new ResizeObserver(ask).observe(document.body);
 
-    /* G10 (Mateusz 18.10.2026): until the dock gets a better form, the floating
-       dock waits tucked under the bottom edge – a 15 px strip at 25 % – and
-       slides up to its full form under the pointer or the keyboard focus
-       (ce/CE-05-dok-doradcy.css). A touch screen has no hover: the first tap on
-       the strip only lifts the dock (is-peek, the tap does not reach the field),
-       a tap elsewhere tucks it again. */
-    function tucked() {
-      return !landed && dock.getAttribute("data-open") !== "true" &&
-        !dock.classList.contains("is-peek") && !dock.contains(document.activeElement);
+    /* ===== The floating form (Mateusz 03.11 and 06.11.2026) ===================
+       Replaces G10 of 18.10.2026 (a 15 px strip at 25 % under the bottom edge).
+       While floating, the dock shows a small pill with a spark in the middle of
+       the bottom edge (.cw-jurek__pill). The message bar keeps its box, so the
+       sticky slot, the landing above the footer and the page height never move –
+       only the look changes (ce/CE-05-dok-doradcy.css). States (classes on the
+       dock; none of them = the pill):
+       - is-lift      the pointer is on the pill: it rises DOCK_LIFT (CSS) at
+                      once and waits there for DOCK_HOVER_MS of intent.
+       - is-expanded  the message bar: the shape of the pill turns into the field
+                      (ce/CE-05). Opened by the pointer resting on the pill for
+                      DOCK_HOVER_MS, a click on the pill, the keyboard (Tab to the
+                      pill moves the focus into the field) or the first showing.
+                      It folds back once the pointer and the focus have left it,
+                      unless the field holds text or the chat is open.
+       - is-intro     the first showing (Mateusz 06.11.2026): on the first visit
+                      it starts once the page has been scrolled DOCK_INTRO_Y and
+                      after DOCK_INTRO_MS – counted from its start, scroll or no
+                      scroll – folds into the pill. On a full-height hero page
+                      the dock is hidden (cx-dockhide) until then, the one-line
+                      bar comes in whole from under the bottom edge and hides
+                      again while the page is back above that line. On any
+                      other page the pill is already on screen, so the bar
+                      grows out of it with the usual morph (is-intro-grow) and
+                      stays when the page goes back up – a slide from under the
+                      edge would first have to take away the pill the reader
+                      already sees. A reader who opens the pill before that
+                      has met the bar: no first showing. Remembered in
+                      localStorage (DOCK_KNOWN_KEY): further pages and visits
+                      start with the pill; without localStorage the first
+                      showing runs on every page.
+       - the pill (folded, intro over) hides only over a full-height hero
+                      (fullHero(), cx-dockhide) and comes in once DOCK_HERO_ROOM
+                      of the page below it is on screen and the page has been
+                      scrolled at least DOCK_INTRO_Y. On every other page it is
+                      there from the first screen, with no scroll (Mateusz
+                      07.11.2026, 13:31). A bar in use (pointer, focus, text,
+                      open chat) stays.
+       - is-compose   touch screen: one tap on the pill opens the bar with the
+                      field focused (keyboard up) over a dimmed page; the bar
+                      rides above the keyboard (visualViewport -> --cw-kb). A tap
+                      on the backdrop or Escape closes it.
+       - is-sheet     touch screen, chat open: the conversation is a sheet from
+                      the bottom edge (up to 85 % of the screen) with a grip, the
+                      header and the field at the bottom; closed by its X, a tap
+                      on the backdrop or a drag of its head down. Then the pill.
+       - is-faint     touch screen: the pill pales while the page scrolls down
+                      and comes back on scrolling up or when the page stops.
+       The landed dock (is-landed) works as before. */
+    var DOCK_KNOWN_KEY = "cw-dok-poznany";
+    var DOCK_HOVER_MS = 150, DOCK_LEAVE_MS = 400, DOCK_INTRO_MS = 4000, DOCK_FAINT_MS = 700;
+    var DOCK_INTRO_Y = 110;   /* px of scroll before the first showing (Mateusz: 100-120) */
+    var DOCK_HERO_ROOM = 100; /* px of page below a full-height hero before the pill comes in */
+    /* A full-height hero (Mateusz 07.11.2026, 13:31: the pill hides only over
+       a hero header as tall as the screen): the block #hero (the hero header of
+       CE-08 and c5.js; [data-dock-hero] and the first section no longer count)
+       that reaches the bottom of the first screen – at most DOCK_FULL_GAP of the
+       next block shows under it – and is built to do so:
+       - wide layout (DOCK_WIDE and up): its CSS min-height (or that of an
+         element up to 3 levels inside) is at least DOCK_FULL_MIN of the window
+         below its top – a block that is tall only through its content (product
+         page, short section header) does not count;
+       - narrow layout (CE-08 drops the min-height under 900 px and stacks the
+         hero): it is at most DOCK_FULL_MAX windows tall – a product section
+         several screens long is not a hero header.
+       Measured on load and whenever the window changes size (fullHero()). */
+    var DOCK_WIDE = 900, DOCK_FULL_GAP = 120, DOCK_FULL_MIN = 0.75, DOCK_FULL_MAX = 2;
+    var hero = document.getElementById("hero");
+    var full = false, fw = -1, fh = -1;
+    var pill = dock.querySelector("[data-jurek-pill]");
+    var input = dock.querySelector("[data-jurek-input]");
+    var closeBtn = dock.querySelector("[data-jurek-close]");
+    var head = dock.querySelector(".cw-jurek__head");
+    var grip = dock.querySelector(".cw-jurek__grip");
+    var backdrop = document.querySelector("[data-jurek-backdrop]");
+    var vv = window.visualViewport;
+    var known = false, over = false, moved = false, quiet = false, pillPress = false, kbOn = false;
+    var introState = "pending";   /* pending -> running -> done */
+    var ptr = "", hoverT = 0, leaveT = 0, introT = 0, faintT = 0, lastY = window.scrollY;
+    var dragY = -1, dragD = 0;
+    try { known = window.localStorage.getItem(DOCK_KNOWN_KEY) === "1"; } catch (e) {}
+    if (known) introState = "done";
+
+    function isOpen() { return dock.getAttribute("data-open") === "true"; }
+    /* the last pointer decides; before any, a screen without hover counts as touch */
+    function touchy() {
+      return ptr ? ptr === "touch" : !!(window.matchMedia && window.matchMedia("(hover: none)").matches);
     }
-    dock.addEventListener("touchstart", function (e) {
-      if (!tucked()) return;
-      e.preventDefault();
-      dock.classList.add("is-peek");
-    }, { passive: false });
-    document.addEventListener("touchstart", function (e) {
-      if (dock.classList.contains("is-peek") && !dock.contains(e.target) && dock.getAttribute("data-open") !== "true") {
-        dock.classList.remove("is-peek");
+    function expand(on) {
+      dock.classList.toggle("is-expanded", on);
+      /* without a full-height hero the pill is on screen before the first
+         showing; a reader who opens it has met the bar */
+      if (on && introState === "pending" && !full) {
+        introState = "done";
+        known = true;
+        try { window.localStorage.setItem(DOCK_KNOWN_KEY, "1"); } catch (e) {}
       }
-    }, { passive: true });
+      if (!on) {
+        dock.classList.remove("is-lift");
+        if (introState === "running") endIntro(false);
+      }
+    }
+    /* is #hero a full-height hero (rule above the constants)? Cached for the
+       window size; measure() calls it again when the size changes */
+    function fullHero() {
+      fw = window.innerWidth; fh = window.innerHeight;
+      full = false;
+      if (!hero) return;
+      var r = hero.getBoundingClientRect(), top = r.top + window.scrollY;
+      var room = fh - top;
+      if (room <= 0 || top + r.height < fh - DOCK_FULL_GAP) return;
+      if (fw < DOCK_WIDE) { full = r.height <= fh * DOCK_FULL_MAX; return; }
+      var els = [hero], m = 0;
+      try { els = els.concat([].slice.call(hero.querySelectorAll(":scope > *, :scope > * > *, :scope > * > * > *"))); } catch (e) {}
+      els.forEach(function (el) { m = Math.max(m, parseFloat(getComputedStyle(el).minHeight) || 0); });
+      full = m >= room * DOCK_FULL_MIN;
+    }
+    /* the full-height hero still covers the bottom of the window, less DOCK_HERO_ROOM */
+    function overHero() {
+      return full && hero.getBoundingClientRect().bottom > window.innerHeight - DOCK_HERO_ROOM;
+    }
+    /* full-height hero: before and during the first showing hidden above
+       DOCK_INTRO_Y of scroll; after it the pill hidden over the hero and above
+       DOCK_INTRO_Y of scroll (an open bar stays). Any other page: never hidden –
+       the pill from the first screen, the first showing grows out of it */
+    function hideRule() {
+      var hide = !full ? false : introState !== "done" ? window.scrollY < DOCK_INTRO_Y :
+        (overHero() || window.scrollY < DOCK_INTRO_Y) && !dock.classList.contains("is-expanded");
+      /* a bar being typed into on a touch screen and an open chat never slide away */
+      if (isOpen() || dock.classList.contains("is-compose")) hide = false;
+      dock.classList.toggle("cx-dockhide", hide);
+    }
+    function busyForm() {
+      return isOpen() || over || dock.classList.contains("is-compose") ||
+        dock.contains(document.activeElement) || !!(input && input.value.trim());
+    }
+    function fold(ms) {
+      clearTimeout(leaveT);
+      leaveT = setTimeout(function () { leaveT = 0; if (!busyForm()) expand(false); }, ms);
+    }
+    /* programmatic focus does not run the focus handlers below (quiet) */
+    function focusEl(el) {
+      if (!el) return;
+      quiet = true;
+      try { el.focus({ preventScroll: true }); } catch (e) { el.focus(); }
+      quiet = false;
+    }
+    /* open the bar and move the focus into the field; the class goes on first
+       and the style is flushed, a hidden field cannot take the focus */
+    function openBar() { expand(true); void dock.offsetWidth; focusEl(input); }
+
+    function kb() {
+      if (!vv) return;
+      dock.style.setProperty("--cw-kb", Math.max(0, Math.round(window.innerHeight - vv.height - vv.offsetTop)) + "px");
+      dock.style.setProperty("--cw-vvh", Math.round(vv.height) + "px");
+    }
+    function trackKb(on) {
+      if (!vv || on === kbOn) return;
+      kbOn = on;
+      var m = on ? "addEventListener" : "removeEventListener";
+      vv[m]("resize", kb);
+      vv[m]("scroll", kb);
+      if (on) kb();
+      else { dock.style.removeProperty("--cw-kb"); dock.style.removeProperty("--cw-vvh"); }
+    }
+    function compose(on) {
+      if (on && (landed || isOpen())) return;
+      if (on === dock.classList.contains("is-compose")) return;
+      dock.classList.toggle("is-compose", on);
+      if (backdrop) backdrop.setAttribute("data-compose", on ? "true" : "false");
+      if (on) openBar();
+      else {
+        /* drop the keyboard */
+        if (dock.contains(document.activeElement) && document.activeElement.blur) document.activeElement.blur();
+        if (!isOpen()) expand(false);
+      }
+      trackKb(on || dock.classList.contains("is-sheet"));
+    }
+
+    if (pill) {
+      pill.addEventListener("pointerdown", function () { pillPress = true; });
+      pill.addEventListener("pointercancel", function () { pillPress = false; });
+      pill.addEventListener("pointerenter", function (e) {
+        if (e.pointerType === "touch") return;
+        clearTimeout(hoverT);
+        dock.classList.add("is-lift");
+        hoverT = setTimeout(function () { hoverT = 0; expand(true); }, DOCK_HOVER_MS);
+      });
+      pill.addEventListener("pointerleave", function () {
+        clearTimeout(hoverT); hoverT = 0;
+        if (!dock.classList.contains("is-expanded")) dock.classList.remove("is-lift");
+      });
+      pill.addEventListener("click", function () {
+        pillPress = false;
+        clearTimeout(hoverT); hoverT = 0;
+        if (touchy()) compose(true);
+        else openBar();
+      });
+      pill.addEventListener("focus", function () {
+        if (quiet || pillPress) return;
+        openBar();
+      });
+    }
+    document.addEventListener("pointerdown", function (e) { ptr = e.pointerType || ""; }, true);
+    dock.addEventListener("pointerenter", function (e) {
+      if (e.pointerType === "touch") return;
+      over = true;
+      clearTimeout(leaveT);
+    });
+    /* a real move of the pointer over the bar (not the page scrolling under a
+       resting pointer) keeps the first showing open past its time */
+    dock.addEventListener("pointermove", function (e) {
+      if (e.pointerType !== "touch" && (e.movementX || e.movementY)) moved = true;
+    });
+    dock.addEventListener("pointerleave", function (e) {
+      if (e.pointerType === "touch") return;
+      over = false; moved = false;
+      if (dock.classList.contains("is-expanded") && !dock.classList.contains("is-intro")) fold(DOCK_LEAVE_MS);
+    });
+    dock.addEventListener("focusout", function (e) {
+      if (e.relatedTarget && dock.contains(e.relatedTarget)) return;
+      if (dock.classList.contains("is-expanded") && !dock.classList.contains("is-intro")) fold(0);
+    });
+    /* a tap into the field of the shown bar (e.g. during the first showing) */
+    if (input) input.addEventListener("focus", function () {
+      if (quiet || landed || isOpen() || ptr !== "touch") return;
+      compose(true);
+    });
+    dock.addEventListener("keydown", function (e) {
+      if (e.key !== "Escape" || landed || isOpen() || !dock.classList.contains("is-expanded")) return;
+      compose(false);
+      expand(false);
+      void dock.offsetWidth;
+      focusEl(pill);
+    });
+    if (backdrop) backdrop.addEventListener("click", function () { compose(false); });
+
+    /* the chat opened or closed (cw.js sets data-open) */
+    function onOpenChange() {
+      if (isOpen()) {
+        expand(true);
+        if (!landed && touchy()) dock.classList.add("is-sheet");
+      } else {
+        var had = dock.contains(document.activeElement);
+        dock.classList.remove("is-sheet");
+        if (panel) { panel.style.transform = ""; panel.style.transition = ""; }
+        compose(false);
+        if (!landed) {
+          if (!over) { expand(false); void dock.offsetWidth; if (had) focusEl(pill); }
+          else if (had) focusEl(input);
+        }
+      }
+      trackKb(dock.classList.contains("is-sheet") || dock.classList.contains("is-compose"));
+    }
+    if (window.MutationObserver) {
+      new MutationObserver(onOpenChange).observe(dock, { attributes: true, attributeFilter: ["data-open"] });
+    }
+
+    /* drag the head of the sheet down to close it */
+    function dragStart(e) {
+      if (!dock.classList.contains("is-sheet") || !panel || (e.target.closest && e.target.closest("button"))) return;
+      dragY = e.clientY; dragD = 0;
+      panel.style.transition = "none";
+    }
+    function dragMove(e) {
+      if (dragY < 0) return;
+      dragD = Math.max(0, e.clientY - dragY);
+      panel.style.transform = dragD ? "translateY(" + dragD + "px)" : "";
+    }
+    function dragEnd() {
+      if (dragY < 0) return;
+      dragY = -1;
+      panel.style.transition = "";
+      panel.style.transform = "";
+      if (dragD > 72 && closeBtn) closeBtn.click();
+    }
+    [grip, head].forEach(function (el) { if (el) el.addEventListener("pointerdown", dragStart); });
+    window.addEventListener("pointermove", dragMove);
+    window.addEventListener("pointerup", dragEnd);
+    window.addEventListener("pointercancel", dragEnd);
+
+    function intro() {
+      introState = "running";
+      known = true;
+      try { window.localStorage.setItem(DOCK_KNOWN_KEY, "1"); } catch (e) {}
+      dock.classList.add("is-intro");
+      /* the pill is on screen: the bar grows out of it (CE-05 keeps the morph) */
+      if (!full) dock.classList.add("is-intro-grow");
+      dock.classList.add("is-expanded");
+      introT = setTimeout(function () { introT = 0; endIntro(true); }, DOCK_INTRO_MS);
+    }
+    /* the end of the first showing: by its time (fold unless the reader is using
+       the bar – typing, focus, open chat, a real pointer on it) or by an action */
+    function endIntro(byTime) {
+      if (introState !== "running") return;
+      introState = "done";
+      clearTimeout(introT); introT = 0;
+      dock.classList.remove("is-intro", "is-intro-grow");
+      hideRule();
+      if (byTime) {
+        var using = isOpen() || dock.classList.contains("is-compose") || dock.contains(document.activeElement) ||
+          !!(input && input.value.trim()) || (over && moved);
+        if (!using) { over = false; expand(false); }
+      }
+    }
+    /* on every measure (scroll, resize, load): the pale pill on a touch screen,
+       an idle bar folding back over the opening block, the hiding rules, the
+       start of the first showing */
+    function formTick() {
+      var y = window.scrollY;
+      if (y > lastY + 4) dock.classList.add("is-faint");
+      else if (y < lastY - 4) dock.classList.remove("is-faint");
+      lastY = y;
+      clearTimeout(faintT);
+      faintT = setTimeout(function () { faintT = 0; dock.classList.remove("is-faint"); }, DOCK_FAINT_MS);
+      if (introState === "done" && full && dock.classList.contains("is-expanded") && !busyForm() &&
+        (overHero() || y < DOCK_INTRO_Y)) expand(false);
+      hideRule();
+      if (introState === "pending" && y >= DOCK_INTRO_Y && !landed && !isOpen()) intro();
+    }
+
+    fullHero();
+    hideRule();
     sizeBar();
     ask();
   }
@@ -1198,8 +1506,9 @@
   /* ===== Page-state badge (bottom-left corner of every page) ===============
      Reads status.js (window.CW_STATUS) and injects itself – no tag in the HTML,
      so a new page gets it as soon as it lands in the manifest. It sits in the
-     0–20 px strip above the bottom edge, i.e. below the advisor dock (the dock
-     stands at bottom: var(--w-space-5) = 20 px) – the two never overlap.
+     0–15 px strip above the bottom edge, i.e. below the advisor dock (the dock
+     stands at bottom: 15 px since 06.11.2026, before 20 px) – the two never
+     overlap.
      Model: one gate (track "makieta" = layout approval) and independent tracks
      after it. The badge shows the gate state, e.g. "Makieta: do akceptacji";
      once the layout is approved it appends the tracks that have a value.
@@ -1207,11 +1516,12 @@
      the badge never guesses.                                                  */
   var STATUS_CSS = `
 /* Height is coupled with the advisor dock offset: the dock stands at
-   bottom: var(--w-space-5) = 20 px, so the badge has to fit below it.
-   17 px leaves 3 px of slack; re-check after changing font-size or padding. */
+   bottom: 15 px (since 06.11.2026; ce/CE-05-dok-doradcy.css), so the badge has
+   to fit below it – 15 px for an 11 px line; re-check after changing
+   font-size or padding. */
 .cw-status{position:fixed;left:0;bottom:0;z-index:var(--w-z-sticky);
   display:flex;align-items:center;max-width:min(92vw,56em);
-  height:17px;padding:0 9px 0 7px;border-radius:0 6px 0 0;box-sizing:border-box;
+  height:15px;padding:0 9px 0 7px;border-radius:0 6px 0 0;box-sizing:border-box;
   background:var(--w-surface-raised);border-top:1px solid var(--w-border-subtle);
   border-right:1px solid var(--w-border-subtle);
   font-family:var(--w-font-sans);font-size:11px;line-height:1.3;
@@ -2090,7 +2400,7 @@
     el.innerHTML = DOCK;
     /* <cw-dock> stands after <cw-footer> on every page; should a page ever put
        it first, the landing waits for the parser to reach the footer */
-    if (document.querySelector("cw-footer")) { dockHero(el); dockLanding(el); }
-    else document.addEventListener("DOMContentLoaded", function () { dockHero(el); dockLanding(el); });
+    if (document.querySelector("cw-footer")) dockLanding(el);
+    else document.addEventListener("DOMContentLoaded", function () { dockLanding(el); });
   });
 })();

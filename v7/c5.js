@@ -4,10 +4,10 @@
    v5/carbomat.html (2026-08-02). Kod jest w calosci odporny na brak
    elementow (kazda funkcja ma guard), wiec strona moze uzyc dowolnego
    podzbioru mechanik: subnaw + scrollspy, taby wariantu, akordeony
-   (panelSet), sceny recept, pin osi sezonu, filtr legendy, dok dr Jurka.
-   carbomat.html celowo NIE zostal ruszony - przy najblizszej okazji warto
-   go przepiac na ten plik, zeby nie doszlo do rozjazdu mechanik.
-   Wymaga: cw.js (dok dr Jurka, mega-menu) zaladowanego wczesniej.
+   (panelSet), sceny recept, pin osi sezonu, filtr legendy, dok wirtualnego doradcy.
+   carbomat.html keeps its own copy of these mechanics and does not link
+   this file.
+   Wymaga: cw.js (dok wirtualnego doradcy, mega-menu) zaladowanego wczesniej.
    ========================================================================= */
 /* ===== CARBOMAT ECO – V5: mechanika layoutu wg makiet 24.07 =====
    Celowo minimalna (bez animacji – dopracujemy je osobno, sekcja po sekcji):
@@ -296,7 +296,7 @@
   });
 
   /* --- Moduł „zadaj pytanie" pod FAQ ------------------------------------------
-     Klik w dowolne miejsce ramki lub w przycisk = otwarcie doka dr. Jurka.
+     Klik w dowolne miejsce ramki lub w przycisk = otwarcie doku wirtualnego doradcy.
      Klik w tabletkę = otwarcie doka + wpisanie pytania do jego pola
      (użytkownik tylko wysyła – bez przepisywania). */
   var askBox = $("[data-ask-box]");

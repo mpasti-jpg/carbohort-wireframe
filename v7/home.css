@@ -1,114 +1,64 @@
 /* ===== 00 baza ===========================================================
-   home.css – the home page layer (V7, new concept of 26.10.2026: hub and
-   showcase through the products, spec 40-strona-www/koncepcja/home-spec.md).
-   Every section is a shared CE from ce/; this sheet carries ONLY the
-   exceptions of this one page and the few page parts that are not CE (the
-   section head, small link rows). Numbered blocks follow the sections of the
-   page. Comments in English, never the em dash. ===== */
+   home.css – the layer of the home page „Gleba”, the narrative home page
+   binding from 07.11.2026 (spec 40-strona-www/koncepcja/home-gleba-spec.md;
+   until 07.11 this sheet was home-gleba.css). Every section is a shared CE
+   from ce/; this sheet carries ONLY the exceptions of this one page: the
+   section head (`c5h-*`, carried over from the home.css of 26.10 under the
+   same prefix), the
+   photo of the hero frame, the rhythm of the chapters and the fits of shared
+   CE. The chapters Problem and Rozwiązanie are CE of their own (CE-101,
+   CE-102) with styles in their modules. Numbered blocks follow the page. No
+   motion of its own. Comments in English, never the em dash. ===== */
 
-/* --- Section head (EL-06 kicker + EL-09 heading + EL-12 lead) -------------
-     <div class="c5h-head" data-reveal>
-       <span class="c5-kicker c5-kicker--outline">…</span>
-       <div class="c5-head"><h2 class="c5-h2">…</h2><p class="c5-lead">…</p></div>
-     </div>
-   The kicker's own margin is dropped, the gap of the head spaces it. */
+/* --- Section head (EL-06 kicker + EL-09 heading + EL-12 lead), from the home.css of 26.10 -- */
 .c5h-head{display:flex;flex-direction:column;align-items:flex-start;gap:clamp(1.25rem,2.4vw,2rem);}
 .c5h-head > .c5-kicker{margin-bottom:0;}
 .c5h-head + *{margin-top:clamp(2.5rem,5vw,4.5rem);}
 
-/* --- Head on the left, content on the right (FAQ) from 900 px ------------ */
-.c5h-split{display:grid;gap:clamp(2rem,4vw,3rem);}
-.c5h-split > .c5h-head + *{margin-top:0;}
-@media (min-width:900px){
-  .c5h-split{grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:40px;align-items:start;}
-}
-
-/* --- Quiet arrow link and the row of actions under a block --------------- */
+/* --- Quiet arrow link and the row of actions under a block, from the home.css of 26.10 -- */
 .c5h-alink{display:inline-flex;align-items:center;gap:8px;font-size:var(--ch-type-body-size);color:var(--ch-text-primary);}
 .c5h-alink .wf-icon{flex:none;transition:transform var(--ch-motion-duration-base) var(--ch-motion-ease);}
 .c5h-alink:hover .wf-icon,.c5h-alink:focus-visible .wf-icon{transform:translateX(4px);}
 .c5h-more{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ch-space-4) var(--ch-space-8);margin-top:clamp(2rem,4vw,3rem);}
+/* the row under a full-width grid stands in the middle (products, comment 06.11) */
+.c5h-more--center{justify-content:center;}
 @media (max-width:899px){.c5h-alink{min-height:44px;}}
 @media (prefers-reduced-motion: reduce){
   .c5h-alink .wf-icon{transition:none;}
   .c5h-alink:hover .wf-icon,.c5h-alink:focus-visible .wf-icon{transform:none;}
 }
 
+/* --- Rhythm of the chapters ----------------------------------------------
+   One ground per chapter, alternating page white and the warm beige of the
+   tokens: hero white, problem warm, solution white, proof warm, products
+   white, knowledge warm, company white, then the warm band of CE-18 and the
+   PRO band. `--next` is the second section of a chapter: same ground, half
+   the air above it, so the chapter reads as one block. */
+.c5h-ch--warm{background:var(--ch-surface-warm);}
+#dowod.pp-liczby--foto{background:var(--ch-surface-warm);}
+.c5h-ch--next{padding-top:clamp(3rem,6vw,5.5rem);}
+
 
 /* ===== 0 hero ============================================================
-   CE-08 grid of the variant `miniatura`, a plain photo instead of the film
-   thumbnail (adnotacja 3:81): it fills the panel, 4:3 below 900 px. */
-.c5-hero--miniatura .c5-hero__stage{padding:0;}
-.c5h-hero__img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:50% 60%;}
-@media (max-width:899px){
-  .c5-hero--miniatura .c5-hero__stage{padding:0;aspect-ratio:4 / 3;}
-}
+   CE-08 `player`: until the company film exists the frame holds a photo
+   (comment 06.11), so the frame is a <div> – no pointer, no zoom on hover. */
+.c5h-film .c5h-film__frame{cursor:default;}
+.c5h-film .c5h-film__frame:hover .pp-film__poster{transform:none;}
 
 
-/* ===== 1 produkty =======================================================
-   CE-20 `z-przyciskami` stands in two columns from 900 px; five family cards
-   read better as three plus two, so from 1100 px this occurrence takes three
-   columns (the only change to the module here). The varieties are EL chips. */
-@media (min-width:1100px){
-  .c5h-prod.c5-cards.c5-cards--z-przyciskami{grid-template-columns:repeat(3,minmax(0,1fr));}
-}
-.c5h-chips{display:flex;flex-wrap:wrap;gap:var(--ch-space-2);margin:0;}
-
-
-/* ===== 2 uprawy =========================================================
-   CE-20 tiles of kontakt.html (`kt-ways`): three columns from 1100 px instead
-   of the auto-fit of the module, the actions pinned to the bottom of a tile,
-   the sixth tile („Mam już produkt”) on the warm ground. */
-@media (min-width:1100px){
-  .c5h-crops.kt-ways{grid-template-columns:repeat(3,minmax(0,1fr));}
-}
-.c5h-crops .kt-way p{flex:0 0 auto;}
-.c5h-crops__acts{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ch-space-2) var(--ch-space-5);margin-top:auto;padding-top:var(--ch-space-3);}
-.c5h-crops__link{display:inline-flex;align-items:center;min-height:44px;font-size:var(--ch-type-small-size);font-weight:var(--ch-font-weight-medium);}
-.c5h-crops__own{background:var(--ch-surface-warm);border-color:transparent;}
-
-/* The list of the CE-37 window: one row per product, name | what the target
-   section is about | arrow (the row language of CE-53). */
-.c5h-howto{display:flex;flex-direction:column;margin:0;padding:0;list-style:none;}
-.c5-pop__body .c5h-howto li{padding-left:0;}
-.c5-pop__body .c5h-howto li::before{display:none;}
-.c5h-howto li + li{border-top:1px solid var(--ch-border-subtle);}
-.c5h-howto__row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:var(--ch-space-4);
-  min-height:56px;padding-block:var(--ch-space-3);color:var(--ch-text-primary);text-decoration:none;}
-.c5h-howto__name{font-weight:var(--ch-font-weight-medium);}
-.c5h-howto__meta{font-size:var(--ch-type-small-size);color:var(--ch-text-secondary);}
-.c5h-howto__row .wf-icon{transition:transform var(--ch-motion-duration-base) var(--ch-motion-ease);}
-.c5h-howto__row:hover .c5h-howto__name{text-decoration:underline;text-underline-offset:.18em;}
-.c5h-howto__row:hover .wf-icon{transform:translateX(3px);}
-@media (max-width:599px){
-  .c5h-howto__row{grid-template-columns:minmax(0,1fr) auto;}
-  .c5h-howto__meta{grid-column:1;grid-row:2;}
-  .c5h-howto__row .wf-icon{grid-column:2;grid-row:1 / span 2;}
-}
-@media (prefers-reduced-motion: reduce){
-  .c5h-howto__row .wf-icon{transition:none;}
-  .c5h-howto__row:hover .wf-icon{transform:none;}
-}
-
-
-/* ===== 3 zaufanie =======================================================
-   CE-24 `wiersze-ze-zdjeciem`: head with a lead, the rows and the links stand
-   in the column beside the photo. This column is taller than the 651 : 747 of
-   the module, and a stretched box with an aspect ratio would grow out of its
-   grid track, so from 900 px the photo simply fills the height of the row. */
-@media (min-width:900px){
-  .c5h-liczby .pp-liczby__ph{position:relative;aspect-ratio:auto;}
-  .c5h-liczby .pp-liczby__ph img{position:absolute;inset:0;}
-}
+/* ===== 03 dowód =========================================================
+   CE-24 `wiersze-ze-zdjeciem`, from the home.css of 26.10, block 3: the column beside the
+   photo is taller than the 651 : 747 of the module, so from 900 px the photo
+   fills the height of the row. */
+/* (the photo filling the row: modifier `pp-liczby--wypelnia` of the module, since 07.11.2026) */
 .c5h-liczby-head{gap:var(--ch-space-4);}
 .c5h-liczby-head .c5-kicker{margin-bottom:0;}
 .c5h-liczby-head .c5-lead{margin:0;}
 .pp-liczby__col > .c5h-more{margin-top:0;}
 
-
-/* ===== 4–5 próchnica+ · o nas ===========================================
-   CE-36: one row per section, so the module's air above the rows goes; below
-   900 px the sections take the air a row would get from its neighbours. */
+/* CE-36 rows (Próchnica+, O nas), from the home.css of 26.10, block 4–5: one row per
+   section; below 900 px the section takes the air a row would get from its
+   neighbours. */
 .c5h-rows.b-rows{margin-top:0;}
 .c5h-rows .c5-kicker{align-self:flex-start;margin-bottom:0;}
 .c5h-rows .b-row__t{margin:0;}
@@ -117,10 +67,48 @@
 }
 
 
-/* ===== 5a dla profesjonalistów ==========================================
-   CE-16 with three buttons: the row of the module has two, here it wraps. */
-.c5h-pro .c5-btnrow{flex-wrap:wrap;}
+/* ===== 04 produkty ======================================================
+   CE-20 `z-przyciskami`: three cards by need in three columns from 1100 px
+   (as the home.css of 26.10, block 1); the product links are small outlined buttons. The
+   crop tiles take three columns from 1100 px (as the home.css of 26.10, block 2). */
+@media (min-width:1100px){
+  .c5h-prod.c5-cards.c5-cards--z-przyciskami{grid-template-columns:repeat(3,minmax(0,1fr));}
+  .c5h-crops.kt-ways{grid-template-columns:repeat(3,minmax(0,1fr));}
+}
+.c5h-chips{display:flex;flex-wrap:wrap;gap:var(--ch-space-2);margin:0;}
+.c5h-prod .c5-cards__acts{gap:var(--ch-space-2);}
+/* several packs in one card picture (comments 07.11): the packs stand on one
+   base line, each with its height in --h (the tallest 100%) */
+.c5h-gama{position:absolute;inset:10% 8%;display:flex;align-items:flex-end;justify-content:center;gap:5%;}
+.c5-cards__shot .c5h-gama img{position:static;transform:none;width:auto;max-width:none;height:var(--h,100%);flex:0 1 auto;min-width:0;object-fit:contain;}
+.c5h-crops .kt-way p{flex:0 0 auto;}
+.c5h-crops__acts{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ch-space-2) var(--ch-space-5);margin-top:auto;padding-top:var(--ch-space-3);}
+.c5h-crops__link{display:inline-flex;align-items:center;min-height:44px;font-size:var(--ch-type-small-size);font-weight:var(--ch-font-weight-medium);}
+/* photo of the crop at the top of each tile (comment 06.11) */
+.c5h-crops__fig{margin:0 0 var(--ch-space-2);aspect-ratio:3 / 2;overflow:hidden;border-radius:var(--ch-radius-sm);background:var(--ch-surface-warm);align-self:stretch;}
+.c5h-crops__fig img{display:block;width:100%;height:100%;object-fit:cover;}
 
 
-/* ===== 6 faq ============================================================ */
-.c5h-faq__links{display:flex;flex-wrap:wrap;gap:var(--ch-space-2) var(--ch-space-6);}
+/* ===== 05 wiedza ========================================================
+   CE-58 link cards without author lines: the foot holds the arrow alone, so
+   it goes to the right; the picture of the lead card is a photo. */
+.c5h-wiedza .c5-ln__foot{justify-content:flex-end;}
+@media (min-width:900px){.c5h-wiedza .c5-ln__card--lead .c5-ln__fig{aspect-ratio:16 / 8;}}
+
+
+/* ===== 06 o nas =========================================================
+   From 900 px two columns (comments 06.11): the head on the left, CE-35 with
+   the values and the button on the right, both from the top. */
+@media (min-width:900px){
+  .c5h-onas{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:clamp(2.5rem,6vw,6rem);align-items:start;}
+  .c5h-onas > .c5h-head + *{margin-top:0;}
+}
+/* In the half column the CE-35 panel is too narrow for its two inner columns
+   (head | list) below about 1360 px: at 900 px the words of the values pushed
+   the page 18 px sideways, up to about 1260 px they stuck out of the panel and
+   up to about 1350 px the two list columns came out uneven (measured 07.11).
+   Here the head stands above the list, as below 900 px; the list keeps its two
+   columns. From 1360 px the panel keeps its own two columns. */
+@media (min-width:900px) and (max-width:1359px){
+  .c5h-onas .c5-pick{grid-template-columns:minmax(0,1fr);}
+}

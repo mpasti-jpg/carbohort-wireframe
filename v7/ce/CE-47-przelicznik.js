@@ -238,54 +238,85 @@
 })();
 
 /* ===== CE-47 · Przelicznik – wariant: etapy ================================
-   Cost of a crop programme phase by phase (Figma 560:205 and its annotations,
-   03.11.2026). Since U-30 (04.11.2026) the box `.u-pk--etapy[data-pk-calc]`
-   has no ruler: the native range ([data-calc-range], uprawa.js) writes the
-   area into [data-calc-in]; this part only listens to that field.
-   Markup: one `.u-pkc__col` per phase with tiles `.u-pkc__tile` – data-prod
-   (key in the product JSON of `script[data-pkc-products]`: id, name, img, url
-   and packs with their volume `l` and gross price, the format of
-   sklep-wspolne.js), data-lo / data-hi (dose per hectare), data-pk (packages of
-   the tile); a tile without a dose (a partner product whose dose is still to be
-   given) only stands and counts nothing. Every tile has its checkbox
-   [data-pkc-pick] (U-19, 04.11.2026 – it replaced the box „Uwzględnij” of the
-   phase): ticked = counted, unticked = `is-skip` (greyed, left out); a tile of
-   another package has its checkbox disabled. Per phase the sum [data-pkc-sum];
-   the total [data-pkc-total] / [data-pkc-gross], what it
-   covers [data-pkc-info], the cart button [data-pkc-cart], the status line
-   [data-pkc-status] and the package switch ([data-pk-switch], the same radio
-   semantics and `c5:pakiet` event as CE-100).
-   Counting: ONE dose per tile and package – the lower dose of the programme
-   in the minimal package, the upper one in the others; no ranges anywhere
-   (Mateusz, 03.11.2026: the client must not be left with the choice). The
-   amount for the field (dose × area) is covered by ONE pack size of the product – the size
-   that costs least for that amount („nie wysyłamy 100 × 10 kg, tylko
-   1 × 1000 kg” – annotation; an amount under the smallest pack is that pack –
-   Mateusz, 03.11.2026); net = gross minus VAT (CWSklep.vatSplit with the rate of the
-   pack). A phase with at least one counted product gets `is-on` (tinted
-   body). „Dodaj wybrane produkty do koszyka” puts exactly the counted packs
-   into the cart (CWSklep.add).
+   Cost of a crop programme for one season – template of the arable crop pages
+   (Figma 560:205 and its annotations, 03.11.2026; the comments on the live
+   page U-11–U-31, 04.11.2026; client comment U-38 and the answer of Mateusz,
+   06.11.2026; the comments of Mateusz on the artifact, 07.11.2026). The box
+   `.u-pk--etapy[data-pk-calc]` has no ruler (U-30): the native range
+   ([data-calc-range], uprawa.js) writes the area into [data-calc-in]; this
+   part only listens to that field.
+   ONE dose per season for every product, the same in every package (U-38):
+   - the list „Produkty na sezon” – one row `.u-pkc__prod` per product:
+     data-prod (key in the product JSON of `script[data-pkc-products]`: id,
+     name, img, url and packs with their volume `l` and gross price, the
+     format of sklep-wspolne.js), data-dose (dose per hectare and season),
+     data-unit, data-pk (packages of the product) and a checkbox
+     [data-pkc-pick] (ticked = counted; unticked = `is-skip`, greyed and left
+     out; a product of another package is `is-out`, without a checkbox and
+     without a price). The price is counted per product: the amount for the
+     field is covered by ONE pack size – the size that costs least for that
+     amount („nie wysyłamy 100 × 10 kg, tylko 1 × 1000 kg” – annotation; an
+     amount under the smallest pack is that pack – Mateusz, 03.11.2026); net =
+     gross minus VAT (CWSklep.vatSplit with the rate of the pack). One price,
+     no ranges (Mateusz, 03.11 and 06.11.2026).
+   - the number of treatments: a product row with a radio group
+     [data-zab-switch] (buttons [data-zab-set="1|2|3"], each with the sentence
+     [data-zab-txt] written into [data-zab-out]) splits its season dose into
+     that many equal parts. The open choice starts as the button marked
+     aria-checked="true" (the default variant, „Domyślnie…”). Every change
+     fires `c5:zabiegi` (group, prod, n) on document – the chart CE-100 draws
+     the terms of the parts with it.
+   - treatments ("slots"): the tiles `.u-pkc__tile` of the phase columns
+     `.u-pkc__col[data-c]` – or, in a box with `data-pkc-bars` (one section
+     for the chart and the calculator, 07.11.2026), the bars
+     `.c5-we__bar[data-pkc-prod]` of the chart CE-100 of the same group, whose
+     `.c5-we__val` gets the dose of one treatment and its amount for the field.
+     An optional data-zab="2 3" names the numbers of treatments that put a
+     part of the dose into that phase. A tile outside the chosen split is
+     hidden; a phase without a visible tile shows its `.u-pkc__none` and is
+     `is-empty`; a phase with a counted product is `is-on` (U-11).
+   - phases left out of the price (07.11.2026, „Wyłącz wybrane fazy z
+     obliczeń”): toggle buttons [data-pkc-excl] [data-c] (aria-pressed=true =
+     left out). A product counts only its treatments in the phases that stay:
+     amount = dose of one treatment × treatments left × area; a product with
+     no treatment left is `is-excl` (greyed, no price). Tiles, bars and columns
+     of a left-out phase are `is-excl`, and so are the cells of its column on
+     the chart (a box with data-pkc-bars) – the column goes slightly darker.
+   - [data-pkc-halab]: the head and the captions of the amount column say
+     „Ilość na N ha” with the area of the field (07.11.2026);
+   - the total [data-pkc-total] / [data-pkc-gross], what it covers
+     [data-pkc-info] (package, area, „cena netto za N zaznaczone produkty”,
+     the phases left out), the cart button [data-pkc-cart] (exactly the
+     counted packs go to the cart – CWSklep.add), the status line
+     [data-pkc-status] and the package switch ([data-pk-switch], the same
+     radio semantics and `c5:pakiet` event as CE-100). A box without its own
+     switch follows the switch of the chart of the same group (07.11.2026).
    Buttons `[data-pkc-buy="key"]` anywhere on the page (the product cards of the
    lightbox) open the quick view of that product from the same JSON.
-   Without JS the tiles stand with their doses and the sums show „–”. ===== */
+   Without JS the rows and tiles stand with their doses and the prices show
+   „–”. ===================================================================== */
 (function () {
   "use strict";
   var doc = document;
+  var slice = function (l) { return Array.prototype.slice.call(l); };
   var boxes = doc.querySelectorAll(".u-pk--etapy[data-pk-calc]");
   if (!boxes.length) return;
   var shop = window.CWSklep || null;
   var PK_NAME = { min: "minimalny", std: "standardowy", kompl: "kompleksowy" };
 
-  function group3(s) { return s.replace(/\B(?=(\d{3})+(?!\d))/g, " "); }
+  function group3(s) { return s.replace(/\B(?=(\d{3})+(?!\d))/g, " "); }
   function num(x) {
     var v = x >= 100 ? Math.round(x) : Math.round(x * 10) / 10, p = String(v).split(".");
     p[0] = group3(p[0]);
     return p.join(",");
   }
-  function zl(a, b) {
-    var x = group3(String(Math.round(a))), y = group3(String(Math.round(b)));
-    return (x === y ? x : x + "–" + y) + " zł";
+  /* a part of a split dose keeps one decimal, so the parts add up to the season (3 × 133,3 l) */
+  function num1(x) {
+    var p = String(Math.round(x * 10) / 10).split(".");
+    p[0] = group3(p[0]);
+    return p.join(",");
   }
+  function zl(a) { return group3(String(Math.round(a))) + " zł"; }
   function net(gross, product, pack) {
     if (shop && shop.vatSplit) return shop.vatSplit(gross, shop.rateOf ? shop.rateOf(product, pack) : undefined).net;
     return gross / 1.08;
@@ -294,11 +325,10 @@
     if (shop && shop.plural) return shop.plural(n, a, b, c);
     return n === 1 ? a : c;
   }
+  function inList(list, v) { return (" " + (list || "") + " ").indexOf(" " + v + " ") >= 0; }
 
   /* one pack size for the whole amount: n × the same pack, the size that costs
-     least for `need` (ties go to the bigger pack) – „nie wysyłamy 100 × 10 kg,
-     tylko 1 × 1000 kg”; an amount under the smallest pack is that pack.
-     Returns { gross, net, packs: [{ pack, n }] }. */
+     least for `need` (ties go to the bigger pack). Returns { gross, net, packs } */
   function cover(need, product) {
     var packs = (product.packs || []).filter(function (p) { return p.l > 0 && typeof p.price === "number"; });
     var out = { gross: 0, net: 0, packs: [] };
@@ -314,102 +344,16 @@
     return out;
   }
   function packText(list) {
-    return list.map(function (x) { return x.n + " × " + x.pack.label; }).join(" + ");
+    return list.map(function (x) { return x.n + " × " + x.pack.label; }).join(" + ");
   }
   function catalogue(scope) {
     var data = (scope || doc).querySelector("script[data-pkc-products]");
     try { return JSON.parse(data ? data.textContent : "{}"); } catch (e) { return {}; }
   }
-
-  Array.prototype.forEach.call(boxes, function (box) {
-    var group = box.getAttribute("data-pakiety") || "";
-    var field = box.querySelector("[data-calc-in]");
-    var products = catalogue(box);
-    var cols = Array.prototype.slice.call(box.querySelectorAll(".u-pkc__col"));
-    var tiles = Array.prototype.slice.call(box.querySelectorAll(".u-pkc__tile"));
-    var totalEl = box.querySelector("[data-pkc-total]");
-    var grossEl = box.querySelector("[data-pkc-gross]");
-    var infoEl = box.querySelector("[data-pkc-info]");
-    var cartBtn = box.querySelector("[data-pkc-cart]");
-    var status = box.querySelector("[data-pkc-status]");
-    var sw = box.querySelector("[data-pk-switch]");
-    var opts = sw ? Array.prototype.slice.call(sw.querySelectorAll("[data-pk-set]")) : [];
-    if (!field || !opts.length) return;
-    var pk = null, plan = [];
-
-    cols.forEach(function (c) { if (!c.querySelector(".u-pkc__tile")) c.classList.add("is-empty"); });
-
-    function area() {
-      var v = parseFloat(String(field.value || "").replace(",", "."));
-      return isFinite(v) && v > 0 ? v : 0;
-    }
-
-    function run() {
-      var ha = area(), tot = { lo: 0, hi: 0, glo: 0, ghi: 0 }, counted = 0;
-      plan = [];
-      cols.forEach(function (c) {
-        var sumEl = c.querySelector("[data-pkc-sum]");
-        var s = { lo: 0, hi: 0, glo: 0, ghi: 0 }, any = false, mine = [];
-        Array.prototype.forEach.call(c.querySelectorAll(".u-pkc__tile"), function (t) {
-          var prod = products[t.getAttribute("data-prod")];
-          var lo = parseFloat(t.getAttribute("data-lo")), hi = parseFloat(t.getAttribute("data-hi"));
-          var unit = t.getAttribute("data-unit") || "l";
-          var qty = t.querySelector("[data-pkc-qty]"), packsEl = t.querySelector("[data-pkc-packs]"), doseEl = t.querySelector("[data-pkc-dose]");
-          var pick = t.querySelector("[data-pkc-pick]"), out = t.classList.contains("is-out");
-          if (pick) pick.disabled = out;
-          var skip = !out && !!pick && !pick.checked;
-          t.classList.toggle("is-skip", skip);
-          if (!isFinite(lo)) { return; }   /* no dose yet: the tile only stands */
-          if (!isFinite(hi)) hi = lo;
-          /* ONE dose, no ranges: the lower dose of the programme in the minimal
-             package, the upper one in the others (Mateusz, 03.11.2026) */
-          var dose = pk === "min" ? lo : hi;
-          if (doseEl) doseEl.textContent = (doseEl.getAttribute("data-prefix") || "") + num(dose) + "\u00a0" + unit + "/ha" + (doseEl.getAttribute("data-suffix") || "");
-          if (qty) qty.textContent = ha ? num(dose * ha) + "\u00a0" + unit : "–";
-          if (out || !prod || !ha) { if (packsEl) packsEl.textContent = ""; return; }
-          var b = cover(dose * ha, prod);
-          if (packsEl) packsEl.textContent = b.packs.length ? packText(b.packs) : "";
-          if (skip) return;   /* left out of the price by its checkbox (U-19) */
-          any = true;
-          s.lo += b.net; s.hi += b.net; s.glo += b.gross; s.ghi += b.gross;
-          mine.push({ product: prod, packs: b.packs });
-        });
-        if (sumEl) sumEl.textContent = any ? zl(s.lo, s.hi) : "–";
-        var on = any;
-        c.classList.toggle("is-off", !on);
-        c.classList.toggle("is-on", on);
-        if (on) { tot.lo += s.lo; tot.hi += s.hi; tot.glo += s.glo; tot.ghi += s.ghi; counted++; plan = plan.concat(mine); }
-      });
-      if (totalEl) totalEl.textContent = tot.ghi ? zl(tot.lo, tot.hi) : "–";
-      if (grossEl) grossEl.textContent = tot.ghi ? "brutto " + zl(tot.glo, tot.ghi) : "";
-      if (infoEl) {
-        infoEl.innerHTML = "";
-        var b1 = doc.createElement("b"); b1.textContent = "Pakiet " + (PK_NAME[pk] || "");
-        infoEl.appendChild(b1);
-        infoEl.appendChild(doc.createTextNode(" · " + (ha ? num(ha) : "–") + " ha · " + counted + " " + plural(counted, "faza", "fazy", "faz") + " w sumie"));
-      }
-      if (cartBtn) cartBtn.disabled = !shop || !plan.some(function (p) { return p.packs.length; });
-    }
-
-    function apply(next, silent) {
-      var hit = opts.filter(function (o) { return o.getAttribute("data-pk-set") === next; })[0];
-      if (!hit) return;
-      pk = next;
-      opts.forEach(function (o) {
-        var on = o === hit;
-        o.setAttribute("aria-checked", on ? "true" : "false");
-        o.tabIndex = on ? 0 : -1;
-      });
-      tiles.forEach(function (t) {
-        t.classList.toggle("is-out", (" " + (t.getAttribute("data-pk") || "") + " ").indexOf(" " + pk + " ") < 0);
-      });
-      if (status) status.textContent = "";
-      run();
-      if (!silent) doc.dispatchEvent(new CustomEvent("c5:pakiet", { detail: { group: group, pk: pk, from: box } }));
-    }
-
+  /* radio semantics shared by the package switch and the split of a dose */
+  function radios(opts, onPick) {
     opts.forEach(function (o, i) {
-      o.addEventListener("click", function () { apply(o.getAttribute("data-pk-set"), false); });
+      o.addEventListener("click", function () { onPick(o); });
       o.addEventListener("keydown", function (e) {
         var n = opts.length, to = -1;
         if (e.key === "ArrowRight" || e.key === "ArrowDown") to = (i + 1) % n;
@@ -418,18 +362,185 @@
         else if (e.key === "End") to = n - 1;
         if (to < 0) return;
         e.preventDefault();
-        apply(opts[to].getAttribute("data-pk-set"), false);
+        onPick(opts[to]);
         opts[to].focus();
       });
     });
+  }
+  function mark(opts, hit) {
+    opts.forEach(function (o) {
+      var on = o === hit;
+      o.setAttribute("aria-checked", on ? "true" : "false");
+      o.tabIndex = on ? 0 : -1;
+    });
+  }
+
+  slice(boxes).forEach(function (box) {
+    var group = box.getAttribute("data-pakiety") || "";
+    var field = box.querySelector("[data-calc-in]");
+    var products = catalogue(box);
+    var cols = slice(box.querySelectorAll(".u-pkc__col"));
+    var tiles = slice(box.querySelectorAll(".u-pkc__tile"));
+    var rows = slice(box.querySelectorAll(".u-pkc__prod"));
+    var totalEl = box.querySelector("[data-pkc-total]");
+    var grossEl = box.querySelector("[data-pkc-gross]");
+    var infoEl = box.querySelector("[data-pkc-info]");
+    var cartBtn = box.querySelector("[data-pkc-cart]");
+    var status = box.querySelector("[data-pkc-status]");
+    var sw = box.querySelector("[data-pk-switch]");
+    var opts = sw ? slice(sw.querySelectorAll("[data-pk-set]")) : [];
+    var halabs = slice(box.querySelectorAll("[data-pkc-halab]"));
+    var exclBtns = slice(box.querySelectorAll("[data-pkc-excl] [data-c]"));
+    var chart = box.hasAttribute("data-pkc-bars") ? doc.querySelector('[data-we][data-pakiety="' + group + '"]') : null;
+    if (!field) return;
+    var pk = null, plan = [], zab = {}, rowOf = {}, excl = {};
+
+    /* the treatments: tiles of the phase columns, or the bars of the chart */
+    var slots = tiles.map(function (t) {
+      var col = t.closest(".u-pkc__col");
+      return { el: t, kind: "tile", prod: t.getAttribute("data-prod"), c: col ? col.getAttribute("data-c") : "", zab: t.getAttribute("data-zab") };
+    });
+    if (chart) slice(chart.querySelectorAll(".c5-we__bar[data-pkc-prod]")).forEach(function (b) {
+      var td = b.closest("td");
+      slots.push({ el: b, kind: "bar", prod: b.getAttribute("data-pkc-prod"), c: td ? td.getAttribute("data-c") : "", zab: b.getAttribute("data-zab") });
+    });
+    function inSplit(s, n) { return !s.zab || inList(s.zab, n); }
+
+    function area() {
+      var v = parseFloat(String(field.value || "").replace(",", "."));
+      return isFinite(v) && v > 0 ? v : 0;
+    }
+    function clear() { if (status) status.textContent = ""; }
+
+    function run() {
+      var ha = area(), tot = { net: 0, gross: 0 }, counted = 0;
+      plan = [];
+      /* the season: one price per product, from its treatments in the phases that stay */
+      rows.forEach(function (r) {
+        var key = r.getAttribute("data-prod"), prod = products[key], n = zab[key] || 1;
+        var dose = parseFloat(r.getAttribute("data-dose")), unit = r.getAttribute("data-unit") || "l";
+        var qty = r.querySelector("[data-pkc-qty]"), packsEl = r.querySelector("[data-pkc-packs]"), price = r.querySelector("[data-pkc-price]");
+        var pick = r.querySelector("[data-pkc-pick]"), out = r.classList.contains("is-out");
+        var mine = slots.filter(function (s) { return s.prod === key && inSplit(s, n); });
+        var left = mine.filter(function (s) { return !excl[s.c]; }).length;
+        var part = mine.length ? left / mine.length : 1, gone = mine.length > 0 && left === 0;
+        if (pick) pick.disabled = out;
+        var skip = !out && !!pick && !pick.checked;
+        r.classList.toggle("is-skip", skip);
+        r.classList.toggle("is-excl", !out && gone);
+        var need = isFinite(dose) ? dose * ha * part : NaN;
+        if (qty) qty.textContent = ha && isFinite(need) && !gone ? (part < 1 ? num1(need) : num(need)) + " " + unit : "–";
+        if (out || !prod || !ha || !isFinite(need) || gone) {
+          if (packsEl) packsEl.textContent = "–";
+          if (price) price.textContent = "–";
+          return;
+        }
+        var b = cover(need, prod);
+        if (packsEl) packsEl.textContent = b.packs.length ? packText(b.packs) : "–";
+        if (price) price.textContent = zl(b.net);
+        if (skip) return;   /* left out of the price by its checkbox */
+        tot.net += b.net; tot.gross += b.gross; counted++;
+        plan.push({ product: prod, packs: b.packs });
+      });
+      /* the schedule: the dose of one treatment in the phases of the split */
+      slots.forEach(function (s) {
+        var r = rowOf[s.prod], n = zab[s.prod] || 1, on = inSplit(s, n);
+        var dose = r ? parseFloat(r.getAttribute("data-dose")) / n : NaN, unit = r ? r.getAttribute("data-unit") || "l" : "l";
+        var amount = ha && isFinite(dose) ? (n > 1 ? num1(dose * ha) : num(dose * ha)) + " " + unit : "–";
+        s.el.classList.toggle("is-excl", !!excl[s.c]);
+        if (s.kind === "tile") {
+          s.el.hidden = !on;
+          var doseEl = s.el.querySelector("[data-pkc-dose]"), qty = s.el.querySelector("[data-pkc-qty]");
+          if (isFinite(dose)) {
+            if (doseEl) doseEl.textContent = (doseEl.getAttribute("data-prefix") || "") + num(dose) + " " + unit + "/ha" + (doseEl.getAttribute("data-suffix") || "");
+            if (qty) qty.textContent = amount;
+          }
+          s.el.classList.toggle("is-skip", !s.el.classList.contains("is-out") && !!r && r.classList.contains("is-skip"));
+        } else {
+          var val = s.el.querySelector(".c5-we__val");
+          if (val) val.textContent = on && isFinite(dose) ? num(dose) + " " + unit + "/ha · " + amount : "";
+          s.el.classList.toggle("is-skip", !!r && r.classList.contains("is-skip"));
+        }
+      });
+      /* a phase left out of the price darkens its column on the chart (07.11.2026) */
+      if (chart) slice(chart.querySelectorAll("td[data-c], th[data-c]")).forEach(function (cell) {
+        cell.classList.toggle("is-excl", !!excl[cell.getAttribute("data-c")]);
+      });
+      cols.forEach(function (c) {
+        var list = c.querySelector(".u-pkc__tiles"), none = c.querySelector(".u-pkc__none");
+        var vis = slice(c.querySelectorAll(".u-pkc__tile")).filter(function (t) { return !t.hidden; });
+        if (list) list.hidden = !vis.length;
+        if (none) none.hidden = vis.length > 0;
+        c.classList.toggle("is-empty", !vis.length);
+        c.classList.toggle("is-excl", !!excl[c.getAttribute("data-c")]);
+        var on = !excl[c.getAttribute("data-c")] && vis.some(function (t) { return !t.classList.contains("is-out") && !t.classList.contains("is-skip"); });
+        c.classList.toggle("is-on", on);
+        c.classList.toggle("is-off", !on);
+      });
+      if (totalEl) totalEl.textContent = tot.gross ? zl(tot.net) : "–";
+      if (grossEl) grossEl.textContent = tot.gross ? "brutto " + zl(tot.gross) : "";
+      if (infoEl) {
+        infoEl.innerHTML = "";
+        var b1 = doc.createElement("b"); b1.textContent = "Pakiet " + (PK_NAME[pk] || "");
+        infoEl.appendChild(b1);
+        var gone = exclBtns.filter(function (x) { return excl[x.getAttribute("data-c")]; }).map(function (x) { return x.textContent.trim(); });
+        infoEl.appendChild(doc.createTextNode(" · " + (ha ? num(ha) : "–") + " ha · cena netto za " + counted + " " +
+          plural(counted, "zaznaczony produkt", "zaznaczone produkty", "zaznaczonych produktów") + (gone.length ? " · bez faz: " + gone.join(", ") : "")));
+      }
+      if (cartBtn) cartBtn.disabled = !shop || !plan.some(function (p) { return p.packs.length; });
+      /* the head of the amounts names the chosen area („Ilość na 10 ha” – 07.11.2026) */
+      halabs.forEach(function (el) { el.textContent = "Ilość na " + (ha ? num(ha) : "–") + " ha"; });
+    }
+
+    function apply(next, silent) {
+      if (!PK_NAME[next]) return;
+      pk = next;
+      if (opts.length) mark(opts, opts.filter(function (o) { return o.getAttribute("data-pk-set") === next; })[0]);
+      tiles.concat(rows).forEach(function (el) { el.classList.toggle("is-out", !inList(el.getAttribute("data-pk"), pk)); });
+      clear();
+      run();
+      if (!silent) doc.dispatchEvent(new CustomEvent("c5:pakiet", { detail: { group: group, pk: pk, from: box } }));
+    }
+
+    /* the split of the season dose of one product */
+    rows.forEach(function (r) {
+      var key = r.getAttribute("data-prod");
+      rowOf[key] = r;
+      zab[key] = 1;
+      var zsw = r.querySelector("[data-zab-switch]");
+      if (!zsw) return;
+      var zopts = slice(zsw.querySelectorAll("[data-zab-set]")), out = r.querySelector("[data-zab-out]");
+      function setZab(o, silent) {
+        mark(zopts, o);
+        zab[key] = parseInt(o.getAttribute("data-zab-set"), 10) || 1;
+        if (out && o.getAttribute("data-zab-txt")) out.textContent = o.getAttribute("data-zab-txt");
+        doc.dispatchEvent(new CustomEvent("c5:zabiegi", { detail: { group: group, prod: key, n: zab[key], from: box } }));
+        if (!silent) { clear(); run(); }
+      }
+      radios(zopts, function (o) { setZab(o, false); });
+      setZab(zopts.filter(function (o) { return o.getAttribute("aria-checked") === "true"; })[0] || zopts[0], true);
+    });
+
+    /* phases left out of the price (toggle buttons) */
+    exclBtns.forEach(function (x) {
+      x.setAttribute("aria-pressed", "false");
+      x.addEventListener("click", function () {
+        var c = x.getAttribute("data-c"), on = !excl[c];
+        if (on) excl[c] = true; else delete excl[c];
+        x.setAttribute("aria-pressed", on ? "true" : "false");
+        clear(); run();
+      });
+    });
+
+    if (opts.length) radios(opts, function (o) { apply(o.getAttribute("data-pk-set"), false); });
     doc.addEventListener("c5:pakiet", function (e) {
       var d = e.detail || {};
       if (d.from !== box && d.group === group) apply(d.pk, true);
     });
-    field.addEventListener("input", function () { if (status) status.textContent = ""; run(); });
-    tiles.forEach(function (t) {
-      var pick = t.querySelector("[data-pkc-pick]");
-      if (pick) pick.addEventListener("change", function () { if (status) status.textContent = ""; run(); });
+    field.addEventListener("input", function () { clear(); run(); });
+    rows.forEach(function (r) {
+      var pick = r.querySelector("[data-pkc-pick]");
+      if (pick) pick.addEventListener("change", function () { clear(); run(); });
     });
     if (cartBtn) cartBtn.addEventListener("click", function () {
       if (!shop) return;
@@ -448,15 +559,17 @@
       status.appendChild(a);
     });
 
-    sw.hidden = false;
-    var first = opts.filter(function (o) { return o.getAttribute("aria-checked") === "true"; })[0] || opts[0];
-    apply(first.getAttribute("data-pk-set"), true);
+    /* the opening package: the box's own switch, else the switch of the chart of the group */
+    var first = opts.filter(function (o) { return o.getAttribute("aria-checked") === "true"; })[0];
+    var chartTab = doc.querySelector('[data-pakiety="' + group + '"] [data-pk-set][aria-checked="true"]');
+    if (sw) sw.hidden = false;
+    apply(first ? first.getAttribute("data-pk-set") : chartTab ? chartTab.getAttribute("data-pk-set") : "kompl", true);
   });
 
   /* „Kup produkt” on the product cards of the lightbox: the button also closes
      the lightbox (data-lightbox-close, uprawa.js), then the quick view opens. */
   var all = catalogue(doc);
-  Array.prototype.forEach.call(doc.querySelectorAll("[data-pkc-buy]"), function (b) {
+  slice(doc.querySelectorAll("[data-pkc-buy]")).forEach(function (b) {
     var prod = all[b.getAttribute("data-pkc-buy")];
     if (!prod || !shop || !shop.open) return;
     b.addEventListener("click", function () {

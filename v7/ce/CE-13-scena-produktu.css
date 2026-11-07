@@ -174,11 +174,14 @@
   .cx-js .c5-use__over{display:block;position:absolute;inset:0;z-index:2;pointer-events:none;
     visibility:hidden;transition:visibility 0s linear var(--use-swap-d);}
   .cx-js .c5-use.is-ui .c5-use__over{visibility:visible;transition-delay:0s;}
-  /* extra room at the bottom: the dock of the advisor (tucked away, but its edge
-     is there) never sits on the tabs or on the card */
+  /* extra room at the bottom: the advisor dock never sits on the tabs or on the
+     card. Since 06.11.2026 the folded dock is a pill 20-44 px above the edge and
+     pinned controls keep --ch-layout-dock-safe (56 px) free: 16 px more than the
+     token, because the lowest tab stands that much below the padding (64 px
+     until then, which left the tabs 48-55 px above the edge). */
   .cx-js .c5-use__crop{display:grid;position:absolute;inset:0;grid-template-columns:minmax(0,1fr) auto;
     align-items:end;gap:clamp(1.5rem,4vw,4rem);
-    padding:var(--ch-space-10) var(--ch-space-10) calc(var(--ch-space-10) + 24px);}
+    padding:var(--ch-space-10) var(--ch-space-10) max(calc(var(--ch-space-10) + 24px), calc(var(--ch-layout-dock-safe) + 16px));}
   .cx-js .c5-use__crop > *{order:0;}
 
   /* tabs: active 1, the others .5 (Figma 630:2581), each one line above the next

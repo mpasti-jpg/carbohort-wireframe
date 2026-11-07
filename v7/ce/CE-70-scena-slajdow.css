@@ -151,7 +151,9 @@
 .c5-vs__join{display:block;width:1px;height:var(--w-space-4);margin-left:13px;background:rgb(255 255 255 / .35);}
 
 /* --- Tab row (scene only; usealia "tabs below", Figma 847:855) -----------
-   EL-18 text tabs in one centred line 32 px above the bottom of the stage,
+   EL-18 text tabs in one centred line --ch-layout-dock-safe (56 px; 32 px until
+   06.11.2026 – the advisor pill stands 20-44 px above the edge) above the
+   bottom of the stage,
    56 px apart; the current one is opaque and carries the four-leaf sign
    (16 px), the others stay at .5 (EL-18). The two-digit numbers of the old
    vertical index stay in the markup (aria-hidden) but are not drawn – the
@@ -195,7 +197,7 @@
   /* The index waits out the heading: the module fades it in (--vs-idx) while
      card 1 rides in and marks it data-off while the heading stands, which
      takes its buttons out of sight, of the tab order and of the reading order. */
-  .cx-js .c5-vs__index{display:block;position:absolute;left:50%;bottom:var(--c5-vs-tabs-bottom,32px);z-index:3;
+  .cx-js .c5-vs__index{display:block;position:absolute;left:50%;bottom:var(--c5-vs-tabs-bottom,var(--ch-layout-dock-safe));z-index:3;
     width:max-content;max-width:calc(100% - 2 * var(--c5-vs-side));transform:translateX(-50%);
     opacity:var(--vs-idx,0);}
   .cx-js .c5-vs__index[data-off="true"]{visibility:hidden;}
@@ -269,7 +271,7 @@
    the path links as grey overlines – the others are rows (icon 24 + title
    22, padding 24/32). The focus glides with the scroll; a fade of the field
    (.8 → 0, 47 px) lies over both ends of the stack window; the tab row
-   (EL-18 text tabs) sits 32 px above the bottom of the stage.
+   (EL-18 text tabs) sits --ch-layout-dock-safe (56 px) above the bottom of the stage.
    Every card keeps the layout of the OPEN card; the module only writes
    --vs-y (translateY from the focus line), --vs-e (0 row … 1 open), --vs-k
    (scaleY of the white sheet) and --vs-o (opacity), so nothing but transform
@@ -363,8 +365,9 @@
     --vs-stack-gap:24;
     --c5-vs-stack-w:clamp(380px,37.7vw,543px);
     --c5-vs-colgap:clamp(24px,5vw,72px);
-    /* band of the tab row at the bottom of the stage (32 px under it) */
-    --c5-vs-tabs-band:104px;
+    /* band of the tab row at the bottom of the stage (--ch-layout-dock-safe
+       under it; 104 px with the 32 px of before 06.11.2026) */
+    --c5-vs-tabs-band:calc(48px + var(--ch-layout-dock-safe));
     --c5-vs-fade-h:47px;
   }
   .cx-js .c5-vs--stos .c5-vs__stage{padding:0;

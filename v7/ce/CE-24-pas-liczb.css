@@ -163,6 +163,13 @@
 .pp-liczby__ph{margin:0;border-radius:var(--ch-radius-lg);overflow:hidden;
   aspect-ratio:651 / 747;background:var(--ch-surface-warm-strong);}
 .pp-liczby__ph img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 50%;transform:scaleX(-1);}
+/* modifier `pp-liczby--wypelnia` on the root (07.11.2026; O firmie, home): when the
+   column is taller than the 651 : 747 frame allows, from 900 px the photo fills the
+   height of the row instead of keeping the ratio. */
+@media (min-width:900px){
+  .pp-liczby--wypelnia .pp-liczby__ph{position:relative;aspect-ratio:auto;}
+  .pp-liczby--wypelnia .pp-liczby__ph img{position:absolute;inset:0;}
+}
 /* P06 (18.10.2026): the column is as tall as the photo – the head (kicker + H2)
    stands on its top edge, the rows sit on the bottom, so the dashed line under
    the last number runs level with the bottom of the photo (Figma 859:2603). The

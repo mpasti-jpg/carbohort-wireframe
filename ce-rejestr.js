@@ -621,7 +621,7 @@ window.CW_CE = {
       "nazwa": "Dok doradcy",
       "grupa": "wspolne",
       "rodzina": "wspolne",
-      "skrot": "Pływający pasek z polem pytania do doradcy i przyciskiem wysyłki; po otwarciu panel rozmowy.",
+      "skrot": "Mała pigułka z iskrą na środku dolnej krawędzi okna; rozwija się w pasek z polem pytania i przyciskiem wysyłki, po wysłaniu panel rozmowy.",
       "projekt": null,
       "tagi": {
         "media": [
@@ -648,8 +648,8 @@ window.CW_CE = {
           "uniwersalny"
         ]
       },
-      "opis": "Pływający dok w prawym dolnym rogu: pasek z polem pytania i przyciskiem, po otwarciu panel rozmowy (nagłówek, wiadomości, formularz).",
-      "mechanika": "Ukryty na stronach z sekcją hero do czasu zejścia z hero (sterowanie w warstwie strony), otwierany przyciskiem albo z linków data-jurek-open; panel z tłem przyciemnionym. Obsługa w cw.js. Od 15.10.2026 (komentarz Mateusza, wzór Figma 390-162): na stronach z <cw-dock> chrome.js wstawia przed stopką sekcję lądowania i przenosi dok tuż pod nią; dok jest przyklejony do dołu okna i zatrzymuje się nad stopką (klasa is-landed) – pole rośnie, pojawia się nagłówek; nigdy nie wchodzi na stopkę; przewinięcie w górę przywraca dok przyklejony. Chowanie nad hero i przy linijce CE-47 działa dalej. Od 16.10.2026 jedna reguła chowania w chrome.js dla każdej strony z dokiem: dok ukryty, dopóki czytelnik nie przewinie 60% bloku otwierającego (#hero, inaczej [data-dock-hero], inaczej pierwsza sekcja main); otwarty dok i dok osadzony nad stopką zawsze widoczne. Dok jest na każdej stronie serwisu poza koszykiem, logowaniem, rejestracją i panelami B2B / handlowca.",
+      "opis": "Pływający dok na środku dolnej krawędzi okna: zwinięty to pigułka z iskrą (96 × 24 px, 14 px nad krawędzią okna; reaguje na kursor najwyżej 5 px nad sobą – od 06.11.2026, wcześniej 20 i 20 px), rozwinięty – pasek z polem pytania i przyciskiem wysyłki, po wysłaniu panel rozmowy (nagłówek, wiadomości, formularz); nad stopką osadzony w sekcji lądowania jako większe pole.",
+      "mechanika": "Ukryty na stronach z sekcją hero do czasu zejścia z hero (sterowanie w warstwie strony), otwierany przyciskiem albo z linków data-jurek-open; panel z tłem przyciemnionym. Obsługa w cw.js. Od 15.10.2026 (komentarz Mateusza, wzór Figma 390-162): na stronach z <cw-dock> chrome.js wstawia przed stopką sekcję lądowania i przenosi dok tuż pod nią; dok jest przyklejony do dołu okna i zatrzymuje się nad stopką (klasa is-landed) – pole rośnie, pojawia się nagłówek; nigdy nie wchodzi na stopkę; przewinięcie w górę przywraca dok przyklejony. Chowanie nad hero i przy linijce CE-47 działa dalej. Od 16.10.2026 jedna reguła chowania w chrome.js dla każdej strony z dokiem: dok ukryty, dopóki czytelnik nie przewinie 60% bloku otwierającego (#hero, inaczej [data-dock-hero], inaczej pierwsza sekcja main); otwarty dok i dok osadzony nad stopką zawsze widoczne. Dok jest na każdej stronie serwisu poza koszykiem, logowaniem, rejestracją i panelami B2B / handlowca. Od 06.11.2026 (Mateusz 03.11 i 06.11; zastąpiło G10 z 18.10 – pasek schowany pod krawędzią): pływający dok to pigułka, a pigułka i pole to jeden kształt: pod kursorem pigułka od razu podchodzi 10 px w górę i po 150 ms jej kształt przechodzi w pasek, potem wchodzi treść; to samo po kliknięciu i przy fokusie z klawiatury. Zwija się po zejściu kursora i fokusu, chyba że pole ma tekst. Pigułka chowa się tylko nad hero na pełną wysokość ekranu (#hero, który sięga dołu pierwszego ekranu i ma w CSS wysokość ekranu; na telefonie – najwyżej dwa ekrany wysokości): zjeżdża pod dolną krawędź okna i wyjeżdża spod niej, gdy pod hero widać 100 px strony, a strona jest przewinięta co najmniej 110 px (Mateusz 07.11.2026 – na hero za bardzo się wyróżniała i mogła zasłaniać interfejs). Na pozostałych stronach (sklep, karty produktu, strony z niskim paskiem tytułowym) pigułka jest widoczna od pierwszego ekranu (Mateusz 07.11.2026). Przy pierwszej wizycie pasek pokazuje się po 110 px przewinięcia: na stronie z pełnym hero wchodzi od dołu i chowa się, gdy strona wróci wyżej, na pozostałych rozwija się z widocznej pigułki; po 4 s – niezależnie od przewijania – zwija się do pigułki; fakt pierwszego pokazania zapamiętany w localStorage (cw-dok-poznany), więc kolejne strony i wizyty od razu zaczynają od pigułki, bez pokazania paska. Na ekranie dotykowym stuknięcie otwiera pasek z polem i klawiaturą nad przyciemnioną stroną (położenie z visualViewport), a po wysłaniu rozmowa jest arkuszem od dołu do 85% wysokości (zamyka X, stuknięcie w tło albo przeciągnięcie w dół); przy przewijaniu w dół pigułka blednie. Sekcje z przypiętymi przyciskami i tabami trzymają --ch-layout-dock-safe (56 px) nad krawędzią okna (CE-11, CE-13, CE-67, CE-70).",
       "baza": {
         "plik": "v7/chrome.js",
         "kotwica": "serwis-dok"
@@ -847,8 +847,8 @@ window.CW_CE = {
         "linia-produktow": "wariant Produktów od 20.09.2026 (komentarze Mateusza w artefakcie): sekcja bierze całą szerokość okna, kontener treści stoi na EL-29 c5-wrap--wide (1800 px, marginesy 40 px). W górnym rzędzie dwie kolumny: kicker i H1 po lewej, lead z dwoma przyciskami po prawej – tam, gdzie wariant polka trzymał panel z packshotami; okruszki schodzą pod nagłówek, bo dolna krawędź sekcji należy teraz do zdjęcia. Pod rzędem cała gama w jednej linii (mock-up klienta) na całą szerokość okna minus 40 px z każdej strony, przyklejona do dolnej krawędzi i skalowana object-fit:contain, więc przy niskim oknie maleje, zamiast wypychać hero. Wysokość sekcji nadal 100 svh minus pasek menu. Modyfikator c5-hero--linia-produktow w ce/CE-08-hero.css",
         "kadr": "kadr zdjęcia uprawy zamiast packshotu – od 19.09.2026 bez wystąpień, na Kukurydzy zastąpił go wariant kadr-w-tle",
         "kadr-w-tle": "hero podstron upraw (decyzja Mateusza z 19.09.2026): duży kadr uprawy w tle całej sekcji, jednolity scrim, bez kickera; okruszki u góry po lewej, wielki H1 u dołu po lewej, lead i dwa przyciski u dołu po prawej, treść kończy się nad dokiem doradcy; kadr osiada ze skali 1,06, treść wchodzi kaskadą; poniżej 900 px H1 na kadrze, lead i przyciski pod nim (modyfikator c5-hero--bg w ce/CE-08-hero.css; siłę scrimu ustawia strona własnością --c5-hero-scrim w atrybucie style na section#hero, domyślnie .4; --c5-hero-scrim-narrow daje osobną wartość do 1099 px)",
-        "player": "player filmu na środku panelu zamiast packshotu; na telefonie wysokość panelu wyznacza film, bez kadru 4:5 (modyfikator c5-hero--player; prochnica-plus.html#hero)",
-        "miniatura": "strona główna od 26.10.2026: układ bazy (kolumna tekstu z leadem, ciepły panel z sygnetem), ale scena panelu zamiast packshotów niesie jedno duże zdjęcie uprawy (img.c5h-hero__img, object-fit cover, wypełnia całą scenę) – od 02.11.2026 bez filmu i bez okna filmu (adnotacja 3:81: filmu nie ma i na razie nie planujemy; reguły miniatury filmu .c5-hero__film zostały w module, nieużywane); pod obiema kolumnami pasek czterech rodzin (opakowanie, nazwa, jedno zdanie, strzałka), każda prowadzi do swojej karty na stronie; od 27.10.2026 ramka Carbohumic (c5-hero__fam--dwa) ma dwa opakowania i dwa odnośniki – doglebowy i nalistny; poniżej 900 px tekst, zdjęcie i rodziny w siatce 2 × 2 (modyfikator c5-hero--miniatura w ce/CE-08-hero.css; home.html#hero)",
+        "player": "player filmu na środku panelu zamiast packshotu; na telefonie wysokość panelu wyznacza film, bez kadru 4:5 (modyfikator c5-hero--player; prochnica-plus.html#hero; od 07.11.2026 także strona główna home.html#hero – w ramce na razie zdjęcie, film później)",
+        "miniatura": "⚠️ bez wystąpień od 07.11.2026 (strona główna przeszła na wersję „Gleba” z hero w wariancie player; prototyp z 26.10 w archiwum-wersji/home-v7-przed-gleba-2026-11-07.zip, reguła .c5h-hero__img była w jego home.css). Opis historyczny – strona główna od 26.10.2026: układ bazy (kolumna tekstu z leadem, ciepły panel z sygnetem), ale scena panelu zamiast packshotów niesie jedno duże zdjęcie uprawy (img.c5h-hero__img, object-fit cover, wypełnia całą scenę) – od 02.11.2026 bez filmu i bez okna filmu (adnotacja 3:81: filmu nie ma i na razie nie planujemy; reguły miniatury filmu .c5-hero__film zostały w module, nieużywane); pod obiema kolumnami pasek czterech rodzin (opakowanie, nazwa, jedno zdanie, strzałka), każda prowadzi do swojej karty na stronie; od 27.10.2026 ramka Carbohumic (c5-hero__fam--dwa) ma dwa opakowania i dwa odnośniki – doglebowy i nalistny; poniżej 900 px tekst, zdjęcie i rodziny w siatce 2 × 2 (modyfikator c5-hero--miniatura w ce/CE-08-hero.css; home.html#hero)",
         "foto": "panel ze zdjęciem zamiast packshotu (o-firmie.html#hero)",
         "dzial": "jedna kolumna na dwie trzecie szerokości, wysokość wg treści, wyszukiwarka i przycisk przewodnika (centrum-wiedzy.html#hero, centrum-wiedzy-kategoria.html#hero)",
         "artykul": "nagłówek artykułu: okruszki, chipy, h1, metryka autora, przyciski udostępnij/drukuj (artykul.html#naglowek)"
@@ -1378,7 +1378,7 @@ window.CW_CE = {
         "kadr-z-prawej": "Statyczne zdjęcie na prawej połowie pasa, po lewej tekst i przycisk."
       },
       "opis": "Pas na szarym tle: kadr zdjęcia z narożnikami 30 px, pod nim nagłówek po lewej oraz akapit i dwa przyciski po prawej; pod przyciskami opcjonalny cichy link trzeciej akcji.",
-      "mechanika": "Kadr skaluje się od .5 do 1, gdy górna krawędź sekcji schodzi poniżej 75 % okna (koniec przy 10 %); statyczny kadr 3:2 na telefonie. Moduł 80/85.",
+      "mechanika": "Kadr skaluje się od .5 do 1, gdy górna krawędź sekcji schodzi poniżej 75 % okna (koniec przy 10 %); statyczny kadr 3:2 na telefonie. Moduł 80/85. Od 06.11.2026 (komentarze Mateusza na stronie głównej „Gleba”, na każdym pasie): rośnie tylko zdjęcie – teksty stoją w miejscu, bez rozjeżdżania się na boki, i bez linii 1 px przez pas; obie kolumny stoją blisko środka; główny przycisk bez listków. Od 07.11.2026 obie kolumny tekstu mają równą szerokość (pokrętło --pro-col, domyślnie 560 px) – trzy przyciski mogą zejść do drugiego wiersza (Mateusz: bez niesymetrycznie szerszej prawej kolumny); wariant zamykający dalej zwęża prawą kolumnę przez --pro-side-max. Od 07.11.2026 nagłówek stoi u góry kolumny, na wysokości pierwszej linii akapitu z prawej, a nie na środku wiersza (komentarz Mateusza).",
       "baza": {
         "plik": "v7/carbomat.html",
         "kotwica": "uprawy-profesjonalne"
@@ -1451,7 +1451,7 @@ window.CW_CE = {
         "grupy": "Kilka akordeonów w grupach, nad każdą mały nagłówek wersalikami (Borówka, Produkty, CARBOHUMIC doglebowy).",
         "informacje": "Trzy akordeony informacji o produkcie z czarnymi liniami i plusem."
       },
-      "opis": "Kicker i H2, pod nimi akordeon pytań: pytanie po lewej, odpowiedź po prawej, wszystkie zwinięte na starcie. W układzie split (od 900 px kolumny 451 | 803 px) nagłówek stoi po lewej, akordeon po prawej i zaczyna się na górnej krawędzi H2, a nie kickera (adnotacja 3:129, 02.11.2026) – tam, gdzie kicker leży w lewej kolumnie (Borówka, strona główna), kicker i nagłówek zajmują dwa wiersze siatki (subgrid), a lista startuje w drugim.",
+      "opis": "Kicker i H2, pod nimi akordeon pytań: pytanie po lewej, odpowiedź po prawej, wszystkie zwinięte na starcie. W układzie split (od 900 px kolumny 451 | 803 px) nagłówek stoi po lewej, akordeon po prawej i zaczyna się na górnej krawędzi H2, a nie kickera (adnotacja 3:129, 02.11.2026) – tam, gdzie kicker leży w lewej kolumnie (Borówka; do 07.11.2026 także strona główna), kicker i nagłówek zajmują dwa wiersze siatki (subgrid), a lista startuje w drugim.",
       "mechanika": "Jedno pytanie otwarte naraz (panelSet animuje wysokość), otwarcie z kotwicy; bez JS wszystkie odpowiedzi widoczne. Moduł 90.",
       "baza": {
         "plik": "v7/carbomat.html",
@@ -1966,8 +1966,8 @@ window.CW_CE = {
         "kotwica": "dowod-liczby"
       },
       "kod": {
-        "css": "jeden plik ce/CE-24-pas-liczb.css, sekcje wg klas korzenia: c5-nums (kafle-2x2, moduł wspólny, CARBOMAT Mata), pp-dark/pp-liczby (kafle-2x2, własna implementacja Próchnicy+, do osobnej decyzji o przepięciu), on-dark/on-nums (kolowrotek, O firmie), u-nb (kolumny, Kukurydza), b-nb (kolumny, kopia na Borówce); pp-liczby / pp-liczba / pp-odo (wiersze-ze-zdjeciem: Próchnica+, CARBOMAT Mata, strona główna, O nas – od 02.11.2026 jedyny układ liczb na tych stronach); c5h-nums zdjęty z home.css; sufiksy: ce/00-base.css EL-31",
-        "js": "ce/CE-24-pas-liczb.js (kołowrotek cyfr data-c5-odo, CARBOMAT Mata) / uprawa.js data-count / prochnica-plus.js ===== 60 / home.js ===== 40 (kołowrotek pod prefiksem c5h-odo)"
+        "css": "jeden plik ce/CE-24-pas-liczb.css, sekcje wg klas korzenia: c5-nums (kafle-2x2, moduł wspólny, CARBOMAT Mata), pp-dark/pp-liczby (kafle-2x2, własna implementacja Próchnicy+, do osobnej decyzji o przepięciu), on-dark/on-nums (kolowrotek, O firmie), u-nb (kolumny, Kukurydza), b-nb (kolumny, kopia na Borówce); pp-liczby / pp-liczba / pp-odo (wiersze-ze-zdjeciem: Próchnica+, CARBOMAT Mata, strona główna (od 07.11.2026 #dowod), O nas – od 02.11.2026 jedyny układ liczb na tych stronach); c5h-nums zdjęty z home.css; sufiksy: ce/00-base.css EL-31",
+        "js": "ce/CE-24-pas-liczb.js (kołowrotek cyfr data-c5-odo, CARBOMAT Mata) / uprawa.js data-count / prochnica-plus.js ===== 60; strona główna (wiersze-ze-zdjeciem, od 07.11.2026) bez skryptu"
       },
       "czesci": [
         "tytuł",
@@ -1980,7 +1980,7 @@ window.CW_CE = {
         "kolumny": "jasny panel, trzy kolumny rozdzielone pionowymi liniami: chip nad liczbą, wielka liczba z małą jednostką u górnej krawędzi cyfr, podpis pod liczbą (wersja alternatywna sekcji liczb; Kukurydza od 18.09 – decyzja Mateusza)",
         "kafle-2x2": "⚠️ bez wystąpień od 02.11.2026 (CARBOMAT Mata i Próchnica+ przeszły na wiersze-ze-zdjeciem; reguły c5-nums i pp-dark zostały w module). Opis historyczny – ciemny kadr, tytuł z dużym odstępem od górnej krawędzi, pod nim siatka 2 × 2 kafli o ton jaśniejszych od tła: wielka liczba przy górnej krawędzi kafla po prawej, etykieta i nota przy dolnej po lewej; cyfry wjeżdżają kołowrotkiem (Próchnica+ od 19.09.2026 – uwaga Mateusza, inspiracja: ramka Figma 306:2941); od 02.10.2026 także CARBOMAT Mata „Dowód” (uwaga Mateusza z 02.10: sekcja jak na Próchnicy+) na module wspólnym ce/CE-24-pas-liczb.* – panel bez nagłówka, cztery kafle, liczba ze znakiem i przecinkiem w kołowrotku, sufiksy EL-31 obok liczby, pod nią opis i wiersz źródła; rozmiar liczby liczony z szerokości kafla",
         "rzad": "⚠️ bez wystąpień od 02.11.2026 (strona główna przeszła na wiersze-ze-zdjeciem). Opis historyczny – ciemny kadr na szerokość kontenera (nie na wysokość ekranu): mały tytuł u góry po lewej, pod nim pięć kolumn rozdzielonych pionowymi liniami włosowymi, w kolumnie wielka liczba, etykieta i drobne źródło przy dolnej krawędzi kadru. Wersja pasowa CE – sekcja pod nią zaczyna się wysoko na stronie, więc liczby są wstępem do dowodu, a nie osobnym ekranem (strona główna od 20.09.2026). Od 1280 px pięć kolumn, między 900 a 1279 px podział 3 + 2, poniżej 900 px wiersze: liczba po lewej, etykieta po prawej, źródło pod nimi na całej szerokości",
-        "wiersze-ze-zdjeciem": "jasna sekcja wg ramki Figma 859:2603 (etap C, 18.10.2026; Próchnica+, od 02.11.2026 także CARBOMAT Mata #dowod-liczby, strona główna #zaufanie i O nas #w-liczbach): po jednej stronie zdjęcie (651 : 747, narożniki 12 px), po drugiej kolumna na wysokość zdjęcia – kicker i nagłówek u góry, wiersze „liczba | podpis” przy dolnej krawędzi, rozdzielone linią kreskowaną; liczba krojem display-num, sufiks (EL-31) na dolnej linii cyfr, podpis wyrównany do prawej, pod nim opcjonalnie drobna nota ze źródłem; od 3 do 6 wierszy (dziś 4–5); cyfry wjeżdżają kołowrotkiem tam, gdzie strona ładuje skrypt (Próchnica+, CARBOMAT Mata, O nas – własny skrypt strony), na stronie głównej, bez JS i przy reduced-motion stoi zwykły tekst; poniżej 900 px zdjęcie nad wierszami (modyfikator pp-liczby--foto na korzeniu, klasy pp-liczby i pp-liczba w ce/CE-24-pas-liczb.css)"
+        "wiersze-ze-zdjeciem": "jasna sekcja wg ramki Figma 859:2603 (etap C, 18.10.2026; Próchnica+, od 02.11.2026 także CARBOMAT Mata #dowod-liczby, strona główna #zaufanie – od 07.11.2026 #dowod – i O nas #w-liczbach): po jednej stronie zdjęcie (651 : 747, narożniki 12 px), po drugiej kolumna na wysokość zdjęcia – kicker i nagłówek u góry, wiersze „liczba | podpis” przy dolnej krawędzi, rozdzielone linią kreskowaną; liczba krojem display-num, sufiks (EL-31) na dolnej linii cyfr, podpis wyrównany do prawej, pod nim opcjonalnie drobna nota ze źródłem; od 3 do 6 wierszy (dziś 4–5); cyfry wjeżdżają kołowrotkiem tam, gdzie strona ładuje skrypt (Próchnica+, CARBOMAT Mata, O nas – własny skrypt strony), na stronie głównej, bez JS i przy reduced-motion stoi zwykły tekst; poniżej 900 px zdjęcie nad wierszami (modyfikator pp-liczby--foto na korzeniu, klasy pp-liczby i pp-liczba w ce/CE-24-pas-liczb.css); gdy kolumna jest wyższa, niż pozwala proporcja kadru, modyfikator pp-liczby--wypelnia (od 07.11.2026, O nas i strona główna) sprawia, że od 900 px zdjęcie wypełnia wysokość wiersza"
       },
       "zrzuty_wariantow": {
         "kolumny": {
@@ -2306,8 +2306,8 @@ window.CW_CE = {
         "kotwica": "z-czym-laczyc-lista"
       },
       "kod": {
-        "css": "jeden plik ce/CE-30-lista-z-panelem.css, sekcje wg klas korzenia: c5-acc30 (akordeon-z-odliczaniem, moduł wspólny, CARBOMAT Mata), c5-acc30--kadr (akordeon-z-kadrem, CARBOMAT HUMIC), c5pr-acc i c5pr-pcard (akordeon-z-odliczaniem, własna implementacja Produktów), c5hu-mixlist (układ podstawowy, bez wystąpień od 02.11.2026 – CARBOHUMIC doglebowy „Z czym łączyć”, #z-czym-laczyc-lista, stoi dziś na c5-acc30 w wariancie akordeon-z-odliczaniem z opcją data-c5-acc30-auto=„off”), on-val (O firmie); wariant z-kadrem: c5h-crops zostaje w home.css ===== 60",
-        "js": "wariant akordeon-z-odliczaniem: produkty.js ===== 50 oraz moduł wspólny ce/CE-30-lista-z-panelem.js (od 02.10.2026, CARBOMAT Mata; od 29.10.2026 także kadr wariantu akordeon-z-kadrem); wariant z-kadrem: home.js ===== 60"
+        "css": "jeden plik ce/CE-30-lista-z-panelem.css, sekcje wg klas korzenia: c5-acc30 (akordeon-z-odliczaniem, moduł wspólny, CARBOMAT Mata), c5-acc30--kadr (akordeon-z-kadrem, CARBOMAT HUMIC), c5pr-acc i c5pr-pcard (akordeon-z-odliczaniem, własna implementacja Produktów), c5hu-mixlist (układ podstawowy, bez wystąpień od 02.11.2026 – CARBOHUMIC doglebowy „Z czym łączyć”, #z-czym-laczyc-lista, stoi dziś na c5-acc30 w wariancie akordeon-z-odliczaniem z opcją data-c5-acc30-auto=„off”), on-val (O firmie); wariant z-kadrem (bez wystąpień od 07.11.2026): dawniej c5h-crops w home.css ===== 60 prototypu z 26.10",
+        "js": "wariant akordeon-z-odliczaniem: produkty.js ===== 50 oraz moduł wspólny ce/CE-30-lista-z-panelem.js (od 02.10.2026, CARBOMAT Mata; od 29.10.2026 także kadr wariantu akordeon-z-kadrem); wariant z-kadrem (bez wystąpień od 07.11.2026): dawniej home.js ===== 60"
       },
       "czesci": [
         "lista tytułów",
@@ -2317,7 +2317,7 @@ window.CW_CE = {
       "warianty": {
         "z-lightboxem": "panel ma przycisk otwierający pełny opis w lightboxie (Kukurydza fazy do 18.09; sekcję przejął CE-65, wariant bez wystąpień)",
         "akordeon-z-odliczaniem": "akordeon na szerokość kontenera wg ramki Figma „Frame 207” (Mateusz, 18.09.2026; Produkty, ścieżki wg sytuacji): otwarta pozycja ma duży tytuł, po lewej opis z notami, ostrzeżeniem i linkami, po prawej karty produktów z packshotem (po dwie w rzędzie, kolejne zawijają się do następnego wiersza; cała karta prowadzi na stronę produktu, „Kup produkt” odsłania się pod opisem na karcie, a packshot maleje); pierwsza pozycja otwarta od początku, odliczanie 5 s z paskiem na górnej linii następnej pozycji otwiera kolejną i zamyka poprzednią, klik otwiera dowolną albo zamyka otwartą i wyłącza automat, kotwica pozycji otwiera ją i zatrzymuje automat; automat tylko na szerokim ekranie i przy włączonym ruchu, pod kursorem i przy fokusie odliczanie stoi Runda wierności 20.09.2026 („odwzoruj bardziej szczegółowo wygląd CE”): karta 10 px promienia i tło #f6f6f6 z ramki (bez 60 % krycia warstwy Figmy – nad pasem #fafafa kafel byłby niewidoczny), zielony znacznik 32 px #86d574 w prawym górnym rogu, packshot w polu 139 px, nazwa 14 px semibold 38 px pod nim, opis 14 px na mierze 275 px, wiersze zamknięte 15 px w czerni i podziałce 62 px, tytuł otwarty 35 px, opis pozycji 16 px/1,3 w #777771 na mierze 358 px. Od 02.10.2026 także CARBOMAT Mata „Ekonomia” (uwaga Mateusza z 02.10: użyć CE, którego używamy gdzie indziej) – pięć pozycji „tytuł + opis” bez kart produktów, na module wspólnym ce/CE-30-lista-z-panelem.* w skali szarości kitu; modyfikator c5-acc30--foto (15.10.2026, CARBOHUMIC dolistny #przewaga-lista): każdy punkt ma zdjęcie w panelu – od 900 px w kolumnie obok opisu (4:3), węziej pod opisem (16:10), pojawia się po otwarciu punktu; pokrętła --c5-acc30-ph-w, --c5-acc30-ph-ratio, --c5-acc30-ph-ratio-sm",
-        "z-kadrem": "wariant strony głównej (uprawy): po lewej lista sześciu grup upraw rozdzielona liniami włosowymi – numer w węźle, duży tytuł 28–44 px, przygaszony podpis pod tytułem i chevron; otwarta pozycja rozwija się w miejscu (grid 0fr → 1fr) i pokazuje chipy-linki stron upraw, dwa przyciski („Zobacz uprawę”, „Dobierz produkty i dawki”), a w razie potrzeby drugi, cichy link doboru. Po prawej nie ma panelu opisu, tylko przyklejony kadr: sześć warstw zdjęć jedna na drugiej, widoczna ta z wybranej pozycji, w lewym dolnym rogu jasna plakietka z numerem i nazwą grupy. Kadr stoi pod nagłówkiem serwisu (20 px zapasu) i kończy się 96 px nad dołem okna, ponad dokiem doradcy; zmiana kadru to wycieranie clip-path od dolnej krawędzi w górę w 0,7 s z osiadaniem skali 1,04 → 1, a poprzednie zdjęcie zostaje nieruchomo pod spodem, żeby wycieranie nie odsłaniało pustej sceny. Klik wybiera (nigdy nie zamyka – jedna pozycja jest zawsze otwarta), fokus i najechanie tylko podglądają kadr, strzałki oraz Home i End przenoszą fokus między nagłówkami wierszy; kotwice #uprawy-sad, #uprawy-jagodowe, #uprawy-warzywa, #uprawy-pole, #uprawy-szkolka i #uprawy-ogrod otwierają swoją pozycję. Poniżej 900 px akordeon z kadrem 4 : 3 wewnątrz otwartej pozycji, nad przyciskami. Bez JS-u wszystkie pozycje rozwinięte, lista na całą szerokość kontenera, kadry ukryte.",
+        "z-kadrem": "⚠️ bez wystąpień od 07.11.2026 (strona główna przeszła na wersję „Gleba”; jej sekcja #uprawy stoi na CE-20 z-przyciskami; prototyp z 26.10 w archiwum-wersji/home-v7-przed-gleba-2026-11-07.zip). Opis historyczny – wariant strony głównej (uprawy): po lewej lista sześciu grup upraw rozdzielona liniami włosowymi – numer w węźle, duży tytuł 28–44 px, przygaszony podpis pod tytułem i chevron; otwarta pozycja rozwija się w miejscu (grid 0fr → 1fr) i pokazuje chipy-linki stron upraw, dwa przyciski („Zobacz uprawę”, „Dobierz produkty i dawki”), a w razie potrzeby drugi, cichy link doboru. Po prawej nie ma panelu opisu, tylko przyklejony kadr: sześć warstw zdjęć jedna na drugiej, widoczna ta z wybranej pozycji, w lewym dolnym rogu jasna plakietka z numerem i nazwą grupy. Kadr stoi pod nagłówkiem serwisu (20 px zapasu) i kończy się 96 px nad dołem okna, ponad dokiem doradcy; zmiana kadru to wycieranie clip-path od dolnej krawędzi w górę w 0,7 s z osiadaniem skali 1,04 → 1, a poprzednie zdjęcie zostaje nieruchomo pod spodem, żeby wycieranie nie odsłaniało pustej sceny. Klik wybiera (nigdy nie zamyka – jedna pozycja jest zawsze otwarta), fokus i najechanie tylko podglądają kadr, strzałki oraz Home i End przenoszą fokus między nagłówkami wierszy; kotwice #uprawy-sad, #uprawy-jagodowe, #uprawy-warzywa, #uprawy-pole, #uprawy-szkolka i #uprawy-ogrod otwierają swoją pozycję. Poniżej 900 px akordeon z kadrem 4 : 3 wewnątrz otwartej pozycji, nad przyciskami. Bez JS-u wszystkie pozycje rozwinięte, lista na całą szerokość kontenera, kadry ukryte.",
         "akordeon-z-kadrem": "akordeon-z-odliczaniem z kadrem ekranu (modyfikator c5-acc30--kadr w ce/CE-30-lista-z-panelem.css/.js; CARBOMAT HUMIC „Czym jest”, #czym-jest-lista, 29.10.2026 – komentarze Mateusza w artefakcie: sekcja nieprzypięta, przewija się normalnie, akordeon wszystkich pozycji, kolejna otwiera się co 5 s, klik wybiera, obok zdjęcie, które się zmienia i powoli przesuwa, 20 px od górnej i dolnej krawędzi okna; zastąpił tam scenę faktów CE-12). Od 900 px korzeń jest siatką lista | kadr na szerokość okna (do 1800 px, 40 px z lewej, 20 px z prawej): kadr przyklejony 20 px pod górą okna, wysokość 100svh − 40 px (najmniej 520 px), zaokrąglenie 20 px; lista wyśrodkowana w pionie obok kadru, wiersze z mniejszym oddechem niż domyślnie, Każda pozycja niesie w panelu .c5-acc30__media: zdjęcie (img.c5-acc30__foto) i opcjonalnie boks ilustracji c5-viz z CE-12 (wygląd bazowy z ce/CE-12-scena-faktow.css, materiał szkła z rozmyciem dopisany w module); bez JS i poniżej 900 px zostaje w panelu (zdjęcie 16 : 10, boks pod nim), od 900 px skrypt przenosi je do pustego .c5-acc30__kadr na końcu korzenia i pokazuje media otwartej pozycji ([data-on]; bez otwartej zostaje ostatnie). Zmiana zdjęcia to przenikanie 0,6 s, pokazane zdjęcie jedzie powoli w górę (skala 1,08, przesuw z 2 % do −2 %) przez czas odliczania plus 1 s; ruch tylko bez reduced-motion. Odliczanie, wstrzymanie pod kursorem i przy fokusie, klik zatrzymujący automat i kotwice pozycji – bez zmian z akordeon-z-odliczaniem. Druga runda (29.10.2026 wieczorem): bez numeracji pozycji, otwarta pozycja bez tła i bez wcięcia (tytuł w linii zamkniętych, linie włosowe zostają), więcej miejsca pod opisem; od 900 px lista stoi na dole wiersza – jej ostatnia linia kończy się 80 px nad dolną krawędzią okna; od 03.11.2026 skrypt trzyma listę na wysokości jej najwyższego stanu otwartego (min-height liczone na starcie, po wczytaniu fontów i przy zmianie okna), więc otwarcie pozycji nie przesuwa wierszy nad nią, a kotwica pozycji (np. #sezon-02) przewija tak, że kadr stoi 20 px pod górą okna i cała lista jest w widoku – na wszystkich wystąpieniach, bez wyjątku w arkuszu strony; od 02.11.2026 także CARBOMAT Mata #sezon-lista (sześć etapów cyklu życia podłoża, bez odliczania – data-c5-acc30-auto=„off”, zdjęcie przy otwartej pozycji)",
         "akordeon-przewijany": "akordeon ścieżek wg potrzeby na Produktach (R04, 18.10.2026; modyfikator c5pr-acc--przewijany i atrybut data-acc-scroll na korzeniu): wiersze otwiera przewijanie zamiast odliczania. Głowa sekcji (kicker w kolumnie numerów, nagłówek 54/63 w kolumnie tytułów, wg Figma 777:1419) stoi nad sceną; od 900 px, przy włączonym ruchu i oknie co najmniej 640 px skrypt przypina scenę na jeden ekran, a lista jedzie w niej w górę (transform), tak że otwarty wiersz zawsze stoi pod poprzednim – jeden krótki odcinek przewijania (ok. 32 % wysokości okna) na wiersz, w obie strony; klik w tytuł otwiera wiersz i przewija do jego odcinka. Węziej, niżej i przy reduced-motion to zwykły akordeon otwierany klikiem, bez JS wszystkie wiersze otwarte; paski odliczania nie są rysowane"
       },
@@ -2325,11 +2325,6 @@ window.CW_CE = {
         "akordeon-z-odliczaniem": {
           "plik": "v7/produkty.html",
           "kotwica": "wg-potrzeby-sciezki",
-          "maxh": 1100
-        },
-        "z-kadrem": {
-          "plik": "v7/home.html",
-          "kotwica": "uprawy",
           "maxh": 1100
         },
         "akordeon-z-kadrem": {
@@ -2465,7 +2460,7 @@ window.CW_CE = {
         "slowa": "Ekran z dwoma dużymi zdaniami, których wyrazy rozjaśniają się kolejno z przewijaniem."
       },
       "opis": "Wyróżnione jedno zdanie lub akapit: duży cytat z pionową kreską i cudzysłowami z CSS, ciemny boks z etykietą wersalikami, albo pasek pod grubą kreską z etykietą i zdaniem.",
-      "mechanika": "Statyczne (opcjonalnie reveal). W wariancie slowa (strona główna, #idea) ce/CE-33-cytat-zasada.js dzieli tekst na wyrazy (span.c5-quote__w z numerem --i) i podnosi ich krycie z .16 do 1 kolejno, w miarę jak tekst przejeżdża przez okno: od górnej krawędzi na 78 % wysokości okna (żaden wyraz nie świeci) do środka tekstu na 45 % (wszystkie świecą); jedna pętla zapisuje na akapicie liczbę rozjaśnionych wyrazów (--q-w), a krycie liczy CSS, tylko przy prefers-reduced-motion: no-preference; bez JS i przy ograniczonym ruchu pełne krycie. Nic nie jest przypięte, scena działa na każdej szerokości.",
+      "mechanika": "Statyczne (opcjonalnie reveal). W wariancie slowa (strona główna #idea do 07.11.2026, dziś bez wystąpień) ce/CE-33-cytat-zasada.js dzieli tekst na wyrazy (span.c5-quote__w z numerem --i) i podnosi ich krycie z .16 do 1 kolejno, w miarę jak tekst przejeżdża przez okno: od górnej krawędzi na 78 % wysokości okna (żaden wyraz nie świeci) do środka tekstu na 45 % (wszystkie świecą); jedna pętla zapisuje na akapicie liczbę rozjaśnionych wyrazów (--q-w), a krycie liczy CSS, tylko przy prefers-reduced-motion: no-preference; bez JS i przy ograniczonym ruchu pełne krycie. Nic nie jest przypięte, scena działa na każdej szerokości.",
       "baza": {
         "plik": "v7/prochnica-plus.html",
         "kotwica": "rzetelnosc-cytat"
@@ -2482,7 +2477,7 @@ window.CW_CE = {
         "ciemny-boks": "ciemne tło, etykieta wersalikami, duży akapit (Kukurydza; od 1100 px etykieta w osobnej kolumnie – klasa u-quote--obok)",
         "pasek-zasady": "gruba kreska górna, etykieta i wytłuszczone zdanie w jednym wierszu (Carbohumic)",
         "cytat": "blockquote z kreską i cudzysłowami; na Próchnicy+ od 19.09.2026 biały, na zdjęciu w tle sekcji; na stronie głównej dawny wyśrodkowany motyw (#motto) zastąpił 02.11.2026 wariant slowa",
-        "slowa": "ekran z dwoma zdaniami (strona główna, #idea; adnotacja 3:89, 02.11.2026): sekcja na wysokość okna (min-height 100svh), tekst wyśrodkowany, bardzo duży, w kroju dawnego motta, miara do 17 em, każde zdanie od nowego wiersza (span.c5-quote__zd); wyrazy rozjaśniają się kolejno z przewijaniem (idea z c5-vs--slowa z CE-70, ale bez przypiętej sceny). Modyfikator c5-quote--slowa na sekcji, atrybut data-slowa na akapicie c5-quote__t; bez JS i przy reduced-motion wszystkie wyrazy w pełnym kryciu"
+        "slowa": "⚠️ bez wystąpień od 07.11.2026 (strona główna przeszła na wersję „Gleba”; prototyp z 26.10 w archiwum-wersji/home-v7-przed-gleba-2026-11-07.zip). Opis historyczny – ekran z dwoma zdaniami (strona główna, #idea; adnotacja 3:89, 02.11.2026): sekcja na wysokość okna (min-height 100svh), tekst wyśrodkowany, bardzo duży, w kroju dawnego motta, miara do 17 em, każde zdanie od nowego wiersza (span.c5-quote__zd); wyrazy rozjaśniają się kolejno z przewijaniem (idea z c5-vs--slowa z CE-70, ale bez przypiętej sceny). Modyfikator c5-quote--slowa na sekcji, atrybut data-slowa na akapicie c5-quote__t; bez JS i przy reduced-motion wszystkie wyrazy w pełnym kryciu"
       },
       "zrzut": {
         "maxh": 400
@@ -2640,7 +2635,7 @@ window.CW_CE = {
         "kotwica": "wariant-pro"
       },
       "kod": {
-        "css": "carbomat-humic.css (c5-who); o-firmie.css (on-who – port tych klas); strony upraw: ce/CE-36-wiersz-zdjecie-opis.css (b-row, b-brief, b-info – wiersz z boksem infografiki na kadrze; wariant odwrocony: klasa b-row--rev); strona główna (od 02.11.2026): wiersze bazy i odwrocony z ce/CE-36-wiersz-zdjecie-opis.css (b-rows, b-row) plus c5h-rows w home.css; wariant z-wartosciami (bez wystąpień): dawniej home.css blok 90",
+        "css": "carbomat-humic.css (c5-who); o-firmie.css (on-who – port tych klas); strony upraw: ce/CE-36-wiersz-zdjecie-opis.css (b-row, b-brief, b-info – wiersz z boksem infografiki na kadrze; wariant odwrocony: klasa b-row--rev); strona główna (od 07.11.2026, wersja „Gleba”): wiersz bazy #prochnica-plus z ce/CE-36-wiersz-zdjecie-opis.css (b-rows, b-row) plus c5h-rows w home.css – do 07.11 także wiersz odwrocony #o-nas; wariant z-wartosciami (bez wystąpień): dawniej home.css blok 90",
         "js": "carbomat-humic.js ===== 40; o-firmie.js (parallax kadru); wariant z-wartosciami (bez wystąpień): dawniej home.js blok 90 (nakładka filmu)"
       },
       "czesci": [
@@ -2654,7 +2649,7 @@ window.CW_CE = {
         "rząd domykający: przycisk i dwa linki ze strzałką"
       ],
       "warianty": {
-        "odwrocony": "opis po lewej, zdjęcie po prawej (klasa b-row--rev na Borówce i stronie głównej #o-nas, c5-who--flip na CARBOMAT HUMIC i CARBOHUMIC nalistny)",
+        "odwrocony": "opis po lewej, zdjęcie po prawej (klasa b-row--rev na Borówce – do 07.11.2026 także strona główna #o-nas – c5-who--flip na CARBOMAT HUMIC i CARBOHUMIC nalistny)",
         "z-wartosciami": "⚠️ bez wystąpień od 02.11.2026 (strona główna przeszła na wiersze bazy i odwrocony, bez filmu i bez wartości; kod c5h-about, c5h-vals i c5h-film zdjęty z home.css). Opis historyczny – siatka 6 / 6 wyrównana do góry: po lewej kadr 4:5 przyklejony na czas prawej kolumny, po prawej kicker i nagłówek sekcji, akapit intro, wyróżniony akapit z kreską po lewej, trzy wartości jako wiersze rozdzielone liniami (ramka ikony, nazwa, zdanie), karta filmu w ramce (kadr 16:9 z plakatem, kwadratowy przycisk odtwarzania, podpis i zdanie) i rząd domykający: przycisk oraz dwa linki ze strzałką; poniżej 900 px kadr 4:3 nad treścią (strona główna #o-nas)"
       },
       "zrzut": {
@@ -2662,8 +2657,8 @@ window.CW_CE = {
       },
       "zrzuty_wariantow": {
         "odwrocony": {
-          "plik": "v7/home.html",
-          "kotwica": "o-nas",
+          "plik": "v7/borowka.html",
+          "kotwica": "b-podloze-mieszanka",
           "maxh": 1100
         }
       }
@@ -3160,7 +3155,7 @@ window.CW_CE = {
       },
       "skroty_wariantow": {
         "z-pakietami": "Pudełka wyboru pakietu, suwak, wiersze zabiegów i boksy wyników z sumą kosztu",
-        "etapy": "Linijka powierzchni, kolumny etapów programu z kaflami produktów, suma netto etapu z polem „Licz w sumie”, razem netto, „Dodaj do koszyka” i trzy pakiety"
+        "etapy": "Powierzchnia, trzy pakiety, terminarz faz z dawką zabiegu, lista produktów na sezon z liczbą zabiegów i jedną ceną, razem netto i „Dodaj do koszyka”"
       },
       "opis": "Nagłówek, suwak powierzchni z wartością, siatka boksów wyników (wartość, jednostka, wiersze pomocnicze). Głowa sekcji – kicker, h2 i lead – stoi NAD paskiem powierzchni, wyrównana do lewej (uwaga Mateusza z 20.09.2026; kolumna głowy obok przelicznika, którą wprowadzał szeroki kontener od 1560 px, zniknęła razem z nim). Boks wyniku może nieść wiersze pomocnicze z własnym `data-calc-out`: woda do zabiegu i koszt produktu brutto (etykieta mówi „brutto” przy każdej liczbie, nie tylko w nocie pod tabelą – decyzja Mateusza z 20.09.2026) – `data-lo`/`data-hi` są tam już w złotówkach na hektar (dawka × cena jednostkowa), więc przelicznik `c5.js` zostaje nietknięty.",
       "mechanika": "Suwak przelicza dawki na bieżąco (data-calc w c5.js, grupowanie tysięcy), bez JS wartości domyślne.",
@@ -3177,7 +3172,7 @@ window.CW_CE = {
         "boksy wyników"
       ],
       "warianty": {
-        "etapy": "koszt programu faza po fazie (Kukurydza #u-koszt, Figma 560:205 z adnotacjami; szablon stron upraw rolniczych, rundy 03.11.2026 wieczorem i 04.11.2026): klasa u-pk--etapy (bez u-pk--linijka – linijki nie ma od 04.11.2026); na białym tle strony, bez leadu pod nagłówkiem; powierzchnia w jednym niskim wierszu – etykieta, suwak natywny między „0,5 ha” i „50 ha”, pole liczby z „ha” obok (wartość startowa: przeciętne pole, 10 ha); pod nią przełącznik pakietów CE-100 (c5-pkdock, w przepływie, nad tabelą); dalej siedem kolumn tych samych faz co wykres CE-100 o trzech wspólnych wierszach (subgrid: nazwy faz, produkty, ceny); od 1200 px pierwsza kolumna --we-first z nazwami wierszy („Fazy”, „Produkty”, „Cena (netto) produktów dla każdej fazy w przeliczeniu na całą powierzchnię uprawy”) i wewnętrzny margines panelu wykresu, więc fazy stoją pod fazami wykresu. Nad kolumną nazwa fazy w obrysie bez wypełnienia, na szerokość kolumny – przycisk otwierający lightbox fazy (u-pkc__ph); pod nią kafle produktów (packshot, nazwa, JEDNA dawka na hektar – dolna z programu w pakiecie minimalnym, górna w pozostałych; ilość na pole, opakowania; kafel partnerski tej samej wielkości na beżowym tle; kafle innych pakietów przerywane, z dopiskiem „poza pakietem”, bez checkboksa) z checkboksem w prawym górnym rogu: zaznaczony = liczony, odznaczony = wyszarzony i poza wyceną (data-pkc-pick, klasa is-skip); niżej jedna cena netto fazy (bez dopisku „netto” od 1200 px; poniżej – „cena netto”), w fazie bez zabiegu „bez zabiegu w tej fazie”; faza z liczonym produktem ma zielonkawe tło i obrys ciała pod nazwą. Pod linią, która zaczyna się od pierwszej fazy: po lewej „Razem netto za zaznaczone produkty”, pakiet, areał i liczba faz, cena netto, brutto mniejszym pismem; po prawej „Dodaj wybrane produkty do koszyka”. Noty o cenach 100 px niżej, bez ramki. Koszt = jedna wielkość opakowania na produkt (ta, która na daną ilość kosztuje najmniej; ilość poniżej najmniejszego opakowania = to opakowanie), netto przez CWSklep.vatSplit; do koszyka trafiają dokładnie policzone opakowania; przyciski data-pkc-buy w metryczkach otwierają szybki podgląd sklepu z tego samego JSON. Poniżej 1000 px fazy jedna pod drugą, puste fazy i nazwy wierszy znikają, kafel w wierszu.",
+        "etapy": "koszt programu na sezon z terminarzem faz (Kukurydza #u-koszt, Figma 560:205 z adnotacjami; szablon stron upraw rolniczych, rundy 03.11.2026 wieczorem, 04.11.2026 i 06.11.2026): klasa u-pk--etapy (bez u-pk--linijka – linijki nie ma od 04.11.2026); na białym tle strony, bez leadu pod nagłówkiem; powierzchnia w jednym niskim wierszu – etykieta, suwak natywny między „0,5 ha” i „50 ha”, pole liczby z „ha” obok (wartość startowa: przeciętne pole, 10 ha); pod nią przełącznik pakietów CE-100 (c5-pkdock, w przepływie, nad tabelą). Od 06.11.2026 (uwaga klienta U-38) każdy produkt ma JEDNĄ dawkę na sezon, taką samą w każdym pakiecie: siedem kolumn tych samych faz co wykres CE-100 to terminarz otwartego pakietu o dwóch wspólnych wierszach (subgrid: nazwy faz, zabiegi) – kafel zabiegu (packshot, nazwa, dawka jednego zabiegu, ilość na pole; bez ceny i bez checkboksa; kafel partnerski na beżowym tle; kafle innych pakietów przerywane, z dopiskiem „poza pakietem”); od 1200 px pierwsza kolumna --we-first z nazwami wierszy („Fazy”, „Zabiegi w wybranym pakiecie – dawka na hektar i ilość na całą powierzchnię”), więc fazy stoją pod fazami wykresu. Nad kolumną nazwa fazy w obrysie bez wypełnienia – przycisk otwierający lightbox fazy (u-pkc__ph); faza bez zabiegu: „bez zabiegu w tej fazie”; faza z liczonym produktem ma zielonkawe tło i obrys ciała pod nazwą. Pod kolumnami lista „Produkty na sezon” (u-pkc__prod, od 1000 px tabela z wierszem nagłówków): checkbox (zaznaczony = liczony, odznaczony = wyszarzony razem z kaflami tego produktu – przeniesiony z kafla, bo produkt może stać w kilku fazach), packshot, nazwa, dawka na sezon, liczba zabiegów, ilość na pole, opakowania i JEDNA cena netto produktu za sezon. Produkt z podziałem dawki ma przełącznik 1 / 2 / 3 zabiegi (semantyka radio) z wariantem domyślnym („Domyślnie: …”), zdaniem, że ilość i cena się nie zmieniają, i przyciskiem „Jak dzielić dawkę?” do metryczki; podział zmienia tylko fazy i dawkę jednego zabiegu. Pod linią, która zaczyna się od pierwszej fazy: po lewej „Razem netto za zaznaczone produkty na sezon”, pakiet, areał i liczba produktów, cena netto, brutto mniejszym pismem; po prawej „Dodaj wybrane produkty do koszyka”. Noty o cenach 100 px niżej, bez ramki. Koszt = jedna wielkość opakowania na produkt na ilość za sezon (ta, która kosztuje najmniej; ilość poniżej najmniejszego opakowania = to opakowanie), netto przez CWSklep.vatSplit; do koszyka trafiają dokładnie policzone opakowania; przyciski data-pkc-buy w metryczkach otwierają szybki podgląd sklepu z tego samego JSON. Poniżej 1000 px fazy jedna pod drugą, puste fazy i nazwy wierszy znikają, kafel w wierszu, w liście produktów wartości w liniach z podpisem. Od 07.11.2026 (komentarze Mateusza na artefakcie): bez kolumny nazw wierszy, fazy na całą szerokość z miniaturą 56 px i osią pod nagłówkami; „Wskaż powierzchnię uprawy”; ciche „Wyłącz wybrane fazy z obliczeń” – siedem chipów faz (aria-pressed), produkt liczy tylko zabiegi z faz, które zostały; „Ilość na N ha”; cena na początku, pod nią jedna linia (pakiet, areał, „cena netto za N zaznaczone produkty”, wyłączone fazy); produkt partnerski w liście jak nasze, z dopiskiem „(produkt partnerski)”; noty 12 px na całą szerokość. W jednej sekcji z wykresem (CE-100 „razem”, na Kukurydzy od 07.11.2026) – bez własnych tabów (pakiet z przełącznika wykresu) i bez kolumn faz (zabiegi = paski wykresu; faza wyłączona z obliczeń przyciemnia swoją kolumnę na wykresie); tryb z kolumnami faz zostaje w module dla stron z dwiema sekcjami.",
         "z-pakietami": "przelicznik spięty z wyborem pakietu (Kukurydza, 01.10.2026): w górnym rzędzie pudełka-przełączniki CE-45 „dwa-pakiety” i suwak powierzchni, niżej panel wybranego pakietu – wiersze „Etap · Zabieg”, a pod nimi boksy wyników po jednym na produkt (ilość, woda do zabiegu, koszt brutto, przycisk sklepu) i ciemny boks sumy kosztu pakietu; trzy boksy w pakiecie minimum, cztery w optimum; `data-calc` i `data-tabs-group` siedzą na tym samym kontenerze, więc przelicznik wypełnia boksy obu paneli. Na Borówce (02.10.2026) panel ma dwie grupy boksów: „co roku” i „jednorazowo” – każda z ciemnym boksem sumy; boksy jednorazowe (podłoże, „Wodny Stoper”, ściółka) niosą ilość na powierzchnię bez wiersza wody i koszt brutto liczony z największego opakowania (uwaga Mateusza z 02.10: „A tu nie liczysz ceny?”); pod panelami zostaje tylko odnośnik „Jak liczymy pakiety: założenia i ceny”, który otwiera okno CE-25 „jednostronicowy” z notą o roboczej propozycji, założeniami przeliczenia na hektar i cenami; modyfikator u-pk--linijka (Borówka, wzór Figma 466-161; od 15.10.2026 wieczorem w przepływie strony): kolejność – przełącznik pakietów, tuż pod nim linijka powierzchni (gęsta podziałka, etykiety w skali logarytmicznej data-ruler-marks, domyślnie 0,5 · 1 · 2 · 5 · 10 · 20 · 50, uchwyt z kreską i ←→, duża wartość z „ha”; przeciąganie i klik, role=slider, strzałki, PageUp / PageDown, Home, End; kroki data-ruler-steps – 0,5 ha do 10 ha, potem 1 ha; wpisuje do [data-calc-in], liczy dalej c5.js), produkty wybranego pakietu w stałej siatce 4 kolumn od 1000 px (karta = 1/4 wiersza bez względu na liczbę kart; poniżej 2 kolumny, także na telefonie), na końcu zalecenia „Etap · Zabieg”; bez przyklejania i bez wpływu na dok doradcy; bez JS suwak natywny. Wzór dla kolejnych stron upraw (decyzja Mateusza z 16.10.2026 – wdrażać przy poprawianiu ich treści)"
       },
       "zrzut": {
@@ -3710,7 +3705,12 @@ window.CW_CE = {
         "2 karty mniejsze",
         "nota o następnym artykule"
       ],
-      "warianty": {},
+      "skroty_wariantow": {
+        "miniatury": "Mniejsze karty z kwadratową miniaturą zdjęcia po lewej stronie tytułu."
+      },
+      "warianty": {
+        "miniatury": "klasa c5-ln--miniatury na korzeniu (strona główna „Gleba”, 07.11.2026, komentarz Mateusza): dwie mniejsze karty-linki mają po lewej kwadratową miniaturę zdjęcia (c5-ln__mini, 80–112 px), tytuł po prawej, strzałka w rogu jak dotąd"
+      },
       "zrzut": {
         "maxh": 800
       }
@@ -4871,11 +4871,12 @@ window.CW_CE = {
       "nazwa": "Kafel promocyjny w siatce",
       "grupa": "karty",
       "rodzina": "karty",
-      "skrot": "Neutralny kafel w siatce produktów: miejsce jednego produktu z etykietą, nagłówkiem, zdaniem i przyciskiem, bez zdjęcia.",
+      "skrot": "Sekcja promocyjna w siatce produktów: zdjęcie w tle, hasło i płaskie karty produktów na szkle – pas na całą szerokość albo kafel na dwie kolumny.",
       "projekt": null,
       "tagi": {
         "media": [
-          "bez-mediow"
+          "zdjecie",
+          "packshot"
         ],
         "tekst": [
           "krotki"
@@ -4884,12 +4885,13 @@ window.CW_CE = {
           "wszystko-widoczne"
         ],
         "pozycje": [
-          "1"
+          "2-4"
         ],
         "nadaje": [
           "cta",
           "lista-produktow",
-          "korzysci-argumenty"
+          "korzysci-argumenty",
+          "sklep-transakcja"
         ],
         "mechanika": [
           "statyczny",
@@ -4901,37 +4903,45 @@ window.CW_CE = {
         ]
       },
       "skroty_wariantow": {
-        "neutralny": "Kafel o rozmiarze karty produktu, bez zdjęcia i filmu: etykieta, nagłówek, zdanie i przycisk."
+        "pas": "Pas na całą szerokość siatki: zdjęcie w tle, etykieta i duży nagłówek po prawej, na dole dwie płaskie karty produktów na szkle.",
+        "podwojny": "Kafel na dwie kolumny i wysokość rzędu: zdjęcie, etykieta, duża liczba rabatu z nagłówkiem, jedna płaska karta produktu."
       },
-      "opis": "Kafel redakcyjny wpleciony w siatkę listy produktów między karty. Od rundy 02.11.2026 (Figma 4:334) jeden wygląd: neutralny kafel o rozmiarze karty produktu – ciepłe tło, cienki obrys, wyśrodkowana treść (etykieta, nagłówek, opcjonalnie zdanie, przycisk), bez zdjęcia i filmu, żeby układ wstawek zaprojektował grafik; dawne kafle na zdjęciu i filmie (baner, wideo, dwie kolumny) oraz kafel z kadrem 1 : 1 zdjęto. Żaden kafel nie prowadzi poza sklep.",
-      "mechanika": "Skrypt listy wstawia każdy kafel za N-tym produktem bieżącej kolejności (data-tile-after), więc sortowanie zostawia kafle na miejscach, a grid-auto-flow: dense zamyka komórkę, którą zostawia kafel wielokolumnowy. Kafle widać tylko w widoku bez zawężenia (bez grupy, faset, zakresu ceny i frazy); licznik „Pokazujemy N z N” liczy wyłącznie produkty. Przycisk kafla z półką włącza grupę (data-tile-shelf) i przewija do początku listy, przycisk kafla promocyjnego otwiera szybki podgląd (CE-76) z wybranym opakowaniem (data-cw-pack).",
+      "opis": "Sekcja reklamowa wpleciona w siatkę listy produktów między karty – zwraca uwagę na zagadnienie, grupę produktów albo promocję. Od 07.11.2026 (Figma 566:183 z adnotacjami Mateusza) dwa warianty: pas na całą szerokość siatki i kafel na dwie kolumny. Zdjęcie w tle (docelowo kadr dobrany do sekcji albo film), hasło, a na dole płaskie, poziome karty produktów na szkle (rozmycie jak w ilustracjach serwisu): miniatura z packshotem, metryczka, nazwa, cena i mniejszy przycisk zakupu. Wcześniejszy wariant neutralny (02.11.2026, kafel bez zdjęcia o rozmiarze karty) zdjęty razem z dwoma wystąpieniami. Żaden kafel nie prowadzi poza sklep.",
+      "mechanika": "Skrypt listy wstawia każdy kafel za N-tym produktem bieżącej kolejności (data-tile-after), więc sortowanie zostawia kafle na miejscach, a grid-auto-flow: dense zamyka komórkę, którą zostawia kafel wielokolumnowy. Kafle widać tylko w widoku bez zawężenia (bez grupy, faset, zakresu ceny i frazy); licznik „Pokazujemy N z N” liczy wyłącznie produkty. Układ wnętrza zależy od szerokości samego kafla (container queries): od 720 px tekst w prawej połowie i karty obok siebie, węziej wszystko jedno pod drugim; poniżej 1000 px okna oba warianty mają pełną szerokość siatki. Skrypt obsługuje też przycisk z półką w kaflu (data-tile-shelf: włącza grupę i przewija do początku listy) – od 07.11.2026 żaden kafel go nie ma; nazwa i miniatura płaskiej karty prowadzą do karty produktu, przycisk otwiera szybki podgląd (CE-76) z wybranym opakowaniem (data-cw-pack).",
       "baza": {
         "plik": "v7/sklep.html",
         "kotwica": "kafel-borowka"
       },
       "kod": {
-        "css": "sklep.html <style> (c5sk-tile, c5sk-tile--neutral, c5sk-tile__label, __nh, __stxt, __cta)",
+        "css": "v7/ce/CE-79-kafel-promocyjny-w-siatce.css (c5sk-tile, c5sk-tile--band, c5sk-tile--double i części __copy, __big, __prods, __prod, __pthumb, __pbody, __pprice, __pbuy)",
         "js": "sklep.html <script> (placeTiles, akcje kafli)"
       },
       "czesci": [
+        "zdjęcie w tle",
         "etykieta",
+        "duża liczba rabatu (promocja)",
         "nagłówek",
-        "zdanie (opcjonalnie)",
-        "najniższa cena z 30 dni (kafel promocyjny)",
-        "przycisk"
+        "płaska karta produktu na szkle (1–2)",
+        "najniższa cena z 30 dni (karta w promocji)"
       ],
       "warianty": {
-        "neutralny": "Figma 4:334, runda 02.11.2026 (klasa c5sk-tile--neutral): kafel o rozmiarze jednego miejsca produktu, bez zdjęcia i bez filmu – układ wstawek zostawiamy grafikowi, żeby makieta nie podsuwała rozwiązania. Ciepłe tło, cienki obrys, promień md, treść wyśrodkowana: drobna etykieta (np. „Promocja”, „Aplikacja”), nagłówek 18 px, opcjonalnie jedno zdanie lub linia „najniższa cena z 30 dni” i przycisk. Cztery wystąpienia: po 6. produkcie (uprawy kwasolubne, przycisk włącza półkę borówki), po 12. (promocja CARBOMAT ECO, przycisk otwiera szybki podgląd CE-76 z wybranym opakowaniem), po 15. (aplikacja przez opryskiwacz, półka sprzętu) i po 18. (ściółka)"
+        "pas": "Figma 566:183, 07.11.2026 (klasa c5sk-tile--band): pas na całą szerokość siatki, za drugim pełnym rzędem kart (po 6. produkcie). Wysokość dowolna (co najmniej ok. 506–660 px, od 07.11.2026 o 10% więcej). Zdjęcie w tle, w prawej połowie tylko etykieta i duży nagłówek (bez listy punktów i przycisku – druga runda komentarzy 07.11); na dole dwie płaskie karty produktów obok siebie na szkle, z niższym przyciskiem „Kup teraz” (szerokość treści, 36 px). Wystąpienie: #kafel-borowka – uprawy kwasolubne, CARBOMAT ECO pH 4,5–5,0 i CARBOMAT ECO Ściółka pH 4,5–5,0. Karuzela z większą liczbą kart – możliwa, niezbudowana.",
+        "podwojny": "Figma 566:183, 07.11.2026 (klasa c5sk-tile--double): kafel na szerokość dwóch kart i wysokość rzędu siatki, obok zwykła karta produktu. Zdjęcie w tle pod lżejszym przyciemnieniem, u góry po lewej etykieta, rabat dużą liczbą (token display-num) i krótszy nagłówek mniejszym krojem; na dole jedna płaska karta produktu na szkle – cena i przekreślona cena regularna, bez plakietki rabatu. Wystąpienie: #kafel-promocja – po 9. produkcie, promocja CARBOMAT ECO pH 6,0–6,5, worek 20 l, z najniższą ceną z 30 dni (obowiązkowa przy pokazanej obniżce, art. 6a – spec sklepu §5.4); przycisk otwiera szybki podgląd z wybranym workiem 20 l."
       },
       "zrzut": {
         "ukryj": ".c5sk-bar",
         "maxh": 800
       },
       "zrzuty_wariantow": {
-        "neutralny": {
+        "pas": {
+          "plik": "v7/sklep.html",
+          "kotwica": "kafel-borowka",
+          "maxh": 800
+        },
+        "podwojny": {
           "plik": "v7/sklep.html",
           "kotwica": "kafel-promocja",
-          "maxh": 600
+          "maxh": 700
         }
       }
     },
@@ -5955,7 +5965,10 @@ window.CW_CE = {
       "nazwa": "Wykres etapów z pakietami",
       "grupa": "dane",
       "rodzina": "dane",
-      "skrot": "Oś faz rozwoju z przyciskiem opisu pod każdą fazą (cała kolumna jest linkiem), wiersze produktów CarboHort i partnerskich z paskami stosowania, pływający przełącznik pakietów.",
+      "skrot": "Oś faz rozwoju ze zdjęciem i przyciskiem opisu pod każdą fazą (cała kolumna jest linkiem), przełącznik pakietów z opisem pakietu, wiersze produktów z paskami obecności w fazach.",
+      "skroty_wariantow": {
+        "razem": "Wykres etapów i przelicznik kosztu sezonu w jednej sekcji, z przełącznikiem pakietów przyklejonym u góry"
+      },
       "projekt": null,
       "tagi": {
         "media": [
@@ -5985,8 +5998,8 @@ window.CW_CE = {
           "typ-strony"
         ]
       },
-      "opis": "Szeroka sekcja wg ramki Figma 560:167 i jej adnotacji (szablon stron upraw rolniczych, Kukurydza od 03.11.2026): głowa wyśrodkowana – kicker, h2 i pod nagłówkiem przełącznik pakietów (c5-pkbar w c5-pkdock, w przepływie strony), bez leadu – wysoko nad wykresem, legenda pod wykresem (od 04.11.2026); wykres na ciepłym panelu jako prawdziwa tabela: u góry oś faz rozwoju (sama nazwa fazy nad linią z kreskami na granicach; numer i BBCH zdjęte 04.11.2026), pod osią w każdej fazie pigułka „Opis fazy” (w ostatniej „Czytaj więcej”), niżej po jednym wierszu na produkt – w karcie produktu packshot 56 px nad nazwą (wiersz ok. 120 px), produkty CarboHort w białej karcie, produkty partnerskie (dostępne w sklepie, mniej promowane) w tej samej wielkości, tylko na beżowym tle (surface-warm-strong), bez chipa – i paski stosowania z jedną dawką wybranego pakietu (data-txt-min – tekst paska w pakiecie minimalnym); pasek przerywany = produkt zamienny, jaśniejszy = partnerski, długi (colspan) = produkt stosowany przez okres. Pierwsza kolumna ma szerokość --we-first (240 px, 200 px przy 900–1199 px, 124 px poniżej 900 px); od 1200 px przelicznik CE-47 „etapy” ma tę samą pierwszą kolumnę (nazwy wierszy) i ten sam wewnętrzny margines panelu, więc kolumny faz obu sekcji stoją w jednej linii.",
-      "mechanika": "Przełącznik (semantyka radio: klik, strzałki, Home, End) pokazuje paski jednego pakietu: data-pk na pasku wymienia jego pakiety, pasek bez data-pk (zamienny) stoi zawsze; lista produktów stoi zawsze, zmieniają się tylko paski; na start pakiet kompleksowy. Klik w dowolne miejsce kolumny fazy klika jej pigułkę – ta otwiera stronę fazy w lightboxie CE-25 „fazy”; najechanie i fokus podbarwiają kolumnę na biało. Nazwa produktu otwiera metryczkę (CE-25 „metryczka”). Wszystkie przełączniki tej samej grupy (data-pakiety) są zgrane zdarzeniem c5:pakiet na document: przelicznik CE-47 „etapy” i pasek pakietów w lightboxie faz (data-pk-sat – filtruje karty produktów data-pk i pokazuje data-pk-none, gdy w fazie nie ma zabiegu pakietu). Przycisk data-we-goto („Oblicz koszt stosowania”) po zamknięciu lightboxa przewija do przelicznika. Poniżej 900 px tabela przewija się w poziomie w panelu z przypiętą kolumną produktów; przewijacz nie ma data-lenis-prevent, więc kółko nad wykresem przewija stronę płynnie (od 04.11.2026). Bez JS przełączniki ukryte, wszystkie paski i karty widoczne; przy reduced-motion bez przejść.",
+      "opis": "Szeroka sekcja wg ramki Figma 560:167 i jej adnotacji (szablon stron upraw rolniczych, Kukurydza od 03.11.2026): głowa wyśrodkowana – kicker, h2 i pod nagłówkiem przełącznik pakietów (c5-pkbar w c5-pkdock, w przepływie strony), pod nim opis otwartego pakietu i chipy jego produktów (od 06.11.2026, U-37), bez leadu – wysoko nad wykresem, legenda pod wykresem (od 04.11.2026); wykres na ciepłym panelu jako prawdziwa tabela: u góry oś faz rozwoju (sama nazwa fazy nad linią z kreskami na granicach; numer i BBCH zdjęte 04.11.2026; między nazwą a linią zdjęcie fazy 4:3 – od 06.11.2026, U-35), pod osią w każdej fazie pigułka „Opis fazy” (w ostatniej „Czytaj więcej”), niżej po jednym wierszu na produkt – w karcie produktu packshot 56 px nad nazwą (wiersz ok. 120 px), produkty CarboHort w białej karcie, produkty partnerskie (dostępne w sklepie, mniej promowane) w tej samej wielkości, tylko na beżowym tle (surface-warm-strong), bez chipa – i paski obecności produktu w fazie, bez dawek (od 06.11.2026, uwaga klienta U-38 – dawka na sezon stoi w metryczce i w przeliczniku; dawny tekst paska data-txt-min zostaje w skrypcie dla innych stron); pasek kreskowany = możliwy termin części dawki na sezon, pasek przerywany = produkt zamienny (produkt partnerski ma od 07.11.2026 taki sam pasek jak nasze, a w karcie wiersza dopisek „(produkt partnerski)”), długi (colspan) = produkt stosowany przez okres. Pierwsza kolumna ma szerokość --we-first (240 px, 200 px przy 900–1199 px, 124 px poniżej 900 px); od 1200 px przelicznik CE-47 „etapy” ma tę samą pierwszą kolumnę (nazwy wierszy) i ten sam wewnętrzny margines panelu, więc kolumny faz obu sekcji stoją w jednej linii.",
+      "mechanika": "Przełącznik (semantyka radio: klik, strzałki, Home, End) pokazuje paski jednego pakietu: data-pk na pasku wymienia jego pakiety, pasek bez data-pk (zamienny) stoi zawsze; lista produktów stoi zawsze, zmieniają się tylko paski; na start pakiet kompleksowy; widoczny jest tylko opis otwartego pakietu (data-pk-desc). Pasek z data-zab-prod i data-zab (liczby zabiegów, w których przypada część dawki) jest kreskowany (is-opt), dopóki przelicznik CE-47 „etapy” nie wybierze podziału, który go obejmuje (zdarzenie c5:zabiegi). Klik w dowolne miejsce kolumny fazy klika jej pigułkę – ta otwiera stronę fazy w lightboxie CE-25 „fazy”; najechanie i fokus podbarwiają kolumnę na biało. Nazwa produktu otwiera metryczkę (CE-25 „metryczka”). Wszystkie przełączniki tej samej grupy (data-pakiety) są zgrane zdarzeniem c5:pakiet na document: przelicznik CE-47 „etapy” i pasek pakietów w lightboxie faz (data-pk-sat – filtruje karty produktów data-pk i pokazuje data-pk-none, gdy w fazie nie ma zabiegu pakietu). Przycisk data-we-goto („Oblicz koszt stosowania”) po zamknięciu lightboxa przewija do przelicznika. Poniżej 900 px tabela przewija się w poziomie w panelu z przypiętą kolumną produktów; przewijacz nie ma data-lenis-prevent, więc kółko nad wykresem przewija stronę płynnie (od 04.11.2026). Bez JS przełączniki ukryte, wszystkie paski i karty widoczne; przy reduced-motion bez przejść.",
       "baza": {
         "plik": "v7/kukurydza.html",
         "kotwica": "u-etapy"
@@ -6005,9 +6018,165 @@ window.CW_CE = {
         "legenda",
         "przełącznik pakietów pod nagłówkiem (c5-pkbar)"
       ],
-      "warianty": {},
+      "warianty": {
+        "razem": "wykres i kalkulator CE-47 „etapy” w jednej sekcji – v7/kukurydza.html, od 07.11.2026 obowiązująca wersja Kukurydzy i wzór upraw rolniczych (wybór Mateusza; wersja z dwiema sekcjami w archiwum): przełącznik pakietów wyjęty z głowy, przykleja się 20 px pod górną krawędzią okna przez całą sekcję; paski pakietu niosą dawkę jednego zabiegu i ilość na pole (c5-we__val, wpisuje kalkulator – data-pkc-bars); pod legendą mniejszy nagłówek „Oblicz koszt stosowania” do lewej i kalkulator bez kickera, h2, własnych tabów i kolumn faz"
+      },
       "zrzut": {
         "maxh": 1000
+      }
+    },
+    "CE-101": {
+      "nazwa": "Problem – sekcja strony głównej",
+      "grupa": "sceny",
+      "rodzina": "sceny",
+      "skrot": "Cały rozdział „Problem” strony głównej jako jedna sekcja do zaprojektowania od zera: głowa, szeroki kadr, sześć problemów, trzy liczby skali ze źródłami i zdanie-pomost.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "zdjecie"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "korzysci-argumenty",
+          "liczby-dane",
+          "dowod-zrodla"
+        ],
+        "mechanika": [
+          "statyczny"
+        ],
+        "zakres": [
+          "jednorazowy"
+        ]
+      },
+      "opis": "Jeden CE dla całego rozdziału „Problem” strony głównej „Gleba” (komentarze Mateusza z 06.11.2026): grafik projektuje sekcję od zera i szuka efektu „wow”, a prototyp pokazuje tylko kolejność i treść. Kolejność: kicker „Problem”, nagłówek i lead; szeroki kadr spękanej gleby (21 : 9, na telefonie 4 : 3); nadpis „Z czym mierzy się Twoja gleba?” i sześć ponumerowanych problemów w układzie 3 + 3 od 1000 px (klasy c5-mt-* z CE-20 „numerowane”); nadpis „Jak to wygląda w Polsce” i trzy liczby skali na białym panelu z linią źródła pod każdym podpisem (klasy u-nb* z CE-24 „kolumny”); na końcu zdanie-pomost do rozwiązania w kroju nagłówków. Zapożyczone części nie mają własnych znaczników CE.",
+      "mechanika": "Statyczny: bez skryptu, bez odliczania liczb; karty i panel wchodzą zwykłym revealem strony.",
+      "baza": {
+        "plik": "v7/home.html",
+        "kotwica": "problem"
+      },
+      "kod": {
+        "css": "ce/CE-101-problem.css (c5-pb) + klasy CE-20 i CE-24"
+      },
+      "czesci": [
+        "głowa rozdziału",
+        "szeroki kadr",
+        "sześć problemów",
+        "trzy liczby skali ze źródłami",
+        "zdanie-pomost"
+      ],
+      "warianty": {},
+      "zrzut": {
+        "maxh": 2400
+      }
+    },
+    "CE-102": {
+      "nazwa": "Rozwiązanie – sekcja strony głównej",
+      "grupa": "sceny",
+      "rodzina": "sceny",
+      "skrot": "Cały rozdział „Rozwiązanie” jako jedna sekcja: ciemny boks z tezą, cztery kroki wzdłuż pionowej osi na środku ekranu i horyzont efektu.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "schemat-wykres"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "kroki-proces",
+          "harmonogram-czas"
+        ],
+        "mechanika": [
+          "statyczny"
+        ],
+        "zakres": [
+          "jednorazowy"
+        ]
+      },
+      "opis": "Jeden CE dla całego rozdziału „Rozwiązanie” strony głównej „Gleba” (komentarz Mateusza z 06.11.2026: teza i kroki pod nią to jedna sekcja, projektowana w całości przez grafika, nie osobne CE). Kolejność: ciemny boks z pełnym kickerem „Rozwiązanie” i jednym zdaniem w kroju nagłówków (klasy CE-33 „ciemny-boks”); nagłówek i lead; cztery kroki wzdłuż pionowej linii biegnącej środkiem ekranu – od 900 px tytuł kroku po lewej, wyrównany do linii, węzeł z numerem na linii, zdanie po prawej; poniżej 900 px linia po lewej jak w CE-73 na telefonie; horyzont efektu pod większym nagłówkiem „Kiedy zobaczysz efekt” (klasy CE-73). Zapożyczone części nie mają własnych znaczników CE.",
+      "mechanika": "Statyczny: bez skryptów CE-33 i CE-73, linia pełna, węzły zapalone; dwa paski horyzontu wypełniają się raz po wejściu w widok (reveal strony, CSS CE-73).",
+      "baza": {
+        "plik": "v7/home.html",
+        "kotwica": "rozwiazanie"
+      },
+      "kod": {
+        "css": "ce/CE-102-rozwiazanie.css (c5-rz) + klasy CE-33 i CE-73"
+      },
+      "czesci": [
+        "ciemny boks z tezą i kickerem",
+        "głowa",
+        "oś czterech kroków na środku ekranu",
+        "horyzont efektu"
+      ],
+      "warianty": {},
+      "zrzut": {
+        "maxh": 2400
+      }
+    },
+    "CE-103": {
+      "nazwa": "Zapis na newsletter",
+      "grupa": "noty-i-cta",
+      "rodzina": "pasy",
+      "skrot": "Biały panel: zaproszenie do newslettera po lewej, pole e-mail z przyciskiem „Zapisz się” i jednozdaniową notą po prawej.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "bez-mediow"
+        ],
+        "tekst": [
+          "krotki"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "1"
+        ],
+        "nadaje": [
+          "kontakt-formularz",
+          "cta"
+        ],
+        "mechanika": [
+          "formularz"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "opis": "Panel na białym tle z obrysem i narożnikami jak karty (12 px): od 900 px dwie kolumny – po lewej nagłówek h3 i krótki opis, czego dotyczy newsletter, po prawej etykieta „Twój e-mail”, pole e-mail i przycisk „Zapisz się” w jednym wierszu (przycisk bez ikony), pod nimi nota o wypisaniu się; poniżej 900 px jedna kolumna, poniżej 480 px przycisk na całą szerokość. Pola z kitu (wf-label, wf-input).",
+      "mechanika": "Makieta nic nie wysyła: przy wysłaniu pusty albo błędny adres dostaje komunikat przeglądarki, poprawny pokazuje notę „Makieta – formularz demonstracyjny. Nic nie zostało wysłane.” (role=status). Skrypt modułu działa na każdym form[data-nl].",
+      "baza": {
+        "plik": "v7/home.html",
+        "kotwica": "newsletter"
+      },
+      "kod": {
+        "css": "ce/CE-103-newsletter.css (c5-nl)",
+        "js": "ce/CE-103-newsletter.js"
+      },
+      "czesci": [
+        "nagłówek i opis",
+        "etykieta i pole e-mail",
+        "przycisk „Zapisz się”",
+        "nota o wypisaniu",
+        "nota demonstracyjna"
+      ],
+      "warianty": {},
+      "zrzut": {
+        "maxh": 600
       }
     }
   },
@@ -6033,8 +6202,8 @@ window.CW_CE = {
         "c5-btn--sm": "mały, 0.8125 rem, nadal 44 px wysokości",
         "c5-btn--tight": "wąski boczny padding, gdy przyciski stoją ciasno",
         "c5-btn--kup": "przycisk zakupu: zielony #86D574 (token --ch-color-green-buy), hover #79CB66; używany tylko jako „Kup teraz” w hero produktów (CE-08)",
-        "c5-btn--ico-liscie": "z ikoną liści za etykietą (maska CSS); przy najechaniu cztery liście zbliżają się o 1 jednostkę do środka",
-        "c5-btn--ico-suwaki": "z ikoną suwaków za etykietą (maska CSS); przy najechaniu gałki suwaków rozjeżdżają się w przeciwne strony, a tory się skracają",
+        "c5-btn--ico-liscie": "z ikoną liści za etykietą (maska CSS); przy najechaniu cztery liście zbliżają się o 1 jednostkę do środka. Reguła Mateusza z 06.11.2026: liście ma każdy przycisk zakupu („Kup teraz”, „Kup w sklepie”, „Kup produkt”, także „Kup teraz” w oknie szybkiego zakupu i w polecanych w koszyku) i żaden inny",
+        "c5-btn--ico-suwaki": "z ikoną suwaków za etykietą (maska CSS); przy najechaniu gałki suwaków rozjeżdżają się w przeciwne strony, a tory się skracają. Reguła z 06.11.2026: suwaki ma każdy przycisk doboru produktu albo dawki („Dobierz…”, konfigurator) i żaden inny; pozostałe przyciski bez ikon ozdobnych, ikony funkcyjne (telefon, e-mail, pobieranie, strzałki) zostają",
         "c5-btn--ghost": "konturowy na zdjęciu: biały obrys, tło rgb(0 0 0 / .3) – działa tylko w kontekście .c5-hero--bg (CE-08, wariant kadr-w-tle); bliźniak c5-pro__login z pasa PRO, do scalenia w fali 2b"
       },
       "opis": "Podstawowa akcja: ostre narożniki, obrys 1 px, etykieta małymi literami, ikona po lewej. Ruch przy najechaniu (G04, 18.10.2026, tylko transform, tylko przy hover:hover i bez prefers-reduced-motion): etykieta przesuwa się o 4 px w prawo (poza wariantem --sm), a ikony liści i suwaków mają własną animację; chrome.js owija etykietę w .c5-btn__t i podmienia ikonę maskowaną na wbudowaną kopię, bez skryptu przycisk zostaje statyczny. Cel dotykowy 44 px siedzi w bazie – nie łata się go już punktowo, a boczny padding ustawia token --c5-btn-px zamiast ośmiu kontekstowych nadpisań.",

@@ -14,13 +14,9 @@
      · CE-33 `on-quote`                      <- uprawa.css (u-quote, wariant ciemny-boks)
    ===================================================================== */
 
-/* 10 · W LICZBACH → ce/CE-24-pas-liczb.css (`wiersze-ze-zdjeciem`)
-   page-specific: five rows with a source line make the column taller than the
-   frame ratio allows, so the photo fills the row instead of keeping the ratio. */
-@media (min-width:900px){
-  #w-liczbach .pp-liczby__ph{position:relative;aspect-ratio:auto;}
-  #w-liczbach .pp-liczby__ph img{position:absolute;inset:0;}
-}
+/* 10 · W LICZBACH → ce/CE-24-pas-liczb.css (`wiersze-ze-zdjeciem` with the
+   modifier `pp-liczby--wypelnia`: five rows with a source line make the column
+   taller than the frame ratio allows, so the photo fills the row). */
 
 /* ===== 20 · CO ROBIMY – trzy kroki i rząd czterech rodzin (CE-20) ===
    Steps: base `numerowane` grid and cards (`c5-mt-*`), families: `on-fam*`, both

@@ -53,11 +53,13 @@
 .cw-a-mprod__more{font-size:var(--ch-type-small-size);color:var(--ch-text-secondary);}
 .cw-a-mprod__more:hover{color:var(--ch-text-primary);}
 
-/* Phone: narrower items so the third product peeks in from the right edge and
-   the fade on that edge says „there is more” – a row that ends exactly on an
-   item looks complete and hides the rest. (The mask only uses the alpha.) */
+/* Phone: the next product peeks in from the right edge and the fade on that
+   edge says „there is more” – a row that ends exactly on an item looks complete
+   and hides the rest. (The mask only uses the alpha.) Items stay at 176 px
+   (150 px until 07.11.2026): „Kup w sklepie” with the leaves (EL-01) needs about
+   146 px of content to keep one line, so the second product peeks in, not the third. */
 @media (max-width:599px){
-  .cw-a-mprod__item{flex-basis:150px;}
+  .cw-a-mprod__item{flex-basis:176px;}
   .cw-a-mprod__shot{width:96px;height:96px;}
   .cw-a-mprod__list{
     -webkit-mask-image:linear-gradient(to right,var(--ch-color-green-950) calc(100% - 36px),transparent);

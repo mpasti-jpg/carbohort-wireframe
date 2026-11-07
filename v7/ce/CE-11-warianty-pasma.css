@@ -54,9 +54,11 @@
   --c5-kdm-stroke:var(--ch-border-control);  /* pH chip, buy button */
   --c5-kdm-pad:40px;                         /* band edge to card / packshot, top */
   /* Bottom inset of the sticky column (switch to the bottom edge of the window).
-     The frame says 40 px; the advisor dock is tucked under the bottom edge since
-     G10 (18.10.2026), so the switch sits where the frame puts it. */
-  --c5-kdm-pad-b:40px;
+     The frame says 40 px; since 06.11.2026 the switch keeps the room of the
+     advisor dock (--ch-layout-dock-safe, 56 px – the folded dock is a pill
+     20-44 px above the edge; Mateusz 03.11 and 06.11: pinned controls stand
+     a little higher than the pill). */
+  --c5-kdm-pad-b:var(--ch-layout-dock-safe);
   --c5-kdm-gutter:24px;                      /* band edge to card, sides */
   --c5-kdm-card-w:609px;                     /* card width in the frame */
   /* the timing of a product change (motion layer): the packshot leaves in OUT,
@@ -211,9 +213,9 @@
 
 /* --- The sticky column of the static layout and the advisor dock ---------------
    `.c5-kdm--dock` on the root ends the sticky column of the static layout where
-   the band ends (--c5-kdm-pad-b). Since the dock is tucked away (G10) the inset is
-   the frame's 40 px, the same as the top one, so the modifier changes nothing
-   until the dock comes back; it stays in the markup for that day. */
+   the band ends (--c5-kdm-pad-b). Since 06.11.2026 that inset is the room of the
+   advisor dock for every CE-11 (see --c5-kdm-pad-b), so the modifier changes
+   nothing; it stays in the markup. */
 @media (min-width:900px){
   .c5-kdm--dock .c5-kdm__left{height:calc(100svh - var(--c5-kdm-pad) - var(--c5-kdm-pad-b));}
 }

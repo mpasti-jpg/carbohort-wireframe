@@ -1,7 +1,8 @@
 /* ===== CE-79 · Kafel promocyjny w siatce (rejestr: ce-rejestr.js) ===========
    Promo tile woven into the product grid of CE-78 (after product 6, 8, 12,
    15, 18): wide banner, video 2 x 2, tile in a product slot, half banner.
-   Variants are modifier classes of the tile (--wide, --video, --slot, --half).
+   Variants are modifier classes of the tile (--wide, --video, --slot, --half,
+   and from 07.11.2026 --band and --double, Figma 566:183).
    Moved from the inline sheet of sklep.html in stage D (18.10.2026). */
 
 /* Promo tiles: a photo or video under a dark shade, white type, r20 (large
@@ -59,3 +60,85 @@
   .c5sk-tile__cta:not(.c5-btn) { font-size: 0.75rem; letter-spacing: .06em; }
 }
 
+
+/* ===== 6–7. Photo tiles with flat product cards (Figma 566:183, 07.11.2026)
+   A photo (cover) under a shade, a short marketing copy and flat, horizontal
+   product cards on glass (.c5-glass, the effect of the illustrations). The
+   thumbnail and the name lead to the product page, the small buy button opens
+   the quick view (data-cw-open inside the card's data-cw-product host).
+   The inner layout follows the width of the tile itself (container queries),
+   so the same rules serve the 3-column grid, the 2-column grid and the phone.
+   --band   across the whole grid (after product 6): copy top right, two
+            flat cards at the bottom; free height.
+   --double two product columns wide, one row high (after product 9 – one
+            product card stands next to it); copy top left, one flat card.
+            The height is the height of the grid row; full width below 1000 px.
+   Second round of comments (07.11.2026): copy cut to kicker + heading (band
+   heading larger), band 10% taller, the discount as a big number above the
+   heading of the double tile instead of a badge in the card, a lighter shade
+   on the double tile, smaller pack shots and a lower buy button in the cards. */
+.c5sk-tile--band, .c5sk-tile--double { container-type: inline-size; justify-content: space-between; gap: var(--ch-space-6); padding: clamp(14px, 2vw, 28px); }
+.c5sk-tile--band { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr); align-content: space-between; min-height: clamp(506px, 48.4vw, 660px); }
+.c5sk-tile--double { grid-column: 1 / -1; min-height: 380px; }
+@media (min-width: 1000px) { .c5sk-tile--double { grid-column: span 2; min-height: 0; } }
+
+/* Shade: dark where the copy stands, clear in the middle of the photo. */
+.c5sk-tile--band .c5sk-tile__shade { background: linear-gradient(to bottom, rgb(0 0 0 / .66) 0%, rgb(0 0 0 / .34) 42%, rgb(0 0 0 / .08) 70%, rgb(0 0 0 / .22) 100%); }
+/* The photo of the double tile is dark on the left already, so its shade is
+   about half as strong (comment 07.11.2026: the background was too dark). */
+.c5sk-tile--double .c5sk-tile__shade { background: linear-gradient(to bottom, rgb(0 0 0 / .46) 0%, rgb(0 0 0 / .18) 40%, rgb(0 0 0 / 0) 66%, rgb(0 0 0 / .12) 100%); }
+@container (min-width: 720px) {
+  .c5sk-tile--band .c5sk-tile__shade { background: linear-gradient(250deg, rgb(0 0 0 / .74) 0%, rgb(0 0 0 / .5) 40%, rgb(0 0 0 / .06) 68%), linear-gradient(to top, rgb(0 0 0 / .28) 0%, rgb(0 0 0 / 0) 34%); }
+  .c5sk-tile--double .c5sk-tile__shade { background: linear-gradient(110deg, rgb(0 0 0 / .4) 0%, rgb(0 0 0 / .18) 38%, rgb(0 0 0 / 0) 62%), linear-gradient(to top, rgb(0 0 0 / .14) 0%, rgb(0 0 0 / 0) 30%); }
+}
+
+.c5sk-tile__copy { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; min-width: 0; }
+.c5sk-tile__copy > * { margin: 0; }
+.c5sk-tile__copy .c5sk-tile__h { text-wrap: balance; }
+.c5sk-tile--double .c5sk-tile__copy { max-width: 26rem; gap: 8px; }
+.c5sk-tile--double .c5sk-tile__h { font-size: clamp(1.25rem, 1.6vw, 1.5rem); line-height: 1.25; }
+/* Band: kicker and heading only, so the heading can be larger. */
+.c5sk-tile--band .c5sk-tile__h { font-size: clamp(1.875rem, 3vw, 2.75rem); line-height: 1.12; }
+/* Discount of a promotion as a big number on the photo, above the heading. */
+.c5sk-tile__big { display: block; margin-bottom: 6px; font-family: var(--ch-type-display-num-font); font-size: clamp(3rem, 4.6vw, var(--ch-type-display-num-size)); font-weight: var(--ch-type-display-num-weight); letter-spacing: var(--ch-type-display-num-ls); line-height: 1; }
+@container (min-width: 720px) {
+  .c5sk-tile--band .c5sk-tile__copy { justify-self: end; width: 50%; }
+}
+
+/* Flat product cards on glass. */
+.c5sk-tile__prods { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; margin: 0; padding: 0; list-style: none; }
+@container (min-width: 720px) { .c5sk-tile--band .c5sk-tile__prods { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.c5sk-tile--double .c5sk-tile__prods { width: min(100%, 34rem); }
+/* GLASS from the glass tokens (the .c5-glass utility of ce/00-base.css, which
+   the shop core does not load; the markup carries the class as well). */
+.c5sk-tile__prod { display: flex; align-items: center; gap: 14px; min-width: 0; padding: 10px; border-radius: var(--ch-radius-control-l); background: var(--ch-effect-glass-background); -webkit-backdrop-filter: blur(var(--ch-effect-glass-blur)); backdrop-filter: blur(var(--ch-effect-glass-blur)); color: var(--ch-text-inverse); }
+.c5sk-tile__pthumb { flex: none; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); place-items: center; width: clamp(76px, 18cqi, 116px); aspect-ratio: 1 / 1; padding: 10px; border-radius: calc(var(--ch-radius-control-l) - 10px); background: var(--ch-surface-page); }
+/* The pack shot is 20% lower than the box, so it keeps clear of the top and
+   bottom edges (comment 07.11.2026). */
+.c5sk-tile__pthumb img { display: block; width: 100%; height: 80%; min-height: 0; object-fit: contain; }
+.c5sk-tile__pbody { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+.c5sk-tile__pbody > * { margin: 0; }
+.c5sk-tile__pmeta { font-size: 0.75rem; line-height: 1.35; opacity: .85; }
+.c5sk-tile__pname { font-size: 1rem; font-weight: var(--w-weight-medium); letter-spacing: -0.01em; line-height: 1.25; }
+.c5sk-tile__pname a { color: inherit; text-decoration: none; }
+.c5sk-tile__pname a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.c5sk-tile__pname a:focus-visible { outline: 2px solid var(--ch-text-inverse); outline-offset: 2px; }
+.c5sk-tile__pfoot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 12px; margin-top: 6px; }
+.c5sk-tile__pprice { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 6px; font-size: var(--ch-type-title-s-size, 1.125rem); line-height: 1.2; font-weight: var(--ch-font-weight-medium); font-variant-numeric: tabular-nums; }
+.c5sk-tile__pfrom { font-size: 0.9375rem; opacity: .85; }
+.c5sk-tile__pold { font-size: 0.875rem; opacity: .8; }
+.c5sk-tile__plow { margin-top: 4px; font-size: 0.6875rem; line-height: 1.35; opacity: .85; }
+/* The smaller buy button (annotation A7): the green button at content width
+   with tighter sides, instead of the full-width button of a card; since
+   07.11.2026 also lower – 36 px (no control token below 44 px yet). */
+.c5sk-tile .c5sk-tile__pbuy { --c5-btn-px: 12px; flex: none; min-height: 36px; padding-block: 6px; gap: 8px; font-size: 0.875rem; }
+.c5sk-tile .c5sk-tile__pbuy:focus-visible { outline: 2px solid var(--ch-text-inverse); outline-offset: 2px; }
+@container (max-width: 359px) {
+  .c5sk-tile__prod { align-items: flex-start; gap: 10px; padding: 8px; }
+  .c5sk-tile__pname { font-size: 0.9375rem; }
+}
+@media (max-width: 599px) {
+  .c5sk-tile--band, .c5sk-tile--double { gap: var(--ch-space-5); }
+}
+/* No line break inside a value such as "pH 6,0–6,5". */
+.c5sk-tile__nw { white-space: nowrap; }

@@ -26,6 +26,12 @@
 .cws-btn--light { background: var(--w-surface-page); color: var(--w-text-primary); }
 .cws-btn--light:hover { border-color: var(--w-border-strong); }
 .cws-btn:focus-visible { outline: 2px solid var(--w-focus-ring); outline-offset: 2px; }
+/* phone (07.11.2026): „Kup teraz” with the leaves (EL-01) in a narrow card (the
+   recommendations of the cart) – small icon, tighter padding, one line */
+@media (max-width: 479px) {
+  .cws-btn.c5-btn--ico-liscie { padding-inline: 16px; gap: 6px; }
+  .cws-btn.c5-btn--ico-liscie::after { width: var(--ch-size-icon-s); height: var(--ch-size-icon-s); margin-left: 0; }
+}
 
 /* --- Quantity stepper --------------------------------------------------- */
 .cws-qty { display: inline-flex; align-items: stretch; border: 1px solid rgb(0 0 0 / .35); background: var(--w-surface-page); }

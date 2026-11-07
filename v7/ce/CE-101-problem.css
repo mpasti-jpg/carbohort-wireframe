@@ -1,0 +1,41 @@
+/* ===== CE-101 · Problem – sekcja strony głównej (rejestr: ce-rejestr.js) =====
+   Prefix: c5-pb. ONE CE for the whole chapter „Problem” of the home page
+   „Gleba” (comments of Mateusz 06.11.2026): the designer draws the section
+   from scratch and looks for a wow effect, so this file holds only the
+   stand-in layout of the prototype – the order and the content, not a design.
+
+   Order: the head (page class c5h-head: kicker, heading, lead), a wide frame
+   of dry soil (21 : 9, 4 : 3 on a phone), an overline and six numbered
+   problems (the classes of CE-20 „numerowane”, c5-mt-*: three plus three from
+   1000 px), an overline and the three figures of the scale with their sources
+   (the classes of CE-24 „kolumny”, u-nb*, on a white panel), one bridge
+   sentence. The borrowed parts carry no CE marker; the page links
+   ce/CE-20-siatka-kart.css and ce/CE-24-pas-liczb.css for them.
+   No motion of its own. Comments in English, never the em dash. ===== */
+
+/* wide frame over the problems */
+.c5-pb__wide{margin-inline:0;margin-bottom:0;overflow:hidden;border-radius:var(--ch-radius-control-l);background:var(--ch-surface-warm-strong);aspect-ratio:21 / 9;}
+.c5-pb__wide img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 55%;}
+@media (max-width:899px){.c5-pb__wide{aspect-ratio:4 / 3;}}
+
+/* overline of the problems and of the figures */
+.c5-pb__over{margin:clamp(3rem,6vw,5rem) 0 0;font-family:var(--ch-type-title-font);font-size:var(--ch-type-title-size);line-height:var(--ch-type-title-lh);
+  letter-spacing:var(--ch-type-title-ls);font-weight:var(--ch-type-title-weight);color:var(--ch-text-primary);}
+
+/* six problems, three plus three from 1000 px */
+.c5-pb__probs{margin:clamp(1.5rem,3vw,2.25rem) 0 0;padding:0;list-style:none;}
+@media (min-width:1000px){
+  .c5-pb__probs.c5-mt-grid{grid-template-columns:repeat(6,minmax(0,1fr));}
+  .c5-pb__probs > li{grid-column:span 2;}
+}
+
+/* the three figures inside the column of the chapter: no own gutters, height
+   or width cap; on the warm ground the panel is white; a small source line
+   under each caption */
+.c5-pb__skala.u-nb{margin:clamp(1.5rem,3vw,2.25rem) 0 0;width:auto;max-width:none;min-height:0;background:var(--ch-surface-raised);}
+.c5-pb__src{display:block;margin-top:var(--ch-space-3);font-size:var(--ch-type-caption-size);line-height:1.35;color:var(--ch-text-secondary);}
+
+/* bridge sentence to the next chapter */
+.c5-pb__bridge{margin:clamp(3rem,6vw,5rem) 0 0;max-width:30ch;font-family:var(--ch-type-h3-display-font);
+  font-size:clamp(1.625rem,2.8vw,2.5rem);line-height:1.2;letter-spacing:var(--ch-type-h3-display-ls);
+  font-weight:var(--ch-type-h3-display-weight);color:var(--ch-text-primary);text-wrap:balance;}

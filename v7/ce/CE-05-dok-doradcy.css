@@ -17,10 +17,20 @@
    The chat panel opens above the bar (absolute), so opening it never changes
    the page height either.
 
+   Floating form (06.11.2026, replaced G10): a pill with a spark in the middle
+   of the bottom edge that opens into the message bar under the pointer (after
+   150 ms), on a click or the keyboard focus, once on the first visit (then it
+   folds and the fact is remembered), and on a touch screen into a bar above
+   the keyboard and a sheet for the conversation. States and timings:
+   chrome.js, dockLanding(). Pinned buttons and navigation of the sections
+   keep --ch-layout-dock-safe (56 px) free above the bottom edge.
+
    The base look of the dock and of the chat panel stays in cw.css, and so
-   does the hiding rule (cx-dockhide over the opening block of the page, set
-   by chrome.js on every page with the dock); it applies to the floating
-   dock.
+   does the hiding rule (cx-dockhide, set by chrome.js: only on a page with a
+   full-height hero – the pill hides over it until 100 px of the page below it
+   are on screen, the first showing of the bar above 110 px of scroll; on every
+   other page the pill is there from the first screen – 07.11.2026); it
+   applies to the floating dock.
    The landed dock is part of the page, so it stays visible.
    Look (design system, stage D, 18.10.2026): Figma has no design of the dock, so
    the look comes from the foundation – white bar with a grey-300 outline, EL-02
@@ -67,27 +77,167 @@
 /* --- the dock in the page flow ------------------------------------------- */
 .cw-jurek.cw-jurek--land {
   position: sticky; left: auto; transform: none;
-  bottom: var(--ch-space-5);
+  /* 15 px above the window edge (Mateusz, 06.11.2026: lower than 20 px, so the
+     pill takes less room at the bottom of small screens and is not hit by
+     accident); the page-state badge below is 15 px tall (chrome.js). The home
+     indicator of a phone adds its own strip (0 without viewport-fit=cover). */
+  bottom: calc(15px + env(safe-area-inset-bottom, 0px));
   display: block;
   width: min(var(--cw-dock-w), 92vw);
   margin: 0 auto clamp(2.5rem, 5vw, 4rem);
-  transition: opacity .3s ease, visibility .3s ease, transform var(--cw-dock-ease),
+  /* transform: coming in from under the bottom edge (see "hidden" below) */
+  transition: opacity .3s ease, visibility .3s ease, transform .56s var(--cw-dock-soft, cubic-bezier(.22, 1, .36, 1)),
               width var(--cw-dock-ease), margin-top var(--cw-dock-ease);
 }
 
-/* --- tucked (G10, Mateusz 18.10.2026) --------------------------------------
-   Until the dock gets a better form it does not cover the bottom of the
-   sections: the floating dock waits under the bottom edge, only a 15 px strip
-   of it shows, at 25 % opacity. Under the pointer (or with the keyboard focus
-   inside) it slides up to its full form; on a touch screen the first tap on the
-   strip lifts it (.is-peek, chrome.js). An open, a landed or a lifted dock is
-   never tucked. The shift is a transform only, so the sticky slot of the dock
-   and the page height do not move (chrome.js measures the slot without it). */
-.cw-jurek--land:not(.is-landed):not([data-open="true"]):not(.is-peek):not(:hover):not(:focus-within) {
-  --cw-dock-peek: 15px;
-  transform: translateY(calc(100% + var(--ch-space-5) - var(--cw-dock-peek)));
-  opacity: .25;
+/* --- hidden: under the bottom edge of the window (Mateusz 07.11.2026) ------
+   cx-dockhide (chrome.js: over a full-height hero, before the first showing on
+   such a page) slides the floating dock under the bottom edge and back instead of
+   fading it. The folded pill travels its own height plus the 15 px under it,
+   the bar of the first showing its whole height. A transform only: the sticky
+   slot and the page do not move, chrome.js takes the shift off when it
+   measures the slot. Coming in: a soft ease-out (rule above); going: quicker,
+   speeding up towards the edge, and out of reach once it is gone. The 15 px
+   must match the bottom of the rule above. */
+.cw-jurek.cw-jurek--land.cx-dockhide {
+  opacity: 1;
+  transform: translateY(calc(100% + 15px + env(safe-area-inset-bottom, 0px) + 6px));
+  transition: transform .36s cubic-bezier(.55, 0, .85, .35), visibility 0s linear .36s,
+              width var(--cw-dock-ease), margin-top var(--cw-dock-ease);
 }
+.cw-jurek--land:not(.is-landed):not([data-open="true"]):not(.is-expanded).cx-dockhide {
+  transform: translateY(calc(var(--cw-dock-pill-h, 24px) + 15px + env(safe-area-inset-bottom, 0px) + 6px));
+}
+/* an open dock (e.g. opened by a button of the page over the hero) stays */
+.cw-jurek.cw-jurek--land[data-open="true"].cx-dockhide { transform: none; visibility: visible; transition-delay: 0s; }
+
+/* --- the pill and how it opens (Mateusz 03.11 and 06.11.2026; replaced G10) --
+   While floating, the dock is a small pill with a spark in the middle of the
+   bottom edge, at the bottom of the dock's box (15 px above the window edge
+   since 06.11.2026, like the bar – the page-state badge below stays clear). The pill and the
+   field are ONE shape: the outline and the background of the bar are drawn by
+   its ::before (the shell), which is the size of the pill while folded and the
+   size of the bar once open, so the pill visibly turns into the field. The bar
+   keeps its box all the time, so the sticky slot and the landing never move.
+   Opening under the pointer (Mateusz 06.11): the pill rises 10 px at once
+   (is-lift, while the 150 ms of intent run), then the shape spreads into the
+   field from there – about the middle of the field – and the contents come in
+   after it; folding runs back the other way. A click, the keyboard focus, a tap
+   and the first showing open it as well (is-expanded, chrome.js). An open or a
+   landed dock never shows the pill. The invisible box of the folded dock lets
+   the clicks through to the page; only the pill catches them, with a target
+   only 5 px taller than the pill (Mateusz, 06.11.2026: with 20 px above it the
+   dock opened too often by accident), which stays where the pill rests. */
+.cw-jurek--land {
+  --cw-dock-pill-w: 96px;
+  --cw-dock-pill-h: 24px;       /* WCAG 2.5.8: at least 24 x 24 */
+  --cw-dock-lift: 10px;         /* the pill rises before it opens */
+  --cw-dock-soft: cubic-bezier(.22, 1, .36, 1);   /* opening: soft ease-out */
+  --cw-dock-fold: cubic-bezier(.65, 0, .35, 1);   /* folding: ease-in-out */
+}
+.cw-jurek__pill, .cw-jurek__grip { display: none; }
+
+/* the bar: transparent box, the shell behind its contents draws the shape */
+.cw-jurek--land .cw-jurek__bar {
+  position: relative; isolation: isolate;
+  height: var(--cw-dock-h0, auto);
+  /* half of the height = the pill of cw.css, but animatable */
+  border-radius: calc(var(--cw-dock-h0, 60px) / 2);
+  background: transparent; border-color: transparent;
+  transition: height var(--cw-dock-ease), border-radius var(--cw-dock-ease);
+}
+.cw-jurek--land .cw-jurek__bar::before {
+  content: ""; position: absolute; z-index: -1; left: 50%; bottom: -1px;
+  box-sizing: border-box; width: calc(100% + 2px); height: calc(100% + 2px);
+  translate: -50% 0;
+  background: var(--ch-surface-raised); border: 1px solid var(--ch-border-control);
+  border-radius: inherit;
+  transition: width .56s var(--cw-dock-soft) .06s, height .56s var(--cw-dock-soft) .06s,
+              border-radius .56s var(--cw-dock-soft) .06s, translate .4s var(--cw-dock-soft),
+              border-color .25s ease, opacity .3s ease;
+}
+/* the contents come in once the shape has mostly opened, one after another
+   (three classes: the look of the send button below must not take this over) */
+.cw-jurek.cw-jurek--land .cw-jurek__bar > * {
+  transition: opacity .32s ease var(--cw-dock-in, .2s), translate .5s var(--cw-dock-soft) var(--cw-dock-in, .2s), visibility 0s,
+              background var(--w-duration-base) var(--w-ease), border-color var(--w-duration-base) var(--w-ease);
+}
+.cw-jurek--land .cw-jurek__bar > svg { --cw-dock-in: .26s; }
+.cw-jurek--land .cw-jurek__bar > .wf-input { --cw-dock-in: .3s; }
+.cw-jurek--land .cw-jurek__bar > button { --cw-dock-in: .34s; }
+
+/* the pill: a target with the spark; its shape is the shell of the bar */
+.cw-jurek--land .cw-jurek__pill {
+  display: grid; place-items: center;
+  position: absolute; left: 50%; bottom: 0; z-index: 1;
+  width: var(--cw-dock-pill-w); height: var(--cw-dock-pill-h); margin: 0 0 0 calc(var(--cw-dock-pill-w) / -2); padding: 0;
+  border: 0; border-radius: calc(var(--cw-dock-pill-h) / 2);
+  background: none; color: var(--ch-color-green-900);
+  font: inherit; cursor: pointer; pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+  visibility: hidden;
+  transition: visibility 0s linear .2s;
+}
+/* the target reaches 5 px above the visible pill (its shell stands 1 px lower
+   than the button box – hence -4px), never below it; 5 px to the sides; about
+   29 px tall in all – WCAG 2.5.8 asks 24 (06.11.2026; until then 20 px above) */
+.cw-jurek--land .cw-jurek__pill::before { content: ""; position: absolute; inset: -4px -5px -1px; }
+.cw-jurek--land .cw-jurek__pill:focus-visible { outline: 2px solid var(--w-focus-ring, currentColor); outline-offset: 2px; }
+.cw-jurek__spark { width: 14px; height: 14px; }
+.cw-jurek--land .cw-jurek__spark {
+  opacity: 0; scale: .6; translate: 0 calc(-1 * var(--cw-dock-lift));
+  transition: opacity .14s ease, scale .25s ease, translate .4s var(--cw-dock-soft);
+}
+
+/* folded: the shell is the pill, the contents are gone, the spark shows */
+.cw-jurek--land:not(.is-landed):not([data-open="true"]):not(.is-expanded) { pointer-events: none; }
+.cw-jurek--land:not(.is-landed):not([data-open="true"]):not(.is-expanded) .cw-jurek__pill { visibility: inherit; transition: visibility 0s; }
+.cw-jurek--land:not(.is-landed):not([data-open="true"]):not(.is-expanded) .cw-jurek__spark {
+  opacity: 1; scale: 1; translate: 0 0;
+  transition: opacity .3s ease .26s, scale .5s var(--cw-dock-soft) .22s, translate .34s var(--cw-dock-soft);
+}
+.cw-jurek--land:not(.is-landed):not([data-open="true"]):not(.is-expanded) .cw-jurek__bar::before {
+  width: var(--cw-dock-pill-w); height: var(--cw-dock-pill-h); border-radius: calc(var(--cw-dock-pill-h) / 2);
+  transition: width .42s var(--cw-dock-fold) .08s, height .42s var(--cw-dock-fold) .08s,
+              border-radius .42s var(--cw-dock-fold) .08s, translate .34s var(--cw-dock-soft),
+              border-color .25s ease, opacity .3s ease;
+}
+.cw-jurek--land:not(.is-landed):not([data-open="true"]):not(.is-expanded) .cw-jurek__bar > * {
+  opacity: 0; visibility: hidden; translate: 0 6px;
+  transition: opacity .14s ease, translate .22s ease, visibility 0s linear .22s;
+}
+/* the pill rises under the pointer, quickly, and waits there for the 150 ms */
+.cw-jurek--land:not(.is-landed):not([data-open="true"]):not(.is-expanded).is-lift .cw-jurek__bar::before {
+  translate: -50% calc(-1 * var(--cw-dock-lift)); border-color: var(--ch-border-strong);
+  transition: width .42s var(--cw-dock-fold), height .42s var(--cw-dock-fold), border-radius .42s var(--cw-dock-fold),
+              translate .2s var(--cw-dock-soft), border-color .2s ease, opacity .3s ease;
+}
+.cw-jurek--land:not(.is-landed):not([data-open="true"]):not(.is-expanded).is-lift .cw-jurek__spark {
+  translate: 0 calc(-1 * var(--cw-dock-lift));
+  transition: opacity .2s ease, scale .3s var(--cw-dock-soft), translate .2s var(--cw-dock-soft);
+}
+/* touch screen: the pill pales while the page scrolls down (chrome.js) */
+@media (hover: none) {
+  .cw-jurek--land:not(.is-landed):not([data-open="true"]):not(.is-expanded).is-faint .cw-jurek__bar::before, .cw-jurek--land:not(.is-landed):not([data-open="true"]):not(.is-expanded).is-faint .cw-jurek__spark { opacity: .35; }
+}
+
+/* the first showing (is-intro, chrome.js): the bar comes in whole, without the
+   morph from the pill, sliding up from under the bottom edge with the dock
+   (hidden, above) – also each time it comes back during the showing after the
+   page went above the line again. Its end folds with the morph (is-intro goes
+   off together with is-expanded). On a page without a full-height hero the
+   pill is already on screen, so the bar grows out of it with the usual morph
+   (is-intro-grow, 07.11.2026). */
+.cw-jurek--land.is-intro:not(.is-intro-grow) .cw-jurek__bar::before,
+.cw-jurek.cw-jurek--land.is-intro:not(.is-intro-grow) .cw-jurek__bar > * { transition: none; }
+
+/* touch screen, typing: the bar over a dimmed page, above the keyboard */
+.cw-jurek-backdrop[data-compose="true"] { display: block; }
+.cw-jurek--land.is-compose {
+  transform: translateY(calc(-1 * var(--cw-kb, 0px)));
+  transition: none;
+}
+
 .cw-jurek--land .cw-jurek__panel {
   position: absolute; left: 0; right: 0; bottom: calc(100% + var(--ch-space-3));
 }
@@ -95,12 +245,37 @@
 .cw-jurek--land.is-drop .cw-jurek__panel {
   bottom: auto; top: calc(100% + var(--ch-space-3));
 }
-.cw-jurek--land .cw-jurek__bar {
-  height: var(--cw-dock-h0, auto);
-  /* half of the height = the pill of cw.css, but animatable */
-  border-radius: calc(var(--cw-dock-h0, 60px) / 2);
-  transition: height var(--cw-dock-ease), border-radius var(--cw-dock-ease);
+
+/* --- touch screen, chat open: a sheet from the bottom edge ------------------
+   chrome.js sets is-sheet when the chat opens after a tap. The dock's box stays
+   in the flow (nothing on the page moves); the panel and the bar are fixed to
+   the window: the panel grows with the conversation up to 85 % of the visible
+   height (--cw-vvh), the field stands at its bottom above the keyboard (--cw-kb).
+   The grip and the head can be dragged down to close it. */
+.cw-jurek--land.is-sheet { transform: none; pointer-events: none; transition: none; }
+.cw-jurek--land.is-sheet .cw-jurek__panel {
+  position: fixed; left: 0; right: 0; top: auto; bottom: var(--cw-kb, 0px);
+  display: flex; flex-direction: column;
+  max-height: calc(var(--cw-vvh, 100svh) * .85);
+  padding-bottom: calc(var(--cw-dock-h0, 60px) + 2 * var(--ch-space-3) + env(safe-area-inset-bottom, 0px));
+  border-width: 1px 0 0; border-radius: var(--ch-radius-lg) var(--ch-radius-lg) 0 0;
+  pointer-events: auto;
+  transition: transform .25s cubic-bezier(.2, .7, .2, 1);
+  animation: cw-sheet-in .3s cubic-bezier(.2, .7, .2, 1) backwards;
 }
+.cw-jurek--land.is-sheet .cw-jurek__grip {
+  display: block; flex: none; width: 40px; height: 4px; margin: var(--ch-space-2) auto 0;
+  border-radius: 2px; background: var(--ch-border-strong); touch-action: none;
+}
+.cw-jurek--land.is-sheet .cw-jurek__head { flex: none; touch-action: none; }
+.cw-jurek--land.is-sheet .cw-jurek__msgs { flex: 1 1 auto; min-height: 120px; max-height: none; }
+.cw-jurek--land.is-sheet .cw-jurek__panel > .wf-caption { flex: none; }
+.cw-jurek--land.is-sheet .cw-jurek__bar {
+  position: fixed; left: var(--ch-space-3); right: var(--ch-space-3); z-index: 1;
+  bottom: calc(var(--cw-kb, 0px) + var(--ch-space-3) + env(safe-area-inset-bottom, 0px));
+  pointer-events: auto;
+}
+@keyframes cw-sheet-in { from { transform: translateY(32px); opacity: 0; } }
 
 /* --- landed: a larger field with a strip of buttons ----------------------- */
 .cw-jurek--land.is-landed {
@@ -124,7 +299,7 @@
 
 /* the landed dock belongs to the page: the floating-dock hiding rule stops here */
 .cw-jurek.cw-jurek--land.is-landed.cx-dockhide {
-  opacity: 1; visibility: visible; pointer-events: auto;
+  opacity: 1; visibility: visible; pointer-events: auto; transform: none;
 }
 
 /* --- look (all states): the bar, the chat panel and the bubbles --------------
@@ -181,8 +356,17 @@
 
 @media (prefers-reduced-motion: reduce) {
   .cw-jurek.cw-jurek--land, .cw-jurek--land .cw-jurek__bar, .cw-dockland__in { transition: none; }
-  /* the tucked dock stays tucked; it switches to its full form without sliding */
-  .cw-jurek--land.is-landed .cw-jurek__bar .wf-input { animation: none; }
+  /* the pill and the bar switch at once: nothing rises, folds or slides */
+  .cw-jurek--land { --cw-dock-lift: 0px; }
+  .cw-jurek--land .cw-jurek__pill, .cw-jurek--land .cw-jurek__spark,
+  .cw-jurek--land .cw-jurek__bar::before, .cw-jurek.cw-jurek--land .cw-jurek__bar > *,
+  .cw-jurek--land:not(.is-landed):not([data-open="true"]):not(.is-expanded) .cw-jurek__pill, .cw-jurek--land:not(.is-landed):not([data-open="true"]):not(.is-expanded) .cw-jurek__spark, .cw-jurek--land:not(.is-landed):not([data-open="true"]):not(.is-expanded) .cw-jurek__bar::before, .cw-jurek--land:not(.is-landed):not([data-open="true"]):not(.is-expanded) .cw-jurek__bar > *,
+  .cw-jurek--land:not(.is-landed):not([data-open="true"]):not(.is-expanded).is-lift .cw-jurek__bar::before, .cw-jurek--land:not(.is-landed):not([data-open="true"]):not(.is-expanded).is-lift .cw-jurek__spark,
+  .cw-jurek--land.is-sheet .cw-jurek__panel { transition: none; }
+  .cw-jurek--land.is-landed .cw-jurek__bar .wf-input,
+  .cw-jurek--land.is-sheet .cw-jurek__panel { animation: none; }
+  /* hiding: at once, no slide */
+  .cw-jurek.cw-jurek--land.cx-dockhide, .cw-jurek--land:not(.is-landed):not([data-open="true"]):not(.is-expanded).cx-dockhide { transition: none; }
 }
 
 @media print { .cw-dockland { display: none; } }

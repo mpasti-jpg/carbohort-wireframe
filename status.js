@@ -163,7 +163,7 @@ window.CW_STATUS = {
       "sekcja": "1. Strona główna",
       "nazwa": "Strona główna",
       "stan": {
-        "makieta": "w-przygotowaniu",
+        "makieta": "do-akceptacji",
         "tresc": null,
         "projekt": null,
         "media": null,
@@ -171,7 +171,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31562,
-      "data": "20.09"
+      "data": "07.11"
     },
     "produkty.html": {
       "sekcja": "2. Produkty Carbohort",
@@ -261,7 +261,7 @@ window.CW_STATUS = {
       "sekcja": "3. Rodzaje upraw",
       "nazwa": "Kukurydza",
       "stan": {
-        "makieta": null,
+        "makieta": "do-akceptacji",
         "tresc": null,
         "projekt": null,
         "media": null,
@@ -326,6 +326,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": null,
+      "wTabeli": false,
       "data": "07.09"
     },
     "warzywnicze.html": {
@@ -340,6 +341,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": null,
+      "wTabeli": false,
       "data": "25.07"
     },
     "zboza.html": {
@@ -354,6 +356,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": null,
+      "wTabeli": false,
       "data": "07.09"
     },
     "szkolki.html": {
@@ -368,6 +371,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": null,
+      "wTabeli": false,
       "data": "25.07"
     },
     "trawnik.html": {
@@ -382,6 +386,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": null,
+      "wTabeli": false,
       "data": "25.07"
     },
     "ogrod.html": {
@@ -396,6 +401,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": null,
+      "wTabeli": false,
       "data": "25.07"
     },
     "krzewy.html": {
@@ -410,6 +416,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": null,
+      "wTabeli": false,
       "data": "25.07"
     },
     "zielen.html": {
@@ -424,6 +431,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": null,
+      "wTabeli": false,
       "data": "25.07"
     },
     "prochnica-plus.html": {
@@ -536,7 +544,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31864,
-      "data": "26.10"
+      "data": "07.11"
     },
     "pdp.html": {
       "sekcja": "9. Sklep",
@@ -550,7 +558,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31512,
-      "data": "26.10"
+      "data": "07.11"
     },
     "pdp-kwasny.html": {
       "sekcja": "9. Sklep",
@@ -564,7 +572,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31865,
-      "data": "26.10"
+      "data": "07.11"
     },
     "koszyk.html": {
       "sekcja": "9. Sklep",

@@ -23,18 +23,35 @@
    - the package bar (`c5-pkdock` > `c5-pkbar`) stands in the flow: under the
      heading of the chart and over the table of the calculator (U-23, U-29,
      04.11.2026 – it no longer floats at the bottom of the window).
-   The first column is `--we-first` wide, the same token as the calculator, so the
-   phase columns of both sections line up. Below 900 px the table scrolls
+   The first column is `--we-first` wide (until 07.11.2026 the calculator took the
+   same column, so the phases of both sections lined up; since then the
+   calculator fills the whole width). Below 900 px the table scrolls
    sideways inside the panel with the product column pinned. The scroller has
    no data-lenis-prevent: the wheel over the chart stays with the page inertia
    (with it the page braked on the chart – U-16); a sideways swipe has no
    vertical delta, so Lenis lets it through to the scroller.
+   Round of client comments on the live page and the answer of Mateusz, 06.11.2026:
+   - under the package tabs the description of the open package – why its
+     products are grouped so – and the list of its products (U-37);
+   - a photo of the phase between its name and the axis, 4:3, as wide as the
+     column (U-35); the calculator has its own small square photo since
+     07.11.2026 (CE-47-przelicznik.css);
+   - bars without doses – only the presence of the product in the phase
+     (U-38): solid = a treatment in the package, hatched (`is-opt`) = a
+     possible term of a part of the season dose, solid again when the
+     calculator splits the dose so (`c5:zabiegi`).
    Script: CE-100-wykres-etapow.js. ======================================== */
 
 .c5-we{--we-first:240px;--we-line:color-mix(in srgb,var(--ch-text-primary) 12%,transparent);}
 .c5-we__head{display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:clamp(2.5rem,4.5vw,3.75rem);}
 .c5-we__head .c5-head{margin:0;}
 .c5-we__head .c5-pkdock{margin-top:var(--ch-space-8);}
+/* the description of the open package and its products (U-37) */
+.c5-we__pkdesc{width:100%;max-width:46rem;margin-top:var(--ch-space-6);}
+.c5-we__pkd[hidden]{display:none;}
+.c5-we__pkt{margin:0;font-size:var(--ch-type-body-relaxed-size);line-height:var(--ch-type-body-relaxed-lh);color:var(--ch-text-primary);text-wrap:pretty;}
+.c5-we__pkl{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:var(--ch-space-2);margin:var(--ch-space-4) 0 0;}
+.c5-we__pkll{margin-right:var(--ch-space-1);font-size:13px;line-height:18px;color:var(--ch-text-secondary);}
 .c5-we__panel{padding:var(--ch-space-8) var(--ch-space-5) var(--ch-space-5);background:var(--ch-surface-warm);border-radius:var(--ch-radius-xl);}
 .c5-we__scroll{overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scrollbar-width:thin;}
 .c5-we__scroll:focus-visible{outline:2px solid var(--w-focus-ring);outline-offset:4px;border-radius:var(--ch-radius-lg);}
@@ -50,6 +67,9 @@
 .c5-we__ph::before{left:0;}
 .c5-we__ph:last-child::after{right:0;}
 .c5-we__phn{display:block;font-size:17px;line-height:1.25;color:var(--ch-text-primary);text-wrap:balance;}
+/* the photo of the phase between its name and the axis (U-35) */
+.c5-we__phimg{display:block;width:100%;max-width:180px;margin:var(--ch-space-3) auto 0;aspect-ratio:4 / 3;overflow:hidden;border-radius:var(--ch-radius-md);background:var(--ch-surface-raised);}
+.c5-we__phimg img{display:block;width:100%;height:100%;object-fit:cover;}
 
 /* --- pills: the description of the phase (CE-25 lightbox `fazy`) --------- */
 .c5-we__pills td{padding:var(--ch-space-6) var(--ch-space-2) var(--ch-space-5);text-align:center;}
@@ -84,20 +104,50 @@
 .c5-we__prod--partner .c5-we__pack{background:var(--ch-surface-raised);}
 
 /* --- bars: the use of a product in a phase --------------------------------- */
-.c5-we__bar{display:flex;align-items:center;justify-content:center;min-height:34px;padding:6px 12px;box-sizing:border-box;
+/* position:relative keeps the hidden text of a bar inside the scroller (an absolute
+   wf-sr-only child would otherwise widen the page on phones) */
+.c5-we__bar{position:relative;display:flex;align-items:center;justify-content:center;min-height:34px;padding:6px 12px;box-sizing:border-box;
   border-radius:999px;background:var(--ch-action-accent-bg);color:var(--ch-text-primary);font-size:13px;line-height:1.25;font-weight:var(--ch-font-weight-medium);text-align:center;
   transform-origin:left center;transition:opacity .25s var(--w-ease),transform .25s var(--w-ease),visibility 0s;}
 .c5-we__bar--alt{background:transparent;border:1px dashed var(--ch-color-green-500);color:var(--ch-text-secondary);font-weight:var(--ch-font-weight-regular);}
-.c5-we__bar--partner{background:var(--ch-color-green-50);border:1px solid var(--ch-color-green-200);font-weight:var(--ch-font-weight-regular);}
+/* a partner product: the same bar as ours (Mateusz on the artifact, 07.11.2026); the card of the row says „(produkt partnerski)” */
+.c5-we__pnp{display:block;font-size:12px;color:var(--ch-text-secondary);}
+/* a possible term of a part of the season dose: hatched in the colour of the solid bar (U-38) */
+.c5-we__bar.is-opt,.c5-we__key.c5-we__key--opt{background:repeating-linear-gradient(135deg,var(--ch-action-accent-bg) 0 4px,transparent 4px 9px);border:1px solid var(--ch-action-accent-bg);}
 .c5-we__bar.is-off{opacity:0;transform:scaleX(.4);visibility:hidden;
   transition:opacity .2s var(--w-ease),transform .2s var(--w-ease),visibility 0s linear .2s;}
+
+/* --- variant „razem” (07.11.2026, v7/kukurydza.html – the one-section version of
+   the page, binding since 07.11.2026): the chart and the calculator CE-47 `etapy` in ONE section.
+   The package switch stands right under the heading, out of the head, so it can
+   stick 20 px under the top edge of the window through the whole section (the
+   site header scrolls away, nothing covers it); the strip lets the clicks
+   through, only the bar catches them. The bars carry the dose of one treatment
+   and the amount for the field (`.c5-we__val`, written by CE-47 – the capsules
+   that are empty in the base version). Under the legend a smaller heading
+   „Oblicz koszt stosowania”, on the left, and the calculator. ---------------- */
+.c5-we--razem .c5-we__head{margin-bottom:var(--ch-space-8);}
+.c5-we--razem .c5-we__dock{position:sticky;top:20px;z-index:5;pointer-events:none;}
+.c5-we--razem .c5-we__dock .c5-pkbar{pointer-events:auto;}
+.c5-we--razem .c5-we__pkdesc{margin:var(--ch-space-6) auto clamp(2.5rem,4.5vw,3.75rem);text-align:center;}
+.c5-we__val{display:block;font-size:12.5px;line-height:1.2;font-weight:var(--ch-font-weight-medium);white-space:nowrap;}
+.c5-we__val:empty{display:none;}
+.c5-we__bar.is-excl{opacity:.35;}
+/* a phase left out of the price in the calculator: its whole column slightly darker (07.11.2026) */
+.c5-we__t td.is-excl,.c5-we__t th.c5-we__ph.is-excl{background:color-mix(in srgb,var(--ch-text-primary) 6%,transparent);}
+.c5-we__t th.c5-we__ph.is-excl{border-radius:var(--ch-radius-lg) var(--ch-radius-lg) 0 0;}
+.c5-we__t tbody tr:last-child td.is-excl{border-radius:0 0 var(--ch-radius-lg) var(--ch-radius-lg);}
+.c5-we__bar.is-skip{opacity:.45;}
+.c5-we__calc{margin-top:clamp(3.5rem,6vw,5rem);}
+.c5-we__calch{margin:0 0 var(--ch-space-6);text-align:left;font-family:var(--ch-type-h3-display-font);
+  font-size:clamp(var(--ch-type-display-sm-size),2.6vw,var(--ch-type-h3-display-size));line-height:1.15;
+  font-weight:var(--ch-type-h3-display-weight);letter-spacing:var(--ch-type-h3-display-ls);}
 
 /* --- legend ---------------------------------------------------------------- */
 .c5-we__legend{display:flex;flex-wrap:wrap;justify-content:center;gap:var(--ch-space-2) var(--ch-space-5);margin:var(--ch-space-5) 0 0;font-size:13px;line-height:20px;color:var(--ch-text-secondary);}
 .c5-we__legend > span{display:inline-flex;align-items:center;gap:8px;}
 .c5-we__key{flex:none;display:inline-block;width:26px;height:12px;box-sizing:border-box;border-radius:999px;background:var(--ch-action-accent-bg);}
 .c5-we__key--alt{background:transparent;border:1px dashed var(--ch-color-green-500);}
-.c5-we__key--partner{background:var(--ch-color-green-50);border:1px solid var(--ch-color-green-200);}
 
 /* --- the package bar (shared): in the flow, centred in its slot ----------- */
 .c5-pkdock{display:flex;justify-content:center;}
@@ -114,8 +164,7 @@
 .c5-pkbar--sm{padding:4px 4px 4px 14px;border-color:var(--ch-border-subtle);}
 .c5-pkbar--sm .c5-pkbar__tab{min-height:32px;padding:5px 12px;font-size:13px;line-height:18px;}
 
-/* --- 900–1199 px: narrower product column and pills (also --we-first of the
-   calculator, CE-47-przelicznik.css, so the columns still line up) --------- */
+/* --- 900–1199 px: narrower product column and pills ---------------------- */
 @media (min-width:900px) and (max-width:1199px){
   .c5-we{--we-first:200px;}
   .c5-we__pill{padding:5px 8px 5px 10px;font-size:12px;gap:4px;}
@@ -130,6 +179,9 @@
   .c5-we__pack{width:40px;height:40px;padding:4px;}
   .c5-we__pn{font-size:12px;}
   .c5-we__head .c5-pkdock{align-self:stretch;margin-top:var(--ch-space-6);}
+  .c5-we__pkt{text-align:left;}
+  .c5-we__pkl{justify-content:flex-start;}
+  .c5-we__phimg{margin-top:var(--ch-space-2);}
   .c5-pkbar{width:100%;padding:4px 4px 4px 12px;}
   .c5-pkbar__tabs{flex:1 1 auto;}
   .c5-pkbar__tab{flex:1 1 0;min-width:0;padding:6px 4px;font-size:13px;line-height:16px;white-space:normal;}

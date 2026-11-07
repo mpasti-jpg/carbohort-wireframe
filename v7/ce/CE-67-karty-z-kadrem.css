@@ -22,8 +22,9 @@
    above the bottom of the window) stands in front of the right column at
    every width from 900 px up and would cover a button lying 28 px above the
    bottom of the frame. In the pinned state the button therefore rises to
-   `--c5-kk-cta-bottom` (96 px – the dock's top edge is 60 px above the bottom
-   of the frame, so that leaves 36 px of air above it).
+   `--c5-kk-cta-bottom`: since 06.11.2026 the folded dock is a pill 20-44 px
+   above the window edge, so the button keeps --ch-layout-dock-safe (56 px)
+   above that edge (36 px above the bottom of the frame; 96 px until then).
    Below 900 px the block is one column in the order head -> frame -> h3 ->
    cards: `.c5-kk__main` runs on `display:contents` there and the four parts
    are ordered as flex items (the frame keeps 4 : 3 and is not pinned).
@@ -127,8 +128,11 @@
 }
 
 @media (min-width:900px){
-  /* the button clears the advisor dock in the pinned state (see the head) */
-  .c5-kk{--c5-kk-cta-bottom:96px;}
+  /* the button clears the advisor dock in the pinned state (see the head):
+     --ch-layout-dock-safe (56 px) above the window edge, i.e. that minus the
+     20 px the frame stands above it, never less than the frame's 28 px
+     (06.11.2026: the dock is a pill 20-44 px above the edge; 96 px until then) */
+  .c5-kk{--c5-kk-cta-bottom:max(28px, calc(var(--ch-layout-dock-safe) - var(--c5-kk-bottom)));}
   /* 52 : 48 – in the frame 674 and 666 px at 1440, with a 40 px gap between
      them (2.8vw resolves to exactly that width) */
   .c5-kk__wrap{display:grid;grid-template-columns:minmax(0,52fr) minmax(0,48fr);

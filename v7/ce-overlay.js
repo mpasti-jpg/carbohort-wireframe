@@ -43,7 +43,7 @@
   if (window.__cwCeOverlay) return;      /* a page must not load it twice */
   window.__cwCeOverlay = true;
 
-  var KEY = "cw-ce-overlay";             /* localStorage: "0" = hidden */
+  var KEY = "cw-ce-overlay";             /* localStorage: "1" = shown; off by default since 07.11.2026 */
   var INDENT = 18;                       /* px of shift per nesting level */
   var MIN_GAP = 120;                     /* ms between observer-driven passes */
   var LATE = [400, 1500];                /* ms after load: pick up late markup */
@@ -436,7 +436,8 @@
       try { localStorage.setItem(KEY, q ? "1" : "0"); } catch (err) { /* ignored */ }
       return q;
     }
-    try { return localStorage.getItem(KEY) !== "0"; } catch (err) { return true; }
+    /* Off unless someone switched it on (the switch, ?ce=1 or Alt+Shift+C). */
+    try { return localStorage.getItem(KEY) === "1"; } catch (err) { return false; }
   }
 
   /* ---- observers -------------------------------------------------------- */

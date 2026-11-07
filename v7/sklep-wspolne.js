@@ -54,7 +54,7 @@
   /* Shipping parameters – illustrative (spec §3.4). 10 zł per parcel is the
      current carbohort.com rate with prepayment (checked 28.09.2026; big bags
      and IBCs are excluded from it there). The pallet price is the placeholder
-     from the B2B admin mock-up and waits for CarboHort's courier terms. */
+     from the B2B admin mock-up, a placeholder until courier terms are set. */
   var SHIP = { parcelPrice: 10, parcelMaxKg: 30, palletPrice: 300, days: 7 };
 
   /* VAT – rates differ per product (review of 28.09: mostly 8%, some 23%), so
@@ -119,7 +119,7 @@
   }
   /* VAT of a cart per rate. Shipping has no rate of its own: it goes with the
      goods, split across the rates in proportion to their gross value (usual
-     treatment of delivery charged by the seller ⚠️ to confirm by CarboHort).
+     treatment of delivery charged by the seller, to be confirmed).
      Returns [{ rate, gross, vat, net }] sorted by rate, plus the totals. */
   function vatByRate(items, extra) {
     var by = {}, goods = 0;
@@ -380,7 +380,7 @@
     html += '<div class="cws-dlg__sum"><span>Razem</span><b data-cws-total></b></div>' +
       '<p class="cws-dlg__note" data-cws-ship></p>' +
       '<div class="cws-dlg__actions">' +
-        '<button type="button" class="cws-btn cws-btn--dark" data-cws-add>Kup teraz</button>' +
+        '<button type="button" class="cws-btn cws-btn--dark c5-btn--ico-liscie" data-cws-add>Kup teraz</button>' +
         '<button type="button" class="cws-btn cws-btn--light" data-cws-close>Anuluj</button>' +
       "</div>" +
       "</div></div>";

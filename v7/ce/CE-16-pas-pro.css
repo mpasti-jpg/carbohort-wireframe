@@ -21,10 +21,14 @@
    top of band at top of window -> bottom of band at bottom of window) and CSS
    derives from it:
      · frame scale  --pro-s0 (.617 = 888/1440, Figma) -> 1 (the full band),
-     · scrim        --pro-scrim (Figma start alpha) -> --pro-scrim-end,
-     · the two text columns start 65 px × (window / 1600) inward and slide out
-       to their place (left column +, right column −),
-     · a 1 px rule (white .2) across the band grows scaleX 0 -> 1.
+     · scrim        --pro-scrim (Figma start alpha) -> --pro-scrim-end.
+   Only the photo moves (comments of Mateusz 06.11.2026 on the home page
+   „Gleba”, for every band): the two text columns stand still – no slide
+   apart – and the 1 px rule across the band is gone. The columns sit close to
+   the middle (centred, one gap between them) and are equally wide (comment of
+   Mateusz 07.11.2026: no wider right column – three buttons may wrap). The
+   heading stands at the top of its column, level with the first line of the
+   paragraph on the right, not in the middle of the row (comment 07.11).
    Only transform and opacity move. Static (below 900 px, reduced motion, no JS):
    the frame stands above the text, no pinning, no extra height.
 
@@ -40,8 +44,9 @@
               --pro-scrim      scrim alpha at the start of the scene (default .17, Figma 801:497)
               --pro-scrim-end  scrim alpha at the end of the scene (default .5)
               --pro-s0         start scale of the frame (default .617)
-              --pro-side-max   width of the right column (default 460px, Figma)
-   Pages that load c5.css next to this file (kukurydza, borowka, pdp, pdp-kwasny,
+              --pro-col        width of each of the two text columns (default 560px, equal since 07.11.2026)
+              --pro-side-max   width of the right column only, for the closing variant (default: --pro-col)
+   Pages that load c5.css next to this file (borowka, pdp, pdp-kwasny,
    sklep) get its `.c5-pro*` rules first; this file comes later in the cascade
    and settles every property they touch. ===== */
 
@@ -62,7 +67,7 @@
 .c5-pro__grid{position:relative;z-index:1;padding-block:clamp(2.5rem,6vw,5rem);display:flex;flex-direction:column;gap:clamp(1.5rem,4vw,2.5rem);}
 .c5-pro__grid:not(.c5-wrap--wide){max-width:calc(var(--ch-layout-container-max) + 2 * var(--ch-layout-gutter));}
 .c5-pro__grid h2{margin:0;font-family:var(--ch-type-h2-sm-font);font-size:clamp(1.875rem,3.2vw,var(--ch-type-h2-sm-size));line-height:1.109;font-weight:var(--ch-type-h2-sm-weight);letter-spacing:var(--ch-type-h2-sm-ls);max-width:500px;}
-.c5-pro__side{display:flex;flex-direction:column;gap:clamp(1.5rem,3vw,1.75rem);max-width:var(--pro-side-max,460px);}
+.c5-pro__side{display:flex;flex-direction:column;gap:clamp(1.5rem,3vw,1.75rem);max-width:var(--pro-side-max,var(--pro-col,560px));}
 .c5-pro__side p{margin:0;font-size:var(--ch-type-lead-size);line-height:1.556;color:var(--ch-text-inverse);opacity:1;}
 /* `margin-top:0` takes back the margin c5.css gives the row on pages that load it */
 .c5-pro__grid .c5-btnrow{gap:11px;margin-top:0;}
@@ -78,8 +83,6 @@
 .c5-pro__grid .c5-btnrow:has(.c5-pro__links){flex-wrap:wrap;row-gap:var(--ch-space-2);}
 .c5-pro__link{color:var(--ch-text-inverse);text-decoration:underline;text-underline-offset:3px;font-weight:var(--w-weight-medium);padding:8px 0;white-space:nowrap;}
 .c5-pro a:focus-visible{outline-color:var(--w-focus-ring-inverse);border-radius:0;}
-/* the rule of the scene exists only in motion */
-.c5-pro__grid::after{content:none;}
 
 @media (max-width:899px){
   /* static: the frame stands above the content, inset by the gutter */
@@ -89,8 +92,11 @@
 @media (min-width:900px){
   /* static (reduced motion / no JS): the frame above the text does not eat the screen */
   .c5-pro__media{margin:var(--c5-gutter,24px) auto 0;width:auto;max-width:calc(100% - 2 * var(--c5-gutter,24px));max-height:min(56vh,520px);}
-  .c5-pro__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,var(--pro-side-max,460px));gap:clamp(2rem,6vw,6rem);align-items:center;}
-  .c5-pro__grid .c5-btnrow{flex-wrap:nowrap;}
+  /* two equal columns close to the middle, one gap between them (06–07.11.2026) */
+  .c5-pro__grid{display:grid;grid-template-columns:minmax(0,var(--pro-col,560px)) minmax(0,var(--pro-side-max,var(--pro-col,560px)));
+    justify-content:center;gap:clamp(2.5rem,5vw,5rem);align-items:start;}
+  /* one row where the column has the room, else the buttons wrap instead of running out */
+  .c5-pro__grid .c5-btnrow{flex-wrap:wrap;}
   .c5-pro__grid .c5-btn{white-space:nowrap;}
 }
 @media (prefers-reduced-motion: reduce){
@@ -101,7 +107,6 @@
 @media (min-width:900px) and (prefers-reduced-motion: no-preference){
   /* `clip`, not `hidden`: a hidden overflow is a scroll container and would stop the sticky layers */
   .cx-js .c5-pro{--pro-s0:.617;--pro-scrim:.17;--pro-scrim-end:.5;
-    --pro-dx:calc((1 - var(--pro-p,1)) * 4.0625vw);   /* 65 px × (window / 1600) */
     height:200svh;overflow:clip;display:grid;grid-template:100% / 100%;align-items:start;}
   /* one row as tall as the band: the grid area is the containing block that bounds the sticky layers */
   .cx-js .c5-pro::before,
@@ -118,17 +123,12 @@
   .cx-js .c5-pro__media::after{content:"";position:absolute;inset:0;pointer-events:none;
     background:rgb(var(--pro-scrim-rgb) / var(--pro-scrim-end));
     opacity:calc((var(--pro-scrim) + (var(--pro-scrim-end) - var(--pro-scrim)) * var(--pro-p,1)) / var(--pro-scrim-end));}
-  /* Figma: heading on the left (x 37, w 500), paragraph and buttons on the right (w 460),
-     both on the middle of the frame */
+  /* heading on the left (w 500), paragraph and buttons on the right, both on
+     the middle of the frame and close to the middle of the band; the text
+     stands still while the photo grows (06.11.2026) */
   /* side margins 24 / 48 (Figma 37 / 48, drift -> gutter); the wider right one keeps the column off the dot rail */
   .cx-js .c5-pro__grid{z-index:1;width:100%;padding-block:clamp(2rem,6vh,4rem);padding-inline:var(--ch-layout-gutter) calc(2 * var(--ch-layout-gutter));
-    grid-template-columns:minmax(0,500px) minmax(0,var(--pro-side-max,460px));justify-content:space-between;align-content:center;align-items:center;}
-  .cx-js .c5-pro__grid > h2{transform:translateX(var(--pro-dx));}
-  .cx-js .c5-pro__side{transform:translateX(calc(-1 * var(--pro-dx)));}
-  /* the rule: 1 px, white .2, across the whole band, below the text */
-  .cx-js .c5-pro__grid::after{content:"";position:absolute;left:50%;bottom:clamp(1.5rem,6vh,3.5rem);width:100vw;height:1px;
-    background:rgb(255 255 255 / .2);pointer-events:none;
-    transform:translateX(-50%) scaleX(var(--pro-p,1));transform-origin:50% 50%;}
+    grid-template-columns:minmax(0,var(--pro-col,560px)) minmax(0,var(--pro-side-max,var(--pro-col,560px)));justify-content:center;align-content:center;align-items:start;}
 }
 
 /* ===== wariant: ramka / kadr-3-2 ===== (o-firmie, produkty / carbohumic) – static frame 3:2 */
@@ -137,16 +137,16 @@
 /* ===== wariant: braz ===== (carbomat, pdp, pdp-kwasny, sklep – Figma 801:497) */
 .c5-pro--braz{--pro-bg:var(--ch-surface-earth);--pro-motif:var(--ch-motif-on-brown);}
 
-/* ===== wariant: zielen ===== (produkty, kukurydza, borowka)
+/* ===== wariant: zielen ===== (produkty, borowka, home)
    The look of „Frame 186-253” is the base; what is left is the knob of the button radius. */
 .c5-pro--zielen{--pro-r:var(--ch-radius-control-l);}
 .c5-pro--zielen .c5-pro__grid .c5-btn{min-height:var(--ch-size-control-l);line-height:1.25;border-radius:var(--pro-r);--c5-btn-px:24px;}
 .c5-pro--zielen .c5-pro__login{padding:15px 24px;}
 .c5-pro--zielen a:focus-visible{border-radius:var(--pro-r);}
 
-/* ===== wariant: scrim-ukosny / h-mackinac ===== (produkty, kukurydza, borowka) – no-ops, kept for the markup */
+/* ===== wariant: scrim-ukosny / h-mackinac ===== (produkty, borowka, home) – no-ops, kept for the markup */
 
-/* ===== wariant: zamykajacy ===== (kukurydza, borowka)
+/* ===== wariant: zamykajacy ===== (borowka)
    Long button labels: the right column stacks the two buttons. */
 /* dark backing: the secondary button lies on the photo */
 .c5-pro--zamykajacy .c5-pro__login{background:rgb(0 0 0 / .3);}

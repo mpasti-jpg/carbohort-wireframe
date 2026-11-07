@@ -76,7 +76,7 @@
     });
   });
 
-  /* --- dr Jurek floating dock ------------------------------------------ */
+  /* --- Virtual advisor floating dock --------------------------------------- */
   var dock = $("[data-jurek-dock]");
   var dockBackdrop = $("[data-jurek-backdrop]");
   var lastJurekTrigger = null;
@@ -101,7 +101,7 @@
       if (dock && dock.getAttribute("data-open") !== "true") setDock(true);
       var u = doc.createElement("div"); u.className = "cw-msg cw-msg--user"; u.textContent = inp.value.trim(); msgs.appendChild(u);
       var a = doc.createElement("div"); a.className = "cw-msg";
-      a.textContent = "Demo: w wersji docelowej dr Jurek dobierze odpowiedź na bazie wiedzy CarboHort.";
+      a.textContent = "Demo: w wersji docelowej wirtualny doradca dobierze odpowiedź na bazie wiedzy Carbohort.";
       msgs.appendChild(a); inp.value = ""; msgs.scrollTop = msgs.scrollHeight;
     });
   }

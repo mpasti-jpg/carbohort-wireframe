@@ -132,19 +132,21 @@
   .c5sk-list.is-folded { grid-template-columns: minmax(0,1fr); }
   .c5sk-list.is-folded > .c5sk-list__side { display: none; }
 }
-/* Filter column as a band (Mateusz 20.10.2026): #F1EDE6 (no token – between
-   beige-50 and beige-100) from the white work bar down to the end of the list
-   section. The column grows by its inner padding, so the filters keep their
-   280 px; negative block margins cancel the top air of the section and the
-   list and the bottom air of the section. Folded, the band goes with it;
-   below 1000 px (drawer) the panel keeps the page surface. */
+/* Filter column as a band (20.10.2026): #F1EDE6 (no token – between beige-50
+   and beige-100) down to the end of the list section. Since 07.11.2026 the
+   band starts level with the top edge of the search field (CE-99) in the
+   product column, with the page surface between it and the white work bar
+   (comment on the artifact of 07.11). The column grows by its inner padding,
+   so the filters keep their 280 px; a negative bottom margin cancels the
+   bottom air of the section. Folded, the band goes with it; below 1000 px
+   (drawer) the panel keeps the page surface. */
 @media (min-width: 1000px) {
   .c5sk-listsec { --c5sk-side-pad: var(--w-space-5); --c5sk-sec-pb: clamp(2.5rem,5vw,4rem); }
   .c5sk-list { grid-template-columns: calc(280px + 2 * var(--c5sk-side-pad)) minmax(0,1fr); }
   .c5sk-list > .c5sk-list__side {
     align-self: stretch; background: #F1EDE6;
-    margin-block: calc(-1 * (var(--w-space-4) + var(--w-space-5))) calc(-1 * var(--c5sk-sec-pb));
-    padding: calc(var(--w-space-4) + var(--w-space-5)) var(--c5sk-side-pad) var(--c5sk-sec-pb);
+    margin-block: 0 calc(-1 * var(--c5sk-sec-pb));
+    padding: var(--c5sk-side-pad) var(--c5sk-side-pad) var(--c5sk-sec-pb);
   }
 }
 /* Poniżej 1000 px kolumna filtrów jest szufladą (position:fixed), więc jej pusta
@@ -213,9 +215,12 @@
    description, tag boxes, pack select or documents link (L1, L4). */
 .c5sk-card { display: flex; flex-direction: column; padding: var(--ch-space-2); border: 1px solid var(--ch-border-subtle); border-radius: var(--ch-radius-md); background: var(--ch-surface-page); }
 .c5sk-card__media { position: relative; }
-/* Square frame, pack mock-up centred with ~12% breathing space. One grid
-   cell with a definite size gives the images a box to fit into. */
-.c5sk-card__shot { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); place-items: center; aspect-ratio: 1 / 1; padding: 12%; background: var(--ch-surface-warm-strong); border-radius: var(--ch-radius-sm); overflow: hidden; }
+/* Frame 5:4, pack mock-up centred. Since 07.11.2026 the frame and the pack
+   are 20% lower than in the former square (comment on the artifact: smaller
+   product photos, a lower card): height 0.8 of the width, vertical padding
+   9.6% so the image box is 0.8 of the former one; side padding stays 12%.
+   One grid cell with a definite size gives the images a box to fit into. */
+.c5sk-card__shot { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); place-items: center; aspect-ratio: 5 / 4; padding: 9.6% 12%; background: var(--ch-surface-warm-strong); border-radius: var(--ch-radius-sm); overflow: hidden; }
 .c5sk-card__shot img { display: block; width: 100%; height: 100%; min-height: 0; object-fit: contain; }
 .c5sk-card__shot--set { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 4%; }
 /* L17 (round 3): a second frame with the texture of the granules, on the

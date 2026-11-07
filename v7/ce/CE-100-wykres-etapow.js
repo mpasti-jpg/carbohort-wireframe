@@ -21,6 +21,14 @@
      `[data-pk-scope]` where no card of the package is left.
    - `[data-we-goto="#id"]` (the „Oblicz koszt stosowania” button of the lightbox,
      which also closes it through data-lightbox-close) scrolls to that section.
+   - Package descriptions (U-37, 06.11.2026): `[data-pk-desc="min"]` etc.
+     inside the chart – only the one of the open package stands.
+   - Split of the season dose (U-38, 06.11.2026): a bar with
+     `data-zab-prod="key"` and `data-zab="2 3"` is a possible term of a part
+     of the dose of that product; it is solid when the number of treatments
+     chosen in the calculator (`c5:zabiegi` event on document: group, prod, n)
+     is in its list, otherwise hatched (`is-opt`). Its hidden text
+     `[data-we-sr]` says which.
    Without JS the switches stay hidden and all bars and cards stand. ======== */
 (function () {
   "use strict";
@@ -73,10 +81,12 @@
     var dosed = slice(root.querySelectorAll(".c5-we__bar[data-txt-min]"));
     dosed.forEach(function (b) { b.setAttribute("data-txt", b.textContent); });
     var cells = slice(table.querySelectorAll("td[data-c]"));
+    var descs = slice(root.querySelectorAll("[data-pk-desc]"));
     var ctl;
     function apply(pk, silent) {
       ctl.mark(pk);
       root.setAttribute("data-pk-on", pk);
+      descs.forEach(function (d) { d.hidden = d.getAttribute("data-pk-desc") !== pk; });
       dosed.forEach(function (b) { b.textContent = b.getAttribute(pk === "min" ? "data-txt-min" : "data-txt"); });
       bars.forEach(function (b) {
         var off = !inPk(b, pk);
@@ -89,6 +99,18 @@
     doc.addEventListener("c5:pakiet", function (e) {
       var d = e.detail || {};
       if (d.from !== root && d.group === group) apply(d.pk, true);
+    });
+
+    /* the split of the season dose chosen in the calculator */
+    doc.addEventListener("c5:zabiegi", function (e) {
+      var d = e.detail || {};
+      if (d.group !== group || !d.prod) return;
+      slice(root.querySelectorAll('.c5-we__bar[data-zab-prod="' + d.prod + '"]')).forEach(function (b) {
+        var on = (" " + (b.getAttribute("data-zab") || "") + " ").indexOf(" " + d.n + " ") >= 0;
+        b.classList.toggle("is-opt", !on);
+        var sr = b.querySelector("[data-we-sr]");
+        if (sr) sr.textContent = on ? "zabieg w pakiecie – część dawki na sezon" : "możliwy termin części dawki";
+      });
     });
 
     /* the whole column is the link to the description of the phase */

@@ -99,7 +99,10 @@
   --c5-casc-line:var(--ch-color-grey-400); /* dashed lines (Figma #A6A6A6, nearest token) */
   /* room the pinned box keeps at the bottom of the window, the advisor dock
      included – the same numbers the shared CE-15 pin uses */
-  /* (18.10.2026: the dock now hides 15 px under the bottom edge – G10) */
+  /* (18.10.2026: the dock now hides 15 px under the bottom edge – G10;
+     06.11.2026: the folded dock is a pill 20-44 px above the edge, so the 48 px
+     floor still clears it. 56 px (--ch-layout-dock-safe) would make the box of
+     Produkty step down a fit level at 1440 x 900 – the header leaves the pin) */
   --c5-casc-dock:24px;
   --c5-casc-gap:max(48px, calc(clamp(0.75rem,2.5vh,1.5rem) + var(--c5-casc-dock)));
   /* one card is swapped for another of the same height; Chrome's scroll
