@@ -269,7 +269,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31566,
-      "data": "16.10"
+      "data": "07.11"
     },
     "ziemniak.html": {
       "sekcja": "3. Rodzaje upraw",
