@@ -53,7 +53,9 @@
 .c5-we__pkl{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:var(--ch-space-2);margin:var(--ch-space-4) 0 0;}
 .c5-we__pkll{margin-right:var(--ch-space-1);font-size:13px;line-height:18px;color:var(--ch-text-secondary);}
 .c5-we__panel{padding:var(--ch-space-8) var(--ch-space-5) var(--ch-space-5);background:var(--ch-surface-warm);border-radius:var(--ch-radius-xl);}
-.c5-we__scroll{overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scrollbar-width:thin;}
+/* position:relative: the containing block of every absolute child (the hidden labels
+   of the bars and of the price ticks) – otherwise they widen the page on phones */
+.c5-we__scroll{position:relative;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scrollbar-width:thin;}
 .c5-we__scroll:focus-visible{outline:2px solid var(--w-focus-ring);outline-offset:4px;border-radius:var(--ch-radius-lg);}
 .c5-we__t{width:100%;min-width:900px;table-layout:fixed;border-collapse:separate;border-spacing:0;}
 .c5-we__colp{width:var(--we-first);}
@@ -126,10 +128,35 @@
    and the amount for the field (`.c5-we__val`, written by CE-47 – the capsules
    that are empty in the base version). Under the legend a smaller heading
    „Oblicz koszt stosowania”, on the left, and the calculator. ---------------- */
-.c5-we--razem .c5-we__head{margin-bottom:var(--ch-space-8);}
-.c5-we--razem .c5-we__dock{position:sticky;top:20px;z-index:5;pointer-events:none;}
+.c5-we--razem .c5-we__dock{position:sticky;top:20px;z-index:5;justify-content:flex-start;pointer-events:none;}
 .c5-we--razem .c5-we__dock .c5-pkbar{pointer-events:auto;}
-.c5-we--razem .c5-we__pkdesc{margin:var(--ch-space-6) auto clamp(2.5rem,4.5vw,3.75rem);text-align:center;}
+.c5-we--razem .c5-we__pkdesc{max-width:40rem;margin:var(--ch-space-5) 0 clamp(2.5rem,4.5vw,3.75rem);text-align:left;}
+/* the first section of the page (08.11.2026, U-71–U-73): the head introduces the
+   whole page – kicker and h2 on the left, a short lead on the right, bottom
+   lines level; under it a smaller heading of the programme on the left (no
+   kicker), then the package tabs on the left and the description of the open
+   package on the right (U-72). From 1100 px `.c5-we__prog` is a grid: the dock
+   spans every row from its own to the calculator, so it still sticks through
+   the whole chart, while the description takes the second column of its row. */
+.c5-we__head--split{flex-direction:row;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:var(--ch-space-6) clamp(2rem,6vw,6rem);
+  margin-bottom:clamp(3.5rem,6vw,5.5rem);text-align:left;}
+.c5-we__hl{display:flex;flex-direction:column;align-items:flex-start;flex:1 1 22rem;max-width:40rem;min-width:0;}
+.c5-we__hl .c5-kicker{margin-bottom:var(--ch-space-6);}
+.c5-we__lead{flex:0 1 30rem;min-width:min(100%,20rem);margin:0;text-wrap:pretty;}
+.c5-we__h3,.c5-we__calch{margin:0;text-align:left;font-family:var(--ch-type-h3-display-font);
+  font-size:clamp(var(--ch-type-display-sm-size),2.6vw,var(--ch-type-h3-display-size));line-height:1.15;
+  font-weight:var(--ch-type-h3-display-weight);letter-spacing:var(--ch-type-h3-display-ls);}
+.c5-we__h3{margin-bottom:var(--ch-space-6);}
+@media (min-width:1100px){
+  .c5-we--razem .c5-we__prog{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:var(--ch-space-10);}
+  .c5-we--razem .c5-we__prog > *{grid-column:1 / -1;}
+  .c5-we--razem .c5-we__prog > .c5-we__h3{grid-row:1;}
+  .c5-we--razem .c5-we__prog > .c5-we__dock{grid-column:1;grid-row:2 / span 4;align-self:start;}
+  .c5-we--razem .c5-we__prog > .c5-we__pkdesc{grid-column:2;grid-row:2;justify-self:end;min-height:54px;margin-top:0;}
+  .c5-we--razem .c5-we__prog > .c5-we__panel{grid-row:3;}
+  .c5-we--razem .c5-we__prog > .c5-we__legend{grid-row:4;}
+  .c5-we--razem .c5-we__prog > .c5-we__calc{grid-row:5;}
+}
 .c5-we__val{display:block;font-size:12.5px;line-height:1.2;font-weight:var(--ch-font-weight-medium);white-space:nowrap;}
 .c5-we__val:empty{display:none;}
 .c5-we__bar.is-excl{opacity:.35;}
@@ -138,10 +165,134 @@
 .c5-we__t th.c5-we__ph.is-excl{border-radius:var(--ch-radius-lg) var(--ch-radius-lg) 0 0;}
 .c5-we__t tbody tr:last-child td.is-excl{border-radius:0 0 var(--ch-radius-lg) var(--ch-radius-lg);}
 .c5-we__bar.is-skip{opacity:.45;}
-.c5-we__calc{margin-top:clamp(3.5rem,6vw,5rem);}
-.c5-we__calch{margin:0 0 var(--ch-space-6);text-align:left;font-family:var(--ch-type-h3-display-font);
-  font-size:clamp(var(--ch-type-display-sm-size),2.6vw,var(--ch-type-h3-display-size));line-height:1.15;
-  font-weight:var(--ch-type-h3-display-weight);letter-spacing:var(--ch-type-h3-display-ls);}
+.c5-we__calc{margin-top:clamp(3rem,5vw,4.5rem);}
+.c5-we__calch{margin-bottom:var(--ch-space-5);}
+/* a possible term of a part of the dose shows nothing until the split fills it
+   (U-76, 08.11.2026; without JS it stays hatched) */
+.cx-js .c5-we--razem .c5-we__bar.is-opt{opacity:0;visibility:hidden;transition:none;}
+/* the split of a dose (U-75): CE-100 flies a piece of the bar to its phase; the
+   bar it lands on waits invisible under it */
+.c5-we__bar.is-landing{opacity:0;transition:none;}
+.c5-we__ghost{position:absolute;z-index:0;box-sizing:border-box;border-radius:999px;background:var(--ch-action-accent-bg);pointer-events:none;}
+
+/* --- variant „razem”: the price column, the phase switches, the number of
+   treatments and the total under the chart (comments of Mateusz on the live
+   page U-40–U-47, 07.11.2026, evening): the list of products under the chart
+   is gone – every product row ends with its price for the season (the packs
+   in small print over the net price, a tick „uwzględnij w wycenie”), a thin
+   last row switches the phases off and on (the column goes darker, the button
+   reads „Włącz”), the number of treatments of a split dose stands under its
+   bar, and the total with the cart button stands under the price column.
+   The cells are filled by CE-47 `etapy`. -------------------------------------- */
+/* the first and the last column equally wide (U-77, 08.11.2026) */
+.c5-we--razem{--we-cost:var(--we-first);}
+.c5-we__colc{width:var(--we-cost);transition:width .6s cubic-bezier(.3,.7,.2,1);}
+.c5-we__ch{padding:0 var(--ch-space-2) var(--ch-space-4) var(--ch-space-4);vertical-align:bottom;text-align:right;}
+.c5-we__chn{display:block;font-size:17px;line-height:1.25;color:var(--ch-text-primary);}
+.c5-we__chs{display:block;margin-top:2px;font-size:12px;line-height:16px;color:var(--ch-text-secondary);}
+.c5-we__t tbody .c5-we__cost,.c5-we__t tbody .c5-we__cc{padding-left:var(--ch-space-4);border-left:1px solid var(--we-line);}
+.c5-we__cost{text-align:right;}
+.c5-we__cin{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-areas:"pick packs" "pick price";column-gap:10px;row-gap:2px;align-items:center;justify-items:end;}
+.c5-we__pick{grid-area:pick;justify-self:start;display:flex;align-items:center;justify-content:center;width:24px;height:24px;cursor:pointer;}
+.c5-we__pick input{width:18px;height:18px;margin:0;accent-color:var(--ch-text-primary);cursor:pointer;}
+.c5-we__cpk{grid-area:packs;font-size:12px;line-height:16px;color:var(--ch-text-secondary);text-align:right;}
+.c5-we__cp{grid-area:price;font-size:17px;line-height:22px;font-weight:var(--ch-font-weight-medium);font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--ch-text-primary);}
+.c5-we__ctag,.c5-we__cna{font-size:12px;line-height:16px;color:var(--ch-text-secondary);}
+.c5-we__ctag{display:none;grid-column:1 / -1;}
+.c5-we__cost.is-out .c5-we__pick,.c5-we__cost.is-out .c5-we__cpk,.c5-we__cost.is-out .c5-we__cp{display:none;}
+.c5-we__cost.is-out .c5-we__ctag{display:block;}
+.c5-we__cost.is-skip .c5-we__cpk,.c5-we__cost.is-skip .c5-we__cp,.c5-we__cost.is-excl .c5-we__cpk,.c5-we__cost.is-excl .c5-we__cp{opacity:.42;}
+/* the number of treatments of a split dose, under its bar (U-40, U-41) */
+.c5-we__zabw{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:2px 6px;margin-top:6px;cursor:default;}
+.c5-we__zabl{font-size:11.5px;line-height:16px;color:var(--ch-text-secondary);}
+.c5-we__zab{display:inline-flex;gap:2px;padding:2px;border:1px solid var(--ch-border-subtle);border-radius:999px;background:var(--ch-surface-raised);}
+.c5-we__zab button{width:26px;height:26px;padding:0;border:0;border-radius:999px;background:transparent;font:inherit;font-size:13px;line-height:1;
+  font-variant-numeric:tabular-nums;color:var(--ch-text-primary);cursor:pointer;transition:background var(--w-duration-base) var(--w-ease);}
+.c5-we__zab button:hover{background:var(--ch-surface-warm);}
+.c5-we__zab button[aria-checked="true"]{background:var(--ch-action-accent-bg);}
+.c5-we__zab button:focus-visible{outline:2px solid var(--w-focus-ring);outline-offset:1px;}
+/* „Wybierz liczbę zabiegów” and three dots (U-74, U-79, 08.11.2026): 6 px dots
+   4 px apart, 7 px right of the label; the chosen number and the dots before it
+   green, the rest in the darkest ink at 20 %. The dots run in the line of the
+   label, so in a narrow column they follow its last word. Each dot is a radio
+   button with a 10 × 28 px target around the dot. */
+.c5-we__zabw--dots{display:block;margin-top:8px;font-size:11.5px;line-height:16px;text-align:center;}
+.c5-we__zabw--dots .c5-we__zabl{display:inline;}
+.c5-we__zabw--dots .c5-we__nw{white-space:nowrap;}
+.c5-we__zab.c5-we__zab--dots{display:inline-flex;vertical-align:middle;gap:0;margin:-6px -2px -6px 5px;padding:0;border:0;border-radius:0;background:none;}
+.c5-we__zab.c5-we__zab--dots button,.c5-we__zab.c5-we__zab--dots button:hover,.c5-we__zab.c5-we__zab--dots button[aria-checked="true"]{position:relative;width:10px;height:28px;padding:0;border-radius:0;background:none;}
+.c5-we__zab--dots button::before{content:"";position:absolute;top:50%;left:2px;width:6px;height:6px;margin-top:-3px;border-radius:50%;
+  background:color-mix(in srgb,var(--ch-text-primary) 20%,transparent);transition:background var(--w-duration-base) var(--w-ease),transform var(--w-duration-base) var(--w-ease);}
+.c5-we__zab--dots button:hover::before{transform:scale(1.35);}
+.c5-we__zab--dots button[aria-checked="true"]::before,.c5-we__zab--dots button:has(~ button[aria-checked="true"])::before{background:var(--ch-color-green-500);}
+.c5-we__zab--dots button:focus-visible{outline:2px solid var(--w-focus-ring);outline-offset:-1px;border-radius:4px;}
+/* the last, thin row: the phases switched off and on (U-47) */
+.c5-we__t tbody .c5-we__xrow th,.c5-we__t tbody .c5-we__xrow td{padding-block:10px;}
+.c5-we__xl{padding-right:var(--ch-space-4)!important;text-align:left;font-size:13px;line-height:18px;font-weight:var(--ch-font-weight-regular);color:var(--ch-text-secondary);}
+.c5-we__xrow td[data-c]{text-align:center;}
+.c5-we__xbtn{min-height:28px;max-width:100%;padding:3px 10px;border:1px solid var(--ch-border-subtle);border-radius:999px;background:var(--ch-surface-raised);
+  font:inherit;font-size:12px;line-height:16px;color:var(--ch-text-primary);cursor:pointer;transition:background var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);}
+.c5-we__xbtn:hover{border-color:var(--ch-border-strong);}
+.c5-we__xbtn.is-off{background:var(--ch-action-accent-bg);border-color:var(--ch-action-accent-bg);}
+.c5-we__xbtn:focus-visible{outline:2px solid var(--w-focus-ring);outline-offset:2px;}
+/* the alternatives apart from the products of the packages (U-51, 08.11.2026): a
+   thin row „Produkty zamienne – poza wyceną”, then smaller rows – the packshot
+   beside the name, lower bars; no price cell text (the row says it) */
+.c5-we__t tbody .c5-we__grp th,.c5-we__t tbody .c5-we__grp td{padding-block:var(--ch-space-5) 4px;}
+.c5-we__gl{padding-right:var(--ch-space-4)!important;text-align:left;font-size:12px;line-height:16px;font-weight:var(--ch-font-weight-medium);
+  letter-spacing:.02em;text-transform:uppercase;color:var(--ch-text-secondary);white-space:nowrap;}
+.c5-we__gls{font-weight:var(--ch-font-weight-regular);text-transform:none;letter-spacing:0;}
+.c5-we__t tbody .c5-we__grp + tr th,.c5-we__t tbody .c5-we__grp + tr td{border-top:0;}
+.c5-we__t tbody .c5-we__alt th,.c5-we__t tbody .c5-we__alt td{padding-block:3px;}
+.c5-we__prod--alt .c5-we__pbtn{flex-direction:row;justify-content:flex-start;gap:var(--ch-space-3);padding:5px 10px 5px 6px;background:transparent;border-color:var(--ch-border-subtle);text-align:left;}
+.c5-we__prod--alt .c5-we__pack{width:36px;height:36px;padding:4px;}
+.c5-we__prod--alt .c5-we__pn{font-size:13px;color:var(--ch-text-secondary);}
+.c5-we__alt .c5-we__bar--alt{min-height:28px;padding-block:4px;font-size:12px;}
+/* the calculator under the chart in ONE row (U-81, 08.11.2026): the heading
+   „Oblicz koszt stosowania” with the slider and the field on the left, the
+   total, its line and the cart button on the right */
+.u-pkc__bar{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:var(--ch-space-6) var(--ch-space-10);
+  padding-top:var(--ch-space-6);border-top:1px solid color-mix(in srgb,var(--ch-text-primary) 25%,transparent);}
+.u-pkc__left{flex:1 1 26rem;max-width:46rem;min-width:0;}
+.c5-we__sum.u-pkc__sumin{flex:0 0 auto;margin-left:auto!important;flex-direction:row;align-items:flex-end;gap:var(--ch-space-6);margin:0;padding:0;border-top:0;}
+.c5-we__sum .u-pkc__tot{padding-right:0;}
+.c5-we__sum .u-pkc__info{max-width:24rem;}
+.c5-we__sum .u-pkc__buy{align-self:flex-end;align-items:flex-end;text-align:right;}
+/* before an area (U-80, 08.11.2026 – replaced the „Oblicz” button of U-48): the
+   programme alone – no price column, no total, no price in the cards. CE-47
+   puts `is-calc` on the section as soon as the area is above 0 ha (the slider
+   or the field); then the middle columns narrow, the price column widens and
+   its figures come in after it, and the total fades in on the right of the row */
+.c5-we--razem:not(.is-calc) .c5-we__colc{width:0;}
+.c5-we--razem .c5-we__ch,.c5-we--razem .c5-we__t .c5-we__cost,.c5-we--razem .c5-we__t .c5-we__cc{overflow:hidden;
+  transition:padding .6s cubic-bezier(.3,.7,.2,1),border-color .3s var(--w-ease);}
+.c5-we--razem .c5-we__ch > *,.c5-we--razem .c5-we__cost > *{transition:opacity .3s var(--w-ease) .4s,visibility 0s linear .4s;}
+.c5-we--razem:not(.is-calc) .c5-we__ch,.c5-we--razem:not(.is-calc) .c5-we__t .c5-we__cost,.c5-we--razem:not(.is-calc) .c5-we__t .c5-we__cc{padding-inline:0!important;border-left-color:transparent!important;}
+.c5-we--razem:not(.is-calc) .c5-we__ch > *,.c5-we--razem:not(.is-calc) .c5-we__cost > *{opacity:0;visibility:hidden;transition:opacity .15s var(--w-ease),visibility 0s linear .15s;}
+.c5-we__chn,.c5-we__chs{white-space:nowrap;}
+/* position:relative: the hidden label of the tick (absolute wf-sr-only) takes the
+   cell as its box, so the clipped 0 px column clips it too – with the scroller
+   as its box it widened the chart by 14 px at 0 ha (an invisible sideways scroll) */
+.c5-we__cin{position:relative;}
+.c5-we--razem .c5-we__sum{transition:opacity .35s var(--w-ease) .3s,visibility 0s linear .3s;}
+.c5-we--razem:not(.is-calc) .c5-we__sum{opacity:0;visibility:hidden;transition:opacity .15s var(--w-ease),visibility 0s linear .15s;}
+.c5-we--razem:not(.is-calc) .c5-we__mprice{display:none;}
+/* below 900 px the total stands under the area, the button the whole width;
+   before an area the summary takes no room */
+@media (max-width:899px){
+  .c5-we__sum.u-pkc__sumin{flex:1 1 100%;flex-direction:column;align-items:stretch;gap:var(--ch-space-4);margin-left:0!important;}
+  .c5-we__sum .u-pkc__tot{align-items:flex-end;}
+  .c5-we__sum .u-pkc__buy{align-self:stretch;align-items:stretch;text-align:left;}
+  .c5-we--razem:not(.is-calc) .c5-we__sum{display:none;}
+}
+/* the price in the product card – where the price column may be off screen: the
+   table scrolls in the panel below about 1050 px (min-width 960 px from 900 px) */
+.c5-we__mprice{display:none;}
+@media (max-width:1099px){
+  .c5-we__mprice{display:block;font-size:12px;line-height:16px;font-weight:var(--ch-font-weight-medium);font-variant-numeric:tabular-nums;color:var(--ch-text-primary);}
+  .c5-we__mprice:empty{display:none;}
+  .c5-we__mprice.is-skip{opacity:.45;}
+}
 
 /* --- legend ---------------------------------------------------------------- */
 .c5-we__legend{display:flex;flex-wrap:wrap;justify-content:center;gap:var(--ch-space-2) var(--ch-space-5);margin:var(--ch-space-5) 0 0;font-size:13px;line-height:20px;color:var(--ch-text-secondary);}
@@ -167,6 +318,9 @@
 /* --- 900–1199 px: narrower product column and pills ---------------------- */
 @media (min-width:900px) and (max-width:1199px){
   .c5-we{--we-first:200px;}
+  .c5-we--razem .c5-we__t{min-width:1100px;}
+  .c5-we--razem .c5-we__t thead tr > :first-child,.c5-we--razem .c5-we__t tbody th{position:sticky;left:0;z-index:1;background:var(--ch-surface-warm);}
+  .c5-we__val{white-space:normal;}
   .c5-we__pill{padding:5px 8px 5px 10px;font-size:12px;gap:4px;}
 }
 /* --- below 900 px: the table scrolls inside the panel ---------------------- */
@@ -174,6 +328,8 @@
   .c5-we{--we-first:124px;}
   .c5-we__panel{padding:var(--ch-space-5) var(--ch-space-2) var(--ch-space-2);border-radius:var(--ch-radius-lg);}
   .c5-we__t{min-width:940px;}
+  .c5-we--razem .c5-we__t{min-width:1072px;}
+  .c5-we__zab button{width:32px;height:32px;}
   .c5-we__t thead tr > :first-child,.c5-we__t tbody th{position:sticky;left:0;z-index:1;background:var(--ch-surface-warm);}
   .c5-we__pbtn{gap:6px;padding:6px 4px 8px;}
   .c5-we__pack{width:40px;height:40px;padding:4px;}
@@ -191,5 +347,6 @@
   .c5-pkbar{padding:4px;}
 }
 @media (prefers-reduced-motion: reduce){
-  .c5-we__bar,.c5-we__bar.is-off,.c5-we__t td[data-c],.c5-pkbar__tab{transition:none;}
+  .c5-we__bar,.c5-we__bar.is-off,.c5-we__t td[data-c],.c5-pkbar__tab,.c5-we__zab button,.c5-we__xbtn,.c5-we__colc,
+  .c5-we--razem .c5-we__ch,.c5-we--razem .c5-we__t .c5-we__cost,.c5-we--razem .c5-we__t .c5-we__cc,.c5-we--razem .c5-we__ch > *,.c5-we--razem .c5-we__cost > *,.c5-we--razem .c5-we__sum{transition:none!important;}
 }

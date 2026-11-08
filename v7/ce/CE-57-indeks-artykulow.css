@@ -58,8 +58,23 @@
 .cw-k-row:hover .cw-k-row__title a,
 .cw-k-row__title a:focus-visible{text-decoration:underline;}
 .cw-k-row__lead{margin:0;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary);
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  max-width:72ch;}  /* 08.11.2026 (SW-04): a readable measure, not 140 characters a line */
 .cw-k-row__meta{margin:0;}
+
+/* 08.11.2026 (SW-04/06) – modifier `cw-k-list--meta-bok`: from 1200 px a row is a grid
+   „title and teaser | metric column”; the metric stands as a short column (chip,
+   author, month, time) without the dot separators. Below 1200 px the row stays as above. */
+@media (min-width:1200px){
+  .cw-k-list--meta-bok .cw-k-row{display:grid;grid-template-columns:minmax(0,1fr) 260px;column-gap:clamp(2rem,4vw,3.5rem);
+    row-gap:var(--ch-space-2);align-items:start;}
+  .cw-k-list--meta-bok .cw-k-row__title,
+  .cw-k-list--meta-bok .cw-k-row__lead{grid-column:1;}
+  .cw-k-list--meta-bok .cw-k-row__meta{grid-column:2;grid-row:1 / span 2;flex-direction:column;align-items:flex-start;gap:var(--ch-space-1);}
+  .cw-k-list--meta-bok .cw-k-row__meta > .c5-chip{margin-bottom:var(--ch-space-2);}
+  /* beats the separator rule of the page sheet (`.cw-k-metasep > *:not(:last-child):not(.c5-chip)::after`) */
+  .cw-k-list--meta-bok .cw-k-row__meta.cw-k-metasep > *:not(.c5-chip)::after{content:none;}
+}
 /* A teaser row (text ready, not yet published): no link, muted – the state is
    carried by the „w przygotowaniu” chip, not by the colour alone. */
 .cw-k-row--soon .cw-k-row__title{color:var(--ch-text-secondary);}
@@ -85,6 +100,14 @@
   /* touch: the chip gets the full 44 px field, the tools run across the width */
   .cw-k-filters .c5-chip{min-height:44px;}
   .cw-k-tools .wf-select,.cw-k-tools .cw-k-findbox{flex:1 1 100%;max-width:none;}
+}
+/* 08.11.2026 (SW-07): on a phone the chips are one row scrolled sideways (not 4–6 wrapped rows);
+   the strip runs to the screen edges, the first chip starts at the page margin */
+@media (max-width:767px){
+  .cw-k-filters{flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;
+    margin-inline:calc(-1 * var(--w-page-padding));padding-inline:var(--w-page-padding);scroll-padding-inline:var(--w-page-padding);}
+  .cw-k-filters::-webkit-scrollbar{display:none;}
+  .cw-k-filters .c5-chip{flex:none;white-space:nowrap;}
 }
 @media (prefers-reduced-motion: reduce){
   .cw-k-row,.cw-k-filters .c5-chip,.cw-k-pager__num{transition:none;}

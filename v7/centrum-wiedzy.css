@@ -54,9 +54,22 @@ html.cx-js [data-nojs-only]{display:none;}
 
 /* Search box `.cw-k-findbox` → ce/CE-08-hero.css (hero „dzial”, shared with the CE-57 tools row) */
 /* 57 · CE-57 → ce/CE-57-indeks-artykulow.css */
+/* 08.11.2026 (SW-06): on the dział page (the index is a section of its own, `section.c5-sec#artykuly`;
+   on the category page it is a div in the grid) the 860 px cap of the module left 532 px empty
+   on the right – the index takes the container; the metric column (`cw-k-list--meta-bok`)
+   and the 72ch teaser keep the rows readable. */
+.c5-sec#artykuly :is(.cw-k-sechead,.cw-k-controls,.cw-k-list,.cw-k-empty,.cw-k-pager){max-width:none;}
 
 /* CE-58 cards and CE-59 category boxes: ce/CE-58-karty-najnowszych.css, ce/CE-59-nawigacja-kategorii.css */
 .cw-k-next{margin-top:clamp(1.25rem,2.5vw,1.75rem);}
+/* 08.11.2026 (SW-02): `.cw-k-metasep{margin:0}` above cancelled the module's `margin-top:auto`
+   – the metric goes back to the foot of the card (the side cards had 89 px of air under it) */
+.c5-ln__meta.cw-k-metasep{margin-top:auto;}
+/* 08.11.2026 (SW-17): the two side cards share the height of the lead card equally
+   (287 / 264 px at 1100 px). Here and not in the module – home.html uses CE-58 too. */
+@media (min-width:900px){
+  .c5-ln{grid-template-rows:repeat(2,1fr);}
+}
 
 /* ===== 53 · CE-53 · Dokumenty do pobrania ================================
    Dwie listy wierszy „tytuł | metryka | Pobierz PDF”, anatomia z wersji
@@ -79,6 +92,8 @@ html.cx-js [data-nojs-only]{display:none;}
 .cw-k-topic__hint{margin:0;}
 .cw-k-topic__msg{margin:0;padding:var(--w-space-3) var(--w-space-4);color:var(--w-text-primary);}
 .cw-k-topic__side{display:flex;flex-direction:column;gap:clamp(1.25rem,2.5vw,1.75rem);}
+/* 08.11.2026 (SW-03): the heading stands over the grid – two lines instead of three in half a column */
+.cw-k-topic__head .c5-h2{max-width:900px;}
 @media (max-width:899px){
   .cw-k-topic{grid-template-columns:minmax(0,1fr);}
 }
@@ -90,6 +105,9 @@ html.cx-js [data-nojs-only]{display:none;}
    tekstem po lewej i jednym przyciskiem po prawej. Wariant „dwa-przyciski”:
    nagłówek po lewej, rząd dwóch przycisków po prawej. */
 /* look of the band: ce/CE-23-pas-cta.css (`c5-ctabar`) */
+/* 08.11.2026 (SW-05): the band now stands in a white section (no `c5-band`, as on the other
+   pages); the section above already gives its 120 px, so no second padding on top of it */
+#dalej.c5-sec{padding-top:0;}
 
 /* ===== 90 · Układ strony kategorii ======================================= */
 /* Lista i kolumna boczna obok siebie od 1100 px, niżej kolumna boczna schodzi

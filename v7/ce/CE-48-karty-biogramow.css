@@ -111,6 +111,17 @@ html:not(.cx-js) .pp-team .pp-more{display:none;}
 }
 .pp-team--siatka .pp-person__body,
 .pp-team--kompakt .pp-person__body{gap:var(--ch-space-4);padding-block:var(--ch-space-6);}
+/* 08.11.2026 (SW-13) – `--kompakt` below 600 px: the 335 × 233 photo field made the
+   section 2000 px tall. A 96 px square photo on the left, the name and the role on
+   the right, the biography and the note under both at full width. */
+@media (max-width:599px){
+  .pp-team--kompakt .pp-person{display:grid;grid-template-columns:96px minmax(0,1fr);column-gap:var(--ch-space-4);row-gap:var(--ch-space-1);align-items:start;}
+  .pp-team--kompakt .pp-person__ph{grid-column:1;grid-row:1 / span 2;width:96px;aspect-ratio:1 / 1;border-radius:var(--ch-radius-sm);}
+  .pp-team--kompakt .pp-person__name{grid-column:2;grid-row:1;align-self:end;padding:0;background:none;border-radius:0;}
+  .pp-team--kompakt .pp-person__body{display:contents;}
+  .pp-team--kompakt .pp-person__body > .pp-person__role{grid-column:2;grid-row:2;}
+  .pp-team--kompakt .pp-person__body > :not(.pp-person__role){grid-column:1 / -1;margin-top:var(--ch-space-4);}
+}
 
 @media (prefers-reduced-motion: reduce){
   .pp-disc{transition:none;}

@@ -1371,6 +1371,24 @@
      · The turn waits until the stage is in view (a hash on load); with
        prefers-reduced-motion it happens at once and the arc is not animated.
      · data-glob-center="lon,lat" on the root mirrors the focus (for tests).
+     · data-glob-hq-kraj="PL" (optional, ISO codes like data-glob-kraje): the
+       country of the head office filled in --c5-glob-k-hq-kraj, a darker
+       beige than the land (07.11.2026, kontakt.html – U-49).
+     · data-glob-legenda (optional): the legend „dystrybutor · siedziba” under
+       the head; without it (both pages since 08.11.2026) the free field starts
+       under the head itself.
+     · Modifier c5-glob--glowa-bok (08.11.2026, o-firmie.html): the head on the
+       left and a side block on the right in one row (.c5-glob__top: the kicker,
+       .c5-glob__head and .c5-glob__aside); the field starts under the row.
+     · Modifier c5-glob--blisko (07.11.2026, kontakt.html – comments of Mateusz
+       U-49, U-50): a closer view. The rim of the sphere is no longer held
+       under the heading – it may run behind the kicker and the heading (a white
+       glow under the head keeps them legible, CSS), only not above the top of
+       the kicker; the partners keep their place 40 px under the head. The
+       row keeps no strip for an open card: closed, it sits close to the bottom
+       of the section; an open card makes the section taller and the stage
+       follows it, so more of the globe shows. The scale is set on the root
+       (--c5-glob-k-k in its style), the centre of the view by data-glob-widok.
      · Libraries from CDN: d3@7.9.0 and topojson-client@3.1.0; missing either
        -> no-op, no `is-ready`: the cards stay a plain grid with all details.
    ========================================================================== */
@@ -1460,7 +1478,11 @@
     });
     if (!items.length) return;
 
-    var hq = null;
+    var hq = null, hqFeats = [];
+    var hqCodes = (root.getAttribute("data-glob-hq-kraj") || "").split(/[\s,]+/).filter(Boolean).map(function (c) {
+      return /^\d+$/.test(c) ? ("00" + c).slice(-3) : ISO[c.toUpperCase()] || "";
+    }).filter(Boolean);
+    var close = root.classList.contains("c5-glob--blisko");
     var hqAttr = (root.getAttribute("data-glob-hq") || "").split(",");
     if (hqAttr.length === 2 && !isNaN(parseFloat(hqAttr[0]))) hq = { lon: parseFloat(hqAttr[0]), lat: parseFloat(hqAttr[1]) };
     var marks = items.concat(hq ? [hq] : []);
@@ -1560,14 +1582,21 @@
       svg("rect", { "class": "c5-glob__k-hq-dot", x: -4.5, y: -4.5, width: 9, height: 9, transform: "rotate(45)" }, hqG);
     }
 
-    /* the legend goes under the lead (or the heading) */
-    var legend = document.createElement("ul");
-    legend.className = "c5-glob__legend";
-    legend.setAttribute("aria-hidden", "true");
-    legend.innerHTML = '<li><span class="c5-glob__key"></span>dystrybutor</li>' +
-      (hq ? '<li><span class="c5-glob__key c5-glob__key--hq"></span>siedziba CarboHort' +
-        (root.getAttribute("data-glob-hq-label") ? " – " + root.getAttribute("data-glob-hq-label") : "") + "</li>" : "");
-    (head || stage).appendChild(legend);
+    /* the legend under the lead (or the heading) – only with data-glob-legenda
+       on the root: since 08.11.2026 neither page has it (Mateusz: „niepotrzebna”) */
+    var legend = null;
+    if (root.hasAttribute("data-glob-legenda")) {
+      legend = document.createElement("ul");
+      legend.className = "c5-glob__legend";
+      legend.setAttribute("aria-hidden", "true");
+      legend.innerHTML = '<li><span class="c5-glob__key"></span>dystrybutor</li>' +
+        (hq ? '<li><span class="c5-glob__key c5-glob__key--hq"></span>siedziba CarboHort' +
+          (root.getAttribute("data-glob-hq-label") ? " – " + root.getAttribute("data-glob-hq-label") : "") + "</li>" : "");
+      (head || stage).appendChild(legend);
+    }
+    /* the block over the globe: the head, or – modifier c5-glob--glowa-bok – the
+       row of the head and its side block (.c5-glob__top) */
+    var topRow = $(".c5-glob__top", root) || head;
 
     /* --- state ------------------------------------------------------------ */
     var L = { w: 0, h: 0, K: 0, R: 0, P: 0, vis: Math.PI / 2, cx: 0, cy: 0, dpr: 1, top: 0, stem: 94 };
@@ -1598,6 +1627,7 @@
       colors.border = v("--c5-glob-k-border", "#fcfcfb");
       colors.kraj = v("--c5-glob-k-kraj", "#f1ede6");
       colors.on = v("--c5-glob-k-kraj-on", "#e5e1d8");
+      colors.home = v("--c5-glob-k-hq-kraj", "");
       L.kRatio = parseFloat(v("--c5-glob-k-k", "0.7565")) || 0.7565;
       L.wMax = parseFloat(v("--c5-glob-k-w-max", "1440")) || 1440;
       L.kMin = parseFloat(v("--c5-glob-k-k-min", "773")) || 773;
@@ -1688,13 +1718,24 @@
       }
       var h2 = head ? $(".c5-h2", head) : null;
       var hb = (h2 || head || stage).getBoundingClientRect();
-      var lb = legend.getBoundingClientRect();
+      var lb = legend ? legend.getBoundingClientRect() : { height: 0, bottom: 0 };
+      var tb = (topRow || h2 || stage).getBoundingClientRect();
       var headBot = hb.bottom - sr.top;
-      L.fieldTop = (lb.height ? lb.bottom : hb.bottom) - sr.top;
+      /* the free field starts under the legend, else under the whole head (the
+         lead included) or the row of the head and its side block */
+      L.fieldTop = (lb.height ? lb.bottom : tb.bottom) - sr.top;
       /* desktop: 40 px from the legend to the highest partner (as in the
          frame); phones: room for a short stem and its number */
       var clear = small ? Math.min(L.stem, 54) * 0.62 + 22 : 40;
-      L.top = Math.max(h2 ? headBot + Math.max(10, 15 * s) : 0, L.fieldTop + clear - b.y0);
+      if (close) {
+        /* c5-glob--blisko: the rim may run behind the head – the partners keep
+           their place under the legend; only not above the top of the kicker */
+        var kick = wrap ? $(".c5-kicker", wrap) : null;
+        var floor = kick ? kick.getBoundingClientRect().top - sr.top : 0;
+        L.top = Math.max(floor, L.fieldTop + clear - b.y0);
+      } else {
+        L.top = Math.max(h2 ? headBot + Math.max(10, 15 * s) : 0, L.fieldTop + clear - b.y0);
+      }
       L.cy = L.top + L.R;
       proj.translate([L.cx, L.cy]);
       /* the bar with the hint: level with the lowest partner (as in the
@@ -1826,6 +1867,12 @@
       if (world) {
         ctx.beginPath(); path(world.all);
         ctx.fillStyle = colors.land; ctx.fill();
+        /* the country of the head office, a darker beige (data-glob-hq-kraj) */
+        if (hqFeats.length && colors.home) {
+          ctx.beginPath();
+          hqFeats.forEach(function (ft) { path(ft); });
+          ctx.fillStyle = colors.home; ctx.fill();
+        }
         items.forEach(function (it) {
           if (!it.feats.length) return;
           var strong = it === active || hotSet.indexOf(it) >= 0;
@@ -2062,6 +2109,7 @@
         items.forEach(function (it) {
           it.feats = it.codes.map(function (c) { return wd.byId[c]; }).filter(Boolean);
         });
+        hqFeats = hqCodes.map(function (c) { return wd.byId[c]; }).filter(Boolean);
         root.classList.add("has-land");
         if (!anim) draw(shown);
       }, function (err) {

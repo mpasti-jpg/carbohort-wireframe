@@ -4,9 +4,11 @@
    right edge and, under it, a row of video cards that scrolls sideways: native
    scrolling with scroll snap, the scrollbar hidden. Below 600 px one card with
    the edge of the next one showing. The carousel never moves by itself.
-   Mateusz, 18.10.2026: a photo in the frame of every card, no „kind of
-   material” label, the date of publication stands in the kicker of the card,
-   and the kicker with the title sits at the bottom edge of the card (34 px).
+   Mateusz, 18.10.2026: a photo in the frame of every card.
+   Mateusz, 08.11.2026 (comment U-69, Figma 996:1496 – back to the Figma
+   layout): the capsule on top says „Relacja YouTube”, the title under it and
+   „data publikacji: …” at the bottom; from 900 px the text column is centred
+   vertically next to the frame (gaps 20 px).
 
    Markup:
      .c5-relc                             root (a div inside .c5-wrap)
@@ -26,9 +28,11 @@
                                           property --c5-relc-pos on the img (default centre)
                .c5-relc__play             48 px play sign (the triangle is a CSS mask)
              .c5-relc__body
-               .c5-relc__kicker           fill chip with the date of publication
-                                          (a <time> when the date is known)
+               .c5-relc__kicker           fill chip with the kind of material
+                                          („Relacja YouTube”)
                .c5-relc__title            title (any heading level)
+               p.c5-relc__date            „data publikacji: …” (a <time> when
+                                          the date is known)
 
    Knobs (custom properties on .c5-relc):
      --c5-relc-cols     cards per view from 900 px (2 by default)
@@ -37,6 +41,7 @@
                         600 px (the visible edge = this value minus the gap)
      --c5-relc-mt       distance between the heading row and the cards
      --c5-relc-bottom   distance from the text to the bottom edge of the card
+                        below 900 px (the stacked card)
 
    Without CE-93-karuzela-relacji.js the arrows stay hidden and the row simply
    scrolls natively (touch, trackpad, keyboard on the focused view).
@@ -82,8 +87,8 @@
 /* --- the card -----------------------------------------------------------------
    Figma 870:3153: a wide card (686 x 220 at 1440) on the warm ground, no outline,
    12 px corners, padding 20; the photo frame (250 x 180, 12 px corners) on the
-   left, the text column on the right, its bottom 34 px above the bottom edge of
-   the card. Below 900 px the card stands: the frame over the text. */
+   left, the text column on the right, centred vertically (Figma 996:1496).
+   Below 900 px the card stands: the frame over the text. */
 .c5-relc__card{flex:none;display:flex;flex-direction:column;gap:var(--ch-space-5);min-width:0;
   width:calc((100% - var(--c5-relc-free) - (var(--c5-relc-n) - 1) * var(--c5-relc-gap)) / var(--c5-relc-n));
   scroll-snap-align:start;padding:var(--ch-space-5) var(--ch-space-5) var(--c5-relc-bottom);
@@ -97,16 +102,19 @@
 .c5-relc__play::before{content:"";display:block;width:8px;height:9px;transform:translateX(1px);background:var(--ch-text-inverse);
   -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8.104 8.591'%3E%3Cpath d='M1.153.094C.912-.036.619-.031.382.108.144.246 0 .497 0 .767v7.057c0 .27.146.522.382.66.236.138.53.144.771.013L7.699 4.969c.249-.134.405-.393.405-.673 0-.28-.156-.539-.405-.674z'/%3E%3C/svg%3E") center / contain no-repeat;
           mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8.104 8.591'%3E%3Cpath d='M1.153.094C.912-.036.619-.031.382.108.144.246 0 .497 0 .767v7.057c0 .27.146.522.382.66.236.138.53.144.771.013L7.699 4.969c.249-.134.405-.393.405-.673 0-.28-.156-.539-.405-.674z'/%3E%3C/svg%3E") center / contain no-repeat;}
-.c5-relc__body{flex:1 1 auto;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;gap:var(--ch-space-5);min-width:0;}
-/* the kicker of the card: the date in a fill chip (beige-100, 8 px corners, 13/14 caps) */
+/* below 900 px the text follows the frame (cards of one row share a height) */
+.c5-relc__body{flex:1 1 auto;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:var(--ch-space-5);min-width:0;}
+/* the kicker of the card: the kind of material in a fill chip (beige-100, 8 px corners, 13/14 caps) */
 .c5-relc__kicker{display:inline-block;padding:10px;border-radius:var(--ch-radius-sm);background:var(--ch-surface-warm-strong);
   font-size:var(--ch-type-kicker-size);line-height:var(--ch-type-kicker-lh);letter-spacing:var(--ch-type-kicker-ls);text-transform:uppercase;color:var(--ch-text-secondary);}
 .c5-relc__title{margin:0;font-size:var(--ch-type-title-size);line-height:var(--ch-type-title-lh);font-weight:var(--ch-type-title-weight);letter-spacing:var(--ch-type-title-ls);color:var(--ch-text-primary);}
+/* the date of publication under the title (Figma: 16 / 25, grey) */
+.c5-relc__date{margin:0;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);letter-spacing:var(--ch-type-body-ls);color:var(--ch-text-secondary);}
 
 @media (min-width:900px){
   .c5-relc__card{flex-direction:row;align-items:stretch;gap:clamp(var(--ch-space-5),2.8vw,var(--ch-space-10));
     padding-bottom:var(--ch-space-5);}
   .c5-relc__ph{flex:0 1 250px;width:auto;min-width:130px;aspect-ratio:250/180;}
-  /* the bottom of the text: 34 px over the edge of the card (20 of them are the padding) */
-  .c5-relc__body{flex:1 1 0;padding-bottom:calc(var(--c5-relc-bottom) - var(--ch-space-5));}
+  /* the text column centred vertically next to the frame (Figma 996:1496) */
+  .c5-relc__body{flex:1 1 0;justify-content:center;}
 }

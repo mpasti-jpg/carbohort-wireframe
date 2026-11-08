@@ -379,19 +379,32 @@
     var group = box.getAttribute("data-pakiety") || "";
     var field = box.querySelector("[data-calc-in]");
     var products = catalogue(box);
+    var chart = box.hasAttribute("data-pkc-bars") ? doc.querySelector('[data-we][data-pakiety="' + group + '"]') : null;
+    /* the box, plus – in one section with the chart – the chart itself: its price
+       column (the product rows), its row of phase switches and the total under
+       it (U-43–U-47, 07.11.2026) */
+    function all(sel) { return slice(box.querySelectorAll(sel)).concat(chart ? slice(chart.querySelectorAll(sel)).filter(function (el) { return !box.contains(el); }) : []); }
+    function one(sel) { return all(sel)[0] || null; }
     var cols = slice(box.querySelectorAll(".u-pkc__col"));
     var tiles = slice(box.querySelectorAll(".u-pkc__tile"));
-    var rows = slice(box.querySelectorAll(".u-pkc__prod"));
-    var totalEl = box.querySelector("[data-pkc-total]");
-    var grossEl = box.querySelector("[data-pkc-gross]");
-    var infoEl = box.querySelector("[data-pkc-info]");
-    var cartBtn = box.querySelector("[data-pkc-cart]");
-    var status = box.querySelector("[data-pkc-status]");
+    var rows = all(".u-pkc__prod, [data-pkc-row]");
+    var totalEl = one("[data-pkc-total]");
+    var grossEl = one("[data-pkc-gross]");
+    var infoEl = one("[data-pkc-info]");
+    var cartBtn = one("[data-pkc-cart]");
+    var status = one("[data-pkc-status]");
     var sw = box.querySelector("[data-pk-switch]");
     var opts = sw ? slice(sw.querySelectorAll("[data-pk-set]")) : [];
-    var halabs = slice(box.querySelectorAll("[data-pkc-halab]"));
-    var exclBtns = slice(box.querySelectorAll("[data-pkc-excl] [data-c]"));
-    var chart = box.hasAttribute("data-pkc-bars") ? doc.querySelector('[data-we][data-pakiety="' + group + '"]') : null;
+    var halabs = all("[data-pkc-halab]");
+    var hafor = all("[data-pkc-hafor]");
+    var exclBtns = all("[data-pkc-excl] button[data-c]");
+    /* In one section with the chart (U-80, 08.11.2026 – it replaced the
+       „Oblicz” button of U-48): the area starts at 0 ha and the chart shows
+       the programme alone – bars with the dose per hectare, no price column,
+       no total. An area above 0 ha (the slider or the field) turns the costs
+       on (`is-calc` on the chart); back at 0 ha they go off again. A box
+       without the chart counts from the start. */
+    var calcOn = !chart;
     if (!field) return;
     var pk = null, plan = [], zab = {}, rowOf = {}, excl = {};
 
@@ -414,6 +427,7 @@
 
     function run() {
       var ha = area(), tot = { net: 0, gross: 0 }, counted = 0;
+      if (chart) calcOn = ha > 0;
       plan = [];
       /* the season: one price per product, from its treatments in the phases that stay */
       rows.forEach(function (r) {
@@ -429,6 +443,9 @@
         r.classList.toggle("is-skip", skip);
         r.classList.toggle("is-excl", !out && gone);
         var need = isFinite(dose) ? dose * ha * part : NaN;
+        /* below 900 px the price also stands in the product card of the chart row */
+        var tr = r.closest ? r.closest("tr") : null, mp = tr ? tr.querySelector("[data-pkc-mprice]") : null;
+        if (mp) { mp.textContent = ""; mp.classList.toggle("is-skip", skip); }
         if (qty) qty.textContent = ha && isFinite(need) && !gone ? (part < 1 ? num1(need) : num(need)) + " " + unit : "–";
         if (out || !prod || !ha || !isFinite(need) || gone) {
           if (packsEl) packsEl.textContent = "–";
@@ -438,6 +455,7 @@
         var b = cover(need, prod);
         if (packsEl) packsEl.textContent = b.packs.length ? packText(b.packs) : "–";
         if (price) price.textContent = zl(b.net);
+        if (mp) mp.textContent = zl(b.net);
         if (skip) return;   /* left out of the price by its checkbox */
         tot.net += b.net; tot.gross += b.gross; counted++;
         plan.push({ product: prod, packs: b.packs });
@@ -458,7 +476,7 @@
           s.el.classList.toggle("is-skip", !s.el.classList.contains("is-out") && !!r && r.classList.contains("is-skip"));
         } else {
           var val = s.el.querySelector(".c5-we__val");
-          if (val) val.textContent = on && isFinite(dose) ? num(dose) + " " + unit + "/ha · " + amount : "";
+          if (val) val.textContent = on && isFinite(dose) ? num(dose) + " " + unit + "/ha" + (calcOn ? " · " + amount : "") : "";
           s.el.classList.toggle("is-skip", !!r && r.classList.contains("is-skip"));
         }
       });
@@ -483,13 +501,16 @@
         infoEl.innerHTML = "";
         var b1 = doc.createElement("b"); b1.textContent = "Pakiet " + (PK_NAME[pk] || "");
         infoEl.appendChild(b1);
-        var gone = exclBtns.filter(function (x) { return excl[x.getAttribute("data-c")]; }).map(function (x) { return x.textContent.trim(); });
+        var gone = exclBtns.filter(function (x) { return excl[x.getAttribute("data-c")]; }).map(function (x) { return x.getAttribute("data-name") || x.textContent.trim(); });
         infoEl.appendChild(doc.createTextNode(" · " + (ha ? num(ha) : "–") + " ha · cena netto za " + counted + " " +
           plural(counted, "zaznaczony produkt", "zaznaczone produkty", "zaznaczonych produktów") + (gone.length ? " · bez faz: " + gone.join(", ") : "")));
       }
       if (cartBtn) cartBtn.disabled = !shop || !plan.some(function (p) { return p.packs.length; });
+      if (chart) chart.classList.toggle("is-calc", calcOn);
       /* the head of the amounts names the chosen area („Ilość na 10 ha” – 07.11.2026) */
       halabs.forEach(function (el) { el.textContent = "Ilość na " + (ha ? num(ha) : "–") + " ha"; });
+      /* the head of the price column of the chart: „dla 10 ha, netto” */
+      hafor.forEach(function (el) { el.textContent = "dla " + (ha ? num(ha) : "–") + "\u00a0ha, netto"; });
     }
 
     function apply(next, silent) {
@@ -502,14 +523,20 @@
       if (!silent) doc.dispatchEvent(new CustomEvent("c5:pakiet", { detail: { group: group, pk: pk, from: box } }));
     }
 
-    /* the split of the season dose of one product */
+    /* the split of the season dose of one product: a switch in its row of the
+       list, or – since 07.11.2026 (U-40, U-41) – in the chart under its bar
+       ([data-zab-switch][data-zab-prod]) */
     rows.forEach(function (r) {
       var key = r.getAttribute("data-prod");
       rowOf[key] = r;
       zab[key] = 1;
-      var zsw = r.querySelector("[data-zab-switch]");
-      if (!zsw) return;
-      var zopts = slice(zsw.querySelectorAll("[data-zab-set]")), out = r.querySelector("[data-zab-out]");
+    });
+    rows.map(function (r) { return { key: r.getAttribute("data-prod"), zsw: r.querySelector("[data-zab-switch]"), r: r }; })
+      .concat(all("[data-zab-switch][data-zab-prod]").map(function (z) { return { key: z.getAttribute("data-zab-prod"), zsw: z, r: null }; }))
+      .forEach(function (it) {
+      var key = it.key, zsw = it.zsw, r = it.r;
+      if (!zsw || !key) return;
+      var zopts = slice(zsw.querySelectorAll("[data-zab-set]")), out = r ? r.querySelector("[data-zab-out]") : null;
       function setZab(o, silent) {
         mark(zopts, o);
         zab[key] = parseInt(o.getAttribute("data-zab-set"), 10) || 1;
@@ -523,11 +550,17 @@
 
     /* phases left out of the price (toggle buttons) */
     exclBtns.forEach(function (x) {
-      x.setAttribute("aria-pressed", "false");
+      var named = x.hasAttribute("data-name"), name = (x.getAttribute("data-name") || "").toLowerCase();
+      if (!named) x.setAttribute("aria-pressed", "false");
       x.addEventListener("click", function () {
         var c = x.getAttribute("data-c"), on = !excl[c];
         if (on) excl[c] = true; else delete excl[c];
-        x.setAttribute("aria-pressed", on ? "true" : "false");
+        if (named) {
+          /* the button of the chart row says what a click does (U-47, 07.11.2026) */
+          x.textContent = on ? "Włącz" : "Wyłącz z obliczeń";
+          x.setAttribute("aria-label", (on ? "Włącz do obliczeń: " : "Wyłącz z obliczeń: ") + name);
+          x.classList.toggle("is-off", on);
+        } else x.setAttribute("aria-pressed", on ? "true" : "false");
         clear(); run();
       });
     });

@@ -28,6 +28,19 @@
   --cw-a-col: 720px;       /* max width of the text column                    */
   --cw-a-gap: clamp(2.5rem, 5vw, 4.5rem);  /* between the two columns         */
   --cw-a-sticky: 30px;     /* sticky offset, one gutter of the pattern        */
+  /* 08.11.2026 (SW-01): the reading frame (header, cover, contents | text) as one value */
+  --cw-a-frame: calc(var(--cw-a-side) + var(--cw-a-gap) + var(--cw-a-col));
+}
+/* 08.11.2026 (SW-10): between 1100 and 1199 px the frame (1035 px) almost filled the
+   1052 px container and stood 9 px off the logo edge. Here the gap takes the rest, so the
+   frame is exactly the container. `100%` resolves where the variable is used – every use
+   (grid gap, max-width and margins of children of a .c5-wrap) measures the container. */
+@media (min-width:1100px) and (max-width:1199px){
+  .cw-a-head,
+  .cw-a-cover,
+  .cw-a-layout,
+  .cw-a-sec,
+  .cw-a-nav { --cw-a-gap: max(clamp(2.5rem, 5vw, 4.5rem), 100% - var(--cw-a-side) - var(--cw-a-col)); }
 }
 
 /* CE-60 progress bar → ce/CE-60-spis-tresci.css
@@ -58,7 +71,10 @@
 
 /* pole pod ilustrację: kadr 16:10, r20 (large photo), podpis neutralny */
 .cw-a-fig { margin: clamp(1.5rem, 3.4vw, 2.25rem) 0; }
-.cw-a-fig__ph { display: block; width: 100%; aspect-ratio: 16 / 10; min-height: 0; border-radius: var(--ch-radius-control-l); }
+/* 08.11.2026 (SW-09): grid, not block – the placeholder icon sits in the middle */
+.cw-a-fig__ph { display: grid; place-items: center; width: 100%; aspect-ratio: 16 / 10; min-height: 0; border-radius: var(--ch-radius-control-l); }
+/* 08.11.2026: a photo in the field – the <img> carries the class (without `wf-ph`) */
+img.cw-a-fig__ph { display: block; height: auto; object-fit: cover; object-position: var(--cw-a-fig-pos, 50% 50%); }
 .cw-a-fig__cap {
   margin-top: var(--ch-space-2);
   font-size: var(--ch-type-caption-size); line-height: 1.45; color: var(--ch-text-secondary);
@@ -108,7 +124,11 @@
 .cw-a-sec { padding-block: clamp(2.5rem, 5vw, 4rem); border-top: 1px solid var(--ch-border-subtle); }
 .cw-a-sec.c5-band,                       /* jasny pas sam się oddziela */
 .cw-a-sec.c5-band + .cw-a-sec { border-top: 0; }
-.cw-a-col { max-width: 980px; }
+/* 08.11.2026 (SW-01): the 980 px column only below 1100 px; from 1100 px see the frame rules
+   after CE-50 below */
+@media (max-width: 1099px) {
+  .cw-a-col { max-width: 980px; }
+}
 
 /* CE-63 author card → ce/CE-63-karta-autora.css */
 
@@ -128,6 +148,27 @@
 .cw-a-form__msg { width: 100%; }
 .cw-a-ask { margin-top: clamp(1.75rem, 4vw, 2.5rem); border-radius: 0; }
 .cw-a-ask .wf-ph--avatar { width: 48px; height: 48px; min-height: 0; flex: none; }
+
+/* ===== 08.11.2026 (SW-01) · Two left edges from 1100 px ======================
+   Before: four edges (frame 194, text 526, `.cw-a-col` 254, „Czytaj dalej” and
+   the prev / next row 24 at 1440 px). Now the sections that continue the text
+   (FAQ, author, „Zaproponuj temat”) stand on the edge and in the width of the
+   text column, the form and the guide band in the same 720 px; „Czytaj dalej”
+   and the prev / next row take the reading frame (the edge of the title).
+   Percentages of the margins measure the container (.c5-wrap content box). */
+@media (min-width: 1100px) {
+  .cw-a-col > * {
+    max-width: var(--cw-a-col);
+    margin-left: calc((100% - var(--cw-a-frame)) / 2 + var(--cw-a-side) + var(--cw-a-gap));
+  }
+  .cw-a-sec > .c5-wrap:not(.cw-a-col) > * {
+    max-width: var(--cw-a-frame);
+    margin-inline: auto;
+  }
+  /* flex items: the margins measure the flex container, i.e. the container */
+  .cw-a-nav__in > .cw-a-nav__item--prev { margin-left: calc((100% - var(--cw-a-frame)) / 2); }
+  .cw-a-nav__in > .cw-a-nav__item--next { margin-right: calc((100% - var(--cw-a-frame)) / 2); }
+}
 
 /* ===== Poprzedni / następny artykuł ======================================== */
 .cw-a-nav { border-top: 1px solid var(--ch-border-subtle); }

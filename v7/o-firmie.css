@@ -47,17 +47,15 @@
 
 /* ===== 70 · GDZIE JESTEŚMY – glob dystrybutorów (CE-96 kraje) i adres
    The globe and the partner cards live in ce/CE-96-glob-dystrybutorow.css
-   (the same section as on kontakt.html). This page only adds the row under
-   the cards: the address on the left, the buttons on the right; up to 767 px
-   one under the other. */
-.on-map{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:var(--ch-space-5) clamp(2rem,5vw,4rem);
-  margin-top:clamp(1.5rem,3vw,2.25rem);padding-top:clamp(1.25rem,2.5vw,1.75rem);border-top:1px solid var(--ch-border-subtle);}
+   (the same section as on kontakt.html). This page adds the address of the head
+   office with two buttons – since 08.11.2026 on the right of the heading, over
+   the globe (modifier c5-glob--glowa-bok of the module): the address, then the
+   buttons under it. */
+.on-map{display:flex;flex-direction:column;align-items:flex-start;gap:var(--ch-space-5);}
 .on-map__addr{font-style:normal;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary);}
 .on-map__co{display:block;font-size:var(--ch-type-tab-size);line-height:var(--ch-type-tab-lh);font-weight:var(--ch-font-weight-medium);letter-spacing:var(--ch-type-tab-ls);
   color:var(--ch-text-primary);margin-bottom:var(--ch-space-2);}
-@media (max-width:767px){
-  .on-map{flex-direction:column;align-items:flex-start;}
-}
+
 
 
 /* ===== 90 · MOTTO – ciemny boks (CE-33 „ciemny-boks") ====================

@@ -1,48 +1,62 @@
-/* ===== CE-90 · Oś programu z punktami zdarzeń – vertical-line look (02.10.2026),
-   Figma look of 18.10.2026, second pass: frame 888:4324 (colour version), the
-   widened month as in frame 903:1447, the marks from the „States” component
-   (Property 1 = Zrobione / W toku / Zaplanowane / Nie dotyczy / Youtube).
-   Class prefix: c5-ax. Spec prochnica-plus-wzorzec-eco-spec §19.5, §20.2, §21.
+/* ===== CE-90 · Oś programu z punktami zdarzeń – quarter look of 08.11.2026
+   (comment U-70 on the comment bar: Figma 996:2431 with its annotations and
+   the states of Figma 996:3195; second round of annotations the same evening).
+   Class prefix: c5-ax. Spec prochnica-plus-wzorzec-eco-spec §24 (earlier
+   looks: §19.5, §20.2, §21 and Figma 888:4324 / 903:1447 of 18.10.2026 –
+   archived 08.11.2026).
    ---------------------------------------------------------------------------
-   One time axis for all farms, drawn on white:
+   One time axis for all farms, drawn on white, cut into QUARTERS of equal
+   width (4th quarter of 2025 … 1st quarter of 2028 – every quarter takes the
+   same room, however many events it holds):
      · a row of years: a solid 1 px dark line at the start of every year after
-       the first, the year (16 / 25) just right of it;
-     · a beige bar of months (31 px, 8 px corners) running the full width, the
-       names column included;
-     · one row per farm (100 px), parted by 1 px rules across the whole width;
-       the farm: a crop chip with an icon over the name (18 / 28).
-   A month with events is a column whose left edge carries a dashed line
-   (5 / 5, grey-300) from the bar down through all rows; its label stands
-   centred over that line. An empty month is a narrow column with a short
-   dashed tick under its label; a year without events is one narrow strip.
-   Events stand 20 px right of their month line in lanes 34 px apart, centred
-   in the row: a 20 px state mark, and a red YouTube mark 10 px further when
-   the event has a film report. The current month: a solid 2 px dark line, a
-   dark label over the years, a dark badge on the bar.
+       the first, the year (16 / 25) just right of it; the line runs unbroken
+       down through the bar and every row;
+     · a beige bar (31 px, 8 px corners) running the full width, the names
+       column included; on it the first month of each quarter but January (IV,
+       VII, X), centred over the line where its quarter starts. The bar FLOATS:
+       hovering a row slides it down onto that row (adapting to its height),
+       and it is gone from the top meanwhile;
+     · a dashed line (1 px, 5 / 5, grey-300) at the start of every quarter,
+       from the bar down through all rows; no other ticks;
+     · one row per farm (at least 100 px), parted by 1 px rules across the
+       whole width; the farm: a crop chip with its own crop icon over the name.
+   The events of one farm in one quarter stand one under another, 8 px apart
+   (never side by side), 20 px right of the quarter line, centred in the row:
+   a 22 px mark – done = a green square with a tick, planned = a solid outline
+   (1.2 px, grey-600) – and, for an event with an existing YouTube report, a
+   red YouTube mark 8 px to its right. There is no „in progress” state.
+   The last quarter that has begun is marked dark: a 2 px dark line down the
+   rows on its start and a dark badge on its month on the bar. While the
+   pointer is over a quarter the line and the badge stand on that quarter.
+   Half a second on a quarter widens it (the others give way equally); leaving
+   it folds it at once. Widened, every mark grows to the right into a capsule
+   with the name of the event (done: the green ground grows; planned: the
+   outline grows and a pulsing dot appears), the YouTube mark rides along 8 px
+   to the right and never gets a title; the quarter line and the rules of that
+   column turn dark. The whole cell (one farm, one quarter) is one button that
+   opens one dialog with every event of the farm in that quarter.
    Widths come from the script as one px track list (--c5-ax-cols) shared by
-   every grid of the block. Hovering a month (or focusing a point, or tapping
-   the column) widens it (Figma 903): each mark grows into a 20 px label with
-   the name of the event, the film mark into a red label with the title of the
-   film, the dashed line and the rules of that column turn dark. The columns
-   glide to their new places on transform only (FLIP, script); the labels fade
-   in. A click opens a dialog. A hovered, focused or targeted row turns beige.
-   Below 900 px the axis scrolls sideways inside the block (`data-lenis-prevent`,
-   no `wheel` listener); the name column stays glued to the left edge and the
-   right edge fades out.
+   every grid of the block, so the columns glide together (the track list is
+   transitioned; not with reduced motion). Where the quarters would get
+   narrower than 72 px the axis scrolls sideways inside the block
+   (`data-lenis-prevent`, no `wheel` listener); the name column stays glued to
+   the left edge and the right edge fades out.
    ========================================================================= */
 
 .c5-ax{
   --c5-ax-name:229px;                         /* sticky name column (Figma 229)          */
-  --c5-ax-lane:34px;                          /* stride of stacked events in one row     */
-  --c5-ax-pad:23px;                           /* top of the first lane in a 100 px row   */
-  --c5-ax-px:20px;                            /* mark: distance from the month line      */
-  --c5-ax-years:63px;                         /* row of years incl. the „we are here” label */
-  --c5-ax-bar:31px;                           /* the beige bar of months                 */
-  --c5-ax-e:320px;                            /* width of the widened column (script)    */
-  --c5-ax-ground:var(--ch-surface-page);      /* ground of a name cell                   */
+  --c5-ax-mk:22px;                            /* mark (Figma annotation: 22 px)          */
+  --c5-ax-gap:8px;                            /* events one under another (annotation)   */
+  --c5-ax-yt-gap:8px;                         /* YouTube mark right of its event         */
+  --c5-ax-years:63px;                         /* row of years                            */
+  --c5-ax-bar:31px;                           /* the beige bar of quarters               */
   --c5-ax-rule:var(--ch-border-subtle);       /* 1 px rule between the rows              */
-  --c5-ax-dash:var(--ch-border-control);      /* dashed month line, grey-300             */
+  --c5-ax-dash:var(--ch-border-control);      /* dashed quarter line, grey-300           */
+  --c5-ax-done:var(--ch-status-done);
+  --c5-ax-plan:var(--ch-status-planned);      /* planned: outline, dot, text (Figma #777771) */
+  --c5-ax-plan-w:1.2px;                       /* outline of a planned mark (Figma 1.2)   */
   --c5-ax-ease:cubic-bezier(.22,.61,.36,1);
+  --c5-ax-dur:.45s;
   position:relative;
   width:100%;
   /* the container of the pattern: 1600 px of content + the 24 px gutters */
@@ -61,6 +75,7 @@
 
 /* the sprite of the marks (symbols only, never painted) */
 .c5-ax__sprite{position:absolute;width:0;height:0;overflow:hidden;}
+.c5-ax__sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;}
 
 /* --- scroll port: the only place this block scrolls sideways --------------- */
 .c5-ax__frame{position:relative;z-index:1;overflow-x:auto;overflow-y:hidden;overscroll-behavior:auto;
@@ -70,19 +85,30 @@
 /* every grid of the block shares one track list, so they all move together */
 .c5-ax__years,.c5-ax__months,.c5-ax__track{display:grid;grid-template-columns:var(--c5-ax-cols);
   flex:0 0 auto;width:var(--c5-ax-w);}
+.c5-ax.is-ready .c5-ax__years,.c5-ax.is-ready .c5-ax__months,.c5-ax.is-ready .c5-ax__track{
+  transition:grid-template-columns var(--c5-ax-dur) var(--c5-ax-ease),width var(--c5-ax-dur) var(--c5-ax-ease);}
 
-/* --- calendar: a row of years over the beige bar of months ------------------- */
-.c5-ax__head{position:relative;display:flex;align-items:stretch;}
-/* the bar: full width of the axis, the names column included */
-.c5-ax__head::after{content:"";position:absolute;z-index:0;left:0;right:0;bottom:0;height:var(--c5-ax-bar);
-  border-radius:var(--ch-radius-sm);background:var(--ch-surface-warm);pointer-events:none;}
+/* --- the bar itself: it lies under the quarter labels and floats down onto
+   the hovered row (Figma 996:2436: „it is not up here while it is lower”) - */
+.c5-ax__hl{position:absolute;z-index:0;left:0;top:0;width:100%;height:var(--c5-ax-bar);
+  border-radius:var(--ch-radius-sm);background:var(--ch-surface-warm);pointer-events:none;
+  transform:translateY(var(--c5-ax-years));}
+.c5-ax.is-ready .c5-ax__hl{transition:transform .4s var(--c5-ax-ease),height .4s var(--c5-ax-ease);}
+
+/* --- calendar: a row of years over the bar ------------------------------------ */
+.c5-ax__head{position:relative;z-index:2;display:flex;align-items:stretch;}
 .c5-ax__corner{position:sticky;left:0;z-index:4;flex:0 0 var(--c5-ax-name);
   background:linear-gradient(var(--ch-surface-page),var(--ch-surface-page)) 0 0 / 100% calc(100% - var(--c5-ax-bar)) no-repeat;}
-.c5-ax__corner::after{content:"";position:absolute;left:0;right:0;bottom:0;height:var(--c5-ax-bar);
-  border-radius:var(--ch-radius-sm) 0 0 var(--ch-radius-sm);background:var(--ch-surface-warm);}
+/* an axis that scrolls: the glued corner covers what slides under it and
+   carries its own piece of the bar (gone while the bar floats on a row) */
+.c5-ax.is-scroll .c5-ax__corner{background:var(--ch-surface-page);}
+.c5-ax.is-scroll .c5-ax__corner::after{content:"";position:absolute;left:0;right:0;bottom:0;height:var(--c5-ax-bar);
+  border-radius:var(--ch-radius-sm) 0 0 var(--ch-radius-sm);background:var(--ch-surface-warm);
+  transition:opacity .25s var(--c5-ax-ease);}
+.c5-ax.is-scroll.has-lit .c5-ax__corner::after{opacity:0;}
 .c5-ax__cal{position:relative;z-index:1;flex:0 0 auto;}
-/* where the axis does not scroll, the label of the first month may stand over
-   the edge of the names column (Figma: „XI” centred on that edge) */
+/* where the axis does not scroll, the label of the first quarter may stand over
+   the edge of the names column (Figma: the label centred on that edge) */
 .c5-ax:not(.is-scroll) .c5-ax__cal{z-index:5;}
 
 .c5-ax__year{position:relative;grid-row:1;min-width:0;height:var(--c5-ax-years);padding-top:26px;white-space:nowrap;overflow:clip;
@@ -93,122 +119,100 @@
 .c5-ax__year > span{position:sticky;left:var(--c5-ax-name);z-index:3;display:inline-block;padding-left:8px;}
 .c5-ax__year:not([data-ys]) > span{visibility:hidden;}  /* Figma: the first year has no number */
 
-/* „we are here”: a dark label over the years, centred on the 2 px line that runs
-   down from it to the bar (the bar hides it; the badge on the bar continues it) */
-.c5-ax__nowcol{position:relative;z-index:2;grid-row:1;min-width:0;pointer-events:none;}
-.c5-ax__nowcol::before{content:"";position:absolute;top:20px;bottom:0;left:0;width:2px;background:var(--ch-border-strong);}
-.c5-ax__nowcol--mid::before{left:calc(50% - 1px);}
-.c5-ax__nowlab{position:absolute;top:0;left:1px;transform:translateX(-50%);white-space:nowrap;
-  padding:6px 8px;border-radius:6px;background:var(--ch-surface-inverse);color:var(--ch-text-inverse);
-  font-size:var(--ch-type-overline-size);line-height:var(--ch-type-overline-lh);font-weight:var(--ch-type-overline-weight);letter-spacing:var(--ch-type-overline-ls);text-transform:uppercase;}
-.c5-ax__nowcol--mid > .c5-ax__nowlab{left:50%;}
-/* on an axis that scrolls the label starts at its line (it never slides under
-   the names column at the start position) */
-.c5-ax.is-scroll .c5-ax__nowlab{left:0;transform:none;}
-.c5-ax__nowlab.is-flip,.c5-ax.is-scroll .c5-ax__nowlab.is-flip{left:auto;right:calc(100% - 2px);transform:none;}
-.c5-ax__nowcol--mid > .c5-ax__nowlab.is-flip{right:calc(50% - 1px);}
-
-/* the months sit on the bar: 12 / 14 caps, grey */
-.c5-ax__month{position:relative;min-width:0;height:var(--c5-ax-bar);cursor:default;white-space:nowrap;
-  font-size:var(--ch-type-overline-size);line-height:var(--c5-ax-bar);letter-spacing:var(--ch-type-overline-ls);text-transform:uppercase;text-align:center;color:var(--ch-text-secondary);}
-.c5-ax__month[data-ys]::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--ch-border-strong);}
-/* a month with events: its label stands centred over the month line (the left edge) */
-.c5-ax__month--ev > span{position:absolute;left:0;top:0;transform:translateX(-50%);}
-/* an empty month: the label goes when the column gets too narrow */
-.c5-ax.is-tight .c5-ax__month--empty > span{visibility:hidden;}
-/* the current month: a 20 px dark badge on the bar */
-.c5-ax__month--now > span{position:absolute;left:1px;top:50%;transform:translate(-50%,-50%);
-  min-width:20px;height:20px;padding:0 4px;border-radius:6px;background:var(--ch-surface-inverse);color:var(--ch-text-inverse);
-  line-height:20px;text-align:center;}
-.c5-ax__month--now.c5-ax__month--empty > span{left:50%;visibility:visible;}
+/* the quarters sit on the bar: the first month of each but January (the year
+   line stands there), 12 / 14 caps, grey, centred over the quarter line */
+.c5-ax__q{position:relative;min-width:0;height:var(--c5-ax-bar);cursor:default;white-space:nowrap;
+  font-size:var(--ch-type-overline-size);line-height:var(--c5-ax-bar);letter-spacing:var(--ch-type-overline-ls);text-transform:uppercase;color:var(--ch-text-secondary);}
+.c5-ax__q > span{position:absolute;z-index:1;left:0;top:50%;transform:translate(-50%,-50%);
+  min-width:20px;height:20px;padding:0 4px;border-radius:6px;line-height:20px;text-align:center;}
+/* the line of a new year runs on unbroken through the bar */
+.c5-ax__q[data-ys]::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--ch-border-strong);}
+/* an axis that scrolls: the first label starts at its line instead of sliding
+   half under the glued names column */
+.c5-ax.is-scroll .c5-ax__q:first-child > span{transform:translate(-2px,-50%);}
+/* the marked quarter: its month turns into a dark badge */
+.c5-ax__q.is-act > span{background:var(--ch-surface-inverse);color:var(--ch-text-inverse);}
 
 /* --- rows ------------------------------------------------------------------- */
-.c5-ax__body{position:relative;display:grid;grid-template-columns:100%;}
-.c5-ax__row{position:relative;z-index:1;display:flex;align-items:stretch;transition:background-color var(--w-duration-base) var(--w-ease);}
-/* the rule under a row runs the whole width (under the cells, over the row ground) */
+.c5-ax__body{position:relative;z-index:1;display:grid;grid-template-columns:100%;}
+.c5-ax__row{position:relative;z-index:1;display:flex;align-items:stretch;}
+/* the rule under a row runs the whole width (under the cells) */
 .c5-ax__row:not(:last-of-type)::after{content:"";position:absolute;z-index:-1;left:0;right:0;bottom:0;height:1px;background:var(--c5-ax-rule);pointer-events:none;}
-.c5-ax__name{position:sticky;left:0;z-index:3;flex:0 0 var(--c5-ax-name);min-width:0;max-width:var(--c5-ax-name);
-  display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:var(--ch-space-1-5);
-  padding:var(--ch-space-5);background:var(--c5-ax-ground);
-  transition:background-color var(--w-duration-base) var(--w-ease);}
-.c5-ax__row:not(:last-of-type) > .c5-ax__name{box-shadow:inset 0 -1px 0 var(--c5-ax-rule);}
+.c5-ax__name{position:sticky;left:0;z-index:3;flex:0 0 var(--c5-ax-name);min-width:0;max-width:var(--c5-ax-name);min-height:100px;
+  display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:6px;
+  padding:var(--ch-space-5);background:transparent;
+  transition:background-color .4s var(--c5-ax-ease);}
+/* an axis that scrolls: the glued names need a ground of their own */
+.c5-ax.is-scroll .c5-ax__name{background:var(--ch-surface-page);}
+.c5-ax.is-scroll .c5-ax__row:not(:last-of-type) > .c5-ax__name{box-shadow:inset 0 -1px 0 var(--c5-ax-rule);}
+.c5-ax.is-scroll .c5-ax__row.is-lit > .c5-ax__name{background:var(--ch-surface-warm);}
 /* the crop: a fill chip (beige-50, 8 px corners, 12 / 14 caps) with the crop icon */
 .c5-ax__crop{display:inline-flex;align-items:center;gap:7px;padding:6px 8px;border-radius:var(--ch-radius-sm);
-  background:var(--ch-surface-warm);color:var(--ch-text-secondary);
+  background:var(--ch-surface-warm);color:var(--ch-text-secondary);transition:background-color .4s var(--c5-ax-ease);
   font-size:var(--ch-type-overline-size);line-height:var(--ch-type-overline-lh);letter-spacing:var(--ch-type-overline-ls);text-transform:uppercase;}
 .c5-ax__cropico{flex:none;width:12px;height:12px;}
 .c5-ax__who{max-width:100%;font-size:var(--ch-type-tab-size);line-height:var(--ch-type-tab-lh);letter-spacing:var(--ch-type-tab-ls);color:var(--ch-text-primary);overflow-wrap:anywhere;}
-.c5-ax__track{position:relative;min-height:calc(2 * var(--c5-ax-pad) + var(--lanes,1) * var(--c5-ax-lane) - 14px);}
-/* the lit row (hover, focus, jump from a participant card): beige across the row */
-.c5-ax__row.is-lit{--c5-ax-ground:var(--ch-surface-warm);background-color:var(--ch-surface-warm);}
+/* the lit row (hover, focus, jump from a participant card) */
 .c5-ax__row.is-lit .c5-ax__crop{background:var(--ch-surface-page);}
+/* the height of a row: its fullest quarter (--n events), at least 100 px */
+.c5-ax__track{position:relative;min-height:max(100px, calc(2 * var(--ch-space-5) + var(--n,1) * var(--c5-ax-mk) + (var(--n,1) - 1) * var(--c5-ax-gap)));}
 
-/* --- one month of one row ---------------------------------------------------- */
-.c5-ax__cell{position:relative;grid-row:1;min-width:0;overflow:hidden;}
-.c5-ax__cell[data-ys]{box-shadow:inset 1px 0 0 var(--ch-border-strong);}
-/* the month line: 1 px, dashed 5 / 5 from the bar down; the phase follows the
+/* --- one quarter of one row ---------------------------------------------------
+   A cell with events is a button: the whole quarter of the farm is the link. */
+.c5-ax__cell{position:relative;grid-row:1;min-width:0;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:var(--c5-ax-gap);
+  /* 20 px to the quarter line (Figma); a squeezed quarter keeps its marks inside */
+  padding:var(--ch-space-5) 0 var(--ch-space-5) clamp(8px, calc(100% - 60px), var(--ch-space-5));
+  margin:0;border:0;border-radius:0;background:transparent;font:inherit;color:inherit;text-align:left;}
+button.c5-ax__cell{cursor:pointer;-webkit-tap-highlight-color:transparent;}
+button.c5-ax__cell:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:-3px;}
+/* the quarter line: 1 px, dashed 5 / 5 from the bar down; the phase follows the
    row (--c5-ax-ry, script), so the dashes run on unbroken from row to row */
-.c5-ax__cell--ev::before{content:"";position:absolute;top:0;bottom:0;left:0;width:1px;
+.c5-ax__cell::before{content:"";position:absolute;top:0;bottom:0;left:0;width:1px;pointer-events:none;
   background:repeating-linear-gradient(180deg,var(--c5-ax-dash) 0 5px,transparent 5px 10px) 0 calc(-2.5px - var(--c5-ax-ry,0px)) / 1px 10px;}
-/* an empty month: a short dashed tick under its label (first row only) */
-.c5-ax__row:first-of-type .c5-ax__cell--empty::before{content:"";position:absolute;top:0;left:50%;width:1px;height:16px;
-  background:repeating-linear-gradient(180deg,var(--c5-ax-dash) 0 2px,transparent 2px 6px,var(--c5-ax-dash) 6px 8px);}
-/* „we are here”: the solid dark 2 px line replaces the dashed one */
-.c5-ax__cell--now::before{display:none;}
-.c5-ax__cell--now::after{content:"";position:absolute;top:0;bottom:0;left:0;width:2px;background:var(--ch-border-strong);}
-.c5-ax__cell--now:not(.c5-ax__cell--ev)::after{left:calc(50% - 1px);}
-/* the widened month (Figma 903): dark dashed line, dark rules */
+/* the start of a year: a solid dark line instead */
+.c5-ax__cell[data-ys]::before{background:var(--ch-border-strong);}
+/* the marked quarter: a solid dark 2 px line over the quarter line */
+.c5-ax__cell.is-act::after{content:"";position:absolute;z-index:3;top:0;bottom:0;left:0;width:2px;background:var(--ch-border-strong);pointer-events:none;}
+/* the widened quarter: dark dashed line, dark rules */
 .c5-ax__cell.is-open{--c5-ax-dash:var(--ch-border-strong);}
 .c5-ax__row:not(:last-of-type) .c5-ax__cell.is-open{box-shadow:inset 0 -1px 0 var(--ch-border-strong);}
-.c5-ax__row:not(:last-of-type) .c5-ax__cell.is-open[data-ys]{box-shadow:inset 1px 0 0 var(--ch-border-strong),inset 0 -1px 0 var(--ch-border-strong);}
 
-/* --- event point -------------------------------------------------------------
-   At rest: the 20 px state mark and, for a film, the 20 px YouTube mark 10 px
-   further. Widened: each mark leads a label of its own (20 px, 5 px corners,
-   11 px text) – the state label carries the name of the event, the film label
-   the title of the film. */
-.c5-ax__pt{position:absolute;z-index:2;
-  left:var(--c5-ax-px);
-  top:calc(var(--c5-ax-pad) + var(--lane) * var(--c5-ax-lane));
-  display:flex;align-items:flex-start;gap:10px;height:20px;margin:0;padding:0;
-  border:0;border-radius:var(--ch-radius-status);background:transparent;font:inherit;text-align:left;cursor:pointer;
-  -webkit-tap-highlight-color:transparent;}
-/* a slightly larger target than the 20 px mark */
-.c5-ax__pt::after{content:"";position:absolute;inset:-4px;}
-.c5-ax__pt:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:2px;}
-.c5-ax__ev,.c5-ax__film{position:relative;display:flex;align-items:flex-start;flex:none;}
-.c5-ax__mk{position:relative;z-index:1;flex:none;display:block;width:20px;height:20px;overflow:visible;}
+/* --- event mark ----------------------------------------------------------------
+   At rest: the 22 px mark and, for an event with a YouTube report, the 22 px
+   YouTube mark 8 px to its right. Widened: the mark grows to the right into a
+   capsule (Figma 996:3195) – the script sets its width (--w) from the label. */
+.c5-ax__pt{position:relative;z-index:2;display:flex;align-items:center;gap:var(--c5-ax-yt-gap);flex:none;max-width:100%;}
+.c5-ax__pill{position:relative;display:flex;align-items:center;flex:none;box-sizing:border-box;
+  width:var(--c5-ax-mk);height:var(--c5-ax-mk);border-radius:var(--ch-radius-status);overflow:hidden;
+  transition:width var(--c5-ax-dur) var(--c5-ax-ease);}
+.c5-ax__pt--done .c5-ax__pill{background:var(--c5-ax-done);color:var(--ch-text-inverse);}
+/* the planned outline: an inset shadow, because a 1.2 px border is snapped to
+   whole device pixels (1 px) while a shadow keeps the width of Figma */
+.c5-ax__pt--plan .c5-ax__pill{box-shadow:inset 0 0 0 var(--c5-ax-plan-w) var(--c5-ax-plan);background:var(--ch-surface-page);color:var(--c5-ax-plan);}
+/* the sign at the start of the capsule: a tick (done) or a pulsing dot
+   (planned); the text starts 23 px from the left edge of the capsule (Figma),
+   8 px of air at its end */
+.c5-ax__sign{flex:none;display:grid;place-items:center;width:var(--c5-ax-mk);height:100%;}
+.c5-ax__pt--plan .c5-ax__sign{opacity:0;transition:opacity .2s var(--c5-ax-ease);}
+.c5-ax__tick{display:block;width:var(--c5-ax-mk);height:var(--c5-ax-mk);}
+.c5-ax__dot{display:block;width:6px;height:6px;border-radius:50%;background:var(--c5-ax-plan);}
+.c5-ax__lab{flex:1 1 auto;min-width:0;padding:0 8px 0 1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  font-size:12px;line-height:14px;letter-spacing:-0.005em;
+  opacity:0;visibility:hidden;transition:opacity .16s var(--c5-ax-ease),visibility 0s linear .16s;}
+/* the YouTube mark: never a title, it only rides along 8 px to the right */
+.c5-ax__yt{flex:none;display:block;width:var(--c5-ax-mk);height:var(--c5-ax-mk);}
 
-.c5-ax{--c5-ax-st:var(--ch-status-planned);}
-.c5-ax [data-state="done"]{--c5-ax-st:var(--ch-status-done);}
-.c5-ax [data-state="doing"]{--c5-ax-st:var(--ch-status-in-progress);}
-.c5-ax [data-state="todo"]{--c5-ax-st:var(--ch-status-planned);}
-.c5-ax [data-state="na"]{--c5-ax-st:var(--ch-status-not-applicable);}
+/* the widened quarter */
+.c5-ax__cell.is-open .c5-ax__pill{width:var(--w,var(--c5-ax-mk));}
+.c5-ax__cell.is-open .c5-ax__lab{opacity:1;visibility:visible;transition:opacity .28s var(--c5-ax-ease) .14s,visibility 0s;}
+.c5-ax__cell.is-open .c5-ax__pt--plan .c5-ax__sign{opacity:1;transition-delay:.12s;}
+/* the dot pulses in opacity only, never in size (annotation 996:3208) */
+.c5-ax__cell.is-open .c5-ax__dot{animation:c5-ax-pulse 1.4s ease-in-out infinite;}
+@keyframes c5-ax-pulse{0%,100%{opacity:1;}50%{opacity:.25;}}
 
-/* the label behind a mark: folded away at rest (still laid out, so the script
-   can measure it), shown in the widened column */
-.c5-ax__seg{position:absolute;z-index:0;top:0;left:15px;display:block;height:20px;margin:0;
-  padding:0 8px 0 9px;border-radius:0 var(--ch-radius-status) var(--ch-radius-status) 0;
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-  font-size:11px;line-height:20px;font-weight:var(--ch-font-weight-regular);letter-spacing:0;
-  opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s var(--c5-ax-ease),visibility 0s linear .16s;}
-/* filled labels (done, film): one continuous pill – the label starts under the mark */
-.c5-ax__pt[data-state="done"] .c5-ax__ev > .c5-ax__seg{background:var(--ch-status-done);color:var(--ch-text-inverse);}
-.c5-ax__film > .c5-ax__seg{background:var(--ch-status-film);color:var(--ch-text-inverse);}
-/* outlined labels (doing, todo, n/a): a 1.5 px frame in the state colour that
-   meets the mark (Figma: the frame overlaps the mark by 1 px) */
-.c5-ax__pt:not([data-state="done"]) .c5-ax__ev > .c5-ax__seg{padding-left:6px;border:1.5px solid var(--c5-ax-st);border-left-width:0;
-  line-height:17px;background:var(--ch-surface-page);color:var(--c5-ax-st);}
-.c5-ax__pt[data-state="na"] .c5-ax__ev > .c5-ax__seg{border-style:dashed;color:var(--ch-text-secondary);}
-.c5-ax__cell.is-open .c5-ax__seg{position:relative;left:auto;margin-left:-5px;
-  opacity:1;visibility:visible;transition:opacity .28s var(--c5-ax-ease) .1s,visibility 0s;}
-.c5-ax__cell.is-open .c5-ax__pt:not([data-state="done"]) .c5-ax__ev > .c5-ax__seg{margin-left:-1px;}
-/* a label longer than the widened column allows is cut with an ellipsis (the
-   script sets max-width per label; the full text stands in the dialog) */
-.c5-ax__cell.is-open .c5-ax__pt:hover .c5-ax__seg{text-decoration:underline;text-underline-offset:2px;}
-
-/* first entry into view: points drop in one after another (motionOn only) */
-.c5-ax--arm .c5-ax__pt{opacity:0;transform:scale(.4);transform-origin:10px 10px;}
+/* first entry into view: the marks drop in quarter by quarter (motionOn only) */
+.c5-ax--arm .c5-ax__pt{opacity:0;transform:scale(.4);transform-origin:11px 11px;}
 .c5-ax--arm.is-in .c5-ax__pt{opacity:1;transform:none;
   transition:opacity .35s var(--w-ease) calc(var(--i) * 40ms),transform .35s var(--w-ease) calc(var(--i) * 40ms);}
 
@@ -216,7 +220,7 @@
 .c5-ax__legend{position:relative;z-index:1;display:flex;flex-wrap:wrap;align-items:center;gap:8px var(--ch-space-6);margin:var(--ch-space-8) 0 0;padding:0;list-style:none;
   font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary);}
 .c5-ax__legend li{display:inline-flex;align-items:center;gap:var(--ch-space-3);}
-.c5-ax__legend li > span::first-letter{text-transform:uppercase;}
+.c5-ax__legend .c5-ax__lg{flex:none;display:block;width:20px;height:20px;}
 
 /* --- pop-up: centred dialog (accessibility pattern of the profile pop-up) ----- */
 html.c5-ax-lock{overflow:hidden;}
@@ -244,7 +248,6 @@ html.c5-ax-lock{overflow:hidden;}
 /* the milestone clone loses the timeline chrome – the dialog frames it itself */
 .c5-ax__dlg .pp-ms{flex:0 0 auto;width:auto;border:1px solid var(--w-border-default);}
 .c5-ax__dlg .pp-ms::before{display:none;}
-.c5-ax__dlg .pp-ms.is-hit{border-width:2px;border-color:var(--w-gray-900);}
 .c5-ax__dlg .pp-ms:only-child{border:0;padding:0;}
 .c5-ax__dlg .pp-ms__name{margin:0;}
 .c5-ax__dlg .pp-ms__name:focus-visible{outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:2px;}
@@ -261,23 +264,25 @@ html.c5-ax-lock{overflow:hidden;}
   .c5-ax__title{margin-bottom:var(--ch-space-3);}
   .c5-ax__name{padding:var(--ch-space-4) var(--ch-space-3);}
   .c5-ax__who{font-size:var(--ch-type-body-size);line-height:22px;}
-  /* the right edge fades out (the axis scrolls here) */
-  .c5-ax__fade{display:block;position:sticky;right:0;grid-column:1;grid-row:1 / span 24;justify-self:end;align-self:stretch;
-    z-index:5;width:56px;pointer-events:none;
-    background:linear-gradient(to right,rgb(255 255 255 / 0),var(--ch-surface-page));}
 }
+/* the right edge fades out where the axis scrolls */
+.c5-ax.is-scroll .c5-ax__fade{display:block;position:sticky;right:0;grid-column:1;grid-row:1 / span 24;justify-self:end;align-self:stretch;
+  z-index:5;width:56px;pointer-events:none;
+  background:linear-gradient(to right,rgb(255 255 255 / 0),var(--ch-surface-page));}
 @media (max-width:599px){
   .c5-ax{--c5-ax-name:6.75rem;}
   .c5-ax__name{padding-inline:var(--ch-space-2) var(--ch-space-2);}
   .c5-ax__who{font-size:var(--ch-type-small-size);line-height:18px;}
   .c5-ax__crop{gap:5px;padding:4px 6px;font-size:10px;letter-spacing:.02em;}
   .c5-ax__cropico{width:10px;height:10px;}
-  .c5-ax__nowlab{padding:6px;font-size:11px;letter-spacing:.01em;}
   /* full-screen panel, like the profile pop-up */
   .c5-ax__dlg{width:100%;height:100%;max-height:100svh;border:0;}
 }
 @media (prefers-reduced-motion:reduce){
-  .c5-ax__row,.c5-ax__name,.c5-ax__dlgclose{transition:none;}
-  .c5-ax__seg,.c5-ax__cell.is-open .c5-ax__seg{transition:none;}
+  .c5-ax.is-ready .c5-ax__years,.c5-ax.is-ready .c5-ax__months,.c5-ax.is-ready .c5-ax__track,
+  .c5-ax.is-ready .c5-ax__hl,.c5-ax.is-scroll .c5-ax__corner::after,
+  .c5-ax__pill,.c5-ax__name,.c5-ax__crop,.c5-ax__dlgclose{transition:none;}
+  .c5-ax__lab,.c5-ax__cell.is-open .c5-ax__lab,.c5-ax__pt--plan .c5-ax__sign{transition:none;}
+  .c5-ax__cell.is-open .c5-ax__dot{animation:none;}
   .c5-ax--arm .c5-ax__pt{opacity:1;transform:none;transition:none;}
 }

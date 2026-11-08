@@ -377,6 +377,7 @@
   --c5-glob-k-edge:transparent;
   --c5-glob-k-kraj:var(--ch-color-green-300);    /* partner countries at rest (#A7D781) */
   --c5-glob-k-kraj-on:var(--ch-color-green-logo); /* picked / pointed country */
+  --c5-glob-k-hq-kraj:#DCD3C3;                   /* the head office country, data-glob-hq-kraj (no token yet; 07.11.2026) */
   --c5-glob-k-ink:var(--ch-text-primary);
   --c5-glob-k-k:0.7565;                          /* central scale / section width (1089 px at 1440; Figma 549:320) */
   --c5-glob-k-w-max:1440;                        /* px – wider sections keep the 1440 globe */
@@ -443,6 +444,35 @@
 /* the strip kept for an open card already gives room under the closed row –
    the section's own bottom padding shrinks by the same order */
 .c5-glob--kraje.is-ready .c5-glob__body:last-child{margin-bottom:calc(clamp(4rem,8.334vw,var(--ch-layout-section-y)) * -0.6);}
+/* modifier c5-glob--blisko (07.11.2026, kontakt.html – U-49, U-50): a closer view.
+   The rim may run behind the kicker and the heading, so a white glow lies under
+   the head; the row keeps no strip for an open card – closed it sits close to the
+   bottom, an open card makes the section taller and shows more of the globe. */
+.c5-glob--kraje.c5-glob--blisko.is-ready .c5-glob__head{position:relative;}
+.c5-glob--kraje.c5-glob--blisko.is-ready .c5-glob__head::before{content:"";position:absolute;z-index:-1;left:50%;top:-110px;bottom:-6px;
+  width:min(1180px,130%);transform:translateX(-50%);pointer-events:none;
+  background:radial-gradient(closest-side,var(--ch-surface-page) 58%,transparent);}
+.c5-glob--kraje.c5-glob--blisko.is-ready .c5-glob__list{min-height:0;}
+/* modifier c5-glob--glowa-bok (08.11.2026, o-firmie.html): the kicker and the heading
+   on the left, a side block (.c5-glob__aside – the address and the buttons of the
+   page) on the right; the side block starts level with the heading, as in the PRO
+   band (CE-16). Below 900 px one column. With c5-glob--blisko the white glow lies
+   under the whole row. */
+.c5-glob--glowa-bok .c5-glob__top{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"kick ." "head side";
+  column-gap:clamp(2rem,5vw,4rem);row-gap:clamp(1rem,2.2vw,2rem);align-items:start;}
+.c5-glob--glowa-bok .c5-glob__top > .c5-kicker{grid-area:kick;justify-self:start;margin:0;}
+.c5-glob--kraje.c5-glob--glowa-bok .c5-glob__head{grid-area:head;align-items:flex-start;text-align:left;margin:0;}
+.c5-glob--kraje.c5-glob--glowa-bok .c5-glob__head .c5-h2{margin-inline:0;}
+.c5-glob--glowa-bok .c5-glob__aside{grid-area:side;}
+.c5-glob--kraje.c5-glob--blisko.c5-glob--glowa-bok.is-ready .c5-glob__head::before{content:none;}
+.c5-glob--kraje.c5-glob--blisko.c5-glob--glowa-bok.is-ready .c5-glob__top{position:relative;}
+.c5-glob--kraje.c5-glob--blisko.c5-glob--glowa-bok.is-ready .c5-glob__top::before{content:"";position:absolute;z-index:-1;left:50%;top:-110px;bottom:-6px;
+  width:calc(100% + 16vw);transform:translateX(-50%);pointer-events:none;
+  background:radial-gradient(farthest-side,var(--ch-surface-page) 62%,transparent);}
+@media (max-width:899px){
+  .c5-glob--glowa-bok .c5-glob__top{grid-template-columns:minmax(0,1fr);grid-template-areas:"kick" "head" "side";}
+}
+.c5-glob--kraje.c5-glob--blisko.is-ready .c5-glob__body:last-child{margin-bottom:calc(clamp(4rem,8.334vw,var(--ch-layout-section-y)) * -0.45);}
 .c5-glob--kraje.is-ready .c5-glob__bar{display:flex;align-items:center;justify-content:space-between;gap:var(--ch-space-4);
   margin-bottom:clamp(16px,2.4vw,32px);pointer-events:none;}
 .c5-glob__hint{margin:0;font-size:var(--ch-type-lead-size);line-height:var(--ch-type-lead-lh);color:var(--ch-text-secondary);}

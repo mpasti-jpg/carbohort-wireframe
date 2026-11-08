@@ -29,6 +29,13 @@
      chosen in the calculator (`c5:zabiegi` event on document: group, prod, n)
      is in its list, otherwise hatched (`is-opt`). Its hidden text
      `[data-we-sr]` says which.
+   - Variant „razem” (08.11.2026, U-75, U-76): a possible term shows nothing
+     until the split fills it; a change of the number of treatments flies the
+     parts between the bar of the first treatment (`data-zab-src="key"`) and
+     the bars of their phases.
+   - Controls inside the cells (`[data-we-ctl]`: the number of treatments under
+     the bar, the row „Wyłącz wybrane fazy z obliczeń” – CE-47 `etapy`,
+     07.11.2026) take their own clicks; the column does not open then.
    Without JS the switches stay hidden and all bars and cards stand. ======== */
 (function () {
   "use strict";
@@ -91,7 +98,7 @@
       bars.forEach(function (b) {
         var off = !inPk(b, pk);
         b.classList.toggle("is-off", off);
-        if (off) b.setAttribute("aria-hidden", "true"); else b.removeAttribute("aria-hidden");
+        if (off || (root.classList.contains("c5-we--razem") && b.classList.contains("is-opt"))) b.setAttribute("aria-hidden", "true"); else b.removeAttribute("aria-hidden");
       });
       if (!silent) announce(group, pk, root);
     }
@@ -102,16 +109,72 @@
     });
 
     /* the split of the season dose chosen in the calculator */
+    var razem = root.classList.contains("c5-we--razem"), zabN = {};
+    var scroller = root.querySelector(".c5-we__scroll");
     doc.addEventListener("c5:zabiegi", function (e) {
       var d = e.detail || {};
       if (d.group !== group || !d.prod) return;
-      slice(root.querySelectorAll('.c5-we__bar[data-zab-prod="' + d.prod + '"]')).forEach(function (b) {
+      var parts = slice(root.querySelectorAll('.c5-we__bar[data-zab-prod="' + d.prod + '"]'));
+      var was = parts.filter(function (b) { return !b.classList.contains("is-opt"); });
+      parts.forEach(function (b) {
         var on = (" " + (b.getAttribute("data-zab") || "") + " ").indexOf(" " + d.n + " ") >= 0;
         b.classList.toggle("is-opt", !on);
         var sr = b.querySelector("[data-we-sr]");
         if (sr) sr.textContent = on ? "zabieg w pakiecie – część dawki na sezon" : "możliwy termin części dawki";
+        /* „razem”: a possible term shows nothing until the split fills it (U-76) */
+        if (razem) { if (!on || b.classList.contains("is-off")) b.setAttribute("aria-hidden", "true"); else b.removeAttribute("aria-hidden"); }
       });
+      var prev = zabN[d.prod];
+      zabN[d.prod] = d.n;
+      if (!razem || prev === undefined || prev === d.n) return;
+      var src = root.querySelector('.c5-we__bar[data-zab-src="' + d.prod + '"]');
+      var now = parts.filter(function (b) { return !b.classList.contains("is-opt"); });
+      fly(src, now.filter(function (b) { return was.indexOf(b) < 0; }), was.filter(function (b) { return now.indexOf(b) < 0; }));
     });
+    /* U-75 (08.11.2026): a bigger number of treatments tears pieces off the right
+       of the bar of the first treatment and flies them to the phases of the new
+       parts, the bar regrowing behind them; a smaller one flies the parts back
+       into it. Pieces are absolute children of the scroller, so they scroll
+       with the table. No motion with prefers-reduced-motion. */
+    function fly(src, add, back) {
+      if (!src || !scroller || !src.animate || src.classList.contains("is-off")) return;
+      if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      var base = scroller.getBoundingClientRect();
+      function box(el) {
+        var r = el.getBoundingClientRect();
+        return { left: r.left - base.left + scroller.scrollLeft, top: r.top - base.top + scroller.scrollTop, width: r.width, height: r.height };
+      }
+      function px(b) { return { left: b.left + "px", top: b.top + "px", width: b.width + "px", height: b.height + "px" }; }
+      function ghost(b) {
+        var g = doc.createElement("span");
+        g.className = "c5-we__ghost";
+        g.setAttribute("aria-hidden", "true");
+        var s = px(b);
+        for (var k in s) g.style[k] = s[k];
+        scroller.appendChild(g);
+        return g;
+      }
+      function lift(a, b) { return { left: (a.left + b.left) / 2 + "px", top: Math.min(a.top, b.top) - 12 + "px", width: (a.width + b.width) / 2 + "px", height: b.height + "px", offset: 0.45 }; }
+      var S = box(src), EASE = "cubic-bezier(.3,.7,.2,1)";
+      var list = add.length ? add : back, k = list.length;
+      if (!k) return;
+      list.sort(function (a, b) { return box(a).left - box(b).left; });
+      list.forEach(function (bar, j) {
+        var T = box(bar), w = S.width / (k + 1);
+        var P = { left: S.left + w * (j + 1), top: S.top, width: w, height: S.height };
+        var from = add.length ? P : T, to = add.length ? T : P;
+        var g = ghost(from);
+        if (add.length) bar.classList.add("is-landing");
+        var a = g.animate([px(from), lift(from, to), add.length ? px(to) : Object.assign(px(to), { opacity: 0 })],
+          { duration: 620 + j * 120, easing: EASE, fill: "forwards" });
+        a.onfinish = a.oncancel = function () { bar.classList.remove("is-landing"); g.remove(); };
+      });
+      /* the bar of the first treatment: cut where the pieces leave, then regrow */
+      if (add.length) {
+        var cut = "inset(0 " + Math.round(k / (k + 1) * 1000) / 10 + "% 0 0 round 999px)";
+        src.animate([{ clipPath: cut }, { clipPath: cut, offset: 0.25 }, { clipPath: "inset(0 0% 0 0 round 999px)" }], { duration: 700, easing: EASE });
+      }
+    }
 
     /* the whole column is the link to the description of the phase */
     var pills = {};
@@ -121,7 +184,9 @@
     });
     table.addEventListener("click", function (e) {
       var cell = e.target.closest ? e.target.closest("td[data-c]") : null;
-      if (!cell || !table.contains(cell) || e.target.closest(".c5-we__pill")) return;
+      /* the controls standing in the cells (the number of treatments under a bar,
+         the phase switches of the last row – 07.11.2026) do their own job */
+      if (!cell || !table.contains(cell) || e.target.closest(".c5-we__pill, [data-we-ctl]")) return;
       var p = pills[cell.getAttribute("data-c")];
       if (p) p.click();
     });

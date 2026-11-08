@@ -17,7 +17,6 @@
 <link rel="stylesheet" href="ce/CE-07-nawigacja-kropkowa.css">
 <link rel="stylesheet" href="ce/CE-08-hero.css">
 <link rel="stylesheet" href="ce/CE-18-cta.css">
-<link rel="stylesheet" href="ce/CE-24-pas-liczb.css">
 <link rel="stylesheet" href="ce/CE-100-wykres-etapow.css">
 <link rel="stylesheet" href="ce/CE-22-tabela.css">
 <link rel="stylesheet" href="ce/CE-25-lightbox.css">
@@ -74,7 +73,17 @@
   <section id="hero" data-chapter="hero" data-ce="CE-08" data-ce-wariant="kadr-w-tle" style="--c5-hero-scrim:rgb(0 0 0 / .2)">
     <div class="c5-hero c5-hero--bg">
       <div class="c5-hero__bg" aria-hidden="true">
-        <img class="c5-hero__bgimg" src="img/foto/kukurydza-hero.jpg" alt="" width="2000" height="1333" decoding="async" fetchpriority="high" style="object-position:50% 0%">
+        
+
+
+
+
+
+
+        <video class="c5-hero__bgimg c5-hero__bgvid" autoplay muted loop playsinline preload="auto" disablepictureinpicture disableremoteplayback
+               poster="img/wideo/kukurydza-hero-poster.jpg" width="1280" height="720" style="object-position:50% 0%" tabindex="-1">
+          <source src="img/wideo/kukurydza-hero.mp4" type="video/mp4">
+        </video>
       </div>
       <div class="c5-wrap c5-wrap--wide c5-hero__inner">
         <nav class="wf-breadcrumb c5-hero__crumbs" aria-label="Okruszki">
@@ -102,7 +111,6 @@
     </div>
   </section>
 
-  
 
 
 
@@ -115,28 +123,23 @@
 
 
 
-  <section class="c5-sec u-nb" id="u-liczby" data-ce="CE-24" data-ce-wariant="kolumny">
-    <div class="u-nb__cols u-reveal">
-      <div class="u-nb__col">
-        <span class="c5-chip u-nb__chip">Pakiety</span>
-        <span class="u-nb__gap" aria-hidden="true"></span>
-        <p class="u-nb__val"><span data-count="3">3</span></p>
-        <p class="c5-src u-nb__cap">pakiety dobrane do Twoich potrzeb</p>
-      </div>
-      <div class="u-nb__col">
-        <span class="c5-chip u-nb__chip">Formy produktów</span>
-        <span class="u-nb__gap" aria-hidden="true"></span>
-        <p class="u-nb__val"><span data-count="2">2</span></p>
-        <p class="c5-src u-nb__cap">Produkty płynne i sypkie, dostosowane do preferencji</p>
-      </div>
-      <div class="u-nb__col">
-        <span class="c5-chip u-nb__chip">Dawkowanie</span>
-        <span class="u-nb__gap" aria-hidden="true"></span>
-        <p class="u-nb__val"><span data-count="1–3">1–3</span><span class="c5-aff">zabiegi</span></p>
-        <p class="c5-src u-nb__cap">Elastyczne dawkowanie, które uwzględnia rachunek ekonomiczny.</p>
-      </div>
-    </div>
-  </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -178,34 +181,36 @@
 
 <section class="c5-sec c5-we c5-we--razem" id="u-etapy" data-chapter="u-etapy" data-ce="CE-100" data-ce-wariant="razem" data-we data-pakiety="kukurydza">
   <div class="c5-wrap c5-wrap--wide">
-    <div class="c5-we__head u-reveal">
-      <span class="c5-kicker c5-kicker--outline c5-kicker--center">Fazy programu</span>
-      <div class="c5-head">
-        <h2 class="c5-h2 c5-h2--center">Program od ścierniska do zbioru</h2>
+    <div class="c5-we__head c5-we__head--split u-reveal">
+      <div class="c5-we__hl">
+        <span class="c5-kicker c5-kicker--outline">Program na sezon</span>
+        <div class="c5-head">
+          <h2 class="c5-h2">Agrotechnika kukurydzy z&nbsp;produktami Carbohort</h2>
+        </div>
       </div>
+      <p class="c5-lead c5-we__lead">Rozpisaliśmy cały sezon – od zbioru przedplonu po zbiór kukurydzy. W&nbsp;każdej fazie widzisz, który produkt podać, a&nbsp;pod wykresem policzysz koszt programu dla swojego pola.</p>
     </div>
+    <div class="c5-we__prog">
+    <h3 class="c5-h3 c5-we__h3">Program od ścierniska do zbioru</h3>
     <div class="c5-pkdock c5-we__dock">
       <div class="c5-pkbar" role="radiogroup" aria-label="Pakiet" data-pk-switch hidden><div class="c5-pkbar__tabs"><button class="c5-pkbar__tab" type="button" role="radio" aria-checked="false" data-pk-set="min">Pakiet minimalny</button><button class="c5-pkbar__tab" type="button" role="radio" aria-checked="false" data-pk-set="std">Pakiet standardowy</button><button class="c5-pkbar__tab" type="button" role="radio" aria-checked="true" data-pk-set="kompl">Pakiet kompleksowy</button></div></div>
     </div>
     <div class="c5-we__pkdesc" aria-live="polite">
       <div class="c5-we__pkd" data-pk-desc="min" hidden>
         <p class="c5-we__pkt">Dopiero poznajesz nasze produkty i chcesz sprawdzić, jak sprawdzą się w Twoim gospodarstwie? Nie musisz od razu inwestować większych środków w rozbudowany program. Wybraliśmy dwa podstawowe zabiegi, które pozwolą Ci rozpocząć pracę z kwasami humusowymi.</p>
-        <p class="c5-we__pkl"><span class="c5-we__pkll">W pakiecie</span><span class="c5-chip">CARBOHUMIC filtrowany</span><span class="c5-chip">CARBOHUMIC MAXI PLUS</span></p>
       </div>
       <div class="c5-we__pkd" data-pk-desc="std" hidden>
         <p class="c5-we__pkt">Znasz już działanie kwasów humusowych i chcesz mocniej zadbać o fazę 4–8 liści, w której kukurydza ustala potencjał kolby? Do dwóch podstawowych produktów dokładamy PURE ONE – cynk w fazie 4–8 liści, gdy analiza gleby albo warunki stanowiska wskazują na jego niedobór.</p>
-        <p class="c5-we__pkl"><span class="c5-we__pkll">W pakiecie</span><span class="c5-chip">CARBOHUMIC filtrowany</span><span class="c5-chip">CARBOHUMIC MAXI PLUS</span><span class="c5-chip">PURE ONE</span></p>
       </div>
       <div class="c5-we__pkd" data-pk-desc="kompl">
         <p class="c5-we__pkt">Chcesz wykorzystać cały program i odbudowywać glebę z roku na rok? Do pakietu standardowego dokładamy CARBOHUMIC niefiltrowany po zbiorze przedplonu – na regenerację gleby, retencję wody i jej życie biologiczne. Podasz go beczkowozem albo rozlewaczem.</p>
-        <p class="c5-we__pkl"><span class="c5-we__pkll">W pakiecie</span><span class="c5-chip">CARBOHUMIC filtrowany</span><span class="c5-chip">CARBOHUMIC MAXI PLUS</span><span class="c5-chip">PURE ONE</span><span class="c5-chip">CARBOHUMIC niefiltrowany</span></p>
       </div>
     </div>
     <div class="c5-we__panel u-reveal">
       <div class="c5-we__scroll" tabindex="0" role="region" aria-label="Wykres faz programu – przewiń w poziomie, jeśli nie mieści się na ekranie">
         <table class="c5-we__t">
           <caption class="wf-sr-only">Zabiegi produktami w fazach programu uprawy kukurydzy dla wybranego pakietu</caption>
-          <colgroup><col class="c5-we__colp"><col span="7"></colgroup>
+          <colgroup><col class="c5-we__colp"><col span="7"><col class="c5-we__colc"></colgroup>
           <thead>
             <tr class="c5-we__axis">
               <td></td>
@@ -216,6 +221,7 @@
               <th class="c5-we__ph" scope="col" data-c="5"><span class="c5-we__phn">Intensywny wzrost</span><span class="c5-we__phimg"><img src="img/foto/kukurydza-faza-06-m.webp" alt="" width="400" height="300" loading="lazy" decoding="async"></span></th>
               <th class="c5-we__ph" scope="col" data-c="6"><span class="c5-we__phn">Wiechowanie do zbioru</span><span class="c5-we__phimg"><img src="img/foto/kukurydza-faza-07-m.webp" alt="" width="400" height="300" loading="lazy" decoding="async"></span></th>
               <th class="c5-we__ph" scope="col" data-c="7"><span class="c5-we__phn">Po zbiorze</span><span class="c5-we__phimg"><img src="img/foto/kukurydza-faza-10-m.webp" alt="" width="400" height="300" loading="lazy" decoding="async"></span></th>
+              <th class="c5-we__ch" scope="col"><span class="c5-we__chn">Koszt na sezon</span><span class="c5-we__chs" data-pkc-hafor>dla 10&nbsp;ha, netto</span></th>
             </tr>
             <tr class="c5-we__pills">
               <td></td>
@@ -226,115 +232,73 @@
               <td data-c="5"><button class="c5-we__pill" type="button" data-lightbox-open="faza-5" aria-label="Opis fazy: intensywny wzrost">Opis fazy</button></td>
               <td data-c="6"><button class="c5-we__pill" type="button" data-lightbox-open="faza-6" aria-label="Opis fazy: wiechowanie do zbioru">Opis fazy</button></td>
               <td data-c="7"><button class="c5-we__pill" type="button" data-lightbox-open="faza-7" aria-label="Czytaj więcej: po zbiorze">Czytaj więcej</button></td>
+              <td class="c5-we__cc"></td>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <th class="c5-we__prod" scope="row"><button class="c5-we__pbtn" type="button" data-lightbox-open="produkt-187" aria-label="Metryczka produktu: CARBOHUMIC filtrowany"><span class="c5-we__pack"><img src="img/opakowania/kanister_20l.png" alt="" loading="lazy" decoding="async"></span><span class="c5-we__pn">CARBOHUMIC filtrowany</span></button></th>
-              <td data-c="1"><span class="c5-we__bar c5-we__bar--alt" data-pk="kompl">zamiast niefiltrowanego</span></td><td data-c="2"><span class="c5-we__bar" data-pk="min std kompl" data-pkc-prod="carbohumic-187mesh"><span class="c5-we__val"></span><span class="wf-sr-only" data-we-sr>zabieg w pakiecie</span></span></td><td data-c="3"><span class="c5-we__bar is-opt" data-pk="min std kompl" data-zab-prod="carbohumic-187mesh" data-zab="3" data-pkc-prod="carbohumic-187mesh"><span class="c5-we__val"></span><span class="wf-sr-only" data-we-sr>możliwy termin części dawki</span></span></td><td data-c="4"></td><td data-c="5"></td><td data-c="6"></td><td data-c="7"><span class="c5-we__bar is-opt" data-pk="min std kompl" data-zab-prod="carbohumic-187mesh" data-zab="2 3" data-pkc-prod="carbohumic-187mesh"><span class="c5-we__val"></span><span class="wf-sr-only" data-we-sr>możliwy termin części dawki</span></span></td>
+              <th class="c5-we__prod" scope="row"><button class="c5-we__pbtn" type="button" data-lightbox-open="produkt-187" aria-label="Metryczka produktu: CARBOHUMIC filtrowany"><span class="c5-we__pack"><img src="img/opakowania/kanister_20l.png" alt="" loading="lazy" decoding="async"></span><span class="c5-we__pn">CARBOHUMIC filtrowany</span><span class="c5-we__mprice" data-pkc-mprice aria-hidden="true"></span></button></th>
+              <td data-c="1"><span class="c5-we__bar c5-we__bar--alt" data-pk="kompl">zamiast niefiltrowanego</span></td><td data-c="2"><span class="c5-we__bar" data-pk="min std kompl" data-pkc-prod="carbohumic-187mesh" data-zab-src="carbohumic-187mesh"><span class="c5-we__val"></span><span class="wf-sr-only" data-we-sr>zabieg w pakiecie</span></span><span class="c5-we__zabw c5-we__zabw--dots" data-we-ctl data-pk="min std kompl"><span class="c5-we__zabl" id="zab-l-187">Wybierz liczbę</span> <span class="c5-we__nw"><span class="c5-we__zabl" id="zab-l-187b">zabiegów</span><span class="c5-we__zab c5-we__zab--dots" role="radiogroup" aria-labelledby="zab-l-187 zab-l-187b" data-zab-switch data-zab-prod="carbohumic-187mesh"><button type="button" role="radio" aria-checked="true" data-zab-set="1" title="1 zabieg" aria-label="1 zabieg – cała dawka przed siewem (domyślnie)"></button><button type="button" role="radio" aria-checked="false" data-zab-set="2" title="2 zabiegi" aria-label="2 zabiegi – przed siewem i po zbiorze"></button><button type="button" role="radio" aria-checked="false" data-zab-set="3" title="3 zabiegi" aria-label="3 zabiegi – przed siewem, przy siewie i po zbiorze"></button></span></span></span></td><td data-c="3"><span class="c5-we__bar is-opt" data-pk="min std kompl" data-zab-prod="carbohumic-187mesh" data-zab="3" data-pkc-prod="carbohumic-187mesh"><span class="c5-we__val"></span><span class="wf-sr-only" data-we-sr>możliwy termin części dawki</span></span></td><td data-c="4"></td><td data-c="5"></td><td data-c="6"></td><td data-c="7"><span class="c5-we__bar is-opt" data-pk="min std kompl" data-zab-prod="carbohumic-187mesh" data-zab="2 3" data-pkc-prod="carbohumic-187mesh"><span class="c5-we__val"></span><span class="wf-sr-only" data-we-sr>możliwy termin części dawki</span></span></td><td class="c5-we__cost" data-pkc-row data-prod="carbohumic-187mesh" data-pk="min std kompl" data-dose="30" data-unit="l"><div class="c5-we__cin"><label class="c5-we__pick"><input type="checkbox" checked data-pkc-pick><span class="wf-sr-only">Uwzględnij w wycenie: CARBOHUMIC filtrowany</span></label><span class="c5-we__cpk" data-pkc-packs>–</span><b class="c5-we__cp" data-pkc-price>–</b><span class="c5-we__ctag">poza pakietem</span></div></td>
             </tr>
             <tr>
-              <th class="c5-we__prod" scope="row"><button class="c5-we__pbtn" type="button" data-lightbox-open="produkt-maxi" aria-label="Metryczka produktu: CARBOHUMIC MAXI PLUS"><span class="c5-we__pack"><img src="img/opakowania/kanister_5l.png" alt="" loading="lazy" decoding="async"></span><span class="c5-we__pn">CARBOHUMIC MAXI PLUS</span></button></th>
-              <td data-c="1"></td><td data-c="2"></td><td data-c="3"></td><td data-c="4"><span class="c5-we__bar" data-pk="min std kompl" data-pkc-prod="maxi-plus"><span class="c5-we__val"></span><span class="wf-sr-only" data-we-sr>zabieg w pakiecie</span></span></td><td data-c="5"></td><td data-c="6"></td><td data-c="7"></td>
+              <th class="c5-we__prod" scope="row"><button class="c5-we__pbtn" type="button" data-lightbox-open="produkt-maxi" aria-label="Metryczka produktu: CARBOHUMIC MAXI PLUS"><span class="c5-we__pack"><img src="img/opakowania/kanister_5l.png" alt="" loading="lazy" decoding="async"></span><span class="c5-we__pn">CARBOHUMIC MAXI PLUS</span><span class="c5-we__mprice" data-pkc-mprice aria-hidden="true"></span></button></th>
+              <td data-c="1"></td><td data-c="2"></td><td data-c="3"></td><td data-c="4"><span class="c5-we__bar" data-pk="min std kompl" data-pkc-prod="maxi-plus"><span class="c5-we__val"></span><span class="wf-sr-only" data-we-sr>zabieg w pakiecie</span></span></td><td data-c="5"></td><td data-c="6"></td><td data-c="7"></td><td class="c5-we__cost" data-pkc-row data-prod="maxi-plus" data-pk="min std kompl" data-dose="0.6" data-unit="l"><div class="c5-we__cin"><label class="c5-we__pick"><input type="checkbox" checked data-pkc-pick><span class="wf-sr-only">Uwzględnij w wycenie: CARBOHUMIC MAXI PLUS</span></label><span class="c5-we__cpk" data-pkc-packs>–</span><b class="c5-we__cp" data-pkc-price>–</b><span class="c5-we__ctag">poza pakietem</span></div></td>
             </tr>
             <tr>
-              <th class="c5-we__prod c5-we__prod--partner" scope="row"><span class="c5-we__pbtn"><span class="c5-we__pack"><img src="img/opakowania/butelka_1l_biala.webp" alt="" loading="lazy" decoding="async"></span><span class="c5-we__pn">PURE ONE <span class="c5-we__pnp">(produkt partnerski)</span></span></span></th>
-              <td data-c="1"></td><td data-c="2"></td><td data-c="3"></td><td data-c="4"><span class="c5-we__bar c5-we__bar--partner" data-pk="std kompl" data-pkc-prod="pure-one"><span class="c5-we__val"></span><span class="wf-sr-only" data-we-sr>zabieg w pakiecie</span></span></td><td data-c="5"></td><td data-c="6"></td><td data-c="7"></td>
+              <th class="c5-we__prod c5-we__prod--partner" scope="row"><span class="c5-we__pbtn"><span class="c5-we__pack"><img src="img/opakowania/butelka_1l_biala.webp" alt="" loading="lazy" decoding="async"></span><span class="c5-we__pn">PURE ONE <span class="c5-we__pnp">(produkt partnerski)</span></span><span class="c5-we__mprice" data-pkc-mprice aria-hidden="true"></span></span></th>
+              <td data-c="1"></td><td data-c="2"></td><td data-c="3"></td><td data-c="4"><span class="c5-we__bar c5-we__bar--partner" data-pk="std kompl" data-pkc-prod="pure-one"><span class="c5-we__val"></span><span class="wf-sr-only" data-we-sr>zabieg w pakiecie</span></span></td><td data-c="5"></td><td data-c="6"></td><td data-c="7"></td><td class="c5-we__cost" data-pkc-row data-prod="pure-one" data-pk="std kompl" data-dose="0.5" data-unit="l"><div class="c5-we__cin"><label class="c5-we__pick"><input type="checkbox" checked data-pkc-pick><span class="wf-sr-only">Uwzględnij w wycenie: PURE ONE</span></label><span class="c5-we__cpk" data-pkc-packs>–</span><b class="c5-we__cp" data-pkc-price>–</b><span class="c5-we__ctag">poza pakietem</span></div></td>
             </tr>
             <tr>
-              <th class="c5-we__prod" scope="row"><button class="c5-we__pbtn" type="button" data-lightbox-open="produkt-20" aria-label="Metryczka produktu: CARBOHUMIC niefiltrowany"><span class="c5-we__pack"><img src="img/opakowania/mauzer_1000l_1500l.png" alt="" loading="lazy" decoding="async"></span><span class="c5-we__pn">CARBOHUMIC niefiltrowany</span></button></th>
-              <td data-c="1"><span class="c5-we__bar" data-pk="kompl" data-pkc-prod="carbohumic-20mesh"><span class="c5-we__val"></span><span class="wf-sr-only" data-we-sr>zabieg w pakiecie</span></span></td><td data-c="2"></td><td data-c="3"></td><td data-c="4"></td><td data-c="5"></td><td data-c="6"></td><td data-c="7"></td>
+              <th class="c5-we__prod" scope="row"><button class="c5-we__pbtn" type="button" data-lightbox-open="produkt-20" aria-label="Metryczka produktu: CARBOHUMIC niefiltrowany"><span class="c5-we__pack"><img src="img/opakowania/mauzer_1000l_1500l.png" alt="" loading="lazy" decoding="async"></span><span class="c5-we__pn">CARBOHUMIC niefiltrowany</span><span class="c5-we__mprice" data-pkc-mprice aria-hidden="true"></span></button></th>
+              <td data-c="1"><span class="c5-we__bar" data-pk="kompl" data-pkc-prod="carbohumic-20mesh"><span class="c5-we__val"></span><span class="wf-sr-only" data-we-sr>zabieg w pakiecie</span></span></td><td data-c="2"></td><td data-c="3"></td><td data-c="4"></td><td data-c="5"></td><td data-c="6"></td><td data-c="7"></td><td class="c5-we__cost" data-pkc-row data-prod="carbohumic-20mesh" data-pk="kompl" data-dose="50" data-unit="l"><div class="c5-we__cin"><label class="c5-we__pick"><input type="checkbox" checked data-pkc-pick><span class="wf-sr-only">Uwzględnij w wycenie: CARBOHUMIC niefiltrowany</span></label><span class="c5-we__cpk" data-pkc-packs>–</span><b class="c5-we__cp" data-pkc-price>–</b><span class="c5-we__ctag">poza pakietem</span></div></td>
             </tr>
-            <tr>
-              <th class="c5-we__prod" scope="row"><button class="c5-we__pbtn" type="button" data-lightbox-open="produkt-humic" aria-label="Metryczka produktu: CARBOMAT HUMIC"><span class="c5-we__pack"><img src="img/opakowania/worek_20l.png" alt="" loading="lazy" decoding="async"></span><span class="c5-we__pn">CARBOMAT HUMIC</span></button></th>
-              <td data-c="1"></td><td data-c="2"><span class="c5-we__bar c5-we__bar--alt">zamiast filtrowanego</span></td><td data-c="3"></td><td data-c="4"></td><td data-c="5"></td><td data-c="6"></td><td data-c="7"></td>
+            <tr class="c5-we__grp">
+              <th class="c5-we__gl" scope="row">Produkty zamienne <span class="c5-we__gls">– poza wyceną</span></th><td data-c="1"></td><td data-c="2"></td><td data-c="3"></td><td data-c="4"></td><td data-c="5"></td><td data-c="6"></td><td data-c="7"></td><td class="c5-we__cc"></td>
             </tr>
-            <tr>
-              <th class="c5-we__prod" scope="row"><button class="c5-we__pbtn" type="button" data-lightbox-open="produkt-eco" aria-label="Metryczka produktu: CARBOMAT ECO"><span class="c5-we__pack"><img src="img/opakowania/worek_1000l_1500l.png" alt="" loading="lazy" decoding="async"></span><span class="c5-we__pn">CARBOMAT ECO</span></button></th>
-              <td data-c="1"><span class="c5-we__bar c5-we__bar--alt">na słabą glebę</span></td><td data-c="2"><span class="c5-we__bar c5-we__bar--alt">na słabą glebę</span></td><td data-c="3"></td><td data-c="4"></td><td data-c="5"></td><td data-c="6"></td><td data-c="7"></td>
+            <tr class="c5-we__alt">
+              <th class="c5-we__prod c5-we__prod--alt" scope="row"><button class="c5-we__pbtn" type="button" data-lightbox-open="produkt-humic" aria-label="Metryczka produktu: CARBOMAT HUMIC"><span class="c5-we__pack"><img src="img/opakowania/worek_20l.png" alt="" loading="lazy" decoding="async"></span><span class="c5-we__pn">CARBOMAT HUMIC</span></button></th>
+              <td data-c="1"></td><td data-c="2"><span class="c5-we__bar c5-we__bar--alt">zamiast filtrowanego</span></td><td data-c="3"></td><td data-c="4"></td><td data-c="5"></td><td data-c="6"></td><td data-c="7"></td><td class="c5-we__cost c5-we__cost--none"></td>
+            </tr>
+            <tr class="c5-we__alt">
+              <th class="c5-we__prod c5-we__prod--alt" scope="row"><button class="c5-we__pbtn" type="button" data-lightbox-open="produkt-eco" aria-label="Metryczka produktu: CARBOMAT ECO"><span class="c5-we__pack"><img src="img/opakowania/worek_1000l_1500l.png" alt="" loading="lazy" decoding="async"></span><span class="c5-we__pn">CARBOMAT ECO</span></button></th>
+              <td data-c="1"><span class="c5-we__bar c5-we__bar--alt">na słabą glebę</span></td><td data-c="2"><span class="c5-we__bar c5-we__bar--alt">na słabą glebę</span></td><td data-c="3"></td><td data-c="4"></td><td data-c="5"></td><td data-c="6"></td><td data-c="7"></td><td class="c5-we__cost c5-we__cost--none"></td>
+            </tr>
+            <tr class="c5-we__xrow" data-pkc-excl>
+              <th class="c5-we__xl" scope="row" id="pkc-excl-l">Wyłącz wybrane fazy z&nbsp;obliczeń</th>
+              <td data-c="1"><button class="c5-we__xbtn" type="button" data-c="1" data-we-ctl data-name="Po zbiorze przedplonu" aria-describedby="pkc-excl-l" aria-label="Wyłącz z obliczeń: po zbiorze przedplonu">Wyłącz z obliczeń</button></td><td data-c="2"><button class="c5-we__xbtn" type="button" data-c="2" data-we-ctl data-name="Przed siewem" aria-describedby="pkc-excl-l" aria-label="Wyłącz z obliczeń: przed siewem">Wyłącz z obliczeń</button></td><td data-c="3"><button class="c5-we__xbtn" type="button" data-c="3" data-we-ctl data-name="Siew i wschody" aria-describedby="pkc-excl-l" aria-label="Wyłącz z obliczeń: siew i wschody">Wyłącz z obliczeń</button></td><td data-c="4"><button class="c5-we__xbtn" type="button" data-c="4" data-we-ctl data-name="4–8 liści" aria-describedby="pkc-excl-l" aria-label="Wyłącz z obliczeń: 4–8 liści">Wyłącz z obliczeń</button></td><td data-c="5"><button class="c5-we__xbtn" type="button" data-c="5" data-we-ctl data-name="Intensywny wzrost" aria-describedby="pkc-excl-l" aria-label="Wyłącz z obliczeń: intensywny wzrost">Wyłącz z obliczeń</button></td><td data-c="6"><button class="c5-we__xbtn" type="button" data-c="6" data-we-ctl data-name="Wiechowanie do zbioru" aria-describedby="pkc-excl-l" aria-label="Wyłącz z obliczeń: wiechowanie do zbioru">Wyłącz z obliczeń</button></td><td data-c="7"><button class="c5-we__xbtn" type="button" data-c="7" data-we-ctl data-name="Po zbiorze" aria-describedby="pkc-excl-l" aria-label="Wyłącz z obliczeń: po zbiorze">Wyłącz z obliczeń</button></td><td class="c5-we__cc"></td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
-    <p class="c5-we__legend"><span><i class="c5-we__key" aria-hidden="true"></i>zabieg w pakiecie</span><span><i class="c5-we__key c5-we__key--opt" aria-hidden="true"></i>możliwy termin części dawki – liczbę zabiegów wybierasz w&nbsp;kalkulatorze</span><span><i class="c5-we__key c5-we__key--alt" aria-hidden="true"></i>produkt zamienny – kiedy go wybrać, przeczytasz w&nbsp;opisie fazy</span></p>
+    <p class="c5-we__legend"><span><i class="c5-we__key" aria-hidden="true"></i>zabieg w pakiecie</span><span><i class="c5-we__key c5-we__key--alt" aria-hidden="true"></i>produkt zamienny – kiedy go wybrać, przeczytasz w&nbsp;opisie fazy</span></p>
     <div class="c5-we__calc" id="u-koszt" data-chapter="u-koszt" data-ce="CE-47" data-ce-wariant="etapy">
-      <h3 class="c5-h3 c5-we__calch">Oblicz koszt stosowania</h3>
-      <div class="u-pk u-pk--etapy u-pk--razem u-reveal" data-calc data-pk-calc data-pkc-bars data-pakiety="kukurydza">
-        <div class="u-pkc-panel">
-          <div class="u-area">
-            <label class="wf-label" id="ha-label" for="ha">Wskaż powierzchnię uprawy</label>
-            <div class="u-area__row">
-              <span class="wf-caption" aria-hidden="true">0,5 ha</span>
-              <input class="u-area__range" type="range" min="0.5" max="50" step="0.5" value="10" data-calc-range aria-label="Powierzchnia uprawy w hektarach – suwak">
-              <span class="wf-caption" aria-hidden="true">50 ha</span>
-              <div class="wf-input-group">
-                <input class="wf-input" id="ha" type="number" inputmode="decimal" min="0" step="0.5" value="10" data-calc-in>
-                <span class="wf-addon">ha</span>
+      <div class="u-pk u-pk--etapy u-pk--razem" data-calc data-pk-calc data-pkc-bars data-pakiety="kukurydza">
+        <div class="u-pkc__bar">
+          <div class="u-pkc__left">
+            <h3 class="c5-h3 c5-we__calch">Oblicz koszt stosowania</h3>
+            <div class="u-area">
+              <label class="wf-label" id="ha-label" for="ha">Wskaż powierzchnię uprawy</label>
+              <div class="u-area__row">
+                <span class="wf-caption" aria-hidden="true">0 ha</span>
+                <input class="u-area__range" type="range" min="0" max="50" step="0.5" value="0" data-calc-range aria-label="Powierzchnia uprawy w hektarach – suwak">
+                <span class="wf-caption" aria-hidden="true">50 ha</span>
+                <div class="wf-input-group">
+                  <input class="wf-input" id="ha" type="number" inputmode="decimal" min="0" step="0.5" value="0" data-calc-in>
+                  <span class="wf-addon">ha</span>
+                </div>
               </div>
             </div>
           </div>
-          <div class="u-pkc__excl" data-pkc-excl>
-            <span class="u-pkc__excll" id="pkc-excl-l">Wyłącz wybrane fazy z obliczeń</span>
-            <div class="u-pkc__exclset" role="group" aria-labelledby="pkc-excl-l"><button type="button" data-c="1">Po zbiorze przedplonu</button><button type="button" data-c="2">Przed siewem</button><button type="button" data-c="3">Siew i wschody</button><button type="button" data-c="4">4–8 liści</button><button type="button" data-c="5">Intensywny wzrost</button><button type="button" data-c="6">Wiechowanie do zbioru</button><button type="button" data-c="7">Po zbiorze</button></div>
-          </div>
-          <div class="u-pkc__prods">
-            <div class="u-pkc__pwrap">
-              <div class="u-pkc__phead" aria-hidden="true"><span>Produkt i&nbsp;dawka na sezon</span><span>Liczba zabiegów</span><span data-pkc-halab>Ilość na 10&nbsp;ha</span><span>Opakowania</span><span>Cena netto</span></div>
-              <ul class="u-pkc__plist">
-                <li class="u-pkc__prod" data-prod="carbohumic-187mesh" data-pk="min std kompl" data-dose="30" data-unit="l">
-                  <label class="u-pkc__pick"><input type="checkbox" checked data-pkc-pick><span class="wf-sr-only">Uwzględnij w wycenie: CARBOHUMIC filtrowany</span></label>
-                  <span class="u-pkc__pack"><img src="img/opakowania/kanister_20l.png" alt="" loading="lazy" decoding="async"></span>
-                  <span class="u-pkc__pn"><span class="u-pkc__n">CARBOHUMIC filtrowany</span><span class="u-pkc__dose">30 l/ha na sezon</span><span class="u-pkc__tag">poza pakietem</span></span>
-                  <span class="u-pkc__zab">
-                    <span class="u-pkc__zabset" role="radiogroup" aria-label="Liczba zabiegów: CARBOHUMIC filtrowany" data-zab-switch><button type="button" role="radio" aria-checked="true" data-zab-set="1" data-zab-txt="Domyślnie: cała dawka jednym zabiegiem przed siewem.">1 zabieg <span class="u-pkc__def">domyślnie</span></button><button type="button" role="radio" aria-checked="false" data-zab-set="2" data-zab-txt="Przed siewem i po zbiorze – po 15 l/ha.">2 zabiegi</button><button type="button" role="radio" aria-checked="false" data-zab-set="3" data-zab-txt="Przed siewem, przy siewie i po zbiorze – po 10 l/ha.">3 zabiegi</button></span>
-                    <span class="u-pkc__zabtxt"><span data-zab-out>Domyślnie: cała dawka jednym zabiegiem przed siewem.</span> Ilość i cena się nie zmieniają. <button class="u-pkc__how" type="button" data-lightbox-open="produkt-187">Jak dzielić dawkę?</button></span>
-                  </span>
-                  <span class="u-pkc__qty"><span class="u-pkc__cap" data-pkc-halab>Ilość na 10&nbsp;ha</span><span data-pkc-qty>–</span></span>
-                  <span class="u-pkc__packs"><span class="u-pkc__cap">Opakowania</span><span data-pkc-packs>–</span></span>
-                  <span class="u-pkc__price"><span class="u-pkc__cap">Cena netto</span><b data-pkc-price>–</b></span>
-                </li>
-                <li class="u-pkc__prod" data-prod="maxi-plus" data-pk="min std kompl" data-dose="0.6" data-unit="l">
-                  <label class="u-pkc__pick"><input type="checkbox" checked data-pkc-pick><span class="wf-sr-only">Uwzględnij w wycenie: CARBOHUMIC MAXI PLUS</span></label>
-                  <span class="u-pkc__pack"><img src="img/opakowania/kanister_5l.png" alt="" loading="lazy" decoding="async"></span>
-                  <span class="u-pkc__pn"><span class="u-pkc__n">CARBOHUMIC MAXI PLUS</span><span class="u-pkc__dose">0,6 l/ha na sezon</span><span class="u-pkc__tag">poza pakietem</span></span>
-                  <span class="u-pkc__zab"><span class="u-pkc__zabtxt">1 zabieg w fazie 4–8 liści</span></span>
-                  <span class="u-pkc__qty"><span class="u-pkc__cap" data-pkc-halab>Ilość na 10&nbsp;ha</span><span data-pkc-qty>–</span></span>
-                  <span class="u-pkc__packs"><span class="u-pkc__cap">Opakowania</span><span data-pkc-packs>–</span></span>
-                  <span class="u-pkc__price"><span class="u-pkc__cap">Cena netto</span><b data-pkc-price>–</b></span>
-                </li>
-                <li class="u-pkc__prod u-pkc__prod--partner" data-prod="pure-one" data-pk="std kompl" data-dose="0.5" data-unit="l">
-                  <label class="u-pkc__pick"><input type="checkbox" checked data-pkc-pick><span class="wf-sr-only">Uwzględnij w wycenie: PURE ONE</span></label>
-                  <span class="u-pkc__pack"><img src="img/opakowania/butelka_1l_biala.webp" alt="" loading="lazy" decoding="async"></span>
-                  <span class="u-pkc__pn"><span class="u-pkc__n">PURE ONE <span class="u-pkc__pnp">(produkt partnerski)</span></span><span class="u-pkc__dose">0,5 l/ha na sezon</span><span class="u-pkc__tag">poza pakietem</span></span>
-                  <span class="u-pkc__zab"><span class="u-pkc__zabtxt">1 zabieg w fazie 4–8 liści</span></span>
-                  <span class="u-pkc__qty"><span class="u-pkc__cap" data-pkc-halab>Ilość na 10&nbsp;ha</span><span data-pkc-qty>–</span></span>
-                  <span class="u-pkc__packs"><span class="u-pkc__cap">Opakowania</span><span data-pkc-packs>–</span></span>
-                  <span class="u-pkc__price"><span class="u-pkc__cap">Cena netto</span><b data-pkc-price>–</b></span>
-                </li>
-                <li class="u-pkc__prod" data-prod="carbohumic-20mesh" data-pk="kompl" data-dose="50" data-unit="l">
-                  <label class="u-pkc__pick"><input type="checkbox" checked data-pkc-pick><span class="wf-sr-only">Uwzględnij w wycenie: CARBOHUMIC niefiltrowany</span></label>
-                  <span class="u-pkc__pack"><img src="img/opakowania/mauzer_1000l_1500l.png" alt="" loading="lazy" decoding="async"></span>
-                  <span class="u-pkc__pn"><span class="u-pkc__n">CARBOHUMIC niefiltrowany</span><span class="u-pkc__dose">50 l/ha na sezon</span><span class="u-pkc__tag">poza pakietem</span></span>
-                  <span class="u-pkc__zab"><span class="u-pkc__zabtxt">1 zabieg po zbiorze przedplonu – co najmniej 50 l/ha naraz, więc tej dawki się nie dzieli</span></span>
-                  <span class="u-pkc__qty"><span class="u-pkc__cap" data-pkc-halab>Ilość na 10&nbsp;ha</span><span data-pkc-qty>–</span></span>
-                  <span class="u-pkc__packs"><span class="u-pkc__cap">Opakowania</span><span data-pkc-packs>–</span></span>
-                  <span class="u-pkc__price"><span class="u-pkc__cap">Cena netto</span><b data-pkc-price>–</b></span>
-                </li>
-              </ul>
+          <div class="u-pkc__sumin c5-we__sum" aria-live="polite">
+            <div class="u-pkc__tot">
+              <b data-pkc-total>–</b>
+              <span class="wf-caption" data-pkc-gross></span>
+              <p class="u-pkc__info" data-pkc-info></p>
             </div>
-          </div>
-          <div class="u-pkc__sumrow">
-            <div class="u-pkc__sumin" aria-live="polite">
-              <div class="u-pkc__tot">
-                <b data-pkc-total>–</b>
-                <span class="wf-caption" data-pkc-gross></span>
-                <p class="u-pkc__info" data-pkc-info></p>
-              </div>
-              <div class="u-pkc__buy">
-                <button class="c5-btn c5-btn--dark" type="button" data-pkc-cart><svg class="wf-icon" aria-hidden="true"><use href="#ti-shopping-cart"></use></svg> Dodaj wybrane produkty do koszyka</button>
-                <p class="u-pkc__status" data-pkc-status></p>
-              </div>
+            <div class="u-pkc__buy">
+              <button class="c5-btn c5-btn--dark" type="button" data-pkc-cart><svg class="wf-icon" aria-hidden="true"><use href="#ti-shopping-cart"></use></svg> Dodaj wybrane produkty do koszyka</button>
+              <p class="u-pkc__status" data-pkc-status></p>
             </div>
           </div>
         </div>
@@ -346,6 +310,7 @@
         {"carbohumic-187mesh": {"id": "carbohumic-187mesh", "name": "Carbohumic filtrowany (187 mesh)", "url": "pdp.html", "img": "img/opakowania/kanister_20l.png", "packs": [{"id": "b1", "label": "butelka 1 l", "l": 1, "price": 25, "ship": "parcel", "kg": 1.2, "img": "img/opakowania/butelka_1l.png"}, {"id": "k5", "label": "kanister 5 l", "l": 5, "price": 80, "ship": "parcel", "kg": 5.8, "img": "img/opakowania/kanister_5l.png"}, {"id": "k20", "label": "kanister 20 l", "l": 20, "price": 260, "ship": "parcel", "kg": 22, "img": "img/opakowania/kanister_20l.png"}, {"id": "b200", "label": "beczka 200 l", "l": 200, "price": 2200, "ship": "pallet", "img": "img/opakowania/beczka_200l.png"}, {"id": "m1000", "label": "mauzer 1000 l", "l": 1000, "price": 9200, "ship": "pallet", "img": "img/opakowania/mauzer_1000l_1500l.png"}]}, "carbohumic-20mesh": {"id": "carbohumic-20mesh", "name": "Carbohumic niefiltrowany (20 mesh)", "url": "pdp.html", "img": "img/opakowania/mauzer_1000l_1500l.png", "packs": [{"id": "k20", "label": "kanister 20 l", "l": 20, "price": 170, "ship": "parcel", "kg": 22, "img": "img/opakowania/kanister_20l.png"}, {"id": "b200", "label": "beczka 200 l", "l": 200, "price": 1400, "ship": "pallet", "img": "img/opakowania/beczka_200l.png"}, {"id": "m1000", "label": "mauzer 1000 l", "l": 1000, "price": 6000, "ship": "pallet", "img": "img/opakowania/mauzer_1000l_1500l.png"}]}, "maxi-plus": {"id": "maxi-plus", "name": "Carbohumic Maxi Plus", "url": "pdp.html", "img": "img/opakowania/kanister_5l.png", "packs": [{"id": "b1", "label": "butelka 1 l", "l": 1, "price": 119, "ship": "parcel", "kg": 1.2, "img": "img/opakowania/butelka_1l.png"}, {"id": "k5", "label": "kanister 5 l", "l": 5, "price": 295, "ship": "parcel", "kg": 5.8, "img": "img/opakowania/kanister_5l.png"}, {"id": "k20", "label": "kanister 20 l", "l": 20, "price": 850, "ship": "parcel", "kg": 22, "img": "img/opakowania/kanister_20l.png"}]}, "carbomat-eco-6": {"id": "carbomat-eco-6", "name": "Carbomat Eco pH 6,0–6,5", "meta": "sypki · doglebowy", "url": "pdp.html", "img": "img/opakowania/worek_20l.png", "packs": [{"id": "w20", "label": "worek 20 l", "short": "20 l", "l": 20, "price": 43, "promo": 39, "lowest30": 43, "ship": "parcel", "kg": 12, "img": "img/opakowania/worek_20l.png"}, {"id": "bb1000", "label": "big bag 1000 l", "l": 1000, "price": 650, "ship": "pallet", "img": "img/opakowania/worek_1000l_1500l.png"}, {"id": "bb1500", "label": "big bag 1500 l", "l": 1500, "price": 850, "ship": "pallet", "img": "img/opakowania/worek_1000l_1500l.png"}]}, "pure-one": {"id": "pure-one", "name": "Pure One biostymulator mineralny", "url": "sklep.html", "img": "", "packs": [{"id": "b1", "label": "1 l", "l": 1, "price": 160, "ship": "parcel", "kg": 1.2}, {"id": "k5", "label": "5 l", "l": 5, "price": 800, "ship": "parcel", "kg": 6}]}}
         </script>
       </div>
+    </div>
     </div>
   </div>
 </section>
@@ -1158,6 +1123,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
 <script src="ce/00-base.js"></script>
+<script src="ce/CE-08-hero.js"></script>
 <script src="ce/CE-07-nawigacja-kropkowa.js"></script>
 <script src="ce/CE-100-wykres-etapow.js"></script>
 <script src="ce/CE-47-przelicznik.js"></script>

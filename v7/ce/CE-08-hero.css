@@ -264,6 +264,23 @@
 .c5-hero--dzial .c5-hero__copyin{margin-block:0;padding-block:0;max-width:none;--c5-hero-gap:clamp(1.25rem,2.4vw,2rem);}
 .c5-hero--dzial .c5-hero__lead{max-width:none;}
 .c5-hero--dzial .c5-hero__crumbs{padding-bottom:0;order:0;}
+/* ===== modyfikator: dzial-foto (08.11.2026) =====
+   `c5-hero--dzial c5-hero--dzial-foto` + `.c5-hero__foto > img` after the copy.
+   The right half of the section hero was empty (copy 745 px, about 600 px of
+   nothing at 1440 px). From 900 px: two columns – the copy column exactly as in
+   `dzial` (same width and type) and a photo filling the rest. The photo takes the
+   height of the copy row (img absolutely positioned, object-fit:cover), so the
+   hero keeps its height; the radius is the r20 of the photo panel of the `foto`
+   variant (o-firmie.html#hero). Below 900 px the photo goes under the copy, 16:10.
+   The focal point is set per page with style="--c5-hero-foto-pos:…" on the root. */
+.c5-hero__foto{position:relative;overflow:hidden;margin:0;border-radius:var(--ch-radius-control-l);background:var(--ch-surface-warm);}
+.c5-hero__foto > img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:var(--c5-hero-foto-pos,50% 50%);}
+@media (min-width:900px){
+  .c5-hero--dzial-foto{display:grid;grid-template-columns:minmax(0,745px) minmax(280px,1fr);column-gap:clamp(2rem,4vw,4rem);align-items:stretch;}
+}
+@media (max-width:899px){
+  .c5-hero--dzial-foto .c5-hero__foto{margin-top:clamp(1.5rem,4vw,2.5rem);aspect-ratio:16 / 10;}
+}
 /* Search box: the field and the icon button in one frame (r14 like every field
    of the foundation). An element shared with the article index (CE-57 tools
    row), so it lives here. */
@@ -288,6 +305,9 @@
 }
 /* subgroup chips in the hero of a category: filters of the list below */
 .cw-k-herochips{display:flex;flex-wrap:wrap;gap:var(--w-space-2);}
+/* 08.11.2026 (SW-08): the chips are buttons – the CE-57 filter height on desktop, a 44 px touch field on a phone */
+.cw-k-herochips .c5-chip{min-height:36px;cursor:pointer;}
+@media (max-width:767px){.cw-k-herochips .c5-chip{min-height:44px;}}
 
 /* ===== wariant: linia-produktow ===== (Figma 800:333, decision 17.10.2026)
    Everything centred on a full-window photo of a field: kicker, headline,
@@ -384,6 +404,10 @@
 .c5-hero__bg{position:absolute;inset:0;z-index:0;overflow:hidden;background:var(--w-gray-900);}
 .c5-hero__bg > *{position:absolute;inset:0;width:100%;height:100%;}
 .c5-hero__bgimg{display:block;object-fit:cover;object-position:50% 50%;border:0;}
+/* the background may be a looping film (08.11.2026, test on Kukurydza): the same
+   rules as the photo, the poster is its first frame; ce/CE-08-hero.js stops it
+   with reduced motion, Save-Data and off screen */
+.c5-hero__bgvid{pointer-events:none;}
 /* G08: in `--bg` the photo reaches up behind the header (below 900 px see the phone block) */
 @media (min-width:900px){.c5-hero--bg .c5-hero__bg{top:calc(-1 * var(--cx-navbar-h, 0px));}}
 /* progressive blur: the backdrop filter fades in with a mask, from 37 % down */
@@ -493,7 +517,10 @@
     padding-bottom:clamp(3.25rem,10vw,4rem);
     font-size:clamp(2.25rem,9vw,3.625rem);line-height:1.04;}
   .c5-hero--bg .c5-hero__lockup{grid-area:1 / 1;align-self:end;gap:var(--ch-space-3);padding-bottom:clamp(3.25rem,10vw,4rem);}
-  .c5-hero--bg .c5-hero__lockup .c5-hero__title{padding:0;}
+  /* in the kicker column the title takes the column's start: the align-self:end above
+     is meant for the grid cell and in a flex column it pushed the title to the right
+     edge (Kukurydza, Borówka – fixed 08.11.2026) */
+  .c5-hero--bg .c5-hero__lockup .c5-hero__title{align-self:auto;padding:0;}
   .c5-hero--bg .c5-hero__orn{grid-area:1 / 1;align-self:end;margin-block:0 clamp(1rem,4vw,1.5rem);}
   .c5-hero--bg .c5-hero__side{grid-area:2 / 1;display:flex;flex-direction:column;gap:var(--ch-space-5);
     max-width:none;padding-top:clamp(1.5rem,5vw,2rem);color:var(--ch-text-primary);}
@@ -535,6 +562,11 @@
 }
 .cw-a-crumbs{padding-block:0 clamp(1.25rem,3vw,2rem);font-size:var(--ch-type-caption-size);line-height:var(--ch-type-caption-lh);
   color:var(--ch-text-secondary);}
+/* 08.11.2026 (SW-11): on a phone the last crumb only repeats the H1 right below – it goes, with the separator before it */
+@media (max-width:767px){
+  .cw-a-crumbs li[aria-current="page"],
+  .cw-a-crumbs li:has(+ li[aria-current="page"]){display:none;}
+}
 .cw-a-head__in{display:flex;flex-direction:column;gap:clamp(1rem,2.4vw,1.5rem);max-width:900px;}
 .cw-a-head__chips{display:flex;flex-wrap:wrap;gap:var(--ch-space-2);margin:0;}
 .cw-a-h1{max-width:900px;}
@@ -559,10 +591,14 @@
    below it). 21:9 from 900 px, 16:10 on a phone. Nothing moves here. */
 .cw-a-cover{max-width:calc(var(--cw-a-side,260px) + var(--cw-a-gap,4.5rem) + var(--cw-a-col,720px));
   margin:clamp(1.5rem,3.5vw,2.25rem) auto 0;}
-.cw-a-cover__ph{display:block;width:100%;aspect-ratio:16 / 10;min-height:0;border-radius:var(--ch-radius-control-l);}
+/* 08.11.2026 (SW-09): grid, not block – the placeholder icon sits in the middle, not glued to the top */
+.cw-a-cover__ph{display:grid;place-items:center;width:100%;aspect-ratio:16 / 10;min-height:0;border-radius:var(--ch-radius-control-l);}
 @media (min-width:900px){
   .cw-a-cover__ph{aspect-ratio:21 / 9;}
 }
+/* 08.11.2026: the cover as a photo – the <img> carries the field class (without
+   `wf-ph`), keeps the 21:9 / 16:10 frame and is cropped with object-fit */
+img.cw-a-cover__ph{display:block;height:auto;object-fit:cover;object-position:var(--cw-a-cover-pos,50% 50%);}
 .cw-a-cover__cap{margin-top:var(--ch-space-2);font-size:var(--ch-type-caption-size);line-height:1.45;color:var(--ch-text-secondary);}
 
 /* ===== wariant: miniatura ===== (home.html#hero, 26.10.2026; no occurrence

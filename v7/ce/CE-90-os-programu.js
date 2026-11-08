@@ -1,26 +1,30 @@
-/* ===== CE-90 · Oś programu z punktami zdarzeń – 02.10.2026, vertical-line look
-   (spec prochnica-plus-wzorzec-eco-spec §19.5, §20.2 and §21); look of Figma
-   888:4324 and 903:1447 since 18.10.2026.
+/* ===== CE-90 · Oś programu z punktami zdarzeń – quarter look of 08.11.2026
+   (comment U-70: Figma 996:2431 and 996:3195 with their annotations, two
+   rounds on 08.11; spec prochnica-plus-wzorzec-eco-spec §24). The month look
+   of 02.10–07.11.2026 lives in
+   archiwum-wersji/prochnica-plus-v7-przed-uwagami-2026-11-08.html.
    ---------------------------------------------------------------------------
    The blocks in `[data-etapy-src]` are the ONLY source of data and at the same
    time the no-JS version: one block per farm. The script reads them, builds one
-   axis (row = farm, column = month) and hides the source. Nothing is guessed
+   axis (row = farm, column = quarter) and hides the source. Nothing is guessed
    from the copy: every event carries the month it starts in (`data-od="YYYY-MM"`;
-   `data-do` stays in the source, unused), the „we are here” marker carries
-   `data-m`, a film report is a `.pp-rel` inside the event (its title is
-   `.pp-rel__title`). Another participant is another block in the HTML and
-   another row here.
-   Column widths come from the data: a month with events is full, an empty
-   month is narrow, a year without events is one narrow strip. The widths go to
-   CSS as one px track list, so every grid of the block moves at once.
-   Hovering a month, focusing one of its points or tapping the column widens it
-   and unfolds its marks into labels (names of the events, titles of the films);
-   leaving the axis or `Esc` folds it back. The columns glide to their new
-   places on transform only (FLIP; not below 900 px, not with reduced motion).
-   Click / Enter / Space on a point opens a centred dialog. The lit row (hover,
-   focus, jump from a participant card) turns beige. Scrolling sideways stays
-   inside the frame (`data-lenis-prevent`, no `wheel` listener).
-   Public API for the participant cards: CX5.ppEtapy.focusFarm(key).
+   `data-do` stays in the source, unused) and its state (`data-state`: „done”
+   is done, anything else is drawn as planned – there is no „in progress”);
+   the marker of the last quarter that has begun carries `data-m`; a film
+   report is a `.pp-rel` inside the event. Another participant is another
+   block in the HTML and another row here. The range of the axis stands on
+   the root (`data-ax-od`, `data-ax-do`); events outside it are not drawn.
+   Every quarter of the range takes the same width. The widths go to CSS as one
+   px track list, so every grid of the block moves at once (CSS transitions the
+   list). The quarter of `data-m` is marked dark (a line on its start, a badge
+   on its month); the pointer over a quarter moves the mark there, half a
+   second on a quarter widens it and leaving it folds it at once. The whole
+   cell (farm × quarter) is one button: click / Enter / Space opens one dialog
+   with every event of the farm in that quarter. Keyboard focus widens the
+   quarter at once; `Esc` folds it. Hovering a row makes the bar float down
+   onto it. Scrolling sideways stays inside the frame (`data-lenis-prevent`, no
+   `wheel` listener). Public API for the participant cards:
+   CX5.ppEtapy.focusFarm(key).
    ========================================================================= */
 (function () {
   "use strict";
@@ -33,93 +37,74 @@
   var src = $("[data-etapy-src]", root);
   if (!src) return;
 
-  /* --- 1. calendar --------------------------------------------------------- */
+  /* --- 1. calendar: quarters ------------------------------------------------ */
   var ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"];
+  var MONTHS = ["styczeń", "luty", "marzec", "kwiecień", "maj", "czerwiec", "lipiec",
+    "sierpień", "wrzesień", "październik", "listopad", "grudzień"];
   function ym(s) {
     var m = /^(\d{4})-(\d{2})$/.exec(s || "");
     return m ? { y: +m[1], m: +m[2] } : null;
   }
   var FROM = ym(root.getAttribute("data-ax-od")) || { y: 2025, m: 11 };
-  var TO = ym(root.getAttribute("data-ax-do")) || { y: 2028, m: 12 };
-  function idx(d) { return (d.y - FROM.y) * 12 + (d.m - FROM.m); }
-  var N = idx(TO) + 1;
+  var TO = ym(root.getAttribute("data-ax-do")) || { y: 2028, m: 3 };
+  var Q0 = { y: FROM.y, q: Math.floor((FROM.m - 1) / 3) };
+  function qIdx(d) { return (d.y - Q0.y) * 4 + Math.floor((d.m - 1) / 3) - Q0.q; }
+  var N = qIdx(TO) + 1;
   if (N < 1) return;
-  function at(i) {
-    var k = FROM.m - 1 + i;
-    return { y: FROM.y + Math.floor(k / 12), m: (k % 12) + 1 };
+  function qAt(k) {
+    var t = Q0.q + k;
+    return { y: Q0.y + Math.floor(t / 4), q: t % 4 };
   }
-  function label(i) { var d = at(i); return ROMAN[d.m - 1] + " " + d.y; }
+  /* „lipiec–wrzesień 2026” */
+  function period(k) {
+    var d = qAt(k);
+    return MONTHS[d.q * 3] + "–" + MONTHS[d.q * 3 + 2] + " " + d.y;
+  }
 
   /* --- 2. rows and events read out of the DOM ------------------------------ */
   function text(n) { return n ? n.textContent.replace(/\s+/g, " ").trim() : ""; }
 
-  var used = [];                                    /* events starting in month i */
+  var used = [];                                    /* events in quarter k, all rows */
   for (var u = 0; u < N; u++) used[u] = 0;
 
   var rows = $$("[data-etapy-block]", src).map(function (block) {
-    var items = [];
+    var cells = [];
+    for (var c = 0; c < N; c++) cells[c] = [];
+    var count = 0;
     $$(".pp-ms", block).forEach(function (li) {
       var od = ym(li.getAttribute("data-od"));
-      if (!od) return;                              /* no explicit period – no point */
-      var a = CX5.clamp(idx(od), 0, N - 1);
-      used[a]++;
+      if (!od) return;                              /* no explicit period – no mark */
+      var k = qIdx(od);
+      if (k < 0 || k >= N) return;                  /* outside the range of the axis */
       var rel = $(".pp-rel", li);
-      items.push({
-        li: li, i: a, lane: 0,
-        term: text($(".pp-ms__term", li)),
+      cells[k].push({
+        li: li, k: k,
         name: text($(".pp-ms__name", li)),
-        state: li.getAttribute("data-state") || "todo",
+        done: li.getAttribute("data-state") === "done",
         /* the state label is copy – it comes from the milestone chip, verbatim */
         stateLabel: text($(".c5-chip", li)),
         film: !!rel,
         filmTitle: rel ? text($(".pp-rel__title", rel)) : ""
       });
+      used[k]++;
+      count++;
     });
-    /* events that share a month stand one under another, in lanes */
-    var perMonth = {}, lanes = 1;
-    items.forEach(function (it) {
-      it.lane = perMonth[it.i] || 0;
-      perMonth[it.i] = it.lane + 1;
-      lanes = Math.max(lanes, perMonth[it.i]);
-    });
+    var most = 1;
+    cells.forEach(function (list) { most = Math.max(most, list.length); });
     return {
       key: block.getAttribute("data-etapy-block"),
       block: block,
       who: block.getAttribute("data-gospodarz") || text($(".pp-varname", block)),
       crop: block.getAttribute("data-uprawa") || "",
       full: text($(".pp-varname", block)),
-      lanes: lanes,
-      items: items
+      most: most,
+      cells: cells,
+      count: count
     };
-  }).filter(function (r) { return r.key && r.items.length; });
+  }).filter(function (r) { return r.key && r.count; });
   if (!rows.length) return;
 
-  /* --- 3. columns: full month, empty month, strip of an empty year --------- */
-  var cols = [], colOf = [], years = [];
-  (function () {
-    var i = 0;
-    while (i < N) {
-      var y = at(i).y, j = i, any = false;
-      while (j < N && at(j).y === y) { if (used[j]) any = true; j++; }
-      var first = cols.length;
-      if (!any) {
-        cols.push({ type: "strip", i: i, n: j - i, ys: i > 0 });
-        for (var s = i; s < j; s++) colOf[s] = first;
-      } else {
-        for (var m = i; m < j; m++) {
-          colOf[m] = cols.length;
-          cols.push({ type: used[m] ? "ev" : "empty", i: m, n: 1, ys: m === i && i > 0 });
-        }
-      }
-      years.push({ y: y, a: first, b: cols.length - 1, strip: !any });
-      i = j;
-    }
-  })();
-  /* weights of month columns; a strip has a fixed width (Figma: ~47 px for 2027) */
-  var UNIT = { ev: 1, empty: 0.32 };
-  var STRIP = 52, MIN_FULL = 76, EMPTY_MIN = 24, OPEN_MAX = 600, OPEN_PART = 0.46;
-
-  /* --- 4. small DOM helpers ------------------------------------------------ */
+  /* --- 3. small DOM helpers and the marks ----------------------------------- */
   function el(tag, cls, txt) {
     var n = doc.createElement(tag);
     if (cls) n.className = cls;
@@ -129,104 +114,128 @@
   function hide(n) { n.setAttribute("aria-hidden", "true"); return n; }
   function place(n, a, b) { n.style.gridColumn = (a + 1) + " / " + (b + 2); return n; }
 
-  /* the marks: symbols drawn after the „States” component of Figma 884:1155
-     (20 x 20, 5 px corners, 1.5 px line); the crop icon after the chip 888:4333 */
+  /* marks after the „States” component (Figma 884:1155 / 996:3195): the tick
+     of a done event, the YouTube mark (both 22 px in the axis, 20 px in the
+     legend), the solid outline of a planned event (legend only – in the axis
+     it is the CSS outline of the capsule); crop icons drawn in the style of
+     the „blueberries” chip icon (Figma 996:2441): 12 px, 1 px line, square
+     caps, a few dots; the object stays self-contained – style-guide.py
+     evaluates it with node to draw the icons */
   var SYM = {
-    done: '<rect width="20" height="20" rx="5" style="fill:var(--ch-status-done)"/>' +
-          '<path d="M14.727 7 8.727 13 6 10.273" style="fill:none;stroke:var(--ch-text-inverse);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"/>',
-    doing: '<rect x=".75" y=".75" width="18.5" height="18.5" rx="4.25" style="fill:var(--ch-surface-page);stroke:var(--ch-status-in-progress);stroke-width:1.5"/>' +
-           '<circle cx="10" cy="10" r="3" style="fill:var(--ch-status-in-progress)"/>',
-    todo: '<rect x=".75" y=".75" width="18.5" height="18.5" rx="4.25" style="fill:var(--ch-surface-page);stroke:var(--ch-status-planned);stroke-width:1.5"/>',
-    na: '<rect x=".75" y=".75" width="18.5" height="18.5" rx="4.25" style="fill:var(--ch-surface-page);stroke:var(--ch-status-not-applicable);stroke-width:1.5;stroke-dasharray:3 2"/>',
-    yt: '<rect width="20" height="20" rx="5" style="fill:var(--ch-status-film)"/>' +
-        '<path transform="translate(4 5.5)" style="fill:var(--ch-text-inverse)" d="M11.85 2.1C11.7 1.125 11.25.45 10.2.3 8.55 0 6 0 6 0S3.45 0 1.8.3C.75.45.225 1.125.15 2.1 0 3.075 0 4.5 0 4.5s0 1.425.15 2.4c.15.975.6 1.65 1.65 1.8C3.45 9 6 9 6 9s2.55 0 4.2-.3c1.05-.225 1.5-.825 1.65-1.8.15-.975.15-2.4.15-2.4s0-1.425-.15-2.4ZM4.5 6.75v-4.5L8.25 4.5 4.5 6.75Z"/>',
-    crop: '<g style="fill:none;stroke:currentColor;stroke-miterlimit:10;stroke-linecap:square">' +
+    done: { vb: "0 0 20 20", g: '<rect width="20" height="20" rx="5" style="fill:var(--ch-status-done)"/>' +
+          '<path d="M14.727 7 8.727 13 6 10.273" style="fill:none;stroke:var(--ch-text-inverse);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"/>' },
+    plan: { vb: "0 0 20 20", g: '<rect x=".6" y=".6" width="18.8" height="18.8" rx="4.4" style="fill:var(--ch-surface-page);stroke:var(--ch-status-planned);stroke-width:1.2"/>' },
+    tick: { vb: "0 0 22 22", g: '<path d="M15.2 8.3 9.6 13.9 7 11.3" style="fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"/>' },
+    yt: { vb: "0 0 20 20", g: '<rect width="20" height="20" rx="5" style="fill:var(--ch-status-film)"/>' +
+        '<path transform="translate(4 5.5)" style="fill:var(--ch-text-inverse)" d="M11.85 2.1C11.7 1.125 11.25.45 10.2.3 8.55 0 6 0 6 0S3.45 0 1.8.3C.75.45.225 1.125.15 2.1 0 3.075 0 4.5 0 4.5s0 1.425.15 2.4c.15.975.6 1.65 1.65 1.8C3.45 9 6 9 6 9s2.55 0 4.2-.3c1.05-.225 1.5-.825 1.65-1.8.15-.975.15-2.4.15-2.4s0-1.425-.15-2.4ZM4.5 6.75v-4.5L8.25 4.5 4.5 6.75Z"/>' },
+    /* aronia – the „blueberries” icon of the chip, verbatim */
+    berries: { vb: "0 0 12 12", g: '<g style="fill:none;stroke:currentColor;stroke-miterlimit:10;stroke-linecap:square">' +
           '<path d="M6.5 8.497a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>' +
           '<path d="M7.5 5.668a2.997 2.997 0 0 1 3.997 2.83 2.997 2.997 0 0 1-3.997 2.829"/>' +
           '<path d="M3.042 3.997a3 3 0 1 1 5.917 0"/></g>' +
-          '<g style="fill:currentColor"><circle cx="6" cy="2.497" r=".5"/><circle cx="2.5" cy="7.497" r=".5"/><circle cx="9.5" cy="8.497" r=".5"/></g>'
+          '<g style="fill:currentColor"><circle cx="6" cy="2.497" r=".5"/><circle cx="2.5" cy="7.497" r=".5"/><circle cx="9.5" cy="8.497" r=".5"/></g>' },
+    /* jabłoń – an apple with a stem and a leaf */
+    apple: { vb: "0 0 12 12", g: '<g style="fill:none;stroke:currentColor;stroke-miterlimit:10;stroke-linecap:square">' +
+          '<path d="M6 4.1c-.9-.6-2.3-.7-3.2.1C1.6 5.2 1.6 7 2.4 8.6c.8 1.6 2.2 2.8 3.6 2.2 1.4.6 2.8-.6 3.6-2.2.8-1.6.8-3.4-.4-4.4-.9-.8-2.3-.7-3.2-.1Z"/>' +
+          '<path d="M6 4V2"/><path d="M6.5 2.4c.4-.9 1.3-1.4 2.3-1.3-.3.9-1.2 1.4-2.3 1.3Z"/></g>' +
+          '<g style="fill:currentColor"><circle cx="3.9" cy="6.3" r=".5"/></g>' },
+    /* grusza – a pear with a stem and a leaf */
+    pear: { vb: "0 0 12 12", g: '<g style="fill:none;stroke:currentColor;stroke-miterlimit:10;stroke-linecap:square">' +
+          '<path d="M6 3c-1 0-1.4.9-1.6 1.9-.2 1-.8 1.5-1.4 2.4-.8 1.2-.5 2.7.6 3.4 1.3.8 3.5.8 4.8 0 1.1-.7 1.4-2.2.6-3.4-.6-.9-1.2-1.4-1.4-2.4C7.4 3.9 7 3 6 3Z"/>' +
+          '<path d="M6 3V1.2"/><path d="M6.4 1.9c.4-.6 1.2-.9 1.9-.7-.4.6-1.2.9-1.9.7Z"/></g>' +
+          '<g style="fill:currentColor"><circle cx="4.9" cy="8.4" r=".5"/></g>' },
+    /* malina – a round berry of drupelets under a calyx */
+    raspberry: { vb: "0 0 12 12", g: '<g style="fill:none;stroke:currentColor;stroke-miterlimit:10;stroke-linecap:square">' +
+          '<path d="M6 11c-2.1 0-3.6-1.7-3.6-3.8C2.4 5.3 4 3.8 6 3.8s3.6 1.5 3.6 3.4C9.6 9.3 8.1 11 6 11Z"/>' +
+          '<path d="M3.9 3.9C4.3 3 5.1 2.4 6 2.4s1.7.6 2.1 1.5M6 2.4V1"/></g>' +
+          '<g style="fill:currentColor"><circle cx="4.5" cy="6.2" r=".5"/><circle cx="7.5" cy="6.2" r=".5"/><circle cx="6" cy="7.7" r=".5"/><circle cx="4.5" cy="9.1" r=".5"/><circle cx="7.5" cy="9.1" r=".5"/></g>' },
+    /* truskawka – a strawberry pointing down, a calyx and seeds */
+    strawberry: { vb: "0 0 12 12", g: '<g style="fill:none;stroke:currentColor;stroke-miterlimit:10;stroke-linecap:square">' +
+          '<path d="M6 11.1C3.9 9.9 2.1 7.8 2.2 5.6c.1-1.1 1-1.8 2-1.8.7 0 1.2.3 1.8.3s1.1-.3 1.8-.3c1 0 1.9.7 2 1.8.1 2.2-1.7 4.3-3.8 5.5Z"/>' +
+          '<path d="M3.9 3.4 6 2.4l2.1 1M6 2.4V1"/></g>' +
+          '<g style="fill:currentColor"><circle cx="4.4" cy="5.9" r=".5"/><circle cx="7.6" cy="5.9" r=".5"/><circle cx="6" cy="7.3" r=".5"/><circle cx="6" cy="9.3" r=".5"/></g>' }
   };
+  var CROP_ICON = { "aronia": "berries", "jabłoń": "apple", "jabłko": "apple", "grusza": "pear", "gruszka": "pear",
+    "malina": "raspberry", "truskawka": "strawberry" };
+  function cropIcon(crop) { return CROP_ICON[(crop || "").toLowerCase()] || "berries"; }
+
   var sprite = doc.createElementNS(NS, "svg");
   sprite.setAttribute("class", "c5-ax__sprite");
   sprite.setAttribute("aria-hidden", "true");
   sprite.setAttribute("focusable", "false");
   sprite.innerHTML = Object.keys(SYM).map(function (k) {
-    return '<symbol id="c5-ax-i-' + k + '" viewBox="' + (k === "crop" ? "0 0 12 12" : "0 0 20 20") + '">' + SYM[k] + "</symbol>";
+    return '<symbol id="c5-ax-i-' + k + '" viewBox="' + SYM[k].vb + '">' + SYM[k].g + "</symbol>";
   }).join("");
   function icon(name, cls) {
     var s = doc.createElementNS(NS, "svg");
-    s.setAttribute("class", cls || "c5-ax__mk");
+    s.setAttribute("class", cls);
     s.setAttribute("aria-hidden", "true");
     s.setAttribute("focusable", "false");
-    s.setAttribute("viewBox", name === "crop" ? "0 0 12 12" : "0 0 20 20");
+    s.setAttribute("viewBox", SYM[name].vb);
     var use = doc.createElementNS(NS, "use");
     use.setAttribute("href", "#c5-ax-i-" + name);
     s.appendChild(use);
     return s;
   }
 
-  /* --- 5. skeleton: calendar head and rows ---------------------------------- */
+  /* --- 4. skeleton: calendar head and rows ---------------------------------- */
   var frame = el("div", "c5-ax__frame");
   frame.setAttribute("data-lenis-prevent", "");
   var table = el("div", "c5-ax__table");
   frame.appendChild(table);
+  /* the bar: it lies under the quarter labels and floats down onto a hovered row */
+  var band = hide(el("div", "c5-ax__hl"));
+  table.appendChild(band);
 
-  var colEls = cols.map(function () { return []; }); /* every cell of a column */
+  var colEls = [];                                  /* every cell of a quarter */
+  for (var ce = 0; ce < N; ce++) colEls[ce] = [];
 
-  /* the calendar is decoration for assistive tech: every point names its own term */
+  /* the calendar is decoration for assistive tech: every cell names its period */
   var head = hide(el("div", "c5-ax__head"));
   var corner = el("div", "c5-ax__corner");
   head.appendChild(corner);
   var cal = el("div", "c5-ax__cal");
   var yearsRow = el("div", "c5-ax__years"), monthsRow = el("div", "c5-ax__months");
-  var yearEls = [];
-  years.forEach(function (yr, n) {
-    var yc = place(el("div", "c5-ax__year" + (yr.strip ? " c5-ax__year--strip" : "")), yr.a, yr.b);
-    yc.appendChild(el("span", "", String(yr.y)));
-    if (n > 0) yc.setAttribute("data-ys", "");
-    yearsRow.appendChild(yc);
-    yearEls.push(yc);
-  });
-  cols.forEach(function (c, k) {
-    var mc = el("div", "c5-ax__month c5-ax__month--" + c.type);
-    if (c.type !== "strip") mc.appendChild(el("span", "", ROMAN[at(c.i).m - 1]));
-    if (c.ys) mc.setAttribute("data-ys", "");
-    mc.setAttribute("data-c", k);
-    colEls[k].push(mc);
-    monthsRow.appendChild(mc);
-  });
+  var yr0 = -1, ya = 0;
+  for (var k0 = 0; k0 <= N; k0++) {
+    var yk = k0 < N ? qAt(k0).y : null;
+    if (yk !== yr0) {
+      if (yr0 >= 0) {
+        var yc = place(el("div", "c5-ax__year"), ya, k0 - 1);
+        yc.appendChild(el("span", "", String(yr0)));
+        if (ya > 0) yc.setAttribute("data-ys", "");
+        yearsRow.appendChild(yc);
+      }
+      yr0 = yk; ya = k0;
+    }
+  }
+  /* the label of a quarter: its first month – not January, where the line of
+     the year stands (annotation 996:2855) */
+  var qEls = [];
+  for (var k1 = 0; k1 < N; k1++) {
+    var d1 = qAt(k1);
+    var qc = el("div", "c5-ax__q");
+    if (d1.q > 0) qc.appendChild(el("span", "", ROMAN[d1.q * 3]));
+    if (d1.q === 0 && k1 > 0) qc.setAttribute("data-ys", "");
+    qc.setAttribute("data-c", k1);
+    qEls.push(qc);
+    monthsRow.appendChild(qc);
+  }
   cal.appendChild(yearsRow);
   cal.appendChild(monthsRow);
   head.appendChild(cal);
   table.appendChild(head);
 
+  /* the last quarter that has begun: one marker in the source (data-m) */
+  var nowSrc = $("[data-m]", src), nowAt = nowSrc ? ym(nowSrc.getAttribute("data-m")) : null;
+  var nowQ = nowAt ? qIdx(nowAt) : -1;
+  if (nowQ >= N) nowQ = N - 1;
+  if (nowQ < 0) nowQ = -1;
+
   var body = el("div", "c5-ax__body");
   table.appendChild(body);
 
-  /* „we are here”: one marker in the source; the label stands over the years,
-     centred on the line of its month */
-  var nowSrc = $("[data-m]", src), nowAt = nowSrc ? ym(nowSrc.getAttribute("data-m")) : null;
-  var nowI = nowAt ? idx(nowAt) : -1;
-  var nowCol = nowI >= 0 && nowI < N && cols[colOf[nowI]].type !== "strip" ? colOf[nowI] : -1;
-  var nowLab = null, nowBox = null;
-  if (nowCol >= 0) {
-    nowBox = el("div", "c5-ax__nowcol" + (cols[nowCol].type === "ev" ? "" : " c5-ax__nowcol--mid"));
-    nowBox.style.gridColumn = String(nowCol + 1);
-    nowLab = el("span", "c5-ax__nowlab", text(nowSrc));
-    nowBox.appendChild(nowLab);
-    yearsRow.appendChild(nowBox);
-    colEls[nowCol][0].classList.add("c5-ax__month--now");
-  }
-
-  function cellFor(c, k) {
-    var cell = el("div", "c5-ax__cell c5-ax__cell--" + c.type + (k === nowCol ? " c5-ax__cell--now" : ""));
-    if (c.ys) cell.setAttribute("data-ys", "");
-    cell.setAttribute("data-c", k);
-    cell.style.gridColumn = String(k + 1);
-    return cell;
-  }
-
-  var rowEls = {}, rowList = [], items = [];
+  var rowEls = {}, rowList = [], pts = [];
   rows.forEach(function (r) {
     var row = el("div", "c5-ax__row");
     row.setAttribute("role", "group");
@@ -237,7 +246,7 @@
     name.id = nameId;
     if (r.crop) {
       var crop = el("span", "c5-ax__crop");
-      crop.appendChild(icon("crop", "c5-ax__cropico"));
+      crop.appendChild(icon(cropIcon(r.crop), "c5-ax__cropico"));
       crop.appendChild(el("span", "", r.crop));
       name.appendChild(crop);
     }
@@ -247,44 +256,42 @@
     row.appendChild(name);
 
     var track = el("div", "c5-ax__track");
-    track.style.setProperty("--lanes", r.lanes);
-    var cells = cols.map(function (c, k) {
-      var cell = cellFor(c, k);
+    track.style.setProperty("--n", r.most);
+    for (var k = 0; k < N; k++) {
+      var list = r.cells[k];
+      var cell = el(list.length ? "button" : "div", "c5-ax__cell");
+      cell.setAttribute("data-c", k);
+      cell.style.gridColumn = String(k + 1);
+      if (qAt(k).q === 0 && k > 0) cell.setAttribute("data-ys", "");
+      if (list.length) {
+        cell.type = "button";
+        cell.setAttribute("aria-haspopup", "dialog");
+        cell.style.setProperty("--i", k);
+        cell.setAttribute("aria-label", period(k) + ": " + list.map(function (it) {
+          return it.name + " – " + (it.stateLabel || (it.done ? "zrobione" : "zaplanowane")) +
+            (it.film ? ", relacja filmowa" + (it.filmTitle ? ": " + it.filmTitle : "") : "");
+        }).join("; "));
+        list.forEach(function (it) {
+          var pt = hide(el("span", "c5-ax__pt c5-ax__pt--" + (it.done ? "done" : "plan")));
+          var pill = el("span", "c5-ax__pill");
+          var sign = el("span", "c5-ax__sign");
+          sign.appendChild(it.done ? icon("tick", "c5-ax__tick") : el("span", "c5-ax__dot"));
+          pill.appendChild(sign);
+          it.lab = pill.appendChild(el("span", "c5-ax__lab", it.name));
+          it.pill = pill;
+          pt.appendChild(pill);
+          if (it.film) pt.appendChild(icon("yt", "c5-ax__yt"));
+          pt.style.setProperty("--i", k);
+          cell.appendChild(pt);
+          pts.push(it);
+        });
+        (function (row0, k0) {
+          cell.addEventListener("click", function () { openDialog(row0, k0, this); });
+        })(r, k);
+      }
       colEls[k].push(cell);
       track.appendChild(cell);
-      return cell;
-    });
-
-    r.items.forEach(function (it) {
-      var k = colOf[it.i];
-      it.col = k;
-      var b = el("button", "c5-ax__pt" + (it.film ? " c5-ax__pt--film" : ""));
-      b.type = "button";
-      b.setAttribute("data-state", it.state);
-      b.setAttribute("data-m", at(it.i).y + "-" + ("0" + at(it.i).m).slice(-2));
-      b.setAttribute("aria-haspopup", "dialog");
-      b.setAttribute("aria-label", [it.term, it.name, it.stateLabel,
-        it.film ? "relacja filmowa" + (it.filmTitle ? ": " + it.filmTitle : "") : ""].filter(Boolean).join(" – "));
-      b.style.setProperty("--i", k);
-      b.style.setProperty("--lane", it.lane);
-      /* the mark is the icon of the label; the name unfolds behind it while the
-         column is widened (the term stays on the axis and in the accessible name) */
-      var ev = hide(el("span", "c5-ax__ev"));
-      ev.appendChild(icon(it.state === "done" || it.state === "doing" || it.state === "na" ? it.state : "todo"));
-      it.seg = ev.appendChild(el("span", "c5-ax__seg", it.name));
-      b.appendChild(ev);
-      if (it.film) {
-        var fm = hide(el("span", "c5-ax__film"));
-        fm.appendChild(icon("yt"));
-        it.filmSeg = fm.appendChild(el("span", "c5-ax__seg", it.filmTitle || "Film"));
-        it.filmEl = fm;
-        b.appendChild(fm);
-      }
-      b.addEventListener("click", function () { openDialog(r, it, b); });
-      it.btn = b;
-      cells[k].appendChild(b);
-      items.push(it);
-    });
+    }
     row.appendChild(track);
     body.appendChild(row);
     rowEls[r.key] = row;
@@ -294,191 +301,117 @@
   /* the right edge fades out where the axis scrolls sideways (CSS) */
   body.appendChild(hide(el("div", "c5-ax__fade")));
 
-  /* legend: four states (labels as on the chips) and the film mark (Figma 888:4758) */
+  /* legend: the three marks of Figma 996:2431 */
   var legend = el("ul", "c5-ax__legend");
-  [["done", "zrobione"], ["doing", "w toku"], ["todo", "zaplanowane"], ["na", "nie dotyczy"], ["yt", "YouTube"]].forEach(function (s) {
+  [["done", "Wykonane"], ["plan", "Zaplanowane"], ["yt", "Relacja na YouTube"]].forEach(function (s) {
     var li = el("li");
-    li.appendChild(icon(s[0]));
+    li.appendChild(icon(s[0], "c5-ax__lg"));
     li.appendChild(el("span", "", s[1]));
     legend.appendChild(li);
   });
 
-  /* --- 6. geometry: one px track list for every grid of the block ----------- */
-  var open = -1, cur = [], total = 0, need = [];
+  /* the marked quarter, for assistive tech (the calendar is decoration) */
+  var nowSr = nowQ >= 0 ? el("p", "c5-ax__sr", "Bieżący kwartał: " + period(nowQ)) : null;
+
+  /* --- 5. geometry: one px track list for every grid of the block ----------- */
+  var MIN_REST = 72;        /* narrower quarters at rest: the axis scrolls      */
+  var MIN_SQUEEZE = 62;     /* a quarter giving way to the widened one          */
+  var OPEN_MAX = 560;
+  var OPEN_DELAY = 500;     /* annotation 996:2646: half a second               */
+  var open = -1, cur = [], total = 0, scrolls = false, need = [];
 
   function nameW() { return corner.getBoundingClientRect().width || 0; }
 
-  /* natural widths of the unfolded labels (measured on the folded labels,
-     which stay laid out while hidden) and the room a widened column needs:
-     20 px to the marks, the widest unfolded point, 24 px of air */
+  /* natural widths of the labels (measured on the folded capsules, which stay
+     laid out while hidden) and the room a widened quarter needs: 20 px to the
+     marks, the widest capsule (+ the YouTube mark), 16 px of air */
+  function capW(it) { return Math.ceil(22 + it.labW); }
   function measureNeed() {
-    need = cols.map(function () { return 0; });
-    fitLabels(-1, 0);
-    items.forEach(function (it) {
-      it.segW = it.seg.offsetWidth;
-      it.filmW = it.film ? it.filmSeg.offsetWidth : 0;
-      need[it.col] = Math.max(need[it.col], 20 + pointW(it, it.segW, it.filmW) + 24);
-    });
-  }
-  /* an unfolded point: mark + label (overlapping by 5), film mark + label 10 px on */
-  function pointW(it, a, f) { return 20 + a - 5 + (it.film ? 10 + 20 + f - 5 : 0); }
-  /* the labels of the widened column share its room; a label that does not fit
-     is cut with an ellipsis (the film title gives way first) */
-  function fitLabels(k, w) {
-    items.forEach(function (it) {
-      if (it.col !== k) { it.seg.style.maxWidth = ""; if (it.filmSeg) it.filmSeg.style.maxWidth = ""; return; }
-      var room = w - 20 - 16;
-      var a = it.segW, f = it.filmW, cut = pointW(it, a, f) > room;
-      if (cut) {
-        if (it.film) {
-          var both = room - (20 - 5) - (10 + 20 - 5);
-          a = Math.min(a, Math.max(both * 0.5, both - f));
-          f = Math.max(40, both - a);
-        } else {
-          a = room - 15;
-        }
-      }
-      /* a label that fits keeps its natural width (rounded up, so no ellipsis) */
-      it.seg.style.maxWidth = (cut ? Math.floor(a) : Math.ceil(a) + 1) + "px";
-      if (it.filmSeg) it.filmSeg.style.maxWidth = (cut ? Math.floor(f) : Math.ceil(f) + 1) + "px";
+    need = [];
+    for (var k = 0; k < N; k++) need[k] = 0;
+    pts.forEach(function (it) {
+      it.labW = it.lab.scrollWidth;
+      need[it.k] = Math.max(need[it.k], 20 + capW(it) + (it.film ? 30 : 0) + 16);
     });
   }
 
   function apply() {
     var avail = Math.floor(frame.clientWidth - nameW());
     if (!(avail > 0)) return;
-    /* an empty month right before a month with events keeps some extra room, so
-       its label clears the label centred on the next month line */
-    var bump = cols.map(function (c, k) { return c.type === "empty" && cols[k + 1] && cols[k + 1].type === "ev" ? 14 : 0; });
-    var units = 0, fixed0 = 0;
-    cols.forEach(function (c, k) { if (c.type === "strip") fixed0 += STRIP; else { units += UNIT[c.type]; fixed0 += bump[k]; } });
-    var full = Math.max(MIN_FULL, (avail - fixed0) / (units || 1));
-    var empty = Math.max(EMPTY_MIN, full * UNIT.empty);
-    var rest = cols.map(function (c, k) { return c.type === "strip" ? STRIP : c.type === "ev" ? full : empty + bump[k]; });
-    total = rest.reduce(function (x, y) { return x + y; }, 0);
-    var scrolls = total > avail + 0.5;
+    var q = avail / N;
+    scrolls = q < MIN_REST;
+    if (scrolls) q = MIN_REST + 8;
     root.classList.toggle("is-scroll", scrolls);
-    cur = rest.slice();
+    cur = [];
+    for (var k = 0; k < N; k++) cur[k] = q;
     if (open >= 0) {
-      /* Figma 903: the widened month takes about half of the axis and at least
-         what its labels need – as far as the other months leave room */
-      var want = Math.max(need[open] || 0, Math.min(OPEN_MAX, total * OPEN_PART));
+      var want = Math.min(OPEN_MAX, need[open] || 0);
       if (scrolls) {
-        /* a frame that scrolls: the axis grows, nothing squeezes; the column
+        /* a frame that scrolls: the axis grows, nothing squeezes; the quarter
            never outgrows the visible part of the axis */
-        cur[open] = Math.max(rest[open], Math.min(want, avail - 8));
+        cur[open] = Math.max(q, Math.min(want, avail - 8));
       } else {
-        var minO = 0, evO = 0, fixO = 0, nEv = 0, emO = 0;
-        cols.forEach(function (c, k) {
-          if (k === open) return;
-          if (c.type === "ev") { evO += rest[k]; nEv++; minO += MIN_FULL; }
-          else { fixO += rest[k]; minO += c.type === "strip" ? STRIP : EMPTY_MIN + bump[k]; if (c.type === "empty") emO += rest[k] - bump[k]; }
-        });
-        var wide = Math.max(rest[open], Math.min(want, total - minO));
-        var R = total - wide;
-        var f = evO ? (R - fixO) / evO : 1;
-        if (!evO || full * f >= MIN_FULL) {
-          /* the other months with events give way, empty months keep their room */
-          cur = rest.map(function (w, k) { return k === open ? wide : cols[k].type === "ev" ? w * f : w; });
-        } else {
-          /* events at their minimum, empty months share what is left */
-          var g = emO ? (R - nEv * MIN_FULL - (fixO - emO)) / emO : 1;
-          cur = rest.map(function (w, k) {
-            if (k === open) return wide;
-            if (cols[k].type === "ev") return MIN_FULL;
-            if (cols[k].type === "empty") return (w - bump[k]) * g + bump[k];
-            return w;
-          });
-        }
+        var wide = Math.max(q, Math.min(want, avail - (N - 1) * MIN_SQUEEZE));
+        var rest = (avail - wide) / (N - 1);
+        for (var j = 0; j < N; j++) cur[j] = j === open ? wide : rest;
       }
-      fitLabels(open, cur[open]);
-    } else {
-      fitLabels(-1, 0);
+      /* the capsules of the widened quarter share its room; one that does not
+         fit is cut with an ellipsis (the full name stands in the dialog) */
+      var room = cur[open] - 20 - 12;
+      pts.forEach(function (it) {
+        if (it.k !== open) return;
+        var w = Math.min(capW(it) + 1, room - (it.film ? 30 : 0));
+        it.pill.style.setProperty("--w", Math.max(22, Math.floor(w)) + "px");
+      });
     }
-    var sum = cur.reduce(function (x, y) { return x + y; }, 0);
+    total = cur.reduce(function (x, y) { return x + y; }, 0);
     table.style.setProperty("--c5-ax-cols", cur.map(function (w) { return (Math.floor(w * 100) / 100) + "px"; }).join(" "));
-    table.style.setProperty("--c5-ax-w", (Math.floor(sum * 100) / 100) + "px");
-    root.style.setProperty("--c5-ax-e", (open >= 0 ? cur[open] : full).toFixed(2) + "px");
-    /* an empty month too narrow for its label („VIII” is ~20 px) loses the label */
-    root.classList.toggle("is-tight", cur.some(function (w, k) { return cols[k].type === "empty" && w - bump[k] < 23; }));
-    /* the dashes of a month line run on unbroken from row to row */
+    table.style.setProperty("--c5-ax-w", (Math.floor(total * 100) / 100) + "px");
+    /* the dashes of a quarter line run on unbroken from row to row */
     rowList.forEach(function (row) { row.style.setProperty("--c5-ax-ry", row.offsetTop + "px"); });
-    if (nowLab) {
-      /* the label must stay inside the axis and clear of the next year's number */
-      var x = xOf(nowCol), lim = sum;
-      years.forEach(function (yr) { if (yr.a > nowCol && lim === sum) lim = xOf(yr.a); });
-      nowLab.classList.toggle("is-flip", x + nowLab.offsetWidth / (scrolls ? 1 : 2) + 4 > lim);
-    }
   }
   function xOf(k) { var x = 0; for (var j = 0; j < k; j++) x += cur[j]; return x; }
 
-  /* --- 6b. the lit row ------------------------------------------------------- */
+  /* --- 6. the marked quarter, the lit row ------------------------------------- */
+  var act = -1;
+  function setAct(k) {
+    if (k === act) return;
+    if (act >= 0) { qEls[act].classList.remove("is-act"); colEls[act].forEach(function (c) { c.classList.remove("is-act"); }); }
+    act = k;
+    if (k >= 0) { qEls[k].classList.add("is-act"); colEls[k].forEach(function (c) { c.classList.add("is-act"); }); }
+  }
+
   var litRow = null, hoverRow = null, focusRow = null, targetRow = null;
   function syncLit() {
     var row = targetRow || focusRow || hoverRow;
     if (litRow && litRow !== row) litRow.classList.remove("is-lit");
     litRow = row;
-    if (row) row.classList.add("is-lit");
+    root.classList.toggle("has-lit", !!row);
+    if (row) {
+      row.classList.add("is-lit");
+      band.style.height = row.offsetHeight + "px";
+      band.style.transform = "translateY(" + (head.offsetHeight + row.offsetTop) + "px)";
+    } else {
+      band.style.height = "";
+      band.style.transform = "";
+    }
   }
   function rowOf(target) {
     var row = target && target.closest ? target.closest(".c5-ax__row") : null;
     return row && body.contains(row) ? row : null;
   }
 
-  /* --- 6c. widening with FLIP: the layout jumps, every column is shifted back
-     to where it stood and glides home on transform alone ---------------------- */
-  var flipEls = [].concat(
-    Array.prototype.slice.call(monthsRow.children),
-    yearEls,
-    nowBox ? [nowBox] : [],
-    Array.prototype.slice.call(body.querySelectorAll(".c5-ax__cell"))
-  );
-  var flipT = null;
+  /* --- 7. widening a quarter ---------------------------------------------------- */
   function setOpen(k) {
+    if (k >= 0 && !used[k]) k = -1;                 /* nothing to unfold */
     if (k === open) return;
-    var anim = CX5.motionOn() && !CX5.reducedMQ.matches;
-    var before = null, films = [];
-    if (anim) {
-      before = flipEls.map(function (n) { return n.getBoundingClientRect().left; });
-      [open, k].forEach(function (c) {
-        if (c < 0) return;
-        items.forEach(function (it) {
-          if (it.col === c && it.filmEl) films.push({ n: it.filmEl, cell: it.btn.parentNode, x: it.filmEl.getBoundingClientRect().left });
-        });
-      });
-    }
     if (open >= 0) colEls[open].forEach(function (c) { c.classList.remove("is-open"); });
     open = k;
     if (k >= 0) colEls[k].forEach(function (c) { c.classList.add("is-open"); });
     apply();
-    if (anim) {
-      if (flipT) { window.clearTimeout(flipT); flipT = null; }
-      /* writes, then reads, then writes – one layout pass for the whole axis */
-      flipEls.forEach(function (n) { n.style.transition = "none"; n.style.transform = ""; });
-      films.forEach(function (f) { f.n.style.transition = "none"; f.n.style.transform = ""; });
-      var after = flipEls.map(function (n) { return n.getBoundingClientRect().left; });
-      var cellDx = new Map();
-      flipEls.forEach(function (n, i) {
-        var dx = before[i] - after[i];
-        if (Math.abs(dx) > 0.5) n.style.transform = "translateX(" + dx.toFixed(1) + "px)";
-        cellDx.set(n, dx);
-      });
-      films.forEach(function (f) {
-        var dx = (f.x - f.n.getBoundingClientRect().left) - (cellDx.get(f.cell) || 0);
-        if (Math.abs(dx) > 0.5) f.n.style.transform = "translateX(" + dx.toFixed(1) + "px)";
-      });
-      void table.offsetWidth;
-      var tr = "transform .45s cubic-bezier(.22,.61,.36,1)";
-      flipEls.forEach(function (n) { if (n.style.transform) { n.style.transition = tr; n.style.transform = ""; } });
-      films.forEach(function (f) { if (f.n.style.transform) { f.n.style.transition = tr; f.n.style.transform = ""; } });
-      flipT = window.setTimeout(function () {
-        flipT = null;
-        flipEls.forEach(function (n) { n.style.transition = ""; });
-        films.forEach(function (f) { f.n.style.transition = ""; });
-      }, 500);
-    }
-    /* a frame that scrolls brings the widened column into view */
-    if (k >= 0 && frame.scrollWidth > frame.clientWidth + 1) {
+    if (litRow) syncLit();
+    /* a frame that scrolls brings the widened quarter into view */
+    if (k >= 0 && scrolls) {
       var x = xOf(k), vis = frame.clientWidth - nameW(), sl = frame.scrollLeft;
       if (x < sl + 4 || x + cur[k] > sl + vis) {
         frame.scrollTo({ left: Math.max(0, x - 6), behavior: CX5.reducedMQ.matches ? "auto" : "smooth" });
@@ -486,93 +419,98 @@
     }
   }
 
-  /* --- 7. widening a month: hover, focus, tap; folding: leave, Esc ----------- */
-  var hoverCol = -1, hoverT = null, closeT = null, lastX = -1, lastY = -1, muted = -1;
-  function clearTimers() {
-    if (hoverT) { window.clearTimeout(hoverT); hoverT = null; }
-    if (closeT) { window.clearTimeout(closeT); closeT = null; }
-  }
-  function evCol(target) {
-    var cell = target && target.closest ? target.closest("[data-c]") : null;
-    if (!cell || !table.contains(cell)) return -1;
-    var k = +cell.getAttribute("data-c");
-    return cols[k] && cols[k].type === "ev" ? k : -1;
+  /* --- 8. the pointer: the mark goes to the quarter under it, half a second
+     widens that quarter, leaving it folds it at once; keyboard focus widens
+     at once --------------------------------------------------------------- */
+  var hoverQ = -1, openT = null, lastX = -1, lastY = -1, muted = -1;
+  function clearOpenT() { if (openT) { window.clearTimeout(openT); openT = null; } }
+  /* the quarter under a screen x – read from the bar, so it is right while the
+     columns glide */
+  function quarterAt(clientX) {
+    for (var k = 0; k < N; k++) {
+      var b = qEls[k].getBoundingClientRect();
+      if (clientX >= b.left && clientX < b.right) return k;
+    }
+    return -1;
   }
   function keyboardInside() {
     var a = doc.activeElement;
     return !!(a && table.contains(a) && a.matches && a.matches(":focus-visible"));
   }
-  function foldSoon(ms) {
-    closeT = window.setTimeout(function () {
-      closeT = null;
-      if (!keyboardInside() && !dlg.open) setOpen(-1);
-    }, ms);
+  function restMark() { setAct(hoverQ >= 0 ? hoverQ : nowQ); }
+  /* the timer asks again which quarter is under the pointer: a fold may have
+     slid another one there in the meantime */
+  function openUnder() {
+    openT = null;
+    var k = lastX >= 0 ? quarterAt(lastX) : -1;
+    if (k < 0 || k === muted) return;
+    hoverQ = k;
+    setAct(k);
+    setOpen(k);
+  }
+  function enterQuarter(k) {
+    if (k === hoverQ) return;
+    hoverQ = k;
+    clearOpenT();
+    if (open >= 0 && k !== open) setOpen(-1);      /* left the widened quarter: fold at once */
+    restMark();
+    if (k >= 0 && k !== open && k !== muted) openT = window.setTimeout(openUnder, OPEN_DELAY);
   }
 
-  /* only a real move of the pointer counts – the axis sliding under a resting
-     cursor must not pick another month; a short pause filters a sweep across */
   table.addEventListener("pointermove", function (e) {
     if (e.pointerType === "touch") return;
-    if (e.clientX === lastX && e.clientY === lastY) return;
+    if (e.clientX === lastX && e.clientY === lastY) return;   /* the axis slid under a resting pointer */
     lastX = e.clientX; lastY = e.clientY;
     var hr = rowOf(e.target);
     if (hr !== hoverRow) { hoverRow = hr; syncLit(); }
     var inName = !!(e.target.closest && e.target.closest(".c5-ax__name, .c5-ax__corner"));
-    var k = evCol(e.target);
+    var k = inName ? -1 : quarterAt(e.clientX);
     if (k !== muted) muted = -1;
-    if (k === hoverCol && !inName) return;
-    hoverCol = k;
-    clearTimers();
-    if (k >= 0) {
-      if (k !== muted && k !== open) hoverT = window.setTimeout(function () { hoverT = null; setOpen(k); }, open >= 0 ? 90 : 40);
-    } else if (inName && open >= 0) {
-      foldSoon(200);                       /* over the names = outside the axis */
-    }
-    /* an empty month keeps the last widened one – no folding halfway across */
+    enterQuarter(k);
   });
   table.addEventListener("pointerleave", function (e) {
     if (e.pointerType === "touch") return;
-    hoverCol = -1; lastX = lastY = -1;
+    lastX = lastY = -1;
     if (hoverRow) { hoverRow = null; syncLit(); }
-    clearTimers();
-    if (open >= 0) foldSoon(160);
-  });
-  /* touch (and a plain click): the column under the finger widens, any other place folds */
-  table.addEventListener("click", function (e) {
-    if (e.target.closest && e.target.closest(".c5-ax__pt")) return;
-    clearTimers();
-    setOpen(evCol(e.target));
+    clearOpenT();
+    hoverQ = -1;
+    if (open >= 0 && !keyboardInside() && !dlg.open) setOpen(-1);
+    restMark();
   });
   doc.addEventListener("pointerdown", function (e) {
     if (open < 0 || root.contains(e.target) || dlg.contains(e.target)) return;
-    clearTimers();
+    clearOpenT();
     setOpen(-1);
   });
-  /* keyboard: the column of the focused point widens */
+  /* keyboard: the quarter of the focused cell widens at once */
   table.addEventListener("focusin", function (e) {
-    var pt = e.target.closest ? e.target.closest(".c5-ax__pt") : null;
-    if (!pt) return;
-    clearTimers();
-    focusRow = rowOf(pt);
-    setOpen(+pt.style.getPropertyValue("--i"));
+    var cell = e.target.closest ? e.target.closest("button.c5-ax__cell") : null;
+    if (!cell) return;
+    focusRow = rowOf(cell);
     syncLit();
+    if (cell.matches(":focus-visible")) {
+      clearOpenT();
+      var k = +cell.getAttribute("data-c");
+      setAct(k);
+      setOpen(k);
+    }
   });
   table.addEventListener("focusout", function (e) {
     if (dlg.open) return;                           /* focus went into the pop-up */
     if (e.relatedTarget && table.contains(e.relatedTarget)) return;
     if (focusRow) { focusRow = null; syncLit(); }
-    if (hoverCol >= 0 && hoverCol === open) return; /* the pointer still holds it */
-    clearTimers();
+    if (hoverQ >= 0 && hoverQ === open) return;     /* the pointer still holds it */
     setOpen(-1);
+    restMark();
   });
   doc.addEventListener("keydown", function (e) {
     if (e.key !== "Escape" || open < 0 || dlg.open) return;
-    clearTimers();
-    muted = hoverCol;                               /* stays folded until the pointer moves on */
+    clearOpenT();
+    muted = hoverQ;                                 /* stays folded until the pointer moves on */
     setOpen(-1);
   });
 
-  /* --- 8. pop-up: centred dialog ----------------------------------------------
+  /* --- 9. pop-up: centred dialog ----------------------------------------------
      accessibility pattern taken over from the farm profile pop-up (module 52):
      native <dialog> for the focus trap and Esc, manual scroll lock, Lenis
      stopped while it is open, focus handed back to the opener. */
@@ -622,41 +560,37 @@
     return h4;
   }
 
-  function openDialog(r, hit, btn) {
+  /* the dialog holds EVERY event of this farm in this quarter */
+  function openDialog(r, k, btn) {
     if (dlg.open) return;
-    clearTimers();
+    clearOpenT();
     opener = btn || null;
-    dCrop.textContent = r.crop;
+    dCrop.textContent = "";
+    if (r.crop) {
+      dCrop.appendChild(icon(cropIcon(r.crop), "c5-ax__cropico"));
+      dCrop.appendChild(el("span", "", r.crop));
+    }
     dCrop.hidden = !r.crop;
     dTitle.textContent = r.who;
-    dPeriod.textContent = label(hit.i);
+    dPeriod.textContent = period(k);
     dScroll.textContent = "";
-
-    /* the dialog holds EVERY event of this farm in this month */
-    var hitHead = null, hitArt = null;
-    r.items.forEach(function (it) {
-      if (it.i !== hit.i) return;
+    var first = null;
+    r.cells[k].forEach(function (it) {
       var art = doc.createElement("article");
       art.className = "pp-ms";
-      art.setAttribute("data-state", it.state);
+      art.setAttribute("data-state", it.li.getAttribute("data-state") || "todo");
       var clone = clean(it.li.cloneNode(true));
       while (clone.firstChild) art.appendChild(clone.firstChild);
       var h = retitle(art);
-      if (it === hit) {
-        art.classList.add("is-hit");
-        if (h) { h.tabIndex = -1; hitHead = h; }
-        hitArt = art;
-      }
+      if (!first && h) { h.tabIndex = -1; first = h; }
       dScroll.appendChild(art);
     });
-
     dlg.showModal();
     doc.documentElement.classList.add("c5-ax-lock");
     if (CX5.lenis) CX5.lenis.stop();
-    if (hitHead) hitHead.focus({ preventScroll: true });
+    if (first) first.focus({ preventScroll: true });
     else dScroll.focus();
-    /* scrolled straight to the event that was clicked (its film included) */
-    dScroll.scrollTop = hitArt && hitArt !== dScroll.firstElementChild ? Math.max(0, hitArt.offsetTop - 12) : 0;
+    dScroll.scrollTop = 0;
   }
 
   dClose.addEventListener("click", function () { dlg.close(); });
@@ -678,7 +612,7 @@
     opener = null;
   });
 
-  /* --- 9. start ---------------------------------------------------------------- */
+  /* --- 10. start ---------------------------------------------------------------- */
   /* the source keeps its content but hands the anchors over to the rows */
   rows.forEach(function (r) {
     if (r.block.id) r.block.id = r.block.id + "-lista";
@@ -686,31 +620,34 @@
   });
   src.hidden = true;
   root.insertBefore(sprite, src);
+  if (nowSr) root.insertBefore(nowSr, src);
   root.insertBefore(frame, src);
   root.insertBefore(legend, src);
 
   /* widths follow the frame; a resize never animates. A frame that scrolls
-     starts with the current month in view */
+     starts with the marked quarter in view */
   var placed = false;
   function measure() {
+    root.classList.remove("is-ready");
     measureNeed();
     apply();
+    restMark();
+    if (litRow) syncLit();
     if (!placed && total > 0) {
       placed = true;
-      if (frame.scrollWidth > frame.clientWidth + 1 && nowCol >= 0) {
-        /* the current month a little left of the middle – or further left on
-           a narrow phone, so its label („we are here”) fits on screen */
-        var vis = frame.clientWidth - nameW(), lw = nowLab ? nowLab.offsetWidth : 0;
-        frame.scrollLeft = Math.max(0, xOf(nowCol) - Math.max(14, Math.min(vis * 0.4, vis - lw - 20)));
-      }
+      /* the quarter before the marked one starts 16 px right of the glued
+         names, so its label is whole and the marked quarter follows it */
+      if (scrolls && nowQ >= 0) frame.scrollLeft = Math.max(0, xOf(Math.max(0, nowQ - 1)) - 16);
     }
+    void table.offsetWidth;
+    root.classList.add("is-ready");
   }
   CX5.register({ resize: measure });
   measure();
   /* the labels are measured in the page font – measure again once it is in */
   if (doc.fonts && doc.fonts.ready) doc.fonts.ready.then(measure);
 
-  /* first entry into view: points appear with a short stagger (motion only) */
+  /* first entry into view: marks appear with a short stagger (motion only) */
   (function () {
     if (!CX5.motionOn() || !window.IntersectionObserver) return;
     if (root.getBoundingClientRect().top < window.innerHeight * 0.9) return;
@@ -728,7 +665,7 @@
       es.forEach(function (e) { if (e.isIntersecting) go(); });
     }, { threshold: 0.12 });
     io.observe(root);
-    /* safety net: a silent observer must never leave the points invisible */
+    /* safety net: a silent observer must never leave the marks invisible */
     CX5.register({ scroll: function () {
       if (done) return;
       var b = root.getBoundingClientRect();
@@ -741,7 +678,7 @@
     }
   })();
 
-  /* --- 10. jump from a participant card: scroll to the row and light it up --- */
+  /* --- 11. jump from a participant card: scroll to the row and light it up --- */
   var hlT = null;
   function focusFarm(key, instant) {
     var row = rowEls[key];
