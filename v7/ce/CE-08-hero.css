@@ -433,13 +433,17 @@
   padding-block:clamp(1.25rem,2.2vw,1.75rem) var(--c5-hero-dock);
   color:var(--ch-text-inverse);--c5-heading-ink:currentColor;}
 /* G17: the breadcrumb at the top, right under the header (the spacer row shrinks under it) */
-.c5-hero--bg .c5-hero__crumbs{grid-column:1 / -1;grid-row:1;align-self:start;padding-bottom:0;color:var(--ch-text-inverse-muted);}
+/* --c5-hero-crumbs-ink / -shadow / -hover (08–09.11.2026): the breadcrumb over a bright
+   sky (Kukurydza with its film, no flat scrim – Figma 800:419 has none) sets its own ink
+   on the root instead of darkening the whole frame; defaults = the white breadcrumb */
+.c5-hero--bg .c5-hero__crumbs{grid-column:1 / -1;grid-row:1;align-self:start;padding-bottom:0;
+  color:var(--c5-hero-crumbs-ink,var(--ch-text-inverse-muted));text-shadow:var(--c5-hero-crumbs-shadow,none);}
 /* Optional kicker over the headline (B01, Figma 800:419 – 16 px above the H1): the pair
    stands in `.c5-hero__lockup` (kicker + `.c5-hero__title`), which takes the row
    of the headline; a page without a kicker keeps the bare title. */
 .c5-hero--bg .c5-hero__lockup{grid-column:1 / -1;grid-row:3;display:flex;flex-direction:column;align-items:flex-start;gap:var(--ch-space-4);}
 .c5-hero--bg .c5-hero__lockup .c5-kicker{margin:0;}
-.c5-hero--bg .c5-hero__crumbs a:hover{color:var(--ch-text-inverse);}
+.c5-hero--bg .c5-hero__crumbs a:hover{color:var(--c5-hero-crumbs-hover,var(--ch-text-inverse));}
 /* headline: the one-line size of the frame (58/59) */
 .c5-hero--bg .c5-hero__title{grid-column:1 / -1;grid-row:3;margin:0;
   font-family:var(--ch-type-h1-kadr-font);font-size:clamp(2.5rem,4.03vw,var(--ch-type-h1-kadr-size));
