@@ -1,6 +1,6 @@
 window.CE_DANE = {
  "meta": {
-  "wygenerowano": "08.11.2026",
+  "wygenerowano": "09.11.2026",
   "wersja": "0.1.0",
   "projekt": "CarboHort",
   "aktywnych": 81,
@@ -466,7 +466,7 @@ window.CE_DANE = {
    "warianty": [
     {
      "slug": "szerokie",
-     "opis": "cztery boksy produktowe (Produkty Carbohort); w nagłówku panelu dwa przyciski – „Poznaj całą gamę produktów” (jasny) i „Przejdź do sklepu” (ciemny, z ikoną koszyka, od 28.09.2026); od 09.10.2026 boks ma cztery części w stałej kolejności – kategoria, nazwa, miniatura opakowania, opis przy dolnej krawędzi – a boks CARBOHUMIC pokazuje dwie butelki z podpisami „Doglebowe” i „Dolistne”; od 16.10.2026 boks CARBOHUMIC to dwa szare kafle obok siebie (odstęp 8 px), każdy osobnym linkiem z butelką na środku i podpisem: biała „Doglebowe” → carbohumic-doglebowy.html, czarna „Dolistne” → carbohumic-dolistny.html; najechany kafel ciemnieje i zdejmuje podświetlenie z boksu",
+     "opis": "cztery boksy produktowe (Produkty Carbohort); w dolnym pasku panelu jeden jasny przycisk „Poznaj całą gamę produktów” na całą szerokość (od 09.11.2026; wcześniej obok ciemny „Przejdź do sklepu” z ikoną koszyka, 28.09–08.11.2026); od 09.10.2026 boks ma cztery części w stałej kolejności – kategoria, nazwa, miniatura opakowania, opis przy dolnej krawędzi – a boks CARBOHUMIC pokazuje dwie butelki z podpisami „Doglebowe” i „Dolistne”; od 16.10.2026 boks CARBOHUMIC to dwa szare kafle obok siebie (odstęp 8 px), każdy osobnym linkiem z butelką na środku i podpisem: biała „Doglebowe” → carbohumic-doglebowy.html, czarna „Dolistne” → carbohumic-dolistny.html; najechany kafel ciemnieje i zdejmuje podświetlenie z boksu",
      "skrot": "Cztery boksy produktów z miniaturą opakowania, dwa przyciski w nagłówku panelu, rząd potrzeb.",
      "zrzut": null
     },

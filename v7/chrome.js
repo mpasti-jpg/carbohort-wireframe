@@ -314,12 +314,11 @@
               <span class="cw-prodbox__desc">Kondycjoner + potas + biostymulator; podnosi pH zakwaszonej gleby – na pole i do ogrodu.</span>
             </a>
           </div>
-          <!-- The shop button (28.09.2026): whoever opens "Produkty Carbohort"
-               expecting to buy gets to the shop in one click. -->
+          <!-- One button across the panel (09.11.2026): the shop button is gone,
+               the header already has "Sklep" next to the cart. -->
           <div class="cw-mega__foot cw-mega__foot--akcje">
             <div class="cw-mega__actions">
               <a class="wf-btn wf-btn--secondary wf-btn--sm" href="produkty.html">Poznaj całą gamę produktów</a>
-              <a class="wf-btn wf-btn--primary wf-btn--sm" href="sklep.html"><svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-shopping-cart"></use></svg>Przejdź do sklepu</a>
             </div>
           </div>
         </div>
