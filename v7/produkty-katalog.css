@@ -1,0 +1,35 @@
+/* ===== produkty-katalog.css – page layer of the alternative Produkty page (V7) =====
+   Contract: 40-strona-www/koncepcja/produkty-katalog-spec.md (10.11.2026). Every
+   section is a shared CE from ce/; this sheet carries ONLY the exceptions of this one
+   page. Comments in English, never the em dash. ===== */
+
+/* ===== 10 · Hero (CE-08 `linia-produktow`) =====
+   The same page exception as on produkty.html (R01, 18.10.2026), carried over under the
+   prefix of this page: the packs are part of the background photo (Figma 800:333), the
+   band `.c5pr-line` only keeps their room between the headline and the lead. */
+.c5pk-hero .c5-hero__bgimg{object-position:50% 0%;}
+@media (max-width:899px){
+  .c5pk-hero .c5-hero--linia-produktow{min-height:calc(100svh - var(--cx-navbar-h, 0px));}
+  .c5pk-hero .c5pr-line{flex:1 1 auto;min-height:clamp(11rem,52vw,18rem);}
+  .c5pk-hero .c5-hero__bgimg{top:-12%;height:112%;object-position:50% 50%;}
+  #hero.c5pk-hero > .c5-hero__bg::after{background:linear-gradient(180deg,rgb(10 10 10 / .55) 0,rgb(10 10 10 / .2) 34%,rgb(10 10 10 / .08) 48%,rgb(10 10 10 / .5) 66%,rgb(10 10 10 / .62) 100%);}
+}
+
+/* ===== 30 · Gama – CE-39 family show (ce/CE-39-pokaz-rodzin.css) =====
+   Page exception: under each panel six fields of the former comparison table instead of the
+   module's four – one row of six on a wide window (like one row of the client's table),
+   3 × 2 between 1024 and 1279 px; below 1024 px the module's own 2 / 1 columns. */
+@media (min-width:1024px){ .c5pk-gama .c5pr-specs{grid-template-columns:repeat(3,minmax(0,1fr));} }
+@media (min-width:1280px){ .c5pk-gama .c5pr-specs{grid-template-columns:repeat(6,minmax(0,1fr));gap:var(--ch-space-8) var(--ch-space-6);} }
+/* Mateusz 10.11 (comment on the artefact): the packshots stand a little lower in the panel. From
+   1120 px the module centres the shot in the band between the tab rail and the group name; here it
+   moves down by a share of the panel height, the same for all four groups. */
+@media (min-width:1120px){ .c5pk-gama .c5pr-shot{translate:0 calc(var(--c5pr-panel-h) * .05);} }
+
+/* ===== 40 · Wg potrzeby – the green goal stage of produkty.html (CE-70); the problem → rozwiązanie
+   classes of the cards live in ce/CE-70-scena-slajdow.css. #wg-potrzeby-cele keeps the air under
+   the stage it has on produkty.html. ===== */
+#wg-potrzeby-cele{margin-bottom:clamp(3rem,6vw,5rem);}
+
+/* ===== 50 · Grupy produktów (#grupy) – the rows come from ce/CE-36-wiersz-zdjecie-opis.css
+   (variant katalog); no rule of this page here. ===== */

@@ -846,7 +846,7 @@ window.CW_CE = {
         "polka": "półka czterech opakowań rodzin na jasnym panelu po prawej; od 20.09.2026 bez wystąpienia na stronie – Produkty przeszły na wariant linia-produktow, a ten został na stronie demonstracyjnej v7/lab/ce-08-polka.html (wzorzec „wersja alternatywna, stara zostaje w indeksie” jak przy CE-65 i CE-44)",
         "linia-produktow": "wariant Produktów od 20.09.2026 (komentarze Mateusza w artefakcie): sekcja bierze całą szerokość okna, kontener treści stoi na EL-29 c5-wrap--wide (1800 px, marginesy 40 px). W górnym rzędzie dwie kolumny: kicker i H1 po lewej, lead z dwoma przyciskami po prawej – tam, gdzie wariant polka trzymał panel z packshotami; okruszki schodzą pod nagłówek, bo dolna krawędź sekcji należy teraz do zdjęcia. Pod rzędem cała gama w jednej linii (mock-up klienta) na całą szerokość okna minus 40 px z każdej strony, przyklejona do dolnej krawędzi i skalowana object-fit:contain, więc przy niskim oknie maleje, zamiast wypychać hero. Wysokość sekcji nadal 100 svh minus pasek menu. Modyfikator c5-hero--linia-produktow w ce/CE-08-hero.css",
         "kadr": "kadr zdjęcia uprawy zamiast packshotu – od 19.09.2026 bez wystąpień, na Kukurydzy zastąpił go wariant kadr-w-tle",
-        "kadr-w-tle": "hero podstron upraw (decyzja Mateusza z 19.09.2026): duży kadr uprawy w tle całej sekcji, jednolity scrim, bez kickera; okruszki u góry po lewej, wielki H1 u dołu po lewej, lead i dwa przyciski u dołu po prawej, treść kończy się nad dokiem doradcy; kadr osiada ze skali 1,06, treść wchodzi kaskadą; poniżej 900 px H1 na kadrze, lead i przyciski pod nim (modyfikator c5-hero--bg w ce/CE-08-hero.css; siłę scrimu ustawia strona własnością --c5-hero-scrim w atrybucie style na section#hero, domyślnie .4; --c5-hero-scrim-narrow daje osobną wartość do 1099 px). Od 08.11.2026 tłem może być zapętlony film zamiast zdjęcia (video.c5-hero__bgimg.c5-hero__bgvid z plakatem = pierwsza klatka; test na Kukurydzy): te same reguły co zdjęcie, a ce/CE-08-hero.js zatrzymuje go przy ograniczonym ruchu i Save-Data oraz poza ekranem. Od 09.11.2026 okruszki mają własności --c5-hero-crumbs-ink, --c5-hero-crumbs-hover i --c5-hero-crumbs-shadow (domyślnie biel jak dotąd, bez cienia) – na jasnym niebie wystąpienie ustawia własny kolor zamiast płaskiego przyciemnienia całego kadru (Kukurydza: ciemne okruszki na jasnym niebie filmu, wzór Figma 800:419 bez przyciemnienia).",
+        "kadr-w-tle": "hero podstron upraw (decyzja Mateusza z 19.09.2026): duży kadr uprawy w tle całej sekcji, jednolity scrim, bez kickera; okruszki u góry po lewej, wielki H1 u dołu po lewej, lead i dwa przyciski u dołu po prawej, treść kończy się nad dokiem doradcy; kadr osiada ze skali 1,06, treść wchodzi kaskadą; poniżej 900 px H1 na kadrze, lead i przyciski pod nim (modyfikator c5-hero--bg w ce/CE-08-hero.css; siłę scrimu ustawia strona własnością --c5-hero-scrim w atrybucie style na section#hero, domyślnie .4; --c5-hero-scrim-narrow daje osobną wartość do 1099 px). Od 08.11.2026 tłem może być zapętlony film zamiast zdjęcia (video.c5-hero__bgimg.c5-hero__bgvid z plakatem = pierwsza klatka; test na Kukurydzy): te same reguły co zdjęcie, a ce/CE-08-hero.js zatrzymuje go przy ograniczonym ruchu i Save-Data oraz poza ekranem. Od 09.11.2026 okruszki mają własności --c5-hero-crumbs-ink, --c5-hero-crumbs-hover i --c5-hero-crumbs-shadow (domyślnie biel jak dotąd, bez cienia) – na jasnym niebie wystąpienie ustawia własny kolor zamiast płaskiego przyciemnienia całego kadru (Kukurydza: ciemne okruszki na jasnym niebie filmu, wzór Figma 800:419 bez przyciemnienia). Film bez atrybutu loop gra raz: na końcu w jego miejsce wchodzi w 1,6 s ostre zdjęcie ostatniej klatki img.c5-hero__bgend (klasa is-ended na .c5-hero__bg; przy ograniczonym ruchu i Save-Data od razu, bez wczytywania filmu) – Kukurydza od 09.11.2026, zdjęcie z upscale klatki do 4K.",
         "player": "player filmu na środku panelu zamiast packshotu; na telefonie wysokość panelu wyznacza film, bez kadru 4:5 (modyfikator c5-hero--player; prochnica-plus.html#hero; od 07.11.2026 także strona główna home.html#hero – w ramce na razie zdjęcie, film później)",
         "miniatura": "⚠️ bez wystąpień od 07.11.2026 (strona główna przeszła na wersję „Gleba” z hero w wariancie player; prototyp z 26.10 w archiwum-wersji/home-v7-przed-gleba-2026-11-07.zip, reguła .c5h-hero__img była w jego home.css). Opis historyczny – strona główna od 26.10.2026: układ bazy (kolumna tekstu z leadem, ciepły panel z sygnetem), ale scena panelu zamiast packshotów niesie jedno duże zdjęcie uprawy (img.c5h-hero__img, object-fit cover, wypełnia całą scenę) – od 02.11.2026 bez filmu i bez okna filmu (adnotacja 3:81: filmu nie ma i na razie nie planujemy; reguły miniatury filmu .c5-hero__film zostały w module, nieużywane); pod obiema kolumnami pasek czterech rodzin (opakowanie, nazwa, jedno zdanie, strzałka), każda prowadzi do swojej karty na stronie; od 27.10.2026 ramka Carbohumic (c5-hero__fam--dwa) ma dwa opakowania i dwa odnośniki – doglebowy i nalistny; poniżej 900 px tekst, zdjęcie i rodziny w siatce 2 × 2 (modyfikator c5-hero--miniatura w ce/CE-08-hero.css; home.html#hero)",
         "foto": "panel ze zdjęciem zamiast packshotu (o-firmie.html#hero)",
@@ -1641,7 +1641,8 @@ window.CW_CE = {
         "dorzuc": "Do czterech kart sklepowych z jasnym przyciskiem pod koszykiem.",
         "polacz-z": "Dwie małe karty z miniaturą, nazwą, zdaniem, ceną i przyciskiem Dodaj w kolumnie zakupu.",
         "z-rozpiska": "Karty bez mediów z rozpiską i przyciskami u dołu.",
-        "uprawy": "Kafle upraw: zdjęcie 4 : 3 i nazwa, siatka rośnie z liczbą kafli."
+        "uprawy": "Kafle upraw: zdjęcie 4 : 3 i nazwa, siatka rośnie z liczbą kafli.",
+        "grupy-upraw": "Pięć grup upraw z menu w jednym rzędzie: zdjęcie, nazwa grupy, główne rośliny jako chipy."
       },
       "opis": "Siatka kart auto-fit (2–5 kolumn zależnie od szerokości), karta w ramce: ikona, numer, zdjęcie albo packshot, tytuł, akapit, opcjonalnie lista dl i rząd przycisków.",
       "mechanika": "Statyczna albo z jednorazowym wejściem od dołu po wejściu w widok (data-reveal, IntersectionObserver, stagger 80–90 ms); poniżej 900 px, przy reduced-motion i bez JS karty po prostu widoczne; w wariancie produktowym na telefonie karuzela scroll-snap.",
@@ -1677,7 +1678,8 @@ window.CW_CE = {
         "dorzuc": "„Dorzuć do zamówienia” pod koszykiem (koszyk.html; od 28.09.2026): nagłówek, zdanie i do czterech kart sklepowych z jasnym przyciskiem „Dodaj do koszyka” (kasa zostaje jedynym ciemnym przyciskiem strony). Karty rysuje koszyk.js: dla każdego produktu z koszyka pierwszy produkt stosowany razem z nim, którego w koszyku jeszcze nie ma, braki dopełnia stała lista „najczęściej wybierane”; przy pustym koszyku sama lista stała pod nagłówkiem „Najczęściej wybierane” z notą. Przeliczenie po każdej zmianie koszyka; dwie kolumny poniżej 900 px, cztery od 900 px",
         "polacz-z": "„Połącz z” w kolumnie zakupu karty produktu (pdp.html, pdp-kwasny.html; od 28.09.2026, zagnieżdżony w CE-82): pod przyciskiem „Dodaj do koszyka”, za linią – nagłówek, zdanie i rząd dwóch małych kart: pasek miniatury 132 px na jasnoszarym tle, nazwa, jedno zdanie, cena „od …” i jasny przycisk „+ Dodaj”, który otwiera szybki podgląd (CE-76); rząd przewija się w poziomie ze scroll-snap, gdy karty się nie mieszczą",
         "z-rozpiska": "karty bez mediów (klasa c5-cards--z-rozpiska; platforma-b2b.html#pulpit): tytuł, treść, rozpiska i rząd przycisków przy dolnej krawędzi; od 900 px trzy kolumny równej wysokości, niżej jedna pod drugą",
-        "uprawy": "kafle upraw (klasa c5-cards--uprawy; carbomat-mata.html#inwestycja-uprawy, od 03.11.2026): opcjonalny tytuł (c5-cards__lede) i lista kafli, w każdym zdjęcie 4 : 3 (img albo placeholder c5-ph) z nazwą uprawy pod spodem; siatka sama dokłada kolumny (co najmniej 15 rem każda), więc kolejny kafel nie wymaga zmiany reguł; na telefonie dwie kolumny; kafle wchodzą po kolei (data-reveal-stagger)"
+        "uprawy": "kafle upraw (klasa c5-cards--uprawy; carbomat-mata.html#inwestycja-uprawy, od 03.11.2026): opcjonalny tytuł (c5-cards__lede) i lista kafli, w każdym zdjęcie 4 : 3 (img albo placeholder c5-ph) z nazwą uprawy pod spodem; siatka sama dokłada kolumny (co najmniej 15 rem każda), więc kolejny kafel nie wymaga zmiany reguł; na telefonie dwie kolumny; kafle wchodzą po kolei (data-reveal-stagger)",
+        "grupy-upraw": "grupy upraw z menu „Rodzaje upraw” (klasa c5-cards--grupy-upraw; home.html#uprawy, od 10.11.2026, uwaga U-93 – wariant A z trzech): kafel na grupę w kolejności i pod nazwami z menu (CE-02) – zdjęcie (img.c5-cards__photo; 4 : 5 od 1200 px, 3 : 2 niżej, 21 : 9 w piątym kaflu na całą szerokość od 700 do 1199 px), nazwa grupy (h3.c5-cards__name), główne rośliny jako chipy EL c5-chip w ul.c5-cards__plants – roślina z własną stroną to link a.c5-chip.c5-chip--solid ze strzałką, pozostałe span.c5-chip, na końcu opcjonalnie li.c5-cards__rest („i 3 inne”). Pięć kafli w jednym rzędzie od 1200 px, dwie kolumny od 700 px, jedna niżej; statyczny"
       },
       "zrzut": {
         "maxh": 900
@@ -1703,6 +1705,11 @@ window.CW_CE = {
           "plik": "v7/platforma-b2b.html",
           "kotwica": "pulpit",
           "maxh": 600
+        },
+        "grupy-upraw": {
+          "plik": "v7/home.html",
+          "kotwica": "uprawy",
+          "maxh": 1100
         }
       }
     },
@@ -2626,7 +2633,8 @@ window.CW_CE = {
       },
       "skroty_wariantow": {
         "odwrocony": "Opis po lewej, zdjęcie po prawej",
-        "z-wartosciami": "Przyklejone zdjęcie obok nagłówka, akapitów, trzech wartości z ikonami i karty filmu (bez wystąpień od 02.11.2026)"
+        "z-wartosciami": "Przyklejone zdjęcie obok nagłówka, akapitów, trzech wartości z ikonami i karty filmu (bez wystąpień od 02.11.2026)",
+        "katalog": "Wiersz grupy produktów w katalogu: opakowania na jasnym polu, lista faktów, dwa przyciski."
       },
       "opis": "Dwie równe kolumny wyrównane do środka: kadr zdjęcia 4:5 z jednej strony, z drugiej nazwa, zajawka, skrót najważniejszych rzeczy i przycisk (na CARBOMAT HUMIC skrót to trzy wiersze etykieta | wartość – dawki, częstotliwość, zakup – słowo w słowo z pop-upu; pełna karta stoi w pop-upie CE-37); kolejne wiersze naprzemiennie.",
       "mechanika": "Parallax kadru z pozycji przewijania, wejście kolumny opisu (reveal), przycisk pod skrótem otwiera pop-up z pełną kartą (CE-37); poniżej 900 px zdjęcie nad tekstem. Moduł 40. W wariancie „z-wartosciami” zamiast parallaksu kadr jest przyklejony (sticky, 40 px od góry, wysokość ograniczona do okna pomniejszonego o odstęp od doka doradcy), a przycisk odtwarzania otwiera natywny dialog z wideo ładowanym dopiero na żądanie (preload „none”): film rusza po otwarciu, zamknięcie (×, Escape, klik w tło) zatrzymuje go i przewija na początek, fokus wraca na kartę; bez JS karta jest zwykłym linkiem do pliku mp4.",
@@ -2650,7 +2658,8 @@ window.CW_CE = {
       ],
       "warianty": {
         "odwrocony": "opis po lewej, zdjęcie po prawej (klasa b-row--rev na Borówce – do 07.11.2026 także strona główna #o-nas – c5-who--flip na CARBOMAT HUMIC i CARBOHUMIC nalistny)",
-        "z-wartosciami": "⚠️ bez wystąpień od 02.11.2026 (strona główna przeszła na wiersze bazy i odwrocony, bez filmu i bez wartości; kod c5h-about, c5h-vals i c5h-film zdjęty z home.css). Opis historyczny – siatka 6 / 6 wyrównana do góry: po lewej kadr 4:5 przyklejony na czas prawej kolumny, po prawej kicker i nagłówek sekcji, akapit intro, wyróżniony akapit z kreską po lewej, trzy wartości jako wiersze rozdzielone liniami (ramka ikony, nazwa, zdanie), karta filmu w ramce (kadr 16:9 z plakatem, kwadratowy przycisk odtwarzania, podpis i zdanie) i rząd domykający: przycisk oraz dwa linki ze strzałką; poniżej 900 px kadr 4:3 nad treścią (strona główna #o-nas)"
+        "z-wartosciami": "⚠️ bez wystąpień od 02.11.2026 (strona główna przeszła na wiersze bazy i odwrocony, bez filmu i bez wartości; kod c5h-about, c5h-vals i c5h-film zdjęty z home.css). Opis historyczny – siatka 6 / 6 wyrównana do góry: po lewej kadr 4:5 przyklejony na czas prawej kolumny, po prawej kicker i nagłówek sekcji, akapit intro, wyróżniony akapit z kreską po lewej, trzy wartości jako wiersze rozdzielone liniami (ramka ikony, nazwa, zdanie), karta filmu w ramce (kadr 16:9 z plakatem, kwadratowy przycisk odtwarzania, podpis i zdanie) i rząd domykający: przycisk oraz dwa linki ze strzałką; poniżej 900 px kadr 4:3 nad treścią (strona główna #o-nas)",
+        "katalog": "wiersz grupy produktów w katalogu: w kadrze opakowania grupy na jasnym polu (zamiast zdjęcia), nad nazwą kicker typu produktu, pod opisem etykieta i lista faktów etykieta | wartość, rząd dwóch przycisków (produkty-katalog.html#grupy); pastylki filtra z pierwszej wersji zdjęte 10.11.2026 (komentarz Mateusza na artefakcie)"
       },
       "zrzut": {
         "maxh": 900
@@ -2810,7 +2819,7 @@ window.CW_CE = {
       },
       "kod": {
         "css": "produkty.css ===== 30 (c5pr-show)",
-        "js": "produkty.js ===== 30"
+        "js": "produkty.js ===== 30; od 10.11.2026 ten sam kod jako moduł ce/CE-39-pokaz-rodzin.js (linkuje go produkty-katalog.html, produkty.html dalej ma własną kopię)"
       },
       "czesci": [
         "tablist",
@@ -6056,7 +6065,7 @@ window.CW_CE = {
           "jednorazowy"
         ]
       },
-      "opis": "Jeden CE dla całego rozdziału „Problem” strony głównej „Gleba” (komentarze Mateusza z 06.11.2026): grafik projektuje sekcję od zera i szuka efektu „wow”, a prototyp pokazuje tylko kolejność i treść. Kolejność: kicker „Problem”, nagłówek i lead; szeroki kadr spękanej gleby (21 : 9, na telefonie 4 : 3); nadpis „Z czym mierzy się Twoja gleba?” i sześć ponumerowanych problemów w układzie 3 + 3 od 1000 px (klasy c5-mt-* z CE-20 „numerowane”); nadpis „Jak to wygląda w Polsce” i trzy liczby skali na białym panelu z linią źródła pod każdym podpisem (klasy u-nb* z CE-24 „kolumny”); na końcu zdanie-pomost do rozwiązania w kroju nagłówków. Zapożyczone części nie mają własnych znaczników CE.",
+      "opis": "Jeden CE dla całego rozdziału „Problem” strony głównej „Gleba” (komentarze Mateusza z 06.11.2026): grafik projektuje sekcję od zera i szuka efektu „wow”, a prototyp pokazuje tylko kolejność i treść. Kolejność: kicker „Problem”, nagłówek i lead; szeroki kadr spękanej gleby (21 : 9, na telefonie 4 : 3); nadpis „Z czym mierzy się Twoja gleba?” i sześć ponumerowanych problemów w układzie 3 + 3 od 1000 px (klasy c5-mt-* z CE-20 „numerowane”); nadpis „Jak to wygląda w Europie” (do 10.11.2026 „w Polsce”) i trzy liczby skali na białym panelu z linią źródła pod każdym podpisem (klasy u-nb* z CE-24 „kolumny”); na końcu zdanie-pomost do rozwiązania w kroju nagłówków. Zapożyczone części nie mają własnych znaczników CE.",
       "mechanika": "Statyczny: bez skryptu, bez odliczania liczb; karty i panel wchodzą zwykłym revealem strony.",
       "baza": {
         "plik": "v7/home.html",
@@ -6081,7 +6090,7 @@ window.CW_CE = {
       "nazwa": "Rozwiązanie – sekcja strony głównej",
       "grupa": "sceny",
       "rodzina": "sceny",
-      "skrot": "Cały rozdział „Rozwiązanie” jako jedna sekcja: ciemny boks z tezą, cztery kroki wzdłuż pionowej osi na środku ekranu i horyzont efektu.",
+      "skrot": "Cały rozdział „Rozwiązanie” jako jedna sekcja: ciemny boks z tezą i cztery kroki wzdłuż pionowej osi na środku ekranu.",
       "projekt": null,
       "tagi": {
         "media": [
@@ -6097,8 +6106,7 @@ window.CW_CE = {
           "5-8"
         ],
         "nadaje": [
-          "kroki-proces",
-          "harmonogram-czas"
+          "kroki-proces"
         ],
         "mechanika": [
           "statyczny"
@@ -6107,8 +6115,8 @@ window.CW_CE = {
           "jednorazowy"
         ]
       },
-      "opis": "Jeden CE dla całego rozdziału „Rozwiązanie” strony głównej „Gleba” (komentarz Mateusza z 06.11.2026: teza i kroki pod nią to jedna sekcja, projektowana w całości przez grafika, nie osobne CE). Kolejność: ciemny boks z pełnym kickerem „Rozwiązanie” i jednym zdaniem w kroju nagłówków (klasy CE-33 „ciemny-boks”); nagłówek i lead; cztery kroki wzdłuż pionowej linii biegnącej środkiem ekranu – od 900 px tytuł kroku po lewej, wyrównany do linii, węzeł z numerem na linii, zdanie po prawej; poniżej 900 px linia po lewej jak w CE-73 na telefonie; horyzont efektu pod większym nagłówkiem „Kiedy zobaczysz efekt” (klasy CE-73). Zapożyczone części nie mają własnych znaczników CE.",
-      "mechanika": "Statyczny: bez skryptów CE-33 i CE-73, linia pełna, węzły zapalone; dwa paski horyzontu wypełniają się raz po wejściu w widok (reveal strony, CSS CE-73).",
+      "opis": "Jeden CE dla całego rozdziału „Rozwiązanie” strony głównej „Gleba” (komentarz Mateusza z 06.11.2026: teza i kroki pod nią to jedna sekcja, projektowana w całości przez grafika, nie osobne CE). Kolejność: ciemny boks z pełnym kickerem „Rozwiązanie” i jednym zdaniem w kroju nagłówków (klasy CE-33 „ciemny-boks”); nagłówek i lead; cztery kroki wzdłuż pionowej linii biegnącej środkiem ekranu – od 900 px tytuł kroku po lewej, wyrównany do linii, węzeł z numerem na linii, zdanie po prawej; poniżej 900 px linia po lewej jak w CE-73 na telefonie. Zapożyczone części nie mają własnych znaczników CE.",
+      "mechanika": "Statyczny: bez skryptów CE-33 i CE-73, linia pełna, węzły zapalone.",
       "baza": {
         "plik": "v7/home.html",
         "kotwica": "rozwiazanie"
@@ -6119,8 +6127,7 @@ window.CW_CE = {
       "czesci": [
         "ciemny boks z tezą i kickerem",
         "głowa",
-        "oś czterech kroków na środku ekranu",
-        "horyzont efektu"
+        "oś czterech kroków na środku ekranu"
       ],
       "warianty": {},
       "zrzut": {
@@ -6177,6 +6184,54 @@ window.CW_CE = {
       "warianty": {},
       "zrzut": {
         "maxh": 600
+      },
+      "status": "wycofany"
+    },
+    "CE-104": {
+      "nazwa": "Pas logotypów",
+      "grupa": "noty-i-cta",
+      "rodzina": "pasy",
+      "skrot": "Nagłówek i rząd logotypów organizacji, każdy logotyp jest linkiem do jej strony.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "ikona"
+        ],
+        "tekst": [
+          "tylko-naglowek"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "2-4"
+        ],
+        "nadaje": [
+          "dowod-zrodla"
+        ],
+        "mechanika": [
+          "statyczny"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "opis": "Cichy pas: wyśrodkowany nagłówek (h2 w stopniu h3) i rząd logotypów, każdy w odnośniku do strony organizacji (nowa karta, rel=noopener), alt = nazwa organizacji. Od 900 px wszystkie logotypy w jednym rzędzie (liczba kolumn w --c5-lg-cols, domyślnie 4), niżej po dwa. Logotypy w swoich kolorach i proporcjach, jedna wspólna wysokość (--c5-lg-h, domyślnie 64 px; na telefonie --c5-lg-h-sm, 52 px). Bez karuzeli i bez ruchu własnego; korzeń nie dodaje odstępów.",
+      "mechanika": "Statyczny; wejście w widok z warstwy wspólnej (data-reveal).",
+      "baza": {
+        "plik": "v7/home.html",
+        "kotwica": "inicjatywy"
+      },
+      "kod": {
+        "css": "ce/CE-104-pas-logotypow.css (c5-lg)"
+      },
+      "czesci": [
+        "nagłówek",
+        "rząd logotypów z odnośnikami"
+      ],
+      "warianty": {},
+      "zrzut": {
+        "maxh": 500
       }
     }
   },

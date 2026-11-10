@@ -474,3 +474,14 @@
   .cx-js .c5-vs--listki .c5-vs__idx[data-leaves="3"] .c5-vs__lf > g:nth-child(-n+3) > use,
   .cx-js .c5-vs--listki .c5-vs__idx[data-leaves="4"] .c5-vs__lf > g > use{opacity:1;transform:none;}
 }
+
+/* ===== Product link in the card text (10.11.2026, produkty-katalog.html#wg-potrzeby) =====
+   Mateusz: the card text stays one paragraph in the light ink of the body (as on
+   carbohumic-dolistny.html#przewaga); a product named in it is a link to that product on its
+   own page, marked only by a thin underline lighter than the text. `c5-vs__plink` keeps the
+   colour of the paragraph; the line darkens to the text colour on hover. Only a new class –
+   no rule above changes. */
+.c5-vs__plink{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;
+  text-decoration-color:color-mix(in srgb,currentColor 35%,transparent);}
+.c5-vs__plink:hover{text-decoration-color:currentColor;}
+.c5-vs__plink:focus-visible{outline:2px solid var(--w-focus-ring);outline-offset:2px;border-radius:2px;}

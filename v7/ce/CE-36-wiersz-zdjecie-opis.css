@@ -154,3 +154,28 @@ img.c5-who__ph{display:block;width:100%;object-fit:cover;object-position:var(--w
 .c5h-val__body{display:flex;flex-direction:column;gap:var(--ch-space-1-5);}
 .c5h-val__name{margin:0;}
 .c5h-val__txt{margin:0;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);color:var(--ch-text-secondary);}
+
+/* ===== wariant: katalog (10.11.2026, produkty-katalog.html#grupy) =====
+   A row of a product group in the catalogue: the frame holds the packs of the
+   group on a light field with the outline of the sign (EL `c5-sygnet
+   c5-sygnet--obrys` from ce/00-base.css) instead of a photo; above the name a
+   kicker of the product type, under the teaser a label and the list of facts
+   label | value, then a row of two buttons. The filter chips of the first
+   version were taken off the same day (Mateusz, comment on the artefact).
+   Only new classes here – the rules above are untouched. */
+.c5-who--katalog{scroll-margin-top:var(--c5-gutter,30px);}
+/* the frame: a light field, the packs standing on a shared base line */
+.c5-who__media--pack{background:var(--ch-surface-warm);--c5-sygnet-size:auto 150%;--c5-sygnet-x:40%;--c5-sygnet-y:12%;}
+.c5-who__packs{position:absolute;z-index:1;inset:12% 8% 14%;display:flex;align-items:flex-end;justify-content:center;gap:5%;}
+.c5-who__packs img{display:block;flex:0 1 auto;min-width:0;width:var(--w,auto);height:var(--h,70%);max-width:100%;object-fit:contain;}
+/* the copy column: kicker, name, teaser, label, (intro), facts, buttons */
+.c5-who--katalog .c5-who__body{max-width:560px;}
+.c5-who__label{margin:0;font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);font-weight:var(--ch-font-weight-medium);color:var(--ch-text-primary);}
+.c5-who__intro{margin:0;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-secondary);}
+.c5-who--katalog .c5-who__fact > dt{flex-basis:9.5rem;}
+/* the facts are what the catalogue is read for: values in the primary text colour */
+.c5-who--katalog .c5-who__fact > dd{color:var(--ch-text-primary);}
+.c5-who--katalog .c5-btnrow .c5-btn{align-self:auto;}
+@media (max-width:899px){
+  .c5-who__packs{inset:10% 8% 10%;}
+}

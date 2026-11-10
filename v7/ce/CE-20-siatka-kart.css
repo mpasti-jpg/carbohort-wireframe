@@ -389,6 +389,40 @@ html.cx-js .u-prod__card{--u-prod-delay:0ms;
   .c5-cards--uprawy .c5-cards__list{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ch-space-3);}
 }
 
+/* ===== wariant: grupy-upraw (strona główna „Co uprawiasz?”, U-93, 10.11.2026) =====
+   Block: c5-cards, modifier: c5-cards--grupy-upraw; inside: `ul.c5-cards__list` of
+   `li.c5-cards__card`, one per crop group of the menu „Rodzaje upraw” (chrome.js, CE-02),
+   in the order of the menu. A tile: a photo (`img.c5-cards__photo`), the group name
+   (`h3.c5-cards__name`, page heading classes allowed) and `ul.c5-cards__plants` – the
+   main crops of the group as chips (EL `c5-chip`): a crop with a page of its own is an
+   `a.c5-chip.c5-chip--solid` with an arrow, the others a plain `span.c5-chip`; an
+   optional last item `li.c5-cards__rest` says how many more crops the group has.
+   Layout: five tiles in one row from 1200 px (photo 4 : 5); from 700 to 1199 px two
+   columns and the fifth tile across both (photo 21 : 9 there, 3 : 2 in the others);
+   one column below (photo 3 : 2). The root adds no spacing of its own. Static. */
+.c5-cards--grupy-upraw .c5-cards__list{gap:clamp(1rem,2vw,1.5rem);}
+.c5-cards--grupy-upraw .c5-cards__card{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.c5-cards--grupy-upraw .c5-cards__photo{display:block;width:100%;max-width:100%;height:auto;aspect-ratio:3 / 2;min-height:0;object-fit:cover;border-radius:var(--ch-radius-md);background:var(--ch-surface-warm);}
+.c5-cards--grupy-upraw .c5-cards__name{margin:0;}
+.c5-cards__plants{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none;}
+.c5-cards__rest{align-self:center;font-size:var(--ch-type-small-size);color:var(--ch-text-secondary);}
+/* crop names, not labels: the chip keeps its frame but drops the overline type of the
+   element (uppercase, tracking) – sentence case as in the approved variant A */
+.c5-cards--grupy-upraw .c5-chip{padding:6px 12px;font-size:var(--ch-type-small-size);line-height:1.3;letter-spacing:normal;text-transform:none;}
+.c5-cards--grupy-upraw a.c5-chip{text-decoration:none;transition:background-color var(--ch-motion-duration-base) var(--ch-motion-ease),color var(--ch-motion-duration-base) var(--ch-motion-ease);}
+.c5-cards--grupy-upraw a.c5-chip:hover,.c5-cards--grupy-upraw a.c5-chip:focus-visible{background:var(--ch-text-primary);color:var(--ch-surface-page);}
+@media (min-width:700px) and (max-width:1199px){
+  .c5-cards--grupy-upraw .c5-cards__list{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .c5-cards--grupy-upraw .c5-cards__card:last-child{grid-column:1 / -1;}
+  .c5-cards--grupy-upraw .c5-cards__card:last-child .c5-cards__photo{aspect-ratio:21 / 9;}
+}
+@media (min-width:1200px){
+  .c5-cards--grupy-upraw .c5-cards__list{grid-template-columns:repeat(5,minmax(0,1fr));}
+  .c5-cards--grupy-upraw .c5-cards__photo{aspect-ratio:4 / 5;}
+}
+@media (max-width:899px){.c5-cards--grupy-upraw .c5-chip{min-height:40px;}}
+@media (prefers-reduced-motion: reduce){.c5-cards--grupy-upraw a.c5-chip{transition:none;}}
+
 @media (prefers-reduced-motion: reduce){
   :is(.cw-a-next__card,.c5hu-mix__card,.kt-way,.c5-mt-card,.c5-proof,.c5-mt-delta__item,.on-step,.on-fam,.c5h-buy__tile,.c5pd-pair,.c5pd-also__card,.c5ks-rec),.c5h-buy__arrow{transition:none;}
   .c5h-buy__tile:hover .c5h-buy__arrow,.c5h-buy__tile:focus-visible .c5h-buy__arrow{transform:none;}

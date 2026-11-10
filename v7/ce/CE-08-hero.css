@@ -408,6 +408,13 @@
    rules as the photo, the poster is its first frame; ce/CE-08-hero.js stops it
    with reduced motion, Save-Data and off screen */
 .c5-hero__bgvid{pointer-events:none;}
+/* a film played once (no `loop`, 09.11.2026): `.c5-hero__bgend` is a still of its last
+   frame laid over it, hidden until CE-08-hero.js puts `is-ended` on `.c5-hero__bg`
+   (at the end of the film, or at once with reduced motion and Save-Data) */
+/* a slow fade (Mateusz, 09.11.2026): the sharp still comes in like a focus pull, not a jump */
+.c5-hero__bgend{opacity:0;pointer-events:none;transition:opacity 1.6s cubic-bezier(.4,0,.2,1);}
+.c5-hero__bg.is-ended .c5-hero__bgend{opacity:1;}
+@media (prefers-reduced-motion: reduce){.c5-hero__bgend{transition:none;}}
 /* G08: in `--bg` the photo reaches up behind the header (below 900 px see the phone block) */
 @media (min-width:900px){.c5-hero--bg .c5-hero__bg{top:calc(-1 * var(--cx-navbar-h, 0px));}}
 /* progressive blur: the backdrop filter fades in with a mask, from 37 % down */

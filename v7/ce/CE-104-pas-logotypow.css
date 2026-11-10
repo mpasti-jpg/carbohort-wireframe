@@ -1,0 +1,24 @@
+/* ===== CE-104 · Pas logotypów (rejestr: ce-rejestr.js) =====================
+   Prefix: c5-lg. A quiet band: one heading and a row of logos, each logo a
+   link to its organisation (opens in a new tab). First use: the home page,
+   „Inicjatywy, które wspieramy” between the chapter „O nas” and the closing
+   band (10.11.2026, comment U-90; the same four logos as on carbohort.com).
+
+   Markup: section > .c5-wrap > .c5-lg > h2.c5-lg__t + ul.c5-lg__list >
+   li > a.c5-lg__link > img.c5-lg__img (alt = name of the organisation).
+   Layout: heading and row centred; from 900 px all logos in one row (columns:
+   --c5-lg-cols, default 4), two per row below. Logos keep their colours and
+   proportions, one common height (--c5-lg-h, default 64 px; --c5-lg-h-sm on a
+   phone). Static: no carousel, no motion of its own. The root adds no spacing
+   of its own. Comments in English, never the em dash. ===== */
+
+.c5-lg{display:flex;flex-direction:column;align-items:center;gap:clamp(1.75rem,3.5vw,3rem);text-align:center;}
+.c5-lg__t{margin:0;text-wrap:balance;}
+.c5-lg__list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:center;justify-items:center;
+  gap:clamp(1.5rem,4vw,3rem) clamp(1rem,3vw,2.5rem);width:100%;margin:0;padding:0;list-style:none;}
+@media (min-width:900px){.c5-lg__list{grid-template-columns:repeat(var(--c5-lg-cols,4),minmax(0,1fr));}}
+.c5-lg__list > li{display:flex;justify-content:center;min-width:0;max-width:100%;}
+.c5-lg__link{display:inline-flex;align-items:center;justify-content:center;min-height:44px;max-width:100%;padding:8px;border-radius:var(--ch-radius-sm);}
+.c5-lg__link:focus-visible{outline:2px solid var(--w-focus-ring);outline-offset:2px;}
+.c5-lg__img{display:block;width:auto;max-width:100%;height:var(--c5-lg-h,64px);object-fit:contain;}
+@media (max-width:599px){.c5-lg__img{height:var(--c5-lg-h-sm,52px);}}

@@ -171,7 +171,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31562,
-      "data": "07.11"
+      "data": "10.11"
     },
     "produkty.html": {
       "sekcja": "2. Produkty Carbohort",
@@ -186,6 +186,21 @@ window.CW_STATUS = {
       },
       "ac": 31789,
       "data": "11.10"
+    },
+    "produkty-katalog.html": {
+      "sekcja": "2. Produkty Carbohort",
+      "nazwa": "Produkty Carbohort – wersja uproszczona",
+      "stan": {
+        "makieta": null,
+        "tresc": null,
+        "projekt": null,
+        "media": null,
+        "infografiki": null,
+        "wdrozenie": null
+      },
+      "ac": 31789,
+      "wTabeli": false,
+      "data": "10.11"
     },
     "carbomat.html": {
       "sekcja": "2. Produkty Carbohort",

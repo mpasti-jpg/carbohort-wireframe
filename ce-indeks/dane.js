@@ -1,12 +1,12 @@
 window.CE_DANE = {
  "meta": {
-  "wygenerowano": "09.11.2026",
+  "wygenerowano": "10.11.2026",
   "wersja": "0.1.0",
   "projekt": "CarboHort",
   "aktywnych": 81,
-  "wycofanych": 22,
-  "wystapien": 299,
-  "stron": 34,
+  "wycofanych": 23,
+  "wystapien": 308,
+  "stron": 35,
   "bazaStron": "v7/"
  },
  "projekt": {
@@ -991,7 +991,7 @@ window.CE_DANE = {
     },
     {
      "slug": "kadr-w-tle",
-     "opis": "hero podstron upraw (decyzja Mateusza z 19.09.2026): duży kadr uprawy w tle całej sekcji, jednolity scrim, bez kickera; okruszki u góry po lewej, wielki H1 u dołu po lewej, lead i dwa przyciski u dołu po prawej, treść kończy się nad dokiem doradcy; kadr osiada ze skali 1,06, treść wchodzi kaskadą; poniżej 900 px H1 na kadrze, lead i przyciski pod nim (modyfikator c5-hero--bg w ce/CE-08-hero.css; siłę scrimu ustawia strona własnością --c5-hero-scrim w atrybucie style na section#hero, domyślnie .4; --c5-hero-scrim-narrow daje osobną wartość do 1099 px). Od 08.11.2026 tłem może być zapętlony film zamiast zdjęcia (video.c5-hero__bgimg.c5-hero__bgvid z plakatem = pierwsza klatka; test na Kukurydzy): te same reguły co zdjęcie, a ce/CE-08-hero.js zatrzymuje go przy ograniczonym ruchu i Save-Data oraz poza ekranem. Od 09.11.2026 okruszki mają własności --c5-hero-crumbs-ink, --c5-hero-crumbs-hover i --c5-hero-crumbs-shadow (domyślnie biel jak dotąd, bez cienia) – na jasnym niebie wystąpienie ustawia własny kolor zamiast płaskiego przyciemnienia całego kadru (Kukurydza: ciemne okruszki na jasnym niebie filmu, wzór Figma 800:419 bez przyciemnienia).",
+     "opis": "hero podstron upraw (decyzja Mateusza z 19.09.2026): duży kadr uprawy w tle całej sekcji, jednolity scrim, bez kickera; okruszki u góry po lewej, wielki H1 u dołu po lewej, lead i dwa przyciski u dołu po prawej, treść kończy się nad dokiem doradcy; kadr osiada ze skali 1,06, treść wchodzi kaskadą; poniżej 900 px H1 na kadrze, lead i przyciski pod nim (modyfikator c5-hero--bg w ce/CE-08-hero.css; siłę scrimu ustawia strona własnością --c5-hero-scrim w atrybucie style na section#hero, domyślnie .4; --c5-hero-scrim-narrow daje osobną wartość do 1099 px). Od 08.11.2026 tłem może być zapętlony film zamiast zdjęcia (video.c5-hero__bgimg.c5-hero__bgvid z plakatem = pierwsza klatka; test na Kukurydzy): te same reguły co zdjęcie, a ce/CE-08-hero.js zatrzymuje go przy ograniczonym ruchu i Save-Data oraz poza ekranem. Od 09.11.2026 okruszki mają własności --c5-hero-crumbs-ink, --c5-hero-crumbs-hover i --c5-hero-crumbs-shadow (domyślnie biel jak dotąd, bez cienia) – na jasnym niebie wystąpienie ustawia własny kolor zamiast płaskiego przyciemnienia całego kadru (Kukurydza: ciemne okruszki na jasnym niebie filmu, wzór Figma 800:419 bez przyciemnienia). Film bez atrybutu loop gra raz: na końcu w jego miejsce wchodzi w 1,6 s ostre zdjęcie ostatniej klatki img.c5-hero__bgend (klasa is-ended na .c5-hero__bg; przy ograniczonym ruchu i Save-Data od razu, bez wczytywania filmu) – Kukurydza od 09.11.2026, zdjęcie z upscale klatki do 4K.",
      "skrot": "Zdjęcie uprawy w tle sekcji, H1 u dołu po lewej, lead i przyciski po prawej.",
      "zrzut": {
       "mini": "ce-indeks/img/m/CE-08--wariant-kadr-w-tle.webp",
@@ -1122,6 +1122,13 @@ window.CE_DANE = {
      "id": "hero",
      "naglowek": "Wspólnie wracamy do korzeni",
      "wariant": "player"
+    },
+    {
+     "plik": "produkty-katalog.html",
+     "strona": "Produkty Carbohort – wersja uproszczona",
+     "id": "hero",
+     "naglowek": "Produkty węglowe Carbohort",
+     "wariant": "linia-produktow"
     },
     {
      "plik": "produkty.html",
@@ -1261,6 +1268,13 @@ window.CE_DANE = {
      "plik": "prochnica-plus.html",
      "strona": "Próchnica+",
      "id": "stan",
+     "naglowek": "",
+     "wariant": null
+    },
+    {
+     "plik": "produkty-katalog.html",
+     "strona": "Produkty Carbohort – wersja uproszczona",
+     "id": "zaufanie",
      "naglowek": "",
      "wariant": null
     },
@@ -2745,6 +2759,17 @@ window.CE_DANE = {
      "opis": "kafle upraw (klasa c5-cards--uprawy; carbomat-mata.html#inwestycja-uprawy, od 03.11.2026): opcjonalny tytuł (c5-cards__lede) i lista kafli, w każdym zdjęcie 4 : 3 (img albo placeholder c5-ph) z nazwą uprawy pod spodem; siatka sama dokłada kolumny (co najmniej 15 rem każda), więc kolejny kafel nie wymaga zmiany reguł; na telefonie dwie kolumny; kafle wchodzą po kolei (data-reveal-stagger)",
      "skrot": "Kafle upraw: zdjęcie 4 : 3 i nazwa, siatka rośnie z liczbą kafli.",
      "zrzut": null
+    },
+    {
+     "slug": "grupy-upraw",
+     "opis": "grupy upraw z menu „Rodzaje upraw” (klasa c5-cards--grupy-upraw; home.html#uprawy, od 10.11.2026, uwaga U-93 – wariant A z trzech): kafel na grupę w kolejności i pod nazwami z menu (CE-02) – zdjęcie (img.c5-cards__photo; 4 : 5 od 1200 px, 3 : 2 niżej, 21 : 9 w piątym kaflu na całą szerokość od 700 do 1199 px), nazwa grupy (h3.c5-cards__name), główne rośliny jako chipy EL c5-chip w ul.c5-cards__plants – roślina z własną stroną to link a.c5-chip.c5-chip--solid ze strzałką, pozostałe span.c5-chip, na końcu opcjonalnie li.c5-cards__rest („i 3 inne”). Pięć kafli w jednym rzędzie od 1200 px, dwie kolumny od 700 px, jedna niżej; statyczny",
+     "skrot": "Pięć grup upraw z menu w jednym rzędzie: zdjęcie, nazwa grupy, główne rośliny jako chipy.",
+     "zrzut": {
+      "mini": "ce-indeks/img/m/CE-20--wariant-grupy-upraw.webp",
+      "pelny": "ce-indeks/img/p/CE-20--wariant-grupy-upraw.webp",
+      "w": 1280,
+      "h": 799
+     }
     }
    ],
    "wystapienia": [
@@ -2772,23 +2797,23 @@ window.CE_DANE = {
     {
      "plik": "carbomat-mata.html",
      "strona": "CARBOMAT Mata Uprawowa",
-     "id": "dowod-sggw-karty",
+     "id": "dowod-sggw-liczby",
      "naglowek": "",
-     "wariant": "numerowane"
+     "wariant": "kafle-danych"
     },
     {
      "plik": "carbomat-mata.html",
      "strona": "CARBOMAT Mata Uprawowa",
-     "id": "dowod-lca-karty",
+     "id": "dowod-lca-liczby",
      "naglowek": "",
-     "wariant": "szerokie"
+     "wariant": "kafle-danych"
     },
     {
      "plik": "carbomat-mata.html",
      "strona": "CARBOMAT Mata Uprawowa",
-     "id": "dowod-pomidor-karty",
+     "id": "dowod-pomidor-liczby",
      "naglowek": "",
-     "wariant": "numerowane"
+     "wariant": "kafle-danych"
     },
     {
      "plik": "carbomat-mata.html",
@@ -2837,7 +2862,7 @@ window.CE_DANE = {
      "strona": "Strona główna",
      "id": "uprawy",
      "naglowek": "Co uprawiasz?",
-     "wariant": "z-przyciskami"
+     "wariant": "grupy-upraw"
     },
     {
      "plik": "kontakt.html",
@@ -3774,6 +3799,20 @@ window.CE_DANE = {
     {
      "plik": "carbomat-mata.html",
      "strona": "CARBOMAT Mata Uprawowa",
+     "id": "dowod-sggw-material",
+     "naglowek": "",
+     "wariant": "dokument"
+    },
+    {
+     "plik": "carbomat-mata.html",
+     "strona": "CARBOMAT Mata Uprawowa",
+     "id": "dowod-lca-material",
+     "naglowek": "",
+     "wariant": "dokument"
+    },
+    {
+     "plik": "carbomat-mata.html",
+     "strona": "CARBOMAT Mata Uprawowa",
      "id": "dowod-pomidor-material",
      "naglowek": "",
      "wariant": "dokument"
@@ -4559,6 +4598,12 @@ window.CE_DANE = {
       "w": 1280,
       "h": 799
      }
+    },
+    {
+     "slug": "katalog",
+     "opis": "wiersz grupy produktów w katalogu: w kadrze opakowania grupy na jasnym polu (zamiast zdjęcia), nad nazwą kicker typu produktu, pod opisem etykieta i lista faktów etykieta | wartość, rząd dwóch przycisków (produkty-katalog.html#grupy); pastylki filtra z pierwszej wersji zdjęte 10.11.2026 (komentarz Mateusza na artefakcie)",
+     "skrot": "Wiersz grupy produktów w katalogu: opakowania na jasnym polu, lista faktów, dwa przyciski.",
+     "zrzut": null
     }
    ],
    "wystapienia": [
@@ -4617,6 +4662,34 @@ window.CE_DANE = {
      "id": "najstarsza-nowosc",
      "naglowek": "Najstarsza nowość",
      "wariant": null
+    },
+    {
+     "plik": "produkty-katalog.html",
+     "strona": "Produkty Carbohort – wersja uproszczona",
+     "id": "eco",
+     "naglowek": "CARBOMAT ECO",
+     "wariant": "katalog"
+    },
+    {
+     "plik": "produkty-katalog.html",
+     "strona": "Produkty Carbohort – wersja uproszczona",
+     "id": "mata",
+     "naglowek": "CARBOMAT Mata Uprawowa",
+     "wariant": "katalog"
+    },
+    {
+     "plik": "produkty-katalog.html",
+     "strona": "Produkty Carbohort – wersja uproszczona",
+     "id": "carbohumic",
+     "naglowek": "CARBOHUMIC",
+     "wariant": "katalog"
+    },
+    {
+     "plik": "produkty-katalog.html",
+     "strona": "Produkty Carbohort – wersja uproszczona",
+     "id": "humic",
+     "naglowek": "CARBOMAT HUMIC",
+     "wariant": "katalog"
     }
    ],
    "wspolny": null,
@@ -4955,6 +5028,13 @@ window.CE_DANE = {
      "id": "gama",
      "naglowek": "Która rodzina jest dla Ciebie?",
      "wariant": null
+    },
+    {
+     "plik": "produkty-katalog.html",
+     "strona": "Produkty Carbohort – wersja uproszczona",
+     "id": "gama",
+     "naglowek": "Która grupa produktów jest dla Ciebie?",
+     "wariant": null
     }
    ],
    "wspolny": null,
@@ -4972,7 +5052,7 @@ window.CE_DANE = {
    ],
    "kod_zrodlowy": {
     "css": "produkty.css ===== 30 (c5pr-show)",
-    "js": "produkty.js ===== 30"
+    "js": "produkty.js ===== 30; od 10.11.2026 ten sam kod jako moduł ce/CE-39-pokaz-rodzin.js (linkuje go produkty-katalog.html, produkty.html dalej ma własną kopię)"
    }
   },
   {
@@ -5680,13 +5760,6 @@ window.CE_DANE = {
      "id": "wiadomosc",
      "naglowek": "Wiadomość do opiekuna i wysyłka",
      "wariant": "z-podsumowaniem"
-    },
-    {
-     "plik": "centrum-wiedzy.html",
-     "strona": "Centrum wiedzy",
-     "id": "zaproponuj",
-     "naglowek": "Masz pytanie, na które chcesz obszernej odpowiedzi?",
-     "wariant": "temat"
     },
     {
      "plik": "handlowiec-klient.html",
@@ -7116,6 +7189,13 @@ window.CE_DANE = {
      "strona": "O nas",
      "id": "wartosci",
      "naglowek": "Robimy to, żeby z polskiego lignitu powstawała zdrowa gleba i zdrowa żywność",
+     "wariant": "zielen"
+    },
+    {
+     "plik": "produkty-katalog.html",
+     "strona": "Produkty Carbohort – wersja uproszczona",
+     "id": "wg-potrzeby-cele",
+     "naglowek": "Powiedz, co chcesz zrobić, a dobierzemy produkt.",
      "wariant": "zielen"
     },
     {
@@ -9185,7 +9265,7 @@ window.CE_DANE = {
     "plik": "v7/home.html",
     "kotwica": "problem"
    },
-   "opis": "Jeden CE dla całego rozdziału „Problem” strony głównej „Gleba” (komentarze Mateusza z 06.11.2026): grafik projektuje sekcję od zera i szuka efektu „wow”, a prototyp pokazuje tylko kolejność i treść. Kolejność: kicker „Problem”, nagłówek i lead; szeroki kadr spękanej gleby (21 : 9, na telefonie 4 : 3); nadpis „Z czym mierzy się Twoja gleba?” i sześć ponumerowanych problemów w układzie 3 + 3 od 1000 px (klasy c5-mt-* z CE-20 „numerowane”); nadpis „Jak to wygląda w Polsce” i trzy liczby skali na białym panelu z linią źródła pod każdym podpisem (klasy u-nb* z CE-24 „kolumny”); na końcu zdanie-pomost do rozwiązania w kroju nagłówków. Zapożyczone części nie mają własnych znaczników CE.",
+   "opis": "Jeden CE dla całego rozdziału „Problem” strony głównej „Gleba” (komentarze Mateusza z 06.11.2026): grafik projektuje sekcję od zera i szuka efektu „wow”, a prototyp pokazuje tylko kolejność i treść. Kolejność: kicker „Problem”, nagłówek i lead; szeroki kadr spękanej gleby (21 : 9, na telefonie 4 : 3); nadpis „Z czym mierzy się Twoja gleba?” i sześć ponumerowanych problemów w układzie 3 + 3 od 1000 px (klasy c5-mt-* z CE-20 „numerowane”); nadpis „Jak to wygląda w Europie” (do 10.11.2026 „w Polsce”) i trzy liczby skali na białym panelu z linią źródła pod każdym podpisem (klasy u-nb* z CE-24 „kolumny”); na końcu zdanie-pomost do rozwiązania w kroju nagłówków. Zapożyczone części nie mają własnych znaczników CE.",
    "mechanika": "Statyczny: bez skryptu, bez odliczania liczb; karty i panel wchodzą zwykłym revealem strony.",
    "czesci": [
     "głowa rozdziału",
@@ -9201,7 +9281,7 @@ window.CE_DANE = {
   {
    "kod": "CE-102",
    "nazwa": "Rozwiązanie – sekcja strony głównej",
-   "skrot": "Cały rozdział „Rozwiązanie” jako jedna sekcja: ciemny boks z tezą, cztery kroki wzdłuż pionowej osi na środku ekranu i horyzont efektu.",
+   "skrot": "Cały rozdział „Rozwiązanie” jako jedna sekcja: ciemny boks z tezą i cztery kroki wzdłuż pionowej osi na środku ekranu.",
    "status": "aktywny",
    "projekt": null,
    "tagi": {
@@ -9221,8 +9301,7 @@ window.CE_DANE = {
      "5-8"
     ],
     "nadaje": [
-     "kroki-proces",
-     "harmonogram-czas"
+     "kroki-proces"
     ],
     "mechanika": [
      "statyczny"
@@ -9252,13 +9331,12 @@ window.CE_DANE = {
     "plik": "v7/home.html",
     "kotwica": "rozwiazanie"
    },
-   "opis": "Jeden CE dla całego rozdziału „Rozwiązanie” strony głównej „Gleba” (komentarz Mateusza z 06.11.2026: teza i kroki pod nią to jedna sekcja, projektowana w całości przez grafika, nie osobne CE). Kolejność: ciemny boks z pełnym kickerem „Rozwiązanie” i jednym zdaniem w kroju nagłówków (klasy CE-33 „ciemny-boks”); nagłówek i lead; cztery kroki wzdłuż pionowej linii biegnącej środkiem ekranu – od 900 px tytuł kroku po lewej, wyrównany do linii, węzeł z numerem na linii, zdanie po prawej; poniżej 900 px linia po lewej jak w CE-73 na telefonie; horyzont efektu pod większym nagłówkiem „Kiedy zobaczysz efekt” (klasy CE-73). Zapożyczone części nie mają własnych znaczników CE.",
-   "mechanika": "Statyczny: bez skryptów CE-33 i CE-73, linia pełna, węzły zapalone; dwa paski horyzontu wypełniają się raz po wejściu w widok (reveal strony, CSS CE-73).",
+   "opis": "Jeden CE dla całego rozdziału „Rozwiązanie” strony głównej „Gleba” (komentarz Mateusza z 06.11.2026: teza i kroki pod nią to jedna sekcja, projektowana w całości przez grafika, nie osobne CE). Kolejność: ciemny boks z pełnym kickerem „Rozwiązanie” i jednym zdaniem w kroju nagłówków (klasy CE-33 „ciemny-boks”); nagłówek i lead; cztery kroki wzdłuż pionowej linii biegnącej środkiem ekranu – od 900 px tytuł kroku po lewej, wyrównany do linii, węzeł z numerem na linii, zdanie po prawej; poniżej 900 px linia po lewej jak w CE-73 na telefonie. Zapożyczone części nie mają własnych znaczników CE.",
+   "mechanika": "Statyczny: bez skryptów CE-33 i CE-73, linia pełna, węzły zapalone.",
    "czesci": [
     "ciemny boks z tezą i kickerem",
     "głowa",
-    "oś czterech kroków na środku ekranu",
-    "horyzont efektu"
+    "oś czterech kroków na środku ekranu"
    ],
    "kod_zrodlowy": {
     "css": "ce/CE-102-rozwiazanie.css (c5-rz) + klasy CE-33 i CE-73"
@@ -9268,35 +9346,9 @@ window.CE_DANE = {
    "kod": "CE-103",
    "nazwa": "Zapis na newsletter",
    "skrot": "Biały panel: zaproszenie do newslettera po lewej, pole e-mail z przyciskiem „Zapisz się” i jednozdaniową notą po prawej.",
-   "status": "aktywny",
+   "status": "wycofany",
    "projekt": null,
-   "tagi": {
-    "rodzina": [
-     "pasy"
-    ],
-    "media": [
-     "bez-mediow"
-    ],
-    "tekst": [
-     "krotki"
-    ],
-    "ukryte": [
-     "wszystko-widoczne"
-    ],
-    "pozycje": [
-     "1"
-    ],
-    "nadaje": [
-     "kontakt-formularz",
-     "cta"
-    ],
-    "mechanika": [
-     "formularz"
-    ],
-    "zakres": [
-     "uniwersalny"
-    ]
-   },
+   "tagi": {},
    "zrzut": {
     "mini": "ce-indeks/img/m/CE-103.webp",
     "pelny": "ce-indeks/img/p/CE-103.webp",
@@ -9304,15 +9356,7 @@ window.CE_DANE = {
     "h": 195
    },
    "warianty": [],
-   "wystapienia": [
-    {
-     "plik": "home.html",
-     "strona": "Strona główna",
-     "id": "newsletter",
-     "naglowek": "Zapisz się na newsletter",
-     "wariant": null
-    }
-   ],
+   "wystapienia": [],
    "wspolny": null,
    "baza": {
     "plik": "v7/home.html",
@@ -9330,6 +9374,69 @@ window.CE_DANE = {
    "kod_zrodlowy": {
     "css": "ce/CE-103-newsletter.css (c5-nl)",
     "js": "ce/CE-103-newsletter.js"
+   }
+  },
+  {
+   "kod": "CE-104",
+   "nazwa": "Pas logotypów",
+   "skrot": "Nagłówek i rząd logotypów organizacji, każdy logotyp jest linkiem do jej strony.",
+   "status": "aktywny",
+   "projekt": null,
+   "tagi": {
+    "rodzina": [
+     "pasy"
+    ],
+    "media": [
+     "ikona"
+    ],
+    "tekst": [
+     "tylko-naglowek"
+    ],
+    "ukryte": [
+     "wszystko-widoczne"
+    ],
+    "pozycje": [
+     "2-4"
+    ],
+    "nadaje": [
+     "dowod-zrodla"
+    ],
+    "mechanika": [
+     "statyczny"
+    ],
+    "zakres": [
+     "uniwersalny"
+    ]
+   },
+   "zrzut": {
+    "mini": "ce-indeks/img/m/CE-104.webp",
+    "pelny": "ce-indeks/img/p/CE-104.webp",
+    "w": 1280,
+    "h": 333
+   },
+   "warianty": [],
+   "wystapienia": [
+    {
+     "plik": "home.html",
+     "strona": "Strona główna",
+     "id": "inicjatywy",
+     "naglowek": "Inicjatywy, które wspieramy",
+     "wariant": null
+    }
+   ],
+   "wspolny": null,
+   "baza": {
+    "plik": "v7/home.html",
+    "kotwica": "inicjatywy"
+   },
+   "opis": "Cichy pas: wyśrodkowany nagłówek (h2 w stopniu h3) i rząd logotypów, każdy w odnośniku do strony organizacji (nowa karta, rel=noopener), alt = nazwa organizacji. Od 900 px wszystkie logotypy w jednym rzędzie (liczba kolumn w --c5-lg-cols, domyślnie 4), niżej po dwa. Logotypy w swoich kolorach i proporcjach, jedna wspólna wysokość (--c5-lg-h, domyślnie 64 px; na telefonie --c5-lg-h-sm, 52 px). Bez karuzeli i bez ruchu własnego; korzeń nie dodaje odstępów.",
+   "mechanika": "Statyczny; wejście w widok z warstwy wspólnej (data-reveal).",
+   "czesci": [
+    "nagłówek",
+    "rząd logotypów z odnośnikami"
+   ],
+   "kod_zrodlowy": {
+    "css": "ce/CE-104-pas-logotypow.css (c5-lg)"
    }
   }
  ]

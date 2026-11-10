@@ -116,6 +116,27 @@
 .c5-mt-pubs li{border-top:1px solid var(--w-border-subtle);padding-block:var(--w-space-3);font-size:var(--w-font-sm-size);color:var(--w-text-secondary);}
 .c5-mt-pubs li:first-child{border-top:0;}
 
+/* --- Short pattern of the evidence window #dowod-lb (10.11.2026) -----------
+   Every page: result in one sentence, 3–4 numbers (CE-20 `kafle-danych`), method,
+   source with the PDF (CE-27). Only the air and the one-line values live here;
+   the tiles and the document block come from their modules. */
+#dowod-lb .c5-lb__wynik{margin:0;max-width:62ch;color:var(--ch-text-primary);}
+#dowod-lb .c5-mt-delta{margin-top:0;grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr));}
+#dowod-lb .c5-mt-delta__item{gap:var(--ch-space-2);}
+#dowod-lb .c5-mt-delta__val{min-height:0;white-space:nowrap;}
+#dowod-lb .c5-lb__metoda{max-width:72ch;}
+#dowod-lb .c5-mt-media{margin-top:0;}
+#dowod-lb .c5-mt-media__body .wf-link{margin-top:var(--ch-space-1);}
+@media (min-width:900px){
+  #dowod-lb .c5-mt-delta__item{padding:var(--ch-space-6);}
+  #dowod-lb .c5-mt-media{padding:var(--ch-space-4) var(--ch-space-6);}
+}
+@media (max-width:699px){
+  #dowod-lb .c5-mt-delta{gap:var(--ch-space-3);}
+  #dowod-lb .c5-mt-delta__item{padding:var(--ch-space-4);gap:var(--ch-space-1);}
+  #dowod-lb .c5-mt-delta__val{white-space:normal;}
+}
+
 /* --- Siatka trzech kart-zajawek (spec §21.5 pkt 2) -------------------------- */
 /* The three cards (`c5-proofs`, `c5-proof*`) are styled in ce/CE-20-siatka-kart.css. */
 
