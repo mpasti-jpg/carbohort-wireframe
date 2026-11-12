@@ -112,3 +112,76 @@
 @media (prefers-reduced-motion: reduce){
   .cw-k-row,.cw-k-filters .c5-chip,.cw-k-pager__num{transition:none;}
 }
+
+/* ===== variants of 12.11.2026 (comments U-58 and U-60 on centrum-wiedzy.html#artykuly) =====
+   Used on both pages (dział and kategoria), so the two indexes stay alike.
+
+   `cw-k-controls--pasek` – one control panel on a warm ground: first the search field
+   (the widest, the most used control) with sorting at its right, under them the subgroup
+   chips with the number of articles (the number is written by centrum-wiedzy.js). Under
+   the panel `.cw-k-status`: the result counter and a „Wyczyść filtry” button that shows
+   only while a chip or a search is active.
+
+   `cw-k-list--okladki` – every row carries a 3 : 2 cover (`.cw-k-row__fig`) at the left;
+   the title link stretches over the row, so the picture opens the article too. The
+   layout follows the width of the list itself (container query), not of the window:
+     list < 560 px      small cover 88 px beside the title, teaser and metric under both
+     560–1099 px        cover 22 % (at most 240 px) | title, teaser, metric line
+     ≥ 1100 px          cover 240 px | title and teaser | metric column 250 px
+                        (chip, author, month, reading time – no dot separators)
+   A row announced but not published yet (`cw-k-row--soon`) has a placeholder field.
+
+   `cw-k-pager--srodek` – the pager centred under the list; below 560 px the
+   „Poprzednia / Następna” labels hide and the arrows stay (aria-label on the button). */
+.cw-k-controls--pasek{--cwk-pad:clamp(1rem,2vw,1.5rem);display:flex;flex-direction:column;gap:var(--ch-space-4);
+  padding:var(--cwk-pad);border-radius:var(--ch-radius-md);background:var(--ch-surface-warm);}
+.cw-k-controls--pasek .cw-k-tools{display:flex;flex-wrap:wrap;gap:var(--ch-space-3);align-items:center;}
+.cw-k-controls--pasek .cw-k-tools .cw-k-findbox{flex:1 1 320px;max-width:none;}
+.cw-k-sort{display:flex;align-items:center;gap:var(--ch-space-3);flex:0 0 auto;margin:0;}
+.cw-k-sort__l{white-space:nowrap;}
+.cw-k-controls--pasek .cw-k-tools .cw-k-sort .wf-select{flex:0 0 auto;width:auto;min-width:190px;background-color:var(--ch-surface-page);}
+.cw-k-filters__n{font-variant-numeric:tabular-nums;opacity:.72;}
+.cw-k-filters .c5-chip[aria-pressed="true"] .cw-k-filters__n{opacity:.85;}
+
+.cw-k-status{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--ch-space-3);
+  min-height:44px;margin-top:clamp(1rem,2vw,1.25rem);}
+.cw-k-status .cw-k-count{margin:0;}
+.cw-k-status [hidden]{display:none;}
+
+.cw-k-list--okladki{container:cwk-list / inline-size;}
+.cw-k-list--okladki .cw-k-row{position:relative;display:grid;grid-template-columns:clamp(120px,22%,240px) minmax(0,1fr);
+  grid-template-rows:auto auto 1fr;column-gap:clamp(1.25rem,3vw,2.5rem);row-gap:var(--ch-space-2);align-items:start;}
+.cw-k-row__fig{grid-column:1;grid-row:1 / -1;display:block;aspect-ratio:3 / 2;border-radius:var(--ch-radius-sm);overflow:hidden;
+  background:var(--ch-surface-warm-strong);}
+.cw-k-row__fig img{display:block;width:100%;height:100%;object-fit:cover;}
+.cw-k-row__fig.wf-ph{min-height:0;display:grid;place-items:center;color:var(--ch-text-secondary);}
+.cw-k-list--okladki .cw-k-row > :not(.cw-k-row__fig){grid-column:2;}
+.cw-k-list--okladki .cw-k-row__meta{align-self:end;}
+.cw-k-list--okladki .cw-k-row__title a::after{content:"";position:absolute;inset:0;}
+@container cwk-list (max-width:559px){
+  .cw-k-list--okladki .cw-k-row{grid-template-columns:88px minmax(0,1fr);grid-template-rows:auto;column-gap:var(--ch-space-4);}
+  .cw-k-list--okladki .cw-k-row__fig{grid-row:1;}
+  .cw-k-list--okladki .cw-k-row > :is(.cw-k-row__lead,.cw-k-row__meta){grid-column:1 / -1;}
+}
+@container cwk-list (min-width:1100px){
+  .cw-k-list--okladki .cw-k-row{grid-template-columns:240px minmax(0,1fr) 250px;grid-template-rows:auto 1fr;}
+  .cw-k-list--okladki .cw-k-row > .cw-k-row__meta{grid-column:3;grid-row:1 / -1;align-self:start;flex-direction:column;align-items:flex-start;gap:var(--ch-space-1);}
+  .cw-k-list--okladki .cw-k-row__meta > .c5-chip{margin-bottom:var(--ch-space-2);}
+  /* beats the separator rule of the page sheet (`.cw-k-metasep > *:not(:last-child):not(.c5-chip)::after`) */
+  .cw-k-list--okladki .cw-k-row__meta.cw-k-metasep > *:not(.c5-chip)::after{content:none;}
+}
+
+.cw-k-pager--srodek{justify-content:center;}
+@media (max-width:899px){
+  .cw-k-controls--pasek .cw-k-tools .cw-k-findbox{flex:1 1 100%;}
+  .cw-k-controls--pasek .cw-k-tools .cw-k-sort{flex:1 1 100%;}
+  .cw-k-controls--pasek .cw-k-tools .cw-k-sort .wf-select{flex:1 1 auto;min-width:0;}
+}
+@media (max-width:767px){
+  /* the chip strip runs to the edges of the panel, not of the screen */
+  .cw-k-controls--pasek .cw-k-filters{margin-inline:calc(-1 * var(--cwk-pad));padding-inline:var(--cwk-pad);scroll-padding-inline:var(--cwk-pad);}
+}
+@media (max-width:559px){
+  .cw-k-pager--srodek .cw-k-pager__t{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+  .cw-k-pager--srodek .cw-k-pager__nums{margin-inline:0;}
+}

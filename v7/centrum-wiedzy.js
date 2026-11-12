@@ -34,7 +34,8 @@
   var pagerNext = pager ? $('[data-cw-page="next"]', pager) : null;
   var countEl = $("[data-cw-count]", root);
   var emptyEl = $("[data-cw-empty]", root);
-  var clearBtn = $("[data-cw-clear]", root);
+  var clearBtns = $$("[data-cw-clear]", root);
+  var resetBtns = $$("[data-cw-reset]", root);   /* „Wyczyść filtry” beside the counter – only while a filter is on */
 
   var stan = { kat: "", sort: "nowe", q: "", strona: 1 };
 
@@ -124,6 +125,7 @@
     chips.forEach(function (c) {
       c.setAttribute("aria-pressed", (c.getAttribute("data-cw-filter") || "") === stan.kat ? "true" : "false");
     });
+    resetBtns.forEach(function (b) { b.hidden = !(stan.kat || stan.q); });
     adres();
   }
 
@@ -184,13 +186,24 @@
     });
   }
 
-  if (clearBtn) {
-    clearBtn.addEventListener("click", function () {
+  clearBtns.forEach(function (b) {
+    b.addEventListener("click", function () {
       stan.kat = ""; stan.q = ""; stan.strona = 1;
       searchIn.forEach(function (o) { o.value = ""; });
       zastosuj();
     });
-  }
+  });
+
+  /* 12.11.2026 (U-60): the chips above the list show how many articles each subgroup
+     holds; the number is counted from the rows, so it never drifts from the list */
+  $$(".cw-k-filters [data-cw-filter]", root).forEach(function (c) {
+    var kat = c.getAttribute("data-cw-filter") || "";
+    var n = items.filter(function (li) { return !kat || li.getAttribute("data-kat") === kat; }).length;
+    var span = document.createElement("span");
+    span.className = "cw-k-filters__n";
+    span.textContent = String(n);
+    c.appendChild(span);
+  });
 
   /* wejście z adresu: ?kat=<slug> ustawia filtr, ?strona=N otwiera stronę listy */
   (function zAdresu() {

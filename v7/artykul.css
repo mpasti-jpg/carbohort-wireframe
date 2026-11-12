@@ -198,8 +198,22 @@ img.cw-a-fig__ph { display: block; height: auto; object-fit: cover; object-posit
 .cw-a-form { display: flex; flex-direction: column; gap: var(--w-space-4); align-items: flex-start; }
 .cw-a-form .wf-field { width: 100%; }
 .cw-a-form__msg { width: 100%; }
-.cw-a-ask { margin-top: clamp(1.75rem, 4vw, 2.5rem); border-radius: 0; }
-.cw-a-ask .wf-ph--avatar { width: 48px; height: 48px; min-height: 0; flex: none; }
+/* 12.11.2026 (U-67): the guide band is gone; the form keeps its 620 px and the
+   section (heading, lead, form) stands centred in the page (the rule of U-62).
+   The class `cw-a-sec--topic` outranks the 08.11 edge rule below. */
+.cw-a-sec--topic .cw-a-col > * { max-width: 620px; margin-inline: auto; }
+
+/* ===== 12.11.2026 (U-68) · Breadcrumb ======================================
+   Only levels with their own page (home / department / category / article).
+   From 768 px the current page (the article title, repeated by the H1 right
+   below) stays on one line and ends with an ellipsis; the full title stays in
+   the DOM. Below 768 px CE-08 hides it altogether. */
+@media (min-width: 768px) {
+  .cw-a-crumbs li[aria-current="page"] {
+    display: block; min-width: 0; max-width: 34ch;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+}
 
 /* ===== 08.11.2026 (SW-01) · Two left edges from 1100 px ======================
    Before: four edges (frame 194, text 526, `.cw-a-col` 254, „Czytaj dalej” and
@@ -252,7 +266,6 @@ a.cw-a-nav__item:hover .cw-a-nav__t { text-decoration: underline; text-underline
   .cw-a-side,
   .cw-a-tools,
   .cw-a-msg,
-  .cw-a-ask,
   .cw-a-nav,
   #zaproponuj,
   .wf-sr-only { display: none !important; }

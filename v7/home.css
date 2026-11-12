@@ -75,7 +75,14 @@
 @media (min-width:1100px){
   .c5h-prod.c5-cards.c5-cards--z-przyciskami{grid-template-columns:repeat(3,minmax(0,1fr));}
 }
-.c5h-chips{display:flex;flex-wrap:wrap;gap:var(--ch-space-2);margin:0;}
+/* 12.11.2026 (comment U-53): the kicker of each card („Produkty doglebowe” …) is a
+   solid chip on the packshot field, top left, on a white ground so it reads on the
+   panel; z-index 1 lifts it over the packs. (U-54) The button to the whole range
+   stands in the head under the lead, with the gap of the head only. */
+.c5h-prod .c5h-prod__tag{position:absolute;z-index:1;top:var(--ch-space-4);left:var(--ch-space-4);background:var(--ch-surface-page);}
+#produkty .c5h-head > .c5h-more{margin-top:0;}
+/* the packs start under the chip, so the tall bag of the first card does not run under it */
+#produkty .c5h-gama{top:max(10%, calc(var(--ch-space-4) + 2.5rem));}
 .c5h-prod .c5-cards__acts{gap:var(--ch-space-2);}
 /* several packs in one card picture (comments 07.11): the packs stand on one
    base line, each with its height in --h (the tallest 100%) */

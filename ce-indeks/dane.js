@@ -1,6 +1,6 @@
 window.CE_DANE = {
  "meta": {
-  "wygenerowano": "10.11.2026",
+  "wygenerowano": "12.11.2026",
   "wersja": "0.1.0",
   "projekt": "CarboHort",
   "aktywnych": 81,
@@ -6217,13 +6217,19 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-57.webp",
     "pelny": "ce-indeks/img/p/CE-57.webp",
     "w": 1280,
-    "h": 800
+    "h": 799
    },
    "warianty": [
     {
      "slug": "kategoria",
      "opis": "lista jednej kategorii z chipami jej podgrup i wierszem „wkrótce” (centrum-wiedzy-kategoria.html#artykuly)",
      "skrot": "Lista jednej kategorii z chipami jej podgrup i wierszem „wkrótce”",
+     "zrzut": null
+    },
+    {
+     "slug": "okladki",
+     "opis": "12.11.2026, na obu stronach (centrum-wiedzy.html#artykuly i centrum-wiedzy-kategoria.html#artykuly): klasa cw-k-list--okladki – każdy wiersz ma po lewej okładkę 3:2 (cw-k-row__fig), link tytułu obejmuje cały wiersz; układ według szerokości listy (container query): poniżej 560 px okładka 88 px obok tytułu, zajawka i meta pod spodem; 560–1099 px okładka | tytuł, zajawka, linia meta; od 1100 px okładka 240 px | tytuł i zajawka | kolumna meta 250 px; zapowiedź ma pole zastępcze. Klasa cw-k-controls--pasek – panel na ciepłym tle: wyszukiwarka z sortowaniem („Sortuj”), pod nimi chipy podgrup z liczbą artykułów (liczy JS z wierszy); pod panelem licznik wyników i przycisk „Wyczyść filtry”, widoczny tylko przy aktywnym filtrze. Klasa cw-k-pager--srodek – stronicowanie wyśrodkowane, poniżej 560 px same strzałki.",
+     "skrot": "Wiersze z okładką 3:2, nad listą jeden panel: wyszukiwarka z sortowaniem i chipy z liczbą artykułów.",
      "zrzut": null
     }
    ],
@@ -6233,7 +6239,7 @@ window.CE_DANE = {
      "strona": "Centrum wiedzy",
      "id": "artykuly",
      "naglowek": "Indeks",
-     "wariant": null
+     "wariant": "okladki"
     },
     {
      "plik": "centrum-wiedzy-kategoria.html",
@@ -6306,6 +6312,12 @@ window.CE_DANE = {
      "opis": "klasa c5-ln--miniatury na korzeniu (strona główna „Gleba”, 07.11.2026, komentarz Mateusza): dwie mniejsze karty-linki mają po lewej kwadratową miniaturę zdjęcia (c5-ln__mini, 80–112 px), tytuł po prawej, strzałka w rogu jak dotąd",
      "skrot": "Mniejsze karty z kwadratową miniaturą zdjęcia po lewej stronie tytułu.",
      "zrzut": null
+    },
+    {
+     "slug": "okladki",
+     "opis": "klasa c5-ln--okladki na korzeniu (centrum-wiedzy.html#najnowsze, 12.11.2026): wszystkie trzy karty mają okładkę 16:9 (c5-ln__fig), link tytułu obejmuje całą kartę; poniżej 768 px jedna kolumna, 768–1099 px karta wiodąca na całą szerokość (zdjęcie | tekst) i dwie karty pod nią, od 1100 px jeden rząd 3 : 2 : 2",
+     "skrot": "Każda karta z okładką 16:9; od 1100 px jeden rząd 3 : 2 : 2.",
+     "zrzut": null
     }
    ],
    "wystapienia": [
@@ -6314,7 +6326,7 @@ window.CE_DANE = {
      "strona": "Centrum wiedzy",
      "id": "najnowsze",
      "naglowek": "Trzy ostatnie artykuły",
-     "wariant": null
+     "wariant": "okladki"
     },
     {
      "plik": "home.html",

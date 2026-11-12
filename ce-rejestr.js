@@ -3644,7 +3644,8 @@ window.CW_CE = {
         ]
       },
       "skroty_wariantow": {
-        "kategoria": "Lista jednej kategorii z chipami jej podgrup i wierszem „wkrótce”"
+        "kategoria": "Lista jednej kategorii z chipami jej podgrup i wierszem „wkrótce”",
+        "okladki": "Wiersze z okładką 3:2, nad listą jeden panel: wyszukiwarka z sortowaniem i chipy z liczbą artykułów."
       },
       "opis": "Pasek sterowania (chipy podgrup, sortowanie, wyszukiwanie, licznik) i lista wierszy bez miniatur: tytuł, zajawka w dwóch liniach, meta (podgrupa, autor, miesiąc, czas czytania); pod listą stronicowanie numerowane. Od 08.11.2026 (dopracowanie Strefy wiedzy) modyfikator cw-k-list--meta-bok: od 1200 px wiersz to siatka treść | kolumna metryki 260 px (kategoria, autor, data, czas czytania, bez kropek), lead wiersza najwyżej 72 znaki; poniżej 768 px chipy filtrów w jednym rzędzie przewijanym w poziomie, pole dotyku 44 px. Na obu stronach.",
       "mechanika": "Filtrowanie chipami, sortowanie i wyszukiwanie po tytule i zajawce w JS (data-kat, data-date, data-title), stronicowanie 10 na stronę z zapisem ?kat= i ?strona= w adresie; pusty stan z przyciskiem czyszczącym. Bez JS wszystkie wiersze widoczne, kontrolki ukryte.",
@@ -3663,7 +3664,8 @@ window.CW_CE = {
         "pusty stan"
       ],
       "warianty": {
-        "kategoria": "lista jednej kategorii z chipami jej podgrup i wierszem „wkrótce” (centrum-wiedzy-kategoria.html#artykuly)"
+        "kategoria": "lista jednej kategorii z chipami jej podgrup i wierszem „wkrótce” (centrum-wiedzy-kategoria.html#artykuly)",
+        "okladki": "12.11.2026, na obu stronach (centrum-wiedzy.html#artykuly i centrum-wiedzy-kategoria.html#artykuly): klasa cw-k-list--okladki – każdy wiersz ma po lewej okładkę 3:2 (cw-k-row__fig), link tytułu obejmuje cały wiersz; układ według szerokości listy (container query): poniżej 560 px okładka 88 px obok tytułu, zajawka i meta pod spodem; 560–1099 px okładka | tytuł, zajawka, linia meta; od 1100 px okładka 240 px | tytuł i zajawka | kolumna meta 250 px; zapowiedź ma pole zastępcze. Klasa cw-k-controls--pasek – panel na ciepłym tle: wyszukiwarka z sortowaniem („Sortuj”), pod nimi chipy podgrup z liczbą artykułów (liczy JS z wierszy); pod panelem licznik wyników i przycisk „Wyczyść filtry”, widoczny tylko przy aktywnym filtrze. Klasa cw-k-pager--srodek – stronicowanie wyśrodkowane, poniżej 560 px same strzałki."
       },
       "zrzut": {
         "maxh": 1000
@@ -3715,10 +3717,12 @@ window.CW_CE = {
         "nota o następnym artykule"
       ],
       "skroty_wariantow": {
-        "miniatury": "Mniejsze karty z kwadratową miniaturą zdjęcia po lewej stronie tytułu."
+        "miniatury": "Mniejsze karty z kwadratową miniaturą zdjęcia po lewej stronie tytułu.",
+        "okladki": "Każda karta z okładką 16:9; od 1100 px jeden rząd 3 : 2 : 2."
       },
       "warianty": {
-        "miniatury": "klasa c5-ln--miniatury na korzeniu (strona główna „Gleba”, 07.11.2026, komentarz Mateusza): dwie mniejsze karty-linki mają po lewej kwadratową miniaturę zdjęcia (c5-ln__mini, 80–112 px), tytuł po prawej, strzałka w rogu jak dotąd"
+        "miniatury": "klasa c5-ln--miniatury na korzeniu (strona główna „Gleba”, 07.11.2026, komentarz Mateusza): dwie mniejsze karty-linki mają po lewej kwadratową miniaturę zdjęcia (c5-ln__mini, 80–112 px), tytuł po prawej, strzałka w rogu jak dotąd",
+        "okladki": "klasa c5-ln--okladki na korzeniu (centrum-wiedzy.html#najnowsze, 12.11.2026): wszystkie trzy karty mają okładkę 16:9 (c5-ln__fig), link tytułu obejmuje całą kartę; poniżej 768 px jedna kolumna, 768–1099 px karta wiodąca na całą szerokość (zdjęcie | tekst) i dwie karty pod nią, od 1100 px jeden rząd 3 : 2 : 2"
       },
       "zrzut": {
         "maxh": 800

@@ -54,11 +54,15 @@
 .c5pd-src { max-width: 784px; font-size: 0.75rem; line-height: 1.5; color: var(--w-text-tertiary); }
 
 /* "O produkcie" (facts, chips, sections): ce/CE-83-opis-w-sekcjach-z-faktami.css */
-/* 26.10.2026 (AC #31865): "Pełny opis działania i badania" moved from the
-   end of the block to a button right under the key facts – the gap of the
-   facts goes under the button. Final look – graphic design. */
+/* 12.11.2026 (comment U-52): "Pełny opis działania i badania" is a small text
+   link with an arrow right under the product text (until then a button under
+   the key facts, AC #31865) – the gap of the lead goes under the link. */
+.c5pd-about__lead:has(+ .c5pd-about__more) { margin-bottom: var(--w-space-3); }
 .c5pd-about__more { margin: 0 0 clamp(1.5rem, 3vw, 2.5rem); }
-.c5pd-facts:has(+ .c5pd-about__more) { margin-bottom: var(--w-space-5); }
+.c5pd-about__go { display: inline-flex; align-items: center; gap: var(--w-space-2); font-size: 0.9375rem; font-weight: var(--w-weight-medium); text-underline-offset: 3px; }
+.c5pd-about__go .wf-icon { width: 16px; height: 16px; flex: none; transition: transform var(--w-duration-fast) var(--w-ease); }
+.c5pd-about__go:hover .wf-icon, .c5pd-about__go:focus-visible .wf-icon { transform: translateX(3px); }
+@media (prefers-reduced-motion: reduce) { .c5pd-about__go .wf-icon { transition: none; } }
 
 /* --- PRO band (§6.7): CE-16 with a photo and three actions -------------- */
 /* Layout, look and motion: ce/CE-16-pas-pro.css / .js (since stage E the
