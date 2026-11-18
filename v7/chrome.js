@@ -260,19 +260,8 @@
         <div class="cw-mega cw-mega--wide" id="mega-produkty" data-ce="CE-02" data-ce-wariant="szerokie" data-open="false" role="region" aria-label="Produkty Carbohort">
           <div class="cw-mega__head">
             <span class="wf-overline wf-t-tertiary">Produkty Carbohort</span>
-            <!-- R3 (02.11.2026): the need tags stand on the head strip, right-aligned;
-                 the "Wg potrzeby" heading is gone, so the group is named for screen
-                 readers only. -->
-            <div class="cw-mega__needs" role="group" aria-label="Produkty według potrzeby">
-              <div class="cw-mega__list">
-                <a class="wf-link--quiet wf-small" href="produkty.html#retencja">Zatrzymać wodę / susza</a>
-                <a class="wf-link--quiet wf-small" href="produkty.html#prochnica">Odbudować próchnicę</a>
-                <a class="wf-link--quiet wf-small" href="produkty.html#jakosc">Jakość i trwałość owocu</a>
-                <a class="wf-link--quiet wf-small" href="produkty.html#start">Lepszy start i wzrost</a>
-                <a class="wf-link--quiet wf-small" href="produkty.html#ph">Uregulować pH gleby</a>
-                <a class="wf-link--quiet wf-small" href="produkty.html#bez-torfu">Podłoże bez torfu</a>
-              </div>
-            </div>
+            <!-- 18.11.2026: the need tags (R3, 02.11.2026) are gone from the head strip;
+                 the strip now carries the title only. -->
           </div>
           <div class="cw-mega__layout">
             <!-- The whole box is one link. Four parts in a fixed order: category,

@@ -454,7 +454,7 @@ window.CW_CE = {
         ]
       },
       "skroty_wariantow": {
-        "szerokie": "Cztery boksy produktów z miniaturą opakowania, dwa przyciski w nagłówku panelu, rząd potrzeb.",
+        "szerokie": "Cztery boksy produktów z miniaturą opakowania, sam tytuł na górnym pasku, jeden przycisk na dolnym pasku.",
         "domyslne": "Trzy kolumny list odnośników.",
         "waskie": "Jedna wąska lista odnośników.",
         "grupy": "Pięć grup upraw z listami nazw (Ozime i Jare), stopka z Konfiguratorem. (bez wystąpień od 15.10.2026)",
@@ -476,7 +476,7 @@ window.CW_CE = {
         "stopka panelu"
       ],
       "warianty": {
-        "szerokie": "cztery boksy produktowe (Produkty Carbohort); w dolnym pasku panelu jeden jasny przycisk „Poznaj całą gamę produktów” na całą szerokość (od 09.11.2026; wcześniej obok ciemny „Przejdź do sklepu” z ikoną koszyka, 28.09–08.11.2026); od 09.10.2026 boks ma cztery części w stałej kolejności – kategoria, nazwa, miniatura opakowania, opis przy dolnej krawędzi – a boks CARBOHUMIC pokazuje dwie butelki z podpisami „Doglebowe” i „Dolistne”; od 16.10.2026 boks CARBOHUMIC to dwa szare kafle obok siebie (odstęp 8 px), każdy osobnym linkiem z butelką na środku i podpisem: biała „Doglebowe” → carbohumic-doglebowy.html, czarna „Dolistne” → carbohumic-dolistny.html; najechany kafel ciemnieje i zdejmuje podświetlenie z boksu",
+        "szerokie": "cztery boksy produktowe (Produkty Carbohort); górny pasek panelu niesie sam tytuł „Produkty Carbohort” (od 18.11.2026; wcześniej, od 02.11.2026, po prawej rząd sześciu tagów potrzeb – linki produkty.html#retencja … #bez-torfu, zdjęte decyzją klienta); w dolnym pasku panelu jeden jasny przycisk „Poznaj całą gamę produktów” na całą szerokość (od 09.11.2026; wcześniej obok ciemny „Przejdź do sklepu” z ikoną koszyka, 28.09–08.11.2026); od 09.10.2026 boks ma cztery części w stałej kolejności – kategoria, nazwa, miniatura opakowania, opis przy dolnej krawędzi – a boks CARBOHUMIC pokazuje dwie butelki z podpisami „Doglebowe” i „Dolistne”; od 16.10.2026 boks CARBOHUMIC to dwa szare kafle obok siebie (odstęp 8 px), każdy osobnym linkiem z butelką na środku i podpisem: biała „Doglebowe” → carbohumic-doglebowy.html, czarna „Dolistne” → carbohumic-dolistny.html; najechany kafel ciemnieje i zdejmuje podświetlenie z boksu",
         "domyslne": "trzy kolumny list – bez wystąpień od 20.09.2026, zastąpiony wariantem „grupy”",
         "waskie": "jedna lista (Programy i badania)",
         "grupy": "bez wystąpień od 15.10.2026, zastąpiony wariantem grupy-ze-zdjeciem; dawniej: pięć grup upraw na pełną szerokość kontenera (Rodzaje upraw, 20.09.2026; wygląd pozycji ujednolicony 01.10.2026): tytuł grupy z kreską 2 px i lista pozycji o jednym wyglądzie, a w grupie Rolnicze dwie listy pod śródtytułami Ozime i Jare, bez kart i ikon. Pozycja ze swoją stroną jest linkiem w ciemnym tonie, pozostałe 28 to jaśniejsze spany „cw-crop--soon”; bez strzałek, pogrubień i szyny wyróżnień. Spec: 40-strona-www/koncepcja/menu-rodzaje-upraw-spec.md",
@@ -1467,7 +1467,7 @@ window.CW_CE = {
       ],
       "warianty": {
         "plain": "trzy pytania pod artykułem, odpowiedzi ze zdań tekstu (artykul.html#faq)",
-        "grupy": "kilka akordeonów w grupach, nad każdą mały nagłówek wersalikami, pod spodem opcjonalny rząd linków do filmów (korzeń b-faq w kolumnie split; stoi na Borówce – tam sekcja nie ma znacznika data-ce-wariant – oraz na Produktach i CARBOHUMIC doglebowy, gdzie znacznik jest)",
+        "grupy": "kilka akordeonów w grupach, nad każdą mały nagłówek wersalikami, pod spodem opcjonalny rząd linków do filmów (na Borówce zdjęty 18.11.2026 – filmy stoją w osobnej sekcji CE-93 #b-filmy, DOK-12; korzeń b-faq w kolumnie split; stoi na Borówce – tam sekcja nie ma znacznika data-ce-wariant – oraz na Produktach i CARBOHUMIC doglebowy, gdzie znacznik jest)",
         "informacje": "trzy akordeony informacji o produkcie na pełną szerokość szerokiego kontenera, pod górną częścią karty produktu sklepu (pdp.html, pdp-kwasny.html; od 28.09.2026, wzór on.com): czarna linia 1 px nad i pod każdą pozycją, tytuł wersalikami z rozstrzeleniem .08 em, plus po prawej (minus po otwarciu), bez kickera i nagłówka sekcji. Natywne details: wszystkie zwinięte na starcie, dowolna liczba otwartych naraz, wysokość otwarcia animowana przez ::details-content (bez animacji przy reduced-motion). W treści tabela parametrów z wierszem metali ciężkich i źródłem, akapit o wysyłce i przyciski dokumentów PDF"
       },
       "zrzut": {
@@ -1642,7 +1642,7 @@ window.CW_CE = {
         "polacz-z": "Dwie małe karty z miniaturą, nazwą, zdaniem, ceną i przyciskiem Dodaj w kolumnie zakupu.",
         "z-rozpiska": "Karty bez mediów z rozpiską i przyciskami u dołu.",
         "uprawy": "Kafle upraw: zdjęcie 4 : 3 i nazwa, siatka rośnie z liczbą kafli.",
-        "grupy-upraw": "Pięć grup upraw z menu w jednym rzędzie: zdjęcie, nazwa grupy, główne rośliny jako chipy."
+        "grupy-upraw": "Pięć grup upraw z menu w jednym rzędzie: zdjęcie, nazwa grupy, główne rośliny jako chipy. Od 18.11.2026 bez wystąpień (zdjęte ze strony głównej, U-105); wariant i moduł zostają."
       },
       "opis": "Siatka kart auto-fit (2–5 kolumn zależnie od szerokości), karta w ramce: ikona, numer, zdjęcie albo packshot, tytuł, akapit, opcjonalnie lista dl i rząd przycisków.",
       "mechanika": "Statyczna albo z jednorazowym wejściem od dołu po wejściu w widok (data-reveal, IntersectionObserver, stagger 80–90 ms); poniżej 900 px, przy reduced-motion i bez JS karty po prostu widoczne; w wariancie produktowym na telefonie karuzela scroll-snap.",
@@ -1961,7 +1961,7 @@ window.CW_CE = {
       "skroty_wariantow": {
         "odliczanie": "Liczby odliczają od zera.",
         "kolowrotek": "Cyfry wjeżdżają kołowrotkiem.",
-        "kolumny": "Jasny panel, trzy kolumny z pionowymi liniami, chip nad liczbą i podpis pod nią.",
+        "kolumny": "Jasny panel, trzy kolumny z pionowymi liniami, chip nad liczbą i podpis pod nią. (bez wystąpień od 18.11.2026)",
         "kafle-2x2": "Ciemny panel, tytuł i siatka 2 × 2 kafli z wielką liczbą, etykietą i źródłem. (bez wystąpień od 02.11.2026)",
         "rzad": "Ciemny pas z tytułem i pięcioma kolumnami liczb z etykietą i źródłem. (bez wystąpień od 02.11.2026)",
         "wiersze-ze-zdjeciem": "Jasna sekcja: zdjęcie po jednej stronie, po drugiej nagłówek i 3–6 wierszy „liczba | podpis” rozdzielonych linią kreskowaną."
@@ -1984,16 +1984,12 @@ window.CW_CE = {
       "warianty": {
         "odliczanie": "liczby odliczają od zera (mechanika data-count z uprawa.js; razem z wariantem kolumny – do 08.11.2026 na Kukurydzy)",
         "kolowrotek": "cyfry wjeżdżają kołowrotkiem (mechanika z Próchnicy+; od 19.09.2026 pracuje w układzie kafle-2x2, sam wariant bez własnych wystąpień)",
-        "kolumny": "jasny panel, trzy kolumny rozdzielone pionowymi liniami: chip nad liczbą, wielka liczba z małą jednostką u górnej krawędzi cyfr, podpis pod liczbą (wersja alternatywna sekcji liczb; Kukurydza od 18.09 do 08.11.2026 – zdjęta, uwaga Mateusza U-73; zostaje na Borówce)",
+        "kolumny": "jasny panel, trzy kolumny rozdzielone pionowymi liniami: chip nad liczbą, wielka liczba z małą jednostką u górnej krawędzi cyfr, podpis pod liczbą (wersja alternatywna sekcji liczb; Kukurydza od 18.09 do 08.11.2026 – zdjęta, uwaga Mateusza U-73; Borówka do 18.11.2026 – zdjęta, uwaga klienta U-96; ⚠️ bez wystąpień od 18.11.2026, reguły u-nb i b-nb zostały w module)",
         "kafle-2x2": "⚠️ bez wystąpień od 02.11.2026 (CARBOMAT Mata i Próchnica+ przeszły na wiersze-ze-zdjeciem; reguły c5-nums i pp-dark zostały w module). Opis historyczny – ciemny kadr, tytuł z dużym odstępem od górnej krawędzi, pod nim siatka 2 × 2 kafli o ton jaśniejszych od tła: wielka liczba przy górnej krawędzi kafla po prawej, etykieta i nota przy dolnej po lewej; cyfry wjeżdżają kołowrotkiem (Próchnica+ od 19.09.2026 – uwaga Mateusza, inspiracja: ramka Figma 306:2941); od 02.10.2026 także CARBOMAT Mata „Dowód” (uwaga Mateusza z 02.10: sekcja jak na Próchnicy+) na module wspólnym ce/CE-24-pas-liczb.* – panel bez nagłówka, cztery kafle, liczba ze znakiem i przecinkiem w kołowrotku, sufiksy EL-31 obok liczby, pod nią opis i wiersz źródła; rozmiar liczby liczony z szerokości kafla",
         "rzad": "⚠️ bez wystąpień od 02.11.2026 (strona główna przeszła na wiersze-ze-zdjeciem). Opis historyczny – ciemny kadr na szerokość kontenera (nie na wysokość ekranu): mały tytuł u góry po lewej, pod nim pięć kolumn rozdzielonych pionowymi liniami włosowymi, w kolumnie wielka liczba, etykieta i drobne źródło przy dolnej krawędzi kadru. Wersja pasowa CE – sekcja pod nią zaczyna się wysoko na stronie, więc liczby są wstępem do dowodu, a nie osobnym ekranem (strona główna od 20.09.2026). Od 1280 px pięć kolumn, między 900 a 1279 px podział 3 + 2, poniżej 900 px wiersze: liczba po lewej, etykieta po prawej, źródło pod nimi na całej szerokości",
         "wiersze-ze-zdjeciem": "jasna sekcja wg ramki Figma 859:2603 (etap C, 18.10.2026; Próchnica+, od 02.11.2026 także CARBOMAT Mata #dowod-liczby, strona główna #zaufanie – od 07.11.2026 #dowod – i O nas #w-liczbach): po jednej stronie zdjęcie (651 : 747, narożniki 12 px), po drugiej kolumna na wysokość zdjęcia – kicker i nagłówek u góry, wiersze „liczba | podpis” przy dolnej krawędzi, rozdzielone linią kreskowaną; liczba krojem display-num, sufiks (EL-31) na dolnej linii cyfr, podpis wyrównany do prawej, pod nim opcjonalnie drobna nota ze źródłem; od 3 do 6 wierszy (dziś 4–5); cyfry wjeżdżają kołowrotkiem tam, gdzie strona ładuje skrypt (Próchnica+, CARBOMAT Mata, O nas – własny skrypt strony), na stronie głównej, bez JS i przy reduced-motion stoi zwykły tekst; poniżej 900 px zdjęcie nad wierszami (modyfikator pp-liczby--foto na korzeniu, klasy pp-liczby i pp-liczba w ce/CE-24-pas-liczb.css); gdy kolumna jest wyższa, niż pozwala proporcja kadru, modyfikator pp-liczby--wypelnia (od 07.11.2026, O nas i strona główna) sprawia, że od 900 px zdjęcie wypełnia wysokość wiersza"
       },
       "zrzuty_wariantow": {
-        "kolumny": {
-          "plik": "v7/borowka.html",
-          "kotwica": "b-liczby"
-        },
         "wiersze-ze-zdjeciem": {
           "plik": "v7/prochnica-plus.html",
           "kotwica": "w-liczbach"
@@ -2059,7 +2055,7 @@ window.CW_CE = {
         "licznik"
       ],
       "warianty": {
-        "fazy": "lightbox faz wykresu CE-100 (Kukurydza, 03.11.2026; adnotacja ramki Figma 560:167 i komentarze Mateusza): klasa u-lightbox--fazy; jedna strona na kolumnę wykresu (siedem), fazy zgrupowane na wykresie jako podbloki z własnymi tytułami (u-lbsub); u góry panelu, poza przewijaną treścią, mały przełącznik pakietów (c5-pkbar--sm, data-pk-sat) zgrany z wykresem i przelicznikiem – filtruje karty produktów fazy (u-pcard--foto z packshotem po lewej; zamienne z obrysem przerywanym i chipem); nagłówek w pionie – „Faza N z 7”, tytuł, lead pod tytułem na całą szerokość; tytuły bloków i treść większe, krojem tekstu strony; „Faza N”, BBCH w tytułach w nawiasach; bez paska przewijania faz – na samym dole treści każdej strony przycisk „Oblicz koszt stosowania” (data-we-goto).",
+        "fazy": "lightbox faz wykresu CE-100 (Kukurydza, 03.11.2026; adnotacja ramki Figma 560:167 i komentarze Mateusza): klasa u-lightbox--fazy; jedna strona na kolumnę wykresu (siedem), fazy zgrupowane na wykresie jako podbloki z własnymi tytułami (u-lbsub); u góry panelu, poza przewijaną treścią, mały przełącznik pakietów (c5-pkbar--sm, data-pk-sat) zgrany z wykresem i przelicznikiem – filtruje karty produktów fazy (u-pcard--foto z packshotem po lewej; zamienne z obrysem przerywanym i chipem); nagłówek w pionie – „Faza N z 7”, tytuł, lead pod tytułem na całą szerokość; tytuły bloków i treść większe, krojem tekstu strony; „Faza N”, BBCH w tytułach w nawiasach; bez paska przewijania faz – na samym dole treści każdej strony przycisk „Oblicz koszt stosowania” (data-we-goto). Od 18.11.2026 drugie wystąpienie: Borówka #b-lightbox-fazy – „Pełny opis” trzech pozycji akordeonu CE-68 (długie objaśnienia z dokumentu klienta z 16.11), bez przełącznika pakietów i bez przycisku kosztu.",
         "metryczka": "metryczka produktu z wykresu CE-100 (Kukurydza, 03.11.2026; adnotacja ramki Figma 560:167): klasa u-lightbox--metryczka; nagłówek z dużym packshotem, nazwą i zdaniem „czym jest”; „Kiedy stosujemy w kukurydzy” – wiersze faza · dawka · pakiety (tu informacje warunkowe, np. druga dawka po stresie); „Co daje” i „Forma i ograniczenia”; w stopce „Kup produkt” (szybki podgląd sklepu przez data-pkc-buy, CE-47 „etapy”), cichy link do strony produktu i karta produktu do pobrania (do czasu plików – nieaktywna).",
         "popup-produktu": "strona = mapa zastosowań produktu z packshotem w nagłówku i własną stopką (Kukurydza)",
         "jednostronicowy": "jedna strona treści zamiast N, więc stopka, licznik i przyciski poprzednia/następna nie istnieją; panel szerszy (1280 px), bo niesie tabelę pięciu kolumn, a kontener treści gubi w nakładce swoją miarę i gutter. Klasy i moduł 1:1 z bazy; kod strony w produkty.css ===== 45 / produkty.js ===== 45 (Produkty „Technikalia czterech rodzin”, 20.09.2026). Od 02.10.2026 także CARBOMAT Mata: tabela trzech podłoży (#co-zastepujesz-lb) i pełna analiza podłoża (#analiza-lb) w oknach jednostronicowych na silniku lightboksa strony (klasa c5-lb--solo – pasek z przyciskiem zamknięcia nad treścią, bez osobnego tytułu); otwiera je przycisk w sekcji albo hash tabeli, bez JS tabela stoi w biegu strony (klasa c5-lb--solo na CARBOMAT Mata, u-lightbox--waski na Borówce)"
@@ -4200,7 +4196,7 @@ window.CW_CE = {
         "przycisk na kadrze"
       ],
       "warianty": {
-        "ikony": "cztery karty 2 × 2 z ikoną w ramce i tytułem zamiast numeru w węźle, bez nagłówka h3 nad siatką (siatka schodzi do dolnej linii kadru); klasa c5-kk--ikony na korzeniu"
+        "ikony": "karty w dwóch kolumnach (cztery na CARBOHUMIC doglebowym, siedem na Borówce od 18.11.2026 – siódma na obie kolumny) z ikoną w ramce i tytułem zamiast numeru w węźle, bez nagłówka h3 nad siatką (siatka schodzi do dolnej linii kadru); klasa c5-kk--ikony na korzeniu"
       },
       "zrzuty_wariantow": {
         "ikony": {
@@ -5636,9 +5632,16 @@ window.CW_CE = {
         "wiersz nagłówka: kicker i nagłówek sekcji",
         "dwie strzałki (przycisk ikonowy EL-02)",
         "tor przewijany w poziomie",
-        "karta: kadr ze zdjęciem i znakiem play, kapsułka rodzaju materiału, tytuł, data publikacji"
+        "karta: kadr ze zdjęciem i znakiem play, kapsułka rodzaju materiału, tytuł, data publikacji",
+        "opcjonalnie: odnośnik do filmu w tytule (a.c5-relc__link), rozciągnięty na całą kartę",
+        "opcjonalnie: odnośnik pod nagłówkiem, np. do całej playlisty (a.c5-relc__more, EL-05 wf-link ze strzałką)"
       ],
-      "warianty": {},
+      "skroty_wariantow": {
+        "pojedyncza": "Jedna karta filmu przy czynności: kadr z play obok tytułu, bez strzałek."
+      },
+      "warianty": {
+        "pojedyncza": "jedna karta filmu wstawiana w cudzy CE przy opisie czynności (kolumna CE-36, karta CE-20, kolumna CE-67, panel CE-68): kadr z play, kapsułka „Film YouTube”, tytuł z odnośnikiem, dopisek pod nim; bez toru, strzałek i skryptu (korzeń bez data-relc). Kontener rozmiaru na korzeniu: od 340 px szerokości kadr ok. 40% (najwyżej 200 px) po lewej, tekst obok, wysokość ok. 110–150 px; węższy – kadr 16 : 9 nad tekstem; typografia o stopień mniejsza niż w karuzeli; kolor karty pokrętłem --c5-relc-card. Klasa c5-relc--pojedyncza (18.11.2026, uwaga klienta U-98 – „krótki film z każdej czynności”; Borówka, przy każdej czynności etapów 1–4)"
+      },
       "zrzut": {
         "maxh": 700
       }

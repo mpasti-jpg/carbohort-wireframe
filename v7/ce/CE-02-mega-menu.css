@@ -16,7 +16,7 @@
    the look comes from the foundation and matches the floating header (CE-01): a
    white 16 px panel 8 px under the bar with a grey-200 outline, no shadow, group
    heads in overline, items in nav/body, product cards EL-15, buttons EL-01 M,
-   chips for the needs. Only --ch-* tokens; this sheet also overrides the shared
+   (chips for the needs until 18.11.2026). Only --ch-* tokens; this sheet also overrides the shared
    rules of cw.css (it is attached later), so the panels, cards and buttons of
    the three variants live here.
 
@@ -105,14 +105,7 @@
   .cw-prodbox__media{padding-inline:var(--ch-space-5);}
   .cw-prodbox__tag{font-size:var(--ch-type-micro-size);letter-spacing:var(--ch-type-micro-ls);}
 }
-/* need tags on the head strip: the links as EL-16 chips */
-.cw-mega__needs .cw-mega__list{gap:var(--ch-space-2);}
-.cw-mega__needs .cw-mega__list a{
-  display:inline-flex;align-items:center;padding:var(--ch-space-1-5) var(--ch-space-3);border-radius:var(--ch-radius-md);background:var(--ch-surface-warm);
-  font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-primary);text-decoration:none;
-  transition:background var(--w-duration-base) var(--w-ease);
-}
-.cw-mega__needs .cw-mega__list a:hover{background:var(--ch-surface-warm-strong);text-decoration:none;}
+/* (need tags on the head strip – EL-16 chips – removed 18.11.2026 with the column) */
 
 /* ===== variant "waskie" – Programy i badania ===== */
 .cw-mega--narrow .cw-mega__list{margin-top:0;gap:var(--ch-space-1);}
@@ -215,5 +208,5 @@
 .cw-mobilenav__sub{font-size:var(--ch-type-small-size);}
 
 @media (prefers-reduced-motion: reduce) {
-  .cw-cropsw__group, .cw-cropsw__chev, .cw-mega .wf-btn, .cw-prodbox, .cw-mega__needs .cw-mega__list a, .cw-mega--narrow .cw-mega__list a { transition: none; }
+  .cw-cropsw__group, .cw-cropsw__chev, .cw-mega .wf-btn, .cw-prodbox, .cw-mega--narrow .cw-mega__list a { transition: none; }
 }

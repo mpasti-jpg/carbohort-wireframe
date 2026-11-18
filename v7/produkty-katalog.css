@@ -23,13 +23,19 @@
 @media (min-width:1280px){ .c5pk-gama .c5pr-specs{grid-template-columns:repeat(6,minmax(0,1fr));gap:var(--ch-space-8) var(--ch-space-6);} }
 /* Mateusz 10.11 (comment on the artefact): the packshots stand a little lower in the panel. From
    1120 px the module centres the shot in the band between the tab rail and the group name; here it
-   moves down by a share of the panel height, the same for all four groups. */
+   moves down by a share of the panel height, the same for all five groups. */
 @media (min-width:1120px){ .c5pk-gama .c5pr-shot{translate:0 calc(var(--c5pr-panel-h) * .05);} }
+/* 18.11.2026 (U-100): five tabs with the full canon names need ~1150 px of rail. Below 1280 px
+   the tabs get smaller type and padding; below 1024 px the rail takes the module's own grid of
+   two columns (the last, odd tab across), which the module itself starts only below 860 px. */
+@media (max-width:1279px){ .c5pk-gama .c5pr-seg .c5pr-seg__tab{padding-inline:12px;font-size:0.9375rem;} }
+@media (min-width:860px) and (max-width:1023px){
+  .c5pr-js .c5pk-gama .c5pr-show .c5pr-seg.c5-seg--rail{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;min-height:0;}
+  .c5pk-gama .c5pr-seg .c5pr-seg__tab{justify-content:center;white-space:normal;text-align:center;padding:12px 10px;line-height:1.3;min-height:56px;}
+  .c5pk-gama .c5pr-seg .c5pr-seg__tab:last-child:nth-of-type(odd){grid-column:1 / -1;}
+}
 
-/* ===== 40 · Wg potrzeby – the green goal stage of produkty.html (CE-70); the problem → rozwiązanie
-   classes of the cards live in ce/CE-70-scena-slajdow.css. #wg-potrzeby-cele keeps the air under
-   the stage it has on produkty.html. ===== */
-#wg-potrzeby-cele{margin-bottom:clamp(3rem,6vw,5rem);}
+/* (40 · Wg potrzeby – section and its rule removed 18.11.2026, U-101.) */
 
 /* ===== 50 · Grupy produktów (#grupy) – the rows come from ce/CE-36-wiersz-zdjecie-opis.css
    (variant katalog); no rule of this page here. ===== */

@@ -87,6 +87,7 @@
   html.cx-js .c5-kk__grid > .c5-kk__card:nth-child(4){transition-delay:.18s;}
   html.cx-js .c5-kk__grid > .c5-kk__card:nth-child(5){transition-delay:.24s;}
   html.cx-js .c5-kk__grid > .c5-kk__card:nth-child(6){transition-delay:.3s;}
+  html.cx-js .c5-kk__grid > .c5-kk__card:nth-child(7){transition-delay:.36s;}
 }
 
 /* --- the frame and the button on it ---------------------------------------- */
@@ -122,9 +123,12 @@
   .c5-kk__grid{order:4;margin-top:var(--w-space-5);}
 }
 
-/* two cards in a row already below the breakpoint */
+/* two cards in a row already below the breakpoint. An odd number of cards
+   (18.11.2026, Borówka #b-sciolka: seven, DOK-7) – the last one takes both
+   columns, so no hole is left at the end of the grid. */
 @media (min-width:640px){
   .c5-kk__grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .c5-kk__grid > .c5-kk__card:last-child:nth-child(odd){grid-column:1 / -1;}
 }
 
 @media (min-width:900px){

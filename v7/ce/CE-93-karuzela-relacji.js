@@ -11,7 +11,10 @@
      · If the arrow that holds the focus goes disabled, the focus moves to the
        other arrow, so a keyboard user is never left on a dead control.
    Nothing here listens to `wheel` and the carousel never moves by itself.
-   No [data-relc] -> no-op. =================================================== */
+   No [data-relc] -> no-op. The variant `pojedyncza` (one card inside another
+   CE, 18.11.2026, U-98 / DOK-12) carries no data-relc and needs no script; the
+   links on the cards (a.c5-relc__link) and under the heading (a.c5-relc__more)
+   are plain links, CSS only. ================================================== */
 (function () {
   "use strict";
   var $ = CX5.$, $$ = CX5.$$, clamp = CX5.clamp;

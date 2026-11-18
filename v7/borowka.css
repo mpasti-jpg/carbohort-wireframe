@@ -25,7 +25,7 @@
    `--b-peat` …) were unused or belong to the proportion bars, which moved to
    ce/CE-87-porownanie-trwalosci.css and now use palette tokens. */
 
-/* 27 · Key numbers → ce/CE-24-pas-liczb.css */
+/* 27 · Key numbers: the band (CE-24) left the page on 18.11.2026 (U-96). */
 
 /* --- 45 · Lignite and peat → ce/CE-87-porownanie-trwalosci.css --- */
 
@@ -77,3 +77,92 @@
 .b-head--center .b-stage{align-items:center;}
 .b-head--center .b-prods{justify-content:center;}
 .b-head--center .b-stage__skip{align-self:center;}
+
+/* --- 41 · Stage 1 „Zakładanie plantacji” (iteration 5, 18.11.2026) ----------
+   The client's document of 16.11 (AC #31568). Rules of this page only:
+   `b-ask` – the short „dobierz indywidualnie” line with a link to the advisor
+   (the quantities of „Wodny Stoper” and of the substrate are not counted by
+   the packages, DOK-11); `b-variants` – the box of the three substrate
+   variants (CE-22 „danych”) under row 02, full container width;
+   `b-peat__more` – the link under „Lignit a torf” to its full comparison
+   (CE-25 „jednostronicowy”).
+   The table itself is EL-21 (`c5-table`), whose base lives in b2b-wspolne.css,
+   not loaded on the crop pages; the few rules below are a page copy of it,
+   scoped to the CE-22 roots of this page, until EL-21 moves to ce/00-base.css. */
+.b-ask{margin:0;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-secondary);}
+.b-ask .b-link{display:inline;font-size:inherit;}
+.b-variants{margin-top:clamp(2rem,4vw,3.5rem);}
+.b-variants .c5-tbl{display:flex;flex-direction:column;gap:var(--ch-space-3);}
+.b-variants .c5-tbl__h{margin:0;}
+.b-variants .b-ask{margin-top:var(--ch-space-2);}
+:is(.b-variants,.u-prodpop) .c5-table{width:100%;border-collapse:collapse;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-primary);}
+:is(.b-variants,.u-prodpop) .c5-table :is(th,td){padding:var(--ch-space-3) var(--ch-space-4);text-align:left;vertical-align:top;border-bottom:1px solid var(--ch-border-subtle);}
+:is(.b-variants,.u-prodpop) .c5-table thead th{font-weight:var(--ch-font-weight-regular);color:var(--ch-text-secondary);white-space:nowrap;}
+:is(.b-variants,.u-prodpop) .c5-table tbody th{font-weight:var(--ch-font-weight-medium);color:var(--ch-text-primary);}
+/* the quantity column never squeezes its short value onto three lines */
+:is(.b-variants,.u-prodpop) .c5-table :is(th,td):last-child{width:24%;}
+.b-peat__more{align-self:flex-start;min-height:44px;}
+/* the card of use of Carbomat Eco: the variants table under both columns of the pop-up */
+.u-prodpop__body > .b-pop__wide{grid-column:1 / -1;}
+
+/* --- 42 · Stage 2 „Sadzenie roślin” (iteration 5, 18.11.2026) ---------------
+   Two cards of CE-20 „z-rozpiska” instead of three: from 900 px they share
+   the row in two columns (the module sets three). Inside the cards the steps
+   of the client's procedure are a numbered list (`b-steps`; the second card
+   goes on with step 6 through `start`). */
+@media (min-width:900px){
+  .b-plantcards .c5-cards__list{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+.b-steps{margin:0;padding-left:1.5rem;display:grid;gap:var(--w-space-2);list-style:decimal;}
+.b-steps > li{padding-left:var(--w-space-1);}
+.b-steps > li::marker{font-weight:var(--w-weight-medium);color:var(--w-text-primary);}
+
+/* --- 50 · Stage 3 „Ściółkowanie” (iteration 5, 18.11.2026) ------------------
+   Seven cards (DOK-7; the module stretches the odd last one). The film card
+   (CE-93 „pojedyncza”) stands in the head under the products of the stage, in
+   the air the head keeps above the grid anyway. */
+.b-sciolka__film{margin-top:clamp(1.5rem,3vw,2.25rem);max-width:33rem;}
+/* the dose table of the card of use of CARBOMAT ECO Ściółka (DOK-8): two header
+   rows, so the width rule of the variants table (last column 24%) is undone,
+   and the stacked sentences of one cell keep a little air */
+.u-prodpop .b-dose .c5-table :is(th,td):last-child{width:auto;}
+.u-prodpop .b-dose .c5-table thead th[colspan]{text-align:left;}
+.u-prodpop .b-dose .c5-table td > p{margin:0;}
+.u-prodpop .b-dose .c5-table td > p + p{margin-top:var(--ch-space-2);}
+
+/* --- 60 · Stage 4 „Produkty płynne w sezonie” (iteration 5, 18.11.2026) ----
+   DOK-9, DOK-10: over the accordion two groups of products, each with its
+   heading and the client's paragraph (F-41, F-55), instead of one list; in the
+   panels the parameters (`b-brief`, the parameter list of CE-36), the CE-31
+   notes, a film card and „Pełny opis”, which opens the phase pop-up (CE-25
+   „fazy”). Panel 03 carries two phases, each a `b-fa__phase` block; their
+   product boxes run in a row, so the three boxes of a phase take two lines,
+   not three. */
+.b-stage--group{gap:var(--w-space-3);}
+.b-stage--group + .b-stage--group{margin-top:clamp(1.75rem,3vw,2.5rem);}
+.b-stage__t{margin:0;font-size:var(--ch-type-title-s-size);line-height:var(--ch-type-title-s-lh);
+  font-weight:var(--ch-font-weight-regular);color:var(--ch-text-primary);}
+.b-stage__txt{margin:0;max-width:60ch;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-secondary);}
+.c5-fa__body > .b-brief,.b-fa__phase > .b-brief{align-self:stretch;margin-top:var(--w-space-6);}
+.c5-fa__body > .c5-note,.c5-fa__body > .c5-relc,.c5-fa__body > .b-ask{align-self:stretch;margin-top:var(--w-space-6);}
+.c5-fa__body > .c5-src + .c5-note{margin-top:var(--w-space-5);}
+.b-fa__phase{align-self:stretch;margin-top:var(--w-space-8);padding-top:var(--w-space-6);border-top:1px solid var(--ch-border-subtle);}
+.b-fa__phase > .c5-fa__lead{margin-top:var(--w-space-2);}
+.b-fa__phase > .c5-fa__prods{flex-direction:row;flex-wrap:wrap;margin-top:var(--w-space-5);}
+/* phase pop-up: a partner product (no packshot in img/) – the warm card of the module's
+   replacement products, without its third column „Kiedy wybrać”; the icon centred in the pack field */
+.b-pcard--partner{background:var(--ch-surface-warm);}
+.b-pcard--partner .u-pcard__pack{display:flex;align-items:center;justify-content:center;color:var(--w-text-tertiary);}
+/* a partner product that links to its shop line (Vinassa, PURE ONE) is an <a> – no link underline on the box */
+a.c5-fa__prod{text-decoration:none;}
+.b-fa__sub{margin:0;font-size:var(--ch-type-title-s-size);line-height:var(--ch-type-title-s-lh);color:var(--ch-text-primary);}
+/* the film card sits on the warm panel: a white card, as the module suggests */
+.c5-fa__body > .c5-relc{--c5-relc-card:var(--ch-surface-raised);}
+/* stage 4 (18.11.2026, review of the main session): panel 03 holds two phases, so its text
+   column runs about 1000 px below the photo the module pins to the bottom corner. From 900 px
+   the photo stands at the top of its column in every panel (page exception – CE-68 stands on
+   this page only; the phone order is untouched). Not sticky: the accordion panel clips its
+   content (overflow), so position: sticky would not hold. */
+@media (min-width:900px){
+  .c5-fa__fig{align-self:start;}
+}

@@ -1,11 +1,11 @@
 window.CE_DANE = {
  "meta": {
-  "wygenerowano": "12.11.2026",
+  "wygenerowano": "18.11.2026",
   "wersja": "0.1.0",
   "projekt": "CarboHort",
   "aktywnych": 81,
   "wycofanych": 23,
-  "wystapien": 308,
+  "wystapien": 325,
   "stron": 35,
   "bazaStron": "v7/"
  },
@@ -461,13 +461,13 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-02.webp",
     "pelny": "ce-indeks/img/p/CE-02.webp",
     "w": 1280,
-    "h": 561
+    "h": 541
    },
    "warianty": [
     {
      "slug": "szerokie",
-     "opis": "cztery boksy produktowe (Produkty Carbohort); w dolnym pasku panelu jeden jasny przycisk „Poznaj całą gamę produktów” na całą szerokość (od 09.11.2026; wcześniej obok ciemny „Przejdź do sklepu” z ikoną koszyka, 28.09–08.11.2026); od 09.10.2026 boks ma cztery części w stałej kolejności – kategoria, nazwa, miniatura opakowania, opis przy dolnej krawędzi – a boks CARBOHUMIC pokazuje dwie butelki z podpisami „Doglebowe” i „Dolistne”; od 16.10.2026 boks CARBOHUMIC to dwa szare kafle obok siebie (odstęp 8 px), każdy osobnym linkiem z butelką na środku i podpisem: biała „Doglebowe” → carbohumic-doglebowy.html, czarna „Dolistne” → carbohumic-dolistny.html; najechany kafel ciemnieje i zdejmuje podświetlenie z boksu",
-     "skrot": "Cztery boksy produktów z miniaturą opakowania, dwa przyciski w nagłówku panelu, rząd potrzeb.",
+     "opis": "cztery boksy produktowe (Produkty Carbohort); górny pasek panelu niesie sam tytuł „Produkty Carbohort” (od 18.11.2026; wcześniej, od 02.11.2026, po prawej rząd sześciu tagów potrzeb – linki produkty.html#retencja … #bez-torfu, zdjęte decyzją klienta); w dolnym pasku panelu jeden jasny przycisk „Poznaj całą gamę produktów” na całą szerokość (od 09.11.2026; wcześniej obok ciemny „Przejdź do sklepu” z ikoną koszyka, 28.09–08.11.2026); od 09.10.2026 boks ma cztery części w stałej kolejności – kategoria, nazwa, miniatura opakowania, opis przy dolnej krawędzi – a boks CARBOHUMIC pokazuje dwie butelki z podpisami „Doglebowe” i „Dolistne”; od 16.10.2026 boks CARBOHUMIC to dwa szare kafle obok siebie (odstęp 8 px), każdy osobnym linkiem z butelką na środku i podpisem: biała „Doglebowe” → carbohumic-doglebowy.html, czarna „Dolistne” → carbohumic-dolistny.html; najechany kafel ciemnieje i zdejmuje podświetlenie z boksu",
+     "skrot": "Cztery boksy produktów z miniaturą opakowania, sam tytuł na górnym pasku, jeden przycisk na dolnym pasku.",
      "zrzut": null
     },
     {
@@ -2273,7 +2273,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-17.webp",
     "pelny": "ce-indeks/img/p/CE-17.webp",
     "w": 1280,
-    "h": 799
+    "h": 800
    },
    "warianty": [
     {
@@ -2284,7 +2284,7 @@ window.CE_DANE = {
     },
     {
      "slug": "grupy",
-     "opis": "kilka akordeonów w grupach, nad każdą mały nagłówek wersalikami, pod spodem opcjonalny rząd linków do filmów (korzeń b-faq w kolumnie split; stoi na Borówce – tam sekcja nie ma znacznika data-ce-wariant – oraz na Produktach i CARBOHUMIC doglebowy, gdzie znacznik jest)",
+     "opis": "kilka akordeonów w grupach, nad każdą mały nagłówek wersalikami, pod spodem opcjonalny rząd linków do filmów (na Borówce zdjęty 18.11.2026 – filmy stoją w osobnej sekcji CE-93 #b-filmy, DOK-12; korzeń b-faq w kolumnie split; stoi na Borówce – tam sekcja nie ma znacznika data-ce-wariant – oraz na Produktach i CARBOHUMIC doglebowy, gdzie znacznik jest)",
      "skrot": "Kilka akordeonów w grupach, nad każdą mały nagłówek wersalikami (Borówka, Produkty, CARBOHUMIC doglebowy).",
      "zrzut": null
     },
@@ -2763,7 +2763,7 @@ window.CE_DANE = {
     {
      "slug": "grupy-upraw",
      "opis": "grupy upraw z menu „Rodzaje upraw” (klasa c5-cards--grupy-upraw; home.html#uprawy, od 10.11.2026, uwaga U-93 – wariant A z trzech): kafel na grupę w kolejności i pod nazwami z menu (CE-02) – zdjęcie (img.c5-cards__photo; 4 : 5 od 1200 px, 3 : 2 niżej, 21 : 9 w piątym kaflu na całą szerokość od 700 do 1199 px), nazwa grupy (h3.c5-cards__name), główne rośliny jako chipy EL c5-chip w ul.c5-cards__plants – roślina z własną stroną to link a.c5-chip.c5-chip--solid ze strzałką, pozostałe span.c5-chip, na końcu opcjonalnie li.c5-cards__rest („i 3 inne”). Pięć kafli w jednym rzędzie od 1200 px, dwie kolumny od 700 px, jedna niżej; statyczny",
-     "skrot": "Pięć grup upraw z menu w jednym rzędzie: zdjęcie, nazwa grupy, główne rośliny jako chipy.",
+     "skrot": "Pięć grup upraw z menu w jednym rzędzie: zdjęcie, nazwa grupy, główne rośliny jako chipy. Od 18.11.2026 bez wystąpień (zdjęte ze strony głównej, U-105); wariant i moduł zostają.",
      "zrzut": {
       "mini": "ce-indeks/img/m/CE-20--wariant-grupy-upraw.webp",
       "pelny": "ce-indeks/img/p/CE-20--wariant-grupy-upraw.webp",
@@ -2840,7 +2840,7 @@ window.CE_DANE = {
      "plik": "borowka.html",
      "strona": "Borówka",
      "id": "b-sadzenie-karty",
-     "naglowek": "Moczenie korzeni",
+     "naglowek": "Zaprawianie korzeni",
      "wariant": "z-rozpiska"
     },
     {
@@ -2856,13 +2856,6 @@ window.CE_DANE = {
      "id": "produkty",
      "naglowek": "Wybierz rozwiązanie dla siebie",
      "wariant": "z-przyciskami"
-    },
-    {
-     "plik": "home.html",
-     "strona": "Strona główna",
-     "id": "uprawy",
-     "naglowek": "Co uprawiasz?",
-     "wariant": "grupy-upraw"
     },
     {
      "plik": "kontakt.html",
@@ -3174,6 +3167,27 @@ window.CE_DANE = {
      "wariant": "z-akcja"
     },
     {
+     "plik": "borowka.html",
+     "strona": "Borówka",
+     "id": "b-podloze-warianty",
+     "naglowek": "Proponowane warianty podłoża",
+     "wariant": "danych"
+    },
+    {
+     "plik": "borowka.html",
+     "strona": "Borówka",
+     "id": "produkt-eco-warianty",
+     "naglowek": "Proponowane warianty podłoża",
+     "wariant": "danych"
+    },
+    {
+     "plik": "borowka.html",
+     "strona": "Borówka",
+     "id": "produkt-sciolka-dawki",
+     "naglowek": "Jak obliczyć zapotrzebowanie na ściółkę CARBOMAT ECO?",
+     "wariant": "danych"
+    },
+    {
      "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "doglebowo-tabela",
@@ -3477,8 +3491,8 @@ window.CE_DANE = {
     },
     {
      "slug": "kolumny",
-     "opis": "jasny panel, trzy kolumny rozdzielone pionowymi liniami: chip nad liczbą, wielka liczba z małą jednostką u górnej krawędzi cyfr, podpis pod liczbą (wersja alternatywna sekcji liczb; Kukurydza od 18.09 do 08.11.2026 – zdjęta, uwaga Mateusza U-73; zostaje na Borówce)",
-     "skrot": "Jasny panel, trzy kolumny z pionowymi liniami, chip nad liczbą i podpis pod nią.",
+     "opis": "jasny panel, trzy kolumny rozdzielone pionowymi liniami: chip nad liczbą, wielka liczba z małą jednostką u górnej krawędzi cyfr, podpis pod liczbą (wersja alternatywna sekcji liczb; Kukurydza od 18.09 do 08.11.2026 – zdjęta, uwaga Mateusza U-73; Borówka do 18.11.2026 – zdjęta, uwaga klienta U-96; ⚠️ bez wystąpień od 18.11.2026, reguły u-nb i b-nb zostały w module)",
+     "skrot": "Jasny panel, trzy kolumny z pionowymi liniami, chip nad liczbą i podpis pod nią. (bez wystąpień od 18.11.2026)",
      "zrzut": {
       "mini": "ce-indeks/img/m/CE-24--wariant-kolumny.webp",
       "pelny": "ce-indeks/img/p/CE-24--wariant-kolumny.webp",
@@ -3527,13 +3541,6 @@ window.CE_DANE = {
      "id": "dowod-liczby",
      "naglowek": "Sprawdzone w badaniach i w uprawie.",
      "wariant": "wiersze-ze-zdjeciem"
-    },
-    {
-     "plik": "borowka.html",
-     "strona": "Borówka",
-     "id": "b-liczby",
-     "naglowek": "",
-     "wariant": "kolumny"
     },
     {
      "plik": "home.html",
@@ -3618,7 +3625,7 @@ window.CE_DANE = {
    "warianty": [
     {
      "slug": "fazy",
-     "opis": "lightbox faz wykresu CE-100 (Kukurydza, 03.11.2026; adnotacja ramki Figma 560:167 i komentarze Mateusza): klasa u-lightbox--fazy; jedna strona na kolumnę wykresu (siedem), fazy zgrupowane na wykresie jako podbloki z własnymi tytułami (u-lbsub); u góry panelu, poza przewijaną treścią, mały przełącznik pakietów (c5-pkbar--sm, data-pk-sat) zgrany z wykresem i przelicznikiem – filtruje karty produktów fazy (u-pcard--foto z packshotem po lewej; zamienne z obrysem przerywanym i chipem); nagłówek w pionie – „Faza N z 7”, tytuł, lead pod tytułem na całą szerokość; tytuły bloków i treść większe, krojem tekstu strony; „Faza N”, BBCH w tytułach w nawiasach; bez paska przewijania faz – na samym dole treści każdej strony przycisk „Oblicz koszt stosowania” (data-we-goto).",
+     "opis": "lightbox faz wykresu CE-100 (Kukurydza, 03.11.2026; adnotacja ramki Figma 560:167 i komentarze Mateusza): klasa u-lightbox--fazy; jedna strona na kolumnę wykresu (siedem), fazy zgrupowane na wykresie jako podbloki z własnymi tytułami (u-lbsub); u góry panelu, poza przewijaną treścią, mały przełącznik pakietów (c5-pkbar--sm, data-pk-sat) zgrany z wykresem i przelicznikiem – filtruje karty produktów fazy (u-pcard--foto z packshotem po lewej; zamienne z obrysem przerywanym i chipem); nagłówek w pionie – „Faza N z 7”, tytuł, lead pod tytułem na całą szerokość; tytuły bloków i treść większe, krojem tekstu strony; „Faza N”, BBCH w tytułach w nawiasach; bez paska przewijania faz – na samym dole treści każdej strony przycisk „Oblicz koszt stosowania” (data-we-goto). Od 18.11.2026 drugie wystąpienie: Borówka #b-lightbox-fazy – „Pełny opis” trzech pozycji akordeonu CE-68 (długie objaśnienia z dokumentu klienta z 16.11), bez przełącznika pakietów i bez przycisku kosztu.",
      "skrot": "Opis fazy programu uprawy: przełącznik pakietów u góry panelu, lead pod tytułem, większy tekst, karty produktów ze zdjęciem, „Oblicz koszt stosowania” na końcu treści.",
      "zrzut": null
     },
@@ -3667,7 +3674,7 @@ window.CE_DANE = {
      "plik": "borowka.html",
      "strona": "Borówka",
      "id": "b-lightbox-produkty",
-     "naglowek": "Carbohumic niefiltrowany",
+     "naglowek": "CARBOHUMIC niefiltrowany",
      "wariant": "popup-produktu"
     },
     {
@@ -3676,6 +3683,20 @@ window.CE_DANE = {
      "id": "b-lightbox-pakiety",
      "naglowek": "Jak liczymy pakiety",
      "wariant": "jednostronicowy"
+    },
+    {
+     "plik": "borowka.html",
+     "strona": "Borówka",
+     "id": "b-lightbox-torf",
+     "naglowek": "Lignit a torf",
+     "wariant": "jednostronicowy"
+    },
+    {
+     "plik": "borowka.html",
+     "strona": "Borówka",
+     "id": "b-lightbox-fazy",
+     "naglowek": "Wczesna wiosna, przed ruszeniem wegetacji / jesienią, po zbiorach",
+     "wariant": "fazy"
     },
     {
      "plik": "kukurydza.html",
@@ -4212,7 +4233,35 @@ window.CE_DANE = {
     {
      "plik": "borowka.html",
      "strona": "Borówka",
-     "id": "b-etapy-wazne",
+     "id": "b-stoper-wazne",
+     "naglowek": "",
+     "wariant": null
+    },
+    {
+     "plik": "borowka.html",
+     "strona": "Borówka",
+     "id": "b-etapy-wazne-1",
+     "naglowek": "",
+     "wariant": null
+    },
+    {
+     "plik": "borowka.html",
+     "strona": "Borówka",
+     "id": "b-etapy-wazne-2",
+     "naglowek": "",
+     "wariant": null
+    },
+    {
+     "plik": "borowka.html",
+     "strona": "Borówka",
+     "id": "b-etapy-wazne-3",
+     "naglowek": "",
+     "wariant": null
+    },
+    {
+     "plik": "borowka.html",
+     "strona": "Borówka",
+     "id": "torf-porownanie-zamiennik",
      "naglowek": "",
      "wariant": null
     },
@@ -4625,14 +4674,14 @@ window.CE_DANE = {
      "plik": "borowka.html",
      "strona": "Borówka",
      "id": "b-podloze-stoper",
-     "naglowek": "Technologia „Wodnego Stopera”",
+     "naglowek": "Wodny Stoper",
      "wariant": null
     },
     {
      "plik": "borowka.html",
      "strona": "Borówka",
      "id": "b-podloze-mieszanka",
-     "naglowek": "Podłoże z udziałem Carbomat Eco",
+     "naglowek": "Przygotowanie podłoża",
      "wariant": "odwrocony"
     },
     {
@@ -4680,15 +4729,22 @@ window.CE_DANE = {
     {
      "plik": "produkty-katalog.html",
      "strona": "Produkty Carbohort – wersja uproszczona",
-     "id": "carbohumic",
-     "naglowek": "CARBOHUMIC",
+     "id": "humic",
+     "naglowek": "CARBOMAT HUMIC",
      "wariant": "katalog"
     },
     {
      "plik": "produkty-katalog.html",
      "strona": "Produkty Carbohort – wersja uproszczona",
-     "id": "humic",
-     "naglowek": "CARBOMAT HUMIC",
+     "id": "carbohumic",
+     "naglowek": "CARBOHUMIC doglebowy",
+     "wariant": "katalog"
+    },
+    {
+     "plik": "produkty-katalog.html",
+     "strona": "Produkty Carbohort – wersja uproszczona",
+     "id": "carbohumic-nalistny",
+     "naglowek": "CARBOHUMIC nalistny",
      "wariant": "katalog"
     }
    ],
@@ -6914,13 +6970,13 @@ window.CE_DANE = {
    "warianty": [
     {
      "slug": "ikony",
-     "opis": "cztery karty 2 × 2 z ikoną w ramce i tytułem zamiast numeru w węźle, bez nagłówka h3 nad siatką (siatka schodzi do dolnej linii kadru); klasa c5-kk--ikony na korzeniu",
+     "opis": "karty w dwóch kolumnach (cztery na CARBOHUMIC doglebowym, siedem na Borówce od 18.11.2026 – siódma na obie kolumny) z ikoną w ramce i tytułem zamiast numeru w węźle, bez nagłówka h3 nad siatką (siatka schodzi do dolnej linii kadru); klasa c5-kk--ikony na korzeniu",
      "skrot": "",
      "zrzut": {
       "mini": "ce-indeks/img/m/CE-67--wariant-ikony.webp",
       "pelny": "ce-indeks/img/p/CE-67--wariant-ikony.webp",
       "w": 1280,
-      "h": 800
+      "h": 799
      }
     }
    ],
@@ -7012,7 +7068,7 @@ window.CE_DANE = {
      "plik": "borowka.html",
      "strona": "Borówka",
      "id": "b-etapy",
-     "naglowek": "Produkty płynne w sezonie",
+     "naglowek": "Sezon uprawowy",
      "wariant": null
     }
    ],
@@ -7201,13 +7257,6 @@ window.CE_DANE = {
      "strona": "O nas",
      "id": "wartosci",
      "naglowek": "Robimy to, żeby z polskiego lignitu powstawała zdrowa gleba i zdrowa żywność",
-     "wariant": "zielen"
-    },
-    {
-     "plik": "produkty-katalog.html",
-     "strona": "Produkty Carbohort – wersja uproszczona",
-     "id": "wg-potrzeby-cele",
-     "naglowek": "Powiedz, co chcesz zrobić, a dobierzemy produkt.",
      "wariant": "zielen"
     },
     {
@@ -8752,13 +8801,90 @@ window.CE_DANE = {
     "w": 1280,
     "h": 496
    },
-   "warianty": [],
+   "warianty": [
+    {
+     "slug": "pojedyncza",
+     "opis": "jedna karta filmu wstawiana w cudzy CE przy opisie czynności (kolumna CE-36, karta CE-20, kolumna CE-67, panel CE-68): kadr z play, kapsułka „Film YouTube”, tytuł z odnośnikiem, dopisek pod nim; bez toru, strzałek i skryptu (korzeń bez data-relc). Kontener rozmiaru na korzeniu: od 340 px szerokości kadr ok. 40% (najwyżej 200 px) po lewej, tekst obok, wysokość ok. 110–150 px; węższy – kadr 16 : 9 nad tekstem; typografia o stopień mniejsza niż w karuzeli; kolor karty pokrętłem --c5-relc-card. Klasa c5-relc--pojedyncza (18.11.2026, uwaga klienta U-98 – „krótki film z każdej czynności”; Borówka, przy każdej czynności etapów 1–4)",
+     "skrot": "Jedna karta filmu przy czynności: kadr z play obok tytułu, bez strzałek.",
+     "zrzut": null
+    }
+   ],
    "wystapienia": [
     {
      "plik": "prochnica-plus.html",
      "strona": "Próchnica+",
      "id": "etapy-relacje",
      "naglowek": "Etapy prac",
+     "wariant": null
+    },
+    {
+     "plik": "borowka.html",
+     "strona": "Borówka",
+     "id": "b-film-stoper",
+     "naglowek": "",
+     "wariant": "pojedyncza"
+    },
+    {
+     "plik": "borowka.html",
+     "strona": "Borówka",
+     "id": "b-film-podloze",
+     "naglowek": "",
+     "wariant": "pojedyncza"
+    },
+    {
+     "plik": "borowka.html",
+     "strona": "Borówka",
+     "id": "b-film-zaprawianie",
+     "naglowek": "",
+     "wariant": "pojedyncza"
+    },
+    {
+     "plik": "borowka.html",
+     "strona": "Borówka",
+     "id": "b-film-podlewanie",
+     "naglowek": "",
+     "wariant": "pojedyncza"
+    },
+    {
+     "plik": "borowka.html",
+     "strona": "Borówka",
+     "id": "b-film-sciolka",
+     "naglowek": "Ściółkowanie krzewów borówki",
+     "wariant": "pojedyncza"
+    },
+    {
+     "plik": "borowka.html",
+     "strona": "Borówka",
+     "id": "b-film-doglebowo",
+     "naglowek": "",
+     "wariant": "pojedyncza"
+    },
+    {
+     "plik": "borowka.html",
+     "strona": "Borówka",
+     "id": "b-film-fertygacja",
+     "naglowek": "",
+     "wariant": "pojedyncza"
+    },
+    {
+     "plik": "borowka.html",
+     "strona": "Borówka",
+     "id": "b-film-nalistnie",
+     "naglowek": "",
+     "wariant": "pojedyncza"
+    },
+    {
+     "plik": "borowka.html",
+     "strona": "Borówka",
+     "id": "b-filmy-relacje",
+     "naglowek": "Borówka na filmach",
+     "wariant": null
+    },
+    {
+     "plik": "kukurydza.html",
+     "strona": "Kukurydza",
+     "id": "u-filmy-relacje",
+     "naglowek": "Kukurydza na filmach",
      "wariant": null
     }
    ],
@@ -8773,7 +8899,9 @@ window.CE_DANE = {
     "wiersz nagłówka: kicker i nagłówek sekcji",
     "dwie strzałki (przycisk ikonowy EL-02)",
     "tor przewijany w poziomie",
-    "karta: kadr ze zdjęciem i znakiem play, kapsułka rodzaju materiału, tytuł, data publikacji"
+    "karta: kadr ze zdjęciem i znakiem play, kapsułka rodzaju materiału, tytuł, data publikacji",
+    "opcjonalnie: odnośnik do filmu w tytule (a.c5-relc__link), rozciągnięty na całą kartę",
+    "opcjonalnie: odnośnik pod nagłówkiem, np. do całej playlisty (a.c5-relc__more, EL-05 wf-link ze strzałką)"
    ],
    "kod_zrodlowy": {
     "css": "ce/CE-93-karuzela-relacji.css (c5-relc)",

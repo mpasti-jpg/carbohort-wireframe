@@ -9,9 +9,14 @@
    layout): the capsule on top says „Relacja YouTube”, the title under it and
    „data publikacji: …” at the bottom; from 900 px the text column is centred
    vertically next to the frame (gaps 20 px).
+   18.11.2026 (Borówka, comment U-98 – Darek: a video card next to every
+   treatment – and DOK-12 of his document): the card can carry a link to the
+   film, the heading block an optional link to the whole playlist, and the new
+   variant `pojedyncza` puts one card into a column of another CE (CE-20,
+   CE-36, CE-67, CE-68 panels). Cards without a link are unchanged.
 
-   Markup:
-     .c5-relc                             root (a div inside .c5-wrap)
+   Markup (carousel, the base layout):
+     .c5-relc[data-relc]                  root (a div inside .c5-wrap)
        .c5-relc__head                     heading block, a two-column grid
          .c5-kicker                       EL-06, spans both columns
          .c5-h2                           EL-09, left column
@@ -19,6 +24,10 @@
                                           the two arrows; the script unhides it
            button.c5-iconbtn[data-relc-prev]   EL-02, aria-controls = the view
            button.c5-iconbtn[data-relc-next]
+         a.c5-relc__more.wf-link          optional, the LAST child: a link under the
+                                          heading, left column (EL-05 with an EL-23
+                                          arrow: svg.wf-icon.wf-icon--sm #ti-arrow-right),
+                                          e.g. „Cała playlista na YouTube”
        .c5-relc__view[data-relc-view]     the scroller: role="group", tabindex="0",
                                           aria-label
          ul.c5-relc__track
@@ -29,10 +38,24 @@
                .c5-relc__play             48 px play sign (the triangle is a CSS mask)
              .c5-relc__body
                .c5-relc__kicker           fill chip with the kind of material
-                                          („Relacja YouTube”)
+                                          („Relacja YouTube”, „Film YouTube”)
                .c5-relc__title            title (any heading level)
+                 a.c5-relc__link          optional link to the film (target="_blank"
+                                          rel="noopener"); a pseudo-element stretches
+                                          it over the whole card, so the frame opens
+                                          the film too; the focus ring is drawn on the card
                p.c5-relc__date            „data publikacji: …” (a <time> when
                                           the date is known)
+
+   Variant `pojedyncza` (class c5-relc--pojedyncza on the root, no data-relc,
+   so the script leaves it alone; no head, no view, no track, no arrows):
+     .c5-relc.c5-relc--pojedyncza         a size container (inline-size)
+       .c5-relc__card                     a div; inside the same as above
+   From 340 px of the container the card lies flat: the frame on the left
+   (40 % of the card, at most --c5-relc-one-ph), the text next to it, centred
+   vertically, about 110-150 px high; in a narrower container the frame stands
+   over the text. Smaller type than in the carousel (title-s, caption date,
+   a lower chip), because the card lives inside another CE.
 
    Knobs (custom properties on .c5-relc):
      --c5-relc-cols     cards per view from 900 px (2 by default)
@@ -42,6 +65,9 @@
      --c5-relc-mt       distance between the heading row and the cards
      --c5-relc-bottom   distance from the text to the bottom edge of the card
                         below 900 px (the stacked card)
+     --c5-relc-card     card ground (warm surface; set white on a beige band)
+     --c5-relc-one-ph   `pojedyncza`: the widest the frame gets in the flat card
+                        (200 px)
 
    Without CE-93-karuzela-relacji.js the arrows stay hidden and the row simply
    scrolls natively (touch, trackpad, keyboard on the focused view).
@@ -117,4 +143,57 @@
   .c5-relc__ph{flex:0 1 250px;width:auto;min-width:130px;aspect-ratio:250/180;}
   /* the text column centred vertically next to the frame (Figma 996:1496) */
   .c5-relc__body{flex:1 1 0;justify-content:center;}
+}
+
+/* --- the link to the film (18.11.2026, U-98 / DOK-12) ------------------------
+   Only a card that holds a.c5-relc__link changes: the pseudo-element of the
+   link covers the card, so the frame and the text open the film as well. The
+   focus ring stands on the card, drawn inside its edge, because the scroller
+   of the carousel clips everything outside it. */
+.c5-relc__card:has(.c5-relc__link){position:relative;}
+.c5-relc__link{color:inherit;text-decoration:none;}
+.c5-relc__link::after{content:"";position:absolute;inset:0;z-index:1;border-radius:var(--ch-radius-md);}
+.c5-relc__link:focus-visible{outline:none;}
+.c5-relc__card:has(.c5-relc__link:focus-visible){outline:var(--w-focus-ring-width) solid var(--w-focus-ring);outline-offset:calc(var(--w-focus-ring-width) * -1);}
+.c5-relc__card:has(.c5-relc__link) .c5-relc__play{transition:background-color var(--w-duration-fast) var(--w-ease);}
+@media (prefers-reduced-motion: no-preference){
+  .c5-relc__card:has(.c5-relc__link) .c5-relc__img{transition:transform .4s var(--w-ease);}
+}
+/* hover as on a link: the title underlined, the play sign darker, the photo
+   a touch closer (the last only with motion) */
+@media (hover:hover){
+  .c5-relc__link:hover{text-decoration:underline;text-underline-offset:.15em;text-decoration-thickness:1px;}
+  .c5-relc__card:has(.c5-relc__link:hover) .c5-relc__play{background:rgb(53 46 40 / .7);}
+}
+@media (hover:hover) and (prefers-reduced-motion: no-preference){
+  .c5-relc__card:has(.c5-relc__link:hover) .c5-relc__img{transform:scale(1.04);}
+}
+
+/* --- the link to the whole playlist under the heading (optional) ------------ */
+.c5-relc__more{grid-column:1;justify-self:start;display:inline-flex;align-items:center;gap:var(--w-space-2);
+  margin-top:var(--w-space-4);}
+.c5-relc__more .wf-icon{flex:none;transition:transform var(--w-duration-fast) var(--w-ease);}
+.c5-relc__more:hover .wf-icon,.c5-relc__more:focus-visible .wf-icon{transform:translateX(3px);}
+@media (prefers-reduced-motion: reduce){
+  .c5-relc__more .wf-icon{transition:none;}
+}
+
+/* ===== wariant: pojedyncza ===== (c5-relc--pojedyncza on the root)
+   One card inside a column of another CE. The root is a size container, so the
+   card follows the width of that column, not of the window: flat from 340 px
+   of the container, stacked below. Two classes in every selector, so the rules
+   win over the window-based ones of the carousel card above. */
+.c5-relc--pojedyncza{--c5-relc-one-ph:200px;container:c5-relc-one / inline-size;inline-size:100%;}
+.c5-relc--pojedyncza .c5-relc__card{width:auto;flex-direction:column;align-items:stretch;gap:var(--ch-space-3);
+  padding:var(--ch-space-3);scroll-snap-align:none;}
+.c5-relc--pojedyncza .c5-relc__ph{flex:none;width:100%;min-width:0;aspect-ratio:16/9;border-radius:var(--ch-radius-sm);}
+.c5-relc--pojedyncza .c5-relc__play{width:40px;height:40px;border-radius:11px;}
+.c5-relc--pojedyncza .c5-relc__body{flex:1 1 auto;justify-content:flex-start;gap:var(--ch-space-2);padding:0 var(--ch-space-1) var(--ch-space-1);}
+.c5-relc--pojedyncza .c5-relc__kicker{padding:6px 8px;}
+.c5-relc--pojedyncza .c5-relc__title{font-size:var(--ch-type-title-s-size);line-height:var(--ch-type-title-s-lh);letter-spacing:var(--ch-type-title-s-ls);}
+.c5-relc--pojedyncza .c5-relc__date{font-size:var(--ch-type-caption-size);line-height:var(--ch-type-caption-lh);}
+@container c5-relc-one (min-width:340px){
+  .c5-relc--pojedyncza .c5-relc__card{flex-direction:row;align-items:center;gap:var(--ch-space-4);}
+  .c5-relc--pojedyncza .c5-relc__ph{flex:0 0 min(40%, var(--c5-relc-one-ph));width:auto;aspect-ratio:16/10;}
+  .c5-relc--pojedyncza .c5-relc__body{flex:1 1 0;justify-content:center;padding:0;}
 }
