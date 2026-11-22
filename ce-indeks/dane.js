@@ -3,10 +3,10 @@ window.CE_DANE = {
   "wygenerowano": "22.11.2026",
   "wersja": "0.1.0",
   "projekt": "CarboHort",
-  "aktywnych": 82,
-  "wycofanych": 23,
-  "wystapien": 323,
-  "stron": 35,
+  "aktywnych": 81,
+  "wycofanych": 24,
+  "wystapien": 299,
+  "stron": 34,
   "bazaStron": "v7/"
  },
  "projekt": {
@@ -401,7 +401,7 @@ window.CE_DANE = {
     }
    ],
    "wystapienia": [],
-   "wspolny": "każda podstrona (chrome.js)",
+   "wspolny": "strony ładujące chrome.js (48)",
    "baza": {
     "plik": "v7/chrome.js",
     "kotwica": "serwis-naglowek"
@@ -506,7 +506,7 @@ window.CE_DANE = {
     }
    ],
    "wystapienia": [],
-   "wspolny": "każda podstrona (chrome.js)",
+   "wspolny": "strony ładujące chrome.js (48)",
    "baza": {
     "plik": "v7/chrome.js",
     "kotwica": "mega-produkty"
@@ -564,7 +564,7 @@ window.CE_DANE = {
    },
    "warianty": [],
    "wystapienia": [],
-   "wspolny": "każda podstrona (chrome.js)",
+   "wspolny": "strony ładujące chrome.js (48)",
    "baza": {
     "plik": "v7/chrome.js",
     "kotwica": "mobilenav"
@@ -636,7 +636,7 @@ window.CE_DANE = {
     }
    ],
    "wystapienia": [],
-   "wspolny": "każda podstrona (chrome.js)",
+   "wspolny": "strony ładujące chrome.js (48)",
    "baza": {
     "plik": "v7/chrome.js",
     "kotwica": "serwis-stopka"
@@ -694,7 +694,7 @@ window.CE_DANE = {
    },
    "warianty": [],
    "wystapienia": [],
-   "wspolny": "każda podstrona (chrome.js)",
+   "wspolny": "strony ładujące chrome.js (48)",
    "baza": {
     "plik": "v7/chrome.js",
     "kotwica": "serwis-dok"
@@ -752,7 +752,7 @@ window.CE_DANE = {
    },
    "warianty": [],
    "wystapienia": [],
-   "wspolny": "każda podstrona (chrome.js)",
+   "wspolny": "strony ładujące chrome.js (48)",
    "baza": {
     "plik": "v7/chrome.js",
     "kotwica": "serwis-status"
@@ -883,13 +883,6 @@ window.CE_DANE = {
     {
      "plik": "prochnica-plus.html",
      "strona": "Próchnica+",
-     "id": "nawigacja-kropki",
-     "naglowek": "",
-     "wariant": null
-    },
-    {
-     "plik": "produkty.html",
-     "strona": "Produkty Carbohort",
      "id": "nawigacja-kropki",
      "naglowek": "",
      "wariant": null
@@ -1124,17 +1117,10 @@ window.CE_DANE = {
      "wariant": "player"
     },
     {
-     "plik": "produkty-katalog.html",
-     "strona": "Produkty Carbohort – wersja uproszczona",
-     "id": "hero",
-     "naglowek": "Produkty węglowe Carbohort",
-     "wariant": "linia-produktow"
-    },
-    {
      "plik": "produkty.html",
      "strona": "Produkty Carbohort",
      "id": "hero",
-     "naglowek": "Kompletna gama produktów na bazie lignitu.",
+     "naglowek": "Produkty węglowe Carbohort",
      "wariant": "linia-produktow"
     }
    ],
@@ -1268,13 +1254,6 @@ window.CE_DANE = {
      "plik": "prochnica-plus.html",
      "strona": "Próchnica+",
      "id": "stan",
-     "naglowek": "",
-     "wariant": null
-    },
-    {
-     "plik": "produkty-katalog.html",
-     "strona": "Produkty Carbohort – wersja uproszczona",
-     "id": "zaufanie",
      "naglowek": "",
      "wariant": null
     },
@@ -1711,13 +1690,6 @@ window.CE_DANE = {
      "id": "metodologia",
      "naglowek": "Metodologia badań terenowych",
      "wariant": "bez-naglowka"
-    },
-    {
-     "plik": "produkty.html",
-     "strona": "Produkty Carbohort",
-     "id": "jak-dzialaja",
-     "naglowek": "Naprawiamy glebę, wzmacniamy roślinę.",
-     "wariant": "z-naglowkiem"
     }
    ],
    "wspolny": null,
@@ -1973,7 +1945,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-15.webp",
     "pelny": "ce-indeks/img/p/CE-15.webp",
     "w": 1280,
-    "h": 799
+    "h": 623
    },
    "warianty": [
     {
@@ -1996,13 +1968,6 @@ window.CE_DANE = {
    ],
    "wystapienia": [
     {
-     "plik": "produkty.html",
-     "strona": "Produkty Carbohort",
-     "id": "co-daja-wiersze",
-     "naglowek": "Co dają i kiedy to zobaczysz.",
-     "wariant": "kaskada-z-pinem"
-    },
-    {
      "plik": "carbohumic-doglebowy.html",
      "strona": "CARBOHUMIC doglebowy",
      "id": "czas-prochnicy-kaskada",
@@ -2012,8 +1977,8 @@ window.CE_DANE = {
    ],
    "wspolny": null,
    "baza": {
-    "plik": "v7/produkty.html",
-    "kotwica": "co-daja-wiersze"
+    "plik": "v7/carbohumic-doglebowy.html",
+    "kotwica": "czas-prochnicy-kaskada"
    },
    "opis": "Nagłówek (kicker, H2, lead) przyklejony na czas cyklu; blok wierszy wchodzi w biegu z pierwszym wierszem otwartym i przykleja się dolną krawędzią; wiersz = tytuł | kwadratowa scena z packshotem | nazwa, opis, przycisk.",
    "mechanika": "Dalsze przewijanie otwiera kolejne wiersze (kwadrat rozwija się od dołu, potem wjeżdża packshot), po ostatnim całość odjeżdża; bez ruchu akordeon na klik z pierwszym otwartym; bez JS wszystkie otwarte. Moduł 80.",
@@ -2204,13 +2169,6 @@ window.CE_DANE = {
      "wariant": "kadr-z-prawej"
     },
     {
-     "plik": "produkty.html",
-     "strona": "Produkty Carbohort",
-     "id": "dla-profesjonalistow",
-     "naglowek": "Zamawiasz większe ilości?",
-     "wariant": "pozny-wzrost"
-    },
-    {
      "plik": "sklep.html",
      "strona": "Lista produktów",
      "id": "dla-profesjonalistow",
@@ -2363,13 +2321,6 @@ window.CE_DANE = {
      "id": "informacje",
      "naglowek": "Parametry produktu",
      "wariant": "informacje"
-    },
-    {
-     "plik": "produkty.html",
-     "strona": "Produkty Carbohort",
-     "id": "faq",
-     "naglowek": "Najczęstsze pytania o produkty",
-     "wariant": "grupy"
     }
    ],
    "wspolny": null,
@@ -2502,13 +2453,6 @@ window.CE_DANE = {
      "id": "u-doradca",
      "naglowek": "Zapytaj doradcę Carbohort",
      "wariant": "z-karta-osoby"
-    },
-    {
-     "plik": "produkty.html",
-     "strona": "Produkty Carbohort",
-     "id": "cta-koncowe",
-     "naglowek": "Dobierzmy wariant i dawkę.",
-     "wariant": null
     }
    ],
    "wspolny": null,
@@ -2933,13 +2877,6 @@ window.CE_DANE = {
      "id": "rzetelnosc-kafle",
      "naglowek": "",
      "wariant": "szklane"
-    },
-    {
-     "plik": "produkty.html",
-     "strona": "Produkty Carbohort",
-     "id": "doglebowo-nalistne",
-     "naglowek": "Carbohumic Maxi Plus",
-     "wariant": "z-przyciskami"
     }
    ],
    "wspolny": null,
@@ -3127,16 +3064,9 @@ window.CE_DANE = {
     {
      "plik": "produkty.html",
      "strona": "Produkty Carbohort",
-     "id": "certyfikaty",
-     "naglowek": "Certyfikaty i rejestracje per produkt",
-     "wariant": "danych"
-    },
-    {
-     "plik": "produkty.html",
-     "strona": "Produkty Carbohort",
-     "id": "doglebowo-tabela",
+     "id": "porownanie-tabela",
      "naglowek": "",
-     "wariant": "z-packshotami"
+     "wariant": null
     },
     {
      "plik": "admin.html",
@@ -3242,19 +3172,12 @@ window.CE_DANE = {
      "id": "pozycje",
      "naglowek": "Pozycje zamówienia",
      "wariant": "danych"
-    },
-    {
-     "plik": "produkty-katalog.html",
-     "strona": "Produkty Carbohort – wersja uproszczona",
-     "id": "porownanie-tabela",
-     "naglowek": "",
-     "wariant": null
     }
    ],
    "wspolny": null,
    "baza": {
     "plik": "v7/produkty.html",
-    "kotwica": "doglebowo-tabela"
+    "kotwica": "porownanie-tabela"
    },
    "opis": "Samodzielna tabela w kontenerze przewijanym w poziomie na wąskich ekranach (cw-scrollx, tabindex), nagłówki kolumn, opcjonalnie packshoty w nagłówkach i przypis pod tabelą.",
    "mechanika": "Statyczna; wariant z klikalnymi wierszami otwiera lightbox; wiersze mogą wchodzić z reveal. W panelu pierwsza kolumna przyklejona do lewej w przewijanym kontenerze. W module c5-tbl dwa pokrętła wpisywane w style na korzeniu wystąpienia: --c5-tbl-min (najmniejsza szerokość tabeli w przewijanym kontenerze, domyślnie 640 px) i --c5-tbl-first (stała szerokość przyklejonej pierwszej kolumny poniżej 600 px). W wariantach z-packshotami i z-przyciskami (c5pr-cmp) dwa pokrętła kadru: --c5pr-cmp-pos-1 i --c5pr-cmp-pos-2 (object-position zdjęcia pierwszego i drugiego kadru, domyślnie 50% 50%; okno-lupa bierze tę samą wartość). Od 03.11.2026 (U-14, U-15) we wszystkich wystąpieniach wariantów z kadrem (z-packshotami, z-przyciskami: Produkty i CARBOHUMIC doglebowy #doglebowo-tabela, CARBOMAT HUMIC #sezon-panele) lekki parallax z ce/CE-22-tabela.js ma tylko duże zdjęcie kadru – obraz w oknie-lupie stoi w miejscu (bez skali i przesunięcia; dawny szybszy „drugi plan” lupy z 20.10 wycofany), a wiersze wchodzą po kolei (data-reveal-stagger na tabeli); bez JS, przy ograniczonym ruchu i bez IntersectionObserver wszystko stoi.",
@@ -3306,7 +3229,7 @@ window.CE_DANE = {
     "mini": "ce-indeks/img/m/CE-23.webp",
     "pelny": "ce-indeks/img/p/CE-23.webp",
     "w": 1280,
-    "h": 226
+    "h": 173
    },
    "warianty": [
     {
@@ -3358,20 +3281,6 @@ window.CE_DANE = {
    ],
    "wystapienia": [
     {
-     "plik": "produkty.html",
-     "strona": "Produkty Carbohort",
-     "id": "wg-potrzeby-pas",
-     "naglowek": "",
-     "wariant": "z-ikona"
-    },
-    {
-     "plik": "produkty.html",
-     "strona": "Produkty Carbohort",
-     "id": "doglebowo-pas",
-     "naglowek": "",
-     "wariant": "z-ikona"
-    },
-    {
      "plik": "carbomat-humic.html",
      "strona": "CARBOMAT HUMIC",
      "id": "ktory-dla-mnie-ostrzezenie",
@@ -3416,8 +3325,8 @@ window.CE_DANE = {
    ],
    "wspolny": null,
    "baza": {
-    "plik": "v7/produkty.html",
-    "kotwica": "wg-potrzeby-pas"
+    "plik": "v7/carbomat-humic.html",
+    "kotwica": "ktory-dla-mnie-ostrzezenie"
    },
    "opis": "Pas na szerokość kolumny między kreską górną (i dolną): po lewej tekst (zdanie wytłuszczone + zdanie drugorzędne, opcjonalnie ikona albo h4 w osobnej kolumnie), po prawej jeden lub dwa przyciski.",
    "mechanika": "Statyczne; poniżej 900 px przyciski schodzą pod tekst.",
@@ -3711,13 +3620,6 @@ window.CE_DANE = {
      "id": "u-lightbox",
      "naglowek": "Po zbiorze przedplonu i przygotowanie gleby",
      "wariant": "fazy"
-    },
-    {
-     "plik": "produkty.html",
-     "strona": "Produkty Carbohort",
-     "id": "porownanie-lb",
-     "naglowek": "Technikalia czterech rodzin · w suchej masie",
-     "wariant": "jednostronicowy"
     }
    ],
    "wspolny": null,
@@ -4075,7 +3977,7 @@ window.CE_DANE = {
       "mini": "ce-indeks/img/m/CE-30--wariant-akordeon-z-odliczaniem.webp",
       "pelny": "ce-indeks/img/p/CE-30--wariant-akordeon-z-odliczaniem.webp",
       "w": 1280,
-      "h": 799
+      "h": 800
      }
     },
     {
@@ -4123,13 +4025,6 @@ window.CE_DANE = {
      "id": "sezon-lista",
      "naglowek": "Rok pierwszy: podłoże wchodzi w rytm uprawy",
      "wariant": "akordeon-z-kadrem"
-    },
-    {
-     "plik": "produkty.html",
-     "strona": "Produkty Carbohort",
-     "id": "wg-potrzeby-sciezki",
-     "naglowek": "Dziesięć sytuacji, w których klienci do nas trafiają",
-     "wariant": "akordeon-przewijany"
     }
    ],
    "wspolny": null,
@@ -4706,36 +4601,36 @@ window.CE_DANE = {
      "wariant": null
     },
     {
-     "plik": "produkty-katalog.html",
-     "strona": "Produkty Carbohort – wersja uproszczona",
+     "plik": "produkty.html",
+     "strona": "Produkty Carbohort",
      "id": "eco",
      "naglowek": "CARBOMAT ECO",
      "wariant": "katalog"
     },
     {
-     "plik": "produkty-katalog.html",
-     "strona": "Produkty Carbohort – wersja uproszczona",
+     "plik": "produkty.html",
+     "strona": "Produkty Carbohort",
      "id": "mata",
      "naglowek": "CARBOMAT Mata Uprawowa",
      "wariant": "katalog"
     },
     {
-     "plik": "produkty-katalog.html",
-     "strona": "Produkty Carbohort – wersja uproszczona",
+     "plik": "produkty.html",
+     "strona": "Produkty Carbohort",
      "id": "humic",
      "naglowek": "CARBOMAT HUMIC",
      "wariant": "katalog"
     },
     {
-     "plik": "produkty-katalog.html",
-     "strona": "Produkty Carbohort – wersja uproszczona",
+     "plik": "produkty.html",
+     "strona": "Produkty Carbohort",
      "id": "carbohumic",
      "naglowek": "CARBOHUMIC doglebowy",
      "wariant": "katalog"
     },
     {
-     "plik": "produkty-katalog.html",
-     "strona": "Produkty Carbohort – wersja uproszczona",
+     "plik": "produkty.html",
+     "strona": "Produkty Carbohort",
      "id": "carbohumic-nalistny",
      "naglowek": "CARBOHUMIC nalistny",
      "wariant": "katalog"
@@ -4950,34 +4845,6 @@ window.CE_DANE = {
      "id": "metodologia-wiecej-6",
      "naglowek": "Wyniki",
      "wariant": null
-    },
-    {
-     "plik": "produkty.html",
-     "strona": "Produkty Carbohort",
-     "id": "jak-dzialaja-wiecej-2",
-     "naglowek": "Najbardziej zasobna substancja organiczna w kwasy humusowe i fulwowe",
-     "wariant": null
-    },
-    {
-     "plik": "produkty.html",
-     "strona": "Produkty Carbohort",
-     "id": "jak-dzialaja-wiecej-3",
-     "naglowek": "Lignit to najbardziej dojrzała i stabilna forma materii organicznej",
-     "wariant": null
-    },
-    {
-     "plik": "produkty.html",
-     "strona": "Produkty Carbohort",
-     "id": "jak-dzialaja-wiecej-4",
-     "naglowek": "Trzy frakcje substancji humusowych – trzy różne role",
-     "wariant": null
-    },
-    {
-     "plik": "produkty.html",
-     "strona": "Produkty Carbohort",
-     "id": "jak-dzialaja-wiecej-5",
-     "naglowek": "Postać produktu decyduje o tempie, nie o zadaniu",
-     "wariant": null
     }
    ],
    "wspolny": null,
@@ -5075,13 +4942,6 @@ window.CE_DANE = {
      "plik": "produkty.html",
      "strona": "Produkty Carbohort",
      "id": "gama",
-     "naglowek": "Która rodzina jest dla Ciebie?",
-     "wariant": null
-    },
-    {
-     "plik": "produkty-katalog.html",
-     "strona": "Produkty Carbohort – wersja uproszczona",
-     "id": "gama",
      "naglowek": "Która grupa produktów jest dla Ciebie?",
      "wariant": null
     }
@@ -5101,43 +4961,16 @@ window.CE_DANE = {
    ],
    "kod_zrodlowy": {
     "css": "produkty.css ===== 30 (c5pr-show)",
-    "js": "produkty.js ===== 30; od 10.11.2026 ten sam kod jako moduł ce/CE-39-pokaz-rodzin.js (linkuje go produkty-katalog.html, produkty.html dalej ma własną kopię)"
+    "js": "produkty.js ===== 30; od 10.11.2026 ten sam kod jako moduł ce/CE-39-pokaz-rodzin.js (od 22.11.2026 linkuje go produkty.html – strona wg dokumentu klienta; dawna produkty.html z własną kopią w produkty.js została w archiwum-wersji)"
    }
   },
   {
    "kod": "CE-40",
    "nazwa": "Tabela technikaliów z podświetlaniem kolumn",
    "skrot": "Tabela parametrów w kolumnach z przyklejonym nagłówkiem, przypisem i kartami uwag sterującymi tabelą.",
-   "status": "aktywny",
+   "status": "wycofany",
    "projekt": null,
-   "tagi": {
-    "rodzina": [
-     "dane"
-    ],
-    "media": [
-     "bez-mediow"
-    ],
-    "tekst": [
-     "krotki"
-    ],
-    "ukryte": [
-     "wszystko-widoczne"
-    ],
-    "pozycje": [
-     "5-8"
-    ],
-    "nadaje": [
-     "porownanie-wybor",
-     "liczby-dane"
-    ],
-    "mechanika": [
-     "przewijanie",
-     "klik"
-    ],
-    "zakres": [
-     "uniwersalny"
-    ]
-   },
+   "tagi": {},
    "zrzut": {
     "mini": "ce-indeks/img/m/CE-40.webp",
     "pelny": "ce-indeks/img/p/CE-40.webp",
@@ -5152,15 +4985,7 @@ window.CE_DANE = {
      "zrzut": null
     }
    ],
-   "wystapienia": [
-    {
-     "plik": "produkty.html",
-     "strona": "Produkty Carbohort",
-     "id": "porownanie",
-     "naglowek": "Technikalia czterech rodzin · w suchej masie",
-     "wariant": "w-lightboxie"
-    }
-   ],
+   "wystapienia": [],
    "wspolny": null,
    "baza": {
     "plik": "v7/produkty.html",
@@ -5235,20 +5060,6 @@ window.CE_DANE = {
    ],
    "wystapienia": [
     {
-     "plik": "produkty.html",
-     "strona": "Produkty Carbohort",
-     "id": "co-daja-bloki",
-     "naglowek": "Kwasy humusowe i trwałość w glebie – porównanie materiałów",
-     "wariant": "jeden-pod-drugim"
-    },
-    {
-     "plik": "produkty.html",
-     "strona": "Produkty Carbohort",
-     "id": "dowod-bloki",
-     "naglowek": "Doświadczenie retencyjne – wilgotność po nasyceniu",
-     "wariant": "jeden-pod-drugim"
-    },
-    {
      "plik": "carbomat-mata.html",
      "strona": "CARBOMAT Mata Uprawowa",
      "id": "analiza-kafle",
@@ -5258,8 +5069,8 @@ window.CE_DANE = {
    ],
    "wspolny": null,
    "baza": {
-    "plik": "v7/produkty.html",
-    "kotwica": "dowod-bloki"
+    "plik": "v7/carbomat-mata.html",
+    "kotwica": "analiza-kafle"
    },
    "opis": "Dwa bloki w ramkach: każdy z h3, wizualem (tabela, skala, wykres słupkowy, lista źródeł z kaflami liczb) i przypisem; obok siebie albo jeden pod drugim na całą szerokość.",
    "mechanika": "Jednorazowe wejście (reveal); paski wykresu rosną po wejściu w widok. Moduł 02 (ce/00-base.js).",
@@ -7251,13 +7062,6 @@ window.CE_DANE = {
      "id": "wartosci",
      "naglowek": "Robimy to, żeby z polskiego lignitu powstawała zdrowa gleba i zdrowa żywność",
      "wariant": "zielen"
-    },
-    {
-     "plik": "produkty.html",
-     "strona": "Produkty Carbohort",
-     "id": "wg-potrzeby-cele",
-     "naglowek": "Powiedz, co chcesz zrobić, a dobierzemy produkt.",
-     "wariant": "zielen"
     }
    ],
    "wspolny": null,
@@ -7543,7 +7347,7 @@ window.CE_DANE = {
    },
    "warianty": [],
    "wystapienia": [],
-   "wspolny": "strony ładujące sklep-wspolne.js (8)",
+   "wspolny": "strony ładujące sklep-wspolne.js (7)",
    "baza": {
     "plik": "v7/sklep-wspolne.js",
     "kotwica": "szybki-podglad"
@@ -8644,7 +8448,7 @@ window.CE_DANE = {
     }
    ],
    "wystapienia": [],
-   "wspolny": "każda podstrona (chrome.js)",
+   "wspolny": "strony ładujące chrome.js (48)",
    "baza": {
     "plik": "v7/chrome.js",
     "kotwica": "panel-naglowek"
@@ -8968,7 +8772,7 @@ window.CE_DANE = {
    },
    "warianty": [],
    "wystapienia": [],
-   "wspolny": "każda podstrona (chrome.js)",
+   "wspolny": "strony ładujące chrome.js (48)",
    "baza": {
     "plik": "v7/chrome.js",
     "kotwica": "serwis-promocja"

@@ -1135,10 +1135,10 @@ window.CW_CE = {
       },
       "zrzuty_wariantow": {
         "z-naglowkiem": {
-          "plik": "v7/produkty.html",
-          "kotwica": "jak-dzialaja",
+          "plik": "v7/carbomat.html",
+          "kotwica": "czym-jest",
           "ruch": true,
-          "przewin": "#jak-dzialaja [data-fx-track]",
+          "przewin": "#czym-jest [data-fx-track]",
           "czekaj": 900
         },
         "bez-naglowka": {
@@ -1312,8 +1312,8 @@ window.CW_CE = {
       "opis": "Nagłówek (kicker, H2, lead) przyklejony na czas cyklu; blok wierszy wchodzi w biegu z pierwszym wierszem otwartym i przykleja się dolną krawędzią; wiersz = tytuł | kwadratowa scena z packshotem | nazwa, opis, przycisk.",
       "mechanika": "Dalsze przewijanie otwiera kolejne wiersze (kwadrat rozwija się od dołu, potem wjeżdża packshot), po ostatnim całość odjeżdża; bez ruchu akordeon na klik z pierwszym otwartym; bez JS wszystkie otwarte. Moduł 80.",
       "baza": {
-        "plik": "v7/produkty.html",
-        "kotwica": "co-daja-wiersze"
+        "plik": "v7/carbohumic-doglebowy.html",
+        "kotwica": "czas-prochnicy-kaskada"
       },
       "kod": {
         "css": "ce/CE-15-wiersze-packshot.css – wariant kaskada-z-pinem (od 02.10.2026 moduł wspólny; stan 02.11.2026: wystąpienia na Produktach i CARBOHUMIC doglebowy, na CARBOMAT Mata zastąpiła ją lista CE-30)",
@@ -1329,10 +1329,10 @@ window.CW_CE = {
       },
       "zrzuty_wariantow": {
         "kaskada-z-pinem": {
-          "plik": "v7/produkty.html",
-          "kotwica": "co-daja-wiersze",
+          "plik": "v7/carbohumic-doglebowy.html",
+          "kotwica": "czas-prochnicy-kaskada",
           "ruch": true,
-          "przewin": "#co-daja-wiersze [data-casc-pin]",
+          "przewin": "#czas-prochnicy-kaskada [data-casc-pin]",
           "czekaj": 900
         }
       },
@@ -1812,7 +1812,7 @@ window.CW_CE = {
       "mechanika": "Statyczna; wariant z klikalnymi wierszami otwiera lightbox; wiersze mogą wchodzić z reveal. W panelu pierwsza kolumna przyklejona do lewej w przewijanym kontenerze. W module c5-tbl dwa pokrętła wpisywane w style na korzeniu wystąpienia: --c5-tbl-min (najmniejsza szerokość tabeli w przewijanym kontenerze, domyślnie 640 px) i --c5-tbl-first (stała szerokość przyklejonej pierwszej kolumny poniżej 600 px). W wariantach z-packshotami i z-przyciskami (c5pr-cmp) dwa pokrętła kadru: --c5pr-cmp-pos-1 i --c5pr-cmp-pos-2 (object-position zdjęcia pierwszego i drugiego kadru, domyślnie 50% 50%; okno-lupa bierze tę samą wartość). Od 03.11.2026 (U-14, U-15) we wszystkich wystąpieniach wariantów z kadrem (z-packshotami, z-przyciskami: Produkty i CARBOHUMIC doglebowy #doglebowo-tabela, CARBOMAT HUMIC #sezon-panele) lekki parallax z ce/CE-22-tabela.js ma tylko duże zdjęcie kadru – obraz w oknie-lupie stoi w miejscu (bez skali i przesunięcia; dawny szybszy „drugi plan” lupy z 20.10 wycofany), a wiersze wchodzą po kolei (data-reveal-stagger na tabeli); bez JS, przy ograniczonym ruchu i bez IntersectionObserver wszystko stoi.",
       "baza": {
         "plik": "v7/produkty.html",
-        "kotwica": "doglebowo-tabela"
+        "kotwica": "porownanie-tabela"
       },
       "kod": {
         "css": "per strona: c5-mt-cmp/c5-mt-tbl, c5hu-cmp, c5pr-cmp/c5pr-cert; strony upraw: ce/CE-22-tabela.css (wariant klikalne-wiersze – u-mt, klasa korzenia u-mtce) + panel: ce/CE-22-tabela.css (c5-tbl, c5-tbl--danych, c5-tbl--z-akcja)",
@@ -1891,8 +1891,8 @@ window.CW_CE = {
       "opis": "Pas na szerokość kolumny między kreską górną (i dolną): po lewej tekst (zdanie wytłuszczone + zdanie drugorzędne, opcjonalnie ikona albo h4 w osobnej kolumnie), po prawej jeden lub dwa przyciski.",
       "mechanika": "Statyczne; poniżej 900 px przyciski schodzą pod tekst.",
       "baza": {
-        "plik": "v7/produkty.html",
-        "kotwica": "wg-potrzeby-pas"
+        "plik": "v7/carbomat-humic.html",
+        "kotwica": "ktory-dla-mnie-ostrzezenie"
       },
       "kod": {
         "css": "per strona: c5-cmp2__cta, c5-mt-cross, c5-proofs__cta, c5pr-bar, c5-who__note; wariant ciemny (bez wystąpień): dawniej c5h-cfg w home.css; wariant cichy: sklep.html <style> (c5sk-hurt)",
@@ -2326,8 +2326,8 @@ window.CW_CE = {
       },
       "zrzuty_wariantow": {
         "akordeon-z-odliczaniem": {
-          "plik": "v7/produkty.html",
-          "kotwica": "wg-potrzeby-sciezki",
+          "plik": "v7/carbohumic-doglebowy.html",
+          "kotwica": "z-czym-laczyc-lista",
           "maxh": 1100
         },
         "akordeon-z-kadrem": {
@@ -2815,7 +2815,7 @@ window.CW_CE = {
       },
       "kod": {
         "css": "produkty.css ===== 30 (c5pr-show)",
-        "js": "produkty.js ===== 30; od 10.11.2026 ten sam kod jako moduł ce/CE-39-pokaz-rodzin.js (linkuje go produkty-katalog.html, produkty.html dalej ma własną kopię)"
+        "js": "produkty.js ===== 30; od 10.11.2026 ten sam kod jako moduł ce/CE-39-pokaz-rodzin.js (od 22.11.2026 linkuje go produkty.html – strona wg dokumentu klienta; dawna produkty.html z własną kopią w produkty.js została w archiwum-wersji)"
       },
       "czesci": [
         "tablist",
@@ -2885,7 +2885,8 @@ window.CW_CE = {
       "zrzut": {
         "hash": "porownanie",
         "maxh": 1400
-      }
+      },
+      "status": "wycofany"
     },
     "CE-41": {
       "nazwa": "Bloki wiedzy (para)",
@@ -2924,8 +2925,8 @@ window.CW_CE = {
       "opis": "Dwa bloki w ramkach: każdy z h3, wizualem (tabela, skala, wykres słupkowy, lista źródeł z kaflami liczb) i przypisem; obok siebie albo jeden pod drugim na całą szerokość.",
       "mechanika": "Jednorazowe wejście (reveal); paski wykresu rosną po wejściu w widok. Moduł 02 (ce/00-base.js).",
       "baza": {
-        "plik": "v7/produkty.html",
-        "kotwica": "dowod-bloki"
+        "plik": "v7/carbomat-mata.html",
+        "kotwica": "analiza-kafle"
       },
       "kod": {
         "css": "ce/CE-41-bloki-wiedzy.css (c5pr-two, c5pr-block; wariant zmiany-przed-po: c5pr-zmiany)",

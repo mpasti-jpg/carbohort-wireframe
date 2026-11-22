@@ -3,7 +3,7 @@
 window.CW_STATUS = {
   "meta": {
     "wersja": "0.2.0",
-    "zaktualizowano": "2026-10-05",
+    "zaktualizowano": "2026-11-22",
     "projektAC": 837,
     "bazaAC": "https://pm.bizwebstudio.pl/projects/837/tasks/",
     "live": "https://mpasti-jpg.github.io/carbohort-wireframe/v7/",
@@ -171,7 +171,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31562,
-      "data": "10.11"
+      "data": "22.11"
     },
     "produkty.html": {
       "sekcja": "2. Produkty Carbohort",
@@ -185,11 +185,11 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31789,
-      "data": "11.10"
+      "data": "22.11"
     },
     "produkty-katalog.html": {
       "sekcja": "2. Produkty Carbohort",
-      "nazwa": "Produkty Carbohort – wersja uproszczona",
+      "nazwa": "Produkty Carbohort – przekierowanie na produkty.html",
       "stan": {
         "makieta": null,
         "tresc": null,
@@ -200,7 +200,7 @@ window.CW_STATUS = {
       },
       "ac": 31789,
       "wTabeli": false,
-      "data": "10.11"
+      "data": "22.11"
     },
     "carbomat.html": {
       "sekcja": "2. Produkty Carbohort",
@@ -214,7 +214,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31223,
-      "data": "26.10"
+      "data": "22.11"
     },
     "carbomat-mata.html": {
       "sekcja": "2. Produkty Carbohort",
@@ -228,7 +228,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31563,
-      "data": "26.10"
+      "data": "10.11"
     },
     "carbohumic-doglebowy.html": {
       "sekcja": "2. Produkty Carbohort",
@@ -242,7 +242,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31564,
-      "data": "26.10"
+      "data": "07.11"
     },
     "carbohumic-dolistny.html": {
       "sekcja": "2. Produkty Carbohort",
@@ -256,7 +256,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31564,
-      "data": "26.10"
+      "data": "07.11"
     },
     "carbomat-humic.html": {
       "sekcja": "2. Produkty Carbohort",
@@ -270,7 +270,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31565,
-      "data": "16.10"
+      "data": "07.11"
     },
     "kukurydza.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -284,7 +284,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31566,
-      "data": "07.11"
+      "data": "22.11"
     },
     "ziemniak.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -298,7 +298,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31567,
-      "data": "16.10"
+      "data": "06.11"
     },
     "borowka.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -312,7 +312,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31568,
-      "data": "15.10"
+      "data": "22.11"
     },
     "sadownicze.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -327,7 +327,7 @@ window.CW_STATUS = {
       },
       "ac": null,
       "wTabeli": false,
-      "data": "25.07"
+      "data": "07.11"
     },
     "jagodowe.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -342,7 +342,7 @@ window.CW_STATUS = {
       },
       "ac": null,
       "wTabeli": false,
-      "data": "07.09"
+      "data": "07.11"
     },
     "warzywnicze.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -357,7 +357,7 @@ window.CW_STATUS = {
       },
       "ac": null,
       "wTabeli": false,
-      "data": "25.07"
+      "data": "07.11"
     },
     "zboza.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -372,7 +372,7 @@ window.CW_STATUS = {
       },
       "ac": null,
       "wTabeli": false,
-      "data": "07.09"
+      "data": "07.11"
     },
     "szkolki.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -387,7 +387,7 @@ window.CW_STATUS = {
       },
       "ac": null,
       "wTabeli": false,
-      "data": "25.07"
+      "data": "07.11"
     },
     "trawnik.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -402,7 +402,7 @@ window.CW_STATUS = {
       },
       "ac": null,
       "wTabeli": false,
-      "data": "25.07"
+      "data": "07.11"
     },
     "ogrod.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -417,7 +417,7 @@ window.CW_STATUS = {
       },
       "ac": null,
       "wTabeli": false,
-      "data": "25.07"
+      "data": "07.11"
     },
     "krzewy.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -432,7 +432,7 @@ window.CW_STATUS = {
       },
       "ac": null,
       "wTabeli": false,
-      "data": "25.07"
+      "data": "07.11"
     },
     "zielen.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -447,7 +447,7 @@ window.CW_STATUS = {
       },
       "ac": null,
       "wTabeli": false,
-      "data": "25.07"
+      "data": "07.11"
     },
     "prochnica-plus.html": {
       "sekcja": "4. Programy i badania",
@@ -461,7 +461,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31569,
-      "data": "15.10"
+      "data": "08.11"
     },
     "centrum-wiedzy.html": {
       "sekcja": "5. Centrum wiedzy",
@@ -475,7 +475,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": null,
-      "data": "15.09"
+      "data": "12.11"
     },
     "centrum-wiedzy-kategoria.html": {
       "sekcja": "5. Centrum wiedzy",
@@ -489,7 +489,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": null,
-      "data": "15.09"
+      "data": "12.11"
     },
     "artykul.html": {
       "sekcja": "5. Centrum wiedzy",
@@ -503,7 +503,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": null,
-      "data": "15.09"
+      "data": "12.11"
     },
     "o-firmie.html": {
       "sekcja": "6. O nas",
@@ -517,7 +517,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31863,
-      "data": "26.10"
+      "data": "08.11"
     },
     "kontakt.html": {
       "sekcja": "7. Kontakt",
@@ -531,7 +531,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31570,
-      "data": "26.10"
+      "data": "07.11"
     },
     "konfigurator.html": {
       "sekcja": "8. Konfigurator",
@@ -545,7 +545,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 30721,
-      "data": "15.10"
+      "data": "07.11"
     },
     "sklep.html": {
       "sekcja": "9. Sklep",
@@ -559,7 +559,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31864,
-      "data": "07.11"
+      "data": "22.11"
     },
     "pdp.html": {
       "sekcja": "9. Sklep",
@@ -573,7 +573,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31512,
-      "data": "07.11"
+      "data": "12.11"
     },
     "pdp-kwasny.html": {
       "sekcja": "9. Sklep",
@@ -587,7 +587,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31865,
-      "data": "07.11"
+      "data": "12.11"
     },
     "koszyk.html": {
       "sekcja": "9. Sklep",
@@ -601,7 +601,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": null,
-      "data": "28.09"
+      "data": "06.11"
     },
     "checkout.html": {
       "sekcja": "9. Sklep",
@@ -615,7 +615,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": null,
-      "data": "25.07"
+      "data": "07.11"
     },
     "potwierdzenie.html": {
       "sekcja": "9. Sklep",
@@ -629,7 +629,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": null,
-      "data": "25.07"
+      "data": "07.11"
     },
     "logowanie.html": {
       "sekcja": "10. Platforma B2B",
@@ -643,7 +643,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": null,
-      "data": "04.10"
+      "data": "07.11"
     },
     "rejestracja.html": {
       "sekcja": "10. Platforma B2B",
@@ -657,7 +657,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": null,
-      "data": "04.10"
+      "data": "05.10"
     },
     "platforma-b2b.html": {
       "sekcja": "10. Platforma B2B",
@@ -671,7 +671,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31514,
-      "data": "04.10"
+      "data": "18.10"
     },
     "b2b-zamow.html": {
       "sekcja": "10. Platforma B2B",
@@ -685,7 +685,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": null,
-      "data": "04.10"
+      "data": "18.10"
     },
     "b2b-dostawa.html": {
       "sekcja": "10. Platforma B2B",
@@ -699,7 +699,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": null,
-      "data": "04.10"
+      "data": "05.10"
     },
     "potwierdzenie-b2b.html": {
       "sekcja": "10. Platforma B2B",
@@ -713,7 +713,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": null,
-      "data": "04.10"
+      "data": "18.10"
     },
     "b2b-zamowienia.html": {
       "sekcja": "10. Platforma B2B",
@@ -741,7 +741,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": null,
-      "data": "04.10"
+      "data": "18.10"
     },
     "b2b-oferta.html": {
       "sekcja": "10. Platforma B2B",
@@ -755,7 +755,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": null,
-      "data": "04.10"
+      "data": "18.10"
     },
     "b2b-dokumenty.html": {
       "sekcja": "10. Platforma B2B",
@@ -783,7 +783,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": null,
-      "data": "04.10"
+      "data": "05.10"
     },
     "admin.html": {
       "sekcja": "10. Platforma B2B",
@@ -811,7 +811,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": null,
-      "data": "04.10"
+      "data": "18.10"
     },
     "handlowiec-klient.html": {
       "sekcja": "10. Platforma B2B",
@@ -825,7 +825,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": null,
-      "data": "04.10"
+      "data": "18.10"
     },
     "handlowiec-uzgodnienie.html": {
       "sekcja": "10. Platforma B2B",
@@ -839,7 +839,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": null,
-      "data": "04.10"
+      "data": "18.10"
     },
     "zalecenia.html": {
       "sekcja": "Poza tabelą",
@@ -853,7 +853,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": null,
-      "data": "25.07",
+      "data": "07.11",
       "wTabeli": false
     }
   }
