@@ -33,9 +33,17 @@
      until the split fills it; a change of the number of treatments flies the
      parts between the bar of the first treatment (`data-zab-src="key"`) and
      the bars of their phases.
-   - Controls inside the cells (`[data-we-ctl]`: the number of treatments under
-     the bar, the row „Wyłącz wybrane fazy z obliczeń” – CE-47 `etapy`,
-     07.11.2026) take their own clicks; the column does not open then.
+   - The way of application of a product (22.11.2026, client comment of
+     10.11): its bars carry `data-spos-prod="key"` and `data-spos="pas strip"`
+     (the ways that put the treatment into that phase). The calculator
+     (CE-47 `etapy`, switch `[data-spos-switch]` under the bar, variant
+     `.c5-we__zabw--sposob` of the number-of-treatments control) fires
+     `c5:sposob` (group, prod, s); a bar of another way is `is-unused` (shows
+     nothing) and a change flies the bar to the phase of the new way.
+   - Controls inside the cells (`[data-we-ctl]`: the number of treatments or
+     the way of application under the bar, the row „Wyłącz wybrane fazy
+     z obliczeń” – CE-47 `etapy`, 07.11.2026) take their own clicks; the
+     column does not open then.
    Without JS the switches stay hidden and all bars and cards stand. ======== */
 (function () {
   "use strict";
@@ -98,7 +106,7 @@
       bars.forEach(function (b) {
         var off = !inPk(b, pk);
         b.classList.toggle("is-off", off);
-        if (off || (root.classList.contains("c5-we--razem") && b.classList.contains("is-opt"))) b.setAttribute("aria-hidden", "true"); else b.removeAttribute("aria-hidden");
+        if (off || b.classList.contains("is-unused") || (root.classList.contains("c5-we--razem") && b.classList.contains("is-opt"))) b.setAttribute("aria-hidden", "true"); else b.removeAttribute("aria-hidden");
       });
       if (!silent) announce(group, pk, root);
     }
@@ -131,6 +139,47 @@
       var now = parts.filter(function (b) { return !b.classList.contains("is-opt"); });
       fly(src, now.filter(function (b) { return was.indexOf(b) < 0; }), was.filter(function (b) { return now.indexOf(b) < 0; }));
     });
+    /* the way of application chosen under the bar (22.11.2026): only the bars
+       of that way stand; a change of phase flies the bar there */
+    var sposOf = {};
+    doc.addEventListener("c5:sposob", function (e) {
+      var d = e.detail || {};
+      if (d.group !== group || !d.prod) return;
+      var list = slice(root.querySelectorAll('.c5-we__bar[data-spos-prod="' + d.prod + '"]'));
+      var was = list.filter(function (b) { return !b.classList.contains("is-unused"); })[0];
+      list.forEach(function (b) {
+        var on = (" " + (b.getAttribute("data-spos") || "") + " ").indexOf(" " + d.s + " ") >= 0;
+        b.classList.toggle("is-unused", !on);
+        if (!on || b.classList.contains("is-off")) b.setAttribute("aria-hidden", "true"); else b.removeAttribute("aria-hidden");
+      });
+      var prev = sposOf[d.prod];
+      sposOf[d.prod] = d.s;
+      var now = list.filter(function (b) { return !b.classList.contains("is-unused"); })[0];
+      if (razem && prev !== undefined && was && now && was !== now) move(was, now);
+    });
+    function move(from, to) {
+      if (!scroller || !to.animate || to.classList.contains("is-off")) return;
+      if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      var base = scroller.getBoundingClientRect();
+      function box(el) {
+        var r = el.getBoundingClientRect();
+        return { left: r.left - base.left + scroller.scrollLeft + "px", top: r.top - base.top + scroller.scrollTop + "px", width: r.width + "px", height: r.height + "px" };
+      }
+      /* the old bar is hidden already: measure it for a moment */
+      from.classList.remove("is-unused");
+      var A = box(from);
+      from.classList.add("is-unused");
+      var B = box(to), g = doc.createElement("span");
+      g.className = "c5-we__ghost";
+      g.setAttribute("aria-hidden", "true");
+      for (var k in A) g.style[k] = A[k];
+      scroller.appendChild(g);
+      to.classList.add("is-landing");
+      var a = g.animate([A, { left: B.left, top: parseFloat(B.top) - 12 + "px", width: B.width, height: B.height, offset: 0.45 }, B],
+        { duration: 620, easing: "cubic-bezier(.3,.7,.2,1)", fill: "forwards" });
+      a.onfinish = a.oncancel = function () { to.classList.remove("is-landing"); g.remove(); };
+    }
+
     /* U-75 (08.11.2026): a bigger number of treatments tears pieces off the right
        of the bar of the first treatment and flies them to the phases of the new
        parts, the bar regrowing behind them; a smaller one flies the parts back

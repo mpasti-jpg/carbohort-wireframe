@@ -113,17 +113,20 @@ html:not(.cx-js) .c5-fa__panel{height:auto;opacity:1;}
 .c5-fa__body .c5-src{margin:var(--w-space-6) 0 0;font-size:var(--w-font-sm-size);
   line-height:1.45;color:var(--w-text-secondary);}
 .c5-fa__body .c5-src + .c5-src{margin-top:var(--w-space-2);}
-/* the button closes the column and takes all of it (frame: 606 px at 1440) */
+/* the button takes the whole column (frame: 606 px at 1440); since 22.11.2026
+   (U-113) it stands above the „Ważne” note, no longer at the end of the column */
 .c5-fa__go{width:100%;margin-top:var(--w-space-10);}
-/* From 900 px the button always stands in the bottom zone of the panel, next to
-   the photo (frame: photo 20 px, button 52 px above the panel edge) – also in a
-   phase with no products and no note, where the photo is taller than the text:
+/* From 900 px the last element of the column always stands in the bottom zone
+   of the panel, next to the photo (frame: photo 20 px, last element 52 px above
+   the panel edge) – also in a phase where the photo is taller than the text:
    the column stretches to the row, the 40 px minimum moves onto the element
-   above the button and the button takes the slack. */
+   above the last one and the last one takes the slack. */
 @media (min-width:900px){
   .c5-fa__body{align-self:stretch;}
   .c5-fa__body > :nth-last-child(2){margin-bottom:var(--w-space-10);}
-  .c5-fa__go{margin-top:auto;}
+  /* scoped to the section, so a page rule giving notes or cards a fixed top
+     margin (borowka.css) does not cancel the slack */
+  .c5-fa .c5-fa__body > :last-child{margin-top:auto;}
 }
 
 /* --- product boxes (local copy of EL-33) ---------------------------------- */

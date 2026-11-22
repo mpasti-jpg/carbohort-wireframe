@@ -157,7 +157,8 @@
   .c5-we--razem .c5-we__prog > .c5-we__legend{grid-row:4;}
   .c5-we--razem .c5-we__prog > .c5-we__calc{grid-row:5;}
 }
-.c5-we__val{display:block;font-size:12.5px;line-height:1.2;font-weight:var(--ch-font-weight-medium);white-space:nowrap;}
+/* 22.11.2026: CE-47 binds a number and its unit with no-break spaces, so a long value (3 000 l/ha · 30 000 l) wraps only at „·” */
+.c5-we__val{display:block;font-size:12.5px;line-height:1.2;font-weight:var(--ch-font-weight-medium);white-space:normal;text-wrap:balance;}
 .c5-we__val:empty{display:none;}
 .c5-we__bar.is-excl{opacity:.35;}
 /* a phase left out of the price in the calculator: its whole column slightly darker (07.11.2026) */
@@ -226,6 +227,22 @@
 .c5-we__zab--dots button:hover::before{transform:scale(1.35);}
 .c5-we__zab--dots button[aria-checked="true"]::before,.c5-we__zab--dots button:has(~ button[aria-checked="true"])::before{background:var(--ch-color-green-500);}
 .c5-we__zab--dots button:focus-visible{outline:2px solid var(--w-focus-ring);outline-offset:-1px;border-radius:4px;}
+/* the way of application under a bar (22.11.2026, client comment of 10.11):
+   the same place and type as „Wybierz liczbę zabiegów” – the label, then one
+   line per way with the same 6 px dot (green = chosen); the default way says
+   „domyślnie”. A bar of a way not chosen shows nothing (`is-unused`; without
+   JS every bar stands). */
+.cx-js .c5-we__bar.is-unused{opacity:0;visibility:hidden;transition:none;}
+.c5-we__zabw--sposob{display:flex;flex-direction:column;align-items:center;gap:0;margin-top:8px;font-size:11.5px;line-height:16px;}
+.c5-we__spos{display:inline-flex;flex-direction:column;align-items:flex-start;margin-top:2px;}
+.c5-we__spos button{position:relative;min-height:24px;padding:2px 0 2px 14px;border:0;background:none;font:inherit;font-size:11.5px;line-height:16px;text-align:left;color:var(--ch-text-secondary);cursor:pointer;}
+.c5-we__spos button::before{content:"";position:absolute;top:50%;left:2px;width:6px;height:6px;margin-top:-3px;border-radius:50%;
+  background:color-mix(in srgb,var(--ch-text-primary) 20%,transparent);transition:background var(--w-duration-base) var(--w-ease),transform var(--w-duration-base) var(--w-ease);}
+.c5-we__spos button:hover::before{transform:scale(1.35);}
+.c5-we__spos button[aria-checked="true"]{color:var(--ch-text-primary);}
+.c5-we__spos button[aria-checked="true"]::before{background:var(--ch-color-green-500);}
+.c5-we__spos button:focus-visible{outline:2px solid var(--w-focus-ring);outline-offset:0;border-radius:4px;}
+.c5-we__def{color:var(--ch-text-secondary);}
 /* the last, thin row: the phases switched off and on (U-47) */
 .c5-we__t tbody .c5-we__xrow th,.c5-we__t tbody .c5-we__xrow td{padding-block:10px;}
 .c5-we__xl{padding-right:var(--ch-space-4)!important;text-align:left;font-size:13px;line-height:18px;font-weight:var(--ch-font-weight-regular);color:var(--ch-text-secondary);}
@@ -347,6 +364,6 @@
   .c5-pkbar{padding:4px;}
 }
 @media (prefers-reduced-motion: reduce){
-  .c5-we__bar,.c5-we__bar.is-off,.c5-we__t td[data-c],.c5-pkbar__tab,.c5-we__zab button,.c5-we__xbtn,.c5-we__colc,
+  .c5-we__bar,.c5-we__bar.is-off,.c5-we__t td[data-c],.c5-pkbar__tab,.c5-we__zab button,.c5-we__spos button::before,.c5-we__xbtn,.c5-we__colc,
   .c5-we--razem .c5-we__ch,.c5-we--razem .c5-we__t .c5-we__cost,.c5-we--razem .c5-we__t .c5-we__cc,.c5-we--razem .c5-we__ch > *,.c5-we--razem .c5-we__cost > *,.c5-we--razem .c5-we__sum{transition:none!important;}
 }

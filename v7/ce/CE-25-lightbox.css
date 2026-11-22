@@ -212,6 +212,8 @@ html.cx-js .u-lightbox--waski .u-lightbox__panel{max-width:760px;}
 .u-pcard--foto{grid-template-columns:96px minmax(0,1fr);align-items:start;gap:var(--ch-space-5);padding:var(--ch-space-4);
   border:1px solid var(--ch-border-subtle);border-radius:var(--ch-radius-lg);background:var(--ch-surface-raised);}
 .u-pcard--foto[hidden]{display:none;}
+/* a whole block of a phase can belong to one package (`data-pk` on the chunk, 22.11.2026) */
+.u-chunk[hidden]{display:none;}
 .u-pcard--foto + .u-pcard--foto{margin-top:var(--ch-space-3);}
 .u-pcard__pack{display:block;width:96px;height:96px;padding:8px;box-sizing:border-box;border-radius:var(--ch-radius-md);background:var(--ch-surface-warm);}
 .u-pcard__pack img{display:block;width:100%;height:100%;object-fit:contain;}
@@ -230,6 +232,12 @@ html.cx-js .u-lightbox--waski .u-lightbox__panel{max-width:760px;}
   .u-pcard--alt{grid-template-columns:96px minmax(0,1fr) minmax(0,1fr);}
   .u-pcard__when{grid-column:auto;padding:0 0 0 var(--ch-space-5);border-top:0;border-left:1px solid var(--ch-border-subtle);}
 }
+/* a partner product as a supplementary treatment of a phase (U-39, 22.11.2026):
+   outside the package and its price – a warm-strong ground like the partner
+   row of CE-100 and a small label „produkt partnerski” over the name */
+.u-pcard--partner{background:var(--ch-surface-warm-strong);}
+.u-pcard--partner .u-pcard__pack{background:var(--ch-surface-raised);}
+.u-pcard__tag{font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-secondary);}
 .u-pcard--foto .u-defs{gap:var(--ch-space-3);}
 .u-pcard--foto .u-more{align-self:flex-start;margin-top:var(--ch-space-1);}
 /* „Oblicz koszt stosowania” at the very end of the content of every page (no fixed pager bar – Mateusz, 03.11.2026) */

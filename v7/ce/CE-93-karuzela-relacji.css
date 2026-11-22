@@ -57,7 +57,18 @@
    over the text. Smaller type than in the carousel (title-s, caption date,
    a lower chip), because the card lives inside another CE.
 
-   Knobs (custom properties on .c5-relc):
+    Variant `warianty` (22.11.2026, Borówka, comment U-111 – client: „podpis
+   wariantu ze zdjęciem, potem wyjaśnienia i dawka […] karuzela”; class
+   c5-relc--warianty on the root, data-relc as in the base – the script drives
+   the arrows the same way): cards of options instead of films – the frame
+   without the play sign, no link; the body takes a chip (any short fact),
+   the title, an explanation p.c5-relc__txt and, at the bottom of the card,
+   p.c5-relc__dose (span.c5-relc__dosel label + b value). The heading row
+   holds a smaller heading (EL-10, c5-h3) and no kicker, so the arrows stand
+   on its line without the negative margin. The text starts at the top of
+   the card (it is longer than a film title).
+
+  Knobs (custom properties on .c5-relc):
      --c5-relc-cols     cards per view from 900 px (2 by default)
      --c5-relc-gap      gap between the cards
      --c5-relc-peek     how much of the row is left for the next card below
@@ -196,4 +207,27 @@
   .c5-relc--pojedyncza .c5-relc__card{flex-direction:row;align-items:center;gap:var(--ch-space-4);}
   .c5-relc--pojedyncza .c5-relc__ph{flex:0 0 min(40%, var(--c5-relc-one-ph));width:auto;aspect-ratio:16/10;}
   .c5-relc--pojedyncza .c5-relc__body{flex:1 1 0;justify-content:center;padding:0;}
+}
+
+/* ===== wariant: warianty ===== (c5-relc--warianty on the root, 22.11.2026, U-111)
+   Cards of options (substrate variants on Borówka): a photo, a chip, the title,
+   an explanation and the dose at the bottom. No play sign in the markup, no
+   link. Two classes in every selector, so the rules win over the base card. */
+.c5-relc--warianty{--c5-relc-mt:var(--ch-space-6);}
+.c5-relc--warianty .c5-relc__head > .c5-h3{margin:0;}
+.c5-relc--warianty .c5-relc__nav{margin-top:0;}
+.c5-relc--warianty .c5-relc__body{justify-content:flex-start;gap:var(--ch-space-3);}
+.c5-relc--warianty .c5-relc__kicker{padding:6px 8px;}
+.c5-relc--warianty .c5-relc__title{font-size:var(--ch-type-title-s-size);line-height:var(--ch-type-title-s-lh);letter-spacing:var(--ch-type-title-s-ls);}
+.c5-relc--warianty .c5-relc__txt{margin:0;font-size:var(--ch-type-small-size);line-height:var(--ch-type-small-lh);color:var(--ch-text-secondary);}
+.c5-relc--warianty .c5-relc__dose{display:flex;flex-direction:column;gap:2px;align-self:stretch;margin:auto 0 0;
+  padding-top:var(--ch-space-3);border-top:1px solid var(--ch-border-subtle);}
+.c5-relc--warianty .c5-relc__dosel{font-size:var(--ch-type-overline-size);line-height:var(--ch-type-overline-lh);
+  letter-spacing:var(--ch-type-overline-ls);text-transform:uppercase;color:var(--ch-text-secondary);}
+.c5-relc--warianty .c5-relc__dose b{font-size:var(--ch-type-body-size);line-height:var(--ch-type-body-lh);
+  font-weight:var(--ch-font-weight-medium);color:var(--ch-text-primary);}
+@media (min-width:900px){
+  /* the frame keeps its 250 : 180 at the top of the card, the text column runs as long as it needs */
+  .c5-relc--warianty .c5-relc__ph{align-self:flex-start;}
+  .c5-relc--warianty .c5-relc__body{justify-content:flex-start;}
 }

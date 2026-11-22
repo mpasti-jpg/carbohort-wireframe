@@ -245,12 +245,18 @@
    `.u-pk--etapy[data-pk-calc]` has no ruler (U-30): the native range
    ([data-calc-range], uprawa.js) writes the area into [data-calc-in]; this
    part only listens to that field.
-   ONE dose per season for every product, the same in every package (U-38):
+   A dose per season for every product (U-38); since 22.11.2026 it may
+   depend on the package and, for one product, on the way of application
+   (client comment of 10.11.2026 and the decision of Mateusz, 22.11.2026 –
+   it replaces the rule of 07.11 „the same dose in every package”):
    - the list „Produkty na sezon” – one row `.u-pkc__prod` per product:
      data-prod (key in the product JSON of `script[data-pkc-products]`: id,
      name, img, url and packs with their volume `l` and gross price, the
      format of sklep-wspolne.js), data-dose (dose per hectare and season),
-     data-unit, data-pk (packages of the product) and a checkbox
+     optional data-doses – JSON with the season dose per package
+     ({"std":0.6,"kompl":1.2}) or per way of application and package
+     ({"pas":{"min":150,…},"strip":{…},"cal":{…}}); without it data-dose
+     counts as before; data-unit, data-pk (packages of the product) and a checkbox
      [data-pkc-pick] (ticked = counted; unticked = `is-skip`, greyed and left
      out; a product of another package is `is-out`, without a checkbox and
      without a price). The price is counted per product: the amount for the
@@ -266,6 +272,16 @@
      aria-checked="true" (the default variant, „Domyślnie…”). Every change
      fires `c5:zabiegi` (group, prod, n) on document – the chart CE-100 draws
      the terms of the parts with it.
+   - the way of application (22.11.2026): a radio group
+     [data-spos-switch][data-spos-prod="key"] under the bar of the chart
+     (buttons [data-spos-set="pas|strip|cal"], the default one marked
+     aria-checked="true") picks the key of data-doses and the bars of that
+     product with `data-spos="pas strip"` that count; every change fires
+     `c5:sposob` (group, prod, s) – CE-100 moves the bar with it.
+   - the dose of ONE treatment = the season dose ÷ the treatments of the
+     product that stand in the chosen package, split and way of application
+     (bars or tiles with their own data-pk, data-zab, data-spos); a product
+     with no such treatment divides by the chosen number of treatments.
    - treatments ("slots"): the tiles `.u-pkc__tile` of the phase columns
      `.u-pkc__col[data-c]` – or, in a box with `data-pkc-bars` (one section
      for the chart and the calculator, 07.11.2026), the bars
@@ -317,6 +333,7 @@
     return p.join(",");
   }
   function zl(a) { return group3(String(Math.round(a))) + " zł"; }
+  function nb(t) { return String(t).replace(/ /g, "\u00a0"); }
   function net(gross, product, pack) {
     if (shop && shop.vatSplit) return shop.vatSplit(gross, shop.rateOf ? shop.rateOf(product, pack) : undefined).net;
     return gross / 1.08;
@@ -406,18 +423,40 @@
        without the chart counts from the start. */
     var calcOn = !chart;
     if (!field) return;
-    var pk = null, plan = [], zab = {}, rowOf = {}, excl = {};
+    var pk = null, plan = [], zab = {}, spos = {}, rowOf = {}, excl = {}, doses = {};
 
     /* the treatments: tiles of the phase columns, or the bars of the chart */
     var slots = tiles.map(function (t) {
       var col = t.closest(".u-pkc__col");
-      return { el: t, kind: "tile", prod: t.getAttribute("data-prod"), c: col ? col.getAttribute("data-c") : "", zab: t.getAttribute("data-zab") };
+      return { el: t, kind: "tile", prod: t.getAttribute("data-prod"), c: col ? col.getAttribute("data-c") : "", zab: t.getAttribute("data-zab"), pk: null, spos: t.getAttribute("data-spos") };
     });
     if (chart) slice(chart.querySelectorAll(".c5-we__bar[data-pkc-prod]")).forEach(function (b) {
       var td = b.closest("td");
-      slots.push({ el: b, kind: "bar", prod: b.getAttribute("data-pkc-prod"), c: td ? td.getAttribute("data-c") : "", zab: b.getAttribute("data-zab") });
+      slots.push({ el: b, kind: "bar", prod: b.getAttribute("data-pkc-prod"), c: td ? td.getAttribute("data-c") : "", zab: b.getAttribute("data-zab"), pk: b.getAttribute("data-pk"), spos: b.getAttribute("data-spos") });
     });
-    function inSplit(s, n) { return !s.zab || inList(s.zab, n); }
+    function inSplit(s, n) {
+      return (!s.zab || inList(s.zab, n)) && (!s.pk || inList(s.pk, pk)) && (!s.spos || !spos[s.prod] || inList(s.spos, spos[s.prod]));
+    }
+    /* the season dose of a product: data-doses (per package, or per way of
+       application and package – 22.11.2026), else data-dose */
+    function seasonDose(r, key) {
+      if (!r) return NaN;
+      if (!(key in doses)) {
+        try { doses[key] = r.hasAttribute("data-doses") ? JSON.parse(r.getAttribute("data-doses")) : null; } catch (e) { doses[key] = null; }
+      }
+      var d = doses[key];
+      if (d && typeof d === "object") {
+        var ways = Object.keys(d).filter(function (k) { return d[k] && typeof d[k] === "object"; });
+        if (ways.length) d = d[spos[key] && d[spos[key]] ? spos[key] : ways[0]];
+        if (typeof d[pk] === "number") return d[pk];
+      }
+      return parseFloat(r.getAttribute("data-dose"));
+    }
+    /* how many treatments the season dose of a product is split into */
+    function parts(key) {
+      var n = zab[key] || 1, k = slots.filter(function (s) { return s.prod === key && inSplit(s, n); }).length;
+      return k || n;
+    }
 
     function area() {
       var v = parseFloat(String(field.value || "").replace(",", "."));
@@ -432,7 +471,7 @@
       /* the season: one price per product, from its treatments in the phases that stay */
       rows.forEach(function (r) {
         var key = r.getAttribute("data-prod"), prod = products[key], n = zab[key] || 1;
-        var dose = parseFloat(r.getAttribute("data-dose")), unit = r.getAttribute("data-unit") || "l";
+        var dose = seasonDose(r, key), unit = r.getAttribute("data-unit") || "l";
         var qty = r.querySelector("[data-pkc-qty]"), packsEl = r.querySelector("[data-pkc-packs]"), price = r.querySelector("[data-pkc-price]");
         var pick = r.querySelector("[data-pkc-pick]"), out = r.classList.contains("is-out");
         var mine = slots.filter(function (s) { return s.prod === key && inSplit(s, n); });
@@ -462,8 +501,8 @@
       });
       /* the schedule: the dose of one treatment in the phases of the split */
       slots.forEach(function (s) {
-        var r = rowOf[s.prod], n = zab[s.prod] || 1, on = inSplit(s, n);
-        var dose = r ? parseFloat(r.getAttribute("data-dose")) / n : NaN, unit = r ? r.getAttribute("data-unit") || "l" : "l";
+        var r = rowOf[s.prod], on = inSplit(s, zab[s.prod] || 1), n = parts(s.prod);
+        var dose = r ? seasonDose(r, s.prod) / n : NaN, unit = r ? r.getAttribute("data-unit") || "l" : "l";
         var amount = ha && isFinite(dose) ? (n > 1 ? num1(dose * ha) : num(dose * ha)) + " " + unit : "–";
         s.el.classList.toggle("is-excl", !!excl[s.c]);
         if (s.kind === "tile") {
@@ -476,7 +515,8 @@
           s.el.classList.toggle("is-skip", !s.el.classList.contains("is-out") && !!r && r.classList.contains("is-skip"));
         } else {
           var val = s.el.querySelector(".c5-we__val");
-          if (val) val.textContent = on && isFinite(dose) ? num(dose) + " " + unit + "/ha" + (calcOn ? " · " + amount : "") : "";
+          /* a long value wraps only at „·” (22.11.2026: 3 000 l/ha · 30 000 l) */
+          if (val) val.textContent = on && isFinite(dose) ? nb(num(dose) + " " + unit + "/ha") + (calcOn ? " · " + nb(amount) : "") : "";
           s.el.classList.toggle("is-skip", !!r && r.classList.contains("is-skip"));
         }
       });
@@ -546,6 +586,21 @@
       }
       radios(zopts, function (o) { setZab(o, false); });
       setZab(zopts.filter(function (o) { return o.getAttribute("aria-checked") === "true"; })[0] || zopts[0], true);
+    });
+
+    /* the way of application of one product (22.11.2026): a switch under its
+       bar on the chart ([data-spos-switch][data-spos-prod]) */
+    all("[data-spos-switch][data-spos-prod]").forEach(function (ssw) {
+      var key = ssw.getAttribute("data-spos-prod"), sopts = slice(ssw.querySelectorAll("[data-spos-set]"));
+      if (!key || !sopts.length) return;
+      function setSpos(o, silent) {
+        mark(sopts, o);
+        spos[key] = o.getAttribute("data-spos-set");
+        doc.dispatchEvent(new CustomEvent("c5:sposob", { detail: { group: group, prod: key, s: spos[key], from: box } }));
+        if (!silent) { clear(); run(); }
+      }
+      radios(sopts, function (o) { setSpos(o, false); });
+      setSpos(sopts.filter(function (o) { return o.getAttribute("aria-checked") === "true"; })[0] || sopts[0], true);
     });
 
     /* phases left out of the price (toggle buttons) */

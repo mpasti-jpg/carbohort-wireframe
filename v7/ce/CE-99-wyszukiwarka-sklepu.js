@@ -703,12 +703,22 @@
       return lw.some(function (x) { return x.indexOf(s) === 0; });
     });
   }
+  /* 22.11.2026: a filter group or option hidden in the column (hidden on
+     .c5sk-facet or .c5sk-opt) is not offered in the panel – it still works
+     from the dictionary, the address and the chips. */
+  function hiddenInColumn(k, v) {
+    var box = doc.querySelector('[data-facet="' + k + '"][value="' + v + '"]');
+    if (!box) return false;
+    var opt = box.closest(".c5sk-opt"), grp = box.closest(".c5sk-facet");
+    return !!((opt && opt.hidden) || (grp && grp.hidden));
+  }
   function categories(p) {
     var out = [], seen = {};
     function push(c) {
       var id = c.shelf ? "shelf:" + c.shelf : c.k + ":" + c.v;
       if (seen[id]) return;
       seen[id] = 1;
+      if (!c.shelf && hiddenInColumn(c.k, c.v)) return;
       if (!c.shelf && ((p.not || {})[c.k] || []).indexOf(c.v) !== -1) return;
       if (c.shelf ? L.shelf() === c.shelf : L.active(c.k, c.v)) return;
       c.n = c.shelf ? L.countShelf(c.shelf) : L.countAdding(c.k, c.v);

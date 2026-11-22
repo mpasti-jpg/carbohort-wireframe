@@ -16,11 +16,8 @@
 }
 
 /* ===== 30 · Gama – CE-39 family show (ce/CE-39-pokaz-rodzin.css) =====
-   Page exception: under each panel six fields of the former comparison table instead of the
-   module's four – one row of six on a wide window (like one row of the client's table),
-   3 × 2 between 1024 and 1279 px; below 1024 px the module's own 2 / 1 columns. */
-@media (min-width:1024px){ .c5pk-gama .c5pr-specs{grid-template-columns:repeat(3,minmax(0,1fr));} }
-@media (min-width:1280px){ .c5pk-gama .c5pr-specs{grid-template-columns:repeat(6,minmax(0,1fr));gap:var(--ch-space-8) var(--ch-space-6);} }
+   Since 22.11.2026 (U-109) the panels carry the module's own four fields again, so the
+   module's grid applies (4 / 2 / 1 columns); the six-field exception of 10.11 is gone. */
 /* Mateusz 10.11 (comment on the artefact): the packshots stand a little lower in the panel. From
    1120 px the module centres the shot in the band between the tab rail and the group name; here it
    moves down by a share of the panel height, the same for all five groups. */
@@ -39,3 +36,35 @@
 
 /* ===== 50 · Grupy produktów (#grupy) – the rows come from ce/CE-36-wiersz-zdjecie-opis.css
    (variant katalog); no rule of this page here. ===== */
+
+/* ===== 60 · Pełne porównanie grup produktów (#porownanie) – CE-22 on cw-scrollx + EL-21
+   `c5-table c5-table--cards` (22.11.2026, U-110). Page rules only, the CE-22 module is not
+   touched. From 600 px: seven columns, the table scrolls sideways in its own container and
+   the first column (group name) stays pinned to the left on an opaque ground. Below 600 px:
+   every row is a card of its group – the name on top, the six fields as label | value. ===== */
+.c5pk-por .c5-head{margin-bottom:var(--ch-space-8);}
+.c5pk-tbl{min-width:0;}
+.c5pk-tbl__scroll{max-width:100%;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;}
+.c5pk-tbl__scroll:focus-visible{outline:2px solid var(--w-focus-ring);outline-offset:2px;}
+.c5pk-tbl__t{min-width:1120px;table-layout:fixed;}
+.c5pk-tbl__t thead th:first-child{width:15rem;}
+.c5pk-tbl__t td,.c5pk-tbl__t tbody th{vertical-align:top;}
+.c5pk-tbl__name{font-weight:var(--ch-font-weight-semibold,600);color:var(--ch-text-primary);text-decoration:none;}
+.c5pk-tbl__name:hover{text-decoration:underline;text-underline-offset:3px;}
+/* pinned first column: the row ground of EL-21 is translucent, so it is laid over the page
+   ground to stay opaque while the other cells scroll under it */
+.c5pk-tbl__t :is(thead th,tbody th):first-child{position:sticky;left:0;z-index:1;}
+.c5pk-tbl__t thead th:first-child{background:var(--ch-surface-page);}
+.c5pk-tbl__t tbody th{background:linear-gradient(var(--ch-surface-warm-row),var(--ch-surface-warm-row)),var(--ch-surface-page);box-shadow:1px 0 0 var(--ch-border-subtle);}
+@media (min-width:1440px){ .c5pk-tbl__t{min-width:0;} }
+@media (max-width:599px){
+  .c5pk-tbl__t{min-width:0;}
+  .c5pk-tbl__t,.c5pk-tbl__t tbody,.c5pk-tbl__t tr,.c5pk-tbl__t tbody th,.c5pk-tbl__t td{display:block;width:auto;}
+  .c5pk-tbl__t thead{display:none;}
+  .c5pk-tbl__t tbody tr{background:var(--ch-surface-warm-row);border-radius:var(--ch-radius-md);padding:var(--ch-space-5);}
+  .c5pk-tbl__t tbody tr + tr{margin-top:var(--ch-space-3);}
+  .c5pk-tbl__t tbody :is(th,td){position:static;padding:0;background:none;box-shadow:none;border-radius:0;}
+  .c5pk-tbl__t tbody th{font-size:1.125rem;line-height:1.35;margin-bottom:var(--ch-space-4);}
+  .c5pk-tbl__t td + td{margin-top:var(--ch-space-3);}
+  .c5pk-tbl__t td::before{content:attr(data-label);display:block;margin-bottom:2px;font-size:0.8125rem;line-height:1.4;color:var(--ch-text-secondary);}
+}

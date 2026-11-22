@@ -96,7 +96,10 @@
 .c5sk-cap:focus-visible { outline: 2px solid var(--w-focus-ring); outline-offset: 1px; }
 .c5sk-cap[aria-current] { background: var(--w-gray-900); border-color: var(--w-gray-900); color: var(--w-text-inverse); }
 @media (max-width: 999px) { .c5sk-cap { min-height: 44px; } }
-.c5sk-facet[hidden], .c5sk-opt[hidden], [data-about][hidden] { display: none; }
+.c5sk-facet[hidden], .c5sk-opt[hidden], .c5sk-price[hidden], [data-about][hidden] { display: none; }
+/* Price ranges are the only price control since 22.11.2026 – the active one shows its state. */
+.c5sk-price[hidden] + .c5sk-price__quick { margin-top: 0; }
+.c5sk-price__quick .c5sk-refine__b[aria-pressed="true"] { background: var(--w-gray-900); color: var(--w-text-inverse); }
 
 /* Grid tiles (CE-79): both variants – band and double – live in their module
    since 07.11.2026; the neutral tile of 02.11.2026 is gone. */
@@ -157,17 +160,24 @@
 
 
 
+
+
+
+
+
+
+
   <div class="c5sk-needsbar" id="grupy">
     <div class="c5-wrap c5-wrap--wide c5sk-needsbar__in">
       <h2 class="c5sk-needs__h" id="grupy-h">Wybierz uprawę lub potrzebę</h2>
       <div class="c5sk-needs" role="group" aria-labelledby="grupy-h" data-needs>
+        <button type="button" class="c5sk-need" data-shelf="sad" aria-pressed="false"><span class="c5sk-need__img"><img src="img/foto/eco-pro-sad.jpg" alt="" width="96" height="96" decoding="async"></span><span class="c5sk-need__lab"><span class="c5sk-need__t" data-t="Uprawy sadownicze">Uprawy sadownicze</span> <span class="c5sk-need__n" data-count-shelf="sad"></span></span></button>
+        <button type="button" class="c5sk-need" data-shelf="pole" aria-pressed="false"><span class="c5sk-need__img"><img src="img/foto/kukurydza-hero.jpg" alt="" width="96" height="96" decoding="async"></span><span class="c5sk-need__lab"><span class="c5sk-need__t" data-t="Uprawy polowe">Uprawy polowe</span> <span class="c5sk-need__n" data-count-shelf="pole"></span></span></button>
         <button type="button" class="c5sk-need" data-shelf="ogrod" aria-pressed="false"><span class="c5sk-need__img"><img src="img/foto/prochnica-06-leafy-greens-rows.jpg" alt="" width="96" height="96" decoding="async"></span><span class="c5sk-need__lab"><span class="c5sk-need__t" data-t="Ogród i warzywnik">Ogród i warzywnik</span> <span class="c5sk-need__n" data-count-shelf="ogrod"></span></span></button>
-        <button type="button" class="c5sk-need" data-shelf="borowka" aria-pressed="false"><span class="c5sk-need__img"><img src="img/foto/sciolka-gruntowe.jpg" alt="" width="96" height="96" decoding="async"></span><span class="c5sk-need__lab"><span class="c5sk-need__t" data-t="Borówka i kwasolubne">Borówka i kwasolubne</span> <span class="c5sk-need__n" data-count-shelf="borowka"></span></span></button>
-        <button type="button" class="c5sk-need" data-shelf="sad" aria-pressed="false"><span class="c5sk-need__img"><img src="img/foto/produkty-cel-jakosc.jpg" alt="" width="96" height="96" decoding="async"></span><span class="c5sk-need__lab"><span class="c5sk-need__t" data-t="Sad i plantacja jagodowa">Sad i plantacja jagodowa</span> <span class="c5sk-need__n" data-count-shelf="sad"></span></span></button>
-        <button type="button" class="c5sk-need" data-shelf="pole" aria-pressed="false"><span class="c5sk-need__img"><img src="img/foto/kukurydza-hero.jpg" alt="" width="96" height="96" decoding="async"></span><span class="c5sk-need__lab"><span class="c5sk-need__t" data-t="Pole i uprawy towarowe">Pole i uprawy towarowe</span> <span class="c5sk-need__n" data-count-shelf="pole"></span></span></button>
         <button type="button" class="c5sk-need" data-shelf="nasadzenia" aria-pressed="false"><span class="c5sk-need__img"><img src="img/foto/eco-gruntowe.jpg" alt="" width="96" height="96" decoding="async"></span><span class="c5sk-need__lab"><span class="c5sk-need__t" data-t="Sadzenie, szkółka i zieleń">Sadzenie, szkółka i zieleń</span> <span class="c5sk-need__n" data-count-shelf="nasadzenia"></span></span></button>
-        <button type="button" class="c5sk-need" data-shelf="sciolka" aria-pressed="false"><span class="c5sk-need__img"><img src="img/foto/sciolka-doniczkowe.jpg" alt="" width="96" height="96" decoding="async"></span><span class="c5sk-need__lab"><span class="c5sk-need__t" data-t="Ściółkowanie zamiast kory">Ściółkowanie zamiast kory</span> <span class="c5sk-need__n" data-count-shelf="sciolka"></span></span></button>
-        <button type="button" class="c5sk-need" data-shelf="sprzet" aria-pressed="false"><span class="c5sk-need__img"><img src="img/foto/produkty-aplikacja-nalistna.jpg" alt="" width="96" height="96" decoding="async"></span><span class="c5sk-need__lab"><span class="c5sk-need__t" data-t="Opryskiwacz i kroplowanie">Opryskiwacz i kroplowanie</span> <span class="c5sk-need__n" data-count-shelf="sprzet"></span></span></button>
+        <button type="button" class="c5sk-need" data-shelf="gleba" aria-pressed="false"><span class="c5sk-need__img"><img src="img/foto/carbomat-humic-czym-jest-retencja.jpg" alt="" width="96" height="96" decoding="async"></span><span class="c5sk-need__lab"><span class="c5sk-need__t" data-t="Kondycjonowanie gleby">Kondycjonowanie gleby</span> <span class="c5sk-need__n" data-count-shelf="gleba"></span></span></button>
+        <button type="button" class="c5sk-need" data-shelf="biostymulacja" aria-pressed="false"><span class="c5sk-need__img"><img src="img/foto/produkty-aplikacja-nalistna.jpg" alt="" width="96" height="96" decoding="async"></span><span class="c5sk-need__lab"><span class="c5sk-need__t" data-t="Biostymulacja roślin">Biostymulacja roślin</span> <span class="c5sk-need__n" data-count-shelf="biostymulacja"></span></span></button>
+        <button type="button" class="c5sk-need" data-shelf="doniczkowe" aria-pressed="false"><span class="c5sk-need__img"><img src="img/foto/eco-doniczkowe.jpg" alt="" width="96" height="96" decoding="async"></span><span class="c5sk-need__lab"><span class="c5sk-need__t" data-t="Uprawy doniczkowe">Uprawy doniczkowe</span> <span class="c5sk-need__n" data-count-shelf="doniczkowe"></span></span></button>
       </div>
       <a class="wf-link--quiet c5sk-toconf" href="konfigurator.html">Dobierz produkty do swojej uprawy <svg class="wf-icon wf-icon--sm" aria-hidden="true"><use href="#ti-arrow-right"></use></svg></a>
     </div>
@@ -235,6 +245,8 @@
 
 
 
+
+
         <div class="c5sk-list__side">
         
         <section class="c5sk-facets" id="fasety" aria-labelledby="filtry-h">
@@ -246,32 +258,79 @@
           </div>
 
           <div class="c5sk-facet c5sk-facet--first">
-            <h3 class="c5sk-facet__h"><button type="button" class="c5sk-facet__title" aria-expanded="true" aria-controls="f-cena">Cena <svg class="wf-icon" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button></h3>
-            <div class="c5sk-facet__body" id="f-cena">
-              <div class="c5sk-price">
-                <label><span class="wf-sr-only">Cena od</span><input type="number" inputmode="numeric" min="0" step="10" placeholder="od" data-cena-od aria-label="Cena od (zł)"></label>
-                <span aria-hidden="true">–</span>
-                <label><span class="wf-sr-only">Cena do</span><input type="number" inputmode="numeric" min="0" step="10" placeholder="do" data-cena-do aria-label="Cena do (zł)"></label>
-                <span class="c5sk-price__zl">zł</span>
-              </div>
-              <div class="c5sk-price__quick">
-                <button type="button" class="c5sk-refine__b" data-cena-preset="0-100">do 100 zł</button>
-                <button type="button" class="c5sk-refine__b" data-cena-preset="100-500">100–500 zł</button>
-                <button type="button" class="c5sk-refine__b" data-cena-preset="500-">powyżej 500 zł</button>
-              </div>
-              <p class="c5sk-facet__src">Ceny brutto poglądowe: od 20 zł za butelkę 1 l do 9200 zł za mauzer 1000 l. Filtr działa na najniższej cenie produktu, a przy promocji – na cenie po obniżce.</p>
+            <h3 class="c5sk-facet__h"><button type="button" class="c5sk-facet__title" aria-expanded="true" aria-controls="f-marka">Producent <svg class="wf-icon" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button></h3>
+            <div class="c5sk-facet__body" id="f-marka">
+              
+
+
+
+              <label class="c5sk-opt"><input type="checkbox" data-facet="marka" value="carbohort"> <span class="c5sk-opt__t">Produkty Carbohort</span> <span class="c5sk-opt__n"></span></label>
+              <label class="c5sk-opt"><input type="checkbox" data-facet="marka" value="partner"> <span class="c5sk-opt__t">Produkty partnerskie</span> <span class="c5sk-opt__n"></span></label>
+              <p class="c5sk-facet__src">Produkty CarboHort stoją na liście przed partnerskimi niezależnie od wybranego sortowania.</p>
+            </div>
+          </div>
+
+          
+
+
+
+
+
+
+
+          <div class="c5sk-facet">
+            <h3 class="c5sk-facet__h"><button type="button" class="c5sk-facet__title" aria-expanded="true" aria-controls="f-typ">Typ uprawy <svg class="wf-icon" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button></h3>
+            <div class="c5sk-facet__body" id="f-typ">
+              <label class="c5sk-opt"><input type="checkbox" data-facet="typ" value="pro"> <span class="c5sk-opt__t">Profesjonalna</span> <span class="c5sk-opt__n"></span></label>
+              <label class="c5sk-opt"><input type="checkbox" data-facet="typ" value="hobby"> <span class="c5sk-opt__t">Hobbystyczna</span> <span class="c5sk-opt__n"></span></label>
             </div>
           </div>
 
           <div class="c5sk-facet">
             <h3 class="c5sk-facet__h"><button type="button" class="c5sk-facet__title" aria-expanded="true" aria-controls="f-zast">Zastosowanie <svg class="wf-icon" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button></h3>
             <div class="c5sk-facet__body" id="f-zast">
-              <label class="c5sk-opt"><input type="checkbox" data-facet="zast" value="doglebowe"> <span class="c5sk-opt__t">Doglebowe<span class="c5sk-opt__note">wnosisz do gleby albo podłoża</span></span> <span class="c5sk-opt__n"></span></label>
-              <label class="c5sk-opt"><input type="checkbox" data-facet="zast" value="dolistne"> <span class="c5sk-opt__t">Nalistne<span class="c5sk-opt__note">podajesz na liście, opryskiwaczem</span></span> <span class="c5sk-opt__n"></span></label>
+              <label class="c5sk-opt"><input type="checkbox" data-facet="zast" value="doglebowe"> <span class="c5sk-opt__t">Produkty doglebowe</span> <span class="c5sk-opt__n"></span></label>
+              <label class="c5sk-opt"><input type="checkbox" data-facet="zast" value="dolistne"> <span class="c5sk-opt__t">Produkty nalistne</span> <span class="c5sk-opt__n"></span></label>
               <label class="c5sk-opt" hidden><input type="checkbox" data-facet="zast" value="zestaw"> <span class="c5sk-opt__t">Zestawy<span class="c5sk-opt__note">gotowe pakiety, tańsze niż osobno</span></span> <span class="c5sk-opt__n"></span></label>
               <label class="c5sk-opt" hidden><input type="checkbox" data-facet="zast" value="podloze"> <span class="c5sk-opt__t">Maty uprawowe</span> <span class="c5sk-opt__n"></span></label>
             </div>
           </div>
+
+          <div class="c5sk-facet">
+            <h3 class="c5sk-facet__h"><button type="button" class="c5sk-facet__title" aria-expanded="true" aria-controls="f-postac">Postać <svg class="wf-icon" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button></h3>
+            <div class="c5sk-facet__body" id="f-postac">
+              <label class="c5sk-opt"><input type="checkbox" data-facet="postac" value="plynny"> <span class="c5sk-opt__t">Płynna</span> <span class="c5sk-opt__n"></span></label>
+              <label class="c5sk-opt"><input type="checkbox" data-facet="postac" value="sypki"> <span class="c5sk-opt__t">Sypka</span> <span class="c5sk-opt__n"></span></label>
+              
+              <label class="c5sk-opt" hidden><input type="checkbox" data-facet="postac" value="mata"> <span class="c5sk-opt__t">Rękaw uprawowy</span> <span class="c5sk-opt__n"></span></label>
+            </div>
+          </div>
+
+          <div class="c5sk-facet">
+            <h3 class="c5sk-facet__h"><button type="button" class="c5sk-facet__title" aria-expanded="true" aria-controls="f-cena">Cena <svg class="wf-icon" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button></h3>
+            <div class="c5sk-facet__body" id="f-cena">
+              
+
+              <div class="c5sk-price" hidden>
+                <label><span class="wf-sr-only">Cena od</span><input type="number" inputmode="numeric" min="0" step="10" placeholder="od" data-cena-od aria-label="Cena od (zł)"></label>
+                <span aria-hidden="true">–</span>
+                <label><span class="wf-sr-only">Cena do</span><input type="number" inputmode="numeric" min="0" step="10" placeholder="do" data-cena-do aria-label="Cena do (zł)"></label>
+                <span class="c5sk-price__zl">zł</span>
+              </div>
+              <div class="c5sk-price__quick" role="group" aria-label="Przedział ceny">
+                <button type="button" class="c5sk-refine__b" data-cena-preset="0-100" aria-pressed="false">do 100 zł</button>
+                <button type="button" class="c5sk-refine__b" data-cena-preset="100-500" aria-pressed="false">100–500 zł</button>
+                <button type="button" class="c5sk-refine__b" data-cena-preset="500-1000" aria-pressed="false">500–1000 zł</button>
+                <button type="button" class="c5sk-refine__b" data-cena-preset="1000-" aria-pressed="false">powyżej 1000 zł</button>
+              </div>
+              <p class="c5sk-facet__src">Ceny brutto poglądowe: od 20 zł za butelkę 1 l do 9200 zł za mauzer 1000 l. Filtr działa na najniższej cenie produktu, a przy promocji – na cenie po obniżce.</p>
+            </div>
+          </div>
+
+          
+
+
+
 
           
 
@@ -316,7 +375,7 @@
             </div>
           </div>
 
-          <div class="c5sk-facet">
+          <div class="c5sk-facet" hidden>
             <h3 class="c5sk-facet__h"><button type="button" class="c5sk-facet__title" aria-expanded="true" aria-controls="f-poj">Wielkość opakowania <svg class="wf-icon" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button></h3>
             <div class="c5sk-facet__body" id="f-poj">
               <label class="c5sk-opt"><input type="checkbox" data-facet="poj" value="1"> <span class="c5sk-opt__t">1 l</span> <span class="c5sk-opt__n"></span></label>
@@ -329,20 +388,7 @@
             </div>
           </div>
 
-          <div class="c5sk-facet">
-            <h3 class="c5sk-facet__h"><button type="button" class="c5sk-facet__title" aria-expanded="true" aria-controls="f-marka">Producent <svg class="wf-icon" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button></h3>
-            <div class="c5sk-facet__body" id="f-marka">
-              
-
-
-
-              <label class="c5sk-opt"><input type="checkbox" data-facet="marka" value="carbohort"> <span class="c5sk-opt__t">Carbohort<span class="c5sk-opt__note">produkty własne</span></span> <span class="c5sk-opt__n"></span></label>
-              <label class="c5sk-opt"><input type="checkbox" data-facet="marka" value="partner"> <span class="c5sk-opt__t">Produkty partnerskie</span> <span class="c5sk-opt__n"></span></label>
-              <p class="c5sk-facet__src">Produkty CarboHort stoją na liście przed partnerskimi niezależnie od wybranego sortowania.</p>
-            </div>
-          </div>
-
-          <div class="c5sk-facet">
+          <div class="c5sk-facet" hidden>
             <h3 class="c5sk-facet__h"><button type="button" class="c5sk-facet__title" aria-expanded="true" aria-controls="f-uprawa">Uprawa <svg class="wf-icon" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button></h3>
             <div class="c5sk-facet__body" id="f-uprawa">
               <label class="c5sk-opt"><input type="checkbox" data-facet="uprawa" value="sad"> <span class="c5sk-opt__t">Sad</span> <span class="c5sk-opt__n"></span></label>
@@ -357,11 +403,7 @@
             </div>
           </div>
 
-          <button type="button" class="c5sk-morefilters" data-more-filters aria-expanded="false">Pokaż wszystkie filtry (6)</button>
-
-          <div data-more-wrap hidden>
-
-          <div class="c5sk-facet">
+          <div class="c5sk-facet" hidden>
             <h3 class="c5sk-facet__h"><button type="button" class="c5sk-facet__title" aria-expanded="false" aria-controls="f-ph">Odczyn produktu (pH) <svg class="wf-icon" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button></h3>
             <div class="c5sk-facet__body" id="f-ph" hidden>
               <label class="c5sk-opt"><input type="checkbox" data-facet="ph" value="kwasny"> <span class="c5sk-opt__t">4,5–5,0 – kwaśny<span class="c5sk-opt__note">pod borówkę i inne kwasolubne</span></span> <span class="c5sk-opt__n"></span></label>
@@ -371,16 +413,7 @@
             </div>
           </div>
 
-          <div class="c5sk-facet">
-            <h3 class="c5sk-facet__h"><button type="button" class="c5sk-facet__title" aria-expanded="false" aria-controls="f-postac">Postać <svg class="wf-icon" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button></h3>
-            <div class="c5sk-facet__body" id="f-postac" hidden>
-              <label class="c5sk-opt"><input type="checkbox" data-facet="postac" value="sypki"> <span class="c5sk-opt__t">Sypki</span> <span class="c5sk-opt__n"></span></label>
-              <label class="c5sk-opt"><input type="checkbox" data-facet="postac" value="plynny"> <span class="c5sk-opt__t">Płynny</span> <span class="c5sk-opt__n"></span></label>
-              <label class="c5sk-opt"><input type="checkbox" data-facet="postac" value="mata"> <span class="c5sk-opt__t">Rękaw uprawowy</span> <span class="c5sk-opt__n"></span></label>
-            </div>
-          </div>
-
-          <div class="c5sk-facet">
+          <div class="c5sk-facet" hidden>
             <h3 class="c5sk-facet__h"><button type="button" class="c5sk-facet__title" aria-expanded="false" aria-controls="f-filtry">Przechodzi przez filtry i dysze <svg class="wf-icon" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button></h3>
             <div class="c5sk-facet__body" id="f-filtry" hidden>
               <label class="c5sk-opt"><input type="checkbox" data-facet="filtry" value="tak"> <span class="c5sk-opt__t">Tak – przejdzie przez dysze i kroplowniki</span> <span class="c5sk-opt__n"></span></label>
@@ -389,7 +422,7 @@
             </div>
           </div>
 
-          <div class="c5sk-facet">
+          <div class="c5sk-facet" hidden>
             <h3 class="c5sk-facet__h"><button type="button" class="c5sk-facet__title" aria-expanded="false" aria-controls="f-linia">Linia produktowa <svg class="wf-icon" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button></h3>
             <div class="c5sk-facet__body" id="f-linia" hidden>
               <label class="c5sk-opt"><input type="checkbox" data-facet="linia" value="carbomat-eco"> <span class="c5sk-opt__t">Carbomat Eco</span> <span class="c5sk-opt__n"></span></label>
@@ -404,7 +437,7 @@
             </div>
           </div>
 
-          <div class="c5sk-facet">
+          <div class="c5sk-facet" hidden>
             <h3 class="c5sk-facet__h"><button type="button" class="c5sk-facet__title" aria-expanded="false" aria-controls="f-oferta">Rodzaj oferty <svg class="wf-icon" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button></h3>
             <div class="c5sk-facet__body" id="f-oferta" hidden>
               <label class="c5sk-opt"><input type="checkbox" data-facet="oferta" value="staly"> <span class="c5sk-opt__t">Produkt w stałej ofercie</span> <span class="c5sk-opt__n"></span></label>
@@ -415,14 +448,12 @@
             </div>
           </div>
 
-          <div class="c5sk-facet">
+          <div class="c5sk-facet" hidden>
             <h3 class="c5sk-facet__h"><button type="button" class="c5sk-facet__title" aria-expanded="false" aria-controls="f-cert">Certyfikat ekologiczny <svg class="wf-icon" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></button></h3>
             <div class="c5sk-facet__body" id="f-cert" hidden>
               <label class="c5sk-opt"><input type="checkbox" data-facet="cert" value="eko"> <span class="c5sk-opt__t">Dopuszczony w produkcji ekologicznej<span class="c5sk-opt__note">IUNG · FiBL · SKAAL – zakres per produkt</span></span> <span class="c5sk-opt__n"></span></label>
               <label class="c5sk-opt"><input type="checkbox" data-facet="cert" value="nd"> <span class="c5sk-opt__t">Status do potwierdzenia ⚠️<span class="c5sk-opt__note">brak dokumentu u nas nie znaczy, że produkt certyfikatu nie ma</span></span> <span class="c5sk-opt__n"></span></label>
             </div>
-          </div>
-
           </div>
 
           <div class="c5sk-drawerfoot">
@@ -583,8 +614,10 @@
 
 
 
+
           <nav class="c5sk-caps" id="kategorie" aria-label="Kategorie produktów">
             <a class="c5sk-cap" href="sklep.html" data-cap="" aria-current="true">Wszystkie</a>
+            <a class="c5sk-cap" href="sklep.html?f=oferta:promocja" data-cap="oferta:promocja">Promocje</a>
             <a class="c5sk-cap" href="sklep.html?f=kat:kwasy-humusowe" data-cap="kat:kwasy-humusowe">Kwasy humusowe</a>
             <a class="c5sk-cap" href="sklep.html?f=kat:podloza" data-cap="kat:podloza">Podłoża</a>
             <a class="c5sk-cap" href="sklep.html?f=kat:sciolka" data-cap="kat:sciolka">Ściółka</a>
@@ -594,7 +627,6 @@
             <a class="c5sk-cap" href="sklep.html?f=kat:efektywne-mikroorganizmy" data-cap="kat:efektywne-mikroorganizmy">Efektywne mikroorganizmy</a>
             <a class="c5sk-cap" href="sklep.html?f=kat:ochrona-biologiczna" data-cap="kat:ochrona-biologiczna">Biologiczna ochrona upraw</a>
             <a class="c5sk-cap" href="sklep.html?f=oferta:zestaw" data-cap="oferta:zestaw">Zestawy</a>
-            <a class="c5sk-cap" href="sklep.html?f=oferta:promocja" data-cap="oferta:promocja">Promocje</a>
           </nav>
 
           
@@ -616,7 +648,7 @@
               data-name="CARBOMAT ECO pH 4,5–5,0 carbomat-eco jagodowe ogrod ozdobne szkolka sad bezglebowe doglebowe"
               data-linia="carbomat-eco" data-ph="kwasny" data-postac="sypki" data-zast="doglebowe"
               data-filtry="nie" data-uprawa="jagodowe ogrod ozdobne szkolka sad bezglebowe" data-poj="1000 1500 20"
-              data-oferta="staly" data-cert="eko" data-polka="ogrod borowka sad pole nasadzenia"
+              data-oferta="staly" data-cert="eko" data-polka="sad pole ogrod nasadzenia gleba" data-typ="pro hobby"
               data-cw-product='{"id": "carbomat-eco-4", "name": "Carbomat Eco pH 4,5–5,0", "meta": "odmiana kwaśna · sypki · doglebowy",
                   "img": "img/opakowania/worek_20l.png", "url": "pdp-kwasny.html",
                   "short": "Surowy lignit o niskim odczynie – pod borówkę, żurawinę, wrzosowate, różaneczniki i azalie. Zakładasz raz, pracuje kolejne sezony.",
@@ -643,7 +675,7 @@
               data-name="CARBOMAT ECO pH 6,0–6,5 carbomat-eco sad jagodowe warzywa rolnicze ogrod ozdobne szkolka bezglebowe doglebowe"
               data-linia="carbomat-eco" data-ph="uniwersalny" data-postac="sypki" data-zast="doglebowe"
               data-filtry="nie" data-uprawa="sad jagodowe warzywa rolnicze ogrod ozdobne szkolka bezglebowe" data-poj="1000 1500 20"
-              data-oferta="staly promocja" data-cert="eko" data-polka="ogrod sad pole nasadzenia"
+              data-oferta="staly promocja" data-cert="eko" data-polka="sad pole ogrod nasadzenia gleba doniczkowe" data-typ="pro hobby"
               data-cw-product='{"id": "carbomat-eco-6", "name": "Carbomat Eco pH 6,0–6,5", "meta": "odmiana uniwersalna · sypki · doglebowy",
                   "img": "img/opakowania/worek_20l.png", "url": "pdp.html",
                   "short": "Surowy lignit do wymieszania z glebą lub podłożem. Odczyn dla większości grup roślin – buduje strukturę i magazyn na wodę.",
@@ -670,7 +702,7 @@
               data-name="CARBOMAT ECO Ściółka pH 4,5–5,0 carbomat-eco-sciolka jagodowe ogrod ozdobne szkolka sad doglebowe"
               data-linia="carbomat-eco-sciolka" data-ph="kwasny" data-postac="sypki" data-zast="doglebowe"
               data-filtry="nie" data-uprawa="jagodowe ogrod ozdobne szkolka sad" data-poj="1000 1500 20"
-              data-oferta="staly" data-cert="eko" data-polka="ogrod borowka sciolka sad nasadzenia"
+              data-oferta="staly" data-cert="eko" data-polka="sad ogrod nasadzenia gleba" data-typ="pro hobby"
               data-cw-product='{"id": "carbomat-eco-sciolka", "name": "Carbomat Eco Ściółka pH 4,5–5,0", "meta": "sypki · ściółka · frakcja 4–8 mm",
                   "img": "img/opakowania/worek_20l.png", "url": "pdp.html",
                   "short": "Grubsza frakcja do rozsypania warstwą 3–5 cm, bez mieszania. W przeciwieństwie do kory nie powoduje głodu azotowego.",
@@ -695,7 +727,7 @@
               data-name="CARBOMAT HUMIC · do warzyw i owoców carbomat-humic warzywa ogrod rolnicze doglebowe"
               data-linia="carbomat-humic" data-ph="podnosi" data-postac="sypki" data-zast="doglebowe"
               data-filtry="nie" data-uprawa="warzywa ogrod rolnicze" data-poj="1 2"
-              data-oferta="staly" data-cert="eko" data-polka="ogrod pole"
+              data-oferta="staly" data-cert="eko" data-polka="pole ogrod gleba doniczkowe" data-typ="hobby"
               data-cw-product='{"id": "carbomat-humic-warzywa", "name": "Carbomat Humic · do warzyw i owoców", "meta": "sypki · doglebowy · pH 9–11",
                   "img": "img/opakowania/torba_1l_2l.png", "url": "pdp.html",
                   "short": "Kondycjoner, potas i biostymulator w jednym – działa od pierwszych dni i podnosi odczyn zakwaszonej gleby.",
@@ -719,7 +751,7 @@
               data-name="CARBOMAT HUMIC · do roślin ozdobnych i ziół carbomat-humic ozdobne ogrod doglebowe"
               data-linia="carbomat-humic" data-ph="podnosi" data-postac="sypki" data-zast="doglebowe"
               data-filtry="nie" data-uprawa="ozdobne ogrod" data-poj="1 2"
-              data-oferta="staly" data-cert="eko" data-polka="ogrod"
+              data-oferta="staly" data-cert="eko" data-polka="ogrod gleba doniczkowe" data-typ="hobby"
               data-cw-product='{"id": "carbomat-humic-ozdobne", "name": "Carbomat Humic · do roślin ozdobnych i ziół", "meta": "sypki · doglebowy · pH 9–11",
                   "img": "img/opakowania/torba_1l_2l.png", "url": "pdp.html",
                   "short": "Ta sama formuła w wersji pod rośliny ozdobne i zioła. Nie pod rośliny kwasolubne – podnosi odczyn.",
@@ -743,7 +775,7 @@
               data-name="CARBOHUMIC niefiltrowany (20 mesh) carbohumic sad jagodowe warzywa rolnicze szkolka ozdobne doglebowe"
               data-linia="carbohumic" data-ph="nd" data-postac="plynny" data-zast="doglebowe"
               data-filtry="nie" data-uprawa="sad jagodowe warzywa rolnicze szkolka ozdobne" data-poj="1000 20 200"
-              data-oferta="staly" data-cert="eko" data-polka="borowka sad pole nasadzenia"
+              data-oferta="staly" data-cert="eko" data-polka="sad pole nasadzenia gleba" data-typ="pro hobby"
               data-cw-product='{"id": "carbohumic-20mesh", "name": "Carbohumic niefiltrowany (20 mesh)", "meta": "płynny · doglebowy",
                   "img": "img/opakowania/kanister_20l.png", "url": "pdp.html",
                   "short": "„Intensywna odbudowa gleby i budowanie trwałej próchnicy”. Podajesz polewaniem z beczki lub mauzera.",
@@ -836,7 +868,7 @@
               data-name="CARBOHUMIC filtrowany (187 mesh) carbohumic sad jagodowe warzywa rolnicze szkolka ozdobne bezglebowe doglebowe"
               data-linia="carbohumic" data-ph="nd" data-postac="plynny" data-zast="doglebowe"
               data-filtry="tak" data-uprawa="sad jagodowe warzywa rolnicze szkolka ozdobne bezglebowe" data-poj="1 1000 20 200 5"
-              data-oferta="staly" data-cert="eko" data-polka="borowka sad pole nasadzenia sprzet"
+              data-oferta="staly" data-cert="eko" data-polka="sad pole nasadzenia gleba" data-typ="pro hobby"
               data-cw-product='{"id": "carbohumic-187mesh", "name": "Carbohumic filtrowany (187 mesh)", "meta": "płynny · doglebowy · przez dysze",
                   "img": "img/opakowania/kanister_5l.png", "url": "pdp.html",
                   "short": "Przechodzi przez opryskiwacze, belki herbicydowe, zraszacze i linie kroplujące. Bieżąca biostymulacja gleby i roślin.",
@@ -863,7 +895,7 @@
               data-name="CARBOHUMIC OGRÓD carbohumic ogrod warzywa ozdobne jagodowe doglebowe"
               data-linia="carbohumic" data-ph="nd" data-postac="plynny" data-zast="doglebowe"
               data-filtry="nd" data-uprawa="ogrod warzywa ozdobne jagodowe" data-poj="20 5"
-              data-oferta="staly" data-cert="nd" data-polka="ogrod borowka nasadzenia"
+              data-oferta="staly" data-cert="nd" data-polka="sad ogrod nasadzenia" data-typ="hobby"
               data-cw-product='{"id": "carbohumic-ogrod", "name": "Carbohumic Ogród", "meta": "płynny · doglebowy",
                   "img": "img/opakowania/kanister_5l.png", "url": "pdp.html",
                   "short": "Wersja pod ogród i działkę – rozcieńczasz z wodą i podlewasz konewką. Ta sama próchnica w płynie, w małym opakowaniu.",
@@ -887,7 +919,7 @@
               data-name="CARBOHUMIC FLORA · do roślin ozdobnych carbohumic ozdobne ogrod doglebowe"
               data-linia="carbohumic" data-ph="nd" data-postac="plynny" data-zast="doglebowe"
               data-filtry="nd" data-uprawa="ozdobne ogrod" data-poj="1 5"
-              data-oferta="staly" data-cert="nd" data-polka="ogrod"
+              data-oferta="staly" data-cert="nd" data-polka="ogrod doniczkowe" data-typ="hobby"
               data-cw-product='{"id": "carbohumic-flora", "name": "Carbohumic Flora · do roślin ozdobnych", "meta": "płynny · doglebowy",
                   "img": "img/opakowania/butelka_1l.png", "url": "pdp.html",
                   "short": "Linia konsumencka pod rośliny ozdobne.",
@@ -946,7 +978,7 @@
               data-name="CARBOHUMIC SAD carbohumic sad jagodowe doglebowe"
               data-linia="carbohumic" data-ph="nd" data-postac="plynny" data-zast="doglebowe"
               data-filtry="nd" data-uprawa="sad jagodowe" data-poj="20"
-              data-oferta="staly" data-cert="nd" data-polka="sad"
+              data-oferta="staly" data-cert="nd" data-polka="sad" data-typ="hobby"
               data-cw-product='{"id": "carbohumic-sad", "name": "Carbohumic Sad", "meta": "płynny · doglebowy",
                   "img": "img/opakowania/kanister_20l.png", "url": "pdp.html",
                   "short": "Linia konsumencka pod sad i jagodowe.",
@@ -969,7 +1001,7 @@
               data-name="CARBOHUMIC BIOMAS carbohumic rolnicze doglebowe"
               data-linia="carbohumic" data-ph="nd" data-postac="plynny" data-zast="doglebowe"
               data-filtry="nd" data-uprawa="rolnicze" data-poj="1000"
-              data-oferta="staly" data-cert="nd" data-polka="pole"
+              data-oferta="staly" data-cert="nd" data-polka="pole gleba" data-typ="pro"
               data-cw-product='{"id": "carbohumic-biomas", "name": "Carbohumic Biomas", "meta": "płynny · doglebowy",
                   "img": "img/opakowania/mauzer_1000l_1500l.png", "url": "pdp.html",
                   "short": "Opis produktu w przygotowaniu.",
@@ -992,7 +1024,7 @@
               data-name="CARBOHUMIC MAXI PLUS carbohumic-dolistny sad jagodowe warzywa rolnicze ozdobne dolistne"
               data-linia="carbohumic-dolistny" data-ph="nd" data-postac="plynny" data-zast="dolistne"
               data-filtry="tak" data-uprawa="sad jagodowe warzywa rolnicze ozdobne" data-poj="1 20 5"
-              data-oferta="staly" data-cert="nd" data-polka="sad pole sprzet"
+              data-oferta="staly" data-cert="nd" data-polka="sad pole biostymulacja" data-typ="hobby"
               data-cw-product='{"id": "maxi-plus", "name": "Carbohumic Maxi Plus", "meta": "płynny · nalistny",
                   "img": "img/opakowania/butelka_1l.png", "url": "pdp.html",
                   "short": "Nalistna biostymulacja w fazie wzrostu – kwasy huminowe i fulwowe pracują na masę liściową. Program podstawowy to minimum trzy zabiegi.",
@@ -1017,7 +1049,7 @@
               data-name="CARBOHUMIC CALBOR carbohumic-dolistny sad dolistne"
               data-linia="carbohumic-dolistny" data-ph="nd" data-postac="plynny" data-zast="dolistne"
               data-filtry="tak" data-uprawa="sad" data-poj="1 20 5"
-              data-oferta="staly" data-cert="nd" data-polka="sad sprzet" data-tylko-sad="1"
+              data-oferta="staly" data-cert="nd" data-polka="sad biostymulacja" data-typ="hobby" data-tylko-sad="1"
               data-cw-product='{"id": "calbor", "name": "Carbohumic Calbor", "meta": "płynny · nalistny · tylko sady",
                   "img": "img/opakowania/butelka_1l.png", "url": "pdp.html",
                   "short": "Wapń i bor w chelacie kwasów humusowych – jakość, kaliber i trwałość owocu po zbiorze. Rejestracja obejmuje wyłącznie uprawy sadownicze.",
@@ -1042,7 +1074,7 @@
               data-name="CARBOMAT ECO pH 4,5–5,0 20 l + CARBOHUMIC OGRÓD 5 l carbomat-eco carbohumic ogrod ozdobne jagodowe zestaw"
               data-linia="carbomat-eco carbohumic" data-ph="kwasny" data-postac="sypki plynny" data-zast="zestaw"
               data-filtry="nd" data-uprawa="ogrod ozdobne jagodowe" data-poj="inne"
-              data-oferta="zestaw" data-cert="eko" data-polka="ogrod borowka nasadzenia"
+              data-oferta="zestaw" data-cert="eko" data-polka="sad ogrod nasadzenia" data-typ="hobby"
               data-cw-product='{"id": "zestaw-ogrod-4", "name": "Carbomat Eco pH 4,5–5,0 20 l + Carbohumic Ogród 5 l", "meta": "zestaw · odmiana kwaśna",
                   "img": "img/opakowania/worek_20l.png", "imgs": ["img/opakowania/worek_20l.png", "img/opakowania/kanister_5l.png"], "url": "pdp.html",
                   "short": "Baza doglebowa plus płynne uzupełnienie na sezon.",
@@ -1067,7 +1099,7 @@
               data-name="CARBOMAT ECO pH 6,0–6,5 20 l + CARBOHUMIC OGRÓD 5 l carbomat-eco carbohumic ogrod warzywa ozdobne jagodowe zestaw"
               data-linia="carbomat-eco carbohumic" data-ph="uniwersalny" data-postac="sypki plynny" data-zast="zestaw"
               data-filtry="nd" data-uprawa="ogrod warzywa ozdobne jagodowe" data-poj="inne"
-              data-oferta="zestaw" data-cert="eko" data-polka="ogrod nasadzenia"
+              data-oferta="zestaw" data-cert="eko" data-polka="ogrod nasadzenia" data-typ="hobby"
               data-cw-product='{"id": "zestaw-ogrod-6", "name": "Carbomat Eco pH 6,0–6,5 20 l + Carbohumic Ogród 5 l", "meta": "zestaw · odmiana uniwersalna",
                   "img": "img/opakowania/worek_20l.png", "imgs": ["img/opakowania/worek_20l.png", "img/opakowania/kanister_5l.png"], "url": "pdp.html",
                   "short": "Baza doglebowa plus płynne uzupełnienie na sezon.",
@@ -1092,7 +1124,7 @@
               data-name="CARBOMAT ECO pH 4,5–5,0 20 l + CARBOHUMIC FLORA 5 l carbomat-eco carbohumic ozdobne ogrod zestaw"
               data-linia="carbomat-eco carbohumic" data-ph="kwasny" data-postac="sypki plynny" data-zast="zestaw"
               data-filtry="nd" data-uprawa="ozdobne ogrod" data-poj="inne"
-              data-oferta="zestaw" data-cert="eko" data-polka="ogrod borowka"
+              data-oferta="zestaw" data-cert="eko" data-polka="sad ogrod" data-typ="hobby"
               data-cw-product='{"id": "zestaw-flora-4", "name": "Carbomat Eco pH 4,5–5,0 20 l + Carbohumic Flora 5 l", "meta": "zestaw · odmiana kwaśna",
                   "img": "img/opakowania/worek_20l.png", "imgs": ["img/opakowania/worek_20l.png", "img/opakowania/kanister_5l.png"], "url": "pdp.html",
                   "short": "Zestaw pod rośliny ozdobne.",
@@ -1117,7 +1149,7 @@
               data-name="CARBOMAT ECO pH 6,0–6,5 20 l + CARBOHUMIC FLORA 5 l carbomat-eco carbohumic ozdobne ogrod zestaw"
               data-linia="carbomat-eco carbohumic" data-ph="uniwersalny" data-postac="sypki plynny" data-zast="zestaw"
               data-filtry="nd" data-uprawa="ozdobne ogrod" data-poj="inne"
-              data-oferta="zestaw" data-cert="eko" data-polka="ogrod"
+              data-oferta="zestaw" data-cert="eko" data-polka="ogrod doniczkowe" data-typ="hobby"
               data-cw-product='{"id": "zestaw-flora-6", "name": "Carbomat Eco pH 6,0–6,5 20 l + Carbohumic Flora 5 l", "meta": "zestaw · odmiana uniwersalna",
                   "img": "img/opakowania/worek_20l.png", "imgs": ["img/opakowania/worek_20l.png", "img/opakowania/kanister_5l.png"], "url": "pdp.html",
                   "short": "Zestaw pod rośliny ozdobne.",
@@ -1142,7 +1174,7 @@
               data-name="CARBOHUMIC MAXI PLUS + PURE ONE carbohumic-dolistny pure-one sad jagodowe warzywa rolnicze zestaw"
               data-linia="carbohumic-dolistny pure-one" data-ph="nd" data-postac="plynny" data-zast="zestaw"
               data-filtry="tak" data-uprawa="sad jagodowe warzywa rolnicze" data-poj="1 20 5"
-              data-oferta="zestaw" data-cert="nd" data-polka="sad pole sprzet"
+              data-oferta="zestaw" data-cert="nd" data-polka="sad pole biostymulacja" data-typ="hobby"
               data-cw-product='{"id": "zestaw-maxi-pure", "name": "Carbohumic Maxi Plus + Pure One", "meta": "zestaw · nalistny",
                   "img": "img/opakowania/butelka_1l.png", "imgs": ["img/opakowania/butelka_1l.png", "img/opakowania/butelka_1l.png"], "url": "pdp.html",
                   "short": "Zestaw nalistny: Carbohumic Maxi Plus z biostymulatorem mineralnym Pure One. Trzy rozmiary – w każdym oba produkty rosną razem.",
@@ -1169,7 +1201,7 @@
               data-name="VINASSA nawóz organiczny vinassa sad jagodowe warzywa rolnicze doglebowe"
               data-linia="vinassa" data-ph="nd" data-postac="plynny" data-zast="doglebowe"
               data-filtry="nd" data-uprawa="sad jagodowe warzywa rolnicze" data-poj="1000 20 200 5"
-              data-oferta="staly" data-cert="nd" data-polka="pole sad"
+              data-oferta="staly" data-cert="nd" data-polka="sad pole gleba" data-typ="pro hobby"
               data-cw-product='{"id": "vinassa", "name": "Vinassa nawóz organiczny", "meta": "płynny · doglebowy",
                   "url": "pdp.html",
                   "short": "Opis produktu w przygotowaniu.",
@@ -1195,7 +1227,7 @@
               data-name="PURE ONE biostymulator mineralny pure-one sad jagodowe warzywa rolnicze ozdobne dolistne"
               data-linia="pure-one" data-ph="nd" data-postac="plynny" data-zast="dolistne"
               data-filtry="tak" data-uprawa="sad jagodowe warzywa rolnicze ozdobne" data-poj="1 5"
-              data-oferta="staly" data-cert="nd" data-polka="sad pole sprzet"
+              data-oferta="staly" data-cert="nd" data-polka="sad pole biostymulacja" data-typ="hobby"
               data-cw-product='{"id": "pure-one", "name": "Pure One biostymulator mineralny", "meta": "płynny · nalistny",
                   "url": "pdp.html",
                   "short": "Biostymulator mineralny zewnętrznego producenta, stosowany w zestawach z Carbohumic Maxi Plus.",
@@ -1219,7 +1251,7 @@
               data-name="BIO-ALGEEN S90 bio-algeen sad jagodowe warzywa ozdobne dolistne"
               data-linia="bio-algeen" data-ph="nd" data-postac="plynny" data-zast="dolistne"
               data-filtry="tak" data-uprawa="sad jagodowe warzywa ozdobne" data-poj="2 inne"
-              data-oferta="staly" data-cert="nd" data-polka="sad sprzet"
+              data-oferta="staly" data-cert="nd" data-polka="sad biostymulacja" data-typ="hobby"
               data-cw-product='{"id": "bio-algeen-s90", "name": "Bio-Algeen S90", "meta": "płynny · nalistny",
                   "url": "pdp.html",
                   "short": "Opis produktu w przygotowaniu.",
@@ -1246,7 +1278,7 @@
               data-name="Mikoryza do borówek i wrzosowatych Mycelium mikoryza borowka wrzosowate kwasolubne jagodowe ozdobne"
               data-linia="" data-ph="" data-postac="" data-zast=""
               data-filtry="" data-uprawa="jagodowe ozdobne" data-poj="inne"
-              data-oferta="staly" data-cert="nd" data-polka=""
+              data-oferta="staly" data-cert="nd" data-polka="sad" data-typ="hobby"
               data-cw-product='{"id": "mikoryza-borowki", "name": "Mikoryza do borówek i wrzosowatych", "meta": "Mycelium · mikoryza",
                   "url": "pdp.html",
                   "short": "Mikoryza Mycelium dla roślin kwasolubnych, w tym borówek i wrzosowatych. Postać, dawka i sposób podania – dane w uzupełnieniu.",
@@ -1272,7 +1304,7 @@
               data-name="Mikoryza do drzew i krzewów owocowych Mycelium mikoryza sad drzewa krzewy owocowe jagodowe"
               data-linia="" data-ph="" data-postac="" data-zast=""
               data-filtry="" data-uprawa="sad jagodowe" data-poj="inne"
-              data-oferta="staly" data-cert="nd" data-polka=""
+              data-oferta="staly" data-cert="nd" data-polka="sad" data-typ="hobby"
               data-cw-product='{"id": "mikoryza-owocowe", "name": "Mikoryza do drzew i krzewów owocowych", "meta": "Mycelium · mikoryza",
                   "url": "pdp.html",
                   "short": "Mikoryza Mycelium dla drzew i krzewów owocowych. Postać, dawka i sposób podania – dane w uzupełnieniu.",
@@ -1298,7 +1330,7 @@
               data-name="EmFarma Plus Witalny Ogrod mikroorganizmy efektywne EM ogrod"
               data-linia="" data-ph="nd" data-postac="plynny" data-zast=""
               data-filtry="" data-uprawa="ogrod" data-poj="1 5"
-              data-oferta="staly" data-cert="nd" data-polka=""
+              data-oferta="staly" data-cert="nd" data-polka="ogrod gleba" data-typ="hobby"
               data-cw-product='{"id": "emfarma-plus", "name": "EmFarma Plus Witalny Ogród", "meta": "płynny · mikroorganizmy",
                   "url": "pdp.html",
                   "short": "Mikrobiologiczny produkt nawozowy z żywymi mikroorganizmami do upraw ogrodowych. Producent, dawka i sposób podania – dane w uzupełnieniu.",
@@ -1325,7 +1357,7 @@
               data-name="Fungilitic Paenibacillus polymyxa mikroorganizmy ogrod"
               data-linia="" data-ph="nd" data-postac="plynny" data-zast=""
               data-filtry="" data-uprawa="ogrod" data-poj="1 5 20"
-              data-oferta="staly" data-cert="nd" data-polka=""
+              data-oferta="staly" data-cert="nd" data-polka="ogrod" data-typ="hobby"
               data-cw-product='{"id": "fungilitic", "name": "Fungilitic", "meta": "płynny · mikroorganizmy",
                   "url": "pdp.html",
                   "short": "Preparat mikrobiologiczny ze szczepem Paenibacillus polymyxa wspomagający witalność roślin (nie jest środkiem ochrony roślin). Producent, dawka i sposób podania – dane w uzupełnieniu.",
@@ -1350,7 +1382,7 @@
               data-name="CARBOMAT Mata Uprawowa carbomat-mata bezglebowe jagodowe warzywa szkolka podloze"
               data-linia="carbomat-mata" data-ph="uniwersalny" data-postac="mata" data-zast="podloze"
               data-filtry="nd" data-uprawa="bezglebowe jagodowe warzywa szkolka" data-poj="nd"
-              data-oferta="staly" data-cert="nd" data-polka="nasadzenia">
+              data-oferta="staly" data-cert="nd" data-polka="nasadzenia" data-typ="pro">
               <div class="c5sk-card__media">
                 <a class="c5sk-card__shot" href="pdp.html" tabindex="-1" aria-hidden="true"><img src="img/opakowania/mata_uprawowa.png" alt="" width="1000" height="313" loading="lazy" decoding="async"></a>
               </div>
@@ -1556,15 +1588,19 @@
 
   /* --- Słowniki -------------------------------------------------------- */
   var SHELVES = {
-    "":           { label: "Wszystkie produkty" },
-    ogrod:        { label: "Ogród i warzywnik" },
-    borowka:      { label: "Borówka i kwasolubne" },
-    sad:          { label: "Sad i plantacja jagodowa" },
-    pole:         { label: "Pole i uprawy towarowe" },
-    nasadzenia:   { label: "Sadzenie, szkółka i zieleń" },
-    sciolka:      { label: "Ściółkowanie zamiast kory" },
-    sprzet:       { label: "Opryskiwacz i kroplowanie" }
+    "":            { label: "Wszystkie produkty" },
+    sad:           { label: "Uprawy sadownicze" },
+    pole:          { label: "Uprawy polowe" },
+    ogrod:         { label: "Ogród i warzywnik" },
+    nasadzenia:    { label: "Sadzenie, szkółka i zieleń" },
+    gleba:         { label: "Kondycjonowanie gleby" },
+    biostymulacja: { label: "Biostymulacja roślin" },
+    doniczkowe:    { label: "Uprawy doniczkowe" }
   };
+  /* Crop pills other than "sad" – CALBOR (orchards only, MRiRW G-1733/25)
+     must drop out on each of them. "gleba" and "biostymulacja" are needs,
+     not crops, so the rule does not fire there. */
+  var CROP_SHELVES_NOT_ORCHARD = ["pole", "ogrod", "nasadzenia", "doniczkowe"];
 
   /* Etykiety chipów są IDENTYCZNE z etykietami w kolumnie filtrów – przed
      przebudową ten sam filtr nazywał się na jednym ekranie „Zatrzymać wodę /
@@ -1574,6 +1610,7 @@
     kat:       "Kategoria",
     poj:       "Wielkość opakowania",
     marka:     "Producent",
+    typ:       "Typ uprawy",
     uprawa:    "Uprawa",
     ph:        "Odczyn produktu (pH)",
     postac:    "Postać",
@@ -1738,7 +1775,7 @@
     {
       id: "calbor",
       fires: function (s) {
-        if (s.shelf === "pole") return true;
+        if (CROP_SHELVES_NOT_ORCHARD.indexOf(s.shelf) !== -1) return true;
         var u = s.facets.uprawa;
         return u.length > 0 && u.indexOf("sad") === -1;
       },
@@ -1747,14 +1784,14 @@
     {
       id: "kwasolubne",
       fires: function (s) {
-        return s.shelf === "borowka" || onlyWithin(s.facets.uprawa, ["jagodowe"]) || onlyWithin(s.facets.ph, ["kwasny"]);
+        return onlyWithin(s.facets.uprawa, ["jagodowe"]) || onlyWithin(s.facets.ph, ["kwasny"]);
       },
       hits: function (c) { return has(c, "ph", "podnosi"); }
     },
     {
       id: "dysze",
       fires: function (s) {
-        return s.shelf === "sprzet" || onlyWithin(s.facets.filtry, ["tak"]);
+        return onlyWithin(s.facets.filtry, ["tak"]);
       },
       hits: function (c) { return has(c, "filtry", "nie"); }
     }
@@ -2035,7 +2072,9 @@
     if (!state.shelf || uzyto) { refineEl.hidden = true; return; }
     var shown = countWith(state);
     var cand = [];
-    ["zast", "poj", "postac", "uprawa"].forEach(function (k) {
+    /* Only the visible groups (22.11.2026) – a hidden group must not be
+       suggested as a refinement. Price is not a facet key. */
+    ["marka", "typ", "zast", "postac"].forEach(function (k) {
       if (state.facets[k].length) return;
       var seen = {};
       cards.forEach(function (c) {
@@ -2205,7 +2244,7 @@
     if (totalEl && totalEl.textContent !== String(cards.length)) totalEl.textContent = String(cards.length);
     placeTiles();
     renderChips(); renderCounts();
-    renderRefine(); renderEmpty(shown); renderFacetsCount(); renderDrawerCta(shown);
+    renderRefine(); renderEmpty(shown); renderFacetsCount(); renderDrawerCta(shown); renderPresets();
     if (mode) syncURL(mode);
     hooks.forEach(function (fn) { try { fn(); } catch (e) { /* a listener error stays local */ } });
   }
@@ -2583,11 +2622,26 @@
     el.addEventListener("input", function () { readCena(); apply("replace"); });
     el.addEventListener("change", function () { readCena(); apply("push"); });
   });
+  /* Price ranges (22.11.2026): the only price control. A second click on the
+     active range clears it; aria-pressed mirrors the state, also after a
+     deep link with cena_od / cena_do. */
+  function presetRange(b) {
+    var pr = b.getAttribute("data-cena-preset").split("-");
+    return { od: pr[0] === "" ? null : parseFloat(pr[0]), "do": (pr[1] === "" || pr[1] === undefined) ? null : parseFloat(pr[1]) };
+  }
+  function renderPresets() {
+    $$("[data-cena-preset]").forEach(function (b) {
+      var r = presetRange(b);
+      var on = state.cenaOd === r.od && state.cenaDo === r["do"];
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+  }
   $$("[data-cena-preset]").forEach(function (b2) {
     b2.addEventListener("click", function () {
+      var on = b2.getAttribute("aria-pressed") === "true";
       var pr = b2.getAttribute("data-cena-preset").split("-");
-      if (cenaOdEl) cenaOdEl.value = pr[0] || "";
-      if (cenaDoEl) cenaDoEl.value = pr[1] || "";
+      if (cenaOdEl) cenaOdEl.value = on ? "" : (pr[0] || "");
+      if (cenaDoEl) cenaDoEl.value = on ? "" : (pr[1] || "");
       readCena(); apply("push");
     });
   });
@@ -2630,19 +2684,6 @@
       if (body) body.hidden = open;
     });
   });
-  var moreBtn = $("[data-more-filters]"), moreWrap = $("[data-more-wrap]");
-  if (moreBtn && moreWrap) {
-    /* The count comes from the DOM: a hard-coded "(9)" drifted away from the
-       six groups actually hidden behind the button. */
-    var moreLabel = "Pokaż wszystkie filtry (" + $$(".c5sk-facet", moreWrap).length + ")";
-    moreBtn.textContent = moreLabel;
-    moreBtn.addEventListener("click", function () {
-      var open = moreBtn.getAttribute("aria-expanded") === "true";
-      moreBtn.setAttribute("aria-expanded", open ? "false" : "true");
-      moreWrap.hidden = open;
-      moreBtn.textContent = open ? moreLabel : "Ukryj dodatkowe filtry";
-    });
-  }
   /* Both filter buttons (the drawer's "Filtry" and the fold button) carry
      the number of active filters. */
   function renderFacetsCount() {

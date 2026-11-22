@@ -38,8 +38,8 @@
      jednej podstronie nie wymaga ruszania pozostałych.
    - The "Rodzaje upraw" mega menu (#mega-uprawy) is CE-02 in the variant
      "grupy-ze-zdjeciem" (class cw-mega--crop-switch, 15.10.2026; it replaced
-     the five-column variant "grupy" of 20.09.2026). Five groups and 31 items
-     from the supplied list: the left column holds the five group names as
+     the five-column variant "grupy" of 20.09.2026). Five groups and 29 items
+     from the client's list (AC #32175, 22.11.2026; before: 31 items): the left column holds the five group names as
      vertical tabs, the middle shows the list of the active group, the right
      its photo (illustrative, one photo per group). The first group is active
      by default; on a crop page the group of that crop. Switching: pointer
@@ -47,11 +47,11 @@
      switch groups), focus and arrow keys (up/down, Home/End), touch (the
      first tap on a group shows its list). Tab leads from the group into its
      list, Escape closes the panel (cw.js). Group names are text, not links;
-     only Borówka amerykańska, Kukurydza and Ziemniak have a page – the rest
+     only Borówka, Kukurydza and Ziemniak have a page – the rest
      are <span class="cw-crop--soon">. All items look alike (link dark, item
      without a page lighter); Ozime / Jare are plain subheadings.
-     li.is-featured stays as data from the supplied list, without a look of
-     its own. The fruit tree group is called "Drzewa sadownicze" (the source
+     li.is-featured marks the crops planned for the start (bold in the
+     client's list, 17 items), without a look of its own. The fruit tree group is called "Drzewa sadownicze" (the source
      document says "Sadownicze"). The panel starts under the left edge of its
      trigger and ends on the right edge of the content container (16.10.2026,
      placeCropPanel(); in a narrow panel the photo gives way, see
@@ -331,11 +331,11 @@
             <div class="cw-cropsw__panel" role="tabpanel" id="cw-cropsw-p1" aria-labelledby="cw-cropsw-t1">
               <div class="cw-cropsw__list">
                 <ul class="cw-crops__list">
-                  <li class="is-featured"><a class="cw-crop" data-nav="borowka" data-nav-parent="uprawy" href="borowka.html">Borówka amerykańska</a></li>
+                  <li class="is-featured"><a class="cw-crop" data-nav="borowka" data-nav-parent="uprawy" href="borowka.html">Borówka</a></li>
                   <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Malina</span></li>
                   <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Truskawka</span></li>
-                  <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Porzeczka</span></li>
-                  <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Aronia</span></li>
+                  <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Porzeczka</span></li>
+                  <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Aronia</span></li>
                   <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Winogrono</span></li>
                 </ul>
               </div>
@@ -346,8 +346,7 @@
                 <ul class="cw-crops__list">
                   <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Jabłoń</span></li>
                   <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Grusza</span></li>
-                  <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Czereśnia</span></li>
-                  <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Wiśnia</span></li>
+                  <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Wiśnia / Czereśnia</span></li>
                   <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Morela / Brzoskwinia</span></li>
                 </ul>
               </div>
@@ -356,9 +355,9 @@
             <div class="cw-cropsw__panel" role="tabpanel" id="cw-cropsw-p3" aria-labelledby="cw-cropsw-t3" tabindex="0" hidden>
               <div class="cw-cropsw__list">
                 <ul class="cw-crops__list">
-                  <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Papryka</span></li>
-                  <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Ogórek</span></li>
-                  <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Pomidor</span></li>
+                  <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Papryka</span></li>
+                  <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Ogórek</span></li>
+                  <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Pomidor</span></li>
                   <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Kapustne</span></li>
                 </ul>
               </div>
@@ -370,8 +369,8 @@
                   <div class="cw-crops__season">
                     <span class="cw-crops__season-name">Ozime</span>
                     <ul class="cw-crops__list">
-                      <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Rzepak ozimy</span></li>
-                      <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Pszenica ozima</span></li>
+                      <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Rzepak ozimy</span></li>
+                      <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Pszenica</span></li>
                       <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Pszenżyto ozime</span></li>
                       <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Jęczmień ozimy</span></li>
                       <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Żyto</span></li>
@@ -396,10 +395,9 @@
             <div class="cw-cropsw__panel" role="tabpanel" id="cw-cropsw-p5" aria-labelledby="cw-cropsw-t5" tabindex="0" hidden>
               <div class="cw-cropsw__list">
                 <ul class="cw-crops__list">
-                  <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Trawnik</span></li>
-                  <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Liściaste</span></li>
-                  <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Iglaste</span></li>
-                  <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Kwasolubne</span></li>
+                  <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Trawnik</span></li>
+                  <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Drzewa i krzewy ozdobne</span></li>
+                  <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Rośliny rabatowe i kwitnące</span></li>
                 </ul>
               </div>
               <img class="cw-cropsw__photo" src="img/foto/sciolka-doniczkowe.jpg" alt="Kwitnący różanecznik w białej donicy na ogrodowym tarasie" width="2000" height="1116" loading="lazy" decoding="async">
@@ -445,16 +443,17 @@
     <a class="wf-navitem cw-mobilenav__sub" data-nav="carbohumic" data-nav-parent="produkty" href="carbohumic-doglebowy.html">Carbohumic doglebowy</a>
     <a class="wf-navitem cw-mobilenav__sub" data-nav="carbohumic-dolistny" data-nav-parent="produkty" href="carbohumic-dolistny.html">Carbohumic nalistny</a>
     <p class="wf-navitem cw-mobilenav__label" data-nav="uprawy">Rodzaje upraw</p>
-    <!-- Ta sama treść co w #mega-uprawy: pięć grup, 31 pozycji, te same stany.
+    <!-- Ta sama treść co w #mega-uprawy: pięć grup, 29 pozycji, te same stany
+         (lista upraw od klienta, 22.11.2026).
          Obie listy trzyma w zgodzie regresja _narzedzia/qa-menu.py. -->
     <details class="cw-mobilenav__group" name="cw-uprawy">
       <summary class="wf-navitem cw-mobilenav__sub">Jagodowe<svg class="wf-icon wf-icon--sm cw-mobilenav__chev" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
       <ul class="cw-crops__list">
-        <li class="is-featured"><a class="cw-crop" data-nav="borowka" data-nav-parent="uprawy" href="borowka.html">Borówka amerykańska</a></li>
+        <li class="is-featured"><a class="cw-crop" data-nav="borowka" data-nav-parent="uprawy" href="borowka.html">Borówka</a></li>
         <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Malina</span></li>
         <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Truskawka</span></li>
-        <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Porzeczka</span></li>
-        <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Aronia</span></li>
+        <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Porzeczka</span></li>
+        <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Aronia</span></li>
         <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Winogrono</span></li>
       </ul>
     </details>
@@ -463,17 +462,16 @@
       <ul class="cw-crops__list">
         <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Jabłoń</span></li>
         <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Grusza</span></li>
-        <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Czereśnia</span></li>
-        <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Wiśnia</span></li>
+        <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Wiśnia / Czereśnia</span></li>
         <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Morela / Brzoskwinia</span></li>
       </ul>
     </details>
     <details class="cw-mobilenav__group" name="cw-uprawy">
       <summary class="wf-navitem cw-mobilenav__sub">Warzywnicze<svg class="wf-icon wf-icon--sm cw-mobilenav__chev" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
       <ul class="cw-crops__list">
-        <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Papryka</span></li>
-        <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Ogórek</span></li>
-        <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Pomidor</span></li>
+        <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Papryka</span></li>
+        <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Ogórek</span></li>
+        <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Pomidor</span></li>
         <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Kapustne</span></li>
       </ul>
     </details>
@@ -483,8 +481,8 @@
         <div class="cw-crops__season">
           <span class="cw-crops__season-name">Ozime</span>
           <ul class="cw-crops__list">
-            <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Rzepak ozimy</span></li>
-            <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Pszenica ozima</span></li>
+            <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Rzepak ozimy</span></li>
+            <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Pszenica</span></li>
             <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Pszenżyto ozime</span></li>
             <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Jęczmień ozimy</span></li>
             <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Żyto</span></li>
@@ -507,10 +505,9 @@
     <details class="cw-mobilenav__group" name="cw-uprawy">
       <summary class="wf-navitem cw-mobilenav__sub">Rośliny ozdobne<svg class="wf-icon wf-icon--sm cw-mobilenav__chev" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
       <ul class="cw-crops__list">
-        <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Trawnik</span></li>
-        <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Liściaste</span></li>
-        <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Iglaste</span></li>
-        <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Kwasolubne</span></li>
+        <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Trawnik</span></li>
+        <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Drzewa i krzewy ozdobne</span></li>
+        <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Rośliny rabatowe i kwitnące</span></li>
       </ul>
     </details>
     <a class="wf-navitem" data-nav="prochnica-plus" href="prochnica-plus.html">Programy i badania</a>

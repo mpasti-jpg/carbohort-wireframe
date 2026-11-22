@@ -2653,7 +2653,7 @@ window.CW_CE = {
         "rząd domykający: przycisk i dwa linki ze strzałką"
       ],
       "warianty": {
-        "odwrocony": "opis po lewej, zdjęcie po prawej (klasa b-row--rev na Borówce – do 07.11.2026 także strona główna #o-nas – c5-who--flip na CARBOMAT HUMIC i CARBOHUMIC nalistny)",
+        "odwrocony": "opis po lewej, zdjęcie po prawej (klasa b-row--rev na Borówce do 22.11.2026 – wiersz 02 etapu 1 zszedł po uwadze U-111; do 07.11.2026 także strona główna #o-nas – c5-who--flip na CARBOMAT HUMIC i CARBOHUMIC nalistny)",
         "z-wartosciami": "⚠️ bez wystąpień od 02.11.2026 (strona główna przeszła na wiersze bazy i odwrocony, bez filmu i bez wartości; kod c5h-about, c5h-vals i c5h-film zdjęty z home.css). Opis historyczny – siatka 6 / 6 wyrównana do góry: po lewej kadr 4:5 przyklejony na czas prawej kolumny, po prawej kicker i nagłówek sekcji, akapit intro, wyróżniony akapit z kreską po lewej, trzy wartości jako wiersze rozdzielone liniami (ramka ikony, nazwa, zdanie), karta filmu w ramce (kadr 16:9 z plakatem, kwadratowy przycisk odtwarzania, podpis i zdanie) i rząd domykający: przycisk oraz dwa linki ze strzałką; poniżej 900 px kadr 4:3 nad treścią (strona główna #o-nas)",
         "katalog": "wiersz grupy produktów w katalogu: w kadrze opakowania grupy na jasnym polu (zamiast zdjęcia), nad nazwą kicker typu produktu, pod opisem etykieta i lista faktów etykieta | wartość, rząd dwóch przycisków (produkty-katalog.html#grupy); pastylki filtra z pierwszej wersji zdjęte 10.11.2026 (komentarz Mateusza na artefakcie)"
       },
@@ -2662,8 +2662,8 @@ window.CW_CE = {
       },
       "zrzuty_wariantow": {
         "odwrocony": {
-          "plik": "v7/borowka.html",
-          "kotwica": "b-podloze-mieszanka",
+          "plik": "v7/carbomat-humic.html",
+          "kotwica": "wariant-hobby",
           "maxh": 1100
         }
       }
@@ -3160,7 +3160,7 @@ window.CW_CE = {
       },
       "skroty_wariantow": {
         "z-pakietami": "Pudełka wyboru pakietu, suwak, wiersze zabiegów i boksy wyników z sumą kosztu",
-        "etapy": "Powierzchnia, trzy pakiety, terminarz faz z dawką zabiegu, cena na sezon dla każdego produktu (lista albo kolumna wykresu), razem netto i „Dodaj do koszyka”"
+        "etapy": "Powierzchnia, trzy pakiety, terminarz faz z dawką zabiegu (zależną od pakietu i sposobu aplikacji), cena na sezon dla każdego produktu (lista albo kolumna wykresu), razem netto i „Dodaj do koszyka”"
       },
       "opis": "Nagłówek, suwak powierzchni z wartością, siatka boksów wyników (wartość, jednostka, wiersze pomocnicze). Głowa sekcji – kicker, h2 i lead – stoi NAD paskiem powierzchni, wyrównana do lewej (uwaga Mateusza z 20.09.2026; kolumna głowy obok przelicznika, którą wprowadzał szeroki kontener od 1560 px, zniknęła razem z nim). Boks wyniku może nieść wiersze pomocnicze z własnym `data-calc-out`: woda do zabiegu i koszt produktu brutto (etykieta mówi „brutto” przy każdej liczbie, nie tylko w nocie pod tabelą – decyzja Mateusza z 20.09.2026) – `data-lo`/`data-hi` są tam już w złotówkach na hektar (dawka × cena jednostkowa), więc przelicznik `c5.js` zostaje nietknięty.",
       "mechanika": "Suwak przelicza dawki na bieżąco (data-calc w c5.js, grupowanie tysięcy), bez JS wartości domyślne.",
@@ -3177,7 +3177,7 @@ window.CW_CE = {
         "boksy wyników"
       ],
       "warianty": {
-        "etapy": "koszt programu na sezon z terminarzem faz (Kukurydza #u-koszt, Figma 560:205 z adnotacjami; szablon stron upraw rolniczych, rundy 03.11.2026 wieczorem, 04.11.2026 i 06.11.2026): klasa u-pk--etapy (bez u-pk--linijka – linijki nie ma od 04.11.2026); na białym tle strony, bez leadu pod nagłówkiem; powierzchnia w jednym niskim wierszu – etykieta, suwak natywny między „0,5 ha” i „50 ha”, pole liczby z „ha” obok (wartość startowa: przeciętne pole, 10 ha); pod nią przełącznik pakietów CE-100 (c5-pkdock, w przepływie, nad tabelą). Od 06.11.2026 (uwaga klienta U-38) każdy produkt ma JEDNĄ dawkę na sezon, taką samą w każdym pakiecie: siedem kolumn tych samych faz co wykres CE-100 to terminarz otwartego pakietu o dwóch wspólnych wierszach (subgrid: nazwy faz, zabiegi) – kafel zabiegu (packshot, nazwa, dawka jednego zabiegu, ilość na pole; bez ceny i bez checkboksa; kafel partnerski na beżowym tle; kafle innych pakietów przerywane, z dopiskiem „poza pakietem”); od 1200 px pierwsza kolumna --we-first z nazwami wierszy („Fazy”, „Zabiegi w wybranym pakiecie – dawka na hektar i ilość na całą powierzchnię”), więc fazy stoją pod fazami wykresu. Nad kolumną nazwa fazy w obrysie bez wypełnienia – przycisk otwierający lightbox fazy (u-pkc__ph); faza bez zabiegu: „bez zabiegu w tej fazie”; faza z liczonym produktem ma zielonkawe tło i obrys ciała pod nazwą. Pod kolumnami lista „Produkty na sezon” (u-pkc__prod, od 1000 px tabela z wierszem nagłówków): checkbox (zaznaczony = liczony, odznaczony = wyszarzony razem z kaflami tego produktu – przeniesiony z kafla, bo produkt może stać w kilku fazach), packshot, nazwa, dawka na sezon, liczba zabiegów, ilość na pole, opakowania i JEDNA cena netto produktu za sezon. Produkt z podziałem dawki ma przełącznik 1 / 2 / 3 zabiegi (semantyka radio) z wariantem domyślnym („Domyślnie: …”), zdaniem, że ilość i cena się nie zmieniają, i przyciskiem „Jak dzielić dawkę?” do metryczki; podział zmienia tylko fazy i dawkę jednego zabiegu. Pod linią, która zaczyna się od pierwszej fazy: po lewej „Razem netto za zaznaczone produkty na sezon”, pakiet, areał i liczba produktów, cena netto, brutto mniejszym pismem; po prawej „Dodaj wybrane produkty do koszyka”. Noty o cenach 100 px niżej, bez ramki. Koszt = jedna wielkość opakowania na produkt na ilość za sezon (ta, która kosztuje najmniej; ilość poniżej najmniejszego opakowania = to opakowanie), netto przez CWSklep.vatSplit; do koszyka trafiają dokładnie policzone opakowania; przyciski data-pkc-buy w metryczkach otwierają szybki podgląd sklepu z tego samego JSON. Poniżej 1000 px fazy jedna pod drugą, puste fazy i nazwy wierszy znikają, kafel w wierszu, w liście produktów wartości w liniach z podpisem. Od 07.11.2026 (komentarze Mateusza na artefakcie): bez kolumny nazw wierszy, fazy na całą szerokość z miniaturą 56 px i osią pod nagłówkami; „Wskaż powierzchnię uprawy”; ciche „Wyłącz wybrane fazy z obliczeń” – siedem chipów faz (aria-pressed), produkt liczy tylko zabiegi z faz, które zostały; „Ilość na N ha”; cena na początku, pod nią jedna linia (pakiet, areał, „cena netto za N zaznaczone produkty”, wyłączone fazy); produkt partnerski w liście jak nasze, z dopiskiem „(produkt partnerski)”; noty 12 px na całą szerokość. W jednej sekcji z wykresem (CE-100 „razem”, na Kukurydzy od 07.11.2026) – bez własnych tabów (pakiet z przełącznika wykresu) i bez kolumn faz (zabiegi = paski wykresu; faza wyłączona z obliczeń przyciemnia swoją kolumnę na wykresie); tryb z kolumnami faz zostaje w module dla stron z dwiema sekcjami. Od 07.11.2026 wieczorem (U-40–U-47) w sekcji „razem” wiersze produktów to komórki kolumny cen wykresu ([data-pkc-row]: data-prod, data-dose, data-unit, data-pk, [data-pkc-pick], [data-pkc-packs], [data-pkc-price]; cena kopiowana do [data-pkc-mprice] karty produktu), przełącznik zabiegów stoi pod paskiem ([data-zab-switch][data-zab-prod]), przyciski faz w wierszu wykresu ([data-pkc-excl] button[data-c][data-name] – zmieniają napis na „Włącz” zamiast aria-pressed), suma i koszyk pod wykresem, [data-pkc-hafor] w nagłówku kolumny cen; listy produktów i chipów faz na Kukurydzy już nie ma. Od 08.11.2026 (U-80, zamiast przycisku „Oblicz” z U-48) powierzchnia startuje od 0 ha, a koszty włącza powierzchnia powyżej 0 (suwak albo pole; klasa is-calc na wykresie, przy 0 ha znika) – do tego czasu paski pokazują samą dawkę na hektar; suma, opis i koszyk stoją w tym samym pasie co powierzchnia (U-81). Pudełko bez wykresu liczy od razu.",
+        "etapy": "koszt programu na sezon z terminarzem faz (Kukurydza #u-koszt, Figma 560:205 z adnotacjami; szablon stron upraw rolniczych, rundy 03.11.2026 wieczorem, 04.11.2026 i 06.11.2026): klasa u-pk--etapy (bez u-pk--linijka – linijki nie ma od 04.11.2026); na białym tle strony, bez leadu pod nagłówkiem; powierzchnia w jednym niskim wierszu – etykieta, suwak natywny między „0,5 ha” i „50 ha”, pole liczby z „ha” obok (wartość startowa: przeciętne pole, 10 ha); pod nią przełącznik pakietów CE-100 (c5-pkdock, w przepływie, nad tabelą). Od 06.11.2026 (uwaga klienta U-38) każdy produkt ma JEDNĄ dawkę na sezon, taką samą w każdym pakiecie: siedem kolumn tych samych faz co wykres CE-100 to terminarz otwartego pakietu o dwóch wspólnych wierszach (subgrid: nazwy faz, zabiegi) – kafel zabiegu (packshot, nazwa, dawka jednego zabiegu, ilość na pole; bez ceny i bez checkboksa; kafel partnerski na beżowym tle; kafle innych pakietów przerywane, z dopiskiem „poza pakietem”); od 1200 px pierwsza kolumna --we-first z nazwami wierszy („Fazy”, „Zabiegi w wybranym pakiecie – dawka na hektar i ilość na całą powierzchnię”), więc fazy stoją pod fazami wykresu. Nad kolumną nazwa fazy w obrysie bez wypełnienia – przycisk otwierający lightbox fazy (u-pkc__ph); faza bez zabiegu: „bez zabiegu w tej fazie”; faza z liczonym produktem ma zielonkawe tło i obrys ciała pod nazwą. Pod kolumnami lista „Produkty na sezon” (u-pkc__prod, od 1000 px tabela z wierszem nagłówków): checkbox (zaznaczony = liczony, odznaczony = wyszarzony razem z kaflami tego produktu – przeniesiony z kafla, bo produkt może stać w kilku fazach), packshot, nazwa, dawka na sezon, liczba zabiegów, ilość na pole, opakowania i JEDNA cena netto produktu za sezon. Produkt z podziałem dawki ma przełącznik 1 / 2 / 3 zabiegi (semantyka radio) z wariantem domyślnym („Domyślnie: …”), zdaniem, że ilość i cena się nie zmieniają, i przyciskiem „Jak dzielić dawkę?” do metryczki; podział zmienia tylko fazy i dawkę jednego zabiegu. Pod linią, która zaczyna się od pierwszej fazy: po lewej „Razem netto za zaznaczone produkty na sezon”, pakiet, areał i liczba produktów, cena netto, brutto mniejszym pismem; po prawej „Dodaj wybrane produkty do koszyka”. Noty o cenach 100 px niżej, bez ramki. Koszt = jedna wielkość opakowania na produkt na ilość za sezon (ta, która kosztuje najmniej; ilość poniżej najmniejszego opakowania = to opakowanie), netto przez CWSklep.vatSplit; do koszyka trafiają dokładnie policzone opakowania; przyciski data-pkc-buy w metryczkach otwierają szybki podgląd sklepu z tego samego JSON. Poniżej 1000 px fazy jedna pod drugą, puste fazy i nazwy wierszy znikają, kafel w wierszu, w liście produktów wartości w liniach z podpisem. Od 07.11.2026 (komentarze Mateusza na artefakcie): bez kolumny nazw wierszy, fazy na całą szerokość z miniaturą 56 px i osią pod nagłówkami; „Wskaż powierzchnię uprawy”; ciche „Wyłącz wybrane fazy z obliczeń” – siedem chipów faz (aria-pressed), produkt liczy tylko zabiegi z faz, które zostały; „Ilość na N ha”; cena na początku, pod nią jedna linia (pakiet, areał, „cena netto za N zaznaczone produkty”, wyłączone fazy); produkt partnerski w liście jak nasze, z dopiskiem „(produkt partnerski)”; noty 12 px na całą szerokość. W jednej sekcji z wykresem (CE-100 „razem”, na Kukurydzy od 07.11.2026) – bez własnych tabów (pakiet z przełącznika wykresu) i bez kolumn faz (zabiegi = paski wykresu; faza wyłączona z obliczeń przyciemnia swoją kolumnę na wykresie); tryb z kolumnami faz zostaje w module dla stron z dwiema sekcjami. Od 07.11.2026 wieczorem (U-40–U-47) w sekcji „razem” wiersze produktów to komórki kolumny cen wykresu ([data-pkc-row]: data-prod, data-dose, data-unit, data-pk, [data-pkc-pick], [data-pkc-packs], [data-pkc-price]; cena kopiowana do [data-pkc-mprice] karty produktu), przełącznik zabiegów stoi pod paskiem ([data-zab-switch][data-zab-prod]), przyciski faz w wierszu wykresu ([data-pkc-excl] button[data-c][data-name] – zmieniają napis na „Włącz” zamiast aria-pressed), suma i koszyk pod wykresem, [data-pkc-hafor] w nagłówku kolumny cen; listy produktów i chipów faz na Kukurydzy już nie ma. Od 08.11.2026 (U-80, zamiast przycisku „Oblicz” z U-48) powierzchnia startuje od 0 ha, a koszty włącza powierzchnia powyżej 0 (suwak albo pole; klasa is-calc na wykresie, przy 0 ha znika) – do tego czasu paski pokazują samą dawkę na hektar; suma, opis i koszyk stoją w tym samym pasie co powierzchnia (U-81). Pudełko bez wykresu liczy od razu. Od 22.11.2026 (zastępuje zasadę „jedna dawka na sezon, taka sama w każdym pakiecie”) dawka na sezon może zależeć od pakietu albo od sposobu aplikacji i pakietu: data-doses na wierszu ceny – JSON {\"std\":0.6,\"kompl\":1.2} albo {\"pas\":{\"min\":150,…},\"strip\":{…},\"cal\":{…}}; bez niego liczy się data-dose jak dotąd. Sposób wybiera radiogroup [data-spos-switch][data-spos-prod] pod paskiem (przyciski data-spos-set, domyślny z aria-checked=\"true\"; zdarzenie c5:sposob), paski i kafle z data-spos liczą się tylko przy swoim sposobie. Dawka jednego zabiegu = dawka na sezon ÷ liczba zabiegów produktu w wybranym pakiecie, podziale i sposobie (paski z własnym data-pk) – np. dwa paski w pakiecie kompleksowym dzielą dawkę 1,2 na 2 × 0,6. Produkt bez opakowań w JSON liczy ilość, a cenę pokazuje „–” i nie wchodzi do sumy.",
         "z-pakietami": "przelicznik spięty z wyborem pakietu (Kukurydza, 01.10.2026): w górnym rzędzie pudełka-przełączniki CE-45 „dwa-pakiety” i suwak powierzchni, niżej panel wybranego pakietu – wiersze „Etap · Zabieg”, a pod nimi boksy wyników po jednym na produkt (ilość, woda do zabiegu, koszt brutto, przycisk sklepu) i ciemny boks sumy kosztu pakietu; trzy boksy w pakiecie minimum, cztery w optimum; `data-calc` i `data-tabs-group` siedzą na tym samym kontenerze, więc przelicznik wypełnia boksy obu paneli. Na Borówce (02.10.2026) panel ma dwie grupy boksów: „co roku” i „jednorazowo” – każda z ciemnym boksem sumy; boksy jednorazowe (podłoże, „Wodny Stoper”, ściółka) niosą ilość na powierzchnię bez wiersza wody i koszt brutto liczony z największego opakowania (uwaga Mateusza z 02.10: „A tu nie liczysz ceny?”); pod panelami zostaje tylko odnośnik „Jak liczymy pakiety: założenia i ceny”, który otwiera okno CE-25 „jednostronicowy” z notą o roboczej propozycji, założeniami przeliczenia na hektar i cenami; modyfikator u-pk--linijka (Borówka, wzór Figma 466-161; od 15.10.2026 wieczorem w przepływie strony): kolejność – przełącznik pakietów, tuż pod nim linijka powierzchni (gęsta podziałka, etykiety w skali logarytmicznej data-ruler-marks, domyślnie 0,5 · 1 · 2 · 5 · 10 · 20 · 50, uchwyt z kreską i ←→, duża wartość z „ha”; przeciąganie i klik, role=slider, strzałki, PageUp / PageDown, Home, End; kroki data-ruler-steps – 0,5 ha do 10 ha, potem 1 ha; wpisuje do [data-calc-in], liczy dalej c5.js), produkty wybranego pakietu w stałej siatce 4 kolumn od 1000 px (karta = 1/4 wiersza bez względu na liczbę kart; poniżej 2 kolumny, także na telefonie), na końcu zalecenia „Etap · Zabieg”; bez przyklejania i bez wpływu na dok doradcy; bez JS suwak natywny. Wzór dla kolejnych stron upraw (decyzja Mateusza z 16.10.2026 – wdrażać przy poprawianiu ich treści)"
       },
       "zrzut": {
@@ -4255,7 +4255,7 @@ window.CW_CE = {
         "wiersz: numer w węźle + tekst od połowy kontenera",
         "panel otwartej pozycji na całą szerokość kontenera",
         "kadr 7 : 5 w lewym dolnym rogu panelu",
-        "kolumna treści: tytuł, opis, boksy produktów w pionie, nota, przycisk na szerokość kolumny"
+        "kolumna treści: tytuł, opis, boksy produktów w pionie, przycisk na szerokość kolumny, nota (od 22.11.2026 przycisk nad notą – U-113)"
       ],
       "warianty": {},
       "zrzut": {
@@ -5637,10 +5637,12 @@ window.CW_CE = {
         "opcjonalnie: odnośnik pod nagłówkiem, np. do całej playlisty (a.c5-relc__more, EL-05 wf-link ze strzałką)"
       ],
       "skroty_wariantow": {
-        "pojedyncza": "Jedna karta filmu przy czynności: kadr z play obok tytułu, bez strzałek."
+        "pojedyncza": "Jedna karta filmu przy czynności: kadr z play obok tytułu, bez strzałek.",
+        "warianty": "Karuzela kart wariantów: zdjęcie, kapsułka, nazwa wariantu, wyjaśnienie i dawka na dole karty."
       },
       "warianty": {
-        "pojedyncza": "jedna karta filmu wstawiana w cudzy CE przy opisie czynności (kolumna CE-36, karta CE-20, kolumna CE-67, panel CE-68): kadr z play, kapsułka „Film YouTube”, tytuł z odnośnikiem, dopisek pod nim; bez toru, strzałek i skryptu (korzeń bez data-relc). Kontener rozmiaru na korzeniu: od 340 px szerokości kadr ok. 40% (najwyżej 200 px) po lewej, tekst obok, wysokość ok. 110–150 px; węższy – kadr 16 : 9 nad tekstem; typografia o stopień mniejsza niż w karuzeli; kolor karty pokrętłem --c5-relc-card. Klasa c5-relc--pojedyncza (18.11.2026, uwaga klienta U-98 – „krótki film z każdej czynności”; Borówka, przy każdej czynności etapów 1–4)"
+        "pojedyncza": "jedna karta filmu wstawiana w cudzy CE przy opisie czynności (kolumna CE-36, karta CE-20, kolumna CE-67, panel CE-68): kadr z play, kapsułka „Film YouTube”, tytuł z odnośnikiem, dopisek pod nim; bez toru, strzałek i skryptu (korzeń bez data-relc). Kontener rozmiaru na korzeniu: od 340 px szerokości kadr ok. 40% (najwyżej 200 px) po lewej, tekst obok, wysokość ok. 110–150 px; węższy – kadr 16 : 9 nad tekstem; typografia o stopień mniejsza niż w karuzeli; kolor karty pokrętłem --c5-relc-card. Klasa c5-relc--pojedyncza (18.11.2026, uwaga klienta U-98 – „krótki film z każdej czynności”; Borówka, przy każdej czynności etapów 1–4)",
+        "warianty": "karuzela kart z wariantami zamiast filmów (Borówka #b-podloze-warianty – trzy warianty podłoża): ta sama mechanika toru i strzałek (data-relc, skrypt modułu), w głowie mniejszy nagłówek (EL-10) bez kickera, strzałki na jego linii; karta: kadr bez znaku play i bez odnośnika, kapsułka z krótkim faktem (udział torfu), nazwa wariantu, wyjaśnienie (p.c5-relc__txt) i dawka na dole karty (p.c5-relc__dose: etykieta + wartość); tekst od góry karty. Klasa c5-relc--warianty (22.11.2026, uwaga klienta U-111 – „podpis wariantu ze zdjęciem, potem wyjaśnienia i dawka […] karuzela”)"
       },
       "zrzut": {
         "maxh": 700
@@ -5983,7 +5985,7 @@ window.CW_CE = {
       "rodzina": "dane",
       "skrot": "Oś faz rozwoju ze zdjęciem i przyciskiem opisu pod każdą fazą (cała kolumna jest linkiem), przełącznik pakietów z opisem pakietu, wiersze produktów z paskami obecności w fazach.",
       "skroty_wariantow": {
-        "razem": "Pierwsza sekcja strony upraw: nagłówek ze wstępem, wykres faz z kolumną cen od powierzchni, kropkami liczby zabiegów i wyłączaniem faz, kalkulator w jednym pasie pod wykresem"
+        "razem": "Pierwsza sekcja strony upraw: nagłówek ze wstępem, wykres faz z kolumną cen od powierzchni, kropkami liczby zabiegów, wyborem sposobu aplikacji pod paskiem i wyłączaniem faz, kalkulator w jednym pasie pod wykresem"
       },
       "projekt": null,
       "tagi": {
@@ -6015,7 +6017,7 @@ window.CW_CE = {
         ]
       },
       "opis": "Szeroka sekcja wg ramki Figma 560:167 i jej adnotacji (szablon stron upraw rolniczych, Kukurydza od 03.11.2026): głowa wyśrodkowana – kicker, h2 i pod nagłówkiem przełącznik pakietów (c5-pkbar w c5-pkdock, w przepływie strony), pod nim opis otwartego pakietu i chipy jego produktów (od 06.11.2026, U-37), bez leadu – wysoko nad wykresem, legenda pod wykresem (od 04.11.2026); wykres na ciepłym panelu jako prawdziwa tabela: u góry oś faz rozwoju (sama nazwa fazy nad linią z kreskami na granicach; numer i BBCH zdjęte 04.11.2026; między nazwą a linią zdjęcie fazy 4:3 – od 06.11.2026, U-35), pod osią w każdej fazie pigułka „Opis fazy” (w ostatniej „Czytaj więcej”), niżej po jednym wierszu na produkt – w karcie produktu packshot 56 px nad nazwą (wiersz ok. 120 px), produkty CarboHort w białej karcie, produkty partnerskie (dostępne w sklepie, mniej promowane) w tej samej wielkości, tylko na beżowym tle (surface-warm-strong), bez chipa – i paski obecności produktu w fazie, bez dawek (od 06.11.2026, uwaga klienta U-38 – dawka na sezon stoi w metryczce i w przeliczniku; dawny tekst paska data-txt-min zostaje w skrypcie dla innych stron); pasek kreskowany = możliwy termin części dawki na sezon, pasek przerywany = produkt zamienny (produkt partnerski ma od 07.11.2026 taki sam pasek jak nasze, a w karcie wiersza dopisek „(produkt partnerski)”), długi (colspan) = produkt stosowany przez okres. Pierwsza kolumna ma szerokość --we-first (240 px, 200 px przy 900–1199 px, 124 px poniżej 900 px); od 1200 px przelicznik CE-47 „etapy” ma tę samą pierwszą kolumnę (nazwy wierszy) i ten sam wewnętrzny margines panelu, więc kolumny faz obu sekcji stoją w jednej linii.",
-      "mechanika": "Przełącznik (semantyka radio: klik, strzałki, Home, End) pokazuje paski jednego pakietu: data-pk na pasku wymienia jego pakiety, pasek bez data-pk (zamienny) stoi zawsze; lista produktów stoi zawsze, zmieniają się tylko paski; na start pakiet kompleksowy; widoczny jest tylko opis otwartego pakietu (data-pk-desc). Pasek z data-zab-prod i data-zab (liczby zabiegów, w których przypada część dawki) jest kreskowany (is-opt), dopóki przelicznik CE-47 „etapy” nie wybierze podziału, który go obejmuje (zdarzenie c5:zabiegi). Klik w dowolne miejsce kolumny fazy klika jej pigułkę – ta otwiera stronę fazy w lightboxie CE-25 „fazy”; najechanie i fokus podbarwiają kolumnę na biało. Nazwa produktu otwiera metryczkę (CE-25 „metryczka”). Wszystkie przełączniki tej samej grupy (data-pakiety) są zgrane zdarzeniem c5:pakiet na document: przelicznik CE-47 „etapy” i pasek pakietów w lightboxie faz (data-pk-sat – filtruje karty produktów data-pk i pokazuje data-pk-none, gdy w fazie nie ma zabiegu pakietu). Przycisk data-we-goto („Oblicz koszt stosowania”) po zamknięciu lightboxa przewija do przelicznika. Poniżej 900 px tabela przewija się w poziomie w panelu z przypiętą kolumną produktów; przewijacz nie ma data-lenis-prevent, więc kółko nad wykresem przewija stronę płynnie (od 04.11.2026). Bez JS przełączniki ukryte, wszystkie paski i karty widoczne; przy reduced-motion bez przejść.",
+      "mechanika": "Przełącznik (semantyka radio: klik, strzałki, Home, End) pokazuje paski jednego pakietu: data-pk na pasku wymienia jego pakiety, pasek bez data-pk (zamienny) stoi zawsze; lista produktów stoi zawsze, zmieniają się tylko paski; na start pakiet kompleksowy; widoczny jest tylko opis otwartego pakietu (data-pk-desc). Pasek z data-zab-prod i data-zab (liczby zabiegów, w których przypada część dawki) jest kreskowany (is-opt), dopóki przelicznik CE-47 „etapy” nie wybierze podziału, który go obejmuje (zdarzenie c5:zabiegi). Klik w dowolne miejsce kolumny fazy klika jej pigułkę – ta otwiera stronę fazy w lightboxie CE-25 „fazy”; najechanie i fokus podbarwiają kolumnę na biało. Nazwa produktu otwiera metryczkę (CE-25 „metryczka”). Wszystkie przełączniki tej samej grupy (data-pakiety) są zgrane zdarzeniem c5:pakiet na document: przelicznik CE-47 „etapy” i pasek pakietów w lightboxie faz (data-pk-sat – filtruje karty produktów data-pk i pokazuje data-pk-none, gdy w fazie nie ma zabiegu pakietu). Przycisk data-we-goto („Oblicz koszt stosowania”) po zamknięciu lightboxa przewija do przelicznika. Poniżej 900 px tabela przewija się w poziomie w panelu z przypiętą kolumną produktów; przewijacz nie ma data-lenis-prevent, więc kółko nad wykresem przewija stronę płynnie (od 04.11.2026). Od 22.11.2026 sposób aplikacji produktu: jego paski mają data-spos-prod i data-spos (sposoby, które kładą zabieg w tej fazie), pod paskiem przełącznik w tym samym miejscu i kroju co liczba zabiegów (wariant c5-we__zabw--sposob: etykieta „Wybierz sposób aplikacji” i po jednym wierszu z kropką na sposób, domyślny z dopiskiem „domyślnie”; radiogroup [data-spos-switch] obsługuje CE-47 „etapy”, zdarzenie c5:sposob) – pasek innego sposobu dostaje is-unused i znika, zmiana fazy przenosi pasek lotem (bez lotu przy reduced-motion). Wartość na pasku zawija się tylko przy „·” (liczby i jednostki spięte twardą spacją). Bez JS przełączniki ukryte, wszystkie paski i karty widoczne; przy reduced-motion bez przejść.",
       "baza": {
         "plik": "v7/kukurydza.html",
         "kotwica": "u-etapy"
@@ -6198,11 +6200,58 @@ window.CW_CE = {
       "nazwa": "Pas logotypów",
       "grupa": "noty-i-cta",
       "rodzina": "pasy",
-      "skrot": "Nagłówek i rząd logotypów organizacji, każdy logotyp jest linkiem do jej strony.",
+      "skrot": "Nagłówek i statyczny pas logotypów organizacji, bez linków.",
       "projekt": null,
       "tagi": {
         "media": [
           "ikona"
+        ],
+        "tekst": [
+          "tylko-naglowek"
+        ],
+        "ukryte": [
+          "wszystko-widoczne"
+        ],
+        "pozycje": [
+          "5-8"
+        ],
+        "nadaje": [
+          "dowod-zrodla"
+        ],
+        "mechanika": [
+          "statyczny"
+        ],
+        "zakres": [
+          "uniwersalny"
+        ]
+      },
+      "opis": "Cichy pas: wyśrodkowany nagłówek (h2 w stopniu h3) i logotypy organizacji bez odnośników (span, od 22.11.2026), alt = nazwa organizacji. Od 900 px siatka o --c5-lg-cols kolumnach (domyślnie 4; na stronie głównej 3, czyli sześć logotypów w dwóch rzędach), z modyfikatorem c5-lg__list--rzad-xl od 1440 px jeden wyśrodkowany rząd; niżej po dwa. Logotypy w swoich kolorach i proporcjach, wspólna wysokość (--c5-lg-h, domyślnie 64 px; na telefonie --c5-lg-h-sm, 52 px) wyrównana optycznie modyfikatorami obrazu: c5-lg__img--kwadrat (logo bliskie kwadratu, ×1,25) i c5-lg__img--szeroki (długi napis, ×0,625). Bez karuzeli i bez ruchu własnego; korzeń nie dodaje odstępów.",
+      "mechanika": "Statyczny; wejście w widok z warstwy wspólnej (data-reveal).",
+      "baza": {
+        "plik": "v7/home.html",
+        "kotwica": "inicjatywy"
+      },
+      "kod": {
+        "css": "ce/CE-104-pas-logotypow.css (c5-lg)"
+      },
+      "czesci": [
+        "nagłówek",
+        "rząd logotypów"
+      ],
+      "warianty": {},
+      "zrzut": {
+        "maxh": 500
+      }
+    },
+    "CE-105": {
+      "nazwa": "Porównanie zdjęć przed / po",
+      "grupa": "karty",
+      "rodzina": "obraz-tekst",
+      "skrot": "Dwa zdjęcia tego samego kadru jedno na drugim i pionowa linia z uchwytem, którą przesuwa się w bok.",
+      "projekt": null,
+      "tagi": {
+        "media": [
+          "zdjecie"
         ],
         "tekst": [
           "tylko-naglowek"
@@ -6217,28 +6266,34 @@ window.CW_CE = {
           "dowod-zrodla"
         ],
         "mechanika": [
-          "statyczny"
+          "przeciaganie"
         ],
         "zakres": [
           "uniwersalny"
         ]
       },
-      "opis": "Cichy pas: wyśrodkowany nagłówek (h2 w stopniu h3) i rząd logotypów, każdy w odnośniku do strony organizacji (nowa karta, rel=noopener), alt = nazwa organizacji. Od 900 px wszystkie logotypy w jednym rzędzie (liczba kolumn w --c5-lg-cols, domyślnie 4), niżej po dwa. Logotypy w swoich kolorach i proporcjach, jedna wspólna wysokość (--c5-lg-h, domyślnie 64 px; na telefonie --c5-lg-h-sm, 52 px). Bez karuzeli i bez ruchu własnego; korzeń nie dodaje odstępów.",
-      "mechanika": "Statyczny; wejście w widok z warstwy wspólnej (data-reveal).",
+      "opis": "Kadr (proporcja w --c5-ba-ratio, domyślnie 4 : 3) z dwoma zdjęciami tego samego miejsca jedno na drugim; drugie zdjęcie przycięte clip-path od lewej krawędzi do linii. Na linii okrągły uchwyt ze strzałkami ←→, w górnych rogach etykiety obu zdjęć (kapsułki na ciemnym tle, np. „Po gradobiciu” / „Po regeneracji”), pod kadrem podpis (miejsce, data, produkt, dawka). Opcjonalna pieczątka na kadrze (c5-ba__stamp) opisuje zaślepkę, póki nie ma prawdziwych zdjęć. Bez JS dwa zdjęcia obok siebie, każde ze swoją etykietą.",
+      "mechanika": "Natywny input type=range (0–100) na całym kadrze, niewidoczny – obsługuje klawiaturę (strzałki, PageUp/PageDown, Home, End) i czytniki ekranu (aria-valuetext z nazwami obu zdjęć). Wskaźnik czyta skrypt na całym kadrze: naciśnięcie przenosi linię w to miejsce, przeciąganie ją przesuwa (pointer capture). touch-action: pan-y – pionowy ruch palcem dalej przewija stronę, więc kadr w panelu akordeonu nie przejmuje przewijania i nie dotyka wierszy akordeonu. Pozycja w --c5-ba-pos na korzeniu; bez nasłuchu przewijania i zmiany rozmiaru. Nic nie rusza się samo.",
       "baza": {
-        "plik": "v7/home.html",
-        "kotwica": "inicjatywy"
+        "plik": "v7/borowka.html",
+        "kotwica": "b-etapy-przed-po"
       },
       "kod": {
-        "css": "ce/CE-104-pas-logotypow.css (c5-lg)"
+        "css": "ce/CE-105-porownanie-przed-po.css (c5-ba)",
+        "js": "ce/CE-105-porownanie-przed-po.js"
       },
       "czesci": [
-        "nagłówek",
-        "rząd logotypów z odnośnikami"
+        "kadr z dwoma zdjęciami jedno na drugim",
+        "etykiety obu zdjęć",
+        "linia z uchwytem",
+        "niewidoczny suwak (input range) dla klawiatury",
+        "opcjonalnie: pieczątka zaślepki",
+        "podpis"
       ],
       "warianty": {},
       "zrzut": {
-        "maxh": 500
+        "maxh": 700,
+        "przewin": "#b-etapy .c5-fa__list"
       }
     }
   },

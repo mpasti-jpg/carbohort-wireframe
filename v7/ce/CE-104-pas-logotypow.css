@@ -1,24 +1,38 @@
 /* ===== CE-104 · Pas logotypów (rejestr: ce-rejestr.js) =====================
-   Prefix: c5-lg. A quiet band: one heading and a row of logos, each logo a
-   link to its organisation (opens in a new tab). First use: the home page,
+   Prefix: c5-lg. A quiet band: one heading and a row of logos of the
+   organisations and projects CarboHort works with. First use: the home page,
    „Inicjatywy, które wspieramy” between the chapter „O nas” and the closing
-   band (10.11.2026, comment U-90; the same four logos as on carbohort.com).
+   band (10.11.2026, comment U-90). Since 22.11.2026 (decision 2026-11-22
+   item 13): six logos, none of them a link (span, not a), static band.
 
    Markup: section > .c5-wrap > .c5-lg > h2.c5-lg__t + ul.c5-lg__list >
-   li > a.c5-lg__link > img.c5-lg__img (alt = name of the organisation).
-   Layout: heading and row centred; from 900 px all logos in one row (columns:
-   --c5-lg-cols, default 4), two per row below. Logos keep their colours and
-   proportions, one common height (--c5-lg-h, default 64 px; --c5-lg-h-sm on a
-   phone). Static: no carousel, no motion of its own. The root adds no spacing
-   of its own. Comments in English, never the em dash. ===== */
+   li > span.c5-lg__link > img.c5-lg__img (alt = name of the organisation).
+   Layout: heading and row centred; two per row below 900 px, a grid of
+   --c5-lg-cols columns from 900 px (default 4; the home page sets 3, so six
+   logos sit in two rows of three) and, with the modifier
+   .c5-lg__list--rzad-xl, one centred row from 1440 px. Logos keep their
+   colours and proportions; one common height (--c5-lg-h, default 64 px;
+   --c5-lg-h-sm on a phone) is evened out optically by two modifiers on the
+   image: .c5-lg__img--kwadrat (logo close to a square, taller) and
+   .c5-lg__img--szeroki (long word mark, lower). Static: no carousel, no
+   motion of its own (a moving band is left to the graphic designer).
+   The root adds no spacing of its own. Comments in English, never the em
+   dash. ===== */
 
 .c5-lg{display:flex;flex-direction:column;align-items:center;gap:clamp(1.75rem,3.5vw,3rem);text-align:center;}
 .c5-lg__t{margin:0;text-wrap:balance;}
 .c5-lg__list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:center;justify-items:center;
   gap:clamp(1.5rem,4vw,3rem) clamp(1rem,3vw,2.5rem);width:100%;margin:0;padding:0;list-style:none;}
 @media (min-width:900px){.c5-lg__list{grid-template-columns:repeat(var(--c5-lg-cols,4),minmax(0,1fr));}}
+@media (min-width:1440px){.c5-lg__list--rzad-xl{display:flex;flex-wrap:nowrap;justify-content:space-between;}}
 .c5-lg__list > li{display:flex;justify-content:center;min-width:0;max-width:100%;}
 .c5-lg__link{display:inline-flex;align-items:center;justify-content:center;min-height:44px;max-width:100%;padding:8px;border-radius:var(--ch-radius-sm);}
 .c5-lg__link:focus-visible{outline:2px solid var(--w-focus-ring);outline-offset:2px;}
 .c5-lg__img{display:block;width:auto;max-width:100%;height:var(--c5-lg-h,64px);object-fit:contain;}
-@media (max-width:599px){.c5-lg__img{height:var(--c5-lg-h-sm,52px);}}
+.c5-lg__img--kwadrat{height:calc(var(--c5-lg-h,64px) * 1.25);}
+.c5-lg__img--szeroki{height:calc(var(--c5-lg-h,64px) * 0.625);}
+@media (max-width:599px){
+  .c5-lg__img{height:var(--c5-lg-h-sm,52px);}
+  .c5-lg__img--kwadrat{height:calc(var(--c5-lg-h-sm,52px) * 1.25);}
+  .c5-lg__img--szeroki{height:calc(var(--c5-lg-h-sm,52px) * 0.625);}
+}
