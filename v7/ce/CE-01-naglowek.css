@@ -97,7 +97,8 @@ cw-navbar[data-current="prochnica-plus"] .cw-haspopup[data-nav-grupa="prochnica-
 /* the Figma group gap between Sklep and the cart (20 px) */
 .wf-navbar__inner > .wf-cluster > .cw-cart{margin-left:14px;}
 /* cart counter: a 16 px green-950 circle with a 3 px white ring, 9 px digits */
-.wf-navbar .cw-cart .wf-count{
+.wf-navbar .cw-cart .wf-count,
+.wf-navbar .cw-minibar__cart .wf-count{
   --wf-badge-offset:5px;min-width:16px;height:16px;padding:0 3px;box-sizing:content-box;border:3px solid var(--ch-surface-raised);
   border-radius:56px;background:var(--ch-text-primary);color:var(--ch-text-inverse);
   font-size:9px;line-height:10px;font-weight:var(--ch-font-weight-semibold);display:grid;place-items:center;
@@ -139,6 +140,58 @@ cw-navbar[data-current="prochnica-plus"] .cw-haspopup[data-nav-grupa="prochnica-
   background:var(--ch-surface-raised);max-height:calc(100dvh - var(--ch-layout-header-h) - 3 * var(--ch-layout-header-top));overflow-y:auto;
 }
 
+/* ===== State "przewiniety" (Mateusz 23.11.2026) =============================
+   When the white bar has scrolled out of the window (miniBar() in chrome.js),
+   the sign of the logo stands on the left and three square buttons on the
+   right: Konfigurator (dark, as in the bar), Sklep and the cart (outlined,
+   as the cart in the bar). Konfigurator and Sklep stand 6 px apart (the gap
+   of the bar's buttons), the cart 50 px to the right of Sklep (Mateusz
+   23.11.2026). The sign and the cart keep the edges of the bar's content:
+   28 px from the window edges (24 px at 981–1199 px, 18 px on phones), as the
+   logo and the last button of the bar. They drop in from the top and go back up when
+   the bar is in view again. No background strip: only the squares float.
+   --cw-minibar-safe (0 while they are hidden) is the room they take at the
+   top; bars pinned to the top of a page add it to their offset. */
+:root{--cw-minibar-x:28px;--cw-minibar-top:26px;--cw-minibar-size:var(--ch-size-control-m);--cw-minibar-gap:6px;--cw-minibar-cart-gap:50px;}
+html.cw-minibar-on{--cw-minibar-safe:calc(var(--cw-minibar-top) + var(--cw-minibar-size) + var(--ch-space-3));}
+.wf-navbar > .cw-minibar{
+  position:fixed;top:var(--cw-minibar-top);left:var(--cw-minibar-x);right:var(--cw-minibar-x);z-index:var(--w-z-sticky);
+  display:flex;justify-content:space-between;align-items:flex-start;pointer-events:none;
+  visibility:hidden;opacity:0;transform:translateY(calc(-100% - var(--cw-minibar-top)));
+  transition:transform .3s var(--w-ease),opacity .2s var(--w-ease),visibility 0s linear .3s;
+}
+.wf-navbar > .cw-minibar[data-on="true"]{visibility:visible;opacity:1;transform:none;transition:transform .3s var(--w-ease),opacity .2s var(--w-ease),visibility 0s;}
+.cw-minibar__right{display:flex;gap:var(--cw-minibar-gap);}
+.cw-minibar__right > .cw-minibar__cart{margin-left:calc(var(--cw-minibar-cart-gap) - var(--cw-minibar-gap));}
+.cw-minibar__btn{
+  position:relative;display:inline-grid;place-items:center;width:var(--cw-minibar-size);height:var(--cw-minibar-size);
+  pointer-events:auto;box-sizing:border-box;border:1px solid var(--ch-border-control);border-radius:var(--ch-radius-control-m);
+  background:var(--ch-surface-raised);color:var(--ch-text-primary);text-decoration:none;
+  box-shadow:0 2px 12px rgb(12 43 28 / .08);
+  transition:background-color var(--w-duration-base) var(--w-ease),border-color var(--w-duration-base) var(--w-ease);
+}
+.cw-minibar__btn:hover{background:var(--ch-surface-warm);border-color:var(--ch-border-strong);}
+.cw-minibar__btn:focus-visible{outline:2px solid var(--ch-border-strong);outline-offset:2px;}
+.cw-minibar__btn--dark{background:var(--ch-action-primary-bg);border-color:var(--ch-action-primary-bg);color:var(--ch-action-primary-fg);}
+.cw-minibar__btn--dark:hover{background:var(--ch-color-green-900);border-color:var(--ch-color-green-900);}
+.cw-minibar__btn .wf-icon{width:var(--ch-size-icon-m);height:var(--ch-size-icon-m);}
+.cw-minibar__sygnet{display:block;width:22px;height:22px;color:var(--ch-color-green-logo);}
+.wf-navbar .cw-minibar__cart .wf-count[hidden]{display:none;}
+/* the cart takes the product when it is added (CWSklep.added(), sklep-wspolne.js) */
+.cw-minibar__cart.is-bump,.wf-navbar .cw-cart.is-bump{animation:cw-cart-bump .4s var(--w-ease);}
+@keyframes cw-cart-bump{40%{transform:scale(1.12);}}
+@media (min-width:981px) and (max-width:1199px){
+  :root{--cw-minibar-x:24px;}
+}
+@media (max-width:560px){
+  :root{--cw-minibar-x:18px;--cw-minibar-top:12px;--cw-minibar-size:36px;--cw-minibar-gap:4px;}
+  .cw-minibar__btn{border-radius:var(--ch-radius-md);}
+  .cw-minibar__sygnet{width:18px;height:18px;}
+}
+
 @media (prefers-reduced-motion: reduce){
   .wf-navbar .cw-nav > .wf-navbar__link,.wf-navbar .cw-nav > .cw-haspopup > .cw-nav-trigger{transition:none;}
+  .wf-navbar > .cw-minibar,.wf-navbar > .cw-minibar[data-on="true"]{transform:none;transition:opacity .15s linear,visibility 0s linear .15s;}
+  .wf-navbar > .cw-minibar[data-on="true"]{transition:opacity .15s linear,visibility 0s;}
+  .cw-minibar__cart.is-bump,.wf-navbar .cw-cart.is-bump{animation:none;}
 }

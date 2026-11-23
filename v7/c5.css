@@ -30,7 +30,8 @@
    nie blokował klikania w treść pod spodem. Pozycja FIXED (nie sticky), bo
    w pierwszym widoku belki ma nie być – wjeżdża od góry dopiero, gdy główne
    menu wyjedzie z ekranu (klasa `is-on` z JS). */
-.cx-subnav{position:fixed;left:0;right:0;top:0;z-index:90;pointer-events:none;transform:translateY(-100%);transition:transform .3s var(--w-ease);}
+/* top: below the header's scrolled-state buttons, which come in at the same moment (CE-01, 23.11.2026) */
+.cx-subnav{position:fixed;left:0;right:0;top:var(--cw-minibar-safe, 0px);z-index:90;pointer-events:none;transform:translateY(-100%);transition:transform .3s var(--w-ease);}
 .cx-subnav.is-on{transform:none;}
 .cx-subnav__in{display:flex;align-items:center;justify-content:space-between;gap:var(--w-space-5);min-height:var(--cx-subnav-h);}
 .cx-subnav__links{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;min-width:0;}
@@ -43,7 +44,7 @@
 .cx-subnav__buy{flex:none;pointer-events:auto;padding:8px 15px;font-size:0.8125rem;letter-spacing:.02em;text-transform:uppercase;background:var(--w-gray-900);color:var(--w-text-inverse);border:1px solid rgb(0 0 0 / .2);text-decoration:none;white-space:nowrap;}
 .cx-subnav__buy:hover{background:var(--w-gray-700);}
 /* kotwice lądują pod przyklejoną belką */
-[data-chapter]{scroll-margin-top:calc(var(--cx-subnav-h) + 8px);}
+[data-chapter]{scroll-margin-top:calc(var(--cx-subnav-h) + 8px + var(--cw-minibar-safe, 0px));}
 
 /* Design system v0.1 (17.10.2026): this block is a byte copy of the same block
    in ce/00-base.css (container, section, kicker, headings, lead, EL-01 button,

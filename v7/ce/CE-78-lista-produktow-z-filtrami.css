@@ -63,8 +63,9 @@
 }
 
 
-/* --- 4. PASEK ROBOCZY (lepki) --------------------------------------------- */
-.c5sk-bar { position: sticky; top: 0; z-index: 90; background: var(--ch-surface-page); border-bottom: 1px solid var(--ch-border-subtle); }
+/* --- 4. PASEK ROBOCZY (nie przykleja się od 23.11.2026) ------------------- */
+/* not sticky (Mateusz 23.11.2026): the toolbar stays where it is in the page */
+.c5sk-bar { position: relative; z-index: 90; background: var(--ch-surface-page); border-bottom: 1px solid var(--ch-border-subtle); }
 .c5sk-bar__in { display: flex; align-items: center; gap: var(--w-space-3) var(--w-space-4); padding-block: 8px; flex-wrap: nowrap; }
 /* Round 3 (L10): count and sort line smaller – about 13 px, select 32 px. */
 .c5sk-count { font-size: 0.8125rem; color: var(--w-text-secondary); flex: 0 1 auto; min-width: 0; }
@@ -158,7 +159,7 @@
 .c5sk-list__main > .c5sk-grid { margin-top: var(--w-space-4); }
 
 .c5sk-facets { display: flex; flex-direction: column; gap: var(--w-space-4); }
-@media (min-width: 1000px) { .c5sk-facets { position: sticky; top: 72px; max-height: calc(100svh - 96px); overflow-y: auto; padding-right: var(--w-space-2); } }
+@media (min-width: 1000px) { .c5sk-facets { position: sticky; top: max(24px, var(--cw-minibar-safe, 0px)); max-height: calc(100svh - 48px - max(0px, var(--cw-minibar-safe, 0px) - 24px)); overflow-y: auto; padding-right: var(--w-space-2); } }
 .c5sk-facet { border-top: 1px solid var(--ch-border-subtle); padding-top: var(--w-space-3); }
 .c5sk-facet--first { border-top: 0; padding-top: 0; }
 .c5sk-facet__h { margin: 0; }

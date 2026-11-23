@@ -262,7 +262,7 @@
     Array.prototype.forEach.call(doc.querySelectorAll("[data-cart-count]"), function (el) {
       el.textContent = String(n); el.hidden = n === 0;
     });
-    Array.prototype.forEach.call(doc.querySelectorAll("a.cw-cart"), function (a) {
+    Array.prototype.forEach.call(doc.querySelectorAll("a.cw-cart, a.cw-minibar__cart"), function (a) {
       a.setAttribute("aria-label", "Koszyk, " + n + " " + plural(n, "produkt", "produkty", "produktów"));
     });
   }
@@ -416,7 +416,8 @@
       var pack = packById(state.pack);
       if (!pack) return;
       add(current, pack.id, state.qty, state.opts);
-      renderAdded(pack, state.qty);
+      close();
+      added();
     });
     update();
   }
@@ -456,27 +457,58 @@
     var r = body.querySelector('input[name="cws-var"]:checked');
     if (r) r.focus();
   }
-  function renderAdded(pack, qty) {
-    var items = load(), n = countOf(items);
-    var img = pack.img || current.img || (current.imgs && current.imgs[0]) || "";
-    panel.classList.remove("cws-dlg__panel--qv");
-    panel.removeAttribute("aria-describedby");
-    body.innerHTML =
-      '<div class="cws-dlg__head">' +
-        (img ? '<img class="cws-dlg__img" src="' + esc(img) + '" alt="">' : '<span class="cws-dlg__img cws-dlg__img--ph" aria-hidden="true"></span>') +
-        '<div class="cws-dlg__done" role="status">' +
-          '<p class="cws-dlg__kicker">Dodano do koszyka</p>' +
-          '<h2 class="cws-dlg__title" id="cws-dlg-title">' + esc(current.name) + "</h2>" +
-          '<p class="cws-dlg__meta">' + esc(pack.label + optSuffix(current, state.opts).label) + " × " + qty + " · " + fmt(priceOf(pack) * qty) + "</p>" +
-          '<p class="cws-dlg__note">W koszyku: ' + n + " " + plural(n, "opakowanie", "opakowania", "opakowań") + " za " + fmt(totalOf(items)) + ".</p>" +
-        "</div>" +
-      "</div>" +
-      '<div class="cws-dlg__actions">' +
-        '<a class="cws-btn cws-btn--dark" href="koszyk.html">Przejdź do koszyka</a>' +
-        '<button type="button" class="cws-btn cws-btn--light" data-cws-close>Kontynuuj zakupy</button>' +
-      "</div>";
-    var first = body.querySelector(".cws-btn");
-    if (first) first.focus();
+  /* ----- added to the cart (Mateusz 23.11.2026) ------------------------
+     No dialog with "Przejdź do koszyka" / "Kontynuuj zakupy" any more: the
+     quick view closes and "Produkt dodany do koszyka" stands 12 px under the
+     cart button in view – the header's, or the square one in the top right
+     corner once the header has scrolled away (CE-01, state "przewiniety") –
+     with its right edge on the cart's. After 1.5 s it flies into the cart,
+     which gives a small bump. The cart itself stays one click away. Public
+     as CWSklep.added(). */
+  var TOAST_MS = 1500, toastEl = null, toastT = 0;
+  function cartTarget() {
+    var list = doc.querySelectorAll('.cw-minibar[data-on="true"] .cw-minibar__cart, a.cw-cart');
+    for (var i = 0; i < list.length; i++) {
+      var r = list[i].getBoundingClientRect();
+      if (r.width && r.bottom > 0 && r.top < window.innerHeight) return list[i];
+    }
+    return null;
+  }
+  function added() {
+    if (toastEl && toastEl.parentNode) toastEl.parentNode.removeChild(toastEl);
+    clearTimeout(toastT);
+    var t = toastEl = doc.createElement("div");
+    t.className = "cws-toast";
+    t.setAttribute("role", "status");
+    var cart = cartTarget();
+    if (cart) {
+      var r = cart.getBoundingClientRect();
+      t.style.top = Math.round(r.bottom + 12) + "px";
+      t.style.right = Math.max(8, Math.round(doc.documentElement.clientWidth - r.right)) + "px";
+    }
+    doc.body.appendChild(t);
+    /* text after insertion, so screen readers announce the live region */
+    requestAnimationFrame(function () {
+      t.innerHTML = '<svg class="wf-icon" aria-hidden="true"><use href="#ti-check"></use></svg><span>Produkt dodany do koszyka</span>';
+    });
+    toastT = setTimeout(function () { fly(t); }, TOAST_MS);
+  }
+  function fly(t) {
+    var cart = cartTarget();
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function done() {
+      if (t.parentNode) t.parentNode.removeChild(t);
+      if (toastEl === t) toastEl = null;
+      if (cart) { cart.classList.remove("is-bump"); void cart.offsetWidth; cart.classList.add("is-bump"); }
+    }
+    if (!cart || reduce || !t.animate) { t.classList.add("is-out"); setTimeout(done, 200); return; }
+    var a = t.getBoundingClientRect(), b = cart.getBoundingClientRect();
+    var dx = Math.round(b.left + b.width / 2 - (a.left + a.width / 2));
+    var dy = Math.round(b.top + b.height / 2 - (a.top + a.height / 2));
+    t.animate([
+      { transform: "translate(0, 0) scale(1)", opacity: 1 },
+      { transform: "translate(" + dx + "px, " + dy + "px) scale(.1)", opacity: 0.3 }
+    ], { duration: 450, easing: "cubic-bezier(.55, 0, .75, .2)", fill: "forwards" }).onfinish = done;
   }
   function focusables() {
     return Array.prototype.filter.call(
@@ -544,6 +576,7 @@
     onChange: function (fn) { if (typeof fn === "function") listeners.push(fn); },
     open: open,
     close: close,
+    added: added,
     product: parse,
     find: find,
     minPack: minPack,

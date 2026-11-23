@@ -142,7 +142,7 @@ img.cw-a-fig__ph { display: block; height: auto; object-fit: cover; object-posit
   }
   .cw-a-side {
     grid-column: 1; grid-row: 1 / span 3; align-self: start;
-    position: sticky; top: var(--cw-a-sticky);
+    position: sticky; top: calc(var(--cw-a-sticky) + var(--cw-minibar-safe, 0px)); /* + the header's scrolled-state buttons (23.11.2026) */
     /* Eleven entries are taller than a laptop screen, so the column is capped
        at the viewport and the LIST scrolls inside it – the heading of the
        contents and the metric with „Udostępnij" / „Drukuj" stay put instead
@@ -151,7 +151,7 @@ img.cw-a-fig__ph { display: block; height: auto; object-fit: cover; object-posit
        `overflow` as a safety net, in case the reserve ever falls short (the
        list is NOT a flex item: `display:flex` on `details` is not something
        every engine honours). */
-    max-height: calc(100svh - 2 * var(--cw-a-sticky));
+    max-height: calc(100svh - 2 * var(--cw-a-sticky) - var(--cw-minibar-safe, 0px));
     overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin;
   }
   .cw-a-toc__nav {

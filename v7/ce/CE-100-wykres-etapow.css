@@ -128,7 +128,8 @@
    and the amount for the field (`.c5-we__val`, written by CE-47 – the capsules
    that are empty in the base version). Under the legend a smaller heading
    „Oblicz koszt stosowania”, on the left, and the calculator. ---------------- */
-.c5-we--razem .c5-we__dock{position:sticky;top:20px;z-index:5;justify-content:flex-start;pointer-events:none;}
+/* top: + the room of the header's scrolled-state buttons (CE-01, 23.11.2026) */
+.c5-we--razem .c5-we__dock{position:sticky;top:calc(20px + var(--cw-minibar-safe, 0px));z-index:5;justify-content:flex-start;pointer-events:none;}
 .c5-we--razem .c5-we__dock .c5-pkbar{pointer-events:auto;}
 .c5-we--razem .c5-we__pkdesc{max-width:40rem;margin:var(--ch-space-5) 0 clamp(2.5rem,4.5vw,3.75rem);text-align:left;}
 /* the first section of the page (08.11.2026, U-71–U-73): the head introduces the
@@ -227,6 +228,16 @@
 .c5-we__zab--dots button:hover::before{transform:scale(1.35);}
 .c5-we__zab--dots button[aria-checked="true"]::before,.c5-we__zab--dots button:has(~ button[aria-checked="true"])::before{background:var(--ch-color-green-500);}
 .c5-we__zab--dots button:focus-visible{outline:2px solid var(--w-focus-ring);outline-offset:-1px;border-radius:4px;}
+/* digits instead of the dots (Darek U-115, 23.11.2026): modifier c5-we__zab--cyfry
+   in the same inline layout (.c5-we__zabw--dots is the line „Wybierz liczbę
+   zabiegów” + the switch, for dots and digits alike), 6 px right of the label;
+   round 22 px buttons with the number (28 px below 900 px), the chosen one on
+   the accent fill. Radio semantics and script as with the dots. */
+.c5-we__zab.c5-we__zab--cyfry{display:inline-flex;vertical-align:middle;gap:4px;margin:-4px 0 -4px 6px;padding:0;border:0;border-radius:0;background:none;}
+.c5-we__zab.c5-we__zab--cyfry button{width:22px;height:22px;border:1px solid var(--ch-border-control);font-size:12px;font-weight:600;color:var(--ch-text-secondary);}
+.c5-we__zab.c5-we__zab--cyfry button:hover{background:var(--ch-surface-warm);color:var(--ch-text-primary);}
+.c5-we__zab.c5-we__zab--cyfry button[aria-checked="true"]{border-color:var(--ch-action-accent-bg);background:var(--ch-action-accent-bg);color:var(--ch-action-accent-fg);}
+@media (max-width:899px){.c5-we__zab.c5-we__zab--cyfry button{width:28px;height:28px;}}
 /* the way of application under a bar (22.11.2026, client comment of 10.11):
    the same place and type as „Wybierz liczbę zabiegów” – the label, then one
    line per way with the same 6 px dot (green = chosen); the default way says

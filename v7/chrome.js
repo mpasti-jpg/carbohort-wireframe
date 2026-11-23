@@ -38,8 +38,9 @@
      jednej podstronie nie wymaga ruszania pozostałych.
    - The "Rodzaje upraw" mega menu (#mega-uprawy) is CE-02 in the variant
      "grupy-ze-zdjeciem" (class cw-mega--crop-switch, 15.10.2026; it replaced
-     the five-column variant "grupy" of 20.09.2026). Five groups and 29 items
-     from the client's list (AC #32175, 22.11.2026; before: 31 items): the left column holds the five group names as
+     the five-column variant "grupy" of 20.09.2026). Five groups and 17 items
+     from the client's list (AC #32175: 29 items on 22.11.2026, since 23.11.2026
+     only the 17 planned for the start; before: 31 items): the left column holds the five group names as
      vertical tabs, the middle shows the list of the active group, the right
      its photo (illustrative, one photo per group). The first group is active
      by default; on a crop page the group of that crop. Switching: pointer
@@ -50,8 +51,10 @@
      only Borówka, Kukurydza and Ziemniak have a page – the rest
      are <span class="cw-crop--soon">. All items look alike (link dark, item
      without a page lighter); Ozime / Jare are plain subheadings.
-     li.is-featured marks the crops planned for the start (bold in the
-     client's list, 17 items), without a look of its own. The fruit tree group is called "Drzewa sadownicze" (the source
+     Since 23.11.2026 the lists hold only the crops planned for the start
+     (bold in the client's list, 17 items, each li.is-featured, without a
+     look of its own); the full list with the other 12 items stays in
+     40-strona-www/koncepcja/menu-rodzaje-upraw-spec.md, section 2. The fruit tree group is called "Drzewa sadownicze" (the source
      document says "Sadownicze"). The panel starts under the left edge of its
      trigger and ends on the right edge of the content container (16.10.2026,
      placeCropPanel(); in a narrow panel the photo gives way, see
@@ -167,6 +170,7 @@
   <path d="M6 11l6 -6" /></symbol>
   <symbol id="ti-arrows-sort" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l4 -4l4 4m-4 -4v14" />
   <path d="M21 15l-4 4l-4 -4m4 4v-14" /></symbol>
+  <symbol id="ti-building-store" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l18 0" /><path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4" /><path d="M5 21l0 -10.15" /><path d="M19 21l0 -10.15" /><path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" /></symbol>
   <symbol id="ti-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12" />
   <path d="M16 3v4" />
   <path d="M8 3v4" />
@@ -336,7 +340,6 @@
                   <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Truskawka</span></li>
                   <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Porzeczka</span></li>
                   <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Aronia</span></li>
-                  <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Winogrono</span></li>
                 </ul>
               </div>
               <img class="cw-cropsw__photo" src="img/foto/borowka-zbior.jpg" alt="Skrzynki z zebraną borówką między rzędami krzewów na plantacji" width="2000" height="1116" loading="lazy" decoding="async">
@@ -358,7 +361,6 @@
                   <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Papryka</span></li>
                   <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Ogórek</span></li>
                   <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Pomidor</span></li>
-                  <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Kapustne</span></li>
                 </ul>
               </div>
               <img class="cw-cropsw__photo" src="img/foto/prochnica-06-leafy-greens-rows.jpg" alt="Rzędy młodych warzyw liściowych na polu" width="933" height="1400" loading="lazy" decoding="async">
@@ -370,22 +372,13 @@
                     <span class="cw-crops__season-name">Ozime</span>
                     <ul class="cw-crops__list">
                       <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Rzepak ozimy</span></li>
-                      <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Pszenica</span></li>
-                      <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Pszenżyto ozime</span></li>
-                      <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Jęczmień ozimy</span></li>
-                      <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Żyto</span></li>
                     </ul>
                   </div>
                   <div class="cw-crops__season">
                     <span class="cw-crops__season-name">Jare</span>
                     <ul class="cw-crops__list">
                       <li class="is-featured"><a class="cw-crop" data-nav="kukurydza" data-nav-parent="uprawy" href="kukurydza.html">Kukurydza</a></li>
-                      <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Słonecznik</span></li>
-                      <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Soja</span></li>
-                      <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Burak cukrowy</span></li>
                       <li class="is-featured"><a class="cw-crop" data-nav="ziemniak" data-nav-parent="uprawy" href="ziemniak.html">Ziemniak</a></li>
-                      <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Jęczmień jary</span></li>
-                      <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Owies</span></li>
                     </ul>
                   </div>
                 </div>
@@ -396,7 +389,6 @@
               <div class="cw-cropsw__list">
                 <ul class="cw-crops__list">
                   <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Trawnik</span></li>
-                  <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Drzewa i krzewy ozdobne</span></li>
                   <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Rośliny rabatowe i kwitnące</span></li>
                 </ul>
               </div>
@@ -436,6 +428,19 @@
          itself still leads to the cart page, touch screens get no preview. -->
     <div class="cw-minicart" id="cw-minicart" data-cw-minicart data-open="false" role="region" aria-label="Podgląd koszyka"></div>
   </div>
+  <!-- CE-01, state "przewiniety" (23.11.2026, Mateusz): once the white bar has
+       left the window, the sign of the logo (left) and three square buttons
+       – Konfigurator, Sklep, cart – drop in from the top and stay until the
+       bar is back in view; no login button, no menu. miniBar() below,
+       styles in ce/CE-01-naglowek.css. -->
+  <nav class="cw-minibar" aria-label="Skróty" data-on="false" inert>
+    <a class="cw-minibar__btn cw-minibar__sign" href="home.html" aria-label="Carbohort – strona główna" title="Strona główna"><svg class="cw-minibar__sygnet" viewBox="0 0 980 980" aria-hidden="true"><use href="#ch-sygnet"></use></svg></a>
+    <span class="cw-minibar__right">
+      <a class="cw-minibar__btn cw-minibar__btn--dark" href="konfigurator.html" aria-label="Konfigurator" title="Konfigurator"><svg class="wf-icon" aria-hidden="true"><use href="#ch-suwaki"></use></svg></a>
+      <a class="cw-minibar__btn" href="sklep.html" aria-label="Sklep" title="Sklep"><svg class="wf-icon" aria-hidden="true"><use href="#ti-building-store"></use></svg></a>
+      <a class="cw-minibar__btn cw-minibar__cart wf-badge--count" href="koszyk.html" aria-label="Koszyk, 0 produktów" title="Koszyk"><svg class="wf-icon" aria-hidden="true"><use href="#ti-shopping-cart"></use></svg><span class="wf-count" data-cart-count>0</span></a>
+    </span>
+  </nav>
   <nav class="cw-mobilenav wf-container" id="mobilenav" data-ce="CE-03" data-open="false" aria-label="Menu mobilne">
     <a class="wf-navitem" data-nav="produkty" href="produkty.html">Produkty Carbohort</a>
     <!-- The two CARBOHUMIC pages (15.10.2026) – the second level under the
@@ -443,8 +448,8 @@
     <a class="wf-navitem cw-mobilenav__sub" data-nav="carbohumic" data-nav-parent="produkty" href="carbohumic-doglebowy.html">Carbohumic doglebowy</a>
     <a class="wf-navitem cw-mobilenav__sub" data-nav="carbohumic-dolistny" data-nav-parent="produkty" href="carbohumic-dolistny.html">Carbohumic nalistny</a>
     <p class="wf-navitem cw-mobilenav__label" data-nav="uprawy">Rodzaje upraw</p>
-    <!-- Ta sama treść co w #mega-uprawy: pięć grup, 29 pozycji, te same stany
-         (lista upraw od klienta, 22.11.2026).
+    <!-- Ta sama treść co w #mega-uprawy: pięć grup, 17 pozycji, te same stany
+         (lista upraw od klienta, 22.11.2026; od 23.11.2026 tylko uprawy na start).
          Obie listy trzyma w zgodzie regresja _narzedzia/qa-menu.py. -->
     <details class="cw-mobilenav__group" name="cw-uprawy">
       <summary class="wf-navitem cw-mobilenav__sub">Jagodowe<svg class="wf-icon wf-icon--sm cw-mobilenav__chev" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
@@ -454,7 +459,6 @@
         <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Truskawka</span></li>
         <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Porzeczka</span></li>
         <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Aronia</span></li>
-        <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Winogrono</span></li>
       </ul>
     </details>
     <details class="cw-mobilenav__group" name="cw-uprawy">
@@ -472,7 +476,6 @@
         <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Papryka</span></li>
         <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Ogórek</span></li>
         <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Pomidor</span></li>
-        <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Kapustne</span></li>
       </ul>
     </details>
     <details class="cw-mobilenav__group" name="cw-uprawy">
@@ -482,22 +485,13 @@
           <span class="cw-crops__season-name">Ozime</span>
           <ul class="cw-crops__list">
             <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Rzepak ozimy</span></li>
-            <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Pszenica</span></li>
-            <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Pszenżyto ozime</span></li>
-            <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Jęczmień ozimy</span></li>
-            <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Żyto</span></li>
           </ul>
         </div>
         <div class="cw-crops__season">
           <span class="cw-crops__season-name">Jare</span>
           <ul class="cw-crops__list">
             <li class="is-featured"><a class="cw-crop" data-nav="kukurydza" data-nav-parent="uprawy" href="kukurydza.html">Kukurydza</a></li>
-            <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Słonecznik</span></li>
-            <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Soja</span></li>
-            <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Burak cukrowy</span></li>
             <li class="is-featured"><a class="cw-crop" data-nav="ziemniak" data-nav-parent="uprawy" href="ziemniak.html">Ziemniak</a></li>
-            <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Jęczmień jary</span></li>
-            <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Owies</span></li>
           </ul>
         </div>
       </div>
@@ -506,7 +500,6 @@
       <summary class="wf-navitem cw-mobilenav__sub">Rośliny ozdobne<svg class="wf-icon wf-icon--sm cw-mobilenav__chev" aria-hidden="true"><use href="#ti-chevron-down"></use></svg></summary>
       <ul class="cw-crops__list">
         <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Trawnik</span></li>
-        <li><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Drzewa i krzewy ozdobne</span></li>
         <li class="is-featured"><span class="cw-crop cw-crop--soon" title="Strona w przygotowaniu">Rośliny rabatowe i kwitnące</span></li>
       </ul>
     </details>
@@ -2354,6 +2347,28 @@
   }
 
   define("cw-icons",  function (el) { el.innerHTML = ICONS; });
+  /* ===== CE-01, state "przewiniety" (23.11.2026) ============================
+     The header is not sticky (18.10.2026), so when its white bar has left the
+     window the sign and the three square buttons (Konfigurator, Sklep, cart)
+     drop in from the top (.cw-minibar[data-on="true"]); they leave again as
+     soon as any part of the bar is back in view. While they are out,
+     html.cw-minibar-on sets --cw-minibar-safe, so things pinned to the top of
+     the page (section pills, the floating package switch, the article
+     contents, the filter column of the shop) stand below them. Hidden buttons
+     are inert. */
+  function miniBar(host) {
+    var bar = host.querySelector(".wf-navbar__inner"), mini = host.querySelector(".cw-minibar");
+    if (!bar || !mini || !("IntersectionObserver" in window)) return;
+    var root = document.documentElement;
+    new IntersectionObserver(function (entries) {
+      var e = entries[entries.length - 1];
+      var on = !e.isIntersecting && e.boundingClientRect.bottom <= 0;
+      mini.setAttribute("data-on", on ? "true" : "false");
+      if (on) mini.removeAttribute("inert"); else mini.setAttribute("inert", "");
+      root.classList.toggle("cw-minibar-on", on);
+    }).observe(bar);
+  }
+
   define("cw-navbar", function (el) {
     var uklad = el.getAttribute("data-uklad");
     if (uklad === "panel" || uklad === "handlowiec") {
@@ -2370,6 +2385,7 @@
     markCurrent(el, el.getAttribute("data-current"));
     bindCropSwitch(el);
     promoBar(el.querySelector("#serwis-naglowek"));
+    miniBar(el);
     /* Three sources, in this order: attribute, address query, address fragment. */
     if (el.getAttribute("data-widok") === "pro") setPro(el, true, "");
     else if (proInQuery()) setPro(el, true, "?");
