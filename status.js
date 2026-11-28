@@ -3,7 +3,7 @@
 window.CW_STATUS = {
   "meta": {
     "wersja": "0.2.0",
-    "zaktualizowano": "2026-11-22",
+    "zaktualizowano": "2026-11-28",
     "projektAC": 837,
     "bazaAC": "https://pm.bizwebstudio.pl/projects/837/tasks/",
     "live": "https://mpasti-jpg.github.io/carbohort-wireframe/v7/",
@@ -171,7 +171,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31562,
-      "data": "22.11"
+      "data": "28.11"
     },
     "produkty.html": {
       "sekcja": "2. Produkty Carbohort",
@@ -185,7 +185,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31789,
-      "data": "22.11"
+      "data": "28.11"
     },
     "produkty-katalog.html": {
       "sekcja": "2. Produkty Carbohort",
@@ -284,7 +284,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31566,
-      "data": "22.11"
+      "data": "23.11"
     },
     "ziemniak.html": {
       "sekcja": "3. Rodzaje upraw",
@@ -503,7 +503,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": null,
-      "data": "12.11"
+      "data": "23.11"
     },
     "o-firmie.html": {
       "sekcja": "6. O nas",
@@ -559,7 +559,7 @@ window.CW_STATUS = {
         "wdrozenie": null
       },
       "ac": 31864,
-      "data": "22.11"
+      "data": "28.11"
     },
     "pdp.html": {
       "sekcja": "9. Sklep",
